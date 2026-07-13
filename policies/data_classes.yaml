@@ -1,0 +1,47 @@
+version: "1.0.0"
+default_unknown_personal_class: PRIVATE
+classes:
+  PUBLIC:
+    rank: 0
+    public_repository_allowed: true
+    external_model_allowed: true
+    encryption_at_rest_required: false
+  INTERNAL:
+    rank: 1
+    public_repository_allowed: false
+    external_model_allowed: true
+    encryption_at_rest_required: true
+  PRIVATE:
+    rank: 2
+    public_repository_allowed: false
+    external_model_allowed: purpose_limited
+    encryption_at_rest_required: true
+  HIGHLY_SENSITIVE:
+    rank: 3
+    public_repository_allowed: false
+    external_model_allowed: exception_only
+    encryption_at_rest_required: true
+    local_first: true
+    explicit_external_transmission_approval: true
+  SECRETS:
+    rank: 4
+    public_repository_allowed: false
+    external_model_allowed: false
+    ordinary_memory_allowed: false
+    embeddings_allowed: false
+    conversational_logs_allowed: false
+    dedicated_secret_manager_required: true
+
+patterns:
+  - match: "passwords, API keys, tokens, private keys, cookies, recovery codes"
+    class: SECRETS
+  - match: "unreviewed personal life archive"
+    class: HIGHLY_SENSITIVE
+  - match: "financial, medical, immigration, intimate relationship, identity documents"
+    class: HIGHLY_SENSITIVE
+  - match: "personal conversations, schedules, private applications, contact details"
+    class: PRIVATE
+  - match: "architecture drafts, development notes, internal test fixtures"
+    class: INTERNAL
+  - match: "approved public portfolio, publications, public documentation"
+    class: PUBLIC

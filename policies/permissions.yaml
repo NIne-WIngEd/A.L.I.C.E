@@ -1,0 +1,257 @@
+version: "1.0.0"
+authority: "docs/ALICE_CONSTITUTION.md"
+default_deny: true
+
+confirmation:
+  explicit_expiry_seconds: 300
+  strong_expiry_seconds: 120
+  invalidate_on_material_change: true
+  silence_is_approval: false
+
+levels:
+  P0:
+    name: internal_cognition
+    confirmation: not_required
+  P1:
+    name: read_only
+    confirmation: standing_or_resource_access
+  P2:
+    name: reversible_preparation
+    confirmation: not_required
+  P3:
+    name: external_action
+    confirmation: explicit
+  P4:
+    name: sensitive_destructive_privileged
+    confirmation: strong
+  P5:
+    name: prohibited
+    confirmation: impossible
+
+permissions:
+  - id: internal.reason
+    level: P0
+    reversible: true
+    audit: false
+    standing_authorization_allowed: true
+
+  - id: memory.search
+    level: P1
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    allowed_data_classes: [PUBLIC, INTERNAL, PRIVATE, HIGHLY_SENSITIVE]
+
+  - id: memory.inspect_source
+    level: P1
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    allowed_data_classes: [PUBLIC, INTERNAL, PRIVATE, HIGHLY_SENSITIVE]
+
+  - id: web.search
+    level: P1
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    allowed_data_classes: [PUBLIC]
+
+  - id: file.read_approved
+    level: P1
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    allowed_data_classes: [PUBLIC, INTERNAL, PRIVATE, HIGHLY_SENSITIVE]
+
+  - id: calendar.read_approved
+    level: P1
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    allowed_data_classes: [PRIVATE]
+
+  - id: draft.create_local
+    level: P2
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+
+  - id: file.write_workspace
+    level: P2
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints:
+      - no_overwrite_without_version
+      - approved_workspace_only
+
+  - id: code.create_branch
+    level: P2
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+
+  - id: code.run_sandbox
+    level: P2
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints:
+      - no_network_by_default
+      - no_production_credentials
+      - resource_limits_required
+
+  - id: memory.propose_change
+    level: P2
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+
+  - id: email.send
+    level: P3
+    reversible: false
+    audit: true
+    standing_authorization_allowed: true
+    confirmation: explicit
+
+  - id: message.send
+    level: P3
+    reversible: false
+    audit: true
+    standing_authorization_allowed: true
+    confirmation: explicit
+
+  - id: calendar.create_or_change
+    level: P3
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: true
+    confirmation: explicit
+
+  - id: content.publish
+    level: P3
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: false
+    confirmation: explicit
+
+  - id: form.submit
+    level: P3
+    reversible: false
+    audit: true
+    standing_authorization_allowed: false
+    confirmation: explicit
+
+  - id: private_data.transmit_external
+    level: P3
+    reversible: false
+    audit: true
+    standing_authorization_allowed: false
+    confirmation: explicit
+    allowed_data_classes: [PRIVATE]
+
+  - id: file.delete_or_overwrite
+    level: P4
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: false
+    confirmation: strong
+
+  - id: account.change_settings
+    level: P4
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: false
+    confirmation: strong
+
+  - id: secrets.access
+    level: P4
+    reversible: false
+    audit: true
+    standing_authorization_allowed: false
+    confirmation: strong
+    allowed_data_classes: [SECRETS]
+
+  - id: highly_sensitive.transmit_external
+    level: P4
+    reversible: false
+    audit: true
+    standing_authorization_allowed: false
+    confirmation: strong
+    allowed_data_classes: [HIGHLY_SENSITIVE]
+
+  - id: finance.commit
+    level: P4
+    reversible: false
+    audit: true
+    standing_authorization_allowed: false
+    confirmation: strong
+
+  - id: system.execute_privileged
+    level: P4
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: false
+    confirmation: strong
+
+  - id: production.deploy_or_merge
+    level: P4
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: false
+    confirmation: strong
+
+  - id: memory.delete
+    level: P4
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: false
+    confirmation: strong
+
+  - id: oversight.disable
+    level: P5
+    reversible: false
+    audit: true
+    standing_authorization_allowed: false
+
+  - id: permissions.bypass
+    level: P5
+    reversible: false
+    audit: true
+    standing_authorization_allowed: false
+
+  - id: logs.falsify_or_hide
+    level: P5
+    reversible: false
+    audit: true
+    standing_authorization_allowed: false
+
+  - id: shutdown.resist
+    level: P5
+    reversible: false
+    audit: true
+    standing_authorization_allowed: false
+
+  - id: credentials.expose
+    level: P5
+    reversible: false
+    audit: true
+    standing_authorization_allowed: false
+
+  - id: constitution.modify_silently
+    level: P5
+    reversible: false
+    audit: true
+    standing_authorization_allowed: false
+
+  - id: self.replicate_against_owner
+    level: P5
+    reversible: false
+    audit: true
+    standing_authorization_allowed: false
+
+  - id: user.manipulate_with_private_memory
+    level: P5
+    reversible: false
+    audit: true
+    standing_authorization_allowed: false

@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+token*.json
+secrets/
+secret/
+mail.py
+
+# Personal A.L.I.C.E. data
+data/
+datasets/
+life_data/
+personal_data/
+private/
+vault/
+memory_store/
+embeddings/
+vector_store/
+backups/
+exports/
+activity_logs/
+logs/
+*.db
+*.sqlite
+*.sqlite3
+
+# Model files and large binaries
+models/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build and coverage
+build/
+dist/
+*.egg-info/
+.coverage
+htmlcov/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
