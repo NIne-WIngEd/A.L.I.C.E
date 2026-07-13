@@ -19,10 +19,10 @@
 - [x] Baseline constitutional, permission, and security cases created
 - [x] Automated policy validator created
 - [x] Public-repository exclusion rules created
-- [ ] Exposed historic credential revoked or changed by account owner
-- [ ] Repository history replaced or cleaned
-- [ ] Secret scanning and push protection verified
-- [ ] Main-branch ruleset activated
-- [ ] `validate` status check required after its first successful run
+- [x] Exposed historic credential revoked or changed by account owner
+- [x] Repository history replaced or cleaned
+- [x] Secret scanning and push protection verified
+- [x] Main-branch ruleset activated
+- [x] `validate` status check required after its first successful run
 
 The unchecked items require actions in GitHub or the credential provider and cannot be completed solely by repository files.
