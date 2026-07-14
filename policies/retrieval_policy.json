@@ -1,0 +1,23 @@
+{
+  "retrieval_policy_schema_version": 1,
+  "policy_id": "alice-fts5-retrieval-v1",
+  "tokenizer": "porter unicode61 remove_diacritics 2",
+  "prefix_indexes": [2, 3, 4],
+  "query_mode": "and_then_or_fallback",
+  "minimum_token_length": 2,
+  "bm25_weights": {
+    "chunk_id": 0.0,
+    "body": 1.0,
+    "filename": 3.0,
+    "source_path": 0.4
+  },
+  "snippet_tokens": 28,
+  "default_limit": 10,
+  "candidate_multiplier": 10,
+  "max_chunks_per_source": 2,
+  "collapse_adjacent_chunks": true,
+  "include_truncated_by_default": true,
+  "lexical_benchmark_cases": 25,
+  "lexical_benchmark_min_term_length": 6,
+  "lexical_benchmark_max_document_frequency": 2
+}
