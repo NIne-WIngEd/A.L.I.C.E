@@ -1,0 +1,209 @@
+{
+  "registry_schema_version": 1,
+  "registry_id": "alice-parser-registry-v1",
+  "default_policy": {
+    "source_hash_required": true,
+    "follow_links": false,
+    "execute_macros": false,
+    "extract_embedded_files": false,
+    "network_access_expected": false,
+    "atomic_outputs": true
+  },
+  "parsers": [
+    {
+      "parser_id": "json-stdlib-v1",
+      "family": "json",
+      "enabled": true,
+      "extensions": [
+        ".json",
+        ".ipynb",
+        ".webmanifest"
+      ],
+      "dependency": "python-stdlib",
+      "max_file_bytes": 20971520,
+      "timeout_seconds": 90,
+      "max_output_chars": 5000000,
+      "limits": {
+        "max_nodes": 150000,
+        "max_depth": 80
+      }
+    },
+    {
+      "parser_id": "html-beautifulsoup-v1",
+      "family": "html",
+      "enabled": true,
+      "extensions": [
+        ".html",
+        ".htm"
+      ],
+      "dependency": "beautifulsoup4",
+      "max_file_bytes": 20971520,
+      "timeout_seconds": 90,
+      "max_output_chars": 5000000,
+      "limits": {
+        "remove_active_content": true
+      }
+    },
+    {
+      "parser_id": "csv-stdlib-v1",
+      "family": "csv",
+      "enabled": true,
+      "extensions": [
+        ".csv"
+      ],
+      "dependency": "python-stdlib",
+      "max_file_bytes": 20971520,
+      "timeout_seconds": 90,
+      "max_output_chars": 5000000,
+      "limits": {
+        "max_rows": 100000,
+        "max_columns": 200
+      }
+    },
+    {
+      "parser_id": "text-stdlib-v1",
+      "family": "text",
+      "enabled": true,
+      "extensions": [
+        ".txt",
+        ".md",
+        ".py",
+        ".cpp"
+      ],
+      "dependency": "python-stdlib",
+      "max_file_bytes": 20971520,
+      "timeout_seconds": 60,
+      "max_output_chars": 5000000,
+      "limits": {}
+    },
+    {
+      "parser_id": "pdf-pypdf-v1",
+      "family": "pdf",
+      "enabled": true,
+      "extensions": [
+        ".pdf"
+      ],
+      "dependency": "pypdf",
+      "max_file_bytes": 31457280,
+      "timeout_seconds": 180,
+      "max_output_chars": 5000000,
+      "limits": {
+        "max_pages": 200,
+        "max_page_content_bytes": 52428800,
+        "ocr": false,
+        "attachments": false
+      }
+    },
+    {
+      "parser_id": "docx-python-docx-v1",
+      "family": "docx",
+      "enabled": true,
+      "extensions": [
+        ".docx"
+      ],
+      "dependency": "python-docx",
+      "max_file_bytes": 31457280,
+      "timeout_seconds": 120,
+      "max_output_chars": 5000000,
+      "limits": {
+        "max_blocks": 100000,
+        "embedded_files": false
+      }
+    },
+    {
+      "parser_id": "xlsx-openpyxl-readonly-v1",
+      "family": "xlsx",
+      "enabled": true,
+      "extensions": [
+        ".xlsx"
+      ],
+      "dependency": "openpyxl",
+      "max_file_bytes": 31457280,
+      "timeout_seconds": 150,
+      "max_output_chars": 5000000,
+      "limits": {
+        "max_sheets": 50,
+        "max_rows_per_sheet": 10000,
+        "max_columns": 200,
+        "read_only": true,
+        "data_only": true,
+        "keep_links": false
+      }
+    },
+    {
+      "parser_id": "pptx-python-pptx-v1",
+      "family": "pptx",
+      "enabled": true,
+      "extensions": [
+        ".pptx"
+      ],
+      "dependency": "python-pptx",
+      "max_file_bytes": 31457280,
+      "timeout_seconds": 120,
+      "max_output_chars": 5000000,
+      "limits": {
+        "max_slides": 300,
+        "embedded_files": false
+      }
+    },
+    {
+      "parser_id": "vcard-stdlib-v1",
+      "family": "contacts",
+      "enabled": true,
+      "extensions": [
+        ".vcf"
+      ],
+      "dependency": "python-stdlib",
+      "max_file_bytes": 10485760,
+      "timeout_seconds": 60,
+      "max_output_chars": 2000000,
+      "limits": {
+        "skip_photo_payloads": true
+      }
+    },
+    {
+      "parser_id": "icalendar-text-v1",
+      "family": "calendar",
+      "enabled": true,
+      "extensions": [
+        ".ics"
+      ],
+      "dependency": "python-stdlib",
+      "max_file_bytes": 10485760,
+      "timeout_seconds": 60,
+      "max_output_chars": 2000000,
+      "limits": {
+        "skip_attachments": true
+      }
+    },
+    {
+      "parser_id": "subtitles-text-v1",
+      "family": "subtitles",
+      "enabled": true,
+      "extensions": [
+        ".srt"
+      ],
+      "dependency": "python-stdlib",
+      "max_file_bytes": 10485760,
+      "timeout_seconds": 60,
+      "max_output_chars": 2000000,
+      "limits": {}
+    },
+    {
+      "parser_id": "xml-disabled-v1",
+      "family": "xml",
+      "enabled": false,
+      "extensions": [
+        ".xml",
+        ".atom"
+      ],
+      "dependency": "disabled",
+      "max_file_bytes": 0,
+      "timeout_seconds": 0,
+      "max_output_chars": 0,
+      "limits": {
+        "reason": "Deferred pending dedicated XML hardening"
+      }
+    }
+  ]
+}
