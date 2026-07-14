@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import lru_cache
 
 
@@ -97,6 +97,24 @@ SENSITIVE_TOPIC_PATTERNS: dict[str, re.Pattern[str]] = {
     ),
 }
 
+PRESIDIO_HIGH_RISK_CONTEXT: dict[str, re.Pattern[str]] = {
+    "US_SSN": re.compile(r"(?i)\b(?:ssn|social security)\b"),
+    "CREDIT_CARD": re.compile(
+        r"(?i)\b(?:credit|debit|card number|visa|mastercard|amex)\b"
+    ),
+    "US_BANK_NUMBER": re.compile(
+        r"(?i)\b(?:bank|account number|routing|checking|savings)\b"
+    ),
+    "IBAN_CODE": re.compile(r"(?i)\b(?:iban|bank|swift)\b"),
+    "US_DRIVER_LICENSE": re.compile(
+        r"(?i)\b(?:driver'?s? licen[cs]e|learner'?s? permit)\b"
+    ),
+    "US_PASSPORT": re.compile(r"(?i)\bpassport\b"),
+    "CRYPTO": re.compile(
+        r"(?i)\b(?:bitcoin|ethereum|crypto|wallet address)\b"
+    ),
+}
+
 
 @dataclass(frozen=True)
 class PrivacyScanResult:
@@ -106,6 +124,7 @@ class PrivacyScanResult:
     pii_counts: dict[str, int]
     sensitive_topics: list[str]
     presidio_counts: dict[str, int]
+    presidio_max_scores: dict[str, float] = field(default_factory=dict)
 
     @property
     def has_secret(self) -> bool:
@@ -152,11 +171,49 @@ def _presidio_analyzer():
     return AnalyzerEngine()
 
 
-def _presidio_counts(text: str) -> dict[str, int]:
+def _presidio_summary(
+    text: str,
+    *,
+    score_threshold: float = 0.70,
+) -> tuple[dict[str, int], dict[str, float]]:
     analyzer = _presidio_analyzer()
-    results = analyzer.analyze(text=text, language="en")
+    results = analyzer.analyze(
+        text=text,
+        language="en",
+        score_threshold=score_threshold,
+    )
     counts = Counter(result.entity_type for result in results)
-    return dict(counts)
+    max_scores: dict[str, float] = {}
+    for result in results:
+        entity = str(result.entity_type)
+        max_scores[entity] = max(
+            max_scores.get(entity, 0.0),
+            float(result.score),
+        )
+    return dict(counts), max_scores
+
+
+def presidio_blocking_entities(
+    result: PrivacyScanResult,
+    text: str,
+    *,
+    score_threshold: float = 0.85,
+) -> set[str]:
+    """Return high-risk Presidio hits supported by score and context.
+
+    Presidio is a recall-oriented detector. A raw entity label alone is not
+    enough to block a local pilot file, because ordinary IDs and numbers can
+    resemble licenses or bank identifiers. Deterministic secret and identity
+    patterns remain unconditional blockers.
+    """
+    blocking: set[str] = set()
+    for entity, context_pattern in PRESIDIO_HIGH_RISK_CONTEXT.items():
+        if (
+            result.presidio_max_scores.get(entity, 0.0) >= score_threshold
+            and context_pattern.search(text)
+        ):
+            blocking.add(entity)
+    return blocking
 
 
 def scan_privacy(
@@ -166,6 +223,11 @@ def scan_privacy(
     use_presidio: bool = False,
 ) -> PrivacyScanResult:
     combined = f"{metadata_text}\n{text}"
+    if use_presidio and text.strip():
+        presidio_counts, presidio_max_scores = _presidio_summary(text)
+    else:
+        presidio_counts, presidio_max_scores = {}, {}
+
     return PrivacyScanResult(
         secret_types=_types_found(SECRET_PATTERNS, combined),
         identity_document_types=_types_found(
@@ -181,9 +243,6 @@ def scan_privacy(
             SENSITIVE_TOPIC_PATTERNS,
             combined,
         ),
-        presidio_counts=(
-            _presidio_counts(text)
-            if use_presidio and text.strip()
-            else {}
-        ),
+        presidio_counts=presidio_counts,
+        presidio_max_scores=presidio_max_scores,
     )

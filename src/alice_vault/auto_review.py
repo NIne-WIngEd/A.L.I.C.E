@@ -13,11 +13,15 @@ from pathlib import Path
 from typing import Any
 
 from .content_extraction import ExtractionResult, extract_text
-from .privacy_scan import PrivacyScanResult, scan_privacy
+from .privacy_scan import (
+    PrivacyScanResult,
+    presidio_blocking_entities,
+    scan_privacy,
+)
 from .semantic_review import OllamaLocalClient, SemanticReview
 
 
-AUTO_REVIEW_SCHEMA_VERSION = 3
+AUTO_REVIEW_SCHEMA_VERSION = 4
 AUTO_COLUMNS = [
     "auto_review_run_id",
     "auto_decision",
@@ -30,6 +34,9 @@ AUTO_COLUMNS = [
     "extraction_truncated",
     "privacy_flags",
     "needs_human_review",
+    "semantic_recommended_decision",
+    "semantic_relevant_to_alice",
+    "semantic_contains_third_party_private_data",
 ]
 MANUAL_EDIT_COLUMNS = [
     "decision",
@@ -131,14 +138,6 @@ def _decide(
             "",
             "",
         )
-    if extraction.truncated:
-        return (
-            "pending",
-            0.0,
-            "Extracted preview was truncated",
-            "",
-            "",
-        )
     if privacy.has_secret:
         return (
             "pending",
@@ -172,24 +171,21 @@ def _decide(
             "no",
             "no",
         )
-    high_risk_presidio = {
-        "US_SSN",
-        "CREDIT_CARD",
-        "US_BANK_NUMBER",
-        "IBAN_CODE",
-        "US_DRIVER_LICENSE",
-        "US_PASSPORT",
-        "CRYPTO",
-    }.intersection(privacy.presidio_counts)
-    if high_risk_presidio:
-        entities = ", ".join(sorted(high_risk_presidio))
+
+    blocking_presidio = presidio_blocking_entities(
+        privacy,
+        extraction.text,
+    )
+    if blocking_presidio:
+        entities = ", ".join(sorted(blocking_presidio))
         return (
             "pending",
             1.0,
-            f"High-risk PII entities: {entities}",
+            f"Context-supported high-risk PII: {entities}",
             "no",
             "no",
         )
+
     if semantic is None:
         return (
             "pending",
@@ -198,6 +194,7 @@ def _decide(
             "no",
             "no",
         )
+
     identity = "yes" if semantic.contains_identity_document else "no"
     credentials = (
         "yes" if semantic.contains_credentials_or_secrets else "no"
@@ -221,22 +218,26 @@ def _decide(
             identity,
             credentials,
         )
-    if semantic.sensitivity == "highly_sensitive":
+
+    manual_categories = {
+        "financial",
+        "medical",
+        "legal_or_immigration",
+        "relationship",
+    }
+    if semantic.document_category in manual_categories:
         return (
             "pending",
             semantic.relevance_score,
-            "Highly sensitive content requires human review",
+            f"Sensitive category requires human review: "
+            f"{semantic.document_category}",
             identity,
             credentials,
         )
-    if semantic.contradiction_topic:
-        return (
-            "pending",
-            semantic.relevance_score,
-            "Potential contradiction/control document",
-            identity,
-            credentials,
-        )
+
+    # A single document cannot establish a contradiction by itself. Preserve
+    # the topic as an annotation for later cross-document comparison, but do
+    # not make it a blanket blocker.
     if semantic.recommended_decision == "manual":
         return (
             "pending",
@@ -245,18 +246,26 @@ def _decide(
             identity,
             credentials,
         )
+
+    effective_approve_threshold = (
+        max(approve_threshold, 0.92)
+        if extraction.truncated
+        else approve_threshold
+    )
     if (
         semantic.recommended_decision == "approve"
         and semantic.relevant_to_alice
-        and semantic.relevance_score >= approve_threshold
+        and semantic.relevance_score >= effective_approve_threshold
     ):
+        suffix = " (truncated preview)" if extraction.truncated else ""
         return (
             "approve",
             semantic.relevance_score,
-            semantic.reason,
+            f"{semantic.reason}{suffix}",
             identity,
             credentials,
         )
+
     if (
         semantic.recommended_decision == "reject"
         and not semantic.relevant_to_alice
@@ -276,6 +285,7 @@ def _decide(
             identity,
             credentials,
         )
+
     return (
         "pending",
         semantic.relevance_score,
@@ -316,6 +326,17 @@ def _result_record(
         "credential_flag": credential_flag,
         "contradiction_topic": (
             semantic.contradiction_topic if semantic else ""
+        ),
+        "semantic_recommended_decision": (
+            semantic.recommended_decision if semantic else ""
+        ),
+        "semantic_relevant_to_alice": (
+            semantic.relevant_to_alice if semantic else None
+        ),
+        "semantic_contains_third_party_private_data": (
+            semantic.contains_third_party_private_data
+            if semantic
+            else None
         ),
         "extraction_status": extraction.status,
         "extraction_truncated": extraction.truncated,
@@ -541,8 +562,8 @@ def auto_review_pilot(
     base_url: str = "http://127.0.0.1:11434",
     use_ollama: bool = True,
     use_presidio: bool = False,
-    approve_threshold: float = 0.92,
-    reject_threshold: float = 0.92,
+    approve_threshold: float = 0.85,
+    reject_threshold: float = 0.85,
     profile_path: Path | None = None,
     max_chars: int = 1800,
     batch_size: int = 3,
@@ -698,20 +719,14 @@ def auto_review_pilot(
         needs_semantic = (
             client is not None
             and extraction.status == "ok"
-            and not extraction.truncated
             and not privacy.has_secret
             and not privacy.has_identity_document
             and not privacy.has_prompt_injection
             and not privacy.sensitive_topics
-            and not {
-                "US_SSN",
-                "CREDIT_CARD",
-                "US_BANK_NUMBER",
-                "IBAN_CODE",
-                "US_DRIVER_LICENSE",
-                "US_PASSPORT",
-                "CRYPTO",
-            }.intersection(privacy.presidio_counts)
+            and not presidio_blocking_entities(
+                privacy,
+                extraction.text,
+            )
         )
 
         if needs_semantic:
@@ -857,6 +872,27 @@ def auto_review_pilot(
                 "needs_human_review": str(
                     result["decision"] == "pending"
                 ).lower(),
+                "semantic_recommended_decision": result.get(
+                    "semantic_recommended_decision", ""
+                ),
+                "semantic_relevant_to_alice": (
+                    ""
+                    if result.get("semantic_relevant_to_alice") is None
+                    else str(
+                        result["semantic_relevant_to_alice"]
+                    ).lower()
+                ),
+                "semantic_contains_third_party_private_data": (
+                    ""
+                    if result.get(
+                        "semantic_contains_third_party_private_data"
+                    ) is None
+                    else str(
+                        result[
+                            "semantic_contains_third_party_private_data"
+                        ]
+                    ).lower()
+                ),
             }
         )
         output_rows.append(updated)
