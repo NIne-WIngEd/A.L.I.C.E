@@ -17,7 +17,7 @@ from .privacy_scan import PrivacyScanResult, scan_privacy
 from .semantic_review import OllamaLocalClient, SemanticReview
 
 
-AUTO_REVIEW_SCHEMA_VERSION = 2
+AUTO_REVIEW_SCHEMA_VERSION = 3
 AUTO_COLUMNS = [
     "auto_review_run_id",
     "auto_decision",
@@ -356,7 +356,13 @@ def _load_checkpoint(
                 continue
             entry = json.loads(line)
             if entry.get("type") == "result":
-                results[str(entry["content_key"])] = dict(entry["result"])
+                result = dict(entry["result"])
+                # Transient model failures must be retried, not treated as
+                # completed work during resume.
+                reason = str(result.get("reason", ""))
+                if reason.startswith("Semantic review error:"):
+                    continue
+                results[str(entry["content_key"])] = result
     return results
 
 
@@ -412,20 +418,26 @@ def _review_batch_compat(
     private_profile: str,
 ) -> dict[str, SemanticReview]:
     if hasattr(client, "review_batch"):
-        return client.review_batch(
-            items=[
+        request_items: list[dict[str, str]] = []
+        id_to_key: dict[str, str] = {}
+        for index, item in enumerate(batch, start=1):
+            request_id = f"i{index}"
+            id_to_key[request_id] = item["content_key"]
+            request_items.append(
                 {
-                    "item_id": item["content_key"],
+                    "item_id": request_id,
                     "filename": item["representative"]["filename"],
                     "family": item["representative"]["family"],
                     "source_bucket": item["representative"]["source_bucket"],
                     "year_hint": item["representative"]["year_hint"],
                     "text": item["extraction"].text,
                 }
-                for item in batch
-            ],
+            )
+        raw = client.review_batch(
+            items=request_items,
             private_profile=private_profile,
         )
+        return {id_to_key[item_id]: review for item_id, review in raw.items()}
 
     # Compatibility for tests and older fake clients.
     result: dict[str, SemanticReview] = {}
@@ -440,6 +452,63 @@ def _review_batch_compat(
             private_profile=private_profile,
         )
     return result
+
+
+def _review_with_fallback(
+    client: Any,
+    batch: list[dict[str, Any]],
+    private_profile: str,
+    *,
+    single_item_retries: int,
+) -> tuple[dict[str, SemanticReview], dict[str, str]]:
+    """Retry failed batches by splitting them down to individual items."""
+    try:
+        return _review_batch_compat(client, batch, private_profile), {}
+    except Exception as exc:
+        error = f"{type(exc).__name__}: {exc}"
+
+    if len(batch) > 1:
+        midpoint = len(batch) // 2
+        left_results, left_errors = _review_with_fallback(
+            client,
+            batch[:midpoint],
+            private_profile,
+            single_item_retries=single_item_retries,
+        )
+        right_results, right_errors = _review_with_fallback(
+            client,
+            batch[midpoint:],
+            private_profile,
+            single_item_retries=single_item_retries,
+        )
+        left_results.update(right_results)
+        left_errors.update(right_errors)
+        return left_results, left_errors
+
+    item = batch[0]
+    last_error = error
+    for _ in range(single_item_retries):
+        # A shorter final preview reduces timeout/truncation risk.
+        original = item["extraction"]
+        shortened_text = original.text[:900]
+        shortened = type(original)(
+            status=original.status,
+            text=shortened_text,
+            chars=len(shortened_text),
+            truncated=False,
+            parser=original.parser,
+            error=original.error,
+        )
+        retry_item = dict(item)
+        retry_item["extraction"] = shortened
+        try:
+            return _review_batch_compat(
+                client, [retry_item], private_profile
+            ), {}
+        except Exception as exc:
+            last_error = f"{type(exc).__name__}: {exc}"
+
+    return {}, {item["content_key"]: last_error}
 
 
 def _promote_canonical(
@@ -475,11 +544,13 @@ def auto_review_pilot(
     approve_threshold: float = 0.92,
     reject_threshold: float = 0.92,
     profile_path: Path | None = None,
-    max_chars: int = 3000,
-    batch_size: int = 6,
+    max_chars: int = 1800,
+    batch_size: int = 3,
     resume: bool = True,
     num_ctx: int = 8192,
-    num_predict: int = 1200,
+    num_predict: int = 600,
+    timeout_seconds: int = 240,
+    single_item_retries: int = 1,
 ) -> dict[str, Any]:
     if batch_size < 1 or batch_size > 16:
         raise ValueError("batch_size must be between 1 and 16")
@@ -527,6 +598,7 @@ def auto_review_pilot(
         client = OllamaLocalClient(
             model=model,
             base_url=base_url,
+            timeout_seconds=timeout_seconds,
             num_ctx=num_ctx,
             num_predict=num_predict,
         )
@@ -559,6 +631,8 @@ def auto_review_pilot(
         "batch_size": batch_size,
         "num_ctx": num_ctx,
         "num_predict": num_predict,
+        "timeout_seconds": timeout_seconds,
+        "single_item_retries": single_item_retries,
         "profile_hash": profile_hash,
         "schema_version": AUTO_REVIEW_SCHEMA_VERSION,
     }
@@ -667,53 +741,72 @@ def auto_review_pilot(
             )
 
     semantic_batches = _batched(semantic_queue, batch_size)
+    semantic_failure_counts: Counter[str] = Counter()
+    unresolved_semantic_errors: dict[str, str] = {}
+
     for batch_index, batch in enumerate(semantic_batches, start=1):
-        try:
-            semantic_results = _review_batch_compat(
+        semantic_results, batch_errors = (
+            _review_with_fallback(
                 client,
                 batch,
                 private_profile,
-            ) if client is not None else {}
-        except Exception as exc:
-            semantic_results = {}
-            batch_error = f"{type(exc).__name__}: {exc}"
-        else:
-            batch_error = ""
+                single_item_retries=single_item_retries,
+            )
+            if client is not None
+            else ({}, {item["content_key"]: "Ollama disabled" for item in batch})
+        )
 
         for item in batch:
             content_key = item["content_key"]
             semantic = semantic_results.get(content_key)
-            semantic_error = (
-                ""
-                if semantic is not None
-                else batch_error or "Ollama omitted this item"
-            )
             if semantic is not None:
                 category_counts[semantic.document_category] += 1
+                result = _result_record(
+                    item["extraction"],
+                    item["privacy"],
+                    semantic,
+                    approve_threshold=approve_threshold,
+                    reject_threshold=reject_threshold,
+                )
+                content_results[content_key] = result
+                _append_checkpoint(
+                    checkpoint_path,
+                    config_hash=config_hash,
+                    config=config,
+                    content_key=content_key,
+                    result=result,
+                )
             else:
-                model_error_count += 1
-
-            result = _result_record(
-                item["extraction"],
-                item["privacy"],
-                semantic,
-                approve_threshold=approve_threshold,
-                reject_threshold=reject_threshold,
-                semantic_error=semantic_error,
-            )
-            content_results[content_key] = result
-            _append_checkpoint(
-                checkpoint_path,
-                config_hash=config_hash,
-                config=config,
-                content_key=content_key,
-                result=result,
-            )
+                error = batch_errors.get(
+                    content_key, "Ollama omitted this item"
+                )
+                unresolved_semantic_errors[content_key] = error
+                semantic_failure_counts[error] += 1
 
         print(
-            f"Completed model batch {batch_index}/{len(semantic_batches)} "
+            f"Completed root model batch {batch_index}/{len(semantic_batches)} "
             f"({min(batch_index * batch_size, len(semantic_queue))}/"
-            f"{len(semantic_queue)} semantic items)"
+            f"{len(semantic_queue)} semantic items; "
+            f"{len(unresolved_semantic_errors)} unresolved)"
+        )
+
+    model_error_count = len(unresolved_semantic_errors)
+    # Unresolved model failures are emitted as pending for this run but are not
+    # checkpointed, so the same command retries them next time.
+    for item in semantic_queue:
+        content_key = item["content_key"]
+        if content_key in content_results:
+            continue
+        error = unresolved_semantic_errors.get(
+            content_key, "Local semantic review was unavailable"
+        )
+        content_results[content_key] = _result_record(
+            item["extraction"],
+            item["privacy"],
+            None,
+            approve_threshold=approve_threshold,
+            reject_threshold=reject_threshold,
+            semantic_error=error,
         )
 
     if len(content_results) != len(groups):
@@ -822,6 +915,7 @@ def auto_review_pilot(
         "resumed_unique_contents": resumed_content_count,
         "semantic_items": len(semantic_queue),
         "semantic_batches": len(semantic_batches),
+        "semantic_failure_reason_counts": dict(semantic_failure_counts),
         "auto_approved": decision_counts["approve"],
         "auto_rejected": decision_counts["reject"],
         "manual_review_required": decision_counts["pending"],
