@@ -13,6 +13,7 @@ SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 
 from alice_vault.analysis import (
+    ArchiveResult,
     PureMagicDetector,
     SignatureResult,
     analyze_inventory,
@@ -20,6 +21,7 @@ from alice_vault.analysis import (
     detect_iso_bmff,
     extensions_equivalent,
     inspect_zip,
+    risk_and_recommendation,
 )
 from alice_vault.inventory import inventory
 
@@ -98,6 +100,33 @@ class AnalysisTests(unittest.TestCase):
             self.assertEqual(result.status, "empty")
             self.assertIsNone(result.error)
 
+
+    def test_ooxml_package_is_pilot_candidate_not_generic_archive(self) -> None:
+        flags, recommendation = risk_and_recommendation(
+            claimed_extension=".docx",
+            detected_extension=".docx",
+            match_status="match",
+            archive=ArchiveResult(
+                is_zip=True,
+                detected_extension=".docx",
+                member_count=2,
+                file_member_count=2,
+            ),
+            size_bytes=1024,
+        )
+        self.assertNotIn("archive_container", flags)
+        self.assertEqual(recommendation, "pilot_candidate")
+
+        zip_flags, zip_recommendation = risk_and_recommendation(
+            claimed_extension=".zip",
+            detected_extension=".zip",
+            match_status="match",
+            archive=ArchiveResult(is_zip=True, detected_extension=".zip"),
+            size_bytes=1024,
+        )
+        self.assertIn("archive_container", zip_flags)
+        self.assertEqual(zip_recommendation, "specialized_review")
+
     def test_zip_inspection_does_not_extract_and_finds_unsafe_path(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             base = Path(temp)
@@ -158,7 +187,7 @@ class AnalysisTests(unittest.TestCase):
             self.assertEqual(summary["unique_contents"], 5)
             self.assertEqual(summary["mismatch_count"], 1)
             self.assertEqual(summary["quarantine_recommended_count"], 1)
-            self.assertGreaterEqual(summary["specialized_review_count"], 2)
+            self.assertGreaterEqual(summary["specialized_review_count"], 1)
             self.assertFalse((base / "escape.txt").exists())
 
             connection = sqlite3.connect(
@@ -166,7 +195,7 @@ class AnalysisTests(unittest.TestCase):
             )
             row = connection.execute(
                 """
-                SELECT a.detected_extension, a.match_status
+                SELECT a.detected_extension, a.match_status, a.recommendation
                 FROM file_analysis a
                 JOIN files f ON f.file_id=a.file_id
                 WHERE f.filename='document.docx'
@@ -174,7 +203,7 @@ class AnalysisTests(unittest.TestCase):
             ).fetchone()
             connection.close()
 
-            self.assertEqual(row, (".docx", "match"))
+            self.assertEqual(row, (".docx", "match", "pilot_candidate"))
 
 
 if __name__ == "__main__":

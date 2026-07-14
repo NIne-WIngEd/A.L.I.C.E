@@ -302,7 +302,11 @@ def risk_and_recommendation(
         flags.append("serialized_code_or_model")
     if claimed in MAILBOX_EXTENSIONS:
         flags.append("mailbox_container")
-    if claimed in ARCHIVE_EXTENSIONS or archive.is_zip:
+    # OOXML documents are intentionally ZIP-packaged. A structurally
+    # recognized DOCX/XLSX/PPTX is a document container, not a generic
+    # archive requiring specialized review. A literal .zip, or a ZIP whose
+    # structure cannot be classified as OOXML, remains an archive container.
+    if claimed in ARCHIVE_EXTENSIONS or (archive.is_zip and detected == ".zip"):
         flags.append("archive_container")
     if claimed in OPAQUE_EXTENSIONS:
         flags.append("opaque_file")
