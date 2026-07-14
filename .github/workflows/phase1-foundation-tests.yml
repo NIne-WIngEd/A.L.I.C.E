@@ -12,10 +12,23 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v6
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
         with:
           python-version: "3.13"
-      - run: python scripts/validate_phase0.py
-      - run: python -m unittest discover -s tests -p "test_*.py" -v
+          cache: "pip"
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install validation dependencies
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Validate Phase 0 policies
+        run: python scripts/validate_phase0.py
+
+      - name: Run Phase 1 unit tests
+        run: python -m unittest discover -s tests -p "test_*.py" -v
