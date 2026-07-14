@@ -1,0 +1,19 @@
+{
+  "chunking_policy_schema_version": 1,
+  "policy_id": "alice-character-chunking-v1",
+  "algorithm_version": "deterministic-boundary-v1",
+  "normalization_version": "alice-text-normalization-v1",
+  "max_chars": 2400,
+  "target_chars": 1800,
+  "min_chars": 500,
+  "overlap_chars": 240,
+  "boundary_penalties": {
+    "paragraph": 0,
+    "sentence": 80,
+    "line": 120,
+    "space": 200
+  },
+  "preserve_duplicate_path_provenance": true,
+  "deduplicate_across_source_objects": false,
+  "propagate_extraction_truncation": true
+}
