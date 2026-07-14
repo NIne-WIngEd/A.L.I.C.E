@@ -22,6 +22,7 @@ SERIALIZED_CODE_EXTENSIONS = {".pth", ".pt", ".pkl", ".pickle", ".joblib"}
 ARCHIVE_EXTENSIONS = {".zip"}
 MAILBOX_EXTENSIONS = {".mbox"}
 OPAQUE_EXTENSIONS = {".dat", ".bin"}
+LOW_TRUST_SIGNATURE_EXTENSIONS = {".xxx"}
 TEXT_LIKE_EXTENSIONS = {
     ".txt", ".md", ".json", ".csv", ".html", ".htm", ".xml", ".css",
     ".js", ".py", ".cpp", ".vcf", ".ics", ".srt", ".atom", ".webmanifest",
@@ -32,8 +33,10 @@ MEDIA_EXTENSIONS = {
 }
 DOCUMENT_EXTENSIONS = {".pdf", ".docx", ".xlsx", ".pptx"}
 EXTENSION_ALIASES = [
-    {".jpg", ".jpeg"},
+    {".jpg", ".jpeg", ".jfif"},
     {".html", ".htm"},
+    {".json", ".ipynb", ".webmanifest"},
+    {".xml", ".atom"},
     {".tif", ".tiff"},
     {".yaml", ".yml"},
 ]
@@ -91,6 +94,32 @@ class SignatureDetector(Protocol):
         ...
 
 
+def detect_iso_bmff(path: Path) -> SignatureResult | None:
+    """Recognize ISO Base Media files from the leading ftyp box."""
+    try:
+        with path.open("rb") as handle:
+            header = handle.read(32)
+    except OSError as exc:
+        return SignatureResult(
+            status="error",
+            error=f"{type(exc).__name__}: {exc}",
+        )
+
+    if len(header) >= 12 and header[4:8] == b"ftyp":
+        brand = header[8:12].decode("ascii", errors="replace").strip()
+        description = "ISO Base Media File"
+        if brand:
+            description += f" ({brand})"
+        return SignatureResult(
+            extension=".mp4",
+            mime_type="video/mp4",
+            description=description,
+            confidence=1.0,
+            status="identified",
+        )
+    return None
+
+
 class PureMagicDetector:
     """Header-oriented signature detection with puremagic deep scan disabled."""
 
@@ -106,6 +135,25 @@ class PureMagicDetector:
         self._puremagic = puremagic
 
     def detect(self, path: Path) -> SignatureResult:
+        try:
+            size_bytes = path.stat().st_size
+        except OSError as exc:
+            return SignatureResult(
+                status="error",
+                error=f"{type(exc).__name__}: {exc}",
+            )
+
+        if size_bytes == 0:
+            return SignatureResult(
+                description="Empty file",
+                confidence=1.0,
+                status="empty",
+            )
+
+        iso_bmff = detect_iso_bmff(path)
+        if iso_bmff is not None:
+            return iso_bmff
+
         try:
             matches = self._puremagic.magic_file(str(path))
         except Exception as exc:
@@ -134,8 +182,17 @@ class PureMagicDetector:
             description = first[2] if len(first) > 2 else ""
             confidence = first[3] if len(first) > 3 else None
 
+        normalized_extension = normalize_extension(extension)
+        if normalized_extension in LOW_TRUST_SIGNATURE_EXTENSIONS:
+            return SignatureResult(
+                mime_type=mime_type,
+                description=description,
+                confidence=float(confidence) if confidence is not None else None,
+                status="ambiguous",
+            )
+
         return SignatureResult(
-            extension=normalize_extension(extension),
+            extension=normalized_extension,
             mime_type=mime_type,
             description=description,
             confidence=float(confidence) if confidence is not None else None,
@@ -210,10 +267,18 @@ def classify_match(
 
     if signature_status == "error":
         return "signature_error"
+    if signature_status == "empty":
+        return "empty"
+    if signature_status == "ambiguous":
+        return "ambiguous"
     if not detected:
         return "unknown"
     if not claimed:
         return "missing_extension"
+    if claimed in OPAQUE_EXTENSIONS:
+        return "opaque_identified"
+    if claimed in SERIALIZED_CODE_EXTENSIONS and detected == ".zip":
+        return "serialized_container"
     if extensions_equivalent(claimed, detected):
         return "match"
     return "mismatch"
@@ -245,8 +310,16 @@ def risk_and_recommendation(
         flags.append("extensionless")
     if match_status == "mismatch":
         flags.append("extension_signature_mismatch")
+    if match_status == "opaque_identified":
+        flags.append("opaque_content_identified")
+    if match_status == "serialized_container":
+        flags.append("serialized_archive_container")
     if match_status == "signature_error":
         flags.append("signature_error")
+    if match_status == "ambiguous":
+        flags.append("ambiguous_signature")
+    if match_status == "empty":
+        flags.append("empty_file")
     if archive.unsafe_path_members:
         flags.append("archive_unsafe_paths")
     if archive.encrypted_members:
@@ -280,8 +353,15 @@ def risk_and_recommendation(
         )
     ):
         recommendation = "specialized_review"
-    elif match_status in {"mismatch", "signature_error", "missing_extension"}:
+    elif match_status in {
+        "mismatch",
+        "signature_error",
+        "missing_extension",
+        "ambiguous",
+    }:
         recommendation = "manual_review"
+    elif match_status == "empty":
+        recommendation = "inventory_only"
     elif claimed in DOCUMENT_EXTENSIONS and size_bytes <= 25 * 1024**2:
         recommendation = "pilot_candidate"
     elif claimed in TEXT_LIKE_EXTENSIONS and size_bytes <= 10 * 1024**2:

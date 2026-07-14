@@ -13,8 +13,12 @@ SRC = ROOT / "src"
 sys.path.insert(0, str(SRC))
 
 from alice_vault.analysis import (
+    PureMagicDetector,
     SignatureResult,
     analyze_inventory,
+    classify_match,
+    detect_iso_bmff,
+    extensions_equivalent,
     inspect_zip,
 )
 from alice_vault.inventory import inventory
@@ -57,6 +61,43 @@ class FakeDetector:
 
 
 class AnalysisTests(unittest.TestCase):
+    def test_format_family_and_opaque_calibration(self) -> None:
+        self.assertTrue(extensions_equivalent(".jpg", ".jfif"))
+        self.assertTrue(extensions_equivalent(".ipynb", ".json"))
+        self.assertTrue(extensions_equivalent(".atom", ".xml"))
+        self.assertEqual(
+            classify_match(".dat", ".png", "identified"),
+            "opaque_identified",
+        )
+        self.assertEqual(
+            classify_match(".pth", ".zip", "identified"),
+            "serialized_container",
+        )
+        self.assertEqual(
+            classify_match(".txt", "", "empty"),
+            "empty",
+        )
+
+    def test_iso_bmff_header_overrides_ambiguous_magic(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "video.mp4"
+            path.write_bytes(
+                b"\x00\x00\x00\x18ftypisom\x00\x00\x02\x00isomiso2"
+            )
+            result = detect_iso_bmff(path)
+            self.assertIsNotNone(result)
+            assert result is not None
+            self.assertEqual(result.extension, ".mp4")
+            self.assertEqual(result.status, "identified")
+
+    def test_empty_file_is_not_a_signature_error(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "empty.txt"
+            path.write_bytes(b"")
+            result = object.__new__(PureMagicDetector).detect(path)
+            self.assertEqual(result.status, "empty")
+            self.assertIsNone(result.error)
+
     def test_zip_inspection_does_not_extract_and_finds_unsafe_path(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             base = Path(temp)
