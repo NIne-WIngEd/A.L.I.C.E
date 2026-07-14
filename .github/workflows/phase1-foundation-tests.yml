@@ -22,10 +22,14 @@ jobs:
         with:
           python-version: "3.13"
           cache: "pip"
-          cache-dependency-path: requirements-dev.txt
+          cache-dependency-path: |
+            requirements-dev.txt
+            requirements-phase1.txt
 
-      - name: Install validation dependencies
-        run: python -m pip install -r requirements-dev.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install -r requirements-dev.txt
+          python -m pip install -r requirements-phase1.txt
 
       - name: Validate Phase 0 policies
         run: python scripts/validate_phase0.py
