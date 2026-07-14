@@ -19,7 +19,7 @@ def main() -> int:
         )
     )
     parser.add_argument("--vault", required=True, type=Path)
-    parser.add_argument("--model", default="qwen3:8b")
+    parser.add_argument("--model", default="qwen3:4b-instruct")
     parser.add_argument(
         "--ollama-url",
         default="http://127.0.0.1:11434",
@@ -40,14 +40,14 @@ def main() -> int:
     parser.add_argument(
         "--max-chars",
         type=int,
-        default=3000,
+        default=1800,
         help="Maximum extracted characters sent per item.",
     )
     parser.add_argument(
         "--batch-size",
         type=int,
-        default=6,
-        help="Documents per Ollama request.",
+        default=3,
+        help="Documents per initial Ollama request.",
     )
     parser.add_argument(
         "--num-ctx",
@@ -57,7 +57,17 @@ def main() -> int:
     parser.add_argument(
         "--num-predict",
         type=int,
-        default=1200,
+        default=600,
+    )
+    parser.add_argument(
+        "--timeout-seconds",
+        type=int,
+        default=240,
+    )
+    parser.add_argument(
+        "--single-item-retries",
+        type=int,
+        default=1,
     )
     parser.add_argument(
         "--no-resume",
@@ -80,6 +90,8 @@ def main() -> int:
         resume=not args.no_resume,
         num_ctx=args.num_ctx,
         num_predict=args.num_predict,
+        timeout_seconds=args.timeout_seconds,
+        single_item_retries=args.single_item_retries,
     )
     print(json.dumps(result, indent=2))
     return 0
