@@ -30,12 +30,12 @@ def main() -> int:
     parser.add_argument(
         "--approve-threshold",
         type=float,
-        default=0.92,
+        default=0.85,
     )
     parser.add_argument(
         "--reject-threshold",
         type=float,
-        default=0.92,
+        default=0.85,
     )
     parser.add_argument(
         "--max-chars",
