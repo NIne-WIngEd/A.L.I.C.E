@@ -9,10 +9,11 @@ Its intended role is to become a persistent, permissioned cognitive partner that
 - **Phase 0 — Identity and Governance:** complete
 - **Phase 1 — Private Data Vault and Ingestion:** in progress
   - encrypted local vault: complete;
-  - metadata inventory: complete;
-  - SHA-256 identity and exact-duplicate inventory: complete;
-  - file-signature and inventory analysis: implemented;
-  - safe parser registry, pilot extraction, and chunking: pending.
+  - metadata and SHA-256 inventory: complete;
+  - file-signature and inventory analysis: complete;
+  - pilot selection, automated review, and immutable `pilot-v1`: complete;
+  - safe parser registry and verified extraction: in progress;
+  - chunking, source attribution, and rebuild/deletion tests: pending.
 
 A working conversational assistant is not yet implemented.
 
@@ -30,10 +31,14 @@ A working conversational assistant is not yet implemented.
 
 - [`docs/PHASE_1_VAULT_FOUNDATION.md`](docs/PHASE_1_VAULT_FOUNDATION.md)
 - [`docs/PHASE_1_INVENTORY_ANALYSIS.md`](docs/PHASE_1_INVENTORY_ANALYSIS.md)
+- [`docs/PHASE_1_PILOT_SELECTION.md`](docs/PHASE_1_PILOT_SELECTION.md)
+- [`docs/PHASE_1_AUTOMATED_REVIEW.md`](docs/PHASE_1_AUTOMATED_REVIEW.md)
+- [`docs/PHASE_1_FINAL_PILOT_POLICY.md`](docs/PHASE_1_FINAL_PILOT_POLICY.md)
+- [`docs/PHASE_1_SAFE_PARSER_REGISTRY.md`](docs/PHASE_1_SAFE_PARSER_REGISTRY.md)
 
 ## Security boundary
 
-Never commit personal datasets, private memory, vault databases, exported manifests, credentials, tokens, activity logs, or extracted personal content.
+Never commit personal datasets, private memory, vault databases, exported manifests, credentials, tokens, activity logs, extracted text, or other personal content.
 
 The private vault and source archive must remain outside this repository.
 
@@ -42,7 +47,8 @@ The private vault and source archive must remain outside this repository.
 ```powershell
 py -m pip install `
   -r requirements-dev.txt `
-  -r requirements-phase1.txt
+  -r requirements-phase1.txt `
+  -r requirements-extraction.txt
 
 py scripts\validate_phase0.py
 py -m unittest discover -s tests -p "test_*.py" -v
