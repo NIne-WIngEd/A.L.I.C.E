@@ -1,0 +1,50 @@
+{
+  "semantic_retrieval_policy_schema_version": 1,
+  "policy_id": "alice-e5-small-v2-hybrid-v1",
+  "model": {
+    "model_id": "intfloat/e5-small-v2",
+    "revision": "ffb93f3bd4047442299a41ebb6fa998a38507c52",
+    "license": "mit",
+    "language": "en",
+    "embedding_dimension": 384,
+    "maximum_sequence_tokens": 512,
+    "query_prompt": "query: ",
+    "document_prompt": "passage: ",
+    "trust_remote_code": false,
+    "safe_serialization_required": true,
+    "local_directory_name": "intfloat__e5-small-v2__ffb93f3bd404"
+  },
+  "build": {
+    "batch_size": 32,
+    "normalize_embeddings": true,
+    "storage_dtype": "float32",
+    "device": "auto",
+    "show_progress": true
+  },
+  "search": {
+    "semantic_candidate_k": 80,
+    "lexical_candidate_k": 80,
+    "default_limit": 10,
+    "maximum_chunks_per_source": 1,
+    "snippet_characters": 420,
+    "rrf_k": 60,
+    "lexical_weight": 1.0,
+    "semantic_weight": 1.0
+  },
+  "benchmark": {
+    "minimum_approved_cases": 10,
+    "candidate_sources_per_question": 5,
+    "evaluation_k_values": [
+      1,
+      3,
+      5,
+      10
+    ]
+  },
+  "semantic_segmenting": {
+    "strategy": "token_window_v1",
+    "maximum_total_tokens": 480,
+    "overlap_tokens": 64,
+    "minimum_content_tokens": 48
+  }
+}
