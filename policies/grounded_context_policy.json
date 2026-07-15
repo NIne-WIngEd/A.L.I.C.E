@@ -1,0 +1,13 @@
+{
+  "grounded_context_policy_schema_version": 1,
+  "policy_id": "alice-grounded-context-v1",
+  "default_max_sources": 6,
+  "maximum_max_sources": 12,
+  "snippet_characters_per_source": 900,
+  "memory_write_allowed": false,
+  "answer_generation_allowed": false,
+  "external_action_allowed": false,
+  "auto_resolve_contradictions": false,
+  "private_output_only": true,
+  "minimum_expected_source_coverage": 0.9
+}
