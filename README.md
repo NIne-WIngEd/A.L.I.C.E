@@ -6,17 +6,20 @@ Its intended role is to become a persistent, permissioned cognitive partner that
 
 ## Current status
 
-- **Phase 0 — Identity and Governance:** complete
-- **Phase 1 — Private Data Vault and Ingestion:** in progress
+- Phase 0 — Identity and Governance: complete
+- Phase 1 — Private Data Vault and Ingestion: in progress
   - encrypted local vault: complete;
   - metadata and SHA-256 inventory: complete;
   - file-signature and inventory analysis: complete;
   - pilot selection, automated review, and immutable `pilot-v1`: complete;
-  - safe parser registry and verified extraction: in progress;
-  - chunking, source attribution, and rebuild/deletion tests: pending.
+  - safe parser registry and verified extraction: complete;
+  - deterministic chunking and provenance catalog: complete;
+  - local lexical retrieval and evaluation: complete;
+  - local semantic and hybrid retrieval: complete;
+  - retrieval-grounded read-only context access: complete;
+  - grounded reasoning and response generation: pending.
 
 A working conversational assistant is not yet implemented.
-
 ## Governing documents
 
 - [`docs/ALICE_CONSTITUTION.md`](docs/ALICE_CONSTITUTION.md)
