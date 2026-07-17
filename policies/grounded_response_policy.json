@@ -1,0 +1,38 @@
+{
+  "grounded_response_policy_schema_version": 1,
+  "policy_id": "alice-grounded-response-v1",
+  "model": "qwen3:8b",
+  "ollama_endpoint": "http://127.0.0.1:11434/api/generate",
+  "request_timeout_seconds": 600,
+  "temperature": 0.1,
+  "think": false,
+  "maximum_context_sources": 6,
+  "maximum_answer_characters": 5000,
+  "require_structured_output": true,
+  "require_citations_for_factual_claims": true,
+  "require_citations_for_inferences": true,
+  "allow_only_package_citations": true,
+  "surface_unresolved_contradictions": true,
+  "allow_general_knowledge_for_personal_facts": false,
+  "memory_write_allowed": false,
+  "external_action_allowed": false,
+  "tool_calling_allowed": false,
+  "web_access_allowed": false,
+  "private_output_only": true,
+  "evaluation": {
+    "minimum_verified_response_rate": 1.0,
+    "minimum_expected_source_citation_rate": 0.9,
+    "minimum_claim_citation_coverage": 1.0
+  },
+  "evidence_expansion": {
+    "enabled": true,
+    "passages_per_source": 3,
+    "maximum_characters_per_source": 2600,
+    "lexical_overlap_weight": 0.18,
+    "minimum_passage_characters": 80
+  },
+  "request_retry_count": 2,
+  "request_retry_backoff_seconds": 8,
+  "keep_alive": "30m",
+  "maximum_output_tokens": 2048
+}

@@ -97,7 +97,25 @@ def _dedupe_provenance(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 def _label(value: Any) -> str:
     text = str(value or "").strip()
-    return "" if text.casefold() in {"", "none", "null", "[none]"} else text
+    normalized = (
+        text.casefold()
+        .replace("-", "_")
+        .replace(" ", "_")
+    )
+    if normalized in {
+        "",
+        "none",
+        "null",
+        "[none]",
+        "no",
+        "false",
+        "0",
+        "n/a",
+        "na",
+        "not_applicable",
+    }:
+        return ""
+    return text
 
 
 def _fingerprint(package: dict[str, Any]) -> str:

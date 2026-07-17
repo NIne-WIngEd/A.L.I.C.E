@@ -1,0 +1,28 @@
+{
+  "claim_entailment_policy_schema_version": 1,
+  "policy_id": "alice-fever-anli-claim-support-gate-v1",
+  "enabled": true,
+  "model_id": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+  "revision": "main",
+  "label_order": [
+    "entailment",
+    "neutral",
+    "contradiction"
+  ],
+  "entailment_threshold": 0.7,
+  "contradiction_threshold": 0.8,
+  "maximum_evidence_passages_per_claim": 12,
+  "sentence_window_size": 3,
+  "sentence_window_stride": 1,
+  "maximum_window_characters": 900,
+  "maximum_evidence_windows_per_claim": 12,
+  "batch_size": 8,
+  "drop_neutral_claims": true,
+  "drop_contradicted_claims": true,
+  "fallback_answer": "I do not have enough cited evidence to answer this reliably.",
+  "private_text_uploaded": false,
+  "memory_write_allowed": false,
+  "external_action_allowed": false,
+  "tool_calling_allowed": false,
+  "web_access_allowed": false
+}
