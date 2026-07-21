@@ -1,0 +1,21 @@
+{
+  "evidence_claim_generation_policy_schema_version": 1,
+  "policy_id": "alice-evidence-constrained-atomic-claims-v1",
+  "enabled": true,
+  "model": "qwen3:8b",
+  "ollama_endpoint": "http://127.0.0.1:11434/api/generate",
+  "request_timeout_seconds": 600,
+  "request_retry_count": 2,
+  "request_retry_backoff_seconds": 8,
+  "keep_alive": "30m",
+  "maximum_output_tokens": 2048,
+  "temperature": 0.0,
+  "think": false,
+  "maximum_claims": 16,
+  "fallback_answer": "I do not have enough cited evidence to answer this reliably.",
+  "private_output_only": true,
+  "memory_write_allowed": false,
+  "external_action_allowed": false,
+  "tool_calling_allowed": false,
+  "web_access_allowed": false
+}

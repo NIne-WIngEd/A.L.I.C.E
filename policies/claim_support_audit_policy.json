@@ -1,0 +1,21 @@
+{
+  "claim_support_audit_policy_schema_version": 1,
+  "policy_id": "alice-claim-support-audit-v1",
+  "model": "qwen3:8b",
+  "ollama_endpoint": "http://127.0.0.1:11434/api/generate",
+  "request_timeout_seconds": 600,
+  "request_retry_count": 2,
+  "request_retry_backoff_seconds": 8,
+  "keep_alive": "30m",
+  "maximum_output_tokens": 2048,
+  "temperature": 0.0,
+  "think": false,
+  "minimum_citation_support_rate": 0.9,
+  "minimum_high_confidence_support_rate": 0.8,
+  "high_confidence_threshold": 0.85,
+  "memory_write_allowed": false,
+  "external_action_allowed": false,
+  "tool_calling_allowed": false,
+  "web_access_allowed": false,
+  "private_output_only": true
+}

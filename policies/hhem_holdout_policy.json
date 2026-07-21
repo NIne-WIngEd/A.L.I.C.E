@@ -1,0 +1,16 @@
+{
+  "hhem_holdout_policy_schema_version": 1,
+  "policy_id": "alice-hhem-2.1-open-holdout-v1",
+  "frozen_threshold": 0.984156,
+  "default_sample_size": 12,
+  "selection_seed": "alice-p1.11-hhem-holdout-v1",
+  "minimum_labeled_items": 8,
+  "minimum_accuracy": 0.8,
+  "minimum_support_precision": 0.9,
+  "minimum_support_recall": 0.5,
+  "private_text_uploaded": false,
+  "memory_write_allowed": false,
+  "external_action_allowed": false,
+  "tool_calling_allowed": false,
+  "web_access_allowed": false
+}

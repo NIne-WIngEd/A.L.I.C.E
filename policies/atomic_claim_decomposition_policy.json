@@ -1,0 +1,21 @@
+{
+  "atomic_claim_decomposition_policy_schema_version": 1,
+  "policy_id": "alice-atomic-claim-decomposition-v1",
+  "enabled": true,
+  "model": "qwen3:8b",
+  "ollama_endpoint": "http://127.0.0.1:11434/api/generate",
+  "request_timeout_seconds": 600,
+  "request_retry_count": 2,
+  "request_retry_backoff_seconds": 8,
+  "keep_alive": "30m",
+  "maximum_output_tokens": 1536,
+  "temperature": 0.0,
+  "think": false,
+  "maximum_atomic_claims_per_parent": 6,
+  "maximum_total_atomic_claims": 24,
+  "private_output_only": true,
+  "memory_write_allowed": false,
+  "external_action_allowed": false,
+  "tool_calling_allowed": false,
+  "web_access_allowed": false
+}

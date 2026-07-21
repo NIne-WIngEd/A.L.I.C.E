@@ -1,0 +1,18 @@
+{
+  "query_claim_relevance_calibration_policy_schema_version": 1,
+  "policy_id": "alice-query-claim-relevance-calibration-v1",
+  "default_sample_size": 12,
+  "selection_seed": "alice-p1.11-query-claim-relevance-calibration-v1",
+  "excluded_regression_query_ids": ["personal-004", "personal-006", "personal-018"],
+  "minimum_labeled_items": 8,
+  "high_precision_target": 0.9,
+  "minimum_recall_for_promising_gate": 0.5,
+  "review_host": "127.0.0.1",
+  "review_port": 8766,
+  "private_output_only": true,
+  "private_text_uploaded": false,
+  "memory_write_allowed": false,
+  "external_action_allowed": false,
+  "tool_calling_allowed": false,
+  "web_access_allowed": false
+}

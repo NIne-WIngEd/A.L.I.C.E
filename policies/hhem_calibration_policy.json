@@ -1,0 +1,17 @@
+{
+  "hhem_calibration_policy_schema_version": 1,
+  "policy_id": "alice-hhem-2.1-open-calibration-v1",
+  "model_id": "vectara/hallucination_evaluation_model",
+  "revision": "main",
+  "batch_size": 4,
+  "default_device": "cpu",
+  "minimum_labeled_items": 8,
+  "high_precision_target": 0.9,
+  "minimum_recall_for_promising_gate": 0.5,
+  "minimum_roc_auc_for_promising_gate": 0.7,
+  "private_text_uploaded": false,
+  "memory_write_allowed": false,
+  "external_action_allowed": false,
+  "tool_calling_allowed": false,
+  "web_access_allowed": false
+}
