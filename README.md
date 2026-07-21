@@ -7,7 +7,7 @@ Its intended role is to become a persistent, permissioned cognitive partner that
 ## Current status
 
 - Phase 0 — Identity and Governance: complete
-- Phase 1 — Private Data Vault and Ingestion: in progress
+- Phase 1 — Private Data Vault and Ingestion: complete
   - encrypted local vault: complete;
   - metadata and SHA-256 inventory: complete;
   - file-signature and inventory analysis: complete;
