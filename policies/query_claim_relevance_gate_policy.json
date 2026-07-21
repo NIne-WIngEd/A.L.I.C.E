@@ -1,0 +1,14 @@
+{
+  "query_claim_relevance_gate_policy_schema_version": 1,
+  "policy_id": "alice-query-claim-relevance-gate-v1",
+  "enabled": true,
+  "model_id": "cross-encoder/ms-marco-MiniLM-L6-v2",
+  "frozen_threshold": -9.76161,
+  "objective": "non_irrelevance_filter",
+  "fallback_answer": "I do not have enough relevant cited evidence to answer this reliably.",
+  "private_output_only": true,
+  "memory_write_allowed": false,
+  "external_action_allowed": false,
+  "tool_calling_allowed": false,
+  "web_access_allowed": false
+}

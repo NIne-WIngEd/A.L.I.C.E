@@ -17,7 +17,7 @@ Its intended role is to become a persistent, permissioned cognitive partner that
   - local lexical retrieval and evaluation: complete;
   - local semantic and hybrid retrieval: complete;
   - retrieval-grounded read-only context access: complete;
-  - grounded reasoning and response generation: pending.
+  - grounded reasoning and response generation: complete.
 
 A working conversational assistant is not yet implemented.
 ## Governing documents

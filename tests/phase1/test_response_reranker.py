@@ -27,13 +27,13 @@ class FakeReranker:
 
 
 class ResponseRerankerTests(unittest.TestCase):
-    def test_ms_marco_reranker_is_intentionally_disabled(self):
+    def test_ms_marco_reranker_is_enabled_for_p1_11_passage_selection(self):
         policy = load_response_reranker_policy(
             ROOT
             / "policies"
             / "response_reranker_policy.json"
         )
-        self.assertFalse(policy.enabled)
+        self.assertTrue(policy.enabled)
         self.assertEqual(
             policy.model_id,
             "cross-encoder/ms-marco-MiniLM-L6-v2",

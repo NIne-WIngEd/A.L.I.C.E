@@ -1,0 +1,29 @@
+{
+  "query_claim_relevance_holdout_policy_schema_version": 1,
+  "policy_id": "alice-query-claim-relevance-holdout-v1",
+  "frozen_threshold": -9.76161,
+  "objective": "non_irrelevance_filter",
+  "positive_labels": [
+    "relevant",
+    "partially_relevant"
+  ],
+  "negative_labels": [
+    "irrelevant"
+  ],
+  "default_sample_size": 8,
+  "max_per_query": 2,
+  "minimum_labeled_items": 6,
+  "minimum_precision": 0.9,
+  "minimum_recall": 0.5,
+  "excluded_regression_query_ids": [
+    "personal-004",
+    "personal-006",
+    "personal-018"
+  ],
+  "private_output_only": true,
+  "private_text_uploaded": false,
+  "memory_write_allowed": false,
+  "external_action_allowed": false,
+  "tool_calling_allowed": false,
+  "web_access_allowed": false
+}

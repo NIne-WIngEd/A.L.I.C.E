@@ -31,6 +31,12 @@ from .evidence_claim_generation import (
 )
 
 
+from .query_claim_relevance_gate import (
+    filter_model_output_by_query_claim_relevance,
+    load_local_query_claim_relevance_model,
+    load_query_claim_relevance_gate_policy,
+)
+
 POLICY_SCHEMA_VERSION = 1
 RESPONSE_SCHEMA_VERSION = 1
 
@@ -826,16 +832,18 @@ def ollama_generate(
             headers={"Content-Type": "application/json"},
             method="POST",
         )
+
         try:
             with urllib.request.urlopen(
                 request,
                 timeout=policy.request_timeout_seconds,
             ) as response:
-                payload = json.loads(
-                    response.read().decode("utf-8")
-                )
-            break
-        except (TimeoutError, socket.timeout, urllib.error.URLError) as exc:
+                payload = json.loads(response.read().decode("utf-8"))
+        except (
+            TimeoutError,
+            socket.timeout,
+            urllib.error.URLError,
+        ) as exc:
             last_error = exc
             retryable = _is_timeout_error(exc)
             if not retryable or attempt >= total_attempts:
@@ -848,41 +856,57 @@ def ollama_generate(
                 raise RuntimeError(
                     f"Could not reach local Ollama endpoint: {exc}"
                 ) from exc
+
             delay = policy.request_retry_backoff_seconds * attempt
             if delay > 0:
                 time.sleep(delay)
-    else:  # pragma: no cover - loop always returns or raises
-        raise RuntimeError(
-            f"Local Ollama generation failed: {last_error}"
-        )
+            continue
 
-    response_text = payload.get("response")
-    if not isinstance(response_text, str):
-        raise RuntimeError(
-            "Ollama response did not contain a text response"
-        )
-    try:
-        structured = json.loads(response_text)
-    except json.JSONDecodeError as exc:
-        raise RuntimeError(
-            "Ollama returned invalid structured JSON"
-        ) from exc
-    return {
-        "structured": structured,
-        "ollama": {
-            "model": payload.get("model", policy.model),
-            "done": payload.get("done"),
-            "done_reason": payload.get("done_reason"),
-            "total_duration": payload.get("total_duration"),
-            "load_duration": payload.get("load_duration"),
-            "prompt_eval_count": payload.get(
-                "prompt_eval_count"
-            ),
-            "eval_count": payload.get("eval_count"),
-            "attempt_count": attempt,
-            "keep_alive": policy.keep_alive,
-        },
-    }
+        response_text = payload.get("response")
+        if not isinstance(response_text, str):
+            last_error = RuntimeError(
+                "Ollama response did not contain a text response"
+            )
+            if attempt >= total_attempts:
+                raise last_error
+            delay = policy.request_retry_backoff_seconds * attempt
+            if delay > 0:
+                time.sleep(delay)
+            continue
+
+        try:
+            structured = json.loads(response_text)
+        except json.JSONDecodeError as exc:
+            last_error = exc
+            if attempt >= total_attempts:
+                raise RuntimeError(
+                    "Ollama returned invalid structured JSON after "
+                    f"{attempt} attempt(s)"
+                ) from exc
+
+            delay = policy.request_retry_backoff_seconds * attempt
+            if delay > 0:
+                time.sleep(delay)
+            continue
+
+        return {
+            "structured": structured,
+            "ollama": {
+                "model": payload.get("model", policy.model),
+                "done": payload.get("done"),
+                "done_reason": payload.get("done_reason"),
+                "total_duration": payload.get("total_duration"),
+                "load_duration": payload.get("load_duration"),
+                "prompt_eval_count": payload.get("prompt_eval_count"),
+                "eval_count": payload.get("eval_count"),
+                "attempt_count": attempt,
+                "keep_alive": policy.keep_alive,
+            },
+        }
+
+    raise RuntimeError(
+        f"Local Ollama generation failed: {last_error}"
+    )
 
 
 def _extract_citations(text: str) -> list[str]:
@@ -1290,6 +1314,35 @@ def generate_grounded_response(
                     )
                 )
 
+    pre_relevance_model_output = copy.deepcopy(model_output)
+    query_claim_relevance_gate = {
+        "enabled": False,
+        "bypassed_for_injected_model_client": (model_client is not None),
+    }
+    if model_client is None:
+        relevance_policy = load_query_claim_relevance_gate_policy()
+        query_claim_relevance_gate["enabled"] = bool(relevance_policy.enabled)
+        if relevance_policy.enabled:
+            relevance_model, relevance_reranker_policy = (
+                load_local_query_claim_relevance_model(
+                    vault_root=vault_root,
+                    device=entailment_device or "auto",
+                )
+            )
+            if relevance_reranker_policy.model_id != relevance_policy.model_id:
+                raise ValueError(
+                    "Query-claim relevance gate model does not match policy"
+                )
+            model_output, query_claim_relevance_gate = (
+                filter_model_output_by_query_claim_relevance(
+                    model_output=model_output,
+                    context_package=context_package,
+                    model=relevance_model,
+                    policy=relevance_policy,
+                    answer_renderer=_render_answer_from_claims,
+                )
+            )
+
     # Private diagnostic snapshot. This is never written to the public
     # summary/export; it remains inside the private response package so
     # rejected claims can be audited later without exposing them to the user.
@@ -1372,6 +1425,8 @@ def generate_grounded_response(
         "evidence_claim_generation": evidence_claim_generation,
         "pre_gate_model_output": pre_gate_model_output,
         "atomic_claim_decomposition": atomic_decomposition,
+        "pre_relevance_model_output": pre_relevance_model_output,
+        "query_claim_relevance_gate": query_claim_relevance_gate,
         "verification": verification,
         "claim_support_gate": support_gate,
         "runtime": result.get("ollama", {}),
@@ -1449,6 +1504,18 @@ def generate_grounded_response(
                 "output_atomic_claim_count",
                 0,
             )
+        ),
+        "relevance_gate_enabled": bool(
+            query_claim_relevance_gate.get("enabled", False)
+        ),
+        "relevance_gate_input_claim_count": int(
+            query_claim_relevance_gate.get("input_claim_count", 0)
+        ),
+        "relevance_gate_kept_claim_count": int(
+            query_claim_relevance_gate.get("kept_claim_count", 0)
+        ),
+        "relevance_gate_dropped_claim_count": int(
+            query_claim_relevance_gate.get("dropped_claim_count", 0)
         ),
         "claim_citation_coverage": verification[
             "claim_citation_coverage"
