@@ -242,9 +242,18 @@ class SensitiveMasterKeyStore:
             )
         return key
 
+    def load_key(self) -> bytes:
+        """Load an existing protected master key; never create during reads."""
+        if not self.path.exists():
+            raise SensitiveKeyProtectionError(
+                "Sensitive-memory master key is missing; refusing to generate "
+                "a replacement key during an access operation."
+            )
+        return self._decode_key(self.path.read_bytes())
+
     def load_or_create_key(self) -> bytes:
         if self.path.exists():
-            return self._decode_key(self.path.read_bytes())
+            return self.load_key()
 
         self.path.parent.mkdir(parents=True, exist_ok=True)
         key = AESGCM.generate_key(bit_length=256)

@@ -1,8 +1,8 @@
 """Encrypted HIGHLY_SENSITIVE memory creation foundation for P2.6a.
 
-This module intentionally provides protected creation only. Purpose-bound
-search and plaintext retrieval are added separately in P2.6b. Ordinary P2.3-
-P2.5 APIs continue to fail closed for HIGHLY_SENSITIVE content.
+This module provides protected creation. Purpose-bound metadata discovery and
+plaintext retrieval are implemented separately in ``sensitive_access``. Ordinary
+P2.3-P2.5 APIs continue to fail closed for HIGHLY_SENSITIVE content.
 """
 
 from __future__ import annotations
