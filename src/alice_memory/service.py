@@ -3,9 +3,9 @@
 P2.3 provides explicit, permission-gated creation and archival operations plus
 metadata-safe reads. Plaintext reads require explicit authorization.
 
-Until P2.6 introduces the dedicated protected storage and purpose-based access
-layer, HIGHLY_SENSITIVE memory writes and reads fail closed. SECRETS are never
-ordinary memories.
+P2.6a keeps ordinary HIGHLY_SENSITIVE writes and reads fail-closed; encrypted
+creation is available only through the dedicated sensitive_storage module.
+SECRETS are never ordinary memories.
 
 P2.3 intentionally does not perform automatic memory formation, model calls,
 correction/supersession logic, deletion, vector indexing, or external actions.
@@ -201,7 +201,11 @@ def _normalize_optional_timestamp(
     )
 
 
-def _validate_create_request(request: MemoryCreateRequest) -> None:
+def _validate_create_request(
+    request: MemoryCreateRequest,
+    *,
+    allow_highly_sensitive: bool = False,
+) -> None:
     if not request.content.strip():
         raise MemoryValidationError("Memory content cannot be empty.")
 
@@ -231,10 +235,13 @@ def _validate_create_request(request: MemoryCreateRequest) -> None:
             "SECRETS are prohibited from ordinary A.L.I.C.E. memory storage."
         )
 
-    if request.data_classification == "HIGHLY_SENSITIVE":
+    if (
+        request.data_classification == "HIGHLY_SENSITIVE"
+        and not allow_highly_sensitive
+    ):
         raise MemoryValidationError(
-            "HIGHLY_SENSITIVE memory storage is disabled until the dedicated "
-            "protected storage and purpose-based access layer is enabled."
+            "HIGHLY_SENSITIVE memory storage requires the dedicated "
+            "encrypted sensitive-memory creation path."
         )
 
     if request.validity_state not in VALIDITY_STATES:
@@ -265,6 +272,8 @@ def _validate_create_request(request: MemoryCreateRequest) -> None:
 
 def _normalize_create_request(
     request: MemoryCreateRequest,
+    *,
+    allow_highly_sensitive: bool = False,
 ) -> MemoryCreateRequest:
     """Canonicalize temporal fields before validation and persistence."""
     normalized = replace(
@@ -286,7 +295,10 @@ def _normalize_create_request(
             field_name="verified_at",
         ),
     )
-    _validate_create_request(normalized)
+    _validate_create_request(
+        normalized,
+        allow_highly_sensitive=allow_highly_sensitive,
+    )
     return normalized
 
 
@@ -391,10 +403,17 @@ def _insert_memory_in_transaction(
     request: MemoryCreateRequest,
     actor: str,
     created_at: str,
+    stored_content: str | None = None,
+    content_sha256: str | None = None,
 ) -> str:
-    """Insert memory, provenance, and creation event in one caller transaction."""
+    """Insert memory, provenance, and creation event in one caller transaction.
+
+    Dedicated protected-storage callers may replace the persisted content with
+    a non-sensitive sentinel while preserving the SHA-256 of the real content.
+    """
     memory_id = request.memory_id or str(uuid.uuid4())
-    content_sha256 = hashlib.sha256(
+    persisted_content = request.content if stored_content is None else stored_content
+    persisted_sha256 = content_sha256 or hashlib.sha256(
         request.content.encode("utf-8")
     ).hexdigest()
     event_details = json.dumps(
@@ -447,8 +466,8 @@ def _insert_memory_in_transaction(
             (
                 memory_id,
                 SCHEMA_VERSION,
-                request.content,
-                content_sha256,
+                persisted_content,
+                persisted_sha256,
                 request.memory_key,
                 request.category,
                 request.knowledge_status,
@@ -557,6 +576,12 @@ def archive_memory(
     if existing.deletion_state != "active":
         raise MemoryValidationError(
             "Only active, non-deleted memories can be archived."
+        )
+
+    if existing.data_classification == "HIGHLY_SENSITIVE":
+        raise MemoryValidationError(
+            "HIGHLY_SENSITIVE memory archival requires the dedicated "
+            "sensitive-memory mutation path."
         )
 
     if existing.retention_state == "archived":

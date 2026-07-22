@@ -167,6 +167,12 @@ def inspect_memory(
         memory_id=memory_id,
     )
 
+    if record.data_classification == "HIGHLY_SENSITIVE":
+        raise MemoryInspectionAuthorizationError(
+            "HIGHLY_SENSITIVE inspection requires the dedicated "
+            "purpose-bound sensitive-memory access path."
+        )
+
     content = None
     if include_content:
         content = load_memory_content(
@@ -217,7 +223,10 @@ def list_memory_summaries(
     category: str | None = None,
 ) -> tuple[MemorySummary, ...]:
     """List metadata-only memory summaries, excluding deleted states."""
-    clauses = ["deletion_state = 'active'"]
+    clauses = [
+        "deletion_state = 'active'",
+        "data_classification <> 'HIGHLY_SENSITIVE'",
+    ]
     parameters: list[object] = []
 
     if not include_archived:
