@@ -12,6 +12,7 @@ from alice_memory.service import (
     MemoryWriteAuthorization,
     create_memory,
 )
+from alice_memory.sources import MemorySourceSpec
 from alice_memory.store import open_memory_store
 from alice_memory.temporal import (
     InvalidMemoryTransitionError,
@@ -19,6 +20,14 @@ from alice_memory.temporal import (
     mark_memory_conflict,
     supersede_memory,
 )
+
+
+def _test_source() -> MemorySourceSpec:
+    return MemorySourceSpec(
+        source_type="approved_manual_entry",
+        source_ref="test-suite:synthetic-memory",
+        support_relation="supports",
+    )
 
 
 def _open(tmp_path: Path):
@@ -50,6 +59,7 @@ def _request(
     classification: str = "PRIVATE",
 ) -> MemoryCreateRequest:
     return MemoryCreateRequest(
+        sources=(_test_source(),),
         memory_id=memory_id,
         content=content,
         memory_key=memory_key,

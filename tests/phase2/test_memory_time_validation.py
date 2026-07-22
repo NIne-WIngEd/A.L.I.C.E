@@ -12,7 +12,16 @@ from alice_memory.service import (
     MemoryWriteAuthorization,
     create_memory,
 )
+from alice_memory.sources import MemorySourceSpec
 from alice_memory.store import open_memory_store
+
+
+def _test_source() -> MemorySourceSpec:
+    return MemorySourceSpec(
+        source_type="approved_manual_entry",
+        source_ref="test-suite:synthetic-memory",
+        support_relation="supports",
+    )
 
 
 def _open(tmp_path: Path):
@@ -41,6 +50,7 @@ def _request(
     recorded_at: str = "2026-07-21T00:00:00Z",
 ) -> MemoryCreateRequest:
     return MemoryCreateRequest(
+        sources=(_test_source(),),
         memory_id="memory-1",
         content="Temporal test memory",
         memory_key="temporal.test",

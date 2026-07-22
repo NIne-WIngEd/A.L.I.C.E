@@ -99,6 +99,11 @@ def _eligible_rows(
             updated_at
         FROM memories
         WHERE deletion_state = 'active'
+          AND EXISTS (
+              SELECT 1
+              FROM memory_sources AS source
+              WHERE source.memory_id = memories.memory_id
+          )
           AND data_classification IN (
               'PUBLIC',
               'INTERNAL',

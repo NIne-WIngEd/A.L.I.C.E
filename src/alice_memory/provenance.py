@@ -3,13 +3,13 @@
 from __future__ import annotations
 
 import sqlite3
-import uuid
 from dataclasses import dataclass
 
 from .phase1_bridge import Phase1ChunkEvidence
-
-_PROVENANCE_NAMESPACE = uuid.UUID(
-    "e726be32-b6e2-4a41-9c58-4078d79e2168"
+from .sources import (
+    MemorySourceRecord,
+    MemorySourceSpec,
+    insert_memory_sources_in_transaction,
 )
 
 
@@ -29,9 +29,9 @@ class AttachedMemorySource:
     memory_id: str
     source_type: str
     source_ref: str
-    source_content_sha256: str
-    source_text_sha256: str
-    chunk_id: str
+    source_content_sha256: str | None
+    source_text_sha256: str | None
+    chunk_id: str | None
     file_id: str | None
     support_relation: str
     created_at: str
@@ -52,28 +52,56 @@ def _memory_exists(
     return row is not None
 
 
-def _source_id(
+def phase1_chunk_source_specs(
+    evidence: Phase1ChunkEvidence,
     *,
-    memory_id: str,
-    source_ref: str,
-    chunk_id: str,
-    file_id: str | None,
     support_relation: str,
-) -> str:
-    canonical = "|".join(
-        (
-            memory_id,
-            source_ref,
-            chunk_id,
-            file_id or "",
-            support_relation,
+) -> tuple[MemorySourceSpec, ...]:
+    """Convert verified Phase 1 evidence to private-safe creation sources."""
+    provenance_file_ids: tuple[str | None, ...]
+    if evidence.provenance_paths:
+        provenance_file_ids = tuple(
+            item.file_id
+            for item in evidence.provenance_paths
         )
-    )
-    return str(
-        uuid.uuid5(
-            _PROVENANCE_NAMESPACE,
-            canonical,
+    else:
+        provenance_file_ids = (None,)
+
+    specs: list[MemorySourceSpec] = []
+    for file_id in provenance_file_ids:
+        source_ref = evidence.source_ref
+        if file_id is not None:
+            source_ref = f"{source_ref}:file:{file_id}"
+
+        specs.append(
+            MemorySourceSpec(
+                source_type="phase1_chunk",
+                source_ref=source_ref,
+                source_content_sha256=evidence.source_content_sha256,
+                source_text_sha256=evidence.source_text_sha256,
+                chunk_id=evidence.chunk_id,
+                file_id=file_id,
+                support_relation=support_relation,
+            )
         )
+
+    return tuple(specs)
+
+
+def _attached(
+    record: MemorySourceRecord,
+) -> AttachedMemorySource:
+    return AttachedMemorySource(
+        memory_source_id=record.memory_source_id,
+        memory_id=record.memory_id,
+        source_type=record.source_type,
+        source_ref=record.source_ref,
+        source_content_sha256=record.source_content_sha256,
+        source_text_sha256=record.source_text_sha256,
+        chunk_id=record.chunk_id,
+        file_id=record.file_id,
+        support_relation=record.support_relation,
+        created_at=record.created_at,
     )
 
 
@@ -87,89 +115,30 @@ def attach_phase1_chunk_evidence(
 ) -> tuple[AttachedMemorySource, ...]:
     """Attach verified Phase 1 chunk provenance without copying plaintext.
 
-    One source link is created per Phase 1 provenance file ID. If a chunk has
-    no provenance paths, a chunk-level source link is created with file_id=None.
-
-    The function does not commit. Callers should use the Memory Core transaction
-    context so memory creation and provenance attachment can be atomic.
+    New creation should pass ``phase1_chunk_source_specs(...)`` through
+    ``MemoryCreateRequest.sources`` so memory and provenance are atomic.
+    This function remains for attaching verified evidence to existing records
+    and intentionally does not commit.
     """
     if not _memory_exists(connection, memory_id):
         raise MemoryNotFoundError(
             f"Cannot attach provenance to missing memory: {memory_id}"
         )
 
-    provenance_file_ids: tuple[str | None, ...]
-    if evidence.provenance_paths:
-        provenance_file_ids = tuple(
-            item.file_id
-            for item in evidence.provenance_paths
-        )
-    else:
-        provenance_file_ids = (None,)
-
-    attached: list[AttachedMemorySource] = []
-
-    for file_id in provenance_file_ids:
-        source_ref = evidence.source_ref
-        if file_id is not None:
-            source_ref = f"{source_ref}:file:{file_id}"
-
-        memory_source_id = _source_id(
-            memory_id=memory_id,
-            source_ref=source_ref,
-            chunk_id=evidence.chunk_id,
-            file_id=file_id,
+    records = insert_memory_sources_in_transaction(
+        connection,
+        memory_id=memory_id,
+        sources=phase1_chunk_source_specs(
+            evidence,
             support_relation=support_relation,
-        )
-
-        connection.execute(
-            """
-            INSERT OR IGNORE INTO memory_sources (
-                memory_source_id,
-                memory_id,
-                source_type,
-                source_ref,
-                source_content_sha256,
-                source_text_sha256,
-                chunk_id,
-                file_id,
-                source_date,
-                support_relation,
-                created_at
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                memory_source_id,
-                memory_id,
-                "phase1_chunk",
-                source_ref,
-                evidence.source_content_sha256,
-                evidence.source_text_sha256,
-                evidence.chunk_id,
-                file_id,
-                None,
-                support_relation,
-                created_at,
-            ),
-        )
-
-        attached.append(
-            AttachedMemorySource(
-                memory_source_id=memory_source_id,
-                memory_id=memory_id,
-                source_type="phase1_chunk",
-                source_ref=source_ref,
-                source_content_sha256=evidence.source_content_sha256,
-                source_text_sha256=evidence.source_text_sha256,
-                chunk_id=evidence.chunk_id,
-                file_id=file_id,
-                support_relation=support_relation,
-                created_at=created_at,
-            )
-        )
-
-    return tuple(attached)
+        ),
+        created_at=created_at,
+        allow_existing=True,
+    )
+    return tuple(
+        _attached(record)
+        for record in records
+    )
 
 
 def list_memory_sources(
@@ -204,9 +173,21 @@ def list_memory_sources(
             memory_id=str(row["memory_id"]),
             source_type=str(row["source_type"]),
             source_ref=str(row["source_ref"]),
-            source_content_sha256=str(row["source_content_sha256"]),
-            source_text_sha256=str(row["source_text_sha256"]),
-            chunk_id=str(row["chunk_id"]),
+            source_content_sha256=(
+                None
+                if row["source_content_sha256"] is None
+                else str(row["source_content_sha256"])
+            ),
+            source_text_sha256=(
+                None
+                if row["source_text_sha256"] is None
+                else str(row["source_text_sha256"])
+            ),
+            chunk_id=(
+                None
+                if row["chunk_id"] is None
+                else str(row["chunk_id"])
+            ),
             file_id=(
                 None
                 if row["file_id"] is None
