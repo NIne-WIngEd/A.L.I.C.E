@@ -29,6 +29,12 @@ from .schema import (
     SCHEMA_VERSION,
     VALIDITY_STATES,
 )
+from .sources import (
+    MemorySourceSpec,
+    MemorySourceValidationError,
+    insert_memory_sources_in_transaction,
+    validate_memory_sources,
+)
 from .store import transaction
 
 
@@ -84,6 +90,7 @@ class MemoryCreateRequest:
     confidence: float
     data_classification: str
     recorded_at: str
+    sources: tuple[MemorySourceSpec, ...]
     validity_state: str = "current"
     retention_state: str = "durable"
     memory_id: str | None = None
@@ -239,6 +246,12 @@ def _validate_create_request(request: MemoryCreateRequest) -> None:
         raise MemoryValidationError(
             f"Unsupported retention state: {request.retention_state!r}"
         )
+    try:
+        validate_memory_sources(request.sources)
+    except MemorySourceValidationError as exc:
+        raise MemoryValidationError(
+            f"Invalid memory provenance: {exc}"
+        ) from exc
 
     if (
         request.valid_from is not None
@@ -372,6 +385,125 @@ def load_memory_content(
     return stored.content
 
 
+def _insert_memory_in_transaction(
+    connection: sqlite3.Connection,
+    *,
+    request: MemoryCreateRequest,
+    actor: str,
+    created_at: str,
+) -> str:
+    """Insert memory, provenance, and creation event in one caller transaction."""
+    memory_id = request.memory_id or str(uuid.uuid4())
+    content_sha256 = hashlib.sha256(
+        request.content.encode("utf-8")
+    ).hexdigest()
+    event_details = json.dumps(
+        {
+            "category": request.category,
+            "knowledge_status": request.knowledge_status,
+            "data_classification": request.data_classification,
+            "rayan_confirmed": request.rayan_confirmed,
+            "source_count": len(request.sources),
+        },
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+
+    if connection.execute(
+        "SELECT 1 FROM memories WHERE memory_id = ?",
+        (memory_id,),
+    ).fetchone() is not None:
+        raise MemoryAlreadyExistsError(
+            f"Memory already exists: {memory_id}"
+        )
+
+    try:
+        connection.execute(
+            """
+            INSERT INTO memories (
+                memory_id,
+                schema_version,
+                content,
+                content_sha256,
+                memory_key,
+                category,
+                knowledge_status,
+                confidence,
+                data_classification,
+                valid_from,
+                valid_to,
+                time_precision,
+                recorded_at,
+                verified_at,
+                rayan_confirmed,
+                validity_state,
+                retention_state,
+                deletion_state,
+                created_at,
+                updated_at
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                memory_id,
+                SCHEMA_VERSION,
+                request.content,
+                content_sha256,
+                request.memory_key,
+                request.category,
+                request.knowledge_status,
+                request.confidence,
+                request.data_classification,
+                request.valid_from,
+                request.valid_to,
+                request.time_precision,
+                request.recorded_at,
+                request.verified_at,
+                int(request.rayan_confirmed),
+                request.validity_state,
+                request.retention_state,
+                "active",
+                created_at,
+                created_at,
+            ),
+        )
+
+        insert_memory_sources_in_transaction(
+            connection,
+            memory_id=memory_id,
+            sources=request.sources,
+            created_at=created_at,
+        )
+
+        connection.execute(
+            """
+            INSERT INTO memory_events (
+                event_id,
+                memory_id,
+                event_type,
+                actor,
+                details_json,
+                created_at
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (
+                str(uuid.uuid4()),
+                memory_id,
+                "created",
+                actor,
+                event_details,
+                created_at,
+            ),
+        )
+    except sqlite3.IntegrityError as exc:
+        raise MemoryValidationError(
+            f"Memory creation failed database validation: {exc}"
+        ) from exc
+
+    return memory_id
+
+
 def create_memory(
     connection: sqlite3.Connection,
     *,
@@ -379,7 +511,7 @@ def create_memory(
     authorization: MemoryWriteAuthorization,
     created_at: str,
 ) -> MemoryRecord:
-    """Create one explicit durable memory and a sanitized lifecycle event."""
+    """Atomically create one authoritative memory with required provenance."""
     _require_write_authorization(authorization)
     request = _normalize_create_request(request)
     created_at = _normalize_timestamp(
@@ -387,114 +519,18 @@ def create_memory(
         field_name="created_at",
     )
 
-    memory_id = request.memory_id or str(uuid.uuid4())
-    content_sha256 = hashlib.sha256(
-        request.content.encode("utf-8")
-    ).hexdigest()
-
-    event_id = str(uuid.uuid4())
-    event_details = json.dumps(
-        {
-            "category": request.category,
-            "knowledge_status": request.knowledge_status,
-            "data_classification": request.data_classification,
-            "rayan_confirmed": request.rayan_confirmed,
-        },
-        sort_keys=True,
-        separators=(",", ":"),
-    )
-
-    try:
-        with transaction(connection):
-            connection.execute(
-                """
-                INSERT INTO memories (
-                    memory_id,
-                    schema_version,
-                    content,
-                    content_sha256,
-                    memory_key,
-                    category,
-                    knowledge_status,
-                    confidence,
-                    data_classification,
-                    valid_from,
-                    valid_to,
-                    time_precision,
-                    recorded_at,
-                    verified_at,
-                    rayan_confirmed,
-                    validity_state,
-                    retention_state,
-                    deletion_state,
-                    created_at,
-                    updated_at
-                )
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """,
-                (
-                    memory_id,
-                    SCHEMA_VERSION,
-                    request.content,
-                    content_sha256,
-                    request.memory_key,
-                    request.category,
-                    request.knowledge_status,
-                    request.confidence,
-                    request.data_classification,
-                    request.valid_from,
-                    request.valid_to,
-                    request.time_precision,
-                    request.recorded_at,
-                    request.verified_at,
-                    int(request.rayan_confirmed),
-                    request.validity_state,
-                    request.retention_state,
-                    "active",
-                    created_at,
-                    created_at,
-                ),
-            )
-
-            connection.execute(
-                """
-                INSERT INTO memory_events (
-                    event_id,
-                    memory_id,
-                    event_type,
-                    actor,
-                    details_json,
-                    created_at
-                )
-                VALUES (?, ?, ?, ?, ?, ?)
-                """,
-                (
-                    event_id,
-                    memory_id,
-                    "created",
-                    authorization.actor,
-                    event_details,
-                    created_at,
-                ),
-            )
-    except sqlite3.IntegrityError as exc:
-        existing = connection.execute(
-            "SELECT 1 FROM memories WHERE memory_id = ?",
-            (memory_id,),
-        ).fetchone()
-        if existing is not None:
-            raise MemoryAlreadyExistsError(
-                f"Memory already exists: {memory_id}"
-            ) from exc
-        raise MemoryValidationError(
-            f"Memory creation failed database validation: {exc}"
-        ) from exc
+    with transaction(connection):
+        memory_id = _insert_memory_in_transaction(
+            connection,
+            request=request,
+            actor=authorization.actor,
+            created_at=created_at,
+        )
 
     return load_memory(
         connection,
         memory_id=memory_id,
     )
-
 
 def archive_memory(
     connection: sqlite3.Connection,

@@ -12,20 +12,19 @@ metadata-only; plaintext stays behind the P2.3 authorization boundary.
 
 from __future__ import annotations
 
-import hashlib
 import json
 import sqlite3
 import uuid
 from dataclasses import dataclass, replace
 from datetime import datetime, timezone
 
-from .schema import SCHEMA_VERSION
 from .service import (
     MemoryAlreadyExistsError,
     MemoryCreateRequest,
     MemoryRecord,
     MemoryValidationError,
     MemoryWriteAuthorization,
+    _insert_memory_in_transaction,
     _normalize_create_request,
     _require_write_authorization,
     load_memory,
@@ -288,117 +287,6 @@ def _insert_transition_event(
             created_at,
         ),
     )
-
-
-def _insert_memory_in_transaction(
-    connection: sqlite3.Connection,
-    *,
-    request: MemoryCreateRequest,
-    actor: str,
-    created_at: str,
-) -> str:
-    memory_id = request.memory_id or str(uuid.uuid4())
-    content_sha256 = hashlib.sha256(
-        request.content.encode("utf-8")
-    ).hexdigest()
-
-    event_details = json.dumps(
-        {
-            "category": request.category,
-            "knowledge_status": request.knowledge_status,
-            "data_classification": request.data_classification,
-            "rayan_confirmed": request.rayan_confirmed,
-        },
-        sort_keys=True,
-        separators=(",", ":"),
-    )
-
-    try:
-        connection.execute(
-            """
-            INSERT INTO memories (
-                memory_id,
-                schema_version,
-                content,
-                content_sha256,
-                memory_key,
-                category,
-                knowledge_status,
-                confidence,
-                data_classification,
-                valid_from,
-                valid_to,
-                time_precision,
-                recorded_at,
-                verified_at,
-                rayan_confirmed,
-                validity_state,
-                retention_state,
-                deletion_state,
-                created_at,
-                updated_at
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """,
-            (
-                memory_id,
-                SCHEMA_VERSION,
-                request.content,
-                content_sha256,
-                request.memory_key,
-                request.category,
-                request.knowledge_status,
-                request.confidence,
-                request.data_classification,
-                request.valid_from,
-                request.valid_to,
-                request.time_precision,
-                request.recorded_at,
-                request.verified_at,
-                int(request.rayan_confirmed),
-                request.validity_state,
-                request.retention_state,
-                "active",
-                created_at,
-                created_at,
-            ),
-        )
-    except sqlite3.IntegrityError as exc:
-        existing = connection.execute(
-            "SELECT 1 FROM memories WHERE memory_id = ?",
-            (memory_id,),
-        ).fetchone()
-        if existing is not None:
-            raise MemoryAlreadyExistsError(
-                f"Memory already exists: {memory_id}"
-            ) from exc
-        raise MemoryValidationError(
-            f"Replacement memory failed database validation: {exc}"
-        ) from exc
-
-    connection.execute(
-        """
-        INSERT INTO memory_events (
-            event_id,
-            memory_id,
-            event_type,
-            actor,
-            details_json,
-            created_at
-        )
-        VALUES (?, ?, ?, ?, ?, ?)
-        """,
-        (
-            str(uuid.uuid4()),
-            memory_id,
-            "created",
-            actor,
-            event_details,
-            created_at,
-        ),
-    )
-
-    return memory_id
 
 
 def correct_memory(
