@@ -1,8 +1,8 @@
 """Versioned SQLite schema contract for the A.L.I.C.E. Phase 2 Memory Core.
 
-P2.0 intentionally defines and initializes an isolated schema only. It does not
-create or open the live private memory database and does not implement memory
-writes, retrieval, or access-control decisions.
+The schema is initialized for fresh stores and migrated explicitly for existing
+stores. Live database opening, writes, retrieval, and access-control decisions
+remain in their dedicated Memory Core modules.
 """
 
 from __future__ import annotations
@@ -10,7 +10,7 @@ from __future__ import annotations
 import sqlite3
 from collections.abc import Iterable
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 MEMORY_CATEGORIES = (
     "working",
@@ -119,7 +119,7 @@ def _sql_values(values: Iterable[str]) -> str:
     return ", ".join("'" + value.replace("'", "''") + "'" for value in values)
 
 
-DDL_STATEMENTS = (
+SCHEMA_V1_DDL_STATEMENTS = (
     """
     CREATE TABLE IF NOT EXISTS schema_migrations (
         version INTEGER PRIMARY KEY,
@@ -257,6 +257,44 @@ DDL_STATEMENTS = (
     "ON memory_entities(entity_type, normalized_value)",
 )
 
+SCHEMA_V2_DDL_STATEMENTS = (
+    """
+    CREATE TABLE IF NOT EXISTS memory_sensitive_payloads (
+        memory_id TEXT PRIMARY KEY,
+        ciphertext BLOB NOT NULL,
+        nonce BLOB NOT NULL,
+        algorithm TEXT NOT NULL CHECK (algorithm = 'AES-256-GCM'),
+        key_id TEXT NOT NULL,
+        aad_version INTEGER NOT NULL DEFAULT 1 CHECK (aad_version = 1),
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        FOREIGN KEY (memory_id) REFERENCES memories(memory_id) ON DELETE CASCADE,
+        CHECK (length(nonce) = 12),
+        CHECK (length(ciphertext) >= 16)
+    )
+    """,
+    """
+    CREATE TABLE IF NOT EXISTS sensitive_memory_access_events (
+        access_event_id TEXT PRIMARY KEY,
+        memory_id TEXT,
+        actor TEXT NOT NULL,
+        purpose TEXT NOT NULL,
+        authorization_id TEXT NOT NULL,
+        operation TEXT NOT NULL,
+        decision TEXT NOT NULL CHECK (decision IN ('allowed', 'denied')),
+        created_at TEXT NOT NULL,
+        FOREIGN KEY (memory_id) REFERENCES memories(memory_id) ON DELETE SET NULL
+    )
+    """,
+    "CREATE INDEX IF NOT EXISTS idx_sensitive_access_memory_id "
+    "ON sensitive_memory_access_events(memory_id)",
+    "CREATE INDEX IF NOT EXISTS idx_sensitive_access_authorization_id "
+    "ON sensitive_memory_access_events(authorization_id)",
+)
+
+DDL_STATEMENTS = SCHEMA_V1_DDL_STATEMENTS + SCHEMA_V2_DDL_STATEMENTS
+
+
 
 def configure_connection(connection: sqlite3.Connection) -> None:
     """Enable deterministic safety settings required by the schema contract."""
@@ -268,7 +306,7 @@ def initialize_schema(
     *,
     applied_at: str,
 ) -> None:
-    """Initialize schema version 1 transactionally on an existing connection."""
+    """Initialize the current schema transactionally on an existing connection."""
     configure_connection(connection)
 
     try:

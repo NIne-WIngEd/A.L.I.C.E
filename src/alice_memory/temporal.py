@@ -192,6 +192,11 @@ def _load_relation(
 
 
 def _require_transitionable(memory: MemoryRecord) -> None:
+    if memory.data_classification == "HIGHLY_SENSITIVE":
+        raise InvalidMemoryTransitionError(
+            "HIGHLY_SENSITIVE transitions require the dedicated "
+            "sensitive-memory mutation path."
+        )
     if memory.deletion_state != "active":
         raise InvalidMemoryTransitionError(
             "Deleted or deletion-pending memories cannot transition."
@@ -692,6 +697,7 @@ def list_current_memories_for_key(
           AND deletion_state = 'active'
           AND retention_state <> 'archived'
           AND validity_state IN ('current', 'disputed')
+          AND data_classification <> 'HIGHLY_SENSITIVE'
         ORDER BY recorded_at, memory_id
         """,
         (memory_key,),
@@ -718,6 +724,7 @@ def list_memory_history(
         FROM memories
         WHERE memory_key = ?
           AND deletion_state = 'active'
+          AND data_classification <> 'HIGHLY_SENSITIVE'
         """,
         (memory_key,),
     ).fetchall()
@@ -773,6 +780,7 @@ def resolve_memory_at(
         FROM memories
         WHERE memory_key = ?
           AND deletion_state = 'active'
+          AND data_classification <> 'HIGHLY_SENSITIVE'
         """,
         (memory_key,),
     ).fetchall()
