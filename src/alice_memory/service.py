@@ -17,7 +17,8 @@ import hashlib
 import json
 import sqlite3
 import uuid
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
+from datetime import datetime, timezone
 
 from .schema import (
     DATA_CLASSIFICATIONS,
@@ -153,6 +154,46 @@ def _require_content_authorization(
         )
 
 
+def _normalize_timestamp(
+    value: str,
+    *,
+    field_name: str,
+) -> str:
+    """Normalize a timezone-aware ISO-8601 timestamp to canonical UTC."""
+    try:
+        parsed = datetime.fromisoformat(
+            value.replace("Z", "+00:00")
+        )
+    except ValueError as exc:
+        raise MemoryValidationError(
+            f"{field_name} must be an ISO-8601 timestamp: {value!r}"
+        ) from exc
+
+    if parsed.tzinfo is None:
+        raise MemoryValidationError(
+            f"{field_name} must include a timezone offset."
+        )
+
+    return (
+        parsed.astimezone(timezone.utc)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
+
+
+def _normalize_optional_timestamp(
+    value: str | None,
+    *,
+    field_name: str,
+) -> str | None:
+    if value is None:
+        return None
+    return _normalize_timestamp(
+        value,
+        field_name=field_name,
+    )
+
+
 def _validate_create_request(request: MemoryCreateRequest) -> None:
     if not request.content.strip():
         raise MemoryValidationError("Memory content cannot be empty.")
@@ -207,6 +248,33 @@ def _validate_create_request(request: MemoryCreateRequest) -> None:
         raise MemoryValidationError(
             "valid_to cannot be earlier than valid_from."
         )
+
+
+def _normalize_create_request(
+    request: MemoryCreateRequest,
+) -> MemoryCreateRequest:
+    """Canonicalize temporal fields before validation and persistence."""
+    normalized = replace(
+        request,
+        valid_from=_normalize_optional_timestamp(
+            request.valid_from,
+            field_name="valid_from",
+        ),
+        valid_to=_normalize_optional_timestamp(
+            request.valid_to,
+            field_name="valid_to",
+        ),
+        recorded_at=_normalize_timestamp(
+            request.recorded_at,
+            field_name="recorded_at",
+        ),
+        verified_at=_normalize_optional_timestamp(
+            request.verified_at,
+            field_name="verified_at",
+        ),
+    )
+    _validate_create_request(normalized)
+    return normalized
 
 
 def _row_to_stored_memory(row: sqlite3.Row) -> _StoredMemoryRecord:
@@ -313,7 +381,11 @@ def create_memory(
 ) -> MemoryRecord:
     """Create one explicit durable memory and a sanitized lifecycle event."""
     _require_write_authorization(authorization)
-    _validate_create_request(request)
+    request = _normalize_create_request(request)
+    created_at = _normalize_timestamp(
+        created_at,
+        field_name="created_at",
+    )
 
     memory_id = request.memory_id or str(uuid.uuid4())
     content_sha256 = hashlib.sha256(
@@ -437,6 +509,10 @@ def archive_memory(
     duplicate lifecycle event.
     """
     _require_write_authorization(authorization)
+    archived_at = _normalize_timestamp(
+        archived_at,
+        field_name="archived_at",
+    )
     existing = load_memory(
         connection,
         memory_id=memory_id,
