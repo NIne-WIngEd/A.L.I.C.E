@@ -1,3 +1,4 @@
+
 """Deterministic Phase 2 memory lifecycle and authorized read service.
 
 P2.3 provides explicit, permission-gated creation and archival operations plus
@@ -387,6 +388,11 @@ def load_memory_content(
         memory_id=memory_id,
     )
 
+    if stored.metadata.deletion_state != "active":
+        raise MemoryContentAuthorizationError(
+            "Pending-deletion memory plaintext is unavailable."
+        )
+
     if stored.metadata.data_classification == "HIGHLY_SENSITIVE":
         raise MemoryContentAuthorizationError(
             "HIGHLY_SENSITIVE plaintext access is disabled until the "
@@ -434,6 +440,15 @@ def _insert_memory_in_transaction(
     ).fetchone() is not None:
         raise MemoryAlreadyExistsError(
             f"Memory already exists: {memory_id}"
+        )
+
+    if connection.execute(
+        "SELECT 1 FROM memory_tombstones WHERE deleted_memory_id = ?",
+        (memory_id,),
+    ).fetchone() is not None:
+        raise MemoryAlreadyExistsError(
+            "Deleted memory identifiers cannot be reused: "
+            f"{memory_id}"
         )
 
     try:

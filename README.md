@@ -27,6 +27,7 @@ Its intended role is to become a persistent, permissioned cognitive partner that
   - P2.5 authorization-aware lexical, semantic, and hybrid retrieval: complete;
   - P2.6 encrypted highly sensitive storage and purpose-bound access: complete;
   - P2.7 non-authoritative candidate formation, deterministic assessment, authorized promotion, transition-aware promotion, and adversarial security gates: complete.
+  - P2.8 ordinary and protected deletion lifecycles, lineage cleanup, derived-index purge and rebuild guarantees, and adversarial deletion gates: complete.
 
 A working conversational assistant is not yet implemented.
 

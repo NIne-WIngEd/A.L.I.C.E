@@ -1,6 +1,6 @@
 # Phase 2 — Memory Core Architecture
 
-**Status:** P2.0–P2.7 implemented; Phase 2 remains in progress
+**Status:** P2.0–P2.8 implemented; Phase 2 remains in progress
 **Phase 1 dependency:** Frozen, read-only evidence layer
 **Owner:** MK Rayan
 
@@ -60,9 +60,10 @@ The current implementation includes:
 - P2.4 — correction, supersession, conflict, and valid-time resolution;
 - P2.5 — authorization-aware lexical, semantic, and hybrid memory retrieval;
 - P2.6 — encrypted `HIGHLY_SENSITIVE` storage and purpose-bound local access;
-- P2.7 — candidate formation, deterministic assessment, ordinary promotion, transition-aware promotion, and adversarial promotion gates.
+- P2.7 — candidate formation, deterministic assessment, ordinary promotion, transition-aware promotion, and adversarial promotion gates;
+- P2.8 — ordinary and protected deletion lifecycles, candidate-lineage cleanup, derived-index purge and rebuild guarantees, and adversarial deletion gates.
 
-P2.7 completion does not mean the entire Phase 2 roadmap is complete.
+P2.8 completion does not mean the entire Phase 2 roadmap is complete.
 
 ## 3. Authoritative store
 
@@ -296,20 +297,97 @@ A successful deletion must remove the targeted active memory from:
 
 - the authoritative memory table;
 - provenance joins whose lifetime is tied only to that memory;
+- memory relations and derivations tied to that memory;
+- memory entities tied to that memory;
+- promoted candidate plaintext and candidate lineage tied to that memory;
 - full-text indexes;
 - vector indexes;
 - caches;
 - active derived summaries.
 
-A sanitized tombstone may preserve:
+### 13.1 Authorized deletion lifecycle
+
+Ordinary memory deletion uses an explicit, exact-resource lifecycle:
+
+```text
+active
+  |
+  | authorized deletion request
+  v
+pending_deletion
+  |              |
+  | cancel       | strong confirmation
+  v              v
+active        deleted
+```
+
+Deletion authorization is bound to the exact memory and deletion scope. Strong confirmation expires after at most two minutes.
+
+A pending-deletion memory cannot expose plaintext through the ordinary content-access path.
+
+Completed deletion is atomic with authoritative dependent cleanup and sanitized audit creation. A failed tombstone write rolls back the authoritative deletion.
+
+Completed retries are idempotent. Reusing a tombstoned memory identifier is prohibited.
+
+### 13.2 Protected sensitive deletion
+
+`HIGHLY_SENSITIVE` memory uses a separate protected deletion path.
+
+The protected path requires:
+
+- direct-user authorization;
+- authorization bound to the exact memory and deletion scope;
+- strong confirmation within the allowed validity window;
+- encrypted-payload and sentinel integrity checks;
+- sanitized deletion audit evidence.
+
+Successful protected deletion removes the encrypted payload, ciphertext, nonce, and key reference with the authoritative memory.
+
+Deletion evidence must not contain deleted sensitive plaintext, ciphertext, nonce, encryption key identifier, source reference, source digest, or free-form reason text.
+
+### 13.3 Candidate lineage and derived state
+
+When an authoritative memory was promoted from a candidate, deletion also removes the linked candidate plaintext, candidate provenance, and candidate audit rows.
+
+Only SHA-256 digests of deleted candidate identifiers may remain in sanitized deletion evidence.
+
+Mismatched content digests, non-promoted links, duplicated lineage proofs, or tampered linkage fail closed.
+
+Unlinked candidates remain unchanged.
+
+The deletion service also fails closed when unmanaged active cache or derived-summary tables are present.
+
+### 13.4 Tombstones and audit integrity
+
+A sanitized tombstone may preserve only:
 
 - deleted memory ID;
 - content digest;
 - deletion time;
 - deletion scope;
-- associated audit event ID.
+- associated deletion-event ID.
 
-A tombstone must not preserve deleted sensitive plaintext unnecessarily.
+The tombstone identifier and content digest are verified deterministically.
+
+Deletion-request, cancellation, and completion events use exact sanitized structures. Unexpected fields, invalid transitions, false confirmation evidence, malformed dependent counts, duplicate sensitive decisions, or mismatched tombstone links fail closed.
+
+A tombstone must not preserve deleted sensitive plaintext or encrypted payload material.
+
+### 13.5 Derived-index purge and rebuild
+
+Derived lexical and semantic indexes are non-authoritative.
+
+Pending deletion changes authoritative state and invalidates stale indexes. Index verification checks authoritative digests and exact memory-ID sets before retrieval.
+
+After completed deletion, the system can:
+
+1. remove the full lexical-index root;
+2. remove every immutable semantic-index generation;
+3. rebuild both indexes from current authoritative memory;
+4. verify that the deleted memory is absent;
+5. verify that retained memories remain present.
+
+Index purge is idempotent. If filesystem cleanup fails after authoritative deletion commits, stale indexes continue to fail closed and purge may be retried.
 
 Critical invariant:
 
@@ -317,11 +395,13 @@ Critical invariant:
 create
 -> index
 -> retrieve
--> delete
+-> request deletion
+-> confirm deletion
 -> cannot retrieve
 -> destroy indexes
 -> rebuild from authoritative store
--> still cannot retrieve
+-> deleted memory still cannot retrieve
+-> retained memory still retrieves
 ```
 
 Backups may retain encrypted copies until expiry, but deleted records must never be silently restored to active memory.
@@ -403,14 +483,46 @@ Final P2.7 verification on the feature branch:
 - 356 full-suite tests passed;
 - 14 subtests passed.
 
-## 18. Next milestone
+## 18. P2.8 completion criteria
 
-P2.7 establishes a safe memory-formation boundary. It does not implement the conversational assistant or declare all Phase 2 work complete.
+P2.8 is complete when:
 
-The next Phase 2 milestone must continue from the governing roadmap and preserve these invariants:
+1. ordinary deletion requires exact-resource authorization and strong confirmation;
+2. a pending deletion can be cancelled before irreversible deletion;
+3. pending-deletion plaintext access fails closed;
+4. `HIGHLY_SENSITIVE` deletion uses a separate protected path;
+5. authoritative deletion and dependent cleanup are atomic;
+6. promoted candidate plaintext and tied lineage are removed;
+7. unrelated candidates remain unchanged;
+8. sanitized tombstones preserve no deleted plaintext or encrypted payload material;
+9. malformed, replayed, duplicated, or tampered deletion audit state fails closed;
+10. stale lexical, semantic, and hybrid indexes fail closed after deletion-state changes;
+11. every derived retrieval index can be destroyed and rebuilt from authoritative memory;
+12. deleted memories remain absent after rebuild;
+13. retained memories remain available after rebuild;
+14. unmanaged active cache or derived-summary state blocks deletion;
+15. completed deletion retries are idempotent;
+16. existing Phase 1 and Phase 2 regression tests remain passing.
 
-- proposals remain non-authoritative until explicitly promoted;
-- models cannot grant themselves authority;
-- sensitive-memory access stays purpose-bound and local;
-- authoritative history is never silently overwritten;
-- derived indexes remain rebuildable and non-authoritative.
+Final P2.8 verification on the feature branch:
+
+- 20 P2.8a ordinary-deletion tests passed;
+- 10 P2.8b index-purge and rebuild tests passed;
+- 21 P2.8c protected sensitive-deletion tests passed;
+- 14 P2.8d lineage-integrity tests passed;
+- 15 P2.8e adversarial and benchmark tests passed;
+- 80 combined P2.8 deletion tests passed;
+- 312 Phase 2 tests passed;
+- 436 full-suite tests passed;
+- 14 subtests passed.
+
+## 19. Next milestone
+
+P2.8 establishes the deletion guarantee required by the governing roadmap. It does not implement the conversational assistant or declare all Phase 2 work complete.
+
+The next Phase 2 milestone must close the remaining Memory Core exit criteria:
+
+- run final memory evaluation gates;
+- verify that personal answers cite authoritative memory and source records;
+- preserve uncertainty, conflict, temporal, permission, sensitivity, and deletion behavior in end-to-end evaluation;
+- document the final Phase 2 release decision.
