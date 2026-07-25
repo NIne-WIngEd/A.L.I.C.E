@@ -1,13 +1,12 @@
 # Phase 2 — Memory Core Architecture
 
-**Status:** P2.0 foundation contract
+**Status:** P2.0–P2.7 implemented; Phase 2 remains in progress
 **Phase 1 dependency:** Frozen, read-only evidence layer
 **Owner:** MK Rayan
 
 ## 1. Purpose
 
-Phase 2 turns trusted Phase 1 evidence and explicitly approved personal knowledge into a durable,
-structured, inspectable, correctable, and deletable memory system.
+Phase 2 turns trusted Phase 1 evidence and explicitly approved personal knowledge into a durable, structured, inspectable, correctable, and deletable memory system.
 
 Phase 2 does not replace or mutate Phase 1. Phase 1 remains the validated evidence layer.
 
@@ -24,6 +23,7 @@ Phase 2 — Memory
 ```
 
 Phase 1 owns:
+
 - verified extraction;
 - deterministic chunks;
 - source and content hashes;
@@ -32,6 +32,7 @@ Phase 1 owns:
 - grounded-response verification.
 
 Phase 2 owns:
+
 - durable memory records;
 - memory lifecycle;
 - memory provenance links;
@@ -41,9 +42,27 @@ Phase 2 owns:
 - memory inspection;
 - deletion;
 - memory-specific indexes;
-- memory access control.
+- memory access control;
+- non-authoritative memory candidates;
+- deterministic candidate assessment;
+- explicitly authorized candidate promotion.
 
 Phase 2 MUST NOT rewrite Phase 1 evidence records.
+
+### 2.1 Implemented milestone status
+
+The current implementation includes:
+
+- P2.0 — memory architecture and schema foundation;
+- P2.1 — authoritative private SQLite store and migration runner;
+- P2.2 — read-only Phase 1 provenance bridge;
+- P2.3 — permission-gated lifecycle operations and metadata-safe inspection;
+- P2.4 — correction, supersession, conflict, and valid-time resolution;
+- P2.5 — authorization-aware lexical, semantic, and hybrid memory retrieval;
+- P2.6 — encrypted `HIGHLY_SENSITIVE` storage and purpose-bound local access;
+- P2.7 — candidate formation, deterministic assessment, ordinary promotion, transition-aware promotion, and adversarial promotion gates.
+
+P2.7 completion does not mean the entire Phase 2 roadmap is complete.
 
 ## 3. Authoritative store
 
@@ -51,14 +70,13 @@ The authoritative Phase 2 store is a private SQLite-compatible relational databa
 
 The live database belongs outside the public repository, under the private A.L.I.C.E. vault.
 
-Derived lexical or vector indexes are not authoritative. They must be completely rebuildable from
-the authoritative memory store.
+Derived lexical or vector indexes are not authoritative. They must be completely rebuildable from the authoritative memory store.
 
-No production/private memory database is created by P2.0. P2.0 defines schema contracts only.
+The public repository contains schema, migration, service, retrieval, and test code only. It must never contain a live private memory database.
 
 ## 4. Package boundary
 
-Phase 2 code lives in a new package:
+Phase 2 code lives in:
 
 ```text
 src/alice_memory/
@@ -98,7 +116,7 @@ A durable memory record must preserve, where technically applicable:
 - deletion state;
 - creation and update timestamps.
 
-The initial controlled vocabularies are defined in `alice_memory.schema`.
+The controlled vocabularies are defined in `alice_memory.schema`.
 
 ## 6. Memory categories
 
@@ -113,7 +131,7 @@ The Phase 0 Memory Policy categories are authoritative:
 - relationship;
 - reflective.
 
-Durable working memory is permitted only after explicit promotion into the durable store.
+Durable working memory is permitted only after explicit promotion into the authoritative store.
 
 ## 7. Knowledge status
 
@@ -143,15 +161,15 @@ Every memory and related object must carry one of:
 
 `SECRETS` are prohibited from ordinary memory storage.
 
-The schema retains the classification field, but runtime rejection of `SECRETS` belongs to the
-memory service/access-control layer and must be implemented before live memory writes are enabled.
+Ordinary candidate staging accepts only `PUBLIC`, `INTERNAL`, and `PRIVATE`. `HIGHLY_SENSITIVE` content requires the dedicated encrypted sensitive-memory path. `SECRETS` remain prohibited.
+
+`HIGHLY_SENSITIVE` authoritative memory uses encrypted payload storage and purpose-bound local access. It must not enter ordinary lexical, semantic, or hybrid retrieval.
 
 ## 9. Provenance model
 
 Memory content and source evidence remain separate.
 
-A memory may have zero or more provenance links during draft/proposal stages, but a durable
-production memory must satisfy the applicable provenance policy before activation.
+Every authoritative memory created through the ordinary service or candidate-promotion path must preserve validated provenance.
 
 Phase 1 provenance links may preserve:
 
@@ -163,23 +181,95 @@ Phase 1 provenance links may preserve:
 - source date;
 - support relationship.
 
-The Phase 2 store must reference Phase 1 evidence; it must not copy private source material into the
-public repository.
+The Phase 2 store references Phase 1 evidence. It must not copy private source material into the public repository.
 
-## 10. Temporal model
+Candidate provenance is stored separately from authoritative provenance. Promotion copies validated candidate provenance into the new authoritative memory within the same transaction.
+
+## 10. Candidate formation and promotion
+
+A proposed memory is not an authoritative memory.
+
+The candidate pipeline is:
+
+```text
+Phase 1 evidence or explicit user input
+        |
+        v
+non-authoritative candidate
+        |
+        v
+deterministic assessment
+        |
+        v
+risk, provenance, duplicate, and conflict checks
+        |
+        v
+explicit candidate-bound authorization
+        |
+        v
+authoritative memory or deterministic no-op
+```
+
+Candidate records live in separate candidate tables and are excluded from authoritative lexical, semantic, and hybrid retrieval.
+
+Candidate origins are:
+
+- `explicit_user`;
+- `deterministic_import`;
+- `model_proposed`.
+
+A model-proposed candidate:
+
+- cannot claim user confirmation at formation time;
+- must preserve policy, model, prompt, and run metadata;
+- always requires explicit user review before promotion;
+- cannot authorize its own promotion;
+- cannot choose or authorize its own correction, supersession, or conflict transition.
+
+Deterministic assessment produces one of:
+
+- `rejected`;
+- `review_required`;
+- `promotion_eligible`.
+
+Ordinary promotion is candidate-bound, atomic, and re-runs deterministic assessment while holding the write transaction.
+
+When a current authoritative memory already occupies the same logical key, transition-aware promotion requires authorization bound to:
+
+- the candidate;
+- the target authoritative memory;
+- the transition type;
+- an audit-safe authorization ID.
+
+Supported transition resolutions are:
+
+- duplicate no-op;
+- correction;
+- supersession;
+- conflict.
+
+Promotion preserves provenance and derivation metadata. Candidate state, authoritative memory creation, relations, target changes, and audit events commit or roll back together.
+
+## 11. Temporal model
 
 The architecture distinguishes:
 
 - `recorded_at`: when A.L.I.C.E. learned or stored the memory;
-- `valid_from`: when the fact/state began to apply;
-- `valid_to`: when the fact/state stopped applying;
+- `valid_from`: when the fact or state began to apply;
+- `valid_to`: when the fact or state stopped applying;
 - `time_precision`: precision of the applicable time range.
 
 A historical record is not automatically false.
 
 Later information may supersede current-state interpretation without deleting history.
 
-## 11. Conflict and supersession
+Valid-time resolution uses half-open intervals:
+
+```text
+valid_from <= at < valid_to
+```
+
+## 12. Conflict and supersession
 
 Memories are not silently overwritten.
 
@@ -194,10 +284,11 @@ Memory-to-memory relations support:
 
 Corrections and supersessions create explicit relation chains.
 
-Material unresolved conflicts must remain inspectable and must not be silently presented as
-confirmed facts.
+Material unresolved conflicts remain inspectable and must not be silently presented as confirmed facts.
 
-## 12. Deletion guarantee
+Transition-aware candidate promotion reuses these same authoritative relation semantics.
+
+## 13. Deletion guarantee
 
 Deletion is defined against active memory state, not merely an index entry.
 
@@ -233,44 +324,42 @@ create
 -> still cannot retrieve
 ```
 
-Backups may retain encrypted copies until expiry, but deleted records must never be silently restored
-to active memory.
+Backups may retain encrypted copies until expiry, but deleted records must never be silently restored to active memory.
 
-## 13. Sensitive-memory access
+## 14. Sensitive-memory access
 
 Memory retrieval is default-deny with deterministic enforcement.
 
-Runtime retrieval must consider:
+Runtime retrieval considers:
 
 - caller;
 - purpose;
 - requested operation;
+- exact resource;
 - data classification;
 - maximum allowed classification;
-- sensitivity;
+- authorization expiry;
 - authorization context.
 
-`HIGHLY_SENSITIVE` memories require purpose-limited retrieval and stronger controls.
+`HIGHLY_SENSITIVE` memories require encrypted storage, purpose-limited local access, exact operation and resource scope, expiry enforcement, and sanitized audit records.
 
-Semantic similarity alone must never be sufficient reason to surface intimate or painful memories.
+Semantic similarity alone is never sufficient reason to surface intimate or painful memories.
 
-`SECRETS` are never eligible for ordinary memory retrieval because they are never eligible for
-ordinary memory storage.
+`SECRETS` are never eligible for ordinary memory retrieval because they are never eligible for ordinary memory storage.
 
-## 14. Model and training boundary
+## 15. Model and training boundary
 
 Phase 2 does not require training a new model.
 
-Personal facts that may change belong in memory/RAG rather than model weights.
+Personal facts that may change belong in memory and retrieval rather than model weights.
 
-Any future A.L.I.C.E. training or fine-tuning is a separately approved workflow. Heavy model training
-will be performed using cloud GPU infrastructure rather than relying on the local laptop.
+Any future A.L.I.C.E. training or fine-tuning is a separately approved workflow. Heavy model training will be performed using cloud GPU infrastructure rather than relying on the local laptop.
 
 Personal memory must not be included in a training dataset by default.
 
-## 15. Initial authoritative tables
+## 16. Current authoritative tables
 
-P2.0 defines these schema-level tables:
+Schema version 3 defines:
 
 - `schema_migrations`;
 - `memories`;
@@ -279,24 +368,49 @@ P2.0 defines these schema-level tables:
 - `memory_derivations`;
 - `memory_entities`;
 - `memory_events`;
-- `memory_tombstones`.
+- `memory_tombstones`;
+- `memory_sensitive_payloads`;
+- `sensitive_memory_access_events`;
+- `memory_candidates`;
+- `memory_candidate_sources`;
+- `memory_candidate_events`.
 
 Additional tables require a versioned schema migration.
 
-## 16. P2.0 exit criteria
+## 17. P2.7 completion criteria
 
-P2.0 is complete when:
+P2.7 is complete when:
 
-1. the Phase 1/Phase 2 boundary is documented;
-2. Phase 2 has an independent package and test namespace;
-3. the initial memory schema is versioned;
-4. SQLite foreign-key enforcement is tested;
-5. required tables and controlled vocabularies are tested;
-6. the schema can initialize transactionally in an isolated test database;
-7. no live private memory data is written;
-8. the existing Phase 1 regression suite remains unchanged.
+1. candidate records remain separate from authoritative memory;
+2. candidates cannot enter authoritative lexical, semantic, or hybrid indexes;
+3. candidate formation preserves origin and provenance;
+4. deterministic assessment handles weak provenance, duplicates, conflicts, confidence, knowledge status, and confirmation state;
+5. rejected candidates cannot use ordinary promotion;
+6. model-origin candidates require explicit human confirmation;
+7. ordinary promotion is explicitly authorized, candidate-bound, atomic, and idempotent;
+8. correction, supersession, conflict, and duplicate resolution are target-bound and transition-bound;
+9. stale assessments are rechecked under the write transaction;
+10. promotion preserves authoritative provenance and derivation metadata;
+11. tampered promotion links, derivations, audit events, and relations fail closed;
+12. ordinary candidate storage continues to reject `HIGHLY_SENSITIVE` and `SECRETS`;
+13. existing Phase 1 and Phase 2 regression tests remain passing.
 
-## 17. Next milestone
+Final P2.7 verification on the feature branch:
 
-After P2.0 passes targeted and full regression tests, P2.1 will implement the authoritative store
-service and migration runner around this schema contract.
+- 15 adversarial P2.7e tests passed;
+- 94 combined Phase 2.7 and temporal-transition tests passed;
+- 232 Phase 2 tests passed;
+- 356 full-suite tests passed;
+- 14 subtests passed.
+
+## 18. Next milestone
+
+P2.7 establishes a safe memory-formation boundary. It does not implement the conversational assistant or declare all Phase 2 work complete.
+
+The next Phase 2 milestone must continue from the governing roadmap and preserve these invariants:
+
+- proposals remain non-authoritative until explicitly promoted;
+- models cannot grant themselves authority;
+- sensitive-memory access stays purpose-bound and local;
+- authoritative history is never silently overwritten;
+- derived indexes remain rebuildable and non-authoritative.

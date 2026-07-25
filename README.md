@@ -18,8 +18,18 @@ Its intended role is to become a persistent, permissioned cognitive partner that
   - local semantic and hybrid retrieval: complete;
   - retrieval-grounded read-only context access: complete;
   - grounded reasoning and response generation: complete.
+- Phase 2 — Memory Core: in progress
+  - P2.0 memory architecture and schema foundation: complete;
+  - P2.1 authoritative private store and migrations: complete;
+  - P2.2 read-only Phase 1 provenance bridge: complete;
+  - P2.3 permission-gated lifecycle and inspection: complete;
+  - P2.4 temporal correction, supersession, and conflict handling: complete;
+  - P2.5 authorization-aware lexical, semantic, and hybrid retrieval: complete;
+  - P2.6 encrypted highly sensitive storage and purpose-bound access: complete;
+  - P2.7 non-authoritative candidate formation, deterministic assessment, authorized promotion, transition-aware promotion, and adversarial security gates: complete.
 
 A working conversational assistant is not yet implemented.
+
 ## Governing documents
 
 - [`docs/ALICE_CONSTITUTION.md`](docs/ALICE_CONSTITUTION.md)
@@ -39,11 +49,15 @@ A working conversational assistant is not yet implemented.
 - [`docs/PHASE_1_FINAL_PILOT_POLICY.md`](docs/PHASE_1_FINAL_PILOT_POLICY.md)
 - [`docs/PHASE_1_SAFE_PARSER_REGISTRY.md`](docs/PHASE_1_SAFE_PARSER_REGISTRY.md)
 
+## Phase 2 documents
+
+- [`docs/PHASE_2_MEMORY_CORE_ARCHITECTURE.md`](docs/PHASE_2_MEMORY_CORE_ARCHITECTURE.md)
+
 ## Security boundary
 
 Never commit personal datasets, private memory, vault databases, exported manifests, credentials, tokens, activity logs, extracted text, or other personal content.
 
-The private vault and source archive must remain outside this repository.
+The private vault, source archive, authoritative memory database, encrypted sensitive-memory payloads, and derived private indexes must remain outside this repository.
 
 ## Development checks
 
@@ -53,8 +67,11 @@ py -m pip install `
   -r requirements-phase1.txt `
   -r requirements-extraction.txt
 
+$env:PYTHONPATH = (Resolve-Path .\src).Path
+
 py scripts\validate_phase0.py
-py -m unittest discover -s tests -p "test_*.py" -v
+py -m pytest tests\phase2 -q
+py -m pytest -q
 ```
 
 ## Legacy prototype

@@ -1,3 +1,4 @@
+
 """Versioned SQLite schema contract for the A.L.I.C.E. Phase 2 Memory Core.
 
 The schema is initialized for fresh stores and migrated explicitly for existing
@@ -10,7 +11,7 @@ from __future__ import annotations
 import sqlite3
 from collections.abc import Iterable
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 MEMORY_CATEGORIES = (
     "working",
@@ -47,6 +48,33 @@ MEMORY_STORABLE_CLASSIFICATIONS = tuple(
     classification
     for classification in DATA_CLASSIFICATIONS
     if classification != "SECRETS"
+)
+
+MEMORY_CANDIDATE_STORABLE_CLASSIFICATIONS = tuple(
+    classification
+    for classification in MEMORY_STORABLE_CLASSIFICATIONS
+    if classification != "HIGHLY_SENSITIVE"
+)
+
+CANDIDATE_STATES = (
+    "proposed",
+    "validated",
+    "rejected",
+    "promoted",
+)
+
+CANDIDATE_ORIGINS = (
+    "explicit_user",
+    "deterministic_import",
+    "model_proposed",
+)
+
+CANDIDATE_EVENT_TYPES = (
+    "proposed",
+    "validated",
+    "rejected",
+    "promoted",
+    "inspected",
 )
 
 VALIDITY_STATES = (
@@ -292,7 +320,109 @@ SCHEMA_V2_DDL_STATEMENTS = (
     "ON sensitive_memory_access_events(authorization_id)",
 )
 
-DDL_STATEMENTS = SCHEMA_V1_DDL_STATEMENTS + SCHEMA_V2_DDL_STATEMENTS
+SCHEMA_V3_DDL_STATEMENTS = (
+    f"""
+    CREATE TABLE IF NOT EXISTS memory_candidates (
+        candidate_id TEXT PRIMARY KEY,
+        schema_version INTEGER NOT NULL,
+        content TEXT NOT NULL,
+        content_sha256 TEXT NOT NULL,
+        memory_key TEXT,
+        category TEXT NOT NULL
+            CHECK (category IN ({_sql_values(MEMORY_CATEGORIES)})),
+        knowledge_status TEXT NOT NULL
+            CHECK (knowledge_status IN ({_sql_values(KNOWLEDGE_STATUSES)})),
+        confidence REAL NOT NULL CHECK (confidence >= 0.0 AND confidence <= 1.0),
+        data_classification TEXT NOT NULL
+            CHECK (
+                data_classification IN (
+                    {_sql_values(MEMORY_CANDIDATE_STORABLE_CLASSIFICATIONS)}
+                )
+            ),
+        valid_from TEXT,
+        valid_to TEXT,
+        time_precision TEXT,
+        recorded_at TEXT NOT NULL,
+        verified_at TEXT,
+        rayan_confirmed INTEGER NOT NULL DEFAULT 0
+            CHECK (rayan_confirmed IN (0, 1)),
+        validity_state TEXT NOT NULL
+            CHECK (validity_state IN ({_sql_values(VALIDITY_STATES)})),
+        retention_state TEXT NOT NULL
+            CHECK (retention_state IN ({_sql_values(RETENTION_STATES)})),
+        candidate_state TEXT NOT NULL
+            CHECK (candidate_state IN ({_sql_values(CANDIDATE_STATES)})),
+        origin TEXT NOT NULL
+            CHECK (origin IN ({_sql_values(CANDIDATE_ORIGINS)})),
+        proposed_by TEXT NOT NULL,
+        policy_version TEXT,
+        model TEXT,
+        model_version TEXT,
+        prompt_version TEXT,
+        run_id TEXT,
+        promoted_memory_id TEXT,
+        rejection_reason TEXT,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        FOREIGN KEY (promoted_memory_id)
+            REFERENCES memories(memory_id) ON DELETE SET NULL,
+        CHECK (length(content_sha256) = 64),
+        CHECK (valid_to IS NULL OR valid_from IS NULL OR valid_to >= valid_from),
+        CHECK (origin <> 'model_proposed' OR rayan_confirmed = 0)
+    )
+    """,
+    f"""
+    CREATE TABLE IF NOT EXISTS memory_candidate_sources (
+        candidate_source_id TEXT PRIMARY KEY,
+        candidate_id TEXT NOT NULL,
+        source_type TEXT NOT NULL
+            CHECK (source_type IN ({_sql_values(SOURCE_TYPES)})),
+        source_ref TEXT NOT NULL,
+        source_content_sha256 TEXT,
+        source_text_sha256 TEXT,
+        chunk_id TEXT,
+        file_id TEXT,
+        source_date TEXT,
+        support_relation TEXT NOT NULL
+            CHECK (support_relation IN ({_sql_values(SUPPORT_RELATIONS)})),
+        created_at TEXT NOT NULL,
+        FOREIGN KEY (candidate_id)
+            REFERENCES memory_candidates(candidate_id) ON DELETE CASCADE,
+        UNIQUE (candidate_id, source_type, source_ref, chunk_id)
+    )
+    """,
+    f"""
+    CREATE TABLE IF NOT EXISTS memory_candidate_events (
+        candidate_event_id TEXT PRIMARY KEY,
+        candidate_id TEXT,
+        event_type TEXT NOT NULL
+            CHECK (event_type IN ({_sql_values(CANDIDATE_EVENT_TYPES)})),
+        actor TEXT NOT NULL,
+        details_json TEXT,
+        created_at TEXT NOT NULL,
+        FOREIGN KEY (candidate_id)
+            REFERENCES memory_candidates(candidate_id) ON DELETE SET NULL
+    )
+    """,
+    "CREATE INDEX IF NOT EXISTS idx_memory_candidates_state "
+    "ON memory_candidates(candidate_state)",
+    "CREATE INDEX IF NOT EXISTS idx_memory_candidates_origin "
+    "ON memory_candidates(origin)",
+    "CREATE INDEX IF NOT EXISTS idx_memory_candidates_memory_key "
+    "ON memory_candidates(memory_key)",
+    "CREATE INDEX IF NOT EXISTS idx_memory_candidates_created_at "
+    "ON memory_candidates(created_at)",
+    "CREATE INDEX IF NOT EXISTS idx_memory_candidate_sources_candidate_id "
+    "ON memory_candidate_sources(candidate_id)",
+    "CREATE INDEX IF NOT EXISTS idx_memory_candidate_events_candidate_id "
+    "ON memory_candidate_events(candidate_id)",
+)
+
+DDL_STATEMENTS = (
+    SCHEMA_V1_DDL_STATEMENTS
+    + SCHEMA_V2_DDL_STATEMENTS
+    + SCHEMA_V3_DDL_STATEMENTS
+)
 
 
 
