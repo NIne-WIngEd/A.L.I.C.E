@@ -1,3 +1,4 @@
+
 # A.L.I.C.E.
 
 A.L.I.C.E. is a long-term personal AI assistant project created for MK Rayan.
@@ -18,7 +19,7 @@ Its intended role is to become a persistent, permissioned cognitive partner that
   - local semantic and hybrid retrieval: complete;
   - retrieval-grounded read-only context access: complete;
   - grounded reasoning and response generation: complete.
-- Phase 2 — Memory Core: in progress
+- Phase 2 — Memory Core: complete
   - P2.0 memory architecture and schema foundation: complete;
   - P2.1 authoritative private store and migrations: complete;
   - P2.2 read-only Phase 1 provenance bridge: complete;
@@ -27,7 +28,8 @@ Its intended role is to become a persistent, permissioned cognitive partner that
   - P2.5 authorization-aware lexical, semantic, and hybrid retrieval: complete;
   - P2.6 encrypted highly sensitive storage and purpose-bound access: complete;
   - P2.7 non-authoritative candidate formation, deterministic assessment, authorized promotion, transition-aware promotion, and adversarial security gates: complete.
-  - P2.8 ordinary and protected deletion lifecycles, lineage cleanup, derived-index purge and rebuild guarantees, and adversarial deletion gates: complete.
+  - P2.8 ordinary and protected deletion lifecycles, lineage cleanup, derived-index purge and rebuild guarantees, and adversarial deletion gates: complete;
+  - P2.9 versioned evaluation contract, authoritative source-cited answers, adversarial end-to-end gates, and final release audit: complete.
 
 A working conversational assistant is not yet implemented.
 
@@ -53,6 +55,7 @@ A working conversational assistant is not yet implemented.
 ## Phase 2 documents
 
 - [`docs/PHASE_2_MEMORY_CORE_ARCHITECTURE.md`](docs/PHASE_2_MEMORY_CORE_ARCHITECTURE.md)
+- [`docs/PHASE_2_FINAL_RELEASE_REPORT.md`](docs/PHASE_2_FINAL_RELEASE_REPORT.md)
 
 ## Security boundary
 
