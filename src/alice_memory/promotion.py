@@ -125,6 +125,24 @@ def _require_promotion_authorization(
         )
 
 
+def _require_model_proposal_confirmation_actor(
+    candidate: MemoryCandidateRecord,
+    authorization: MemoryCandidatePromotionAuthorization,
+) -> None:
+    """Prevent the model-side proposer from authorizing its own promotion."""
+    if candidate.origin != "model_proposed":
+        return
+    if not authorization.user_confirmed:
+        raise MemoryCandidatePromotionAuthorizationError(
+            "Model-proposed candidates require explicit user confirmation."
+        )
+    if authorization.actor.strip() == candidate.proposed_by.strip():
+        raise MemoryCandidatePromotionAuthorizationError(
+            "The actor that proposed a model candidate cannot authorize its "
+            "promotion, even when a confirmation flag is supplied."
+        )
+
+
 def _candidate_content(
     connection: sqlite3.Connection,
     *,
@@ -317,23 +335,59 @@ def _load_promoted_event(
     connection: sqlite3.Connection,
     *,
     candidate_id: str,
-) -> sqlite3.Row:
-    row = connection.execute(
+) -> tuple[sqlite3.Row, dict[str, object]]:
+    rows = connection.execute(
         """
         SELECT actor, details_json, created_at
         FROM memory_candidate_events
         WHERE candidate_id = ?
           AND event_type = 'promoted'
         ORDER BY created_at DESC, candidate_event_id DESC
-        LIMIT 1
         """,
         (candidate_id,),
-    ).fetchone()
-    if row is None:
+    ).fetchall()
+
+    for row in rows:
+        try:
+            details = json.loads(str(row["details_json"]))
+        except (TypeError, ValueError) as exc:
+            raise MemoryCandidatePromotionStateError(
+                "Candidate promotion event contains invalid JSON."
+            ) from exc
+        if not isinstance(details, dict):
+            raise MemoryCandidatePromotionStateError(
+                "Candidate promotion event must contain a JSON object."
+            )
+
+        mode = details.get("promotion_mode")
+        if mode in (None, "ordinary"):
+            return row, details
+        if mode == "transition_aware":
+            continue
         raise MemoryCandidatePromotionStateError(
-            "Promoted candidate is missing its promotion audit event."
+            "Candidate promotion event contains an unsupported promotion mode."
         )
-    return row
+
+    raise MemoryCandidatePromotionStateError(
+        "Promoted candidate is missing its ordinary promotion audit event."
+    )
+
+
+def _persisted_derivation_types(
+    connection: sqlite3.Connection,
+    *,
+    memory_id: str,
+) -> tuple[str, ...]:
+    rows = connection.execute(
+        """
+        SELECT derivation_type
+        FROM memory_derivations
+        WHERE memory_id = ?
+        ORDER BY derivation_type
+        """,
+        (memory_id,),
+    ).fetchall()
+    return tuple(str(row["derivation_type"]) for row in rows)
 
 
 def load_candidate_promotion(
@@ -341,7 +395,7 @@ def load_candidate_promotion(
     *,
     candidate_id: str,
 ) -> MemoryCandidatePromotionResult:
-    """Load a completed promotion without exposing candidate plaintext."""
+    """Load and integrity-check one completed ordinary promotion."""
     candidate = load_memory_candidate(
         connection,
         candidate_id=candidate_id,
@@ -355,16 +409,10 @@ def load_candidate_promotion(
             "Promoted candidate is missing promoted_memory_id."
         )
 
-    event = _load_promoted_event(
+    event, details = _load_promoted_event(
         connection,
         candidate_id=candidate_id,
     )
-    try:
-        details = json.loads(str(event["details_json"]))
-    except (TypeError, ValueError) as exc:
-        raise MemoryCandidatePromotionStateError(
-            "Candidate promotion event contains invalid JSON."
-        ) from exc
 
     outcome = str(details.get("assessment_outcome", ""))
     if outcome not in ASSESSMENT_OUTCOMES:
@@ -373,21 +421,70 @@ def load_candidate_promotion(
             "outcome."
         )
 
-    return MemoryCandidatePromotionResult(
-        candidate=candidate,
-        memory=load_memory(
+    event_memory_id = str(details.get("promoted_memory_id", ""))
+    if event_memory_id != candidate.promoted_memory_id:
+        raise MemoryCandidatePromotionStateError(
+            "Candidate promotion event does not match promoted_memory_id."
+        )
+
+    authorization_id = str(details.get("authorization_id", ""))
+    if not _SAFE_AUTHORIZATION_ID.fullmatch(authorization_id):
+        raise MemoryCandidatePromotionStateError(
+            "Candidate promotion event contains an invalid authorization_id."
+        )
+
+    derivation_types = tuple(
+        str(value) for value in details.get("derivation_types", ())
+    )
+    if candidate.origin not in derivation_types:
+        raise MemoryCandidatePromotionStateError(
+            "Candidate promotion event is missing the origin derivation."
+        )
+
+    user_confirmed = bool(details.get("user_confirmed", False))
+    if user_confirmed != ("human_confirmed" in derivation_types):
+        raise MemoryCandidatePromotionStateError(
+            "Candidate promotion confirmation metadata is inconsistent."
+        )
+    if candidate.origin == "model_proposed" and not user_confirmed:
+        raise MemoryCandidatePromotionStateError(
+            "Model-proposed promotion is missing human confirmation."
+        )
+
+    persisted_derivations = set(
+        _persisted_derivation_types(
             connection,
             memory_id=candidate.promoted_memory_id,
-        ),
+        )
+    )
+    if not set(derivation_types).issubset(persisted_derivations):
+        raise MemoryCandidatePromotionStateError(
+            "Candidate promotion derivation records are missing or inconsistent."
+        )
+
+    memory = load_memory(
+        connection,
+        memory_id=candidate.promoted_memory_id,
+    )
+    if memory.content_sha256 != candidate.content_sha256:
+        raise MemoryCandidatePromotionStateError(
+            "Promoted memory content digest does not match its candidate."
+        )
+    if user_confirmed and not memory.rayan_confirmed:
+        raise MemoryCandidatePromotionStateError(
+            "User-confirmed promotion did not persist confirmation metadata."
+        )
+
+    return MemoryCandidatePromotionResult(
+        candidate=candidate,
+        memory=memory,
         assessment_outcome=outcome,
         reason_codes=tuple(
             str(value) for value in details.get("reason_codes", ())
         ),
-        authorization_id=str(details.get("authorization_id", "")),
-        user_confirmed=bool(details.get("user_confirmed", False)),
-        derivation_types=tuple(
-            str(value) for value in details.get("derivation_types", ())
-        ),
+        authorization_id=authorization_id,
+        user_confirmed=user_confirmed,
+        derivation_types=derivation_types,
         promoted_by=str(event["actor"]),
         promoted_at=str(event["created_at"]),
     )
@@ -450,6 +547,10 @@ def promote_memory_candidate(
         connection,
         candidate_id=candidate_id,
     )
+    _require_model_proposal_confirmation_actor(
+        initial,
+        authorization,
+    )
     if initial.candidate_state == "promoted":
         return load_candidate_promotion(
             connection,
@@ -486,6 +587,10 @@ def promote_memory_candidate(
             candidate = load_memory_candidate(
                 connection,
                 candidate_id=candidate_id,
+            )
+            _require_model_proposal_confirmation_actor(
+                candidate,
+                authorization,
             )
             if candidate.candidate_state == "promoted":
                 memory_id = candidate.promoted_memory_id
@@ -558,6 +663,7 @@ def promote_memory_candidate(
                         "authorization_id": authorization.authorization_id,
                         "derivation_types": list(derivation_types),
                         "promoted_memory_id": memory_id,
+                        "promotion_mode": "ordinary",
                         "reason_codes": list(reason_codes),
                         "user_confirmed": authorization.user_confirmed,
                     },

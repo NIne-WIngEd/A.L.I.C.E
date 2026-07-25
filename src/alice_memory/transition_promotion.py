@@ -32,9 +32,12 @@ from .formation import MemoryCandidateRecord, load_memory_candidate
 from .promotion import (
     MemoryCandidatePromotionAuthorization,
     MemoryCandidatePromotionAuthorizationError,
+    _SAFE_AUTHORIZATION_ID,
     _insert_derivations,
+    _persisted_derivation_types,
     _promoted_memory_id,
     _promotion_request,
+    _require_model_proposal_confirmation_actor,
     _require_promotion_authorization,
 )
 from .service import (
@@ -179,11 +182,11 @@ def _require_transition_authorization(
         )
 
 
-def _load_resolution_event(
+def _find_resolution_event(
     connection: sqlite3.Connection,
     *,
     candidate_id: str,
-) -> tuple[sqlite3.Row, dict[str, object]]:
+) -> tuple[sqlite3.Row, dict[str, object]] | None:
     rows = connection.execute(
         """
         SELECT event_type, actor, details_json, created_at
@@ -212,10 +215,72 @@ def _load_resolution_event(
             and details.get("operation") == "duplicate_noop"
         ):
             return row, details
+    return None
 
-    raise MemoryCandidateTransitionStateError(
-        "Candidate has no transition-aware promotion or duplicate resolution."
+
+def _load_resolution_event(
+    connection: sqlite3.Connection,
+    *,
+    candidate_id: str,
+) -> tuple[sqlite3.Row, dict[str, object]]:
+    result = _find_resolution_event(
+        connection,
+        candidate_id=candidate_id,
     )
+    if result is None:
+        raise MemoryCandidateTransitionStateError(
+            "Candidate has no transition-aware promotion or duplicate "
+            "resolution."
+        )
+    return result
+
+
+def _validate_transition_relation(
+    *,
+    transition_type: str,
+    relation: MemoryRelation | None,
+    memory_id: str,
+    target_memory_id: str,
+) -> None:
+    if transition_type == "duplicate":
+        if relation is not None:
+            raise MemoryCandidateTransitionStateError(
+                "Duplicate no-op must not create an authoritative relation."
+            )
+        return
+
+    if relation is None:
+        raise MemoryCandidateTransitionStateError(
+            "Transition-promoted candidate is missing its relation."
+        )
+
+    expected_relation = {
+        "correction": "corrects",
+        "supersession": "supersedes",
+        "conflict": "conflicts_with",
+    }[transition_type]
+    if relation.relation_type != expected_relation:
+        raise MemoryCandidateTransitionStateError(
+            "Transition relation type does not match the audit event."
+        )
+
+    if transition_type in {"correction", "supersession"}:
+        if (
+            relation.from_memory_id != memory_id
+            or relation.to_memory_id != target_memory_id
+        ):
+            raise MemoryCandidateTransitionStateError(
+                "Transition relation endpoints do not match promoted and "
+                "target memories."
+            )
+    elif {
+        relation.from_memory_id,
+        relation.to_memory_id,
+    } != {memory_id, target_memory_id}:
+        raise MemoryCandidateTransitionStateError(
+            "Conflict relation endpoints do not match promoted and target "
+            "memories."
+        )
 
 
 def load_candidate_transition_promotion(
@@ -223,7 +288,7 @@ def load_candidate_transition_promotion(
     *,
     candidate_id: str,
 ) -> MemoryCandidateTransitionResult:
-    """Load a completed transition-aware result without exposing plaintext."""
+    """Load and integrity-check one completed transition-aware result."""
     candidate = load_memory_candidate(
         connection,
         candidate_id=candidate_id,
@@ -238,16 +303,29 @@ def load_candidate_transition_promotion(
         raise MemoryCandidateTransitionStateError(
             "Transition audit event contains an unsupported transition type."
         )
+    expected_action = _TRANSITION_ACTIONS[transition_type]
+    transition_action = str(details.get("transition_action", ""))
+    if transition_action != expected_action:
+        raise MemoryCandidateTransitionStateError(
+            "Transition audit action does not match transition type."
+        )
+
+    authorization_id = str(details.get("authorization_id", ""))
+    if not _SAFE_AUTHORIZATION_ID.fullmatch(authorization_id):
+        raise MemoryCandidateTransitionStateError(
+            "Transition audit event contains an invalid authorization_id."
+        )
+
     target_memory_id = str(details.get("target_memory_id", ""))
     if not target_memory_id:
         raise MemoryCandidateTransitionStateError(
             "Transition audit event is missing target_memory_id."
         )
-
     target = load_memory(
         connection,
         memory_id=target_memory_id,
     )
+
     relation_id = details.get("relation_id")
     relation = (
         None
@@ -258,13 +336,50 @@ def load_candidate_transition_promotion(
         )
     )
 
+    user_confirmed = bool(details.get("user_confirmed", False))
+    derivation_types = tuple(
+        str(value) for value in details.get("derivation_types", ())
+    )
+
     if transition_type == "duplicate":
+        if event["event_type"] != "inspected":
+            raise MemoryCandidateTransitionStateError(
+                "Duplicate no-op must use an inspected audit event."
+            )
+        if details.get("operation") != "duplicate_noop":
+            raise MemoryCandidateTransitionStateError(
+                "Duplicate audit event is missing duplicate_noop operation."
+            )
         if candidate.candidate_state != "rejected":
             raise MemoryCandidateTransitionStateError(
                 "Duplicate-resolved candidate must remain rejected."
             )
+        if candidate.promoted_memory_id is not None:
+            raise MemoryCandidateTransitionStateError(
+                "Duplicate-resolved candidate must not link a promoted memory."
+            )
+        if candidate.content_sha256 != target.content_sha256:
+            raise MemoryCandidateTransitionStateError(
+                "Duplicate target digest does not match candidate digest."
+            )
+        if derivation_types:
+            raise MemoryCandidateTransitionStateError(
+                "Duplicate no-op must not record authoritative derivations."
+            )
         memory = target
     else:
+        if event["event_type"] != "promoted":
+            raise MemoryCandidateTransitionStateError(
+                "Authoritative transition must use a promoted audit event."
+            )
+        if details.get("promotion_mode") != "transition_aware":
+            raise MemoryCandidateTransitionStateError(
+                "Transition promotion audit mode is missing or invalid."
+            )
+        if not user_confirmed:
+            raise MemoryCandidateTransitionStateError(
+                "Authoritative transition is missing user confirmation."
+            )
         if candidate.candidate_state != "promoted":
             raise MemoryCandidateTransitionStateError(
                 "Transition-promoted candidate is not marked promoted."
@@ -273,27 +388,66 @@ def load_candidate_transition_promotion(
             raise MemoryCandidateTransitionStateError(
                 "Transition-promoted candidate is missing promoted_memory_id."
             )
+        if str(details.get("promoted_memory_id", "")) != (
+            candidate.promoted_memory_id
+        ):
+            raise MemoryCandidateTransitionStateError(
+                "Transition audit event does not match promoted_memory_id."
+            )
+
         memory = load_memory(
             connection,
             memory_id=candidate.promoted_memory_id,
         )
+        if memory.content_sha256 != candidate.content_sha256:
+            raise MemoryCandidateTransitionStateError(
+                "Transition-promoted memory digest does not match candidate."
+            )
+        if not memory.rayan_confirmed:
+            raise MemoryCandidateTransitionStateError(
+                "User-confirmed transition did not persist confirmation."
+            )
+        if candidate.origin not in derivation_types:
+            raise MemoryCandidateTransitionStateError(
+                "Transition audit event is missing the origin derivation."
+            )
+        if "human_confirmed" not in derivation_types:
+            raise MemoryCandidateTransitionStateError(
+                "Transition audit event is missing human confirmation "
+                "derivation."
+            )
+        persisted_derivations = set(
+            _persisted_derivation_types(
+                connection,
+                memory_id=memory.memory_id,
+            )
+        )
+        if not set(derivation_types).issubset(persisted_derivations):
+            raise MemoryCandidateTransitionStateError(
+                "Transition derivation records are missing or inconsistent."
+            )
+
+    _validate_transition_relation(
+        transition_type=transition_type,
+        relation=relation,
+        memory_id=memory.memory_id,
+        target_memory_id=target.memory_id,
+    )
 
     return MemoryCandidateTransitionResult(
         candidate=candidate,
         memory=memory,
         target=target,
         transition_type=transition_type,
-        transition_action=str(details.get("transition_action", "")),
+        transition_action=transition_action,
         relation=relation,
         assessment_outcome=str(details.get("assessment_outcome", "")),
         reason_codes=tuple(
             str(value) for value in details.get("reason_codes", ())
         ),
-        authorization_id=str(details.get("authorization_id", "")),
-        user_confirmed=bool(details.get("user_confirmed", False)),
-        derivation_types=tuple(
-            str(value) for value in details.get("derivation_types", ())
-        ),
+        authorization_id=authorization_id,
+        user_confirmed=user_confirmed,
+        derivation_types=derivation_types,
         resolved_by=str(event["actor"]),
         resolved_at=str(event["created_at"]),
     )
@@ -820,8 +974,18 @@ def promote_memory_candidate_with_transition(
         candidate_id=candidate_id,
     )
     _require_assessed_candidate(initial)
+    try:
+        _require_model_proposal_confirmation_actor(
+            initial,
+            _base_promotion_authorization(authorization),
+        )
+    except MemoryCandidatePromotionAuthorizationError as exc:
+        raise MemoryCandidateTransitionAuthorizationError(str(exc)) from exc
 
-    if initial.candidate_state == "promoted":
+    if _find_resolution_event(
+        connection,
+        candidate_id=candidate_id,
+    ) is not None:
         result = load_candidate_transition_promotion(
             connection,
             candidate_id=candidate_id,
@@ -852,6 +1016,15 @@ def promote_memory_candidate_with_transition(
                 candidate_id=candidate_id,
             )
             _require_assessed_candidate(candidate)
+            try:
+                _require_model_proposal_confirmation_actor(
+                    candidate,
+                    _base_promotion_authorization(authorization),
+                )
+            except MemoryCandidatePromotionAuthorizationError as exc:
+                raise MemoryCandidateTransitionAuthorizationError(
+                    str(exc)
+                ) from exc
 
             if candidate.candidate_state == "promoted":
                 pass
