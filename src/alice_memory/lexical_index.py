@@ -1,3 +1,4 @@
+
 """Private, derived, rebuildable lexical index for Phase 2 memory.
 
 The authoritative SQLite Memory Core remains the source of truth. This module
@@ -383,25 +384,53 @@ def verify_memory_lexical_index(
             "Memory Core. Rebuild the index before retrieval."
         )
 
+    expected_rows = _eligible_rows(connection)
+    expected_metadata = [
+        (
+            str(row["memory_id"]),
+            str(row["content_sha256"]),
+            str(row["data_classification"]),
+        )
+        for row in expected_rows
+    ]
+    expected_fts = [
+        (
+            str(row["memory_id"]),
+            str(row["content"]),
+        )
+        for row in expected_rows
+    ]
+
     with closing(
         sqlite3.connect(
             f"{Path(index_path).resolve().as_uri()}?mode=ro",
             uri=True,
         )
     ) as index:
-        indexed_count = index.execute(
-            "SELECT COUNT(*) FROM indexed_memories"
-        ).fetchone()[0]
-        fts_count = index.execute(
-            "SELECT COUNT(*) FROM memory_fts"
-        ).fetchone()[0]
+        indexed_rows = [
+            tuple(row)
+            for row in index.execute(
+                """
+                SELECT memory_id, content_sha256, data_classification
+                FROM indexed_memories
+                ORDER BY memory_id
+                """
+            ).fetchall()
+        ]
+        fts_rows = [
+            tuple(row)
+            for row in index.execute(
+                """
+                SELECT memory_id, content
+                FROM memory_fts
+                ORDER BY memory_id
+                """
+            ).fetchall()
+        ]
 
-    if (
-        indexed_count != manifest.record_count
-        or fts_count != manifest.record_count
-    ):
+    if indexed_rows != expected_metadata or fts_rows != expected_fts:
         raise MemoryLexicalIndexError(
-            "Memory lexical index row counts do not match its manifest."
+            "Memory lexical index rows do not match authoritative memory."
         )
 
     return manifest

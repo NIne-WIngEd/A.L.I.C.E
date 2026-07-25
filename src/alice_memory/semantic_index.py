@@ -1,3 +1,4 @@
+
 """Private, derived semantic index for Phase 2 memory retrieval.
 
 The semantic index is memory-specific and rebuildable from the authoritative
@@ -545,6 +546,32 @@ def verify_memory_semantic_index(
     ) != _sha256_file(map_path):
         raise MemorySemanticIndexError(
             "Semantic memory-map digest mismatch."
+        )
+
+    try:
+        map_rows = [
+            json.loads(line)
+            for line in map_path.read_text(
+                encoding="utf-8"
+            ).splitlines()
+            if line.strip()
+        ]
+    except (OSError, json.JSONDecodeError) as exc:
+        raise MemorySemanticIndexError(
+            "Semantic memory map is missing or invalid."
+        ) from exc
+
+    expected_map_rows = [
+        {
+            "memory_id": str(row["memory_id"]),
+            "content_sha256": str(row["content_sha256"]),
+            "data_classification": str(row["data_classification"]),
+        }
+        for row in _eligible_rows(connection)
+    ]
+    if map_rows != expected_map_rows:
+        raise MemorySemanticIndexError(
+            "Semantic memory map does not match authoritative memory."
         )
 
     expected_bytes = (
