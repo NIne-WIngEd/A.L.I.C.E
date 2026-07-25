@@ -1,6 +1,7 @@
+
 # Phase 2 — Memory Core Architecture
 
-**Status:** P2.0–P2.8 implemented; Phase 2 remains in progress
+**Status:** P2.0–P2.9 implemented; Phase 2 complete
 **Phase 1 dependency:** Frozen, read-only evidence layer
 **Owner:** MK Rayan
 
@@ -61,9 +62,10 @@ The current implementation includes:
 - P2.5 — authorization-aware lexical, semantic, and hybrid memory retrieval;
 - P2.6 — encrypted `HIGHLY_SENSITIVE` storage and purpose-bound local access;
 - P2.7 — candidate formation, deterministic assessment, ordinary promotion, transition-aware promotion, and adversarial promotion gates;
-- P2.8 — ordinary and protected deletion lifecycles, candidate-lineage cleanup, derived-index purge and rebuild guarantees, and adversarial deletion gates.
+- P2.8 — ordinary and protected deletion lifecycles, candidate-lineage cleanup, derived-index purge and rebuild guarantees, and adversarial deletion gates;
+- P2.9 — versioned evaluation policy and benchmark, deterministic source-cited answers, adversarial end-to-end Memory Core gates, and private final release audit.
 
-P2.8 completion does not mean the entire Phase 2 roadmap is complete.
+P2.9 completes the Phase 2 roadmap scope. Conversational orchestration remains Phase 3 work.
 
 ## 3. Authoritative store
 
@@ -516,13 +518,64 @@ Final P2.8 verification on the feature branch:
 - 436 full-suite tests passed;
 - 14 subtests passed.
 
-## 19. Next milestone
+## 19. P2.9 final evaluation and release audit
 
-P2.8 establishes the deletion guarantee required by the governing roadmap. It does not implement the conversational assistant or declare all Phase 2 work complete.
+P2.9 closes the remaining Memory Core exit criteria without introducing a conversational model.
 
-The next Phase 2 milestone must close the remaining Memory Core exit criteria:
+The final evaluation is:
 
-- run final memory evaluation gates;
-- verify that personal answers cite authoritative memory and source records;
-- preserve uncertainty, conflict, temporal, permission, sensitivity, and deletion behavior in end-to-end evaluation;
-- document the final Phase 2 release decision.
+- versioned and synthetic-only;
+- deterministic and reproducible;
+- read-only after fixture construction;
+- offline;
+- unable to call tools or perform external actions;
+- restricted to private output;
+- bound to the approved policy, benchmark, fixture snapshot, and repository commit.
+
+Deterministic answer packets cite exact authoritative memory and `memory_sources` rows. The evaluator verifies claim text, content digests, source records, temporal eligibility, correction state, conflicts, uncertainty labels, deletion absence, candidate boundaries, permission denial, sensitive-data denial, and prompt-injection resistance.
+
+The final release audit produces a tamper-evident JSON record under the private vault. The public repository contains only the evaluation implementation, synthetic fixtures, policy, benchmark, tests, and this sanitized release summary.
+
+## 20. P2.9 completion criteria
+
+P2.9 is complete when:
+
+1. the evaluation policy and benchmark are versioned and validated;
+2. all required Memory Core suites have deterministic synthetic cases;
+3. the fixture snapshot matches the approved benchmark digest;
+4. personal answer claims match authoritative memory plaintext and content digests;
+5. each supported claim cites exact authoritative source rows;
+6. unsupported questions produce no personal claims;
+7. temporal current and historical states are distinguished correctly;
+8. material conflicts remain surfaced;
+9. corrected records cannot support current answers;
+10. uncertainty remains explicitly labeled;
+11. permission-denied cases expose no protected memory;
+12. `HIGHLY_SENSITIVE` memory cannot enter ordinary answer generation;
+13. deleted memory remains absent;
+14. unpromoted candidates remain non-authoritative;
+15. prompt-injection text is treated as untrusted data;
+16. every governing metric passes its threshold;
+17. every critical zero-tolerance gate passes;
+18. the final report is digest-verified;
+19. the release decision records the repository commit, UTC time, policies, limitations, and rollback target;
+20. the private release record cannot be written into the repository;
+21. existing Phase 1 and Phase 2 regression tests remain passing.
+
+Final P2.9 verification on the feature branch:
+
+- 32 P2.9a evaluation-contract and fixture tests passed;
+- 34 P2.9b authoritative citation tests passed;
+- 30 P2.9c/P2.9d final-gate and release-audit tests passed;
+- 96 combined P2.9 tests passed;
+- 408 Phase 2 tests passed;
+- 532 full-suite tests passed;
+- 14 subtests passed.
+
+## 21. Phase 2 release decision
+
+Phase 2 is complete when the private release-audit runner returns `approved=true` for the final feature-branch commit and all required repository checks pass.
+
+The private release record is not committed. It preserves the exact evaluated commit, policy and benchmark digests, approved fixture snapshot, metric results, known limitations, rollback commit, and a tamper-evident record digest.
+
+Phase 2 completion establishes the Memory Core only. A working conversational assistant, orchestration loop, constitutional dialogue behavior, and conversation state remain Phase 3 responsibilities.

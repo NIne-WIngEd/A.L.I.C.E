@@ -1,7 +1,8 @@
+
 # A.L.I.C.E. Roadmap
 
-**Version:** 1.0.0  
-**Owner:** MK Rayan  
+**Version:** 1.0.0
+**Owner:** MK Rayan
 **Principle:** Capability grows only after governance, evaluation, and rollback controls exist.
 
 ## Phase 0 — Identity and Governance
@@ -53,6 +54,8 @@ Exit criteria:
 - deletion and rebuild procedures are tested.
 
 ## Phase 2 — Memory Core
+
+**Status:** Complete
 
 Build:
 
