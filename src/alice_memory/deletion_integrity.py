@@ -15,6 +15,7 @@ import sqlite3
 from dataclasses import dataclass
 
 DELETION_INTEGRITY_VERSION = "p2.8d-v1"
+DELETION_SECURITY_VERSION = "p2.8e-v1"
 
 
 class MemoryDeletionIntegrityError(RuntimeError):
@@ -62,6 +63,90 @@ _FORBIDDEN_AUDIT_KEYS = frozenset(
 )
 
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
+_SAFE_IDENTIFIER = re.compile(r"^[A-Za-z0-9_.:-]{3,128}$")
+
+_ORDINARY_COMPLETION_KEYS = frozenset(
+    {
+        "authorization_id",
+        "content_sha256",
+        "deleted_memory_id",
+        "deletion_scope",
+        "dependent_counts",
+        "operation",
+        "promoted_candidate_lineage",
+        "request_event_id",
+        "strong_confirmation",
+    }
+)
+_SENSITIVE_COMPLETION_KEYS = frozenset(
+    set(_ORDINARY_COMPLETION_KEYS)
+    | {"encrypted_payload_deleted", "memory_kind"}
+)
+_DEPENDENT_COUNT_KEYS = frozenset(
+    {"candidate_links", "derivations", "entities", "relations", "sources"}
+)
+
+
+def validate_deletion_lifecycle_details(
+    details: dict[str, object],
+    *,
+    operation: str,
+    target_memory_id: str,
+    deletion_scope: str,
+    memory_kind: str | None = None,
+) -> None:
+    """Require exact, sanitized request/cancellation audit structure."""
+    _walk_audit_value(details)
+    required = {
+        "authorization_id",
+        "deletion_scope",
+        "new_deletion_state",
+        "operation",
+        "previous_deletion_state",
+        "target_memory_id",
+    }
+    if operation == "deletion_cancelled":
+        required.add("request_event_id")
+    if memory_kind is not None:
+        required.add("memory_kind")
+    if set(details) != required:
+        raise MemoryDeletionIntegrityError(
+            "Deletion lifecycle audit has missing or unexpected fields."
+        )
+    if details.get("operation") != operation:
+        raise MemoryDeletionIntegrityError(
+            "Deletion lifecycle audit operation is inconsistent."
+        )
+    if details.get("target_memory_id") != target_memory_id:
+        raise MemoryDeletionIntegrityError(
+            "Deletion lifecycle audit target is inconsistent."
+        )
+    if details.get("deletion_scope") != deletion_scope:
+        raise MemoryDeletionIntegrityError(
+            "Deletion lifecycle audit scope is inconsistent."
+        )
+    auth_id = details.get("authorization_id")
+    if not isinstance(auth_id, str) or not _SAFE_IDENTIFIER.fullmatch(auth_id):
+        raise MemoryDeletionIntegrityError(
+            "Deletion lifecycle audit authorization_id is invalid."
+        )
+    if operation == "deletion_requested":
+        expected = ("active", "pending_deletion")
+    else:
+        expected = ("pending_deletion", "active")
+        request_event_id = details.get("request_event_id")
+        if not isinstance(request_event_id, str) or not request_event_id:
+            raise MemoryDeletionIntegrityError(
+                "Deletion cancellation audit request_event_id is invalid."
+            )
+    if (details.get("previous_deletion_state"), details.get("new_deletion_state")) != expected:
+        raise MemoryDeletionIntegrityError(
+            "Deletion lifecycle audit state transition is inconsistent."
+        )
+    if memory_kind is not None and details.get("memory_kind") != memory_kind:
+        raise MemoryDeletionIntegrityError(
+            "Deletion lifecycle audit memory kind is inconsistent."
+        )
 
 
 def require_no_unmanaged_active_derivative_tables(
@@ -279,8 +364,57 @@ def _walk_audit_value(value: object) -> None:
 
 
 def validate_sanitized_deletion_details(details: dict[str, object]) -> None:
-    """Validate that deletion audit details contain no protected payload data."""
+    """Validate exact completion-audit structure and protected-data absence."""
     _walk_audit_value(details)
+    expected_keys = (
+        _SENSITIVE_COMPLETION_KEYS
+        if details.get("memory_kind") == "highly_sensitive"
+        else _ORDINARY_COMPLETION_KEYS
+    )
+    if set(details) != expected_keys:
+        raise MemoryDeletionIntegrityError(
+            "Deletion audit has missing or unexpected fields."
+        )
+    if details.get("operation") != "memory_deleted":
+        raise MemoryDeletionIntegrityError(
+            "Deletion audit operation is invalid."
+        )
+    if details.get("strong_confirmation") is not True:
+        raise MemoryDeletionIntegrityError(
+            "Deletion audit lacks strong-confirmation proof."
+        )
+    for name in ("authorization_id", "request_event_id"):
+        value = details.get(name)
+        if not isinstance(value, str) or not _SAFE_IDENTIFIER.fullmatch(value):
+            raise MemoryDeletionIntegrityError(
+                f"Deletion audit contains invalid {name}."
+            )
+    digest = details.get("content_sha256")
+    if not isinstance(digest, str) or not _SHA256.fullmatch(digest):
+        raise MemoryDeletionIntegrityError(
+            "Deletion audit contains an invalid content digest."
+        )
+    counts = details.get("dependent_counts")
+    if not isinstance(counts, dict) or set(counts) != _DEPENDENT_COUNT_KEYS:
+        raise MemoryDeletionIntegrityError(
+            "Deletion audit dependent counts are incomplete or unexpected."
+        )
+    if any(
+        not isinstance(value, int) or isinstance(value, bool) or value < 0
+        for value in counts.values()
+    ):
+        raise MemoryDeletionIntegrityError(
+            "Deletion audit contains invalid dependent counts."
+        )
+    if "memory_kind" in details:
+        if details.get("memory_kind") != "highly_sensitive":
+            raise MemoryDeletionIntegrityError(
+                "Sensitive deletion audit has an invalid memory kind."
+            )
+        if details.get("encrypted_payload_deleted") is not True:
+            raise MemoryDeletionIntegrityError(
+                "Sensitive deletion audit lacks payload-deletion proof."
+            )
     lineage = details.get("promoted_candidate_lineage")
     if not isinstance(lineage, dict):
         raise MemoryDeletionIntegrityError(
@@ -312,6 +446,10 @@ def validate_sanitized_deletion_details(details: dict[str, object]) -> None:
     if any(not isinstance(value, str) or not _SHA256.fullmatch(value) for value in digests):
         raise MemoryDeletionIntegrityError(
             "Deletion audit contains an invalid candidate identifier digest."
+        )
+    if len(set(digests)) != len(digests):
+        raise MemoryDeletionIntegrityError(
+            "Deletion audit candidate identifier digests must be unique."
         )
 
 

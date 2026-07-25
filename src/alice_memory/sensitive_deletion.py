@@ -36,6 +36,7 @@ from .deletion_integrity import (
     promoted_candidate_lineage_audit,
     purge_promoted_candidate_lineage,
     require_no_unmanaged_active_derivative_tables,
+    validate_deletion_lifecycle_details,
     verify_promoted_candidate_lineage_removed,
 )
 from .sensitive_storage import (
@@ -343,10 +344,28 @@ def _parse_lifecycle_event(
     if not isinstance(details, dict):
         return None
     if details.get("memory_kind") != "highly_sensitive":
+        if str(row["event_type"]) == "deletion_requested":
+            raise SensitiveMemoryDeletionStateError(
+                "Sensitive deletion request lacks protected-memory proof."
+            )
         return None
     operation = str(details.get("operation", ""))
     if operation not in {"deletion_requested", "deletion_cancelled"}:
+        if str(row["event_type"]) == "deletion_requested":
+            raise SensitiveMemoryDeletionStateError(
+                "Sensitive deletion request has invalid structure."
+            )
         return None
+    try:
+        validate_deletion_lifecycle_details(
+            details,
+            operation=operation,
+            target_memory_id=str(details.get("target_memory_id", "")),
+            deletion_scope=SENSITIVE_MEMORY_DELETION_SCOPE,
+            memory_kind="highly_sensitive",
+        )
+    except MemoryDeletionIntegrityError as exc:
+        raise SensitiveMemoryDeletionStateError(str(exc)) from exc
     return _SensitiveDeletionLifecycleEvent(
         event_id=str(row["event_id"]),
         event_type=str(row["event_type"]),
@@ -792,6 +811,7 @@ def delete_sensitive_memory(
             details_json = json.dumps(
                 {
                     "authorization_id": authorization.authorization_id,
+                    "content_sha256": current.content_sha256,
                     "deleted_memory_id": memory_id,
                     "deletion_scope": authorization.deletion_scope,
                     "dependent_counts": dependent_counts,

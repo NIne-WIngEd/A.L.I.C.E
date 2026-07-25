@@ -26,6 +26,7 @@ from .deletion_integrity import (
     promoted_candidate_lineage_audit,
     purge_promoted_candidate_lineage,
     require_no_unmanaged_active_derivative_tables,
+    validate_deletion_lifecycle_details,
     verify_promoted_candidate_lineage_removed,
 )
 from .service import (
@@ -326,7 +327,20 @@ def _parse_lifecycle_event(row: sqlite3.Row) -> _DeletionLifecycleEvent | None:
 
     operation = str(details.get("operation", ""))
     if operation not in {"deletion_requested", "deletion_cancelled"}:
+        if str(row["event_type"]) == "deletion_requested":
+            raise MemoryDeletionStateError(
+                "Deletion request audit event has invalid structure."
+            )
         return None
+    try:
+        validate_deletion_lifecycle_details(
+            details,
+            operation=operation,
+            target_memory_id=str(details.get("target_memory_id", "")),
+            deletion_scope=ORDINARY_MEMORY_DELETION_SCOPE,
+        )
+    except MemoryDeletionIntegrityError as exc:
+        raise MemoryDeletionStateError(str(exc)) from exc
 
     return _DeletionLifecycleEvent(
         event_id=str(row["event_id"]),
@@ -724,6 +738,14 @@ def load_memory_deletion(
         raise MemoryDeletionStateError(
             "Memory tombstone is missing its deletion event link."
         )
+    if tombstone.tombstone_id != _tombstone_id(memory_id):
+        raise MemoryDeletionStateError(
+            "Memory tombstone identifier is inconsistent."
+        )
+    if not re.fullmatch(r"[0-9a-f]{64}", tombstone.content_sha256):
+        raise MemoryDeletionStateError(
+            "Memory tombstone contains an invalid content digest."
+        )
     event, details = _load_deleted_event(
         connection,
         event_id=tombstone.event_id,
@@ -736,6 +758,10 @@ def load_memory_deletion(
     if str(details.get("deleted_memory_id", "")) != memory_id:
         raise MemoryDeletionStateError(
             "Deletion event does not match the tombstoned memory identifier."
+        )
+    if str(details.get("content_sha256", "")) != tombstone.content_sha256:
+        raise MemoryDeletionStateError(
+            "Deletion event digest does not match the tombstone."
         )
     if str(details.get("deletion_scope", "")) != tombstone.deletion_scope:
         raise MemoryDeletionStateError(
@@ -775,15 +801,24 @@ def load_memory_deletion(
         raise MemoryDeletionStateError(
             "Deletion request event contains invalid JSON."
         ) from exc
-    if (
-        not isinstance(request_details, dict)
-        or request_details.get("operation") != "deletion_requested"
-        or request_details.get("deletion_scope") != tombstone.deletion_scope
-        or request_details.get("target_memory_id") != memory_id
-    ):
+    if not isinstance(request_details, dict):
         raise MemoryDeletionStateError(
-            "Deletion request event does not match the completed deletion."
+            "Deletion request event details must be an object."
         )
+    try:
+        validate_deletion_lifecycle_details(
+            request_details,
+            operation="deletion_requested",
+            target_memory_id=memory_id,
+            deletion_scope=tombstone.deletion_scope,
+            memory_kind=(
+                "highly_sensitive"
+                if details.get("memory_kind") == "highly_sensitive"
+                else None
+            ),
+        )
+    except MemoryDeletionIntegrityError as exc:
+        raise MemoryDeletionStateError(str(exc)) from exc
 
     return MemoryDeletionResult(
         tombstone=tombstone,
@@ -878,6 +913,7 @@ def delete_memory(
             details_json = json.dumps(
                 {
                     "authorization_id": authorization.authorization_id,
+                    "content_sha256": current.content_sha256,
                     "deleted_memory_id": memory_id,
                     "deletion_scope": authorization.deletion_scope,
                     "dependent_counts": dependent_counts,
