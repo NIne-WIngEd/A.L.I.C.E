@@ -1,3 +1,4 @@
+
 """P2.0 schema-contract tests for the A.L.I.C.E. Memory Core."""
 
 from __future__ import annotations
@@ -26,6 +27,11 @@ REQUIRED_TABLES = {
     "memory_entities",
     "memory_events",
     "memory_tombstones",
+    "memory_sensitive_payloads",
+    "sensitive_memory_access_events",
+    "memory_candidates",
+    "memory_candidate_sources",
+    "memory_candidate_events",
 }
 
 

@@ -1,3 +1,4 @@
+
 """Explicit schema migrations for the A.L.I.C.E. Phase 2 Memory Core."""
 
 from __future__ import annotations
@@ -7,6 +8,7 @@ from datetime import datetime, timezone
 
 from .schema import (
     SCHEMA_V2_DDL_STATEMENTS,
+    SCHEMA_V3_DDL_STATEMENTS,
     SCHEMA_VERSION,
     configure_connection,
     current_schema_version,
@@ -43,6 +45,11 @@ _V1_REQUIRED_TABLES = {
     "memory_entities",
     "memory_events",
     "memory_tombstones",
+}
+
+_V2_REQUIRED_TABLES = _V1_REQUIRED_TABLES | {
+    "memory_sensitive_payloads",
+    "sensitive_memory_access_events",
 }
 
 
@@ -122,6 +129,42 @@ def migrate_v1_to_v2(
         raise
 
 
+
+def migrate_v2_to_v3(
+    connection: sqlite3.Connection,
+    *,
+    applied_at: str,
+) -> None:
+    """Add the non-authoritative memory-candidate staging layer."""
+    if current_schema_version(connection) != 2:
+        raise UnsupportedSchemaVersionError(
+            "The v2-to-v3 migration requires a schema version 2 database."
+        )
+
+    missing = _V2_REQUIRED_TABLES - _table_names(connection)
+    if missing:
+        raise UnsupportedSchemaVersionError(
+            "Schema version 2 database is missing required tables: "
+            + ", ".join(sorted(missing))
+        )
+
+    try:
+        connection.execute("BEGIN")
+        for statement in SCHEMA_V3_DDL_STATEMENTS:
+            connection.execute(statement)
+        connection.execute(
+            """
+            INSERT INTO schema_migrations (version, applied_at)
+            VALUES (?, ?)
+            """,
+            (3, applied_at),
+        )
+        connection.commit()
+    except Exception:
+        connection.rollback()
+        raise
+
+
 def ensure_current_schema(
     connection: sqlite3.Connection,
     *,
@@ -150,6 +193,8 @@ def ensure_current_schema(
     while version < SCHEMA_VERSION:
         if version == 1:
             migrate_v1_to_v2(connection, applied_at=timestamp)
+        elif version == 2:
+            migrate_v2_to_v3(connection, applied_at=timestamp)
         else:
             raise UnsupportedSchemaVersionError(
                 "Memory database schema version "
