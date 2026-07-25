@@ -30,6 +30,14 @@ from .deletion import (
     load_memory_deletion,
     load_memory_tombstone,
 )
+from .deletion_integrity import (
+    MemoryDeletionIntegrityError,
+    collect_promoted_candidate_lineage,
+    promoted_candidate_lineage_audit,
+    purge_promoted_candidate_lineage,
+    require_no_unmanaged_active_derivative_tables,
+    verify_promoted_candidate_lineage_removed,
+)
 from .sensitive_storage import (
     SENSITIVE_CONTENT_SENTINEL,
     SensitiveMemoryStorageError,
@@ -767,6 +775,16 @@ def delete_sensitive_memory(
                     "Encrypted payload changed before deletion could commit."
                 )
 
+            try:
+                require_no_unmanaged_active_derivative_tables(connection)
+                candidate_lineage = collect_promoted_candidate_lineage(
+                    connection,
+                    memory_id=memory_id,
+                    content_sha256=current.content_sha256,
+                )
+            except MemoryDeletionIntegrityError as exc:
+                raise SensitiveMemoryDeletionValidationError(str(exc)) from exc
+
             dependent_counts = _dependent_counts(
                 connection,
                 memory_id=memory_id,
@@ -780,6 +798,9 @@ def delete_sensitive_memory(
                     "encrypted_payload_deleted": True,
                     "memory_kind": "highly_sensitive",
                     "operation": "memory_deleted",
+                    "promoted_candidate_lineage": (
+                        promoted_candidate_lineage_audit(candidate_lineage)
+                    ),
                     "request_event_id": current_request.event_id,
                     "strong_confirmation": True,
                 },
@@ -810,6 +831,14 @@ def delete_sensitive_memory(
                 created_at=deleted_at,
             )
 
+            try:
+                purge_promoted_candidate_lineage(
+                    connection,
+                    lineage=candidate_lineage,
+                )
+            except MemoryDeletionIntegrityError as exc:
+                raise SensitiveMemoryDeletionValidationError(str(exc)) from exc
+
             cursor = connection.execute(
                 """
                 DELETE FROM memories
@@ -825,6 +854,13 @@ def delete_sensitive_memory(
                 connection,
                 memory_id=memory_id,
             )
+            try:
+                verify_promoted_candidate_lineage_removed(
+                    connection,
+                    lineage=candidate_lineage,
+                )
+            except MemoryDeletionIntegrityError as exc:
+                raise SensitiveMemoryDeletionValidationError(str(exc)) from exc
             connection.execute(
                 """
                 INSERT INTO memory_tombstones (

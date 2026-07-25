@@ -19,6 +19,15 @@ import uuid
 from dataclasses import dataclass
 from datetime import datetime, timezone
 
+from .deletion_integrity import (
+    MemoryDeletionIntegrityError,
+    collect_promoted_candidate_lineage,
+    parse_and_validate_deletion_details,
+    promoted_candidate_lineage_audit,
+    purge_promoted_candidate_lineage,
+    require_no_unmanaged_active_derivative_tables,
+    verify_promoted_candidate_lineage_removed,
+)
 from .service import (
     MemoryNotFoundError,
     MemoryRecord,
@@ -698,15 +707,9 @@ def _load_deleted_event(
             "Completed deletion event still references an active memory row."
         )
     try:
-        details = json.loads(str(row["details_json"]))
-    except (TypeError, ValueError) as exc:
-        raise MemoryDeletionStateError(
-            "Deletion event contains invalid JSON."
-        ) from exc
-    if not isinstance(details, dict):
-        raise MemoryDeletionStateError(
-            "Deletion event details must be a JSON object."
-        )
+        details = parse_and_validate_deletion_details(row["details_json"])
+    except MemoryDeletionIntegrityError as exc:
+        raise MemoryDeletionStateError(str(exc)) from exc
     return row, details
 
 
@@ -858,6 +861,16 @@ def delete_memory(
                     "commit."
                 )
 
+            try:
+                require_no_unmanaged_active_derivative_tables(connection)
+                candidate_lineage = collect_promoted_candidate_lineage(
+                    connection,
+                    memory_id=memory_id,
+                    content_sha256=current.content_sha256,
+                )
+            except MemoryDeletionIntegrityError as exc:
+                raise MemoryDeletionValidationError(str(exc)) from exc
+
             dependent_counts = _dependent_counts(
                 connection,
                 memory_id=memory_id,
@@ -869,6 +882,9 @@ def delete_memory(
                     "deletion_scope": authorization.deletion_scope,
                     "dependent_counts": dependent_counts,
                     "operation": "memory_deleted",
+                    "promoted_candidate_lineage": (
+                        promoted_candidate_lineage_audit(candidate_lineage)
+                    ),
                     "request_event_id": current_request.event_id,
                     "strong_confirmation": True,
                 },
@@ -896,6 +912,14 @@ def delete_memory(
                 ),
             )
 
+            try:
+                purge_promoted_candidate_lineage(
+                    connection,
+                    lineage=candidate_lineage,
+                )
+            except MemoryDeletionIntegrityError as exc:
+                raise MemoryDeletionValidationError(str(exc)) from exc
+
             cursor = connection.execute(
                 """
                 DELETE FROM memories
@@ -913,6 +937,13 @@ def delete_memory(
                 connection,
                 memory_id=memory_id,
             )
+            try:
+                verify_promoted_candidate_lineage_removed(
+                    connection,
+                    lineage=candidate_lineage,
+                )
+            except MemoryDeletionIntegrityError as exc:
+                raise MemoryDeletionValidationError(str(exc)) from exc
 
             connection.execute(
                 """
