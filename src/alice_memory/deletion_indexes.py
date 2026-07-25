@@ -31,6 +31,10 @@ from .lexical_index import (
     memory_lexical_index_path,
     verify_memory_lexical_index,
 )
+from .sensitive_deletion import (
+    SensitiveMemoryDeletionAuthorization,
+    delete_sensitive_memory,
+)
 from .semantic_index import (
     MemorySemanticIndexManifest,
     build_memory_semantic_index,
@@ -342,6 +346,38 @@ def delete_memory_with_index_purge(
     stale. The purge operation is idempotent and can be retried safely.
     """
     deletion = delete_memory(
+        connection,
+        memory_id=memory_id,
+        authorization=authorization,
+        deleted_at=deleted_at,
+    )
+    purge = purge_deleted_memory_indexes(
+        connection,
+        vault_root,
+        memory_id=memory_id,
+        repository_root=repository_root,
+    )
+    return MemoryDeletionWithIndexPurgeResult(
+        deletion=deletion,
+        purge=purge,
+    )
+
+def delete_sensitive_memory_with_index_purge(
+    connection: sqlite3.Connection,
+    vault_root: str | Path,
+    *,
+    memory_id: str,
+    authorization: SensitiveMemoryDeletionAuthorization,
+    deleted_at: str,
+    repository_root: str | Path | None = None,
+) -> MemoryDeletionWithIndexPurgeResult:
+    """Delete encrypted sensitive memory, then destroy derived indexes.
+
+    HIGHLY_SENSITIVE memory is excluded from ordinary indexes, but complete
+    index-root destruction is still performed conservatively so no cache or
+    stale generation can survive the protected deletion workflow.
+    """
+    deletion = delete_sensitive_memory(
         connection,
         memory_id=memory_id,
         authorization=authorization,
