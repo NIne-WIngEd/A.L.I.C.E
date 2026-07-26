@@ -1,4 +1,4 @@
-"""Controlled single-turn orchestration for A.L.I.C.E. Phase 3 P3.5."""
+"""Controlled context-aware orchestration for A.L.I.C.E. Phase 3 P3.8."""
 
 from __future__ import annotations
 
@@ -14,6 +14,14 @@ from .constitutional_policy import (
 from .constitutional_prompt import (
     ConstitutionalSystemContract,
     compile_constitutional_system_contract,
+)
+from .context_assembly import (
+    ConversationContextAssemblyError,
+    assemble_conversation_context,
+)
+from .context_policy import (
+    ConversationContextPolicy,
+    load_conversation_context_policy,
 )
 from .contracts import (
     ConversationCapabilities,
@@ -241,7 +249,7 @@ class ConversationTurnResult:
 
 
 class ConversationOrchestrator:
-    """Compose P3.1-P3.4 into one controlled, no-tools turn lifecycle."""
+    """Compose the governed Phase 3 stack into one context-aware turn lifecycle."""
 
     def __init__(
         self,
@@ -251,6 +259,7 @@ class ConversationOrchestrator:
         system_contract: ConstitutionalSystemContract,
         policy: ConversationOrchestrationPolicy,
         response_validation_policy: ConversationResponseValidationPolicy | None = None,
+        context_policy: ConversationContextPolicy | None = None,
         clock: Callable[[], str] = utc_now_text,
     ) -> None:
         system_contract.validate()
@@ -268,6 +277,12 @@ class ConversationOrchestrator:
             raise ConversationContractError(
                 "ConversationOrchestrator requires a validated P3.6 response policy."
             )
+        selected_context = context_policy or load_conversation_context_policy()
+        if not isinstance(selected_context, ConversationContextPolicy):
+            raise ConversationContractError(
+                "ConversationOrchestrator requires a validated P3.8 context policy."
+            )
+        selected_context.validate()
         if not callable(clock):
             raise ConversationContractError("Orchestration clock must be callable.")
         self.state_service = state_service
@@ -275,6 +290,7 @@ class ConversationOrchestrator:
         self.system_contract = system_contract
         self.policy = policy
         self.response_validation_policy = selected_validation
+        self.context_policy = selected_context
         self._clock = clock
         self._verify_boundaries()
 
@@ -288,6 +304,7 @@ class ConversationOrchestrator:
         orchestration_policy: ConversationOrchestrationPolicy | None = None,
         constitutional_policy: ConstitutionalDialoguePolicy | None = None,
         response_validation_policy: ConversationResponseValidationPolicy | None = None,
+        context_policy: ConversationContextPolicy | None = None,
         clock: Callable[[], str] = utc_now_text,
     ) -> "ConversationOrchestrator":
         root = Path(repository_root).resolve()
@@ -303,6 +320,12 @@ class ConversationOrchestrator:
                 root / "policies" / "conversation_response_validation_policy.json"
             )
         )
+        selected_context = (
+            context_policy
+            or load_conversation_context_policy(
+                root / "policies" / "conversation_context_policy.json"
+            )
+        )
         contract = compile_constitutional_system_contract(
             policy=selected_constitutional,
             repository_root=root,
@@ -313,6 +336,7 @@ class ConversationOrchestrator:
             system_contract=contract,
             policy=selected_orchestration,
             response_validation_policy=selected_validation,
+            context_policy=selected_context,
             clock=clock,
         )
 
@@ -512,13 +536,28 @@ class ConversationOrchestrator:
                 failure_code=self.policy.failure_code("configuration"),
             ) from exc
 
+        try:
+            context = assemble_conversation_context(
+                self.state_service.store,
+                session_id=session_id,
+                current_turn_id=turn_id,
+                policy=self.context_policy,
+            )
+        except ConversationContextAssemblyError as exc:
+            self._fail_with_code(turn_id, exc.failure_code)
+            raise ConversationTurnFailedError(
+                "The governed conversation context could not be assembled.",
+                turn_id=turn_id,
+                failure_code=exc.failure_code,
+            ) from exc
+
         request = ModelRequest(
             request_id=request_id,
             session_id=session_id,
             turn_id=turn_id,
             system_contract_version=self.system_contract.version,
             system_contract=self.system_contract.content,
-            messages=(user_message,),
+            messages=context.messages + (user_message,),
             grounding=grounding,
             capabilities=ConversationCapabilities(),
             max_output_tokens=self.policy.max_output_tokens,
@@ -694,7 +733,9 @@ class ConversationOrchestrator:
         )
 
     def _fail(self, turn_id: str, category: str) -> None:
-        code = self.policy.failure_code(category)
+        self._fail_with_code(turn_id, self.policy.failure_code(category))
+
+    def _fail_with_code(self, turn_id: str, code: str) -> None:
         try:
             self.state_service.fail_turn(
                 turn_id=turn_id,
