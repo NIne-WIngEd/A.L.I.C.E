@@ -1,0 +1,26 @@
+{
+  "conversation_release_audit_policy_schema_version": 1,
+  "policy_id": "phase3-conversation-release-audit-v1",
+  "phase": "3",
+  "milestone": "P3.11",
+  "status": "final_release_audit_and_closure",
+  "required_evaluation_version": "p3.10-v1",
+  "required_evaluation_policy_id": "phase3-conversation-final-evaluation-v1",
+  "required_package_version": "0.12.0",
+  "repository_requirements": {
+    "exact_head_commit_required": true,
+    "clean_working_tree_required": true,
+    "rollback_commit_required": true,
+    "rollback_must_be_ancestor": true
+  },
+  "boundaries": {
+    "private_output_only": true,
+    "repository_output_allowed": false,
+    "raw_conversation_content_allowed": false,
+    "web_access_allowed": false,
+    "tool_calling_allowed": false,
+    "external_action_allowed": false,
+    "memory_write_allowed": false
+  },
+  "required_evidence_manifest_id": "phase3-conversation-release-evidence-v1"
+}

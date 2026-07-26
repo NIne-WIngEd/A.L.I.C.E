@@ -1,9 +1,11 @@
 # Phase 3 — Conversational A.L.I.C.E. Architecture
 
-**Status:** P3.0 foundation started
+**Status:** Complete and frozen after P3.11 release audit
 **Phase 1 dependency:** Frozen, read-only evidence layer
 **Phase 2 dependency:** Complete, authoritative Memory Core
 **Owner:** MK Rayan
+
+**Closure note:** The implementation expanded beyond the original P3.0–P3.8 plan. The delivered sequence is P3.0–P3.11 and is summarized in `PHASE_3_FINAL_RELEASE_REPORT.md`. Section 11 remains the original planning record.
 
 ## 1. Purpose
 
@@ -210,7 +212,7 @@ Before a response is returned, deterministic validation will check:
 
 Invalid responses fail closed.
 
-## 11. Phase 3 milestones
+## 11. Original Phase 3 milestone plan
 
 ### P3.0 — Conversational architecture and contracts
 
