@@ -32,11 +32,15 @@ class InterruptThenRespondModel:
         self.requests.append(request)
         if self.calls == 1:
             raise ConversationGenerationInterruptedError()
+        content = "Resumed response."
+        if request.grounding is not None:
+            claim = request.grounding.claims[0]
+            content = f"{claim.text} {claim.citations[0].token}"
         response = ModelResponse(
             request_id=request.request_id,
             provider=self.provider,
             model=self.model,
-            content="Resumed response.",
+            content=content,
             finish_reason="stop",
             created_at="2026-07-26T05:01:00Z",
         )

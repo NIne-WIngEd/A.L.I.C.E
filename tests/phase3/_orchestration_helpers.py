@@ -36,7 +36,7 @@ class DeterministicClock:
 
 @dataclass
 class RecordingModel:
-    response_text: str = "Grounded response."
+    response_text: str | None = None
     provider: str = "deterministic-test"
     model: str = "orchestration-v1"
     finish_reason: str = "stop"
@@ -53,11 +53,18 @@ class RecordingModel:
         self.requests.append(request)
         if cancellation is not None:
             cancellation.raise_if_cancelled()
+        content = self.response_text
+        if content is None:
+            if request.grounding is None:
+                content = "Grounded response."
+            else:
+                claim = request.grounding.claims[0]
+                content = f"{claim.text} {claim.citations[0].token}"
         response = ModelResponse(
             request_id=request.request_id,
             provider=self.provider,
             model=self.model,
-            content=self.response_text,
+            content=content,
             finish_reason=self.finish_reason,
             created_at="2026-07-26T05:00:30Z",
         )
