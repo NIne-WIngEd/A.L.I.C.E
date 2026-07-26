@@ -1,4 +1,4 @@
-"""Controlled private local conversational runtime for A.L.I.C.E. P3.7."""
+"""Controlled private local conversational runtime for A.L.I.C.E. P3.8."""
 
 from __future__ import annotations
 
@@ -10,6 +10,10 @@ from uuid import uuid4
 
 from .cli_policy import ConversationCliPolicy, load_conversation_cli_policy
 from .constitutional_policy import load_constitutional_dialogue_policy
+from .context_assembly import (
+    ConversationContextAssemblyError,
+    assemble_conversation_context,
+)
 from .contracts import ConversationContractError, ConversationGroundingPacket, utc_now_text
 from .grounding_io import load_conversation_grounding_packet
 from .model import CancellationToken, ConversationModelConfigurationError
@@ -94,6 +98,14 @@ class ConversationCliInspection:
     grounding_outcome: str | None
     grounding_claim_count: int
     grounding_citation_count: int
+    context_policy_version: str
+    context_sha256: str
+    context_turn_count: int
+    context_message_count: int
+    context_character_count: int
+    context_omitted_turn_count: int
+    context_excluded_turn_count: int
+    context_truncated: bool
 
 
 @dataclass(frozen=True)
@@ -105,7 +117,7 @@ class ConversationGroundingStatus:
 
 
 class ConversationCliRuntime:
-    """One local interactive runtime over P3.2-P3.6 controlled components."""
+    """One local interactive runtime over P3.2-P3.8 controlled components."""
 
     def __init__(
         self,
@@ -313,6 +325,16 @@ class ConversationCliRuntime:
         ]
         last_generation = generations[-1] if generations else None
         grounding = self.grounding_status()
+        try:
+            context = assemble_conversation_context(
+                self.state_service.store,
+                session_id=session_id,
+                policy=self.orchestrator.context_policy,
+            )
+        except ConversationContextAssemblyError as exc:
+            raise ConversationCliError(
+                "Conversation context diagnostics are unavailable."
+            ) from exc
         return ConversationCliInspection(
             status=inspection.status,
             retention=inspection.retention,
@@ -332,6 +354,14 @@ class ConversationCliRuntime:
             grounding_outcome=grounding.outcome,
             grounding_claim_count=grounding.claim_count,
             grounding_citation_count=grounding.citation_count,
+            context_policy_version=context.policy_version,
+            context_sha256=context.context_sha256,
+            context_turn_count=context.included_turn_count,
+            context_message_count=len(context.messages),
+            context_character_count=context.included_character_count,
+            context_omitted_turn_count=context.omitted_turn_count,
+            context_excluded_turn_count=context.excluded_turn_count,
+            context_truncated=context.truncated,
         )
 
     def grounding_status(self) -> ConversationGroundingStatus:
@@ -453,7 +483,7 @@ def build_local_conversation_runtime(
     retention: str = "session_only",
     grounding_file: str | Path | None = None,
 ) -> ConversationCliRuntime:
-    """Build the first local-only user runtime from the repository policies."""
+    """Build the local context-aware user runtime from repository policies."""
     root = Path(repository_root).expanduser().resolve()
     vault = Path(vault_root).expanduser().resolve(strict=False)
     cli_policy = load_conversation_cli_policy(

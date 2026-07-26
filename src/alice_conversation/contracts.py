@@ -351,16 +351,41 @@ class ModelRequest:
             raise ConversationContractError(
                 "Model requests require at least one user-visible message."
             )
+        message_ids: set[str] = set()
         for message in self.messages:
             message.validate()
-            if message.turn_id != self.turn_id:
+            if message.message_id in message_ids:
                 raise ConversationContractError(
-                    "Every request message must belong to the request turn."
+                    "Model requests cannot contain duplicate message IDs."
                 )
-        if self.messages[-1].role != "user":
+            message_ids.add(message.message_id)
+        current = self.messages[-1]
+        if current.role != "user" or current.turn_id != self.turn_id:
             raise ConversationContractError(
-                "The final model-request message must be a user message."
+                "The final model-request message must be the current turn user message."
             )
+        history = self.messages[:-1]
+        if len(history) % 2 != 0:
+            raise ConversationContractError(
+                "Cross-turn model context must contain complete message pairs."
+            )
+        seen_turns: set[str] = set()
+        for index in range(0, len(history), 2):
+            user = history[index]
+            assistant = history[index + 1]
+            if user.role != "user" or assistant.role != "assistant":
+                raise ConversationContractError(
+                    "Cross-turn model context must alternate user and assistant."
+                )
+            if user.turn_id != assistant.turn_id:
+                raise ConversationContractError(
+                    "Cross-turn context pairs must belong to one prior turn."
+                )
+            if user.turn_id == self.turn_id or user.turn_id in seen_turns:
+                raise ConversationContractError(
+                    "Cross-turn context must use distinct prior turns."
+                )
+            seen_turns.add(user.turn_id)
         if self.grounding is not None:
             self.grounding.validate()
         if not 1 <= self.max_output_tokens <= 8192:

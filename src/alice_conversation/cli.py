@@ -1,4 +1,4 @@
-"""Interactive local terminal entry point for A.L.I.C.E. Phase 3 P3.7."""
+"""Interactive local terminal entry point for A.L.I.C.E. Phase 3 P3.8."""
 
 from __future__ import annotations
 
@@ -105,6 +105,15 @@ def _render_inspection(runtime: ConversationCliRuntime, output_fn: Callable[[str
             else "disabled"
         )
     )
+    output_fn(
+        "  context: "
+        f"turns={value.context_turn_count}; "
+        f"messages={value.context_message_count}; "
+        f"characters={value.context_character_count}; "
+        f"truncated={str(value.context_truncated).lower()}"
+    )
+    output_fn(f"  context policy: {value.context_policy_version}")
+    output_fn(f"  context digest: {value.context_sha256}")
 
 
 def _render_grounding(runtime: ConversationCliRuntime, output_fn: Callable[[str], None]) -> None:
