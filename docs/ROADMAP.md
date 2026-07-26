@@ -1,7 +1,7 @@
 
 # A.L.I.C.E. Roadmap
 
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Owner:** MK Rayan
 **Principle:** Capability grows only after governance, evaluation, and rollback controls exist.
 
@@ -74,20 +74,26 @@ Exit criteria:
 
 ## Phase 3 — Conversational A.L.I.C.E.
 
+**Status:** Complete
+
 Build:
 
-- model abstraction;
-- orchestration loop;
-- constitutional system behavior;
-- conversation state;
-- grounded answer generation;
-- text CLI or minimal local web interface.
+- provider-neutral model abstraction and local Ollama adapter;
+- private conversation state with retention, interruption, cancellation, and resume controls;
+- read-only Phase 1 and Phase 2 grounding bridges;
+- versioned constitutional dialogue behavior;
+- controlled orchestration and deterministic response validation;
+- local text runtime with governed cross-turn context;
+- one bounded response-repair attempt under explicit policy;
+- synthetic adversarial evaluation and exact-commit private release audit.
 
 Exit criteria:
 
-- personality and personal-knowledge gates pass;
-- uncertainty is handled correctly;
-- no external-action tools are enabled.
+- constitutional, grounding, citation, context, lifecycle, and repair gates pass;
+- uncertainty, conflict, denial, and abstention remain visible and fail closed;
+- conversation state stays separate from authoritative memory;
+- no web access, external-action tools, or conversational memory writes are enabled;
+- the final private release record is bound to the exact repository commit and rollback commit.
 
 ## Phase 4 — Web and Information Tools
 

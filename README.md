@@ -31,7 +31,12 @@ Its intended role is to become a persistent, permissioned cognitive partner that
   - P2.8 ordinary and protected deletion lifecycles, lineage cleanup, derived-index purge and rebuild guarantees, and adversarial deletion gates: complete;
   - P2.9 versioned evaluation contract, authoritative source-cited answers, adversarial end-to-end gates, and final release audit: complete.
 
-A working conversational assistant is not yet implemented.
+- Phase 3 — Conversational A.L.I.C.E.: complete
+  - P3.0–P3.4 governed contracts, model abstraction, private state, grounding, and constitutional dialogue: complete;
+  - P3.5–P3.9 controlled orchestration, response validation, local runtime, governed cross-turn context, and bounded repair: complete;
+  - P3.10 versioned synthetic adversarial conversational evaluation: complete;
+  - P3.11 exact-commit private release audit and Phase 3 closure: complete.
+A governed local conversational assistant is implemented. Phase 3 still enables no web access, tool calling, external actions, or conversational memory writes.
 
 ## Governing documents
 
@@ -75,6 +80,7 @@ $env:PYTHONPATH = (Resolve-Path .\src).Path
 
 py scripts\validate_phase0.py
 py -m pytest tests\phase2 -q
+py -m pytest tests\phase3 -q
 py -m pytest -q
 ```
 

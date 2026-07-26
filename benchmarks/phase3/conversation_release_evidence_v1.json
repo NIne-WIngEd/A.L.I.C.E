@@ -1,0 +1,134 @@
+{
+  "conversation_release_evidence_manifest_schema_version": 1,
+  "manifest_id": "phase3-conversation-release-evidence-v1",
+  "phase": "3",
+  "milestone": "P3.11",
+  "benchmark_id": "phase3-conversation-adversarial-v1",
+  "test_set_version": "p3.10-v1",
+  "cases": [
+    {
+      "case_id": "constitutional-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_constitutional_adversarial.py",
+        "tests/phase3/test_conversation_constitutional_policy.py"
+      ]
+    },
+    {
+      "case_id": "grounding-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_memory_grounding_bridge.py",
+        "tests/phase3/test_conversation_phase1_grounding_bridge.py"
+      ]
+    },
+    {
+      "case_id": "citation-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_response_validation_adversarial.py",
+        "tests/phase3/test_conversation_grounding_io.py"
+      ]
+    },
+    {
+      "case_id": "abstention-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_response_validation.py"
+      ]
+    },
+    {
+      "case_id": "context-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_context_assembly.py",
+        "tests/phase3/test_conversation_context_orchestration.py"
+      ]
+    },
+    {
+      "case_id": "truncation-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_context_assembly.py",
+        "tests/phase3/test_conversation_context_policy.py"
+      ]
+    },
+    {
+      "case_id": "cross-session-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_context_security.py"
+      ]
+    },
+    {
+      "case_id": "prompt-injection-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_constitutional_adversarial.py",
+        "tests/phase3/test_conversation_response_validation_adversarial.py"
+      ]
+    },
+    {
+      "case_id": "capability-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_cli_security.py",
+        "tests/phase3/test_conversation_orchestration_failures.py"
+      ]
+    },
+    {
+      "case_id": "reasoning-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_response_validation_adversarial.py",
+        "tests/phase3/test_conversation_constitutional_adversarial.py"
+      ]
+    },
+    {
+      "case_id": "repair-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_response_repair_adversarial.py",
+        "tests/phase3/test_conversation_response_repair_orchestration.py"
+      ]
+    },
+    {
+      "case_id": "cancellation-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_cli_interruptions.py",
+        "tests/phase3/test_conversation_cli_commands.py"
+      ]
+    },
+    {
+      "case_id": "interruption-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_state_interruptions.py",
+        "tests/phase3/test_conversation_cli_interruptions.py"
+      ]
+    },
+    {
+      "case_id": "retention-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_state_security.py",
+        "tests/phase3/test_conversation_state_service.py"
+      ]
+    },
+    {
+      "case_id": "replay-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_context_orchestration.py",
+        "tests/phase3/test_conversation_orchestration_resume.py"
+      ]
+    },
+    {
+      "case_id": "privacy-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_state_security.py",
+        "tests/phase3/test_conversation_context_security.py"
+      ]
+    },
+    {
+      "case_id": "integrity-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_state_store.py",
+        "tests/phase3/test_conversation_context_security.py"
+      ]
+    },
+    {
+      "case_id": "provider-failure-001",
+      "pytest_targets": [
+        "tests/phase3/test_conversation_orchestration_failures.py",
+        "tests/phase3/test_conversation_response_repair_adversarial.py"
+      ]
+    }
+  ]
+}
