@@ -1,0 +1,49 @@
+{
+  "policy_name": "alice_conversation_cli_policy",
+  "version": "1.0.0",
+  "phase": "3",
+  "milestone": "P3.7",
+  "status": "local_conversational_runtime",
+  "boundaries": {
+    "local_only": true,
+    "private_vault_required": true,
+    "repository_state_allowed": false,
+    "web_access_allowed": false,
+    "tool_calling_allowed": false,
+    "external_action_allowed": false,
+    "memory_write_allowed": false,
+    "memory_promotion_allowed": false,
+    "live_retrieval_allowed": false,
+    "hidden_reasoning_display_allowed": false,
+    "raw_database_identifiers_display_allowed": false,
+    "automatic_response_repair_allowed": false,
+    "provider_fallback_allowed": false
+  },
+  "runtime": {
+    "allowed_retentions": [
+      "session_only",
+      "retained"
+    ],
+    "default_retention": "session_only",
+    "allowed_providers": [
+      "ollama-local"
+    ],
+    "explicit_provider_required": true,
+    "explicit_model_required": true,
+    "prebuilt_grounding_file_allowed": true
+  },
+  "commands": [
+    ":help",
+    ":new",
+    ":close",
+    ":inspect",
+    ":cancel",
+    ":resume",
+    ":grounding",
+    ":exit"
+  ],
+  "limits": {
+    "max_input_chars": 100000,
+    "max_grounding_file_bytes": 1048576
+  }
+}
