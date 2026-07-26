@@ -1,10 +1,11 @@
-"""Controlled context-aware orchestration for A.L.I.C.E. Phase 3 P3.8."""
+"""Controlled repair-aware orchestration for A.L.I.C.E. Phase 3 P3.9."""
 
 from __future__ import annotations
 
 import re
 from dataclasses import dataclass
 from pathlib import Path
+from time import monotonic
 from typing import Callable
 
 from .constitutional_policy import (
@@ -61,6 +62,14 @@ from .response_validation_policy import (
     load_conversation_response_validation_policy,
 )
 from .registry import ConversationModelRegistry
+from .repair_policy import (
+    ConversationResponseRepairPolicy,
+    load_conversation_response_repair_policy,
+)
+from .response_repair import (
+    ConversationResponseRepairError,
+    build_conversation_response_repair_request,
+)
 from .state_inspection import (
     ConversationTurnInspection,
     inspect_conversation_session,
@@ -206,6 +215,8 @@ class ConversationTurnResult:
     grounding_packet_id: str | None
     grounding_packet_sha256: str | None
     validation_outcome: str
+    repair_attempted: bool = False
+    repair_request_sha256: str | None = None
     replayed: bool = False
 
     def validate(self) -> None:
@@ -246,6 +257,17 @@ class ConversationTurnResult:
             raise ConversationContractError(
                 "Completed orchestration results must be accepted or abstained."
             )
+        if self.repair_attempted is not (self.repair_request_sha256 is not None):
+            raise ConversationContractError(
+                "Repair-attempt metadata must be paired with its request digest."
+            )
+        if self.repair_request_sha256 is not None and (
+            len(self.repair_request_sha256) != 64
+            or any(char not in "0123456789abcdef" for char in self.repair_request_sha256)
+        ):
+            raise ConversationContractError(
+                "Repair request metadata must be a lower-case SHA-256 digest."
+            )
 
 
 class ConversationOrchestrator:
@@ -260,7 +282,9 @@ class ConversationOrchestrator:
         policy: ConversationOrchestrationPolicy,
         response_validation_policy: ConversationResponseValidationPolicy | None = None,
         context_policy: ConversationContextPolicy | None = None,
+        repair_policy: ConversationResponseRepairPolicy | None = None,
         clock: Callable[[], str] = utc_now_text,
+        monotonic_clock: Callable[[], float] = monotonic,
     ) -> None:
         system_contract.validate()
         if not isinstance(policy, ConversationOrchestrationPolicy):
@@ -283,15 +307,23 @@ class ConversationOrchestrator:
                 "ConversationOrchestrator requires a validated P3.8 context policy."
             )
         selected_context.validate()
-        if not callable(clock):
-            raise ConversationContractError("Orchestration clock must be callable.")
+        selected_repair = repair_policy or ConversationResponseRepairPolicy.disabled()
+        if not isinstance(selected_repair, ConversationResponseRepairPolicy):
+            raise ConversationContractError(
+                "ConversationOrchestrator requires a validated P3.9 repair policy."
+            )
+        selected_repair.validate()
+        if not callable(clock) or not callable(monotonic_clock):
+            raise ConversationContractError("Orchestration clocks must be callable.")
         self.state_service = state_service
         self.model_registry = model_registry
         self.system_contract = system_contract
         self.policy = policy
         self.response_validation_policy = selected_validation
         self.context_policy = selected_context
+        self.repair_policy = selected_repair
         self._clock = clock
+        self._monotonic_clock = monotonic_clock
         self._verify_boundaries()
 
     @classmethod
@@ -305,7 +337,9 @@ class ConversationOrchestrator:
         constitutional_policy: ConstitutionalDialoguePolicy | None = None,
         response_validation_policy: ConversationResponseValidationPolicy | None = None,
         context_policy: ConversationContextPolicy | None = None,
+        repair_policy: ConversationResponseRepairPolicy | None = None,
         clock: Callable[[], str] = utc_now_text,
+        monotonic_clock: Callable[[], float] = monotonic,
     ) -> "ConversationOrchestrator":
         root = Path(repository_root).resolve()
         selected_orchestration = (
@@ -326,6 +360,12 @@ class ConversationOrchestrator:
                 root / "policies" / "conversation_context_policy.json"
             )
         )
+        selected_repair = (
+            repair_policy
+            or load_conversation_response_repair_policy(
+                root / "policies" / "conversation_response_repair_policy.json"
+            )
+        )
         contract = compile_constitutional_system_contract(
             policy=selected_constitutional,
             repository_root=root,
@@ -337,7 +377,9 @@ class ConversationOrchestrator:
             policy=selected_orchestration,
             response_validation_policy=selected_validation,
             context_policy=selected_context,
+            repair_policy=selected_repair,
             clock=clock,
+            monotonic_clock=monotonic_clock,
         )
 
     def run_turn(
@@ -442,6 +484,15 @@ class ConversationOrchestrator:
                 turn_id=command.turn_id,
                 failure_code="turn_not_interrupted",
             )
+        if any(
+            generation.request_id.startswith("repair-request:")
+            for generation in turn.generations
+        ):
+            raise ConversationTurnFailedError(
+                "An interrupted response-repair attempt cannot be retried.",
+                turn_id=command.turn_id,
+                failure_code=self.repair_policy.failure_code("exhausted"),
+            )
         self._verify_resume_grounding(turn, command.grounding)
         user_inspection = _one_message(turn, "user")
         if user_inspection.content is None:
@@ -535,7 +586,6 @@ class ConversationOrchestrator:
                 turn_id=turn_id,
                 failure_code=self.policy.failure_code("configuration"),
             ) from exc
-
         try:
             context = assemble_conversation_context(
                 self.state_service.store,
@@ -550,7 +600,6 @@ class ConversationOrchestrator:
                 turn_id=turn_id,
                 failure_code=exc.failure_code,
             ) from exc
-
         request = ModelRequest(
             request_id=request_id,
             session_id=session_id,
@@ -572,83 +621,27 @@ class ConversationOrchestrator:
                 turn_id=turn_id,
                 failure_code=self.policy.failure_code("protocol"),
             ) from exc
-
-        started_at = self._now()
+        total_started = self._monotonic_clock()
+        self._start_generation_or_fail(
+            turn_id=turn_id,
+            generation_id=generation_id,
+            request_id=request_id,
+            provider=provider,
+            model=model,
+        )
         try:
-            self.state_service.start_generation(
-                turn_id=turn_id,
-                generation_id=generation_id,
-                request_id=request_id,
+            response, validation_report = self._invoke_and_validate(
+                adapter=adapter,
+                request=request,
                 provider=provider,
                 model=model,
-                started_at=started_at,
-                reasoning_status="not_persisted",
-            )
-        except ConversationStateError as exc:
-            self._fail(turn_id, "internal")
-            raise ConversationTurnFailedError(
-                "The generation attempt could not be recorded.",
-                turn_id=turn_id,
-                failure_code=self.policy.failure_code("internal"),
-            ) from exc
-
-        try:
-            response = adapter.generate(request, cancellation=cancellation)
-            response.validate()
-            if response.request_id != request_id:
-                raise ConversationModelProtocolError(
-                    "Model response request identity does not match."
-                )
-            if response.provider != provider or response.model != model:
-                raise ConversationModelProtocolError(
-                    "Model response provider/model identity does not match."
-                )
-            validation_report = validate_conversation_response(
-                response=response,
                 grounding=grounding,
-                policy=self.response_validation_policy,
-            )
-            if validation_report.outcome == "rejected":
-                raise ConversationResponseRejectedError(validation_report)
-            validation_outcome = validation_report.outcome
-            assistant_created_at = self._now()
-            assistant_message = ConversationMessage.create(
-                message_id=assistant_message_id,
-                turn_id=turn_id,
-                role="assistant",
-                content=response.content,
-                created_at=assistant_created_at,
-                data_classification=user_message.data_classification,
-            )
-            self.state_service.complete_turn(
-                turn_id=turn_id,
-                request_id=request_id,
-                response=response,
-                assistant_message=assistant_message,
-                completed_at=assistant_created_at,
-                validation_outcome=validation_outcome,
+                cancellation=cancellation,
             )
         except ConversationGenerationInterruptedError as exc:
-            code = self.policy.failure_code("interrupted")
-            self.state_service.interrupt_turn(
-                turn_id=turn_id,
-                request_id=request_id,
-                interrupted_at=self._now(),
-                reason_code=code,
-            )
-            raise ConversationTurnInterruptedError(
-                "The model generation was interrupted and may be explicitly resumed.",
-                turn_id=turn_id,
-                failure_code=code,
-            ) from exc
+            self._interrupt(turn_id=turn_id, request_id=request_id, cause=exc)
         except ConversationModelCancelledError as exc:
-            code = self.policy.failure_code("cancelled")
-            self._cancel(turn_id, code)
-            raise ConversationTurnCancelledError(
-                "The model generation was cancelled.",
-                turn_id=turn_id,
-                failure_code=code,
-            ) from exc
+            self._raise_cancelled(turn_id=turn_id, cause=exc)
         except ConversationModelTimeoutError as exc:
             raise self._recorded_failure(
                 turn_id, "timeout", "The model generation timed out.", exc
@@ -668,25 +661,9 @@ class ConversationOrchestrator:
                 "The model adapter configuration failed.",
                 exc,
             )
-        except ConversationResponseRejectedError as exc:
-            code = self.policy.failure_code("validation")
-            self._fail(turn_id, "validation")
-            raise ConversationTurnValidationError(
-                "The generated response failed deterministic validation.",
-                turn_id=turn_id,
-                failure_code=code,
-                report=exc.report,
-            ) from exc
         except (ConversationModelProtocolError, ConversationContractError) as exc:
             raise self._recorded_failure(
                 turn_id, "protocol", "The model response violated the contract.", exc
-            )
-        except ConversationStateError as exc:
-            raise self._recorded_failure(
-                turn_id,
-                "internal",
-                "The completed response could not be committed atomically.",
-                exc,
             )
         except ConversationModelError as exc:
             raise self._recorded_failure(
@@ -699,7 +676,296 @@ class ConversationOrchestrator:
                 "An internal orchestration failure was recorded.",
                 exc,
             )
+        if validation_report.outcome != "rejected":
+            return self._complete_response(
+                session_id=session_id,
+                turn_id=turn_id,
+                assistant_message_id=assistant_message_id,
+                request_id=request_id,
+                generation_id=generation_id,
+                provider=provider,
+                model=model,
+                user_message=user_message,
+                response=response,
+                validation_outcome=validation_report.outcome,
+                grounding_packet_id=grounding_packet_id,
+                grounding_packet_sha256=grounding_packet_sha256,
+                repair_request_sha256=None,
+            )
+        if not self.repair_policy.enabled:
+            self._record_rejected_response(
+                turn_id=turn_id,
+                request_id=request_id,
+                response=response,
+                failure_code=self.policy.failure_code("validation"),
+                allow_repair=False,
+            )
+            raise ConversationTurnValidationError(
+                "The generated response failed deterministic validation.",
+                turn_id=turn_id,
+                failure_code=self.policy.failure_code("validation"),
+                report=validation_report,
+            )
+        repair_output_tokens = min(
+            request.max_output_tokens,
+            self.repair_policy.max_repair_output_tokens,
+        )
+        if request.max_output_tokens + repair_output_tokens > (
+            self.repair_policy.max_total_output_tokens
+        ):
+            code = self.repair_policy.failure_code("budget")
+            self._record_rejected_response(
+                turn_id=turn_id,
+                request_id=request_id,
+                response=response,
+                failure_code=code,
+                allow_repair=False,
+            )
+            raise ConversationTurnFailedError(
+                "The controlled response-repair budget was not available.",
+                turn_id=turn_id,
+                failure_code=code,
+            )
+        if self._elapsed(total_started) >= self.repair_policy.max_total_elapsed_seconds:
+            code = self.repair_policy.failure_code("timeout")
+            self._record_rejected_response(
+                turn_id=turn_id,
+                request_id=request_id,
+                response=response,
+                failure_code=code,
+                allow_repair=False,
+            )
+            raise ConversationTurnFailedError(
+                "The controlled response-repair time budget was exhausted.",
+                turn_id=turn_id,
+                failure_code=code,
+            )
+        if self._repair_already_attempted(session_id=session_id, turn_id=turn_id):
+            code = self.repair_policy.failure_code("exhausted")
+            self._record_rejected_response(
+                turn_id=turn_id,
+                request_id=request_id,
+                response=response,
+                failure_code=code,
+                allow_repair=False,
+            )
+            raise ConversationTurnFailedError(
+                "The controlled response-repair attempt was already used.",
+                turn_id=turn_id,
+                failure_code=code,
+            )
+        try:
+            repair = build_conversation_response_repair_request(
+                original_request=request,
+                rejected_response=response,
+                validation_report=validation_report,
+                policy=self.repair_policy,
+                context_sha256=context.context_sha256,
+            )
+        except ConversationResponseRepairError as exc:
+            code = self.repair_policy.failure_code("internal")
+            self._record_rejected_response(
+                turn_id=turn_id,
+                request_id=request_id,
+                response=response,
+                failure_code=code,
+                allow_repair=False,
+            )
+            raise ConversationTurnFailedError(
+                "The controlled response-repair request could not be built.",
+                turn_id=turn_id,
+                failure_code=code,
+            ) from exc
+        self._record_rejected_response(
+            turn_id=turn_id,
+            request_id=request_id,
+            response=response,
+            failure_code=self.policy.failure_code("validation"),
+            allow_repair=True,
+        )
+        self._start_generation_or_fail(
+            turn_id=turn_id,
+            generation_id=repair.generation_id,
+            request_id=repair.request.request_id,
+            provider=provider,
+            model=model,
+        )
+        try:
+            repair_response, repair_report = self._invoke_and_validate(
+                adapter=adapter,
+                request=repair.request,
+                provider=provider,
+                model=model,
+                grounding=grounding,
+                cancellation=cancellation,
+            )
+            if self._elapsed(total_started) > self.repair_policy.max_total_elapsed_seconds:
+                code = self.repair_policy.failure_code("timeout")
+                self._fail_with_code(turn_id, code)
+                raise ConversationTurnFailedError(
+                    "The controlled response-repair time budget was exceeded.",
+                    turn_id=turn_id,
+                    failure_code=code,
+                )
+        except ConversationGenerationInterruptedError as exc:
+            self._interrupt(
+                turn_id=turn_id,
+                request_id=repair.request.request_id,
+                cause=exc,
+            )
+        except ConversationModelCancelledError as exc:
+            self._raise_cancelled(turn_id=turn_id, cause=exc)
+        except ConversationModelTimeoutError as exc:
+            raise self._recorded_failure(
+                turn_id,
+                "timeout",
+                "The response-repair generation exceeded its time budget.",
+                exc,
+            )
+        except ConversationModelBudgetError as exc:
+            raise self._recorded_failure(
+                turn_id,
+                "budget",
+                "The response-repair generation exceeded its model budget.",
+                exc,
+            )
+        except ConversationModelProviderError as exc:
+            raise self._recorded_failure(
+                turn_id,
+                "provider",
+                "The model provider failed during response repair.",
+                exc,
+            )
+        except ConversationModelConfigurationError as exc:
+            raise self._recorded_failure(
+                turn_id,
+                "configuration",
+                "The model adapter configuration failed during response repair.",
+                exc,
+            )
+        except (ConversationModelProtocolError, ConversationContractError) as exc:
+            raise self._recorded_failure(
+                turn_id,
+                "protocol",
+                "The response-repair model output violated the contract.",
+                exc,
+            )
+        except ConversationModelError as exc:
+            raise self._recorded_failure(
+                turn_id,
+                "protocol",
+                "The response-repair generation failed.",
+                exc,
+            )
+        except ConversationTurnFailedError:
+            raise
+        except Exception as exc:
+            raise self._recorded_failure(
+                turn_id,
+                "internal",
+                "An internal response-repair failure was recorded.",
+                exc,
+            )
+        if repair_report.outcome == "rejected":
+            code = self.repair_policy.failure_code("exhausted")
+            self._record_rejected_response(
+                turn_id=turn_id,
+                request_id=repair.request.request_id,
+                response=repair_response,
+                failure_code=code,
+                allow_repair=False,
+            )
+            raise ConversationTurnValidationError(
+                "The repaired response failed deterministic validation.",
+                turn_id=turn_id,
+                failure_code=code,
+                report=repair_report,
+            )
+        return self._complete_response(
+            session_id=session_id,
+            turn_id=turn_id,
+            assistant_message_id=assistant_message_id,
+            request_id=repair.request.request_id,
+            generation_id=repair.generation_id,
+            provider=provider,
+            model=model,
+            user_message=user_message,
+            response=repair_response,
+            validation_outcome=repair_report.outcome,
+            grounding_packet_id=grounding_packet_id,
+            grounding_packet_sha256=grounding_packet_sha256,
+            repair_request_sha256=repair.repair_request_sha256,
+        )
 
+    def _invoke_and_validate(
+        self,
+        *,
+        adapter,
+        request: ModelRequest,
+        provider: str,
+        model: str,
+        grounding: ConversationGroundingPacket | None,
+        cancellation: CancellationToken | None,
+    ) -> tuple[ModelResponse, ConversationResponseValidationReport]:
+        response = adapter.generate(request, cancellation=cancellation)
+        response.validate()
+        if response.request_id != request.request_id:
+            raise ConversationModelProtocolError(
+                "Model response request identity does not match."
+            )
+        if response.provider != provider or response.model != model:
+            raise ConversationModelProtocolError(
+                "Model response provider/model identity does not match."
+            )
+        report = validate_conversation_response(
+            response=response,
+            grounding=grounding,
+            policy=self.response_validation_policy,
+        )
+        return response, report
+
+    def _complete_response(
+        self,
+        *,
+        session_id: str,
+        turn_id: str,
+        assistant_message_id: str,
+        request_id: str,
+        generation_id: str,
+        provider: str,
+        model: str,
+        user_message: ConversationMessage,
+        response: ModelResponse,
+        validation_outcome: str,
+        grounding_packet_id: str | None,
+        grounding_packet_sha256: str | None,
+        repair_request_sha256: str | None,
+    ) -> ConversationTurnResult:
+        assistant_created_at = self._now()
+        assistant_message = ConversationMessage.create(
+            message_id=assistant_message_id,
+            turn_id=turn_id,
+            role="assistant",
+            content=response.content,
+            created_at=assistant_created_at,
+            data_classification=user_message.data_classification,
+        )
+        try:
+            self.state_service.complete_turn(
+                turn_id=turn_id,
+                request_id=request_id,
+                response=response,
+                assistant_message=assistant_message,
+                completed_at=assistant_created_at,
+                validation_outcome=validation_outcome,
+            )
+        except ConversationStateError as exc:
+            raise self._recorded_failure(
+                turn_id,
+                "internal",
+                "The completed response could not be committed atomically.",
+                exc,
+            )
         result = ConversationTurnResult(
             session_id=session_id,
             turn_id=turn_id,
@@ -712,10 +978,117 @@ class ConversationOrchestrator:
             grounding_packet_id=grounding_packet_id,
             grounding_packet_sha256=grounding_packet_sha256,
             validation_outcome=validation_outcome,
+            repair_attempted=repair_request_sha256 is not None,
+            repair_request_sha256=repair_request_sha256,
             replayed=False,
         )
         result.validate()
         return result
+
+    def _start_generation_or_fail(
+        self,
+        *,
+        turn_id: str,
+        generation_id: str,
+        request_id: str,
+        provider: str,
+        model: str,
+    ) -> None:
+        try:
+            self.state_service.start_generation(
+                turn_id=turn_id,
+                generation_id=generation_id,
+                request_id=request_id,
+                provider=provider,
+                model=model,
+                started_at=self._now(),
+                reasoning_status="not_persisted",
+            )
+        except ConversationStateError as exc:
+            self._fail(turn_id, "internal")
+            raise ConversationTurnFailedError(
+                "The generation attempt could not be recorded.",
+                turn_id=turn_id,
+                failure_code=self.policy.failure_code("internal"),
+            ) from exc
+
+    def _record_rejected_response(
+        self,
+        *,
+        turn_id: str,
+        request_id: str,
+        response: ModelResponse,
+        failure_code: str,
+        allow_repair: bool,
+    ) -> None:
+        try:
+            self.state_service.reject_generation(
+                turn_id=turn_id,
+                request_id=request_id,
+                response=response,
+                rejected_at=self._now(),
+                failure_code=failure_code,
+                allow_repair=allow_repair,
+            )
+        except ConversationStateError as exc:
+            raise self._recorded_failure(
+                turn_id,
+                "internal",
+                "The rejected generation could not be recorded atomically.",
+                exc,
+            )
+
+    def _interrupt(
+        self,
+        *,
+        turn_id: str,
+        request_id: str,
+        cause: Exception,
+    ) -> None:
+        code = self.policy.failure_code("interrupted")
+        self.state_service.interrupt_turn(
+            turn_id=turn_id,
+            request_id=request_id,
+            interrupted_at=self._now(),
+            reason_code=code,
+        )
+        raise ConversationTurnInterruptedError(
+            "The model generation was interrupted and may be explicitly resumed.",
+            turn_id=turn_id,
+            failure_code=code,
+        ) from cause
+
+    def _raise_cancelled(self, *, turn_id: str, cause: Exception) -> None:
+        code = self.policy.failure_code("cancelled")
+        self._cancel(turn_id, code)
+        raise ConversationTurnCancelledError(
+            "The model generation was cancelled.",
+            turn_id=turn_id,
+            failure_code=code,
+        ) from cause
+
+    def _repair_already_attempted(self, *, session_id: str, turn_id: str) -> bool:
+        turn = self._find_turn(session_id, turn_id)
+        return bool(
+            turn
+            and any(
+                generation.request_id.startswith("repair-request:")
+                for generation in turn.generations
+            )
+        )
+
+    def _elapsed(self, started: float) -> float:
+        current = self._monotonic_clock()
+        if isinstance(current, bool) or not isinstance(current, (int, float)):
+            raise ConversationContractError(
+                "Orchestration monotonic clock must return a number."
+            )
+        elapsed = float(current) - float(started)
+        if elapsed < 0:
+            raise ConversationContractError(
+                "Orchestration monotonic clock cannot move backwards."
+            )
+        return elapsed
 
     def _recorded_failure(
         self,
@@ -803,12 +1176,18 @@ class ConversationOrchestrator:
                 failure_code="state_integrity",
             )
         generation = completed[0]
+        matched_keys = [
+            item
+            for item in turn.generations
+            if item.request_id == request_id and item.generation_id == generation_id
+        ]
         expected = (
             user.message_id == user_message_id
             and user.content_sha256 == sha256_text(user_content)
             and assistant.message_id == assistant_message_id
-            and generation.request_id == request_id
-            and generation.generation_id == generation_id
+            and len(matched_keys) == 1
+            and matched_keys[0].provider == provider
+            and matched_keys[0].model == model
             and generation.provider == provider
             and generation.model == model
         )
@@ -853,6 +1232,12 @@ class ConversationOrchestrator:
             grounding_packet_id=turn.grounding_packet_id,
             grounding_packet_sha256=turn.grounding_packet_sha256,
             validation_outcome=generation.validation_outcome,
+            repair_attempted=generation.request_id.startswith("repair-request:"),
+            repair_request_sha256=(
+                generation.request_id.split(":", 1)[1]
+                if generation.request_id.startswith("repair-request:")
+                else None
+            ),
             replayed=True,
         )
         result.validate()
@@ -918,6 +1303,15 @@ class ConversationOrchestrator:
         if self.policy.lifecycle_value("provider_fallback_allowed") is not False:
             raise ConversationContractError(
                 "P3.5 orchestration cannot enable provider fallback."
+            )
+        self.repair_policy.validate()
+        if self.repair_policy.max_repair_attempts != 1:
+            raise ConversationContractError(
+                "P3.9 orchestration permits exactly one repair attempt."
+            )
+        if self.repair_policy.boundary("provider_fallback_allowed") is not False:
+            raise ConversationContractError(
+                "P3.9 response repair cannot enable provider fallback."
             )
 
     def _now(self) -> str:

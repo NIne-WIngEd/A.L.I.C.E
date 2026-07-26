@@ -520,6 +520,102 @@ class ConversationStateService:
                 occurred_at=completed_at,
             )
 
+    def reject_generation(
+        self,
+        *,
+        turn_id: str,
+        request_id: str,
+        response: ModelResponse,
+        rejected_at: str,
+        failure_code: str,
+        allow_repair: bool,
+    ) -> None:
+        """Record rejected output by digest and either reopen or fail the turn."""
+        response.validate()
+        _parse_timestamp(rejected_at, field="generation rejected_at")
+        _require_code(failure_code, field="failure_code")
+        if response.request_id != request_id:
+            raise ConversationStateError("Rejected response request ID does not match.")
+        if not isinstance(allow_repair, bool):
+            raise ConversationStateError("allow_repair must be boolean.")
+        with self.store.transaction() as connection:
+            turn = self._require_turn(connection, turn_id)
+            if turn["status"] != "generating":
+                raise ConversationStateError(
+                    "Only a generating turn can record a rejected response."
+                )
+            generation = connection.execute(
+                """
+                SELECT * FROM conversation_generations
+                WHERE turn_id = ? AND request_id = ?
+                """,
+                (turn_id, request_id),
+            ).fetchone()
+            if generation is None or generation["status"] != "started":
+                raise ConversationStateError(
+                    "Response rejection requires the active generation attempt."
+                )
+            if generation["provider"] != response.provider or generation["model"] != response.model:
+                raise ConversationStateError(
+                    "Rejected response identity does not match the generation attempt."
+                )
+            connection.execute(
+                """
+                UPDATE conversation_generations
+                SET status = 'failed', validation_outcome = 'rejected',
+                    finish_reason = ?, response_sha256 = ?,
+                    completed_at = ?, failure_code = ?
+                WHERE generation_id = ?
+                """,
+                (
+                    response.finish_reason,
+                    sha256_text(response.content),
+                    rejected_at,
+                    failure_code,
+                    generation["generation_id"],
+                ),
+            )
+            if allow_repair:
+                connection.execute(
+                    """
+                    UPDATE conversation_turns
+                    SET status = 'context_ready', updated_at = ?,
+                        completed_at = NULL, failure_code = NULL
+                    WHERE turn_id = ?
+                    """,
+                    (rejected_at, turn_id),
+                )
+                event_type = "generation_rejected"
+                detail_code = "repair_pending"
+            else:
+                connection.execute(
+                    """
+                    UPDATE conversation_turns
+                    SET status = 'failed', updated_at = ?, completed_at = ?,
+                        failure_code = ?
+                    WHERE turn_id = ?
+                    """,
+                    (rejected_at, rejected_at, failure_code, turn_id),
+                )
+                event_type = "turn_failed"
+                detail_code = failure_code
+            connection.execute(
+                """
+                UPDATE conversation_sessions
+                SET status = 'active', updated_at = ?
+                WHERE session_id = ?
+                """,
+                (rejected_at, turn["session_id"]),
+            )
+            self._insert_event(
+                connection,
+                session_id=turn["session_id"],
+                turn_id=turn_id,
+                event_type=event_type,
+                detail_code=detail_code,
+                occurred_at=rejected_at,
+            )
+
     def interrupt_turn(
         self,
         *,

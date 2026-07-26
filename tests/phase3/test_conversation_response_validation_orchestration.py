@@ -78,9 +78,9 @@ def test_rejected_response_records_failure_without_assistant_message(tmp_path):
     assert len(turn.messages) == 1
     assert turn.messages[0].role == "user"
     assert turn.generations[0].status == "failed"
-    assert turn.generations[0].validation_outcome == "not_evaluated"
+    assert turn.generations[0].validation_outcome == "rejected"
     assert turn.generations[0].failure_code == "response_validation_rejected"
-    assert turn.generations[0].response_sha256 is None
+    assert turn.generations[0].response_sha256 is not None
 
 
 def test_fabricated_action_completion_is_rejected_before_commit(tmp_path):
