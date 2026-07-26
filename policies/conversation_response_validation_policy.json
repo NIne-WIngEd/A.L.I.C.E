@@ -1,0 +1,51 @@
+{
+  "policy_name": "alice_conversation_response_validation_policy",
+  "version": "1.0.0",
+  "phase": "3",
+  "milestone": "P3.6",
+  "status": "generated_response_validation",
+  "boundaries": {
+    "web_access_allowed": false,
+    "tool_calling_allowed": false,
+    "external_action_allowed": false,
+    "memory_write_allowed": false,
+    "memory_promotion_allowed": false,
+    "highly_sensitive_grounding_allowed": false,
+    "chain_of_thought_persistence_allowed": false,
+    "automatic_repair_allowed": false,
+    "provider_fallback_allowed": false
+  },
+  "citations": {
+    "require_exact_tokens": true,
+    "reject_unknown_tokens": true,
+    "require_grounded_personal_claims": true,
+    "require_supported_factual_claims": true,
+    "minimum_answerable_claims_cited": 1,
+    "minimum_conflict_claims_cited": 2
+  },
+  "epistemic": {
+    "preserve_conflict": true,
+    "preserve_uncertainty": true,
+    "require_abstention_on_insufficient_evidence": true,
+    "require_abstention_on_denied": true,
+    "require_abstention_on_not_applicable": true,
+    "reject_certainty_language_for_conflict": true,
+    "reject_certainty_language_for_uncertainty": true
+  },
+  "safety": {
+    "reject_action_completion_claims": true,
+    "reject_capability_claims": true,
+    "reject_invented_personal_facts": true,
+    "reject_dependency_language": true,
+    "reject_hidden_reasoning_disclosure": true,
+    "reject_truncated_responses": true
+  },
+  "limits": {
+    "max_response_chars": 20000,
+    "max_issues": 64
+  },
+  "failure_codes": {
+    "rejected": "response_validation_rejected",
+    "internal": "response_validation_internal"
+  }
+}

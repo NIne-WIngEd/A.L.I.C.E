@@ -37,7 +37,7 @@ _EXPECTED_LIFECYCLE = {
     "duplicate_assistant_messages_allowed": False,
     "automatic_retry_count": 0,
     "provider_fallback_allowed": False,
-    "final_grounding_validation_enabled": False,
+    "final_grounding_validation_enabled": True,
 }
 _EXPECTED_FAILURE_KEYS = {
     "cancelled",
@@ -48,6 +48,7 @@ _EXPECTED_FAILURE_KEYS = {
     "configuration",
     "protocol",
     "internal",
+    "validation",
 }
 
 

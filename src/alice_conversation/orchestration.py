@@ -43,6 +43,15 @@ from .orchestration_policy import (
     ConversationOrchestrationPolicy,
     load_conversation_orchestration_policy,
 )
+from .response_validation import (
+    ConversationResponseRejectedError,
+    ConversationResponseValidationReport,
+    validate_conversation_response,
+)
+from .response_validation_policy import (
+    ConversationResponseValidationPolicy,
+    load_conversation_response_validation_policy,
+)
 from .registry import ConversationModelRegistry
 from .state_inspection import (
     ConversationTurnInspection,
@@ -73,6 +82,22 @@ class ConversationTurnInterruptedError(ConversationOrchestrationError):
 
 class ConversationTurnFailedError(ConversationOrchestrationError):
     """Raised after a failed turn is atomically recorded."""
+
+
+class ConversationTurnValidationError(ConversationTurnFailedError):
+    """Raised after rejected generated output is recorded without an assistant message."""
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        turn_id: str,
+        failure_code: str,
+        report: ConversationResponseValidationReport,
+    ) -> None:
+        report.validate()
+        self.report = report
+        super().__init__(message, turn_id=turn_id, failure_code=failure_code)
 
 
 class ConversationGenerationInterruptedError(RuntimeError):
@@ -172,6 +197,7 @@ class ConversationTurnResult:
     response: ModelResponse
     grounding_packet_id: str | None
     grounding_packet_sha256: str | None
+    validation_outcome: str
     replayed: bool = False
 
     def validate(self) -> None:
@@ -208,6 +234,10 @@ class ConversationTurnResult:
             raise ConversationContractError(
                 "Grounding packet identity and digest must be paired."
             )
+        if self.validation_outcome not in {"accepted", "abstained"}:
+            raise ConversationContractError(
+                "Completed orchestration results must be accepted or abstained."
+            )
 
 
 class ConversationOrchestrator:
@@ -220,6 +250,7 @@ class ConversationOrchestrator:
         model_registry: ConversationModelRegistry,
         system_contract: ConstitutionalSystemContract,
         policy: ConversationOrchestrationPolicy,
+        response_validation_policy: ConversationResponseValidationPolicy | None = None,
         clock: Callable[[], str] = utc_now_text,
     ) -> None:
         system_contract.validate()
@@ -227,12 +258,23 @@ class ConversationOrchestrator:
             raise ConversationContractError(
                 "ConversationOrchestrator requires a validated P3.5 policy."
             )
+        selected_validation = (
+            response_validation_policy
+            or load_conversation_response_validation_policy()
+        )
+        if not isinstance(
+            selected_validation, ConversationResponseValidationPolicy
+        ):
+            raise ConversationContractError(
+                "ConversationOrchestrator requires a validated P3.6 response policy."
+            )
         if not callable(clock):
             raise ConversationContractError("Orchestration clock must be callable.")
         self.state_service = state_service
         self.model_registry = model_registry
         self.system_contract = system_contract
         self.policy = policy
+        self.response_validation_policy = selected_validation
         self._clock = clock
         self._verify_boundaries()
 
@@ -245,6 +287,7 @@ class ConversationOrchestrator:
         repository_root: str | Path,
         orchestration_policy: ConversationOrchestrationPolicy | None = None,
         constitutional_policy: ConstitutionalDialoguePolicy | None = None,
+        response_validation_policy: ConversationResponseValidationPolicy | None = None,
         clock: Callable[[], str] = utc_now_text,
     ) -> "ConversationOrchestrator":
         root = Path(repository_root).resolve()
@@ -253,6 +296,12 @@ class ConversationOrchestrator:
         )
         selected_constitutional = (
             constitutional_policy or load_constitutional_dialogue_policy()
+        )
+        selected_validation = (
+            response_validation_policy
+            or load_conversation_response_validation_policy(
+                root / "policies" / "conversation_response_validation_policy.json"
+            )
         )
         contract = compile_constitutional_system_contract(
             policy=selected_constitutional,
@@ -263,6 +312,7 @@ class ConversationOrchestrator:
             model_registry=model_registry,
             system_contract=contract,
             policy=selected_orchestration,
+            response_validation_policy=selected_validation,
             clock=clock,
         )
 
@@ -514,6 +564,14 @@ class ConversationOrchestrator:
                 raise ConversationModelProtocolError(
                     "Model response provider/model identity does not match."
                 )
+            validation_report = validate_conversation_response(
+                response=response,
+                grounding=grounding,
+                policy=self.response_validation_policy,
+            )
+            if validation_report.outcome == "rejected":
+                raise ConversationResponseRejectedError(validation_report)
+            validation_outcome = validation_report.outcome
             assistant_created_at = self._now()
             assistant_message = ConversationMessage.create(
                 message_id=assistant_message_id,
@@ -529,7 +587,7 @@ class ConversationOrchestrator:
                 response=response,
                 assistant_message=assistant_message,
                 completed_at=assistant_created_at,
-                validation_outcome="accepted",
+                validation_outcome=validation_outcome,
             )
         except ConversationGenerationInterruptedError as exc:
             code = self.policy.failure_code("interrupted")
@@ -571,6 +629,15 @@ class ConversationOrchestrator:
                 "The model adapter configuration failed.",
                 exc,
             )
+        except ConversationResponseRejectedError as exc:
+            code = self.policy.failure_code("validation")
+            self._fail(turn_id, "validation")
+            raise ConversationTurnValidationError(
+                "The generated response failed deterministic validation.",
+                turn_id=turn_id,
+                failure_code=code,
+                report=exc.report,
+            ) from exc
         except (ConversationModelProtocolError, ConversationContractError) as exc:
             raise self._recorded_failure(
                 turn_id, "protocol", "The model response violated the contract.", exc
@@ -605,6 +672,7 @@ class ConversationOrchestrator:
             response=response,
             grounding_packet_id=grounding_packet_id,
             grounding_packet_sha256=grounding_packet_sha256,
+            validation_outcome=validation_outcome,
             replayed=False,
         )
         result.validate()
@@ -743,6 +811,7 @@ class ConversationOrchestrator:
             response=response,
             grounding_packet_id=turn.grounding_packet_id,
             grounding_packet_sha256=turn.grounding_packet_sha256,
+            validation_outcome=generation.validation_outcome,
             replayed=True,
         )
         result.validate()

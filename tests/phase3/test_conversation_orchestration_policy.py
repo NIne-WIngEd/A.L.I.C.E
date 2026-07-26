@@ -22,14 +22,14 @@ def payload():
 
 def test_load_orchestration_policy_preserves_fail_closed_values():
     policy = load_conversation_orchestration_policy(POLICY_PATH)
-    assert policy.version == "1.0.0"
+    assert policy.version == "1.1.0"
     assert policy.milestone == "P3.5"
     assert policy.max_output_tokens == 1024
     assert policy.temperature == 0.0
     assert all(value is False for _, value in policy.boundaries)
     assert policy.lifecycle_value("automatic_retry_count") == 0
     assert policy.lifecycle_value("provider_fallback_allowed") is False
-    assert policy.lifecycle_value("final_grounding_validation_enabled") is False
+    assert policy.lifecycle_value("final_grounding_validation_enabled") is True
 
 
 @pytest.mark.parametrize("name", [
@@ -67,7 +67,6 @@ def test_disabling_required_lifecycle_guards_is_rejected(name):
     "live_retrieval_allowed",
     "duplicate_assistant_messages_allowed",
     "provider_fallback_allowed",
-    "final_grounding_validation_enabled",
 ])
 def test_enabling_deferred_features_is_rejected(name):
     changed = payload()
@@ -75,6 +74,13 @@ def test_enabling_deferred_features_is_rejected(name):
     with pytest.raises(ConversationOrchestrationPolicyError):
         parse_conversation_orchestration_policy(changed)
 
+
+
+def test_disabling_final_grounding_validation_is_rejected():
+    changed = payload()
+    changed["lifecycle"]["final_grounding_validation_enabled"] = False
+    with pytest.raises(ConversationOrchestrationPolicyError):
+        parse_conversation_orchestration_policy(changed)
 
 def test_automatic_retry_is_rejected():
     changed = payload()

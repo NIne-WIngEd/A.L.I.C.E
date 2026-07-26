@@ -1,6 +1,6 @@
 {
   "policy_name": "alice_conversation_orchestration_policy",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "phase": "3",
   "milestone": "P3.5",
   "status": "controlled_turn_orchestration",
@@ -24,7 +24,7 @@
     "duplicate_assistant_messages_allowed": false,
     "automatic_retry_count": 0,
     "provider_fallback_allowed": false,
-    "final_grounding_validation_enabled": false
+    "final_grounding_validation_enabled": true
   },
   "request": {
     "max_output_tokens": 1024,
@@ -38,6 +38,7 @@
     "provider": "provider_failure",
     "configuration": "model_configuration",
     "protocol": "model_protocol",
-    "internal": "orchestration_internal"
+    "internal": "orchestration_internal",
+    "validation": "response_validation_rejected"
   }
 }
