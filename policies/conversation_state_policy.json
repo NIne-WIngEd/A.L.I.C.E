@@ -1,0 +1,43 @@
+{
+  "policy_name": "alice_conversation_state_policy",
+  "version": "1.0.0",
+  "phase": "3",
+  "milestone": "P3.2",
+  "status": "private_conversation_state",
+  "storage": {
+    "database_relative_path": "conversation/alice-conversation.sqlite3",
+    "repository_storage_allowed": false,
+    "private_output_only": true,
+    "journal_mode": "WAL",
+    "synchronous": "FULL",
+    "foreign_keys": true
+  },
+  "retention": {
+    "default": "session_only",
+    "allowed": [
+      "session_only",
+      "retained"
+    ],
+    "session_only_close_action": "purge",
+    "retained_close_action": "retain"
+  },
+  "boundaries": {
+    "ordinary_classifications": [
+      "PUBLIC",
+      "INTERNAL",
+      "PRIVATE"
+    ],
+    "highly_sensitive_allowed": false,
+    "secrets_allowed": false,
+    "chain_of_thought_persistence_allowed": false,
+    "memory_write_allowed": false,
+    "external_action_allowed": false,
+    "web_access_allowed": false,
+    "tool_calling_allowed": false
+  },
+  "limits": {
+    "max_message_chars": 100000,
+    "max_turns_per_session": 10000,
+    "max_references_per_turn": 256
+  }
+}
