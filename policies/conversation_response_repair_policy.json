@@ -1,0 +1,37 @@
+{
+  "policy_name": "alice_conversation_response_repair_policy",
+  "version": "1.0.0",
+  "phase": "3",
+  "milestone": "P3.9",
+  "status": "controlled_response_repair",
+  "enabled": false,
+  "boundaries": {
+    "same_provider_model_required": true,
+    "same_grounding_required": true,
+    "same_context_required": true,
+    "issue_codes_only": true,
+    "rejected_response_text_in_prompt_allowed": false,
+    "rejected_response_text_persistence_allowed": false,
+    "hidden_reasoning_allowed": false,
+    "provider_fallback_allowed": false,
+    "live_retrieval_allowed": false,
+    "tool_calling_allowed": false,
+    "external_action_allowed": false,
+    "memory_write_allowed": false
+  },
+  "limits": {
+    "max_repair_attempts": 1,
+    "max_issue_codes": 64,
+    "max_repair_prompt_chars": 4096,
+    "max_repair_output_tokens": 1024,
+    "max_total_output_tokens": 2048,
+    "max_total_elapsed_seconds": 900.0
+  },
+  "failure_codes": {
+    "unavailable": "response_repair_unavailable",
+    "exhausted": "response_repair_exhausted",
+    "timeout": "response_repair_timeout",
+    "budget": "response_repair_budget",
+    "internal": "response_repair_internal"
+  }
+}
