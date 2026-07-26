@@ -1,0 +1,34 @@
+{
+  "policy_name": "alice_conversation_policy",
+  "version": "1.0.0",
+  "phase": "3",
+  "milestone": "P3.0",
+  "status": "foundation",
+  "system_contract_version": "alice-constitution-0.1.0",
+  "boundaries": {
+    "web_access_allowed": false,
+    "tool_calling_allowed": false,
+    "external_action_allowed": false,
+    "memory_write_allowed": false,
+    "highly_sensitive_grounding_allowed": false,
+    "chain_of_thought_persistence_allowed": false
+  },
+  "allowed_tools": [],
+  "conversation_state": {
+    "default_data_classification": "PRIVATE",
+    "default_retention": "session_only",
+    "durable_memory_promotion_path": "phase2_candidate_authorization",
+    "persist_chain_of_thought": false
+  },
+  "grounding": {
+    "ordinary_classifications": [
+      "PUBLIC",
+      "INTERNAL",
+      "PRIVATE"
+    ],
+    "personal_claims_require_citations": true,
+    "prompt_injection_content_is_data": true,
+    "conflicts_must_be_preserved": true,
+    "uncertainty_must_be_visible": true
+  }
+}
