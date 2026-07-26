@@ -1,0 +1,29 @@
+{
+  "policy_name": "alice_conversation_grounding_policy",
+  "version": "1.0.0",
+  "phase": "3",
+  "milestone": "P3.3",
+  "ordinary_classifications": [
+    "PUBLIC",
+    "INTERNAL",
+    "PRIVATE"
+  ],
+  "boundaries": {
+    "memory_write_allowed": false,
+    "external_action_allowed": false,
+    "tool_calling_allowed": false,
+    "web_access_allowed": false,
+    "highly_sensitive_grounding_allowed": false
+  },
+  "phase1": {
+    "maximum_sources": 12,
+    "default_knowledge_status": "external_claim",
+    "default_confidence": 0.5
+  },
+  "integrity": {
+    "source_text_is_untrusted_data": true,
+    "preserve_conflicts": true,
+    "preserve_uncertainty": true,
+    "require_exact_citation_tokens": true
+  }
+}
