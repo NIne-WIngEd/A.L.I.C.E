@@ -1,0 +1,43 @@
+{
+  "policy_name": "alice_conversation_orchestration_policy",
+  "version": "1.0.0",
+  "phase": "3",
+  "milestone": "P3.5",
+  "status": "controlled_turn_orchestration",
+  "boundaries": {
+    "web_access_allowed": false,
+    "tool_calling_allowed": false,
+    "external_action_allowed": false,
+    "memory_write_allowed": false,
+    "memory_promotion_allowed": false,
+    "highly_sensitive_grounding_allowed": false,
+    "chain_of_thought_persistence_allowed": false
+  },
+  "lifecycle": {
+    "constitutional_contract_required": true,
+    "prebuilt_grounding_only": true,
+    "live_retrieval_allowed": false,
+    "model_registry_resolution_required": true,
+    "generation_attempt_recording_required": true,
+    "atomic_state_transitions_required": true,
+    "response_identity_match_required": true,
+    "duplicate_assistant_messages_allowed": false,
+    "automatic_retry_count": 0,
+    "provider_fallback_allowed": false,
+    "final_grounding_validation_enabled": false
+  },
+  "request": {
+    "max_output_tokens": 1024,
+    "temperature": 0.0
+  },
+  "failure_codes": {
+    "cancelled": "model_cancelled",
+    "interrupted": "model_interrupted",
+    "timeout": "model_timeout",
+    "budget": "model_budget",
+    "provider": "provider_failure",
+    "configuration": "model_configuration",
+    "protocol": "model_protocol",
+    "internal": "orchestration_internal"
+  }
+}
