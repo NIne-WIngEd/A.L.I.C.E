@@ -1,0 +1,34 @@
+{
+  "policy_name": "alice_conversation_model_policy",
+  "version": "1.0.0",
+  "phase": "3",
+  "milestone": "P3.1",
+  "status": "model_abstraction",
+  "default_provider": "ollama-local",
+  "providers": {
+    "deterministic-test": {
+      "enabled": true,
+      "local_only": true,
+      "allowed_models": [
+        "fixed-response-v1"
+      ],
+      "default_model": "fixed-response-v1"
+    },
+    "ollama-local": {
+      "enabled": true,
+      "local_only": true,
+      "base_url": "http://127.0.0.1:11434",
+      "allowed_models": [
+        "qwen3:8b",
+        "qwen3:4b-instruct"
+      ],
+      "default_model": "qwen3:8b",
+      "request_timeout_seconds": 600,
+      "max_context_chars": 32768,
+      "max_output_tokens": 4096,
+      "stream": false,
+      "think": false,
+      "tools_allowed": false
+    }
+  }
+}
