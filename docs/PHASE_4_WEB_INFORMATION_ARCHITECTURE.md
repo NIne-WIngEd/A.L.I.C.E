@@ -1,6 +1,6 @@
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** P4.2 controlled retrieval boundary started; live network disabled
+**Status:** P4.2b controlled live HTTPS transport implemented; no live provider or runtime path registered
 **Phase 0 dependency:** Ratified governance and default-deny permission model
 **Phase 1 dependency:** Frozen read-only evidence layer
 **Phase 2 dependency:** Frozen authoritative Memory Core
@@ -185,8 +185,64 @@ Still disabled after P4.2a:
 - recursive browsing or background work.
 
 The deterministic resolver and transport are security fixtures, not live web
-providers. A later live adapter must preserve the same address pinning and
-response gates and requires a separate policy change and evaluation.
+providers. The P4.2b adapter preserves this boundary through a separate exact
+activation policy rather than weakening the frozen P4.0 or P4.2a policies.
+
+## 4.3 P4.2b controlled live HTTPS transport
+
+P4.2b adds the first operating-system network implementation. It is an
+explicitly constructed transport component only. It is not registered in the
+P4.1 provider registry and is not reachable from Phase 3 conversation code.
+
+Implemented in P4.2b:
+
+- a separate versioned live-transport activation policy bound to `web.search`;
+- HTTPS-only source access on the default port;
+- bounded operating-system `getaddrinfo` execution with one in-flight daemon
+  worker per resolver backend;
+- rejection when any DNS answer is non-public, malformed, duplicated beyond
+  policy, or outside the address-count budget;
+- direct sockets that ignore environment and system proxy configuration;
+- connection to one exact approved address with post-connect peer verification;
+- default operating-system trust roots with mandatory certificate and hostname
+  validation, plus rejection of environment CA overrides and TLS key logging;
+- TLS 1.2 minimum and HTTP/1.1-only ALPN;
+- fixed credential-free GET requests with no cookies or caller headers;
+- one deadline across connect, request transmission, header parsing, and body
+  reading;
+- a strict HTTP/1.0 and HTTP/1.1 response parser with bounded status line,
+  header count, header bytes, and response bytes;
+- rejection of obsolete folded headers, ambiguous content lengths, transfer
+  encoding, malformed framing, and early EOF;
+- exact production resolver and socket-backend checks at live-retriever
+  construction and again before every retrieval;
+- sanitized DNS, timeout, connection, TLS, protocol, peer, and framing failures;
+- metadata-only component digests that contain no hostname, URL, query, or
+  source body.
+
+The P4.0 information policy and P4.2a retrieval policy remain unchanged and
+network-free. The P4.2b activation policy is a narrow additive authorization
+for the exact live resolver and transport classes. It cannot enable a provider,
+query transmission, fallback, retries, credentials, or runtime integration.
+
+Still disabled after P4.2b:
+
+- live search providers and live fetch-provider registration;
+- Phase 3 conversation or CLI access to the live transport;
+- plaintext HTTP, non-default ports, transfer encoding, connection reuse, and
+  multiple address attempts;
+- environment proxies, TLS environment overrides, TLS key logging, credentials,
+  cookies, client certificates, custom CA bundles, JavaScript, forms, downloads,
+  and automatic retries;
+- recursive browsing, background execution, and memory writes.
+
+Known compatibility boundary:
+
+- responses using HTTP transfer coding are rejected rather than decoded;
+- only the first deterministically ordered public address is attempted;
+- if an operating-system DNS call ignores its deadline, the caller fails closed
+  and that resolver backend refuses another DNS worker until the original call
+  returns.
 
 ## 5. Package boundary
 
@@ -208,6 +264,7 @@ Public policies live in:
 policies/information_policy.json
 policies/information_provider_policy.json
 policies/information_http_retrieval_policy.json
+policies/information_live_http_policy.json
 ```
 
 Private browsing history, live queries, fetched content, provider credentials, activity databases, caches, and release records must remain outside the public repository.
