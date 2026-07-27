@@ -30,6 +30,12 @@ from .live_policy import InformationLiveHttpPolicy
 from .policy import InformationPolicy
 from .providers import InformationCancellationToken
 from .retrieval_policy import InformationHttpRetrievalPolicy
+from .temporal_metadata import (
+    InformationTemporalMetadataCandidate,
+    temporal_candidate_set_sha256,
+    temporal_metadata_failure,
+)
+from .temporal_metadata_policy import APPROVED_MAX_CANDIDATES
 
 _REDIRECT_STATUSES = {301, 302, 303, 307, 308}
 _SINGLETON_HEADERS = {
@@ -38,6 +44,7 @@ _SINGLETON_HEADERS = {
     "content-length",
     "content-type",
     "location",
+    "last-modified",
 }
 _WHITESPACE = re.compile(r"[ \t\f\v]+")
 _BLANK_LINES = re.compile(r"\n{3,}")
@@ -85,25 +92,95 @@ class _VisibleHtmlParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self._hidden_depth = 0
+        self._metadata_block_depth = 0
+        self._hidden_tag_stack: list[str] = []
         self._parts: list[str] = []
         self.title_parts: list[str] = []
         self._title_depth = 0
+        self.temporal_candidates: list[InformationTemporalMetadataCandidate] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         lowered = tag.lower()
+        attribute_map: dict[str, str] = {}
+        if lowered == "meta":
+            protected_attributes = {"property", "name", "itemprop", "content"}
+        elif lowered == "time":
+            protected_attributes = {"itemprop", "datetime"}
+        else:
+            protected_attributes = set()
+        for raw_name, raw_value in attrs:
+            name = raw_name.lower()
+            if name in attribute_map and name in protected_attributes:
+                raise ValueError("Duplicate HTML attribute at metadata boundary.")
+            if raw_value is not None and name not in attribute_map:
+                attribute_map[name] = raw_value
+        if self._metadata_block_depth == 0:
+            self._capture_temporal_metadata(lowered, attribute_map)
         if lowered in self._HIDDEN_TAGS:
+            self._hidden_tag_stack.append(lowered)
             self._hidden_depth += 1
+            if lowered != "head":
+                self._metadata_block_depth += 1
         if lowered == "title":
             self._title_depth += 1
         if lowered in self._BLOCK_TAGS and self._hidden_depth == 0:
             self._parts.append("\n")
 
+    def _capture_temporal_metadata(
+        self,
+        tag: str,
+        attributes: dict[str, str],
+    ) -> None:
+        origin: str | None = None
+        raw_value: str | None = None
+        if tag == "meta":
+            markers = {
+                value.casefold()
+                for value in (attributes.get("property"), attributes.get("name"))
+                if value
+            }
+            itemprop = attributes.get("itemprop", "").casefold()
+            detected: list[str] = []
+            if "article:published_time" in markers:
+                detected.append("html_meta_article_published_time")
+            if "article:modified_time" in markers:
+                detected.append("html_meta_article_modified_time")
+            if itemprop == "datepublished":
+                detected.append("html_meta_date_published")
+            elif itemprop == "datemodified":
+                detected.append("html_meta_date_modified")
+            if len(set(detected)) > 1:
+                raise ValueError("Conflicting HTML temporal metadata markers.")
+            origin = detected[0] if detected else None
+            raw_value = attributes.get("content", "")
+        elif tag == "time":
+            itemprop = attributes.get("itemprop", "").casefold()
+            raw_value = attributes.get("datetime", "")
+            if itemprop == "datepublished":
+                origin = "html_time_date_published"
+            elif itemprop == "datemodified":
+                origin = "html_time_date_modified"
+        if origin is None:
+            return
+        self.temporal_candidates.append(
+            InformationTemporalMetadataCandidate.create(
+                origin=origin,
+                raw_value=raw_value,
+            )
+        )
+        if len(self.temporal_candidates) > APPROVED_MAX_CANDIDATES:
+            raise ValueError("Temporal metadata candidate limit exceeded.")
+
     def handle_endtag(self, tag: str) -> None:
         lowered = tag.lower()
         if lowered == "title" and self._title_depth:
             self._title_depth -= 1
-        if lowered in self._HIDDEN_TAGS and self._hidden_depth:
-            self._hidden_depth -= 1
+        if lowered in self._HIDDEN_TAGS and self._hidden_tag_stack:
+            if self._hidden_tag_stack[-1] == lowered:
+                self._hidden_tag_stack.pop()
+                self._hidden_depth -= 1
+                if lowered != "head" and self._metadata_block_depth:
+                    self._metadata_block_depth -= 1
         if lowered in self._BLOCK_TAGS and self._hidden_depth == 0:
             self._parts.append("\n")
 
@@ -146,6 +223,7 @@ class InformationRetrievedResource:
     decoded_bytes: int
     peer_address: str
     title: str | None = None
+    temporal_metadata_candidates: tuple[InformationTemporalMetadataCandidate, ...] = ()
 
     def validate(self) -> None:
         if canonicalize_public_url(self.requested_url) != self.requested_url:
@@ -178,6 +256,14 @@ class InformationRetrievedResource:
         if self.wire_bytes < 0 or self.decoded_bytes < 0:
             raise http_failure("response_too_large")
         validate_global_address(self.peer_address)
+        if not isinstance(self.temporal_metadata_candidates, tuple):
+            raise http_failure("normalization_failed")
+        if len(self.temporal_metadata_candidates) > APPROVED_MAX_CANDIDATES:
+            raise http_failure("normalization_failed")
+        for candidate in self.temporal_metadata_candidates:
+            if type(candidate) is not InformationTemporalMetadataCandidate:
+                raise http_failure("normalization_failed")
+            candidate.validate()
 
     def to_source_document(
         self,
@@ -188,9 +274,11 @@ class InformationRetrievedResource:
         published_at: str | None = None,
         updated_at: str | None = None,
     ) -> InformationSourceDocument:
-        """Project normalized retrieval into the existing source contract."""
+        """Project an undated resource; P4.4b owns verified date projection."""
 
         self.validate()
+        if published_at is not None or updated_at is not None:
+            raise temporal_metadata_failure("temporal_resolution_invalid")
         title = self.title or urlsplit(self.final_url).hostname or "External source"
         return InformationSourceDocument.create(
             source_id=source_id,
@@ -310,7 +398,20 @@ class ControlledInformationHttpRetriever:
                 text = decoded.decode(charset, errors="strict")
             except (LookupError, UnicodeDecodeError) as exc:
                 raise http_failure("content_decode_failed") from exc
-            normalized, title = self._normalize(text, content_type=content_type)
+            normalized, title, temporal_candidates = self._normalize(
+                text,
+                content_type=content_type,
+            )
+            last_modified = headers.get("last-modified")
+            if last_modified is not None:
+                temporal_candidates = temporal_candidates + (
+                    InformationTemporalMetadataCandidate.create(
+                        origin="http_last_modified",
+                        raw_value=last_modified,
+                    ),
+                )
+            if len(temporal_candidates) > APPROVED_MAX_CANDIDATES:
+                raise http_failure("normalization_failed")
             resource = InformationRetrievedResource(
                 requested_url=requested,
                 final_url=current,
@@ -325,6 +426,7 @@ class ControlledInformationHttpRetriever:
                 decoded_bytes=len(decoded),
                 peer_address=validate_global_address(response.peer_address),
                 title=title,
+                temporal_metadata_candidates=temporal_candidates,
             )
             resource.validate()
             if cancellation is not None:
@@ -438,7 +540,16 @@ class ControlledInformationHttpRetriever:
             raise http_failure("content_decode_failed") from exc
         return bytes(output), wire
 
-    def _normalize(self, text: str, *, content_type: str) -> tuple[str, str | None]:
+    def _normalize(
+        self,
+        text: str,
+        *,
+        content_type: str,
+    ) -> tuple[
+        str,
+        str | None,
+        tuple[InformationTemporalMetadataCandidate, ...],
+    ]:
         try:
             if content_type in {"text/html", "application/xhtml+xml"}:
                 parser = _VisibleHtmlParser()
@@ -446,21 +557,25 @@ class ControlledInformationHttpRetriever:
                 parser.close()
                 normalized = parser.normalized_text()
                 title = parser.title()
+                temporal_candidates = tuple(parser.temporal_candidates)
             else:
                 normalized = _BLANK_LINES.sub(
                     "\n\n",
                     "\n".join(
                         _WHITESPACE.sub(" ", line).strip()
-                        for line in text.replace("\r\n", "\n").replace("\r", "\n").split("\n")
+                        for line in text.replace("\r\n", "\n")
+                        .replace("\r", "\n")
+                        .split("\n")
                     ),
                 ).strip()
                 title = None
+                temporal_candidates = ()
             normalized = normalized.replace("\x00", "").strip()
         except Exception as exc:  # parser internals fail closed at this boundary
             raise http_failure("normalization_failed") from exc
         if not normalized:
             raise http_failure("normalization_failed")
-        return normalized, title
+        return normalized, title, temporal_candidates
 
 
 @dataclass(frozen=True)
@@ -522,16 +637,20 @@ def deduplicate_retrieved_resources(
     tuple[InformationRetrievedResource, ...],
     tuple[InformationDuplicateObservation, ...],
 ]:
-    """Keep the first exact normalized body and report later duplicates."""
+    """Deduplicate only exact body and temporal-evidence versions."""
 
     retained: list[InformationRetrievedResource] = []
     duplicates: list[InformationDuplicateObservation] = []
-    by_digest: dict[str, InformationRetrievedResource] = {}
+    by_digest: dict[tuple[str, str], InformationRetrievedResource] = {}
     for resource in resources:
         resource.validate()
-        prior = by_digest.get(resource.content_sha256)
+        version_key = (
+            resource.content_sha256,
+            temporal_candidate_set_sha256(resource.temporal_metadata_candidates),
+        )
+        prior = by_digest.get(version_key)
         if prior is None:
-            by_digest[resource.content_sha256] = resource
+            by_digest[version_key] = resource
             retained.append(resource)
             continue
         duplicates.append(

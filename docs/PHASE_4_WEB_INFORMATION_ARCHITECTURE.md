@@ -511,7 +511,7 @@ Exit criteria:
 
 ### P4.4 — Freshness and temporal reasoning
 
-Add query-time classification, publication and update extraction, freshness policy, stale-source warnings, date conflict handling, and unsupported-current-claim rejection. **P4.4a is implemented in package version `0.6.0` as conservative query classification, explicit query-bound temporal intents, and deterministic digest-bound source assessments. P4.4b will add provider/header/HTML publication and update extraction plus multi-source date-conflict aggregation.**
+Add query-time classification, publication and update extraction, freshness policy, stale-source warnings, date conflict handling, and unsupported-current-claim rejection. **P4.4a is implemented in package version `0.6.0` as conservative query classification, explicit query-bound temporal intents, and deterministic digest-bound source assessments. P4.4b is implemented in package version `0.7.0` as deterministic HTML/header temporal-metadata evidence extraction, fail-closed resolution, verified date projection, and explicit-subject cross-source conflict aggregation.**
 
 Implemented controls:
 
@@ -530,7 +530,19 @@ Implemented controls:
 - re-derivation during validation to reject forged `fresh` assessments;
 - `InformationTemporallyQualifiedSource` as the only P4.4 wrapper eligible for future model-facing temporal grounding;
 - no model temporal inference, background activity, external action, memory write, or raw temporal-metadata logging;
-- publication/update extraction and cross-source date-conflict aggregation remain disabled until P4.4b.
+- exact versioned P4.4b temporal-metadata evidence policy with fixed candidate and aggregation limits;
+- deterministic extraction limited to recognized Open Graph article timestamps, schema-style `datePublished` and `dateModified` metadata, matching `<time datetime>` elements, and an HTTP `Last-Modified` update fallback;
+- strict RFC 3339 timestamps for HTML metadata and strict IMF-fixdate parsing for HTTP `Last-Modified`;
+- visible source prose and model-based date extraction explicitly prohibited;
+- original temporal values retained only inside digest-bound evidence candidates, with log-safe records exposing hashes rather than raw values;
+- explicit HTML update metadata preferred over the HTTP `Last-Modified` fallback;
+- duplicate-body handling includes the temporal-candidate-set digest so conflicting head or header dates are never discarded as body duplicates;
+- malformed candidates, within-source date disagreement, and materially pre-publication update times preserved as non-supporting `invalid` or `conflict` resolutions;
+- no automatic winner selection for conflicting timestamps;
+- raw retrieved resources refuse caller-supplied publication or update times, while `InformationResolvedTemporalResource` is the verified path for projecting dates into source documents;
+- cross-source aggregation requires an explicit subject digest and at least two distinct canonical source URLs, and it never infers that sources describe the same temporal fact;
+- matching observations produce deterministic consensus, undated observations remain insufficient, and conflicting dates remain unresolved;
+- live provider registration, citation grounding, and Phase 3 conversational web access remain disabled.
 
 Exit criteria:
 
