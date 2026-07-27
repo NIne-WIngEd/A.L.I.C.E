@@ -511,7 +511,26 @@ Exit criteria:
 
 ### P4.4 — Freshness and temporal reasoning
 
-Add query-time classification, publication and update extraction, freshness policy, stale-source warnings, date conflict handling, and unsupported-current-claim rejection.
+Add query-time classification, publication and update extraction, freshness policy, stale-source warnings, date conflict handling, and unsupported-current-claim rejection. **P4.4a is implemented in package version `0.6.0` as conservative query classification, explicit query-bound temporal intents, and deterministic digest-bound source assessments. P4.4b will add provider/header/HTML publication and update extraction plus multi-source date-conflict aggregation.**
+
+Implemented controls:
+
+- exact versioned freshness policy bound to `web.search`, P4.0, and the clear-source P4.3 firewall boundary;
+- conservative model-free query classification into explicit `current`, `latest`, `recent`, `historical`, and `time_insensitive` intents, with ambiguous signals rejected;
+- exact query ID and query-content-digest binding for every temporal intent;
+- separate publication, update, retrieval, reference, and assessment times;
+- retrieval time explicitly prohibited from acting as freshness evidence;
+- updated time preferred over publication time when both are valid;
+- future, contradictory, and post-retrieval source timestamps rejected with bounded clock skew;
+- deterministic age limits of 24 hours for `current`, 7 days for `latest`, and 30 days for `recent`;
+- historical-window matching that does not require a current source;
+- undated time-sensitive sources marked `unknown` and made non-renderable;
+- stale and historical-mismatch sources preserved as assessments but blocked from model-facing claim support;
+- exact source-content, source-metadata, query, intent, policy-version, and reference-time binding;
+- re-derivation during validation to reject forged `fresh` assessments;
+- `InformationTemporallyQualifiedSource` as the only P4.4 wrapper eligible for future model-facing temporal grounding;
+- no model temporal inference, background activity, external action, memory write, or raw temporal-metadata logging;
+- publication/update extraction and cross-source date-conflict aggregation remain disabled until P4.4b.
 
 Exit criteria:
 
