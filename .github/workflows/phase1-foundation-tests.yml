@@ -12,6 +12,8 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
