@@ -1,0 +1,41 @@
+{
+  "policy_name": "alice_information_freshness_policy",
+  "version": "1.0.0",
+  "phase": "4",
+  "milestone": "P4.4a",
+  "status": "deterministic_freshness_temporal_contracts",
+  "permission_id": "web.search",
+  "allowed_intents": [
+    "current",
+    "latest",
+    "recent",
+    "historical",
+    "time_insensitive"
+  ],
+  "allowed_verdicts": [
+    "fresh",
+    "stale",
+    "unknown",
+    "historical_match",
+    "historical_mismatch",
+    "time_insensitive"
+  ],
+  "age_limits_seconds": {
+    "current": 86400,
+    "latest": 604800,
+    "recent": 2592000
+  },
+  "max_clock_skew_seconds": 300,
+  "deterministic_query_classification_required": true,
+  "ambiguous_temporal_queries_fail_closed": true,
+  "retrieval_time_is_freshness_evidence": false,
+  "require_source_time_for_time_sensitive_claims": true,
+  "updated_time_preferred": true,
+  "future_source_time_allowed": false,
+  "historical_window_required": true,
+  "time_insensitive_without_source_time_allowed": true,
+  "model_temporal_inference_allowed": false,
+  "raw_temporal_metadata_logging_allowed": false,
+  "source_digest_binding_required": true,
+  "firewall_clear_required": true
+}
