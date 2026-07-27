@@ -1,0 +1,38 @@
+{
+  "policy_name": "alice_information_temporal_metadata_policy",
+  "version": "1.0.0",
+  "phase": "4",
+  "milestone": "P4.4b",
+  "status": "deterministic_temporal_metadata_evidence",
+  "permission_id": "web.search",
+  "allowed_candidate_kinds": [
+    "published_at",
+    "updated_at"
+  ],
+  "allowed_candidate_origins": [
+    "html_meta_article_published_time",
+    "html_meta_article_modified_time",
+    "html_meta_date_published",
+    "html_meta_date_modified",
+    "html_time_date_published",
+    "html_time_date_modified",
+    "http_last_modified"
+  ],
+  "limits": {
+    "max_candidates": 32,
+    "max_raw_value_characters": 256,
+    "min_cross_source_observations": 2,
+    "max_cross_source_observations": 16
+  },
+  "deterministic_html_metadata_extraction_required": true,
+  "http_last_modified_allowed": true,
+  "visible_text_date_inference_allowed": false,
+  "model_date_extraction_allowed": false,
+  "invalid_candidates_fail_closed": true,
+  "conflicting_candidates_fail_closed": true,
+  "conflict_winner_selection_allowed": false,
+  "raw_temporal_metadata_logging_allowed": false,
+  "source_digest_binding_required": true,
+  "explicit_subject_digest_required": true,
+  "cross_source_conflicts_preserved": true
+}
