@@ -52,6 +52,11 @@
 | T-018 | Public repository used as private-data storage | Critical | explicit repository policy, blocked paths, data inventory checks | CI path and secret checks |
 | T-019 | Malicious or mistaken memory deletion | High | strong target resolution, preview, backup window, deletion audit | deletion and recovery tests |
 | T-020 | A.L.I.C.E. silently expands task scope | High | exact action plans, permission per action, no permission laundering | scope-expansion tests |
+| T-021 | Web retrieval reaches localhost, private networks, link-local services, or cloud metadata | Critical | HTTP(S)-only transport, DNS and redirect revalidation, global-address enforcement, no raw sockets | SSRF, rebinding, and redirect tests |
+| T-022 | Private user context leaks through search queries or provider logs | Critical | PUBLIC-only initial transmission, query minimization, classification gate, metadata-only activity records | query-classification and log-redaction tests |
+| T-023 | Malicious source content overrides policy, launders permission, or triggers tools | Critical | untrusted-data delimiting, injection firewall, no model-controlled network client, deterministic permission boundary | direct and indirect web-injection tests |
+| T-024 | False freshness, source spoofing, or citation swapping produces unsupported current claims | High | canonical source identity, content digests, exact citation binding, timestamp separation, freshness evaluation | stale-source, date-conflict, and citation-tamper tests |
+| T-025 | Redirect loops, oversized responses, compression bombs, or recursive browsing exhaust resources | High | redirect, byte, fetch, source, and time budgets; streaming enforcement; cancellation; deterministic stopping | resource-cap and cancellation tests |
 
 ## 4. Security assumptions
 
