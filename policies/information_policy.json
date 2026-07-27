@@ -1,0 +1,67 @@
+{
+  "policy_name": "alice_information_policy",
+  "version": "1.0.0",
+  "phase": "4",
+  "milestone": "P4.0",
+  "status": "foundation",
+  "permission_id": "web.search",
+  "boundaries": {
+    "live_network_access_allowed": false,
+    "external_action_allowed": false,
+    "memory_write_allowed": false,
+    "background_monitoring_allowed": false,
+    "arbitrary_code_execution_allowed": false,
+    "provider_fallback_allowed": false,
+    "chain_of_thought_persistence_allowed": false
+  },
+  "allowed_operations": [
+    "search",
+    "fetch"
+  ],
+  "approved_live_providers": [],
+  "deterministic_fixture_mode_allowed": true,
+  "query_transmission": {
+    "allowed_classifications": [
+      "PUBLIC"
+    ],
+    "private_context_allowed": false,
+    "highly_sensitive_allowed": false,
+    "secrets_allowed": false
+  },
+  "source_retrieval": {
+    "allowed_schemes": [
+      "http",
+      "https"
+    ],
+    "authenticated_browsing_allowed": false,
+    "cookies_allowed": false,
+    "javascript_execution_allowed": false,
+    "form_submission_allowed": false,
+    "downloads_allowed": false,
+    "recursive_browsing_allowed": false
+  },
+  "untrusted_content": {
+    "treated_as_untrusted_data": true,
+    "can_modify_policy": false,
+    "can_grant_permission": false,
+    "can_request_credentials": false,
+    "can_trigger_tools": false,
+    "can_trigger_actions": false,
+    "can_write_memory": false
+  },
+  "budgets": {
+    "max_search_calls": 3,
+    "max_fetch_calls": 8,
+    "max_sources": 8,
+    "max_redirects": 3,
+    "request_timeout_seconds": 10,
+    "total_timeout_seconds": 45,
+    "max_response_bytes": 2000000,
+    "foreground_only": true
+  },
+  "logging": {
+    "activity_logging_required": true,
+    "raw_query_logging_allowed": false,
+    "raw_content_logging_allowed": false
+  }
+}

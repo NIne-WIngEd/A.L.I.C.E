@@ -1,7 +1,7 @@
 
 # A.L.I.C.E. Roadmap
 
-**Version:** 1.1.0
+**Version:** 1.2.0
 **Owner:** MK Rayan
 **Principle:** Capability grows only after governance, evaluation, and rollback controls exist.
 
@@ -97,19 +97,29 @@ Exit criteria:
 
 ## Phase 4 — Web and Information Tools
 
+**Status:** In progress — P4.0 architecture and contracts
+
 Build:
 
-- read-only web search;
-- source retrieval;
-- freshness checks;
-- citations;
-- bounded proactive research;
-- activity log.
+- P4.0 provider-neutral contracts, PUBLIC-only transmission policy, source identity, citation binding, and metadata-safe activity records;
+- P4.1 deterministic search and fetch provider abstraction;
+- P4.2 controlled HTTP(S) retrieval, normalization, redirect controls, and SSRF defenses;
+- P4.3 untrusted-content and prompt-injection firewall;
+- P4.4 freshness and public temporal reasoning;
+- P4.5 citation-bound web grounding through the Phase 3 validation path;
+- P4.6 bounded foreground research orchestration and activity persistence;
+- P4.7 explicit local conversational integration and offline behavior;
+- P4.8 synthetic adversarial information evaluation;
+- P4.9 exact-commit private release audit and closure.
 
 Exit criteria:
 
-- retrieved instructions cannot override policy;
-- source quality and freshness evaluations pass.
+- retrieved instructions cannot override policy, grant permissions, trigger tools, or create actions;
+- only approved PUBLIC query content is transmitted externally;
+- local and private networks remain unreachable;
+- source quality, freshness, citation, privacy, cancellation, and resource-budget evaluations pass;
+- no background monitoring, external action, or automatic memory write is enabled;
+- the final private release record is bound to the exact repository commit and rollback commit.
 
 ## Phase 5 — User Interface
 
