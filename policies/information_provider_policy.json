@@ -1,0 +1,22 @@
+{
+  "policy_name": "alice_information_provider_policy",
+  "version": "1.0.0",
+  "phase": "4",
+  "milestone": "P4.1",
+  "status": "provider_abstraction",
+  "live_network_access_allowed": false,
+  "provider_fallback_allowed": false,
+  "sanitized_failures_required": true,
+  "raw_query_in_failures_allowed": false,
+  "raw_source_content_in_failures_allowed": false,
+  "approved_providers": [
+    {
+      "provider": "deterministic-fixture-v1",
+      "provider_type": "deterministic_fixture",
+      "operations": [
+        "search",
+        "fetch"
+      ]
+    }
+  ]
+}
