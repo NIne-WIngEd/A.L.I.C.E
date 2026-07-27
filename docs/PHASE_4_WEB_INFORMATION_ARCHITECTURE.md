@@ -1,6 +1,6 @@
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** P4.1 provider abstraction implemented; live network disabled
+**Status:** P4.2 controlled retrieval boundary started; live network disabled
 **Phase 0 dependency:** Ratified governance and default-deny permission model
 **Phase 1 dependency:** Frozen read-only evidence layer
 **Phase 2 dependency:** Frozen authoritative Memory Core
@@ -149,6 +149,45 @@ P4.1 provider policy. A provider must be allowed by exact identity, provider
 type, and operation before registration. The only approved provider type is
 `deterministic_fixture`.
 
+## 4.2 P4.2a controlled retrieval boundary
+
+P4.2a establishes the connection-time safety and deterministic normalization
+boundary before any operating-system DNS or socket adapter is approved.
+
+Implemented in P4.2a:
+
+- versioned HTTP retrieval policy bound to the P4.0 limits;
+- default-port-only HTTP and HTTPS target validation;
+- deterministic resolver fixtures that require every resolved address to be
+  globally routable;
+- deterministic transport fixtures pinned to the approved address set;
+- point-of-use revalidation for every redirect hop;
+- HTTPS downgrade, redirect-loop, and redirect-budget rejection;
+- fixed credential-free GET headers;
+- no environment proxies, cookies, authentication, downloads, retries, or
+  caller-controlled headers;
+- response-header and singleton-header validation;
+- MIME-type, character-set, and content-encoding allowlists;
+- declared, streamed, compressed, and decoded byte limits;
+- bounded gzip and deflate decoding;
+- deterministic visible-text normalization for HTML, XHTML, and plain text;
+- exact normalized-content digests and source-contract projection;
+- exact-content duplicate observations;
+- sanitized DNS, redirect, peer, header, status, size, decoding, and
+  normalization failures.
+
+Still disabled after P4.2a:
+
+- operating-system DNS resolution;
+- sockets or live HTTP clients;
+- live search or fetch provider registration;
+- credentials, cookies, JavaScript, forms, downloads, proxies, and retries;
+- recursive browsing or background work.
+
+The deterministic resolver and transport are security fixtures, not live web
+providers. A later live adapter must preserve the same address pinning and
+response gates and requires a separate policy change and evaluation.
+
 ## 5. Package boundary
 
 Phase 4 code lives in:
@@ -163,10 +202,12 @@ Phase 4 tests live in:
 tests/phase4/
 ```
 
-Public policy lives in:
+Public policies live in:
 
 ```text
 policies/information_policy.json
+policies/information_provider_policy.json
+policies/information_http_retrieval_policy.json
 ```
 
 Private browsing history, live queries, fetched content, provider credentials, activity databases, caches, and release records must remain outside the public repository.
@@ -330,6 +371,11 @@ Phase 4 uses sanitized deterministic errors. Planned categories include:
 - `provider_fixture_missing`;
 - `provider_protocol_error`;
 - `provider_timeout`;
+- `dns_resolution_failed`;
+- `peer_address_mismatch`;
+- `response_header_invalid`;
+- `http_status_rejected`;
+- `content_decode_failed`;
 - `research_budget_exhausted`;
 - `invalid_source_url`;
 - `private_network_blocked`;
@@ -373,7 +419,7 @@ Exit criteria:
 
 ### P4.2 — Controlled source retrieval and normalization
 
-Build the first HTTP(S) transport. Add DNS and redirect revalidation, SSRF protection, streaming limits, content-type controls, decompression limits, canonical source metadata, text normalization, and duplicate detection.
+Add the connection-time HTTP(S) security boundary, deterministic resolver and transport fixtures, DNS and redirect revalidation, SSRF protection, peer pinning, streaming limits, content controls, decompression limits, canonical source metadata, text normalization, and duplicate detection. **The P4.2a boundary is implemented in package version `0.3.0`; operating-system DNS and live sockets remain pending within P4.2 and disabled.**
 
 Exit criteria:
 
