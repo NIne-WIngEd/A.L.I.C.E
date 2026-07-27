@@ -1,0 +1,39 @@
+{
+  "version": "1.0.0",
+  "authority": "docs/FRIDAY_PRIVACY_AND_TRUST_MODEL.md",
+  "product_id": "friday",
+  "defaults": {
+    "raw_host_data_storage": "local_encrypted",
+    "vendor_can_decrypt_host_data": false,
+    "mandatory_cloud_account": false,
+    "core_functionality_offline": true,
+    "telemetry_enabled": false,
+    "telemetry_personal_content_allowed": false,
+    "remote_inference_enabled": false,
+    "background_network_enabled": false,
+    "network_egress_ledger_enabled": true,
+    "plugin_network_access": "manifest_and_host_authority",
+    "update_packages_must_be_signed": true,
+    "host_state_migration_snapshot_required": true,
+    "host_specific_training": "local_by_default"
+  },
+  "protected_artifacts": [
+    "source_content",
+    "extracted_content",
+    "memory",
+    "beliefs",
+    "experience",
+    "credentials",
+    "training_assets",
+    "adapter_weights",
+    "identity_capsule",
+    "audit_roots"
+  ],
+  "optional_services": [
+    "encrypted_sync",
+    "encrypted_backup",
+    "remote_inference",
+    "federated_improvement",
+    "enterprise_management"
+  ]
+}

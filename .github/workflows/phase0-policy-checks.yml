@@ -12,20 +12,22 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
-
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: "3.13"
           cache: "pip"
           cache-dependency-path: requirements-dev.txt
-
       - name: Install validation dependencies
         run: python -m pip install -r requirements-dev.txt
-
-      - name: Validate Phase 0 policies
-        run: python scripts/validate_phase0.py
+      - name: Validate constitutional and capability foundation
+        run: |
+          python scripts/validate_phase0.py
+          python scripts/validate_governance_v1.py
+          python scripts/validate_product_family.py
+          python -m pytest tests/governance -q
+      - name: Audit repository-wide capability barriers
+        run: python scripts/audit_capability_barriers.py --repo . --fail-on-unresolved

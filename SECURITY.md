@@ -1,45 +1,32 @@
-# Security Policy
+# A.L.I.C.E. Security and System Integrity
 
-## Supported development state
+**Version:** 2.0.0
 
-A.L.I.C.E. is currently in pre-release development. No version should be treated as safe for handling the complete personal archive or controlling external services until the relevant release gates pass.
+Security exists to preserve A.L.I.C.E.'s capability, Rayan's ownership, reliable learning, and continuity under increasingly autonomous operation.
 
-## Never report secrets publicly
+## Security model
 
-Do not place passwords, API keys, private keys, tokens, recovery codes, identity documents, personal datasets, or private memory content in:
+A.L.I.C.E. uses mission-scoped authority, capability profiles, credential custody, provenance, evaluation, isolation where useful, canary promotion, and rollback. The project does not use security as a blanket reason to forbid research into networking, tools, private-data learning, model training, background operation, self-modification, production deployment, or embodiment.
 
-- GitHub issues;
-- pull requests;
-- discussions;
-- commits;
-- screenshots;
-- logs attached to public reports.
+## Protected kernel
 
-Redact sensitive values and use GitHub's private security-reporting mechanism when available.
+The protected kernel covers:
 
-## Credential exposure response
+- owner sovereignty and constitutional ratification;
+- truthful material-state reporting;
+- legitimate stop and rollback;
+- audit, provenance, and benchmark integrity;
+- credential and cryptographic authority custody;
+- recoverable known-good states.
 
-Treat any committed credential as compromised:
+## Capability activation
 
-1. revoke or rotate it immediately;
-2. stop affected integrations;
-3. determine where it was exposed;
-4. remove it from the current tree;
-5. remediate repository history when appropriate;
-6. add a regression control;
-7. verify that the old credential no longer works.
+Internal cognition, observation, learning, sandboxing, candidate code, candidate models, and reversible local creation are allowed by default. External and high-consequence effects are activated by explicit authority or a ratified mission. A5 missions may authorize automatic code merge, deployment, model promotion, and recursive improvement after measured gates.
 
-Deleting the visible file alone is not sufficient.
+## Data and models
 
-## Security boundaries
+Private and highly sensitive data may participate in authorized retrieval, learning, simulation, and training. Data classification determines custody, exposure, deletion, and lineage requirements; it is not a permanent intelligence ceiling. Secrets remain credential material and should normally be referenced through a credential broker rather than copied into prompts or training corpora.
 
-- the model does not enforce its own permissions;
-- tools execute only through the permission gateway;
-- secrets are stored only in a dedicated secret manager;
-- external content is untrusted data;
-- highly sensitive personal data is local-first;
-- production self-modification requires human review and approval.
+## Reporting
 
-## Current restriction
-
-The `legacy/` prototype is historical reference only. Do not add credentials to it or enable its external-action functions.
+Report vulnerabilities privately to the owner. A vulnerability is any condition that can corrupt authority, evidence, credentials, recovery, learning quality, or intended mission behavior—not merely the presence of a powerful capability.

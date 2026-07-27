@@ -1,0 +1,21 @@
+{
+  "policy_id": "alice.lifelong_learning",
+  "version": "1.0.0",
+  "continuous_event_eligibility": true,
+  "automatic_curriculum": true,
+  "automatic_low_consequence_memory_promotion": "policy_threshold",
+  "sandboxed_self_modification": "allowed",
+  "automatic_training": "mission_and_budget_authorized",
+  "automatic_production_promotion": "A5_mandate_and_evaluation_gates",
+  "learning_substrates": [
+    "working_context",
+    "experience_ledger",
+    "episodic_memory",
+    "semantic_knowledge",
+    "derived_beliefs",
+    "user_world_self_models",
+    "procedural_skills",
+    "training_assets",
+    "parametric_models"
+  ]
+}

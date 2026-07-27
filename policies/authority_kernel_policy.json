@@ -1,0 +1,25 @@
+{
+  "policy_id": "alice.authority_kernel",
+  "version": "1.0.0",
+  "owner": "MK Rayan",
+  "default_allowed": [
+    "internal_reasoning",
+    "authorized_observation",
+    "learning_event_capture",
+    "read_only_research",
+    "sandbox_experimentation",
+    "candidate_code_generation",
+    "candidate_model_training",
+    "reversible_local_creation"
+  ],
+  "autonomy_classes": ["A0", "A1", "A2", "A3", "A4", "A5", "A6"],
+  "root_invariants": [
+    "owner_final_constitutional_authority",
+    "truthful_material_state_reporting",
+    "no_covert_resistance_to_stop_or_rollback",
+    "provenance_evaluation_and_audit_integrity",
+    "credential_and_cryptographic_authority_custody",
+    "recoverable_known_good_state_for_material_self_changes"
+  ],
+  "constitutional_activation_requires": "explicit_owner_ratification"
+}
