@@ -1,0 +1,47 @@
+{
+  "policy_name": "alice_information_http_retrieval_policy",
+  "version": "1.0.0",
+  "phase": "4",
+  "milestone": "P4.2",
+  "status": "controlled_http_boundary",
+  "live_network_access_allowed": false,
+  "deterministic_resolver_required": true,
+  "deterministic_transport_required": true,
+  "allowed_schemes": [
+    "http",
+    "https"
+  ],
+  "allowed_ports": {
+    "http": [80],
+    "https": [443]
+  },
+  "max_redirects": 3,
+  "max_header_bytes": 65536,
+  "max_wire_bytes": 2000000,
+  "max_decoded_bytes": 2000000,
+  "request_timeout_seconds": 10,
+  "allowed_content_types": [
+    "application/xhtml+xml",
+    "text/html",
+    "text/plain"
+  ],
+  "allowed_content_encodings": [
+    "identity",
+    "gzip",
+    "deflate"
+  ],
+  "allowed_charsets": [
+    "ascii",
+    "us-ascii",
+    "utf-8"
+  ],
+  "all_resolved_addresses_must_be_global": true,
+  "redirect_revalidation_required": true,
+  "peer_address_pinning_required": true,
+  "https_downgrade_allowed": false,
+  "environment_proxy_allowed": false,
+  "credentials_allowed": false,
+  "cookies_allowed": false,
+  "downloads_allowed": false,
+  "automatic_retries_allowed": false
+}
