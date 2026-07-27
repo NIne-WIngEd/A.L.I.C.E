@@ -1,0 +1,43 @@
+{
+  "policy_name": "alice_information_live_http_policy",
+  "version": "1.0.0",
+  "phase": "4",
+  "milestone": "P4.2b",
+  "status": "controlled_live_transport",
+  "permission_id": "web.search",
+  "live_network_access_allowed": true,
+  "approved_resolver_type": "system_getaddrinfo",
+  "approved_transport_type": "direct_https_socket",
+  "allowed_schemes": [
+    "https"
+  ],
+  "network": {
+    "operating_system_dns_allowed": true,
+    "direct_socket_connections_allowed": true,
+    "environment_proxies_allowed": false,
+    "automatic_retries_allowed": false,
+    "dns_cache_allowed": false,
+    "connection_reuse_allowed": false,
+    "transfer_encoding_allowed": false
+  },
+  "privacy": {
+    "cookies_allowed": false,
+    "credentials_allowed": false,
+    "client_certificates_allowed": false,
+    "custom_ca_bundle_allowed": false
+  },
+  "tls": {
+    "certificate_validation_required": true,
+    "hostname_validation_required": true,
+    "environment_overrides_allowed": false,
+    "key_logging_allowed": false,
+    "minimum_version": "TLSv1.2"
+  },
+  "limits": {
+    "max_dns_addresses": 8,
+    "max_header_count": 64,
+    "max_status_line_bytes": 4096,
+    "socket_read_chunk_bytes": 65536,
+    "max_connect_attempts": 1
+  }
+}

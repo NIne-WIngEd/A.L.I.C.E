@@ -1,4 +1,4 @@
-"""Deterministic P4.2 controlled retrieval and text normalization."""
+"""Controlled P4.2 retrieval, normalization, and explicit live adapter."""
 
 from __future__ import annotations
 
@@ -20,6 +20,13 @@ from .http_transport import (
     http_failure,
     validate_global_address,
 )
+from .live_http import (
+    DirectInformationHttpsTransport,
+    StdlibInformationDnsBackend,
+    StdlibInformationSocketBackend,
+    SystemInformationNameResolver,
+)
+from .live_policy import InformationLiveHttpPolicy
 from .policy import InformationPolicy
 from .providers import InformationCancellationToken
 from .retrieval_policy import InformationHttpRetrievalPolicy
@@ -209,12 +216,15 @@ class ControlledInformationHttpRetriever:
     def __post_init__(self) -> None:
         self.information_policy.validate()
         self.retrieval_policy.validate(information_policy=self.information_policy)
+        self._validate_runtime_components()
+
+    def _validate_runtime_components(self) -> None:
         if self.retrieval_policy.live_network_access_allowed:
-            raise ValueError("P4.2 live network access must remain disabled.")
+            raise ValueError("P4.2a retrieval policy must remain network-free.")
         if type(self.resolver) is not DeterministicInformationNameResolver:
-            raise ValueError("P4.2 requires the exact deterministic resolver fixture.")
+            raise ValueError("P4.2a requires the exact deterministic resolver fixture.")
         if type(self.transport) is not DeterministicInformationHttpTransport:
-            raise ValueError("P4.2 requires the exact deterministic transport fixture.")
+            raise ValueError("P4.2a requires the exact deterministic transport fixture.")
 
     def retrieve(
         self,
@@ -224,10 +234,7 @@ class ControlledInformationHttpRetriever:
     ) -> InformationRetrievedResource:
         self.information_policy.validate()
         self.retrieval_policy.validate(information_policy=self.information_policy)
-        if type(self.resolver) is not DeterministicInformationNameResolver:
-            raise ValueError("P4.2 resolver changed after initialization.")
-        if type(self.transport) is not DeterministicInformationHttpTransport:
-            raise ValueError("P4.2 transport changed after initialization.")
+        self._validate_runtime_components()
         try:
             current = canonicalize_public_url(url)
         except ValueError as exc:
@@ -454,6 +461,50 @@ class ControlledInformationHttpRetriever:
         if not normalized:
             raise http_failure("normalization_failed")
         return normalized, title
+
+
+@dataclass(frozen=True)
+class LiveControlledInformationHttpRetriever(ControlledInformationHttpRetriever):
+    """Explicit P4.2b live adapter with exact production components only.
+
+    The adapter is intentionally not registered as a Phase 4 provider and is
+    not reachable from the Phase 3 runtime in this milestone.
+    """
+
+    live_policy: InformationLiveHttpPolicy
+
+    def __post_init__(self) -> None:
+        self.information_policy.validate()
+        self.retrieval_policy.validate(information_policy=self.information_policy)
+        self.live_policy.validate(
+            information_policy=self.information_policy,
+            retrieval_policy=self.retrieval_policy,
+        )
+        self._validate_runtime_components()
+
+    def _validate_runtime_components(self) -> None:
+        if type(self.resolver) is not SystemInformationNameResolver:
+            raise ValueError("P4.2b requires the exact system resolver adapter.")
+        if type(self.transport) is not DirectInformationHttpsTransport:
+            raise ValueError("P4.2b requires the exact direct HTTPS transport.")
+        if self.resolver.information_policy != self.information_policy:
+            raise ValueError("P4.2b resolver information policy does not match.")
+        if self.resolver.retrieval_policy != self.retrieval_policy:
+            raise ValueError("P4.2b resolver retrieval policy does not match.")
+        if self.resolver.live_policy != self.live_policy:
+            raise ValueError("P4.2b resolver activation policy does not match.")
+        if self.transport.information_policy != self.information_policy:
+            raise ValueError("P4.2b transport information policy does not match.")
+        if self.transport.retrieval_policy != self.retrieval_policy:
+            raise ValueError("P4.2b transport retrieval policy does not match.")
+        if self.transport.live_policy != self.live_policy:
+            raise ValueError("P4.2b transport activation policy does not match.")
+        if type(self.resolver.backend) is not StdlibInformationDnsBackend:
+            raise ValueError("P4.2b resolver backend changed after initialization.")
+        if type(self.transport.backend) is not StdlibInformationSocketBackend:
+            raise ValueError("P4.2b socket backend changed after initialization.")
+        self.resolver.validate_live_boundary()
+        self.transport.validate_live_boundary()
 
 
 @dataclass(frozen=True)

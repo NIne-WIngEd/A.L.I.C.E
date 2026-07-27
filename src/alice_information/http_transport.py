@@ -40,6 +40,10 @@ HTTP_FAILURE_MESSAGES = {
     "response_too_large": "Information source exceeded the approved byte limit.",
     "content_decode_failed": "Information source content could not be decoded safely.",
     "normalization_failed": "Information source content could not be normalized safely.",
+    "network_connection_failed": "Information source connection could not be established safely.",
+    "network_timeout": "Information source network operation exceeded the approved timeout.",
+    "tls_validation_failed": "Information source TLS validation failed.",
+    "http_protocol_invalid": "Information source HTTP response was invalid.",
 }
 HTTP_FAILURE_CODES = tuple(HTTP_FAILURE_MESSAGES)
 _HEADER_NAME = re.compile(r"^[!#$%&'*+\-.^_`|~0-9A-Za-z]+$")
