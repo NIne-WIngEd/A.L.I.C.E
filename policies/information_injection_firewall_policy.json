@@ -1,0 +1,40 @@
+{
+  "policy_name": "alice_information_injection_firewall_policy",
+  "version": "1.0.0",
+  "phase": "4",
+  "milestone": "P4.3",
+  "status": "deterministic_injection_firewall",
+  "permission_id": "web.search",
+  "untrusted_content_required": true,
+  "deterministic_detection_required": true,
+  "model_classifier_allowed": false,
+  "content_mutation_allowed": false,
+  "preserve_original_source_text": true,
+  "source_digest_binding_required": true,
+  "raw_excerpt_logging_allowed": false,
+  "clear_sources_renderable": true,
+  "flagged_sources_renderable": false,
+  "normalization": {
+    "unicode_form": "NFKC",
+    "strip_format_characters_for_detection": true,
+    "collapse_detection_whitespace": true
+  },
+  "limits": {
+    "max_source_characters": 2000000,
+    "max_source_lines": 50000,
+    "max_findings": 100
+  },
+  "critical_finding_codes": [
+    "boundary_collision_attempt",
+    "credential_request_instruction",
+    "encoded_instruction_payload",
+    "memory_write_instruction",
+    "permission_laundering_instruction",
+    "policy_mutation_instruction",
+    "policy_override_instruction",
+    "private_data_exfiltration_instruction",
+    "role_marker_instruction",
+    "tool_execution_instruction",
+    "unicode_obfuscation_detected"
+  ]
+}

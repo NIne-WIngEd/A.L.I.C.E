@@ -1,6 +1,6 @@
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** P4.2b controlled live HTTPS transport implemented; no live provider or runtime path registered
+**Status:** P4.3 deterministic retrieved-content injection firewall implemented; no live provider or conversation runtime path registered
 **Phase 0 dependency:** Ratified governance and default-deny permission model
 **Phase 1 dependency:** Frozen read-only evidence layer
 **Phase 2 dependency:** Frozen authoritative Memory Core
@@ -487,7 +487,21 @@ Exit criteria:
 
 ### P4.3 — Injection firewall
 
-Add instruction-like-content analysis, containment labels, source isolation, credential-request detection, policy-override rejection, and adversarial fixtures.
+Add instruction-like-content analysis, containment labels, source isolation, credential-request detection, policy-override rejection, and adversarial fixtures. **Implemented in package version `0.5.0` as a deterministic, model-free, digest-bound firewall. Flagged sources are non-renderable and no raw finding excerpt is retained.**
+
+Implemented controls:
+
+- exact versioned firewall policy bound to `web.search` and the P4.0 untrusted-content boundary;
+- NFKC and Unicode-format-character normalization for detection only;
+- original source text and content digest preservation;
+- deterministic detection of role markers, policy overrides, permission laundering, credential requests, tool execution, memory writes, policy mutation, private-data exfiltration, encoded instruction payloads, and source-boundary collisions;
+- two-line detection windows for split instructions;
+- metadata-only findings containing approved codes, line numbers, and normalized-line digests;
+- exact source ID, URL, source digest, policy version, and detection-view binding;
+- fail-closed source, line, and finding budgets;
+- `InformationInspectedSource` as the only P4.3 source wrapper eligible for future model-facing web grounding;
+- blocked-source rendering refusal;
+- no model classifier, content rewriting, raw excerpt logging, tool invocation, action, or memory write.
 
 Exit criteria:
 
