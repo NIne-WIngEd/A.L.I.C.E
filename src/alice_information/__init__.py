@@ -1,3 +1,3 @@
-"""Governed external-information foundations for A.L.I.C.E. Phase 4."""
+"""A.L.I.C.E. Phase 4 web and information boundary."""
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"

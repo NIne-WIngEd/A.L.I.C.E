@@ -1,6 +1,6 @@
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** P4.0 foundation started
+**Status:** P4.1 provider abstraction implemented; live network disabled
 **Phase 0 dependency:** Ratified governance and default-deny permission model
 **Phase 1 dependency:** Frozen read-only evidence layer
 **Phase 2 dependency:** Frozen authoritative Memory Core
@@ -113,6 +113,41 @@ Not implemented in P4.0:
 - research orchestration;
 - Phase 3 runtime integration;
 - background work.
+
+## 4.1 P4.1 provider abstraction scope
+
+P4.1 adds the execution interface without adding a network transport.
+
+Implemented in P4.1:
+
+- separate read-only search and fetch protocols;
+- exact lowercase provider identities;
+- deterministic search fixtures keyed by public-query digest;
+- deterministic source fixtures keyed by canonical URL;
+- cooperative cancellation before and after provider execution;
+- bounded result, timeout, and response-byte inputs;
+- sanitized provider-failure metadata and an approved failure-code vocabulary;
+- exact operation-specific provider registration;
+- a versioned P4.1 provider allowlist;
+- explicit duplicate-registration rejection;
+- exact resolution with no provider fallback;
+- deterministic output replay and protocol validation.
+
+Still disabled in P4.1:
+
+- HTTP or HTTPS connections;
+- DNS resolution;
+- redirects;
+- live provider credentials;
+- authenticated browsing;
+- automatic retries;
+- provider fallback;
+- background execution.
+
+The P4.1 provider registry requires both the P4.0 information policy and the
+P4.1 provider policy. A provider must be allowed by exact identity, provider
+type, and operation before registration. The only approved provider type is
+`deterministic_fixture`.
 
 ## 5. Package boundary
 
@@ -292,6 +327,8 @@ Phase 4 uses sanitized deterministic errors. Planned categories include:
 - `information_denied`;
 - `query_classification_denied`;
 - `provider_not_registered`;
+- `provider_fixture_missing`;
+- `provider_protocol_error`;
 - `provider_timeout`;
 - `research_budget_exhausted`;
 - `invalid_source_url`;
@@ -325,7 +362,7 @@ Exit criteria:
 
 ### P4.1 — Information-provider abstraction
 
-Build search and fetch protocols, deterministic fixture providers, cancellation, sanitized failures, exact provider registry, provider policy, and no-fallback enforcement.
+Build search and fetch protocols, deterministic fixture providers, cancellation, sanitized failures, exact provider registry, provider policy, and no-fallback enforcement. **Implemented in package version `0.2.0`; live network access remains disabled.**
 
 Exit criteria:
 

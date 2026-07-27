@@ -47,6 +47,117 @@ class InformationPolicy:
     raw_query_logging_allowed: bool
     raw_content_logging_allowed: bool
 
+    def validate(self) -> None:
+        """Revalidate a projected policy at every trust-boundary entry."""
+
+        if self.policy_name != "alice_information_policy":
+            raise InformationPolicyError(
+                "P4.0 policy_name must be alice_information_policy."
+            )
+        if self.version != "1.0.0":
+            raise InformationPolicyError(
+                "P4.0 information policy version must be 1.0.0."
+            )
+        if self.phase != "4" or self.milestone != "P4.0":
+            raise InformationPolicyError(
+                "Information policy must be bound to Phase 4 milestone P4.0."
+            )
+        if self.status != "foundation":
+            raise InformationPolicyError(
+                "P4.0 information policy status must be foundation."
+            )
+        if self.permission_id != "web.search":
+            raise InformationPolicyError(
+                "Phase 4 read-only information access must map to web.search."
+            )
+        self.capabilities.validate()
+        if self.allowed_operations != ("search", "fetch"):
+            raise InformationPolicyError(
+                "P4.0 allowed_operations must remain search and fetch."
+            )
+        if self.approved_live_providers != ():
+            raise InformationPolicyError(
+                "P4.0 approved_live_providers must remain empty."
+            )
+        if self.deterministic_fixture_mode_allowed is not True:
+            raise InformationPolicyError(
+                "P4.0 deterministic fixture mode must remain enabled."
+            )
+        if self.allowed_query_classifications != ("PUBLIC",):
+            raise InformationPolicyError(
+                "P4.0 external query classification must remain PUBLIC-only."
+            )
+        if self.allowed_schemes != ("http", "https"):
+            raise InformationPolicyError(
+                "P4.0 allowed URL schemes must remain HTTP and HTTPS."
+            )
+        _bounded_int(
+            self.max_search_calls,
+            field="max_search_calls",
+            minimum=1,
+            maximum=10,
+        )
+        _bounded_int(
+            self.max_fetch_calls,
+            field="max_fetch_calls",
+            minimum=1,
+            maximum=20,
+        )
+        _bounded_int(
+            self.max_sources,
+            field="max_sources",
+            minimum=1,
+            maximum=20,
+        )
+        _bounded_int(
+            self.max_redirects,
+            field="max_redirects",
+            minimum=0,
+            maximum=5,
+        )
+        _bounded_number(
+            self.request_timeout_seconds,
+            field="request_timeout_seconds",
+            minimum=1,
+            maximum=30,
+        )
+        _bounded_number(
+            self.total_timeout_seconds,
+            field="total_timeout_seconds",
+            minimum=1,
+            maximum=120,
+        )
+        _bounded_int(
+            self.max_response_bytes,
+            field="max_response_bytes",
+            minimum=1,
+            maximum=5_000_000,
+        )
+        if self.total_timeout_seconds < self.request_timeout_seconds:
+            raise InformationPolicyError(
+                "Total research timeout cannot be smaller than request timeout."
+            )
+        if self.foreground_only is not True:
+            raise InformationPolicyError(
+                "P4.0 information access must remain foreground-only."
+            )
+        if self.retrieved_content_is_untrusted_data is not True:
+            raise InformationPolicyError(
+                "P4.0 retrieved content must remain untrusted data."
+            )
+        if self.activity_logging_required is not True:
+            raise InformationPolicyError(
+                "P4.0 activity logging must remain required."
+            )
+        if self.raw_query_logging_allowed is not False:
+            raise InformationPolicyError(
+                "P4.0 raw query logging must remain disabled."
+            )
+        if self.raw_content_logging_allowed is not False:
+            raise InformationPolicyError(
+                "P4.0 raw content logging must remain disabled."
+            )
+
 
 def _mapping(value: Any, *, field: str) -> dict[str, Any]:
     if not isinstance(value, dict):
@@ -299,28 +410,7 @@ def parse_information_policy(payload: dict[str, Any]) -> InformationPolicy:
         ),
     )
 
-    if policy.policy_name != "alice_information_policy":
-        raise InformationPolicyError(
-            "P4.0 policy_name must be alice_information_policy."
-        )
-    if policy.version != "1.0.0":
-        raise InformationPolicyError("P4.0 information policy version must be 1.0.0.")
-    if policy.phase != "4" or policy.milestone != "P4.0":
-        raise InformationPolicyError(
-            "Information policy must be bound to Phase 4 milestone P4.0."
-        )
-    if policy.status != "foundation":
-        raise InformationPolicyError(
-            "P4.0 information policy status must be foundation."
-        )
-    if policy.permission_id != "web.search":
-        raise InformationPolicyError(
-            "Phase 4 read-only information access must map to web.search."
-        )
-    if policy.total_timeout_seconds < policy.request_timeout_seconds:
-        raise InformationPolicyError(
-            "Total research timeout cannot be smaller than request timeout."
-        )
+    policy.validate()
     return policy
 
 
