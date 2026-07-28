@@ -170,6 +170,64 @@ parity = json.loads((POLICIES / "capability_parity_ledger.json").read_text(encod
 if "storage_lifecycle_and_replay" not in parity.get("capabilities", {}):
     errors.append("capability parity ledger must include storage lifecycle and replay")
 
+# final-architecture-cleanup-v1
+constitution_status_markers = [
+    "**Status:** Ratified and effective",
+    "**Ratification:** Ratified by explicit owner approval and repository merge.",
+]
+for phrase in constitution_status_markers:
+    if phrase not in constitution:
+        errors.append(f"constitution ratification marker missing: {phrase}")
+
+permissions_text = (POLICIES / "permissions.yaml").read_text(encoding="utf-8")
+for phrase in [
+    'version: "2.0.0"',
+    'policy_model: "mission_scoped_autonomy"',
+    'activation_model: "capability_profile_plus_mission"',
+    "A5: autonomous_production_and_self_evolution",
+    "A6: constitutional_and_authority_kernel",
+    "id: code.self_modify_candidate",
+    "id: model.train_candidate",
+    "id: production.deploy_or_merge",
+    "id: model.promote_production",
+]:
+    if phrase not in permissions_text:
+        errors.append(f"mission authority marker missing: {phrase}")
+
+readme = (ROOT / "README.md").read_text(encoding="utf-8")
+for phrase in [
+    "P4.5a citation-bound grounding is merged",
+    "Aggressive temporary capture",
+    "Personal Cognitive Kernel extraction starts at Phase 5.0",
+    "Friday is not the user-facing assistant name",
+]:
+    if phrase not in readme:
+        errors.append(f"README architecture marker missing: {phrase}")
+
+evaluation = (DOCS / "EVALUATION_CHARTER.md").read_text(encoding="utf-8")
+for phrase in [
+    "**Status:** Ratified cross-phase evaluation charter",
+    "catastrophic forgetting",
+    "retention-value prediction",
+    "representative replay quality",
+    "Product-family parity",
+    "backup and restore drills",
+]:
+    if phrase not in evaluation:
+        errors.append(f"evaluation charter marker missing: {phrase}")
+for phase in range(5, 16):
+    if f"Phase {phase}" not in evaluation:
+        errors.append(f"evaluation charter missing Phase {phase}")
+
+scope = (DOCS / "SCOPE_AND_NON_GOALS.md").read_text(encoding="utf-8")
+for phrase in [
+    "HISTORICAL RELEASE SCOPE",
+    "**Scope kind:** Historical compatibility document",
+    "**Capability ceiling:** false",
+    "intended future directions or research programs",
+]:
+    if phrase not in scope:
+        errors.append(f"historical scope marker missing: {phrase}")
 if errors:
     print("Governance and evolvability validation failed:")
     for error in errors:
