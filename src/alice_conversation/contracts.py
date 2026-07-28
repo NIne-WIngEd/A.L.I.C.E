@@ -30,6 +30,7 @@ GROUNDING_SOURCE_KINDS = (
     "memory_source",
     "phase1_chunk",
     "phase1_source",
+    "web_source",
 )
 KNOWLEDGE_STATUSES = (
     "verified_fact",

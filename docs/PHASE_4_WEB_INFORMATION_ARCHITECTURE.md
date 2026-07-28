@@ -2,7 +2,7 @@
 
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** P4.5a deterministic citation-grounding foundation implemented; no Phase 3 adapter or conversation runtime path registered
+**Status:** P4.5b deterministic Phase 3 grounding projection implemented; no conversation runtime path registered
 **Phase 0 dependency:** Ratified Governance 1.1 and mission/profile-driven authority
 **Phase 1 dependency:** Released read-only evidence compatibility baseline
 **Phase 2 dependency:** Released authoritative-memory compatibility baseline
@@ -576,11 +576,31 @@ The boundary:
 
 P4.5a does not perform semantic-entailment inference, publisher-reputation scoring, model claim generation, Phase 3 adaptation, external actions, memory writes, or background activity. These are milestone-local limits rather than permanent capability ceilings.
 
+#### P4.5b — Deterministic Phase 3 grounding projection
+
+Package version `0.9.0` adds a read-only adapter from revalidated P4.5a packets into the released Phase 3 grounding and response-validation contracts.
+
+The bridge:
+
+- revalidates the exact P4.5a packet, query digest, source versions, freshness assessments, support bindings, and grounding digest before projection;
+- maps `insufficient_sources` to the existing Phase 3 `insufficient_evidence` outcome while preserving `answerable`, `uncertain`, and `conflict`;
+- adds `web_source` as an additive Phase 3 citation source kind without giving the Phase 3 model direct network access;
+- preserves exact `[WEB:...]` tokens, canonical URLs, source-content digests, knowledge status, confidence, and PUBLIC classification;
+- creates deterministic Phase 3 claim and packet identities bound to the P4 grounding and query digests;
+- emits a metadata-only projection receipt containing source-version, freshness, citation, P4 packet, P3 packet, and policy bindings;
+- emits one metadata-only `grounding_packet` state reference, with no source body or raw support span persisted;
+- revalidates the projection before delegating visible-response checks to the unchanged P3.6 validator;
+- binds the P3.6 validation report and response digest back to the exact P4.5b projection.
+
+P4.5b does not register the bridge in the local conversation runtime, execute research, generate claims, infer semantic entailment, write memory, perform actions, or persist source bodies. Those successor capabilities remain separately gated.
+
 Exit criteria:
 
 - visible external claims are source-supported;
 - citation swapping and digest tampering fail;
 - uncertainty and source conflict remain explicit;
+- P4 grounding cannot be substituted during Phase 3 projection;
+- the exact P3.6 validation report is bound to the projected P4 grounding;
 - P3.6 remains the final visible-response gate.
 
 ### P4.6 — Governed research orchestration

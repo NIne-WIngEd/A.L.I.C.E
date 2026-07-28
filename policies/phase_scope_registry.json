@@ -1189,6 +1189,21 @@
       "reason": "The P4.5a grounding policy is intentionally read-only and side-effect-free inside this milestone. It does not prohibit later information, memory, tool, or action profiles.",
       "sunset_condition": "Replace the hard-coded P4.5a guard with a selected capability profile when grounding is integrated with the Experience Ledger and action-capable runtimes.",
       "registered_by": "alice-mega-architecture-migration-v1.3"
+    },
+    "src/alice_information/conversation_bridge_policy.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "information.phase4.grounding",
+      "milestone": "P4.5b",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "MUST_REMAIN_DISABLED"
+      ],
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "reason": "The P4.5b bridge policy preserves the released read-only projection and P3.6 validation boundary. It does not prohibit later integrated conversation, learning, tool, memory, or action profiles.",
+      "sunset_condition": "Replace the hard-coded P4.5b compatibility guards with a selected integrated capability profile when the bridge is registered in the conversation runtime.",
+      "registered_by": "phase4-p4.5b-conversation-grounding-bridge"
     }
   },
   "patterns": [
@@ -1279,7 +1294,7 @@
     "pattern_entries_must_be_narrow_and_reviewed": true,
     "unexpected_active_barriers_fail_migration": true
   },
-  "registered_file_count": 132,
+  "registered_file_count": 133,
   "registered_pattern_count": 11,
   "released_baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe"
 }

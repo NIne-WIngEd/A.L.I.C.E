@@ -1,0 +1,33 @@
+{
+  "policy_name": "alice_information_conversation_bridge_policy",
+  "version": "1.0.0",
+  "phase": "4",
+  "milestone": "P4.5b",
+  "status": "deterministic_phase3_grounding_projection",
+  "source_kind": "web_source",
+  "state_reference_kind": "grounding_packet",
+  "outcome_mapping": {
+    "answerable": "answerable",
+    "conflict": "conflict",
+    "uncertain": "uncertain",
+    "insufficient_sources": "insufficient_evidence"
+  },
+  "requirements": {
+    "verified_information_grounding": true,
+    "exact_projection": true,
+    "exact_citation_tokens": true,
+    "source_version_bindings": true,
+    "freshness_metadata": true,
+    "p3_response_validation": true,
+    "metadata_only_state_reference": true
+  },
+  "boundaries": {
+    "raw_source_persistence_allowed": false,
+    "raw_support_persistence_allowed": false,
+    "conversation_runtime_registration_allowed": false,
+    "memory_write_allowed": false,
+    "external_action_allowed": false,
+    "model_claim_generation_allowed": false,
+    "semantic_entailment_inference_allowed": false
+  }
+}
