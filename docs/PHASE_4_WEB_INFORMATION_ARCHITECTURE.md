@@ -2,11 +2,11 @@
 
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** P4.3 deterministic retrieved-content injection firewall implemented; no live provider or conversation runtime path registered
-**Phase 0 dependency:** Ratified governance and default-deny permission model
-**Phase 1 dependency:** Frozen read-only evidence layer
-**Phase 2 dependency:** Frozen authoritative Memory Core
-**Phase 3 dependency:** Frozen governed conversation layer
+**Status:** P4.5a deterministic citation-grounding foundation implemented; no Phase 3 adapter or conversation runtime path registered
+**Phase 0 dependency:** Ratified Governance 1.1 and mission/profile-driven authority
+**Phase 1 dependency:** Released read-only evidence compatibility baseline
+**Phase 2 dependency:** Released authoritative-memory compatibility baseline
+**Phase 3 dependency:** Released governed-conversation compatibility baseline
 **Owner:** MK Rayan
 
 ## 1. Purpose
@@ -556,10 +556,31 @@ Exit criteria:
 
 Build source-quality metadata, claim construction, exact citation verification, source-diversity rules, uncertainty and conflict preservation, and the adapter into Phase 3 grounding.
 
+#### P4.5a — Deterministic citation-grounding foundation
+
+Package version `0.8.0` adds a model-free grounding boundary before any Phase 3 adapter exists.
+
+The boundary:
+
+- accepts only injection-cleared and freshness-supported source versions;
+- derives structural source-quality metadata without publisher-reputation inference;
+- requires HTTPS, minimum normalized content, exact source digests, and exact query binding;
+- constructs claims only from exact character spans whose text equals the visible claim text;
+- binds every citation to the canonical URL and normalized source-content digest;
+- requires two distinct canonical domains before an extractive claim may be labeled `verified_fact`;
+- preserves `uncertain` and `disputed` states instead of upgrading them silently;
+- requires two distinct canonical domains for a conflict packet;
+- rejects unused packet sources, citation swapping, support-span tampering, and forged quality assessments;
+- renders a digest-bound `VERIFIED WEB GROUNDING` envelope around already governed source renderings;
+- stores only span coordinates and digests in metadata-safe support records.
+
+P4.5a does not perform semantic-entailment inference, publisher-reputation scoring, model claim generation, Phase 3 adaptation, external actions, memory writes, or background activity. These are milestone-local limits rather than permanent capability ceilings.
+
 Exit criteria:
 
 - visible external claims are source-supported;
 - citation swapping and digest tampering fail;
+- uncertainty and source conflict remain explicit;
 - P3.6 remains the final visible-response gate.
 
 ### P4.6 — Governed research orchestration
