@@ -1,197 +1,130 @@
+# A.L.I.C.E. Roadmap 2.1
 
-# A.L.I.C.E. Roadmap
-
-**Version:** 1.2.0
+**Version:** 2.1.0
 **Owner:** MK Rayan
-**Principle:** Capability grows only after governance, evaluation, and rollback controls exist.
+**Status:** Final top-level capability domains with a mapped Friday product track
+**Principle:** Capability, learning, and governance co-evolve. Earlier implementations remain changeable when necessary to serve the final architecture.
 
-## Phase 0 — Identity and Governance
+## Phase 0 — Identity and Authority Kernel
 
-**Status:** Complete
+**Status:** Released baseline; evolvable.
 
-Deliverables:
+Constitution, owner sovereignty, authority model, memory principles, evaluation, resilience, rollback, and repository governance.
 
-- ratified Constitution;
-- permission model;
-- memory policy;
-- data classification;
-- threat model;
-- v0.1 scope and non-goals;
-- evaluation charter;
-- machine-readable policy;
-- policy-validation tests;
-- repository security baseline.
+## Phase 1 — Private Evidence Foundation
 
-Exit criteria:
+**Status:** Released baseline; evolvable.
 
-- all required documents exist;
-- machine-readable policies validate;
-- public repository contains no active credentials or private life data;
-- protected-main workflow is configured;
-- Phase 1 boundaries are approved.
+Private vault, ingestion, classification, provenance, retrieval indexes, reproducibility, and grounded evidence.
 
-## Phase 1 — Private Data Vault and Ingestion
+This phase may be refactored to support host-neutral storage, product identity, local encryption, Identity Capsules, or multiple host instances.
 
-Build:
+## Phase 2 — Authoritative Memory Core
 
-- encrypted local raw-data vault;
-- complete file inventory;
-- data-type and sensitivity classification;
-- duplicate detection;
-- parser registry;
-- metadata extraction;
-- chunking pipeline;
-- source IDs and checksums;
-- quarantine for unsupported or suspicious files;
-- pilot-dataset ground truth.
+**Status:** Released baseline; evolvable.
 
-Exit criteria:
+Inspectable memory, temporal conflict, authorization-aware retrieval, sensitive storage, candidate promotion, correction, deletion, and rebuild guarantees.
 
-- pilot data can be ingested reproducibly;
-- originals remain unchanged;
-- every extracted segment maps to a source;
-- secrets are detected and excluded;
-- deletion and rebuild procedures are tested.
-
-## Phase 2 — Memory Core
-
-**Status:** Complete
-
-Build:
-
-- structured memory database;
-- vector and metadata retrieval;
-- memory provenance;
-- temporal and conflict handling;
-- inspection, correction, supersession, and deletion APIs;
-- sensitive-memory access controls.
-
-Exit criteria:
-
-- memory evaluation gates pass;
-- deleted records stay absent after index rebuild;
-- personal answers can cite source records.
+This phase may be extended or replaced where necessary for automated curation, multi-host isolation, personal adapters, or Friday productization.
 
 ## Phase 3 — Conversational A.L.I.C.E.
 
-**Status:** Complete
+**Status:** Released baseline; evolvable.
 
-Build:
+Model abstraction, private conversation state, grounded responses, orchestration, repair, local inference, and evaluation.
 
-- provider-neutral model abstraction and local Ollama adapter;
-- private conversation state with retention, interruption, cancellation, and resume controls;
-- read-only Phase 1 and Phase 2 grounding bridges;
-- versioned constitutional dialogue behavior;
-- controlled orchestration and deterministic response validation;
-- local text runtime with governed cross-turn context;
-- one bounded response-repair attempt under explicit policy;
-- synthetic adversarial evaluation and exact-commit private release audit.
+Released Phase 3 behavior is a compatibility profile, not a permanent limit on tools, retries, fallback, live retrieval, memory, or learning.
 
-Exit criteria:
+## Phase 4 — Public Web and Information Intelligence
 
-- constitutional, grounding, citation, context, lifecycle, and repair gates pass;
-- uncertainty, conflict, denial, and abstention remain visible and fail closed;
-- conversation state stays separate from authoritative memory;
-- no web access, external-action tools, or conversational memory writes are enabled;
-- the final private release record is bound to the exact repository commit and rollback commit.
+**Status:** Active; current work may resume at P4.5 after architecture migration.
 
-## Phase 4 — Web and Information Tools
+Provider-neutral search and fetch, temporal metadata, citation binding, source conflict, injection-resistant evidence handling, and learning-ready observation envelopes.
 
-**Status:** In progress — P4.0 architecture and contracts
+Phase 4's read-only release scope is a maturity boundary. Phase 4 documents, code, tests, and schemas may change when required to support the final learning architecture, product family, or migration path.
 
-Build:
+## Phase 5 — Experience Ledger, Evaluation Substrate, and Kernel Extraction
 
-- P4.0 provider-neutral contracts, PUBLIC-only transmission policy, source identity, citation binding, and metadata-safe activity records;
-- P4.1 deterministic search and fetch provider abstraction;
-- P4.2 controlled HTTP(S) retrieval, normalization, redirect controls, and SSRF defenses;
-- P4.3 untrusted-content and prompt-injection firewall;
-- P4.4 freshness and public temporal reasoning;
-- P4.5 citation-bound web grounding through the Phase 3 validation path;
-- P4.6 bounded foreground research orchestration and activity persistence;
-- P4.7 explicit local conversational integration and offline behavior;
-- P4.8 synthetic adversarial information evaluation;
-- P4.9 exact-commit private release audit and closure.
+Trajectory capture, outcomes, corrections, decision lineage, source/model/tool histories, benchmark registry, resource accounting, and candidate-learning extraction.
 
-Exit criteria:
+**Friday action:** Begin code-level separation from A.L.I.C.E. at Phase 5.0 (P5.0). New reusable contracts are built in host-neutral `cognitive_kernel` namespaces with product and host scope.
 
-- retrieved instructions cannot override policy, grant permissions, trigger tools, or create actions;
-- only approved PUBLIC query content is transmitted externally;
-- local and private networks remain unreachable;
-- source quality, freshness, citation, privacy, cancellation, and resource-budget evaluations pass;
-- no background monitoring, external action, or automatic memory write is enabled;
-- the final private release record is bound to the exact repository commit and rollback commit.
+## Phase 6 — Cognitive Control Plane, Inspector, UI, and Voice
 
-## Phase 5 — User Interface
+Interfaces for memory, beliefs, models, skills, missions, autonomy, overrides, evaluations, rollback, voice, constitutional management, host enrollment, and local model management.
 
-Build:
+**Friday action:** Build generic host identity and product-neutral control interfaces.
 
-- conversation UI;
-- memory inspector;
-- source viewer;
-- activity and permission panels;
-- approval dialogs;
-- task state;
-- emergency stop.
+### Phase 6.5 — Product Separation Gate
 
-## Phase 6 — Personal-Service Integrations
+This is a release gate, not a new top-level phase. Create separate Friday and shared-kernel repositories/packages after host-neutral APIs, storage isolation, synthetic-host tests, and generic control-plane interfaces pass.
 
-Add one integration at a time:
+## Phase 7 — Capability Fabric, Integrations, and Multimodal Perception
 
-- files;
-- calendar;
-- email drafts;
-- contacts;
-- notes and tasks;
-- approved repositories.
+Files, email, calendars, repositories, services, scientific tools, APIs, MCP/A2A compatibility, images, audio, video, telemetry, sensors, and model routing.
 
-External actions remain disabled until P3/P4 confirmation workflows pass.
+**Friday action:** Deliver the first signed Windows local-ingestion alpha using the shared kernel.
 
-## Phase 7 — Proactive Assistance
+## Phase 8 — Autonomous Memory, Reflection, and Procedural Learning
 
-Build:
+Learning Curator, automated memory formation, belief revision, consolidation, source trust, skill synthesis, executable procedures, compression, forgetting, and training candidates.
 
-- schedules and condition watches;
-- opportunity and deadline monitoring;
-- morning or project briefings;
-- bounded resource budgets;
-- notification prioritization.
+**Friday action:** Earliest credible closed alpha. Friday's core differentiation requires automated selective learning, not only local chat.
 
-## Phase 8 — Controlled Coding Capability
+## Phase 9 — Cognitive Core
 
-Build:
+World model, temporal and causal graphs, model of Rayan, generic host model, self-model, metacognition, uncertainty, social models, identity continuity, voice, and independent judgment.
 
-- sandboxed code generation;
-- issue creation;
-- branch-only changes;
-- automated tests;
-- security scans;
-- diff review;
-- explicit merge and deployment approval;
-- rollback.
+**Friday action:** Personal-intelligence beta with stable host-specific behavior and the Personalization Inspector.
 
-## Phase 9 — Fine-Tuning and Adaptation
+## Phase 10 — Planning, Curiosity, and Proactive Agency
 
-Use only approved behavioral datasets.
+Hierarchical goals, search, simulation, long-running missions, proactive research, automatic curriculum, specialist-agent teams, replanning, and resource-aware initiative.
 
-Goals:
+**Friday action:** Proactive local-agent beta.
 
-- consistent voice;
-- better constructive criticism;
-- preferred explanation style;
-- improved tool selection.
+## Phase 11 — Computer Use, Autonomous Coding, and Self-Evolution
 
-Personal facts remain primarily in memory, not model weights.
+General desktop and terminal operation, repository agency, code generation, skill libraries, self-modifying agents, variant archives, automatic low-risk promotion, canaries, and rollback.
 
-## Phase 10 — A.L.I.C.E. Operating Environment
+**Friday action:** Public beta with evaluated computer-use and signed local skill packages.
 
-Build an operating layer above an existing OS:
+## Phase 12 — Scientific Discovery and Formal Intelligence
 
-- local background service;
-- desktop overlay;
-- system-wide shortcuts;
-- approved application control;
-- voice;
-- phone companion;
-- multi-device state.
+Hypotheses, experiments, simulation, statistics, optimization, CAD, scientific tools, formal solvers, theorem proving, neuro-symbolic reasoning, and evolutionary discovery.
 
-A custom kernel is not a near-term goal.
+**Friday action:** Expert and research capability packs.
+
+## Phase 13 — Continual Model Adaptation and Self-Training
+
+Learned rankers, routers, preference models, world models, adapters, automated dataset curation, training, champion/challenger promotion, lifelong neural learning, and machine-unlearning research.
+
+**Friday action:** Host-specific adapters and model components become a standard product feature.
+
+## Phase 14 — Operating Environment and Embodiment
+
+Persistent desktop/mobile/edge operation, multimodal ambient interface, secure synchronization, sensors, smart devices, laboratories, robotics, and physical-world action.
+
+**Friday action:** Friday Operating Environment preview and dedicated-system research.
+
+## Phase 15 — Generalized Platform and Frontier Research
+
+Reusable personal-AI platform, developer SDK, signed capability ecosystem, agent federation, distributed intelligence, optional open-source components, and active research on capabilities listed in `RESEARCH_FRONTIERS.md`.
+
+**Friday action:** Platform launch, household/enterprise modes, optional privacy-preserving federation, and eventual AI operating-system distribution.
+
+## Product-track rule
+
+Friday milestones are mapped in `docs/FRIDAY_ROADMAP.md`. They do not create or renumber top-level A.L.I.C.E. phases.
+
+## Architecture-change rule
+
+Top-level capability domains remain stable to prevent planning churn. Their internal implementations are not frozen. A new requirement normally becomes a module, subphase, ADR, experiment, product-track milestone, capability entry, or frontier program.
+
+No earlier phase is immune from migration. Change it when the final architecture requires it, while preserving useful released behavior through explicit compatibility profiles and evidence-backed migrations.
+
+## Product-family parity rule
+
+The consumer distribution internally codenamed Friday inherits the complete destination capability set of A.L.I.C.E. through the Personal Cognitive Kernel. A.L.I.C.E. may implement frontier work earlier, but generalizable successful capabilities enter a parity ledger and downstream productization plan. Every consumer installation selects its own assistant name and develops a distinct identity.
+
+The host chooses the assistant identity during enrollment. This capability parity commitment is permanent at the destination-architecture level.

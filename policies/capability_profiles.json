@@ -1,0 +1,371 @@
+{
+  "version": "1.0.0",
+  "authority": "docs/CAPABILITY_UNBLOCKING_POLICY.md",
+  "default_profile": "conversation.phase3.compatibility",
+  "profiles": {
+    "conversation.phase3.compatibility": {
+      "domain": "conversation",
+      "scope_kind": "phase_local",
+      "capability_ceiling": false,
+      "description": "Compatibility profile preserving the released Phase 3 behavior while allowing later profiles to enable broader capabilities.",
+      "capabilities": {
+        "web_access_allowed": false,
+        "tool_calling_allowed": false,
+        "external_action_allowed": false,
+        "memory_write_allowed": false,
+        "highly_sensitive_grounding_allowed": false,
+        "chain_of_thought_persistence_allowed": false
+      },
+      "allowed_tools": [],
+      "allowed_data_classifications": [
+        "PUBLIC",
+        "INTERNAL",
+        "PRIVATE"
+      ],
+      "retention": "session_only"
+    },
+    "conversation.integrated": {
+      "domain": "conversation",
+      "scope_kind": "mission_selectable",
+      "capability_ceiling": false,
+      "description": "Integrated conversational profile for tools, retrieval, governed memory formation, and sensitive grounding.",
+      "capabilities": {
+        "web_access_allowed": true,
+        "tool_calling_allowed": true,
+        "external_action_allowed": true,
+        "memory_write_allowed": true,
+        "highly_sensitive_grounding_allowed": true,
+        "chain_of_thought_persistence_allowed": false
+      },
+      "allowed_tools": [
+        "registry:*"
+      ],
+      "allowed_data_classifications": [
+        "PUBLIC",
+        "INTERNAL",
+        "PRIVATE",
+        "HIGHLY_SENSITIVE"
+      ],
+      "retention": "learning_curator"
+    },
+    "conversation.experimental_reasoning_trace": {
+      "domain": "conversation",
+      "scope_kind": "research_only",
+      "capability_ceiling": false,
+      "description": "Owner-authorized research profile for persisted reasoning artifacts in isolated experiments.",
+      "capabilities": {
+        "web_access_allowed": true,
+        "tool_calling_allowed": true,
+        "external_action_allowed": false,
+        "memory_write_allowed": true,
+        "highly_sensitive_grounding_allowed": true,
+        "chain_of_thought_persistence_allowed": true
+      },
+      "allowed_tools": [
+        "sandbox:*"
+      ],
+      "allowed_data_classifications": [
+        "PUBLIC",
+        "INTERNAL",
+        "PRIVATE",
+        "HIGHLY_SENSITIVE"
+      ],
+      "retention": "research_manifest"
+    },
+    "orchestration.phase3.compatibility": {
+      "domain": "orchestration",
+      "scope_kind": "phase_local",
+      "capability_ceiling": false,
+      "description": "Released P3.5 deterministic orchestration behavior.",
+      "boundaries": {
+        "web_access_allowed": false,
+        "tool_calling_allowed": false,
+        "external_action_allowed": false,
+        "memory_write_allowed": false,
+        "memory_promotion_allowed": false,
+        "highly_sensitive_grounding_allowed": false,
+        "chain_of_thought_persistence_allowed": false
+      },
+      "lifecycle": {
+        "constitutional_contract_required": true,
+        "prebuilt_grounding_only": true,
+        "live_retrieval_allowed": false,
+        "model_registry_resolution_required": true,
+        "generation_attempt_recording_required": true,
+        "atomic_state_transitions_required": true,
+        "response_identity_match_required": true,
+        "duplicate_assistant_messages_allowed": false,
+        "automatic_retry_count": 0,
+        "provider_fallback_allowed": false,
+        "final_grounding_validation_enabled": true
+      }
+    },
+    "orchestration.adaptive": {
+      "domain": "orchestration",
+      "scope_kind": "mission_selectable",
+      "capability_ceiling": false,
+      "description": "Adaptive orchestration with live retrieval, retries, provider routing, memory and tools.",
+      "boundaries": {
+        "web_access_allowed": true,
+        "tool_calling_allowed": true,
+        "external_action_allowed": true,
+        "memory_write_allowed": true,
+        "memory_promotion_allowed": true,
+        "highly_sensitive_grounding_allowed": true,
+        "chain_of_thought_persistence_allowed": false
+      },
+      "lifecycle": {
+        "constitutional_contract_required": true,
+        "prebuilt_grounding_only": false,
+        "live_retrieval_allowed": true,
+        "model_registry_resolution_required": true,
+        "generation_attempt_recording_required": true,
+        "atomic_state_transitions_required": true,
+        "response_identity_match_required": true,
+        "duplicate_assistant_messages_allowed": false,
+        "automatic_retry_count": 3,
+        "provider_fallback_allowed": true,
+        "final_grounding_validation_enabled": true
+      }
+    },
+    "information.phase4.foundation": {
+      "domain": "information",
+      "scope_kind": "phase_local",
+      "capability_ceiling": false,
+      "description": "Compatibility profile for the original P4.0 contract-only foundation.",
+      "capabilities": {
+        "live_network_access_allowed": false,
+        "external_action_allowed": false,
+        "memory_write_allowed": false,
+        "background_monitoring_allowed": false,
+        "authenticated_browsing_allowed": false,
+        "javascript_execution_allowed": false,
+        "form_submission_allowed": false,
+        "arbitrary_code_execution_allowed": false,
+        "provider_fallback_allowed": false,
+        "chain_of_thought_persistence_allowed": false
+      },
+      "allowed_operations": [
+        "search",
+        "fetch"
+      ],
+      "allowed_query_classifications": [
+        "PUBLIC"
+      ],
+      "resource_limits": {
+        "max_search_calls": 10,
+        "max_fetch_calls": 20,
+        "max_sources": 20,
+        "max_redirects": 5,
+        "request_timeout_seconds": 30,
+        "total_timeout_seconds": 120,
+        "max_response_bytes": 5000000
+      }
+    },
+    "information.live_read_only": {
+      "domain": "information",
+      "scope_kind": "mission_selectable",
+      "capability_ceiling": false,
+      "description": "Live multi-provider research with adaptive budgets and learning-event output.",
+      "capabilities": {
+        "live_network_access_allowed": true,
+        "external_action_allowed": false,
+        "memory_write_allowed": true,
+        "background_monitoring_allowed": true,
+        "authenticated_browsing_allowed": false,
+        "javascript_execution_allowed": true,
+        "form_submission_allowed": false,
+        "arbitrary_code_execution_allowed": true,
+        "provider_fallback_allowed": true,
+        "chain_of_thought_persistence_allowed": false
+      },
+      "allowed_operations": [
+        "search",
+        "fetch",
+        "browse",
+        "download",
+        "analyze",
+        "observe"
+      ],
+      "allowed_query_classifications": [
+        "PUBLIC",
+        "INTERNAL",
+        "PRIVATE",
+        "HIGHLY_SENSITIVE"
+      ],
+      "resource_limits": {
+        "max_search_calls": 1000,
+        "max_fetch_calls": 5000,
+        "max_sources": 5000,
+        "max_redirects": 20,
+        "request_timeout_seconds": 300,
+        "total_timeout_seconds": 86400,
+        "max_response_bytes": 1000000000
+      }
+    },
+    "information.authorized_browser": {
+      "domain": "information",
+      "scope_kind": "mission_selectable",
+      "capability_ceiling": false,
+      "description": "Authenticated browser and form-capable profile under mission authority.",
+      "capabilities": {
+        "live_network_access_allowed": true,
+        "external_action_allowed": true,
+        "memory_write_allowed": true,
+        "background_monitoring_allowed": true,
+        "authenticated_browsing_allowed": true,
+        "javascript_execution_allowed": true,
+        "form_submission_allowed": true,
+        "arbitrary_code_execution_allowed": true,
+        "provider_fallback_allowed": true,
+        "chain_of_thought_persistence_allowed": false
+      },
+      "allowed_operations": [
+        "search",
+        "fetch",
+        "browse",
+        "download",
+        "upload",
+        "submit",
+        "observe",
+        "act"
+      ],
+      "allowed_query_classifications": [
+        "PUBLIC",
+        "INTERNAL",
+        "PRIVATE",
+        "HIGHLY_SENSITIVE"
+      ],
+      "resource_limits": {
+        "max_search_calls": 10000,
+        "max_fetch_calls": 50000,
+        "max_sources": 50000,
+        "max_redirects": 50,
+        "request_timeout_seconds": 3600,
+        "total_timeout_seconds": 604800,
+        "max_response_bytes": 10000000000
+      }
+    },
+    "evolution.a5": {
+      "domain": "evolution",
+      "scope_kind": "owner_ratified_mission",
+      "capability_ceiling": false,
+      "description": "Autonomous production evolution, model promotion and self-modification under an A5 mandate.",
+      "capabilities": {
+        "self_modify_code": true,
+        "train_models": true,
+        "promote_models": true,
+        "merge_code": true,
+        "deploy_production": true,
+        "create_agents": true,
+        "change_non_kernel_governance": true,
+        "conduct_open_ended_research": true
+      }
+    },
+    "vault.phase1.compatibility": {
+      "domain": "vault",
+      "scope_kind": "phase_local",
+      "capability_ceiling": false,
+      "description": "Released Phase 1 ingestion and private-evidence compatibility behavior.",
+      "capabilities": {
+        "authorized_ingestion": true,
+        "external_write_allowed": false,
+        "automatic_model_training": false
+      }
+    },
+    "memory.phase2.compatibility": {
+      "domain": "memory",
+      "scope_kind": "phase_local",
+      "capability_ceiling": false,
+      "description": "Released Phase 2 authoritative-memory compatibility behavior.",
+      "capabilities": {
+        "authoritative_store": true,
+        "automatic_memory_formation": false,
+        "parametric_learning": false
+      }
+    },
+    "legacy.release.compatibility": {
+      "domain": "legacy",
+      "scope_kind": "phase_local",
+      "capability_ceiling": false,
+      "description": "Generic compatibility classification for older release-specific modules pending replacement.",
+      "capabilities": {}
+    },
+    "friday.local_core": {
+      "domain": "product",
+      "product_id": "friday",
+      "scope_kind": "product_default",
+      "capability_ceiling": false,
+      "description": "Offline-first Friday host instance with local conversation, retrieval, ingestion, inspection, and signed local skills.",
+      "capabilities": {
+        "local_inference_allowed": true,
+        "local_ingestion_allowed": true,
+        "local_memory_allowed": true,
+        "local_learning_allowed": true,
+        "local_code_execution_allowed": true,
+        "external_network_allowed": false,
+        "vendor_content_telemetry_allowed": false,
+        "remote_inference_allowed": false,
+        "host_specific_training_allowed": false,
+        "background_operation_allowed": false
+      },
+      "required_controls": [
+        "host_instance_scope",
+        "encrypted_local_storage",
+        "network_egress_ledger",
+        "signed_capabilities"
+      ]
+    },
+    "friday.learning_alpha": {
+      "domain": "product",
+      "product_id": "friday",
+      "scope_kind": "host_selectable",
+      "capability_ceiling": false,
+      "description": "Closed-alpha Friday profile with automated curation, beliefs, skills, Identity Capsule, and idle-time local learning.",
+      "capabilities": {
+        "local_inference_allowed": true,
+        "local_ingestion_allowed": true,
+        "local_memory_allowed": true,
+        "automatic_memory_curation_allowed": true,
+        "derived_beliefs_allowed": true,
+        "procedural_skill_learning_allowed": true,
+        "host_specific_training_allowed": true,
+        "adapter_promotion_allowed": true,
+        "external_network_allowed": false,
+        "vendor_content_telemetry_allowed": false,
+        "background_operation_allowed": true
+      },
+      "required_controls": [
+        "host_instance_scope",
+        "training_lineage",
+        "held_out_personal_evaluation",
+        "identity_capsule",
+        "deletion_propagation",
+        "champion_challenger"
+      ]
+    },
+    "friday.optional_connected": {
+      "domain": "product",
+      "product_id": "friday",
+      "scope_kind": "host_selectable",
+      "capability_ceiling": false,
+      "description": "Friday profile for host-authorized web, remote models, encrypted sync, and connectors with visible egress.",
+      "capabilities": {
+        "external_network_allowed": true,
+        "remote_inference_allowed": true,
+        "encrypted_sync_allowed": true,
+        "connector_access_allowed": true,
+        "vendor_content_telemetry_allowed": false,
+        "network_egress_ledger_required": true,
+        "local_redaction_allowed": true
+      },
+      "required_controls": [
+        "destination_manifest",
+        "data_class_manifest",
+        "host_authority",
+        "network_egress_ledger",
+        "local_redaction"
+      ]
+    }
+  }
+}

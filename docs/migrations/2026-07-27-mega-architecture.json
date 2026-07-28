@@ -1,0 +1,10 @@
+﻿{
+    "migration":  "alice-friday-mega-architecture-v1",
+    "applied_at_utc":  "2026-07-27T22:32:00.4955260Z",
+    "base_commit":  "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+    "source_worktree":  "C:\\A.L.I.C.E-main",
+    "source_branch":  "feat/phase4-citation-grounding",
+    "source_worktree_was_dirty":  true,
+    "migration_branch":  "planning/alice-friday-mega-architecture-v1",
+    "active_phase45_worktree_modified":  false
+}

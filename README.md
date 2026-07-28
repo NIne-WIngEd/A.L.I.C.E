@@ -1,89 +1,50 @@
-
 # A.L.I.C.E.
 
-A.L.I.C.E. is a long-term personal AI assistant project created for MK Rayan.
+A.L.I.C.E. is MK Rayan's long-term, model-independent personal cognitive system for continuous learning, memory, judgment, research, software, planning, multimodal perception, computer use, scientific discovery, and self-improvement.
 
-Its intended role is to become a persistent, permissioned cognitive partner that can understand personal context, support research and daily work, preserve important memories, offer truthful and constructive judgment, and eventually coordinate approved tools and workflows.
+A.L.I.C.E. is also the flagship research implementation for a separate general product line currently codenamed **Friday**. Friday will be a local-first personal cognitive system that each host installs, owns, and trains on their own machine without giving the developer access to raw host data.
 
 ## Current status
 
-- Phase 0 — Identity and Governance: complete
-- Phase 1 — Private Data Vault and Ingestion: complete
-  - encrypted local vault: complete;
-  - metadata and SHA-256 inventory: complete;
-  - file-signature and inventory analysis: complete;
-  - pilot selection, automated review, and immutable `pilot-v1`: complete;
-  - safe parser registry and verified extraction: complete;
-  - deterministic chunking and provenance catalog: complete;
-  - local lexical retrieval and evaluation: complete;
-  - local semantic and hybrid retrieval: complete;
-  - retrieval-grounded read-only context access: complete;
-  - grounded reasoning and response generation: complete.
-- Phase 2 — Memory Core: complete
-  - P2.0 memory architecture and schema foundation: complete;
-  - P2.1 authoritative private store and migrations: complete;
-  - P2.2 read-only Phase 1 provenance bridge: complete;
-  - P2.3 permission-gated lifecycle and inspection: complete;
-  - P2.4 temporal correction, supersession, and conflict handling: complete;
-  - P2.5 authorization-aware lexical, semantic, and hybrid retrieval: complete;
-  - P2.6 encrypted highly sensitive storage and purpose-bound access: complete;
-  - P2.7 non-authoritative candidate formation, deterministic assessment, authorized promotion, transition-aware promotion, and adversarial security gates: complete.
-  - P2.8 ordinary and protected deletion lifecycles, lineage cleanup, derived-index purge and rebuild guarantees, and adversarial deletion gates: complete;
-  - P2.9 versioned evaluation contract, authoritative source-cited answers, adversarial end-to-end gates, and final release audit: complete.
+- Phases 0–3: released baselines and fully migratable when required by the ratified architecture.
+- Phase 4: active; current work is around P4.5.
+- Phase 5: begins the host-neutral Personal Cognitive Kernel extraction.
+- Phase 6.5: formal A.L.I.C.E.–Friday repository separation gate.
+- Phase 8: earliest credible Friday closed alpha, after autonomous memory formation exists.
 
-- Phase 3 — Conversational A.L.I.C.E.: complete
-  - P3.0–P3.4 governed contracts, model abstraction, private state, grounding, and constitutional dialogue: complete;
-  - P3.5–P3.9 controlled orchestration, response validation, local runtime, governed cross-turn context, and bounded repair: complete;
-  - P3.10 versioned synthetic adversarial conversational evaluation: complete;
-  - P3.11 exact-commit private release audit and Phase 3 closure: complete.
-A governed local conversational assistant is implemented. Phase 3 still enables no web access, tool calling, external actions, or conversational memory writes.
+No completed phase, test, validator, document, or compatibility contract has permanent authority to block the approved direction. Released behavior may be preserved through profiles and migrations, but obsolete assumptions are replaceable.
 
-## Governing documents
+## Core documents
 
-- [`docs/ALICE_CONSTITUTION.md`](docs/ALICE_CONSTITUTION.md)
-- [`docs/PERMISSION_MODEL.md`](docs/PERMISSION_MODEL.md)
-- [`docs/MEMORY_POLICY.md`](docs/MEMORY_POLICY.md)
-- [`docs/DATA_CLASSIFICATION.md`](docs/DATA_CLASSIFICATION.md)
-- [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md)
-- [`docs/EVALUATION_CHARTER.md`](docs/EVALUATION_CHARTER.md)
-- [`docs/ROADMAP.md`](docs/ROADMAP.md)
+- `docs/ALICE_CONSTITUTION.md`
+- `docs/ROADMAP.md`
+- `docs/ARCHITECTURE.md`
+- `docs/CAPABILITY_CATALOG.md`
+- `docs/RESEARCH_FRONTIERS.md`
+- `docs/CAPABILITY_UNBLOCKING_POLICY.md`
+- `docs/IMPLEMENTATION_EVOLVABILITY_STANDARD.md`
 
-## Phase 1 documents
+## Friday product track
 
-- [`docs/PHASE_1_VAULT_FOUNDATION.md`](docs/PHASE_1_VAULT_FOUNDATION.md)
-- [`docs/PHASE_1_INVENTORY_ANALYSIS.md`](docs/PHASE_1_INVENTORY_ANALYSIS.md)
-- [`docs/PHASE_1_PILOT_SELECTION.md`](docs/PHASE_1_PILOT_SELECTION.md)
-- [`docs/PHASE_1_AUTOMATED_REVIEW.md`](docs/PHASE_1_AUTOMATED_REVIEW.md)
-- [`docs/PHASE_1_FINAL_PILOT_POLICY.md`](docs/PHASE_1_FINAL_PILOT_POLICY.md)
-- [`docs/PHASE_1_SAFE_PARSER_REGISTRY.md`](docs/PHASE_1_SAFE_PARSER_REGISTRY.md)
+- `docs/FRIDAY_PRODUCT_VISION.md`
+- `docs/FRIDAY_ROADMAP.md`
+- `docs/ALICE_FRIDAY_SEPARATION_PLAN.md`
+- `docs/FRIDAY_ARCHITECTURE.md`
+- `docs/FRIDAY_PRIVACY_AND_TRUST_MODEL.md`
+- `docs/FRIDAY_YC_AND_COMPANY_PLAN.md`
+- `docs/FRIDAY_NAME_AND_IP_RISK.md`
+- `docs/SHARED_KERNEL_EXTRACTION_STANDARD.md`
+- `policies/product_lines.json`
 
-## Phase 2 documents
+## Capability evolution
 
-- [`docs/PHASE_2_MEMORY_CORE_ARCHITECTURE.md`](docs/PHASE_2_MEMORY_CORE_ARCHITECTURE.md)
-- [`docs/PHASE_2_FINAL_RELEASE_REPORT.md`](docs/PHASE_2_FINAL_RELEASE_REPORT.md)
+- `policies/capability_profiles.json`
+- `policies/phase_scope_registry.json`
+- `scripts/audit_capability_barriers.py`
+- `scripts/validate_product_family.py`
+- `src/alice_evolution/capability_runtime.py`
+- `src/product_family/manifest.py`
 
-## Security boundary
+## Consumer product identity and parity
 
-Never commit personal datasets, private memory, vault databases, exported manifests, credentials, tokens, activity logs, extracted text, or other personal content.
-
-The private vault, source archive, authoritative memory database, encrypted sensitive-memory payloads, and derived private indexes must remain outside this repository.
-
-## Development checks
-
-```powershell
-py -m pip install `
-  -r requirements-dev.txt `
-  -r requirements-phase1.txt `
-  -r requirements-extraction.txt
-
-$env:PYTHONPATH = (Resolve-Path .\src).Path
-
-py scripts\validate_phase0.py
-py -m pytest tests\phase2 -q
-py -m pytest tests\phase3 -q
-py -m pytest -q
-```
-
-## Legacy prototype
-
-The original 2022 voice-assistant prototype is retained under `legacy/` only as historical reference. It is not part of the current architecture and must not be connected to real credentials.
+`Friday` is the internal codename for the general consumer distribution. Each host chooses the assistant's local name. The consumer distribution shares A.L.I.C.E.'s complete destination capability set through the Personal Cognitive Kernel; it is not planned as a permanently reduced edition. See `docs/HOST_SELECTED_IDENTITY_STANDARD.md` and `docs/PRODUCT_FAMILY_CAPABILITY_PARITY.md`.

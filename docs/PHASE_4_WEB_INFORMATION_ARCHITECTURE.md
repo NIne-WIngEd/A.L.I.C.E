@@ -1,3 +1,5 @@
+> **A.L.I.C.E. CAPABILITY SCOPE:** `historical_or_phase_local`; `capability_ceiling=false`; profile `information.phase4.foundation`. Restrictions below reproduce a released or historical configuration and do not limit successor A.L.I.C.E. capabilities.
+
 # Phase 4 — Web and Information Tools Architecture
 
 **Status:** P4.3 deterministic retrieved-content injection firewall implemented; no live provider or conversation runtime path registered
@@ -598,7 +600,7 @@ Exit criteria:
 
 - private audit returns `approved=true`;
 - exact commit, policy versions, package version, evaluation digest, evidence digest, and rollback commit are recorded;
-- Phase 4 is frozen after merge.
+- Phase 4 release behavior is versioned after merge; its implementation remains migratable under the final architecture.
 
 ## 12. Development sequence
 
@@ -628,4 +630,26 @@ PR and required checks
 merge, sync main, delete branch
 ```
 
-Phases 0–3 remain frozen. A regression or security fix in an earlier phase requires a dedicated maintenance branch and explicit scope.
+Phases 0–3 remain released baselines, not immutable architecture. Earlier-phase changes may use dedicated migration branches and must carry regression evidence, but no phase is exempt from redesign when required by the ratified direction.
+
+
+---
+
+# Roadmap 2.0 Compatibility Amendment
+
+Phase 4 may emit a sanitized, learning-ready activity envelope for future ingestion by Phase 5. This amendment does not create a Phase 4 memory writer, training path, background process, or new authority.
+
+The envelope may contain:
+
+- event and task identifiers;
+- query purpose and public classification decision;
+- provider, source, canonical URL, retrieval time, and content digest;
+- publication/update metadata when available;
+- injection, trust, freshness, and contradiction indicators;
+- claims and citations actually used;
+- budgets, cancellation state, and execution outcome;
+- `memory_eligibility: unassessed`.
+
+Raw private context, unrestricted source bodies, secrets, and model hidden reasoning are excluded from ordinary activity records. Phase 5 alone will define retention and candidate-learning ingestion.
+
+Current P4.5 work may continue against the existing release contracts. Completed P4.0–P4.4 components may also be rewritten when necessary for product/host scoping, the Experience Ledger, capability profiles, Friday extraction, or the final learning architecture. Preserve useful behavior through migrations and compatibility profiles rather than treating completion as immunity.

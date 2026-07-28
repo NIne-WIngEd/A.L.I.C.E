@@ -1,0 +1,23 @@
+name: Product family architecture
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate-product-family:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Install validation dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Validate A.L.I.C.E.–Friday architecture
+        run: |
+          python scripts/validate_product_family.py
+          python -m pytest tests/governance/test_product_family.py -q

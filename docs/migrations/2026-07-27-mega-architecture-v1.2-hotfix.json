@@ -1,0 +1,7 @@
+﻿{
+    "migration":  "alice-mega-architecture-v1.2-baseline-scope-and-diff-audit",
+    "applied_at_utc":  "2026-07-27T22:50:51.9945799Z",
+    "reason":  "Register exact released Phase 1-4 baseline files as compatibility profiles and audit only newly changed Phase 4.5 lines.",
+    "preserved_source_worktree":  "C:\\A.L.I.C.E-main",
+    "migration_worktree":  "C:\\A.L.I.C.E-architecture-migration"
+}

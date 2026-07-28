@@ -1,0 +1,55 @@
+{
+  "version": "1.0.0",
+  "authority": "docs/PRODUCT_FAMILY_CAPABILITY_PARITY.md",
+  "destination_parity_required": true,
+  "capabilities": {
+    "continuous_learning": {
+      "alice": "planned_or_active",
+      "kernel": "planned",
+      "consumer": "planned",
+      "target_phase": "8"
+    },
+    "personal_intelligence_and_judgment": {
+      "alice": "planned",
+      "kernel": "planned",
+      "consumer": "planned",
+      "target_phase": "9"
+    },
+    "proactive_planning_and_curiosity": {
+      "alice": "planned",
+      "kernel": "planned",
+      "consumer": "planned",
+      "target_phase": "10"
+    },
+    "computer_use_and_autonomous_coding": {
+      "alice": "planned",
+      "kernel": "planned",
+      "consumer": "planned",
+      "target_phase": "11"
+    },
+    "scientific_and_formal_reasoning": {
+      "alice": "planned",
+      "kernel": "planned",
+      "consumer": "planned",
+      "target_phase": "12"
+    },
+    "host_specific_adapters_and_weights": {
+      "alice": "planned",
+      "kernel": "planned",
+      "consumer": "planned",
+      "target_phase": "13"
+    },
+    "operating_environment_and_devices": {
+      "alice": "planned",
+      "kernel": "planned",
+      "consumer": "planned",
+      "target_phase": "14"
+    },
+    "frontier_research": {
+      "alice": "permanent_track",
+      "kernel": "research_backlog",
+      "consumer": "research_backlog",
+      "target_phase": "15+"
+    }
+  }
+}
