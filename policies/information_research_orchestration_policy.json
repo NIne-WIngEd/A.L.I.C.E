@@ -1,0 +1,34 @@
+{
+  "policy_name": "alice_information_research_orchestration_policy",
+  "version": "1.0.0",
+  "phase": "4",
+  "milestone": "P4.6a",
+  "status": "deterministic_research_orchestration_foundation",
+  "provider_selection": {
+    "exact_search_provider_required": true,
+    "exact_fetch_provider_required": true,
+    "deterministic_fixture_only": true,
+    "live_provider_registration_allowed": false,
+    "provider_fallback_allowed": false
+  },
+  "execution": {
+    "foreground_only": true,
+    "query_rewriting_allowed": false,
+    "recursive_browsing_allowed": false,
+    "arbitrary_link_following_allowed": false,
+    "retries_allowed": false,
+    "canonical_url_deduplication_required": true,
+    "partial_results_preserved": true,
+    "activity_records_required": true,
+    "raw_query_in_activity_allowed": false,
+    "raw_source_content_in_activity_allowed": false
+  },
+  "budgets": {
+    "max_search_calls": 1,
+    "max_fetch_calls": 8,
+    "max_sources": 8,
+    "max_response_bytes": 2000000,
+    "max_request_timeout_seconds": 10,
+    "max_total_timeout_seconds": 45
+  }
+}
