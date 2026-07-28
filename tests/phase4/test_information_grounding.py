@@ -623,3 +623,40 @@ def test_insufficient_sources_packet_revalidates_successfully() -> None:
         freshness_policy=freshness,
         grounding_policy=grounding,
     )
+
+
+def test_packet_source_substitution_is_rejected_even_with_new_digest() -> None:
+    from alice_information.grounding import _grounding_digest
+
+    qualified = _qualified()
+    verified = _build(
+        sources=(qualified,),
+        drafts=(_draft(qualified),),
+    )
+    forged_source = replace(
+        verified.packet.sources[0],
+        title="Substituted source metadata",
+    )
+    forged_packet = replace(verified.packet, sources=(forged_source,))
+    forged = replace(
+        verified,
+        packet=forged_packet,
+        grounding_sha256=_grounding_digest(
+            packet=forged_packet,
+            query=_query(),
+            quality_assessments=verified.quality_assessments,
+            supports=verified.support_spans,
+            policy_version=verified.policy_version,
+        ),
+    )
+    base, firewall, freshness, grounding, *_ = _boundaries()
+    with pytest.raises(InformationGroundingError) as exc_info:
+        forged.validate(
+            query=_query(),
+            qualified_sources=(qualified,),
+            information_policy=base,
+            firewall_policy=firewall,
+            freshness_policy=freshness,
+            grounding_policy=grounding,
+        )
+    assert exc_info.value.code == "grounding_binding_invalid"

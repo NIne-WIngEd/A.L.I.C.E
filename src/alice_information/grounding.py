@@ -465,13 +465,19 @@ class InformationVerifiedGroundingPacket:
         }
         if len(source_map) != len(qualified_sources):
             raise grounding_failure("grounding_binding_invalid")
-        packet_source_ids = {source.source_id for source in self.packet.sources}
+        packet_source_map = {source.source_id: source for source in self.packet.sources}
+        if len(packet_source_map) != len(self.packet.sources):
+            raise grounding_failure("grounding_binding_invalid")
+        packet_source_ids = set(packet_source_map)
         if packet_source_ids != set(source_map):
             raise grounding_failure("grounding_binding_invalid")
         if tuple(source.source_id for source in self.packet.sources) != tuple(
             sorted(packet_source_ids)
         ):
             raise grounding_failure("grounding_binding_invalid")
+        for source_id, qualified in source_map.items():
+            if packet_source_map[source_id] != qualified.inspected_source.source:
+                raise grounding_failure("grounding_binding_invalid")
         quality_map = {
             assessment.source_id: assessment
             for assessment in self.quality_assessments
