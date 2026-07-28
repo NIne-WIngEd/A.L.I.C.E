@@ -629,3 +629,23 @@ merge, sync main, delete branch
 ```
 
 Phases 0–3 remain frozen. A regression or security fix in an earlier phase requires a dedicated maintenance branch and explicit scope.
+
+## P4.5a deterministic citation-grounding boundary
+
+Package version `0.8.0` adds a model-free grounding boundary before any Phase 3 adapter exists.
+
+The boundary:
+
+- accepts only injection-cleared and freshness-supported source versions;
+- derives structural source-quality metadata without publisher-reputation inference;
+- requires HTTPS, minimum normalized content, exact source digests, and exact query binding;
+- constructs claims only from exact character spans whose text equals the visible claim text;
+- binds every citation to the canonical URL and normalized source-content digest;
+- requires two distinct canonical domains before an extractive claim may be labeled `verified_fact`;
+- preserves `uncertain` and `disputed` states instead of upgrading them silently;
+- requires two distinct canonical domains for a conflict packet;
+- rejects unused packet sources, citation swapping, support-span tampering, and forged quality assessments;
+- renders a digest-bound `VERIFIED WEB GROUNDING` envelope around already governed source renderings;
+- stores only span coordinates and digests in metadata-safe support records.
+
+P4.5a does not perform semantic entailment inference, publisher reputation scoring, model claim generation, Phase 3 adaptation, external actions, memory writes, or background activity.
