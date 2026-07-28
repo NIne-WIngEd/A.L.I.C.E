@@ -1,0 +1,85 @@
+{
+  "version": "1.1.0",
+  "authority": "docs/ALICE_FRIDAY_SEPARATION_PLAN.md",
+  "shared_kernel": {
+    "id": "personal-cognitive-kernel",
+    "starts_at_phase": "5.0",
+    "formal_repository_split_gate": "6.5",
+    "host_neutral": true,
+    "may_contain_personal_data": false,
+    "required_scopes": [
+      "product_id",
+      "host_instance_id",
+      "schema_version",
+      "encryption_domain",
+      "provenance",
+      "deletion_lineage"
+    ]
+  },
+  "products": {
+    "alice": {
+      "display_name": "A.L.I.C.E.",
+      "kind": "owner_specific_research_flagship",
+      "owner": "MK Rayan",
+      "repository": "NIne-WIngEd/A.L.I.C.E",
+      "personal_state_sharing": "prohibited",
+      "kernel_consumer": true,
+      "product_policy": "ambition_first_owner_governed",
+      "public_distribution": false,
+      "full_capability_destination_source": true
+    },
+    "friday": {
+      "display_name": "Consumer Personal AI (internal codename Friday)",
+      "name_status": "internal_codename_pending_clearance",
+      "kind": "general_local_first_personal_cognitive_product",
+      "owner": "host_instance",
+      "repository_creation_gate": "6.5",
+      "closed_alpha_gate": "8",
+      "kernel_consumer": true,
+      "personal_state_sharing": "prohibited",
+      "raw_host_data_vendor_access": false,
+      "mandatory_vendor_account": false,
+      "offline_core_required": true,
+      "host_specific_learning": [
+        "memory",
+        "beliefs",
+        "preferences",
+        "skills",
+        "rankers",
+        "adapters",
+        "future_weights"
+      ],
+      "identity_capsule_required": true,
+      "product_codename": "friday",
+      "public_product_brand_status": "to_be_selected",
+      "host_selects_assistant_name": true,
+      "assistant_name_is_personal_state": true,
+      "full_capability_parity_with_alice": true,
+      "permanent_consumer_capability_ceiling": false,
+      "capability_source_of_truth": "personal-cognitive-kernel",
+      "productization_lag_allowed": true,
+      "permanent_capability_withholding_allowed": false,
+      "dedicated_maintenance_team_planned": true
+    }
+  },
+  "separation_rules": {
+    "alice_personal_data_may_seed_friday": false,
+    "friday_host_data_may_enter_shared_kernel_distribution": false,
+    "cross_host_cache_without_scope_allowed": false,
+    "product_brand_may_define_storage_schema": false,
+    "phase_1_to_4_files_are_migratable": true,
+    "compatibility_profiles_may_preserve_released_behavior": true,
+    "all_generalizable_alice_capabilities_enter_parity_backlog": true,
+    "friday_may_be_permanently_reduced_edition": false,
+    "product_and_assistant_names_must_be_separate": true,
+    "host_selected_name_may_define_storage_schema": false,
+    "difference_is_state_maturity_hardware_and_permissions_not_destination_capability": true
+  },
+  "parity_policy": {
+    "authority": "docs/PRODUCT_FAMILY_CAPABILITY_PARITY.md",
+    "ledger_required": true,
+    "consumer_destination_matches_alice": true,
+    "alice_may_lead_experiments": true,
+    "successful_generalizable_capabilities_require_downstream_disposition": true
+  }
+}

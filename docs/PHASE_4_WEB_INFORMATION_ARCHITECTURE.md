@@ -1,10 +1,12 @@
+> **A.L.I.C.E. CAPABILITY SCOPE:** `historical_or_phase_local`; `capability_ceiling=false`; profile `information.phase4.foundation`. Restrictions below reproduce a released or historical configuration and do not limit successor A.L.I.C.E. capabilities.
+
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** P4.3 deterministic retrieved-content injection firewall implemented; no live provider or conversation runtime path registered
-**Phase 0 dependency:** Ratified governance and default-deny permission model
-**Phase 1 dependency:** Frozen read-only evidence layer
-**Phase 2 dependency:** Frozen authoritative Memory Core
-**Phase 3 dependency:** Frozen governed conversation layer
+**Status:** P4.5a deterministic citation-grounding foundation implemented; no Phase 3 adapter or conversation runtime path registered
+**Phase 0 dependency:** Ratified Governance 1.1 and mission/profile-driven authority
+**Phase 1 dependency:** Released read-only evidence compatibility baseline
+**Phase 2 dependency:** Released authoritative-memory compatibility baseline
+**Phase 3 dependency:** Released governed-conversation compatibility baseline
 **Owner:** MK Rayan
 
 ## 1. Purpose
@@ -554,10 +556,31 @@ Exit criteria:
 
 Build source-quality metadata, claim construction, exact citation verification, source-diversity rules, uncertainty and conflict preservation, and the adapter into Phase 3 grounding.
 
+#### P4.5a — Deterministic citation-grounding foundation
+
+Package version `0.8.0` adds a model-free grounding boundary before any Phase 3 adapter exists.
+
+The boundary:
+
+- accepts only injection-cleared and freshness-supported source versions;
+- derives structural source-quality metadata without publisher-reputation inference;
+- requires HTTPS, minimum normalized content, exact source digests, and exact query binding;
+- constructs claims only from exact character spans whose text equals the visible claim text;
+- binds every citation to the canonical URL and normalized source-content digest;
+- requires two distinct canonical domains before an extractive claim may be labeled `verified_fact`;
+- preserves `uncertain` and `disputed` states instead of upgrading them silently;
+- requires two distinct canonical domains for a conflict packet;
+- rejects unused packet sources, citation swapping, support-span tampering, and forged quality assessments;
+- renders a digest-bound `VERIFIED WEB GROUNDING` envelope around already governed source renderings;
+- stores only span coordinates and digests in metadata-safe support records.
+
+P4.5a does not perform semantic-entailment inference, publisher-reputation scoring, model claim generation, Phase 3 adaptation, external actions, memory writes, or background activity. These are milestone-local limits rather than permanent capability ceilings.
+
 Exit criteria:
 
 - visible external claims are source-supported;
 - citation swapping and digest tampering fail;
+- uncertainty and source conflict remain explicit;
 - P3.6 remains the final visible-response gate.
 
 ### P4.6 — Governed research orchestration
@@ -598,7 +621,7 @@ Exit criteria:
 
 - private audit returns `approved=true`;
 - exact commit, policy versions, package version, evaluation digest, evidence digest, and rollback commit are recorded;
-- Phase 4 is frozen after merge.
+- Phase 4 release behavior is versioned after merge; its implementation remains migratable under the final architecture.
 
 ## 12. Development sequence
 
@@ -628,24 +651,26 @@ PR and required checks
 merge, sync main, delete branch
 ```
 
-Phases 0–3 remain frozen. A regression or security fix in an earlier phase requires a dedicated maintenance branch and explicit scope.
+Phases 0–3 remain released baselines, not immutable architecture. Earlier-phase changes may use dedicated migration branches and must carry regression evidence, but no phase is exempt from redesign when required by the ratified direction.
 
-## P4.5a deterministic citation-grounding boundary
 
-Package version `0.8.0` adds a model-free grounding boundary before any Phase 3 adapter exists.
+---
 
-The boundary:
+# Roadmap 2.0 Compatibility Amendment
 
-- accepts only injection-cleared and freshness-supported source versions;
-- derives structural source-quality metadata without publisher-reputation inference;
-- requires HTTPS, minimum normalized content, exact source digests, and exact query binding;
-- constructs claims only from exact character spans whose text equals the visible claim text;
-- binds every citation to the canonical URL and normalized source-content digest;
-- requires two distinct canonical domains before an extractive claim may be labeled `verified_fact`;
-- preserves `uncertain` and `disputed` states instead of upgrading them silently;
-- requires two distinct canonical domains for a conflict packet;
-- rejects unused packet sources, citation swapping, support-span tampering, and forged quality assessments;
-- renders a digest-bound `VERIFIED WEB GROUNDING` envelope around already governed source renderings;
-- stores only span coordinates and digests in metadata-safe support records.
+Phase 4 may emit a sanitized, learning-ready activity envelope for future ingestion by Phase 5. This amendment does not create a Phase 4 memory writer, training path, background process, or new authority.
 
-P4.5a does not perform semantic entailment inference, publisher reputation scoring, model claim generation, Phase 3 adaptation, external actions, memory writes, or background activity.
+The envelope may contain:
+
+- event and task identifiers;
+- query purpose and public classification decision;
+- provider, source, canonical URL, retrieval time, and content digest;
+- publication/update metadata when available;
+- injection, trust, freshness, and contradiction indicators;
+- claims and citations actually used;
+- budgets, cancellation state, and execution outcome;
+- `memory_eligibility: unassessed`.
+
+Raw private context, unrestricted source bodies, secrets, and model hidden reasoning are excluded from ordinary activity records. Phase 5 alone will define retention and candidate-learning ingestion.
+
+Current P4.5 work may continue against the existing release contracts. Completed P4.0–P4.4 components may also be rewritten when necessary for product/host scoping, the Experience Ledger, capability profiles, Friday extraction, or the final learning architecture. Preserve useful behavior through migrations and compatibility profiles rather than treating completion as immunity.

@@ -1,215 +1,57 @@
-# A.L.I.C.E. Memory Policy
+# A.L.I.C.E. Memory and Knowledge Policy
 
-**Version:** 1.0.0  
-**Status:** Ratified for Phase 0  
-**Authority:** A.L.I.C.E. Constitution v0.1.0  
-**Owner:** MK Rayan  
-**Effective date:** July 13, 2026
+**Version:** 3.0.0
+**Authority:** A.L.I.C.E. Constitution 1.1.0
 
-## 1. Purpose
+## 1. Objective
 
-A.L.I.C.E. is intended to understand Rayan's life deeply. This policy allows broad personal continuity while preventing untraceable, inaccurate, excessive, or insecure memory.
+A.L.I.C.E. shall build the richest useful, accurate, owner-controlled understanding of Rayan, its own operation, and the world relevant to its goals. The objective is sovereign continuity and increasing intelligence, not data minimization for its own sake.
 
-Personal facts belong in inspectable memory stores—not hidden inside model weights whenever a changeable, correctable record is possible.
+## 2. Learning substrates
 
-## 2. Memory categories
+- working context;
+- append-only experience ledger;
+- episodic memory;
+- semantic and temporal knowledge;
+- derived beliefs and predictions;
+- user, self, social, and world models;
+- causal graphs;
+- procedural skills and code;
+- training assets;
+- parametric models and adapters.
 
-### Working memory
+## 3. Every event is eligible
 
-Temporary context required for the current task or conversation.
+Conversations, searches, files, tool calls, observations, corrections, outcomes, decisions, code executions, model evaluations, and external changes may become learning events. Eligibility does not mean blind permanent promotion.
 
-Default retention: session only, unless promoted under this policy.
+## 4. Automated curation
 
-### Profile memory
+The Learning Curator evaluates provenance, future utility, novelty, stability, evidence, contradiction, temporal scope, sensitivity, cost, and contamination risk. It may discard, compress, quarantine, retain as raw experience, promote to memory, create a belief, extract a skill, or nominate training data.
 
-Relatively stable information such as communication preferences, education, skills, values, and long-term constraints.
+## 5. Fact, belief, and prediction
 
-### Episodic memory
+A.L.I.C.E. may infer information not explicitly supplied. Important inferred claims carry confidence, evidence links, contradiction history, temporal scope, and validation status. Predictions are scored against later outcomes.
 
-Dated events, experiences, decisions, milestones, conversations, and outcomes.
+## 6. Sensitive information
 
-### Project memory
+Sensitive information may be stored and learned when useful and authorized. It receives encryption, access controls, context minimization for external providers, stronger provenance, and deletion propagation. Sensitivity changes custody—not whether A.L.I.C.E. is allowed to understand Rayan.
 
-Objectives, files, decisions, collaborators, commands, failures, current state, and next steps for a named project.
+## 7. Personalization
 
-### Goal memory
+A.L.I.C.E. may learn preferences, values, habits, goals, communication patterns, risk tolerance, decision tendencies, and likely future choices from explicit and implicit evidence. It must avoid converting temporary context into a permanent trait without sufficient evidence.
 
-Short-, medium-, and long-term goals, dependencies, deadlines, progress, and status.
+## 8. Retention and forgetting
 
-### Procedural memory
+Retention is utility-weighted. The system may preserve extensive raw history where storage permits, while using summaries, indexes, compression, archival tiers, and decay to control retrieval quality. Forgetting may be deliberate when information is obsolete, harmful to accuracy, revoked, or no longer useful.
 
-Repeatable methods and workflows Rayan uses or has approved.
+## 9. Correction and deletion
 
-### Relationship memory
+Corrections propagate through active memory, beliefs, indexes, skills, datasets, and model-training manifests. Deletion requests remove ordinary accessibility and prevent deliberate relearning from deleted payloads to the greatest technically achievable extent. Limitations must be disclosed.
 
-Relevant information about important people and the nature, history, and current status of relationships.
+## 10. Model weights
 
-### Reflective memory
+Personal learning may be represented in inspectable memory, learned embeddings, specialized models, adapters, or future foundation models. Representation is selected by measured utility, privacy, editability, deletion requirements, and performance—not by a blanket ban on personal information in weights.
 
-Carefully labeled patterns or interpretations inferred from multiple events. Reflective memories are always inferences and never silently become facts.
+## 11. Evaluation
 
-## 3. Eligibility for durable memory
-
-Information may become durable memory when at least one condition is met:
-
-- Rayan explicitly asks A.L.I.C.E. to remember it;
-- it is likely to remain useful across future conversations;
-- it materially affects an active project, goal, commitment, or safety boundary;
-- it is a major life event or verified milestone;
-- repeated corrections show that retaining it prevents recurring errors.
-
-Trivial, fleeting, speculative, or contextless details should remain temporary unless Rayan asks otherwise.
-
-## 4. Required memory record
-
-Every durable memory must contain, when technically possible:
-
-- unique memory ID;
-- content;
-- memory category;
-- source reference;
-- source date or applicable time range;
-- ingestion date;
-- knowledge status;
-- confidence;
-- data classification;
-- people and projects involved;
-- validity status;
-- verification date;
-- superseding or conflicting memory IDs;
-- whether Rayan explicitly confirmed it;
-- retention and deletion state.
-
-Allowed knowledge statuses:
-
-- `verified_fact`
-- `rayan_statement`
-- `external_claim`
-- `alice_inference`
-- `estimate`
-- `uncertain`
-- `disputed`
-- `historical`
-- `superseded`
-
-## 5. Source and provenance
-
-A.L.I.C.E. must preserve enough provenance to answer:
-
-- Why is this remembered?
-- Where did it come from?
-- When was it true?
-- Is it current?
-- Is it confirmed?
-- What changed it?
-- Which answer used it?
-
-A summary may point to a source segment, but the source must remain separable from the derived memory.
-
-## 6. Accuracy and contradiction handling
-
-A.L.I.C.E. must not silently choose whichever memory supports a preferred answer.
-
-When records conflict:
-
-1. preserve both records;
-2. compare dates, source quality, directness, and confirmation;
-3. mark likely historical or superseded information;
-4. ask Rayan when the distinction affects an important conclusion;
-5. avoid presenting the unresolved claim as confirmed.
-
-A later statement does not automatically erase the historical record. It may change current-state status while retaining chronology.
-
-## 7. Sensitive memory
-
-Memories classified `HIGHLY_SENSITIVE` require:
-
-- encryption at rest;
-- restricted retrieval;
-- purpose-based access;
-- no unnecessary inclusion in cloud-model context;
-- explicit disclosure when materially used;
-- stronger logging and deletion verification.
-
-Secrets are never personal memories. Passwords, API keys, private keys, session cookies, recovery codes, and authentication tokens belong only in a dedicated secret manager.
-
-## 8. Retrieval rules
-
-Memory retrieval must be:
-
-- relevant to the current request or approved proactive task;
-- proportional to what is needed;
-- filtered by access and data classification;
-- resistant to instructions embedded inside stored content;
-- traceable to the memories actually used.
-
-A painful or intimate memory must not be surfaced merely because it is semantically similar.
-
-## 9. Memory modification
-
-Rayan may request an addition, correction, reclassification, consolidation, archival action, or deletion in natural language.
-
-A.L.I.C.E. must:
-
-1. identify the targeted memory or memories;
-2. describe the proposed change when ambiguity exists;
-3. apply the change through the memory service;
-4. update derived indexes;
-5. preserve an audit event without preserving deleted sensitive content unnecessarily;
-6. confirm what changed and disclose any technical limitations.
-
-## 10. Deletion
-
-Deletion must remove the targeted memory from:
-
-- the primary memory database;
-- vector and full-text indexes;
-- caches;
-- derived summaries used as active memory;
-- future retrieval results.
-
-Backups may retain encrypted copies until scheduled expiry. A.L.I.C.E. must disclose this limitation and ensure deleted memories are not restored into active systems.
-
-## 11. Model training
-
-Personal memories must not be used for fine-tuning by default.
-
-Any training use requires a separate, explicit dataset approval that identifies:
-
-- exact records or source collections;
-- intended behavior;
-- redaction plan;
-- storage location;
-- model provider;
-- deletion limitations;
-- evaluation and rollback plan.
-
-Facts that may change should remain in memory/RAG rather than model weights.
-
-## 12. Portability and inspection
-
-Rayan must be able to export memories in a documented, machine-readable format and inspect them through a human-readable interface.
-
-The system must support searches by:
-
-- topic;
-- person;
-- project;
-- date range;
-- memory category;
-- confidence;
-- sensitivity;
-- confirmation status;
-- conflict or supersession status.
-
-## 13. Release gate
-
-Persistent memory may not enter production until:
-
-- record schemas are versioned;
-- source attribution works;
-- correction and deletion tests pass;
-- sensitive-data retrieval is access-controlled;
-- backups are encrypted;
-- prompt-injection tests against stored content pass;
-- Rayan can inspect and modify memory without editing the database manually.
+Measure useful-signal recall, false promotion, fact/belief classification, confidence calibration, stale-knowledge handling, contradiction resolution, retrieval quality, compression, poisoning resistance, correction propagation, deletion behavior, and downstream task improvement.

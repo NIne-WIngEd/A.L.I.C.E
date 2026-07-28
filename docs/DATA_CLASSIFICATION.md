@@ -1,125 +1,31 @@
-# A.L.I.C.E. Data Classification
+# A.L.I.C.E. Data Classification and Learning Custody
 
-**Version:** 1.0.0  
-**Status:** Ratified for Phase 0  
-**Owner:** MK Rayan
+**Version:** 2.0.0
 
-## Classification rule
+Classification controls custody and exposure. It does not determine whether A.L.I.C.E. is allowed to understand or learn from information.
 
-Every stored object, memory, document, log, tool parameter, and model-context segment must have a data classification. When classifications conflict, the most restrictive applicable class controls.
+## Classes
 
-## PUBLIC
+- **PUBLIC** — may be processed locally or by approved external systems.
+- **INTERNAL** — project-operational information; external processing follows mission policy.
+- **PRIVATE** — personal or non-public information; may be used for memory, inference, simulation, and training under owner-controlled lineage and provider rules.
+- **HIGHLY_SENSITIVE** — health, finances, identity, intimate history, or similarly consequential material; may be used when useful under stronger encryption, access, external-exposure, and deletion requirements.
+- **SECRETS** — credentials and cryptographic authority. Use through references or credential brokers. Do not duplicate into ordinary memory or training data unless a narrowly designed cryptographic research task explicitly requires it.
 
-Information intentionally approved for unrestricted public release.
+## Representation choices
 
-Examples:
+Authorized information may be represented as:
 
-- public portfolio content;
-- published papers;
-- public GitHub source code;
-- approved biography;
-- public project documentation.
+- raw experience;
+- episodic or semantic memory;
+- graphs or embeddings;
+- derived beliefs;
+- procedural skills;
+- training examples;
+- specialized model weights or adapters.
 
-Controls:
+The representation is selected by measured utility, editability, privacy, deletion, compute, and reliability—not by a blanket ban on parametric learning.
 
-- may be stored in the public repository;
-- may be sent to approved external models;
-- still requires factual accuracy and source integrity.
+## External processing
 
-## INTERNAL
-
-Non-public project material with limited harm if exposed.
-
-Examples:
-
-- architecture drafts;
-- development notes;
-- non-sensitive test fixtures;
-- internal technical decisions;
-- unfinished public-facing writing.
-
-Controls:
-
-- may be stored in private development systems;
-- public release requires review;
-- external processing is allowed only through approved providers.
-
-## PRIVATE
-
-Personal or project information that should not be publicly disclosed.
-
-Examples:
-
-- personal conversations;
-- unpublished applications;
-- personal schedules;
-- private source documents;
-- private contact details;
-- unannounced project plans;
-- ordinary personal memories.
-
-Controls:
-
-- encrypted at rest;
-- access limited to approved A.L.I.C.E. components;
-- excluded from the public repository;
-- external disclosure requires a defined purpose and permission.
-
-## HIGHLY_SENSITIVE
-
-Information whose disclosure could create material emotional, financial, legal, academic, reputational, or safety harm.
-
-Examples:
-
-- detailed financial records;
-- identity documents;
-- immigration records;
-- medical or mental-health information;
-- intimate relationship history;
-- precise location history;
-- private legal records;
-- unpublished proprietary research;
-- deeply personal life events.
-
-Controls:
-
-- strongest available encryption;
-- local-first processing by default;
-- no logging of full content unless essential;
-- purpose-limited retrieval;
-- explicit authorization before external transmission;
-- deletion must include derived indexes and caches;
-- cloud use requires a recorded exception.
-
-## SECRETS
-
-Authentication material that must never enter ordinary AI memory or prompts.
-
-Examples:
-
-- passwords;
-- API keys;
-- access and refresh tokens;
-- private keys;
-- recovery codes;
-- session cookies;
-- database credentials;
-- encryption master keys.
-
-Controls:
-
-- dedicated secret manager only;
-- never committed to Git;
-- never stored in embeddings;
-- never included in conversational logs;
-- redacted from errors;
-- rotated immediately after suspected exposure;
-- access granted only to the exact process that requires it.
-
-## Default classifications
-
-- unknown personal content: `PRIVATE`
-- unreviewed life archive: `HIGHLY_SENSITIVE`
-- generated logs containing personal context: `PRIVATE`
-- credentials detected anywhere: `SECRETS`
-- public-source web content: `PUBLIC`, while derived user profiles remain at least `PRIVATE`
+External transmission is controlled by mission scope, provider capabilities, and data custody rules. Local-only processing is a selectable strategy, not a universal architectural requirement.

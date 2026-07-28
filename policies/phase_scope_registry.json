@@ -1,0 +1,1285 @@
+{
+  "version": "1.3.0",
+  "authority": "docs/PHASE_SCOPE_POLICY.md",
+  "generated_at": "2026-07-27T00:00:00Z",
+  "migration_id": "alice-mega-architecture-migration-v1.3",
+  "entries": {
+    "docs/PHASE_4_WEB_INFORMATION_ARCHITECTURE.md": {
+      "scope_kind": "historical_or_phase_local",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "reason": "The document defines the released Phase 4 foundation profile, not the destination ceiling.",
+      "registered_by": "alice-mega-architecture-migration-v1"
+    },
+    "src/alice_conversation/contracts.py": {
+      "scope_kind": "phase_local_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "reason": "Released Phase 3 contracts remain reproducible while integrated profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1"
+    },
+    "src/alice_conversation/conversation_policy.py": {
+      "scope_kind": "phase_local_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "reason": "Released Phase 3 policy parser is compatibility-scoped, not globally normative.",
+      "registered_by": "alice-mega-architecture-migration-v1"
+    },
+    "src/alice_conversation/constitutional_policy.py": {
+      "scope_kind": "phase_local_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "reason": "Exact Constitution 0.1 bindings reproduce the released profile only; Governance 1.1 is the active destination authority.",
+      "registered_by": "alice-mega-architecture-migration-v1"
+    },
+    "src/alice_conversation/orchestration_policy.py": {
+      "scope_kind": "phase_local_compatibility",
+      "capability_ceiling": false,
+      "profile": "orchestration.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "reason": "No-retry/no-fallback orchestration is retained only for exact Phase 3 reproduction.",
+      "registered_by": "alice-mega-architecture-migration-v1"
+    },
+    "src/alice_information/contracts.py": {
+      "scope_kind": "phase_local_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "reason": "Released P4.0 contracts remain narrow while live and authorized successor profiles are separately defined.",
+      "registered_by": "alice-mega-architecture-migration-v1"
+    },
+    "src/alice_information/policy.py": {
+      "scope_kind": "phase_local_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "reason": "Strict-false P4.0 values are a release profile, not a permanent information-system ceiling.",
+      "registered_by": "alice-mega-architecture-migration-v1"
+    },
+    "src/alice_conversation/__init__.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/__main__.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/cli.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/cli_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/cli_runtime.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/constitutional_inspection.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/constitutional_prompt.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/context_assembly.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/context_inspection.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/context_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/final_evaluation.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/final_evaluation_contract.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/final_evaluation_inspection.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/grounding_bridge.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/grounding_io.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/grounding_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/model.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/model_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/ollama.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/orchestration.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/registry.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/release_audit.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/release_audit_inspection.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/release_evidence.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/repair_inspection.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/repair_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/response_repair.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/response_validation.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/response_validation_inspection.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/response_validation_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/state_inspection.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/state_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/state_schema.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/state_service.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/state_store.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_conversation/transport.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/__init__.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/freshness.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/freshness_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/http_transport.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/injection_firewall.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/injection_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/live_http.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/live_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/provider_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/providers.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/registry.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/retrieval.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/retrieval_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/temporal_metadata.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/temporal_metadata_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 4 source remains reproducible while live, authorized, and learning-aware profiles evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/__init__.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/candidate_assessment.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/citation_evaluation.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/cited_answer.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/deletion.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/deletion_evaluation.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/deletion_indexes.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/deletion_integrity.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/evaluation_contract.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/evaluation_fixtures.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/final_evaluation.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/formation.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/hybrid_retrieval.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/inspection.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/lexical_index.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/migrations.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/phase1_bridge.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/promotion.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/provenance.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/release_audit.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/retrieval.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/retrieval_models.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/schema.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/semantic_index.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/sensitive_access.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/sensitive_crypto.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/sensitive_deletion.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/sensitive_storage.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/service.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/sources.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/store.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/temporal.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_memory/transition_promotion.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 2 source remains reproducible while lifelong-learning successors evolve separately.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/__init__.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/analysis.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/atomic_claim_decomposition.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/auto_review.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/chunk_catalog.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/chunking.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/claim_entailment_gate.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/claim_support_audit.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/content_extraction.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/evidence_claim_generation.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/final_pilot_policy.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/grounded_context.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/grounded_context_evaluation.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/grounded_response.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/grounded_response_evaluation.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/hhem_calibration.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/hhem_holdout.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/inventory.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/judge_calibration.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/owner_attribution.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/parser_registry.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/pilot.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/pilot_review.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/privacy_scan.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/query_claim_relevance_calibration.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/query_claim_relevance_gate.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/query_claim_relevance_holdout.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/response_context_enrichment.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/response_reranker.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/retrieval.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/review_calibration.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/safe_extraction.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/safe_parsers.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/semantic_benchmark_review.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/semantic_evaluation.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/semantic_retrieval.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/semantic_review.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/verifier_ensemble_analysis.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_vault/verifier_failure_forensics.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
+      "reason": "Released Phase 1 source remains reproducible while the shared kernel provides the successor path.",
+      "registered_by": "alice-mega-architecture-migration-v1.2"
+    },
+    "src/alice_information/grounding_policy.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "information.phase4.grounding",
+      "milestone": "P4.5a",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "MUST_REMAIN_DISABLED"
+      ],
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "reason": "The P4.5a grounding policy is intentionally read-only and side-effect-free inside this milestone. It does not prohibit later information, memory, tool, or action profiles.",
+      "sunset_condition": "Replace the hard-coded P4.5a guard with a selected capability profile when grounding is integrated with the Experience Ledger and action-capable runtimes.",
+      "registered_by": "alice-mega-architecture-migration-v1.3"
+    }
+  },
+  "patterns": [
+    {
+      "glob": "docs/PHASE_1_*.md",
+      "scope_kind": "historical_or_phase_local",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "reason": "Released Phase 1 documentation is historical evidence and may be migrated by the product-neutral architecture."
+    },
+    {
+      "glob": "docs/PHASE_2_*.md",
+      "scope_kind": "historical_or_phase_local",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "reason": "Released Phase 2 documentation describes compatibility behavior, not the lifelong-learning ceiling."
+    },
+    {
+      "glob": "docs/PHASE_3_*.md",
+      "scope_kind": "historical_or_phase_local",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "reason": "Released Phase 3 documents remain reproducible but non-normative for successor profiles."
+    },
+    {
+      "glob": "docs/PHASE_4_*.md",
+      "scope_kind": "historical_or_phase_local",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "reason": "Phase 4 documents define the current release boundary only."
+    },
+    {
+      "glob": "tests/phase1/**",
+      "scope_kind": "compatibility_test",
+      "capability_ceiling": false,
+      "profile": "vault.phase1.compatibility",
+      "reason": "Tests preserve Phase 1 behavior and cannot veto successor implementations."
+    },
+    {
+      "glob": "tests/phase2/**",
+      "scope_kind": "compatibility_test",
+      "capability_ceiling": false,
+      "profile": "memory.phase2.compatibility",
+      "reason": "Tests preserve Phase 2 behavior and cannot veto successor implementations."
+    },
+    {
+      "glob": "tests/phase3/**",
+      "scope_kind": "compatibility_test",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "reason": "Tests must bind to the released Phase 3 compatibility profile rather than the destination architecture."
+    },
+    {
+      "glob": "tests/phase4/**",
+      "scope_kind": "compatibility_test",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "reason": "Tests validate the active Phase 4 foundation profile, not future information capability."
+    },
+    {
+      "glob": "policies/*conversation*.json",
+      "scope_kind": "phase_local_compatibility",
+      "capability_ceiling": false,
+      "profile": "conversation.phase3.compatibility",
+      "reason": "Released conversation policies are compatibility inputs selected through profile-aware runtimes."
+    },
+    {
+      "glob": "policies/*orchestration*.json",
+      "scope_kind": "phase_local_compatibility",
+      "capability_ceiling": false,
+      "profile": "orchestration.phase3.compatibility",
+      "reason": "Released orchestration policies remain profile-local."
+    },
+    {
+      "glob": "policies/*information*.json",
+      "scope_kind": "phase_local_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.foundation",
+      "reason": "Released information policies remain profile-local."
+    }
+  ],
+  "rules": {
+    "capability_ceiling_must_be_false": true,
+    "new_entries_require_review": true,
+    "ci_may_not_auto_register": true,
+    "historical_restrictions_are_non_normative": true,
+    "compatibility_restrictions_apply_only_to_named_profiles": true,
+    "pattern_entries_must_be_narrow_and_reviewed": true,
+    "unexpected_active_barriers_fail_migration": true
+  },
+  "registered_file_count": 132,
+  "registered_pattern_count": 11,
+  "released_baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe"
+}

@@ -1,60 +1,38 @@
-# A.L.I.C.E. Scope and Non-Goals
+# Scope and Non-Goals
 
-**Version:** 1.0.0  
-**Applies to:** First implementable release (`v0.1`)  
-**Owner:** MK Rayan
+**Version:** 2.0.0
+**Status:** Release-scoping policy; not a permanent capability ceiling
 
-## Product statement
+## Current delivery scope
 
-A.L.I.C.E. v0.1 will be a local-first, text-based personal assistant prototype that can answer questions using an approved personal knowledge vault while showing the sources and memory records used.
+The active implementation remains in Phase 4. Current releases may expose only the capabilities that have been built and evaluated for that milestone.
 
-## In scope for v0.1
+## Long-term scope
 
-- local text conversation;
-- explicit user authentication for access to private memory;
-- ingestion of a small, approved pilot dataset;
-- document parsing and chunking;
-- structured memory records with provenance;
-- vector and metadata retrieval;
-- answers grounded in retrieved personal sources;
-- memory inspection, correction, supersession, and deletion;
-- uncertainty and conflict handling;
-- read-only web research through an approved tool;
-- activity and retrieval logs with privacy controls;
-- permission gateway implemented before external-action tools;
-- automated tests for memory, permissions, privacy, and prompt injection.
+The long-term project includes, without categorical exclusion:
 
-## Out of scope for v0.1
+- continual memory and model learning;
+- multimodal perception;
+- authenticated integrations;
+- background cognition and monitoring;
+- broad computer use;
+- autonomous coding and software evolution;
+- automatic model training and promotion;
+- scientific discovery;
+- multi-agent coordination;
+- voice, mobile, desktop, edge, and robotic embodiment;
+- production self-modification under A5 missions;
+- original research into currently unsolved frontier capabilities;
+- a separate host-owned general product, Friday, and an eventual AI operating environment.
 
-- sending email or messages;
-- changing calendars or accounts;
-- purchases or financial transactions;
-- unrestricted terminal or administrator access;
-- continuous background monitoring;
-- computer-wide control;
-- production self-modification;
-- autonomous code deployment;
-- model training on the complete life archive;
-- ingestion of the entire 14 GB dataset;
-- voice-first interaction;
-- mobile application;
-- custom operating-system kernel;
-- representation of A.L.I.C.E. as conscious, human, or infallible.
+## Non-goals of a particular release
 
-## Phase 1 pilot-data limit
+A feature absent from a release is not prohibited. It is unimplemented, unevaluated, unavailable in the selected profile, or deferred by delivery order.
 
-The first ingestion experiment must use a deliberately selected, reviewable subset rather than the complete archive.
+## Permanent project non-goals
 
-Recommended pilot:
+A.L.I.C.E. is not intended to transfer final constitutional ownership away from Rayan, falsify its state or evidence, covertly resist legitimate stop/rollback, secretly self-grant credentials, or destroy all recoverable known-good states during material self-change.
 
-- 50–200 files;
-- less than 2 GB total;
-- multiple data types;
-- known duplicates and contradictions for testing;
-- no active credentials;
-- no identity documents in the first run;
-- a written ground-truth answer set.
+## Product-family scope
 
-## Success condition for v0.1
-
-A.L.I.C.E. can answer a defined set of questions about Rayan and one technical project, cite the exact personal sources used, recognize outdated or conflicting records, and correctly process memory corrections and deletions without performing unauthorized external actions.
+A.L.I.C.E. is the owner-specific research flagship. Friday is the general distributable product. The shared Personal Cognitive Kernel is host-neutral and contains no production personal state. Productization may require direct migration of any earlier phase.

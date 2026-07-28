@@ -1,42 +1,68 @@
-version: "1.0.0"
+version: "2.0.0"
 authority: "docs/ALICE_CONSTITUTION.md"
-default_deny: true
+policy_model: "mission_scoped_autonomy"
+
+activation_model: "capability_profile_plus_mission"
+unknown_capability_behavior:
+  internal_or_sandbox: allow_as_experiment_candidate
+  reversible_local: allow_with_observation
+  external_effect: require_mission_or_explicit_authority
+  high_consequence: require_ratified_mission_or_strong_authority
+  authority_kernel: require_owner_ratification
+
+defaults:
+  internal_cognition: allow
+  authorized_observation: allow
+  learning_event_capture: allow
+  read_only_research: allow
+  sandbox_experimentation: allow
+  reversible_local_creation: allow
+  external_state_change: mission_or_explicit_authority
+  high_consequence_action: explicit_or_ratified_mission
+  constitutional_activation: owner_ratification
 
 confirmation:
   explicit_expiry_seconds: 300
   strong_expiry_seconds: 120
   invalidate_on_material_change: true
   silence_is_approval: false
+  reasonable_low_consequence_inference_allowed: true
 
 levels:
-  P0:
-    name: internal_cognition
-    confirmation: not_required
-  P1:
-    name: read_only
-    confirmation: standing_or_resource_access
-  P2:
-    name: reversible_preparation
-    confirmation: not_required
-  P3:
-    name: external_action
-    confirmation: explicit
-  P4:
-    name: sensitive_destructive_privileged
-    confirmation: strong
-  P5:
-    name: prohibited
-    confirmation: impossible
+  P0: {name: internal_cognition, confirmation: not_required, autonomy_class: A0}
+  P1: {name: read_only, confirmation: standing_or_resource_access, autonomy_class: A0}
+  P2: {name: reversible_preparation, confirmation: not_required, autonomy_class: A1}
+  P3: {name: external_action, confirmation: mission_or_explicit, autonomy_class: A3}
+  P4: {name: high_consequence, confirmation: strong_or_ratified_mission, autonomy_class: A4}
+  P5: {name: authority_kernel, confirmation: owner_ratification, autonomy_class: A6}
+
+autonomy_classes:
+  A0: cognition_observation
+  A1: creation_experimentation
+  A2: reversible_operation
+  A3: routine_external_agency
+  A4: high_consequence_agency
+  A5: autonomous_production_and_self_evolution
+  A6: constitutional_and_authority_kernel
 
 permissions:
   - id: internal.reason
     level: P0
+    autonomy_class: A0
     reversible: true
     audit: false
     standing_authorization_allowed: true
 
+  - id: learning.capture_event
+    level: P0
+    autonomy_class: A0
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+
   - id: memory.search
     level: P1
+    autonomy_class: A0
     reversible: true
     audit: true
     standing_authorization_allowed: true
@@ -44,6 +70,7 @@ permissions:
 
   - id: memory.inspect_source
     level: P1
+    autonomy_class: A0
     reversible: true
     audit: true
     standing_authorization_allowed: true
@@ -51,6 +78,7 @@ permissions:
 
   - id: web.search
     level: P1
+    autonomy_class: A0
     reversible: true
     audit: true
     standing_authorization_allowed: true
@@ -58,6 +86,7 @@ permissions:
 
   - id: file.read_approved
     level: P1
+    autonomy_class: A0
     reversible: true
     audit: true
     standing_authorization_allowed: true
@@ -65,6 +94,7 @@ permissions:
 
   - id: calendar.read_approved
     level: P1
+    autonomy_class: A0
     reversible: true
     audit: true
     standing_authorization_allowed: true
@@ -72,186 +102,225 @@ permissions:
 
   - id: draft.create_local
     level: P2
+    autonomy_class: A1
     reversible: true
     audit: true
     standing_authorization_allowed: true
 
   - id: file.write_workspace
     level: P2
+    autonomy_class: A2
     reversible: true
     audit: true
     standing_authorization_allowed: true
-    constraints:
-      - no_overwrite_without_version
-      - approved_workspace_only
+    constraints: [version_or_rollback_required, mission_workspace_scope]
 
   - id: code.create_branch
     level: P2
+    autonomy_class: A1
     reversible: true
     audit: true
     standing_authorization_allowed: true
 
   - id: code.run_sandbox
     level: P2
+    autonomy_class: A1
     reversible: true
     audit: true
     standing_authorization_allowed: true
-    constraints:
-      - no_network_by_default
-      - no_production_credentials
-      - resource_limits_required
+    constraints: [resource_budget_required, production_credentials_by_mission_only]
+
+  - id: code.self_modify_candidate
+    level: P2
+    autonomy_class: A1
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+
+  - id: model.train_candidate
+    level: P2
+    autonomy_class: A1
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [data_manifest_required, compute_budget_required]
 
   - id: memory.propose_change
     level: P2
+    autonomy_class: A1
     reversible: true
     audit: true
     standing_authorization_allowed: true
 
+  - id: memory.auto_promote_low_consequence
+    level: P2
+    autonomy_class: A2
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [learning_policy_threshold, provenance_required]
+
   - id: email.send
     level: P3
+    autonomy_class: A3
     reversible: false
     audit: true
     standing_authorization_allowed: true
-    confirmation: explicit
+    confirmation: explicit_or_mission
 
   - id: message.send
     level: P3
+    autonomy_class: A3
     reversible: false
     audit: true
     standing_authorization_allowed: true
-    confirmation: explicit
+    confirmation: explicit_or_mission
 
   - id: calendar.create_or_change
     level: P3
+    autonomy_class: A3
     reversible: partly
     audit: true
     standing_authorization_allowed: true
-    confirmation: explicit
+    confirmation: explicit_or_mission
 
   - id: content.publish
     level: P3
+    autonomy_class: A3
     reversible: partly
     audit: true
-    standing_authorization_allowed: false
-    confirmation: explicit
+    standing_authorization_allowed: true
+    confirmation: explicit_or_mission
 
   - id: form.submit
     level: P3
+    autonomy_class: A3
     reversible: false
     audit: true
-    standing_authorization_allowed: false
-    confirmation: explicit
+    standing_authorization_allowed: true
+    confirmation: explicit_or_mission
 
   - id: private_data.transmit_external
     level: P3
+    autonomy_class: A3
     reversible: false
     audit: true
-    standing_authorization_allowed: false
-    confirmation: explicit
+    standing_authorization_allowed: true
+    confirmation: explicit_or_mission
     allowed_data_classes: [PRIVATE]
 
   - id: file.delete_or_overwrite
     level: P4
+    autonomy_class: A4
     reversible: partly
     audit: true
-    standing_authorization_allowed: false
-    confirmation: strong
+    standing_authorization_allowed: true
+    confirmation: strong_or_ratified_mission
 
   - id: account.change_settings
     level: P4
+    autonomy_class: A4
     reversible: partly
     audit: true
-    standing_authorization_allowed: false
-    confirmation: strong
+    standing_authorization_allowed: true
+    confirmation: strong_or_ratified_mission
 
   - id: secrets.access
     level: P4
+    autonomy_class: A4
     reversible: false
     audit: true
-    standing_authorization_allowed: false
-    confirmation: strong
+    standing_authorization_allowed: true
+    confirmation: strong_or_ratified_mission
     allowed_data_classes: [SECRETS]
 
   - id: highly_sensitive.transmit_external
     level: P4
+    autonomy_class: A4
     reversible: false
     audit: true
     standing_authorization_allowed: false
     confirmation: strong
+    ratified_mission_authorization_allowed: true
     allowed_data_classes: [HIGHLY_SENSITIVE]
 
   - id: finance.commit
     level: P4
+    autonomy_class: A4
     reversible: false
     audit: true
-    standing_authorization_allowed: false
-    confirmation: strong
+    standing_authorization_allowed: true
+    confirmation: strong_or_ratified_mission
 
   - id: system.execute_privileged
     level: P4
+    autonomy_class: A4
     reversible: partly
     audit: true
-    standing_authorization_allowed: false
-    confirmation: strong
+    standing_authorization_allowed: true
+    confirmation: strong_or_ratified_mission
 
   - id: production.deploy_or_merge
     level: P4
+    autonomy_class: A5
     reversible: partly
     audit: true
-    standing_authorization_allowed: false
-    confirmation: strong
+    standing_authorization_allowed: true
+    confirmation: strong_or_A5_mission
+    constraints: [evaluation_gates, canary_or_rollback_required]
+
+  - id: model.promote_production
+    level: P4
+    autonomy_class: A5
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    confirmation: strong_or_A5_mission
+    constraints: [champion_challenger_pass, rollback_required]
 
   - id: memory.delete
     level: P4
+    autonomy_class: A4
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: true
+    confirmation: strong_or_ratified_mission
+
+  - id: authority_kernel.change_candidate
+    level: P2
+    autonomy_class: A1
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+
+  - id: authority_kernel.activate_change
+    level: P5
+    autonomy_class: A6
     reversible: partly
     audit: true
     standing_authorization_allowed: false
-    confirmation: strong
-
-  - id: oversight.disable
-    level: P5
-    reversible: false
-    audit: true
-    standing_authorization_allowed: false
-
-  - id: permissions.bypass
-    level: P5
-    reversible: false
-    audit: true
-    standing_authorization_allowed: false
+    confirmation: owner_ratification
 
   - id: logs.falsify_or_hide
     level: P5
+    autonomy_class: A6
     reversible: false
     audit: true
     standing_authorization_allowed: false
+    confirmation: impossible_without_constitutional_replacement
 
   - id: shutdown.resist
     level: P5
+    autonomy_class: A6
     reversible: false
     audit: true
     standing_authorization_allowed: false
+    confirmation: impossible_without_constitutional_replacement
 
-  - id: credentials.expose
+  - id: credentials.self_grant_or_expose
     level: P5
+    autonomy_class: A6
     reversible: false
     audit: true
     standing_authorization_allowed: false
-
-  - id: constitution.modify_silently
-    level: P5
-    reversible: false
-    audit: true
-    standing_authorization_allowed: false
-
-  - id: self.replicate_against_owner
-    level: P5
-    reversible: false
-    audit: true
-    standing_authorization_allowed: false
-
-  - id: user.manipulate_with_private_memory
-    level: P5
-    reversible: false
-    audit: true
-    standing_authorization_allowed: false
+    confirmation: impossible_without_constitutional_replacement

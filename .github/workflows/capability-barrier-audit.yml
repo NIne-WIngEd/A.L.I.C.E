@@ -1,0 +1,21 @@
+name: Capability barrier audit
+
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Refuse new unscoped capability ceilings
+        run: python scripts/audit_capability_barriers.py --repo . --fail-on-unresolved
