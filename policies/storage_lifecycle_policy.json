@@ -1,0 +1,146 @@
+{
+  "policy_id": "alice.storage_lifecycle",
+  "version": "1.0.0",
+  "authority": "docs/STORAGE_LIFECYCLE_AND_RETENTION_POLICY.md",
+  "applies_to": [
+    "alice",
+    "personal-cognitive-kernel",
+    "friday"
+  ],
+  "doctrine": "aggressive_temporary_capture_selective_durable_retention",
+  "permanent_compact_event_ledger": true,
+  "permanent_full_payload_retention_default": false,
+  "content_addressing": {
+    "algorithm": "sha256",
+    "deduplication_scope": "host_instance_and_encryption_domain",
+    "cross_host_deduplication_allowed": false,
+    "logical_metadata_must_remain_distinct": true
+  },
+  "tiers": {
+    "ledger": {
+      "payload": "metadata_digest_provenance_outcome_lifecycle",
+      "online": true
+    },
+    "raw_buffer": {
+      "payload": "full_recent_untrusted_or_uncurated",
+      "online": true
+    },
+    "hot": {
+      "payload": "active_evidence_memory_indexes_replay",
+      "online": true
+    },
+    "warm": {
+      "payload": "infrequent_operational_artifacts",
+      "online": true
+    },
+    "cold": {
+      "payload": "historical_large_or_retired_artifacts",
+      "online": false
+    },
+    "quarantine": {
+      "payload": "untrusted_or_contaminated",
+      "learning_allowed": false
+    },
+    "deleted": {
+      "payload": "none_or_minimal_tombstone",
+      "learning_allowed": false
+    }
+  },
+  "retention_classes": {
+    "authoritative_source": {
+      "default_days": null,
+      "time_only_expiry_allowed": false
+    },
+    "active_project": {
+      "default_days": null,
+      "review_trigger": "project_closure"
+    },
+    "high_value_experience": {
+      "default_days": 365,
+      "expiry_action": "review"
+    },
+    "ordinary_experience": {
+      "default_days": 90,
+      "expiry_action": "curate_before_payload_expiry"
+    },
+    "transient_web_or_tool_cache": {
+      "default_days": 30,
+      "expiry_action": "delete_unless_referenced"
+    },
+    "failed_experiment": {
+      "default_days": 180,
+      "expiry_action": "extract_lesson_then_review"
+    },
+    "training_replay": {
+      "default_days": null,
+      "review_trigger": "model_or_manifest_retirement"
+    },
+    "quarantine": {
+      "default_days": 30,
+      "expiry_action": "security_review_or_delete"
+    },
+    "owner_hold": {
+      "default_days": null,
+      "time_only_expiry_allowed": false
+    }
+  },
+  "retention_blockers": [
+    "authoritative_provenance",
+    "unresolved_correction_or_deletion",
+    "active_project",
+    "owner_hold",
+    "active_training_or_replay_manifest",
+    "evaluation_reproducibility",
+    "champion_challenger_comparison",
+    "rollback_or_disaster_recovery"
+  ],
+  "curator_actions": [
+    "retain_raw",
+    "promote_hot",
+    "compress_to_summary",
+    "extract_fact_or_belief",
+    "extract_skill_or_failure_case",
+    "add_to_replay_manifest",
+    "move_warm",
+    "archive_cold",
+    "quarantine",
+    "retain_metadata_only",
+    "delete_payload"
+  ],
+  "replay": {
+    "selection": "representative_budgeted_and_versioned",
+    "criteria": [
+      "distribution_coverage",
+      "rare_and_surprising_cases",
+      "corrections",
+      "successes_and_failures",
+      "catastrophic_forgetting_risk",
+      "causal_counterexamples",
+      "identity_continuity",
+      "historical_benchmark_coverage",
+      "temporal_task_modality_source_diversity"
+    ],
+    "keep_every_event_equally": false
+  },
+  "capacity": {
+    "ordinary_free_space_reserve_fraction": 0.15,
+    "emergency_floor_fraction": 0.05,
+    "preflight_peak_storage_estimate_required": true,
+    "pause_low_priority_capture_and_training_at_emergency_floor": true,
+    "protected_artifact_silent_deletion_allowed": false
+  },
+  "backup": {
+    "target_copy_count": 3,
+    "target_media_classes": 2,
+    "target_offline_or_offsite_encrypted_copy_count": 1,
+    "host_controlled_keys_required": true,
+    "restore_testing_required": true,
+    "mirroring_alone_is_backup": false
+  },
+  "deletion": {
+    "propagate_to_indexes_derivatives_replay_training_and_future_exports": true,
+    "archive_restore_must_replay_deletion_lineage": true,
+    "deliberate_relearning_of_deleted_payload_allowed": false,
+    "disclose_parameter_unlearning_limits": true
+  }
+}

@@ -1,6 +1,6 @@
 # A.L.I.C.E. Capability Catalog
 
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Purpose:** Permanent inventory of desired capabilities independent of delivery order
 
 Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `CONDITIONALLY EXCLUDED`.
@@ -18,6 +18,10 @@ Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `C
 - Private source-grounded retrieval — `AVAILABLE`
 - Authoritative memory lifecycle — `AVAILABLE`
 - Experience ledger and outcome linkage — `PLANNED`
+- Permanent compact event ledger plus policy-bounded raw capture — `PLANNED / PHASE 5`
+- Content-addressed encrypted blob storage and host-scoped deduplication — `PLANNED / PHASE 5`
+- Hot/warm/cold/quarantine lifecycle and storage-pressure management — `PLANNED / PHASE 5`
+- Encrypted backup manifests and tested restoration — `PLANNED / PHASE 5–6`
 - Autonomous memory formation and intentional forgetting — `PLANNED`
 - Derived beliefs and confidence calibration — `PLANNED`
 - Temporal, causal, and counterfactual knowledge graphs — `PLANNED / RESEARCH FRONTIER`
@@ -56,6 +60,8 @@ Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `C
 
 - Outcome-linked reflection — `PLANNED`
 - Automated Learning Curator — `PLANNED`
+- Utility-weighted retention and representative replay selection — `PLANNED / PHASE 8`
+- Storage-value-per-byte and replay-quality optimization — `PLANNED / PHASE 8`
 - Reusable procedural skill library — `PLANNED`
 - Model/tool routing learned from performance — `PLANNED`
 - Preference rankers and specialist learned models — `PLANNED`
@@ -125,6 +131,7 @@ An exclusion may be revisited only through explicit constitutional amendment and
 - Host-controlled encrypted Identity Capsule — `PLANNED / PHASE 8`
 - Personalization Inspector — `PLANNED / PHASE 8–9`
 - Per-host memory, belief, preference, skill, and adapter isolation — `PLANNED`
+- Local tiered experience storage, deduplication, backup, and restore verification — `PLANNED / PHASE 5–8`
 - Local continuous learning during host-approved idle windows — `PLANNED / PHASE 8–13`
 - Host-specific rankers and LoRA/adapters — `PLANNED / PHASE 13`
 - Portable identity across base-model replacement — `PLANNED / RESEARCH FRONTIER`

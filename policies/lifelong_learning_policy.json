@@ -1,21 +1,29 @@
 {
   "policy_id": "alice.lifelong_learning",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "continuous_event_eligibility": true,
   "automatic_curriculum": true,
   "automatic_low_consequence_memory_promotion": "policy_threshold",
+  "capture_mode": "aggressive_temporary_capture",
+  "permanent_compact_event_ledger": true,
+  "raw_experience_buffer": "policy_bounded",
+  "durable_retention": "utility_weighted",
+  "replay_selection": "representative_budgeted_and_versioned",
+  "storage_lifecycle_policy": "policies/storage_lifecycle_policy.json",
   "sandboxed_self_modification": "allowed",
   "automatic_training": "mission_and_budget_authorized",
   "automatic_production_promotion": "A5_mandate_and_evaluation_gates",
   "learning_substrates": [
     "working_context",
     "experience_ledger",
+    "raw_experience_buffer",
     "episodic_memory",
     "semantic_knowledge",
     "derived_beliefs",
     "user_world_self_models",
     "procedural_skills",
     "training_assets",
+    "representative_replay",
     "parametric_models"
   ]
 }

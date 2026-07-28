@@ -1,8 +1,14 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "authority": "docs/PRODUCT_FAMILY_CAPABILITY_PARITY.md",
   "destination_parity_required": true,
   "capabilities": {
+    "storage_lifecycle_and_replay": {
+      "alice": "planned",
+      "kernel": "planned",
+      "consumer": "planned",
+      "target_phase": "5-8"
+    },
     "continuous_learning": {
       "alice": "planned_or_active",
       "kernel": "planned",

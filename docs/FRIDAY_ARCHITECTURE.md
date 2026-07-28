@@ -52,12 +52,18 @@ Every record carries:
 - source and provenance;
 - sensitivity classification;
 - encryption domain;
+- content digest;
 - retention class;
+- active storage tier;
 - deletion lineage;
 - model/training influence identifiers;
 - schema version.
 
-No shared cache, vector collection, telemetry batch, or model-training directory may mix two host instances.
+Friday uses the same aggressive-capture/selective-retention architecture as A.L.I.C.E.: a compact permanent ledger, a policy-bounded raw buffer, utility-weighted durable stores, representative replay manifests, and encrypted hot/warm/cold/quarantine tiers. Full payloads are content-addressed. Deduplication is limited to the same host and encryption domain so equality information is not leaked across users.
+
+The lifecycle manager predicts storage needs before ingestion or training, preserves free-space reserves, archives inactive data, verifies backups and restoration, and pauses low-priority capture or training before disk exhaustion. It never silently deletes authoritative evidence, active rollback state, owner-held records, or artifacts still referenced by a memory, evaluation, model, or deletion investigation.
+
+No shared cache, vector collection, telemetry batch, blob namespace, backup set, or model-training directory may mix two host instances.
 
 ## 4. Host model stack
 
@@ -110,7 +116,7 @@ Initial candidates:
 The installer benchmarks:
 
 - architecture and instruction set;
-- RAM and available storage;
+- RAM, available storage, storage tier performance, free-space reserve, and expected annual growth;
 - GPU/NPU providers;
 - thermal and power profile;
 - expected context and training workload.
@@ -155,7 +161,8 @@ Training jobs require:
 - curated input lineage;
 - a declared objective;
 - a held-out local evaluation set;
-- resource and thermal budgets;
+- resource, thermal, and storage budgets;
+- a representative replay manifest;
 - a current champion;
 - rollback and deletion strategy.
 

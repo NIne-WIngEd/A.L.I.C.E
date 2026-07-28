@@ -1,6 +1,6 @@
 # A.L.I.C.E. Roadmap 2.1
 
-**Version:** 2.1.0
+**Version:** 2.2.0
 **Owner:** MK Rayan
 **Status:** Final top-level capability domains with a mapped Friday product track
 **Principle:** Capability, learning, and governance co-evolve. Earlier implementations remain changeable when necessary to serve the final architecture.
@@ -45,9 +45,13 @@ Phase 4's read-only release scope is a maturity boundary. Phase 4 documents, cod
 
 ## Phase 5 — Experience Ledger, Evaluation Substrate, and Kernel Extraction
 
-Trajectory capture, outcomes, corrections, decision lineage, source/model/tool histories, benchmark registry, resource accounting, and candidate-learning extraction.
+Trajectory capture, outcomes, corrections, decision lineage, source/model/tool histories, benchmark registry, resource accounting, candidate-learning extraction, and the storage lifecycle substrate. Phase 5 establishes an immutable compact event ledger, aggressive temporary capture, content-addressed blobs, host-scoped deduplication, retention classes, hot/warm/cold/quarantine tiers, storage-pressure controls, encrypted backup manifests, and restore verification.
 
-**Friday action:** Begin code-level separation from A.L.I.C.E. at Phase 5.0 (P5.0). New reusable contracts are built in host-neutral `cognitive_kernel` namespaces with product and host scope.
+**Friday action:** Begin code-level separation from A.L.I.C.E. at Phase 5.0 (P5.0). New reusable contracts are built in host-neutral `cognitive_kernel` namespaces with product and host scope. Storage lifecycle contracts must be host-isolated and portable before the Phase 6.5 split.
+
+### Storage doctrine
+
+A.L.I.C.E. captures broadly enough to preserve future learning opportunity, but permanent full-payload retention is not the default. The governing pattern is: permanent compact ledger + policy-bounded raw buffer + utility-weighted durable memory + representative replay + encrypted archive + verified deletion. `docs/STORAGE_LIFECYCLE_AND_RETENTION_POLICY.md` defines the controlling lifecycle.
 
 ## Phase 6 — Cognitive Control Plane, Inspector, UI, and Voice
 
@@ -67,7 +71,7 @@ Files, email, calendars, repositories, services, scientific tools, APIs, MCP/A2A
 
 ## Phase 8 — Autonomous Memory, Reflection, and Procedural Learning
 
-Learning Curator, automated memory formation, belief revision, consolidation, source trust, skill synthesis, executable procedures, compression, forgetting, and training candidates.
+Learning Curator, automated memory formation, belief revision, consolidation, source trust, skill synthesis, executable procedures, learned retention, representative replay selection, compression, archival, intentional forgetting, and training candidates.
 
 **Friday action:** Earliest credible closed alpha. Friday's core differentiation requires automated selective learning, not only local chat.
 

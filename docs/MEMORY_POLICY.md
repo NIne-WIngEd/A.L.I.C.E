@@ -1,6 +1,6 @@
 # A.L.I.C.E. Memory and Knowledge Policy
 
-**Version:** 3.0.0
+**Version:** 3.1.0
 **Authority:** A.L.I.C.E. Constitution 1.1.0
 
 ## 1. Objective
@@ -42,7 +42,13 @@ A.L.I.C.E. may learn preferences, values, habits, goals, communication patterns,
 
 ## 8. Retention and forgetting
 
-Retention is utility-weighted. The system may preserve extensive raw history where storage permits, while using summaries, indexes, compression, archival tiers, and decay to control retrieval quality. Forgetting may be deliberate when information is obsolete, harmful to accuracy, revoked, or no longer useful.
+The storage doctrine is **aggressive temporary capture with selective durable retention**. Every eligible event may be captured long enough for curation, while a compact event ledger preserves provenance, outcome, digest, and retention history even when the full payload is later compressed, archived, or deleted. Permanent full-payload retention is never assumed merely because storage is available.
+
+Durable retention is utility-weighted. Authoritative evidence, corrections, rare failures, active-project state, causal counterexamples, successful procedures, training lineage, evaluation evidence, and rollback dependencies receive stronger retention. Routine duplicates, transient caches, low-value tool traces, failed checkpoints after their lesson is extracted, and reproducible build artifacts may be compressed, archived, or removed.
+
+The lifecycle uses content addressing, host-scoped deduplication, hot/warm/cold/quarantine tiers, representative replay manifests, storage-pressure controls, encrypted backups, restore tests, and deletion lineage. Time alone may not delete an artifact that is still required by authoritative memory, active training, evaluation reproducibility, rollback, an owner hold, or a pending correction/deletion investigation. `docs/STORAGE_LIFECYCLE_AND_RETENTION_POLICY.md` is controlling.
+
+Forgetting may be deliberate when information is obsolete, harmful to accuracy, revoked, superseded, no longer useful, or disproportionately costly relative to its expected future value.
 
 ## 9. Correction and deletion
 
@@ -54,4 +60,4 @@ Personal learning may be represented in inspectable memory, learned embeddings, 
 
 ## 11. Evaluation
 
-Measure useful-signal recall, false promotion, fact/belief classification, confidence calibration, stale-knowledge handling, contradiction resolution, retrieval quality, compression, poisoning resistance, correction propagation, deletion behavior, and downstream task improvement.
+Measure useful-signal recall, false promotion, fact/belief classification, confidence calibration, stale-knowledge handling, contradiction resolution, retrieval quality, compression, poisoning resistance, correction propagation, deletion behavior, representative-replay quality, storage value per byte, archive restoration, backup integrity, and downstream task improvement.

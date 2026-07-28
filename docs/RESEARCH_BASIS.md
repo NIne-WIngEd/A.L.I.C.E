@@ -34,3 +34,11 @@ The design conclusion is capability-first but evidence-driven: broad research fr
 - Wu et al., *OS-Copilot: Towards Generalist Computer Agents with Self-Improvement*, arXiv:2402.07456. Uses the name FRIDAY for an academic self-improving computer agent, creating a public-name collision that requires clearance.
 
 These references mean Friday cannot rely on "local" or "personalized" as a standalone moat. The planned differentiation is the complete combination of local multimodal ingestion, selective lifelong learning, inspectable beliefs, host-owned learned parameters, portable identity, autonomous skills, and proof-oriented developer non-access.
+
+## Storage lifecycle and continual-replay basis
+- Isele and Cosgun, *Selective Experience Replay for Lifelong Learning*, AAAI 2018 / arXiv:1802.10269. Shows that selective long-term replay can preserve prior competence while using a bounded memory rather than retaining every experience equally.
+- Rolnick et al., *Experience Replay for Continual Learning*, NeurIPS 2019. Establishes replay as a practical method for reducing catastrophic forgetting under continual learning.
+- Amazon S3 and Microsoft Azure official lifecycle/tiering documentation. Demonstrate automated transitions among frequent-access, infrequent-access, cold, and archive tiers plus explicit expiration policies.
+- Git object storage design. Motivates content-addressed immutable objects and deduplication by digest; A.L.I.C.E. applies this only within a host and encryption domain to avoid cross-host equality leakage.
+
+The design conclusion is aggressive temporary capture, not permanent indiscriminate retention: preserve enough raw evidence for later curation and model improvement, select representative replay for stability, move inactive payloads to encrypted archives, and delete redundant or low-value data only when provenance and derived-artifact dependencies remain correct.

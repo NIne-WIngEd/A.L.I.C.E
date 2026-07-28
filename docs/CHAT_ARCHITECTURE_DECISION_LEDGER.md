@@ -1,4 +1,4 @@
-# July 27, 2026 Architecture Decision Ledger
+# July 27–28, 2026 Architecture Decision Ledger
 
 This ledger records the decision sequence that produced the consolidated architecture.
 
@@ -15,3 +15,4 @@ This ledger records the decision sequence that produced the consolidated archite
 11. **Host-selected identity:** Friday is not the user's assistant name. Each host selects a name, voice, and identity locally.
 12. **Full parity:** the consumer system inherits the full generalizable destination capability set of A.L.I.C.E.; A.L.I.C.E. may lead experiments but cannot become a permanently separate capability class.
 13. **Long-term handoff:** after a dedicated consumer maintenance team exists, Rayan may return primary focus to A.L.I.C.E. while parity continues through the shared-kernel process.
+16. **Storage lifecycle:** A.L.I.C.E. uses aggressive temporary capture, a permanent compact event ledger, content-addressed host-scoped deduplication, utility-weighted durable retention, representative replay, tiered encrypted archives, restore verification, and intentional forgetting rather than storing every raw byte forever.
