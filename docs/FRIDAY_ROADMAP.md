@@ -8,7 +8,7 @@
 | Friday milestone | A.L.I.C.E. dependency | Deliverable |
 |---|---|---|
 | F0 — Product definition | Phase 4.5 | Vision, full capability parity, privacy promise, host-selected identity, product-brand clearance track |
-| F1 — Shared-kernel preparation | Phase 5 | Host-neutral experience ledger, evaluation substrate, product manifests, synthetic-host tests |
+| F1 — Shared-kernel preparation | Phase 5 | Host-neutral experience ledger, tiered storage lifecycle, evaluation substrate, product manifests, synthetic-host tests |
 | F2 — Generic control plane | Phase 6 | Host identity, memory inspector, learning controls, model manager, voice/UI contracts |
 | F3 — Formal product split | Phase 6.5 gate | Separate consumer-product and shared-kernel repositories/packages |
 | F4 — Local ingestion alpha | Phase 7 | Windows app, host naming, hardware benchmark, multimodal local ingestion, connector permissions, local model runtime |
@@ -47,8 +47,9 @@ During A.L.I.C.E. Phase 5.0:
 - add `ProductIdentity` and `HostInstance` manifests;
 - replace Rayan-specific constructor assumptions in reusable modules;
 - create synthetic host fixtures;
-- define event, memory, training, and evaluation portability;
-- add a no-cross-product-data test suite.
+- define event, memory, training, evaluation, retention-class, archive, and deletion portability;
+- define content-addressed host-scoped storage, deduplication, storage budgets, and restore manifests;
+- add a no-cross-product-data and no-cross-host-deduplication test suite.
 
 Exit criteria:
 
@@ -96,7 +97,7 @@ Recommended first product stack:
 - Python sidecar initially for mature A.L.I.C.E. ML/retrieval components;
 - llama.cpp-compatible local generation runtime;
 - ONNX Runtime for embeddings, classifiers, vision/audio, and on-device training experiments;
-- encrypted local object store, database, and vector index;
+- encrypted content-addressed local object store, database, vector index, lifecycle manager, and backup/restore verifier;
 - DPAPI-protected local master key on Windows.
 
 The architecture must allow later replacement of any runtime.
@@ -125,7 +126,10 @@ This is the minimum credible Friday launch cohort. Friday must automatically det
 - derived belief;
 - skill extraction;
 - training-candidate status;
-- quarantine.
+- quarantine;
+- warm or cold archival;
+- representative replay retention;
+- verified deletion.
 
 Closed-alpha gates:
 
@@ -134,6 +138,8 @@ Closed-alpha gates:
 - complete source lineage;
 - correction and deletion propagation;
 - encrypted export/import;
+- storage-pressure behavior that preserves protected records;
+- successful backup and restore verification;
 - offline operation;
 - no mandatory vendor account.
 

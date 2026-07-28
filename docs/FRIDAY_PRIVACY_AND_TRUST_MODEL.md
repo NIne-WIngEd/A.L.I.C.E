@@ -41,6 +41,10 @@ Separate keys or derivation contexts protect:
 
 The host can see which component sent data, destination, purpose, and data class. Offline mode blocks all non-local destinations.
 
+### Lifecycle and backup custody
+
+Hot, warm, cold, quarantine, and backup tiers remain inside host-controlled encryption domains. Moving data to an external drive, NAS, or optional cloud archive does not grant the vendor access. Off-device archives use end-to-end encryption with host-held keys and expose their destination, retention, restore, and purge behavior. Cross-host deduplication is prohibited because shared content hashes can leak equality information between users.
+
 ### Least vendor knowledge, not least local intelligence
 
 Friday may learn extensively about its host. The privacy objective is to keep that intelligence under host custody, not to minimize useful personalization.
@@ -90,7 +94,7 @@ Deletion must propagate through:
 - future retraining queues;
 - exported capsules created after deletion.
 
-Where exact parameter unlearning cannot be guaranteed, Friday must say so and offer adapter deletion and retraining from retained lineage.
+Where exact parameter unlearning cannot be guaranteed, Friday must say so and offer adapter deletion and retraining from retained lineage. Backup and cold-archive deletion follows a declared purge schedule; new restores and exports must not reintroduce payloads whose deletion lineage is active.
 
 ## 8. Optional services
 

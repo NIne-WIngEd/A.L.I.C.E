@@ -15,6 +15,8 @@ Shared code must:
 - support synthetic host tests;
 - expose stable versioned contracts;
 - record product and host scope on every persistent event;
+- carry content digest, retention class, storage tier, provenance, and deletion lineage across storage interfaces;
+- implement deduplication inside a host and encryption domain, never across unrelated hosts by default;
 - avoid vendor services as mandatory dependencies;
 - preserve data export and deletion lineage.
 
@@ -31,7 +33,9 @@ Every shared storage or learning component must prove:
 - shared caches include host scope or contain no personal content;
 - logs and exceptions do not leak raw content across scopes;
 - training jobs consume only declared host datasets;
-- exports contain only the selected host identity.
+- exports contain only the selected host identity;
+- storage pressure cannot delete another host's records or protected lineage;
+- backup, archive, restore, and replay manifests remain host-scoped.
 
 ## 5. Extraction workflow
 
@@ -44,3 +48,7 @@ Every shared storage or learning component must prove:
 7. move module into shared namespace/package;
 8. publish version and migration note;
 9. consume from A.L.I.C.E. and Friday independently.
+
+## 6. Storage lifecycle contract
+
+The Phase 5 kernel must expose product-neutral interfaces for the compact event ledger, raw buffer, content-addressed blobs, lifecycle decisions, storage accounting, replay manifests, archive/restore, and deletion propagation. A.L.I.C.E. and Friday may select different hardware or retention profiles, but they share the same contract and evaluation vocabulary.

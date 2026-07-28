@@ -1,6 +1,6 @@
 # A.L.I.C.E. and Friday Permanent Cognitive Architecture
 
-**Version:** 1.2.0
+**Version:** 1.3.0
 **Authority:** A.L.I.C.E. Constitution and ratified product-family policy
 
 ## 1. System family
@@ -29,11 +29,15 @@ Maintains goals, attention, priorities, task state, budgets, interruption, deleg
 
 ### Experience and learning plane
 
-Captures trajectories, outcomes, corrections, evaluations, and learning events. Hosts curation, reflection, consolidation, skill extraction, dataset formation, local training, and evolution loops.
+Captures trajectories, outcomes, corrections, evaluations, and learning events. Hosts curation, reflection, consolidation, skill extraction, dataset formation, local training, replay selection, and evolution loops.
 
 ### Memory and knowledge plane
 
 Contains episodic, semantic, temporal, causal, belief, user-model, self-model, world-model, and procedural stores.
+
+### Storage lifecycle plane
+
+Maintains the permanent compact event ledger, content-addressed encrypted blob store, retention classes, hot/warm/cold/quarantine tiers, storage budgets, backup manifests, restore verification, deletion lineage, and replay-buffer manifests. Capture is aggressive at the temporary boundary; durable retention is utility-weighted and evidence-linked. Deduplication is limited to the same host and encryption domain unless a separate privacy proof authorizes a broader scope.
 
 ### Reasoning and planning plane
 
@@ -57,7 +61,7 @@ For Friday, distributes signed installers, common model packs, schema migrations
 
 ## 4. Core data flow
 
-Observation → Experience Ledger → Curator → memory/belief/skill/training candidates → executive → plan/simulation → action → verification → outcome → learning.
+Observation → compact Experience Ledger + policy-bounded raw buffer → Curator → retain/compress/archive/delete decision → memory/belief/skill/training candidates → representative replay or model adaptation → executive → plan/simulation → action → verification → outcome → learning.
 
 ## 5. Product and host scoping
 
@@ -68,7 +72,10 @@ Every persistent event and artifact must identify:
 - schema version;
 - provenance;
 - encryption domain;
-- deletion lineage.
+- deletion lineage;
+- content digest;
+- retention class;
+- active storage tier.
 
 Shared kernel components may process multiple synthetic or separately authorized hosts, but production personal state is isolated by construction.
 

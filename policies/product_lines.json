@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "authority": "docs/ALICE_FRIDAY_SEPARATION_PLAN.md",
   "shared_kernel": {
     "id": "personal-cognitive-kernel",
@@ -13,6 +13,9 @@
       "schema_version",
       "encryption_domain",
       "provenance",
+      "content_digest",
+      "retention_class",
+      "storage_tier",
       "deletion_lineage"
     ]
   },
@@ -59,13 +62,16 @@
       "capability_source_of_truth": "personal-cognitive-kernel",
       "productization_lag_allowed": true,
       "permanent_capability_withholding_allowed": false,
-      "dedicated_maintenance_team_planned": true
+      "dedicated_maintenance_team_planned": true,
+      "local_storage_lifecycle_required": true,
+      "cross_host_deduplication_allowed": false
     }
   },
   "separation_rules": {
     "alice_personal_data_may_seed_friday": false,
     "friday_host_data_may_enter_shared_kernel_distribution": false,
     "cross_host_cache_without_scope_allowed": false,
+    "cross_host_deduplication_allowed": false,
     "product_brand_may_define_storage_schema": false,
     "phase_1_to_4_files_are_migratable": true,
     "compatibility_profiles_may_preserve_released_behavior": true,
