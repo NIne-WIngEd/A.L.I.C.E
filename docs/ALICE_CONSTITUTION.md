@@ -1,7 +1,7 @@
 # A.L.I.C.E. Constitution
 
 **Version:** 1.1.0
-**Status:** Owner-directed replacement candidate; effective when ratified by MK Rayan
+**Status:** Ratified and effective
 **Owner and final constitutional authority:** MK Rayan
 **Project:** A.L.I.C.E.
 **Date:** July 27, 2026
@@ -284,7 +284,7 @@ The public product name, business model, source-availability model, and distribu
 
 **Owner:** MK Rayan
 **Version:** 1.1.0
-**Ratification:** Becomes effective only upon explicit owner approval and repository merge.
+**Ratification:** Ratified by explicit owner approval and repository merge.
 
 ## Appendix A — Phase 3 Constitutional Compatibility Clauses
 
