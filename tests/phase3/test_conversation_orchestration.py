@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import pytest
 
-from alice_conversation.contracts import ConversationCapabilities
+from alice_conversation.contracts import (
+    ConversationCapabilities,
+    ConversationContractError,
+)
 from alice_conversation.orchestration import (
     ConversationOrchestrationError,
     ConversationTurnCommand,
@@ -140,3 +143,50 @@ def test_nonexistent_session_fails_before_model_generation(tmp_path):
     with pytest.raises(Exception):
         orchestrator.run_turn(missing)
     assert model.calls == 0
+
+
+def test_response_validation_hook_runs_before_assistant_commit(tmp_path):
+    orchestrator, store, _, model, _, _ = make_orchestrator(tmp_path)
+    observed: list[str] = []
+
+    def hook(response, grounding):
+        inspection = inspect_conversation_session(
+            store, session_id="session-1", include_content=True
+        )
+        turn = inspection.turns[0]
+        observed.append(turn.status)
+        assert [message.role for message in turn.messages] == ["user"]
+        assert grounding is None
+        assert response.content == "Grounded response."
+
+    result = orchestrator.run_turn(command(), response_validation_hook=hook)
+    assert result.validation_outcome == "accepted"
+    assert observed == ["generating"]
+    assert model.calls == 1
+
+
+def test_non_callable_response_validation_hook_fails_before_state_mutation(tmp_path):
+    orchestrator, store, _, model, _, _ = make_orchestrator(tmp_path)
+    with pytest.raises(ConversationContractError):
+        orchestrator.run_turn(command(), response_validation_hook="invalid")
+    assert model.calls == 0
+    inspection = inspect_conversation_session(
+        store, session_id="session-1", include_content=True
+    )
+    assert inspection.turns == ()
+
+
+def test_replayed_turn_does_not_reinvoke_response_validation_hook(tmp_path):
+    orchestrator, _, _, model, _, _ = make_orchestrator(tmp_path)
+    selected = command()
+    orchestrator.run_turn(selected)
+    calls = 0
+
+    def hook(response, grounding):
+        nonlocal calls
+        calls += 1
+
+    replayed = orchestrator.run_turn(selected, response_validation_hook=hook)
+    assert replayed.replayed is True
+    assert calls == 0
+    assert model.calls == 1

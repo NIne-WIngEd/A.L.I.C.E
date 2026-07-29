@@ -79,6 +79,11 @@ from .state_service import ConversationStateError, ConversationStateService
 
 _ID_PATTERN = re.compile(r"^[A-Za-z0-9_.:-]{1,256}$")
 
+ConversationResponseValidationHook = Callable[
+    [ModelResponse, ConversationGroundingPacket | None],
+    None,
+]
+
 
 class ConversationOrchestrationError(RuntimeError):
     """Base sanitized orchestration failure."""
@@ -387,8 +392,13 @@ class ConversationOrchestrator:
         command: ConversationTurnCommand,
         *,
         cancellation: CancellationToken | None = None,
+        response_validation_hook: ConversationResponseValidationHook | None = None,
     ) -> ConversationTurnResult:
         command.validate()
+        if response_validation_hook is not None and not callable(response_validation_hook):
+            raise ConversationContractError(
+                "response_validation_hook must be callable when provided."
+            )
         existing = self._find_turn(command.session_id, command.turn_id)
         if existing is not None:
             return self._replay_or_reject(
@@ -449,6 +459,7 @@ class ConversationOrchestrator:
             grounding_packet_id=grounding_id,
             grounding_packet_sha256=grounding_sha256,
             cancellation=cancellation,
+            response_validation_hook=response_validation_hook,
         )
 
     def resume_turn(
@@ -576,6 +587,7 @@ class ConversationOrchestrator:
         grounding_packet_id: str | None,
         grounding_packet_sha256: str | None,
         cancellation: CancellationToken | None,
+        response_validation_hook: ConversationResponseValidationHook | None = None,
     ) -> ConversationTurnResult:
         try:
             adapter = self.model_registry.resolve(provider=provider, model=model)
@@ -637,6 +649,7 @@ class ConversationOrchestrator:
                 model=model,
                 grounding=grounding,
                 cancellation=cancellation,
+                response_validation_hook=response_validation_hook,
             )
         except ConversationGenerationInterruptedError as exc:
             self._interrupt(turn_id=turn_id, request_id=request_id, cause=exc)
@@ -798,6 +811,7 @@ class ConversationOrchestrator:
                 model=model,
                 grounding=grounding,
                 cancellation=cancellation,
+                response_validation_hook=response_validation_hook,
             )
             if self._elapsed(total_started) > self.repair_policy.max_total_elapsed_seconds:
                 code = self.repair_policy.failure_code("timeout")
@@ -906,6 +920,7 @@ class ConversationOrchestrator:
         model: str,
         grounding: ConversationGroundingPacket | None,
         cancellation: CancellationToken | None,
+        response_validation_hook: ConversationResponseValidationHook | None = None,
     ) -> tuple[ModelResponse, ConversationResponseValidationReport]:
         response = adapter.generate(request, cancellation=cancellation)
         response.validate()
@@ -922,6 +937,8 @@ class ConversationOrchestrator:
             grounding=grounding,
             policy=self.response_validation_policy,
         )
+        if report.outcome != "rejected" and response_validation_hook is not None:
+            response_validation_hook(response, grounding)
         return response, report
 
     def _complete_response(

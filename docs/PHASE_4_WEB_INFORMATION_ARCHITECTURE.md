@@ -2,7 +2,7 @@
 
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** P4.6b controlled research-evidence pipeline implemented; fixture-only execution with no live research path registered
+**Status:** P4.7a explicit local research-mode turn adapter implemented; no live provider or end-to-end research execution registered
 **Phase 0 dependency:** Ratified Governance 1.1 and mission/profile-driven authority
 **Phase 1 dependency:** Released read-only evidence compatibility baseline
 **Phase 2 dependency:** Released authoritative-memory compatibility baseline
@@ -654,11 +654,28 @@ Exit criteria:
 
 Add an explicit local research mode. Show when web research is used. Render sources and freshness. Add offline behavior. Do not enable silent web access.
 
+#### P4.7a — Explicit local research-mode turn adapter
+
+Package version `0.12.0` adds an explicit adapter over the released Phase 3 turn lifecycle. It:
+
+- requires every turn to select either `local_only` or `research`;
+- rejects web grounding, research evidence, and research availability on `local_only` turns;
+- returns a deterministic `offline` or `unavailable` result before any conversation-state mutation;
+- revalidates the exact P4.6b evidence result before projecting its P4.5a grounding through the P4.5b bridge;
+- injects only the exact projected Phase 3 grounding packet into a copied turn command;
+- adds an optional Phase 3 pre-commit response-validation hook so the stricter P4.5b citation boundary runs after P3.6 accepts or abstains but before the assistant message is committed;
+- exposes metadata-only source summaries containing the exact citation token, canonical URL, source-content digest, and freshness verdict;
+- binds mode, availability, research and evidence receipts, grounding, projection, response, validation, source summaries, and selected policy versions into a deterministic metadata-only receipt;
+- revalidates completed and replayed results against the exact evidence, projection, response, and conversation-grounding identities.
+
+P4.7a does not execute search or fetch, register live providers, persist source bodies, change the Phase 3 database schema, write memory, implement Phase 5 storage, perform external actions, retry, recursively browse, or run in the background. End-to-end local research execution and live-provider selection remain separately governed successor work.
+
 Exit criteria:
 
 - the user can distinguish local-only and web-grounded replies;
-- offline mode fails cleanly;
-- unrelated turns do not silently trigger web access.
+- offline mode fails cleanly before state mutation;
+- unrelated turns do not silently trigger web access;
+- no research response is committed before both P3.6 and the exact P4.5b validation boundary accept it.
 
 ### P4.8 — Final adversarial information evaluation
 
