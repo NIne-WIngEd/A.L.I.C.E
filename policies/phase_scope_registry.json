@@ -1249,6 +1249,21 @@
       "reason": "The P4.7a policy requires explicit local-only or research turns, preflight unavailability handling, and metadata-only source display. It does not prohibit later live, learning-aware, storage-backed, or action-capable research profiles.",
       "sunset_condition": "Replace the hard-coded P4.7a compatibility guards with a selected integrated-research capability profile when live provider selection and end-to-end local research execution are registered.",
       "registered_by": "phase4-p4.7a-explicit-research-mode"
+    },
+    "src/alice_information/research_execution_policy.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "information.phase4.research_execution",
+      "milestone": "P4.7b",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "MUST_REMAIN_DISABLED"
+      ],
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "reason": "The P4.7b policy composes the exact fixture research, evidence, and conversation boundaries with fail-clean preconversation handling. It does not prohibit later live, learning-aware, storage-backed, or action-capable research profiles.",
+      "sunset_condition": "Replace the hard-coded P4.7b fixture guards with a selected integrated-research capability profile when live provider registration and governed live execution are authorized.",
+      "registered_by": "phase4-p4.7b-governed-research-execution"
     }
   },
   "patterns": [

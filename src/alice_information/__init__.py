@@ -1,3 +1,3 @@
 """A.L.I.C.E. Phase 4 web and information boundary."""
 
-__version__ = "0.12.0"
+__version__ = "0.13.0"
