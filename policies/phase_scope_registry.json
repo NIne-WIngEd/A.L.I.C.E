@@ -1219,6 +1219,21 @@
       "reason": "The P4.6a policy keeps this fixture-only orchestration foundation foreground, bounded, no-fallback, and side-effect-free. It does not prohibit later live, learning-aware, or action-capable research profiles.",
       "sunset_condition": "Replace the hard-coded P4.6a fixture guards with a selected governed-research capability profile when P4.6b or P4.7 registers live orchestration.",
       "registered_by": "phase4-p4.6a-research-orchestration-foundation"
+    },
+    "src/alice_information/research_evidence_policy.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "information.phase4.research_evidence",
+      "milestone": "P4.6b",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "MUST_REMAIN_DISABLED"
+      ],
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "reason": "The P4.6b policy composes fixture research through read-only evidence gates and preserves rejected evidence as metadata. It does not prohibit later live, learning-aware, storage-backed, conversational, or action-capable research profiles.",
+      "sunset_condition": "Replace the hard-coded P4.6b compatibility guards with a selected governed-research capability profile when P4.7 registers the evidence pipeline in the local conversation runtime.",
+      "registered_by": "phase4-p4.6b-research-evidence-pipeline"
     }
   },
   "patterns": [
@@ -1309,7 +1324,7 @@
     "pattern_entries_must_be_narrow_and_reviewed": true,
     "unexpected_active_barriers_fail_migration": true
   },
-  "registered_file_count": 134,
+  "registered_file_count": 135,
   "registered_pattern_count": 11,
   "released_baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe"
 }

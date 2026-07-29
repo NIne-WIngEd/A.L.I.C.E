@@ -2,7 +2,7 @@
 
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** P4.6a deterministic research-orchestration foundation implemented; fixture-only execution with no live research path registered
+**Status:** P4.6b controlled research-evidence pipeline implemented; fixture-only execution with no live research path registered
 **Phase 0 dependency:** Ratified Governance 1.1 and mission/profile-driven authority
 **Phase 1 dependency:** Released read-only evidence compatibility baseline
 **Phase 2 dependency:** Released authoritative-memory compatibility baseline
@@ -628,6 +628,27 @@ Exit criteria:
 - every run terminates under policy budgets;
 - no hidden provider fallback or arbitrary link following occurs;
 - partial and failed research is reported truthfully.
+
+#### P4.6b — Controlled research-evidence pipeline
+
+Package version `0.11.0` composes verified P4.6a research runs through the existing injection, temporal-intent, freshness, and citation-grounding boundaries. It:
+
+- revalidates the exact research run, query, receipt, selected-source sequence, and source-content digests before processing evidence;
+- inspects every preserved source through the deterministic P4.3 injection firewall;
+- applies the P4.4a temporal classifier and freshness evaluator only to injection-clear sources;
+- preserves blocked and freshness-rejected sources as metadata-only dispositions without retaining excerpts in the pipeline receipt;
+- accepts only explicit deterministic claim drafts and builds grounding only from qualified source versions;
+- prevents partial P4.6a research from being promoted to an `answerable` outcome;
+- binds the research receipt, temporal intent, complete source-disposition sequence, qualified source IDs and digests, grounding digest, and exact policy versions into a deterministic metadata-only evidence receipt;
+- re-derives inspections and freshness assessments during validation and rejects source substitution, reordered outcomes, policy substitution, receipt tampering, and grounding substitution.
+
+P4.6b remains fixture-only and foreground-only. It does not register live providers or the Phase 3 runtime, persist source bodies, write memory, implement Phase 5 storage, generate model claims, infer semantic entailment, perform actions, retry, recursively browse, or run in the background. Those capabilities remain separately governed successor work.
+
+Exit criteria:
+
+- every source used for grounding passes the exact injection and freshness gates;
+- rejected and partial evidence remains explicit and metadata-safe;
+- the final grounding packet is cryptographically bound to the exact research run and policy set.
 
 ### P4.7 — Local conversation integration
 
