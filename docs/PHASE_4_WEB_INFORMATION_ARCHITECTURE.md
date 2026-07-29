@@ -2,7 +2,7 @@
 
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** P4.7a explicit local research-mode turn adapter implemented; no live provider or end-to-end research execution registered
+**Status:** P4.7b governed fixture research execution implemented; no live provider registration
 **Phase 0 dependency:** Ratified Governance 1.1 and mission/profile-driven authority
 **Phase 1 dependency:** Released read-only evidence compatibility baseline
 **Phase 2 dependency:** Released authoritative-memory compatibility baseline
@@ -676,6 +676,28 @@ Exit criteria:
 - offline mode fails cleanly before state mutation;
 - unrelated turns do not silently trigger web access;
 - no research response is committed before both P3.6 and the exact P4.5b validation boundary accept it.
+
+#### P4.7b — Governed fixture research execution
+
+Package version `0.13.0` adds an explicit execution boundary that composes the released P4.6a orchestrator, P4.6b evidence pipeline, and P4.7a research-mode adapter. It:
+
+- requires an explicit `local_only` or `research` execution plan before any provider is touched;
+- guarantees local-only, offline, and unavailable turns do not execute search or fetch providers;
+- selects the exact approved fixture search and fetch provider identities before execution and rejects provider, request, run, evidence, or mode-result substitution;
+- revalidates completed, partial, failed, cancelled, and insufficient-source research-run receipts before deciding whether evidence processing may continue;
+- maps failed, cancelled, source-empty, and no-qualified-evidence paths into P4.7a unavailable results before conversation-state mutation;
+- preserves partial research without allowing it to become an `answerable` grounding outcome;
+- reprocesses the exact evidence plan during validation and binds the research request, query digest, selected providers, run receipt, evidence receipt, mode receipt, result status, unavailable reason, and selected policy versions into one deterministic metadata-only execution receipt;
+- keeps P3.6 and the exact P4.5b citation boundary authoritative before any web-grounded response is committed.
+
+P4.7b remains deterministic-fixture-only and foreground-only. It does not register live providers, use provider fallback, persist source bodies, write memory, implement Phase 5 storage, perform external actions, retry, recursively browse, or run in the background. Live provider registration remains separately governed successor work.
+
+Exit criteria:
+
+- local-only and preflight-unavailable turns never execute providers;
+- every executed research turn binds the exact request, providers, run, evidence, conversation result, and policies;
+- failed, cancelled, partial, and insufficient-evidence outcomes remain explicit and cannot silently become complete answers;
+- no conversation-state mutation occurs on any unavailable execution path.
 
 ### P4.8 — Final adversarial information evaluation
 
