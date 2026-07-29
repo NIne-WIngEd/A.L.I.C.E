@@ -2,7 +2,7 @@
 
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** P4.5b deterministic Phase 3 grounding projection implemented; no conversation runtime path registered
+**Status:** P4.6a deterministic research-orchestration foundation implemented; fixture-only execution with no live research path registered
 **Phase 0 dependency:** Ratified Governance 1.1 and mission/profile-driven authority
 **Phase 1 dependency:** Released read-only evidence compatibility baseline
 **Phase 2 dependency:** Released authoritative-memory compatibility baseline
@@ -606,6 +606,22 @@ Exit criteria:
 ### P4.6 — Governed research orchestration
 
 Build bounded query planning, maximum search and fetch counts, deterministic stopping, cancellation, partial-result handling, sanitized activity persistence, and no recursive uncontrolled browsing.
+
+#### P4.6a — Deterministic research-orchestration foundation
+
+Package version `0.10.0` adds a foreground, fixture-only orchestration layer over the existing exact provider registry. It:
+
+- requires one exact search provider and one exact fetch provider before execution;
+- permits one search call and bounds fetch calls, selected sources, response bytes, per-call timeout, and total timeout to the selected Phase 4 foundation policy;
+- deterministically orders search results and deduplicates canonical URLs before fetch;
+- fetches only URLs returned by the selected search provider;
+- checks cancellation and total-time budgets around every provider operation;
+- preserves successful sources when later fetches fail or a run is cancelled or times out;
+- emits terminal, metadata-safe activity records with approved sanitized error codes;
+- records exact operation counters, selected result IDs, source IDs, source digests, outcome, and stopping reason in a digest-bound research-run receipt;
+- rejects provider substitution, query substitution, duplicate result identity, unselected URLs, receipt tampering, source reordering, and hidden retries or fallback.
+
+P4.6a does not register live providers, rewrite queries, follow arbitrary links, retry operations, recursively browse, invoke Phase 3, generate claims, persist source bodies, write memory, implement Phase 5 storage, perform actions, or run in the background. Those are milestone-local boundaries rather than permanent capability ceilings. P4.6b may connect verified orchestrated sources through the existing retrieval, injection, temporal, and grounding gates.
 
 Exit criteria:
 
