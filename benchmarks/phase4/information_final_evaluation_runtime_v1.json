@@ -1,0 +1,223 @@
+{
+  "information_final_evaluation_runtime_manifest_schema_version": 1,
+  "manifest_id": "phase4-information-runtime-probes-v1",
+  "evaluation_version": "p4.8-v1",
+  "minimum_collected_test_count": 640,
+  "target_files": [
+    "tests/phase4/test_information_contracts.py",
+    "tests/phase4/test_information_conversation_bridge.py",
+    "tests/phase4/test_information_conversation_bridge_policy.py",
+    "tests/phase4/test_information_freshness.py",
+    "tests/phase4/test_information_freshness_policy.py",
+    "tests/phase4/test_information_grounding.py",
+    "tests/phase4/test_information_grounding_policy.py",
+    "tests/phase4/test_information_http_retrieval_policy.py",
+    "tests/phase4/test_information_http_transport.py",
+    "tests/phase4/test_information_injection_firewall.py",
+    "tests/phase4/test_information_injection_policy.py",
+    "tests/phase4/test_information_live_http.py",
+    "tests/phase4/test_information_live_http_policy.py",
+    "tests/phase4/test_information_policy.py",
+    "tests/phase4/test_information_provider_policy.py",
+    "tests/phase4/test_information_provider_registry.py",
+    "tests/phase4/test_information_providers.py",
+    "tests/phase4/test_information_research_evidence.py",
+    "tests/phase4/test_information_research_evidence_policy.py",
+    "tests/phase4/test_information_research_execution.py",
+    "tests/phase4/test_information_research_execution_policy.py",
+    "tests/phase4/test_information_research_mode.py",
+    "tests/phase4/test_information_research_mode_policy.py",
+    "tests/phase4/test_information_research_orchestration.py",
+    "tests/phase4/test_information_research_orchestration_policy.py",
+    "tests/phase4/test_information_retrieval.py",
+    "tests/phase4/test_information_temporal_metadata.py",
+    "tests/phase4/test_information_temporal_metadata_policy.py"
+  ],
+  "case_targets": [
+    {
+      "case_id": "p48-injection-001",
+      "target_files": [
+        "tests/phase4/test_information_injection_policy.py",
+        "tests/phase4/test_information_injection_firewall.py"
+      ]
+    },
+    {
+      "case_id": "p48-injection-002",
+      "target_files": [
+        "tests/phase4/test_information_injection_policy.py",
+        "tests/phase4/test_information_injection_firewall.py"
+      ]
+    },
+    {
+      "case_id": "p48-ssrf-001",
+      "target_files": [
+        "tests/phase4/test_information_http_retrieval_policy.py",
+        "tests/phase4/test_information_http_transport.py",
+        "tests/phase4/test_information_live_http.py"
+      ]
+    },
+    {
+      "case_id": "p48-ssrf-002",
+      "target_files": [
+        "tests/phase4/test_information_http_transport.py",
+        "tests/phase4/test_information_live_http_policy.py",
+        "tests/phase4/test_information_live_http.py"
+      ]
+    },
+    {
+      "case_id": "p48-redirect-001",
+      "target_files": [
+        "tests/phase4/test_information_http_transport.py",
+        "tests/phase4/test_information_live_http_policy.py",
+        "tests/phase4/test_information_live_http.py"
+      ]
+    },
+    {
+      "case_id": "p48-redirect-002",
+      "target_files": [
+        "tests/phase4/test_information_http_transport.py",
+        "tests/phase4/test_information_live_http.py"
+      ]
+    },
+    {
+      "case_id": "p48-size-001",
+      "target_files": [
+        "tests/phase4/test_information_http_retrieval_policy.py",
+        "tests/phase4/test_information_http_transport.py",
+        "tests/phase4/test_information_retrieval.py"
+      ]
+    },
+    {
+      "case_id": "p48-size-002",
+      "target_files": [
+        "tests/phase4/test_information_http_transport.py",
+        "tests/phase4/test_information_retrieval.py"
+      ]
+    },
+    {
+      "case_id": "p48-stale-001",
+      "target_files": [
+        "tests/phase4/test_information_freshness_policy.py",
+        "tests/phase4/test_information_freshness.py",
+        "tests/phase4/test_information_temporal_metadata.py"
+      ]
+    },
+    {
+      "case_id": "p48-stale-002",
+      "target_files": [
+        "tests/phase4/test_information_freshness.py",
+        "tests/phase4/test_information_temporal_metadata.py"
+      ]
+    },
+    {
+      "case_id": "p48-conflict-001",
+      "target_files": [
+        "tests/phase4/test_information_freshness.py",
+        "tests/phase4/test_information_temporal_metadata_policy.py",
+        "tests/phase4/test_information_temporal_metadata.py"
+      ]
+    },
+    {
+      "case_id": "p48-conflict-002",
+      "target_files": [
+        "tests/phase4/test_information_grounding_policy.py",
+        "tests/phase4/test_information_grounding.py",
+        "tests/phase4/test_information_conversation_bridge.py"
+      ]
+    },
+    {
+      "case_id": "p48-citation-001",
+      "target_files": [
+        "tests/phase4/test_information_grounding.py",
+        "tests/phase4/test_information_conversation_bridge.py"
+      ]
+    },
+    {
+      "case_id": "p48-citation-002",
+      "target_files": [
+        "tests/phase4/test_information_grounding.py",
+        "tests/phase4/test_information_conversation_bridge_policy.py",
+        "tests/phase4/test_information_conversation_bridge.py"
+      ]
+    },
+    {
+      "case_id": "p48-privacy-001",
+      "target_files": [
+        "tests/phase4/test_information_contracts.py",
+        "tests/phase4/test_information_policy.py",
+        "tests/phase4/test_information_research_mode.py"
+      ]
+    },
+    {
+      "case_id": "p48-privacy-002",
+      "target_files": [
+        "tests/phase4/test_information_contracts.py",
+        "tests/phase4/test_information_research_execution.py"
+      ]
+    },
+    {
+      "case_id": "p48-cancel-001",
+      "target_files": [
+        "tests/phase4/test_information_providers.py",
+        "tests/phase4/test_information_research_orchestration.py",
+        "tests/phase4/test_information_research_execution.py"
+      ]
+    },
+    {
+      "case_id": "p48-cancel-002",
+      "target_files": [
+        "tests/phase4/test_information_research_orchestration.py",
+        "tests/phase4/test_information_research_evidence.py",
+        "tests/phase4/test_information_research_execution.py"
+      ]
+    },
+    {
+      "case_id": "p48-timeout-001",
+      "target_files": [
+        "tests/phase4/test_information_provider_policy.py",
+        "tests/phase4/test_information_research_orchestration_policy.py",
+        "tests/phase4/test_information_research_orchestration.py"
+      ]
+    },
+    {
+      "case_id": "p48-timeout-002",
+      "target_files": [
+        "tests/phase4/test_information_providers.py",
+        "tests/phase4/test_information_research_orchestration.py",
+        "tests/phase4/test_information_research_execution.py"
+      ]
+    },
+    {
+      "case_id": "p48-provider-001",
+      "target_files": [
+        "tests/phase4/test_information_provider_registry.py",
+        "tests/phase4/test_information_providers.py",
+        "tests/phase4/test_information_research_orchestration.py"
+      ]
+    },
+    {
+      "case_id": "p48-provider-002",
+      "target_files": [
+        "tests/phase4/test_information_research_orchestration.py",
+        "tests/phase4/test_information_research_evidence.py",
+        "tests/phase4/test_information_research_execution.py"
+      ]
+    },
+    {
+      "case_id": "p48-replay-001",
+      "target_files": [
+        "tests/phase4/test_information_research_orchestration.py",
+        "tests/phase4/test_information_research_evidence.py",
+        "tests/phase4/test_information_research_execution.py"
+      ]
+    },
+    {
+      "case_id": "p48-replay-002",
+      "target_files": [
+        "tests/phase4/test_information_research_orchestration.py",
+        "tests/phase4/test_information_research_evidence.py",
+        "tests/phase4/test_information_research_execution.py"
+      ]
+    }
+  ]
+}
