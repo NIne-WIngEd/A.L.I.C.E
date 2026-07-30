@@ -2,7 +2,7 @@
 
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** P4.8 final adversarial information evaluation implemented; P4.9 release audit pending
+**Status:** Released compatibility baseline through P4.9 exact-commit private audit; evolvable under the ratified architecture
 **Phase 0 dependency:** Ratified Governance 1.1 and mission/profile-driven authority
 **Phase 1 dependency:** Released read-only evidence compatibility baseline
 **Phase 2 dependency:** Released authoritative-memory compatibility baseline
@@ -715,7 +715,7 @@ Package version `0.14.0` adds the synthetic, content-free Phase 4 closure evalua
 - writes evaluation reports only outside the repository and refuses overwrite;
 - remains synthetic-only, private-output-only, offline, read-only, and free of raw query text, source bodies, real private queries, persistence, memory writes, actions, repository writes, and background execution.
 
-P4.8 now produces runtime-backed deterministic evaluation evidence. Exact clean-commit binding, rollback selection, private vault recording, README closure, and release approval remain P4.9 responsibilities.
+P4.8 produces the runtime-backed deterministic evidence consumed directly by the P4.9 exact-commit release audit.
 
 Exit criteria:
 
@@ -725,12 +725,24 @@ Exit criteria:
 
 ### P4.9 — Release audit and closure
 
-Bind test-backed evidence and the final evaluation to an exact clean commit. Require a rollback commit. Write the private release record under the vault. Close the roadmap and README only after approval.
+Package version `0.15.0` adds the exact-commit private Phase 4 release audit. It:
+
+- reruns the canonical P4.8 runtime-backed evaluation against the exact repository selected for release;
+- rejects a supplied commit that differs from `HEAD`, any dirty working tree, a rollback equal to the release commit, or a rollback that is not an ancestor;
+- binds the release policy, evaluation policy, benchmark, runtime manifest, package version, final evaluation report, runtime evidence, repository snapshot, collection and execution summaries, test counts, network guard, timestamp, and rollback commit;
+- requires at least 24 benchmark cases, 28 pinned runtime test files, 640 collected tests, zero skipped tests, complete test and case passage, zero critical failures, and every metric gate to pass;
+- writes a canonical SHA-256 release record only beneath the private vault and refuses repository-local output or overwrite with different content;
+- rejects duplicate JSON keys, weakened or substituted release policy, malformed digests, inconsistent approval decisions, tampered counts, boundary changes, and modified records;
+- provides metadata-only inspection without case payloads, raw query text, source content, target-file lists, credentials, or other private browsing material;
+- closes the README and roadmap while preserving the released Phase 4 behavior as an evolvable compatibility profile rather than a permanent capability ceiling.
+
+The canonical private record path is `C:\ALICE_Vault\reports\phase4-information-release.json`.
 
 Exit criteria:
 
 - private audit returns `approved=true`;
-- exact commit, policy versions, package version, evaluation digest, evidence digest, and rollback commit are recorded;
+- exact commit, policy versions, package version, evaluation digest, runtime-evidence digest, runtime-backed report digest, repository snapshot, and rollback commit are recorded;
+- the record verifies after writing and remains outside the repository;
 - Phase 4 release behavior is versioned after merge; its implementation remains migratable under the final architecture.
 
 ## 12. Development sequence
