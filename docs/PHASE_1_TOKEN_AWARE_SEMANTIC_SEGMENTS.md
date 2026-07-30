@@ -1,6 +1,6 @@
 # Phase 1 — Token-Aware Semantic Segments
 
-**Subphase:** P1.9a  
+**Subphase:** P1.9a
 **Reason:** The first semantic index embedded P1.7 character chunks directly. Most exceeded the 512-token E5 limit and were silently truncated by the model runtime.
 
 ## Correction

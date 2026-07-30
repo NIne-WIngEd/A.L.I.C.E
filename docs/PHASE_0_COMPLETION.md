@@ -1,8 +1,8 @@
 # Phase 0 Completion Record
 
-**Project:** A.L.I.C.E.  
-**Owner:** MK Rayan  
-**Completion date:** July 13, 2026  
+**Project:** A.L.I.C.E.
+**Owner:** MK Rayan
+**Completion date:** July 13, 2026
 **Status:** Complete after repository security remediation and GitHub ruleset activation
 
 ## Completed deliverables

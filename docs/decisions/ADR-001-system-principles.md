@@ -1,7 +1,7 @@
 # ADR-001: Foundational System Principles
 
-**Status:** Accepted  
-**Date:** July 13, 2026  
+**Status:** Accepted
+**Date:** July 13, 2026
 **Decision owner:** MK Rayan
 
 ## Context

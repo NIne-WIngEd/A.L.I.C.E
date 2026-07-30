@@ -1,6 +1,6 @@
 # Phase 1.5 — Pilot Dataset Proposal
 
-**Status:** Proposal generation implemented  
+**Status:** Proposal generation implemented
 **Safety mode:** Read-only and review-required
 
 ## Purpose

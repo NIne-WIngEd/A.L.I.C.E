@@ -1,6 +1,6 @@
 # Phase 1 — Local Automated Pilot Review
 
-**Subphase:** P1.5c  
+**Subphase:** P1.5c
 **Safety model:** deterministic extraction/privacy rules + local Ollama + human review of exceptions
 
 ## Guarantees

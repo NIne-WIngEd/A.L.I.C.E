@@ -1,4 +1,4 @@
-import pyttsx3 
+import pyttsx3
 import datetime
 import speech_recognition as micro
 import smtplib
@@ -49,7 +49,7 @@ def greeting():
 
 #while True:
  #     voice = int(input("Press 1 for male\nPress 2 for female\n"))
-      #speak(audio) 
+      #speak(audio)
    #   getvoices(voice)
 
 def takeCommandCMD():
@@ -111,8 +111,7 @@ while True:
         speak("Whats on your mind")
         topic = takeCommandMic()
         pywhatkit.playonyt(topic)
-    
+
     elif 'offline' or 'kill the power' in query:
         quit()
-        
-    
+

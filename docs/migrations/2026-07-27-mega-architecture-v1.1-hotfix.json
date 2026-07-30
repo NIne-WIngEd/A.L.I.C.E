@@ -1,4 +1,4 @@
-﻿{
+{
     "migration":  "alice-mega-architecture-v1.1-audit-hotfix",
     "applied_at_utc":  "2026-07-27T22:40:47.7602888Z",
     "reason":  "Distinguish component-local policy capability declarations from permanent global capability ceilings.",

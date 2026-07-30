@@ -2,7 +2,7 @@
 
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** Released compatibility baseline through P4.9 exact-commit private audit; evolvable under the ratified architecture
+**Status:** P4.0–P4.9 fixture-governed compatibility release approved; P4.10 operational live-public-information closure required before Phase 5
 **Phase 0 dependency:** Ratified Governance 1.1 and mission/profile-driven authority
 **Phase 1 dependency:** Released read-only evidence compatibility baseline
 **Phase 2 dependency:** Released authoritative-memory compatibility baseline
@@ -744,6 +744,33 @@ Exit criteria:
 - exact commit, policy versions, package version, evaluation digest, runtime-evidence digest, runtime-backed report digest, repository snapshot, and rollback commit are recorded;
 - the record verifies after writing and remains outside the repository;
 - Phase 4 release behavior is versioned after merge; its implementation remains migratable under the final architecture.
+
+### P4.10 — Operational live-public-information acceptance and closure
+
+P4.10 is an additive post-release milestone discovered by the Phase 4 post-phase audit. It does not invalidate P4.0–P4.9.
+
+P4.10 must:
+
+- implement at least one exact live PUBLIC search provider;
+- register the exact live fetch path through the controlled HTTPS boundary;
+- keep provider credentials and configuration outside Git;
+- require explicit research mode before network use;
+- bind search, fetch, injection inspection, temporal/freshness analysis, grounding, Phase 3 projection, P3.6 validation, and the P4.5b citation gate;
+- expose metadata-safe network egress;
+- test provider availability, quota, rate limits, timeout, cancellation, outage, and no-silent-fallback behavior;
+- keep source-body persistence, Phase 5 storage, private-query transmission, authenticated browsing, external actions, recursion, and background operation outside the initial acceptance profile;
+- run private real-provider and real-model acceptance;
+- write an exact-commit private acceptance record with rollback evidence.
+
+Exit criteria:
+
+- a live PUBLIC query reaches a real search provider and controlled live fetch path;
+- returned evidence survives all Phase 4 trust, freshness, grounding, and response-validation boundaries;
+- indirect prompt injection and citation substitution fail in live acceptance;
+- provider outage and quota exhaustion fail cleanly;
+- private acceptance returns `approved=true`;
+- the post-phase repository audit has zero critical findings;
+- README, Roadmap, Capability Catalog, architecture, report, and handoff agree that Phase 4 is operationally complete.
 
 ## 12. Development sequence
 

@@ -1,6 +1,6 @@
 # A.L.I.C.E. Capability Catalog
 
-**Version:** 1.1.0
+**Version:** 1.2.0
 **Purpose:** Permanent inventory of desired capabilities independent of delivery order
 
 Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `CONDITIONALLY EXCLUDED`.
@@ -49,7 +49,7 @@ Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `C
 ## Reasoning and planning
 
 - Grounded conversational reasoning — `AVAILABLE`
-- Fresh web research with exact citations — `IN DEVELOPMENT`
+- Fresh web research with exact citations — `IN DEVELOPMENT / P4.10 LIVE ACCEPTANCE`
 - Hierarchical planning and dependency management — `PLANNED`
 - Search, simulation, counterfactuals, and causal interventions — `PLANNED / RESEARCH FRONTIER`
 - Metacognition and calibrated uncertainty — `PLANNED / RESEARCH FRONTIER`
@@ -72,7 +72,7 @@ Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `C
 
 ## Tools and action
 
-- Read-only public information tools — `IN DEVELOPMENT`
+- Read-only public information tools — `IN DEVELOPMENT / P4.10 LIVE ACCEPTANCE`
 - Files, email, calendar, contacts, tasks, and repositories — `PLANNED`
 - Capability registry and standardized tool protocols — `PLANNED`
 - General Windows/Linux/browser/terminal/IDE use — `PLANNED / RESEARCH FRONTIER`

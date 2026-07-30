@@ -1,8 +1,8 @@
 # Phase 1 — Deterministic Chunking and Provenance Catalog
 
-**Subphase:** P1.7  
-**Input:** verified P1.6 extraction outputs  
-**Cloud use:** none  
+**Subphase:** P1.7
+**Input:** verified P1.6 extraction outputs
+**Cloud use:** none
 **Embeddings:** deferred
 
 P1.7 converts verified extracted text into deterministic overlapping chunks while preserving complete path-level provenance.

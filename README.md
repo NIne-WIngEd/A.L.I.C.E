@@ -6,9 +6,9 @@ A.L.I.C.E. is also the owner-specific frontier implementation for a separate loc
 
 ## Current status
 
-- **Phases 0–4:** released compatibility baselines; evolvable when the ratified architecture requires migration.
-- **Phase 4:** released through the P4.9 exact-commit private audit. P4.5a citation-bound grounding is merged and preserved within the released compatibility profile, alongside governed read-only public information research, runtime-backed adversarial evaluation, and rollback evidence.
-- **Phase 5.0:** next active implementation; begins the Experience Ledger, evaluation substrate, storage runtime, and host-neutral Personal Cognitive Kernel extraction.
+- **Phases 0–3:** released compatibility baselines; evolvable when the ratified architecture requires migration.
+- **Phase 4:** P4.0–P4.9 form an approved fixture-governed compatibility release. P4.5a citation-bound grounding is merged and preserved within that release. The post-phase audit found that P4.10 operational live-public-information closure is still required to prove real current-web research.
+- **Phase 5.0:** blocked until P4.10 live-provider acceptance, exact-commit evidence, and the repository-wide phase-boundary audit pass; then begins the Experience Ledger, evaluation substrate, storage runtime, and host-neutral Personal Cognitive Kernel extraction.
 - **Phase 6.5:** formal A.L.I.C.E.–Friday repository and product separation gate.
 - **Phase 8:** earliest credible Friday closed alpha, after autonomous selective memory formation and procedural learning exist.
 - **Phase 13:** host-specific adapters and model components become a standard product capability.

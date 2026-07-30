@@ -1,7 +1,7 @@
 # Phase 1 — Pilot Human Review and Approval
 
-**Subphase:** P1.5b  
-**Status:** Human review gate  
+**Subphase:** P1.5b
+**Status:** Human review gate
 **Data boundary:** Private vault only
 
 ## Purpose

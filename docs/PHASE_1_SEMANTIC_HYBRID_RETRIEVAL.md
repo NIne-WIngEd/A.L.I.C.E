@@ -1,8 +1,8 @@
 # Phase 1 — Local Semantic and Hybrid Retrieval
 
-**Subphase:** P1.9  
-**Input:** verified P1.7 chunk catalog and P1.8 FTS5 index  
-**Private text uploaded:** no  
+**Subphase:** P1.9
+**Input:** verified P1.7 chunk catalog and P1.8 FTS5 index
+**Private text uploaded:** no
 **Cloud training:** deferred
 
 ## Purpose

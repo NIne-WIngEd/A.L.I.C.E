@@ -1,7 +1,7 @@
 # ADR-002: Local Personal Vault with Cloud Model Training
 
-**Status:** Accepted  
-**Date:** July 14, 2026  
+**Status:** Accepted
+**Date:** July 14, 2026
 **Decision owner:** MK Rayan
 
 ## Decision
