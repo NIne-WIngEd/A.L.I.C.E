@@ -1,7 +1,7 @@
 # Phase 1 — Final Conservative Pilot Policy
 
-**Subphase:** P1.5c  
-**Model calls:** None  
+**Subphase:** P1.5c
+**Model calls:** None
 **Purpose:** Resolve the remaining pilot decisions without inspecting every file
 
 ## Policy

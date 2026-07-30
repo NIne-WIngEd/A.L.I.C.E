@@ -1,0 +1,51 @@
+{
+  "information_live_provider_acceptance_policy_schema_version": 1,
+  "policy_id": "phase4-live-public-information-acceptance-v1",
+  "phase": "4",
+  "milestone": "P4.10",
+  "status": "operational_live_public_information_closure",
+  "permission_id": "web.search",
+  "initial_query_classifications": [
+    "PUBLIC"
+  ],
+  "required_live_search_provider_count": 1,
+  "required_live_fetch_provider_count": 1,
+  "required_execution_path": [
+    "explicit_research_mode",
+    "live_search",
+    "controlled_https_fetch",
+    "injection_inspection",
+    "temporal_and_freshness_analysis",
+    "citation_grounding",
+    "phase3_projection",
+    "p36_response_validation",
+    "p45b_web_citation_validation"
+  ],
+  "required_controls": [
+    "exact_provider_selection",
+    "credentials_outside_repository",
+    "network_egress_metadata",
+    "provider_health_preflight",
+    "rate_limit_and_quota_handling",
+    "timeout_and_cancellation",
+    "no_silent_fallback",
+    "no_source_body_persistence",
+    "no_phase5_storage_activation",
+    "no_external_action",
+    "no_background_operation",
+    "exact_receipt_binding"
+  ],
+  "required_acceptance_domains": [
+    "provider_availability",
+    "current_public_web_quality",
+    "citation_integrity",
+    "indirect_prompt_injection",
+    "freshness_and_conflict",
+    "outage_and_quota_behavior",
+    "conversation_commit_boundary",
+    "privacy_and_egress"
+  ],
+  "private_acceptance_record": "C:\\ALICE_Vault\\reports\\phase4-live-information-acceptance.json",
+  "phase5_start_gate": "blocked_until_p4_10_approved",
+  "capability_ceiling": false
+}

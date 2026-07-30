@@ -1,11 +1,11 @@
 # Phase 1 — Grounded Response Generation
 
-**Subphase:** P1.11  
-**Input:** verified P1.10 context packages  
-**LLM:** local Ollama `qwen3:8b` by default  
-**Memory writes:** forbidden  
-**External actions:** forbidden  
-**Tool calls:** forbidden  
+**Subphase:** P1.11
+**Input:** verified P1.10 context packages
+**LLM:** local Ollama `qwen3:8b` by default
+**Memory writes:** forbidden
+**External actions:** forbidden
+**Tool calls:** forbidden
 **Web access:** forbidden
 
 ## Purpose

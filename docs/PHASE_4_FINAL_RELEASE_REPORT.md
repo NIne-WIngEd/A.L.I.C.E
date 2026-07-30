@@ -1,9 +1,13 @@
 # Phase 4 — Final Information Release Report
 
-**Status:** Approved only after the final private exact-commit release audit
+**Status:** Approved fixture-governed compatibility release; P4.10 operational live acceptance remains required
 **Scope:** Phase 4 Public Web and Information Intelligence
 **Public-data classification:** INTERNAL
 **Private release record:** Stored outside the repository
+
+## Post-phase audit classification
+
+The P4.9 exact-commit audit remains valid for the deterministic fixture-governed compatibility release. It does not establish an operational live-provider path. P4.10 operational live acceptance remains required before Phase 5 starts.
 
 ## Release scope
 

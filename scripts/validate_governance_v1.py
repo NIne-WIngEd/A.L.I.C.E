@@ -228,6 +228,55 @@ for phrase in [
 ]:
     if phrase not in scope:
         errors.append(f"historical scope marker missing: {phrase}")
+# phase4-post-phase-integrity-v1
+phase4_post_audit_markers = {
+    ROOT / "README.md": [
+        "P4.10 operational live-public-information closure",
+        "Phase 5.0",
+        "blocked until P4.10",
+    ],
+    DOCS / "ROADMAP.md": [
+        "P4.10 operational live-public-information closure",
+        "Blocked until P4.10",
+    ],
+    DOCS / "CAPABILITY_CATALOG.md": [
+        "IN DEVELOPMENT / P4.10 LIVE ACCEPTANCE",
+    ],
+    DOCS / "PHASE_4_POST_PHASE_AUDIT.md": [
+        "operational live-public-information closure remains required",
+    ],
+    DOCS / "PHASE_BOUNDARY_AUDIT_STANDARD.md": [
+        "Every top-level phase ends with an adversarial audit",
+    ],
+    DOCS / "decisions" / "ADR-009-phase4-live-public-information-closure.md": [
+        "Phase 5 is blocked until P4.10",
+    ],
+}
+for path, phrases in phase4_post_audit_markers.items():
+    if not path.is_file():
+        errors.append(f"phase-boundary file missing: {path.relative_to(ROOT)}")
+        continue
+    body = path.read_text(encoding="utf-8")
+    for phrase in phrases:
+        if phrase not in body:
+            errors.append(
+                f"phase-boundary marker missing in {path.relative_to(ROOT)}: {phrase}"
+            )
+
+live_acceptance_policy = POLICIES / "information_live_provider_acceptance_policy.json"
+if not live_acceptance_policy.is_file():
+    errors.append("live-provider acceptance policy missing")
+else:
+    live_acceptance_body = live_acceptance_policy.read_text(encoding="utf-8")
+    for phrase in [
+        '"milestone": "P4.10"',
+        '"initial_query_classifications": [',
+        '"PUBLIC"',
+        '"phase5_start_gate": "blocked_until_p4_10_approved"',
+        '"capability_ceiling": false',
+    ]:
+        if phrase not in live_acceptance_body:
+            errors.append(f"live-provider acceptance marker missing: {phrase}")
 if errors:
     print("Governance and evolvability validation failed:")
     for error in errors:

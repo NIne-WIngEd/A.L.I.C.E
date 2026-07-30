@@ -1,8 +1,8 @@
 # Phase 1 — Safe Parser Registry and Verified Extraction
 
-**Subphase:** P1.6  
-**Input:** `C:\ALICE_Vault\raw\pilot-v1`  
-**Output:** private derived text and provenance metadata  
+**Subphase:** P1.6
+**Input:** `C:\ALICE_Vault\raw\pilot-v1`
+**Output:** private derived text and provenance metadata
 **Cloud use:** none
 
 ## Purpose

@@ -1,8 +1,8 @@
 # Phase 1 — Local FTS5 Retrieval and Evaluation
 
-**Subphase:** P1.8  
-**Input:** verified P1.7 chunk catalog  
-**Cloud use:** none  
+**Subphase:** P1.8
+**Input:** verified P1.7 chunk catalog
+**Cloud use:** none
 **Embeddings:** deferred
 
 ## Purpose

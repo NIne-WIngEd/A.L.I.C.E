@@ -1,6 +1,6 @@
 # Phase 1 — Auto-Review Policy Calibration
 
-**Status:** P1.5 decision-policy correction  
+**Status:** P1.5 decision-policy correction
 **Purpose:** Reduce false manual-review routing without weakening hard privacy controls.
 
 ## Why the previous run left all 120 files pending

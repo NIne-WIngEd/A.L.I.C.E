@@ -1,6 +1,6 @@
 # A.L.I.C.E. Roadmap 2.1
 
-**Version:** 2.2.0
+**Version:** 2.3.0
 **Owner:** MK Rayan
 **Status:** Final top-level capability domains with a mapped Friday product track
 **Principle:** Capability, learning, and governance co-evolve. Earlier implementations remain changeable when necessary to serve the final architecture.
@@ -37,13 +37,15 @@ Released Phase 3 behavior is a compatibility profile, not a permanent limit on t
 
 ## Phase 4 — Public Web and Information Intelligence
 
-**Status:** Released baseline; evolvable.
+**Status:** P4.0–P4.9 fixture-governed compatibility release approved; P4.10 operational live-public-information closure active.
 
 Provider-neutral search and fetch, controlled HTTPS retrieval, temporal metadata, citation binding, source conflict, injection-resistant evidence handling, governed research orchestration, explicit conversational research mode, runtime-backed adversarial evaluation, and exact-commit private release audit.
 
-The released read-only profile is a compatibility and maturity boundary, not a permanent capability ceiling. Phase 4 documents, code, tests, and schemas may change when required to support the final learning architecture, product family, live integrated research, or migration path.
+The released read-only profile is a compatibility and maturity boundary, not a permanent capability ceiling. The fixture-governed release does not yet prove a real current-web provider path. P4.10 must add and privately evaluate an exact live PUBLIC search/fetch path before Phase 5 starts.
 
 ## Phase 5 — Experience Ledger, Evaluation Substrate, and Kernel Extraction
+
+**Status:** Blocked until P4.10 operational live-public-information closure is approved and merged.
 
 Trajectory capture, outcomes, corrections, decision lineage, source/model/tool histories, benchmark registry, resource accounting, candidate-learning extraction, and the storage lifecycle substrate. Phase 5 establishes an immutable compact event ledger, aggressive temporary capture, content-addressed blobs, host-scoped deduplication, retention classes, hot/warm/cold/quarantine tiers, storage-pressure controls, encrypted backup manifests, and restore verification.
 

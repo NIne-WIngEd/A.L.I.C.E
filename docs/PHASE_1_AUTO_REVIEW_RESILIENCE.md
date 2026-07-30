@@ -1,6 +1,6 @@
 # Phase 1 — Auto-Review Resilience Patch
 
-**Subphase:** P1.5 automated pilot review  
+**Subphase:** P1.5 automated pilot review
 **Status:** Runtime correction after first production run
 
 ## Observed production failures

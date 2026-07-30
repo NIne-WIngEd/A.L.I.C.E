@@ -1,7 +1,7 @@
 # Phase 1 — Inventory Analysis and File-Signature Review
 
-**Subphase:** P1.4  
-**Status:** Initial implementation  
+**Subphase:** P1.4
+**Status:** Initial implementation
 **Safety mode:** Read-only
 
 ## Purpose

@@ -1,0 +1,35 @@
+name: Phase boundary repository integrity
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install audit dependencies
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Scan every tracked file
+        run: |
+          python scripts/audit_repository_phase_boundary.py             --repo .             --output "${RUNNER_TEMP}/phase-boundary-audit.json"
+
+      - name: Run post-phase governance tests
+        run: python -m pytest tests/governance/test_phase4_post_phase_audit.py -q

@@ -1,4 +1,4 @@
-﻿{
+{
     "migration":  "alice-mega-architecture-v1.4-governance-contract-bridge",
     "applied_at_utc":  "2026-07-27T23:21:02.5419842Z",
     "reason":  "Preserve strict capability auditing while migrating the Phase 2 permission compatibility contract and binding the released Phase 3 compiler to ratified Governance 1.1 source versions.",
