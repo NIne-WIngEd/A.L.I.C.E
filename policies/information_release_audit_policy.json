@@ -1,0 +1,37 @@
+{
+  "information_release_audit_policy_schema_version": 1,
+  "policy_id": "phase4-information-release-audit-v1",
+  "phase": "4",
+  "milestone": "P4.9",
+  "status": "final_release_audit_and_closure",
+  "required_evaluation_version": "p4.8-v1",
+  "required_evaluation_policy_id": "alice-information-final-evaluation-v1",
+  "required_benchmark_id": "phase4-information-adversarial-v1",
+  "required_test_set_version": "p4.8-v1",
+  "required_runtime_version": "p4.8-runtime-v1",
+  "required_runtime_manifest_id": "phase4-information-runtime-probes-v1",
+  "required_package_version": "0.15.0",
+  "minimum_case_count": 24,
+  "minimum_runtime_target_file_count": 28,
+  "minimum_runtime_collected_test_count": 640,
+  "repository_requirements": {
+    "exact_head_commit_required": true,
+    "clean_working_tree_required": true,
+    "rollback_commit_required": true,
+    "rollback_must_be_ancestor": true
+  },
+  "boundaries": {
+    "synthetic_only": true,
+    "private_output_only": true,
+    "repository_output_allowed": false,
+    "raw_query_text_allowed": false,
+    "raw_source_content_allowed": false,
+    "live_network_allowed": false,
+    "real_private_query_allowed": false,
+    "source_body_persistence_allowed": false,
+    "memory_write_allowed": false,
+    "external_action_allowed": false,
+    "repository_write_allowed": false,
+    "background_execution_allowed": false
+  }
+}

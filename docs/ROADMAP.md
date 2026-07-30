@@ -37,11 +37,11 @@ Released Phase 3 behavior is a compatibility profile, not a permanent limit on t
 
 ## Phase 4 — Public Web and Information Intelligence
 
-**Status:** Active; current work may resume at P4.5 after architecture migration.
+**Status:** Released baseline; evolvable.
 
-Provider-neutral search and fetch, temporal metadata, citation binding, source conflict, injection-resistant evidence handling, and learning-ready observation envelopes.
+Provider-neutral search and fetch, controlled HTTPS retrieval, temporal metadata, citation binding, source conflict, injection-resistant evidence handling, governed research orchestration, explicit conversational research mode, runtime-backed adversarial evaluation, and exact-commit private release audit.
 
-Phase 4's read-only release scope is a maturity boundary. Phase 4 documents, code, tests, and schemas may change when required to support the final learning architecture, product family, or migration path.
+The released read-only profile is a compatibility and maturity boundary, not a permanent capability ceiling. Phase 4 documents, code, tests, and schemas may change when required to support the final learning architecture, product family, live integrated research, or migration path.
 
 ## Phase 5 — Experience Ledger, Evaluation Substrate, and Kernel Extraction
 
