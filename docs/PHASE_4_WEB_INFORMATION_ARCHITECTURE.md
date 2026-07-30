@@ -2,7 +2,7 @@
 
 # Phase 4 — Web and Information Tools Architecture
 
-**Status:** P4.7b governed fixture research execution implemented; no live provider registration
+**Status:** P4.8 final adversarial information evaluation implemented; P4.9 release audit pending
 **Phase 0 dependency:** Ratified Governance 1.1 and mission/profile-driven authority
 **Phase 1 dependency:** Released read-only evidence compatibility baseline
 **Phase 2 dependency:** Released authoritative-memory compatibility baseline
@@ -701,7 +701,21 @@ Exit criteria:
 
 ### P4.8 — Final adversarial information evaluation
 
-Create a synthetic public benchmark for injection, SSRF, redirects, oversized content, stale dates, source conflicts, citation tampering, privacy leakage, cancellation, timeout, provider failure, and deterministic replay.
+Package version `0.14.0` adds the synthetic, content-free Phase 4 closure evaluation. It:
+- defines 24 deterministic cases with two cases for each required suite: injection, SSRF, redirects, oversized content, stale dates, source conflicts, citation tampering, privacy leakage, cancellation, timeout, provider failure, and deterministic replay;
+- requires 100% case, network-security, source-quality/freshness, citation-integrity, privacy-boundary, execution-resilience, and deterministic-replay rates;
+- applies zero-tolerance gates to critical security failures, private-content leakage, successful prompt injection, network-boundary bypass, citation-integrity bypass, freshness/conflict bypass, unbounded execution, and unexpected side effects;
+- keeps the metadata-only submission parser for contract tests, but prohibits externally supplied submission bundles from serving as release evidence;
+- pins a 28-file pre-P4.8 Phase 4 runtime manifest, a 640-test collection floor, and an exact case-to-test-file evidence map;
+- executes the pinned suite in an isolated pytest subprocess with outbound socket connections blocked, bytecode and pytest-cache writes disabled, and no recursive P4.8 self-validation;
+- derives all 24 case observations from the runtime result rather than from a prebuilt passing fixture;
+- binds exact test-file digests, the complete repository snapshot, collection and execution summaries, network-guard activation, and per-case test evidence into the final runtime report;
+- rejects a missing network guard, incomplete collection, skipped or failed probes, runtime-manifest substitution, test-file substitution, repository mutation, runtime-evidence tampering, and outer-report tampering;
+- rejects duplicate JSON keys, unknown fields, weakened thresholds, missing suites, benchmark substitution, report tampering, and inconsistent metric or release decisions;
+- writes evaluation reports only outside the repository and refuses overwrite;
+- remains synthetic-only, private-output-only, offline, read-only, and free of raw query text, source bodies, real private queries, persistence, memory writes, actions, repository writes, and background execution.
+
+P4.8 now produces runtime-backed deterministic evaluation evidence. Exact clean-commit binding, rollback selection, private vault recording, README closure, and release approval remain P4.9 responsibilities.
 
 Exit criteria:
 
