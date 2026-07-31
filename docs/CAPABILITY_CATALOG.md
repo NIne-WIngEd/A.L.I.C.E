@@ -151,3 +151,13 @@ Every generalizable capability entry must eventually declare:
 - whether the item is a capability or non-transferable personal state.
 
 The consumer product has no permanent reduced-capability class.
+
+<!-- P4.10 LIVE PUBLIC STATUS START -->
+## Additive Phase 4 live-public-information status
+
+- Completed sub-milestone: **P4.10a**
+- Package profile: `alice_information 0.16.0`
+- P4.10a live-provider foundation is complete. P4.10b live governed research execution remains active. Phase 5 remains blocked.
+- P4.0–P4.9 and the P4.6a/P4.7a/P4.7b fixture profiles remain reproducible and unchanged.
+- No source persistence, Phase 5 storage, memory write, external action, recursive browse, retry, fallback, or background execution is activated.
+<!-- P4.10 LIVE PUBLIC STATUS END -->

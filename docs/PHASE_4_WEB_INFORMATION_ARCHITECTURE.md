@@ -823,3 +823,13 @@ The envelope may contain:
 Raw private context, unrestricted source bodies, secrets, and model hidden reasoning are excluded from ordinary activity records. Phase 5 alone will define retention and candidate-learning ingestion.
 
 Current P4.5 work may continue against the existing release contracts. Completed P4.0–P4.4 components may also be rewritten when necessary for product/host scoping, the Experience Ledger, capability profiles, Friday extraction, or the final learning architecture. Preserve useful behavior through migrations and compatibility profiles rather than treating completion as immunity.
+
+<!-- P4.10 LIVE PUBLIC STATUS START -->
+## Additive Phase 4 live-public-information status
+
+- Completed sub-milestone: **P4.10a**
+- Package profile: `alice_information 0.16.0`
+- P4.10a live-provider foundation is complete. P4.10b live governed research execution remains active. Phase 5 remains blocked.
+- P4.0–P4.9 and the P4.6a/P4.7a/P4.7b fixture profiles remain reproducible and unchanged.
+- No source persistence, Phase 5 storage, memory write, external action, recursive browse, retry, fallback, or background execution is activated.
+<!-- P4.10 LIVE PUBLIC STATUS END -->

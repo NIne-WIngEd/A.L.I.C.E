@@ -134,3 +134,13 @@ No earlier phase is immune from migration. Change it when the final architecture
 The consumer distribution internally codenamed Friday inherits the complete destination capability set of A.L.I.C.E. through the Personal Cognitive Kernel. A.L.I.C.E. may implement frontier work earlier, but generalizable successful capabilities enter a parity ledger and downstream productization plan. Every consumer installation selects its own assistant name and develops a distinct identity.
 
 The host chooses the assistant identity during enrollment. This capability parity commitment is permanent at the destination-architecture level.
+
+<!-- P4.10 LIVE PUBLIC STATUS START -->
+## Additive Phase 4 live-public-information status
+
+- Completed sub-milestone: **P4.10a**
+- Package profile: `alice_information 0.16.0`
+- P4.10a live-provider foundation is complete. P4.10b live governed research execution remains active. Phase 5 remains blocked.
+- P4.0–P4.9 and the P4.6a/P4.7a/P4.7b fixture profiles remain reproducible and unchanged.
+- No source persistence, Phase 5 storage, memory write, external action, recursive browse, retry, fallback, or background execution is activated.
+<!-- P4.10 LIVE PUBLIC STATUS END -->
