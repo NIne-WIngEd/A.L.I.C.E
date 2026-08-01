@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "policy_id": "friday.production_governance.v1",
+  "authority": "docs/FRIDAY_PRODUCTION_GOVERNANCE.md",
+  "capability_ceiling": false,
+  "candidate_work": {
+    "independent_research_allowed": true,
+    "independent_design_allowed": true,
+    "independent_implementation_allowed": true,
+    "independent_testing_allowed": true,
+    "unilateral_production_promotion_allowed": false
+  },
+  "production_promotion": {
+    "alice_audit_required": true,
+    "rayan_approval_required": true,
+    "exact_commit_binding": true,
+    "exact_artifact_binding": true,
+    "matching_candidate_required": true,
+    "bypass_allowed": false,
+    "either_may_veto": true,
+    "only_rayan_may_amend_rule": true
+  },
+  "alice_determinations": [
+    "APPROVED_FOR_RAYAN_REVIEW",
+    "APPROVED_WITH_CONDITIONS",
+    "RETURN_FOR_REVISION",
+    "BLOCKED_SECURITY",
+    "BLOCKED_PRIVACY",
+    "BLOCKED_AUTHORITY",
+    "BLOCKED_EVALUATION",
+    "BLOCKED_ARCHITECTURE",
+    "INSUFFICIENT_EVIDENCE"
+  ],
+  "rayan_decisions": [
+    "APPROVED",
+    "APPROVED_CANARY_ONLY",
+    "APPROVED_CLOSED_ALPHA",
+    "APPROVED_WITH_CONDITIONS",
+    "REJECTED",
+    "REVISION_REQUIRED",
+    "DEFERRED"
+  ],
+  "emergency_response": {
+    "rollback_allowed": true,
+    "disable_allowed": true,
+    "containment_allowed": true,
+    "reversion_to_previously_approved_behavior_allowed": true,
+    "new_capability_allowed": false,
+    "broader_permissions_allowed": false,
+    "new_data_collection_allowed": false,
+    "unapproved_replacement_behavior_allowed": false,
+    "incident_record_required": true
+  },
+  "required_bindings": [
+    "source_commit",
+    "kernel_version",
+    "dependency_lock_digest",
+    "artifact_hashes",
+    "model_pack_versions",
+    "schema_versions",
+    "policy_versions",
+    "migration_manifest",
+    "evaluation_bundle_digest",
+    "deployment_manifest",
+    "rollback_manifest",
+    "release_channel"
+  ]
+}

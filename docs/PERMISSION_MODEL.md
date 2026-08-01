@@ -99,3 +99,21 @@ Within the released Phase 3 compatibility profile:
 - Ambiguous authorization is interpreted narrowly.
 
 These clauses scope the released no-tool profile. Later mission-scoped profiles may exercise broader authority through deterministic capability and mission evaluation rather than model self-authorization.
+
+
+## 11. Friday product-governance actions
+
+Friday development and production promotion use explicit product-governance actions:
+
+```text
+friday.feature.propose
+friday.feature.test
+friday.feature.audit
+friday.feature.owner_approve
+friday.release.sign
+friday.release.promote
+friday.release.rollback
+friday.release.emergency_disable
+```
+
+Proposal, research, sandbox implementation, and testing are candidate work. Production promotion is A5/high-consequence product action and requires a matching A.L.I.C.E. audit attestation plus Rayan approval for the exact commit and artifacts. Emergency rollback or disablement may restore previously approved behavior; it may not add capability or broaden authority. These product-governance actions are enforced by `policies/friday_production_governance.json` and do not silently grant Friday runtime authority inside A.L.I.C.E.

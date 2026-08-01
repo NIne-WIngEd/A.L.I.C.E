@@ -1,6 +1,6 @@
 # A.L.I.C.E. Roadmap 2.1
 
-**Version:** 2.3.0
+**Version:** 2.4.0
 **Owner:** MK Rayan
 **Status:** Final top-level capability domains with a mapped Friday product track
 **Principle:** Capability, learning, and governance co-evolve. Earlier implementations remain changeable when necessary to serve the final architecture.
@@ -37,19 +37,19 @@ Released Phase 3 behavior is a compatibility profile, not a permanent limit on t
 
 ## Phase 4 — Public Web and Information Intelligence
 
-**Status:** P4.0–P4.9 fixture-governed compatibility release approved; P4.10 operational live-public-information closure active.
+**Status:** Operationally complete. P4.0–P4.9 remain the approved fixture-governed compatibility release; P4.10 adds the approved exact-commit live PUBLIC research path.
 
-Provider-neutral search and fetch, controlled HTTPS retrieval, temporal metadata, citation binding, source conflict, injection-resistant evidence handling, governed research orchestration, explicit conversational research mode, runtime-backed adversarial evaluation, and exact-commit private release audit.
+Provider-neutral search and fetch, controlled HTTPS retrieval, temporal metadata, citation binding, source conflict, injection-resistant evidence handling, governed research orchestration, explicit conversational research mode, runtime-backed adversarial evaluation, real-provider/private-model acceptance, and exact-commit private release evidence.
 
-The released read-only profile is a compatibility and maturity boundary, not a permanent capability ceiling. The fixture-governed release does not yet prove a real current-web provider path. P4.10 must add and privately evaluate an exact live PUBLIC search/fetch path before Phase 5 starts.
+The released narrow live profile is a compatibility and maturity boundary, not a permanent capability ceiling.
 
 ## Phase 5 — Experience Ledger, Evaluation Substrate, and Kernel Extraction
 
-**Status:** Blocked until P4.10 operational live-public-information closure is approved and merged.
+**Status:** Active after approved P4.10 closure and merge.
 
-Trajectory capture, outcomes, corrections, decision lineage, source/model/tool histories, benchmark registry, resource accounting, candidate-learning extraction, and the storage lifecycle substrate. Phase 5 establishes an immutable compact event ledger, aggressive temporary capture, content-addressed blobs, host-scoped deduplication, retention classes, hot/warm/cold/quarantine tiers, storage-pressure controls, encrypted backup manifests, and restore verification.
+Trajectory capture, outcomes, corrections, decision lineage, source/model/tool histories, benchmark registry, resource accounting, candidate-learning extraction, and the storage lifecycle substrate. Phase 5 establishes a logically append-only, tamper-evident, deletion-aware compact event ledger; aggressive temporary capture; content-addressed blobs; host-scoped deduplication; retention classes; hot/warm/cold/quarantine tiers; storage-pressure controls; encrypted backup manifests; and restore verification. It also establishes clone-aware identity, provenance, fidelity-evaluation, and custody contracts for A.L.I.C.E. private source-person material and product-neutral Mission Graph, Result Capsule, traceback, attention, workspace-projection, speaker-context, and guest-grant contracts.
 
-**Friday action:** Begin code-level separation from A.L.I.C.E. at Phase 5.0 (P5.0). New reusable contracts are built in host-neutral `cognitive_kernel` namespaces with product and host scope. Storage lifecycle contracts must be host-isolated and portable before the Phase 6.5 split.
+**Friday action:** Build new reusable contracts under host-neutral `cognitive_kernel` boundaries with product and host scope. Friday product code remains in its independent repository. Phase 5 adds the shared Mission Graph/Cognitive Workspace contract layer and exact-artifact dual-approval schemas; Phase 6 builds the UI; Phase 6.5 proves independent-product readiness.
 
 ### Storage doctrine
 
@@ -61,9 +61,9 @@ Interfaces for memory, beliefs, models, skills, missions, autonomy, overrides, e
 
 **Friday action:** Build generic host identity and product-neutral control interfaces.
 
-### Phase 6.5 — Product Separation Gate
+### Phase 6.5 — Independent Product Readiness Gate
 
-This is a release gate, not a new top-level phase. Create separate Friday and shared-kernel repositories/packages after host-neutral APIs, storage isolation, synthetic-host tests, and generic control-plane interfaces pass.
+This is a release gate, not a new top-level phase and not the repository-creation event. Prove that Friday builds without A.L.I.C.E., consumes an independently versioned kernel contract, contains no A.L.I.C.E. private state, isolates multiple hosts, enforces dual production approval, and passes migration and rollback tests.
 
 ## Phase 7 — Capability Fabric, Integrations, and Multimodal Perception
 
@@ -140,7 +140,21 @@ The host chooses the assistant identity during enrollment. This capability parit
 
 - Completed sub-milestone: **P4.10c**
 - Package profile: `alice_information 0.18.0`
-- P4.10 operational live-public-information closure is implemented. Phase 4 becomes operationally complete only after the private P4.10c record is approved and the exact audited tree is merged.
+- P4.10 operational live-public-information closure is approved and merged; Phase 4 is operationally complete.
 - P4.0–P4.9 and the P4.6a/P4.7a/P4.7b fixture profiles remain reproducible and unchanged.
 - No source persistence, Phase 5 storage, memory write, external action, recursive browse, retry, fallback, or background execution is activated.
 <!-- P4.10 LIVE PUBLIC STATUS END -->
+
+
+## Clone-aware private identity phase lane
+
+- **Phase 5:** provenance, confidentiality, custody, typed source-state distinctions, private loader interfaces, evaluation contracts, and candidate-learning manifests. No public ciphertext or private plaintext enters Git.
+- **Phase 8:** selective memory, belief, preference, and procedural formation from authorized private material.
+- **Phase 9:** mature clone-aware identity with highest-achievable source-person fidelity, perspective, self-model, owner model, continuity, and inspectable uncertainty.
+- **Phase 13:** optional evaluated private adapters or weight updates with deletion, rollback, and source-lineage guarantees.
+
+Canonical source history, inference, generated reconstruction, and A.L.I.C.E.'s later evolved identity remain distinct. The system must not present generated reconstruction as verbatim historical memory without owner attestation.
+
+## Mission Graph and Cognitive Workspace lane
+
+Phase 5 defines shared semantic contracts and state machines. Phase 6 implements the Mission Canvas, adaptive workspace, attention explanation, Result Capsule viewer, speaker trust, and guest UI. Friday productization begins immediately in its own repository, but each product releases only after its own gates pass.

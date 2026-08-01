@@ -1,12 +1,13 @@
 {
-  "version": "1.2.0",
+  "version": "2.0.0",
   "authority": "docs/ALICE_FRIDAY_SEPARATION_PLAN.md",
   "shared_kernel": {
     "id": "personal-cognitive-kernel",
     "starts_at_phase": "5.0",
-    "formal_repository_split_gate": "6.5",
+    "independent_product_readiness_gate": "6.5",
     "host_neutral": true,
     "may_contain_personal_data": false,
+    "distribution_model": "independently_versioned_contract_or_repository",
     "required_scopes": [
       "product_id",
       "host_instance_id",
@@ -17,7 +18,22 @@
       "retention_class",
       "storage_tier",
       "deletion_lineage"
-    ]
+    ],
+    "phase5_contracts": [
+      "experience_event",
+      "evaluation",
+      "storage_lifecycle",
+      "mission_graph",
+      "result_capsule",
+      "traceback_transition",
+      "attention_decision",
+      "workspace_projection",
+      "speaker_context",
+      "guest_grant",
+      "release_attestation"
+    ],
+    "formal_repository_split_gate": "6.5",
+    "formal_repository_split_gate_semantics": "deprecated_compatibility_alias_for_independent_product_readiness"
   },
   "products": {
     "alice": {
@@ -25,18 +41,23 @@
       "kind": "owner_specific_research_flagship",
       "owner": "MK Rayan",
       "repository": "NIne-WIngEd/A.L.I.C.E",
+      "repository_independent": true,
       "personal_state_sharing": "prohibited",
       "kernel_consumer": true,
       "product_policy": "ambition_first_owner_governed",
       "public_distribution": false,
-      "full_capability_destination_source": true
+      "full_capability_destination_source": true,
+      "private_companion_state_allowed": true
     },
     "friday": {
       "display_name": "Consumer Personal AI (internal codename Friday)",
       "name_status": "internal_codename_pending_clearance",
       "kind": "general_local_first_personal_cognitive_product",
       "owner": "host_instance",
-      "repository_creation_gate": "6.5",
+      "repository_independent": true,
+      "repository_required_before_product_source": true,
+      "product_source_allowed_in_alice_repository": false,
+      "independent_product_readiness_gate": "6.5",
       "closed_alpha_gate": "8",
       "kernel_consumer": true,
       "personal_state_sharing": "prohibited",
@@ -64,7 +85,8 @@
       "permanent_capability_withholding_allowed": false,
       "dedicated_maintenance_team_planned": true,
       "local_storage_lifecycle_required": true,
-      "cross_host_deduplication_allowed": false
+      "cross_host_deduplication_allowed": false,
+      "production_dual_approval_required": true
     }
   },
   "separation_rules": {
@@ -79,13 +101,26 @@
     "friday_may_be_permanently_reduced_edition": false,
     "product_and_assistant_names_must_be_separate": true,
     "host_selected_name_may_define_storage_schema": false,
-    "difference_is_state_maturity_hardware_and_permissions_not_destination_capability": true
+    "difference_is_state_maturity_hardware_and_permissions_not_destination_capability": true,
+    "friday_product_source_may_live_in_alice_repository": false,
+    "private_companion_data_may_enter_shared_kernel_or_friday": false
   },
   "parity_policy": {
     "authority": "docs/PRODUCT_FAMILY_CAPABILITY_PARITY.md",
     "ledger_required": true,
     "consumer_destination_matches_alice": true,
     "alice_may_lead_experiments": true,
-    "successful_generalizable_capabilities_require_downstream_disposition": true
+    "successful_generalizable_capabilities_require_downstream_disposition": true,
+    "cognitive_workspace_working_parity_required": true
+  },
+  "production_governance": {
+    "authority": "docs/FRIDAY_PRODUCTION_GOVERNANCE.md",
+    "alice_exact_artifact_audit_required": true,
+    "rayan_exact_candidate_approval_required": true,
+    "either_may_veto": true,
+    "team_unilateral_production_promotion_allowed": false,
+    "emergency_rollback_disable_contain_allowed": true,
+    "emergency_new_behavior_allowed": false,
+    "only_rayan_may_amend_dual_approval": true
   }
 }

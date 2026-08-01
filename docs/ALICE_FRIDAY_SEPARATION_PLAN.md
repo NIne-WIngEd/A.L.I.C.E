@@ -1,152 +1,83 @@
 # A.L.I.C.E.–Friday Separation Plan
 
-**Decision:** A.L.I.C.E. remains the owner-specific research flagship. Friday becomes a separate distributable product. Both depend on a host-neutral Personal Cognitive Kernel.
+**Version:** 2.0.0
+**Status:** Owner-ratified repository and product boundary
+**Decision:** A.L.I.C.E., Friday, and the Personal Cognitive Kernel are independent identities. Friday product source never lives in the A.L.I.C.E. repository.
 
-## 1. Exact separation point
-
-Separation starts in **A.L.I.C.E. Phase 5.0**, immediately after Phase 4 is released.
-
-Phase 5 is the first new subsystem that must be designed host-neutrally: the Experience Ledger and evaluation substrate. Building it directly inside owner-specific namespaces would create avoidable extraction debt.
-
-The formal repository split occurs at the **Phase 6.5 Product Separation Gate**, after the generic cognitive control plane and host identity interfaces exist and before Phase 7 integrations proliferate.
-
-Therefore:
-
-- **Phase 4.5:** Finish current web-information work. Do not interrupt it with a premature product fork.
-- **Phase 5.0:** Begin internal kernel extraction in the existing A.L.I.C.E. repository.
-- **Phase 6.5:** Create the Friday repository and a shared-kernel repository/package.
-- **Phase 7.0 onward:** Develop A.L.I.C.E. and Friday as separate products against shared versioned interfaces.
-- **Phase 8 release:** Friday becomes worthy of closed alpha because autonomous memory formation is the minimum credible product moat.
-
-## 2. Target repository topology
-
-### Before Phase 6.5
-
-One repository, explicit internal boundaries:
+## 1. Effective topology
 
 ```text
+personal-cognitive-kernel/
+    Host-neutral libraries, schemas, state machines, evaluators, and migrations
+
 A.L.I.C.E/
-  src/
-    cognitive_kernel/
-    products/
-      alice/
-      friday_incubator/
-  policies/
-    kernel/
-    alice/
-    friday/
+    Rayan-specific flagship, private adapters, private policies, and research
+
+Friday/
+    Consumer shell, onboarding, UI, packaging, updates, and product integrations
+
+friday-model-packs/
+    Optional signed generic model, adapter, and evaluation manifests
 ```
 
-### After Phase 6.5
+The kernel may begin as an independently versioned package boundary while extraction is underway, but no product may import another product's private implementation or state. Friday's repository exists before its first Friday-specific source commit.
 
-```text
-personal-cognitive-kernel/   # host-neutral libraries, schemas, evaluators
-A.L.I.C.E/                   # Rayan-specific flagship and research system
-Friday/                      # installable general product
-friday-model-packs/          # distributable manifests, adapters, eval metadata
-```
+## 2. Phase timing
 
-The kernel may initially remain private while interfaces stabilize. Open-source scope is a commercial and trust decision, not a requirement for the split.
+- **Phase 5.0:** establish host-neutral kernel identity, Experience Ledger, storage/evaluation contracts, Mission Graph contracts, Result Capsules, traceback, attention/workspace projections, speaker context, guest grants, and release-attestation schemas.
+- **Phase 6:** implement the Cognitive Workspace and control-plane UI against those contracts.
+- **Phase 6.5:** Independent Product Readiness Gate. Prove independent builds, versioned kernel consumption, host isolation, release attestations, production-signing gates, migration, rollback, and parity tracking.
+- **Phase 7 onward:** release and evolve products independently while sharing versioned contracts and evaluation suites.
 
-## 3. Ownership boundaries
+## 3. Kernel ownership
 
-### Personal Cognitive Kernel
+The Personal Cognitive Kernel may own:
 
-Owns:
-
-- experience-event contracts;
-- memory and belief schemas;
-- learning curator interfaces;
+- product and host identity contracts;
+- Experience Ledger and evaluation contracts;
+- memory, belief, learning, and storage interfaces;
+- Mission Graph and task-node state machines;
+- Result Capsule and traceback contracts;
+- attention decisions and workspace projections;
+- speaker-context and guest-grant primitives;
 - model/runtime abstraction;
-- capability manifests;
-- evaluation and champion/challenger framework;
-- identity-capsule format;
-- encrypted local storage interfaces;
-- action and permission primitives;
-- product-neutral migration tooling.
+- permission primitives;
+- capability manifests and product-neutral migrations.
 
 It must not contain:
 
-- Rayan's personal memories;
-- A.L.I.C.E.-specific constitutional identity;
-- consumer-product branding, licensing, or commercial account logic;
-- hard-coded user names, paths, credentials, or goals.
+- Rayan's memories, private companion source, private directives, identity, credentials, goals, models, or adapters;
+- Friday customer data, host state, voice profiles, branding, account logic, or commercial configuration;
+- hard-coded host names or machine paths;
+- cross-product training data.
 
-### A.L.I.C.E.
+## 4. A.L.I.C.E. ownership
 
-Owns:
+A.L.I.C.E. owns Rayan's Constitution and authority relationship, private vault, private companion materials, owner-specific Mission Graph, memories, beliefs, models, adapters, goals, experimental autonomy profiles, research integrations, and frontier experiments.
 
-- Rayan's Constitution and final authority;
-- personal vault and learned identity;
-- experimental autonomy profiles;
-- private research integrations;
-- frontier self-evolution experiments;
-- owner-specific tools and data.
+## 5. Friday ownership
 
-### Consumer distribution (internal codename Friday)
+Friday owns host enrollment, host-selected identity, product shell, Cognitive Workspace integration, installer/updater, consumer privacy defaults, hardware/model selection, local onboarding, accessibility, support, diagnostics, and signed downstream releases.
 
-Owns:
+## 6. Data and repository isolation
 
-- host enrollment, host-selected naming, and identity creation;
-- Windows installer and desktop UX;
-- hardware benchmarking and model selection;
-- product privacy defaults;
-- generic host Constitution templates;
-- local data onboarding;
-- update, licensing, and optional service integration;
-- consumer-facing inspection and deletion tools;
-- multi-user and household product policies when added.
+Every persistent kernel record carries `product_id`, `host_instance_id`, `encryption_domain`, schema version, digest, provenance, retention class, storage tier, and deletion lineage. Two synthetic hosts must remain isolated across primary storage, caches, logs, backups, restore, evaluations, and deletion.
 
-## 4. Extraction criteria
+A.L.I.C.E. personal data must never seed Friday defaults, fixtures, training, model packs, or telemetry. Friday data must never enter A.L.I.C.E. private state.
 
-A module enters the shared kernel only when:
+## 7. Capability parity
 
-1. all Rayan-specific data and assumptions are removed;
-2. product behavior is configured by manifests rather than hard-coded identity;
-3. interfaces support more than one host instance;
-4. storage paths and encryption keys are instance-scoped;
-5. tests run with synthetic hosts;
-6. no developer service requires raw host data;
-7. migration and rollback behavior is defined;
-8. the module is useful to both A.L.I.C.E. and Friday.
+Friday shares A.L.I.C.E.'s generalizable destination capabilities. A.L.I.C.E. may lead experiments; temporary productization lag is allowed. Permanent capability omission is not. Mission Graph and Cognitive Workspace behavior have a dedicated working-parity lane.
 
-## 5. Data separation
+## 8. Production governance
 
-A.L.I.C.E. data must never seed Friday test users or product defaults. Friday fixtures use synthetic identities and generated non-sensitive corpora.
+Friday development teams may research, design, prototype, implement, test, and propose changes independently. Production promotion requires both:
 
-Each Friday installation receives a random instance identifier and locally generated encryption root. The vendor may know a license or update identifier, but that identifier must not be a decryption key or a direct index into personal content.
+1. an A.L.I.C.E. audit attestation bound to the exact commit, artifacts, policies, migrations, models, evaluations, and rollback manifest; and
+2. MK Rayan's explicit production approval bound to the same candidate.
 
-## 6. Versioning
+Either may veto or return the candidate for revision. Emergency rollback, disablement, containment, and reversion to previously approved behavior are allowed. Emergency status may not introduce new capability or replacement production behavior. Only Rayan may amend this dual-approval rule.
 
-- Kernel uses semantic versions and migration manifests.
-- A.L.I.C.E. and Friday pin explicit kernel versions.
-- Product-specific policies can evolve independently.
-- Identity Capsules declare compatible kernel and schema versions.
-- Experimental A.L.I.C.E. features enter the parity ledger. They ship downstream after generalization and productization; they may not be silently removed from the destination roadmap.
+## 9. Migration rule
 
-## 7. Phase 1–4 migration rule
-
-Completed phases are released baselines, not untouchable architecture. Any Phase 1–4 document, schema, source file, validator, or test may be changed when required to:
-
-- remove owner-specific coupling from the shared kernel;
-- support multiple product identities;
-- eliminate obsolete capability ceilings;
-- add migration or versioning;
-- support Friday's local privacy architecture;
-- preserve compatibility through named profiles.
-
-Changes require regression evidence and migrations; they do not require preserving an obsolete design solely because it shipped earlier.
-
-## 8. Capability parity
-
-A.L.I.C.E. and the consumer distribution have the same ultimate capability destination. A.L.I.C.E. may lead in experimental implementation, but every successful generalizable capability enters the shared-kernel catalog and downstream product backlog.
-
-The products differ by personal state, release maturity, active hardware, host permissions, packaging, and private integrations—not by a permanent intelligence ceiling.
-
-## 9. Host-selected identity
-
-`Friday` is an internal codename only. The commercial brand is selected separately, and every host chooses the assistant's local name. Product identifiers and storage schemas remain neutral so renaming either the product or an assistant does not require a data migration.
-
-## 10. Long-term organizational split
-
-After the consumer product has a dedicated maintenance team capable of independent releases, hardware support, updates, incident response, and capability productization, Rayan may return primary development attention to A.L.I.C.E. The consumer team remains responsible for tracking the shared-kernel parity ledger and delivering the same destination capabilities to host installations.
+Released Phase 1–4 artifacts remain compatibility baselines, not permanent authority. They may be migrated, generalized, replaced, or retired through versioned evidence-backed migrations.

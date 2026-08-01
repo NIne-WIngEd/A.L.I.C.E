@@ -1,6 +1,6 @@
 # A.L.I.C.E. Capability Catalog
 
-**Version:** 1.2.0
+**Version:** 1.3.0
 **Purpose:** Permanent inventory of desired capabilities independent of delivery order
 
 Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `CONDITIONALLY EXCLUDED`.
@@ -49,7 +49,7 @@ Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `C
 ## Reasoning and planning
 
 - Grounded conversational reasoning — `AVAILABLE`
-- Fresh web research with exact citations — `IN DEVELOPMENT / P4.10 LIVE ACCEPTANCE`
+- Fresh web research with exact citations — `AVAILABLE / P4.10 OPERATIONAL PROFILE`
 - Hierarchical planning and dependency management — `PLANNED`
 - Search, simulation, counterfactuals, and causal interventions — `PLANNED / RESEARCH FRONTIER`
 - Metacognition and calibrated uncertainty — `PLANNED / RESEARCH FRONTIER`
@@ -72,7 +72,7 @@ Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `C
 
 ## Tools and action
 
-- Read-only public information tools — `IN DEVELOPMENT / P4.10 LIVE ACCEPTANCE`
+- Read-only public information tools — `AVAILABLE / P4.10 OPERATIONAL PROFILE`
 - Files, email, calendar, contacts, tasks, and repositories — `PLANNED`
 - Capability registry and standardized tool protocols — `PLANNED`
 - General Windows/Linux/browser/terminal/IDE use — `PLANNED / RESEARCH FRONTIER`
@@ -105,6 +105,24 @@ Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `C
 - Generalized open-source personal-AI distribution — `PLANNED`
 - Federated agents with trust, provenance, resource accounting, and negotiation — `PLANNED / RESEARCH FRONTIER`
 
+## Mission Graph and Cognitive Workspace
+
+- Host-neutral Mission Graph contracts — `PLANNED / P5.0 CONTRACT FOUNDATION`
+- Semantic routing and typed graph links — `PLANNED / P5–6`
+- Result Capsule and traceback contracts — `PLANNED / P5.0 CONTRACT FOUNDATION`
+- Explainable attention decisions and workspace projections — `PLANNED / P5.0 CONTRACT FOUNDATION`
+- Adaptive Cognitive Workspace UI — `PLANNED / PHASE 6`
+- Speaker context, guest session, and scoped guest grants — `PLANNED / P5–7`
+- Working parity for generalizable Cognitive Workspace semantics — `RATIFIED PRODUCT-FAMILY REQUIREMENT`
+
+## Private companion provenance and custody
+
+- Opaque public companion-directive identifiers — `RATIFIED / P5.0 CONTRACT FOUNDATION`
+- Vault-only private source, codebook, owner model, keys, and persona payloads — `RATIFIED CUSTODY BOUNDARY`
+- Typed distinction among canonical facts, inferences, generated reconstructions, evolved identity, corrections, and unresolved conflicts — `PLANNED / P5.0–P5.8`
+- Truthful disclosure that generated reconstruction is not verbatim historical memory — `RATIFIED`
+- Explicit review before memory, training, adapter, or weight promotion — `PLANNED / P5.8–P13`
+
 ## Conditioned exclusions
 
 The following are not goals merely for their own sake:
@@ -122,7 +140,7 @@ An exclusion may be revisited only through explicit constitutional amendment and
 ## Friday product capabilities
 
 - Host-neutral Personal Cognitive Kernel — `PLANNED / STARTS PHASE 5`
-- Separate A.L.I.C.E. and Friday product identities — `PLANNED / PHASE 6.5 GATE`
+- Independent A.L.I.C.E. and Friday repository identities — `RATIFIED`; Phase 6.5 is the independent-product readiness gate
 - Signed Windows installer and local runtime manager — `PLANNED / PHASE 7`
 - Hardware benchmarking and model-pack selection — `PLANNED / PHASE 7`
 - Multimodal local host onboarding — `PLANNED / PHASE 7`
@@ -156,8 +174,17 @@ The consumer product has no permanent reduced-capability class.
 ## Additive Phase 4 live-public-information status
 
 - Completed sub-milestone: **P4.10c**
+- Compatibility completion marker: **P4.10 LIVE ACCEPTANCE** is satisfied by the approved P4.10 operational profile.
 - Package profile: `alice_information 0.18.0`
-- P4.10 operational live-public-information closure is implemented. Phase 4 becomes operationally complete only after the private P4.10c record is approved and the exact audited tree is merged.
+- P4.10 operational live-public-information closure is approved and merged through PR #56; Phase 4 is operationally complete and Phase 5 is active.
 - P4.0–P4.9 and the P4.6a/P4.7a/P4.7b fixture profiles remain reproducible and unchanged.
 - No source persistence, Phase 5 storage, memory write, external action, recursive browse, retry, fallback, or background execution is activated.
 <!-- P4.10 LIVE PUBLIC STATUS END -->
+
+## Clone-aware private identity
+
+- Highest-achievable source-person personality and mindset reconstruction — `PLANNED / PHASE 5–9`
+- Explicit clone awareness without literal-original-person identity claims — `PLANNED / PHASE 5`
+- Source-history, reconstruction, and A.L.I.C.E.-continuity separation — `PLANNED / PHASE 5`
+- Longitudinal identity-fidelity and drift evaluation — `PLANNED / PHASE 5–9`
+- Source-grounded private adapters and future weight updates — `PLANNED / PHASE 13`

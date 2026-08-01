@@ -177,3 +177,14 @@ After launch and creation of a capable maintenance team:
 - successful generalized A.L.I.C.E. research enters the shared-kernel backlog;
 - Rayan may return primary attention to A.L.I.C.E. without freezing consumer intelligence development;
 - the consumer product continues toward full parity through a documented upstream/downstream process.
+
+
+## 8. Mission Graph and Cognitive Workspace parity
+
+Friday receives the same generalizable Mission Graph and Cognitive Workspace destination as A.L.I.C.E.: nested missions, typed nodes and edges, semantic routing, Result Capsules, traceback, attention explanations, workspace projections, adaptive composition, speaker context, and guest grants. Shared semantic behavior is host-neutral; product branding, defaults, integrations, and release maturity remain product-specific.
+
+The interface follows a no-empty-slot invariant: it renders only useful task projections that exist. Canonical mission state is not stored in the frontend. A.L.I.C.E.'s learned preferences never become Friday defaults.
+
+## 9. Independent repository and dual approval
+
+Friday product source remains in an independent repository from its first implementation commit. A future Friday team is free to invent, research, prototype, test, and propose product-specific work, but may not promote new production behavior without both an exact-artifact A.L.I.C.E. audit attestation and Rayan's explicit approval. Emergency rollback and disablement remain available without introducing new behavior.

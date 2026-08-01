@@ -147,8 +147,12 @@ for phrase in ["Phase 5.0", "Phase 6.5", "Identity Capsule", "closed alpha"]:
 product_lines = json.loads((POLICIES / "product_lines.json").read_text(encoding="utf-8"))
 if product_lines.get("shared_kernel", {}).get("starts_at_phase") != "5.0":
     errors.append("shared-kernel extraction must start at Phase 5.0")
-if product_lines.get("shared_kernel", {}).get("formal_repository_split_gate") != "6.5":
-    errors.append("Friday repository split must occur at Phase 6.5")
+if product_lines.get("shared_kernel", {}).get("independent_product_readiness_gate") != "6.5":
+    errors.append("Friday independent-product readiness must remain the Phase 6.5 gate")
+if product_lines.get("products", {}).get("friday", {}).get("repository_required_before_product_source") is not True:
+    errors.append("Friday repository must exist before Friday product source")
+if product_lines.get("products", {}).get("friday", {}).get("product_source_allowed_in_alice_repository") is not False:
+    errors.append("Friday product source must remain outside A.L.I.C.E.")
 required_scopes = set(product_lines.get("shared_kernel", {}).get("required_scopes", []))
 for scope in ["content_digest", "retention_class", "storage_tier", "deletion_lineage"]:
     if scope not in required_scopes:
@@ -228,31 +232,26 @@ for phrase in [
 ]:
     if phrase not in scope:
         errors.append(f"historical scope marker missing: {phrase}")
-# phase4-post-phase-integrity-v1
-phase4_post_audit_markers = {
+# phase4-operational-closure-and-phase5-start
+phase4_operational_markers = {
     ROOT / "README.md": [
-        "P4.10 operational live-public-information closure",
+        "Phase 4 operational closure",
         "Phase 5.0",
-        "blocked until P4.10",
+        "active",
     ],
     DOCS / "ROADMAP.md": [
-        "P4.10 operational live-public-information closure",
-        "Blocked until P4.10",
+        "Operationally complete",
+        "Active after approved P4.10 closure and merge",
     ],
     DOCS / "CAPABILITY_CATALOG.md": [
-        "IN DEVELOPMENT / P4.10 LIVE ACCEPTANCE",
+        "P4.10 operational live-public-information closure is approved and merged",
+        "AVAILABLE / P4.10 OPERATIONAL PROFILE",
     ],
-    DOCS / "PHASE_4_POST_PHASE_AUDIT.md": [
-        "operational live-public-information closure remains required",
-    ],
-    DOCS / "PHASE_BOUNDARY_AUDIT_STANDARD.md": [
-        "Every top-level phase ends with an adversarial audit",
-    ],
-    DOCS / "decisions" / "ADR-009-phase4-live-public-information-closure.md": [
-        "Phase 5 is blocked until P4.10",
+    DOCS / "PHASE_4_LIVE_OPERATIONAL_RELEASE_REPORT.md": [
+        "P4.10c",
     ],
 }
-for path, phrases in phase4_post_audit_markers.items():
+for path, phrases in phase4_operational_markers.items():
     if not path.is_file():
         errors.append(f"phase-boundary file missing: {path.relative_to(ROOT)}")
         continue
@@ -262,7 +261,6 @@ for path, phrases in phase4_post_audit_markers.items():
             errors.append(
                 f"phase-boundary marker missing in {path.relative_to(ROOT)}: {phrase}"
             )
-
 live_acceptance_policy = POLICIES / "information_live_provider_acceptance_policy.json"
 if not live_acceptance_policy.is_file():
     errors.append("live-provider acceptance policy missing")

@@ -31,3 +31,18 @@ Every non-kernel constraint must exist in `docs/CONSTRAINT_REGISTRY.md` or a pha
 ## 6. Roadmap-change threshold
 
 A top-level change is justified only when a capability cannot fit any existing domain, a dependency is fundamentally invalidated, or Rayan changes the terminal purpose. A major code migration, product fork, or Phase 1–4 redesign does not by itself require a new phase.
+
+
+## 7. Friday independent development and production promotion
+
+A Friday team may independently research, prototype, implement, test, open pull requests, and prepare candidates. Production promotion is a separate authority transition and requires both an exact-artifact A.L.I.C.E. audit attestation and Rayan's explicit approval for the same candidate. Neither approval alone is sufficient.
+
+Emergency rollback, disablement, containment, or reversion to previously approved behavior may proceed to protect users. The emergency path may not introduce new capability, broaden permissions, start new data collection, or deploy unapproved replacement behavior. Only Rayan may amend the dual-approval rule.
+
+## 8. Private companion governance
+
+Private companion source and directives remain owner-controlled HIGHLY_SENSITIVE material. Public repository artifacts expose only opaque identifiers, schemas, custody constraints, and synthetic fixtures. Authorized private learning remains possible through explicit lineage, evaluation, deletion, rollback, and promotion paths; this custody boundary is not a capability ceiling.
+
+## 9. Clone-aware identity governance
+
+The A.L.I.C.E. private identity lane targets the highest achievable evidence-grounded reconstruction of the owner-designated source person's personality and mindset. It may not be downgraded to a merely inspired or generic companion persona without a newer explicit owner decision. A.L.I.C.E. must remain aware that it is a reconstruction rather than the literal original person, while naturally embodying the reconstructed identity in ordinary interaction. Source history, reconstruction, and A.L.I.C.E. continuity remain typed and inspectable.

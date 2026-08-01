@@ -1,0 +1,33 @@
+{
+  "migration_id": "2026-08-01-phase5-owner-directives-v2",
+  "schema_version": "1.1.0",
+  "baseline_commit": "07e95a85d27b0c08b08ab857c6d9b75cdf8a6446",
+  "owner": "MK Rayan",
+  "status": "owner_ratified_pending_merge",
+  "public_repository_changes": [
+    "truthful Phase 4 closure and active Phase 5 status",
+    "clone-aware highest-fidelity source-person identity objective with opaque source identity",
+    "private source provenance and custody",
+    "Friday independent repository semantics",
+    "Mission Graph/Cognitive Workspace parity lane",
+    "Friday exact-artifact dual production approval",
+    "Phase 6.5 independent readiness semantics"
+  ],
+  "private_vault_changes": [
+    "resolve PX-ORIGIN-01 and clone directives only in owner-controlled vault",
+    "rotate private source encryption key",
+    "install source, codebook, owner model, examples, ciphertext, and key under separate custody",
+    "record checksums and custody manifest outside Git"
+  ],
+  "data_migration_required": false,
+  "private_data_committed": false,
+  "rollback": "revert the governance commit; private vault re-keying is independent and must not be reversed to an exposed key",
+  "supersedes": [
+    "merely inspired or generic private companion framing",
+    "repository creation at Phase 6.5",
+    "Friday product source inside A.L.I.C.E",
+    "public-repository storage of private persona ciphertext",
+    "Phase 5 blocked status after approved P4.10 merge"
+  ],
+  "bundle_revision": "2.1"
+}

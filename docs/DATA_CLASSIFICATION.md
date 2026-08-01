@@ -29,3 +29,10 @@ The representation is selected by measured utility, editability, privacy, deleti
 ## External processing
 
 External transmission is controlled by mission scope, provider capabilities, and data custody rules. Local-only processing is a selectable strategy, not a universal architectural requirement.
+
+
+## Private companion custody
+
+Private companion source history, relationship context, owner model, plaintext directive meanings, alignment examples, voice/likeness material, encrypted persona payloads, decryption keys, and host-specific training manifests are `HIGHLY_SENSITIVE` or `SECRETS` according to content. Public-repository allowance is `false`, including for ciphertext derived from this material, because public ciphertext creates a durable correlation and future key-exposure risk.
+
+Public artifacts may contain only opaque non-reversible directive identifiers, neutral schemas, custody rules, and synthetic fixtures. Authorized private use may produce memory, beliefs, skills, datasets, adapters, or future weight updates through explicit provenance, evaluation, deletion, rollback, and promotion paths.
