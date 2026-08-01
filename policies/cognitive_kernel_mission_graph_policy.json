@@ -1,0 +1,108 @@
+{
+  "cognitive_kernel_mission_graph_policy_schema_version": 1,
+  "policy_id": "personal-cognitive-kernel.mission-graph.v1",
+  "version": "0.2.0",
+  "phase": "5",
+  "milestone": "P5.0c",
+  "status": "contract_foundation",
+  "required_capabilities": [
+    "mission_graph.v1",
+    "semantic_router.v1",
+    "result_capsule.v1",
+    "traceback_engine.v1"
+  ],
+  "allowed_node_types": [
+    "mission",
+    "task",
+    "decision",
+    "monitor",
+    "reference",
+    "control"
+  ],
+  "allowed_node_statuses": [
+    "planned",
+    "ready",
+    "active",
+    "blocked",
+    "waiting",
+    "completed",
+    "failed",
+    "cancelled",
+    "archived"
+  ],
+  "allowed_execution_states": [
+    "idle",
+    "queued",
+    "running",
+    "paused",
+    "awaiting_input",
+    "verifying",
+    "succeeded",
+    "failed",
+    "cancelled"
+  ],
+  "allowed_visibility_states": [
+    "foreground",
+    "supporting",
+    "background",
+    "hidden",
+    "archived"
+  ],
+  "allowed_edge_types": [
+    "parent_child",
+    "depends_on",
+    "blocks",
+    "related",
+    "derived_from",
+    "supersedes",
+    "result_for"
+  ],
+  "allowed_edge_states": [
+    "active",
+    "superseded",
+    "deleted"
+  ],
+  "allowed_routing_actions": [
+    "continue_current",
+    "create_child",
+    "create_sibling",
+    "reattach",
+    "create_mission",
+    "control_command"
+  ],
+  "allowed_result_statuses": [
+    "succeeded",
+    "partial",
+    "failed",
+    "cancelled",
+    "blocked"
+  ],
+  "allowed_traceback_actions": [
+    "propagate_to_parent",
+    "reopen_node",
+    "create_followup",
+    "mark_blocker",
+    "resolve_conflict",
+    "stop_at_mission_root"
+  ],
+  "allowed_traceback_statuses": [
+    "planned",
+    "applied",
+    "blocked",
+    "cancelled"
+  ],
+  "invariants": {
+    "immutable_node_identity": true,
+    "product_host_scope_required": true,
+    "metadata_only_labels": true,
+    "parent_child_acyclic": true,
+    "single_parent_for_non_root": true,
+    "cross_host_links_forbidden": true,
+    "canonical_state_in_frontend": false,
+    "persistence_implemented": false,
+    "complete_ui_implemented": false,
+    "attention_engine_implemented": false,
+    "speaker_guest_implemented": false
+  },
+  "capability_ceiling": false
+}
