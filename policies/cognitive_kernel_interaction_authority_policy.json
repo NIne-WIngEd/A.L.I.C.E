@@ -1,0 +1,156 @@
+{
+  "allowed_authority_capabilities": [
+    "authority_policy_amendment",
+    "constitutional_change",
+    "credential_access",
+    "destructive_action",
+    "external_commitments",
+    "general_questions",
+    "host_workspace_control",
+    "local_status",
+    "media_control",
+    "messaging",
+    "mission_routing_control",
+    "private_companion_governance",
+    "private_file_access",
+    "private_memory_read",
+    "production_promotion",
+    "purchases",
+    "sanitized_workspace_view",
+    "system_changes",
+    "timers"
+  ],
+  "allowed_authority_decisions": [
+    "approve",
+    "deny",
+    "require_stronger_authentication"
+  ],
+  "allowed_authority_evidence_classes": [
+    "explicit_guest_grant",
+    "host_session_context",
+    "local_voice_match",
+    "none",
+    "owner_explicit_approval",
+    "speaker_context_only",
+    "stronger_authentication"
+  ],
+  "allowed_authority_levels": [
+    "none",
+    "guest_scoped",
+    "host_context",
+    "host_verified",
+    "owner_verified"
+  ],
+  "allowed_consequence_classes": [
+    "credential",
+    "destructive",
+    "external_commitment",
+    "financial",
+    "ordinary",
+    "private_data",
+    "production_governance",
+    "system_change"
+  ],
+  "allowed_guest_capabilities": [
+    "general_questions",
+    "local_status",
+    "media_control",
+    "sanitized_workspace_view",
+    "timers"
+  ],
+  "allowed_guest_grant_statuses": [
+    "active",
+    "expired",
+    "revoked"
+  ],
+  "allowed_guest_session_modes": [
+    "delegated_guest",
+    "guest"
+  ],
+  "allowed_guest_session_statuses": [
+    "active",
+    "closed",
+    "expired",
+    "revoked"
+  ],
+  "allowed_speaker_authority_ceilings": [
+    "none",
+    "guest_scoped",
+    "host_context",
+    "host_verified"
+  ],
+  "allowed_speaker_evidence_classes": [
+    "diarization_metadata",
+    "explicit_guest_grant",
+    "host_session_context",
+    "local_voice_match",
+    "stronger_authentication",
+    "unknown"
+  ],
+  "allowed_speaker_states": [
+    "multiple_speakers",
+    "recognized",
+    "uncertain",
+    "unknown"
+  ],
+  "allowed_speaker_trust_states": [
+    "delegated_guest_session",
+    "guest_session",
+    "host_context_recognized",
+    "host_privilege_verified",
+    "multiple_speakers",
+    "speaker_recognized",
+    "speaker_uncertain"
+  ],
+  "capability_ceiling": false,
+  "cognitive_kernel_interaction_authority_policy_schema_version": 1,
+  "invariants": {
+    "authority_decisions_explainable": true,
+    "autonomous_authority_escalation_implemented": false,
+    "biometric_recognition_implemented": false,
+    "complete_ui_implemented": false,
+    "cross_host_guest_authority_forbidden": true,
+    "friday_product_source_implemented": false,
+    "guest_actions_locally_logged": true,
+    "guest_authority_visible_scoped_expiring_revocable": true,
+    "guest_grants_non_delegable": true,
+    "guest_self_expansion_forbidden": true,
+    "microphone_capture_implemented": false,
+    "owner_only_capabilities_protected": true,
+    "persistent_guest_store_implemented": false,
+    "private_payload_allowed": false,
+    "private_views_hidden_for_guest": true,
+    "product_host_scope_required": true,
+    "raw_audio_forbidden": true,
+    "speaker_context_metadata_only": true,
+    "stronger_authentication_required_for_high_consequence": true,
+    "voice_alone_privileged_authority_forbidden": true,
+    "voice_profile_forbidden": true
+  },
+  "mandatory_guest_denied_domains": [
+    "credential_access",
+    "destructive_actions",
+    "external_commitments",
+    "messaging",
+    "private_files",
+    "private_memory",
+    "purchases",
+    "system_changes"
+  ],
+  "milestone": "P5.0e",
+  "owner_only_capabilities": [
+    "authority_policy_amendment",
+    "constitutional_change",
+    "private_companion_governance",
+    "production_promotion"
+  ],
+  "phase": "5",
+  "policy_id": "cognitive-kernel-interaction-authority-policy",
+  "required_capabilities": [
+    "speaker_context.v1",
+    "guest_session.v1",
+    "guest_grant.v1"
+  ],
+  "status": "contract_foundation",
+  "version": "0.4.0"
+}
