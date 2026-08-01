@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-SCHEMA_VERSION = 1
-
+SCHEMA_VERSION = 3
 SESSION_STATUSES = ("active", "interrupted", "completed")
 SESSION_RETENTIONS = ("session_only", "retained")
 TURN_STATUSES = (
@@ -22,13 +21,14 @@ GENERATION_STATUSES = (
     "cancelled",
     "failed",
 )
-REFERENCE_KINDS = (
+REFERENCE_KINDS_V1 = (
     "memory",
     "memory_source",
     "phase1_chunk",
     "phase1_source",
     "grounding_packet",
 )
+REFERENCE_KINDS = REFERENCE_KINDS_V1 + ("web_source",)
 REASONING_STATUSES = (
     "not_requested",
     "not_persisted",
@@ -120,7 +120,7 @@ CREATE TABLE conversation_turn_references (
     reference_id TEXT PRIMARY KEY,
     turn_id TEXT NOT NULL,
     reference_index INTEGER NOT NULL CHECK (reference_index >= 0),
-    source_kind TEXT NOT NULL CHECK (source_kind IN ({_quoted(REFERENCE_KINDS)})),
+    source_kind TEXT NOT NULL CHECK (source_kind IN ({_quoted(REFERENCE_KINDS_V1)})),
     source_ref TEXT NOT NULL,
     citation_token TEXT,
     content_sha256 TEXT,
@@ -195,4 +195,71 @@ CREATE INDEX idx_conversation_generations_turn
     ON conversation_generations(turn_id, attempt_index);
 CREATE INDEX idx_conversation_events_session
     ON conversation_state_events(session_id, occurred_at);
+"""
+
+MIGRATION_2_SQL = f"""
+CREATE TABLE conversation_turn_references_v2 (
+    reference_id TEXT PRIMARY KEY,
+    turn_id TEXT NOT NULL,
+    reference_index INTEGER NOT NULL CHECK (reference_index >= 0),
+    source_kind TEXT NOT NULL CHECK (source_kind IN ({_quoted(REFERENCE_KINDS)})),
+    source_ref TEXT NOT NULL,
+    citation_token TEXT,
+    content_sha256 TEXT,
+    data_classification TEXT NOT NULL
+        CHECK (data_classification IN ({_quoted(ORDINARY_CLASSIFICATIONS)})),
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (turn_id)
+        REFERENCES conversation_turns(turn_id)
+        ON DELETE CASCADE,
+    UNIQUE (turn_id, reference_index),
+    UNIQUE (turn_id, source_kind, source_ref)
+);
+INSERT INTO conversation_turn_references_v2(
+    reference_id, turn_id, reference_index, source_kind, source_ref,
+    citation_token, content_sha256, data_classification, created_at
+)
+SELECT
+    reference_id, turn_id, reference_index, source_kind, source_ref,
+    citation_token, content_sha256, data_classification, created_at
+FROM conversation_turn_references;
+DROP TABLE conversation_turn_references;
+ALTER TABLE conversation_turn_references_v2
+    RENAME TO conversation_turn_references;
+CREATE INDEX idx_conversation_references_turn
+    ON conversation_turn_references(turn_id, reference_index);
+"""
+
+MIGRATION_3_SQL = f"""
+CREATE TABLE conversation_turn_references_v3 (
+    reference_id TEXT NOT NULL,
+    turn_id TEXT NOT NULL,
+    reference_index INTEGER NOT NULL CHECK (reference_index >= 0),
+    source_kind TEXT NOT NULL CHECK (source_kind IN ({_quoted(REFERENCE_KINDS)})),
+    source_ref TEXT NOT NULL,
+    citation_token TEXT,
+    content_sha256 TEXT,
+    data_classification TEXT NOT NULL
+        CHECK (data_classification IN ({_quoted(ORDINARY_CLASSIFICATIONS)})),
+    created_at TEXT NOT NULL,
+    PRIMARY KEY (turn_id, reference_id),
+    FOREIGN KEY (turn_id)
+        REFERENCES conversation_turns(turn_id)
+        ON DELETE CASCADE,
+    UNIQUE (turn_id, reference_index),
+    UNIQUE (turn_id, source_kind, source_ref)
+);
+INSERT INTO conversation_turn_references_v3(
+    reference_id, turn_id, reference_index, source_kind, source_ref,
+    citation_token, content_sha256, data_classification, created_at
+)
+SELECT
+    reference_id, turn_id, reference_index, source_kind, source_ref,
+    citation_token, content_sha256, data_classification, created_at
+FROM conversation_turn_references;
+DROP TABLE conversation_turn_references;
+ALTER TABLE conversation_turn_references_v3
+    RENAME TO conversation_turn_references;
+CREATE INDEX idx_conversation_references_turn
+    ON conversation_turn_references(turn_id, reference_index);
 """

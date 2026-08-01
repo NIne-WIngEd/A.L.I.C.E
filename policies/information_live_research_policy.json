@@ -1,0 +1,53 @@
+{
+  "information_live_research_policy_schema_version": 1,
+  "policy_name": "alice_information_live_research_policy",
+  "version": "1.0.0",
+  "phase": "4",
+  "milestone": "P4.10b",
+  "status": "live_governed_research_execution",
+  "permission_id": "web.search",
+  "required_mode": "research",
+  "required_availability": "available",
+  "required_operations": [
+    "search",
+    "fetch"
+  ],
+  "search_provider": "brave-search-v1",
+  "fetch_provider": "controlled-live-http-v1",
+  "maximum_search_calls": 1,
+  "maximum_fetch_calls": 5,
+  "maximum_sources": 5,
+  "required_path": [
+    "explicit_research_mode",
+    "live_search",
+    "controlled_https_fetch",
+    "injection_inspection",
+    "temporal_and_freshness_analysis",
+    "exact_extractive_grounding",
+    "phase3_projection",
+    "p36_pre_commit_validation",
+    "p45b_citation_validation"
+  ],
+  "controls": {
+    "public_queries_only": true,
+    "foreground_only": true,
+    "exact_provider_selection": true,
+    "no_silent_fallback": true,
+    "no_retry": true,
+    "no_recursive_browsing": true,
+    "no_source_body_persistence": true,
+    "no_phase5_storage": true,
+    "no_memory_write": true,
+    "no_external_action": true,
+    "no_background_execution": true,
+    "pre_commit_validation_required": true,
+    "web_citation_validation_required": true,
+    "continue_after_skippable_source_failure": true
+  },
+  "capability_ceiling": false,
+  "maximum_grounded_sources": 2,
+  "skippable_fetch_failure_codes": [
+    "http_status_rejected",
+    "response_header_invalid"
+  ]
+}

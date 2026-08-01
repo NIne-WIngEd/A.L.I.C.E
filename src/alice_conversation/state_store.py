@@ -14,7 +14,13 @@ from .state_policy import (
     load_conversation_state_policy,
     resolve_conversation_state_database_path,
 )
-from .state_schema import MIGRATION_1_SQL, REQUIRED_TABLES, SCHEMA_VERSION
+from .state_schema import (
+    MIGRATION_1_SQL,
+    MIGRATION_2_SQL,
+    MIGRATION_3_SQL,
+    REQUIRED_TABLES,
+    SCHEMA_VERSION,
+)
 
 
 class ConversationStateStoreError(RuntimeError):
@@ -151,9 +157,32 @@ class ConversationStateStore:
                     INSERT INTO conversation_schema_migrations(version, applied_at)
                     VALUES (?, ?)
                     """,
-                    (SCHEMA_VERSION, "2026-07-25T00:00:00Z"),
+                    (1, "2026-07-25T00:00:00Z"),
                 )
-            elif current != SCHEMA_VERSION:
+                current = 1
+            if current == 1:
+                for statement in _sql_statements(MIGRATION_2_SQL):
+                    connection.execute(statement)
+                connection.execute(
+                    """
+                    INSERT INTO conversation_schema_migrations(version, applied_at)
+                    VALUES (?, ?)
+                    """,
+                    (2, "2026-07-31T00:00:00Z"),
+                )
+                current = 2
+            if current == 2:
+                for statement in _sql_statements(MIGRATION_3_SQL):
+                    connection.execute(statement)
+                connection.execute(
+                    """
+                    INSERT INTO conversation_schema_migrations(version, applied_at)
+                    VALUES (?, ?)
+                    """,
+                    (3, "2026-07-31T00:00:00Z"),
+                )
+                current = 3
+            if current != SCHEMA_VERSION:
                 raise ConversationStateStoreError(
                     "No approved migration path exists for this state database."
                 )
