@@ -193,3 +193,20 @@ Consumer productization and hardware adaptation
         ↓
 Host-named personal AI instances
 ```
+
+
+## 11. Mission Graph plane
+
+The host-local Mission Graph contains stable mission and node identities, typed edges, node/execution/visibility state, routing decisions, Result Capsules, traceback transitions, and reopen/supersession lineage. The vendor does not retain a readable centralized copy.
+
+## 12. Cognitive Workspace and attention plane
+
+Workspace projections are derived from canonical mission state. The compositor renders only useful existing work, preserves layout stability, explains ranking, honors host pin/foreground/background commands, and keeps protected security or integrity interrupts visible. Product analytics and advertising may not manipulate personal attention ranking.
+
+## 13. Presence and guest-trust plane
+
+Speech content, speaker recognition, host context, authenticated privilege, and capability authorization remain separate signals. Voice alone cannot authorize high-consequence actions. Guest grants are scoped, visible, expiring, revocable, non-delegable, and unable to reveal private Mission Graph state.
+
+## 14. Production-governance plane
+
+Every production behavior change is bound to a release manifest containing the source commit, kernel version, dependency lock, artifact hashes, policy and migration versions, models, evaluation bundle, rollback manifest, A.L.I.C.E. audit attestation, and Rayan approval. Signing fails if the pair is missing or mismatched.

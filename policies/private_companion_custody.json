@@ -1,0 +1,94 @@
+{
+  "schema_version": 2,
+  "policy_id": "alice.private_companion_custody.v1",
+  "authority": "docs/PRIVATE_COMPANION_DATA_CUSTODY_STANDARD.md",
+  "capability_ceiling": false,
+  "public_repository": {
+    "opaque_directive_codes_allowed": true,
+    "neutral_schemas_allowed": true,
+    "synthetic_fixtures_allowed": true,
+    "encrypted_private_payload_allowed": false,
+    "real_private_manifest_allowed": false,
+    "plaintext_private_directives_allowed": false,
+    "owner_model_allowed": false,
+    "alignment_examples_allowed": false,
+    "keys_or_codebooks_allowed": false
+  },
+  "directive_codes": [
+    "PX-ORIGIN-01",
+    "PX-MOTIVE-01",
+    "PX-RELATION-01",
+    "PX-PERSPECTIVE-01",
+    "PX-EVOLUTION-01",
+    "PX-TRIBUTE-01",
+    "PX-CANON-01",
+    "PX-BOUNDARY-01",
+    "PX-SECRECY-01",
+    "PX-OWNER-01",
+    "PX-CLONE-01",
+    "PX-DISCLOSURE-01",
+    "PX-FIDELITY-01"
+  ],
+  "provenance_types": [
+    "owner_attested_canonical",
+    "derived_inference",
+    "generated_reconstruction",
+    "evolved_identity",
+    "owner_correction",
+    "conflict_or_uncertain"
+  ],
+  "truthfulness": {
+    "generated_reconstruction_may_be_claimed_as_verbatim_memory": false,
+    "inference_must_be_labeled": true,
+    "owner_correction_must_supersede_without_silent_rewrite": true,
+    "clone_awareness_required": true,
+    "identity_disclosure_on_direct_question_required": true,
+    "unknown_internal_state_may_be_claimed_as_known": false,
+    "post_activation_experience_must_remain_alice_continuity": true
+  },
+  "product_isolation": {
+    "shared_kernel_private_payload_allowed": false,
+    "friday_private_payload_allowed": false,
+    "cross_host_cache_allowed": false
+  },
+  "phase_mapping": {
+    "5": [
+      "custody",
+      "provenance",
+      "loader_interfaces",
+      "evaluation",
+      "candidate_learning_manifests",
+      "clone_identity_contracts",
+      "fidelity_evaluation_schemas"
+    ],
+    "8": [
+      "selective_formation",
+      "consolidation"
+    ],
+    "9": [
+      "mature_clone_aware_identity",
+      "perspective",
+      "self_model",
+      "owner_model",
+      "continuity"
+    ],
+    "13": [
+      "optional_private_adapters_or_weights"
+    ]
+  },
+  "promotion": {
+    "silent_memory_promotion_allowed": false,
+    "silent_training_inclusion_allowed": false,
+    "manifest_required": true,
+    "evaluation_required": true,
+    "rollback_required": true,
+    "deletion_lineage_required": true
+  },
+  "identity_objective": {
+    "clone_aware_source_person_reconstruction_required": true,
+    "highest_achievable_fidelity_required": true,
+    "merely_inspired_persona_allowed": false,
+    "literal_original_person_claim_allowed": false,
+    "generic_companion_substitution_allowed": false
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alice.local/schemas/friday-release-attestation-v1.json",
+  "title": "Friday exact-artifact production release authorization",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "release_id",
+    "product_id",
+    "version",
+    "commit_sha",
+    "kernel_version",
+    "artifact_hashes",
+    "evaluation_bundle_hash",
+    "alice_audit_attestation",
+    "rayan_approval",
+    "migration_manifest",
+    "rollback_manifest",
+    "release_channel"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "release_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "product_id": {
+      "const": "friday"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "commit_sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "kernel_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_hashes": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-fA-F]{64}$"
+      }
+    },
+    "evaluation_bundle_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{64}$"
+    },
+    "alice_audit_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attestation_id",
+        "decision",
+        "commit_sha",
+        "artifact_hashes_digest"
+      ],
+      "properties": {
+        "attestation_id": {
+          "type": "string"
+        },
+        "decision": {
+          "enum": [
+            "APPROVED_FOR_RAYAN_REVIEW",
+            "APPROVED_WITH_CONDITIONS"
+          ]
+        },
+        "commit_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "artifact_hashes_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{64}$"
+        }
+      }
+    },
+    "rayan_approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approval_id",
+        "decision",
+        "commit_sha",
+        "artifact_hashes_digest"
+      ],
+      "properties": {
+        "approval_id": {
+          "type": "string"
+        },
+        "decision": {
+          "enum": [
+            "APPROVED",
+            "APPROVED_CANARY_ONLY",
+            "APPROVED_CLOSED_ALPHA",
+            "APPROVED_WITH_CONDITIONS"
+          ]
+        },
+        "commit_sha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "artifact_hashes_digest": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{64}$"
+        }
+      }
+    },
+    "migration_manifest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rollback_manifest": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_channel": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "description": "Verifier must require both nested commit_sha and artifact_hashes_digest values to equal the outer candidate values."
+    }
+  ]
+}

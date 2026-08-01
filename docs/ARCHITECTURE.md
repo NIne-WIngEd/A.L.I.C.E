@@ -59,6 +59,18 @@ Executes mission-authorized actions, records state transitions, verifies outcome
 
 For Friday, distributes signed installers, common model packs, schema migrations, and public evaluations without receiving raw host state.
 
+### Mission and Cognitive Workspace plane
+
+Mission Graphs, immutable node identity, typed graph links, Result Capsules, traceback, attention decisions, workspace projections, speaker context, guest grants, and adaptive composition. Canonical mission state lives in the kernel or product runtime, not the frontend.
+
+### Private companion custody plane
+
+Owner-authorized private source ingestion, opaque directive resolution, provenance, source/inference/reconstruction/evolved-identity separation, confidentiality labels, and local-only training/runtime manifests. Private payloads and keys never enter public packages or product-family fixtures.
+
+### Product governance plane
+
+Friday candidate classification, exact-artifact A.L.I.C.E. audit attestations, Rayan production approvals, release manifests, emergency rollback boundaries, parity disposition, and production-signing enforcement.
+
 ## 4. Core data flow
 
 Observation → compact Experience Ledger + policy-bounded raw buffer → Curator → retain/compress/archive/delete decision → memory/belief/skill/training candidates → representative replay or model adaptation → executive → plan/simulation → action → verification → outcome → learning.
@@ -91,7 +103,7 @@ Every evolvable module declares interfaces, benchmarks, consequence class, rollb
 
 ## 8. Shared-kernel extraction
 
-New Phase 5+ reusable work begins in host-neutral namespaces. Phase 1–4 modules may be migrated whenever they contain owner-specific coupling or product barriers. `docs/SHARED_KERNEL_EXTRACTION_STANDARD.md` is controlling for extraction.
+New Phase 5+ reusable work begins in host-neutral namespaces. Friday product source is repository-independent from its first commit. Phase 6.5 is the independent-product readiness gate. Phase 1–4 modules remain migratable under `docs/SHARED_KERNEL_EXTRACTION_STANDARD.md`.
 
 ## 9. Governance principle
 
@@ -100,3 +112,7 @@ Containment enables experimentation; evidence enables deployment. Permanent capa
 ## 10. Extension rule
 
 New capabilities enter through manifests and modules and connect to experience capture, evaluation, authority, and outcome verification. Product-specific behavior remains outside the shared kernel.
+
+### Clone-aware identity plane
+
+A.L.I.C.E.-private source-person modeling, clone awareness, identity-layer separation, fidelity evaluation, drift detection, and continuity across model replacement. The plane distinguishes source history, source-person model, reconstruction inference, A.L.I.C.E. continuity, and the evolving owner relationship model. It is excluded from Friday and shared-kernel distributions except for neutral contracts.

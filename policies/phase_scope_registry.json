@@ -1,8 +1,8 @@
 {
-  "version": "1.3.0",
+  "version": "1.4.0",
   "authority": "docs/PHASE_SCOPE_POLICY.md",
-  "generated_at": "2026-07-27T00:00:00Z",
-  "migration_id": "alice-mega-architecture-migration-v1.3",
+  "generated_at": "2026-08-01T00:00:00Z",
+  "migration_id": "phase5-owner-directives-v2",
   "entries": {
     "docs/PHASE_4_WEB_INFORMATION_ARCHITECTURE.md": {
       "scope_kind": "historical_or_phase_local",
@@ -1831,6 +1831,62 @@
       "registered_by": "phase4-p410-operational-live-closure",
       "scope_kind": "compatibility_test",
       "reason": "P4.10c tests bind the additive live PUBLIC profile and cannot veto later authorized information capabilities."
+    },
+    "docs/ALICE_PRIVATE_COMPANION_DIRECTION.md": {
+      "scope_kind": "owner_ratified_destination_policy",
+      "capability_ceiling": false,
+      "profile": "kernel.phase5.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase5-owner-directives-v2",
+      "reason": "Public opaque direction for owner-private clone-aware identity capability; payload remains outside Git."
+    },
+    "docs/ALICE_CLONE_AWARE_IDENTITY_STANDARD.md": {
+      "scope_kind": "owner_ratified_destination_policy",
+      "capability_ceiling": false,
+      "profile": "kernel.phase5.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase5-owner-directives-v2",
+      "reason": "Highest-achievable clone-fidelity objective with explicit reconstruction identity truthfulness."
+    },
+    "docs/PRIVATE_COMPANION_DATA_CUSTODY_STANDARD.md": {
+      "scope_kind": "owner_ratified_destination_policy",
+      "capability_ceiling": false,
+      "profile": "kernel.phase5.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase5-owner-directives-v2",
+      "reason": "Custody and provenance rules preserve private capability without exporting host state."
+    },
+    "docs/FRIDAY_COGNITIVE_WORKSPACE_AND_PRODUCTION_GOVERNANCE_PLAN.md": {
+      "scope_kind": "owner_ratified_destination_policy",
+      "capability_ceiling": false,
+      "profile": "kernel.phase5.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase5-owner-directives-v2",
+      "reason": "Owner-ratified product-family destination and production governance."
+    },
+    "docs/FRIDAY_PRODUCTION_GOVERNANCE.md": {
+      "scope_kind": "owner_ratified_destination_policy",
+      "capability_ceiling": false,
+      "profile": "kernel.phase5.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase5-owner-directives-v2",
+      "reason": "Exact-artifact product release governance, not a permanent capability ceiling."
+    },
+    "docs/decisions/ADR-010-private-companion-provenance-and-custody.md": {
+      "scope_kind": "owner_ratified_destination_policy",
+      "capability_ceiling": false,
+      "profile": "kernel.phase5.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase5-owner-directives-v2",
+      "reason": "Accepted owner decision for private custody and truthful provenance."
+    },
+    "docs/decisions/ADR-011-friday-independent-repository-dual-approval.md": {
+      "scope_kind": "owner_ratified_destination_policy",
+      "capability_ceiling": false,
+      "profile": "kernel.phase5.foundation",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase5-owner-directives-v2",
+      "reason": "Accepted owner decision for independent repositories and product production approval."
     }
   },
   "patterns": [

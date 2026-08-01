@@ -8,9 +8,9 @@
 | Friday milestone | A.L.I.C.E. dependency | Deliverable |
 |---|---|---|
 | F0 — Product definition | Phase 4.5 | Vision, full capability parity, privacy promise, host-selected identity, product-brand clearance track |
-| F1 — Shared-kernel preparation | Phase 5 | Host-neutral experience ledger, tiered storage lifecycle, evaluation substrate, product manifests, synthetic-host tests |
-| F2 — Generic control plane | Phase 6 | Host identity, memory inspector, learning controls, model manager, voice/UI contracts |
-| F3 — Formal product split | Phase 6.5 gate | Separate consumer-product and shared-kernel repositories/packages |
+| F1 — Shared foundation | Phase 5 | Kernel identity, Experience Ledger/storage/evaluation contracts, Mission Graph, Result Capsule, traceback, attention/workspace/speaker/guest schemas, dual-approval schemas, parity expansion |
+| F2 — Cognitive Workspace | Phase 6 | Mission Canvas, adaptive windows, control plane, graph inspector, Result Capsule viewer, attention explanation, guest/trust UI, product-neutral model controls |
+| F3 — Independent Product Readiness | Phase 6.5 gate | Independent build, versioned kernel pin, host isolation, dual-approval signing gate, migration, rollback, and parity evidence |
 | F4 — Local ingestion alpha | Phase 7 | Windows app, host naming, hardware benchmark, multimodal local ingestion, connector permissions, local model runtime |
 | F5 — Learning closed alpha | Phase 8 | Automated memory curation, beliefs, skills, correction, deletion, Identity Capsule |
 | F6 — Personal intelligence beta | Phase 9 | User model, self-model, voice, judgment, uncertainty, personalization inspector |
@@ -37,55 +37,62 @@ Exit criteria:
 - the product is not described merely as a local chatbot;
 - each host instance has a distinct technical identity;
 - developer non-access is an architectural property;
-- the formal split phase is fixed.
+- the independent-repository boundary and Phase 6.5 readiness semantics are fixed.
 
-## F1 — Shared-kernel preparation
+## F1 — Shared foundation
 
-During A.L.I.C.E. Phase 5.0:
+**A.L.I.C.E. dependency:** Phase 5.0
 
-- move new host-neutral contracts under `cognitive_kernel`;
-- add `ProductIdentity` and `HostInstance` manifests;
-- replace Rayan-specific constructor assumptions in reusable modules;
-- create synthetic host fixtures;
-- define event, memory, training, evaluation, retention-class, archive, and deletion portability;
-- define content-addressed host-scoped storage, deduplication, storage budgets, and restore manifests;
-- add a no-cross-product-data and no-cross-host-deduplication test suite.
+During A.L.I.C.E. Phase 5:
 
-Exit criteria:
+- establish independently versioned host-neutral kernel contracts;
+- define product and host identity, Experience Ledger, storage, evaluation, and migration contracts;
+- define Mission Graph schemas and events;
+- define Result Capsule and traceback state machines;
+- define attention-decision, workspace-projection, speaker-context, and guest-grant schemas;
+- add dual-approval governance and release-attestation schemas;
+- test one synthetic A.L.I.C.E.-style host and at least two isolated synthetic Friday hosts;
+- expand the parity ledger.
 
-- two synthetic hosts can run the same kernel with isolated state;
-- no kernel test requires A.L.I.C.E.-specific data;
-- all learning events carry a product and host scope.
-
-## F2 — Generic control plane
-
-During A.L.I.C.E. Phase 6:
-
-- build host enrollment;
-- build memory/belief/training inspector;
-- build capability and network dashboards;
-- define local key recovery and export;
-- create generic voice and identity configuration;
-- implement product-neutral model management.
+Friday product code remains in the Friday repository. The complete consumer UI is not required in F1.
 
 Exit criteria:
 
-- A.L.I.C.E. and a synthetic Friday host can use the same control-plane interfaces;
-- owner-specific policies are loaded from product manifests;
-- Friday can initialize without A.L.I.C.E. files.
+- shared contracts contain no product-private state;
+- two synthetic Friday hosts remain isolated;
+- Friday can pin an explicit kernel contract version;
+- production promotion cannot be represented without both required approvals.
 
-## F3 — Phase 6.5 Product Separation Gate
+## F2 — Cognitive Workspace
 
-Create separate repositories/packages only when:
+During A.L.I.C.E. Phase 6 and the parallel Friday product track:
 
-- shared-kernel APIs have versioned contracts;
-- host storage is fully instance-scoped;
-- synthetic-host tests pass;
-- the generic control plane works;
-- no A.L.I.C.E. personal data appears in shared or Friday artifacts;
-- release automation can publish signed kernel packages.
+- build the Mission Canvas and Mission Graph inspector;
+- build adaptive multi-window composition with no empty fixed slots;
+- build Result Capsule and traceback views;
+- expose attention explanations and host workspace commands;
+- expose speaker trust, guest mode, permission state, and sensitive-view hiding;
+- build generic memory, learning, model, and capability controls;
+- integrate each product independently against the same semantic contracts.
 
-After this gate, the consumer product is no longer a branch or rename of A.L.I.C.E.; it is a separate distribution consuming the same kernel and capability catalog.
+Exit criteria:
+
+- A.L.I.C.E. and a synthetic Friday host interpret node state, Result Capsules, traceback, attention, and guest authority identically;
+- owner-specific policy and branding remain outside shared components;
+- Friday initializes without A.L.I.C.E. source or state.
+
+## F3 — Phase 6.5 Independent Product Readiness Gate
+
+Prove:
+
+- Friday's repository and build are independent from A.L.I.C.E.;
+- the kernel contract is independently versioned and pinned;
+- no A.L.I.C.E. private state exists in Friday artifacts;
+- at least two Friday hosts remain isolated through storage, cache, backup, restore, and deletion;
+- release manifests support exact-artifact A.L.I.C.E. audit and Rayan approval;
+- production signing rejects missing, mismatched, expired, or revoked approvals;
+- emergency rollback works and emergency feature addition fails;
+- migration, rollback, shared UI contracts, and parity tracking pass.
 
 ## F4 — Windows local-ingestion alpha
 
@@ -216,4 +223,4 @@ A capability may be delayed in this lane. It may not be removed from the destina
 
 ## Team handoff lane
 
-Before a dedicated consumer team exists, the core team develops A.L.I.C.E., the kernel, and the consumer product together. After the team passes an independent-maintenance gate, Rayan may focus primarily on A.L.I.C.E.; the consumer team owns downstream parity, releases, support, and platform maintenance.
+Before a dedicated consumer team exists, the core team develops A.L.I.C.E., the kernel, and the consumer product together. After the team passes an independent-maintenance gate, Rayan may focus primarily on A.L.I.C.E.; the consumer team owns downstream implementation, support, and platform maintenance; production promotion remains subject to A.L.I.C.E. audit and Rayan approval.

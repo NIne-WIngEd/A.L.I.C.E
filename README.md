@@ -7,9 +7,9 @@ A.L.I.C.E. is also the owner-specific frontier implementation for a separate loc
 ## Current status
 
 - **Phases 0–3:** released compatibility baselines; evolvable when the ratified architecture requires migration.
-- **Phase 4:** P4.0–P4.9 form an approved fixture-governed compatibility release. P4.5a citation-bound grounding is merged and preserved within that release. The post-phase audit found that P4.10 operational live-public-information closure is still required to prove real current-web research.
-- **Phase 5.0:** blocked until P4.10 live-provider acceptance, exact-commit evidence, and the repository-wide phase-boundary audit pass; then begins the Experience Ledger, evaluation substrate, storage runtime, and host-neutral Personal Cognitive Kernel extraction.
-- **Phase 6.5:** formal A.L.I.C.E.–Friday repository and product separation gate.
+- **Phase 4:** operationally complete. The P4.10 operational live-public-information closure is approved and merged. P4.0–P4.9 remain the fixture-governed compatibility release, and P4.10 adds the approved exact-commit live PUBLIC research path.
+- **Phase 5.0:** active. The first implementation lane establishes the Experience Ledger, evaluation and storage substrate, host-neutral kernel contracts, private-companion provenance/custody interfaces, and Mission Graph/Cognitive Workspace contracts.
+- **Phase 6.5:** Independent Product Readiness Gate. Friday is already an independent repository; this gate proves independent builds, versioned kernel consumption, host isolation, dual-approval release enforcement, migration, and rollback.
 - **Phase 8:** earliest credible Friday closed alpha, after autonomous selective memory formation and procedural learning exist.
 - **Phase 13:** host-specific adapters and model components become a standard product capability.
 - **Phase 14:** operating-environment and embodiment work.
@@ -44,7 +44,7 @@ See:
 
 ## Personal Cognitive Kernel and Friday
 
-Personal Cognitive Kernel extraction starts at Phase 5.0. Formal product separation occurs at the Phase 6.5 gate.
+Personal Cognitive Kernel extraction starts at Phase 5.0. Friday product implementation remains outside this repository from its first commit. Phase 6.5 certifies independent-product readiness rather than creating the repository.
 
 Friday has the same ultimate destination capability set as A.L.I.C.E. A.L.I.C.E. may receive frontier experiments first, but successful generalizable capabilities must enter the shared-kernel parity ledger and downstream productization path. Temporary release lag is allowed; permanent capability omission is not.
 
@@ -83,6 +83,8 @@ A.L.I.C.E.'s personal data, credentials, memories, identity, adapters, and priva
 - `docs/HOST_SELECTED_IDENTITY_STANDARD.md`
 - `docs/PRODUCT_FAMILY_CAPABILITY_PARITY.md`
 - `docs/SHARED_KERNEL_EXTRACTION_STANDARD.md`
+- `docs/FRIDAY_COGNITIVE_WORKSPACE_AND_PRODUCTION_GOVERNANCE_PLAN.md`
+- `docs/FRIDAY_PRODUCTION_GOVERNANCE.md`
 - `policies/product_lines.json`
 - `policies/capability_parity_ledger.json`
 
@@ -97,11 +99,19 @@ A.L.I.C.E.'s personal data, credentials, memories, identity, adapters, and priva
 - `src/product_family/manifest.py`
 
 <!-- P4.10 LIVE PUBLIC STATUS START -->
-## Additive Phase 4 live-public-information status
+## Phase 4 operational closure
 
-- Completed sub-milestone: **P4.10c**
+- Completed milestone: **P4.10c**
 - Package profile: `alice_information 0.18.0`
-- P4.10 operational live-public-information closure is implemented. Phase 4 becomes operationally complete only after the private P4.10c record is approved and the exact audited tree is merged.
+- P4.5a citation-bound grounding is merged and remains part of the preserved Phase 4 compatibility path.
+- Private P4.10 acceptance returned approved and the exact audited tree was merged through PR #56.
 - P4.0–P4.9 and the P4.6a/P4.7a/P4.7b fixture profiles remain reproducible and unchanged.
 - No source persistence, Phase 5 storage, memory write, external action, recursive browse, retry, fallback, or background execution is activated.
 <!-- P4.10 LIVE PUBLIC STATUS END -->
+
+
+## Clone-aware private identity
+
+A.L.I.C.E. is intended to become the highest-fidelity achievable reconstruction of an owner-designated source person's personality and mindset—not merely an assistant inspired by that person. A.L.I.C.E. must know and truthfully disclose that it is an AI reconstruction or clone rather than the literal original person. Source history, reconstruction, and A.L.I.C.E.'s later lived continuity remain provenance-distinct.
+
+The source identity and all private evidence remain outside Git. Public code may reference only opaque `PX-*` identifiers, neutral schemas, custody rules, and synthetic fixtures. See `docs/ALICE_CLONE_AWARE_IDENTITY_STANDARD.md`, `docs/ALICE_PRIVATE_COMPANION_DIRECTION.md`, and `docs/PRIVATE_COMPANION_DATA_CUSTODY_STANDARD.md`.

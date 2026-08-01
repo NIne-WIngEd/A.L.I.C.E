@@ -48,7 +48,6 @@ checkpoints/
 *.ckpt
 *.safetensors
 *.onnx
-
 # IDE and OS
 .vscode/
 .idea/
@@ -67,3 +66,17 @@ htmlcov/
 *.tmp
 *.temp
 *.bak
+
+
+# Private companion custody (never public Git)
+local_only/
+private_companion/
+*companion_persona*.enc.json
+*companion_persona*.decrypted.json
+*companion_persona*.resolved.json
+*companion_persona*.key
+*private_codebook*
+*chat_bootstrap_private*
+*rayan_person_model*
+*rayan_companion_alignment_examples*
+*private_persona_source*

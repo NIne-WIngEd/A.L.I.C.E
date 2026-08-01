@@ -66,3 +66,14 @@ When a dedicated consumer team exists:
 - the consumer team productizes and maintains downstream releases;
 - parity debt is reviewed as a product and technical metric;
 - Rayan may focus on A.L.I.C.E. while the consumer team preserves the parity commitment.
+
+
+## 6. Cognitive Workspace working-parity lane
+
+The following generalizable capabilities receive immediate kernel and Friday disposition: Mission Graph, semantic routing, Result Capsules, traceback, attention policy, workspace projection, adaptive compositor, host window overrides, speaker context, guest sessions, guest grants, and legacy-chat compatibility.
+
+A.L.I.C.E. may evaluate frontier variants first. Friday productization planning begins immediately. Product releases remain independent, and each records its own privacy, host-isolation, evaluation, A.L.I.C.E.-audit, and Rayan-approval state.
+
+## 7. Production-governance parity
+
+A dedicated Friday team may diverge in research and product experience, but it may not silently alter shared semantics or unilaterally ship production behavior. Exact-artifact dual approval and emergency rollback boundaries are part of the product-family contract.

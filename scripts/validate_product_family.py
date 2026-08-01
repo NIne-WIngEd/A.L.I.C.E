@@ -11,24 +11,23 @@ if str(SRC) not in sys.path:
 
 from product_family import load_product_family_manifest  # noqa: E402
 
-
 REQUIRED_DOCS = [
     "docs/FRIDAY_PRODUCT_VISION.md",
     "docs/FRIDAY_ROADMAP.md",
     "docs/ALICE_FRIDAY_SEPARATION_PLAN.md",
     "docs/FRIDAY_ARCHITECTURE.md",
     "docs/FRIDAY_PRIVACY_AND_TRUST_MODEL.md",
-    "docs/FRIDAY_YC_AND_COMPANY_PLAN.md",
-    "docs/FRIDAY_NAME_AND_IP_RISK.md",
     "docs/HOST_SELECTED_IDENTITY_STANDARD.md",
     "docs/PRODUCT_FAMILY_CAPABILITY_PARITY.md",
-    "docs/FRIDAY_HANDOFF_AND_MAINTENANCE_PLAN.md",
     "docs/SHARED_KERNEL_EXTRACTION_STANDARD.md",
-    "docs/PHASE_1_4_PRODUCT_MIGRATION_PLAN.md",
-    "docs/decisions/ADR-006-friday-product-and-kernel-separation.md",
+    "docs/FRIDAY_COGNITIVE_WORKSPACE_AND_PRODUCTION_GOVERNANCE_PLAN.md",
+    "docs/FRIDAY_PRODUCTION_GOVERNANCE.md",
+    "docs/decisions/ADR-011-friday-independent-repository-dual-approval.md",
     "policies/product_lines.json",
     "policies/friday_privacy_defaults.json",
     "policies/capability_parity_ledger.json",
+    "policies/friday_production_governance.json",
+    "policies/friday_release_attestation_schema.json",
 ]
 
 
@@ -45,12 +44,7 @@ def main() -> int:
         manifest = None
 
     try:
-        privacy = json.loads(
-            (ROOT / "policies" / "friday_privacy_defaults.json").read_text(
-                encoding="utf-8"
-            )
-        )
-        defaults = privacy["defaults"]
+        privacy = json.loads((ROOT / "policies/friday_privacy_defaults.json").read_text(encoding="utf-8"))
         expected = {
             "vendor_can_decrypt_host_data": False,
             "mandatory_cloud_account": False,
@@ -62,29 +56,29 @@ def main() -> int:
             "update_packages_must_be_signed": True,
         }
         for key, value in expected.items():
-            if defaults.get(key) is not value:
+            if privacy["defaults"].get(key) is not value:
                 errors.append(f"Friday privacy default {key!r} must be {value!r}")
     except Exception as exc:  # noqa: BLE001
         errors.append(f"invalid Friday privacy policy: {exc}")
 
-    roadmap = (ROOT / "docs" / "ROADMAP.md").read_text(encoding="utf-8")
+    roadmap = (ROOT / "docs/ROADMAP.md").read_text(encoding="utf-8")
     for marker in (
-        "Phase 5.0",
-        "Phase 6.5",
-        "Friday",
-        "host chooses",
-        "capability parity",
-        "No earlier phase is immune from migration",
+        "Phase 5",
+        "Active after approved P4.10 closure and merge",
+        "Independent Product Readiness Gate",
+        "Mission Graph and Cognitive Workspace lane",
+        "Clone-aware private identity phase lane",
     ):
         if marker not in roadmap:
             errors.append(f"roadmap missing product marker: {marker}")
 
     try:
-        parity = json.loads((ROOT / "policies" / "capability_parity_ledger.json").read_text(encoding="utf-8"))
+        parity = json.loads((ROOT / "policies/capability_parity_ledger.json").read_text(encoding="utf-8"))
         if parity.get("destination_parity_required") is not True:
             errors.append("capability parity ledger must require destination parity")
-        if not parity.get("capabilities"):
-            errors.append("capability parity ledger may not be empty")
+        for capability in ("mission_graph.v1", "result_capsule.v1", "workspace_projection.v1", "guest_grant.v1"):
+            if capability not in parity.get("capabilities", {}):
+                errors.append(f"capability parity ledger missing {capability}")
     except Exception as exc:  # noqa: BLE001
         errors.append(f"invalid capability parity ledger: {exc}")
 
@@ -92,7 +86,7 @@ def main() -> int:
         print(
             "Validated product family:",
             ", ".join(sorted(manifest.products)),
-            f"with split gate {manifest.formal_repository_split_gate}",
+            f"with readiness gate {manifest.independent_product_readiness_gate}",
         )
 
     if errors:
@@ -100,7 +94,6 @@ def main() -> int:
         for error in errors:
             print(f"- {error}")
         return 1
-
     print("A.L.I.C.E.–Friday product-family architecture validation passed.")
     return 0
 

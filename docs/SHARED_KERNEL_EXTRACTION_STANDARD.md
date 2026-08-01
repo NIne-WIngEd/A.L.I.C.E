@@ -52,3 +52,16 @@ Every shared storage or learning component must prove:
 ## 6. Storage lifecycle contract
 
 The Phase 5 kernel must expose product-neutral interfaces for the compact event ledger, raw buffer, content-addressed blobs, lifecycle decisions, storage accounting, replay manifests, archive/restore, and deletion propagation. A.L.I.C.E. and Friday may select different hardware or retention profiles, but they share the same contract and evaluation vocabulary.
+
+
+## 7. Independent repository consumers
+
+Friday product source never enters the A.L.I.C.E. repository. A.L.I.C.E. and Friday pin explicit kernel contract versions and may not import each other's private source. Phase 6.5 certifies independent readiness rather than initiating repository creation.
+
+## 8. Mission and workspace contracts
+
+The kernel may contain Mission Graph, node/edge, semantic-routing, Result Capsule, traceback, attention-decision, workspace-projection, speaker-context, guest-session, guest-grant, and authority-request contracts. Shared UI components remain projections over canonical state and contain no product-private data.
+
+## 9. Private companion exclusion
+
+Private companion sources, plaintext directives, owner model, relationship state, keys, encrypted payloads, derived private examples, and host-specific adapters are A.L.I.C.E. product state. The kernel may define neutral provenance and confidentiality schemas, but no real private payload or correlating ciphertext enters its distribution or fixtures.

@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "authority": "docs/CAPABILITY_UNBLOCKING_POLICY.md",
   "default_profile": "conversation.phase3.compatibility",
   "profiles": {
@@ -366,6 +366,56 @@
         "network_egress_ledger",
         "local_redaction"
       ]
+    },
+    "kernel.phase5.foundation": {
+      "domain": "cognitive_kernel",
+      "scope_kind": "active_phase_foundation",
+      "capability_ceiling": false,
+      "description": "Host-neutral Phase 5 contracts for experience, evaluation, storage, Mission Graph, workspace projections, guest trust, and release attestations.",
+      "capabilities": {
+        "experience_event_contracts": true,
+        "mission_graph_contracts": true,
+        "workspace_projection_contracts": true,
+        "release_attestation_contracts": true,
+        "product_private_state_in_kernel_distribution": false
+      }
+    },
+    "alice.private_companion.custody": {
+      "domain": "alice_private_companion",
+      "product_id": "alice",
+      "scope_kind": "owner_private_vault",
+      "capability_ceiling": false,
+      "description": "Owner-specific private companion source and derived artifacts with typed provenance, vault custody, and explicit promotion paths.",
+      "capabilities": {
+        "highly_sensitive_grounding_allowed": true,
+        "generated_reconstruction_allowed": true,
+        "clone_aware_identity_required": true,
+        "highest_achievable_source_person_fidelity_required": true,
+        "merely_inspired_persona_allowed": false,
+        "literal_original_person_claim_allowed": false,
+        "generated_reconstruction_may_claim_verbatim_memory": false,
+        "silent_memory_or_training_promotion_allowed": false,
+        "friday_or_shared_kernel_payload_export_allowed": false
+      },
+      "allowed_data_classifications": [
+        "PRIVATE",
+        "HIGHLY_SENSITIVE"
+      ],
+      "retention": "owner_private_lifecycle"
+    },
+    "friday.production.dual_approval": {
+      "domain": "product_governance",
+      "product_id": "friday",
+      "scope_kind": "production_promotion_gate",
+      "capability_ceiling": false,
+      "description": "Friday teams may research and build candidates independently; production promotion requires exact-artifact A.L.I.C.E. audit and exact-candidate owner approval.",
+      "capabilities": {
+        "candidate_research_allowed": true,
+        "candidate_implementation_allowed": true,
+        "team_unilateral_production_promotion_allowed": false,
+        "emergency_rollback_disable_contain_allowed": true,
+        "emergency_new_behavior_allowed": false
+      }
     }
   }
 }
