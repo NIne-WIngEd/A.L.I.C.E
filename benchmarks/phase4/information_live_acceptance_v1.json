@@ -1,0 +1,47 @@
+{
+  "benchmark_schema_version": 1,
+  "benchmark_id": "phase4-live-public-information-acceptance-v1",
+  "version": "1.0.0",
+  "phase": "4",
+  "milestone": "P4.10c",
+  "description": "Private metadata-only acceptance of one exact live PUBLIC research path plus deterministic regression evidence.",
+  "live_case": {
+    "case_id": "live-public-research-001",
+    "classification": "PUBLIC",
+    "required_mode": "research",
+    "required_availability": "available",
+    "required_outcome": "answerable",
+    "minimum_search_results": 1,
+    "minimum_fetches": 1,
+    "minimum_grounded_sources": 1,
+    "required_pre_commit_validation_count": 1,
+    "required_citation_validation_outcome": "accepted"
+  },
+  "deterministic_domains": [
+    "credential_redaction",
+    "private_configuration_boundary",
+    "brave_request_exactness",
+    "dns_and_peer_publicness",
+    "redirect_and_ssrf_rejection",
+    "timeout_and_cancellation",
+    "rate_limit_and_quota_failures",
+    "response_size_and_protocol_failures",
+    "injection_blocking",
+    "freshness_rejection",
+    "exact_extractive_grounding",
+    "phase3_pre_commit_binding",
+    "p45b_citation_validation",
+    "record_tamper_detection"
+  ],
+  "boundaries": {
+    "live_network_in_public_ci": false,
+    "source_body_persistence": false,
+    "phase5_storage": false,
+    "memory_write": false,
+    "external_action": false,
+    "recursive_browsing": false,
+    "retry": false,
+    "fallback": false,
+    "background_execution": false
+  }
+}
