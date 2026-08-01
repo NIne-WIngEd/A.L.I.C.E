@@ -1,0 +1,143 @@
+{
+  "cognitive_kernel_attention_workspace_policy_schema_version": 1,
+  "policy_id": "personal-cognitive-kernel.attention-workspace.v1",
+  "version": "0.3.0",
+  "phase": "5",
+  "milestone": "P5.0d",
+  "status": "contract_foundation",
+  "required_capabilities": [
+    "attention_policy.v1",
+    "workspace_projection.v1",
+    "adaptive_compositor.v1",
+    "host_window_override.v1"
+  ],
+  "allowed_attention_subject_types": [
+    "mission_node",
+    "result_capsule",
+    "security_interrupt",
+    "authority_request",
+    "monitor"
+  ],
+  "allowed_attention_priority_classes": [
+    "host_decision_required",
+    "protected_interrupt",
+    "critical_path_blocker",
+    "imminent_deadline",
+    "result_ready",
+    "host_engaged",
+    "significant_state_change",
+    "active_execution",
+    "recent_support",
+    "monitor_update",
+    "low_attention"
+  ],
+  "allowed_protected_interrupt_reasons": [
+    "device_or_data_threat",
+    "uncertain_identity_privileged_action",
+    "destructive_action_authorization",
+    "security_breach",
+    "failed_migration",
+    "imminent_deadline_intervention",
+    "active_mission_integrity_conflict"
+  ],
+  "allowed_attention_host_overrides": [
+    "none",
+    "pinned",
+    "foreground",
+    "background",
+    "suppressed"
+  ],
+  "allowed_interruption_preferences": [
+    "allow",
+    "minimize",
+    "focus_only"
+  ],
+  "allowed_focus_modes": [
+    "automatic",
+    "mission_focus",
+    "quiet",
+    "security_only"
+  ],
+  "allowed_host_override_commands": [
+    "pin",
+    "unpin",
+    "foreground",
+    "background",
+    "set_visibility_limit",
+    "lock_layout",
+    "unlock_layout",
+    "set_focus_mission",
+    "clear_focus",
+    "set_interruption_preference",
+    "keep_security_visible",
+    "restore_automatic_layout"
+  ],
+  "allowed_host_override_statuses": [
+    "requested",
+    "applied",
+    "rejected",
+    "revoked",
+    "expired"
+  ],
+  "allowed_workspace_item_types": [
+    "mission_node",
+    "result_capsule",
+    "permission_state",
+    "trust_state",
+    "monitor"
+  ],
+  "allowed_workspace_roles": [
+    "primary",
+    "secondary",
+    "pane",
+    "compact_card",
+    "background_panel"
+  ],
+  "allowed_workspace_layout_modes": [
+    "empty",
+    "full_workspace",
+    "focus_support_split",
+    "primary_two_secondary",
+    "adaptive_grid",
+    "panels_live_cards",
+    "command_center",
+    "highest_value_set"
+  ],
+  "allowed_workspace_audiences": [
+    "host",
+    "non_host"
+  ],
+  "allowed_workspace_privacy_classes": [
+    "ordinary",
+    "sensitive",
+    "restricted"
+  ],
+  "allowed_workspace_redaction_states": [
+    "none",
+    "metadata_only",
+    "title_hidden"
+  ],
+  "allowed_workspace_projection_states": [
+    "active",
+    "superseded",
+    "expired"
+  ],
+  "invariants": {
+    "product_host_scope_required": true,
+    "host_override_precedes_learned_ranking": true,
+    "protected_interrupts_cannot_be_suppressed": true,
+    "commercial_attention_priority_forbidden": true,
+    "ranking_explainable": true,
+    "canonical_state_in_frontend": false,
+    "no_empty_fixed_slots": true,
+    "projection_metadata_only": true,
+    "cross_host_projection_forbidden": true,
+    "non_host_sensitive_redaction_required": true,
+    "remote_attention_manipulation_allowed": false,
+    "persistent_store_implemented": false,
+    "complete_ui_implemented": false,
+    "autonomous_attention_execution_implemented": false,
+    "speaker_guest_authority_implemented": false
+  },
+  "capability_ceiling": false
+}
