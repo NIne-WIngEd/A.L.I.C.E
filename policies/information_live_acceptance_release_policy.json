@@ -1,0 +1,82 @@
+{
+  "information_live_acceptance_release_policy_schema_version": 1,
+  "policy_name": "phase4-live-information-acceptance-v1",
+  "version": "1.0.0",
+  "phase": "4",
+  "milestone": "P4.10c",
+  "status": "private_live_acceptance_and_exact_commit_closure",
+  "permission_id": "web.search",
+  "package_version": "0.18.0",
+  "required_provider_policy": "alice_information_live_provider_runtime_policy@1.0.0",
+  "required_research_policy": "alice_information_live_research_policy@1.0.0",
+  "required_search_provider": "brave-search-v1",
+  "required_fetch_provider": "controlled-live-http-v1",
+  "required_live_path": [
+    "explicit_research_mode",
+    "live_search",
+    "controlled_https_fetch",
+    "injection_inspection",
+    "temporal_and_freshness_analysis",
+    "exact_extractive_grounding",
+    "phase3_projection",
+    "p36_pre_commit_validation",
+    "p45b_citation_validation"
+  ],
+  "required_acceptance_domains": [
+    "provider_availability",
+    "public_network_boundary",
+    "live_source_fetch",
+    "injection_and_freshness_gates",
+    "exact_grounding",
+    "phase3_projection",
+    "pre_commit_validation",
+    "citation_validation",
+    "privacy_and_egress",
+    "deterministic_regression",
+    "exact_commit_and_rollback"
+  ],
+  "required_live_result": {
+    "outcome": "answerable",
+    "minimum_search_results": 1,
+    "minimum_fetches": 1,
+    "minimum_grounded_sources": 1,
+    "minimum_p36_pre_commit_validations": 1,
+    "p45b_outcome": "accepted"
+  },
+  "required_repository_state": {
+    "clean": true,
+    "head_matches_requested_commit": true,
+    "rollback_must_be_distinct_ancestor": true,
+    "repository_unchanged_after_audit": true
+  },
+  "required_private_record": {
+    "outside_repository": true,
+    "raw_query_allowed": false,
+    "source_body_allowed": false,
+    "credential_allowed": false,
+    "provider_response_body_allowed": false,
+    "model_prompt_allowed": false,
+    "metadata_only": true
+  },
+  "required_regression": {
+    "p410_targeted_passed": 101,
+    "p410_targeted_skipped": 0,
+    "minimum_repository_passed": 2124,
+    "maximum_repository_skipped": 2,
+    "required_repository_subtests_passed": 14
+  },
+  "execution_controls": {
+    "foreground_only": true,
+    "public_queries_only": true,
+    "exact_provider_selection": true,
+    "no_fallback": true,
+    "no_retry": true,
+    "no_recursive_browsing": true,
+    "no_source_body_persistence": true,
+    "no_phase5_storage": true,
+    "no_memory_write": true,
+    "no_external_action": true,
+    "no_background_execution": true
+  },
+  "capability_ceiling": false
+}

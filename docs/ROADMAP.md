@@ -138,9 +138,9 @@ The host chooses the assistant identity during enrollment. This capability parit
 <!-- P4.10 LIVE PUBLIC STATUS START -->
 ## Additive Phase 4 live-public-information status
 
-- Completed sub-milestone: **P4.10b**
-- Package profile: `alice_information 0.17.0`
-- P4.10a–P4.10b are complete. P4.10c private live acceptance and exact-commit closure remains active. Phase 5 remains blocked.
+- Completed sub-milestone: **P4.10c**
+- Package profile: `alice_information 0.18.0`
+- P4.10 operational live-public-information closure is implemented. Phase 4 becomes operationally complete only after the private P4.10c record is approved and the exact audited tree is merged.
 - P4.0–P4.9 and the P4.6a/P4.7a/P4.7b fixture profiles remain reproducible and unchanged.
 - No source persistence, Phase 5 storage, memory write, external action, recursive browse, retry, fallback, or background execution is activated.
 <!-- P4.10 LIVE PUBLIC STATUS END -->
