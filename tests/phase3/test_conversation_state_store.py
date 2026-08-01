@@ -73,7 +73,10 @@ def test_store_rejects_newer_schema_version(tmp_path: Path) -> None:
     store, _, _, _ = make_store(tmp_path)
     with sqlite3.connect(store.database_path) as connection:
         connection.execute(
-            "UPDATE conversation_schema_migrations SET version = 99"
+            """
+            UPDATE conversation_schema_migrations SET version = 99
+            WHERE version = (SELECT MAX(version) FROM conversation_schema_migrations)
+            """
         )
     with pytest.raises(ConversationStateStoreError):
         store.initialize()

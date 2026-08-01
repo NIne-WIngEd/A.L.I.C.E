@@ -34,9 +34,14 @@ P410B_FILES = (
     "docs/PHASE_4_LIVE_RESEARCH_EXECUTION.md",
     "policies/information_live_research_policy.json",
     "scripts/run_phase4_live_research.py",
+    "src/alice_conversation/state_schema.py",
+    "src/alice_conversation/state_store.py",
     "src/alice_information/live_claims.py",
     "src/alice_information/live_research.py",
     "src/alice_information/live_research_policy.py",
+    "tests/phase3/test_conversation_state_store.py",
+    "tests/phase3/test_conversation_web_source_state_migration.py",
+    "tests/phase3/test_conversation_reference_identity_migration.py",
     "tests/phase4/_information_live_research_helpers.py",
     "tests/phase4/test_information_live_claims.py",
     "tests/phase4/test_information_live_research.py",
@@ -132,7 +137,7 @@ def main() -> int:
             "successor_runtime": "src/alice_evolution/capability_runtime.py",
             "registered_by": "phase4-p410-operational-live-closure",
         }
-        if relative.startswith("tests/phase4/"):
+        if relative.startswith("tests/"):
             entries[relative] = {
                 **common,
                 "scope_kind": "compatibility_test",

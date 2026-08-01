@@ -358,13 +358,19 @@
       "registered_by": "alice-mega-architecture-migration-v1.2"
     },
     "src/alice_conversation/state_schema.py": {
-      "scope_kind": "released_baseline_compatibility",
       "capability_ceiling": false,
-      "profile": "conversation.phase3.compatibility",
+      "profile": "information.phase4.live_public",
       "successor_runtime": "src/alice_evolution/capability_runtime.py",
-      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
-      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
-      "registered_by": "alice-mega-architecture-migration-v1.2"
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "active_milestone_guard",
+      "milestone": "P4.10b",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "MUST_REMAIN_DISABLED"
+      ],
+      "reason": "P4.10b is a bounded foreground PUBLIC live-research profile. Its no-persistence, no-action, no-retry, no-fallback, and no-background controls do not prohibit later authorized profiles.",
+      "sunset_condition": "Retain this exact Phase 4 live-public release profile for reproducibility while successor capabilities are selected through the shared capability runtime."
     },
     "src/alice_conversation/state_service.py": {
       "scope_kind": "released_baseline_compatibility",
@@ -376,13 +382,19 @@
       "registered_by": "alice-mega-architecture-migration-v1.2"
     },
     "src/alice_conversation/state_store.py": {
-      "scope_kind": "released_baseline_compatibility",
       "capability_ceiling": false,
-      "profile": "conversation.phase3.compatibility",
+      "profile": "information.phase4.live_public",
       "successor_runtime": "src/alice_evolution/capability_runtime.py",
-      "baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
-      "reason": "Released Phase 3 source remains reproducible while integrated conversation profiles provide the successor path.",
-      "registered_by": "alice-mega-architecture-migration-v1.2"
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "active_milestone_guard",
+      "milestone": "P4.10b",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "MUST_REMAIN_DISABLED"
+      ],
+      "reason": "P4.10b is a bounded foreground PUBLIC live-research profile. Its no-persistence, no-action, no-retry, no-fallback, and no-background controls do not prohibit later authorized profiles.",
+      "sunset_condition": "Retain this exact Phase 4 live-public release profile for reproducibility while successor capabilities are selected through the shared capability runtime."
     },
     "src/alice_conversation/transport.py": {
       "scope_kind": "released_baseline_compatibility",
@@ -1562,6 +1574,154 @@
       "registered_by": "phase4-p410-operational-live-closure",
       "scope_kind": "compatibility_test",
       "reason": "P4.10a tests bind the additive live PUBLIC profile and cannot veto later authorized information capabilities."
+    },
+    "docs/PHASE_4_LIVE_RESEARCH_EXECUTION.md": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "historical_or_phase_local",
+      "reason": "P4.10b documentation defines the current live PUBLIC release profile, not the destination capability ceiling."
+    },
+    "policies/information_live_research_policy.json": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "phase_local_compatibility",
+      "reason": "P4.10b policy/evaluation data is selected only for the named live PUBLIC compatibility profile."
+    },
+    "scripts/run_phase4_live_research.py": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "active_milestone_guard",
+      "milestone": "P4.10b",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "MUST_REMAIN_DISABLED"
+      ],
+      "reason": "P4.10b is a bounded foreground PUBLIC live-research profile. Its no-persistence, no-action, no-retry, no-fallback, and no-background controls do not prohibit later authorized profiles.",
+      "sunset_condition": "Retain this exact Phase 4 live-public release profile for reproducibility while successor capabilities are selected through the shared capability runtime."
+    },
+    "src/alice_information/live_claims.py": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "active_milestone_guard",
+      "milestone": "P4.10b",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "MUST_REMAIN_DISABLED"
+      ],
+      "reason": "P4.10b is a bounded foreground PUBLIC live-research profile. Its no-persistence, no-action, no-retry, no-fallback, and no-background controls do not prohibit later authorized profiles.",
+      "sunset_condition": "Retain this exact Phase 4 live-public release profile for reproducibility while successor capabilities are selected through the shared capability runtime."
+    },
+    "src/alice_information/live_research.py": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "active_milestone_guard",
+      "milestone": "P4.10b",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "MUST_REMAIN_DISABLED"
+      ],
+      "reason": "P4.10b is a bounded foreground PUBLIC live-research profile. Its no-persistence, no-action, no-retry, no-fallback, and no-background controls do not prohibit later authorized profiles.",
+      "sunset_condition": "Retain this exact Phase 4 live-public release profile for reproducibility while successor capabilities are selected through the shared capability runtime."
+    },
+    "src/alice_information/live_research_policy.py": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "active_milestone_guard",
+      "milestone": "P4.10b",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "MUST_REMAIN_DISABLED"
+      ],
+      "reason": "P4.10b is a bounded foreground PUBLIC live-research profile. Its no-persistence, no-action, no-retry, no-fallback, and no-background controls do not prohibit later authorized profiles.",
+      "sunset_condition": "Retain this exact Phase 4 live-public release profile for reproducibility while successor capabilities are selected through the shared capability runtime."
+    },
+    "tests/phase4/_information_live_research_helpers.py": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "compatibility_test",
+      "reason": "P4.10b tests bind the additive live PUBLIC profile and cannot veto later authorized information capabilities."
+    },
+    "tests/phase4/test_information_live_claims.py": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "compatibility_test",
+      "reason": "P4.10b tests bind the additive live PUBLIC profile and cannot veto later authorized information capabilities."
+    },
+    "tests/phase4/test_information_live_research.py": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "compatibility_test",
+      "reason": "P4.10b tests bind the additive live PUBLIC profile and cannot veto later authorized information capabilities."
+    },
+    "tests/phase4/test_information_live_research_adversarial.py": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "compatibility_test",
+      "reason": "P4.10b tests bind the additive live PUBLIC profile and cannot veto later authorized information capabilities."
+    },
+    "tests/phase4/test_information_live_research_policy.py": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "compatibility_test",
+      "reason": "P4.10b tests bind the additive live PUBLIC profile and cannot veto later authorized information capabilities."
+    },
+    "tests/phase4/test_information_live_research_script.py": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "compatibility_test",
+      "reason": "P4.10b tests bind the additive live PUBLIC profile and cannot veto later authorized information capabilities."
+    },
+    "tests/phase3/test_conversation_state_store.py": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "compatibility_test",
+      "reason": "P4.10b tests bind the additive live PUBLIC profile and cannot veto later authorized information capabilities."
+    },
+    "tests/phase3/test_conversation_web_source_state_migration.py": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "compatibility_test",
+      "reason": "P4.10b tests bind the additive live PUBLIC profile and cannot veto later authorized information capabilities."
+    },
+    "tests/phase3/test_conversation_reference_identity_migration.py": {
+      "capability_ceiling": false,
+      "profile": "information.phase4.live_public",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "registered_by": "phase4-p410-operational-live-closure",
+      "scope_kind": "compatibility_test",
+      "reason": "P4.10b tests bind the additive live PUBLIC profile and cannot veto later authorized information capabilities."
     }
   },
   "patterns": [
@@ -1652,7 +1812,7 @@
     "pattern_entries_must_be_narrow_and_reviewed": true,
     "unexpected_active_barriers_fail_migration": true
   },
-  "registered_file_count": 162,
+  "registered_file_count": 177,
   "registered_pattern_count": 11,
   "released_baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe"
 }
