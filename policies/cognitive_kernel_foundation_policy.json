@@ -1,0 +1,85 @@
+{
+  "cognitive_kernel_foundation_policy_schema_version": 1,
+  "policy_id": "personal-cognitive-kernel.foundation.v1",
+  "version": "0.1.0",
+  "phase": "5",
+  "milestone": "P5.0b",
+  "status": "contract_foundation",
+  "shared_kernel_id": "personal-cognitive-kernel",
+  "required_products": [
+    "alice",
+    "friday"
+  ],
+  "required_scope_fields": [
+    "product_id",
+    "host_instance_id",
+    "schema_version",
+    "encryption_domain",
+    "provenance",
+    "content_digest",
+    "retention_class",
+    "storage_tier",
+    "deletion_lineage"
+  ],
+  "allowed_provenance_types": [
+    "owner_attested_canonical",
+    "derived_inference",
+    "generated_reconstruction",
+    "evolved_identity",
+    "owner_correction",
+    "conflict_or_uncertain"
+  ],
+  "allowed_identity_layers": [
+    "source_history",
+    "source_person_model",
+    "reconstruction_inference",
+    "alice_continuity",
+    "owner_relationship_model"
+  ],
+  "allowed_private_directive_codes": [
+    "PX-ORIGIN-01",
+    "PX-MOTIVE-01",
+    "PX-RELATION-01",
+    "PX-PERSPECTIVE-01",
+    "PX-EVOLUTION-01",
+    "PX-TRIBUTE-01",
+    "PX-CANON-01",
+    "PX-BOUNDARY-01",
+    "PX-SECRECY-01",
+    "PX-OWNER-01",
+    "PX-CLONE-01",
+    "PX-DISCLOSURE-01",
+    "PX-FIDELITY-01"
+  ],
+  "allowed_storage_tiers": [
+    "ledger",
+    "raw_buffer",
+    "hot",
+    "warm",
+    "cold",
+    "quarantine",
+    "deleted"
+  ],
+  "allowed_retention_classes": [
+    "authoritative_source",
+    "active_project",
+    "high_value_experience",
+    "ordinary_experience",
+    "transient_web_or_tool_cache",
+    "failed_experiment",
+    "training_replay",
+    "quarantine",
+    "owner_hold"
+  ],
+  "boundaries": {
+    "metadata_only_contracts": true,
+    "private_payload_allowed": false,
+    "cross_host_deduplication_allowed": false,
+    "friday_product_source_allowed": false,
+    "persistent_store_implemented": false,
+    "raw_buffer_implemented": false,
+    "complete_ui_implemented": false,
+    "autonomous_learning_implemented": false
+  },
+  "capability_ceiling": false
+}
