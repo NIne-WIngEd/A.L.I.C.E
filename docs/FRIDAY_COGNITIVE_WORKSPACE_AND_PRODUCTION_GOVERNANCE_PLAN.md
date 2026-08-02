@@ -1,6 +1,9 @@
 # Friday Cognitive Workspace and Production Governance Plan
 
-> [!IMPORTANT]\n> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.\n>\n> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
+> [!IMPORTANT]
+> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.
+>
+> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
 
 
 **Status:** Owner-accepted product and governance direction
@@ -49,8 +52,8 @@ Unless Rayan explicitly revises them, future planning and implementation must pr
 10. Generalizable production-ready A.L.I.C.E. UI capability enters Friday's implementation lane immediately.
 11. A.L.I.C.E. may receive frontier experiments first.
 12. Temporary productization lag is allowed; permanent capability omission is not.
-13. A future Friday team may independently research, design, implement, test, and propose features.
-14. A future Friday team may not independently ship production behavior.
+13. After formal handover, a future Friday team may independently manage maintenance, product experience, packaging, support, and downstream implementation or testing of capabilities already eligible through A.L.I.C.E.; it may also prepare and submit upstream capability proposals.
+14. A future Friday team may not implement, activate, or test a capability as a Friday capability before A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless Rayan records an explicit exact-scope override.
 15. Every production feature requires an exact-artifact A.L.I.C.E. audit attestation.
 16. Every production feature requires Rayan's explicit production approval.
 17. Either A.L.I.C.E. or Rayan may veto or return a candidate for revision.
@@ -640,29 +643,24 @@ Friday productization planning begins immediately rather than waiting several ph
 A qualified Friday team may independently:
 
 - set its own sprint schedule;
-- perform product research;
-- propose new features;
-- develop Friday-only integrations;
-- design alternative product experiences;
-- improve accessibility;
-- support new hardware;
-- create experimental branches;
-- run internal tests;
-- maintain packaging;
-- fix bugs;
+- maintain packaging and releases;
+- fix bugs and respond to incidents;
+- improve accessibility and hardware support;
+- design product experiences;
+- conduct separately approved user research;
+- develop Friday-only integrations that do not add an unapproved capability;
+- implement and test capabilities already eligible through A.L.I.C.E.;
 - propose shared-kernel changes;
-- prepare model packs;
-- conduct separately approved user research.
+- prepare upstream capability proposals;
+- prepare model packs for already eligible capabilities.
 
-The team does not need prior permission to think, research, prototype, or prepare candidates.
+The team does not need prior permission for maintenance, product-experience research, or preparation of upstream proposals.
 
 However:
 
-> The Friday team cannot place a new feature or changed behavior into production without both A.L.I.C.E.'s exact-artifact audit approval and Rayan's explicit production approval.
+> A capability that A.L.I.C.E. does not yet possess remains proposal-only. Friday may not implement, activate, or test it as a Friday capability until A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless Rayan records an explicit exact-scope override.
 
-The team may go its own way in research and implementation.
-
-It may not bypass product-family production governance.
+Independent maintenance does not create independent capability sovereignty. The team may not bypass either the capability-precedent gate or product-family production governance.
 
 ---
 
@@ -804,7 +802,7 @@ A purely non-behavioral documentation or visual correction may use a reduced rev
 
 ## 17. Actions allowed without production approval
 
-The Friday team may independently:
+For maintenance and capabilities already eligible through A.L.I.C.E., the Friday team may independently:
 
 ```text
 create branches
@@ -823,6 +821,8 @@ submit proposals
 open pull requests
 create candidate model packs
 ```
+
+For a capability A.L.I.C.E. has not yet gained, Friday work is limited to problem research, requirements, risk analysis, and upstream proposal artifacts. Friday code, prototypes, model packs, or tests that implement or exercise that capability as a Friday capability are prohibited unless Rayan records an explicit exact-scope override.
 
 These candidates must remain in:
 
@@ -1724,4 +1724,4 @@ Important amendment:
 
 ## 34. Final governance statement
 
-> Friday's production team is free to invent, investigate, implement, and argue for its own product direction. It is not free to place unreviewed capability into production. Production authority remains a two-key system: A.L.I.C.E. must attest that the exact candidate passed the required audit, and Rayan must explicitly authorize the exact release.
+> Friday's production team may independently manage maintenance, product experience, and downstream implementation of capabilities already eligible through A.L.I.C.E., and it may argue for new capabilities through upstream proposals. It may not originate, implement, activate, or test a new Friday capability before A.L.I.C.E. precedent unless Rayan records an explicit exact-scope override. Production authority remains a two-key system: A.L.I.C.E. must attest that the exact candidate passed the required audit, and Rayan must explicitly authorize the exact release.

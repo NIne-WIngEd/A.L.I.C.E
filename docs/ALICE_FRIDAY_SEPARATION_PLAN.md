@@ -1,6 +1,9 @@
 # A.L.I.C.E.–Friday Separation Plan
 
-> [!IMPORTANT]\n> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.\n>\n> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
+> [!IMPORTANT]
+> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.
+>
+> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
 
 
 **Version:** 2.0.0
@@ -30,7 +33,7 @@ The kernel may begin as an independently versioned package boundary while extrac
 - **Phase 5.0:** establish host-neutral kernel identity, Experience Ledger, storage/evaluation contracts, Mission Graph contracts, Result Capsules, traceback, attention/workspace projections, speaker context, guest grants, and release-attestation schemas.
 - **Phase 6:** implement the Cognitive Workspace and control-plane UI against those contracts.
 - **Phase 6.5:** Independent Product Readiness Gate. Prove independent builds, versioned kernel consumption, host isolation, release attestations, production-signing gates, migration, rollback, and parity tracking.
-- **Phase 7 onward:** release and evolve products independently while sharing versioned contracts and evaluation suites.
+- **Phase 7 onward:** release and evolve products independently within the A.L.I.C.E.-first capability-precedent and dual-approval rules while sharing versioned contracts and evaluation suites.
 
 ## 3. Kernel ownership
 
@@ -74,7 +77,7 @@ Friday shares A.L.I.C.E.'s generalizable destination capabilities. A.L.I.C.E. ma
 
 ## 8. Production governance
 
-Friday development teams may research, design, prototype, implement, test, and propose changes independently. Production promotion requires both:
+Before formal handover, Friday work is limited to repository foundation, maintenance, and downstream productization of capabilities already eligible through A.L.I.C.E. After formal handover, a qualified Friday team may independently manage maintenance, product experience, packaging, support, and downstream implementation or testing of capabilities already eligible through A.L.I.C.E. A capability that A.L.I.C.E. has not yet gained remains proposal-only and must be routed upstream; Friday may not implement, activate, or test it as a Friday capability unless Rayan records an explicit exact-scope override. Production promotion requires both:
 
 1. an A.L.I.C.E. audit attestation bound to the exact commit, artifacts, policies, migrations, models, evaluations, and rollback manifest; and
 2. MK Rayan's explicit production approval bound to the same candidate.

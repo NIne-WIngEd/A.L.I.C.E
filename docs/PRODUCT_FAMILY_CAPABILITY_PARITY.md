@@ -1,6 +1,9 @@
 # Product-Family Capability Parity Standard
 
-> [!IMPORTANT]\n> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.\n>\n> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
+> [!IMPORTANT]
+> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.
+>
+> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
 
 
 **Status:** Ratified architecture standard
@@ -79,4 +82,4 @@ A.L.I.C.E. may evaluate frontier variants first. Friday productization planning 
 
 ## 7. Production-governance parity
 
-A dedicated Friday team may diverge in research and product experience, but it may not silently alter shared semantics or unilaterally ship production behavior. Exact-artifact dual approval and emergency rollback boundaries are part of the product-family contract.
+A dedicated Friday team may independently manage maintenance, product experience, packaging, support, and productization of capabilities already eligible through A.L.I.C.E. A Friday-originated capability that A.L.I.C.E. lacks must remain an upstream proposal until A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless Rayan records an explicit exact-scope override. The team may not silently alter shared semantics or unilaterally ship production behavior. Exact-artifact dual approval and emergency rollback boundaries are part of the product-family contract.
