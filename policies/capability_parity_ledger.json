@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "2.1.0",
   "authority": "docs/PRODUCT_FAMILY_CAPABILITY_PARITY.md",
   "destination_parity_required": true,
   "capabilities": {
@@ -59,168 +59,341 @@
     },
     "mission_graph.v1": {
       "title": "mission graph",
-      "alice_status": "planned",
-      "kernel_status": "planned_phase5_contract",
-      "friday_status": "planned_independent_repository",
+      "alice_status": "kernel_contract_available_runtime_not_yet_activated",
+      "kernel_status": "implemented_phase5_contract",
+      "friday_status": "foundation_only_not_eligible",
       "shared_ui_status": "planned",
       "generalization_status": "required",
-      "privacy_review": "pending",
-      "host_isolation_review": "pending",
-      "alice_audit_status": "not_yet_candidate",
-      "rayan_approval_status": "not_yet_candidate",
-      "reason_for_lag": null,
+      "privacy_review": "contract_review_passed",
+      "host_isolation_review": "contract_review_passed",
+      "alice_audit_status": "kernel_contract_validated_not_production_candidate",
+      "rayan_approval_status": "not_applicable_contract_foundation",
+      "reason_for_lag": "A.L.I.C.E. has not yet implemented, evaluated, approved, and gained the corresponding production capability; Friday remains foundation-only before Phase 6.5.",
       "target_phase": "5-6",
-      "evidence_bundle": null
+      "evidence_bundle": {
+        "kernel_contract_version": "0.2.0",
+        "implementation_milestone": "P5.0c",
+        "merged_main_commit": "54ed564f23eac116d06859a265c0a8e0e823189a",
+        "policy_path": "policies/cognitive_kernel_mission_graph_policy.json",
+        "source_and_test_paths": [
+          "src/cognitive_kernel/mission.py",
+          "tests/phase5/test_mission_graph_contracts.py"
+        ]
+      },
+      "kernel_contract_implemented": true,
+      "alice_capability_gained": false,
+      "friday_eligibility_status": "not_eligible_alice_capability_not_yet_gained",
+      "pre_phase_6_5_status": "foundation_only"
     },
     "semantic_router.v1": {
       "title": "semantic router",
-      "alice_status": "planned",
-      "kernel_status": "planned_phase5_contract",
-      "friday_status": "planned_independent_repository",
+      "alice_status": "kernel_contract_available_runtime_not_yet_activated",
+      "kernel_status": "implemented_phase5_contract",
+      "friday_status": "foundation_only_not_eligible",
       "shared_ui_status": "planned",
       "generalization_status": "required",
-      "privacy_review": "pending",
-      "host_isolation_review": "pending",
-      "alice_audit_status": "not_yet_candidate",
-      "rayan_approval_status": "not_yet_candidate",
-      "reason_for_lag": null,
+      "privacy_review": "contract_review_passed",
+      "host_isolation_review": "contract_review_passed",
+      "alice_audit_status": "kernel_contract_validated_not_production_candidate",
+      "rayan_approval_status": "not_applicable_contract_foundation",
+      "reason_for_lag": "A.L.I.C.E. has not yet implemented, evaluated, approved, and gained the corresponding production capability; Friday remains foundation-only before Phase 6.5.",
       "target_phase": "5-6",
-      "evidence_bundle": null
+      "evidence_bundle": {
+        "kernel_contract_version": "0.2.0",
+        "implementation_milestone": "P5.0c",
+        "merged_main_commit": "54ed564f23eac116d06859a265c0a8e0e823189a",
+        "policy_path": "policies/cognitive_kernel_mission_graph_policy.json",
+        "source_and_test_paths": [
+          "src/cognitive_kernel/routing.py",
+          "tests/phase5/test_semantic_routing.py"
+        ]
+      },
+      "kernel_contract_implemented": true,
+      "alice_capability_gained": false,
+      "friday_eligibility_status": "not_eligible_alice_capability_not_yet_gained",
+      "pre_phase_6_5_status": "foundation_only"
     },
     "result_capsule.v1": {
       "title": "result capsule",
-      "alice_status": "planned",
-      "kernel_status": "planned_phase5_contract",
-      "friday_status": "planned_independent_repository",
+      "alice_status": "kernel_contract_available_runtime_not_yet_activated",
+      "kernel_status": "implemented_phase5_contract",
+      "friday_status": "foundation_only_not_eligible",
       "shared_ui_status": "planned",
       "generalization_status": "required",
-      "privacy_review": "pending",
-      "host_isolation_review": "pending",
-      "alice_audit_status": "not_yet_candidate",
-      "rayan_approval_status": "not_yet_candidate",
-      "reason_for_lag": null,
+      "privacy_review": "contract_review_passed",
+      "host_isolation_review": "contract_review_passed",
+      "alice_audit_status": "kernel_contract_validated_not_production_candidate",
+      "rayan_approval_status": "not_applicable_contract_foundation",
+      "reason_for_lag": "A.L.I.C.E. has not yet implemented, evaluated, approved, and gained the corresponding production capability; Friday remains foundation-only before Phase 6.5.",
       "target_phase": "5-6",
-      "evidence_bundle": null
+      "evidence_bundle": {
+        "kernel_contract_version": "0.2.0",
+        "implementation_milestone": "P5.0c",
+        "merged_main_commit": "54ed564f23eac116d06859a265c0a8e0e823189a",
+        "policy_path": "policies/cognitive_kernel_mission_graph_policy.json",
+        "source_and_test_paths": [
+          "src/cognitive_kernel/results.py",
+          "tests/phase5/test_result_capsule_traceback.py"
+        ]
+      },
+      "kernel_contract_implemented": true,
+      "alice_capability_gained": false,
+      "friday_eligibility_status": "not_eligible_alice_capability_not_yet_gained",
+      "pre_phase_6_5_status": "foundation_only"
     },
     "traceback_engine.v1": {
       "title": "traceback engine",
-      "alice_status": "planned",
-      "kernel_status": "planned_phase5_contract",
-      "friday_status": "planned_independent_repository",
+      "alice_status": "kernel_contract_available_runtime_not_yet_activated",
+      "kernel_status": "implemented_phase5_contract",
+      "friday_status": "foundation_only_not_eligible",
       "shared_ui_status": "planned",
       "generalization_status": "required",
-      "privacy_review": "pending",
-      "host_isolation_review": "pending",
-      "alice_audit_status": "not_yet_candidate",
-      "rayan_approval_status": "not_yet_candidate",
-      "reason_for_lag": null,
+      "privacy_review": "contract_review_passed",
+      "host_isolation_review": "contract_review_passed",
+      "alice_audit_status": "kernel_contract_validated_not_production_candidate",
+      "rayan_approval_status": "not_applicable_contract_foundation",
+      "reason_for_lag": "A.L.I.C.E. has not yet implemented, evaluated, approved, and gained the corresponding production capability; Friday remains foundation-only before Phase 6.5.",
       "target_phase": "5-6",
-      "evidence_bundle": null
+      "evidence_bundle": {
+        "kernel_contract_version": "0.2.0",
+        "implementation_milestone": "P5.0c",
+        "merged_main_commit": "54ed564f23eac116d06859a265c0a8e0e823189a",
+        "policy_path": "policies/cognitive_kernel_mission_graph_policy.json",
+        "source_and_test_paths": [
+          "src/cognitive_kernel/results.py",
+          "tests/phase5/test_result_capsule_traceback.py"
+        ]
+      },
+      "kernel_contract_implemented": true,
+      "alice_capability_gained": false,
+      "friday_eligibility_status": "not_eligible_alice_capability_not_yet_gained",
+      "pre_phase_6_5_status": "foundation_only"
     },
     "attention_policy.v1": {
       "title": "attention policy",
-      "alice_status": "planned",
-      "kernel_status": "planned_phase5_contract",
-      "friday_status": "planned_independent_repository",
+      "alice_status": "kernel_contract_available_runtime_not_yet_activated",
+      "kernel_status": "implemented_phase5_contract",
+      "friday_status": "foundation_only_not_eligible",
       "shared_ui_status": "planned",
       "generalization_status": "required",
-      "privacy_review": "pending",
-      "host_isolation_review": "pending",
-      "alice_audit_status": "not_yet_candidate",
-      "rayan_approval_status": "not_yet_candidate",
-      "reason_for_lag": null,
+      "privacy_review": "contract_review_passed",
+      "host_isolation_review": "contract_review_passed",
+      "alice_audit_status": "kernel_contract_validated_not_production_candidate",
+      "rayan_approval_status": "not_applicable_contract_foundation",
+      "reason_for_lag": "A.L.I.C.E. has not yet implemented, evaluated, approved, and gained the corresponding production capability; Friday remains foundation-only before Phase 6.5.",
       "target_phase": "5-6",
-      "evidence_bundle": null
+      "evidence_bundle": {
+        "kernel_contract_version": "0.3.0",
+        "implementation_milestone": "P5.0d",
+        "merged_main_commit": "e5ddd77141ca4577fadedf62502aa8102960fbc2",
+        "policy_path": "policies/cognitive_kernel_attention_workspace_policy.json",
+        "source_and_test_paths": [
+          "src/cognitive_kernel/attention.py",
+          "tests/phase5/test_attention_decision.py"
+        ]
+      },
+      "kernel_contract_implemented": true,
+      "alice_capability_gained": false,
+      "friday_eligibility_status": "not_eligible_alice_capability_not_yet_gained",
+      "pre_phase_6_5_status": "foundation_only"
     },
     "workspace_projection.v1": {
       "title": "workspace projection",
-      "alice_status": "planned",
-      "kernel_status": "planned_phase5_contract",
-      "friday_status": "planned_independent_repository",
+      "alice_status": "kernel_contract_available_runtime_not_yet_activated",
+      "kernel_status": "implemented_phase5_contract",
+      "friday_status": "foundation_only_not_eligible",
       "shared_ui_status": "planned",
       "generalization_status": "required",
-      "privacy_review": "pending",
-      "host_isolation_review": "pending",
-      "alice_audit_status": "not_yet_candidate",
-      "rayan_approval_status": "not_yet_candidate",
-      "reason_for_lag": null,
+      "privacy_review": "contract_review_passed",
+      "host_isolation_review": "contract_review_passed",
+      "alice_audit_status": "kernel_contract_validated_not_production_candidate",
+      "rayan_approval_status": "not_applicable_contract_foundation",
+      "reason_for_lag": "A.L.I.C.E. has not yet implemented, evaluated, approved, and gained the corresponding production capability; Friday remains foundation-only before Phase 6.5.",
       "target_phase": "5-6",
-      "evidence_bundle": null
+      "evidence_bundle": {
+        "kernel_contract_version": "0.3.0",
+        "implementation_milestone": "P5.0d",
+        "merged_main_commit": "e5ddd77141ca4577fadedf62502aa8102960fbc2",
+        "policy_path": "policies/cognitive_kernel_attention_workspace_policy.json",
+        "source_and_test_paths": [
+          "src/cognitive_kernel/workspace.py",
+          "tests/phase5/test_workspace_projection.py"
+        ]
+      },
+      "kernel_contract_implemented": true,
+      "alice_capability_gained": false,
+      "friday_eligibility_status": "not_eligible_alice_capability_not_yet_gained",
+      "pre_phase_6_5_status": "foundation_only"
     },
     "adaptive_compositor.v1": {
       "title": "adaptive compositor",
-      "alice_status": "planned",
-      "kernel_status": "planned_phase5_contract",
-      "friday_status": "planned_independent_repository",
+      "alice_status": "kernel_contract_available_runtime_not_yet_activated",
+      "kernel_status": "implemented_phase5_contract",
+      "friday_status": "foundation_only_not_eligible",
       "shared_ui_status": "planned",
       "generalization_status": "required",
-      "privacy_review": "pending",
-      "host_isolation_review": "pending",
-      "alice_audit_status": "not_yet_candidate",
-      "rayan_approval_status": "not_yet_candidate",
-      "reason_for_lag": null,
+      "privacy_review": "contract_review_passed",
+      "host_isolation_review": "contract_review_passed",
+      "alice_audit_status": "kernel_contract_validated_not_production_candidate",
+      "rayan_approval_status": "not_applicable_contract_foundation",
+      "reason_for_lag": "A.L.I.C.E. has not yet implemented, evaluated, approved, and gained the corresponding production capability; Friday remains foundation-only before Phase 6.5.",
       "target_phase": "6",
-      "evidence_bundle": null
+      "evidence_bundle": {
+        "kernel_contract_version": "0.3.0",
+        "implementation_milestone": "P5.0d",
+        "merged_main_commit": "e5ddd77141ca4577fadedf62502aa8102960fbc2",
+        "policy_path": "policies/cognitive_kernel_attention_workspace_policy.json",
+        "source_and_test_paths": [
+          "src/cognitive_kernel/workspace.py",
+          "tests/phase5/test_workspace_layout.py"
+        ]
+      },
+      "kernel_contract_implemented": true,
+      "alice_capability_gained": false,
+      "friday_eligibility_status": "not_eligible_alice_capability_not_yet_gained",
+      "pre_phase_6_5_status": "foundation_only"
     },
     "host_window_override.v1": {
       "title": "host window override",
-      "alice_status": "planned",
-      "kernel_status": "planned_phase5_contract",
-      "friday_status": "planned_independent_repository",
+      "alice_status": "kernel_contract_available_runtime_not_yet_activated",
+      "kernel_status": "implemented_phase5_contract",
+      "friday_status": "foundation_only_not_eligible",
       "shared_ui_status": "planned",
       "generalization_status": "required",
-      "privacy_review": "pending",
-      "host_isolation_review": "pending",
-      "alice_audit_status": "not_yet_candidate",
-      "rayan_approval_status": "not_yet_candidate",
-      "reason_for_lag": null,
+      "privacy_review": "contract_review_passed",
+      "host_isolation_review": "contract_review_passed",
+      "alice_audit_status": "kernel_contract_validated_not_production_candidate",
+      "rayan_approval_status": "not_applicable_contract_foundation",
+      "reason_for_lag": "A.L.I.C.E. has not yet implemented, evaluated, approved, and gained the corresponding production capability; Friday remains foundation-only before Phase 6.5.",
       "target_phase": "6",
-      "evidence_bundle": null
+      "evidence_bundle": {
+        "kernel_contract_version": "0.3.0",
+        "implementation_milestone": "P5.0d",
+        "merged_main_commit": "e5ddd77141ca4577fadedf62502aa8102960fbc2",
+        "policy_path": "policies/cognitive_kernel_attention_workspace_policy.json",
+        "source_and_test_paths": [
+          "src/cognitive_kernel/attention.py",
+          "tests/phase5/test_host_workspace_override.py"
+        ]
+      },
+      "kernel_contract_implemented": true,
+      "alice_capability_gained": false,
+      "friday_eligibility_status": "not_eligible_alice_capability_not_yet_gained",
+      "pre_phase_6_5_status": "foundation_only"
     },
     "speaker_context.v1": {
       "title": "speaker context",
-      "alice_status": "planned",
-      "kernel_status": "planned_phase5_contract",
-      "friday_status": "planned_independent_repository",
+      "alice_status": "kernel_contract_available_runtime_not_yet_activated",
+      "kernel_status": "implemented_phase5_contract",
+      "friday_status": "foundation_only_not_eligible",
       "shared_ui_status": "not_applicable_or_future",
       "generalization_status": "required",
-      "privacy_review": "pending",
-      "host_isolation_review": "pending",
-      "alice_audit_status": "not_yet_candidate",
-      "rayan_approval_status": "not_yet_candidate",
-      "reason_for_lag": null,
+      "privacy_review": "contract_review_passed",
+      "host_isolation_review": "contract_review_passed",
+      "alice_audit_status": "kernel_contract_validated_not_production_candidate",
+      "rayan_approval_status": "not_applicable_contract_foundation",
+      "reason_for_lag": "A.L.I.C.E. has not yet implemented, evaluated, approved, and gained the corresponding production capability; Friday remains foundation-only before Phase 6.5.",
       "target_phase": "5-7",
-      "evidence_bundle": null
+      "evidence_bundle": {
+        "kernel_contract_version": "0.4.0",
+        "implementation_milestone": "P5.0e",
+        "merged_main_commit": "f71a0fb18d4583d0a9af76ec81af154873d24bb1",
+        "policy_path": "policies/cognitive_kernel_interaction_authority_policy.json",
+        "source_and_test_paths": [
+          "src/cognitive_kernel/speaker.py",
+          "tests/phase5/test_speaker_context.py"
+        ]
+      },
+      "kernel_contract_implemented": true,
+      "alice_capability_gained": false,
+      "friday_eligibility_status": "not_eligible_alice_capability_not_yet_gained",
+      "pre_phase_6_5_status": "foundation_only"
     },
     "guest_session.v1": {
       "title": "guest session",
-      "alice_status": "planned",
-      "kernel_status": "planned_phase5_contract",
-      "friday_status": "planned_independent_repository",
+      "alice_status": "kernel_contract_available_runtime_not_yet_activated",
+      "kernel_status": "implemented_phase5_contract",
+      "friday_status": "foundation_only_not_eligible",
       "shared_ui_status": "not_applicable_or_future",
       "generalization_status": "required",
-      "privacy_review": "pending",
-      "host_isolation_review": "pending",
-      "alice_audit_status": "not_yet_candidate",
-      "rayan_approval_status": "not_yet_candidate",
-      "reason_for_lag": null,
+      "privacy_review": "contract_review_passed",
+      "host_isolation_review": "contract_review_passed",
+      "alice_audit_status": "kernel_contract_validated_not_production_candidate",
+      "rayan_approval_status": "not_applicable_contract_foundation",
+      "reason_for_lag": "A.L.I.C.E. has not yet implemented, evaluated, approved, and gained the corresponding production capability; Friday remains foundation-only before Phase 6.5.",
       "target_phase": "5-7",
-      "evidence_bundle": null
+      "evidence_bundle": {
+        "kernel_contract_version": "0.4.0",
+        "implementation_milestone": "P5.0e",
+        "merged_main_commit": "f71a0fb18d4583d0a9af76ec81af154873d24bb1",
+        "policy_path": "policies/cognitive_kernel_interaction_authority_policy.json",
+        "source_and_test_paths": [
+          "src/cognitive_kernel/guest.py",
+          "tests/phase5/test_guest_session.py"
+        ]
+      },
+      "kernel_contract_implemented": true,
+      "alice_capability_gained": false,
+      "friday_eligibility_status": "not_eligible_alice_capability_not_yet_gained",
+      "pre_phase_6_5_status": "foundation_only"
     },
     "guest_grant.v1": {
       "title": "guest grant",
-      "alice_status": "planned",
-      "kernel_status": "planned_phase5_contract",
-      "friday_status": "planned_independent_repository",
+      "alice_status": "kernel_contract_available_runtime_not_yet_activated",
+      "kernel_status": "implemented_phase5_contract",
+      "friday_status": "foundation_only_not_eligible",
       "shared_ui_status": "not_applicable_or_future",
       "generalization_status": "required",
-      "privacy_review": "pending",
-      "host_isolation_review": "pending",
-      "alice_audit_status": "not_yet_candidate",
-      "rayan_approval_status": "not_yet_candidate",
-      "reason_for_lag": null,
+      "privacy_review": "contract_review_passed",
+      "host_isolation_review": "contract_review_passed",
+      "alice_audit_status": "kernel_contract_validated_not_production_candidate",
+      "rayan_approval_status": "not_applicable_contract_foundation",
+      "reason_for_lag": "A.L.I.C.E. has not yet implemented, evaluated, approved, and gained the corresponding production capability; Friday remains foundation-only before Phase 6.5.",
       "target_phase": "5-7",
-      "evidence_bundle": null
+      "evidence_bundle": {
+        "kernel_contract_version": "0.4.0",
+        "implementation_milestone": "P5.0e",
+        "merged_main_commit": "f71a0fb18d4583d0a9af76ec81af154873d24bb1",
+        "policy_path": "policies/cognitive_kernel_interaction_authority_policy.json",
+        "source_and_test_paths": [
+          "src/cognitive_kernel/guest.py",
+          "tests/phase5/test_guest_grant.py"
+        ]
+      },
+      "kernel_contract_implemented": true,
+      "alice_capability_gained": false,
+      "friday_eligibility_status": "not_eligible_alice_capability_not_yet_gained",
+      "pre_phase_6_5_status": "foundation_only"
+    },
+    "release_attestation.v1": {
+      "title": "release attestation",
+      "alice_status": "kernel_contract_available_runtime_not_yet_activated",
+      "kernel_status": "implemented_phase5_contract",
+      "friday_status": "foundation_only_not_eligible",
+      "shared_ui_status": "not_applicable_or_future",
+      "generalization_status": "required",
+      "privacy_review": "contract_review_passed",
+      "host_isolation_review": "contract_review_passed",
+      "alice_audit_status": "kernel_contract_validated_not_production_candidate",
+      "rayan_approval_status": "not_applicable_contract_foundation",
+      "reason_for_lag": "A.L.I.C.E. has not yet implemented, evaluated, approved, and gained the corresponding production capability; Friday remains foundation-only before Phase 6.5.",
+      "target_phase": "5-7",
+      "kernel_contract_implemented": true,
+      "alice_capability_gained": false,
+      "friday_eligibility_status": "not_eligible_alice_capability_not_yet_gained",
+      "pre_phase_6_5_status": "foundation_only",
+      "evidence_bundle": {
+        "kernel_contract_version": "0.5.0",
+        "implementation_milestone": "P5.0f",
+        "candidate_commit_binding": "bound by the exact P5.0f candidate commit and pull-request evidence",
+        "policy_path": "policies/cognitive_kernel_release_attestation_policy.json",
+        "source_and_test_paths": [
+          "src/cognitive_kernel/release.py",
+          "src/cognitive_kernel/release_policy.py",
+          "tests/phase5/test_release_attestation.py",
+          "tests/phase5/test_release_attestation_policy.py"
+        ]
+      }
     },
     "legacy_chat_compatibility.v1": {
       "title": "legacy chat compatibility",
@@ -268,5 +441,11 @@
     "rayan_permission_required": true,
     "owner_override_allowed": true,
     "owner_override_non_precedential_by_default": true
+  },
+  "eligibility_model": {
+    "kernel_contract_implementation_does_not_equal_product_capability": true,
+    "alice_capability_gained_required_before_friday_eligibility": true,
+    "friday_pre_phase_6_5_state": "foundation_only",
+    "owner_override_schema": "policies/rayan_owner_override_schema.json"
   }
 }

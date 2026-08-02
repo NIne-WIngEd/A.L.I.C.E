@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "authority": "docs/CAPABILITY_UNBLOCKING_POLICY.md",
   "default_profile": "conversation.phase3.compatibility",
   "profiles": {
@@ -371,13 +371,17 @@
       "domain": "cognitive_kernel",
       "scope_kind": "active_phase_foundation",
       "capability_ceiling": false,
-      "description": "Host-neutral Phase 5 contracts for experience, evaluation, storage, Mission Graph, workspace projections, guest trust, and release attestations.",
+      "description": "Host-neutral Phase 5 contracts for experience, evaluation, storage, Mission Graph, workspace projections, guest trust, and exact-artifact release verification.",
       "capabilities": {
         "experience_event_contracts": true,
         "mission_graph_contracts": true,
         "workspace_projection_contracts": true,
         "release_attestation_contracts": true,
-        "product_private_state_in_kernel_distribution": false
+        "product_private_state_in_kernel_distribution": false,
+        "release_attestation_verification_implemented": true,
+        "release_signing_implemented": false,
+        "release_deployment_implemented": false,
+        "approval_generation_implemented": false
       }
     },
     "alice.private_companion.custody": {
@@ -408,10 +412,19 @@
       "product_id": "friday",
       "scope_kind": "production_promotion_gate",
       "capability_ceiling": false,
-      "description": "Friday teams may research and build candidates independently; production promotion requires exact-artifact A.L.I.C.E. audit and exact-candidate owner approval.",
+      "description": "Friday foundation maintenance, product-experience research, upstream proposals, and eligible downstream productization remain subject to A.L.I.C.E.-first capability precedent; production promotion requires exact-artifact A.L.I.C.E. audit and exact-candidate MK Rayan approval.",
       "capabilities": {
-        "candidate_research_allowed": true,
-        "candidate_implementation_allowed": true,
+        "maintenance_allowed": true,
+        "product_experience_research_allowed": true,
+        "upstream_proposal_research_allowed": true,
+        "eligible_capability_productization_allowed": true,
+        "candidate_research_allowed": false,
+        "candidate_implementation_allowed": false,
+        "uneligible_capability_testing_allowed": false,
+        "alice_capability_precedent_required": true,
+        "exact_artifact_audit_required": true,
+        "exact_candidate_owner_approval_required": true,
+        "phase_6_5_foundation_only": true,
         "team_unilateral_production_promotion_allowed": false,
         "emergency_rollback_disable_contain_allowed": true,
         "emergency_new_behavior_allowed": false
