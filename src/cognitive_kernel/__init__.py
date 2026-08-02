@@ -119,11 +119,36 @@ from .release_policy import (
     CognitiveKernelReleaseAttestationPolicy,
     load_cognitive_kernel_release_attestation_policy,
 )
+from .ledger import (
+    LEDGER_SCHEMA_VERSION,
+    ExperienceLedgerEntryReceipt,
+    ExperienceLedgerIntegrityReport,
+    ExperienceLedgerRecord,
+    ExperienceLedgerTransactionReceipt,
+    ledger_scope_digest,
+    ledger_scope_record,
+)
+from .ledger_store import (
+    DuplicateExperienceEventError,
+    ExperienceLedgerConfigurationError,
+    ExperienceLedgerError,
+    ExperienceLedgerIntegrityError,
+    ExperienceLedgerIsolationError,
+    ExperienceLedgerStore,
+    ExperienceLedgerTransactionError,
+    UnsafeExperienceLedgerPathError,
+    open_experience_ledger,
+    validate_experience_ledger_path,
+)
+from .ledger_policy import (
+    CognitiveKernelExperienceLedgerPolicy,
+    load_cognitive_kernel_experience_ledger_policy,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -172,5 +197,24 @@ __all__ = [
     "ReleaseAttestation", "ReleaseAuditAttestation",
     "ReleaseOwnerApproval", "artifact_manifest_digest",
     "load_cognitive_kernel_release_attestation_policy",
+    "CognitiveKernelExperienceLedgerPolicy",
+    "DuplicateExperienceEventError",
+    "ExperienceLedgerConfigurationError",
+    "ExperienceLedgerEntryReceipt",
+    "ExperienceLedgerError",
+    "ExperienceLedgerIntegrityError",
+    "ExperienceLedgerIntegrityReport",
+    "ExperienceLedgerIsolationError",
+    "ExperienceLedgerRecord",
+    "ExperienceLedgerStore",
+    "ExperienceLedgerTransactionError",
+    "ExperienceLedgerTransactionReceipt",
+    "LEDGER_SCHEMA_VERSION",
+    "UnsafeExperienceLedgerPathError",
+    "ledger_scope_digest",
+    "ledger_scope_record",
+    "load_cognitive_kernel_experience_ledger_policy",
+    "open_experience_ledger",
+    "validate_experience_ledger_path",
     "stronger_authentication_required",
 ]

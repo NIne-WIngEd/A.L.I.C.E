@@ -1,0 +1,43 @@
+{
+  "cognitive_kernel_experience_ledger_policy_schema_version": 1,
+  "policy_id": "personal-cognitive-kernel.experience-ledger.v1",
+  "version": "0.6.0",
+  "phase": "5",
+  "milestone": "P5.1a",
+  "status": "runtime_foundation",
+  "required_contracts": [
+    "experience_event",
+    "storage_lifecycle"
+  ],
+  "database_format": "sqlite3",
+  "ledger_schema_version": "1.0.0",
+  "journal_mode": "wal",
+  "synchronous": "full",
+  "hash_algorithm": "sha256",
+  "required_scope_fields": [
+    "product_id",
+    "host_instance_id",
+    "encryption_domain"
+  ],
+  "invariants": {
+    "logically_append_only": true,
+    "deterministic_sequence_numbers": true,
+    "tamper_evident_hash_chain": true,
+    "duplicate_event_rejection": true,
+    "database_outside_public_repository": true,
+    "metadata_only_event_storage": true,
+    "product_host_encryption_isolation": true,
+    "atomic_transactions": true,
+    "full_integrity_verification": true,
+    "sanitized_inspection": true,
+    "raw_buffer_implemented": false,
+    "blob_store_implemented": false,
+    "payload_deduplication_implemented": false,
+    "automated_retention_implemented": false,
+    "backup_restore_implemented": false,
+    "phase2_memory_store_migrated": false,
+    "friday_product_source_implemented": false,
+    "private_payload_allowed": false
+  },
+  "capability_ceiling": false
+}
