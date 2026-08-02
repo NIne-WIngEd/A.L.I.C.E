@@ -1,5 +1,8 @@
 # A.L.I.C.E.
 
+> [!IMPORTANT]\n> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.\n>\n> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
+
+
 A.L.I.C.E. is MK Rayan's long-term, model-independent personal cognitive system for continuous learning, memory, judgment, research, software, planning, multimodal perception, computer use, scientific discovery, and evaluated self-improvement.
 
 A.L.I.C.E. is also the owner-specific frontier implementation for a separate local-first consumer product line internally codenamed **Friday**. Friday is not the user-facing assistant name: every host chooses the assistant's name, voice, and identity, and each installation develops private host-specific memories, beliefs, skills, evaluations, adapters, and future model state.

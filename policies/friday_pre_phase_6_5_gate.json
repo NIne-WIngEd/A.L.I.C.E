@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "policy_id": "friday.pre_phase_6_5_foundation_gate.v1",
+  "authority": "docs/FRIDAY_PRE_PHASE_6_5_READINESS.md",
+  "state": "foundation_only_waiting_for_alice_phase_6_5",
+  "repository_exists": true,
+  "phase_6_5_is_readiness_certification_not_repository_creation": true,
+  "allowed_before_gate": [
+    "repository_controls",
+    "governance",
+    "documentation",
+    "product_family_manifest_and_parser",
+    "governance_tests",
+    "ci",
+    "synthetic_test_scaffolding",
+    "productization_planning_for_alice_eligible_capabilities"
+  ],
+  "prohibited_before_gate": [
+    "production_runtime_activation",
+    "real_host_state",
+    "friday_first_capability_implementation",
+    "friday_first_capability_testing",
+    "alice_private_source_or_state",
+    "production_model_weights",
+    "credentials"
+  ],
+  "unlock_requires": [
+    "alice_phase_6_5_exact_commit_attestation",
+    "rayan_approval"
+  ]
+}

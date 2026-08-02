@@ -253,5 +253,20 @@
     "rayan_approval_status",
     "reason_for_lag",
     "evidence_bundle"
-  ]
+  ],
+  "flagship_governance": {
+    "authority": "docs/ALICE_FRIDAY_FLAGSHIP_GOVERNANCE.md",
+    "flagship_product": "alice",
+    "default_precedent_product": "alice",
+    "minimum_full_parity_through_alice_phase": "15",
+    "temporary_productization_lag_allowed": true,
+    "permanent_omission_before_phase_15_allowed": false,
+    "friday_first_capability_allowed_by_default": false,
+    "friday_originated_proposal_routes_upstream": true,
+    "alice_must_gain_capability_before_friday_eligibility": true,
+    "alice_permission_required": true,
+    "rayan_permission_required": true,
+    "owner_override_allowed": true,
+    "owner_override_non_precedential_by_default": true
+  }
 }
