@@ -1,6 +1,9 @@
 # ADR-011 — Friday Independent Repository and Dual Production Approval
 
-> [!IMPORTANT]\n> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.\n>\n> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
+> [!IMPORTANT]
+> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.
+>
+> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
 
 
 **Status:** Accepted
@@ -19,7 +22,7 @@ Friday product source never enters A.L.I.C.E. Phase 6.5 becomes an Independent P
 
 - product repositories and private state remain independent;
 - generalizable Mission Graph/Cognitive Workspace behavior has an immediate parity lane;
-- a Friday team may develop independently but cannot unilaterally ship;
+- after formal handover, a Friday team may independently maintain and productize eligible capabilities, while new capabilities remain upstream proposals until A.L.I.C.E. precedent or an explicit Rayan override exists;
 - production signing is eventually enforced through exact-artifact manifests;
 - the old repository-creation-at-6.5 language is superseded.
 

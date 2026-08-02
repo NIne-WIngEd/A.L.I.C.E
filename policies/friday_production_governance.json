@@ -1,13 +1,20 @@
 {
   "schema_version": 1,
+  "policy_version": "1.1.0",
   "policy_id": "friday.production_governance.v1",
   "authority": "docs/FRIDAY_PRODUCTION_GOVERNANCE.md",
   "capability_ceiling": false,
   "candidate_work": {
-    "independent_research_allowed": true,
-    "independent_design_allowed": true,
-    "independent_implementation_allowed": true,
-    "independent_testing_allowed": true,
+    "maintenance_allowed": true,
+    "product_experience_research_allowed": true,
+    "upstream_proposal_research_allowed": true,
+    "eligible_capability_productization_allowed": true,
+    "independent_research_allowed": false,
+    "independent_design_allowed": false,
+    "independent_implementation_allowed": false,
+    "independent_testing_allowed": false,
+    "new_capability_implementation_as_friday_capability_allowed": false,
+    "new_capability_testing_as_friday_capability_allowed": false,
     "unilateral_production_promotion_allowed": false
   },
   "production_promotion": {
@@ -79,6 +86,9 @@
     "friday_originated_capability_routes_upstream": true,
     "alice_must_gain_capability_before_friday_eligibility": true,
     "rayan_owner_override_allowed": true,
-    "owner_override_schema": "policies/rayan_owner_override_schema.json"
+    "owner_override_schema": "policies/rayan_owner_override_schema.json",
+    "legacy_candidate_work_fields_are_deny_by_default": true,
+    "post_handover_upstream_proposal_research_allowed": true,
+    "uneligible_capability_implementation_or_testing_allowed": false
   }
 }

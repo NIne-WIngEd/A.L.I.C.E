@@ -1,6 +1,9 @@
 # Consumer Personal-AI Product Vision
 
-> [!IMPORTANT]\n> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.\n>\n> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
+> [!IMPORTANT]
+> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.
+>
+> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
 
 
 **Status:** Ratified product direction
@@ -190,4 +193,4 @@ The interface follows a no-empty-slot invariant: it renders only useful task pro
 
 ## 9. Independent repository and dual approval
 
-Friday product source remains in an independent repository from its first implementation commit. A future Friday team is free to invent, research, prototype, test, and propose product-specific work, but may not promote new production behavior without both an exact-artifact A.L.I.C.E. audit attestation and Rayan's explicit approval. Emergency rollback and disablement remain available without introducing new behavior.
+Friday product source remains in an independent repository from its first implementation commit. After formal handover, a future Friday team may independently manage maintenance, product experience, packaging, support, and downstream implementation or testing of capabilities already eligible through A.L.I.C.E. A capability A.L.I.C.E. lacks must be proposed upstream and remains ineligible for Friday implementation, activation, or testing unless Rayan records an explicit exact-scope override. Production promotion still requires both an exact-artifact A.L.I.C.E. audit attestation and Rayan's explicit approval. Emergency rollback and disablement remain available without introducing new behavior.

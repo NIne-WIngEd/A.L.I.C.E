@@ -1,14 +1,17 @@
 # Friday Production Governance
 
-> [!IMPORTANT]\n> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.\n>\n> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
+> [!IMPORTANT]
+> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.
+>
+> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
 
 
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Status:** Owner-ratified production-promotion standard
 
-## 1. Independent development
+## 1. Eligibility-scoped development
 
-A qualified Friday team may research, design, prototype, implement, test, open pull requests, build internal artifacts, and propose product or kernel changes without prior production approval. Candidate work remains in development, laboratory, sandbox, simulation, or explicitly non-production channels.
+Before formal handover, Friday work is limited to repository foundation, maintenance, and downstream productization of capabilities already eligible through A.L.I.C.E. After formal handover, a qualified Friday team may independently manage maintenance, product-experience research, packaging, support, and implementation or testing of already eligible capabilities. A capability A.L.I.C.E. has not gained remains proposal-only: Friday may research the problem and prepare an upstream proposal, but may not implement, activate, or test it as a Friday capability unless Rayan records an explicit exact-scope override. Candidate work remains in development, laboratory, sandbox, simulation, or explicitly non-production channels until all applicable gates pass.
 
 ## 2. Dual production approval
 
