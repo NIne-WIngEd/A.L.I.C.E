@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://alice.local/schemas/friday-release-attestation-v1.json",
+  "$id": "https://alice.local/schemas/friday-release-attestation-v2.json",
   "title": "Friday exact-artifact production release authorization",
   "type": "object",
   "additionalProperties": false,
@@ -9,23 +9,30 @@
     "release_id",
     "product_id",
     "version",
-    "commit_sha",
+    "source_commit",
     "kernel_version",
+    "dependency_lock_digest",
     "artifact_hashes",
-    "evaluation_bundle_hash",
+    "artifact_manifest_digest",
+    "model_pack_versions",
+    "schema_versions",
+    "policy_versions",
+    "migration_manifest",
+    "evaluation_bundle_digest",
+    "deployment_manifest",
+    "rollback_manifest",
+    "release_channel",
     "alice_audit_attestation",
     "rayan_approval",
-    "migration_manifest",
-    "rollback_manifest",
-    "release_channel"
+    "release_digest"
   ],
   "properties": {
     "schema_version": {
-      "const": "1.0.0"
+      "const": "2.0.0"
     },
     "release_id": {
       "type": "string",
-      "minLength": 1
+      "pattern": "^[a-z0-9][a-z0-9._:-]{0,255}$"
     },
     "product_id": {
       "const": "friday"
@@ -34,102 +41,209 @@
       "type": "string",
       "minLength": 1
     },
-    "commit_sha": {
+    "source_commit": {
       "type": "string",
       "pattern": "^[0-9a-f]{40}$"
     },
     "kernel_version": {
-      "type": "string",
-      "minLength": 1
+      "const": "0.5.0"
+    },
+    "dependency_lock_digest": {
+      "$ref": "#/$defs/sha256"
     },
     "artifact_hashes": {
       "type": "object",
       "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[a-z0-9][a-z0-9._:-]{0,255}$"
+      },
       "additionalProperties": {
-        "type": "string",
-        "pattern": "^[0-9a-fA-F]{64}$"
+        "$ref": "#/$defs/sha256"
       }
     },
-    "evaluation_bundle_hash": {
-      "type": "string",
-      "pattern": "^[0-9a-fA-F]{64}$"
+    "artifact_manifest_digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "model_pack_versions": {
+      "$ref": "#/$defs/versionMap"
+    },
+    "schema_versions": {
+      "$ref": "#/$defs/versionMap"
+    },
+    "policy_versions": {
+      "$ref": "#/$defs/versionMap"
+    },
+    "migration_manifest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "evaluation_bundle_digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "deployment_manifest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "rollback_manifest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "release_channel": {
+      "enum": [
+        "internal",
+        "canary",
+        "closed_alpha",
+        "alpha",
+        "beta",
+        "stable"
+      ]
     },
     "alice_audit_attestation": {
+      "$ref": "#/$defs/auditAttestation"
+    },
+    "release_digest": {
+      "$ref": "#/$defs/sha256"
+    },
+    "rayan_approval": {
+      "$ref": "#/$defs/ownerApproval"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "versionMap": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9][a-z0-9._:-]{0,255}$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "auditAttestation": {
       "type": "object",
       "additionalProperties": false,
       "required": [
         "attestation_id",
         "decision",
-        "commit_sha",
-        "artifact_hashes_digest"
+        "source_commit",
+        "artifact_manifest_digest",
+        "evaluation_bundle_digest",
+        "deployment_manifest_digest",
+        "issued_at",
+        "conditions_digest"
       ],
       "properties": {
         "attestation_id": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,255}$"
         },
         "decision": {
           "enum": [
-            "APPROVED_FOR_RAYAN_REVIEW",
-            "APPROVED_WITH_CONDITIONS"
+            "approved_for_owner_review",
+            "approved_with_conditions",
+            "return_for_revision",
+            "blocked_security",
+            "blocked_privacy",
+            "blocked_authority",
+            "blocked_evaluation",
+            "blocked_architecture",
+            "insufficient_evidence"
           ]
         },
-        "commit_sha": {
+        "source_commit": {
           "type": "string",
           "pattern": "^[0-9a-f]{40}$"
         },
-        "artifact_hashes_digest": {
-          "type": "string",
-          "pattern": "^[0-9a-fA-F]{64}$"
+        "artifact_manifest_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "evaluation_bundle_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "deployment_manifest_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "issued_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "conditions_digest": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       }
     },
-    "rayan_approval": {
+    "ownerApproval": {
       "type": "object",
       "additionalProperties": false,
       "required": [
         "approval_id",
         "decision",
-        "commit_sha",
-        "artifact_hashes_digest"
+        "source_commit",
+        "artifact_manifest_digest",
+        "evaluation_bundle_digest",
+        "deployment_manifest_digest",
+        "issued_at",
+        "conditions_digest"
       ],
       "properties": {
         "approval_id": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._:-]{0,255}$"
         },
         "decision": {
           "enum": [
-            "APPROVED",
-            "APPROVED_CANARY_ONLY",
-            "APPROVED_CLOSED_ALPHA",
-            "APPROVED_WITH_CONDITIONS"
+            "approved",
+            "approved_canary_only",
+            "approved_closed_alpha",
+            "approved_with_conditions",
+            "rejected",
+            "revision_required",
+            "deferred"
           ]
         },
-        "commit_sha": {
+        "source_commit": {
           "type": "string",
           "pattern": "^[0-9a-f]{40}$"
         },
-        "artifact_hashes_digest": {
-          "type": "string",
-          "pattern": "^[0-9a-fA-F]{64}$"
+        "artifact_manifest_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "evaluation_bundle_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "deployment_manifest_digest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "issued_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "conditions_digest": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       }
-    },
-    "migration_manifest": {
-      "type": "string",
-      "minLength": 1
-    },
-    "rollback_manifest": {
-      "type": "string",
-      "minLength": 1
-    },
-    "release_channel": {
-      "type": "string",
-      "minLength": 1
     }
   },
   "allOf": [
     {
-      "description": "Verifier must require both nested commit_sha and artifact_hashes_digest values to equal the outer candidate values."
+      "description": "The host-neutral verifier must recompute artifact_manifest_digest and require the A.L.I.C.E. audit and owner approval to match the outer source commit, artifact manifest, evaluation bundle, and deployment manifest exactly."
     }
   ]
 }

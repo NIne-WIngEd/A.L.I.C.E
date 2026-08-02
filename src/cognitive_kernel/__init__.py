@@ -104,11 +104,26 @@ from .interaction_policy import (
     CognitiveKernelInteractionAuthorityPolicy,
     load_cognitive_kernel_interaction_authority_policy,
 )
+from .release import (
+    AUDIT_DECISIONS,
+    AUTHORIZED_AUDIT_DECISIONS,
+    AUTHORIZED_OWNER_DECISIONS,
+    OWNER_APPROVAL_DECISIONS,
+    RELEASE_CHANNELS,
+    ReleaseAttestation,
+    ReleaseAuditAttestation,
+    ReleaseOwnerApproval,
+    artifact_manifest_digest,
+)
+from .release_policy import (
+    CognitiveKernelReleaseAttestationPolicy,
+    load_cognitive_kernel_release_attestation_policy,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -150,5 +165,12 @@ __all__ = [
     "load_cognitive_kernel_interaction_authority_policy",
     "load_cognitive_kernel_mission_graph_policy", "normalize_timestamp",
     "require_sha256", "required_authority_for",
+    "AUDIT_DECISIONS", "AUTHORIZED_AUDIT_DECISIONS",
+    "AUTHORIZED_OWNER_DECISIONS",
+    "CognitiveKernelReleaseAttestationPolicy",
+    "OWNER_APPROVAL_DECISIONS", "RELEASE_CHANNELS",
+    "ReleaseAttestation", "ReleaseAuditAttestation",
+    "ReleaseOwnerApproval", "artifact_manifest_digest",
+    "load_cognitive_kernel_release_attestation_policy",
     "stronger_authentication_required",
 ]

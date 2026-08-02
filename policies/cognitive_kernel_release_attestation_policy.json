@@ -1,0 +1,81 @@
+{
+  "cognitive_kernel_release_attestation_policy_schema_version": 1,
+  "policy_id": "cognitive_kernel.release_attestation.v1",
+  "version": "0.5.0",
+  "phase": "5",
+  "milestone": "P5.0f",
+  "status": "contract_foundation",
+  "required_capabilities": [
+    "release_attestation.v1"
+  ],
+  "allowed_audit_decisions": [
+    "approved_for_owner_review",
+    "approved_with_conditions",
+    "blocked_architecture",
+    "blocked_authority",
+    "blocked_evaluation",
+    "blocked_privacy",
+    "blocked_security",
+    "insufficient_evidence",
+    "return_for_revision"
+  ],
+  "allowed_owner_decisions": [
+    "approved",
+    "approved_canary_only",
+    "approved_closed_alpha",
+    "approved_with_conditions",
+    "deferred",
+    "rejected",
+    "revision_required"
+  ],
+  "authorized_audit_decisions": [
+    "approved_for_owner_review",
+    "approved_with_conditions"
+  ],
+  "authorized_owner_decisions": [
+    "approved",
+    "approved_canary_only",
+    "approved_closed_alpha",
+    "approved_with_conditions"
+  ],
+  "allowed_release_channels": [
+    "internal",
+    "canary",
+    "closed_alpha",
+    "alpha",
+    "beta",
+    "stable"
+  ],
+  "required_bindings": [
+    "source_commit",
+    "kernel_version",
+    "dependency_lock_digest",
+    "artifact_hashes",
+    "model_pack_versions",
+    "schema_versions",
+    "policy_versions",
+    "migration_manifest",
+    "evaluation_bundle_digest",
+    "deployment_manifest",
+    "rollback_manifest",
+    "release_channel"
+  ],
+  "invariants": {
+    "exact_source_commit_binding": true,
+    "exact_artifact_manifest_binding": true,
+    "exact_evaluation_bundle_binding": true,
+    "exact_deployment_manifest_binding": true,
+    "alice_audit_required": true,
+    "owner_approval_required": true,
+    "matching_candidate_required": true,
+    "parity_contract_status_does_not_imply_alice_capability_gained": true,
+    "friday_eligibility_requires_alice_capability_gained": true,
+    "friday_pre_phase_6_5_foundation_only": true,
+    "release_signing_implemented": false,
+    "deployment_implemented": false,
+    "approval_generation_implemented": false,
+    "friday_product_source_implemented": false,
+    "private_payload_allowed": false
+  },
+  "capability_ceiling": false
+}
