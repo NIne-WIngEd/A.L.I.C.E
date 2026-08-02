@@ -1,0 +1,22 @@
+name: A.L.I.C.E.-Friday flagship governance
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate-flagship-governance:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - name: Install validation dependencies
+        run: python -m pip install -r requirements-dev.txt
+      - name: Validate flagship governance
+        run: |
+          python -m pytest tests/governance/test_alice_friday_flagship_governance.py -q

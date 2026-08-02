@@ -64,5 +64,21 @@
     "deployment_manifest",
     "rollback_manifest",
     "release_channel"
-  ]
+  ],
+  "owner_ratified_flagship_amendment": {
+    "authority": "docs/ALICE_FRIDAY_FLAGSHIP_GOVERNANCE.md",
+    "effective_immediately": true,
+    "supersedes_candidate_work_for_new_capabilities": true,
+    "legacy_candidate_work_fields_retained_for_compatibility_only": true,
+    "pre_handover_new_capability_research_as_friday_capability_allowed": false,
+    "pre_handover_new_capability_implementation_allowed": false,
+    "pre_handover_new_capability_testing_allowed": false,
+    "post_handover_independent_maintenance_allowed": true,
+    "post_handover_eligible_capability_productization_allowed": true,
+    "post_handover_new_capability_dual_permission_required": true,
+    "friday_originated_capability_routes_upstream": true,
+    "alice_must_gain_capability_before_friday_eligibility": true,
+    "rayan_owner_override_allowed": true,
+    "owner_override_schema": "policies/rayan_owner_override_schema.json"
+  }
 }

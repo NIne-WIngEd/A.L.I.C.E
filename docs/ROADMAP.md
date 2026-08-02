@@ -1,5 +1,8 @@
 # A.L.I.C.E. Roadmap 2.1
 
+> [!IMPORTANT]\n> **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.\n>\n> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
+
+
 **Version:** 2.4.0
 **Owner:** MK Rayan
 **Status:** Final top-level capability domains with a mapped Friday product track
@@ -158,3 +161,9 @@ Canonical source history, inference, generated reconstruction, and A.L.I.C.E.'s 
 ## Mission Graph and Cognitive Workspace lane
 
 Phase 5 defines shared semantic contracts and state machines. Phase 6 implements the Mission Canvas, adaptive workspace, attention explanation, Result Capsule viewer, speaker trust, and guest UI. Friday productization begins immediately in its own repository, but each product releases only after its own gates pass.
+
+## Owner-ratified Phase 6.5 clarification
+
+The Friday repository already exists. Phase 6.5 is an independent-product readiness and certification gate, not the repository-creation event.
+
+The gate must verify host-neutral contract versioning, product and host isolation, migration and rollback, capability-precedent enforcement, exact-artifact release governance, and independent Friday build readiness before production runtime activation.

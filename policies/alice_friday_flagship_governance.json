@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "policy_id": "product_family.alice_first_friday_governance.v1",
+  "authority": "docs/ALICE_FRIDAY_FLAGSHIP_GOVERNANCE.md",
+  "status": "owner_ratified_effective",
+  "decision_owner": "MK Rayan",
+  "flagship_product": "alice",
+  "default_downstream_product": "friday",
+  "default_capability_flow": [
+    "alice",
+    "personal-cognitive-kernel",
+    "friday"
+  ],
+  "parity": {
+    "required_through_alice_phase": "15",
+    "all_transferable_alice_capabilities_required": true,
+    "temporary_productization_lag_allowed": true,
+    "permanent_omission_before_phase_15_allowed": false
+  },
+  "handover": {
+    "current_state": "owner_managed",
+    "formal_owner_handover_required": true,
+    "pre_handover_friday_independent_capability_governance_allowed": false,
+    "post_handover_friday_independent_maintenance_and_roadmap_allowed": true,
+    "post_handover_new_capability_dual_permission_required": true
+  },
+  "default_new_capability_gate": {
+    "friday_first_capability_allowed": false,
+    "alice_existing_implemented_evaluated_approved_and_gained_capability_required": true,
+    "friday_discovered_capability_must_be_proposed_upstream": true,
+    "alice_must_gain_capability_before_friday_eligibility": true,
+    "alice_permission_required": true,
+    "rayan_permission_required": true
+  },
+  "owner_override": {
+    "authority": "MK Rayan",
+    "may_override_any_product_family_policy": true,
+    "may_authorize_friday_first_capability": true,
+    "explicit_record_required": true,
+    "exact_scope_and_artifact_binding_required": true,
+    "reason_and_risk_disposition_required": true,
+    "non_precedential_by_default": true,
+    "requirements_not_explicitly_waived_remain_active": true
+  },
+  "production": {
+    "alice_exact_artifact_audit_required_by_default": true,
+    "rayan_exact_candidate_approval_required": true,
+    "emergency_new_capability_allowed": false
+  }
+}

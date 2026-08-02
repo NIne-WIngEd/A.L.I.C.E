@@ -47,7 +47,8 @@
       "product_policy": "ambition_first_owner_governed",
       "public_distribution": false,
       "full_capability_destination_source": true,
-      "private_companion_state_allowed": true
+      "private_companion_state_allowed": true,
+      "capability_precedence_source": true
     },
     "friday": {
       "display_name": "Consumer Personal AI (internal codename Friday)",
@@ -86,7 +87,14 @@
       "dedicated_maintenance_team_planned": true,
       "local_storage_lifecycle_required": true,
       "cross_host_deduplication_allowed": false,
-      "production_dual_approval_required": true
+      "production_dual_approval_required": true,
+      "full_capability_parity_required_through_alice_phase": "15",
+      "default_capability_precedent_product": "alice",
+      "friday_first_capability_allowed_by_default": false,
+      "owner_override_may_authorize_friday_first": true,
+      "independent_capability_governance_before_formal_handover": false,
+      "independent_maintenance_and_roadmap_after_formal_handover": true,
+      "new_capability_dual_permission_after_handover": true
     }
   },
   "separation_rules": {
@@ -103,7 +111,11 @@
     "host_selected_name_may_define_storage_schema": false,
     "difference_is_state_maturity_hardware_and_permissions_not_destination_capability": true,
     "friday_product_source_may_live_in_alice_repository": false,
-    "private_companion_data_may_enter_shared_kernel_or_friday": false
+    "private_companion_data_may_enter_shared_kernel_or_friday": false,
+    "friday_capability_requires_existing_alice_precedent_by_default": true,
+    "friday_discovered_capability_must_be_proposed_upstream": true,
+    "alice_must_gain_capability_before_friday_eligibility_by_default": true,
+    "rayan_owner_override_may_authorize_exception": true
   },
   "parity_policy": {
     "authority": "docs/PRODUCT_FAMILY_CAPABILITY_PARITY.md",
@@ -122,5 +134,18 @@
     "emergency_rollback_disable_contain_allowed": true,
     "emergency_new_behavior_allowed": false,
     "only_rayan_may_amend_dual_approval": true
+  },
+  "flagship_governance": {
+    "authority": "docs/ALICE_FRIDAY_FLAGSHIP_GOVERNANCE.md",
+    "machine_policy": "policies/alice_friday_flagship_governance.json",
+    "flagship_product": "alice",
+    "default_downstream_product": "friday",
+    "minimum_full_parity_through_alice_phase": "15",
+    "friday_first_capability_allowed_by_default": false,
+    "friday_originated_capability_routes_upstream": true,
+    "alice_must_gain_capability_before_friday_eligibility": true,
+    "formal_handover_required_for_independent_friday_maintenance": true,
+    "post_handover_new_capability_dual_permission_required": true,
+    "rayan_owner_override_authority": true
   }
 }
