@@ -168,11 +168,47 @@ from .raw_buffer_policy import (
     CognitiveKernelRawBufferPolicy,
     load_cognitive_kernel_raw_buffer_policy,
 )
+from .lifecycle import (
+    ALLOWED_LIFECYCLE_TRANSITIONS,
+    LIFECYCLE_AUTHORITY_LEVELS,
+    LIFECYCLE_AUTHORITY_REQUIREMENTS,
+    LIFECYCLE_DECISION_OUTCOMES,
+    LIFECYCLE_DECISION_TYPES,
+    LIFECYCLE_RECORD_KINDS,
+    LIFECYCLE_SCHEMA_VERSION,
+    RETENTION_BLOCKER_STATES,
+    RETENTION_BLOCKER_TYPES,
+    LifecycleDecision,
+    LifecycleJournalEntryReceipt,
+    LifecycleJournalIntegrityReport,
+    LifecycleJournalRecord,
+    LifecycleJournalTransactionReceipt,
+    RetentionBlockerRecord,
+    lifecycle_scope_digest,
+    lifecycle_scope_record,
+    lifecycle_value_from_metadata,
+)
+from .lifecycle_store import (
+    DuplicateLifecycleRecordError,
+    LifecycleJournalConfigurationError,
+    LifecycleJournalError,
+    LifecycleJournalIntegrityError,
+    LifecycleJournalIsolationError,
+    LifecycleJournalStore,
+    LifecycleJournalTransactionError,
+    UnsafeLifecycleJournalPathError,
+    open_lifecycle_journal,
+    validate_lifecycle_journal_path,
+)
+from .lifecycle_policy import (
+    CognitiveKernelLifecyclePolicy,
+    load_cognitive_kernel_lifecycle_policy,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.7.0"
+__version__ = "0.8.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -258,5 +294,35 @@ __all__ = [
     "open_raw_buffer_store",
     "raw_payload_object_id",
     "validate_raw_buffer_root",
+    "ALLOWED_LIFECYCLE_TRANSITIONS",
+    "CognitiveKernelLifecyclePolicy",
+    "DuplicateLifecycleRecordError",
+    "LIFECYCLE_AUTHORITY_LEVELS",
+    "LIFECYCLE_AUTHORITY_REQUIREMENTS",
+    "LIFECYCLE_DECISION_OUTCOMES",
+    "LIFECYCLE_DECISION_TYPES",
+    "LIFECYCLE_RECORD_KINDS",
+    "LIFECYCLE_SCHEMA_VERSION",
+    "LifecycleDecision",
+    "LifecycleJournalConfigurationError",
+    "LifecycleJournalEntryReceipt",
+    "LifecycleJournalError",
+    "LifecycleJournalIntegrityError",
+    "LifecycleJournalIntegrityReport",
+    "LifecycleJournalIsolationError",
+    "LifecycleJournalRecord",
+    "LifecycleJournalStore",
+    "LifecycleJournalTransactionError",
+    "LifecycleJournalTransactionReceipt",
+    "RETENTION_BLOCKER_STATES",
+    "RETENTION_BLOCKER_TYPES",
+    "RetentionBlockerRecord",
+    "UnsafeLifecycleJournalPathError",
+    "lifecycle_scope_digest",
+    "lifecycle_scope_record",
+    "lifecycle_value_from_metadata",
+    "load_cognitive_kernel_lifecycle_policy",
+    "open_lifecycle_journal",
+    "validate_lifecycle_journal_path",
     "stronger_authentication_required",
 ]

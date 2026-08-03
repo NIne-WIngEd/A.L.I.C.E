@@ -1,5 +1,5 @@
 {
-  "version": "1.3.0",
+  "version": "1.4.0",
   "authority": "docs/CAPABILITY_UNBLOCKING_POLICY.md",
   "default_profile": "conversation.phase3.compatibility",
   "profiles": {
@@ -371,7 +371,7 @@
       "domain": "cognitive_kernel",
       "scope_kind": "active_phase_foundation",
       "capability_ceiling": false,
-      "description": "Host-neutral Phase 5 contracts and runtime foundations for experience, compact ledger persistence, host-sealed raw-buffer storage, Mission Graph, workspace projections, guest trust, and exact-artifact release verification.",
+      "description": "Host-neutral Phase 5 contracts and runtime foundations for experience, compact ledger persistence, host-sealed raw-buffer storage, retention lifecycle decisions and blockers, Mission Graph, workspace projections, guest trust, and exact-artifact release verification.",
       "capabilities": {
         "experience_event_contracts": true,
         "mission_graph_contracts": true,
@@ -387,9 +387,18 @@
         "content_addressed_payload_store_implemented": true,
         "host_scoped_payload_deduplication_implemented": true,
         "host_sealed_opaque_payload_boundary_required": true,
+        "lifecycle_decision_contracts_implemented": true,
+        "retention_blocker_contracts_implemented": true,
+        "lifecycle_journal_runtime_implemented": true,
+        "authorized_transition_validation_implemented": true,
+        "append_only_override_lineage_implemented": true,
         "automatic_retention_implemented": false,
         "tier_movement_implemented": false,
-        "backup_restore_implemented": false
+        "payload_deletion_implemented": false,
+        "deletion_propagation_implemented": false,
+        "storage_pressure_eviction_implemented": false,
+        "backup_restore_implemented": false,
+        "learning_curator_implemented": false
       }
     },
     "alice.private_companion.custody": {

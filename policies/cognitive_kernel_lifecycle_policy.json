@@ -1,0 +1,129 @@
+{
+  "cognitive_kernel_lifecycle_policy_schema_version": 1,
+  "policy_id": "personal-cognitive-kernel.lifecycle-journal.v1",
+  "version": "0.8.0",
+  "phase": "5",
+  "milestone": "P5.1c",
+  "status": "runtime_foundation",
+  "required_contracts": [
+    "experience_event",
+    "storage_lifecycle"
+  ],
+  "database_format": "sqlite3",
+  "journal_schema_version": "1.0.0",
+  "journal_mode": "wal",
+  "synchronous": "full",
+  "hash_algorithm": "sha256",
+  "required_scope_fields": [
+    "product_id",
+    "host_instance_id",
+    "encryption_domain"
+  ],
+  "decision_types": [
+    "delete_eligible",
+    "override",
+    "quarantine",
+    "retain",
+    "transition"
+  ],
+  "decision_outcomes": [
+    "approved",
+    "blocked",
+    "denied",
+    "recorded"
+  ],
+  "blocker_types": [
+    "active_project",
+    "active_training_or_replay_manifest",
+    "authoritative_provenance",
+    "champion_challenger_comparison",
+    "evaluation_reproducibility",
+    "owner_hold",
+    "rollback_or_disaster_recovery",
+    "unresolved_correction_or_deletion"
+  ],
+  "blocker_states": [
+    "open",
+    "resolved"
+  ],
+  "authority_levels": [
+    "none",
+    "guest_scoped",
+    "host_context",
+    "host_verified",
+    "owner_verified"
+  ],
+  "transition_matrix": {
+    "ledger": [],
+    "raw_buffer": [
+      "cold",
+      "deleted",
+      "hot",
+      "quarantine",
+      "warm"
+    ],
+    "hot": [
+      "cold",
+      "deleted",
+      "quarantine",
+      "warm"
+    ],
+    "warm": [
+      "cold",
+      "deleted",
+      "hot",
+      "quarantine"
+    ],
+    "cold": [
+      "deleted",
+      "hot",
+      "quarantine",
+      "warm"
+    ],
+    "quarantine": [
+      "cold",
+      "deleted",
+      "hot",
+      "warm"
+    ],
+    "deleted": []
+  },
+  "authority_requirements": {
+    "ordinary_transition": "host_context",
+    "enter_quarantine": "host_context",
+    "leave_quarantine": "host_verified",
+    "delete_eligibility": "host_verified",
+    "override": "owner_verified",
+    "blocker_open": "host_context",
+    "blocker_resolution": "host_verified",
+    "owner_hold": "owner_verified"
+  },
+  "invariants": {
+    "metadata_only_records": true,
+    "logically_append_only": true,
+    "deterministic_record_identity": true,
+    "deterministic_sequence_numbers": true,
+    "tamper_evident_hash_chain": true,
+    "duplicate_record_rejection": true,
+    "authorized_transition_validation": true,
+    "retention_blocker_lineage": true,
+    "authorized_override_lineage": true,
+    "database_outside_public_repository": true,
+    "product_host_encryption_isolation": true,
+    "atomic_transactions": true,
+    "full_integrity_verification": true,
+    "sanitized_inspection": true,
+    "automatic_expiry_implemented": false,
+    "physical_tier_movement_implemented": false,
+    "payload_deletion_implemented": false,
+    "deletion_propagation_implemented": false,
+    "storage_pressure_eviction_implemented": false,
+    "backup_restore_implemented": false,
+    "learning_curator_implemented": false,
+    "phase2_memory_store_migrated": false,
+    "friday_product_source_implemented": false,
+    "private_payload_allowed": false,
+    "kernel_key_custody": false
+  },
+  "capability_ceiling": false
+}
