@@ -144,11 +144,35 @@ from .ledger_policy import (
     CognitiveKernelExperienceLedgerPolicy,
     load_cognitive_kernel_experience_ledger_policy,
 )
+from .raw_buffer import (
+    RAW_BUFFER_SCHEMA_VERSION,
+    RAW_BUFFER_SENSITIVITY_CLASSES,
+    RAW_BUFFER_STORAGE_TIER,
+    PayloadStoreAccounting,
+    PayloadStoreIntegrityReport,
+    RawBufferCaptureReceipt,
+    RawBufferReference,
+    raw_payload_object_id,
+)
+from .payload_store import (
+    DuplicateRawBufferReferenceError,
+    RawBufferIntegrityError,
+    RawBufferIsolationError,
+    RawBufferStore,
+    RawBufferStoreError,
+    UnsafeRawBufferPathError,
+    open_raw_buffer_store,
+    validate_raw_buffer_root,
+)
+from .raw_buffer_policy import (
+    CognitiveKernelRawBufferPolicy,
+    load_cognitive_kernel_raw_buffer_policy,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.6.0"
+__version__ = "0.7.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -216,5 +240,23 @@ __all__ = [
     "load_cognitive_kernel_experience_ledger_policy",
     "open_experience_ledger",
     "validate_experience_ledger_path",
+    "CognitiveKernelRawBufferPolicy",
+    "DuplicateRawBufferReferenceError",
+    "PayloadStoreAccounting",
+    "PayloadStoreIntegrityReport",
+    "RAW_BUFFER_SCHEMA_VERSION",
+    "RAW_BUFFER_SENSITIVITY_CLASSES",
+    "RAW_BUFFER_STORAGE_TIER",
+    "RawBufferCaptureReceipt",
+    "RawBufferIntegrityError",
+    "RawBufferIsolationError",
+    "RawBufferReference",
+    "RawBufferStore",
+    "RawBufferStoreError",
+    "UnsafeRawBufferPathError",
+    "load_cognitive_kernel_raw_buffer_policy",
+    "open_raw_buffer_store",
+    "raw_payload_object_id",
+    "validate_raw_buffer_root",
     "stronger_authentication_required",
 ]

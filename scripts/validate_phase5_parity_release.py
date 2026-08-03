@@ -111,8 +111,8 @@ def main() -> int:
 
     try:
         profiles = load("policies/capability_profiles.json")
-        if profiles.get("version") != "1.2.0":
-            errors.append("capability profiles must be version 1.2.0")
+        if profiles.get("version") != "1.3.0":
+            errors.append("capability profiles must be version 1.3.0")
         profile_map = profiles.get("profiles")
         if not isinstance(profile_map, dict):
             raise ValueError("profiles must be an object")
@@ -130,6 +130,22 @@ def main() -> int:
             "release_signing_implemented",
             "release_deployment_implemented",
             "approval_generation_implemented",
+        ):
+            if kernel_caps.get(key) is not False:
+                errors.append(f"kernel profile {key} must be false")
+        for key in (
+            "compact_experience_ledger_runtime_implemented",
+            "raw_buffer_runtime_implemented",
+            "content_addressed_payload_store_implemented",
+            "host_scoped_payload_deduplication_implemented",
+            "host_sealed_opaque_payload_boundary_required",
+        ):
+            if kernel_caps.get(key) is not True:
+                errors.append(f"kernel profile {key} must be true")
+        for key in (
+            "automatic_retention_implemented",
+            "tier_movement_implemented",
+            "backup_restore_implemented",
         ):
             if kernel_caps.get(key) is not False:
                 errors.append(f"kernel profile {key} must be false")
