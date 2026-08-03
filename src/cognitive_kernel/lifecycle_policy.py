@@ -466,9 +466,9 @@ def load_cognitive_kernel_lifecycle_policy(
         )
 
     profiles = _read_json(root / "policies" / "capability_profiles.json")
-    if profiles.get("version") != "1.4.0":
+    if profiles.get("version") != "1.5.0":
         raise CognitiveKernelContractError(
-            "capability profiles must be version 1.4.0"
+            "capability profiles must be version 1.5.0"
         )
     profile_map = _require_dict(profiles.get("profiles"), "profiles")
     kernel = _require_dict(
@@ -484,6 +484,12 @@ def load_cognitive_kernel_lifecycle_policy(
         "lifecycle_journal_runtime_implemented",
         "authorized_transition_validation_implemented",
         "append_only_override_lineage_implemented",
+        "governed_non_destructive_tier_transition_runtime_implemented",
+        "approved_transition_decision_binding_implemented",
+        "blocker_revalidation_implemented",
+        "source_preserving_copy_verify_publish_implemented",
+        "tier_transition_crash_recovery_implemented",
+        "tier_movement_implemented",
     }:
         if capabilities.get(key) is not True:
             raise CognitiveKernelContractError(
@@ -491,7 +497,6 @@ def load_cognitive_kernel_lifecycle_policy(
             )
     for key in {
         "automatic_retention_implemented",
-        "tier_movement_implemented",
         "payload_deletion_implemented",
         "deletion_propagation_implemented",
         "storage_pressure_eviction_implemented",

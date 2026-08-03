@@ -1,5 +1,5 @@
 {
-  "version": "1.4.0",
+  "version": "1.5.0",
   "authority": "docs/CAPABILITY_UNBLOCKING_POLICY.md",
   "default_profile": "conversation.phase3.compatibility",
   "profiles": {
@@ -371,7 +371,7 @@
       "domain": "cognitive_kernel",
       "scope_kind": "active_phase_foundation",
       "capability_ceiling": false,
-      "description": "Host-neutral Phase 5 contracts and runtime foundations for experience, compact ledger persistence, host-sealed raw-buffer storage, retention lifecycle decisions and blockers, Mission Graph, workspace projections, guest trust, and exact-artifact release verification.",
+      "description": "Host-neutral Phase 5 contracts and runtime foundations for experience, compact ledger persistence, host-sealed raw-buffer storage, retention lifecycle decisions and blockers, governed non-destructive tier transition execution, Mission Graph, workspace projections, guest trust, and exact-artifact release verification.",
       "capabilities": {
         "experience_event_contracts": true,
         "mission_graph_contracts": true,
@@ -392,8 +392,13 @@
         "lifecycle_journal_runtime_implemented": true,
         "authorized_transition_validation_implemented": true,
         "append_only_override_lineage_implemented": true,
+        "governed_non_destructive_tier_transition_runtime_implemented": true,
+        "approved_transition_decision_binding_implemented": true,
+        "blocker_revalidation_implemented": true,
+        "source_preserving_copy_verify_publish_implemented": true,
+        "tier_transition_crash_recovery_implemented": true,
         "automatic_retention_implemented": false,
-        "tier_movement_implemented": false,
+        "tier_movement_implemented": true,
         "payload_deletion_implemented": false,
         "deletion_propagation_implemented": false,
         "storage_pressure_eviction_implemented": false,

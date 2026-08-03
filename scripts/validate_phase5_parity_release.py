@@ -111,8 +111,8 @@ def main() -> int:
 
     try:
         profiles = load("policies/capability_profiles.json")
-        if profiles.get("version") != "1.4.0":
-            errors.append("capability profiles must be version 1.4.0")
+        if profiles.get("version") != "1.5.0":
+            errors.append("capability profiles must be version 1.5.0")
         profile_map = profiles.get("profiles")
         if not isinstance(profile_map, dict):
             raise ValueError("profiles must be an object")
@@ -144,12 +144,17 @@ def main() -> int:
             "lifecycle_journal_runtime_implemented",
             "authorized_transition_validation_implemented",
             "append_only_override_lineage_implemented",
+            "governed_non_destructive_tier_transition_runtime_implemented",
+            "approved_transition_decision_binding_implemented",
+            "blocker_revalidation_implemented",
+            "source_preserving_copy_verify_publish_implemented",
+            "tier_transition_crash_recovery_implemented",
+            "tier_movement_implemented",
         ):
             if kernel_caps.get(key) is not True:
                 errors.append(f"kernel profile {key} must be true")
         for key in (
             "automatic_retention_implemented",
-            "tier_movement_implemented",
             "payload_deletion_implemented",
             "deletion_propagation_implemented",
             "storage_pressure_eviction_implemented",
