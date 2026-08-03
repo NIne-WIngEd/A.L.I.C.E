@@ -204,11 +204,40 @@ from .lifecycle_policy import (
     CognitiveKernelLifecyclePolicy,
     load_cognitive_kernel_lifecycle_policy,
 )
+from .tier_transition import (
+    EXECUTABLE_SOURCE_TIERS,
+    EXECUTABLE_TARGET_TIERS,
+    TIER_TRANSITION_DECISION_TYPES,
+    TIER_TRANSITION_SCHEMA_VERSION,
+    TIER_TRANSITION_STATES,
+    TierPayloadReference,
+    TierTransitionInspectionRecord,
+    TierTransitionIntegrityReport,
+    TierTransitionIntent,
+    TierTransitionReceipt,
+    tier_transition_scope_digest,
+)
+from .tier_transition_store import (
+    DuplicateTierTransitionError,
+    TierTransitionAuthorizationError,
+    TierTransitionBlockedError,
+    TierTransitionIntegrityError,
+    TierTransitionIsolationError,
+    TierTransitionStore,
+    TierTransitionStoreError,
+    UnsafeTierTransitionPathError,
+    open_tier_transition_store,
+    validate_tier_transition_root,
+)
+from .tier_transition_policy import (
+    CognitiveKernelTierTransitionPolicy,
+    load_cognitive_kernel_tier_transition_policy,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.8.0"
+__version__ = "0.9.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -324,5 +353,28 @@ __all__ = [
     "load_cognitive_kernel_lifecycle_policy",
     "open_lifecycle_journal",
     "validate_lifecycle_journal_path",
+    "CognitiveKernelTierTransitionPolicy",
+    "DuplicateTierTransitionError",
+    "EXECUTABLE_SOURCE_TIERS",
+    "EXECUTABLE_TARGET_TIERS",
+    "TIER_TRANSITION_DECISION_TYPES",
+    "TIER_TRANSITION_SCHEMA_VERSION",
+    "TIER_TRANSITION_STATES",
+    "TierPayloadReference",
+    "TierTransitionAuthorizationError",
+    "TierTransitionBlockedError",
+    "TierTransitionInspectionRecord",
+    "TierTransitionIntegrityError",
+    "TierTransitionIntegrityReport",
+    "TierTransitionIntent",
+    "TierTransitionIsolationError",
+    "TierTransitionReceipt",
+    "TierTransitionStore",
+    "TierTransitionStoreError",
+    "UnsafeTierTransitionPathError",
+    "load_cognitive_kernel_tier_transition_policy",
+    "open_tier_transition_store",
+    "tier_transition_scope_digest",
+    "validate_tier_transition_root",
     "stronger_authentication_required",
 ]

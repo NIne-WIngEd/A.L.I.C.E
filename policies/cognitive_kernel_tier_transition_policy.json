@@ -1,0 +1,81 @@
+{
+  "cognitive_kernel_tier_transition_policy_schema_version": 1,
+  "policy_id": "personal-cognitive-kernel.tier-transition.v1",
+  "version": "0.9.0",
+  "phase": "5",
+  "milestone": "P5.1d",
+  "status": "runtime_foundation",
+  "required_contracts": [
+    "storage_lifecycle",
+    "raw_buffer",
+    "retention_lifecycle_journal"
+  ],
+  "store_schema_version": "1.0.0",
+  "database_format": "sqlite3",
+  "journal_mode": "wal",
+  "synchronous": "full",
+  "hash_algorithm": "sha256",
+  "required_scope_fields": [
+    "product_id",
+    "host_instance_id",
+    "encryption_domain"
+  ],
+  "executable_decision_types": [
+    "override",
+    "quarantine",
+    "transition"
+  ],
+  "executable_source_tiers": [
+    "cold",
+    "hot",
+    "quarantine",
+    "raw_buffer",
+    "warm"
+  ],
+  "executable_target_tiers": [
+    "cold",
+    "hot",
+    "quarantine",
+    "warm"
+  ],
+  "publication_protocol": [
+    "append_prepared_intent",
+    "copy_host_sealed_bytes_to_temporary_object",
+    "verify_temporary_length_and_sha256",
+    "atomically_publish_target_object",
+    "fsync_target_directory",
+    "append_publication_receipt",
+    "preserve_source_object"
+  ],
+  "invariants": {
+    "approved_decision_binding": true,
+    "decision_digest_binding": true,
+    "lifecycle_journal_integrity_required": true,
+    "retention_blocker_revalidation": true,
+    "superseded_decision_rejection": true,
+    "non_destructive_source_preservation": true,
+    "host_sealed_opaque_bytes_only": true,
+    "atomic_copy_verify_publish": true,
+    "append_only_transition_intents": true,
+    "append_only_publication_receipts": true,
+    "idempotent_reexecution": true,
+    "crash_recovery_supported": true,
+    "database_outside_public_repository": true,
+    "product_host_encryption_isolation": true,
+    "full_integrity_verification": true,
+    "sanitized_inspection": true,
+    "physical_tier_movement_implemented": true,
+    "automatic_retention_implemented": false,
+    "payload_deletion_implemented": false,
+    "deletion_propagation_implemented": false,
+    "storage_pressure_eviction_implemented": false,
+    "backup_restore_implemented": false,
+    "learning_curator_implemented": false,
+    "phase2_memory_store_migrated": false,
+    "friday_product_source_implemented": false,
+    "private_payload_allowed": false,
+    "kernel_key_custody": false,
+    "network_or_cloud_dependency": false
+  },
+  "capability_ceiling": false
+}
