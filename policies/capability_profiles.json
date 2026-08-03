@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0",
+  "version": "1.3.0",
   "authority": "docs/CAPABILITY_UNBLOCKING_POLICY.md",
   "default_profile": "conversation.phase3.compatibility",
   "profiles": {
@@ -371,7 +371,7 @@
       "domain": "cognitive_kernel",
       "scope_kind": "active_phase_foundation",
       "capability_ceiling": false,
-      "description": "Host-neutral Phase 5 contracts for experience, evaluation, storage, Mission Graph, workspace projections, guest trust, and exact-artifact release verification.",
+      "description": "Host-neutral Phase 5 contracts and runtime foundations for experience, compact ledger persistence, host-sealed raw-buffer storage, Mission Graph, workspace projections, guest trust, and exact-artifact release verification.",
       "capabilities": {
         "experience_event_contracts": true,
         "mission_graph_contracts": true,
@@ -381,7 +381,15 @@
         "release_attestation_verification_implemented": true,
         "release_signing_implemented": false,
         "release_deployment_implemented": false,
-        "approval_generation_implemented": false
+        "approval_generation_implemented": false,
+        "compact_experience_ledger_runtime_implemented": true,
+        "raw_buffer_runtime_implemented": true,
+        "content_addressed_payload_store_implemented": true,
+        "host_scoped_payload_deduplication_implemented": true,
+        "host_sealed_opaque_payload_boundary_required": true,
+        "automatic_retention_implemented": false,
+        "tier_movement_implemented": false,
+        "backup_restore_implemented": false
       }
     },
     "alice.private_companion.custody": {

@@ -1,0 +1,45 @@
+{
+  "cognitive_kernel_raw_buffer_policy_schema_version": 1,
+  "policy_id": "personal-cognitive-kernel.raw-buffer.v1",
+  "version": "0.7.0",
+  "phase": "5",
+  "milestone": "P5.1b",
+  "status": "runtime_foundation",
+  "required_contracts": [
+    "experience_event",
+    "storage_lifecycle"
+  ],
+  "payload_mode": "host_sealed_opaque_bytes",
+  "content_digest_algorithm": "sha256",
+  "deduplication_scope": "host_instance_and_encryption_domain",
+  "required_scope_fields": [
+    "product_id",
+    "host_instance_id",
+    "encryption_domain"
+  ],
+  "invariants": {
+    "persistent_ledger_implemented": true,
+    "policy_bounded_raw_buffer": true,
+    "host_sealed_opaque_payloads": true,
+    "content_addressed_objects": true,
+    "same_scope_physical_deduplication": true,
+    "logical_references_remain_distinct": true,
+    "cross_host_deduplication_prohibited": true,
+    "atomic_object_publication": true,
+    "transactional_reference_metadata": true,
+    "database_and_objects_outside_public_repository": true,
+    "payload_integrity_verification": true,
+    "sanitized_inspection": true,
+    "storage_accounting": true,
+    "kernel_key_custody": false,
+    "plaintext_payload_requirement": false,
+    "automatic_expiry_implemented": false,
+    "tier_movement_implemented": false,
+    "deletion_propagation_implemented": false,
+    "storage_pressure_eviction_implemented": false,
+    "backup_restore_implemented": false,
+    "friday_product_source_implemented": false,
+    "payload_in_source_or_contracts_allowed": false
+  },
+  "capability_ceiling": false
+}
