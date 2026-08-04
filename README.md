@@ -803,6 +803,8 @@ Development is progressing in evaluated phases.
 
 ### Phase 4 operational closure
 
+The P4.10 operational live-public-information closure is approved and merged.
+
 P4.5a citation-bound grounding is merged and remains part of the preserved Phase 4 compatibility path. Phase 4 is operationally complete through P4.10c. Phase 5.0 is active.
 
 | Phase | Domain | Status |
