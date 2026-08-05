@@ -11,6 +11,14 @@
 **Status:** Final top-level capability domains with a mapped Friday product track
 **Principle:** Capability, learning, and governance co-evolve. Earlier implementations remain changeable when necessary to serve the final architecture.
 
+## Capability-first research and delivery rule
+
+The roadmap defines delivery and production-activation order. It does not limit research order.
+
+A.L.I.C.E. may research, prototype, benchmark, and shadow-evaluate graph engines, event stores, distributed databases, vector systems, durable workflows, model training, large-context serving, clusters, remote accelerators, federation, robotics, and later technologies whenever evidence indicates value. Production influence remains profile-governed and truthfully labeled.
+
+Released source and tests are compatibility baselines. They remain available during migration, but they do not veto successor architectures. Every temporary limit must name its profile, reason, review point, removal criterion, and successor path.
+
 ## Phase 0 — Identity and Authority Kernel
 
 **Status:** Released baseline; evolvable.

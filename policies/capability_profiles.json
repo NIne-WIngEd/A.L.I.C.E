@@ -1,6 +1,6 @@
 {
   "version": "1.5.0",
-  "authority": "docs/CAPABILITY_UNBLOCKING_POLICY.md",
+  "authority": "docs/MEMORY_CAPABILITY_EXPANSION_AND_RATIFICATION_PROGRAM.md",
   "default_profile": "conversation.phase3.compatibility",
   "profiles": {
     "conversation.phase3.compatibility": {
@@ -22,7 +22,14 @@
         "INTERNAL",
         "PRIVATE"
       ],
-      "retention": "session_only"
+      "retention": "session_only",
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "compatibility_only",
+      "successor_profile": "conversation.integrated",
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "conversation.integrated": {
       "domain": "conversation",
@@ -46,7 +53,14 @@
         "PRIVATE",
         "HIGHLY_SENSITIVE"
       ],
-      "retention": "learning_curator"
+      "retention": "learning_curator",
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "enabled",
+      "successor_profile": null,
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "conversation.experimental_reasoning_trace": {
       "domain": "conversation",
@@ -70,7 +84,14 @@
         "PRIVATE",
         "HIGHLY_SENSITIVE"
       ],
-      "retention": "research_manifest"
+      "retention": "research_manifest",
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "enabled",
+      "successor_profile": null,
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "orchestration.phase3.compatibility": {
       "domain": "orchestration",
@@ -98,7 +119,14 @@
         "automatic_retry_count": 0,
         "provider_fallback_allowed": false,
         "final_grounding_validation_enabled": true
-      }
+      },
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "compatibility_only",
+      "successor_profile": "orchestration.adaptive",
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "orchestration.adaptive": {
       "domain": "orchestration",
@@ -126,7 +154,14 @@
         "automatic_retry_count": 3,
         "provider_fallback_allowed": true,
         "final_grounding_validation_enabled": true
-      }
+      },
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "enabled",
+      "successor_profile": null,
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "information.phase4.foundation": {
       "domain": "information",
@@ -160,7 +195,14 @@
         "request_timeout_seconds": 30,
         "total_timeout_seconds": 120,
         "max_response_bytes": 5000000
-      }
+      },
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "compatibility_only",
+      "successor_profile": "information.live_read_only",
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "information.live_read_only": {
       "domain": "information",
@@ -201,7 +243,14 @@
         "request_timeout_seconds": 300,
         "total_timeout_seconds": 86400,
         "max_response_bytes": 1000000000
-      }
+      },
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "enabled",
+      "successor_profile": null,
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "information.authorized_browser": {
       "domain": "information",
@@ -244,7 +293,14 @@
         "request_timeout_seconds": 3600,
         "total_timeout_seconds": 604800,
         "max_response_bytes": 10000000000
-      }
+      },
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "enabled",
+      "successor_profile": null,
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "evolution.a5": {
       "domain": "evolution",
@@ -260,7 +316,14 @@
         "create_agents": true,
         "change_non_kernel_governance": true,
         "conduct_open_ended_research": true
-      }
+      },
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "enabled",
+      "successor_profile": null,
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "vault.phase1.compatibility": {
       "domain": "vault",
@@ -271,7 +334,14 @@
         "authorized_ingestion": true,
         "external_write_allowed": false,
         "automatic_model_training": false
-      }
+      },
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "compatibility_only",
+      "successor_profile": "memory.edge",
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "memory.phase2.compatibility": {
       "domain": "memory",
@@ -282,14 +352,28 @@
         "authoritative_store": true,
         "automatic_memory_formation": false,
         "parametric_learning": false
-      }
+      },
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "compatibility_only",
+      "successor_profile": "memory.workstation",
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "legacy.release.compatibility": {
       "domain": "legacy",
       "scope_kind": "phase_local",
       "capability_ceiling": false,
       "description": "Generic compatibility classification for older release-specific modules pending replacement.",
-      "capabilities": {}
+      "capabilities": {},
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "compatibility_only",
+      "successor_profile": "memory.frontier_research",
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "friday.local_core": {
       "domain": "product",
@@ -314,7 +398,14 @@
         "encrypted_local_storage",
         "network_egress_ledger",
         "signed_capabilities"
-      ]
+      ],
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "enabled",
+      "successor_profile": "friday.learning_alpha",
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "friday.learning_alpha": {
       "domain": "product",
@@ -342,7 +433,14 @@
         "identity_capsule",
         "deletion_propagation",
         "champion_challenger"
-      ]
+      ],
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "enabled",
+      "successor_profile": null,
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "friday.optional_connected": {
       "domain": "product",
@@ -365,7 +463,14 @@
         "host_authority",
         "network_egress_ledger",
         "local_redaction"
-      ]
+      ],
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "enabled",
+      "successor_profile": null,
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "kernel.phase5.foundation": {
       "domain": "cognitive_kernel",
@@ -404,7 +509,14 @@
         "storage_pressure_eviction_implemented": false,
         "backup_restore_implemented": false,
         "learning_curator_implemented": false
-      }
+      },
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "enabled",
+      "successor_profile": null,
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "alice.private_companion.custody": {
       "domain": "alice_private_companion",
@@ -427,7 +539,14 @@
         "PRIVATE",
         "HIGHLY_SENSITIVE"
       ],
-      "retention": "owner_private_lifecycle"
+      "retention": "owner_private_lifecycle",
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "enabled",
+      "successor_profile": null,
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
     },
     "friday.production.dual_approval": {
       "domain": "product_governance",
@@ -450,6 +569,574 @@
         "team_unilateral_production_promotion_allowed": false,
         "emergency_rollback_disable_contain_allowed": true,
         "emergency_new_behavior_allowed": false
+      },
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "state": "enabled",
+      "successor_profile": null,
+      "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
+    },
+    "memory.edge": {
+      "domain": "memory",
+      "scope_kind": "mission_selectable",
+      "state": "research_active",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": "memory.workstation",
+      "activation_condition": "edge_profile_evaluation_and_owner_custody",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Embedded and edge-capable cognitive fabric with owner-controlled custody and export.",
+      "capabilities": {
+        "evidence_log": true,
+        "claim_authority": true,
+        "current_claim_projection": true,
+        "graph_projection": true,
+        "vector_projection": true,
+        "payload_store": true,
+        "durable_workflows": true,
+        "adaptive_context": true,
+        "deletion_coordinator": true,
+        "rollback": true,
+        "backend_replacement": true,
+        "single_node": true,
+        "distributed_execution": false,
+        "remote_compute": false
+      }
+    },
+    "memory.workstation": {
+      "domain": "memory",
+      "scope_kind": "mission_selectable",
+      "state": "research_active",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": "memory.home_cluster",
+      "activation_condition": "workstation_benchmark_privacy_deletion_and_rollback_pass",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Single or multi-GPU workstation profile with replaceable local services.",
+      "capabilities": {
+        "evidence_log": true,
+        "claim_authority": true,
+        "current_claim_projection": true,
+        "graph_projection": true,
+        "vector_projection": true,
+        "payload_store": true,
+        "durable_workflows": true,
+        "adaptive_context": true,
+        "deletion_coordinator": true,
+        "rollback": true,
+        "backend_replacement": true,
+        "single_node": true,
+        "multi_process": true,
+        "distributed_execution": true,
+        "remote_compute": false
+      }
+    },
+    "memory.home_cluster": {
+      "domain": "memory",
+      "scope_kind": "mission_selectable",
+      "state": "research_active",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": "memory.private_cluster",
+      "activation_condition": "cluster_failure_recovery_and_namespace_isolation_pass",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Owner-controlled multi-node home or lab cluster.",
+      "capabilities": {
+        "evidence_log": true,
+        "claim_authority": true,
+        "current_claim_projection": true,
+        "graph_projection": true,
+        "vector_projection": true,
+        "payload_store": true,
+        "durable_workflows": true,
+        "adaptive_context": true,
+        "deletion_coordinator": true,
+        "rollback": true,
+        "backend_replacement": true,
+        "replication": true,
+        "sharding": true,
+        "distributed_execution": true,
+        "multi_device_sync": true
+      }
+    },
+    "memory.private_cluster": {
+      "domain": "memory",
+      "scope_kind": "mission_selectable",
+      "state": "research_active",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": "memory.hybrid_cloud",
+      "activation_condition": "private_cluster_slo_security_deletion_and_failover_pass",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Owner-authorized private cluster with durable services and accelerator scheduling.",
+      "capabilities": {
+        "evidence_log": true,
+        "claim_authority": true,
+        "current_claim_projection": true,
+        "graph_projection": true,
+        "vector_projection": true,
+        "payload_store": true,
+        "durable_workflows": true,
+        "adaptive_context": true,
+        "deletion_coordinator": true,
+        "rollback": true,
+        "backend_replacement": true,
+        "replication": true,
+        "sharding": true,
+        "distributed_training": true,
+        "distributed_inference": true,
+        "multi_region": true
+      }
+    },
+    "memory.hybrid_cloud": {
+      "domain": "memory",
+      "scope_kind": "owner_authorized",
+      "state": "research_active",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": "memory.distributed",
+      "activation_condition": "egress_custody_export_deletion_and_cost_profile_approved",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Hybrid local and remote deployment preserving owner-controlled authority and replacement.",
+      "capabilities": {
+        "evidence_log": true,
+        "claim_authority": true,
+        "current_claim_projection": true,
+        "graph_projection": true,
+        "vector_projection": true,
+        "payload_store": true,
+        "durable_workflows": true,
+        "adaptive_context": true,
+        "deletion_coordinator": true,
+        "rollback": true,
+        "backend_replacement": true,
+        "local_continuity": true,
+        "remote_compute": true,
+        "remote_storage": true,
+        "replication": true,
+        "distributed_training": true,
+        "distributed_inference": true
+      }
+    },
+    "memory.distributed": {
+      "domain": "memory",
+      "scope_kind": "owner_authorized",
+      "state": "research_active",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": "memory.frontier_research",
+      "activation_condition": "distributed_consistency_partition_recovery_and_owner_namespace_pass",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Distributed multi-device and multi-region cognitive fabric.",
+      "capabilities": {
+        "evidence_log": true,
+        "claim_authority": true,
+        "current_claim_projection": true,
+        "graph_projection": true,
+        "vector_projection": true,
+        "payload_store": true,
+        "durable_workflows": true,
+        "adaptive_context": true,
+        "deletion_coordinator": true,
+        "rollback": true,
+        "backend_replacement": true,
+        "multi_region": true,
+        "horizontal_scaling": true,
+        "federation": true,
+        "distributed_training": true,
+        "distributed_inference": true
+      }
+    },
+    "memory.frontier_research": {
+      "domain": "memory",
+      "scope_kind": "research_only",
+      "state": "research_active",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": null,
+      "activation_condition": "isolated_or_owner_authorized_research_with_lineage",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Open-ended frontier profile for later architectures and capability experiments.",
+      "capabilities": {
+        "evidence_log": true,
+        "claim_authority": true,
+        "current_claim_projection": true,
+        "graph_projection": true,
+        "vector_projection": true,
+        "payload_store": true,
+        "durable_workflows": true,
+        "adaptive_context": true,
+        "deletion_coordinator": true,
+        "rollback": true,
+        "backend_replacement": true,
+        "new_backends_allowed": true,
+        "new_models_allowed": true,
+        "new_topologies_allowed": true,
+        "new_training_methods_allowed": true,
+        "open_ended_research": true
+      }
+    },
+    "graph.shadow": {
+      "domain": "graph",
+      "scope_kind": "research_only",
+      "state": "research_active",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": "graph.production",
+      "activation_condition": "registered_graph_generation_and_no_production_authority",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Cognitive graph projection and algorithm evaluation without claim authority.",
+      "capabilities": {
+        "read_claims": true,
+        "write_graph_projection": true,
+        "run_algorithms": true,
+        "graph_embeddings": true,
+        "propose_claim_candidates": true,
+        "production_claim_authority": false
+      }
+    },
+    "graph.production": {
+      "domain": "graph",
+      "scope_kind": "owner_ratified_mission",
+      "state": "destination",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": null,
+      "activation_condition": "graph_quality_failure_deletion_and_reconciliation_evidence",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Production graph reasoning with provenance, deletion, reconciliation, and rollback.",
+      "capabilities": {
+        "graph_retrieval": true,
+        "graph_algorithms": true,
+        "graph_embeddings": true,
+        "claim_candidate_generation": true,
+        "registered_write_back": true,
+        "graph_to_claim_reconciliation": true
+      }
+    },
+    "curator.shadow": {
+      "domain": "curation",
+      "scope_kind": "research_only",
+      "state": "research_active",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": "curator.production",
+      "activation_condition": "isolated_shadow_workflows_and_complete_lineage",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Durable Curator computation with candidate output and no production promotion.",
+      "capabilities": {
+        "candidate_extraction": true,
+        "episode_construction": true,
+        "belief_candidate_generation": true,
+        "automatic_production_promotion": false
+      }
+    },
+    "curator.production": {
+      "domain": "curation",
+      "scope_kind": "mission_selectable",
+      "state": "destination",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": null,
+      "activation_condition": "class_specific_evidence_thresholds_deletion_rollback_and_authority",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Profile-governed automatic curation and adjudication.",
+      "capabilities": {
+        "automatic_memory_formation": true,
+        "automatic_adjudication": true,
+        "belief_revision": true,
+        "skill_formation": true,
+        "learned_retention": true
+      }
+    },
+    "training.challenger": {
+      "domain": "training",
+      "scope_kind": "research_only",
+      "state": "research_active",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": "training.canary",
+      "activation_condition": "dataset_lineage_compute_budget_and_isolation",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Automatic challenger dataset construction and model training.",
+      "capabilities": {
+        "dataset_build": true,
+        "distributed_training": true,
+        "remote_accelerators": true,
+        "checkpointing": true,
+        "production_influence": false
+      }
+    },
+    "training.canary": {
+      "domain": "training",
+      "scope_kind": "owner_ratified_mission",
+      "state": "destination",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": "training.production",
+      "activation_condition": "champion_challenger_pass_canary_scope_and_rollback",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Bounded canary influence for evaluated challenger models.",
+      "capabilities": {
+        "shadow_serving": true,
+        "canary_influence": true,
+        "automatic_rollback": true,
+        "production_influence": false
+      }
+    },
+    "training.production": {
+      "domain": "training",
+      "scope_kind": "owner_ratified_mission",
+      "state": "destination",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": null,
+      "activation_condition": "A5_or_owner_authority_plus_full_evaluation_deletion_and_rollback",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Production learned-model influence with lineage and rollback.",
+      "capabilities": {
+        "production_influence": true,
+        "automatic_low_impact_promotion": true,
+        "distributed_training": true,
+        "distributed_serving": true,
+        "model_retirement": true
+      }
+    },
+    "federation.owner_namespace": {
+      "domain": "federation",
+      "scope_kind": "owner_authorized",
+      "state": "research_active",
+      "capability_ceiling": false,
+      "research_allowed": true,
+      "shadow_allowed": true,
+      "successor_profile": null,
+      "activation_condition": "same_owner_namespace_encryption_conflict_and_deletion_controls",
+      "review_at": "evidence_or_owner_directive",
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "description": "Replication and synchronization inside one owner-authorized authority namespace.",
+      "capabilities": {
+        "multi_device_replication": true,
+        "offline_operation": true,
+        "causal_metadata": true,
+        "conflict_receipts": true,
+        "deletion_watermarks": true,
+        "cross_owner_access": false
+      }
+    }
+  },
+  "capability_ceiling": false,
+  "capability_state_vocabulary": [
+    "destination",
+    "research_active",
+    "prototype_operational",
+    "shadow_evaluated",
+    "canary_enabled",
+    "production_profile_enabled",
+    "degraded",
+    "superseded",
+    "retired",
+    "compatibility_only",
+    "implemented_disabled",
+    "enabled"
+  ],
+  "global_semantics": {
+    "owner_sovereign": true,
+    "local_capable": true,
+    "deployment_unbounded": true,
+    "capability_ceiling": false,
+    "research_bans_are_invalid": true,
+    "temporary_limits_require_profile": true,
+    "fixed_limits_are_profile_defaults": true,
+    "historical_profiles_do_not_govern_successors": true,
+    "production_activation_is_profile_governed": true,
+    "private_state_requires_owner_authorized_custody": true,
+    "product_and_host_isolation_required": true,
+    "provenance_required": true,
+    "deletion_and_rollback_required": true
+  },
+  "component_policy_state_registry": {
+    "schema_version": "1.0.0",
+    "capability_ceiling": false,
+    "released_component_contracts_mutated": false,
+    "semantics": "false _implemented fields describe current implementation state, not destination prohibition",
+    "entries": {
+      "cognitive_kernel_attention_workspace_policy.json": {
+        "source_policy_version": "0.3.0",
+        "false_implemented_fields": [
+          "invariants.persistent_store_implemented",
+          "invariants.complete_ui_implemented",
+          "invariants.autonomous_attention_execution_implemented",
+          "invariants.speaker_guest_authority_implemented"
+        ],
+        "destination_status": "defined_by_capability_catalog_and_successor_profiles",
+        "research_status": "allowed",
+        "successor_profile": "registered_in_capability_profiles_or_phase_scope_registry",
+        "activation_evidence": "implementation_tests_evaluation_and_required_authority",
+        "meaning": "truthful_current_implementation_state_not_permanent_denial",
+        "released_contract_unchanged": true
+      },
+      "cognitive_kernel_experience_ledger_policy.json": {
+        "source_policy_version": "0.6.0",
+        "false_implemented_fields": [
+          "invariants.raw_buffer_implemented",
+          "invariants.blob_store_implemented",
+          "invariants.payload_deduplication_implemented",
+          "invariants.automated_retention_implemented",
+          "invariants.backup_restore_implemented",
+          "invariants.friday_product_source_implemented"
+        ],
+        "destination_status": "defined_by_capability_catalog_and_successor_profiles",
+        "research_status": "allowed",
+        "successor_profile": "registered_in_capability_profiles_or_phase_scope_registry",
+        "activation_evidence": "implementation_tests_evaluation_and_required_authority",
+        "meaning": "truthful_current_implementation_state_not_permanent_denial",
+        "released_contract_unchanged": true
+      },
+      "cognitive_kernel_foundation_policy.json": {
+        "source_policy_version": "0.1.0",
+        "false_implemented_fields": [
+          "boundaries.persistent_store_implemented",
+          "boundaries.raw_buffer_implemented",
+          "boundaries.complete_ui_implemented",
+          "boundaries.autonomous_learning_implemented"
+        ],
+        "destination_status": "defined_by_capability_catalog_and_successor_profiles",
+        "research_status": "allowed",
+        "successor_profile": "registered_in_capability_profiles_or_phase_scope_registry",
+        "activation_evidence": "implementation_tests_evaluation_and_required_authority",
+        "meaning": "truthful_current_implementation_state_not_permanent_denial",
+        "released_contract_unchanged": true
+      },
+      "cognitive_kernel_interaction_authority_policy.json": {
+        "source_policy_version": "0.4.0",
+        "false_implemented_fields": [
+          "invariants.autonomous_authority_escalation_implemented",
+          "invariants.biometric_recognition_implemented",
+          "invariants.complete_ui_implemented",
+          "invariants.friday_product_source_implemented",
+          "invariants.microphone_capture_implemented",
+          "invariants.persistent_guest_store_implemented"
+        ],
+        "destination_status": "defined_by_capability_catalog_and_successor_profiles",
+        "research_status": "allowed",
+        "successor_profile": "registered_in_capability_profiles_or_phase_scope_registry",
+        "activation_evidence": "implementation_tests_evaluation_and_required_authority",
+        "meaning": "truthful_current_implementation_state_not_permanent_denial",
+        "released_contract_unchanged": true
+      },
+      "cognitive_kernel_lifecycle_policy.json": {
+        "source_policy_version": "0.8.0",
+        "false_implemented_fields": [
+          "invariants.automatic_expiry_implemented",
+          "invariants.physical_tier_movement_implemented",
+          "invariants.payload_deletion_implemented",
+          "invariants.deletion_propagation_implemented",
+          "invariants.storage_pressure_eviction_implemented",
+          "invariants.backup_restore_implemented",
+          "invariants.learning_curator_implemented",
+          "invariants.friday_product_source_implemented"
+        ],
+        "destination_status": "defined_by_capability_catalog_and_successor_profiles",
+        "research_status": "allowed",
+        "successor_profile": "registered_in_capability_profiles_or_phase_scope_registry",
+        "activation_evidence": "implementation_tests_evaluation_and_required_authority",
+        "meaning": "truthful_current_implementation_state_not_permanent_denial",
+        "released_contract_unchanged": true
+      },
+      "cognitive_kernel_mission_graph_policy.json": {
+        "source_policy_version": "0.2.0",
+        "false_implemented_fields": [
+          "invariants.persistence_implemented",
+          "invariants.complete_ui_implemented",
+          "invariants.attention_engine_implemented",
+          "invariants.speaker_guest_implemented"
+        ],
+        "destination_status": "defined_by_capability_catalog_and_successor_profiles",
+        "research_status": "allowed",
+        "successor_profile": "registered_in_capability_profiles_or_phase_scope_registry",
+        "activation_evidence": "implementation_tests_evaluation_and_required_authority",
+        "meaning": "truthful_current_implementation_state_not_permanent_denial",
+        "released_contract_unchanged": true
+      },
+      "cognitive_kernel_raw_buffer_policy.json": {
+        "source_policy_version": "0.7.0",
+        "false_implemented_fields": [
+          "invariants.automatic_expiry_implemented",
+          "invariants.tier_movement_implemented",
+          "invariants.deletion_propagation_implemented",
+          "invariants.storage_pressure_eviction_implemented",
+          "invariants.backup_restore_implemented",
+          "invariants.friday_product_source_implemented"
+        ],
+        "destination_status": "defined_by_capability_catalog_and_successor_profiles",
+        "research_status": "allowed",
+        "successor_profile": "registered_in_capability_profiles_or_phase_scope_registry",
+        "activation_evidence": "implementation_tests_evaluation_and_required_authority",
+        "meaning": "truthful_current_implementation_state_not_permanent_denial",
+        "released_contract_unchanged": true
+      },
+      "cognitive_kernel_release_attestation_policy.json": {
+        "source_policy_version": "0.5.0",
+        "false_implemented_fields": [
+          "invariants.release_signing_implemented",
+          "invariants.deployment_implemented",
+          "invariants.approval_generation_implemented",
+          "invariants.friday_product_source_implemented"
+        ],
+        "destination_status": "defined_by_capability_catalog_and_successor_profiles",
+        "research_status": "allowed",
+        "successor_profile": "registered_in_capability_profiles_or_phase_scope_registry",
+        "activation_evidence": "implementation_tests_evaluation_and_required_authority",
+        "meaning": "truthful_current_implementation_state_not_permanent_denial",
+        "released_contract_unchanged": true
+      },
+      "cognitive_kernel_tier_transition_policy.json": {
+        "source_policy_version": "0.9.0",
+        "false_implemented_fields": [
+          "invariants.automatic_retention_implemented",
+          "invariants.payload_deletion_implemented",
+          "invariants.deletion_propagation_implemented",
+          "invariants.storage_pressure_eviction_implemented",
+          "invariants.backup_restore_implemented",
+          "invariants.learning_curator_implemented",
+          "invariants.friday_product_source_implemented"
+        ],
+        "destination_status": "defined_by_capability_catalog_and_successor_profiles",
+        "research_status": "allowed",
+        "successor_profile": "registered_in_capability_profiles_or_phase_scope_registry",
+        "activation_evidence": "implementation_tests_evaluation_and_required_authority",
+        "meaning": "truthful_current_implementation_state_not_permanent_denial",
+        "released_contract_unchanged": true
       }
     }
   }

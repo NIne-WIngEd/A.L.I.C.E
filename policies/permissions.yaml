@@ -324,3 +324,202 @@ permissions:
     audit: true
     standing_authorization_allowed: false
     confirmation: impossible_without_constitutional_replacement
+
+
+# Capability-First Polyglot Cognitive Fabric permissions.
+# Research and candidate construction use P0-P2 where reversible and isolated.
+# Production influence follows mission, A5, or owner authority by consequence.
+
+  - id: graph.read
+    level: P1
+    autonomy_class: A0
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+
+  - id: graph.write_projection
+    level: P2
+    autonomy_class: A2
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [provenance_required, projection_generation_required, deletion_lineage_required]
+
+  - id: graph.run_algorithm
+    level: P2
+    autonomy_class: A1
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [resource_profile_required, result_role_must_be_candidate_or_projection]
+
+  - id: event_stream.append
+    level: P2
+    autonomy_class: A2
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [registered_stream_required, idempotency_required, authority_namespace_required]
+
+  - id: event_stream.subscribe
+    level: P1
+    autonomy_class: A0
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [registered_subscription_required]
+
+  - id: claim.append
+    level: P2
+    autonomy_class: A2
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [registered_claim_authority_required, provenance_required, expected_version_or_idempotency]
+
+  - id: claim.adjudicate
+    level: P2
+    autonomy_class: A2
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [authority_class_required, evidence_threshold_required, rollback_reference_required]
+
+  - id: vector.index_build
+    level: P2
+    autonomy_class: A1
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [generation_manifest_required, deletion_watermark_required]
+
+  - id: vector.search
+    level: P1
+    autonomy_class: A0
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+
+  - id: workflow.launch
+    level: P2
+    autonomy_class: A2
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [registered_workflow_required, idempotency_required, resource_profile_required]
+
+  - id: workflow.signal
+    level: P2
+    autonomy_class: A2
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: true
+
+  - id: workflow.cancel
+    level: P2
+    autonomy_class: A2
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: true
+
+  - id: cluster.provision
+    level: P3
+    autonomy_class: A3
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: true
+    confirmation: explicit_or_mission
+    constraints: [owner_authorized_account, budget_profile_required, custody_profile_required]
+
+  - id: cluster.scale
+    level: P3
+    autonomy_class: A3
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: true
+    confirmation: explicit_or_mission
+    constraints: [budget_profile_required, rollback_or_scale_down_required]
+
+  - id: remote_compute.use
+    level: P3
+    autonomy_class: A3
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: true
+    confirmation: explicit_or_mission
+    constraints: [egress_manifest_required, data_classification_check, deletion_contract_required]
+
+  - id: model.train_distributed
+    level: P2
+    autonomy_class: A1
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [dataset_manifest_required, compute_budget_required, checkpoint_and_rollback_required]
+
+  - id: model.evaluate_challenger
+    level: P2
+    autonomy_class: A1
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [evaluation_profile_required, lineage_required]
+
+  - id: model.deploy_shadow
+    level: P2
+    autonomy_class: A2
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [no_production_authority, isolation_required, rollback_required]
+
+  - id: model.deploy_canary
+    level: P4
+    autonomy_class: A5
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    confirmation: strong_or_A5_mission
+    constraints: [canary_scope_required, champion_challenger_pass, rollback_required]
+
+  - id: dataset.build
+    level: P2
+    autonomy_class: A1
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [source_and_deletion_lineage_required, exclusion_manifest_required]
+
+  - id: dataset.export_authorized
+    level: P3
+    autonomy_class: A3
+    reversible: false
+    audit: true
+    standing_authorization_allowed: true
+    confirmation: explicit_or_mission
+    constraints: [exact_export_manifest, recipient_and_purpose_required, product_isolation_check]
+
+  - id: memory.federate_owner_namespace
+    level: P3
+    autonomy_class: A3
+    reversible: partly
+    audit: true
+    standing_authorization_allowed: true
+    confirmation: explicit_or_mission
+    constraints: [same_owner_authority_namespace_or_explicit_export, encryption_required, deletion_watermark_required]
+
+  - id: memory.replicate
+    level: P2
+    autonomy_class: A2
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [registered_replica_required, authority_namespace_required, deletion_watermark_required]
+
+  - id: memory.resolve_replication_conflict
+    level: P2
+    autonomy_class: A2
+    reversible: true
+    audit: true
+    standing_authorization_allowed: true
+    constraints: [conflict_receipt_required, provenance_required, adjudication_policy_required]

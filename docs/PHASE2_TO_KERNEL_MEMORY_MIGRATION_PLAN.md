@@ -1,200 +1,147 @@
-# Phase 2 to Cognitive Kernel Memory Migration Plan
+# Phase 2 to Cognitive Fabric Memory Migration Plan
 
-**Draft:** 0.2<br>
-**Canonical authority decision:** Accepted 2026-08-03<br>
-**Goal:** Unify Phase 2 authoritative memory and Phase 5 experience storage
-without creating two competing sources of truth.
+**Version:** 1.0.0
+**Status:** Owner-ratified M1 migration architecture; migration has not started
+**Source baseline:** Released Phase 2 Memory Core
+**Destination:** Backend-neutral Memory Architecture v4.1
 
-## 1. Current state
+## 1. Objective
 
-Phase 2 provides:
+Migrate Phase 2 memory into a claim-centered, evidence-linked, polyglot cognitive fabric without creating an ambiguous source of truth, losing provenance, leaking private state, or removing a tested fallback before successor evidence exists.
 
-- durable memory rows;
-- provenance;
-- temporal state;
-- correction/conflict relations;
-- sensitive storage;
-- candidate staging;
-- lexical and semantic retrieval;
-- deletion foundations.
+The target may combine embedded, relational, distributed, event, graph, vector, object, workflow, and model systems. The plan does not assume one database or one host.
 
-Phase 5 provides:
+## 2. Migration principles
 
-- immutable Experience Ledger metadata;
-- raw payload references;
-- content-addressed storage;
-- lifecycle decisions;
-- tier movement;
-- product/host/encryption-domain isolation.
+1. Released Phase 2 source and tests remain a compatibility baseline and test oracle.
+2. Every target authority is registered before accepting production writes.
+3. One component is canonical for each authority type at a given generation.
+4. Secondary writes are projections, replicas, outbox deliveries, or shadow authorities with explicit status.
+5. Dual-write periods require idempotency, reconciliation, divergence metrics, and rollback.
+6. Private payloads and owner state remain within authorized custody.
+7. Corrections and deletion lineage migrate before production cutover.
+8. Graph, vector, summary, cache, model, and episode systems remain provenance-linked derivatives unless explicitly ratified otherwise.
+9. Research and prototypes may proceed in parallel. Cutover proceeds by evidence.
 
-The systems are intentionally separate today.
+## 3. Target planes
 
-## 2. Accepted source-of-truth topology
+The migration may populate:
 
-The accepted migration target is:
+- Experience/Event Fabric;
+- Claim Authority and current-state projection;
+- Cognitive Graph;
+- lexical, vector, and multimodal indexes;
+- object and archive storage;
+- durable workflow runtime;
+- dataset and model registries;
+- owner-authorized replicas and multi-device synchronization;
+- inspection, deletion, and rollback services.
 
-- Experience Ledger: immutable evidence and action lineage;
-- Claim Store: canonical append-only, bitemporal adjudicated knowledge;
-- Phase 2 Memory Core: compatibility projection during shadow migration;
-- episodes and cognitive models: versioned derivatives;
-- search, graph, summary, cache, and current-state indexes: rebuildable
-  derivatives.
+A single-node edge profile and a distributed profile implement the same logical contracts.
 
-Claim Store v1 uses new kernel contracts and tables in the existing host-local
-SQLite architecture. It does not require a new database service.
+## 4. Stages
 
-## 3. Migration rule
+### Stage A — Inventory and registration
 
-Do not bulk-copy all Phase 2 rows into the Experience Ledger.
+Register every source store, schema, generation, authority role, encryption domain, data classification, record count, integrity state, and deletion capability.
 
-Use explicit roles:
+No source file becomes authoritative merely because it is discovered.
 
-- Experience Ledger: event and action lineage;
-- payload store: opaque evidence bytes;
-- claim store: versioned adjudicated knowledge;
-- projections: current state and cognitive models;
-- indexes: derived search structures.
+### Stage B — Contract adapters
 
-## 4. Target flow
+Implement read adapters that translate Phase 2 records into neutral Evidence Event, Claim Identity, Claim Version, Evidence Relation, Conflict, Correction, and Deletion records.
 
-```text
-Phase 3/4/7 event
-    -> Experience Ledger event
-    -> optional payload reference
-    -> curation outbox
-    -> memory candidate
-    -> claim/episode/mission version
-    -> current-state projection
-    -> derived indexes
-    -> Memory Context Packet
-    -> model/action
-    -> outcome event
-```
+Adapters record loss, ambiguity, and unsupported semantics.
 
-## 5. Compatibility strategy
+### Stage C — Destination candidates
 
-### Stage 0 — Freeze and inventory
+Build one or more destination backends behind `EvidenceLog`, `ClaimAuthority`, `CurrentClaimProjection`, `GraphProjection`, `VectorProjection`, `PayloadStore`, and `DeletionCoordinator` contracts.
 
-- record exact Phase 2 schemas and callers;
-- profile row counts, indexes, latency, and sensitive-store use;
-- inventory every API import;
-- define compatibility tests.
+Candidates may include embedded and distributed systems. Selection follows benchmark and reliability evidence.
 
-### Stage 1 — Introduce canonical kernel contracts
+### Stage D — Historical backfill
 
-Add host-neutral contracts for:
+Backfill in deterministic batches with:
 
-- memory unit envelope;
-- evidence binding;
-- claim version;
-- episode;
-- context packet;
-- retrieval trace;
-- curation task and receipt.
+- source checkpoint;
+- record digest;
+- mapping version;
+- idempotency key;
+- accepted, rejected, quarantined, and ambiguous counts;
+- evidence and deletion lineage;
+- reconciliation receipt.
 
-No behavior changes.
+Backfill never invents missing provenance.
 
-### Stage 2 — Add event-to-candidate bridge
+### Stage E — Shadow reads
 
-New Phase 5 evidence events create outbox tasks. Each task receives a durable
-workflow ID and replayable event history. Tasks may stage candidates in a new
-kernel candidate API. Existing Phase 2 authoritative memory remains the serving
-source.
+Run current Phase 2 reads and successor reads against the same synthetic and authorized workloads.
 
-### Stage 3 — Add append-only claim versions
+Compare result quality, authority correctness, conflict handling, latency, staleness, deletion, privacy, and explanation.
 
-Introduce new Claim Identity, Claim Version, Claim Evidence, Claim Adjudication,
-and Current Claim Projection tables through Cognitive Kernel contracts in the
-existing host-local SQLite architecture.
+### Stage F — Controlled write mirroring
 
-Dual authoritative write is prohibited. The Claim Store transaction becomes the
-canonical write. A durable outbox updates the Phase 2 compatibility projection
-and all derived indexes.
+Keep one canonical writer. Publish canonical changes through outbox records to successor projections or a shadow authority.
 
-### Stage 4 — Rebuild Phase 2 compatibility projection
+If a successor is selected as canonical during canary, reverse projection to Phase 2 may continue for rollback. The authority transition is explicit.
 
-Generate Phase 2-compatible rows from claim versions. Compare every field and
-retrieval result against the original store.
+### Stage G — Graph, vector, and workflow build
 
-### Stage 5 — Shadow serving
+Construct graph and vector generations from registered claims and evidence. Launch durable projection, deletion, and repair workflows. Record build manifests and deletion watermarks.
 
-Run old and new retrieval in parallel. Log disagreements without changing model
-context. Evaluate:
+### Stage H — Canary authority
 
-- result overlap;
-- correct current state;
-- temporal behavior;
-- conflict expansion;
-- classification;
-- latency;
-- token efficiency.
+Enable a bounded owner-authorized profile for selected namespaces, claim classes, or missions.
 
-### Stage 6 — Controlled cutover
+Canary evidence includes divergence, rollback rehearsal, recovery, failure injection, privacy, and deletion verification.
 
-Enable the v4 serving plane for a limited capability profile. Retain the Phase 2
-compatibility projection and rollback path.
+### Stage I — Cutover
 
-### Stage 7 — Deprecate direct Phase 2 writes
+Freeze the old canonical position, drain outboxes, reconcile, verify integrity, record cutover manifest, activate the new authority generation, and preserve a tested rollback window.
 
-All new writes pass through kernel contracts. Phase 2 write APIs become
-compatibility adapters.
+### Stage J — Compatibility operation
 
-### Stage 8 — Archive legacy authority
+Phase 2 becomes a read-only compatibility projection, fallback, export source, or retired archive according to profile.
 
-After repeated rebuild and rollback tests, the original Phase 2 database becomes
-a signed migration artifact rather than the active authority.
+It is not deleted until retention, rollback, and owner authority permit.
 
-## 6. Sensitive memory
+## 5. Distributed and multi-device semantics
 
-Sensitive payload migration requires:
+Migration records authority namespace, owner partition, shard or stream position, logical clock, causal order, device/cluster identity, replication conflict, and reconciliation.
 
-- key and encryption-domain continuity;
-- no plaintext export;
-- row-by-row integrity verification;
-- owner authorization;
-- deletion-state preservation;
-- access-event continuity;
-- rollback.
+Partition strategy cannot leak owner or product state. Cross-owner federation requires an explicit export rather than implicit shared storage.
 
-## 7. Identifier mapping
+## 6. Deletion migration
 
-Maintain permanent mappings between:
+Before cutover:
 
-- Experience Event ID;
-- payload reference;
-- Phase 2 memory ID;
-- claim version ID;
-- episode ID;
-- mission ID;
-- projection version ID;
-- deletion request ID.
+- import all active deletion requests and tombstones;
+- verify ordinary retrieval exclusion;
+- propagate to graph, vector, object, cache, dataset, replay, model, replica, and backup manifests;
+- test archive restore with deletion replay;
+- disclose model-influence limitations;
+- rehearse rebuild or retirement of noncompliant derivatives.
 
-Mappings are append-only and inspection-safe.
+## 7. Rollback
 
-## 8. Rollback
+Rollback restores the prior authority generation or a known-good successor snapshot, replays accepted canonical events, reapplies deletion lineage, verifies current state, and records divergence.
 
-Every migration stage records:
+Rollback never silently discards writes accepted after cutover. Compensation or forward repair is used when reversal would lose valid authority history.
 
-- source commit;
-- source database digest;
-- schema version;
-- migration code digest;
-- output digest;
-- record counts;
-- mismatch report;
-- rollback procedure.
+## 8. Exit evidence
 
-A cutover is invalid without a tested rollback.
+A production cutover requires:
 
-## 9. Exit conditions
+- exact source and destination hashes;
+- registered backends and profiles;
+- mapping and reconciliation reports;
+- synthetic and authorized benchmark results;
+- failure and recovery tests;
+- product-isolation and privacy review;
+- deletion and restore verification;
+- public-claim update;
+- owner or mission authority appropriate to consequence.
 
-Migration is complete only when:
+## 9. Current state
 
-- all production writes use kernel contracts;
-- new stores rebuild all compatibility projections;
-- old/new shadow retrieval disagreements meet the ratified threshold;
-- sensitive memory is verified;
-- correction/deletion propagation works;
-- performance targets pass;
-- rollback passes after later writes;
-- owner approval is recorded.
+This ratified plan is architecture documentation. Migration has not started. No Claim Authority backend is declared implemented by this ratification.

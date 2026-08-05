@@ -24,6 +24,26 @@
     "procedural_skills",
     "training_assets",
     "representative_replay",
-    "parametric_models"
-  ]
+    "parametric_models",
+    "temporal_graph",
+    "causal_graph",
+    "multimodal_episode_models",
+    "distributed_event_streams",
+    "learned_retrieval",
+    "learned_routing",
+    "preference_models",
+    "world_models",
+    "source_person_models",
+    "personal_adapters",
+    "continual_pretraining_candidates",
+    "embodied_skills",
+    "simulation_generated_experience"
+  ],
+  "capability_ceiling": false,
+  "distributed_training": "mission_and_budget_authorized",
+  "remote_accelerators": "owner_authorized_profiles",
+  "shadow_model_serving": "enabled_by_evaluation_profile",
+  "automatic_challenger_generation": true,
+  "production_influence": "profile_and_authority_governed",
+  "deletion_and_rollback_required": true
 }

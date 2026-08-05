@@ -1,190 +1,192 @@
-# Memory Record and Provenance Standard
+# Memory Record and Provenance Standard — Polyglot Cognitive Fabric
 
-**Draft:** 0.2<br>
-**Status:** Canonical Claim Store direction accepted<br>
-**Applies to:** Memory Architecture v4
+**Version:** 1.0.0
+**Status:** Owner-ratified under Memory M1 on 2026-08-05
+**Applies to:** Memory Architecture v4.1 and successor profiles
 
 ## 1. Purpose
 
-This standard prevents different memory meanings from collapsing into generic
-text records.
+This standard prevents evidence, claims, graph relations, vector representations, workflows, datasets, models, and operational state from collapsing into one ambiguous notion of memory.
 
-## 2. Canonical Claim Store decision
+Every material record declares its truth role, authority role, provenance, scope, generation, deletion behavior, and successor path.
 
-The Claim Store is the canonical adjudicated-knowledge layer.
+## 2. Common envelope
 
-Claim Store v1 is a logical store implemented through new Cognitive Kernel
-contracts and tables in the existing host-local SQLite architecture. It is not a
-new microservice.
+Every authoritative or registered derivative record carries, directly or through a bound manifest:
 
-The minimum canonical structures are:
+```text
+record_id
+record_type
+schema_version
+product_id
+authority_namespace_id
+host_or_cluster_id
+authority_role
+deployment_profile
+created_at
+valid_time
+transaction_time
+logical_clock
+causal_parents[]
+source_records[]
+generation
+state
+data_classification
+encryption_domain
+retention_class
+deletion_state
+provenance_digest
+content_digest
+writer
+workflow_or_request_id
+idempotency_namespace
+idempotency_key
+supersedes[]
+superseded_by[]
+rollback_reference
+```
 
-### Claim Identity
+Physical backend locators, shard keys, replica locations, and encryption routing do not redefine semantic identity.
 
-Stable identity for one subject-predicate-scope proposition family.
+## 3. Required record families
 
-### Claim Version
+### 3.1 Store and Capability Fabric Registration
 
-Append-only asserted value, epistemic class, authority class, confidence,
-bitemporal validity, lifecycle state, and content digest.
+Registers databases, streams, graph engines, vector systems, object stores, workflow runtimes, model servers, training clusters, datasets, replicas, and archives.
 
-### Claim Evidence Relation
+Required fields include capability descriptor, authority role, backend type/version, consistency, availability, encryption, region/device scope, health, performance, cost, deletion endpoint, rollback endpoint, backup profile, derives-from, replicates, synchronizes-with, and successor.
 
-Typed support, opposition, origin, correction, or derivation relation from a
-claim version to an Evidence Event or other authorized record.
+### 3.2 Evidence Event
 
-### Claim Adjudication
+Records an observation, supplied artifact, action, invocation, outcome, correction, measurement, or system event.
 
-Governed decision recording acceptance, rejection, dispute, supersession,
-retraction, or owner override.
+An Evidence Event does not become an adjudicated claim merely because an extractor assigns confidence.
 
-### Current Claim Projection
+### 3.3 Event Stream Registration and Position
 
-Materialized, indexed, rebuildable view of the presently adjudicated claim
-version. It serves normal reads but is not historical authority.
+Records stream identity, expected revision semantics, global or partition position, subscription checkpoints, retention, replay, compaction, and authority namespace.
 
-## 3. First-class record kinds
+### 3.4 Claim Identity
 
-### Evidence Event
+A backend-neutral semantic identity for an assertion family. It includes product and authority namespace plus canonicalized subject, predicate, object or value, qualifiers, and scope.
 
-An immutable record that something was observed, received, decided, attempted,
-or executed.
+### 3.5 Claim Version
 
-### Claim Version
+An append-only bitemporal version with validity, transaction time, authority, evidence relations, confidence, adjudication, conflict state, supersession, and deletion state.
 
-A structured proposition with authority, evidence, validity, and version
-lineage.
+### 3.6 Current Claim Projection
 
-### Episode
+A materialized projection naming the current adjudicated version and generation. It is rebuildable from Claim Versions and adjudication records.
 
-A bounded set of evidence events with a rebuildable summary.
+### 3.7 Evidence Relation
 
-### Mission State Version
+Binds evidence to a claim or model as support, contradiction, correction, context, derivation, evaluation, or deletion cause.
 
-A versioned mission, commitment, dependency, blocker, decision, or outcome.
+### 3.8 Adjudication and Conflict Record
 
-### Preference Observation
+Records the authority, rule, evidence considered, alternatives, confidence, outcome, and rollback path for add, revise, supersede, dispute, quarantine, merge, split, or reject decisions.
 
-Evidence that a preference was expressed or exhibited. It is not automatically
-a stable preference.
+### 3.9 Episode and Cognitive Model Version
 
-### Trait Hypothesis
+Records versioned episodes, owner models, source-person models, relationship models, self models, world/social/causal models, beliefs, predictions, skills, and mission projections.
 
-A derived estimate of a persistent tendency. It requires multiple evidence
-points, uncertainty, and review.
+Each remains derived unless a separately ratified authority role says otherwise.
 
-### Belief Version
+### 3.10 Graph Projection Registration
 
-A.L.I.C.E.'s current evidence-linked conclusion. It is not historical fact.
+Records ontology, source generations, node and edge mappings, temporal semantics, algorithms, embeddings, write-back policy, graph-to-claim reconciliation, deletion watermark, and rebuild recipe.
 
-### Prediction
+### 3.11 Vector Generation Registration
 
-A time-bounded forecast with evaluation criteria and later outcome score.
+Records embedding model and digest, modality, preprocessing, dimensionality, metric, normalization, source generation, sharding/replication, calibration, deletion behavior, and rebuild recipe.
 
-### Projection Snapshot
+### 3.12 Object Manifest
 
-A versioned owner, source-person, relationship, self, world, social, or causal
-model derived from other records.
+Records payload digest, encryption, custody, physical copies, erasure coding, retention, integrity, references, deletion state, restoration behavior, and export lineage.
 
-### Procedure Candidate
+### 3.13 Durable Workflow and Activity Receipt
 
-A proposed reusable process extracted from successful or failed trajectories.
+Records workflow identity, run, code version, input digest, history position, activity attempts, side-effect receipts, retries, signals, updates, cancellation, result, and repair state.
 
-### Skill Version
+Workflow history is operational authority for orchestration, not knowledge authority.
 
-An evaluated procedure or code artifact with tests, permissions, and rollback.
+### 3.14 Cross-Backend Transaction, Outbox, Inbox, and Saga Receipt
 
-### Context Packet Trace
+Records canonical write, projected writes, expected versions, delivery attempts, idempotency, reconciliation, compensation, and completion.
 
-A metadata-safe record of which memory units influenced one model invocation.
+### 3.15 Synchronization and Replication Receipt
 
-## 4. Required provenance
+Records source and target component, positions, logical clock, causal parents, conflict, resolution, deletion watermark, encryption domain, and verification.
 
-Every derived record must identify:
+### 3.16 Dataset and Replay Manifest
 
-- source evidence IDs;
-- support or opposition relation;
-- derivation policy version;
-- model and version;
-- prompt version;
-- run ID;
-- recorded time;
-- confidence or uncertainty;
-- scope;
-- sensitivity;
-- reviewer/authority receipt where required.
+Records selected evidence/claim/model versions, exclusions, sampling, weighting, purpose, consent/authority, deletion lineage, contamination checks, splits, and digest.
 
-## 5. Promotion rules
+### 3.17 Model or Adapter Artifact Registration
 
-- Model proposals enter candidate state.
-- Owner statements remain owner statements even when trusted.
-- External claims remain claims until verified under domain policy.
-- Repetition does not convert a claim into fact.
-- A preference observation requires stability evidence before becoming a stable
-  preference.
-- A trait hypothesis requires longitudinal evidence and must preserve
-  counterexamples.
-- A generated reconstruction cannot become source history without owner
-  attestation.
-- A belief may be useful while remaining uncertain.
-- A skill cannot activate without tests and permission scope.
+Records base model, dataset manifest, code, environment, hyperparameters, compute, checkpoints, evaluation, failure cases, serving state, deletion limits, rollback artifact, and successor.
 
-## 6. Versioning
+### 3.18 Inference and Serving Trace
 
-No semantic overwrite is permitted for:
+Records selected models, tools, sources, claims, graph paths, vectors, context plan, rejected evidence, uncertainty, output digest, and downstream influence.
 
-- claim value;
-- belief;
-- prediction;
-- stable preference;
-- trait hypothesis;
-- mission decision;
-- relationship state;
-- identity projection.
+### 3.19 Deletion Propagation Receipt
 
-A new version records the superseded version and reason.
+Records authority request, exact target, completed and pending surfaces, technical limitations, rebuilds, retirement, restored-copy handling, and verification.
 
-## 7. Current-state projection
+### 3.20 Cutover and Rollback Manifest
 
-The materialized `current_claims` projection provides fast reads. It must be
-rebuildable from claim identities, versions, evidence relations, and
-adjudications and may never be the only record of a correction.
+Records old and new authorities, generations, migration checks, shadow comparison, freeze point, cutover, rollback conditions, irreversible steps, and final disposition.
 
-## 8. Bitemporal requirement
+## 4. Identity and ordering
 
-Changing records carry:
+Opaque global IDs use a collision-resistant scheme such as UUIDv7. Store-assigned authoritative sequence or stream position determines committed order inside an authority.
 
-- `valid_from` and `valid_to`;
-- `recorded_at`;
-- optional `superseded_at`.
+Wall-clock timestamps support temporal semantics but do not independently establish transaction order.
 
-Backfilled evidence may have old valid time and new recorded time.
+Canonical values are type-tagged. Canonicalization version is recorded. Digest collisions require full semantic equality verification before reuse.
 
-## 9. Source-person separation
+Idempotency combines namespace, key, and request digest. Reusing a key with a different request is an explicit conflict.
 
-The following record spaces remain distinct:
+## 5. Truth and authority roles
 
-- `SOURCE_HISTORY`
-- `SOURCE_PERSON_MODEL`
-- `RECONSTRUCTION_INFERENCE`
-- `ALICE_CONTINUITY`
-- `OWNER_RELATIONSHIP_MODEL`
+At minimum:
 
-Cross-space derivations require explicit edges. No record may silently move
-between spaces.
+```text
+evidence_authority
+claim_authority
+operational_workflow_state
+registered_projection
+cache
+replica
+archive
+candidate
+model_artifact
+evaluation_artifact
+```
 
-## 10. Context-use provenance
+A record may not claim a stronger role than its registered component and profile permit.
 
-Every Memory Context Packet records:
+## 6. Provenance graph
 
-- query/mission identifier;
-- selected memory IDs;
-- selection scores;
-- filters applied;
-- exclusions;
-- token allocation;
-- stale/disputed flags;
-- model profile;
-- packet digest.
+Provenance is a directed graph from observations and supplied sources through extraction, adjudication, projection, context, inference, action, outcome, training, model, and later decision influence.
 
-This enables inspection of why A.L.I.C.E. remembered or ignored something.
+Material edges are append-only except for authorized privacy deletion and cryptographic-key destruction. Corrections add new records and supersession links.
+
+## 7. Privacy, product isolation, and export
+
+Public repositories use neutral schemas and opaque identifiers. Private payloads, owner-specific paths, credentials, cryptographic keys, source-person material, and owner models remain outside Git.
+
+Exports declare product, authority namespace, permitted fields, recipient, purpose, expiry, deletion contract, and digest. An export does not silently merge authority namespaces.
+
+## 8. Deletion
+
+Deletion can remove or cryptographically destroy payloads while retaining the minimum tombstone or proof needed to prevent restoration and relearning, subject to owner authority and legal constraints.
+
+All affected derivatives, datasets, models, replicas, archives, and restores are represented in the deletion graph. Technical limits are truthful state, not permission to hide residual influence.
+
+## 9. Registration rule
+
+An unregistered database file, graph, vector collection, model, dataset, stream, workflow, replica, or archive cannot act as production authority.
+
+Registration may be automated under an authorized profile, but it must produce inspectable records and a successor or retirement path.

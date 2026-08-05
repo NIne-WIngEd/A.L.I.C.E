@@ -67,7 +67,7 @@ The compact ledger may remain after the full payload is compressed, archived, or
 | Tier | Purpose | Typical media | Learning availability |
 |---|---|---|---|
 | `ledger` | Compact permanent history, provenance, outcomes, and lifecycle state | transactional database | always searchable |
-| `raw_buffer` | Recently captured full payload awaiting curation | fast local NVMe | available, not automatically trusted |
+| `raw_buffer` | Recently captured full payload awaiting curation | profile-selected low-latency storage | available, not automatically trusted |
 | `hot` | Active memories, evidence, indexes, current projects, current replay | NVMe/SSD | immediate |
 | `warm` | Infrequently accessed but operationally useful artifacts | SSD/HDD/NAS | online with moderate latency |
 | `cold` | Large historical sources, experiments, media, and retired checkpoints | encrypted HDD/NAS/offline or E2EE archive | restored on demand |
@@ -111,9 +111,9 @@ The system must expose why an artifact is retained and which dependencies block 
 
 ## 7. Content addressing and deduplication
 
-Full payloads are identified by SHA-256 or a later ratified cryptographic digest. Duplicate payload bytes are stored once **within the same host and encryption domain** and referenced by multiple logical records.
+Full payloads are identified by SHA-256 or a later ratified cryptographic digest. Duplicate payload bytes may be stored once inside an owner-authorized authority namespace and key domain while logical records, provenance, retention, and deletion references remain distinct.
 
-Cross-host or cross-owner deduplication is prohibited by default because shared digests or physical object identity can reveal that two hosts possess the same content. Friday may not trade host privacy for vendor storage efficiency.
+Cross-owner physical deduplication is outside ordinary profiles because shared digests or object identity can leak possession. Privacy-preserving deduplication may be evaluated inside an explicitly authorized owner namespace and key domain when leakage controls, deletion isolation, and accounting are demonstrated. Friday may not trade host privacy for vendor storage efficiency.
 
 Deduplication never merges:
 
@@ -184,7 +184,7 @@ Every ingestion, indexing, training, checkpointing, export, and rebuild job esti
 Initial profile defaults reserve:
 
 - 15% free capacity for ordinary operation;
-- 5% as an emergency floor at which low-priority capture and training stop.
+- an emergency reserve profile at which low-priority work is deferred according to mission value, recoverability, and owner policy.
 
 Before deleting useful durable information, the system attempts, in order:
 
@@ -293,3 +293,22 @@ The policy does not require:
 - deleting useful evidence merely to minimize data;
 - retaining useless payloads merely because capacity exists;
 - implementing Phase 5 runtime storage during Phase 4.
+
+## Capability-first distributed storage amendment
+
+Storage policy is backend-neutral. Registered classes may include:
+
+- encrypted local filesystems and content-addressed stores;
+- NAS and owner-controlled edge replicas;
+- S3-compatible object storage and encrypted cloud archives;
+- distributed and erasure-coded object stores;
+- event-stream persistence and relational claim stores;
+- graph and vector projections;
+- model, dataset, checkpoint, and evaluation registries;
+- cold, offline, offsite, and multi-region owner-authorized replicas.
+
+Retention values, free-space reserves, copy counts, and tier placements are profile defaults. They may adapt to hardware, mission value, cost, risk, legal requirements, restore objectives, and measured failure modes. They do not define destination capacity.
+
+Every backend must declare custody, encryption, authority role, consistency, durability, deletion mode, backup and restore behavior, exportability, health, and successor path. Restored data must apply active deletion lineage before serving or learning. A derivative that cannot support direct excision must be retired, rebuilt, or truthfully quarantined according to the deletion profile.
+
+A.L.I.C.E. may retain high-value information across authorized storage classes. Local capability is preserved through owner-controlled copies, export, migration, and recovery rather than by limiting storage to one machine.
