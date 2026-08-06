@@ -1,6 +1,6 @@
 {
   "policy_id": "memory-m2-execution",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "prepared": "2026-08-06",
   "status": "owner_directed_active",
   "scope": "memory_m2_and_parallel_full_memory_tracks",
@@ -65,11 +65,15 @@
     "m2_0_foundation_contracts": "implemented",
     "m2_1_claim_contracts": "implemented",
     "full_memory_research": "authorized",
-    "full_memory_prototypes": "claim_authority_embedded_reversible_prototype_operational",
+    "full_memory_prototypes": "claim_authority_and_shadow_adjudication_reversible_prototypes_operational",
     "claim_authority_production": "not_asserted_enabled",
     "automatic_memory_formation_production": "not_asserted_enabled",
     "phase2_migration": "not_asserted_started",
-    "p5_1e": "paused_pending_exact_unblock"
+    "p5_1e": "paused_pending_exact_unblock",
+    "m2_2_adjudication_contracts": "implemented",
+    "evidence_to_candidate": "persistent_shadow_prototype_operational",
+    "canonical_claim_authority_effect_from_shadow": false,
+    "shadow_adjudication_production_influence": false
   },
   "active_prototype": {
     "milestone": "M2.1",
@@ -90,5 +94,26 @@
     "automatic_formation": "not_activated_by_this_tranche",
     "production_authority": "not_activated_by_this_tranche",
     "rollback": "close_and_delete_external_prototype_database"
+  },
+  "shadow_adjudication_prototype": {
+    "milestone": "M2.2",
+    "profile": "memory.m2.shadow_adjudication",
+    "state": "reversible_nonproduction",
+    "persistence": "operational",
+    "content_scope": "full_candidate_content_evidence_relations_conflicts_and_decisions",
+    "backend_profile": "embedded_sqlite_reference_challenger",
+    "backend_is_destination_ceiling": false,
+    "evidence_to_candidate": true,
+    "deterministic_rejection": true,
+    "support_contradiction_quarantine": true,
+    "materialized_candidate_state": true,
+    "idempotent_submission": true,
+    "optimistic_expected_current": true,
+    "append_only_candidate_decision_history": true,
+    "canonical_claim_authority_write": false,
+    "production_influence": false,
+    "public_repository_payloads": "excluded",
+    "current_data_profile": "synthetic_test_and_owner_authorized_research",
+    "rollback": "close_and_delete_external_shadow_database"
   }
 }

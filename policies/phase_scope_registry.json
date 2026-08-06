@@ -2250,6 +2250,102 @@
       "production_activation_condition": "A named production profile requires evidence, deletion and rollback evaluation, cutover receipts, and owner approval.",
       "rollback_or_exit": "Close and remove the external prototype database or rebuild from registered evidence without changing semantic identity.",
       "registered_by": "memory-m2-1-claim-authority-prototype"
+    },
+    "src/cognitive_kernel/adjudication_contracts.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "memory.m2.adjudication_contracts",
+      "milestone": "M2.2",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "PLATFORM_SQLITE_LOCK",
+        "SINGLE_WRITER_DESTINATION_LOCK",
+        "AUTOMATIC_LEARNING_RESEARCH_BAN",
+        "SEQUENTIAL_PHASE_RESEARCH_BAN",
+        "METADATA_ONLY_MEMORY_CEILING"
+      ],
+      "successor_runtime": "src/cognitive_kernel/shadow_adjudication_prototype.py",
+      "reason": "M2.2 defines backend-neutral evidence relation, full-content candidate, adjudication, and conflict contracts.",
+      "sunset_condition": "Retain the M2.2 contract and reversible shadow profile for reproducibility while measured authority, curation, graph, vector, model, workflow, and distributed successors advance.",
+      "research_allowed": true,
+      "prototype_allowed": true,
+      "shadow_allowed": true,
+      "production_activation_condition": "A named production profile requires evaluation evidence, deletion and rollback validation, cutover receipts, and owner approval.",
+      "rollback_or_exit": "Close and remove the external shadow database without changing canonical Claim Authority state.",
+      "registered_by": "memory-m2-2-shadow-adjudication"
+    },
+    "src/cognitive_kernel/shadow_adjudication_prototype.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "memory.m2.shadow_adjudication",
+      "milestone": "M2.2",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "PLATFORM_SQLITE_LOCK",
+        "SINGLE_WRITER_DESTINATION_LOCK",
+        "AUTOMATIC_LEARNING_RESEARCH_BAN",
+        "SEQUENTIAL_PHASE_RESEARCH_BAN",
+        "METADATA_ONLY_MEMORY_CEILING"
+      ],
+      "successor_runtime": "src/cognitive_kernel/adjudication_runtime.py",
+      "reason": "M2.2 exercises persistent evidence-to-candidate rejection, conflict quarantine, and shadow decisions through a reversible profile with no canonical or production effect.",
+      "sunset_condition": "Retain the M2.2 contract and reversible shadow profile for reproducibility while measured authority, curation, graph, vector, model, workflow, and distributed successors advance.",
+      "research_allowed": true,
+      "prototype_allowed": true,
+      "shadow_allowed": true,
+      "production_activation_condition": "A named production profile requires evaluation evidence, deletion and rollback validation, cutover receipts, and owner approval.",
+      "rollback_or_exit": "Close and remove the external shadow database without changing canonical Claim Authority state.",
+      "registered_by": "memory-m2-2-shadow-adjudication"
+    },
+    "tests/phase5/test_memory_m2_adjudication_contracts.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "memory.m2.adjudication_contracts",
+      "milestone": "M2.2",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "PLATFORM_SQLITE_LOCK",
+        "SINGLE_WRITER_DESTINATION_LOCK",
+        "AUTOMATIC_LEARNING_RESEARCH_BAN",
+        "SEQUENTIAL_PHASE_RESEARCH_BAN",
+        "METADATA_ONLY_MEMORY_CEILING"
+      ],
+      "successor_runtime": "src/cognitive_kernel/shadow_adjudication_prototype.py",
+      "reason": "M2.2 contract tests validate lineage, candidate/truth separation, authority, conflict, scope, and shadow boundaries.",
+      "sunset_condition": "Retain the M2.2 contract and reversible shadow profile for reproducibility while measured authority, curation, graph, vector, model, workflow, and distributed successors advance.",
+      "research_allowed": true,
+      "prototype_allowed": true,
+      "shadow_allowed": true,
+      "production_activation_condition": "A named production profile requires evaluation evidence, deletion and rollback validation, cutover receipts, and owner approval.",
+      "rollback_or_exit": "Close and remove the external shadow database without changing canonical Claim Authority state.",
+      "registered_by": "memory-m2-2-shadow-adjudication"
+    },
+    "tests/phase5/test_shadow_adjudication_prototype.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "memory.m2.shadow_adjudication",
+      "milestone": "M2.2",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "PLATFORM_SQLITE_LOCK",
+        "SINGLE_WRITER_DESTINATION_LOCK",
+        "AUTOMATIC_LEARNING_RESEARCH_BAN",
+        "SEQUENTIAL_PHASE_RESEARCH_BAN",
+        "METADATA_ONLY_MEMORY_CEILING"
+      ],
+      "successor_runtime": "src/cognitive_kernel/adjudication_runtime.py",
+      "reason": "M2.2 prototype tests validate persistent candidate content, rejection, quarantine, integrity, idempotency, rollback, and isolation.",
+      "sunset_condition": "Retain the M2.2 contract and reversible shadow profile for reproducibility while measured authority, curation, graph, vector, model, workflow, and distributed successors advance.",
+      "research_allowed": true,
+      "prototype_allowed": true,
+      "shadow_allowed": true,
+      "production_activation_condition": "A named production profile requires evaluation evidence, deletion and rollback validation, cutover receipts, and owner approval.",
+      "rollback_or_exit": "Close and remove the external shadow database without changing canonical Claim Authority state.",
+      "registered_by": "memory-m2-2-shadow-adjudication"
     }
   },
   "patterns": [
@@ -2340,7 +2436,7 @@
     "pattern_entries_must_be_narrow_and_reviewed": true,
     "unexpected_active_barriers_fail_migration": true
   },
-  "registered_file_count": 220,
+  "registered_file_count": 224,
   "registered_pattern_count": 11,
   "released_baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
   "capability_expansion_rules": {
