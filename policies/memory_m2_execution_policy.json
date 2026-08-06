@@ -1,6 +1,6 @@
 {
   "policy_id": "memory-m2-execution",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "prepared": "2026-08-06",
   "status": "owner_directed_active",
   "scope": "memory_m2_and_parallel_full_memory_tracks",
@@ -65,7 +65,7 @@
     "m2_0_foundation_contracts": "implemented",
     "m2_1_claim_contracts": "implemented",
     "full_memory_research": "authorized",
-    "full_memory_prototypes": "claim_authority_and_shadow_adjudication_reversible_prototypes_operational",
+    "full_memory_prototypes": "claim_authority_shadow_adjudication_and_projection_reversible_prototypes_operational",
     "claim_authority_production": "not_asserted_enabled",
     "automatic_memory_formation_production": "not_asserted_enabled",
     "phase2_migration": "not_asserted_started",
@@ -73,7 +73,12 @@
     "m2_2_adjudication_contracts": "implemented",
     "evidence_to_candidate": "persistent_shadow_prototype_operational",
     "canonical_claim_authority_effect_from_shadow": false,
-    "shadow_adjudication_production_influence": false
+    "shadow_adjudication_production_influence": false,
+    "m2_3_projection_contracts": "implemented",
+    "projection_fabric": "persistent_reversible_prototype_operational",
+    "graph_vector_owner_source_self_temporal_projection": "research_prototype_operational",
+    "projection_canonical_authority": false,
+    "projection_production_influence": false
   },
   "active_prototype": {
     "milestone": "M2.1",
@@ -115,5 +120,29 @@
     "public_repository_payloads": "excluded",
     "current_data_profile": "synthetic_test_and_owner_authorized_research",
     "rollback": "close_and_delete_external_shadow_database"
+  },
+  "projection_prototype": {
+    "milestone": "M2.3",
+    "profile": "memory.m2.projection_prototype",
+    "state": "reversible_nonproduction",
+    "persistence": "operational",
+    "content_scope": "full_episode_projection_graph_vector_and_temporal_content",
+    "backend_profile": "embedded_sqlite_reference_challenger",
+    "backend_is_destination_ceiling": false,
+    "episode_persistence": true,
+    "immutable_projection_versions": true,
+    "materialized_current_projection": true,
+    "temporal_as_of_queries": true,
+    "graph_projection": true,
+    "vector_projection": true,
+    "owner_source_self_projection": true,
+    "idempotent_append": true,
+    "optimistic_expected_current": true,
+    "integrity_verification": true,
+    "canonical_claim_authority": false,
+    "production_influence": false,
+    "public_repository_payloads": "excluded",
+    "current_data_profile": "synthetic_test_and_owner_authorized_research",
+    "rollback": "close_and_delete_external_projection_database"
   }
 }
