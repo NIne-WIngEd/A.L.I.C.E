@@ -1,6 +1,6 @@
 {
   "policy_id": "memory-m2-execution",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "prepared": "2026-08-06",
   "status": "owner_directed_active",
   "scope": "memory_m2_and_parallel_full_memory_tracks",
@@ -63,12 +63,32 @@
   ],
   "current_truth": {
     "m2_0_foundation_contracts": "implemented",
-    "m2_1_claim_contracts": "not_asserted_implemented",
+    "m2_1_claim_contracts": "implemented",
     "full_memory_research": "authorized",
-    "full_memory_prototypes": "authorized_not_asserted_operational",
+    "full_memory_prototypes": "claim_authority_embedded_reversible_prototype_operational",
     "claim_authority_production": "not_asserted_enabled",
     "automatic_memory_formation_production": "not_asserted_enabled",
     "phase2_migration": "not_asserted_started",
     "p5_1e": "paused_pending_exact_unblock"
+  },
+  "active_prototype": {
+    "milestone": "M2.1",
+    "profile": "memory.m2.claim_authority_prototype",
+    "state": "reversible_nonproduction",
+    "persistence": "operational",
+    "content_scope": "canonical_claim_content_and_version_history",
+    "backend_profile": "embedded_sqlite_reference_challenger",
+    "backend_is_destination_ceiling": false,
+    "store_registration_selects_successor_backends": true,
+    "store_assigned_sequence": true,
+    "idempotent_append": true,
+    "optimistic_expected_current": true,
+    "materialized_current_state": true,
+    "append_only_versions": true,
+    "public_repository_payloads": "excluded",
+    "current_data_profile": "synthetic_test_and_owner_authorized_research",
+    "automatic_formation": "not_activated_by_this_tranche",
+    "production_authority": "not_activated_by_this_tranche",
+    "rollback": "close_and_delete_external_prototype_database"
   }
 }
