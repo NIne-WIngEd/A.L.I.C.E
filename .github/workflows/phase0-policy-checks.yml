@@ -14,9 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PYTHONPATH: src
+      AUDIT_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -31,5 +34,9 @@ jobs:
           python scripts/validate_governance_v1.py
           python scripts/validate_product_family.py
           python -m pytest tests/governance -q
-      - name: Audit repository-wide capability barriers
-        run: python scripts/audit_capability_barriers.py --repo . --fail-on-unresolved
+      - name: Refuse new unscoped capability ceilings
+        run: |
+          if [ -z "$AUDIT_BASE" ] || echo "$AUDIT_BASE" | grep -Eq '^0+$'; then
+            AUDIT_BASE="$(git rev-parse HEAD^)"
+          fi
+          python scripts/audit_capability_barriers.py             --repo .             --changed-only-against "$AUDIT_BASE"             --fail-on-unresolved

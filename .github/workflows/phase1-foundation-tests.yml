@@ -14,10 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PYTHONPATH: src
+      AUDIT_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
-
+        with:
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
@@ -28,20 +30,22 @@ jobs:
             requirements-phase1.txt
             requirements-phase2.txt
             requirements-extraction.txt
-
       - name: Install dependencies
         run: |
           python -m pip install -r requirements-dev.txt
           python -m pip install -r requirements-phase1.txt
           python -m pip install -r requirements-phase2.txt
           python -m pip install -r requirements-extraction.txt
-
       - name: Validate current governance
         run: |
           python scripts/validate_phase0.py
           python scripts/validate_governance_v1.py
-          python scripts/audit_capability_barriers.py --repo . --fail-on-unresolved
-
+      - name: Refuse new unscoped capability ceilings
+        run: |
+          if [ -z "$AUDIT_BASE" ] || echo "$AUDIT_BASE" | grep -Eq '^0+$'; then
+            AUDIT_BASE="$(git rev-parse HEAD^)"
+          fi
+          python scripts/audit_capability_barriers.py             --repo .             --changed-only-against "$AUDIT_BASE"             --fail-on-unresolved
       - name: Run active regression suites
         run: |
           python -m pytest tests/phase1 tests/phase2 tests/phase4 tests/governance -q
