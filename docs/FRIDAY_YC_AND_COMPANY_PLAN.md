@@ -54,7 +54,7 @@ The strongest YC demo is not a generic chat screen.
 
 1. Show a clean Friday installation or product prototype.
 2. Grant access to a synthetic host folder containing documents, photos, audio, and project files.
-3. Show local-only ingestion and zero outbound content traffic.
+3. Show an owner-selected device-resident ingestion profile and verify zero outbound content traffic.
 4. Ask a question requiring connections across modalities.
 5. Show the memory/belief evidence behind the answer.
 6. Correct a preference and show immediate behavior change.
