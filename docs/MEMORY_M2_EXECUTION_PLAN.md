@@ -1,6 +1,6 @@
 # Memory M2 Execution Plan — Contract and Full-Memory Parallelism
 
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Prepared:** 2026-08-06
 **Status:** Owner-directed active execution clarification
 **Architecture:** Memory v4.1 Capability-First Polyglot Cognitive Fabric
@@ -90,14 +90,16 @@ The following distinctions remain mandatory:
 - model output is not adjudicated truth;
 - a planned or researched capability is not a released feature.
 
-## 6. Current state at activation
+## 6. Current state after M2.1 prototype activation
 
 - M1 architecture and capability-first governance are owner-ratified.
 - M2.0 Store Registration, Memory Unit envelope, and Evidence Binding contracts are implemented.
-- M2.1 and later contracts are not asserted implemented by this plan.
-- Full-memory research and reversible prototypes are authorized.
-- A production Claim Authority runtime is not asserted enabled.
-- Automatic memory formation is not asserted production-enabled.
+- M2.1 Claim Identity, Claim Version, and Current Claim Projection contracts are implemented by this tranche.
+- A reversible embedded Claim Authority prototype persists canonical claim content, immutable version history, idempotency receipts, store-assigned ordering, and rebuildable current state outside the public repository.
+- The embedded backend is one measured prototype profile. Store Registration preserves alternate relational, distributed, event, graph, object, and hybrid successor backends.
+- Full-memory research and reversible prototypes remain authorized across every track in this plan.
+- Production Claim Authority activation remains governed by profile evidence, owner approval, deletion and rollback evaluation, and exact cutover receipts.
+- Automatic selective-memory research remains authorized. Production influence is not activated by this tranche.
 - Phase 2 migration is not asserted started.
 - P5.1e remains paused until its exact storage-admission interaction is explicitly unblocked. That pause does not prohibit other memory research or prototypes.
 

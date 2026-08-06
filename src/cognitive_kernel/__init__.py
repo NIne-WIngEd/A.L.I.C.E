@@ -242,11 +242,41 @@ from .memory_contracts import (
     MemoryUnitEnvelope,
     StoreRegistration,
 )
+from .claim_contracts import (
+    CLAIM_ADJUDICATION_STATES,
+    CLAIM_CONFLICT_STATES,
+    CLAIM_CONTRACT_SCHEMA_VERSION,
+    CLAIM_DELETION_STATES,
+    CLAIM_VALIDITY_STATES,
+    STANDARD_CANONICAL_VALUE_TYPES,
+    CanonicalTaggedValue,
+    ClaimIdentity,
+    ClaimQualifier,
+    ClaimVersion,
+    CurrentClaimProjection,
+    normalize_claim_qualifiers,
+)
+from .claim_authority_prototype import (
+    CLAIM_AUTHORITY_PROTOTYPE_SCHEMA_VERSION,
+    CLAIM_AUTHORITY_PROTOTYPE_STATE,
+    ClaimAuthorityAppendReceipt,
+    ClaimAuthorityAppendRequest,
+    ClaimAuthorityIntegrityReport,
+    ClaimAuthorityPrototypeConflictError,
+    ClaimAuthorityPrototypeError,
+    ClaimAuthorityPrototypeIntegrityError,
+    ClaimAuthorityPrototypeIsolationError,
+    ClaimAuthorityPrototypeStore,
+    ClaimAuthorityPrototypeTransactionError,
+    UnsafeClaimAuthorityPrototypePathError,
+    open_claim_authority_prototype,
+    validate_claim_authority_prototype_path,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.10.0"
+__version__ = "0.11.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -392,5 +422,31 @@ __all__ = [
     "EvidenceBinding",
     "MemoryUnitEnvelope",
     "StoreRegistration",
+    "CLAIM_ADJUDICATION_STATES",
+    "CLAIM_AUTHORITY_PROTOTYPE_SCHEMA_VERSION",
+    "CLAIM_AUTHORITY_PROTOTYPE_STATE",
+    "CLAIM_CONFLICT_STATES",
+    "CLAIM_CONTRACT_SCHEMA_VERSION",
+    "CLAIM_DELETION_STATES",
+    "CLAIM_VALIDITY_STATES",
+    "STANDARD_CANONICAL_VALUE_TYPES",
+    "CanonicalTaggedValue",
+    "ClaimAuthorityAppendReceipt",
+    "ClaimAuthorityAppendRequest",
+    "ClaimAuthorityIntegrityReport",
+    "ClaimAuthorityPrototypeConflictError",
+    "ClaimAuthorityPrototypeError",
+    "ClaimAuthorityPrototypeIntegrityError",
+    "ClaimAuthorityPrototypeIsolationError",
+    "ClaimAuthorityPrototypeStore",
+    "ClaimAuthorityPrototypeTransactionError",
+    "ClaimIdentity",
+    "ClaimQualifier",
+    "ClaimVersion",
+    "CurrentClaimProjection",
+    "UnsafeClaimAuthorityPrototypePathError",
+    "normalize_claim_qualifiers",
+    "open_claim_authority_prototype",
+    "validate_claim_authority_prototype_path",
     "stronger_authentication_required",
 ]
