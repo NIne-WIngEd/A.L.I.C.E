@@ -362,11 +362,41 @@ from .bounded_serving_prototype import (
     open_bounded_serving_prototype,
     validate_bounded_serving_path,
 )
+from .curation_contracts import (
+    CURATION_CONTRACT_SCHEMA_VERSION,
+    CURATION_RECEIPT_OUTCOMES,
+    CURATION_TASK_KINDS,
+    CURATION_TASK_STATES,
+    WORKFLOW_ACTIVITY_KINDS,
+    WORKFLOW_ACTIVITY_OUTCOMES,
+    WORKFLOW_KINDS,
+    WORKFLOW_STATES,
+    CurationReceipt,
+    CurationTask,
+    DurableWorkflow,
+    WorkflowActivityEvent,
+)
+from .durable_workflow_prototype import (
+    DURABLE_WORKFLOW_PROTOTYPE_SCHEMA_VERSION,
+    DURABLE_WORKFLOW_PROTOTYPE_STATE,
+    DurableWorkflowConflictError,
+    DurableWorkflowIntegrityError,
+    DurableWorkflowIntegrityReport,
+    DurableWorkflowIsolationError,
+    DurableWorkflowOperationReceipt,
+    DurableWorkflowProfile,
+    DurableWorkflowPrototypeError,
+    DurableWorkflowPrototypeStore,
+    DurableWorkflowTransactionError,
+    UnsafeDurableWorkflowPathError,
+    open_durable_workflow_prototype,
+    validate_durable_workflow_path,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.14.0"
+__version__ = "0.15.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -616,5 +646,31 @@ __all__ = [
     "UnsafeBoundedServingPathError",
     "open_bounded_serving_prototype",
     "validate_bounded_serving_path",
+    "CURATION_CONTRACT_SCHEMA_VERSION",
+    "CURATION_RECEIPT_OUTCOMES",
+    "CURATION_TASK_KINDS",
+    "CURATION_TASK_STATES",
+    "WORKFLOW_ACTIVITY_KINDS",
+    "WORKFLOW_ACTIVITY_OUTCOMES",
+    "WORKFLOW_KINDS",
+    "WORKFLOW_STATES",
+    "CurationReceipt",
+    "CurationTask",
+    "DurableWorkflow",
+    "WorkflowActivityEvent",
+    "DURABLE_WORKFLOW_PROTOTYPE_SCHEMA_VERSION",
+    "DURABLE_WORKFLOW_PROTOTYPE_STATE",
+    "DurableWorkflowConflictError",
+    "DurableWorkflowIntegrityError",
+    "DurableWorkflowIntegrityReport",
+    "DurableWorkflowIsolationError",
+    "DurableWorkflowOperationReceipt",
+    "DurableWorkflowProfile",
+    "DurableWorkflowPrototypeError",
+    "DurableWorkflowPrototypeStore",
+    "DurableWorkflowTransactionError",
+    "UnsafeDurableWorkflowPathError",
+    "open_durable_workflow_prototype",
+    "validate_durable_workflow_path",
     "stronger_authentication_required",
 ]

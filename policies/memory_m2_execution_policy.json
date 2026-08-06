@@ -1,6 +1,6 @@
 {
   "policy_id": "memory-m2-execution",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "prepared": "2026-08-06",
   "status": "owner_directed_active",
   "scope": "memory_m2_and_parallel_full_memory_tracks",
@@ -65,7 +65,7 @@
     "m2_0_foundation_contracts": "implemented",
     "m2_1_claim_contracts": "implemented",
     "full_memory_research": "authorized",
-    "full_memory_prototypes": "claim_authority_shadow_adjudication_projection_and_bounded_serving_reversible_prototypes_operational",
+    "full_memory_prototypes": "claim_authority_shadow_adjudication_projection_bounded_serving_and_durable_workflow_reversible_prototypes_operational",
     "claim_authority_production": "not_asserted_enabled",
     "automatic_memory_formation_production": "not_asserted_enabled",
     "phase2_migration": "not_asserted_started",
@@ -83,7 +83,12 @@
     "bounded_serving": "persistent_reversible_prototype_operational",
     "fusion_expansion_and_stale_index_fallback": "research_prototype_operational",
     "serving_canonical_authority": false,
-    "serving_production_influence": false
+    "serving_production_influence": false,
+    "m2_5_curation_workflow_contracts": "implemented",
+    "durable_curation_workflows": "persistent_reversible_prototype_operational",
+    "curator_migration_repair_learning_workflows": "research_prototypes_operational",
+    "workflow_canonical_claim_authority": false,
+    "workflow_production_influence": false
   },
   "active_prototype": {
     "milestone": "M2.1",
@@ -171,5 +176,31 @@
     "public_repository_payloads": "excluded",
     "current_data_profile": "synthetic_test_and_owner_authorized_research",
     "rollback": "close_and_delete_external_serving_database"
+  },
+  "durable_curation_workflow_prototype": {
+    "milestone": "M2.5",
+    "profile": "memory.m2.durable_curation_workflow_prototype",
+    "state": "reversible_nonproduction",
+    "persistence": "operational",
+    "content_scope": "full_workflow_task_activity_checkpoint_signal_and_receipt_content",
+    "backend_profile": "embedded_sqlite_reference_challenger",
+    "backend_is_destination_ceiling": false,
+    "curator_workflows": true,
+    "migration_workflows": true,
+    "repair_workflows": true,
+    "learning_workflows": true,
+    "idempotent_operations": true,
+    "ordered_activity_history": true,
+    "profile_selected_retries_and_leases": true,
+    "checkpoints": true,
+    "signals": true,
+    "cancellation": true,
+    "restart_recovery": true,
+    "integrity_verification": true,
+    "canonical_claim_authority": false,
+    "production_influence": false,
+    "public_repository_payloads": "excluded",
+    "current_data_profile": "synthetic_test_and_owner_authorized_research",
+    "rollback": "close_and_delete_external_workflow_database"
   }
 }
