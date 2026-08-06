@@ -1,6 +1,6 @@
 # Memory M2 Execution Plan — Contract and Full-Memory Parallelism
 
-**Version:** 1.2.0
+**Version:** 1.3.0
 **Prepared:** 2026-08-06
 **Status:** Owner-directed active execution clarification
 **Architecture:** Memory v4.1 Capability-First Polyglot Cognitive Fabric
@@ -90,18 +90,19 @@ The following distinctions remain mandatory:
 - model output is not adjudicated truth;
 - a planned or researched capability is not a released feature.
 
-## 6. Current state after M2.2 shadow-adjudication activation
+## 6. Current state after M2.3 projection-fabric activation
 
 - M1 architecture and capability-first governance are owner-ratified.
 - M2.0 Store Registration, Memory Unit envelope, and Evidence Binding contracts are implemented.
 - M2.1 Claim Identity, Claim Version, Current Claim Projection, and the reversible persistent Claim Authority prototype are implemented.
-- M2.2 Claim Evidence Relation, Claim Candidate, Adjudication Record, and Claim Conflict Record contracts are implemented by this tranche.
-- A reversible persistent shadow-adjudication prototype stores full canonical candidate content, evidence relations, deterministic rejection decisions, conflict quarantines, shadow decisions, idempotency receipts, and materialized candidate state outside the public repository.
-- The shadow prototype cannot write canonical Claim Authority state and cannot influence production behavior. Those are exact profile boundaries, not research or destination capability ceilings.
-- Evidence-to-candidate, rejection, contradiction detection, quarantine, and shadow adjudication are operational for synthetic tests and owner-authorized research profiles.
-- Full-memory research remains authorized for automatic selective memory, graph and vector projection, cognitive models, learning, training, deletion, rollback, migration, distributed successors, and every other ratified track.
-- The embedded SQLite profile is a reversible reference challenger. It is not the destination backend or topology.
-- Production Claim Authority activation remains governed by profile evidence, deletion and rollback evaluation, exact cutover receipts, and owner approval.
+- M2.2 evidence, candidate, adjudication, and conflict contracts plus the reversible persistent shadow-adjudication prototype are implemented.
+- M2.3 Episode Record and Projection Version contracts are implemented by this tranche.
+- A reversible persistent projection-fabric prototype stores full episode and projection content, immutable projection versions, materialized current projections, temporal history, graph edges, and vectors outside the public repository.
+- Graph, vector, temporal, owner-model, source-person-model, and self-model projection paths are operational for synthetic tests and owner-authorized research profiles.
+- Projections remain derived and rebuildable. They are not evidence, adjudicated Claim Authority truth, or production behavior by themselves.
+- The embedded SQLite profile is one reversible reference challenger. It does not constrain graph engines, vector systems, distributed databases, object stores, model runtimes, or hybrid successors.
+- Full-memory research remains authorized for automatic selective memory, cognitive models, context serving, learning, training, deletion, rollback, migration, federation, and every other ratified track.
+- Production projection influence and canonical authority remain governed by named profiles, evaluation evidence, deletion and rollback validation, cutover receipts, and owner approval.
 - Phase 2 migration is not asserted started.
 - P5.1e remains paused until its exact storage-admission interaction is explicitly unblocked. That pause does not prohibit other memory research or prototypes.
 

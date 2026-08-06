@@ -303,11 +303,39 @@ from .shadow_adjudication_prototype import (
     open_shadow_adjudication_prototype,
     validate_shadow_adjudication_path,
 )
+from .projection_contracts import (
+    EPISODE_KINDS,
+    EPISODE_STATES,
+    PROJECTION_CONTRACT_SCHEMA_VERSION,
+    PROJECTION_MODALITIES,
+    PROJECTION_STATES,
+    PROJECTION_SUBJECT_TYPES,
+    PROJECTION_TYPES,
+    EpisodeRecord,
+    ProjectionVersion,
+)
+from .projection_prototype import (
+    PROJECTION_PROTOTYPE_SCHEMA_VERSION,
+    PROJECTION_PROTOTYPE_STATE,
+    ProjectionAppendReceipt,
+    ProjectionGraphEdge,
+    ProjectionIntegrityReport,
+    ProjectionPrototypeConflictError,
+    ProjectionPrototypeError,
+    ProjectionPrototypeIntegrityError,
+    ProjectionPrototypeIsolationError,
+    ProjectionPrototypeProfile,
+    ProjectionPrototypeStore,
+    ProjectionPrototypeTransactionError,
+    UnsafeProjectionPrototypePathError,
+    open_projection_prototype,
+    validate_projection_prototype_path,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.12.0"
+__version__ = "0.13.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -506,5 +534,29 @@ __all__ = [
     "UnsafeShadowAdjudicationPathError",
     "open_shadow_adjudication_prototype",
     "validate_shadow_adjudication_path",
+    "EPISODE_KINDS",
+    "EPISODE_STATES",
+    "PROJECTION_CONTRACT_SCHEMA_VERSION",
+    "PROJECTION_MODALITIES",
+    "PROJECTION_STATES",
+    "PROJECTION_SUBJECT_TYPES",
+    "PROJECTION_TYPES",
+    "EpisodeRecord",
+    "ProjectionVersion",
+    "PROJECTION_PROTOTYPE_SCHEMA_VERSION",
+    "PROJECTION_PROTOTYPE_STATE",
+    "ProjectionAppendReceipt",
+    "ProjectionGraphEdge",
+    "ProjectionIntegrityReport",
+    "ProjectionPrototypeConflictError",
+    "ProjectionPrototypeError",
+    "ProjectionPrototypeIntegrityError",
+    "ProjectionPrototypeIsolationError",
+    "ProjectionPrototypeProfile",
+    "ProjectionPrototypeStore",
+    "ProjectionPrototypeTransactionError",
+    "UnsafeProjectionPrototypePathError",
+    "open_projection_prototype",
+    "validate_projection_prototype_path",
     "stronger_authentication_required",
 ]

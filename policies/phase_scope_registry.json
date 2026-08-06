@@ -2346,6 +2346,102 @@
       "production_activation_condition": "A named production profile requires evaluation evidence, deletion and rollback validation, cutover receipts, and owner approval.",
       "rollback_or_exit": "Close and remove the external shadow database without changing canonical Claim Authority state.",
       "registered_by": "memory-m2-2-shadow-adjudication"
+    },
+    "src/cognitive_kernel/projection_contracts.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "memory.m2.projection_contracts",
+      "milestone": "M2.3",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "PLATFORM_SQLITE_LOCK",
+        "SINGLE_WRITER_DESTINATION_LOCK",
+        "AUTOMATIC_LEARNING_RESEARCH_BAN",
+        "SEQUENTIAL_PHASE_RESEARCH_BAN",
+        "METADATA_ONLY_MEMORY_CEILING"
+      ],
+      "successor_runtime": "src/cognitive_kernel/projection_prototype.py",
+      "reason": "M2.3 defines backend-neutral Episode Record and immutable Projection Version contracts with temporal and source lineage.",
+      "sunset_condition": "Retain the M2.3 contracts and reversible projection profile for reproducibility while graph, vector, model, serving, workflow, distributed, and production successors advance.",
+      "research_allowed": true,
+      "prototype_allowed": true,
+      "shadow_allowed": true,
+      "production_activation_condition": "A named production profile requires projection-quality evaluation, deletion and rollback validation, cutover receipts, and owner approval.",
+      "rollback_or_exit": "Close and remove the external projection database without changing canonical Claim Authority state.",
+      "registered_by": "memory-m2-3-projection-prototype"
+    },
+    "src/cognitive_kernel/projection_prototype.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "memory.m2.projection_prototype",
+      "milestone": "M2.3",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "PLATFORM_SQLITE_LOCK",
+        "SINGLE_WRITER_DESTINATION_LOCK",
+        "AUTOMATIC_LEARNING_RESEARCH_BAN",
+        "SEQUENTIAL_PHASE_RESEARCH_BAN",
+        "METADATA_ONLY_MEMORY_CEILING"
+      ],
+      "successor_runtime": "src/cognitive_kernel/projection_runtime.py",
+      "reason": "M2.3 exercises full-content episode, graph, vector, owner/source/self, and temporal projections through a reversible profile with no canonical or production effect.",
+      "sunset_condition": "Retain the M2.3 contracts and reversible projection profile for reproducibility while graph, vector, model, serving, workflow, distributed, and production successors advance.",
+      "research_allowed": true,
+      "prototype_allowed": true,
+      "shadow_allowed": true,
+      "production_activation_condition": "A named production profile requires projection-quality evaluation, deletion and rollback validation, cutover receipts, and owner approval.",
+      "rollback_or_exit": "Close and remove the external projection database without changing canonical Claim Authority state.",
+      "registered_by": "memory-m2-3-projection-prototype"
+    },
+    "tests/phase5/test_memory_m2_projection_contracts.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "memory.m2.projection_contracts",
+      "milestone": "M2.3",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "PLATFORM_SQLITE_LOCK",
+        "SINGLE_WRITER_DESTINATION_LOCK",
+        "AUTOMATIC_LEARNING_RESEARCH_BAN",
+        "SEQUENTIAL_PHASE_RESEARCH_BAN",
+        "METADATA_ONLY_MEMORY_CEILING"
+      ],
+      "successor_runtime": "src/cognitive_kernel/projection_prototype.py",
+      "reason": "M2.3 contract tests validate episode lineage, projection versioning, subject classes, modality requirements, scope, and digest integrity.",
+      "sunset_condition": "Retain the M2.3 contracts and reversible projection profile for reproducibility while graph, vector, model, serving, workflow, distributed, and production successors advance.",
+      "research_allowed": true,
+      "prototype_allowed": true,
+      "shadow_allowed": true,
+      "production_activation_condition": "A named production profile requires projection-quality evaluation, deletion and rollback validation, cutover receipts, and owner approval.",
+      "rollback_or_exit": "Close and remove the external projection database without changing canonical Claim Authority state.",
+      "registered_by": "memory-m2-3-projection-prototype"
+    },
+    "tests/phase5/test_projection_prototype.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "memory.m2.projection_prototype",
+      "milestone": "M2.3",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION",
+        "PLATFORM_SQLITE_LOCK",
+        "SINGLE_WRITER_DESTINATION_LOCK",
+        "AUTOMATIC_LEARNING_RESEARCH_BAN",
+        "SEQUENTIAL_PHASE_RESEARCH_BAN",
+        "METADATA_ONLY_MEMORY_CEILING"
+      ],
+      "successor_runtime": "src/cognitive_kernel/projection_runtime.py",
+      "reason": "M2.3 prototype tests validate full-content persistence, graph and vector queries, temporal history, idempotency, isolation, integrity, and reversible removal.",
+      "sunset_condition": "Retain the M2.3 contracts and reversible projection profile for reproducibility while graph, vector, model, serving, workflow, distributed, and production successors advance.",
+      "research_allowed": true,
+      "prototype_allowed": true,
+      "shadow_allowed": true,
+      "production_activation_condition": "A named production profile requires projection-quality evaluation, deletion and rollback validation, cutover receipts, and owner approval.",
+      "rollback_or_exit": "Close and remove the external projection database without changing canonical Claim Authority state.",
+      "registered_by": "memory-m2-3-projection-prototype"
     }
   },
   "patterns": [
@@ -2436,7 +2532,7 @@
     "pattern_entries_must_be_narrow_and_reviewed": true,
     "unexpected_active_barriers_fail_migration": true
   },
-  "registered_file_count": 224,
+  "registered_file_count": 228,
   "registered_pattern_count": 11,
   "released_baseline_commit": "28004227e206a526d9f3c00b86f9b18d64ea34fe",
   "capability_expansion_rules": {
