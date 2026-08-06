@@ -233,11 +233,20 @@ from .tier_transition_policy import (
     CognitiveKernelTierTransitionPolicy,
     load_cognitive_kernel_tier_transition_policy,
 )
+from .memory_contracts import (
+    AUTHORITY_ROLES,
+    CAPABILITY_STATES,
+    EVIDENCE_RELATION_TYPES,
+    MEMORY_CONTRACT_SCHEMA_VERSION,
+    EvidenceBinding,
+    MemoryUnitEnvelope,
+    StoreRegistration,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.9.0"
+__version__ = "0.10.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -376,5 +385,12 @@ __all__ = [
     "open_tier_transition_store",
     "tier_transition_scope_digest",
     "validate_tier_transition_root",
+    "AUTHORITY_ROLES",
+    "CAPABILITY_STATES",
+    "EVIDENCE_RELATION_TYPES",
+    "MEMORY_CONTRACT_SCHEMA_VERSION",
+    "EvidenceBinding",
+    "MemoryUnitEnvelope",
+    "StoreRegistration",
     "stronger_authentication_required",
 ]
