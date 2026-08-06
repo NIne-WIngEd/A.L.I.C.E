@@ -1247,6 +1247,15 @@
       "sunset_condition": "Replace the hard-coded P4.6b compatibility guards with a selected governed-research capability profile when P4.7 registers the evidence pipeline in the local conversation runtime.",
       "registered_by": "phase4-p4.6b-research-evidence-pipeline"
     },
+    "src/alice_information/research_mode.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.research_mode",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "092a6b7de35e072a8f9977d569df8b76c99948af",
+      "reason": "The released P4.7a source preserves an explicit device-resident non-research mode alongside governed research mode. Its local-mode exclusions are mode invariants, not destination-wide bans on remote, live, learning-aware, storage-backed, or action-capable research.",
+      "registered_by": "post-m1-capability-audit-baseline-closure"
+    },
     "src/alice_information/research_mode_policy.py": {
       "scope_kind": "active_milestone_guard",
       "capability_ceiling": false,
@@ -1258,9 +1267,18 @@
         "MUST_REMAIN_DISABLED"
       ],
       "successor_runtime": "src/alice_evolution/capability_runtime.py",
-      "reason": "The P4.7a policy requires explicit local-only or research turns, preflight unavailability handling, and metadata-only source display. It does not prohibit later live, learning-aware, storage-backed, or action-capable research profiles.",
+      "reason": "The P4.7a policy requires explicit device-resident non-research turns or governed research turns, preflight unavailability handling, and metadata-only source display. It does not prohibit later live, learning-aware, storage-backed, or action-capable research profiles.",
       "sunset_condition": "Replace the hard-coded P4.7a compatibility guards with a selected integrated-research capability profile when live provider selection and end-to-end local research execution are registered.",
       "registered_by": "phase4-p4.7a-explicit-research-mode"
+    },
+    "src/alice_information/research_execution.py": {
+      "scope_kind": "released_baseline_compatibility",
+      "capability_ceiling": false,
+      "profile": "information.phase4.research_execution",
+      "successor_runtime": "src/alice_evolution/capability_runtime.py",
+      "baseline_commit": "092a6b7de35e072a8f9977d569df8b76c99948af",
+      "reason": "The released P4.7b source preserves fail-clean local-mode binding and artifact-separation invariants. Those mode contracts do not limit successor live, remote, learning-aware, storage-backed, or action-capable research profiles.",
+      "registered_by": "post-m1-capability-audit-baseline-closure"
     },
     "src/alice_information/research_execution_policy.py": {
       "scope_kind": "active_milestone_guard",

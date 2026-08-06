@@ -22,7 +22,7 @@ authority topology:
 - episodes and cognitive models are versioned derivatives;
 - graph, vector, lexical, summary, cache, and current-state structures are
   rebuildable projections;
-- Claim Store v1 remains in the existing host-local SQLite architecture.
+- The first Claim Store compatibility implementation uses SQLite inside the original host process. This implementation baseline does not define the destination topology. Backend-neutral Claim Authority contracts and challenger backends remain authorized.
 
 This is an A.L.I.C.E.-specific synthesis. No external framework is adopted
 wholesale.
@@ -252,7 +252,7 @@ including plaintext, activation, and parametric memory.
 #### Reject or defer
 
 - do not import all memory types at once;
-- parametric memory remains blocked;
+- production promotion of learned memory weights remains gated by replay, deletion, rollback, contamination, evaluation, and owner-approved activation; parametric learning research, dataset construction, challenger training, and shadow evaluation remain authorized;
 - do not make a generic "memory OS" abstraction hide epistemic differences;
 - performance must be proven before adding representations.
 

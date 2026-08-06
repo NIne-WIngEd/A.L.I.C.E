@@ -120,14 +120,13 @@ def test_enabling_invariants_are_preserved() -> None:
         assert marker in program, marker
 
 
-def test_active_destination_docs_have_no_unresolved_ceiling() -> None:
+def test_repository_has_no_unresolved_capability_ceiling() -> None:
     scanner = _load_scanner()
     findings = scanner.audit(REPO)
     unresolved = [
         finding
         for finding in findings
         if finding.disposition == "unresolved_active_barrier"
-        and finding.path in set(ACTIVE_DOCS)
     ]
     assert not unresolved, [
         (item.path, item.line, item.code, item.excerpt) for item in unresolved

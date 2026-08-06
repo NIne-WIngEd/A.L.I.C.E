@@ -28,7 +28,7 @@ The representation is selected by measured utility, editability, privacy, deleti
 
 ## External processing
 
-External transmission is controlled by mission scope, provider capabilities, and data custody rules. Local-only processing is a selectable strategy, not a universal architectural requirement.
+External transmission is controlled by mission scope, provider capabilities, and data custody rules. Device-resident processing with no outbound content traffic is a selectable strategy, not a universal architectural requirement.
 
 
 ## Private companion custody
