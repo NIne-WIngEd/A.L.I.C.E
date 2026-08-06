@@ -1,6 +1,6 @@
 {
   "policy_id": "memory-m2-execution",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "prepared": "2026-08-06",
   "status": "owner_directed_active",
   "scope": "memory_m2_and_parallel_full_memory_tracks",
@@ -65,7 +65,7 @@
     "m2_0_foundation_contracts": "implemented",
     "m2_1_claim_contracts": "implemented",
     "full_memory_research": "authorized",
-    "full_memory_prototypes": "claim_authority_shadow_adjudication_projection_bounded_serving_and_durable_workflow_reversible_prototypes_operational",
+    "full_memory_prototypes": "claim_authority_shadow_adjudication_projection_bounded_serving_durable_workflow_and_deletion_reversible_prototypes_operational",
     "claim_authority_production": "not_asserted_enabled",
     "automatic_memory_formation_production": "not_asserted_enabled",
     "phase2_migration": "not_asserted_started",
@@ -88,7 +88,15 @@
     "durable_curation_workflows": "persistent_reversible_prototype_operational",
     "curator_migration_repair_learning_workflows": "research_prototypes_operational",
     "workflow_canonical_claim_authority": false,
-    "workflow_production_influence": false
+    "workflow_production_influence": false,
+    "m2_6_deletion_propagation_contracts": "implemented",
+    "cross_plane_deletion_rehearsal": "persistent_reversible_prototype_operational",
+    "restore_filtering": "research_prototype_operational",
+    "rollback_and_model_retirement_rehearsal": "research_prototype_operational",
+    "m2_contract_sequence": "m2_0_through_m2_6_implemented",
+    "deletion_canonical_claim_authority": false,
+    "deletion_production_influence": false,
+    "destructive_live_deletion": false
   },
   "active_prototype": {
     "milestone": "M2.1",
@@ -202,5 +210,31 @@
     "public_repository_payloads": "excluded",
     "current_data_profile": "synthetic_test_and_owner_authorized_research",
     "rollback": "close_and_delete_external_workflow_database"
+  },
+  "deletion_propagation_prototype": {
+    "milestone": "M2.6",
+    "profile": "memory.m2.deletion_propagation_prototype",
+    "state": "reversible_nonproduction",
+    "persistence": "operational",
+    "content_scope": "full_deletion_request_plane_result_restore_filter_rollback_retirement_and_receipt_content",
+    "backend_profile": "embedded_sqlite_reference_challenger",
+    "backend_is_destination_ceiling": false,
+    "cross_plane_propagation": true,
+    "restore_filtering": true,
+    "rollback_rehearsal": true,
+    "model_retirement_rehearsal": true,
+    "residual_influence_measurements": true,
+    "idempotent_operations": true,
+    "optimistic_generation_checks": true,
+    "materialized_current_receipt": true,
+    "append_only_receipt_history": true,
+    "restart_recovery": true,
+    "integrity_verification": true,
+    "canonical_claim_authority": false,
+    "production_influence": false,
+    "destructive_live_deletion": false,
+    "public_repository_payloads": "excluded",
+    "current_data_profile": "synthetic_test_and_owner_authorized_research",
+    "rollback": "close_and_delete_external_deletion_database"
   }
 }
