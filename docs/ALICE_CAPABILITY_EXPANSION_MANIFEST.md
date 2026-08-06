@@ -1,6 +1,6 @@
 # A.L.I.C.E. Capability Expansion Manifest
 
-**Manifest version:** 1.0.0
+**Manifest version:** 1.1.0
 **Prepared:** 2026-08-05
 **Baseline:** PR #71 merge `ca0d7bbafb5ff8879b89dfa766f94f6ae419a39d` plus the exact local M1 review state discovered at execution time
 **Authority:** Owner-ratified capability-first remediation
@@ -75,3 +75,17 @@ M1-DX0 through M1-D9 were explicitly owner-ratified on 2026-08-05. Ratification 
 ## Released policy compatibility boundary
 
 Exact-key Cognitive Kernel component policies and their loaders remain byte-for-byte compatibility baselines during M1 documentation ratification. Their false `_implemented` fields are registered in `policies/capability_profiles.json` under `component_policy_state_registry`; they are not expanded in place. Any later component-policy schema change requires its own versioned runtime contract, loader, migration, and regression evidence.
+
+## M2 contract-scope anti-ceiling amendment
+
+Owner clarification on 2026-08-06 establishes that a metadata-only public contract artifact is an artifact-local representation boundary. It is not a limit on A.L.I.C.E. memory, the M2 program, runtime payloads, persistence, research, prototypes, graph/vector planes, cognitive models, learning, training, deployment, or the destination architecture.
+
+The amendment adds:
+
+- `docs/MEMORY_M2_EXECUTION_PLAN.md` for concurrent contract and full-memory lanes;
+- `policies/memory_m2_execution_policy.json` for machine-readable anti-ceiling rules;
+- README, roadmap, catalog, renovation-plan, and governing-program alignment;
+- a `METADATA_ONLY_MEMORY_CEILING` scanner rule;
+- synthetic scanner regression cases and repository-level governance assertions.
+
+Contract dependencies may gate production influence or irreversible cutover when exact evidence requires them. They may not become blanket research or prototype prerequisites.

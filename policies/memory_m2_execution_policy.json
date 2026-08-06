@@ -1,0 +1,74 @@
+{
+  "policy_id": "memory-m2-execution",
+  "version": "1.0.0",
+  "prepared": "2026-08-06",
+  "status": "owner_directed_active",
+  "scope": "memory_m2_and_parallel_full_memory_tracks",
+  "capability_ceiling": false,
+  "contract_artifact_boundary": {
+    "artifact_representation": "metadata_only",
+    "scope": "artifact_local",
+    "private_payloads_in_public_git": false,
+    "generalizes_to_memory_system_scope": false,
+    "generalizes_to_runtime_scope": false,
+    "generalizes_to_research_scope": false,
+    "generalizes_to_prototype_scope": false,
+    "generalizes_to_destination_scope": false
+  },
+  "parallel_execution": {
+    "research_allowed": true,
+    "prototype_allowed": true,
+    "shadow_allowed": true,
+    "contract_and_full_memory_lanes_may_overlap": true,
+    "later_integration_wave_is_research_prerequisite": false,
+    "contract_completion_is_blanket_prototype_prerequisite": false
+  },
+  "full_memory_tracks": [
+    "claim_authority_persistence",
+    "event_and_experience_subscriptions",
+    "evidence_to_candidate",
+    "candidate_rejection_and_deduplication",
+    "shadow_adjudication",
+    "materialized_current_state",
+    "graph_projection",
+    "vector_and_multimodal_projection",
+    "automated_selective_memory",
+    "owner_source_relationship_self_world_models",
+    "procedural_learning",
+    "parametric_learning_research",
+    "deletion_propagation",
+    "rollback_and_migration_rehearsal",
+    "distributed_and_federated_deployment"
+  ],
+  "production_gates": {
+    "production_influence_requires_profile_evidence": true,
+    "canonical_authority_transfer_requires_explicit_approval": true,
+    "private_payload_use_requires_owner_authorization": true,
+    "irreversible_cutover_requires_rehearsal_and_approval": true,
+    "friday_transfer_requires_flagship_implementation_evaluation_and_approval": true
+  },
+  "temporary_gate_requirements": [
+    "exact_scope",
+    "reason",
+    "evidence",
+    "review_event",
+    "removal_criterion",
+    "successor_path",
+    "research_allowed",
+    "prototype_allowed",
+    "shadow_allowed",
+    "production_activation_condition",
+    "rollback_or_exit",
+    "capability_ceiling_false"
+  ],
+  "current_truth": {
+    "m2_0_foundation_contracts": "implemented",
+    "m2_1_claim_contracts": "not_asserted_implemented",
+    "full_memory_research": "authorized",
+    "full_memory_prototypes": "authorized_not_asserted_operational",
+    "claim_authority_production": "not_asserted_enabled",
+    "automatic_memory_formation_production": "not_asserted_enabled",
+    "phase2_migration": "not_asserted_started",
+    "p5_1e": "paused_pending_exact_unblock"
+  }
+}

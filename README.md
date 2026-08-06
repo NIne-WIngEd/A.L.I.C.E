@@ -817,6 +817,12 @@ P4.5a citation-bound grounding is merged and remains part of the preserved Phase
 | **Phase 5.0+** | Experience Ledger, storage lifecycle, Mission Graph contracts, kernel extraction, and private identity custody | Active development |
 | **Phase 6+** | Interface, integrations, autonomous learning, agency, self-evolution, model adaptation, and embodiment | Roadmap |
 
+### Memory contract work is not the memory limit
+
+Some public kernel records are metadata-only so authority, provenance, lineage, deletion, and backend-neutral interfaces can be defined without placing private memory payloads in Git. That artifact boundary is not the limit of A.L.I.C.E.'s memory.
+
+Persistent memory, selective formation, adjudication, conflict handling, cognitive projections, graph and vector retrieval, owner/source/self models, learning, training, deletion propagation, and rollback remain destination capabilities. Contract work and full-memory research or prototypes may proceed in parallel under separate evaluation and activation profiles.
+
 ### Implemented foundations
 
 The repository currently contains working or released foundations for:
@@ -1008,6 +1014,7 @@ The documents below define how it is being built.
 - [Lifelong Learning Policy](docs/LIFELONG_LEARNING_POLICY.md)
 - [Storage Lifecycle and Retention](docs/STORAGE_LIFECYCLE_AND_RETENTION_POLICY.md)
 - [Evaluation Charter](docs/EVALUATION_CHARTER.md)
+  * [Memory M2 Execution Plan](docs/MEMORY_M2_EXECUTION_PLAN.md)
 
 ### Authority and judgment
 

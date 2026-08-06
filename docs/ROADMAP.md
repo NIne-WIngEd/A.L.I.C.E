@@ -65,6 +65,12 @@ Trajectory capture, outcomes, corrections, decision lineage, source/model/tool h
 
 **Friday action:** Build new reusable contracts under host-neutral `cognitive_kernel` boundaries with product and host scope. Friday product code remains in its independent repository. Phase 5 adds the shared Mission Graph/Cognitive Workspace contract layer and exact-artifact dual-approval schemas; Phase 6 builds the UI; Phase 6.5 proves independent-product readiness.
 
+### Memory M2 parallel execution rule
+
+M2 begins with host-neutral authority and lineage contracts, but the contract artifacts do not define the full memory capability boundary. In parallel with contract completion, A.L.I.C.E. may research and build reversible full-memory prototypes for persistent Claim Authority, Experience Ledger subscriptions, candidate formation, rejection, conflict and adjudication, materialized current state, graph/vector projections, automated selective memory, cognitive models, learning, deletion propagation, and rollback.
+
+Delivery order is not research order. Production influence, canonical-authority transfer, private-data use, migration cutover, and release remain separately gated by evidence and owner authority.
+
 ### Storage doctrine
 
 A.L.I.C.E. captures broadly enough to preserve future learning opportunity, but permanent full-payload retention is not the default. The governing pattern is: permanent compact ledger + policy-bounded raw buffer + utility-weighted durable memory + representative replay + encrypted archive + verified deletion. `docs/STORAGE_LIFECYCLE_AND_RETENTION_POLICY.md` defines the controlling lifecycle.
