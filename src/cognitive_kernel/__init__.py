@@ -272,11 +272,42 @@ from .claim_authority_prototype import (
     open_claim_authority_prototype,
     validate_claim_authority_prototype_path,
 )
+from .adjudication_contracts import (
+    ADJUDICATION_AUTHORITY_CLASSES,
+    ADJUDICATION_CONTRACT_SCHEMA_VERSION,
+    ADJUDICATION_EXECUTION_MODES,
+    ADJUDICATION_OUTCOMES,
+    CLAIM_CANDIDATE_ACTIONS,
+    CLAIM_CANDIDATE_STATES,
+    CLAIM_CONFLICT_RESOLUTION_STATES,
+    CLAIM_CONFLICT_TYPES,
+    AdjudicationRecord,
+    ClaimCandidate,
+    ClaimConflictRecord,
+    ClaimEvidenceRelation,
+)
+from .shadow_adjudication_prototype import (
+    SHADOW_ADJUDICATION_PROTOTYPE_SCHEMA_VERSION,
+    SHADOW_ADJUDICATION_PROTOTYPE_STATE,
+    ShadowAdjudicationConflictError,
+    ShadowAdjudicationIntegrityError,
+    ShadowAdjudicationIntegrityReport,
+    ShadowAdjudicationIsolationError,
+    ShadowAdjudicationProfile,
+    ShadowAdjudicationPrototypeError,
+    ShadowAdjudicationPrototypeStore,
+    ShadowAdjudicationReceipt,
+    ShadowAdjudicationSubmission,
+    ShadowAdjudicationTransactionError,
+    UnsafeShadowAdjudicationPathError,
+    open_shadow_adjudication_prototype,
+    validate_shadow_adjudication_path,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.11.0"
+__version__ = "0.12.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -448,5 +479,32 @@ __all__ = [
     "normalize_claim_qualifiers",
     "open_claim_authority_prototype",
     "validate_claim_authority_prototype_path",
+    "ADJUDICATION_AUTHORITY_CLASSES",
+    "ADJUDICATION_CONTRACT_SCHEMA_VERSION",
+    "ADJUDICATION_EXECUTION_MODES",
+    "ADJUDICATION_OUTCOMES",
+    "CLAIM_CANDIDATE_ACTIONS",
+    "CLAIM_CANDIDATE_STATES",
+    "CLAIM_CONFLICT_RESOLUTION_STATES",
+    "CLAIM_CONFLICT_TYPES",
+    "AdjudicationRecord",
+    "ClaimCandidate",
+    "ClaimConflictRecord",
+    "ClaimEvidenceRelation",
+    "SHADOW_ADJUDICATION_PROTOTYPE_SCHEMA_VERSION",
+    "SHADOW_ADJUDICATION_PROTOTYPE_STATE",
+    "ShadowAdjudicationConflictError",
+    "ShadowAdjudicationIntegrityError",
+    "ShadowAdjudicationIntegrityReport",
+    "ShadowAdjudicationIsolationError",
+    "ShadowAdjudicationProfile",
+    "ShadowAdjudicationPrototypeError",
+    "ShadowAdjudicationPrototypeStore",
+    "ShadowAdjudicationReceipt",
+    "ShadowAdjudicationSubmission",
+    "ShadowAdjudicationTransactionError",
+    "UnsafeShadowAdjudicationPathError",
+    "open_shadow_adjudication_prototype",
+    "validate_shadow_adjudication_path",
     "stronger_authentication_required",
 ]

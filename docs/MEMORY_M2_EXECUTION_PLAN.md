@@ -1,6 +1,6 @@
 # Memory M2 Execution Plan — Contract and Full-Memory Parallelism
 
-**Version:** 1.1.0
+**Version:** 1.2.0
 **Prepared:** 2026-08-06
 **Status:** Owner-directed active execution clarification
 **Architecture:** Memory v4.1 Capability-First Polyglot Cognitive Fabric
@@ -90,16 +90,18 @@ The following distinctions remain mandatory:
 - model output is not adjudicated truth;
 - a planned or researched capability is not a released feature.
 
-## 6. Current state after M2.1 prototype activation
+## 6. Current state after M2.2 shadow-adjudication activation
 
 - M1 architecture and capability-first governance are owner-ratified.
 - M2.0 Store Registration, Memory Unit envelope, and Evidence Binding contracts are implemented.
-- M2.1 Claim Identity, Claim Version, and Current Claim Projection contracts are implemented by this tranche.
-- A reversible embedded Claim Authority prototype persists canonical claim content, immutable version history, idempotency receipts, store-assigned ordering, and rebuildable current state outside the public repository.
-- The embedded backend is one measured prototype profile. Store Registration preserves alternate relational, distributed, event, graph, object, and hybrid successor backends.
-- Full-memory research and reversible prototypes remain authorized across every track in this plan.
-- Production Claim Authority activation remains governed by profile evidence, owner approval, deletion and rollback evaluation, and exact cutover receipts.
-- Automatic selective-memory research remains authorized. Production influence is not activated by this tranche.
+- M2.1 Claim Identity, Claim Version, Current Claim Projection, and the reversible persistent Claim Authority prototype are implemented.
+- M2.2 Claim Evidence Relation, Claim Candidate, Adjudication Record, and Claim Conflict Record contracts are implemented by this tranche.
+- A reversible persistent shadow-adjudication prototype stores full canonical candidate content, evidence relations, deterministic rejection decisions, conflict quarantines, shadow decisions, idempotency receipts, and materialized candidate state outside the public repository.
+- The shadow prototype cannot write canonical Claim Authority state and cannot influence production behavior. Those are exact profile boundaries, not research or destination capability ceilings.
+- Evidence-to-candidate, rejection, contradiction detection, quarantine, and shadow adjudication are operational for synthetic tests and owner-authorized research profiles.
+- Full-memory research remains authorized for automatic selective memory, graph and vector projection, cognitive models, learning, training, deletion, rollback, migration, distributed successors, and every other ratified track.
+- The embedded SQLite profile is a reversible reference challenger. It is not the destination backend or topology.
+- Production Claim Authority activation remains governed by profile evidence, deletion and rollback evaluation, exact cutover receipts, and owner approval.
 - Phase 2 migration is not asserted started.
 - P5.1e remains paused until its exact storage-admission interaction is explicitly unblocked. That pause does not prohibit other memory research or prototypes.
 
