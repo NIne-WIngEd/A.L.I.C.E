@@ -331,11 +331,42 @@ from .projection_prototype import (
     open_projection_prototype,
     validate_projection_prototype_path,
 )
+from .serving_contracts import (
+    CONTEXT_PACKET_STATES,
+    CONTEXT_SOURCE_KINDS,
+    RETRIEVAL_FUSION_STRATEGIES,
+    RETRIEVAL_STAGE_KINDS,
+    RETRIEVAL_STAGE_OUTCOMES,
+    SERVING_CONTRACT_SCHEMA_VERSION,
+    ContextPacket,
+    ContextSelection,
+    RetrievalTrace,
+    RetrievalTraceStep,
+)
+from .bounded_serving_prototype import (
+    BOUNDED_SERVING_PROTOTYPE_SCHEMA_VERSION,
+    BOUNDED_SERVING_PROTOTYPE_STATE,
+    FALLBACK_MODES,
+    INDEX_KINDS,
+    INDEX_STATES,
+    BoundedServingIntegrityError,
+    BoundedServingIntegrityReport,
+    BoundedServingIsolationError,
+    BoundedServingProfile,
+    BoundedServingPrototypeError,
+    BoundedServingPrototypeStore,
+    BoundedServingReceipt,
+    BoundedServingTransactionError,
+    ServingDocumentReceipt,
+    UnsafeBoundedServingPathError,
+    open_bounded_serving_prototype,
+    validate_bounded_serving_path,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.13.0"
+__version__ = "0.14.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -558,5 +589,32 @@ __all__ = [
     "UnsafeProjectionPrototypePathError",
     "open_projection_prototype",
     "validate_projection_prototype_path",
+    "CONTEXT_PACKET_STATES",
+    "CONTEXT_SOURCE_KINDS",
+    "RETRIEVAL_FUSION_STRATEGIES",
+    "RETRIEVAL_STAGE_KINDS",
+    "RETRIEVAL_STAGE_OUTCOMES",
+    "SERVING_CONTRACT_SCHEMA_VERSION",
+    "ContextPacket",
+    "ContextSelection",
+    "RetrievalTrace",
+    "RetrievalTraceStep",
+    "BOUNDED_SERVING_PROTOTYPE_SCHEMA_VERSION",
+    "BOUNDED_SERVING_PROTOTYPE_STATE",
+    "FALLBACK_MODES",
+    "INDEX_KINDS",
+    "INDEX_STATES",
+    "BoundedServingIntegrityError",
+    "BoundedServingIntegrityReport",
+    "BoundedServingIsolationError",
+    "BoundedServingProfile",
+    "BoundedServingPrototypeError",
+    "BoundedServingPrototypeStore",
+    "BoundedServingReceipt",
+    "BoundedServingTransactionError",
+    "ServingDocumentReceipt",
+    "UnsafeBoundedServingPathError",
+    "open_bounded_serving_prototype",
+    "validate_bounded_serving_path",
     "stronger_authentication_required",
 ]

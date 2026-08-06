@@ -1,6 +1,6 @@
 # Memory M2 Execution Plan — Contract and Full-Memory Parallelism
 
-**Version:** 1.3.0
+**Version:** 1.4.0
 **Prepared:** 2026-08-06
 **Status:** Owner-directed active execution clarification
 **Architecture:** Memory v4.1 Capability-First Polyglot Cognitive Fabric
@@ -90,19 +90,19 @@ The following distinctions remain mandatory:
 - model output is not adjudicated truth;
 - a planned or researched capability is not a released feature.
 
-## 6. Current state after M2.3 projection-fabric activation
+## 6. Current state after M2.4 bounded-serving activation
 
 - M1 architecture and capability-first governance are owner-ratified.
-- M2.0 Store Registration, Memory Unit envelope, and Evidence Binding contracts are implemented.
-- M2.1 Claim Identity, Claim Version, Current Claim Projection, and the reversible persistent Claim Authority prototype are implemented.
-- M2.2 evidence, candidate, adjudication, and conflict contracts plus the reversible persistent shadow-adjudication prototype are implemented.
-- M2.3 Episode Record and Projection Version contracts are implemented by this tranche.
-- A reversible persistent projection-fabric prototype stores full episode and projection content, immutable projection versions, materialized current projections, temporal history, graph edges, and vectors outside the public repository.
-- Graph, vector, temporal, owner-model, source-person-model, and self-model projection paths are operational for synthetic tests and owner-authorized research profiles.
-- Projections remain derived and rebuildable. They are not evidence, adjudicated Claim Authority truth, or production behavior by themselves.
-- The embedded SQLite profile is one reversible reference challenger. It does not constrain graph engines, vector systems, distributed databases, object stores, model runtimes, or hybrid successors.
-- Full-memory research remains authorized for automatic selective memory, cognitive models, context serving, learning, training, deletion, rollback, migration, federation, and every other ratified track.
-- Production projection influence and canonical authority remain governed by named profiles, evaluation evidence, deletion and rollback validation, cutover receipts, and owner approval.
+- M2.0 through M2.3 contracts and their paired reversible prototypes are implemented.
+- M2.4 Context Packet, Context Selection, Retrieval Trace Step, and Retrieval Trace contracts are implemented by this tranche.
+- A reversible persistent bounded-serving prototype stores full context-packet and retrieval-trace content outside the public repository.
+- Profile-selected item and byte budgets bound ordinary serving without becoming universal architecture maxima.
+- Lexical, vector, graph, temporal, and mission-aware sources may be fused and expanded with deterministic receipts.
+- Stale or unavailable indexes invoke an explicit profile-selected fallback path and remain visible in the Retrieval Trace.
+- Context Packets are bounded serving artifacts. They are not evidence, adjudicated Claim Authority truth, or permanent memory by themselves.
+- The embedded SQLite profile is one reversible reference challenger. It does not constrain distributed serving, graph-native retrieval, external vector systems, model rankers, remote compute, or hybrid successors.
+- Full-memory research remains authorized for automatic selective memory, cognitive models, curation, durable workflow, learning, training, deletion, rollback, migration, federation, and every other ratified track.
+- Production serving influence remains governed by named profiles, evaluation evidence, privacy and deletion validation, cutover receipts, and owner approval.
 - Phase 2 migration is not asserted started.
 - P5.1e remains paused until its exact storage-admission interaction is explicitly unblocked. That pause does not prohibit other memory research or prototypes.
 
