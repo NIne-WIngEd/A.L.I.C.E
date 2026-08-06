@@ -1,191 +1,165 @@
-# A.L.I.C.E. Memory Renovation Plan
+# Memory Renovation Plan — Parallel Capability Tracks
 
-**Draft:** 0.2<br>
-**Claim Store authority decision:** Accepted 2026-08-03<br>
-**Controlling condition:** Memory Architecture Hold
+**Version:** 1.0.0
+**Status:** Owner-ratified M1 capability-track plan; implementation activation remains separate
+**Architecture:** Memory v4.1 Capability-First Polyglot Cognitive Fabric
 
-## M0 — Hold and evidence baseline
+## 1. Objective
+
+Renovate A.L.I.C.E. memory into a claim-centered, evidence-linked, graph-capable, distributed, multimodal, continually learning cognitive fabric without sacrificing truth, custody, deletion, or recovery.
+
+The plan uses parallel research and independently activated production profiles. A small first implementation may be useful, but it does not define the destination.
+
+## 2. Common entry requirements
+
+Each track defines:
+
+- logical contracts and authority role;
+- registered candidate backends;
+- synthetic and owner-authorized evaluations;
+- provenance and truth-state semantics;
+- privacy and product-isolation controls;
+- deletion behavior;
+- rollback or retirement;
+- performance profiles;
+- public-claim state;
+- production activation evidence.
+
+## 3. Track A — Authority and Claim Fabric
 
 Deliver:
 
-- architecture hold;
-- public-claim matrix;
-- external systems review;
-- repository memory inventory;
-- private-store inventory;
-- current latency and scale baseline.
+- Store and Capability Fabric Registry;
+- Evidence Event and stream position;
+- Claim Identity and Claim Version;
+- current adjudicated projection;
+- Evidence Relation;
+- authority, conflict, and adjudication;
+- bitemporal and causal semantics;
+- owner namespace and federation identity;
+- deletion and rollback receipts.
 
-No runtime behavior changes.
+Candidate backends may include embedded, relational, distributed-SQL, and custom fact architectures.
 
-## M1 — Ratify Memory Architecture v4
-
-### Accepted M1 decision
-
-- Experience Ledger is evidence authority.
-- A new logical append-only, bitemporal Claim Store is canonical adjudicated
-  knowledge.
-- Phase 2 is a compatibility projection during shadow migration.
-- Derived memory and indexes remain rebuildable.
-- Claim Store v1 remains inside the host-local SQLite architecture.
-
-### Remaining M1 decisions
-
-Ratify:
-
-- exact Claim Identity and Claim Version schemas;
-- authority lattice;
-- adjudication and owner-review rules;
-- temporal semantics;
-- context packet;
-- online/offline boundary;
-- SLOs;
-- deletion and rollback;
-- shadow migration thresholds.
-
-## M2 — Kernel memory contracts
-
-Implement metadata-only contracts for:
-
-- Memory Unit envelope;
-- Evidence Binding;
-- Claim Identity;
-- Claim Version;
-- Claim Evidence Relation;
-- Claim Adjudication;
-- Current Claim Projection;
-- Episode;
-- Projection Version;
-- Context Packet;
-- Retrieval Trace;
-- Curation Task/Receipt;
-- Durable Memory Workflow/Activity Event;
-- Deletion Propagation Receipt.
-
-No automatic memory formation.
-
-## M3 — Retrieval and serving renovation
-
-First production code improvements:
-
-1. materialized current-state projection;
-2. batch memory hydration;
-3. batch conflict/provenance loading;
-4. generation-bound index manifests;
-5. bounded retrieval plan;
-6. Memory Context Packet builder;
-7. retrieval trace;
-8. no-memory session mode;
-9. stale-index degraded fallback.
-
-This stage addresses the current N+1 and global-scan bottlenecks before adding
-more memory.
-
-## M4 — Evidence-to-candidate bridge
-
-- durable outbox from Experience Ledger;
-- deterministic workflow history and replay;
-- session quiescence and debounce;
-- cheap deterministic eligibility;
-- candidate extraction;
-- exact/hash deduplication;
-- bounded existing-memory shortlist;
-- model/prompt/policy lineage;
-- no automatic promotion.
-
-## M5 — Governed promotion and episodic consolidation
-
-- claim matching;
-- authority review;
-- explicit add/update/supersede/dispute operations;
-- episode construction;
-- raw evidence preservation;
-- summary regeneration;
-- owner-review queue;
-- rollback.
-
-## M6 — Cognitive projections
-
-Implement one projection at a time:
-
-1. active owner constraints;
-2. mission/commitment projection;
-3. stable preference model;
-4. goal/value model;
-5. relationship model;
-6. source-person model;
-7. belief/prediction model;
-8. self/world/social/causal projections.
-
-Each projection requires a separate benchmark and release profile.
-
-## M7 — Scale, staleness, and adversarial evaluation
+## 4. Track B — Event and Experience Fabric
 
 Evaluate:
 
-- LongMemEval;
-- LoCoMo and LoCoMo-Plus style tasks;
-- MemoryAgentBench;
-- STALE implicit invalidation;
-- Memora/FAMA stale-memory penalties;
-- internal mission/outcome benchmarks;
-- memory poisoning;
-- deletion;
-- rollback;
-- model replacement;
-- 10M-event scale.
+- current embedded Experience Ledger;
+- KurrentDB or another event store;
+- Kafka or Pulsar;
+- hybrid embedded and distributed event fabrics.
 
-## M8 — Learning Curator activation
+Build append, expected-version, subscription, replay, outbox, integrity, compaction, archive, and projection interfaces.
 
-Activate only low-risk operations first:
+## 5. Track C — Cognitive Graph
 
-- duplicate rejection;
-- topic/mission segmentation;
-- episode candidate creation;
-- explicit owner-memory candidate staging.
+Build ontologies and projections for:
 
-Belief revision, skill formation, learned retention, and forgetting remain
-separate later gates.
+- missions and dependencies;
+- identity and source history;
+- temporal and causal relations;
+- social and relationship models;
+- projects, tools, skills, and concepts;
+- claims, evidence, conflicts, predictions, and outcomes;
+- model and dataset lineage.
 
-## M9 — Parametric learning gate
+Evaluate graph databases, graph algorithms, embeddings, retrieval, planning, anomaly detection, and graph-to-claim reconciliation.
 
-Remain blocked until:
+## 6. Track D — Vector and Multimodal Retrieval
 
-- replay lineage;
-- held-out evaluation;
-- champion/challenger promotion;
-- rollback;
-- contamination tests;
-- deletion impact;
-- unlearning limitations;
-- owner approval
+Evaluate Qdrant, Milvus, Vespa, pgvector, embedded indexes, and later systems.
 
-are complete.
+Support generation-aware text, code, image, audio, video, sensor, and scientific retrieval. Benchmark hybrid lexical, vector, graph, symbolic, and source plans.
 
-## Current planning branch
+## 7. Track E — Durable Curation and Mission Workflows
 
-The active documentation-review branch is:
+Evaluate Temporal, durable event consumers, Dagster, Prefect, Ray, and local runners.
 
-```text
-planning/memory-architecture-v4
-```
+Run candidate extraction, adjudication, projection refresh, deletion, migration, repair, training, evaluation, federation, and long missions with idempotency, retries, signals, cancellation, and recovery.
 
-The current repository patch is documentation only. It must not modify `src/`,
-active capability flags, or Phase 5 runtime policies.
+## 8. Track F — Adaptive Context and Serving
 
-## First implementation branch after ratification
+Build:
 
-Proposed:
+- Context Planner;
+- Retrieval Trace;
+- source and evidence expansion;
+- graph/vector/claim fusion;
+- uncertainty and contradiction preservation;
+- compact through very-large-context plans;
+- multi-agent and simulation plans;
+- local and distributed inference;
+- stale-index and no-memory fallbacks.
 
-```text
-feat/memory-v4-serving-foundation
-```
+## 9. Track G — Owner, Source, Relationship, Self, and World Models
 
-Proposed initial scope:
+Create versioned, evidence-linked projections for preferences, values, traits, goals, temporary state, source-person hypotheses, relationship state, self-model, world/social/causal models, and predictions.
 
-- batch retrieval;
-- current-state projection contract;
-- context packet and retrieval trace;
-- performance benchmark harness;
-- no automatic curation;
-- comparative prototype of a local SQLite durable workflow runner versus
-  self-hosted Temporal, with no production activation.
+Unknowns remain uncertain. Generated reconstruction is not source history.
+
+## 10. Track H — Procedural and Parametric Learning
+
+Build:
+
+- reusable skills and failure cases;
+- dataset and replay manifests;
+- learned retrieval, routing, ranking, and preference models;
+- adapters and LoRA;
+- challenger models and continual-learning experiments;
+- shadow and canary serving;
+- machine-unlearning and model-editing research;
+- later deeper weight updates.
+
+Production influence follows evaluation and authority profiles. Research begins when lineage and containment are sufficient.
+
+## 11. Track I — Distributed Deployment and Synchronization
+
+Build profiles for edge, mobile, workstation, multi-GPU, home cluster, private cluster, hybrid cloud, distributed global, and frontier research.
+
+Implement replication, sharding, synchronization, causal metadata, conflict resolution, owner-namespace federation, failover, export, and replacement.
+
+## 12. Track J — Inspection, Evaluation, Deletion, and Rollback
+
+Provide one inspection and control surface across claims, events, graphs, vectors, objects, workflows, models, datasets, replicas, and archives.
+
+Test deletion propagation, restore filtering, cutover, rollback, model retirement, projection rebuild, and public-claim accuracy.
+
+## 13. Integration waves
+
+### Wave 1 — contracts and registry
+
+Ratify M1. Implement metadata-only neutral contracts and capability discovery.
+
+### Wave 2 — serving and shadow planes
+
+Build current-state serving, batch hydration, traces, and shadow graph/vector/event/workflow candidates.
+
+### Wave 3 — evidence-to-candidate and adjudication
+
+Connect Experience Fabric to candidate generation, rejection, conflict, and Claim Authority.
+
+### Wave 4 — cognitive projections and learning
+
+Activate episodes, graph reasoning, owner/source/self models, skills, datasets, and challenger learning by profile.
+
+### Wave 5 — federation and scale
+
+Expand multi-device, cluster, remote, and distributed profiles through measured certification.
+
+Waves describe integration maturity. Track research may proceed in parallel.
+
+## 14. Exit evidence for each production profile
+
+- exact contracts and backend registrations;
+- correctness, authority, performance, and adversarial evaluation;
+- custody and product-isolation review;
+- deletion and rollback rehearsal;
+- degraded mode and recovery;
+- public-claim language;
+- exact commit and artifact hashes;
+- owner or mission authority appropriate to consequence.
+
+## 15. Current state
+
+This owner-ratified plan does not assert runtime implementation, production activation, Claim Authority deployment, or Phase 2 migration start.

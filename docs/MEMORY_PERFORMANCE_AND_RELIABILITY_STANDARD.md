@@ -1,191 +1,202 @@
-# Memory Performance and Reliability Standard
+# Memory Performance and Reliability Standard — Adaptive Capability Profiles
 
-**Draft:** 0.2<br>
-**Claim Store direction:** Accepted 2026-08-03<br>
-**Status:** Provisional targets requiring hardware calibration
+**Version:** 1.0.0
+**Status:** Owner-ratified under Memory M1 on 2026-08-05
+**Applies to:** Memory Architecture v4.1 and successor profiles
 
 ## 1. Objective
 
-Memory must improve A.L.I.C.E. without making ordinary interaction unreliable,
-slow, or computationally unbounded.
+Memory must maximize useful reasoning, continuity, learning, and action while meeting measured reliability, privacy, latency, cost, and recovery objectives.
 
-## 2. Hot-path prohibitions
+This standard defines profile-scoped service objectives and certification points. It does not encode a universal hardware, context, concurrency, candidate-pool, model, or scale maximum.
 
-The synchronous dialogue path must not perform:
+## 2. Performance profiles
 
-- unbounded scans;
-- per-candidate database round trips;
-- full graph traversal;
-- full index rebuild or verification;
-- large-model curation;
-- deep consolidation;
-- automatic deletion;
-- model training;
-- blocking cold-archive restore.
+Every benchmark and production claim names one profile:
 
-## 3. Provisional local-host SLOs
+```text
+edge
+mobile
+single_workstation
+high_end_workstation
+home_cluster
+private_cluster
+hybrid_cloud
+large_scale_distributed
+frontier_research
+```
 
-Measured excluding base-model generation:
+A profile records hardware, accelerators, storage, network, backend topology, model set, concurrency, data scale, consistency, availability, privacy, cost, and failure assumptions.
 
-| Operation | Target |
-|---|---:|
-| Compact evidence append p95 | <= 25 ms |
-| Protected-core and mission load p95 | <= 40 ms |
-| Structured current-state lookup p95 | <= 75 ms |
-| Hybrid candidate retrieval + batch hydration at 100K claims p95 | <= 150 ms |
-| Memory Context Packet assembly p95 | <= 50 ms |
-| Total ordinary memory overhead at 100K claims p95 | <= 350 ms |
-| Total ordinary memory overhead at 1M evidence events p95 | <= 750 ms |
-| Explicit correction available to serving plane p95 | <= 5 s |
-| Explicit deletion hidden from ordinary retrieval p95 | <= 5 s |
+## 3. Quality–latency–resource evaluation
 
-Targets must be measured on defined hardware profiles and may be revised only
-through evaluation evidence.
+Systems are evaluated on a Pareto frontier that includes:
 
-## 4. Claim Store serving rule
+- answer and decision quality;
+- evidence coverage and authority correctness;
+- freshness and staleness;
+- context efficiency;
+- latency p50, p95, and p99;
+- throughput and concurrency;
+- compute, memory, storage, network, energy, and monetary cost;
+- deletion and correction propagation lag;
+- recovery time and recovery point;
+- availability and degraded-mode quality;
+- privacy and custody;
+- rollback completeness.
 
-- Ordinary reads use the materialized `current_claims` projection.
-- Ordinary responses never replay complete claim history.
-- Appending a claim version and updating its current projection occur in one
-  authoritative transaction.
-- Historical reconstruction, provenance expansion, and rollback are explicit
-  bounded operations.
-- Claim write conflicts use expected-current-version or equivalent optimistic
-  concurrency checks.
-- Idempotency keys prevent duplicate claim-version creation after retries.
+A faster system is not preferred when it materially degrades truth, provenance, mission value, or safety. A more capable system is not production-enabled when its reliability profile is unmeasured.
 
-## 5. Context budgets
+## 4. Serving-path placement
 
-- Memory context is hard-capped.
-- The protected core never grows with history.
-- Default memory budget is the lower of 4096 tokens or 12% of usable context.
-- Raw evidence enters only when required.
-- Contradictions and uncertainty cannot be dropped merely to maximize relevance.
-- Every packet reports used and rejected tokens.
+The synchronous serving plan may use local or remote computation, graph traversal, vector search, models, tools, or iterative retrieval when the selected profile predicts net value.
 
-## 6. Queue classes
+Expensive work is moved to asynchronous or parallel execution when that improves the selected objective. This is a scheduling decision, not a prohibition.
 
-1. `critical_correction_deletion`
-2. `owner_explicit_memory`
-3. `active_mission_outcome`
-4. `normal_session_curation`
-5. `projection_refresh`
-6. `index_maintenance`
-7. `deep_consolidation`
-8. `training_candidate_analysis`
+Ordinary serving should prefer:
 
-Critical work may preempt lower classes. Training analysis stops first under
-resource pressure.
+- materialized current claim state;
+- batch hydration;
+- bounded and explainable query plans;
+- generation-aware indexes;
+- parallel graph, vector, lexical, symbolic, and source retrieval;
+- cached protected state with freshness checks;
+- stale-index and no-memory fallbacks;
+- traceable model and tool routing.
 
-## 7. Worker requirements
+Historical replay, full verification, archive restore, deep consolidation, and training may run concurrently or asynchronously according to mission priority and resource policy.
 
-Every worker must implement:
+## 5. Adaptive context
 
-- durable workflow ID and ordered event history;
-- deterministic replay of orchestration decisions;
-- external side effects isolated as idempotent activities;
-- bounded concurrency;
-- bounded queue size;
-- idempotency;
-- retry limit and exponential backoff;
-- heartbeat;
-- lease expiration;
-- checkpoint/resume;
-- cancellation;
-- supersession;
-- dead-letter quarantine;
-- metrics;
-- graceful shutdown;
-- recovery after process or host failure without duplicating semantic writes.
+The Context Planner selects among:
 
-## 8. Curation-lag targets
+- compact packets;
+- large or very large context windows;
+- iterative retrieval;
+- graph traversal;
+- source expansion;
+- multimodal evidence;
+- external memory tools;
+- multi-agent decomposition;
+- simulations;
+- model mixtures.
 
-| Class | Provisional p95 |
-|---|---:|
-| Owner correction/deletion | <= 30 s |
-| Explicit owner memory request | <= 2 min |
-| Active mission outcome | <= 5 min |
-| Normal conversation curation | <= 30 min |
-| Deep consolidation | <= 24 h |
+Every plan records offered, selected, rejected, truncated, and deferred material with reasons.
 
-Dialogue remains functional if these targets are missed.
+Profiles may define default token and latency budgets. The planner may expand or contract them based on measured marginal reasoning value, privacy, mission importance, available compute, and model capability.
 
-## 9. Index rules
+Contradictions, uncertainty, deletion state, and authority cannot be silently removed merely to increase relevance.
 
-Each index generation records:
+## 6. Retrieval and index generations
 
-- source-store generation;
-- embedding model and dimensionality;
-- normalization version;
-- schema version;
-- build time;
-- record count;
-- digest;
-- status.
+Each lexical, vector, graph, summary, cache, and learned-retrieval generation records:
 
-Mixed embedding generations are prohibited.
+- authority source and source generation;
+- build and update positions;
+- model, algorithm, dimensionality, and normalization;
+- schema and code version;
+- scope and authorization;
+- record count and integrity digest;
+- quality and calibration evidence;
+- deletion watermark;
+- health and staleness;
+- successor and rollback generation.
 
-Full verification runs asynchronously. Ordinary reads verify generation binding
-and touched records.
+Multiple generations may coexist. Cross-generation serving requires calibrated fusion and explicit traceability.
 
-## 10. Database access rules
+## 7. Queue and scheduling policy
 
-- batch hydrate candidate IDs;
-- batch load conflict and provenance edges;
-- no global correction scan per query;
-- use materialized current-state projections;
-- use prepared statements;
-- cap candidate pools;
-- measure query plans;
-- add indexes only with write-cost evaluation.
+Work is scheduled by mission value, consequence, urgency, dependency, privacy, resource efficiency, deadline, and recoverability.
 
-## 11. Backpressure
+Corrections, deletion, authority integrity, and active mission continuity receive protected service classes. Training, consolidation, projection rebuilds, and research jobs are not categorically sacrificed; they are scheduled according to their declared value and profile.
 
-Under compute, memory, or disk pressure:
+Every durable worker supports:
 
-1. pause deep consolidation;
-2. pause training-candidate work;
-3. reduce embedding batch size;
-4. defer low-value curation;
-5. preserve corrections, deletion, evidence, and active-mission state;
-6. never silently delete protected artifacts.
+- durable identity and ordered history;
+- idempotent activities;
+- bounded resource reservations for the selected profile;
+- retries, backoff, heartbeat, lease, checkpoint, resume, cancellation, and supersession;
+- dead-letter quarantine and repair;
+- observability;
+- process, host, and cluster failure recovery;
+- duplicate-delivery safety;
+- code-version and migration compatibility.
 
-## 12. Reliability tests
+## 8. Certification scale
 
-Required tests include:
+Initial certification points:
 
-- worker crash at every checkpoint;
-- duplicate event delivery;
-- out-of-order events;
-- stale lease recovery;
-- partial secondary-index failure;
-- embedding migration;
-- database lock contention;
-- corrupt projection rebuild;
-- cold archive unavailable;
-- graph store unavailable;
-- deletion during curation;
+```text
+1K
+10K
+100K
+1M
+```
+
+Extended certification points:
+
+```text
+10M
+100M
+1B
+beyond-1B profile-defined evaluations
+```
+
+Events, claims, graph nodes and edges, vector points, objects, workflows, datasets, model artifacts, and concurrent missions are measured separately.
+
+Certification points are checkpoints. They are not an architectural maximum. Vertical and horizontal scaling, partitioning, sharding, replication, tiering, compression, learned retrieval, and backend replacement remain available.
+
+## 9. Reliability tests
+
+Required profile-appropriate tests include:
+
+- process, host, zone, and cluster failure;
+- duplicate, delayed, missing, and out-of-order events;
+- stale lease and worker recovery;
+- optimistic concurrency conflicts;
+- partition and replication conflict;
+- graph, vector, object, workflow, model, and claim-store outage;
+- projection corruption and rebuild;
+- embedding and schema migration;
+- deletion during curation, training, serving, and restore;
 - correction during response assembly;
-- rollback after later exposure;
-- host restart with backlog;
-- deterministic workflow replay after code restart;
-- duplicate activity delivery and idempotent result reuse;
-- 10M-event ledger scan and sampled verification.
+- stale or poisoned memory;
+- model replacement and rollback;
+- authority cutover and reverse cutover;
+- backup restore with deletion replay;
+- network isolation and degraded local continuity;
+- load spikes and resource exhaustion;
+- large-scale replay and sampled integrity verification.
 
-## 13. Observability
+## 10. Observability
 
-Expose:
+Expose by profile and authority namespace:
 
-- retrieval p50/p95/p99;
-- candidate counts by stage;
-- packet token use;
-- cache hit rate;
-- index age/generation;
-- queue depth and oldest age;
-- worker heartbeat;
-- curation lag;
-- promotion/rejection rates;
-- stale-memory use;
-- deletion propagation lag;
-- projection rebuild time;
-- storage value per byte.
+- latency, throughput, queue depth, and oldest age;
+- candidate counts and rejection reasons;
+- graph and vector query plans;
+- context use and marginal-value estimates;
+- cache/index health, age, and generation;
+- curation and correction lag;
+- deletion propagation state;
+- projection rebuild and repair time;
+- training and serving utilization;
+- model, dataset, and workflow lineage;
+- cost, energy, and storage value;
+- replication lag and conflict rate;
+- availability and degraded-mode quality.
+
+## 11. Activation evidence
+
+A production profile requires:
+
+- named hardware and topology;
+- representative and adversarial workloads;
+- correctness and authority validation;
+- reliability and recovery results;
+- privacy and product-isolation review;
+- deletion and rollback evidence;
+- public-claim language;
+- owner or mission authority appropriate to consequence.
+
+Research and shadow evaluation may begin before production evidence is complete when they remain isolated, traceable, and reversible.

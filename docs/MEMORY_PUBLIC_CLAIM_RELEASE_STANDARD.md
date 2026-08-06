@@ -1,100 +1,78 @@
 # Memory Public Claim Release Standard
 
-**Baseline commit:** `d5d311ec49f1e4a3e5a7cf688062c7dc2f46d4ec`<br>
-**Generated:** `2026-08-04T05:07:30Z`<br>
-**Status:** M0 controlling documentation draft
+**Version:** 1.0.0
+**Status:** Owner-ratified under Memory M1 on 2026-08-05
 
 ## 1. Purpose
 
-This standard prevents architecture direction, storage foundations, experiments,
-and production memory behavior from being described as the same thing.
+Public statements must communicate A.L.I.C.E.'s destination without representing research, prototypes, or plans as implemented production capability.
 
-## 2. Approved release labels
+## 2. Required status vocabulary
 
-### Implemented
+```text
+destination
+research_active
+prototype_operational
+shadow_evaluated
+canary_enabled
+production_profile_enabled
+degraded
+superseded
+retired
+compatibility_only
+```
 
-Use only when the exact runtime behavior exists, is enabled by the declared
-capability profile, passes correctness/privacy/performance/recovery evaluation,
-and is bound to a signed release artifact.
+Every material claim names the capability, profile, date or release, evidence reference, and limitations.
 
-### Foundation implemented
+## 3. Claim rules
 
-Use when durable lower-level contracts or stores exist, but the complete
-user-facing memory behavior is not available.
+- `destination` describes intended architecture or capability.
+- `research_active` means investigation, design, experiments, or benchmarks are underway.
+- `prototype_operational` means code runs in an isolated or synthetic environment.
+- `shadow_evaluated` means the capability observes or computes without production authority or influence.
+- `canary_enabled` means bounded production influence exists under an exact profile.
+- `production_profile_enabled` means the capability is active only in the named production profile.
+- `degraded` names reduced or unreliable operation.
+- `superseded` names a replaced design or implementation.
+- `retired` names an inactive capability or artifact with retention and deletion disposition.
+- `compatibility_only` describes preserved historical behavior that does not govern successors.
 
-### Contract implemented
+A proposal, schema, registry entry, benchmark harness, or documentation statement is not implementation evidence.
 
-Use when schemas and interfaces exist without production activation.
+## 4. Experimental authority
 
-### Experimental
+Owner-authorized shadow authorities, private test stores, alternate backends, graph systems, event streams, workflow engines, distributed clusters, model training, and challenger serving are valid research states.
 
-Use only for isolated prototypes or evaluations that cannot mutate authoritative
-or private production stores.
+Their status, custody, authority role, isolation, and deletion behavior must be explicit.
 
-### Under active development
+## 5. Destination language
 
-Use for scoped work with an approved implementation plan that has not completed
-release gates.
+Public material may describe powerful future capability when it clearly uses destination or research language. It must not imply a technology, scale, context, model, graph, workflow, training, or deployment limit merely because the current release is smaller.
 
-### Destination capability
+## 6. Invariants
 
-Use for long-term intended behavior that is not yet implemented.
+Every public claim preserves:
 
-### Blocked by Memory Architecture Hold
+- owner sovereignty;
+- privacy and product isolation;
+- provenance and epistemic distinctions;
+- truthful material state;
+- deletion and correction rights;
+- rollback and recovery;
+- clone-aware constitutional honesty.
 
-Use when the architecture explicitly prohibits implementation or activation.
+## 7. Release evidence
 
-## 3. Evidence required for “implemented”
+A production claim links to:
 
-1. exact commit and signed artifact;
-2. active capability-profile entry;
-3. implementation and migration status;
-4. correctness and temporal-update tests;
-5. privacy, authorization, and deletion tests;
-6. latency, scale, and storage evidence;
-7. crash recovery and rollback;
-8. owner-visible inspection behavior;
-9. public-claim coverage-matrix update;
-10. explicit known limitations.
+- exact commit and artifact digests;
+- profile and configuration;
+- tests and evaluation;
+- known limitations and degraded modes;
+- data and model lineage when relevant;
+- deletion and rollback evidence;
+- authority and approval record.
 
-## 4. Prohibited language
+## 8. Staleness
 
-Do not say that A.L.I.C.E. currently:
-
-- learns autonomously from every interaction;
-- maintains a complete owner, relationship, or source-person model;
-- connects all missions, decisions, and outcomes;
-- forgets safely across every derivative;
-- remains behaviorally identical across arbitrary model replacement;
-- performs long-term memory at proven million-record scale;
-- uses a production Claim Store;
-
-unless the exact capability has passed its release gate.
-
-## 5. Current M0 language
-
-Approved descriptions are:
-
-- Phase 2 provides an authoritative-memory foundation with provenance,
-  authorization, correction, temporal, retrieval, and deletion contracts.
-- Phase 5 provides an Experience Ledger and governed storage substrate.
-- Memory Architecture v4 ratifies the future Claim Store authority topology.
-- Claim Store runtime implementation and Phase 2 migration have not started.
-- P5.1e and autonomous memory work remain paused under the Hold.
-
-## 6. Update rule
-
-Every memory-related PR must state whether it changes:
-
-- evidence capture;
-- authoritative claims;
-- episodes;
-- missions;
-- cognitive projections;
-- context serving;
-- curation;
-- deletion/rollback;
-- indexes;
-- public capability language.
-
-Silence means no capability advancement.
+Status blocks must identify their release or date. A historical profile cannot be read as the global current state. Superseded text points to its successor.

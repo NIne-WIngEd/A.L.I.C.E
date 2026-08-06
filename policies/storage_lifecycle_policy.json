@@ -14,7 +14,10 @@
     "algorithm": "sha256",
     "deduplication_scope": "host_instance_and_encryption_domain",
     "cross_host_deduplication_allowed": false,
-    "logical_metadata_must_remain_distinct": true
+    "logical_metadata_must_remain_distinct": true,
+    "privacy_preserving_broader_scope": "owner_authorized_authority_namespace_and_key_domain",
+    "privacy_preserving_broader_scope_state": "evaluation_profile_only",
+    "leakage_analysis_required": true
   },
   "tiers": {
     "ledger": {
@@ -127,7 +130,9 @@
     "emergency_floor_fraction": 0.05,
     "preflight_peak_storage_estimate_required": true,
     "pause_low_priority_capture_and_training_at_emergency_floor": true,
-    "protected_artifact_silent_deletion_allowed": false
+    "protected_artifact_silent_deletion_allowed": false,
+    "numeric_values_are_profile_defaults": true,
+    "adaptive_override": "mission_value_risk_cost_and_recoverability"
   },
   "backup": {
     "target_copy_count": 3,
@@ -135,12 +140,36 @@
     "target_offline_or_offsite_encrypted_copy_count": 1,
     "host_controlled_keys_required": true,
     "restore_testing_required": true,
-    "mirroring_alone_is_backup": false
+    "mirroring_alone_is_backup": false,
+    "distributed_and_multi_region_profiles_allowed": true,
+    "restores_apply_deletion_lineage_before_use": true
   },
   "deletion": {
     "propagate_to_indexes_derivatives_replay_training_and_future_exports": true,
     "archive_restore_must_replay_deletion_lineage": true,
     "deliberate_relearning_of_deleted_payload_allowed": false,
-    "disclose_parameter_unlearning_limits": true
-  }
+    "disclose_parameter_unlearning_limits": true,
+    "cross_backend_influence_graph_required": true,
+    "noncompliant_derivative_action": "rebuild_retire_or_quarantine"
+  },
+  "capability_ceiling": false,
+  "backend_neutral": true,
+  "profile_defaults_are_adaptive": true,
+  "storage_classes": [
+    "embedded_local",
+    "encrypted_nas",
+    "edge_replica",
+    "s3_compatible_object_store",
+    "encrypted_cloud_archive",
+    "distributed_object_store",
+    "erasure_coded_store",
+    "event_store",
+    "relational_claim_store",
+    "graph_projection_store",
+    "vector_projection_store",
+    "model_registry",
+    "dataset_registry",
+    "offline_archive",
+    "multi_region_owner_authorized_replica"
+  ]
 }

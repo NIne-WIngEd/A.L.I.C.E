@@ -12,10 +12,18 @@ permissions:
 jobs:
   audit:
     runs-on: ubuntu-latest
+    env:
+      AUDIT_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
       - name: Refuse new unscoped capability ceilings
-        run: python scripts/audit_capability_barriers.py --repo . --fail-on-unresolved
+        run: |
+          if [ -z "$AUDIT_BASE" ] || echo "$AUDIT_BASE" | grep -Eq '^0+$'; then
+            AUDIT_BASE="$(git rev-parse HEAD^)"
+          fi
+          python scripts/audit_capability_barriers.py             --repo .             --changed-only-against "$AUDIT_BASE"             --fail-on-unresolved

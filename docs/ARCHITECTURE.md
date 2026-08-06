@@ -1,6 +1,6 @@
 # A.L.I.C.E. and Friday Permanent Cognitive Architecture
 
-**Version:** 1.3.0
+**Version:** 1.4.0
 **Authority:** A.L.I.C.E. Constitution and ratified product-family policy
 
 ## 1. System family
@@ -9,7 +9,7 @@ The project consists of three architectural identities:
 
 1. **Personal Cognitive Kernel** — host-neutral libraries, schemas, learning machinery, evaluators, and capability contracts.
 2. **A.L.I.C.E.** — Rayan's owner-specific flagship and unrestricted long-term research implementation.
-3. **Friday** — a separately distributed local-first product that creates a new host-specific intelligence for each installation.
+3. **Friday** — a separately distributed, owner-sovereign, local-capable product that creates a new host-specific intelligence for each installation.
 
 A.L.I.C.E. and Friday may share kernel code. They do not share personal state, authority, learned identity, or product policy.
 
@@ -29,7 +29,7 @@ Maintains goals, attention, priorities, task state, budgets, interruption, deleg
 
 ### Experience and learning plane
 
-Captures trajectories, outcomes, corrections, evaluations, and learning events. Hosts curation, reflection, consolidation, skill extraction, dataset formation, local training, replay selection, and evolution loops.
+Captures trajectories, outcomes, corrections, evaluations, and learning events. Hosts curation, reflection, consolidation, skill extraction, dataset formation, local or distributed training, replay selection, and evolution loops.
 
 ### Memory and knowledge plane
 
@@ -37,7 +37,7 @@ Contains episodic, semantic, temporal, causal, belief, user-model, self-model, w
 
 ### Storage lifecycle plane
 
-Maintains the permanent compact event ledger, content-addressed encrypted blob store, retention classes, hot/warm/cold/quarantine tiers, storage budgets, backup manifests, restore verification, deletion lineage, and replay-buffer manifests. Capture is aggressive at the temporary boundary; durable retention is utility-weighted and evidence-linked. Deduplication is limited to the same host and encryption domain unless a separate privacy proof authorizes a broader scope.
+Maintains the permanent compact event ledger, content-addressed encrypted blob store, retention classes, hot/warm/cold/quarantine tiers, storage budgets, backup manifests, restore verification, deletion lineage, and replay-buffer manifests. Capture is aggressive at the temporary boundary; durable retention is utility-weighted and evidence-linked. Deduplication is scoped to an owner-authorized authority namespace and key domain. Broader physical deduplication requires leakage analysis, explicit custody boundaries, and deletion-safe reference accounting.
 
 ### Reasoning and planning plane
 
@@ -65,11 +65,26 @@ Mission Graphs, immutable node identity, typed graph links, Result Capsules, tra
 
 ### Private companion custody plane
 
-Owner-authorized private source ingestion, opaque directive resolution, provenance, source/inference/reconstruction/evolved-identity separation, confidentiality labels, and local-only training/runtime manifests. Private payloads and keys never enter public packages or product-family fixtures.
+Owner-authorized private source ingestion, opaque directive resolution, provenance, source/inference/reconstruction/evolved-identity separation, confidentiality labels, and owner-controlled training/runtime manifests deployable across authorized local, edge, cluster, hybrid, or remote infrastructure. Private payloads and keys never enter public packages or product-family fixtures.
 
 ### Product governance plane
 
 Friday candidate classification, exact-artifact A.L.I.C.E. audit attestations, Rayan production approvals, release manifests, emergency rollback boundaries, parity disposition, and production-signing enforcement.
+
+
+## 3.1 Capability-First Polyglot Cognitive Fabric
+
+A.L.I.C.E. is **owner-sovereign, local-capable, deployment-unbounded**. Logical authority is independent of any physical engine. The cognitive fabric may combine:
+
+- embedded, relational, distributed-SQL, event, graph, vector, object, and archive stores;
+- durable workflow systems and event consumers;
+- local, edge, workstation, cluster, hybrid-cloud, and distributed deployments;
+- replaceable local, remote, specialist, multimodal, and learned models;
+- distributed inference, training, evaluation, simulation, and multi-agent execution.
+
+Each authority type has one declared canonical owner at a time. Other stores are registered projections, replicas, caches, indexes, or archives with lineage, health, deletion, and rollback contracts. SQLite remains a valid embedded and compatibility backend. It does not define the destination topology.
+
+Capability profiles express current activation state. They do not prohibit research, prototyping, shadow evaluation, successor design, or backend replacement. Delivery dependencies govern production activation rather than research order.
 
 ## 4. Core data flow
 
@@ -95,7 +110,7 @@ Shared kernel components may process multiple synthetic or separately authorized
 
 A router selects local or external models by competence, privacy, cost, latency, modality, context, hardware, and measured reliability. Multiple specialist models may collaborate behind one product identity.
 
-Friday defaults to local execution. External compute is an optional declared capability.
+Friday may default to local execution in a selected profile. External or distributed compute is an optional declared capability whose custody, egress, and deletion behavior is inspectable.
 
 ## 7. Self-evolution
 

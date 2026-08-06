@@ -1,9 +1,9 @@
 # A.L.I.C.E. Capability Catalog
 
-**Version:** 1.3.0
+**Version:** 1.4.0
 **Purpose:** Permanent inventory of desired capabilities independent of delivery order
 
-Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `CONDITIONALLY EXCLUDED`.
+Status labels: `DESTINATION`, `RESEARCH_ACTIVE`, `PROTOTYPE_OPERATIONAL`, `SHADOW_EVALUATED`, `CANARY_ENABLED`, `PRODUCTION_PROFILE_ENABLED`, `DEGRADED`, `SUPERSEDED`, `RETIRED`, plus exact historical compatibility labels.
 
 ## Identity, governance, and control
 
@@ -24,7 +24,7 @@ Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `C
 - Encrypted backup manifests and tested restoration — `PLANNED / PHASE 5–6`
 - Autonomous memory formation and intentional forgetting — `PLANNED`
 - Derived beliefs and confidence calibration — `PLANNED`
-- Temporal, causal, and counterfactual knowledge graphs — `PLANNED / RESEARCH FRONTIER`
+- Temporal, causal, social, mission, identity, and counterfactual cognitive graphs — `RESEARCH_ACTIVE / CORE COGNITIVE TRACK`
 - Deletion-correct machine unlearning — `RESEARCH FRONTIER`
 
 ## Personal intelligence
@@ -65,8 +65,8 @@ Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `C
 - Reusable procedural skill library — `PLANNED`
 - Model/tool routing learned from performance — `PLANNED`
 - Preference rankers and specialist learned models — `PLANNED`
-- Personal LoRA or adapter training — `PLANNED`
-- Stable lifelong neural adaptation — `RESEARCH FRONTIER`
+- Personal adapters, LoRA, preference models, routers, and other neural adaptation — `RESEARCH_ACTIVE / PROFILE-GOVERNED`
+- Stable lifelong neural adaptation and continual-learning challengers — `RESEARCH_ACTIVE / FRONTIER EVALUATION`
 - Automated champion/challenger evolution — `PLANNED`
 - Broad recursive self-improvement with formal guarantees — `RESEARCH FRONTIER`
 
@@ -93,7 +93,7 @@ Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `C
 ## Devices and embodiment
 
 - Persistent desktop and mobile operating environment — `PLANNED`
-- Offline and local-first operation — `PLANNED`
+- Owner-sovereign local, edge, distributed, hybrid, and cloud operation — `DESTINATION / PROFILE-GOVERNED`
 - Sensors, smart home, cameras, laboratory equipment, and edge devices — `PLANNED`
 - Robotics and physical-world execution — `PLANNED / RESEARCH FRONTIER`
 - General-purpose human-level robotics — `RESEARCH FRONTIER`
@@ -121,7 +121,7 @@ Status labels: `AVAILABLE`, `IN DEVELOPMENT`, `PLANNED`, `RESEARCH FRONTIER`, `C
 - Vault-only private source, codebook, owner model, keys, and persona payloads — `RATIFIED CUSTODY BOUNDARY`
 - Typed distinction among canonical facts, inferences, generated reconstructions, evolved identity, corrections, and unresolved conflicts — `PLANNED / P5.0–P5.8`
 - Truthful disclosure that generated reconstruction is not verbatim historical memory — `RATIFIED`
-- Explicit review before memory, training, adapter, or weight promotion — `PLANNED / P5.8–P13`
+- Profile-based promotion with automatic low-impact promotion, challenger training, shadow deployment, canary influence, and owner-ratified identity or authority-kernel changes — `DESTINATION`
 
 ## Conditioned exclusions
 
@@ -188,3 +188,20 @@ The consumer product has no permanent reduced-capability class.
 - Source-history, reconstruction, and A.L.I.C.E.-continuity separation — `PLANNED / PHASE 5`
 - Longitudinal identity-fidelity and drift evaluation — `PLANNED / PHASE 5–9`
 - Source-grounded private adapters and future weight updates — `PLANNED / PHASE 13`
+
+## Capability-first cognitive fabric
+
+- Backend-neutral evidence and claim authority — `RESEARCH_ACTIVE`
+- Append-only event streams and subscriptions — `RESEARCH_ACTIVE`
+- Bitemporal relational and distributed claim stores — `RESEARCH_ACTIVE`
+- Graph-native retrieval, planning, algorithms, embeddings, and reconciliation — `RESEARCH_ACTIVE`
+- Distributed vector and multimodal retrieval — `RESEARCH_ACTIVE`
+- Durable Curator, deletion, migration, training, and mission workflows — `RESEARCH_ACTIVE`
+- Adaptive context from compact packets through very large model/tool plans — `RESEARCH_ACTIVE`
+- Distributed inference, model routing, and accelerator scheduling — `RESEARCH_ACTIVE`
+- Challenger, shadow, canary, and production learning profiles — `RESEARCH_ACTIVE`
+- Owner-namespace federation and multi-device synchronization — `RESEARCH_ACTIVE`
+- Cross-backend deletion, restoration filtering, and rollback — `RESEARCH_ACTIVE`
+- Capability and store discovery with replacement paths — `RESEARCH_ACTIVE`
+
+A capability may be unavailable in one release profile while remaining a destination capability with active research and a named successor path. Historical status labels describe exact released behavior only.
