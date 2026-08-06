@@ -60,6 +60,7 @@ ACTIVE_DESTINATION_FILES = {
     "docs/MEMORY_PERFORMANCE_AND_RELIABILITY_STANDARD.md",
     "docs/MEMORY_RECORD_AND_PROVENANCE_STANDARD.md",
     "docs/MEMORY_RENOVATION_PLAN.md",
+    "docs/MEMORY_M2_EXECUTION_PLAN.md",
     "docs/PHASE2_TO_KERNEL_MEMORY_MIGRATION_PLAN.md",
     "docs/MEMORY_PUBLIC_CLAIM_RELEASE_STANDARD.md",
     "docs/MEMORY_M1_RATIFICATION_PLAN.md",
@@ -74,6 +75,7 @@ ACTIVE_DESTINATION_FILES = {
     "policies/capability_profiles.json",
     "policies/phase_scope_registry.json",
     "policies/lifelong_learning_policy.json",
+    "policies/memory_m2_execution_policy.json",
     "policies/permissions.yaml",
     "policies/storage_lifecycle_policy.json",
 }
@@ -278,6 +280,29 @@ RULES = (
         r"\bexplicit (?:human|owner) review\b.{0,80}\bbefore every\b|"
         r"\bevery .{0,40}\bpromotion\b.{0,50}\brequires\b.{0,30}\bmanual\b",
         "All promotion may be permanently forced through manual review.",
+    ),
+    _rule(
+        "METADATA_ONLY_MEMORY_CEILING",
+        r"\b(?:A\.L\.I\.C\.E\.?(?:['’]s)?\s+memory|"
+        r"(?:the\s+)?memory\s+(?:system|architecture|runtime|implementation)|"
+        r"M2|Wave\s*1|Phase\s*5)\b"
+        r"(?:(?!\b(?:not|never)\b).){0,100}"
+        r"\b(?:is|remains|must remain|shall remain|must be|shall be|"
+        r"is limited to|is restricted to)\b"
+        r"(?:(?!\b(?:not|never)\b).){0,50}"
+        r"\bmetadata[- ]only\b|"
+        r"\b(?:M2|Wave\s*1|Phase\s*5)\b"
+        r"(?:(?!\b(?:not|never)\b).){0,100}"
+        r"\b(?:only|exclusively)\b"
+        r".{0,40}\bmetadata(?:[- ]only)?\s+(?:contracts?|work|records?)\b|"
+        r"\bmetadata[- ]only\b"
+        r"(?:(?!\b(?:does|do|will|must|shall|can)\s+not\b|\bnever\b).){0,100}"
+        r"\b(?:blocks?|prevents?|prohibits?|forbids?|must precede)\b"
+        r".{0,100}\b(?:runtime|payload|persistence|research|prototype|learning|"
+        r"training|adjudication|projection)\b",
+        "A metadata-only contract artifact may be generalized into a "
+        "memory-system, research, prototype, or destination ceiling.",
+        "critical",
     ),
     _rule(
         "SEQUENTIAL_PHASE_RESEARCH_BAN",

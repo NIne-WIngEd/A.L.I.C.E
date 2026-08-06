@@ -1,6 +1,6 @@
 # Memory Renovation Plan — Parallel Capability Tracks
 
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Status:** Owner-ratified M1 capability-track plan; implementation activation remains separate
 **Architecture:** Memory v4.1 Capability-First Polyglot Cognitive Fabric
 
@@ -129,7 +129,7 @@ Test deletion propagation, restore filtering, cutover, rollback, model retiremen
 
 ### Wave 1 — contracts and registry
 
-Ratify M1. Implement metadata-only neutral contracts and capability discovery.
+Ratify M1 and implement the first neutral authority, lineage, and capability-discovery contracts. Public contract artifacts may carry metadata and content references rather than private payload bytes. That artifact-local representation does not define the memory-data, runtime, research, prototype, or destination boundary.
 
 ### Wave 2 — serving and shadow planes
 
@@ -147,7 +147,18 @@ Activate episodes, graph reasoning, owner/source/self models, skills, datasets, 
 
 Expand multi-device, cluster, remote, and distributed profiles through measured certification.
 
-Waves describe integration maturity. Track research may proceed in parallel.
+Waves describe integration maturity. Track research and reversible prototypes may proceed in parallel. No later wave is a blanket prerequisite for another track's research or prototype work.
+
+## 13.1 Contract-artifact boundary and parallel execution
+
+Wave 1 defines neutral authority, lineage, and capability-discovery interfaces. A public contract artifact may carry metadata and content references instead of private payload bytes. That representation is local to the artifact. It is not a restriction on memory content, persistence, runtime implementation, research, prototypes, candidate formation, adjudication, cognitive projections, learning, training, or the destination architecture.
+
+The implementation program therefore has two concurrent lanes:
+
+- **contract lane:** complete the neutral contracts needed for authority, interoperability, deletion, rollback, and later cutover;
+- **full-memory lane:** research and build reversible prototypes for Claim Authority persistence, event-to-candidate flow, adjudication, current-state serving, graph/vector projections, automated selective memory, cognitive models, learning, deletion propagation, and rollback.
+
+A later integration wave is not a prerequisite for beginning another track's research or reversible prototype. Dependencies govern production influence, canonical authority, private-data use, and irreversible cutover.
 
 ## 14. Exit evidence for each production profile
 

@@ -1,4 +1,7 @@
-"""Memory M2 metadata-only registration, envelope, and evidence contracts."""
+"""Memory M2 registration, envelope, and evidence contract artifacts.
+
+These public records carry metadata and content references instead of private payload bytes. That artifact boundary does not limit full-memory runtime, research, prototypes, learning, or destination capability.
+"""
 
 from __future__ import annotations
 
@@ -653,7 +656,7 @@ class MemoryUnitEnvelope:
 
 @dataclass(frozen=True)
 class EvidenceBinding:
-    """Metadata-only evidence relation to a claim, model, or other record."""
+    """Evidence-relation contract with payload-free public references."""
 
     scope: ProductHostScope
     binding_id: str

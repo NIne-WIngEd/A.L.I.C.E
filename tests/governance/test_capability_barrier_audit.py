@@ -342,3 +342,97 @@ def test_active_milestone_registrar_adds_exact_grounding_scope(tmp_path: Path) -
     entry = payload["entries"]["src/alice_information/grounding_policy.py"]
     assert entry["scope_kind"] == "active_milestone_guard"
     assert entry["changed_line_rule_codes"] == ["MUST_REMAIN_DISABLED"]
+
+def test_metadata_only_m2_ceiling_is_reported(tmp_path: Path) -> None:
+    _registry(tmp_path)
+    target = tmp_path / "docs" / "current_memory_plan.md"
+    target.parent.mkdir(parents=True)
+    target.write_text(
+        "M2 is metadata-only.\n",
+        encoding="utf-8",
+    )
+    findings = MODULE.audit(tmp_path)
+    assert any(
+        item.code == "METADATA_ONLY_MEMORY_CEILING"
+        and item.disposition == "unresolved_active_barrier"
+        for item in findings
+    )
+
+
+def test_metadata_contract_artifact_does_not_limit_full_memory(
+    tmp_path: Path,
+) -> None:
+    _registry(tmp_path)
+    target = tmp_path / "docs" / "current_memory_plan.md"
+    target.parent.mkdir(parents=True)
+    target.write_text(
+        "The public contract artifact is metadata-only by artifact design. "
+        "Full-memory research and reversible prototypes remain authorized.\n",
+        encoding="utf-8",
+    )
+    findings = MODULE.audit(tmp_path)
+    assert not any(
+        item.code == "METADATA_ONLY_MEMORY_CEILING"
+        for item in findings
+    )
+
+
+def test_metadata_only_ceiling_is_flagged_in_changed_surface(
+    tmp_path: Path,
+) -> None:
+    _init_git(tmp_path)
+    _registry(tmp_path)
+    target = tmp_path / "docs" / "current_memory_plan.md"
+    target.parent.mkdir(parents=True)
+    target.write_text("# baseline\n", encoding="utf-8")
+    _git(tmp_path, "add", "--all")
+    _git(tmp_path, "commit", "-m", "baseline")
+    target.write_text(
+        "# baseline\nWave 1 will only implement metadata contracts.\n",
+        encoding="utf-8",
+    )
+    findings = MODULE.audit(tmp_path, changed_only_against="HEAD")
+    assert any(
+        item.code == "METADATA_ONLY_MEMORY_CEILING"
+        and item.disposition == "unresolved_active_barrier"
+        for item in findings
+    )
+
+
+def test_negated_metadata_only_successor_statement_is_not_flagged(
+    tmp_path: Path,
+) -> None:
+    _registry(tmp_path)
+    target = tmp_path / "docs" / "current_memory_plan.md"
+    target.parent.mkdir(parents=True)
+    target.write_text(
+        "The P4.7a profile uses metadata-only source display. "
+        "It does not prohibit later live, learning-aware, "
+        "storage-backed, or action-capable research profiles.\n"
+        "M2 is not metadata-only.\n"
+        "M2 is not only metadata contracts.\n",
+        encoding="utf-8",
+    )
+    findings = MODULE.audit(tmp_path)
+    assert not any(
+        item.code == "METADATA_ONLY_MEMORY_CEILING"
+        for item in findings
+    )
+
+
+def test_alice_memory_metadata_only_ceiling_is_reported(
+    tmp_path: Path,
+) -> None:
+    _registry(tmp_path)
+    target = tmp_path / "docs" / "current_memory_plan.md"
+    target.parent.mkdir(parents=True)
+    target.write_text(
+        "A.L.I.C.E. memory must remain metadata-only.\n",
+        encoding="utf-8",
+    )
+    findings = MODULE.audit(tmp_path)
+    assert any(
+        item.code == "METADATA_ONLY_MEMORY_CEILING"
+        and item.disposition == "unresolved_active_barrier"
+        for item in findings
+    )

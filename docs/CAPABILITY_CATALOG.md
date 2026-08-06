@@ -1,6 +1,6 @@
 # A.L.I.C.E. Capability Catalog
 
-**Version:** 1.4.0
+**Version:** 1.5.0
 **Purpose:** Permanent inventory of desired capabilities independent of delivery order
 
 Status labels: `DESTINATION`, `RESEARCH_ACTIVE`, `PROTOTYPE_OPERATIONAL`, `SHADOW_EVALUATED`, `CANARY_ENABLED`, `PRODUCTION_PROFILE_ENABLED`, `DEGRADED`, `SUPERSEDED`, `RETIRED`, plus exact historical compatibility labels.
@@ -23,6 +23,10 @@ Status labels: `DESTINATION`, `RESEARCH_ACTIVE`, `PROTOTYPE_OPERATIONAL`, `SHADO
 - Hot/warm/cold/quarantine lifecycle and storage-pressure management — `PLANNED / PHASE 5`
 - Encrypted backup manifests and tested restoration — `PLANNED / PHASE 5–6`
 - Autonomous memory formation and intentional forgetting — `PLANNED`
+- Host-neutral memory authority, envelope, and evidence contracts — `AVAILABLE / M2.0 FOUNDATION`
+- Persistent Claim Authority and current-state prototypes — `RESEARCH_ACTIVE / PARALLEL M2`
+- Evidence-to-candidate, rejection, conflict, and shadow adjudication — `RESEARCH_ACTIVE / PARALLEL M2`
+- Graph, vector, multimodal, cognitive-model, and learning prototypes — `RESEARCH_ACTIVE / PARALLEL M2`
 - Derived beliefs and confidence calibration — `PLANNED`
 - Temporal, causal, social, mission, identity, and counterfactual cognitive graphs — `RESEARCH_ACTIVE / CORE COGNITIVE TRACK`
 - Deletion-correct machine unlearning — `RESEARCH FRONTIER`

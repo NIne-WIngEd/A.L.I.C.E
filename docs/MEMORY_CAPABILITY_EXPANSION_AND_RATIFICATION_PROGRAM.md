@@ -1,6 +1,6 @@
 # Memory Capability Expansion and Ratification Program
 
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Prepared:** 2026-08-05
 **Status:** Owner-ratified M1 governing program
 **Owner:** MK Rayan
@@ -38,6 +38,22 @@ production_activation_condition
 rollback_or_exit
 capability_ceiling: false
 ```
+
+## 3.1 Contract scope is not system scope
+
+A public contract artifact may be metadata-only to remain backend-neutral, payload-free, inspectable, and safe for public Git. That property applies only to the specific artifact.
+
+No metadata representation in a contract may be generalized into a limit on:
+
+- A.L.I.C.E. memory content or retention;
+- persistent or distributed memory runtimes;
+- event, claim, graph, vector, object, workflow, model, or dataset planes;
+- automated candidate formation, adjudication, projection, reflection, or learning;
+- source-person, owner, relationship, self, world, social, causal, or prediction models;
+- procedural or parametric learning research;
+- reversible prototypes, shadow systems, challenger backends, or future deployment forms.
+
+Contract development and full-memory research or prototypes are parallel capability lanes. Contract completion may gate production authority or irreversible cutover when a dependency is real. It may not become a blanket prerequisite for research, prototyping, benchmarking, or reversible shadow evaluation.
 
 ## 4. Activation profiles
 
@@ -132,7 +148,7 @@ Build edge, workstation, cluster, hybrid, remote, multi-device, and federation p
 
 Make every authority and derivative plane inspectable, testable, deletable to its stated extent, and recoverable.
 
-Tracks may research in parallel. Dependencies govern production influence.
+Tracks may research and build reversible prototypes in parallel. Dependencies govern production influence, canonical authority, private-data use, irreversible cutover, and release. They do not create blanket research or prototype sequencing.
 
 ## 7. M1 ratification record
 

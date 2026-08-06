@@ -16,6 +16,7 @@ ACTIVE_DOCS = (
     "docs/MEMORY_PERFORMANCE_AND_RELIABILITY_STANDARD.md",
     "docs/MEMORY_RECORD_AND_PROVENANCE_STANDARD.md",
     "docs/MEMORY_RENOVATION_PLAN.md",
+    "docs/MEMORY_M2_EXECUTION_PLAN.md",
     "docs/PHASE2_TO_KERNEL_MEMORY_MIGRATION_PLAN.md",
     "docs/MEMORY_PUBLIC_CLAIM_RELEASE_STANDARD.md",
     "docs/MEMORY_M1_RATIFICATION_PLAN.md",
@@ -27,6 +28,7 @@ ACTIVE_DOCS = (
     "docs/STORAGE_LIFECYCLE_AND_RETENTION_POLICY.md",
     "docs/ROADMAP.md",
     "docs/CONSTRAINT_REGISTRY.md",
+    "policies/memory_m2_execution_policy.json",
 )
 
 REQUIRED_INVARIANTS = (
@@ -309,3 +311,62 @@ def test_m1_decisions_are_owner_ratified_without_runtime_activation() -> None:
     assert "does not assert that Claim Authority runtime is implemented" in record
     assert "does not assert that Phase 2 migration has started" in record
     assert "constitutes a permanent capability ceiling" in record
+
+def test_m2_contract_artifact_scope_cannot_limit_full_memory() -> None:
+    plan = (REPO / "docs/MEMORY_M2_EXECUTION_PLAN.md").read_text(
+        encoding="utf-8"
+    )
+    renovation = (REPO / "docs/MEMORY_RENOVATION_PLAN.md").read_text(
+        encoding="utf-8"
+    )
+    program = (
+        REPO / "docs/MEMORY_CAPABILITY_EXPANSION_AND_RATIFICATION_PROGRAM.md"
+    ).read_text(encoding="utf-8")
+    readme = (REPO / "README.md").read_text(encoding="utf-8")
+    policy = json.loads(
+        (REPO / "policies/memory_m2_execution_policy.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    registry = json.loads(
+        (REPO / "policies/phase_scope_registry.json").read_text(
+            encoding="utf-8"
+        )
+    )
+
+    assert "artifact-local representation boundary" in plan
+    assert "Two concurrent execution lanes" in plan
+    assert "Contract delivery order does not impose research order" in plan
+    assert "Permanent anti-ceiling rule" in plan
+    assert "Contract scope is not system scope" in program
+    assert "contract lane" in renovation
+    assert "full-memory lane" in renovation
+    assert "Memory contract work is not the memory limit" in readme
+
+    assert policy["capability_ceiling"] is False
+    boundary = policy["contract_artifact_boundary"]
+    assert boundary["scope"] == "artifact_local"
+    assert boundary["generalizes_to_memory_system_scope"] is False
+    assert boundary["generalizes_to_runtime_scope"] is False
+    assert boundary["generalizes_to_research_scope"] is False
+    assert boundary["generalizes_to_prototype_scope"] is False
+    assert boundary["generalizes_to_destination_scope"] is False
+
+    parallel = policy["parallel_execution"]
+    assert parallel["research_allowed"] is True
+    assert parallel["prototype_allowed"] is True
+    assert parallel["shadow_allowed"] is True
+    assert parallel["contract_and_full_memory_lanes_may_overlap"] is True
+    assert parallel["later_integration_wave_is_research_prerequisite"] is False
+    assert (
+        parallel["contract_completion_is_blanket_prototype_prerequisite"]
+        is False
+    )
+
+    rules = registry["capability_expansion_rules"]
+    assert rules["metadata_only_contract_scope_is_artifact_local"] is True
+    assert rules["contract_delivery_order_cannot_block_parallel_research"] is True
+
+    scanner = _load_scanner()
+    rule_codes = {rule.code for rule in scanner.RULES}
+    assert "METADATA_ONLY_MEMORY_CEILING" in rule_codes
