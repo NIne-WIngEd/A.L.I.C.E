@@ -1,6 +1,6 @@
 # Memory M2 Execution Plan — Contract and Full-Memory Parallelism
 
-**Version:** 1.4.0
+**Version:** 1.5.0
 **Prepared:** 2026-08-06
 **Status:** Owner-directed active execution clarification
 **Architecture:** Memory v4.1 Capability-First Polyglot Cognitive Fabric
@@ -90,19 +90,18 @@ The following distinctions remain mandatory:
 - model output is not adjudicated truth;
 - a planned or researched capability is not a released feature.
 
-## 6. Current state after M2.4 bounded-serving activation
+## 6. Current state after M2.5 durable-curation workflow activation
 
 - M1 architecture and capability-first governance are owner-ratified.
-- M2.0 through M2.3 contracts and their paired reversible prototypes are implemented.
-- M2.4 Context Packet, Context Selection, Retrieval Trace Step, and Retrieval Trace contracts are implemented by this tranche.
-- A reversible persistent bounded-serving prototype stores full context-packet and retrieval-trace content outside the public repository.
-- Profile-selected item and byte budgets bound ordinary serving without becoming universal architecture maxima.
-- Lexical, vector, graph, temporal, and mission-aware sources may be fused and expanded with deterministic receipts.
-- Stale or unavailable indexes invoke an explicit profile-selected fallback path and remain visible in the Retrieval Trace.
-- Context Packets are bounded serving artifacts. They are not evidence, adjudicated Claim Authority truth, or permanent memory by themselves.
-- The embedded SQLite profile is one reversible reference challenger. It does not constrain distributed serving, graph-native retrieval, external vector systems, model rankers, remote compute, or hybrid successors.
-- Full-memory research remains authorized for automatic selective memory, cognitive models, curation, durable workflow, learning, training, deletion, rollback, migration, federation, and every other ratified track.
-- Production serving influence remains governed by named profiles, evaluation evidence, privacy and deletion validation, cutover receipts, and owner approval.
+- M2.0 through M2.4 contracts and paired reversible prototypes are implemented.
+- M2.5 Curation Task, Curation Receipt, Durable Workflow, and Workflow Activity Event contracts are implemented by this tranche.
+- A reversible persistent workflow prototype stores full workflow, curation-task, activity-event, checkpoint, signal, and receipt content outside the public repository.
+- Durable Curator, migration, repair, and learning workflow kinds are exercised with idempotent operations, ordered activity history, retries, checkpoints, signals, cancellation, restart recovery, and integrity verification.
+- Workflow history and Curation Receipts are operational state and execution evidence. They are not canonical Claim Authority truth by themselves.
+- Retry and lease behavior is selected by named profiles. It does not impose universal execution, duration, topology, or scale maxima.
+- The embedded SQLite profile is one reversible reference challenger. It does not constrain Temporal, event-store, distributed scheduler, multi-agent, cluster, remote, or hybrid successors.
+- Full-memory research remains authorized for automatic selective memory, cognitive models, deletion, rollback, migration, federation, training, model influence management, and every other ratified track.
+- Production workflow influence remains governed by named profiles, evaluation evidence, custody, privacy, deletion and rollback validation, cutover receipts, and owner approval.
 - Phase 2 migration is not asserted started.
 - P5.1e remains paused until its exact storage-admission interaction is explicitly unblocked. That pause does not prohibit other memory research or prototypes.
 
