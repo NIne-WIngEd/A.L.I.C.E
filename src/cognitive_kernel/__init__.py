@@ -392,11 +392,40 @@ from .durable_workflow_prototype import (
     open_durable_workflow_prototype,
     validate_durable_workflow_path,
 )
+from .deletion_contracts import (
+    DELETION_CONTRACT_SCHEMA_VERSION,
+    DELETION_MODES,
+    DELETION_PLANE_KINDS,
+    DELETION_PLANE_STATES,
+    DELETION_PROPAGATION_STATES,
+    RESTORE_FILTER_ACTIONS,
+    RETIREMENT_STATES,
+    ROLLBACK_STATES,
+    DeletionPlaneReceipt,
+    DeletionPropagationReceipt,
+    RestoreFilterDecision,
+)
+from .deletion_prototype import (
+    DELETION_PROPAGATION_PROTOTYPE_SCHEMA_VERSION,
+    DELETION_PROPAGATION_PROTOTYPE_STATE,
+    DeletionPropagationConflictError,
+    DeletionPropagationIntegrityError,
+    DeletionPropagationIntegrityReport,
+    DeletionPropagationIsolationError,
+    DeletionPropagationOperationReceipt,
+    DeletionPropagationProfile,
+    DeletionPropagationPrototypeError,
+    DeletionPropagationPrototypeStore,
+    DeletionPropagationTransactionError,
+    UnsafeDeletionPropagationPathError,
+    open_deletion_propagation_prototype,
+    validate_deletion_propagation_path,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.15.0"
+__version__ = "0.16.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -672,5 +701,30 @@ __all__ = [
     "UnsafeDurableWorkflowPathError",
     "open_durable_workflow_prototype",
     "validate_durable_workflow_path",
+    "DELETION_CONTRACT_SCHEMA_VERSION",
+    "DELETION_MODES",
+    "DELETION_PLANE_KINDS",
+    "DELETION_PLANE_STATES",
+    "DELETION_PROPAGATION_STATES",
+    "RESTORE_FILTER_ACTIONS",
+    "RETIREMENT_STATES",
+    "ROLLBACK_STATES",
+    "DeletionPlaneReceipt",
+    "DeletionPropagationReceipt",
+    "RestoreFilterDecision",
+    "DELETION_PROPAGATION_PROTOTYPE_SCHEMA_VERSION",
+    "DELETION_PROPAGATION_PROTOTYPE_STATE",
+    "DeletionPropagationConflictError",
+    "DeletionPropagationIntegrityError",
+    "DeletionPropagationIntegrityReport",
+    "DeletionPropagationIsolationError",
+    "DeletionPropagationOperationReceipt",
+    "DeletionPropagationProfile",
+    "DeletionPropagationPrototypeError",
+    "DeletionPropagationPrototypeStore",
+    "DeletionPropagationTransactionError",
+    "UnsafeDeletionPropagationPathError",
+    "open_deletion_propagation_prototype",
+    "validate_deletion_propagation_path",
     "stronger_authentication_required",
 ]
