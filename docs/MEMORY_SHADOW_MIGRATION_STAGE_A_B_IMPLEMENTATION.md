@@ -1,15 +1,15 @@
 # Memory Shadow Migration Stage A+B Implementation
 
-**Version:** 1.0.0
-**Status:** implementation started
-**Baseline:** PR #82 merge `8d27de4f7050ea8fbc420806bb837f9e5362e89b`
+**Version:** 1.1.0
+**Status:** prototype operational
+**Baseline:** PR #82 merge `8d27de4f7050ea8fbc420806bb837f9e5362e89b`; merged by PR #83 at `2ad8ffcafa25ffc8bc5129ae32dbb201236950ca`
 **Scope:** Phase 2 inventory/registration and deterministic read-only adapters
 
 ## 1. Material state
 
 M2.0 through M2.6 are closed at the implemented-contract and reversible-prototype level.
 
-This tranche begins the admitted Phase 2 shadow-migration work:
+PR #83 completed the first admitted Phase 2 shadow-migration prototype tranche:
 
 - Stage A — inventory and registration;
 - Stage B — deterministic read-only contract adapters.
@@ -91,3 +91,7 @@ Required before PR:
 - `git diff --check`;
 - clean secret/private-artifact scan;
 - exact candidate commit and evidence report.
+
+## 8. Successor state
+
+Stage A+B remains the source inventory, registration, adapter, and reconciliation oracle for Stage C+E. The Stage C+E profile may compare destination candidates and shadow observations, but it may not reinterpret Stage A+B discovery as authority or bypass its ambiguity, correction, deletion-lineage, custody, and reconciliation receipts.

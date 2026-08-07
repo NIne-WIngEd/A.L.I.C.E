@@ -2858,6 +2858,48 @@
       "production_activation_condition": "Production influence or canonical authority transfer requires a named profile with custody, mapping, reconciliation, privacy, deletion, rollback, recovery, benchmark, cutover, and owner authority evidence.",
       "rollback_or_exit": "Remove the external synthetic evaluation stores and report; retain released Phase 2 and merged M2 contracts unchanged.",
       "registered_by": "memory-m2-closeout-shadow-admission"
+    },
+    "src/cognitive_kernel/shadow_migration_stage_c_e.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "memory.frontier_research",
+      "milestone": "Stage C+E",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION"
+      ],
+      "reason": "Stage C+E is an exact nonproduction shadow-migration research profile. Its receipts explicitly record that production influence is disabled for this profile. Later canary and production profiles remain available under separately evaluated evidence, rollback, and owner-authority gates.",
+      "sunset_condition": "Retain this Stage C+E profile for reproducibility until a separately admitted successor profile supersedes its activation boundary. Later migration, canary, and production profiles may activate influence under their own gates.",
+      "successor_runtime": "docs/PHASE2_TO_KERNEL_MEMORY_MIGRATION_PLAN.md",
+      "registered_by": "phase2-shadow-migration-stage-c-e"
+    },
+    "tests/phase5/test_memory_shadow_migration_stage_c_e.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "memory.frontier_research",
+      "milestone": "stage_c_e",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION"
+      ],
+      "reason": "This test verifies the exact nonproduction Stage C+E receipt state. The disabled production-influence value is profile-scoped test evidence and does not prohibit a separately admitted successor capability.",
+      "sunset_condition": "Retain while the Stage C+E nonproduction profile is supported. Successor canary or production profiles receive separate tests and may activate production influence under their own gates.",
+      "successor_runtime": "docs/PHASE2_TO_KERNEL_MEMORY_MIGRATION_PLAN.md",
+      "registered_by": "phase2-shadow-migration-stage-c-e"
+    },
+    "src/cognitive_kernel/shadow_migration_stage_c_e_evaluation.py": {
+      "scope_kind": "active_milestone_guard",
+      "capability_ceiling": false,
+      "profile": "memory.frontier_research",
+      "milestone": "Stage C+E",
+      "applies_to_changed_lines": true,
+      "changed_line_rule_codes": [
+        "FALSE_CAPABILITY_ASSERTION"
+      ],
+      "reason": "The Stage C+E evaluation emits and checks the exact nonproduction state of this research profile. Output showing production influence disabled is evaluation evidence for this profile, not a destination prohibition.",
+      "sunset_condition": "Retain while Stage C+E evaluation remains supported. A later admitted canary or production profile receives separate evaluation semantics and may activate production influence under its own evidence and authority.",
+      "successor_runtime": "docs/PHASE2_TO_KERNEL_MEMORY_MIGRATION_PLAN.md",
+      "registered_by": "phase2-shadow-migration-stage-c-e"
     }
   },
   "patterns": [
