@@ -11,7 +11,8 @@ A.L.I.C.E. is being built to remember, reason, research, judge, learn, act, and 
 ![Status](https://img.shields.io/badge/status-active%20development-blue)
 ![Current Phase](https://img.shields.io/badge/current%20phase-Phase%205-purple)
 ![Architecture](https://img.shields.io/badge/architecture-model%20independent-green)
-![Execution](https://img.shields.io/badge/execution-local%20first-orange)
+![Authority](https://img.shields.io/badge/authority-owner%20sovereign-orange)
+![Deployment](https://img.shields.io/badge/deployment-unbounded-orange)
 
 [Why A.L.I.C.E. Exists](#why-alice-exists) •
 [What Makes It Different](#how-alice-differs-across-the-ai-landscape) •
@@ -693,7 +694,7 @@ The project contains three separate architectural identities.
 |---|---|---|
 | **Personal Cognitive Kernel** | Host-neutral contracts, schemas, learning machinery, evaluators, and shared capability foundations. | None |
 | **A.L.I.C.E.** | Owner-specific flagship, private identity system, and frontier research implementation. | Private to the owner |
-| **Friday** | Separate local-first consumer product that develops a new intelligence for each user. | Private to each Friday host |
+| **Friday** | Separate owner-sovereign, local-capable consumer product that develops a new intelligence for each user. | Private to each Friday host |
 
 A.L.I.C.E. and Friday may use the same kernel capabilities.
 
@@ -807,6 +808,10 @@ The P4.10 operational live-public-information closure is approved and merged.
 
 P4.5a citation-bound grounding is merged and remains part of the preserved Phase 4 compatibility path. Phase 4 is operationally complete through P4.10c. Phase 5.0 is active.
 
+### Memory M2 closeout and shadow migration
+
+PR #82 closed M2.0 through M2.6 at the implemented-contract and reversible-prototype level. Phase 2 shadow migration Stage A+B is now under implementation as a reversible, read-only tranche. Phase 2 remains the released compatibility baseline and test oracle. Later backfill, write mirroring, canary authority, canonical transfer, cutover, retirement, and P5.1e storage admission retain their own evidence and approval gates. Those gates are activation conditions rather than permanent research or architecture limits.
+
 | Phase | Domain | Status |
 |---|---|---|
 | **Phase 0** | Identity, Constitution, authority, governance, and rollback principles | Released foundation |
@@ -814,7 +819,7 @@ P4.5a citation-bound grounding is merged and remains part of the preserved Phase
 | **Phase 2** | Inspectable memory, correction, temporal conflict, sensitive storage, and deletion | Released foundation |
 | **Phase 3** | Conversation, local-model abstraction, orchestration, validation, and repair | Released foundation |
 | **Phase 4** | Public web research, freshness, citations, source conflict, and injection resistance | Operationally complete |
-| **Phase 5.0+** | Experience Ledger, storage lifecycle, Mission Graph contracts, kernel extraction, and private identity custody | Active development |
+| **Phase 5.0+** | Experience Ledger, storage lifecycle, Mission Graph contracts, kernel extraction, private identity custody, and Memory M2 | M2 closed; Phase 2 shadow migration Stage A+B under implementation |
 | **Phase 6+** | Interface, integrations, autonomous learning, agency, self-evolution, model adaptation, and embodiment | Roadmap |
 
 ### Memory contract work is not the memory limit
@@ -847,7 +852,9 @@ The repository currently contains working or released foundations for:
 - Experience Ledger contracts and storage;
 - raw-buffer and content-addressed payload foundations;
 - governed, source-preserving storage-tier transition foundations;
-- product-family separation and release governance.
+- product-family separation and release governance;
+- Memory M2.0–M2.6 contracts and reversible research prototypes;
+- Phase 2 source inventory, registration, and deterministic read-only adapter foundations for shadow migration Stage A+B.
 
 ### Still under development
 
@@ -958,9 +965,9 @@ A.L.I.C.E.’s personal data must never become:
 
 Deletion should propagate through active storage, indexes, memories, derived records, replay manifests, training candidates, and future restored backups where technically supported.
 
-Local-first does not mean security is assumed.
+Owner-sovereign, local-capable operation does not confine execution to one device or topology.
 
-It means control begins with the owner.
+Authority and custody begin with the owner while authorized edge, cluster, hybrid, and remote infrastructure remain available.
 
 ---
 
@@ -1014,7 +1021,10 @@ The documents below define how it is being built.
 - [Lifelong Learning Policy](docs/LIFELONG_LEARNING_POLICY.md)
 - [Storage Lifecycle and Retention](docs/STORAGE_LIFECYCLE_AND_RETENTION_POLICY.md)
 - [Evaluation Charter](docs/EVALUATION_CHARTER.md)
-  * [Memory M2 Execution Plan](docs/MEMORY_M2_EXECUTION_PLAN.md)
+- [Memory M2 Execution Plan](docs/MEMORY_M2_EXECUTION_PLAN.md)
+- [M2 Closeout and Shadow-Migration Admission](docs/MEMORY_M2_CLOSEOUT_AND_SHADOW_MIGRATION_ADMISSION.md)
+- [Phase 2 to Cognitive Fabric Migration Plan](docs/PHASE2_TO_KERNEL_MEMORY_MIGRATION_PLAN.md)
+- [Shadow Migration Stage A+B Implementation](docs/MEMORY_SHADOW_MIGRATION_STAGE_A_B_IMPLEMENTATION.md)
 
 ### Authority and judgment
 

@@ -1,7 +1,7 @@
 # Phase 2 to Cognitive Fabric Memory Migration Plan
 
-**Version:** 1.1.0
-**Status:** M2 closeout preparatory admission recorded; migration has not started
+**Version:** 1.2.0
+**Status:** Shadow migration Stage A+B implementation started; later activation stages remain independently gated
 **Source baseline:** Released Phase 2 Memory Core
 **Destination:** Backend-neutral Memory Architecture v4.1
 
@@ -157,4 +157,4 @@ The admission review authorizes preparatory read-only work for:
 
 This review does not activate historical private-data backfill, controlled write mirroring, canary authority, production influence, canonical authority transfer, cutover, Phase 2 retirement, or P5.1e storage admission. Those capabilities remain available through their exact successor evidence and approval gates.
 
-Phase 2 migration has not started. The next implementation tranche may begin Stage A and Stage B and must then update material state truthfully.
+Phase 2 shadow migration has started at Stage A inventory/registration and Stage B deterministic read-only adapter implementation. This tranche does not change canonical authority or activate historical private backfill, write mirroring, canary authority, production influence, cutover, Phase 2 retirement, or P5.1e storage admission. Those later capabilities remain available through their exact successor evidence and approval gates.

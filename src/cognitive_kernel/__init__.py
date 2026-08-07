@@ -431,11 +431,32 @@ from .m2_closeout import (
     M2ComponentEvaluation,
     ShadowMigrationAdmissionDecision,
 )
+from .shadow_migration_contracts import (
+    INVENTORY_INTEGRITY_STATES,
+    MAPPING_OUTCOMES,
+    RECONCILIATION_STATES,
+    SHADOW_MIGRATION_CONTRACT_SCHEMA_VERSION,
+    SHADOW_MIGRATION_STAGE,
+    SHADOW_MIGRATION_STATE,
+    Phase2MappingReceipt,
+    Phase2SourceInventory,
+    ShadowMigrationReconciliationReceipt,
+)
+from .phase2_shadow_adapter import (
+    PHASE2_EXPECTED_TABLES,
+    PHASE2_STAGE_AB_MAPPING_VERSION,
+    adapt_phase2_memory_record,
+    adapt_phase2_relation_record,
+    adapt_phase2_tombstone_record,
+    inspect_phase2_source,
+    open_phase2_metadata_reader,
+    reconcile_phase2_mappings,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.17.0"
+__version__ = "0.18.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -744,5 +765,22 @@ __all__ = [
     "M2CloseoutReport",
     "M2ComponentEvaluation",
     "ShadowMigrationAdmissionDecision",
+    "INVENTORY_INTEGRITY_STATES",
+    "MAPPING_OUTCOMES",
+    "RECONCILIATION_STATES",
+    "SHADOW_MIGRATION_CONTRACT_SCHEMA_VERSION",
+    "SHADOW_MIGRATION_STAGE",
+    "SHADOW_MIGRATION_STATE",
+    "Phase2MappingReceipt",
+    "Phase2SourceInventory",
+    "ShadowMigrationReconciliationReceipt",
+    "PHASE2_EXPECTED_TABLES",
+    "PHASE2_STAGE_AB_MAPPING_VERSION",
+    "adapt_phase2_memory_record",
+    "adapt_phase2_relation_record",
+    "adapt_phase2_tombstone_record",
+    "inspect_phase2_source",
+    "open_phase2_metadata_reader",
+    "reconcile_phase2_mappings",
     "stronger_authentication_required",
 ]

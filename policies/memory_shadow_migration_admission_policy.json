@@ -1,6 +1,6 @@
 {
   "policy_id": "memory-shadow-migration-admission",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "prepared": "2026-08-06",
   "status": "preparatory_read_only_admitted",
   "scope": "phase2_shadow_migration_preparation",
@@ -61,5 +61,7 @@
     ],
     "state_change_on_success": "phase2_shadow_migration_stage_a_b_started"
   },
-  "rollback_or_exit": "Remove generated adapter fixtures and external evaluation stores; retain the released Phase 2 baseline unchanged."
+  "rollback_or_exit": "Remove generated adapter fixtures and external evaluation stores; retain the released Phase 2 baseline unchanged.",
+  "successor_current_state_policy": "policies/memory_shadow_migration_stage_a_b_policy.json",
+  "successor_state": "phase2_shadow_migration_stage_a_b_implementation_started"
 }
