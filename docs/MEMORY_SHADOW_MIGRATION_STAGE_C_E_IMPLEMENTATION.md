@@ -1,8 +1,8 @@
 # Memory Shadow Migration Stage C+E Implementation
 
-**Version:** 1.0.0
-**Status:** reversible prototype operational
-**Baseline:** PR #83 merge `2ad8ffcafa25ffc8bc5129ae32dbb201236950ca`
+**Version:** 1.1.0
+**Status:** prototype operational; Stage D successor admitted
+**Baseline:** PR #83 merge `2ad8ffcafa25ffc8bc5129ae32dbb201236950ca`; merged by PR #84 at `e5edd541dc06f486904d94ffaca1d0bb95be36ea`
 **Scope:** destination-candidate profiling and synthetic or separately owner-authorized shadow-read evaluation
 
 ## 1. Material state
@@ -84,3 +84,7 @@ Required before PR:
 - staged file-by-file repository audit;
 - `git diff --check`;
 - signed candidate commit and external report hash.
+
+## 8. Successor state
+
+PR #84 established Stage C+E as the nonproduction candidate-comparison and shadow-read oracle. Stage D may use an explicitly selected registered destination candidate for deterministic historical backfill, but it may not reinterpret a candidate as canonical authority or bypass Stage C+E correctness, deletion, privacy, product-isolation, latency, staleness, explanation, or external-report evidence.

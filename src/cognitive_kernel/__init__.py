@@ -465,11 +465,26 @@ from .shadow_migration_stage_c_e import (
     build_m2_destination_candidate_profile,
 )
 from .shadow_migration_stage_c_e_evaluation import build_synthetic_stage_c_e_report
+from .shadow_migration_stage_d import (
+    BACKFILL_DESTINATION_OUTCOMES,
+    BACKFILL_DISPOSITIONS,
+    BACKFILL_WORKLOAD_CLASSES,
+    PROVENANCE_STATES,
+    SHADOW_MIGRATION_STAGE_D_SCHEMA_VERSION,
+    BackfillBatchReceipt,
+    BackfillDestinationResult,
+    HistoricalBackfillCheckpoint,
+    HistoricalBackfillManifest,
+    HistoricalBackfillRecord,
+    InMemoryIdempotentBackfillSink,
+    build_synthetic_stage_d_manifest,
+    run_historical_backfill_batch,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.19.0"
+__version__ = "0.20.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -806,5 +821,18 @@ __all__ = [
     "ShadowReadWorkload",
     "build_m2_destination_candidate_profile",
     "build_synthetic_stage_c_e_report",
+    "BACKFILL_DESTINATION_OUTCOMES",
+    "BACKFILL_DISPOSITIONS",
+    "BACKFILL_WORKLOAD_CLASSES",
+    "PROVENANCE_STATES",
+    "SHADOW_MIGRATION_STAGE_D_SCHEMA_VERSION",
+    "BackfillBatchReceipt",
+    "BackfillDestinationResult",
+    "HistoricalBackfillCheckpoint",
+    "HistoricalBackfillManifest",
+    "HistoricalBackfillRecord",
+    "InMemoryIdempotentBackfillSink",
+    "build_synthetic_stage_d_manifest",
+    "run_historical_backfill_batch",
     "stronger_authentication_required",
 ]

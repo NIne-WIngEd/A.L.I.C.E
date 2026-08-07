@@ -1,0 +1,85 @@
+{
+  "policy_id": "memory-shadow-migration-stage-d",
+  "version": "1.0.0",
+  "prepared": "2026-08-07",
+  "scope": "phase2_shadow_migration_stage_d",
+  "status": "prototype_operational",
+  "destination_status": "phase2_shadow_migration",
+  "research_status": "allowed",
+  "prototype_status": "stage_d_deterministic_backfill_prototype_operational",
+  "production_status": "not_activated_by_this_profile",
+  "capability_ceiling": false,
+  "baseline_pr": 84,
+  "baseline_merge_commit": "e5edd541dc06f486904d94ffaca1d0bb95be36ea",
+  "implemented_stage": "stage_d_deterministic_historical_backfill_contracts_and_synthetic_evaluation",
+  "workload_classes": [
+    "synthetic",
+    "owner_authorized"
+  ],
+  "authorization": {
+    "owner_authorized_manifest_requires_reference": true,
+    "synthetic_manifest_may_not_claim_owner_authorization": true,
+    "private_batch_execution_by_repository_script": "not_performed"
+  },
+  "backfill_invariants": [
+    "source_checkpoint",
+    "source_and_mapped_record_digests",
+    "mapping_version",
+    "deterministic_idempotency_key",
+    "accepted_rejected_quarantined_ambiguous_counts",
+    "evidence_lineage",
+    "deletion_lineage",
+    "destination_result_receipts",
+    "reconciliation_receipt",
+    "checkpoint_receipt",
+    "no_provenance_synthesis"
+  ],
+  "authority_state": {
+    "canonical_authority": "phase2_released_profile_remains_current",
+    "destination_role": "shadow_backfill_candidate",
+    "production_serving_effect": "none",
+    "canonical_transfer_effect": "none"
+  },
+  "privacy": {
+    "private_paths_committed": false,
+    "private_payloads_committed": false,
+    "synthetic_evaluation_data": "synthetic_only",
+    "real_private_batches_require_owner_authorized_manifest": true,
+    "evaluation_report_location": "outside_public_git"
+  },
+  "backend_semantics": {
+    "destination_candidate_is_explicit": true,
+    "writer_contract_is_backend_neutral": true,
+    "single_database_destination_required": false,
+    "distributed_or_polyglot_candidates_remain_available": true,
+    "preferred_batch_size_is_profile_input_not_architectural_maximum": true
+  },
+  "later_activation_states": [
+    "owner_authorized_historical_private_backfill_execution",
+    "controlled_write_mirroring",
+    "graph_vector_workflow_generation",
+    "canary_authority",
+    "canonical_authority_transfer",
+    "production_serving_influence",
+    "cutover",
+    "phase2_retirement",
+    "p5_1e_storage_admission",
+    "friday_state_transfer"
+  ],
+  "successor_profile": "memory.shadow_migration.stage_d_owner_authorized_execution_or_stage_f_g_research",
+  "review_at": "stage_d_pr_review_or_material_evidence_change",
+  "removal_criterion": "superseded_by_owner_authorized_backfill_execution_or_later_migration_profile",
+  "rollback_or_exit": "remove_stage_d_public_artifacts_and_retain_phase2_stage_a_b_stage_c_e_oracles",
+  "activation_evidence": "stage_d_contracts_synthetic_evaluation_tests_capability_audits_and_repository_audit",
+  "validation": [
+    "targeted_stage_d_tests",
+    "synthetic_stage_d_evaluation",
+    "stage_c_e_and_stage_a_b_regression",
+    "phase5_regression",
+    "governance_regression",
+    "full_repository_regression",
+    "repository_phase_boundary_audit",
+    "changed_and_full_capability_barrier_audits",
+    "git_diff_check"
+  ]
+}

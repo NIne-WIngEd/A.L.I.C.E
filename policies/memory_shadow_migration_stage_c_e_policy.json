@@ -45,11 +45,11 @@
   },
   "removal_criterion": "superseded_by_expanded_evaluation_or_owner_ratified_successor_stage",
   "research_status": "allowed",
-  "review_at": "stage_c_e_pr_review_or_material_evidence_change",
+  "review_at": "stage_d_pr_review_or_material_evidence_change",
   "rollback_or_exit": "remove_stage_c_e_artifacts_external_reports_and_retain_phase2_plus_stage_a_b_oracles",
   "scope": "phase2_shadow_migration_stage_c_e",
   "status": "prototype_operational",
-  "successor_profile": "memory.shadow_migration.expanded_candidate_evaluation_or_next_ratified_stage",
+  "successor_profile": "memory.shadow_migration.stage_d",
   "validation": [
     "targeted_stage_c_e_tests",
     "synthetic_stage_c_e_evaluation",
@@ -61,5 +61,7 @@
     "changed_and_full_capability_barrier_audits",
     "git_diff_check"
   ],
-  "version": "1.0.0"
+  "version": "1.1.0",
+  "merged_commit": "e5edd541dc06f486904d94ffaca1d0bb95be36ea",
+  "successor_current_state_policy": "policies/memory_shadow_migration_stage_d_policy.json"
 }
