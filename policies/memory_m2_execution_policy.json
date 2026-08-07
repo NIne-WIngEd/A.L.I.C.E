@@ -1,6 +1,6 @@
 {
   "policy_id": "memory-m2-execution",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "prepared": "2026-08-06",
   "status": "owner_directed_active",
   "scope": "memory_m2_and_parallel_full_memory_tracks",
@@ -68,7 +68,7 @@
     "full_memory_prototypes": "claim_authority_shadow_adjudication_projection_bounded_serving_durable_workflow_and_deletion_reversible_prototypes_operational",
     "claim_authority_production": "not_asserted_enabled",
     "automatic_memory_formation_production": "not_asserted_enabled",
-    "phase2_migration": "not_asserted_started",
+    "phase2_migration": "not_started_admission_review_only",
     "p5_1e": "paused_pending_exact_unblock",
     "m2_2_adjudication_contracts": "implemented",
     "evidence_to_candidate": "persistent_shadow_prototype_operational",
@@ -93,10 +93,12 @@
     "cross_plane_deletion_rehearsal": "persistent_reversible_prototype_operational",
     "restore_filtering": "research_prototype_operational",
     "rollback_and_model_retirement_rehearsal": "research_prototype_operational",
-    "m2_contract_sequence": "m2_0_through_m2_6_implemented",
+    "m2_contract_sequence": "closed_m2_0_through_m2_6_implemented",
     "deletion_canonical_claim_authority": false,
     "deletion_production_influence": false,
-    "destructive_live_deletion": false
+    "destructive_live_deletion": false,
+    "cross_prototype_integration": "synthetic_evaluation_passed",
+    "shadow_migration_admission": "preparatory_read_only_admitted"
   },
   "active_prototype": {
     "milestone": "M2.1",
@@ -236,5 +238,38 @@
     "public_repository_payloads": "excluded",
     "current_data_profile": "synthetic_test_and_owner_authorized_research",
     "rollback": "close_and_delete_external_deletion_database"
+  },
+  "m2_closeout_evaluation": {
+    "milestone": "M2-CLOSEOUT",
+    "profile": "memory.m2.closeout.synthetic_integration",
+    "state": "evaluated_nonproduction",
+    "contract_sequence": "m2_0_through_m2_6_complete",
+    "cross_prototype_lineage": true,
+    "component_integrity_required": true,
+    "synthetic_only_by_default": true,
+    "private_payload_read": false,
+    "canonical_authority_transfer": false,
+    "production_influence": false,
+    "phase2_migration_started": false,
+    "report_location": "external_owner_vault_report_root",
+    "backend_is_destination_ceiling": false
+  },
+  "shadow_migration_admission": {
+    "milestone": "M2-CLOSEOUT",
+    "outcome": "admitted_preparatory_read_only",
+    "admitted_stages": [
+      "stage_a_inventory_registration",
+      "stage_b_contract_adapters",
+      "stage_c_destination_candidates",
+      "stage_e_shadow_reads"
+    ],
+    "historical_private_backfill_activated": false,
+    "controlled_write_mirroring_activated": false,
+    "canary_authority_activated": false,
+    "canonical_authority_transfer": false,
+    "cutover_activated": false,
+    "phase2_migration_started": false,
+    "p5_1e_unblocked": false,
+    "capability_ceiling": false
   }
 }

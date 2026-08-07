@@ -1,7 +1,7 @@
 # Phase 2 to Cognitive Fabric Memory Migration Plan
 
-**Version:** 1.0.0
-**Status:** Owner-ratified M1 migration architecture; migration has not started
+**Version:** 1.1.0
+**Status:** M2 closeout preparatory admission recorded; migration has not started
 **Source baseline:** Released Phase 2 Memory Core
 **Destination:** Backend-neutral Memory Architecture v4.1
 
@@ -144,4 +144,17 @@ A production cutover requires:
 
 ## 9. Current state
 
-This ratified plan is architecture documentation. Migration has not started. No Claim Authority backend is declared implemented by this ratification.
+The M2 contract sequence is closed at the implemented-contract and reversible-prototype level.
+
+A deterministic synthetic cross-prototype evaluation has passed across Claim Authority, shadow adjudication, projection, bounded serving, durable workflow, and deletion propagation.
+
+The admission review authorizes preparatory read-only work for:
+
+- Stage A inventory and registration;
+- Stage B deterministic read-only contract adapters;
+- Stage C destination-candidate comparison;
+- Stage E synthetic and separately owner-authorized shadow-read harness development.
+
+This review does not activate historical private-data backfill, controlled write mirroring, canary authority, production influence, canonical authority transfer, cutover, Phase 2 retirement, or P5.1e storage admission. Those capabilities remain available through their exact successor evidence and approval gates.
+
+Phase 2 migration has not started. The next implementation tranche may begin Stage A and Stage B and must then update material state truthfully.
