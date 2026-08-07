@@ -810,7 +810,7 @@ P4.5a citation-bound grounding is merged and remains part of the preserved Phase
 
 ### Memory M2 closeout and shadow migration
 
-PR #82 closed M2.0 through M2.6 at the implemented-contract and reversible-prototype level. PR #83 made Phase 2 shadow migration Stage A+B prototype-operational. The current read-only Stage C+E tranche adds destination-candidate profiling and deterministic synthetic or separately owner-authorized shadow-read comparison. Phase 2 remains the released compatibility baseline, test oracle, fallback, and current authority for its released profile. Later private backfill, write mirroring, canary authority, canonical transfer, production influence, cutover, retirement, and P5.1e storage admission retain their own evidence and approval gates. Those gates are activation conditions rather than permanent research or architecture limits.
+PR #82 closed M2.0 through M2.6 at the implemented-contract and reversible-prototype level. PR #83 made Phase 2 shadow migration Stage A+B prototype-operational. PR #84 made the read-only Stage C+E destination-candidate and shadow-read evaluation profile prototype-operational. The current Stage D tranche adds deterministic historical-backfill manifests, record and batch receipts, idempotent replay, checkpointing, provenance and deletion lineage, and reconciliation. Its public evaluator uses synthetic data; real private historical batches require an explicit owner-authorized manifest. Phase 2 remains the released compatibility baseline, test oracle, fallback, and current authority for its released profile. Write mirroring, canary authority, canonical transfer, production influence, cutover, retirement, and P5.1e storage admission retain their own evidence and approval gates. Those gates are activation conditions rather than permanent research or architecture limits.
 
 | Phase | Domain | Status |
 |---|---|---|
@@ -819,7 +819,7 @@ PR #82 closed M2.0 through M2.6 at the implemented-contract and reversible-proto
 | **Phase 2** | Inspectable memory, correction, temporal conflict, sensitive storage, and deletion | Released foundation |
 | **Phase 3** | Conversation, local-model abstraction, orchestration, validation, and repair | Released foundation |
 | **Phase 4** | Public web research, freshness, citations, source conflict, and injection resistance | Operationally complete |
-| **Phase 5.0+** | Experience Ledger, storage lifecycle, Mission Graph contracts, kernel extraction, private identity custody, and Memory M2 | M2 closed; Stage A+B and read-only Stage C+E prototypes operational |
+| **Phase 5.0+** | Experience Ledger, storage lifecycle, Mission Graph contracts, kernel extraction, private identity custody, and Memory M2 | M2 closed; Stage A+B, Stage C+E, and deterministic Stage D backfill prototypes operational |
 | **Phase 6+** | Interface, integrations, autonomous learning, agency, self-evolution, model adaptation, and embodiment | Roadmap |
 
 ### Memory contract work is not the memory limit
@@ -855,7 +855,8 @@ The repository currently contains working or released foundations for:
 - product-family separation and release governance;
 - Memory M2.0–M2.6 contracts and reversible research prototypes;
 - Phase 2 source inventory, registration, and deterministic read-only adapter foundations for shadow migration Stage A+B;
-- read-only destination-candidate profiles and synthetic shadow-read comparison receipts for Stage C+E.
+- read-only destination-candidate profiles and synthetic shadow-read comparison receipts for Stage C+E;
+- deterministic Stage D historical-backfill manifests, idempotency keys, lineage, reconciliation, and checkpoint receipts.
 
 ### Still under development
 
@@ -1027,6 +1028,7 @@ The documents below define how it is being built.
 - [Phase 2 to Cognitive Fabric Migration Plan](docs/PHASE2_TO_KERNEL_MEMORY_MIGRATION_PLAN.md)
 - [Shadow Migration Stage A+B Implementation](docs/MEMORY_SHADOW_MIGRATION_STAGE_A_B_IMPLEMENTATION.md)
 - [Shadow Migration Stage C+E Implementation](docs/MEMORY_SHADOW_MIGRATION_STAGE_C_E_IMPLEMENTATION.md)
+- [Shadow Migration Stage D Implementation](docs/MEMORY_SHADOW_MIGRATION_STAGE_D_IMPLEMENTATION.md)
 
 ### Authority and judgment
 

@@ -1,6 +1,6 @@
 # A.L.I.C.E. Capability Catalog
 
-**Version:** 1.7.0
+**Version:** 1.8.0
 **Purpose:** Permanent inventory of desired capabilities independent of delivery order
 
 Status labels: `DESTINATION`, `RESEARCH_ACTIVE`, `PROTOTYPE_OPERATIONAL`, `SHADOW_EVALUATED`, `CANARY_ENABLED`, `PRODUCTION_PROFILE_ENABLED`, `DEGRADED`, `SUPERSEDED`, `RETIRED`, plus exact historical compatibility labels.
@@ -29,6 +29,7 @@ Status labels: `DESTINATION`, `RESEARCH_ACTIVE`, `PROTOTYPE_OPERATIONAL`, `SHADO
 - Graph, vector, multimodal, cognitive-model, and learning prototypes — `PROTOTYPE_OPERATIONAL / M2 PROJECTION FOUNDATION; RESEARCH_ACTIVE SUCCESSORS`
 - Phase 2 inventory, registration, and deterministic read-only adapters — `PROTOTYPE_OPERATIONAL / SHADOW MIGRATION STAGE A+B`
 - Destination-candidate profiles and synthetic or owner-authorized shadow-read comparison — `PROTOTYPE_OPERATIONAL / SHADOW MIGRATION STAGE C+E; NONPRODUCTION`
+- Deterministic historical-backfill manifests, batch execution, replay safety, lineage, reconciliation, and checkpoints — `PROTOTYPE_OPERATIONAL / SHADOW MIGRATION STAGE D; SYNTHETIC EVALUATED; OWNER-AUTHORIZED PRIVATE EXECUTION SEPARATELY GATED`
 - Phase 2 source inventory, registration, and deterministic read-only adapters — `PROTOTYPE_OPERATIONAL / SHADOW MIGRATION STAGE A+B`
 - Derived beliefs and confidence calibration — `PLANNED`
 - Temporal, causal, social, mission, identity, and counterfactual cognitive graphs — `RESEARCH_ACTIVE / CORE COGNITIVE TRACK`

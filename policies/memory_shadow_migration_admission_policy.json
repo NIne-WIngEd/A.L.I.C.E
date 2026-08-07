@@ -30,20 +30,23 @@
     "production_influence": false,
     "production_write_mirroring": false,
     "stage_a_b_prototype_operational": true,
-    "stage_c_e_prototype_operational": true
+    "stage_c_e_prototype_operational": true,
+    "stage_d_deterministic_backfill_prototype_operational": true,
+    "historical_private_backfill_execution": "synthetic_public_evaluation_only"
   },
   "next_activation_gate": {
+    "stage": "owner_authorized_stage_d_execution_or_stage_f_g_successor_research",
     "requirements": [
-      "candidate_profile_and_contract_coverage",
-      "synthetic_and_when_authorized_owner_workload_evidence",
-      "authority_conflict_correction_and_deletion_correctness",
-      "privacy_and_product_isolation",
-      "latency_staleness_and_explanation_metrics",
-      "rollback_and_external_report_custody",
+      "exact_source_registration_and_snapshot",
+      "registered_destination_candidate",
+      "owner_authorization_reference_for_private_batches",
+      "mapping_version_and_idempotency_evidence",
+      "provenance_and_deletion_lineage_preservation",
+      "batch_reconciliation_and_checkpoint_evidence",
+      "custody_privacy_rollback_and_external_report_controls",
       "repository_and_capability_audits"
     ],
-    "stage": "expanded_stage_c_e_evaluation_or_separately_ratified_successor_stage",
-    "state_change_on_success": "eligible_for_next_research_or_owner_ratification_gate"
+    "state_change_on_success": "eligible_for_owner_authorized_private_backfill_or_successor_research_gate"
   },
   "not_activated_by_this_decision": [
     "historical_private_backfill",
@@ -62,7 +65,7 @@
   "rollback_or_exit": "Remove generated adapter fixtures and external evaluation stores; retain the released Phase 2 baseline unchanged.",
   "scope": "phase2_shadow_migration_preparation",
   "status": "preparatory_read_only_admitted",
-  "successor_current_state_policy": "policies/memory_shadow_migration_stage_c_e_policy.json",
-  "successor_state": "phase2_shadow_migration_stage_c_e_prototype_operational",
-  "version": "1.2.0"
+  "successor_current_state_policy": "policies/memory_shadow_migration_stage_d_policy.json",
+  "successor_state": "phase2_shadow_migration_stage_d_deterministic_backfill_prototype_operational",
+  "version": "1.3.0"
 }

@@ -1,6 +1,6 @@
 # Memory M2 Execution Plan — Contract and Full-Memory Parallelism
 
-**Version:** 1.9.0
+**Version:** 1.10.0
 **Prepared:** 2026-08-06
 **Status:** Owner-directed active execution clarification
 **Architecture:** Memory v4.1 Capability-First Polyglot Cognitive Fabric
@@ -90,7 +90,7 @@ The following distinctions remain mandatory:
 - model output is not adjudicated truth;
 - a planned or researched capability is not a released feature.
 
-## 6. Current state after M2 closeout and Stage A+B plus Stage C+E prototype activation
+## 6. Current state after M2 closeout and Stage A+B, Stage C+E, and Stage D prototype activation
 
 - M1 architecture and capability-first governance are owner-ratified.
 - M2.0 through M2.6 contracts are implemented.
@@ -103,7 +103,8 @@ The following distinctions remain mandatory:
 - Phase 2 remains the released compatibility baseline and test oracle.
 - Stage A source inventory/registration and Stage B deterministic read-only adapters are prototype-operational. This successor tranche adds Stage C destination-candidate profiles and Stage E deterministic synthetic or separately owner-authorized shadow-read evaluation contracts.
 - The Stage A+B profile reads source schema, integrity metadata, and counts through read-only SQLite mode. Record adapters operate on caller-supplied synthetic or separately authorized records and emit mapping, ambiguity, information-loss, correction, deletion-lineage, and reconciliation receipts.
-- The Stage C+E profile compares baseline and candidate observations across authority correctness, conflicts, corrections, deletion, privacy, product isolation, latency, staleness, and explanation traces. A successful result remains a research-gate recommendation rather than production selection.
+- The Stage C+E profile compares baseline and candidate observations across authority correctness, conflicts, corrections, deletion, privacy, product isolation, latency, staleness, and explanation traces. PR #84 made that nonproduction profile prototype-operational and its deterministic synthetic evaluation recommended eligibility for the next research gate rather than production selection.
+- The Stage D profile now provides deterministic historical-backfill manifests, record and batch receipts, idempotent replay, provenance and deletion lineage, reconciliation, and checkpoint continuation. Its repository evaluation is synthetic; real private historical batches require an explicit owner-authorized manifest and external custody evidence.
 - P5.1e remains paused until its exact storage-admission interaction is explicitly unblocked. That pause does not restrict Stage C/E research or any ratified distributed, graph, vector, workflow, model, training, federation, or successor-backend track.
 
 ## 7. Permanent anti-ceiling rule
