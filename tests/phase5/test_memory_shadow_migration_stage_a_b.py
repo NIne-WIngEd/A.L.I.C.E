@@ -282,7 +282,7 @@ def test_stage_ab_policy_state_metadata_is_flat_and_governance_compatible() -> N
 
     assert "capability_state_semantics" not in payload
     assert payload["research_status"] == "allowed"
-    assert payload["prototype_status"] == "stage_a_b_implementation"
+    assert payload["prototype_status"] == "stage_a_b_prototype_operational"
     assert payload["production_status"] == "not_activated_by_this_profile"
     assert payload["successor_profile"] == "memory.shadow_migration.stage_c_e"
     assert payload["removal_criterion"] == "superseded_by_evaluated_successor_stage"

@@ -1,7 +1,7 @@
 # Phase 2 to Cognitive Fabric Memory Migration Plan
 
-**Version:** 1.2.0
-**Status:** Shadow migration Stage A+B implementation started; later activation stages remain independently gated
+**Version:** 1.3.0
+**Status:** Stage A+B prototype operational; read-only Stage C+E prototype operational; later activation stages independently gated
 **Source baseline:** Released Phase 2 Memory Core
 **Destination:** Backend-neutral Memory Architecture v4.1
 
@@ -148,13 +148,6 @@ The M2 contract sequence is closed at the implemented-contract and reversible-pr
 
 A deterministic synthetic cross-prototype evaluation has passed across Claim Authority, shadow adjudication, projection, bounded serving, durable workflow, and deletion propagation.
 
-The admission review authorizes preparatory read-only work for:
+The admission review authorized preparatory read-only work for Stage A, Stage B, Stage C, and Stage E. PR #83 made Stage A inventory/registration and Stage B deterministic read-only adapters prototype-operational. The current Stage C+E tranche adds a nonproduction destination-candidate profile plus deterministic synthetic and separately owner-authorized workload contracts, observations, comparison receipts, and evaluation reports.
 
-- Stage A inventory and registration;
-- Stage B deterministic read-only contract adapters;
-- Stage C destination-candidate comparison;
-- Stage E synthetic and separately owner-authorized shadow-read harness development.
-
-This review does not activate historical private-data backfill, controlled write mirroring, canary authority, production influence, canonical authority transfer, cutover, Phase 2 retirement, or P5.1e storage admission. Those capabilities remain available through their exact successor evidence and approval gates.
-
-Phase 2 shadow migration has started at Stage A inventory/registration and Stage B deterministic read-only adapter implementation. This tranche does not change canonical authority or activate historical private backfill, write mirroring, canary authority, production influence, cutover, Phase 2 retirement, or P5.1e storage admission. Those later capabilities remain available through their exact successor evidence and approval gates.
+No historical private backfill, write mirroring, canonical authority transfer, production influence, cutover, Phase 2 retirement, or P5.1e unblock is activated. Those successor stages remain available under their own evidence and authority gates.

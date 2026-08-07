@@ -1,0 +1,65 @@
+{
+  "activation_evidence": "stage_c_e_contracts_synthetic_evaluation_tests_and_audits",
+  "authority_state": {
+    "canonical_writer_changed": false,
+    "candidate_profile_grants_authority": false,
+    "phase2_released_profile_remains_current": true,
+    "production_serving_influence": false,
+    "shadow_observation_is_canonical": false
+  },
+  "baseline_commit": "2ad8ffcafa25ffc8bc5129ae32dbb201236950ca",
+  "capability_ceiling": false,
+  "destination_status": "phase2_shadow_migration",
+  "implemented_stages": [
+    "stage_c_destination_candidate_profile_and_comparison",
+    "stage_e_synthetic_shadow_read_evaluation"
+  ],
+  "later_activation_states": [
+    "owner_authorized_live_shadow_read_execution",
+    "historical_private_backfill",
+    "controlled_write_mirroring",
+    "canary_authority",
+    "canonical_authority_transfer",
+    "production_serving_influence",
+    "cutover",
+    "phase2_retirement",
+    "p5_1e_storage_admission",
+    "friday_state_transfer"
+  ],
+  "policy_id": "memory-shadow-migration-stage-c-e",
+  "prepared": "2026-08-07",
+  "privacy": {
+    "owner_authorization_required_for_non_synthetic_workload": true,
+    "private_paths_committed": false,
+    "private_payloads_committed": false,
+    "synthetic_report_location": "outside_public_git",
+    "test_data": "synthetic_only"
+  },
+  "production_status": "not_activated_by_this_profile",
+  "prototype_status": "stage_c_e_prototype_operational",
+  "read_boundaries": {
+    "candidate_observations_are_caller_supplied": true,
+    "owner_authorized_workload_requires_reference": true,
+    "private_store_opened_by_contract": false,
+    "synthetic_shadow_read_evaluation": true
+  },
+  "removal_criterion": "superseded_by_expanded_evaluation_or_owner_ratified_successor_stage",
+  "research_status": "allowed",
+  "review_at": "stage_c_e_pr_review_or_material_evidence_change",
+  "rollback_or_exit": "remove_stage_c_e_artifacts_external_reports_and_retain_phase2_plus_stage_a_b_oracles",
+  "scope": "phase2_shadow_migration_stage_c_e",
+  "status": "prototype_operational",
+  "successor_profile": "memory.shadow_migration.expanded_candidate_evaluation_or_next_ratified_stage",
+  "validation": [
+    "targeted_stage_c_e_tests",
+    "synthetic_stage_c_e_evaluation",
+    "stage_a_b_regression",
+    "phase5_regression",
+    "governance_regression",
+    "full_repository_regression",
+    "repository_phase_boundary_audit",
+    "changed_and_full_capability_barrier_audits",
+    "git_diff_check"
+  ],
+  "version": "1.0.0"
+}

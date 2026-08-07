@@ -25,6 +25,7 @@
     "p5_1e_storage_admission",
     "friday_state_transfer"
   ],
+  "merged_commit": "2ad8ffcafa25ffc8bc5129ae32dbb201236950ca",
   "policy_id": "memory-shadow-migration-stage-a-b",
   "prepared": "2026-08-07",
   "privacy": {
@@ -34,7 +35,7 @@
     "test_data": "synthetic_only"
   },
   "production_status": "not_activated_by_this_profile",
-  "prototype_status": "stage_a_b_implementation",
+  "prototype_status": "stage_a_b_prototype_operational",
   "read_boundaries": {
     "integrity_metadata_read": true,
     "private_payload_columns_enumerated": false,
@@ -46,10 +47,11 @@
   },
   "removal_criterion": "superseded_by_evaluated_successor_stage",
   "research_status": "allowed",
-  "review_at": "stage_a_b_pr_review_or_material_evidence_change",
+  "review_at": "stage_c_e_pr_review_or_material_evidence_change",
   "rollback_or_exit": "remove_stage_a_b_artifacts_and_retain_phase2_oracle",
   "scope": "phase2_shadow_migration_stage_a_b",
-  "status": "implementation_started",
+  "status": "prototype_operational",
+  "successor_current_state_policy": "policies/memory_shadow_migration_stage_c_e_policy.json",
   "successor_profile": "memory.shadow_migration.stage_c_e",
   "validation": [
     "targeted_stage_a_b_tests",
@@ -60,5 +62,5 @@
     "capability_barrier_audit",
     "git_diff_check"
   ],
-  "version": "1.0.0"
+  "version": "1.1.0"
 }
