@@ -480,11 +480,29 @@ from .shadow_migration_stage_d import (
     build_synthetic_stage_d_manifest,
     run_historical_backfill_batch,
 )
+from .shadow_migration_stage_f_g import (
+    CANONICAL_CHANGE_OPERATIONS,
+    MIRROR_DESTINATION_OUTCOMES,
+    MIRROR_WORKLOAD_CLASSES,
+    PROJECTION_PLANES,
+    SHADOW_MIGRATION_STAGE_F_G_SCHEMA_VERSION,
+    CanonicalChangeEnvelope,
+    ControlledMirrorBatchReceipt,
+    ControlledMirrorManifest,
+    InMemoryIdempotentMirrorSink,
+    MirrorDestinationResult,
+    ProjectionBuildManifest,
+    ProjectionBuildReceipt,
+    build_synthetic_stage_f_manifest,
+    build_synthetic_stage_g_manifest,
+    run_controlled_mirror_batch,
+)
+from .shadow_migration_stage_f_g_evaluation import build_synthetic_stage_f_g_report
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.20.0"
+__version__ = "0.21.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -834,5 +852,21 @@ __all__ = [
     "InMemoryIdempotentBackfillSink",
     "build_synthetic_stage_d_manifest",
     "run_historical_backfill_batch",
+    "CANONICAL_CHANGE_OPERATIONS",
+    "MIRROR_DESTINATION_OUTCOMES",
+    "MIRROR_WORKLOAD_CLASSES",
+    "PROJECTION_PLANES",
+    "SHADOW_MIGRATION_STAGE_F_G_SCHEMA_VERSION",
+    "CanonicalChangeEnvelope",
+    "ControlledMirrorBatchReceipt",
+    "ControlledMirrorManifest",
+    "InMemoryIdempotentMirrorSink",
+    "MirrorDestinationResult",
+    "ProjectionBuildManifest",
+    "ProjectionBuildReceipt",
+    "build_synthetic_stage_f_manifest",
+    "build_synthetic_stage_g_manifest",
+    "run_controlled_mirror_batch",
+    "build_synthetic_stage_f_g_report",
     "stronger_authentication_required",
 ]
