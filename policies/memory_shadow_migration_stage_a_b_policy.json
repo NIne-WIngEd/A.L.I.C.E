@@ -1,0 +1,64 @@
+{
+  "activation_evidence": "stage_a_b_tests_audits_and_owner_or_mission_authority",
+  "authority_state": {
+    "canonical_writer_changed": false,
+    "destination_authority_created": false,
+    "discovery_grants_authority": false,
+    "phase2_released_profile_remains_current": true,
+    "production_serving_influence": false
+  },
+  "baseline_commit": "8d27de4f7050ea8fbc420806bb837f9e5362e89b",
+  "capability_ceiling": false,
+  "destination_status": "phase2_shadow_migration",
+  "implemented_stages": [
+    "stage_a_inventory_registration",
+    "stage_b_deterministic_read_only_contract_adapters"
+  ],
+  "later_activation_states": [
+    "historical_private_backfill",
+    "controlled_write_mirroring",
+    "canary_authority",
+    "canonical_authority_transfer",
+    "production_serving_influence",
+    "cutover",
+    "phase2_retirement",
+    "p5_1e_storage_admission",
+    "friday_state_transfer"
+  ],
+  "policy_id": "memory-shadow-migration-stage-a-b",
+  "prepared": "2026-08-07",
+  "privacy": {
+    "owner_authorization_required_for_real_store_path": true,
+    "private_paths_committed": false,
+    "private_payloads_committed": false,
+    "test_data": "synthetic_only"
+  },
+  "production_status": "not_activated_by_this_profile",
+  "prototype_status": "stage_a_b_implementation",
+  "read_boundaries": {
+    "integrity_metadata_read": true,
+    "private_payload_columns_enumerated": false,
+    "record_counts_read": true,
+    "schema_metadata_read": true,
+    "sqlite_query_only": true,
+    "sqlite_uri_mode_read_only": true,
+    "synthetic_record_adapter_input": true
+  },
+  "removal_criterion": "superseded_by_evaluated_successor_stage",
+  "research_status": "allowed",
+  "review_at": "stage_a_b_pr_review_or_material_evidence_change",
+  "rollback_or_exit": "remove_stage_a_b_artifacts_and_retain_phase2_oracle",
+  "scope": "phase2_shadow_migration_stage_a_b",
+  "status": "implementation_started",
+  "successor_profile": "memory.shadow_migration.stage_c_e",
+  "validation": [
+    "targeted_stage_a_b_tests",
+    "m2_regression",
+    "phase2_store_regression",
+    "python_compile",
+    "repository_phase_boundary_audit",
+    "capability_barrier_audit",
+    "git_diff_check"
+  ],
+  "version": "1.0.0"
+}

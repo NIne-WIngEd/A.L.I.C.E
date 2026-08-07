@@ -1,6 +1,6 @@
 # Memory M2 Execution Plan — Contract and Full-Memory Parallelism
 
-**Version:** 1.7.0
+**Version:** 1.8.0
 **Prepared:** 2026-08-06
 **Status:** Owner-directed active execution clarification
 **Architecture:** Memory v4.1 Capability-First Polyglot Cognitive Fabric
@@ -90,7 +90,7 @@ The following distinctions remain mandatory:
 - model output is not adjudicated truth;
 - a planned or researched capability is not a released feature.
 
-## 6. Current state after M2 contract-sequence closeout and shadow-migration admission
+## 6. Current state after M2 closeout and Stage A+B implementation start
 
 - M1 architecture and capability-first governance are owner-ratified.
 - M2.0 through M2.6 contracts are implemented.
@@ -101,9 +101,9 @@ The following distinctions remain mandatory:
 - Historical private-data backfill, controlled write mirroring, canary authority, production influence, cutover, and Phase 2 retirement are not activated by this closeout.
 - The admission is a scoped next-work authorization rather than a permanent limit. Distributed, event, graph, vector, workflow, model, federation, training, and successor-backend research remains authorized.
 - Phase 2 remains the released compatibility baseline and test oracle.
-- Phase 2 shadow migration is not asserted started by the closeout review.
-- P5.1e remains paused until its exact storage-admission interaction is explicitly unblocked.
-- The next implementation tranche is Stage A source inventory and registration plus Stage B deterministic read-only adapters.
+- The closeout review itself did not start migration. This successor tranche now truthfully records Stage A source inventory/registration and Stage B deterministic read-only adapter implementation as started.
+- The Stage A+B profile reads source schema, integrity metadata, and counts through read-only SQLite mode. Record adapters operate on caller-supplied synthetic or separately authorized records and emit mapping, ambiguity, information-loss, correction, deletion-lineage, and reconciliation receipts.
+- P5.1e remains paused until its exact storage-admission interaction is explicitly unblocked. That pause does not restrict Stage C/E research or any ratified distributed, graph, vector, workflow, model, training, federation, or successor-backend track.
 
 ## 7. Permanent anti-ceiling rule
 
