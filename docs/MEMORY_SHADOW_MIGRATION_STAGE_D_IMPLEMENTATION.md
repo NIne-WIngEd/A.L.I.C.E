@@ -1,8 +1,8 @@
 # Memory Shadow Migration Stage D Implementation
 
-**Version:** 1.0.0
-**Status:** deterministic historical-backfill prototype operational
-**Baseline:** PR #84 merge `e5edd541dc06f486904d94ffaca1d0bb95be36ea`
+**Version:** 1.1.0
+**Status:** deterministic historical-backfill prototype operational; Stage F+G successor research admitted
+**Baseline:** PR #84 merge `e5edd541dc06f486904d94ffaca1d0bb95be36ea`; merged by PR #85 at `401d828a3d03ae42553c2719151fc9a4e0837917`
 **Scope:** backend-neutral historical backfill contracts, replay safety, lineage preservation, reconciliation, and synthetic evaluation
 
 ## 1. Material state
@@ -134,3 +134,7 @@ After Stage D prototype evidence is accepted, independent next gates may include
 - later Stage H canary authority under owner-ratified scope.
 
 No successful Stage D result itself grants production authority.
+
+## 11. Successor state
+
+PR #85 established Stage D deterministic backfill contracts and synthetic evaluation as an accepted migration oracle. Stage F+G may consume explicit canonical outbox changes and registered source generations in nonproduction research profiles, but they do not reinterpret Stage D results as production authority or bypass private-data authorization, deletion, reconciliation, rollback, or external-report evidence.

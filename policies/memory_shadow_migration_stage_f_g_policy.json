@@ -1,0 +1,85 @@
+{
+  "policy_id": "memory-shadow-migration-stage-f-g",
+  "version": "1.0.0",
+  "prepared": "2026-08-07",
+  "scope": "phase2_shadow_migration_stage_f_g",
+  "status": "prototype_operational",
+  "destination_status": "phase2_shadow_migration",
+  "research_status": "allowed",
+  "prototype_status": "stage_f_g_nonproduction_successor_prototypes_operational",
+  "production_status": "not_activated_by_this_profile",
+  "capability_ceiling": false,
+  "baseline_pr": 85,
+  "baseline_merge_commit": "401d828a3d03ae42553c2719151fc9a4e0837917",
+  "implemented_stages": [
+    "stage_f_controlled_write_mirroring_contracts_and_synthetic_evaluation",
+    "stage_g_graph_vector_workflow_generation_contracts_and_synthetic_evaluation"
+  ],
+  "authority_state": {
+    "canonical_writer": "phase2_released_writer_remains_current",
+    "authority_transition": "unchanged",
+    "destination_role": "shadow_projection_candidate",
+    "production_serving": "not_activated_by_this_profile"
+  },
+  "stage_f_invariants": [
+    "single_explicit_canonical_writer",
+    "ordered_outbox_sequence",
+    "deterministic_idempotency_key",
+    "destination_result_receipts",
+    "deletion_lineage_preservation",
+    "reconciliation_receipt",
+    "authority_transition_explicit"
+  ],
+  "stage_g_invariants": [
+    "source_generation_and_snapshot_digest",
+    "graph_generation_digest",
+    "vector_generation_digest",
+    "workflow_generation_digest",
+    "deletion_watermark",
+    "deletion_exclusion_accounting",
+    "repair_action_accounting"
+  ],
+  "privacy": {
+    "private_paths_committed": false,
+    "private_payloads_committed": false,
+    "synthetic_evaluation_data": "synthetic_only",
+    "real_private_workloads_require_separate_owner_authorization": true,
+    "evaluation_report_location": "outside_public_git"
+  },
+  "backend_semantics": {
+    "destination_candidate_is_explicit": true,
+    "single_database_destination_required": false,
+    "graph_engine_is_not_fixed": true,
+    "vector_engine_is_not_fixed": true,
+    "workflow_runtime_is_not_fixed": true,
+    "distributed_or_polyglot_candidates_remain_available": true
+  },
+  "later_activation_states": [
+    "owner_authorized_historical_private_backfill_execution",
+    "expanded_controlled_write_mirroring",
+    "concrete_graph_vector_workflow_backend_generations",
+    "canary_authority",
+    "canonical_authority_transfer",
+    "production_serving_influence",
+    "cutover",
+    "phase2_retirement",
+    "p5_1e_storage_admission",
+    "friday_state_transfer"
+  ],
+  "successor_profile": "memory.shadow_migration.expanded_f_g_or_stage_h_canary_or_owner_authorized_stage_d",
+  "review_at": "stage_f_g_pr_review_or_material_evidence_change",
+  "removal_criterion": "superseded_by_expanded_backend_integration_canary_or_later_migration_profile",
+  "rollback_or_exit": "remove_stage_f_g_public_artifacts_and_retain_phase2_stage_a_b_stage_c_e_stage_d_oracles",
+  "activation_evidence": "stage_f_g_contracts_synthetic_evaluation_tests_capability_audits_and_repository_audit",
+  "validation": [
+    "targeted_stage_f_g_tests",
+    "synthetic_stage_f_g_evaluation",
+    "stage_d_c_e_a_b_regression",
+    "phase5_regression",
+    "governance_regression",
+    "full_repository_regression",
+    "repository_phase_boundary_audit",
+    "changed_and_full_capability_barrier_audits",
+    "git_diff_check"
+  ]
+}

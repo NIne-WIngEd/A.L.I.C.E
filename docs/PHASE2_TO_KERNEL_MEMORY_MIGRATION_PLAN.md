@@ -1,7 +1,7 @@
 # Phase 2 to Cognitive Fabric Memory Migration Plan
 
-**Version:** 1.4.0
-**Status:** Stage A+B and Stage C+E prototypes operational; deterministic Stage D historical-backfill prototype operational; private execution and later activation stages independently gated
+**Version:** 1.5.0
+**Status:** Stage A+B, Stage C+E, and deterministic Stage D prototypes operational; nonproduction Stage F controlled-mirroring and Stage G projection-generation prototypes operational; private execution and production authority stages independently gated
 **Source baseline:** Released Phase 2 Memory Core
 **Destination:** Backend-neutral Memory Architecture v4.1
 
@@ -150,6 +150,8 @@ A deterministic synthetic cross-prototype evaluation has passed across Claim Aut
 
 The admission review authorized preparatory read-only work for Stage A, Stage B, Stage C, and Stage E. PR #83 made Stage A inventory/registration and Stage B deterministic read-only adapters prototype-operational. PR #84 made Stage C destination-candidate profiling and Stage E deterministic synthetic or separately owner-authorized shadow-read evaluation prototype-operational.
 
-The Stage D tranche adds deterministic historical-backfill manifests, source checkpoints, record digests, mapping versions, idempotency keys, accepted/rejected/quarantined/ambiguous accounting, evidence and deletion lineage, reconciliation receipts, and checkpoint continuation. The repository evaluator uses synthetic records only. Real private historical batch execution requires an explicit owner-authorized manifest and remains separately auditable.
+The Stage D tranche adds deterministic historical-backfill manifests, source checkpoints, record digests, mapping versions, idempotency keys, accepted/rejected/quarantined/ambiguous accounting, evidence and deletion lineage, reconciliation receipts, and checkpoint continuation. Its repository evaluator uses synthetic records only. Real private historical batch execution requires an explicit owner-authorized manifest and remains separately auditable.
 
-Stage D does not change canonical authority or production serving. Controlled write mirroring, canary authority, canonical authority transfer, production influence, cutover, Phase 2 retirement, and P5.1e unblock remain available under their own evidence and authority gates.
+The Stage F+G successor tranche adds a nonproduction controlled-mirroring profile over an explicit canonical writer/outbox stream and generation-bound graph, vector, and workflow build receipts with deletion watermarks. Its repository evaluator is synthetic. Phase 2 remains the canonical writer and current released authority.
+
+Owner-authorized private backfill, expanded mirroring, canary authority, canonical authority transfer, production influence, cutover, Phase 2 retirement, and P5.1e unblock remain available under their own evidence and authority gates.

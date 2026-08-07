@@ -24,6 +24,7 @@
   "capability_ceiling": false,
   "current_truth": {
     "canonical_authority_transfer": false,
+    "historical_private_backfill_execution": "not_performed_by_public_stage_f_g_evaluation",
     "p5_1e_unblocked": false,
     "phase2_migration_started": true,
     "private_historical_backfill": false,
@@ -32,21 +33,20 @@
     "stage_a_b_prototype_operational": true,
     "stage_c_e_prototype_operational": true,
     "stage_d_deterministic_backfill_prototype_operational": true,
-    "historical_private_backfill_execution": "synthetic_public_evaluation_only"
+    "stage_f_g_nonproduction_successor_prototypes_operational": true
   },
   "next_activation_gate": {
-    "stage": "owner_authorized_stage_d_execution_or_stage_f_g_successor_research",
     "requirements": [
-      "exact_source_registration_and_snapshot",
-      "registered_destination_candidate",
-      "owner_authorization_reference_for_private_batches",
-      "mapping_version_and_idempotency_evidence",
-      "provenance_and_deletion_lineage_preservation",
-      "batch_reconciliation_and_checkpoint_evidence",
+      "registered_source_destination_and_authority_generations",
+      "owner_authorization_reference_for_private_workloads",
+      "outbox_idempotency_and_reconciliation_evidence",
+      "projection_generation_and_deletion_watermark_evidence",
       "custody_privacy_rollback_and_external_report_controls",
+      "canary_scope_and_failure_recovery_evidence_before_authority_transition",
       "repository_and_capability_audits"
     ],
-    "state_change_on_success": "eligible_for_owner_authorized_private_backfill_or_successor_research_gate"
+    "stage": "expanded_stage_f_g_or_owner_authorized_stage_d_or_stage_h_canary_review",
+    "state_change_on_success": "eligible_for_expanded_backend_integration_private_execution_or_bounded_canary_review"
   },
   "not_activated_by_this_decision": [
     "historical_private_backfill",
@@ -65,7 +65,7 @@
   "rollback_or_exit": "Remove generated adapter fixtures and external evaluation stores; retain the released Phase 2 baseline unchanged.",
   "scope": "phase2_shadow_migration_preparation",
   "status": "preparatory_read_only_admitted",
-  "successor_current_state_policy": "policies/memory_shadow_migration_stage_d_policy.json",
-  "successor_state": "phase2_shadow_migration_stage_d_deterministic_backfill_prototype_operational",
-  "version": "1.3.0"
+  "successor_current_state_policy": "policies/memory_shadow_migration_stage_f_g_policy.json",
+  "successor_state": "phase2_shadow_migration_stage_f_g_nonproduction_successor_prototypes_operational",
+  "version": "1.4.0"
 }
