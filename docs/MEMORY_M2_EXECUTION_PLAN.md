@@ -1,6 +1,6 @@
 # Memory M2 Execution Plan — Contract and Full-Memory Parallelism
 
-**Version:** 1.6.0
+**Version:** 1.7.0
 **Prepared:** 2026-08-06
 **Status:** Owner-directed active execution clarification
 **Architecture:** Memory v4.1 Capability-First Polyglot Cognitive Fabric
@@ -90,21 +90,20 @@ The following distinctions remain mandatory:
 - model output is not adjudicated truth;
 - a planned or researched capability is not a released feature.
 
-## 6. Current state after M2.6 deletion-propagation activation
+## 6. Current state after M2 contract-sequence closeout and shadow-migration admission
 
 - M1 architecture and capability-first governance are owner-ratified.
-- M2.0 through M2.5 contracts and paired reversible prototypes are implemented.
-- M2.6 Deletion Propagation Receipt, plane receipt, and restore-filter contracts are implemented by this tranche.
-- A reversible persistent deletion-propagation prototype stores full request, plane result, restore-filter, rollback rehearsal, retirement rehearsal, and final receipt content outside the public repository.
-- Cross-plane deletion rehearsal covers Claim Authority, evidence and payload stores, projections, indexes, serving state, workflows, caches, replicas, backups, datasets, and model artifacts through profile-selected planes.
-- Restore filtering prevents deleted or deletion-sensitive records from silently reappearing during recovery rehearsal.
-- Rollback and model-retirement rehearsals preserve explicit evidence, residual-influence measurements, and replacement requirements.
-- Deletion receipts are operational evidence. They do not independently rewrite canonical Claim Authority truth.
-- The embedded SQLite profile is one reversible reference challenger. It does not constrain event stores, graph engines, distributed deletion coordinators, workflow engines, model-management systems, federated deployments, or hybrid successors.
-- Full-memory research remains authorized for automatic selective memory, cognitive models, migration, federation, training, model influence management, and every other ratified track.
-- Production deletion remains governed by named profiles, exact authority, custody, privacy, backup, restore, rollback, model-influence, cutover, and owner-approval evidence.
-- Phase 2 migration is not asserted started.
-- P5.1e remains paused until its exact storage-admission interaction is explicitly unblocked. That pause does not prohibit other memory research or prototypes.
+- M2.0 through M2.6 contracts are implemented.
+- The paired Claim Authority, shadow adjudication, projection, bounded serving, durable workflow, and deletion-propagation profiles remain reversible nonproduction prototypes.
+- A deterministic synthetic lineage has been evaluated across claim persistence, candidate adjudication, episode and projection formation, graph and vector retrieval, Context Packet assembly, durable workflow completion, and deletion plus restore-filter rehearsal.
+- The closeout report records zero canonical authority transfer, zero production influence, zero private payload read, and no Phase 2 migration start.
+- Preparatory read-only work is admitted for Stage A inventory and registration, Stage B contract adapters, Stage C destination-candidate comparison, and Stage E synthetic or separately owner-authorized shadow-read evaluation.
+- Historical private-data backfill, controlled write mirroring, canary authority, production influence, cutover, and Phase 2 retirement are not activated by this closeout.
+- The admission is a scoped next-work authorization rather than a permanent limit. Distributed, event, graph, vector, workflow, model, federation, training, and successor-backend research remains authorized.
+- Phase 2 remains the released compatibility baseline and test oracle.
+- Phase 2 shadow migration is not asserted started by the closeout review.
+- P5.1e remains paused until its exact storage-admission interaction is explicitly unblocked.
+- The next implementation tranche is Stage A source inventory and registration plus Stage B deterministic read-only adapters.
 
 ## 7. Permanent anti-ceiling rule
 

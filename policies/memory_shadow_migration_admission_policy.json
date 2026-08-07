@@ -1,0 +1,65 @@
+{
+  "policy_id": "memory-shadow-migration-admission",
+  "version": "1.0.0",
+  "prepared": "2026-08-06",
+  "status": "preparatory_read_only_admitted",
+  "scope": "phase2_shadow_migration_preparation",
+  "capability_ceiling": false,
+  "admission_basis": {
+    "m2_contract_sequence": "m2_0_through_m2_6_implemented",
+    "cross_prototype_evaluation": "synthetic_passed",
+    "repository_governance": "required_green",
+    "capability_barriers": "zero_unresolved_required",
+    "private_payload_read_by_closeout": false
+  },
+  "admitted_stages": [
+    "stage_a_inventory_registration",
+    "stage_b_contract_adapters",
+    "stage_c_destination_candidates",
+    "stage_e_shadow_reads"
+  ],
+  "admitted_activities": [
+    "schema_and_store_inventory",
+    "authority_and_generation_registration",
+    "read_only_adapter_development",
+    "mapping_loss_and_ambiguity_receipts",
+    "destination_candidate_comparison",
+    "synthetic_shadow_read_evaluation",
+    "owner_authorized_shadow_read_evaluation"
+  ],
+  "not_activated_by_this_decision": [
+    "historical_private_backfill",
+    "controlled_write_mirroring",
+    "canary_authority",
+    "production_serving_influence",
+    "destructive_live_deletion",
+    "canonical_authority_transfer",
+    "cutover",
+    "phase2_retirement",
+    "p5_1e_unblock",
+    "friday_state_transfer"
+  ],
+  "current_truth": {
+    "phase2_migration_started": false,
+    "p5_1e_unblocked": false,
+    "production_write_mirroring": false,
+    "canonical_authority_transfer": false,
+    "private_historical_backfill": false,
+    "production_influence": false
+  },
+  "next_activation_gate": {
+    "stage": "stage_a_and_b_implementation",
+    "requirements": [
+      "exact_source_inventory",
+      "registered_authority_and_custody",
+      "deterministic_mapping_version",
+      "ambiguity_and_information_loss_reporting",
+      "deletion_and_correction_lineage",
+      "phase2_test_oracle",
+      "rollback_and_exit",
+      "repository_and_capability_audits"
+    ],
+    "state_change_on_success": "phase2_shadow_migration_stage_a_b_started"
+  },
+  "rollback_or_exit": "Remove generated adapter fixtures and external evaluation stores; retain the released Phase 2 baseline unchanged."
+}

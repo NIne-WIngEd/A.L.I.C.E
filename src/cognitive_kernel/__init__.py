@@ -421,11 +421,21 @@ from .deletion_prototype import (
     open_deletion_propagation_prototype,
     validate_deletion_propagation_path,
 )
+from .m2_closeout import (
+    M2_CLOSEOUT_COMPONENTS,
+    M2_CLOSEOUT_SCHEMA_VERSION,
+    M2_COMPONENT_EVALUATION_STATES,
+    SHADOW_MIGRATION_ADMISSION_OUTCOMES,
+    SHADOW_MIGRATION_STAGES,
+    M2CloseoutReport,
+    M2ComponentEvaluation,
+    ShadowMigrationAdmissionDecision,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.16.0"
+__version__ = "0.17.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -726,5 +736,13 @@ __all__ = [
     "UnsafeDeletionPropagationPathError",
     "open_deletion_propagation_prototype",
     "validate_deletion_propagation_path",
+    "M2_CLOSEOUT_COMPONENTS",
+    "M2_CLOSEOUT_SCHEMA_VERSION",
+    "M2_COMPONENT_EVALUATION_STATES",
+    "SHADOW_MIGRATION_ADMISSION_OUTCOMES",
+    "SHADOW_MIGRATION_STAGES",
+    "M2CloseoutReport",
+    "M2ComponentEvaluation",
+    "ShadowMigrationAdmissionDecision",
     "stronger_authentication_required",
 ]
