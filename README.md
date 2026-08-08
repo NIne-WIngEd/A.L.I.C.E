@@ -810,7 +810,7 @@ P4.5a citation-bound grounding is merged and remains part of the preserved Phase
 
 ### Memory M2 closeout and shadow migration
 
-PR #82 closed M2.0 through M2.6 at the implemented-contract and reversible-prototype level. PR #83 made Phase 2 shadow migration Stage A+B prototype-operational. PR #84 made the read-only Stage C+E destination-candidate and shadow-read evaluation profile prototype-operational. PR #85 made deterministic Stage D historical-backfill machinery prototype-operational with synthetic evaluation while real private batches remain separately owner-authorized. The current Stage F+G tranche adds nonproduction controlled write-mirroring semantics plus graph, vector, and workflow generation receipts. Phase 2 remains the released compatibility baseline, test oracle, fallback, canonical writer, and current authority for its released profile. Expanded mirroring, owner-private execution, canary authority, canonical transfer, production influence, cutover, retirement, and P5.1e storage admission retain their own evidence and approval gates. Those gates are activation conditions rather than permanent research or architecture limits.
+PR #82 closed M2.0 through M2.6 at the implemented-contract and reversible-prototype level. PR #83 made Phase 2 shadow migration Stage A+B prototype-operational. PR #84 made the read-only Stage C+E destination-candidate and shadow-read evaluation profile prototype-operational. PR #85 made deterministic Stage D historical-backfill machinery prototype-operational with synthetic evaluation while real private batches remain separately owner-authorized. PR #86 made nonproduction Stage F controlled mirroring and Stage G graph/vector/workflow generation prototypes operational. The current persistent Stage F+G integration tranche adds restart/replay durability evidence and a polyglot backend-candidate registry while SQLite remains only a compatibility/reference durability oracle. Phase 2 remains the released compatibility baseline, test oracle, fallback, canonical writer, and current authority for its released profile. Live candidate integrations, owner-private execution, bounded canary review, canonical transfer, production influence, cutover, retirement, and P5.1e storage admission retain their own evidence and approval gates. Those gates are activation conditions rather than permanent research or architecture limits.
 
 | Phase | Domain | Status |
 |---|---|---|
@@ -819,7 +819,7 @@ PR #82 closed M2.0 through M2.6 at the implemented-contract and reversible-proto
 | **Phase 2** | Inspectable memory, correction, temporal conflict, sensitive storage, and deletion | Released foundation |
 | **Phase 3** | Conversation, local-model abstraction, orchestration, validation, and repair | Released foundation |
 | **Phase 4** | Public web research, freshness, citations, source conflict, and injection resistance | Operationally complete |
-| **Phase 5.0+** | Experience Ledger, storage lifecycle, Mission Graph contracts, kernel extraction, private identity custody, and Memory M2 | M2 closed; Stage A+B, Stage C+E, Stage D, and nonproduction Stage F+G successor prototypes operational |
+| **Phase 5.0+** | Experience Ledger, storage lifecycle, Mission Graph contracts, kernel extraction, private identity custody, and Memory M2 | M2 closed; Stage A+B, Stage C+E, Stage D, Stage F+G, and persistent F+G reference integration operational in nonproduction profiles |
 | **Phase 6+** | Interface, integrations, autonomous learning, agency, self-evolution, model adaptation, and embodiment | Roadmap |
 
 ### Memory contract work is not the memory limit
@@ -858,6 +858,7 @@ The repository currently contains working or released foundations for:
 - read-only destination-candidate profiles and synthetic shadow-read comparison receipts for Stage C+E;
 - deterministic Stage D historical-backfill manifests, idempotency keys, lineage, reconciliation, and checkpoint receipts;
 - nonproduction Stage F controlled-mirroring receipts and Stage G graph/vector/workflow generation manifests with deletion watermarks.
+- persistent Stage F+G restart/replay durability receipts and a non-exclusive KurrentDB/Neo4j/Qdrant/Temporal backend-candidate registry, with SQLite retained only as a compatibility/reference oracle.
 
 ### Still under development
 
@@ -1031,6 +1032,7 @@ The documents below define how it is being built.
 - [Shadow Migration Stage C+E Implementation](docs/MEMORY_SHADOW_MIGRATION_STAGE_C_E_IMPLEMENTATION.md)
 - [Shadow Migration Stage D Implementation](docs/MEMORY_SHADOW_MIGRATION_STAGE_D_IMPLEMENTATION.md)
 - [Shadow Migration Stage F+G Implementation](docs/MEMORY_SHADOW_MIGRATION_STAGE_F_G_IMPLEMENTATION.md)
+- [Shadow Migration Stage F+G Persistent Integration](docs/MEMORY_SHADOW_MIGRATION_STAGE_F_G_PERSISTENT_IMPLEMENTATION.md)
 
 ### Authority and judgment
 

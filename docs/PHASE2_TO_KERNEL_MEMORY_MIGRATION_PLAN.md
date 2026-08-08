@@ -1,7 +1,7 @@
 # Phase 2 to Cognitive Fabric Memory Migration Plan
 
-**Version:** 1.5.0
-**Status:** Stage A+B, Stage C+E, and deterministic Stage D prototypes operational; nonproduction Stage F controlled-mirroring and Stage G projection-generation prototypes operational; private execution and production authority stages independently gated
+**Version:** 1.6.0
+**Status:** Stage A+B, Stage C+E, deterministic Stage D, Stage F controlled-mirroring, and Stage G projection-generation prototypes operational; persistent F+G reference integration operational; private execution, live candidate integrations, and production authority stages independently gated
 **Source baseline:** Released Phase 2 Memory Core
 **Destination:** Backend-neutral Memory Architecture v4.1
 
@@ -155,3 +155,7 @@ The Stage D tranche adds deterministic historical-backfill manifests, source che
 The Stage F+G successor tranche adds a nonproduction controlled-mirroring profile over an explicit canonical writer/outbox stream and generation-bound graph, vector, and workflow build receipts with deletion watermarks. Its repository evaluator is synthetic. Phase 2 remains the canonical writer and current released authority.
 
 Owner-authorized private backfill, expanded mirroring, canary authority, canonical authority transfer, production influence, cutover, Phase 2 retirement, and P5.1e unblock remain available under their own evidence and authority gates.
+
+## Persistent Stage F+G integration evidence after PR #86
+
+The persistent integration profile proves restart/replay durability and persistent projection-receipt semantics through a SQLite compatibility/reference oracle. SQLite is not selected as the migration destination. KurrentDB, Neo4j, Qdrant, Temporal, and later alternatives remain independently evaluable candidates. Phase 2 remains the canonical writer/current released authority. Live candidate integrations, owner-authorized private Stage D execution, Stage H bounded canary review, canonical transfer, production serving, cutover, Phase 2 retirement, and P5.1e remain separate evidence gates.

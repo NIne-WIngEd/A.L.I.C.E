@@ -24,7 +24,7 @@
   "capability_ceiling": false,
   "current_truth": {
     "canonical_authority_transfer": false,
-    "historical_private_backfill_execution": "not_performed_by_public_stage_f_g_evaluation",
+    "historical_private_backfill_execution": "not_performed_by_public_persistent_integration_evaluation",
     "p5_1e_unblocked": false,
     "phase2_migration_started": true,
     "private_historical_backfill": false,
@@ -33,20 +33,24 @@
     "stage_a_b_prototype_operational": true,
     "stage_c_e_prototype_operational": true,
     "stage_d_deterministic_backfill_prototype_operational": true,
-    "stage_f_g_nonproduction_successor_prototypes_operational": true
+    "stage_f_g_nonproduction_successor_prototypes_operational": true,
+    "stage_f_g_persistent_reference_operational": true,
+    "persistent_backend_candidate_registry_active": true,
+    "live_external_backend_connections": "not_performed_by_public_persistent_integration_evaluation"
   },
   "next_activation_gate": {
+    "stage": "live_backend_integrations_or_owner_authorized_stage_d_or_stage_h_canary_review",
     "requirements": [
       "registered_source_destination_and_authority_generations",
+      "persistent_restart_replay_and_integrity_evidence",
+      "candidate_specific_dependency_configuration_and_health_evidence",
+      "outbox_idempotency_reconciliation_and_failure_recovery_evidence",
+      "projection_generation_deletion_watermark_and_restore_evidence",
       "owner_authorization_reference_for_private_workloads",
-      "outbox_idempotency_and_reconciliation_evidence",
-      "projection_generation_and_deletion_watermark_evidence",
-      "custody_privacy_rollback_and_external_report_controls",
-      "canary_scope_and_failure_recovery_evidence_before_authority_transition",
+      "canary_scope_failure_recovery_and_rollback_evidence_before_authority_transition",
       "repository_and_capability_audits"
     ],
-    "stage": "expanded_stage_f_g_or_owner_authorized_stage_d_or_stage_h_canary_review",
-    "state_change_on_success": "eligible_for_expanded_backend_integration_private_execution_or_bounded_canary_review"
+    "state_change_on_success": "eligible_for_candidate_specific_live_integration_private_execution_or_bounded_canary_review"
   },
   "not_activated_by_this_decision": [
     "historical_private_backfill",
@@ -65,7 +69,7 @@
   "rollback_or_exit": "Remove generated adapter fixtures and external evaluation stores; retain the released Phase 2 baseline unchanged.",
   "scope": "phase2_shadow_migration_preparation",
   "status": "preparatory_read_only_admitted",
-  "successor_current_state_policy": "policies/memory_shadow_migration_stage_f_g_policy.json",
-  "successor_state": "phase2_shadow_migration_stage_f_g_nonproduction_successor_prototypes_operational",
-  "version": "1.4.0"
+  "successor_current_state_policy": "policies/memory_shadow_migration_stage_f_g_persistent_policy.json",
+  "successor_state": "phase2_shadow_migration_stage_f_g_persistent_reference_operational",
+  "version": "1.5.0"
 }
