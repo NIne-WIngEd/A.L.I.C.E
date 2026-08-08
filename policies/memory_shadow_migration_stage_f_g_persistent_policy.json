@@ -1,0 +1,93 @@
+{
+  "policy_id": "memory-shadow-migration-stage-f-g-persistent",
+  "version": "1.0.0",
+  "prepared": "2026-08-07",
+  "scope": "phase2_shadow_migration_stage_f_g_persistent_integration",
+  "status": "prototype_operational",
+  "destination_status": "phase2_shadow_migration",
+  "research_status": "allowed",
+  "prototype_status": "stage_f_g_persistent_reference_and_candidate_registry_operational",
+  "production_status": "not_activated_by_this_profile",
+  "capability_ceiling": false,
+  "baseline_pr": 86,
+  "baseline_merge_commit": "1a3c668121d69f467740f518bb8d549f1ea26791",
+  "implemented_capabilities": [
+    "persistent_reference_mirror_receipts",
+    "persistent_projection_generation_receipts",
+    "restart_and_replay_durability_evidence",
+    "wal_and_integrity_receipts",
+    "polyglot_backend_candidate_registry",
+    "external_synthetic_report_and_reference_database"
+  ],
+  "authority_state": {
+    "canonical_writer": "phase2_released_writer_remains_current",
+    "authority_transition": "unchanged",
+    "destination_role": "persistent_reference_and_research_candidates",
+    "production_serving": "not_activated_by_this_profile"
+  },
+  "reference_adapter": {
+    "adapter_id": "alice.reference.sqlite.stage_f_g_persistent",
+    "engine_family": "sqlite_reference",
+    "role": "compatibility_reference_not_destination_selection",
+    "durability_features": [
+      "wal",
+      "full_synchronous_commit",
+      "idempotent_replay",
+      "integrity_check",
+      "persistent_state_digest",
+      "projection_receipt_persistence"
+    ]
+  },
+  "registered_candidates": [
+    "alice.candidate.kurrentdb",
+    "alice.candidate.neo4j",
+    "alice.candidate.qdrant",
+    "alice.candidate.temporal"
+  ],
+  "candidate_semantics": {
+    "registry_is_non_exhaustive": true,
+    "candidate_registration_is_not_destination_selection": true,
+    "single_database_destination_required": false,
+    "polyglot_composition_remains_available": true,
+    "distributed_multi_region_candidates_remain_available": true
+  },
+  "privacy": {
+    "private_paths_committed": false,
+    "private_payloads_committed": false,
+    "public_evaluation_workload": "synthetic_only",
+    "external_candidate_connections": "not_performed_by_public_evaluation",
+    "real_private_workloads_require_separate_owner_authorization": true,
+    "evaluation_artifacts_location": "outside_public_git"
+  },
+  "later_activation_states": [
+    "candidate_specific_live_backend_integrations",
+    "candidate_specific_benchmarks_and_failure_recovery",
+    "owner_authorized_historical_private_backfill_execution",
+    "expanded_controlled_write_mirroring",
+    "concrete_graph_vector_workflow_backend_generations",
+    "stage_h_bounded_canary_review",
+    "canary_authority",
+    "canonical_authority_transfer",
+    "production_serving_influence",
+    "cutover",
+    "phase2_retirement",
+    "p5_1e_storage_admission",
+    "friday_state_transfer"
+  ],
+  "successor_profile": "memory.shadow_migration.live_backend_integrations_or_owner_authorized_stage_d_or_stage_h_review",
+  "review_at": "persistent_integration_pr_review_or_material_backend_evidence_change",
+  "removal_criterion": "superseded_by_live_backend_integration_canary_or_later_migration_profile",
+  "rollback_or_exit": "remove_persistent_integration_public_artifacts_and_retain_phase2_stage_a_b_stage_c_e_stage_d_stage_f_g_oracles",
+  "activation_evidence": "persistent_reference_restart_replay_integrity_tests_candidate_registry_capability_audits_and_repository_audit",
+  "validation": [
+    "persistent_reference_synthetic_evaluation",
+    "targeted_persistent_stage_f_g_tests",
+    "stage_f_g_d_c_e_a_b_regression",
+    "phase5_regression",
+    "governance_regression",
+    "full_repository_regression",
+    "repository_phase_boundary_audit",
+    "changed_and_full_capability_barrier_audits",
+    "git_diff_check"
+  ]
+}

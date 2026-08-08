@@ -1,6 +1,6 @@
 {
   "policy_id": "memory-shadow-migration-stage-f-g",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "prepared": "2026-08-07",
   "scope": "phase2_shadow_migration_stage_f_g",
   "status": "prototype_operational",
@@ -66,8 +66,8 @@
     "p5_1e_storage_admission",
     "friday_state_transfer"
   ],
-  "successor_profile": "memory.shadow_migration.expanded_f_g_or_stage_h_canary_or_owner_authorized_stage_d",
-  "review_at": "stage_f_g_pr_review_or_material_evidence_change",
+  "successor_profile": "memory.shadow_migration.stage_f_g_persistent",
+  "review_at": "persistent_integration_pr_review_or_material_evidence_change",
   "removal_criterion": "superseded_by_expanded_backend_integration_canary_or_later_migration_profile",
   "rollback_or_exit": "remove_stage_f_g_public_artifacts_and_retain_phase2_stage_a_b_stage_c_e_stage_d_oracles",
   "activation_evidence": "stage_f_g_contracts_synthetic_evaluation_tests_capability_audits_and_repository_audit",
@@ -81,5 +81,7 @@
     "repository_phase_boundary_audit",
     "changed_and_full_capability_barrier_audits",
     "git_diff_check"
-  ]
+  ],
+  "merged_commit": "1a3c668121d69f467740f518bb8d549f1ea26791",
+  "successor_current_state_policy": "policies/memory_shadow_migration_stage_f_g_persistent_policy.json"
 }

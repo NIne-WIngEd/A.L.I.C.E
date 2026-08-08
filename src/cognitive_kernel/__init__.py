@@ -498,11 +498,28 @@ from .shadow_migration_stage_f_g import (
     run_controlled_mirror_batch,
 )
 from .shadow_migration_stage_f_g_evaluation import build_synthetic_stage_f_g_report
+from .shadow_migration_stage_f_g_persistent import (
+    PERSISTENT_CANDIDATE_STATES,
+    PERSISTENT_PROJECTION_WRITE_OUTCOMES,
+    PERSISTENT_WORKLOAD_CLASSES,
+    SHADOW_MIGRATION_STAGE_F_G_PERSISTENT_SCHEMA_VERSION,
+    PersistentBackendCandidate,
+    PersistentIntegrationManifest,
+    PersistentProjectionWriteReceipt,
+    PersistentReferenceIntegrityReceipt,
+    SQLitePersistentStageFGReferenceAdapter,
+    build_persistent_backend_candidate_registry,
+    build_synthetic_persistent_integration_manifest,
+    persistent_backend_candidate_registry_sha256,
+)
+from .shadow_migration_stage_f_g_persistent_evaluation import (
+    build_persistent_stage_f_g_report,
+)
 from .policy import CognitiveKernelFoundationPolicy, load_cognitive_kernel_foundation_policy
 from .mission_policy import CognitiveKernelMissionGraphPolicy, load_cognitive_kernel_mission_graph_policy
 from .attention_policy import CognitiveKernelAttentionWorkspacePolicy, load_cognitive_kernel_attention_workspace_policy
 
-__version__ = "0.21.0"
+__version__ = "0.22.0"
 
 __all__ = [
     "ATTENTION_HOST_OVERRIDES", "ATTENTION_PRIORITY_CLASSES",
@@ -868,5 +885,18 @@ __all__ = [
     "build_synthetic_stage_g_manifest",
     "run_controlled_mirror_batch",
     "build_synthetic_stage_f_g_report",
+    "PERSISTENT_CANDIDATE_STATES",
+    "PERSISTENT_PROJECTION_WRITE_OUTCOMES",
+    "PERSISTENT_WORKLOAD_CLASSES",
+    "SHADOW_MIGRATION_STAGE_F_G_PERSISTENT_SCHEMA_VERSION",
+    "PersistentBackendCandidate",
+    "PersistentIntegrationManifest",
+    "PersistentProjectionWriteReceipt",
+    "PersistentReferenceIntegrityReceipt",
+    "SQLitePersistentStageFGReferenceAdapter",
+    "build_persistent_backend_candidate_registry",
+    "build_synthetic_persistent_integration_manifest",
+    "persistent_backend_candidate_registry_sha256",
+    "build_persistent_stage_f_g_report",
     "stronger_authentication_required",
 ]

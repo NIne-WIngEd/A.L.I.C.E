@@ -1,8 +1,8 @@
 # Memory Shadow Migration Stage F+G Implementation
 
-**Version:** 1.0.0
-**Status:** nonproduction successor prototypes operational
-**Baseline:** PR #85 merge `401d828a3d03ae42553c2719151fc9a4e0837917`
+**Version:** 1.1.0
+**Status:** nonproduction successor prototypes operational; persistent integration successor admitted
+**Baseline:** PR #85 merge `401d828a3d03ae42553c2719151fc9a4e0837917`; merged by PR #86 at `1a3c668121d69f467740f518bb8d549f1ea26791`
 **Scope:** controlled write-mirroring semantics plus graph/vector/workflow generation research
 
 ## 1. Material state
@@ -88,3 +88,7 @@ Independent next gates may include:
 - later cutover, compatibility, retirement, and P5.1e storage admission through their own evidence profiles.
 
 Research may continue in parallel. Production activation remains dependency- and evidence-governed.
+
+## 8. Persistent integration successor state
+
+PR #86 established Stage F controlled-mirroring and Stage G projection-generation contracts as accepted nonproduction migration oracles. The persistent integration successor may now exercise restart/replay durability through compatibility/reference adapters and register live backend candidates without interpreting persistence evidence as canary authority, canonical transfer, or production serving.

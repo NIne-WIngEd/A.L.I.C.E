@@ -1,6 +1,6 @@
 # Memory M2 Execution Plan — Contract and Full-Memory Parallelism
 
-**Version:** 1.11.0
+**Version:** 1.12.0
 **Prepared:** 2026-08-06
 **Status:** Owner-directed active execution clarification
 **Architecture:** Memory v4.1 Capability-First Polyglot Cognitive Fabric
@@ -106,6 +106,7 @@ The following distinctions remain mandatory:
 - The Stage C+E profile compares baseline and candidate observations across authority correctness, conflicts, corrections, deletion, privacy, product isolation, latency, staleness, and explanation traces. PR #84 made that nonproduction profile prototype-operational and its deterministic synthetic evaluation recommended eligibility for the next research gate rather than production selection.
 - The Stage D profile now provides deterministic historical-backfill manifests, record and batch receipts, idempotent replay, provenance and deletion lineage, reconciliation, and checkpoint continuation. Its repository evaluation is synthetic; real private historical batches require an explicit owner-authorized manifest and external custody evidence.
 - The Stage F+G profile now provides nonproduction canonical-outbox mirroring receipts plus graph/vector/workflow generation manifests, deletion watermarks, generation digests, replay evidence, and repair accounting. Phase 2 remains the canonical writer and current released authority under this profile.
+- The persistent Stage F+G integration profile now proves durable restart/replay semantics through the SQLite compatibility/reference adapter and registers KurrentDB, Neo4j, Qdrant, and Temporal as non-exclusive research candidates. No external candidate is selected or contacted by the public synthetic evaluation.
 - P5.1e remains paused until its exact storage-admission interaction is explicitly unblocked. That pause does not restrict Stage C/E research or any ratified distributed, graph, vector, workflow, model, training, federation, or successor-backend track.
 
 ## 7. Permanent anti-ceiling rule
