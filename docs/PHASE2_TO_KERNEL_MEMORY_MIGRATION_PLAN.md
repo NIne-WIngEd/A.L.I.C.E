@@ -1,6 +1,6 @@
 # Phase 2 to Cognitive Fabric Memory Migration Plan
 
-**Version:** 1.7.0
+**Version:** 1.8.0
 **Status:** Stage A+B, Stage C+E, deterministic Stage D, Stage F controlled-mirroring, and Stage G projection-generation prototypes operational; persistent F+G reference integration operational; private execution, live candidate integrations, and production authority stages independently gated
 **Source baseline:** Released Phase 2 Memory Core
 **Destination:** Backend-neutral Memory Architecture v4.1
@@ -90,6 +90,16 @@ If a successor is selected as canonical during canary, reverse projection to Pha
 Construct graph and vector generations from registered claims and evidence. Launch durable projection, deletion, and repair workflows. Record build manifests and deletion watermarks.
 
 Backend durability alone is not sufficient Stage G exit evidence. Before Stage G can close, the successor cognitive-memory fabric must also pass owner-authorized and synthetic qualification covering the learned Memory Formation Model, the Elaina Identity / Personality Model, Rayan host learning without Elaina-identity drift, deterministic authority/routing, per-layer behavior, cross-layer projection consistency, retrieval/context fusion, conflict and temporal correction, deletion/revocation propagation, A.L.I.C.E./Friday isolation, failure/recovery, concurrency, rebuild, rollback, scale, and README/governance promise alignment. Stage H is not eligible until this integrated Stage G qualification is accepted.
+
+#### Stage G candidate qualification matrix
+
+The mandatory technology/challenger inventory is maintained in `docs/STAGE_G_MEMORY_FABRIC_CANDIDATE_QUALIFICATION_MATRIX.md`.
+
+Before Stage G can close, every concrete named candidate in that matrix must receive individual stress qualification, same-role all-pairs comparison must cover every concrete candidate pair, cross-role candidate-substitution must cover every registered architecturally meaningful interaction edge, and multi-plane plus full-fabric runs must pass on the complex synthetic Rayan-life workload.
+
+Implementation-family candidates must be concretized and qualified or separately owner-ratified as descriptive non-candidates. Candidate evidence must cover correction, deletion, revocation, restore, failure, concurrency, replay, rebuild, rollback, scale, identity/provenance boundaries, A.L.I.C.E./Friday isolation, and README/governance promise coverage.
+
+Stage H remains ineligible while this candidate-qualification gate is incomplete. The matrix selects no permanent backend and creates no technology ceiling.
 
 ### Stage H — Canary authority
 

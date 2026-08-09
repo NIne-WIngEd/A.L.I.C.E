@@ -1,6 +1,6 @@
 # A.L.I.C.E. Memory Identity, Formation, Host Learning, and Repository Lifecycle
 
-**Version:** 2.0.0
+**Version:** 2.1.0
 **Status:** Owner-ratified architecture decision
 **Applies to:** A.L.I.C.E. identity, memory formation, host learning, Stage G qualification, Friday separation, and repository lifecycle
 
@@ -281,6 +281,23 @@ Backend persistence tests are necessary but far from sufficient.
 The Neo4j/Qdrant persistence work already performed is evidence for physical durability only. It does not close Stage G.
 
 Stage G must qualify the complete cognitive-memory fabric.
+
+### Candidate technology qualification gate
+
+The canonical detailed candidate inventory and qualification contract are defined in `docs/STAGE_G_MEMORY_FABRIC_CANDIDATE_QUALIFICATION_MATRIX.md`.
+
+Stage G cannot close until:
+
+- every concrete named candidate in that matrix is stress-tested individually;
+- same-role all-pairs comparison is required across every concrete candidate pair;
+- candidate substitutions are required across every registered architecturally meaningful cross-role interaction;
+- multi-plane combinations and complete end-to-end fabric runs use the complex synthetic Rayan-life workload;
+- correction, deletion, revocation, restore, failure, concurrency, replay, rebuild, rollback, scale, identity, provenance, and A.L.I.C.E./Friday-isolation evidence passes;
+- implementation-family placeholders are concretized into runnable candidates and qualified or separately owner-ratified as descriptive non-candidates;
+- README/governance promises are mapped to executable or inspectable evidence;
+- no unresolved zero-tolerance failure remains.
+
+This gate expands Stage G evidence without selecting a permanent backend or creating a technology ceiling.
 
 ### G2 — learned formation and identity foundations
 
