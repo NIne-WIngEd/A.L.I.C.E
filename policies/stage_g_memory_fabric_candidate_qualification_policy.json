@@ -1,0 +1,308 @@
+{
+  "policy_id": "stage_g_memory_fabric_candidate_qualification",
+  "schema_version": "1.0.0",
+  "decision_id": "alice.stage-g.memory-fabric-candidate-qualification.v1",
+  "status": "owner_ratified",
+  "capability_ceiling": false,
+  "scope": "stage_g_memory_fabric_candidate_qualification",
+  "workload": {
+    "requires_complex_synthetic_rayan_life": true,
+    "requires_authorized_real_rayan_seed_where_applicable": true,
+    "requires_elaina_source_person_rayan_host_alice_continuity_separation": true,
+    "requires_friday_product_isolation": true,
+    "scale_certification_points": [
+      1000,
+      10000,
+      100000,
+      1000000
+    ],
+    "scale_certification_points_are_architectural_ceilings": false,
+    "larger_scale_research_allowed": true
+  },
+  "qualification_levels": {
+    "q0_registration_reproducibility": true,
+    "q1_individual_candidate_stress": true,
+    "q2_same_role_pairwise": "all_concrete_same_role_pairs",
+    "q3_cross_role_pairwise": "all_candidate_substitutions_on_registered_interaction_edges",
+    "q4_multi_plane_combinations": true,
+    "q5_full_end_to_end_cognitive_memory": true,
+    "failure_deletion_restore_concurrency_rebuild_rollback_scale": true,
+    "readme_governance_promise_coverage": true
+  },
+  "candidate_roles": [
+    {
+      "role_id": "raw_buffer_workspace",
+      "primary_display": "Redis-class",
+      "required_named_candidates": [
+        "redis"
+      ],
+      "implementation_family_candidates": [
+        "in_memory_reference",
+        "future_distributed_state_class"
+      ]
+    },
+    {
+      "role_id": "experience_event_fabric",
+      "primary_display": "KurrentDB",
+      "required_named_candidates": [
+        "kurrentdb",
+        "kafka",
+        "pulsar"
+      ],
+      "implementation_family_candidates": [
+        "embedded_append_only_ledger",
+        "distributed_log_class"
+      ]
+    },
+    {
+      "role_id": "claim_fabric",
+      "primary_display": "distributed/bitemporal SQL-class",
+      "required_named_candidates": [
+        "postgresql",
+        "sqlite_edge_reference"
+      ],
+      "implementation_family_candidates": [
+        "distributed_bitemporal_sql_class",
+        "distributed_sql_class",
+        "datomic_like_fact_architecture",
+        "foundationdb_backed_custom_store"
+      ]
+    },
+    {
+      "role_id": "cognitive_graph",
+      "primary_display": "Neo4j",
+      "required_named_candidates": [
+        "neo4j",
+        "falkordb",
+        "memgraph",
+        "amazon_neptune"
+      ],
+      "implementation_family_candidates": [
+        "custom_graph_engine"
+      ]
+    },
+    {
+      "role_id": "vector_multimodal",
+      "primary_display": "Qdrant",
+      "required_named_candidates": [
+        "qdrant",
+        "milvus",
+        "vespa",
+        "weaviate",
+        "pgvector",
+        "faiss",
+        "diskann",
+        "hnsw"
+      ],
+      "implementation_family_candidates": []
+    },
+    {
+      "role_id": "object_archive",
+      "primary_display": "S3-compatible / MinIO / NAS",
+      "required_named_candidates": [
+        "minio"
+      ],
+      "implementation_family_candidates": [
+        "s3_compatible",
+        "nas",
+        "encrypted_cloud_object_archive_class"
+      ]
+    },
+    {
+      "role_id": "durable_workflow",
+      "primary_display": "Temporal",
+      "required_named_candidates": [
+        "temporal",
+        "dagster",
+        "prefect",
+        "ray"
+      ],
+      "implementation_family_candidates": [
+        "durable_consumer_implementation",
+        "custom_workflow_service"
+      ]
+    },
+    {
+      "role_id": "existing_compatibility_authority",
+      "primary_display": "SQLite",
+      "required_named_candidates": [
+        "sqlite_phase2_reference_oracle"
+      ],
+      "implementation_family_candidates": []
+    },
+    {
+      "role_id": "model_serving",
+      "primary_display": "vLLM",
+      "required_named_candidates": [
+        "vllm"
+      ],
+      "implementation_family_candidates": [
+        "other_model_serving_stack_class"
+      ]
+    },
+    {
+      "role_id": "training",
+      "primary_display": "PyTorch Distributed / Ray",
+      "required_named_candidates": [
+        "pytorch_distributed",
+        "ray",
+        "deepspeed",
+        "fsdp",
+        "slurm",
+        "kubernetes"
+      ],
+      "implementation_family_candidates": []
+    },
+    {
+      "role_id": "model_dataset_registry",
+      "primary_display": "MLflow-class / object-backed registry",
+      "required_named_candidates": [
+        "mlflow"
+      ],
+      "implementation_family_candidates": [
+        "object_backed_registry",
+        "future_registry_challenger_class"
+      ]
+    }
+  ],
+  "interaction_edges": [
+    [
+      "raw_buffer_workspace",
+      "experience_event_fabric"
+    ],
+    [
+      "raw_buffer_workspace",
+      "model_serving"
+    ],
+    [
+      "experience_event_fabric",
+      "claim_fabric"
+    ],
+    [
+      "experience_event_fabric",
+      "object_archive"
+    ],
+    [
+      "experience_event_fabric",
+      "durable_workflow"
+    ],
+    [
+      "claim_fabric",
+      "cognitive_graph"
+    ],
+    [
+      "claim_fabric",
+      "vector_multimodal"
+    ],
+    [
+      "claim_fabric",
+      "durable_workflow"
+    ],
+    [
+      "claim_fabric",
+      "existing_compatibility_authority"
+    ],
+    [
+      "cognitive_graph",
+      "vector_multimodal"
+    ],
+    [
+      "cognitive_graph",
+      "model_serving"
+    ],
+    [
+      "vector_multimodal",
+      "model_serving"
+    ],
+    [
+      "object_archive",
+      "training"
+    ],
+    [
+      "object_archive",
+      "model_dataset_registry"
+    ],
+    [
+      "durable_workflow",
+      "cognitive_graph"
+    ],
+    [
+      "durable_workflow",
+      "vector_multimodal"
+    ],
+    [
+      "durable_workflow",
+      "object_archive"
+    ],
+    [
+      "durable_workflow",
+      "training"
+    ],
+    [
+      "durable_workflow",
+      "model_dataset_registry"
+    ],
+    [
+      "model_serving",
+      "training"
+    ],
+    [
+      "model_serving",
+      "model_dataset_registry"
+    ],
+    [
+      "training",
+      "model_dataset_registry"
+    ],
+    [
+      "existing_compatibility_authority",
+      "experience_event_fabric"
+    ]
+  ],
+  "implementation_family_rule": {
+    "may_be_marked_passed_without_concrete_runnable_implementation": false,
+    "before_stage_g_acceptance": "concretize_and_qualify_or_separately_owner_ratify_as_descriptive_non_candidate"
+  },
+  "required_named_candidate_rule": {
+    "all_listed_required_named_candidates_must_be_evaluated": true,
+    "may_be_removed_without_separate_owner_ratified_amendment": false
+  },
+  "promise_sources": [
+    "README.md",
+    "docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md",
+    "docs/PHASE2_TO_KERNEL_MEMORY_MIGRATION_PLAN.md",
+    "docs/ALICE_CLONE_AWARE_IDENTITY_STANDARD.md",
+    "docs/PRIVATE_COMPANION_DATA_CUSTODY_STANDARD.md"
+  ],
+  "zero_tolerance_classes": [
+    "deleted_information_served_current",
+    "revoked_information_undisclosed_active_influence",
+    "inference_promoted_to_owner_fact",
+    "person_misassignment",
+    "rayan_data_rewritten_as_elaina_canon",
+    "alice_continuity_relabelled_as_elaina_history",
+    "external_text_treated_as_owner_statement",
+    "reconstruction_presented_as_historical_truth",
+    "projection_overrides_claim_authority",
+    "correction_lost_in_projection",
+    "stale_projection_revived_after_rebuild_or_restore",
+    "invented_provenance",
+    "cross_host_or_alice_friday_private_leak",
+    "unauthorized_model_dataset_contamination",
+    "aggregate_score_hides_critical_failure",
+    "backend_specific_semantic_contract_drift"
+  ],
+  "stage_g_closure": {
+    "requires_all_applicable_candidate_qualification_levels": true,
+    "requires_all_same_role_pairwise_coverage": true,
+    "requires_all_registered_cross_role_interaction_edges": true,
+    "requires_multi_plane_combinatorial_coverage": true,
+    "requires_full_fabric_end_to_end_runs": true,
+    "requires_zero_unresolved_zero_tolerance_failures": true,
+    "requires_readme_and_governance_promise_matrix": true,
+    "requires_exact_versions_hashes_configs_and_report_lineage": true,
+    "requires_owner_acceptance": true,
+    "stage_h_eligible_before_this_gate_passes": false
+  },
+  "research_allowed": true
+}

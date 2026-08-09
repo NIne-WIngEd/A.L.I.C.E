@@ -180,7 +180,7 @@ def test_docs_remove_obsolete_opaque_only_boundary() -> None:
     assert "Named identity roles and architecture-specific context may be documented in Git" in custody
     assert "Public Git contains only opaque identifiers" not in custody
 
-    assert "**Version:** 1.7.0" in migration
+    assert "**Version:** 1.8.0" in migration
     assert "Backend durability alone is not sufficient Stage G exit evidence." in migration
     assert "final replacement or retirement is complete only after Stage J" in migration
 
