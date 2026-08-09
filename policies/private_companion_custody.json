@@ -12,7 +12,10 @@
     "plaintext_private_directives_allowed": false,
     "owner_model_allowed": false,
     "alignment_examples_allowed": false,
-    "keys_or_codebooks_allowed": false
+    "keys_or_codebooks_allowed": false,
+    "named_identity_roles_allowed": true,
+    "architecture_specific_context_allowed": true,
+    "raw_private_payload_required_for_documentation": false
   },
   "directive_codes": [
     "PX-ORIGIN-01",

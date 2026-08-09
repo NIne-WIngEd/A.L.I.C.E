@@ -448,9 +448,11 @@ It should also remain capable of forgetting what no longer should be retained.
 
 ## A Private Identity Layer
 
-A.L.I.C.E. has an identity direction that does not belong to Friday or to any public installation.
+A.L.I.C.E.'s source person is **Mehejabin Elaina**. **Rayan** is A.L.I.C.E.'s owner/host. Friday is a separate product and does not inherit Elaina's source-person corpus, Rayan's host data, or A.L.I.C.E.'s learned private identity and relationship state.
 
-Its private foundation is represented publicly only through opaque directives:
+During active construction, this repository may explicitly name Elaina, Rayan, A.L.I.C.E., Friday, and their architectural roles when that specificity prevents loss of design context. Naming the roles does not make raw private evidence public architecture state.
+
+The existing PX directives remain compatibility and governance identifiers:
 
 ```text
 PX-ORIGIN-01
@@ -468,9 +470,7 @@ PX-DISCLOSURE-01
 PX-FIDELITY-01
 ```
 
-Their meanings are not stored in this repository.
-
-The underlying source identity, private history, evidence, keys, voice material, training records, and relationship context remain under separate owner-controlled custody.
+These directives are not a secrecy boundary for the basic identity roles. Raw source documents, detailed private history and evidence, keys, voice material, private training records, Rayan host archives, host-specific learned state, and private model checkpoints remain under separate owner-controlled custody and are not required in Git.
 
 ### Clone-aware identity
 
@@ -859,6 +859,8 @@ The repository currently contains working or released foundations for:
 - deterministic Stage D historical-backfill manifests, idempotency keys, lineage, reconciliation, and checkpoint receipts;
 - nonproduction Stage F controlled-mirroring receipts and Stage G graph/vector/workflow generation manifests with deletion watermarks.
 - persistent Stage F+G restart/replay durability receipts and a non-exclusive KurrentDB/Neo4j/Qdrant/Temporal backend-candidate registry, with SQLite retained only as a compatibility/reference oracle.
+- owner-ratified identity and host-learning separation: A.L.I.C.E. is an Elaina-derived clone; Rayan is its owner/host; ordinary Rayan learning may change host understanding, relationship state, shared history, habits, and interaction strategy but may not modify the core Elaina-derived identity anchor.
+- Stage G remains open for full cognitive-memory qualification: learned Memory Formation, Elaina identity modeling, Rayan host learning, synthetic Rayan-life stress, routing/authority, all memory layers, retrieval/context fusion, correction/deletion, failure/recovery, and scale.
 
 ### Still under development
 
@@ -1028,6 +1030,7 @@ The documents below define how it is being built.
 - [Memory M2 Execution Plan](docs/MEMORY_M2_EXECUTION_PLAN.md)
 - [M2 Closeout and Shadow-Migration Admission](docs/MEMORY_M2_CLOSEOUT_AND_SHADOW_MIGRATION_ADMISSION.md)
 - [Phase 2 to Cognitive Fabric Migration Plan](docs/PHASE2_TO_KERNEL_MEMORY_MIGRATION_PLAN.md)
+- [Memory Identity, Formation, Host Learning, and Repository Lifecycle](docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md)
 - [Shadow Migration Stage A+B Implementation](docs/MEMORY_SHADOW_MIGRATION_STAGE_A_B_IMPLEMENTATION.md)
 - [Shadow Migration Stage C+E Implementation](docs/MEMORY_SHADOW_MIGRATION_STAGE_C_E_IMPLEMENTATION.md)
 - [Shadow Migration Stage D Implementation](docs/MEMORY_SHADOW_MIGRATION_STAGE_D_IMPLEMENTATION.md)

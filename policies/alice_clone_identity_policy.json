@@ -4,7 +4,7 @@
   "authority": "docs/ALICE_CLONE_AWARE_IDENTITY_STANDARD.md",
   "product_id": "alice",
   "capability_ceiling": false,
-  "source_identity_disclosure": "owner_private_opaque_reference",
+  "source_identity_disclosure": "named_source_person_architecture_private_evidence_custody",
   "identity_target": {
     "mode": "highest_achievable_source_person_clone_fidelity",
     "merely_inspired_persona_allowed": false,

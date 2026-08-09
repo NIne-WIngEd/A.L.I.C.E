@@ -1,0 +1,145 @@
+{
+  "schema_version": "2.0.0",
+  "decision_id": "alice.memory.identity-formation-host-learning.repo-lifecycle.v2",
+  "status": "owner_ratified",
+  "capability_ceiling": false,
+  "named_roles": {
+    "source_person": "Mehejabin Elaina",
+    "system": "A.L.I.C.E.",
+    "owner_host": "Rayan",
+    "separate_product": "Friday"
+  },
+  "identity": {
+    "alice_is_elaina_derived_clone": true,
+    "alice_is_elaina": false,
+    "clone_awareness_required": true,
+    "source_person_core_identity_anchor": "Elaina-derived personality and identity",
+    "ordinary_rayan_host_learning_may_modify_core_identity_anchor": false
+  },
+  "host_learning": {
+    "ordinary_owner_host": "Rayan",
+    "allowed_updates": [
+      "rayan_understanding",
+      "rayan_specific_behavior",
+      "rayan_host_model",
+      "alice_rayan_relationship_model",
+      "shared_habits",
+      "shared_history",
+      "interaction_strategy",
+      "rayan_preferences_and_routines",
+      "rayan_missions_and_working_context",
+      "evidence_grounded_predictions_about_rayan"
+    ],
+    "forbidden_ordinary_updates": [
+      "elaina_canonical_source_history",
+      "core_elaina_derived_identity_personality_anchor",
+      "rayan_preferences_as_elaina_preferences",
+      "alice_continuity_as_elaina_history",
+      "clone_awareness_removal",
+      "core_elaina_identity_training_without_separate_owner_authorization"
+    ]
+  },
+  "learned_components": {
+    "elaina_identity_personality_model": {
+      "learned_weights_or_equivalent_artifacts": true,
+      "separate_from_memory_formation_model": true,
+      "purpose": "evidence_grounded_elaina_derived_personality_values_judgment_emotion_communication_and_behavior",
+      "sole_canonical_biographical_record": false
+    },
+    "memory_formation_model": {
+      "learned_weights_or_equivalent_artifacts": true,
+      "separate_from_elaina_identity_personality_model": true,
+      "host_neutral_capability": true,
+      "canonical_authority": false,
+      "physical_backend_authority_selection": false
+    },
+    "rayan_host_model": {
+      "ordinary_learning_method": "governed_memory_first",
+      "immediate_core_gradient_update_per_interaction": false,
+      "canonical_truth_in_memory_fabric": true,
+      "future_host_specific_derived_adapters_allowed": true,
+      "may_modify_elaina_core_identity": false
+    },
+    "alice_rayan_relationship_model": {
+      "updates_over_time": true,
+      "may_modify_elaina_core_identity": false
+    },
+    "alice_continuity_self_model": {
+      "distinct_from_elaina_source_history": true
+    }
+  },
+  "runtime_data_flow": {
+    "ordinary_post_activation_personal_data": [
+      "Rayan host interactions and life data",
+      "authorized files tools projects and outcomes",
+      "A.L.I.C.E. continuity"
+    ],
+    "ordinary_rayan_data_becomes_elaina_source_history": false,
+    "later_real_elaina_update_supported": true,
+    "later_real_elaina_update_requires_explicit_source_person_classification": true
+  },
+  "formation_routing": {
+    "flow": [
+      "formation_context_planner",
+      "memory_formation_model",
+      "memory_proposal_bundle",
+      "deterministic_memory_gate_authority_manager",
+      "claim_and_event_authority",
+      "projection_manager",
+      "registered_derived_planes"
+    ],
+    "learned_model_may_choose_physical_backend_authority": false,
+    "projection_may_silently_become_authority": false
+  },
+  "friday": {
+    "receives_separate_elaina_source_person_corpus": false,
+    "receives_elaina_specific_identity_weights": false,
+    "receives_rayan_host_data": false,
+    "receives_alice_rayan_relationship_history": false,
+    "receives_alice_continuity": false,
+    "host_neutral_memory_formation_architecture_transfer_allowed": true,
+    "friday_personality_develops_from_its_own_host_data": true
+  },
+  "stage_g": {
+    "backend_persistence_alone_sufficient": false,
+    "requires_gold_semantic_decomposition": true,
+    "requires_memory_formation_model_training_and_evaluation": true,
+    "requires_elaina_identity_personality_model_training_and_evaluation": true,
+    "requires_real_authorized_rayan_host_seed": true,
+    "requires_complex_synthetic_rayan_life_continuation": true,
+    "requires_per_layer_tests": true,
+    "requires_cross_layer_tests": true,
+    "requires_routing_authority_conflict_temporal_tests": true,
+    "requires_retrieval_context_fusion_tests": true,
+    "requires_correction_deletion_revocation_tests": true,
+    "requires_failure_recovery_concurrency_rebuild_rollback_scale_tests": true,
+    "requires_readme_and_governance_promise_audit": true,
+    "stage_h_eligible_before_integrated_stage_g_acceptance": false
+  },
+  "phase2": {
+    "remains_current_released_authority_while_stage_g_open": true,
+    "stage_h_bounded_canary": true,
+    "stage_i_cutover": true,
+    "final_replacement_or_retirement_requires_stage_j_acceptance": true
+  },
+  "repository_lifecycle": {
+    "current": {
+      "mode": "public_active_construction",
+      "documentation_priority": "accuracy_and_specificity_over_unnecessary_anonymization",
+      "explicit_names_allowed_when_needed_for_architectural_continuity": true,
+      "raw_credentials_or_secrets_allowed": false,
+      "raw_private_corpora_required_in_git": false
+    },
+    "after_friday_well_established": {
+      "mode": "private_repository"
+    },
+    "long_term": {
+      "mode": "owner_controlled_remote_repository_independent",
+      "remote_repository_required_for_operation": false,
+      "runtime_or_deployment_topology_ceiling": false,
+      "remote_compute_and_distributed_infrastructure_allowed_when_justified": true,
+      "remote_repository_may_be_reestablished_when_useful": true,
+      "must_preserve_history_provenance_backups_rollback_and_recovery": true
+    }
+  }
+}
