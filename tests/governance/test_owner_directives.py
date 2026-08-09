@@ -6,10 +6,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def test_private_companion_public_boundary_is_opaque_and_non_ceiling() -> None:
+def test_private_companion_repository_boundary_allows_named_roles_and_protects_payloads() -> None:
     policy = json.loads((ROOT / "policies/private_companion_custody.json").read_text(encoding="utf-8"))
     assert policy["capability_ceiling"] is False
     assert policy["public_repository"]["opaque_directive_codes_allowed"] is True
+    assert policy["public_repository"]["named_identity_roles_allowed"] is True
+    assert policy["public_repository"]["architecture_specific_context_allowed"] is True
+    assert policy["public_repository"]["raw_private_payload_required_for_documentation"] is False
     assert policy["public_repository"]["encrypted_private_payload_allowed"] is False
     assert policy["public_repository"]["keys_or_codebooks_allowed"] is False
     assert policy["product_isolation"]["friday_private_payload_allowed"] is False

@@ -1,11 +1,11 @@
 # Private Companion Data Custody Standard
 
-**Version:** 1.0.0
+**Version:** 1.1.0
 **Authority:** A.L.I.C.E. Constitution, Data Classification, and owner-ratified private companion direction
 
 ## 1. Repository boundary
 
-Never commit private source documents, plaintext directive meanings, codebooks, owner models, alignment examples, keys, decrypted persona data, encrypted persona payloads, real private manifests, voice/likeness data, private training data, or host-specific models/adapters. Public Git contains only opaque identifiers, neutral schemas, custody policy, validators, and synthetic fixtures.
+Never commit credentials, keys, codebooks that unlock protected payloads, raw private source documents, decrypted persona payloads, encrypted private payload bundles, real private manifests, raw Rayan host archives, voice/likeness source material, private training corpora, or host-specific private model checkpoints/adapters merely for documentation convenience. Named identity roles and architecture-specific context may be documented in Git when accuracy and continuity require them. Opaque directive identifiers, neutral schemas, custody policy, validators, and synthetic fixtures remain allowed. Naming Mehejabin Elaina as source person or Rayan as owner/host does not authorize publishing their raw private evidence.
 
 ## 2. Cryptographic custody
 

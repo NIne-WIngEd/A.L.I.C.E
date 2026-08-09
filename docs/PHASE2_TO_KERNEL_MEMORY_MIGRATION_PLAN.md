@@ -1,6 +1,6 @@
 # Phase 2 to Cognitive Fabric Memory Migration Plan
 
-**Version:** 1.6.0
+**Version:** 1.7.0
 **Status:** Stage A+B, Stage C+E, deterministic Stage D, Stage F controlled-mirroring, and Stage G projection-generation prototypes operational; persistent F+G reference integration operational; private execution, live candidate integrations, and production authority stages independently gated
 **Source baseline:** Released Phase 2 Memory Core
 **Destination:** Backend-neutral Memory Architecture v4.1
@@ -89,6 +89,8 @@ If a successor is selected as canonical during canary, reverse projection to Pha
 
 Construct graph and vector generations from registered claims and evidence. Launch durable projection, deletion, and repair workflows. Record build manifests and deletion watermarks.
 
+Backend durability alone is not sufficient Stage G exit evidence. Before Stage G can close, the successor cognitive-memory fabric must also pass owner-authorized and synthetic qualification covering the learned Memory Formation Model, the Elaina Identity / Personality Model, Rayan host learning without Elaina-identity drift, deterministic authority/routing, per-layer behavior, cross-layer projection consistency, retrieval/context fusion, conflict and temporal correction, deletion/revocation propagation, A.L.I.C.E./Friday isolation, failure/recovery, concurrency, rebuild, rollback, scale, and README/governance promise alignment. Stage H is not eligible until this integrated Stage G qualification is accepted.
+
 ### Stage H — Canary authority
 
 Enable a bounded owner-authorized profile for selected namespaces, claim classes, or missions.
@@ -103,7 +105,9 @@ Freeze the old canonical position, drain outboxes, reconcile, verify integrity, 
 
 Phase 2 becomes a read-only compatibility projection, fallback, export source, or retired archive according to profile.
 
-It is not deleted until retention, rollback, and owner authority permit.
+Stage J must itself be evaluated and owner-accepted. For this migration, final replacement or retirement is complete only after Stage J acceptance; neither Stage H canary authority nor Stage I cutover alone completes final Phase 2 replacement.
+
+It is not deleted until retention, rollback, Stage J acceptance, and owner authority permit.
 
 ## 5. Distributed and multi-device semantics
 
@@ -158,4 +162,6 @@ Owner-authorized private backfill, expanded mirroring, canary authority, canonic
 
 ## Persistent Stage F+G integration evidence after PR #86
 
-The persistent integration profile proves restart/replay durability and persistent projection-receipt semantics through a SQLite compatibility/reference oracle. SQLite is not selected as the migration destination. KurrentDB, Neo4j, Qdrant, Temporal, and later alternatives remain independently evaluable candidates. Phase 2 remains the canonical writer/current released authority. Live candidate integrations, owner-authorized private Stage D execution, Stage H bounded canary review, canonical transfer, production serving, cutover, Phase 2 retirement, and P5.1e remain separate evidence gates.
+The persistent integration profile proves restart/replay durability and persistent projection-receipt semantics through a SQLite compatibility/reference oracle. SQLite is not selected as the migration destination. KurrentDB, Neo4j, Qdrant, Temporal, and later alternatives remain independently evaluable candidates. Phase 2 remains the canonical writer/current released authority. Live candidate integrations, owner-authorized private Stage D execution, full Stage G cognitive-memory qualification, Stage H bounded canary review, canonical transfer, production serving, cutover, Stage J compatibility acceptance, Phase 2 final replacement/retirement, and P5.1e remain separate evidence gates.
+
+The owner-ratified identity and host-learning boundary is recorded in `docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md`: A.L.I.C.E. is an Elaina-derived clone, Rayan is its owner/host, ordinary Rayan learning may update host and relationship models but not the core Elaina-derived identity anchor, and the Memory Formation Model remains a separate learned non-authoritative component.
