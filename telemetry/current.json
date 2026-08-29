@@ -1,0 +1,67 @@
+{
+  "adaptive": {
+    "blocks_scored": 0,
+    "blocks_selected": 0,
+    "tasks_used": 0
+  },
+  "authority_invariants": {
+    "A_SYN_generated_count": 0,
+    "E_INF_accepted_count": 0,
+    "MC10_saturation_rounds_credited": 0,
+    "model_training_performed": false,
+    "qualification_outputs_are_not_E_INF": true
+  },
+  "current_stage": "screen-adjudication",
+  "dispatch": {
+    "cleanup_complete": 4,
+    "note": "dispatch counts are observability hints; canonical tournament files remain authoritative",
+    "platform_absent_observations": 0,
+    "platform_complete_observations": 6,
+    "platform_running_observations": 0,
+    "state_files": 17,
+    "unsettled_state_files": 11,
+    "wrapper_outputs_verified": 6
+  },
+  "durable_completed_stage": "screen-primary",
+  "final": {
+    "finalist_count": 0,
+    "holdout_scored": false,
+    "owner_review_complete": false,
+    "owner_review_packet_prepared": false,
+    "pairwise_diagnostic_complete": false,
+    "winner_ratified": false
+  },
+  "last_local_activity_utc": "2026-08-29T04:54:24Z",
+  "next_stage": "screen-adjudication",
+  "package_version": "v2.1.9",
+  "privacy": {
+    "candidate_text_exposed": false,
+    "credentials_exposed": false,
+    "hidden_evaluator_text_exposed": false,
+    "kernel_ids_exposed": false,
+    "local_paths_exposed": false,
+    "model_tags_exposed": false,
+    "public_sanitized": true,
+    "rank_identities_exposed": false
+  },
+  "repo_head": "0abaed85873c3f8de04765847eb7700b0e20433f",
+  "schema_version": "alice.generator-tournament.public-telemetry.v1",
+  "screen": {
+    "adjudication_assignment_pairs": 712,
+    "adjudication_ingested": false,
+    "adjudication_judgments_ingested": 0,
+    "adjudication_plan_complete": true,
+    "adjudication_target_candidates": 356,
+    "assigned_judge_jobs": 9,
+    "credible_contender_count": 12,
+    "final_scored": false,
+    "primary_elimination_performed": false,
+    "primary_provisional_elimination_count": 11,
+    "primary_scored": true,
+    "validated_judge_outputs": 0
+  },
+  "state": "active",
+  "telemetry_revision": "e94ec95d2dde1009775481089e1e951d4cfc0cde43a95421b47882ed28d20e65",
+  "tournament_id": "alice-generator-qualification-tournament-adaptive-v2.1",
+  "updated_at_utc": "2026-08-29T15:00:52Z"
+}
