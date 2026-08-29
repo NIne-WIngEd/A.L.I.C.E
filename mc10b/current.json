@@ -1,1 +1,1 @@
-{"artifact_id":"alice.MC10B1.kaggle-live.current.v1","run_id":"mc10b1-primary-20260829T184800Z-a9954c4c","stage":"primary","status":"LOCAL_PREPARATION","checkpoint":"INPUT_FREEZE","updated_at_utc":"2026-08-29T18:48:05.4426941Z","local_model_inference":false,"stage_g_closed":false}
+{"artifact_id":"alice.MC10B1.kaggle-live.current.v1","run_id":"mc10b1-primary-20260829T191748Z-b45d9b70","stage":"primary","status":"LOCAL_PREPARATION","checkpoint":"INPUT_FREEZE","updated_at_utc":"2026-08-29T19:17:50.0628245Z","local_model_inference":false,"stage_g_closed":false}
