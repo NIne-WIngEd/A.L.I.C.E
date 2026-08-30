@@ -1,0 +1,1 @@
+{"arg1":"pull","argv0":"/tmp/alice-mc10b1-loe5uisu/runtime/bin/ollama","at_utc":"2026-08-30T15:34:29.975248Z","kind":"PROCESS_START","label":"ollama pull gemma4:31b-it-q4_K_M","run_id":"mc10b1-challengers-20260830T152032Z-4870b223","stage":"challengers"}
