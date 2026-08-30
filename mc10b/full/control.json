@@ -1,0 +1,1 @@
+{"artifact_id":"alice.MC10B.full-einf-generation.control.v1","run_id":"mc10b-full-20260830T175946Z-f0722ca9","action":"run","stage":"full-einf-generation","updated_at_utc":"2026-08-30T17:59:46.3828632Z","note":"Set action=stop to request a graceful checkpoint before the next generation obligation."}
