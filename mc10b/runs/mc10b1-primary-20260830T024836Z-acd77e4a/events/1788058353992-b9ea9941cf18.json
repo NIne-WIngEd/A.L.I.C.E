@@ -1,0 +1,1 @@
+{"arg1":"pull","argv0":"/tmp/alice-mc10b1-5s31cfqv/runtime/bin/ollama","at_utc":"2026-08-30T02:52:33.992687Z","kind":"PROCESS_START","label":"ollama pull gpt-oss:20b","run_id":"mc10b1-primary-20260830T024836Z-acd77e4a","stage":"primary"}
