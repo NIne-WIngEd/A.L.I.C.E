@@ -1,0 +1,1 @@
+{"at_utc":"2026-09-01T17:15:31.433363Z","elapsed_seconds":116.29,"kind":"PROCESS_COMPLETE","label":"ollama pull gpt-oss:20b","run_id":"mc10c-asyn-20260901T170829Z-9cd9f058","stage":"mc10c-asyn-generation"}
