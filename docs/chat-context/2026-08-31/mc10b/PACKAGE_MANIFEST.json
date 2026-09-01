@@ -1,0 +1,62 @@
+{
+  "artifact_id": "alice.MC10B.full-einf-frontier.execution-package.v1.1.0",
+  "authority": {
+    "A_SYN_generation": false,
+    "E_INF_acceptance": false,
+    "MC10B_closure": false,
+    "MC10C_start": false,
+    "model_training": false,
+    "stage_g_closure": false
+  },
+  "controller_version": "1.1.0",
+  "expected_package_files": [
+    "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_mc10b1-challengers-20260830T152032Z-4870b223.zip",
+    "ALICE_MC10B1_CHALLENGER_AUDIT_VERDICTS_20260830.jsonl",
+    "ALICE_MC10B1_CHALLENGER_FIDELITY_AUDIT_20260830.md",
+    "ALICE_MC10B1_PILOT_AUDIT_CLOSURE_AND_FULL_GENERATION_AUTHORIZATION_v1.json",
+    "ALICE_MC10B1_POST_CHALLENGER_PROVISIONAL_EINF_SET_20260830.md",
+    "ALICE_MC10B_GENERATOR_PORTFOLIO_QUALIFICATION_v1.json",
+    "DEEP_AUDIT_REPORT.md",
+    "PACKAGE_MANIFEST.json",
+    "README.md",
+    "SHA256SUMS.txt",
+    "Start-ALICEMC10BFullEInfGeneration-v1.1.0.ps1",
+    "build_mc10b1_portfolio_pilot_v1_1.py",
+    "mc10b1_kaggle_worker.py",
+    "mc10b1_transport_common.py",
+    "mc10b_full_common.py",
+    "mc10b_full_controller.py",
+    "mc10b_full_kaggle_worker.py",
+    "mc10b_full_mount_probe.py",
+    "qualify_mc10b_full_v110.py",
+    "selftest_mc10b_full_v110.py"
+  ],
+  "external_failure_statement": "Kaggle/GitHub/network/GPU/model failures cannot be guaranteed absent; controller is designed to fail closed and preserve recoverable evidence.",
+  "frozen_artifact_sha256": {
+    "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_mc10b1-challengers-20260830T152032Z-4870b223.zip": "F6E2E54157AFBFEF0B7214F1DF0C0FDA3CC698A69CCCD4C964E923D91BFD8788",
+    "ALICE_MC10B1_CHALLENGER_AUDIT_VERDICTS_20260830.jsonl": "8C91587CA45B03F90498BE94A8EA4763085B30F11132A861C072D246FE45990F",
+    "ALICE_MC10B1_CHALLENGER_FIDELITY_AUDIT_20260830.md": "1870FC2245E4B12F18D04D82580DDA74DC2C6C4B0BD1390141E9FE141A91FD61",
+    "ALICE_MC10B1_PILOT_AUDIT_CLOSURE_AND_FULL_GENERATION_AUTHORIZATION_v1.json": "402115CAC129473EA7D74F3E56E5702BF95B1F569E4C2CAB81BF9DD5D8BE50FD",
+    "ALICE_MC10B1_POST_CHALLENGER_PROVISIONAL_EINF_SET_20260830.md": "D9533F5139C5573FD0DCED7BD9FE2E0A67EEC136263C01006388F9C0FBC429CA",
+    "ALICE_MC10B_GENERATOR_PORTFOLIO_QUALIFICATION_v1.json": "275FE5B2BBB597CBDFE5838E1B6A8E1ACB53C3BE4FED78397AFF8E577B16FFA6",
+    "build_mc10b1_portfolio_pilot_v1_1.py": "48970BE5AFF9D002C137A3FBF8F1D0AE4A5BC634C09BCD35DE341585E1733ABB",
+    "mc10b1_kaggle_worker.py": "16010EB47F103F66E1CA52FAA436ECAF3551D52130C1E9FFEE6C64BB83F1A15B",
+    "mc10b1_transport_common.py": "6BEF93ECB5897AA20912388F14B5EB70C1A32064991D8C0B0651ABC55D57B913"
+  },
+  "qualification": {
+    "clean_extract_requalification_required": true,
+    "deep_selftest_checks": 16,
+    "windows_powershell_parser_gate_required_before_execution": true
+  },
+  "release_class": "CLEAN_CONTROLLER_REDESIGN_AFTER_DEEP_AUDIT",
+  "repository_expected_head": "0abaed85873c3f8de04765847eb7700b0e20433f",
+  "scope": {
+    "audited_pilot_packets": 5,
+    "candidates_per_packet": 12,
+    "eligible_packets_total": 65,
+    "raw_candidates_target": 720,
+    "remaining_packets": 60,
+    "telemetry_blocks": 6,
+    "telemetry_packets_per_block": 10
+  }
+}

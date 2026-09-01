@@ -1,0 +1,201 @@
+>> }
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> Write-Host "launcher=$($Launcher[0].FullName)"
+launcher=C:\Users\rayns\Downloads\ALICE_CONTINUATION_2026-08-31_RUN\Start-ALICE-Continuation-20260831.ps1
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> Write-Host "`n===== WINDOWS POWERSHELL PARSER GATE =====" -ForegroundColor Cyan
+
+===== WINDOWS POWERSHELL PARSER GATE =====
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> $Tokens = $null
+(base) PS C:\A.L.I.C.E-main> $ParseErrors = $null
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> [System.Management.Automation.Language.Parser]::ParseFile(
+>>     $Launcher[0].FullName,
+>>     [ref]$Tokens,
+>>     [ref]$ParseErrors
+>> ) | Out-Null
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> if (@($ParseErrors).Count -gt 0) {
+>>     $ParseErrors | Format-List Message, Extent
+>>     throw "Parser check failed. Nothing executed."
+>> }
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> Write-Host "parser_check_passed=true" -ForegroundColor Green
+parser_check_passed=true
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> Write-Host "`n===== START A.L.I.C.E. CONTINUATION =====" -ForegroundColor Green
+
+===== START A.L.I.C.E. CONTINUATION =====
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> & $Launcher[0].FullName
+
+
+Message : Missing statement body in do loop.
+Extent  :
+
+Message : The string is missing the terminator: ".
+Extent  : "
+
+
+
+
+Windows PowerShell parser rejected:
+C:\Users\rayns\Downloads\ALICE_CONTINUATION_2026-08-31_RUN\Recover-and-Resume-ALICE-MC10B-v1.1.0.ps1
+At C:\Users\rayns\Downloads\ALICE_CONTINUATION_2026-08-31_RUN\Start-ALICE-Continuation-20260831.ps1:32 char:9
++         throw "Windows PowerShell parser rejected: $P"
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Windows PowerSh...C10B-v1.1.0.ps1:String) [], RuntimeException
+    + FullyQualifiedErrorId : Windows PowerShell parser rejected: C:\Users\rayns\Downloads\ALICE_CONTINUATION_2026-08-
+   31_RUN\Recover-and-Resume-ALICE-MC10B-v1.1.0.ps1
+
+(base) PS C:\A.L.I.C.E-main> $ErrorActionPreference = "Stop"
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> Set-Location "C:\A.L.I.C.E-main"
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> $Zip = @(
+>>     Get-ChildItem `
+>>         -LiteralPath "$HOME\Downloads" `
+>>         -File `
+>>         -Filter "ALICE_CONTINUATION_v1.2.0*.zip" |
+>>     Sort-Object LastWriteTime -Descending
+>> )[0]
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> if ($null -eq $Zip) {
+>>     throw "ALICE_CONTINUATION_v1.2.0 ZIP not found in Downloads."
+>> }
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> $Expected = "4CC5ABD85E9B973F0B9ADB41A5B037C845E4F945FE50AC31E3776F1ED6352AF9"
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> $Actual = (
+>>     Get-FileHash `
+>>         -LiteralPath $Zip.FullName `
+>>         -Algorithm SHA256
+>> ).Hash.ToUpperInvariant()
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> Write-Host "zip=$($Zip.FullName)"
+zip=C:\Users\rayns\Downloads\ALICE_CONTINUATION_v1.2.0.zip
+(base) PS C:\A.L.I.C.E-main> Write-Host "zip_sha256=$Actual"
+zip_sha256=4CC5ABD85E9B973F0B9ADB41A5B037C845E4F945FE50AC31E3776F1ED6352AF9
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> if ($Actual -ne $Expected) {
+>>     throw "ZIP SHA mismatch. Expected=$Expected Actual=$Actual"
+>> }
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> $Root = "$HOME\Downloads\ALICE_CONTINUATION_v1.2.0_RUN"
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> Remove-Item `
+>>     -LiteralPath $Root `
+>>     -Recurse `
+>>     -Force `
+>>     -ErrorAction SilentlyContinue
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> Expand-Archive `
+>>     -LiteralPath $Zip.FullName `
+>>     -DestinationPath $Root `
+>>     -Force
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> $Controller = Join-Path $Root "alice_continuation_v1_2_0.py"
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> if (-not (Test-Path -LiteralPath $Controller -PathType Leaf)) {
+>>     throw "Continuation controller missing after extraction."
+>> }
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> Write-Host ""
+
+(base) PS C:\A.L.I.C.E-main> Write-Host "===== PYTHON COMPILE GATE =====" -ForegroundColor Cyan
+===== PYTHON COMPILE GATE =====
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> python -m py_compile $Controller
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> if ($LASTEXITCODE -ne 0) {
+>>     throw "Python compile gate failed. Nothing executed."
+>> }
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> Write-Host "python_compile_gate_passed=true" -ForegroundColor Green
+python_compile_gate_passed=true
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> Write-Host ""
+
+(base) PS C:\A.L.I.C.E-main> Write-Host "===== FULL OFFLINE SELFTEST =====" -ForegroundColor Cyan
+===== FULL OFFLINE SELFTEST =====
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> python $Controller --selftest
+===== A.L.I.C.E. CONTINUATION v1.2.0 SELFTEST =====
+continuation_package_verified=true files=5
+context_archive_verified=true files=53
+safe_zip_extraction=true
+kaggle_status_parser=true
+
+===== VERIFY EXACT MC10B v1.1.0 RELEASE =====
+selftest_check_count=16
+package_qualification_check_count=7
+ALICE_MC10B_FULL_EINF_FRONTIER_V1_1_0_PACKAGE_QUALIFIED=true
+package_manifest_verified=true files=19
+mc10b_v1_1_0_zip_sha256=27D066BCF2940160A0A4A0EB797413EF72A25CDFD51D3B89CE8044D1F706B2FE
+recovered_partial_rows=519
+recovered_tail_recovered=false
+recovery_checkpoint_contract=true
+continuation_selftest_passed=true
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> if ($LASTEXITCODE -ne 0) {
+>>     throw "Continuation selftest failed. Live continuation was NOT started."
+>> }
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> Write-Host ""
+
+(base) PS C:\A.L.I.C.E-main> Write-Host "===== START A.L.I.C.E. CONTINUATION =====" -ForegroundColor Green
+===== START A.L.I.C.E. CONTINUATION =====
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> python $Controller
+===== A.L.I.C.E. CONTINUATION v1.2.0 =====
+architecture=python_only_continuation_controller
+custom_recovery_powershell=false
+context_archive_first=true
+main_mutation=false
+local_model_inference=false
+E_INF_acceptance=false
+A_SYN=false
+model_training=false
+continuation_package_verified=true files=5
++ C:\Program Files\Git\cmd\git.EXE fetch origin --prune
+From https://github.com/NIne-WIngEd/A.L.I.C.E
+   385428f..ea96dc9  alice-mc10b-live -> origin/alice-mc10b-live
+frozen_repo_baseline_verified=true
+
+===== ARCHIVE CHAT CONTEXT ON ISOLATED alice-context BRANCH =====
+context_archive_verified=true files=53
++ C:\Program Files\Git\cmd\git.EXE fetch origin --prune
++ C:\Program Files\Git\cmd\git.EXE worktree add --detach C:\Users\rayns\AppData\Local\Temp\alice-context-worktree-esy7ozcl\worktree 0abaed85873c3f8de04765847eb7700b0e20433f
+Preparing worktree (detached HEAD 0abaed8)
+HEAD is now at 0abaed8 Merge pull request #89 from NIne-WIngEd/docs/stage-g-candidate-qualification-matrix-v2
+context_archive_changes_detected=true
++ C:\Program Files\Git\cmd\git.EXE add -- docs/chat-context
+warning: in the working copy of 'docs/chat-context/2026-08-31/ARCHIVE_SHA256SUMS.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/chat-context/2026-08-31/CURRENT_STATE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/chat-context/2026-08-31/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/chat-context/2026-08-31/SOURCE_MANIFEST.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/chat-context/2026-08-31/TERMINAL_OPERATING_PATTERN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/chat-context/2026-08-31/mc10b-v1.1.0/ALICE_MC10B_FULL_EINF_FRONTIER_v1.1.0/ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/RECOVERY_RECEIPT.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/chat-context/2026-08-31/mc10b-v1.1.0/ALICE_MC10B_FULL_EINF_FRONTIER_v1.1.0/ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/SOURCE_KAGGLE_FAILURE.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/chat-context/2026-08-31/mc10b-v1.1.0/ALICE_MC10B_FULL_EINF_FRONTIER_v1.1.0/ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/ALICE_MC10B1_EINF_PORTFOLIO_PILOT_V1_1.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/chat-context/2026-08-31/mc10b-v1.1.0/ALICE_MC10B_FULL_EINF_FRONTIER_v1.1.0/ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/SHA256SUMS.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/chat-context/2026-08-31/mc10b-v1.1.0/ALICE_MC10B_FULL_EINF_FRONTIER_v1.1.0/ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_blinded_challenger_handoff_v1.jsonl', LF will be replaced by CRLF the next time Git touches it
+error: open("docs/chat-context/2026-08-31/mc10b-v1.1.0/ALICE_MC10B_FULL_EINF_FRONTIER_v1.1.0/ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_blinded_future_evaluation_handoff_v1.jsonl"): Filename too long
+error: unable to index file 'docs/chat-context/2026-08-31/mc10b-v1.1.0/ALICE_MC10B_FULL_EINF_FRONTIER_v1.1.0/ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_blinded_future_evaluation_handoff_v1.jsonl'
+fatal: adding files failed
+continuation_failure_class=ContinuationError
+continuation_failure_message=Command failed rc=128: C:\Program Files\Git\cmd\git.EXE add -- docs/chat-context
+continuation_private_diagnostic=C:\ALICE_Vault\datasets\memory_stage_g2\alice.stage-g2.g2a.gold-semantic-decomposition.v1\audits\alice-mc10b-full-einf-generation-v1.work\continuation-diagnostics\continuation-v120-20260901T023627Z.json
+(base) PS C:\A.L.I.C.E-main>
+(base) PS C:\A.L.I.C.E-main> if ($LASTEXITCODE -ne 0) {
+>>     throw "A.L.I.C.E. continuation returned exit code $LASTEXITCODE"
+>> }
+A.L.I.C.E. continuation returned exit code 1
+At line:2 char:5
++     throw "A.L.I.C.E. continuation returned exit code $LASTEXITCODE"
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (A.L.I.C.E. cont...ned exit code 1:String) [], RuntimeException
+    + FullyQualifiedErrorId : A.L.I.C.E. continuation returned exit code 1
+
+(base) PS C:\A.L.I.C.E-main>

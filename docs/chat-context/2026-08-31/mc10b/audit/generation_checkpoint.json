@@ -1,0 +1,1 @@
+{"artifact_id":"alice.MC10B1.portfolio-generation-checkpoint-receipt.v1.1","checkpoint_state_removed_after_completion":true,"completed_primary_generation_obligations":60,"completed_shadow_challenge_obligations":10,"execution_backend":"KAGGLE_T4X2_PINNED_OLLAMA_RUNTIME","partial_files_finalized":true,"resume_count":0,"resume_supported":true}

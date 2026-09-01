@@ -1,0 +1,36 @@
+{
+  "A_SYN_generated_count": 0,
+  "E_INF_accepted_count": 0,
+  "MC10B_complete": false,
+  "MC10B_full_generation_start_allowed": true,
+  "MC10C_start_allowed": false,
+  "MC10_saturation_rounds_credited": 0,
+  "artifact_id": "alice.MC10B1.pilot-challenger-audit-closure.v1",
+  "audited_at_date": "2026-08-30",
+  "challenger_audit_status": "PASS_WITH_FILTERING",
+  "challenger_outputs_audited": 10,
+  "gemma_outputs_audited": 5,
+  "glm_outputs_audited": 5,
+  "input_challenger_audit_zip_sha256": "F6E2E54157AFBFEF0B7214F1DF0C0FDA3CC698A69CCCD4C964E923D91BFD8788",
+  "model_training_performed": false,
+  "next_gate": "MC10B_FULL_CANDIDATE_GENERATION",
+  "notes": [
+    "Pilot pass validates the generation/challenger/falsification workflow; it does not itself accept E-INF.",
+    "All challenger outputs remain SHADOW-CHALLENGE and are ineligible for promotion.",
+    "UNKNOWN remains mandatory in future candidate competitions.",
+    "Broader-canon/hidden-E0 falsification remains required before any acceptance."
+  ],
+  "owner_primary_review_status": "APPROVED_BY_OWNER",
+  "phase2_replaced": false,
+  "pilot_challenger_audit_passed": true,
+  "primary_packet_decisions_overturned": 0,
+  "primary_selected_einf_survivors": [
+    "EINF-7C3BF24AC1A55EFCDBD17173",
+    "EINF-C963B44A0F73C31128B641AE",
+    "EINF-36000228E482563914A11A64",
+    "EINF-6A8B9E8F463BB9857F31CB59"
+  ],
+  "primary_unknown_winner": "EINF-C85F9476353C233FB07FF096",
+  "stage_g_closed": false,
+  "stage_h_activated": false
+}

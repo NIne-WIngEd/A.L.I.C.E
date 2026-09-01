@@ -1,0 +1,363 @@
+{
+  "generated_at_utc": "2026-09-01T02:40:00Z",
+  "layout_version": "short-path-v1",
+  "path_budget": {
+    "max_archive_member_chars": 120
+  },
+  "original_uploads": [
+    {
+      "original_name": "ChatGPT-Continue Alice Stage G-20260831-1940.pdf",
+      "original_bytes": 4839444,
+      "original_sha256": "55558D788E6E388953FF80AC4317E0037D58BA047EFE174BB9563A284EE9DC58"
+    },
+    {
+      "original_name": "ChatGPT-Continue Alice Stage G-20260829-1629(1).pdf",
+      "original_bytes": 4839438,
+      "original_sha256": "F289D189B4B0325E3B9CA0DFF66159E1D1396266D2A92E37DCBECBA21A4F5404"
+    },
+    {
+      "original_name": "Pasted text(20260901-004240).txt",
+      "original_bytes": 533803,
+      "original_sha256": "A3CAEE9630A94C8527F57BD272436D87513BFB15D5A3C2C0DFA5368500EF81F0"
+    },
+    {
+      "original_name": "ChatGPT-Alice Memory Continuation(3).pdf",
+      "original_bytes": 2797594,
+      "original_sha256": "0B078CCE37484E1D78F6D7F1A3442895EAD08A59EA8896B8B7437D216824547C"
+    },
+    {
+      "original_name": "ChatGPT-Research UI Design Options-20260829-1634(1).pdf",
+      "original_bytes": 6721864,
+      "original_sha256": "E7E62ABF3E927848B74A1FFCD8980E48CB2A50C77FCB39B30F4D4F5093E2E97A"
+    },
+    {
+      "original_name": "ChatGPT-Recovery Audit Progress-20260823-2255(3).pdf",
+      "original_bytes": 3632235,
+      "original_sha256": "35047B057FECF0BE54540899E16A8B94F035F73B09ACA9318C85C10C2047832C"
+    },
+    {
+      "original_name": "ChatGPT-Assess AI Use-20260812-1928(4).pdf",
+      "original_bytes": 2710044,
+      "original_sha256": "B3029D49DC63EB8FB646C69E4A1D0747BD264B9F3ADF91E31FD48DD11894230D"
+    },
+    {
+      "original_name": "ALICE_STAGE_G_GPLUS_MEMORY_ARCHITECTURE_HANDOFF_2026-08-23(5).md",
+      "original_bytes": 31500,
+      "original_sha256": "B56870041A3689DDEB806E53B89B665CFAEF80ED3CA3064EFA98A60022A868F3"
+    },
+    {
+      "original_name": "ALICE_KAGGLE_REMOTE_COMPUTE_HANDOFF_v0.2(5).md",
+      "original_bytes": 15258,
+      "original_sha256": "2646FDDC83CAC73461497587105566BAA445FAF6653F7571B1EB6752DF080CFB"
+    },
+    {
+      "original_name": "ALICE_MC10B_FULL_EINF_FRONTIER_v1.1.0(1).zip",
+      "original_bytes": 202362,
+      "original_sha256": "27D066BCF2940160A0A4A0EB797413EF72A25CDFD51D3B89CE8044D1F706B2FE"
+    },
+    {
+      "original_name": "Pasted text(20260901-023643).txt",
+      "original_bytes": 10892,
+      "original_sha256": "6A1084898EE574F4EADE9EF3313840A1D61E07A2FB4E01E4A8EC4416C0799BFB",
+      "note": "v1.2.0 continuation execution log"
+    }
+  ],
+  "context_sources": [
+    {
+      "archive_path": "src/S01-kaggle-handoff.md",
+      "original_source": "ALICE_KAGGLE_REMOTE_COMPUTE_HANDOFF_v0.2.md",
+      "bytes": 15258,
+      "sha256": "2646FDDC83CAC73461497587105566BAA445FAF6653F7571B1EB6752DF080CFB"
+    },
+    {
+      "archive_path": "src/S02-memory-handoff.md",
+      "original_source": "ALICE_STAGE_G_GPLUS_MEMORY_ARCHITECTURE_HANDOFF_2026-08-23.md",
+      "bytes": 31500,
+      "sha256": "B56870041A3689DDEB806E53B89B665CFAEF80ED3CA3064EFA98A60022A868F3"
+    },
+    {
+      "archive_path": "src/S03-alice-memory.txt",
+      "original_source": "ChatGPT-Alice-Memory-Continuation.txt",
+      "bytes": 392804,
+      "sha256": "560D34AEB8A431C6408E2EB04D5DD1DAF203301B7555A68381CBB063D7DBBDCD"
+    },
+    {
+      "archive_path": "src/S04-assess-ai-use.txt",
+      "original_source": "ChatGPT-Assess-AI-Use-20260812-1928.txt",
+      "bytes": 245119,
+      "sha256": "C4A80DC151BC4593082844BC3F88FDFF0D5642E8C28D46105A1A87381065C8AB"
+    },
+    {
+      "archive_path": "src/S05-stageg-0829.txt",
+      "original_source": "ChatGPT-Continue-Alice-Stage-G-20260829-1629.txt",
+      "bytes": 586088,
+      "sha256": "728B9C85A44CBF89FC38D372B0C6AF69CFA0A1A233B59A9A9A2CF9D525592795"
+    },
+    {
+      "archive_path": "src/S06-stageg-0831.txt",
+      "original_source": "ChatGPT-Continue-Alice-Stage-G-20260831-1940.txt",
+      "bytes": 586088,
+      "sha256": "E1DC94D9FF75293DAFCF5E48E01A3D40CAA2D03609A522A151F9F4BFE9C8B191"
+    },
+    {
+      "archive_path": "src/S07-recovery-audit.txt",
+      "original_source": "ChatGPT-Recovery-Audit-Progress-20260823-2255.txt",
+      "bytes": 431257,
+      "sha256": "A43ABB9A4160180EA1B82A4C9D02309CAB776998ABD14276D2E65EB8EDAA5496"
+    },
+    {
+      "archive_path": "src/S08-research-ui.txt",
+      "original_source": "ChatGPT-Research-UI-Design-Options-20260829-1634.txt",
+      "bytes": 600261,
+      "sha256": "D0CEDA31E12DB0A36DCE55EFA9170023CF35B4D4D5E795D369237736872AAF6E"
+    },
+    {
+      "archive_path": "src/S09-terminal-004240.txt",
+      "original_source": "Pasted-text-20260901-004240.txt",
+      "bytes": 533803,
+      "sha256": "A3CAEE9630A94C8527F57BD272436D87513BFB15D5A3C2C0DFA5368500EF81F0"
+    },
+    {
+      "archive_path": "src/S10-terminal-023643.txt",
+      "original_source": "Pasted text(20260901-023643).txt",
+      "bytes": 10892,
+      "sha256": "6A1084898EE574F4EADE9EF3313840A1D61E07A2FB4E01E4A8EC4416C0799BFB"
+    }
+  ],
+  "mc10b_mirror": [
+    {
+      "archive_path": "mc10b/audit/live_current.json",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/LIVE_CURRENT_SNAPSHOT.json",
+      "bytes": 1483,
+      "sha256": "05952ECB3BF4E19C75E9F8CAD762D2FA4E0DB5CC5126C626789F342841501EA4"
+    },
+    {
+      "archive_path": "mc10b/audit/recovery_receipt.json",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/RECOVERY_RECEIPT.json",
+      "bytes": 1673,
+      "sha256": "9567BCB5130D74AEB6F2B745DE5B16400FD457F3F61E213DBFFFF76829F84491"
+    },
+    {
+      "archive_path": "mc10b/audit/source_failure.json",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/SOURCE_KAGGLE_FAILURE.json",
+      "bytes": 2549,
+      "sha256": "2FCD647FF069522581432EAD40DA45E6B35C011911CA0D03364ACCAED93FEF29"
+    },
+    {
+      "archive_path": "mc10b/audit/portfolio.md",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/ALICE_MC10B1_EINF_PORTFOLIO_PILOT_V1_1.md",
+      "bytes": 423,
+      "sha256": "E6A93EE530DA871403520564F9F54C61C7CD2BA7D32773CCA54C56F67AE1A639"
+    },
+    {
+      "archive_path": "mc10b/audit/final_sha256.txt",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/SHA256SUMS.txt",
+      "bytes": 1598,
+      "sha256": "CA1CDDD96EB4E1C4D24FCFF719089FB72429D170B9187B6F5B0F04BB118FF016"
+    },
+    {
+      "archive_path": "mc10b/audit/challenger_handoff.jsonl",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_blinded_challenger_handoff_v1.jsonl",
+      "bytes": 19351,
+      "sha256": "6F4874E53F4F1FA0F11DBE22636D89CF989F04EDF874F494EA068BCC25C6886D"
+    },
+    {
+      "archive_path": "mc10b/audit/future_handoff.jsonl",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_blinded_future_evaluation_handoff_v1.jsonl",
+      "bytes": 158974,
+      "sha256": "709308D33B7FF4509AEED366337E9A08E4BC062A24998D28D8026FEE3B88B49A"
+    },
+    {
+      "archive_path": "mc10b/audit/runtime_manifests.jsonl",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_challenger_runtime_manifests_v1.jsonl",
+      "bytes": 1668,
+      "sha256": "1F8A740EDFA03ADD2DB771F5F135FC8A1931ECDE5678828D05E288ACF47EE01D"
+    },
+    {
+      "archive_path": "mc10b/audit/raw_candidates.jsonl",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_einf_raw_candidates_v1.jsonl",
+      "bytes": 256405,
+      "sha256": "FCE506F32923C869078D0B0228F9B95083823A9155DEF9F16380EAF95539CDA5"
+    },
+    {
+      "archive_path": "mc10b/audit/generation_checkpoint.json",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_generation_checkpoint_receipt_v1.json",
+      "bytes": 343,
+      "sha256": "4624D81A7C33E299B6A1427C20DD0740D15CA1F59BB123F247297B1259528ACE"
+    },
+    {
+      "archive_path": "mc10b/audit/generation_source.json",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_generation_source_manifest_v1.json",
+      "bytes": 4249,
+      "sha256": "02AE7264D909E93113A39E162CDEBB6F0BEA8BE2AECAD06444080564D4D4937E"
+    },
+    {
+      "archive_path": "mc10b/audit/portfolio_receipt.json",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_generator_portfolio_receipt_v1.json",
+      "bytes": 3323,
+      "sha256": "275FE5B2BBB597CBDFE5838E1B6A8E1ACB53C3BE4FED78397AFF8E577B16FFA6"
+    },
+    {
+      "archive_path": "mc10b/audit/runtime_manifest.json",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_generator_runtime_manifest_v1.json",
+      "bytes": 909,
+      "sha256": "06CC0B4B9C66F30A395A4461E838F0351B97A8A23FCC944A83B11986E05D5EB5"
+    },
+    {
+      "archive_path": "mc10b/audit/pilot_closure.json",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_pilot_closure_receipt_v1.json",
+      "bytes": 749,
+      "sha256": "16446EE05264C0CAF76AFECE62BAEB5A2643888CBD117E5FFFA13A8AF4C0F33D"
+    },
+    {
+      "archive_path": "mc10b/audit/pilot_packets.jsonl",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_selected_pilot_packets_v1.jsonl",
+      "bytes": 2220,
+      "sha256": "6869FE7520568FC1169B6A525F24042785D86A6451F54132F122BAC91BE6F72E"
+    },
+    {
+      "archive_path": "mc10b/audit/shadow_challenges.jsonl",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_shadow_challenges_v1.jsonl",
+      "bytes": 32775,
+      "sha256": "701BEB82DE651ECB928FFE202591AF0F4976B03663DC656103E00965F0FEB400"
+    },
+    {
+      "archive_path": "mc10b/audit/summary.json",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_summary_v1.json",
+      "bytes": 2193,
+      "sha256": "D0A6F1ED91C060D7D4BD7FF2E132E54E85BE4F7AB3136088E13A020F8798D2EC"
+    },
+    {
+      "archive_path": "mc10b/audit/unknown_competitors.jsonl",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/mc10b1_unknown_competitors_v1.jsonl",
+      "bytes": 2360,
+      "sha256": "96BD33198346EAD35B6F80DFD2D7BDA3790A6561300A1BA82EA0958B81290AAB"
+    },
+    {
+      "archive_path": "mc10b/audit/validate_final.py",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_INPUT_extracted/final_package/validate_alice_mc10b1_einf_portfolio_pilot_v1_1.py",
+      "bytes": 5326,
+      "sha256": "08BD5449D996FD1732E86D690CEB897B9C7E9427E33694EBE4F94727E1B43E06"
+    },
+    {
+      "archive_path": "mc10b/challenger_verdicts.jsonl",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_AUDIT_VERDICTS_20260830.jsonl",
+      "bytes": 10841,
+      "sha256": "8C91587CA45B03F90498BE94A8EA4763085B30F11132A861C072D246FE45990F"
+    },
+    {
+      "archive_path": "mc10b/challenger_audit.md",
+      "original_package_path": "ALICE_MC10B1_CHALLENGER_FIDELITY_AUDIT_20260830.md",
+      "bytes": 11943,
+      "sha256": "1870FC2245E4B12F18D04D82580DDA74DC2C6C4B0BD1390141E9FE141A91FD61"
+    },
+    {
+      "archive_path": "mc10b/pilot_authorization.json",
+      "original_package_path": "ALICE_MC10B1_PILOT_AUDIT_CLOSURE_AND_FULL_GENERATION_AUTHORIZATION_v1.json",
+      "bytes": 1493,
+      "sha256": "402115CAC129473EA7D74F3E56E5702BF95B1F569E4C2CAB81BF9DD5D8BE50FD"
+    },
+    {
+      "archive_path": "mc10b/provisional_einf.md",
+      "original_package_path": "ALICE_MC10B1_POST_CHALLENGER_PROVISIONAL_EINF_SET_20260830.md",
+      "bytes": 4312,
+      "sha256": "D9533F5139C5573FD0DCED7BD9FE2E0A67EEC136263C01006388F9C0FBC429CA"
+    },
+    {
+      "archive_path": "mc10b/generator_portfolio.json",
+      "original_package_path": "ALICE_MC10B_GENERATOR_PORTFOLIO_QUALIFICATION_v1.json",
+      "bytes": 3323,
+      "sha256": "275FE5B2BBB597CBDFE5838E1B6A8E1ACB53C3BE4FED78397AFF8E577B16FFA6"
+    },
+    {
+      "archive_path": "mc10b/DEEP_AUDIT.md",
+      "original_package_path": "DEEP_AUDIT_REPORT.md",
+      "bytes": 4612,
+      "sha256": "C8FBAE144377A9A9FB73204985CFD3C1A519207C77E959E9CAE085A9E57F927D"
+    },
+    {
+      "archive_path": "mc10b/PACKAGE_MANIFEST.json",
+      "original_package_path": "PACKAGE_MANIFEST.json",
+      "bytes": 3139,
+      "sha256": "667580D4F10EECBDF457651834A2E288B8A40990605ED2324D31EE744C92B4F6"
+    },
+    {
+      "archive_path": "mc10b/README.md",
+      "original_package_path": "README.md",
+      "bytes": 3937,
+      "sha256": "95E574793F89F60F38F65B7FED25C44E563A94334B8C77007D2445D3F16A7134"
+    },
+    {
+      "archive_path": "mc10b/SHA256SUMS.txt",
+      "original_package_path": "SHA256SUMS.txt",
+      "bytes": 1977,
+      "sha256": "D8B2918AC2B7585BDE0A583D68118BB3DDC54C37AA6A360163C9FF79C3F9BEAA"
+    },
+    {
+      "archive_path": "mc10b/launcher.ps1",
+      "original_package_path": "Start-ALICEMC10BFullEInfGeneration-v1.1.0.ps1",
+      "bytes": 1249,
+      "sha256": "A5230D07523444ED79D14D47484513543565EBB2E4D88F4C8B9515BC837C8B81"
+    },
+    {
+      "archive_path": "mc10b/pilot_builder.py",
+      "original_package_path": "build_mc10b1_portfolio_pilot_v1_1.py",
+      "bytes": 56573,
+      "sha256": "48970BE5AFF9D002C137A3FBF8F1D0AE4A5BC634C09BCD35DE341585E1733ABB"
+    },
+    {
+      "archive_path": "mc10b/pilot_worker.py",
+      "original_package_path": "mc10b1_kaggle_worker.py",
+      "bytes": 49726,
+      "sha256": "16010EB47F103F66E1CA52FAA436ECAF3551D52130C1E9FFEE6C64BB83F1A15B"
+    },
+    {
+      "archive_path": "mc10b/transport.py",
+      "original_package_path": "mc10b1_transport_common.py",
+      "bytes": 15587,
+      "sha256": "6BEF93ECB5897AA20912388F14B5EB70C1A32064991D8C0B0651ABC55D57B913"
+    },
+    {
+      "archive_path": "mc10b/full_common.py",
+      "original_package_path": "mc10b_full_common.py",
+      "bytes": 34996,
+      "sha256": "F4229EF2E1AE3E27EFB2BD5B52D04FBF488C0F64397C7F7A69698D0C56EFF2CE"
+    },
+    {
+      "archive_path": "mc10b/full_controller.py",
+      "original_package_path": "mc10b_full_controller.py",
+      "bytes": 59285,
+      "sha256": "1DFAE9F8D0ACD6BA7E1042FA127376AE4D95692EF7BCAB20CC765E78E98F02D3"
+    },
+    {
+      "archive_path": "mc10b/full_worker.py",
+      "original_package_path": "mc10b_full_kaggle_worker.py",
+      "bytes": 28906,
+      "sha256": "EF9AE24B59C7C5EBBE8ABF26E3F066255532D42DF8930C77DD954683CDFAD193"
+    },
+    {
+      "archive_path": "mc10b/mount_probe.py",
+      "original_package_path": "mc10b_full_mount_probe.py",
+      "bytes": 13463,
+      "sha256": "E0E34771C7D6EC7A854A993A37A341EA9549050591E22D1ED193AC6919F37A8D"
+    },
+    {
+      "archive_path": "mc10b/qualify.py",
+      "original_package_path": "qualify_mc10b_full_v110.py",
+      "bytes": 3878,
+      "sha256": "AD08B2191409BCAE17B248FD0EF53830D65027EC9361429BCE46C060EB720502"
+    },
+    {
+      "archive_path": "mc10b/selftest.py",
+      "original_package_path": "selftest_mc10b_full_v110.py",
+      "bytes": 20187,
+      "sha256": "45360F0BF348A1260357DD7684B926686B06BD2F60B9EFCDF0FF30DC3B98C47E"
+    },
+    {
+      "archive_path": "mc10b/release-v1.1.0.zip",
+      "original_package_path": "owner-provided ALICE_MC10B_FULL_EINF_FRONTIER_v1.1.0.zip",
+      "bytes": 202362,
+      "sha256": "27D066BCF2940160A0A4A0EB797413EF72A25CDFD51D3B89CE8044D1F706B2FE"
+    }
+  ]
+}
