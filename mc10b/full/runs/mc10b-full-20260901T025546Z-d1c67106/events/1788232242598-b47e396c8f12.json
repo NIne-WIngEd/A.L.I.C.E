@@ -1,0 +1,1 @@
+{"at_utc":"2026-09-01T03:10:42.598803Z","elapsed_seconds":109.64,"kind":"PROCESS_COMPLETE","label":"ollama pull gpt-oss:20b","run_id":"mc10b-full-20260901T025546Z-d1c67106","stage":"full-einf-generation"}
