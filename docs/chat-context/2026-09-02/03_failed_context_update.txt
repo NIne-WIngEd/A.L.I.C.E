@@ -1,0 +1,11 @@
+A.L.I.C.E. continuation context-update failure captured 2026-09-02
+
+The obsolete ALICE_CONTINUE_20260902.py stopped immediately after verifying frozen main because it incorrectly assumed ChatGPT-uploaded context files were present in Windows Downloads. No context/Kaggle/Vault mutation occurred after the frozen-main check.
+
+The superseding ALICE_CONTEXT_CHECKPOINT_v1.3.0.pyz then failed its own synthetic selftest before any live --apply step. The synthetic test checked a working-tree README byte hash under Git line-ending conversion and reported:
+
+ALICE_CONTEXT_CHECKPOINT_V130_FAILED: RuntimeError: alice-context README parent drift
+
+This was a packaging/selftest design bug. It did not mutate the real A.L.I.C.E. repository, alice-context branch, Vault, or Kaggle state. v1.3.0.pyz is superseded and must not be used.
+
+Recovered operating rule: use the proven versioned ZIP + plain Python controller workflow for context continuation. PowerShell is only the short verification/extraction/compile/selftest/run wrapper. For later MC10D packages, a tiny pre-audited .ps1 launcher is acceptable and is invoked with powershell.exe -NoProfile -ExecutionPolicy Bypass -File.

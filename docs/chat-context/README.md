@@ -6,7 +6,7 @@ This is the stable entry point for future A.L.I.C.E. working chats so the owner 
 
 ## Latest checkpoint
 
-Start with [`2026-08-31/CURRENT_STATE.md`](./2026-08-31/CURRENT_STATE.md), then follow [`2026-08-31/README.md`](./2026-08-31/README.md).
+Start with [`2026-09-02/CURRENT_STATE.md`](./2026-09-02/CURRENT_STATE.md). The prior full checkpoint remains under [`2026-08-31/`](./2026-08-31/).
 
 These archives are contextual reconstruction checkpoints, **not substitutes for canonical ratified A.L.I.C.E. authority**. Current ratified repository files, executable validators, and canonical Stage G evidence win if they conflict with a prior chat transcript.
 
