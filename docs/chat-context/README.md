@@ -12,6 +12,10 @@ Start with the newest dated handoff. Use canonical main for released source and 
 
 Rayan accepted the audit and switched ongoing work to Astra. The newly supplied terminal log records a v186 GLM semantic calibration failure under thinking_off. Existing output must be inspected without a GPU rerun. v186 success, pointwise readiness and breadth-v104 eligibility are not established. Preserve the existing 287 pool, 63 replacements and one deferred item.
 
+## Current execution package
+
+The [v186 offline forensics package](2026-09-06/astra/tools/v186-forensics-v1/README.md) collects existing Windows output and publishes a typed summary to this branch. It passed 20 offline tests; actual vault response rows remain pending. See the [prospective validation design](2026-09-06/astra/PROSPECTIVE_JUDGE_VALIDATION.md) for the accepted scientific direction.
+
 ## Earlier context
 
 - [Previous Q04 diagnostic and v186 preparation](2026-09-06/MC10D_GLM_Q04_DIAGNOSTIC_TO_V186.md)

@@ -5,7 +5,7 @@ Rayan explicitly switched ongoing ALICE work to Astra on 6 September 2026. The e
 ## Locations and authority
 
 - Canonical release: `NIne-WIngEd/A.L.I.C.E`, `main`, frozen at `0abaed85873c3f8de04765847eb7700b0e20433f`.
-- Continuity: `alice-context`, `docs/chat-context/README.md`; older source index: `2026-08-31/SOURCE_INDEX.md` (check the tree for exact index filename).
+- Continuity: `alice-context`, `docs/chat-context/README.md`; older source index: `2026-08-31/SOURCE_INDEX.md`.
 - Operational history: `alice-mc10b-live`, `alice-mc10c-live`, `alice-telemetry`; compute receipts: `NIne-WIngEd/Rayan-Compute-Ledger`.
 - User machine: `C:\A.L.I.C.E-main`; data/artifacts: `C:\ALICE_Vault`; Downloads contains versioned packages and launchers.
 - Remote archive: `rayan_gdrive:Rayan-Compute`; Magnolia working root: `/homes/01/mxrayan/rayan-compute`.

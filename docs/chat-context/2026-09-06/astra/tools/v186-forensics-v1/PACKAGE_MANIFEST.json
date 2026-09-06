@@ -1,0 +1,45 @@
+{
+  "artifact_id": "alice.mc10d.v186.offline-forensics.package.v1.0.0",
+  "files": [
+    {
+      "path": "EFFECTIVE_CALIBRATION_CONTRACT.json",
+      "bytes": 2473,
+      "sha256": "06d9631cc408ed8f2209b9c77210fc58609d203ab557e48c1789e90c6e6bba7c"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4714,
+      "sha256": "26555025e96b09be5b6c64fc246dfd5775c5ea580d70adc3fa4cce1a61003cab"
+    },
+    {
+      "path": "authority/effective_profile_policy.json",
+      "bytes": 1003,
+      "sha256": "45c66a55d5a04162b6373b7faa7f025cc523945e64e98c1301240e93d91f7f6a"
+    },
+    {
+      "path": "authority/recorded_failure_receipt.json",
+      "bytes": 720,
+      "sha256": "9f2f42447b99399338659c721e596a5339bad7d00ee4f188f685438bcd51580c"
+    },
+    {
+      "path": "authority/tasks.json",
+      "bytes": 7994,
+      "sha256": "b3abc2e36e4e93d3f8f6c9398c7c39b6ca2f40f9b3dcbe875ce9005d096f9420"
+    },
+    {
+      "path": "mc10d_forensics.py",
+      "bytes": 18696,
+      "sha256": "229457fdbfc42b120c69bf326d296bb9cacfbd02aa73fd2f03e209613dc98114"
+    },
+    {
+      "path": "publish_context.py",
+      "bytes": 7812,
+      "sha256": "d793a9e8a7951286b3c48526299e837163e62622cd624eaccbe164f02664094f"
+    },
+    {
+      "path": "selftest_forensics.py",
+      "bytes": 14029,
+      "sha256": "956172c6d2506cce972ba4e8d8a32e6f4070592798706402a48b3a8abfe2a639"
+    }
+  ]
+}

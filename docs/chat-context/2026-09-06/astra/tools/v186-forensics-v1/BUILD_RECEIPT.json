@@ -1,0 +1,20 @@
+{
+  "artifact_id": "alice.astra.offline-forensics-build-receipt.v1",
+  "package": "ALICE_MC10D_V186_OFFLINE_FORENSICS_v1.0.0.zip",
+  "package_sha256": "6a20ac96ad24300939478d704fba6f56c1143ccdf5c6f91cef5b4a130b8b6722",
+  "package_bytes": 23526,
+  "launcher": "Start-ALICEAstraForensicsV100.ps1",
+  "launcher_sha256": "6cfc803fdaea13feb726d1554670ff2c2cb5a448e17fd9b5778cb57414ab0be5",
+  "files_in_zip": 9,
+  "python_version": "Python 3.12.13",
+  "offline_tests": 20,
+  "offline_tests_passed": true,
+  "tested_from_fresh_zip_extraction": true,
+  "python_compile_gate_passed": true,
+  "launcher_embedded_manifest_verifier_tested": true,
+  "powershell_validation": "static inspection only; PowerShell runtime unavailable in this workspace",
+  "actual_windows_vault_results_read": false,
+  "remote_compute_actions": 0,
+  "synthetic_test_results_are_scientific_evidence": false,
+  "upstream_audit_context_commit": "cc31b59dd1f1b53426734483e6032f70cf5f1129"
+}

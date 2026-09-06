@@ -1,0 +1,33 @@
+context_publish_stage=fetch attempt=1
+context_publish_stage=push
+context_publish_stage=fetch attempt=1
+context_publish_stage=fetch attempt=1
+context_publish_stage=fetch attempt=1
+context_publish_stage=push
+context_publish_stage=fetch attempt=2
+context_publish_stage=push
+test_missing_evidence_does_not_create_output (__main__.CollectionTests.test_missing_evidence_does_not_create_output) ... ok
+test_output_cannot_be_inside_source_vault (__main__.CollectionTests.test_output_cannot_be_inside_source_vault) ... ok
+test_publication_failure_preserves_collection_and_returns_75 (__main__.CollectionTests.test_publication_failure_preserves_collection_and_returns_75) ... ok
+test_read_only_collection_rerun_and_bundle_contents (__main__.CollectionTests.test_read_only_collection_rerun_and_bundle_contents) ... ok
+test_source_change_during_collection_stops (__main__.CollectionTests.test_source_change_during_collection_stops) ... ok
+test_symlink_source_refused_where_supported (__main__.CollectionTests.test_symlink_source_refused_where_supported) ... ok
+test_append_idempotence_and_main_preservation (__main__.GitTests.test_append_idempotence_and_main_preservation) ... ok
+test_concurrent_context_advance_is_preserved (__main__.GitTests.test_concurrent_context_advance_is_preserved) ... ok
+test_boolean_gold_cannot_be_integer (__main__.ScoreTests.test_boolean_gold_cannot_be_integer) ... ok
+test_duplicate_missing_unknown_task_ids (__main__.ScoreTests.test_duplicate_missing_unknown_task_ids) ... ok
+test_exact_model_runtime_and_rendered_worker (__main__.ScoreTests.test_exact_model_runtime_and_rendered_worker) ... ok
+test_forged_counter_and_pass_cannot_override_rows (__main__.ScoreTests.test_forged_counter_and_pass_cannot_override_rows) ... ok
+test_gold_tampering_is_not_a_new_source_of_truth (__main__.ScoreTests.test_gold_tampering_is_not_a_new_source_of_truth) ... ok
+test_hard_anchor_failure_preserved_even_with_15_verdicts_and_6_critical (__main__.ScoreTests.test_hard_anchor_failure_preserved_even_with_15_verdicts_and_6_critical) ... ok
+test_privacy_and_authority_flags_required (__main__.ScoreTests.test_privacy_and_authority_flags_required) ... ok
+test_rationale_length_is_a_diagnostic_not_new_semantic_gate (__main__.ScoreTests.test_rationale_length_is_a_diagnostic_not_new_semantic_gate) ... ok
+test_reordered_rows_are_scored_by_frozen_id (__main__.ScoreTests.test_reordered_rows_are_scored_by_frozen_id) ... ok
+test_response_schema_and_self_reported_flags (__main__.ScoreTests.test_response_schema_and_self_reported_flags) ... ok
+test_stale_failure_and_duplicate_json_keys (__main__.ScoreTests.test_stale_failure_and_duplicate_json_keys) ... ok
+test_threshold_boundaries_and_no_upgrading_failure_to_pass (__main__.ScoreTests.test_threshold_boundaries_and_no_upgrading_failure_to_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.340s
+
+OK

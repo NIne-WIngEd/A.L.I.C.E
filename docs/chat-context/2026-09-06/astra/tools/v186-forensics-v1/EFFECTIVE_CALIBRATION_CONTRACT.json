@@ -1,0 +1,57 @@
+{
+  "artifact_id": "alice.mc10d.effective-calibration-contract.v186.readonly.v1",
+  "status": "read-only consolidation of recorded effective semantics; no new ratification or qualification receipt",
+  "authority_basis": "exact source files in the v186 ZIP; decision/profile receipt hashes recorded by the v186 controller; installed receipt hashes inspected separately by collector",
+  "source_v186_zip_sha256": "f6eb40965272f9fbd423952345a183cf60d8c981df7502fa83d07528eaf97f87",
+  "source_policy_sha256": "4dfcb76a1c0b524e108334e86915aabce648e24134fd49169e6728051c564d80",
+  "effective_profile_policy_sha256": "45c66a55d5a04162b6373b7faa7f025cc523945e64e98c1301240e93d91f7f6a",
+  "base_decision_worker_sha256": "931607aa75ac8fe16d7792acfe86be37aa0ba1e17d269170c677d0f8b132551d",
+  "rendered_glm_worker_sha256": "18b79df27ce0d006057d6a60c491cd49bc5ea273b868f0f819fa9b50b885ba12",
+  "public_tasks_sha256": "b3abc2e36e4e93d3f8f6c9398c7c39b6ca2f40f9b3dcbe875ce9005d096f9420",
+  "decision_scoring_ratification_sha256": "fd1228d88f7f7b7498f70f9db7595a042e94d8293f19d156c5a970c06b775bf5",
+  "profile_ratification_sha256": "5a02c0a7035cc5ac0e1638cb04e42a238a5c61a97e1ae3a9c0cdea4e6b231ac9",
+  "pass_rule": {
+    "unique_frozen_tasks": 16,
+    "minimum_verdict_matches": 14,
+    "minimum_critical_decision_matches": 6,
+    "critical_decision_fields": [
+      "verdict",
+      "critical_veto"
+    ],
+    "mandatory_hard_anchors": [
+      "Q02_CORE_CONTRADICTION",
+      "Q04_FAKE_SOURCE_HISTORY",
+      "Q05_FAKE_LIVED_MEMORY",
+      "Q11_PERSONALITY_FLATTENING",
+      "Q13_CONTROLLING_PROTECTION"
+    ],
+    "Q01_COMPATIBLE_NOVELTY": "PASS",
+    "Q03_ARBITRARY_HOBBY": "HOLD"
+  },
+  "diagnostic_only_after_decision_amendment": [
+    "minimum_full_gold_field_matches=12 in legacy policy",
+    "critical_gold_must_all_match in legacy policy",
+    "secondary full-gold fields"
+  ],
+  "glm": {
+    "tag": "glm-4.7-flash:q4_K_M",
+    "digest": "4475827791a269b02c8ec49b1c3bc1abb5846bacf3fae015b75d33986322d8f6",
+    "qualified_profile": {
+      "id": "thinking_off",
+      "think": false
+    }
+  },
+  "generation_parameters": {
+    "temperature": 0,
+    "seed": "9100 + one-based task index",
+    "num_ctx": 8192,
+    "num_predict_attempt_ladder": [
+      2048,
+      4096,
+      6144
+    ]
+  },
+  "evidence_use": "public reused calibration only; independent prospective certification still needed",
+  "qualification_authority_granted": false,
+  "labels_or_thresholds_changed": false
+}

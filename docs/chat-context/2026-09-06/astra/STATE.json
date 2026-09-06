@@ -39,5 +39,14 @@
     "complete Mission Graph semantics",
     "preserve phase ordering and private identity custody"
   ],
-  "stage_g_scope": "owner-authorized planning amendment; canonical machine-contract migration and evidence still pending; no Stage G closure inferred"
+  "stage_g_scope": "owner-authorized planning amendment; canonical machine-contract migration and evidence still pending; no Stage G closure inferred",
+  "continuation_work": {
+    "status": "OFFLINE_PACKAGE_PREPARED_AND_TESTED; actual Windows evidence pending",
+    "tool": "tools/v186-forensics-v1/README.md",
+    "offline_tests_passed": 20,
+    "gpu_jobs_submitted": 0,
+    "effective_calibration_contract_consolidated": true,
+    "prospective_validation_design_written": true,
+    "remote_run_success_claimed": false
+  }
 }

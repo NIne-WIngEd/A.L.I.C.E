@@ -45,3 +45,9 @@ The repository is public. The supplied v1.8.6 ZIP recursively contains private s
 
 A recorded local plan is not an upload receipt. Verify the remote alice-context commit after publishing; report any connector permission failure honestly and use the established local authenticated Git workflow only when authorized by the owner.
 
+
+## Prepared continuation artifact
+
+The CPU-only forensic package is implemented and passed 20 offline tests, including local Git publication, idempotence, concurrent edits, altered labels, missing evidence and preservation of source outputs. See [execution instructions](tools/v186-forensics-v1/README.md) and [build receipt](tools/v186-forensics-v1/BUILD_RECEIPT.json). The actual Windows vault result rows have not yet been read by Astra. Do not substitute synthetic selftest fixtures for real run evidence.
+
+The effective decision-centric calibration contract is consolidated in the tool directory. [Prospective validation design](PROSPECTIVE_JUDGE_VALIDATION.md) explains the independent evaluation that future generalization claims need. It does not change the current MC10D gates. After the launcher runs, a public typed summary may be appended under `forensics/`; the local result ZIP contains the existing fictional response rationales for review.
