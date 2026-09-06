@@ -5,7 +5,7 @@
   "main": "0abaed85873c3f8de04765847eb7700b0e20433f",
   "context_parent": "a42e6cb07fcccccf1e4e3cc394df460852f668a2",
   "evidence": "terminal log SHA256 b98891795bdd0f3b263aafe015dbdaa5cddd52789d6b96f87e7b79d6d931763e",
-  "checkpoint": "V100_WINDOWS_PREFLIGHT_PASSED_TRANSFER_FAILED_V101_REPAIR_READY",
+  "checkpoint": "QWEN_FALLBACK_OWNER_APPROVED_PACKAGE_READY_LIVE_EXECUTION_PENDING",
   "run_id": "260906185551-e563ae",
   "glm_profile": {
     "id": "thinking_off",
@@ -28,7 +28,7 @@
   "breadth_v104_executed_in_supplied_log": false,
   "breadth_prerequisite_satisfied": false,
   "acceptance_promotion_training_established": false,
-  "next_action": "RUN_CHECKED_QWEN_V101_WINDOWS_TRANSPORT_LAUNCHER_ON_EXISTING_STATE_THEN_VERIFY_ACTUAL_RESULT_ZIP",
+  "next_action": "RUN_CHECKED_QWEN_V100_WINDOWS_LAUNCHER_THEN_VERIFY_ACTUAL_RESULT_ZIP",
   "numeric_judge_gates_changed": false,
   "hidden_MC8_accessed": false,
   "accepted_plan_changes": [
@@ -41,22 +41,15 @@
   ],
   "stage_g_scope": "owner-authorized planning amendment; canonical machine-contract migration and evidence still pending; no Stage G closure inferred",
   "continuation_work": {
-    "status": "V100_WINDOWS_PREFLIGHT_PASSED_TRANSFER_FAILED_V101_REPAIR_READY",
-    "tool": "tools/qwen-transport-v101/README.md",
-    "offline_tests_passed": 11,
+    "status": "OWNER_APPROVED_QWEN_PUBLIC_PACKAGE_READY",
+    "tool": "tools/qwen-public-v1/README.md",
+    "offline_tests_passed": 35,
     "fresh_zip_extraction_tested": true,
     "ssh_bootstrap_python_tested": true,
     "native_windows_powershell_tested": false,
     "remote_compute_jobs_submitted": 0,
     "remote_run_success_claimed": false,
-    "automatic_rerun_or_provider_fallback": false,
-    "offline_tests_scope": "v101 focused client transport repair; original workload separately passed 35 native Windows tests",
-    "native_windows_powershell_test_scope": "active v101 launcher; pending",
-    "v100_native_windows_tests_reported_passed": 35,
-    "v100_native_windows_powershell_executed": true,
-    "actual_magnolia_transfer_after_repair_verified": false,
-    "original_workload_identity_preserved": true,
-    "state_migration_required": false
+    "automatic_rerun_or_provider_fallback": false
   },
   "actual_glm_forensic_bundle_received": true,
   "actual_glm_rows_reverified": true,
@@ -89,11 +82,5 @@
     "effective_calibration_contract_consolidated": true,
     "prospective_validation_design_written": true,
     "remote_run_success_claimed": false
-  },
-  "checkpoint_context_parent": "e3fe83d460cd4f2717e3f2b040b4d479655735f4",
-  "qwen_transport_repair": "QWEN_TRANSPORT_REPAIR_V101.json",
-  "qwen_terminal_observation": "QWEN_V100_WINDOWS_TERMINAL_OBSERVATION.json",
-  "qwen_latest_terminal_sha256": "78b19e9e4f53a977547b639b839ba9988628eade5d970984f7961cfa72fa24ff",
-  "qwen_last_controller_exit": 74,
-  "qwen_last_invocation_reached_submission": false
+  }
 }

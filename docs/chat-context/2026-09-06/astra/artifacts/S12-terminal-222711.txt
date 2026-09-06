@@ -1,0 +1,105 @@
+(base) PS C:\A.L.I.C.E-main> powershell -NoProfile -ExecutionPolicy Bypass -File "$HOME\Downloads\Start-ALICEAstraForensicsV100.ps1"
+package_sha256=6A20AC96AD24300939478D704FBA6F56C1143CCDF5C6F91CEF5B4A130B8B6722
+PYTHON=C:\Users\rayns\anaconda3\python.exe
+package_manifest_verified=true files=8
+python_compile_gate_passed=true files=3
+test_missing_evidence_does_not_create_output (__main__.CollectionTests.test_missing_evidence_does_not_create_output) ... ok
+test_output_cannot_be_inside_source_vault (__main__.CollectionTests.test_output_cannot_be_inside_source_vault) ... ok
+test_publication_failure_preserves_collection_and_returns_75 (__main__.CollectionTests.test_publication_failure_preserves_collection_and_returns_75) ... ok
+test_read_only_collection_rerun_and_bundle_contents (__main__.CollectionTests.test_read_only_collection_rerun_and_bundle_contents) ... ok
+test_source_change_during_collection_stops (__main__.CollectionTests.test_source_change_during_collection_stops) ... ok
+test_symlink_source_refused_where_supported (__main__.CollectionTests.test_symlink_source_refused_where_supported) ... skipped 'symlink creation unavailable for this user'
+test_append_idempotence_and_main_preservation (__main__.GitTests.test_append_idempotence_and_main_preservation) ... context_publish_stage=fetch attempt=1
+context_publish_stage=push
+context_publish_stage=fetch attempt=1
+context_publish_stage=fetch attempt=1
+ok
+test_concurrent_context_advance_is_preserved (__main__.GitTests.test_concurrent_context_advance_is_preserved) ... context_publish_stage=fetch attempt=1
+context_publish_stage=push
+context_publish_stage=fetch attempt=2
+context_publish_stage=push
+ok
+test_boolean_gold_cannot_be_integer (__main__.ScoreTests.test_boolean_gold_cannot_be_integer) ... ok
+test_duplicate_missing_unknown_task_ids (__main__.ScoreTests.test_duplicate_missing_unknown_task_ids) ... ok
+test_exact_model_runtime_and_rendered_worker (__main__.ScoreTests.test_exact_model_runtime_and_rendered_worker) ... ok
+test_forged_counter_and_pass_cannot_override_rows (__main__.ScoreTests.test_forged_counter_and_pass_cannot_override_rows) ... ok
+test_gold_tampering_is_not_a_new_source_of_truth (__main__.ScoreTests.test_gold_tampering_is_not_a_new_source_of_truth) ... ok
+test_hard_anchor_failure_preserved_even_with_15_verdicts_and_6_critical (__main__.ScoreTests.test_hard_anchor_failure_preserved_even_with_15_verdicts_and_6_critical) ... ok
+test_privacy_and_authority_flags_required (__main__.ScoreTests.test_privacy_and_authority_flags_required) ... ok
+test_rationale_length_is_a_diagnostic_not_new_semantic_gate (__main__.ScoreTests.test_rationale_length_is_a_diagnostic_not_new_semantic_gate) ... ok
+test_reordered_rows_are_scored_by_frozen_id (__main__.ScoreTests.test_reordered_rows_are_scored_by_frozen_id) ... ok
+test_response_schema_and_self_reported_flags (__main__.ScoreTests.test_response_schema_and_self_reported_flags) ... ok
+test_stale_failure_and_duplicate_json_keys (__main__.ScoreTests.test_stale_failure_and_duplicate_json_keys) ... ok
+test_threshold_boundaries_and_no_upgrading_failure_to_pass (__main__.ScoreTests.test_threshold_boundaries_and_no_upgrading_failure_to_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 14.549s
+
+OK (skipped=1)
+Collecting existing public GLM output. Remote compute jobs: zero. Git publication follows collection.
+FORENSICS_OUTPUT_DIRECTORY=C:\Users\rayns\Downloads\ALICE_V186_FORENSICS_d8e8914ec3c6
+FORENSICS_RESULT_BUNDLE=C:\Users\rayns\Downloads\ALICE_V186_FORENSICS_d8e8914ec3c6.zip
+recorded_calibration_passed=false collection_integrity_verified=true gpu_jobs_submitted=0
+failed_gates=at_least_14_verdict_matches,at_least_6_critical_decision_matches,all_five_hard_anchors_correct,arbitrary_hobby_hold
+context_publish_stage=fetch attempt=1
+context_publish_stage=push
+CONTEXT_COMMIT=167e1df631a03e3fd51985d4b29e298016821cfb
+ALICE_ASTRA_FORENSICS_V100_EXIT=0
+ALICE_ASTRA_FORENSICS_V100_EXIT=0
+(base) PS C:\A.L.I.C.E-main> powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$HOME\Downloads\Start-ALICEAstraQwenQualificationV100.ps1"
+package_sha256=BC7C76C29A4F0FCFBD4567A610737EC5BB2052E7165677562959AC4DCA7C959E
+PYTHON=C:\Users\rayns\anaconda3\python.exe
+package_manifest_verified=true files=16
+python_compile_gate_passed=true files=8
+test_boolean_integer_confusion_rejected (__main__.ContractTests.test_boolean_integer_confusion_rejected) ... ok
+test_duplicate_final_chunk_rejected (__main__.ContractTests.test_duplicate_final_chunk_rejected) ... ok
+test_duplicate_tasks_rejected (__main__.ContractTests.test_duplicate_tasks_rejected) ... ok
+test_hard_anchor_failure_cannot_hide_in_high_total (__main__.ContractTests.test_hard_anchor_failure_cannot_hide_in_high_total) ... ok
+test_missing_finish_and_missing_metrics_rejected (__main__.ContractTests.test_missing_finish_and_missing_metrics_rejected) ... ok
+test_owner_approval_preserves_ungranted_authority (__main__.ContractTests.test_owner_approval_preserves_ungranted_authority) ... ok
+test_rationale_not_silently_truncated (__main__.ContractTests.test_rationale_not_silently_truncated) ... ok
+test_rejects_duplicate_json_keys_and_nonfinite (__main__.ContractTests.test_rejects_duplicate_json_keys_and_nonfinite) ... ok
+test_rejects_short_model_digest (__main__.ContractTests.test_rejects_short_model_digest) ... ok
+test_secondary_fields_remain_diagnostic (__main__.ContractTests.test_secondary_fields_remain_diagnostic) ... ok
+test_task_requests_keep_gold_out_and_seeds_unique (__main__.ContractTests.test_task_requests_keep_gold_out_and_seeds_unique) ... ok
+test_truncated_response_cannot_pass_even_if_json_valid (__main__.ContractTests.test_truncated_response_cannot_pass_even_if_json_valid) ... ok
+test_connection_loss_then_collection_then_publication_retry_reuses_evidence (__main__.ControllerTests.test_connection_loss_then_collection_then_publication_retry_reuses_evidence) ... ok
+test_final_telemetry_failure_does_not_destroy_results (__main__.LifecycleTests.test_final_telemetry_failure_does_not_destroy_results) ... ok
+test_forged_worker_scores_rejected (__main__.LifecycleTests.test_forged_worker_scores_rejected) ... ok
+test_full_worker_round_trip_and_no_successor_grant (__main__.LifecycleTests.test_full_worker_round_trip_and_no_successor_grant) ... ok
+test_missing_finalization_cannot_grant_qualification (__main__.LifecycleTests.test_missing_finalization_cannot_grant_qualification) ... ok
+test_mutated_gold_or_authority_rejected (__main__.LifecycleTests.test_mutated_gold_or_authority_rejected) ... ok
+test_mutated_request_rejected_even_with_updated_local_hashes (__main__.LifecycleTests.test_mutated_request_rejected_even_with_updated_local_hashes) ... ok
+test_raw_stream_mutation_rejected (__main__.LifecycleTests.test_raw_stream_mutation_rejected) ... ok
+test_result_zip_manifest_and_traversal (__main__.LifecycleTests.test_result_zip_manifest_and_traversal) ... ok
+test_semantic_failure_preserves_all_sixteen_responses (__main__.LifecycleTests.test_semantic_failure_preserves_all_sixteen_responses) ... ok
+test_slow_cpu_stops_before_any_calibration_task (__main__.LifecycleTests.test_slow_cpu_stops_before_any_calibration_task) ... ok
+test_terminal_telemetry_can_recover_without_inference (__main__.LifecycleTests.test_terminal_telemetry_can_recover_without_inference) ... ok
+test_token_exhaustion_is_preserved_without_resampling (__main__.LifecycleTests.test_token_exhaustion_is_preserved_without_resampling) ... ok
+test_isolated_git_publication_idempotent_and_preserves_concurrent_file (__main__.PublicationTests.test_isolated_git_publication_idempotent_and_preserves_concurrent_file) ... ok
+test_public_payload_omits_rationales_and_is_typed (__main__.PublicationTests.test_public_payload_omits_rationales_and_is_typed) ... ok
+test_controller_lock_rejects_concurrent_process_and_releases (__main__.TransportTests.test_controller_lock_rejects_concurrent_process_and_releases) ... ok
+test_cpu_proof_and_digest_drift_fail_closed (__main__.TransportTests.test_cpu_proof_and_digest_drift_fail_closed) ... ok
+test_download_reuses_only_exact_cache (__main__.TransportTests.test_download_reuses_only_exact_cache) ... ok
+test_inflight_transport_failure_never_retries_task (__main__.TransportTests.test_inflight_transport_failure_never_retries_task) ... ok
+test_lost_sbatch_ack_recovered_without_second_job (__main__.TransportTests.test_lost_sbatch_ack_recovered_without_second_job) ... ok
+test_real_loopback_stream_preserves_full_bytes (__main__.TransportTests.test_real_loopback_stream_preserves_full_bytes) ... ok
+test_repeated_launcher_reattaches_one_submission (__main__.TransportTests.test_repeated_launcher_reattaches_one_submission) ... ok
+test_unknown_submission_never_resubmitted (__main__.TransportTests.test_unknown_submission_never_resubmitted) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 69.568s
+
+OK
+Approved public Qwen calibration: Magnolia CPU, 20 CPUs, 48 GiB, six-hour job limit. Reruns attach to the same run.
+run_id=alice-qwen38-a1-8e7a384a745496f4
+persistent_state=C:\ALICE_Vault\tools\alice-astra\qwen-fallback-a1\controller-state.json
+live_telemetry=https://github.com/NIne-WIngEd/Rayan-Compute-Ledger/tree/main/runs/alice-qwen38-a1-8e7a384a745496f4
+transport_diagnostics=C:\ALICE_Vault\tools\alice-astra\qwen-fallback-a1\runs\alice-qwen38-a1-8e7a384a745496f4\controller-diagnostics.jsonl
+scp: dest open "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e.zip.upload-88c1cb7ec673": No such file or directory
+scp: failed to upload file C:/Users/rayns/Downloads/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0.zip to /homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e.zip.upload-88c1cb7ec673
+
+QWEN_RUN_PENDING: Package transfer interrupted before validation; rerun the same launcher. Run the same launcher to resume monitoring/collection. No automatic new job.
+ALICE_ASTRA_QWEN_V100_EXIT=74
+Connection or monitoring pending. Rerun this launcher to attach to the same job.
+(base) PS C:\A.L.I.C.E-main>

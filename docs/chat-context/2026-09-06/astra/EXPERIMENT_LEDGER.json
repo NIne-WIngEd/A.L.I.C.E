@@ -87,13 +87,17 @@
       "purpose": "Test the explicitly approved fallback family on the frozen public calibration before any successor binding",
       "approval_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
       "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
-      "execution_status": "PACKAGE_VERIFIED_LIVE_EXECUTION_PENDING",
+      "execution_status": "V100_WINDOWS_PREFLIGHT_PASSED_TRANSFER_FAILED_V101_REPAIR_READY",
       "observed_result": null,
       "tasks": 16,
       "same_pass_rule": true,
       "independent_validation": false,
       "latest_pointer": "qwen-public/LATEST_QWEN_PUBLIC.json",
-      "next_dependency": "Verify four exact family receipts and effective profiles; construct successor lineage only if eligible"
+      "next_dependency": "Verify four exact family receipts and effective profiles; construct successor lineage only if eligible",
+      "transport_observation": "QWEN_V100_WINDOWS_TERMINAL_OBSERVATION.json",
+      "transport_repair": "QWEN_TRANSPORT_REPAIR_V101.json",
+      "native_windows_v100_tests_passed": 35,
+      "last_invocation_reached_submission": false
     }
   ]
 }

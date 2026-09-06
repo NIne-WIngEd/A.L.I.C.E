@@ -1,0 +1,25 @@
+{
+  "schema": "alice.mc10d.qwen.windows-transport-package.v1.0.1",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4430,
+      "sha256": "a246aded13556013b3772c7484f33ed599a22948b33d26d9918ce81f36f90fc7"
+    },
+    {
+      "path": "runner.py",
+      "bytes": 6450,
+      "sha256": "98b974ee0733f8d6951f6d93fa0ac90a99c6b1595e4c7593b914ba7cc75ffce5"
+    },
+    {
+      "path": "selftest_transport.py",
+      "bytes": 9848,
+      "sha256": "5f1c5bfa73737b4e434d914ec661f5d5d6b83d68311c1b766c7aa1cef273ff35"
+    },
+    {
+      "path": "workload/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0.zip",
+      "bytes": 55454,
+      "sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e"
+    }
+  ]
+}

@@ -48,6 +48,14 @@
       "original_private_file_id": "libfile_ec69533956c08191a4aaee61c3b5cacb",
       "public_archive_path": "AUDIT_SNAPSHOT.md",
       "custody": "original PDF preserved privately; complete project assessment text copied with current-state preface; raw private sources excluded"
+    },
+    {
+      "original_name": "Pasted text(20260906-222711).txt",
+      "sha256": "78b19e9e4f53a977547b639b839ba9988628eade5d970984f7961cfa72fa24ff",
+      "bytes": 10312,
+      "original_private_file_id": "libfile_b337a03fe7188191bb48eb8420760eae",
+      "public_archive_path": "artifacts/S12-terminal-222711.txt",
+      "custody": "reviewed complete terminal log; no credential contents or private candidate text; original bytes preserved"
     }
   ],
   "original_audit_markdown_sha256": "8a93d002b2b2e1e2b571bdcb8808016afc5b8cd76b11f80a93fbe1c3b5193ffb",
@@ -62,5 +70,13 @@
     "full_public_source": "tools/qwen-public-v1/",
     "original_distribution_artifact_id": "libfile_947c7429f7b481918c8de86b6ea39ac2",
     "custody": "public fictional qualification code, authority and task bytes only; private payloads not included"
+  },
+  "active_qwen_transport_repair": {
+    "release": "QWEN_TRANSPORT_REPAIR_V101.json",
+    "package_sha256": "ae20351156cdb9dff4ca7674d2fee607c9eb4d3d880dfbb5ffd6d23393047575",
+    "distribution_artifact_id": "libfile_70cc4ac6c0108191bb918dbfdd35902d",
+    "frozen_workload_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+    "source_and_rebuild": "tools/qwen-transport-v101/README.md",
+    "custody": "public client transport repair and unchanged frozen fictional workload only"
   }
 }

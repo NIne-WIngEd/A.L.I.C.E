@@ -8,4 +8,4 @@ Approval is not a qualification result. No Qwen run or successor binding has com
 
 The historical `validate_fallback_amendment.py` and its receipt validate the draft as drafted. They are preserved as historical evidence; they do not validate the newly approved runtime package.
 
-The release passed 35 offline tests from a fresh ZIP extraction. Native Windows execution and the actual model result remain pending. Follow [QWEN_RELEASE.json](../QWEN_RELEASE.json) and the [latest actual-result pointer](../qwen-public/LATEST_QWEN_PUBLIC.json).
+The release subsequently passed all 35 tests natively on Windows, then failed during upload before submission. The [active v101 transport repair](../tools/qwen-transport-v101/README.md) corrects the remote path mismatch while reusing the exact original workload and run state. It passed 11 focused regression tests. Actual v101 transfer and the model result remain pending. Follow [QWEN_RELEASE.json](../QWEN_RELEASE.json) and the [latest actual-result pointer](../qwen-public/LATEST_QWEN_PUBLIC.json).

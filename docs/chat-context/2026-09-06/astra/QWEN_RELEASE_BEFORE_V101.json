@@ -1,6 +1,6 @@
 {
   "schema": "alice.astra.qwen-approved-release.v1",
-  "status": "FROZEN_WORKLOAD_REUSED_THROUGH_V101_WINDOWS_TRANSPORT_REPAIR",
+  "status": "OWNER_APPROVED_PACKAGE_READY_LIVE_EXECUTION_PENDING",
   "owner_message_exact": "approve",
   "approval_context_commit": "591dbc0781b1df8e11f0eea7d743952724722bae",
   "approved_draft_sha256": "e16142639f13c9b2191afcfa4221dbf1610abf6af84273b07774fc13a0a1b40b",
@@ -20,17 +20,8 @@
   "actual_model_digest": null,
   "actual_qwen_inference_executed": false,
   "offline_tests_passed": 35,
-  "powershell_runtime_executed": true,
+  "powershell_runtime_executed": false,
   "main": "0abaed85873c3f8de04765847eb7700b0e20433f",
   "four_family_successor_binding_exists": false,
-  "breadth_v104_eligible": false,
-  "historical_release_snapshot": "QWEN_RELEASE_BEFORE_V101.json",
-  "historical_release_context_commit": "e3fe83d460cd4f2717e3f2b040b4d479655735f4",
-  "powershell_runtime_evidence": "QWEN_V100_WINDOWS_TERMINAL_OBSERVATION.json",
-  "v100_native_windows_tests_reported_passed": 35,
-  "v100_terminal_exit": 74,
-  "v100_terminal_reached_slurm_submission": false,
-  "launcher_role": "historical v100 launcher; use active_windows_launcher for recovery",
-  "active_windows_launcher": "tools/qwen-transport-v101/dist/Start-ALICEAstraQwenQualificationV101.ps1",
-  "active_windows_transport_repair": "QWEN_TRANSPORT_REPAIR_V101.json"
+  "breadth_v104_eligible": false
 }

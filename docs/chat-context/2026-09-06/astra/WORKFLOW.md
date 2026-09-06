@@ -39,6 +39,7 @@ Before any future remote submission, reconcile exact existing lifecycle IDs and 
 | Repeated rubric amendments after viewing the same public 16 tasks | Label that suite calibration; use prospective independently authored evidence for generalization. Keep MC8 sealed. |
 | Validator trusts embedded gold and collapses task IDs into a dictionary | Diagnostic recomputation must use the frozen external task gold and reject duplicate/missing IDs. Do not infer that tampering caused the actual model failure. |
 | Recovery replaces canonical qualification directory before checking its contents | New diagnostic reads downloaded output only and writes to its own run directory. |
+| Qwen v100 passed 35 native Windows tests but SSH mkdir used Windows-formatted remote paths; SCP then failed | Use explicit POSIX path values for Magnolia addresses while keeping local Windows paths native. Test client and server conventions independently, including result download. |
 
 Preserve the exact 63 replacements, one deferred item, 287-candidate pool, Gemma v182 rows and existing qualified bindings. The new audit is a continuation, not a restart. Neither version numbers nor green structural validators demonstrate learned identity or memory cognition.
 
@@ -47,3 +48,9 @@ Preserve the exact 63 replacements, one deferred item, 287-candidate pool, Gemma
 Owner activation of the Qwen fallback is recorded in `fallback/OWNER_APPROVAL.json`; no renewed permission is required for that exact public run. `QWEN_RELEASE.json` records the checked package and launcher identities. The implementation carries forward the exact pinned Ollama archive/binary and Python shared-library fix. It uses a durable Slurm submission intent, no automatic requeue, per-task request/stream checkpoints, a fixed token ceiling, independent score reconstruction and terminal telemetry recovery. Resume means attaching or collecting from the same run; it never means silently repeating model judgments.
 
 A source build, a test pass, and a real calibration pass are different evidence states. Future chats must inspect `qwen-public/LATEST_QWEN_PUBLIC.json` and the actual returned result ZIP before advancing any eligibility gate. The package's approved six-hour CPU envelope is not a new GPU quota estimate or scheduler authorization.
+
+## Windows transport repair checkpoint
+
+`QWEN_V100_WINDOWS_TRANSFER_FINDINGS.md` records the reproduced defect and `QWEN_TRANSPORT_REPAIR_V101.json` identifies the active launcher. The original v100 workload ZIP and stable run ID remain frozen. The repair wraps that exact ZIP and adjusts only local remote-address metadata after authority validation. Never replace its original workload identity with the transport wrapper's ZIP hash in controller state. No manual state cleanup, new run or approval is required.
+
+The supplied native Windows log passed all 35 original tests, then stopped before submission. The repair release passed 11 focused tests on Linux. One actual bash reproduction is intentionally skipped by the next Windows selftest; the other 10 run before live transport. Keep these observations separate from actual Magnolia success. Record a client repair receipt in both the fresh launcher folder and the persistent run archive. Return the transcript and actual result ZIP for verification after the next run.

@@ -1,0 +1,16 @@
+test_actual_download_accepts_posix_server_and_verifies_bytes (__main__.TransportRepairTests.test_actual_download_accepts_posix_server_and_verifies_bytes) ... ok
+test_actual_upload_method_emits_posix_mkdir_scp_and_move (__main__.TransportRepairTests.test_actual_upload_method_emits_posix_mkdir_scp_and_move) ... ok
+test_altered_workload_zip_stops_before_extracting (__main__.TransportRepairTests.test_altered_workload_zip_stops_before_extracting) ... ok
+test_original_windows_representation_reproduces_both_bad_boundaries (__main__.TransportRepairTests.test_original_windows_representation_reproduces_both_bad_boundaries) ... ok
+test_original_workload_remains_byte_exact_after_repair (__main__.TransportRepairTests.test_original_workload_remains_byte_exact_after_repair) ... ok
+test_posix_server_download_receipt_was_rejected_before_repair (__main__.TransportRepairTests.test_posix_server_download_receipt_was_rejected_before_repair) ... ok
+test_real_shell_before_and_after_on_distinct_client_server_paths (__main__.TransportRepairTests.test_real_shell_before_and_after_on_distinct_client_server_paths) ... ok
+test_repair_uses_posix_only_for_remote_addresses (__main__.TransportRepairTests.test_repair_uses_posix_only_for_remote_addresses) ... ok
+test_reuses_prepared_or_submitted_state_without_identity_migration (__main__.TransportRepairTests.test_reuses_prepared_or_submitted_state_without_identity_migration) ... ok
+test_unexpected_root_and_run_are_refused (__main__.TransportRepairTests.test_unexpected_root_and_run_are_refused) ... ok
+test_wrong_server_path_is_not_normalized_into_acceptance (__main__.TransportRepairTests.test_wrong_server_path_is_not_normalized_into_acceptance) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.039s
+
+OK
