@@ -54,3 +54,11 @@ A source build, a test pass, and a real calibration pass are different evidence 
 `QWEN_V100_WINDOWS_TRANSFER_FINDINGS.md` records the reproduced defect and `QWEN_TRANSPORT_REPAIR_V101.json` identifies the active launcher. The original v100 workload ZIP and stable run ID remain frozen. The repair wraps that exact ZIP and adjusts only local remote-address metadata after authority validation. Never replace its original workload identity with the transport wrapper's ZIP hash in controller state. No manual state cleanup, new run or approval is required.
 
 The supplied native Windows log passed all 35 original tests, then stopped before submission. The repair release passed 11 focused tests on Linux. One actual bash reproduction is intentionally skipped by the next Windows selftest; the other 10 run before live transport. Keep these observations separate from actual Magnolia success. Record a client repair receipt in both the fresh launcher folder and the persistent run archive. Return the transcript and actual result ZIP for verification after the next run.
+
+## Recovered v1.7.6 CA and immutable-ledger requirements
+
+The v101 result confirmed two regressions. Job 575089 stopped before any inference because the new worker omitted the documented CA setup. The ledger helper accepted the first heartbeat and rejected changed bytes under the same run ID with exit 73. These are infrastructure failures; do not interpret zero attempted tasks as Qwen semantic accuracy.
+
+Carry the earlier explicit CA policy into every external HTTPS client and dependent process. Preserve certificate and hostname verification. Test the endpoint and freeze the model manifest before scheduler submission. Each changed telemetry payload must use its own immutable snapshot identity. Retry saved bytes under the same snapshot ID only. Never overwrite an old ledger run to clear a collision.
+
+V102 uses one named source-bound infrastructure successor after exact zero-inference source evidence and live terminal reconciliation. The old job/state remain intact. Original probe/task request hashes are checked independently. Full worker-lifecycle tests now model the actual immutable publisher. The source terminal failure was appended through the GitHub connector under a separate snapshot; the original ZIP remains an unchanged historical record.

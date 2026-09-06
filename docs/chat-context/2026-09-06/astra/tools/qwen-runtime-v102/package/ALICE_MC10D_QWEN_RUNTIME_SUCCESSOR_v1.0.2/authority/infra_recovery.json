@@ -1,0 +1,29 @@
+{
+  "schema": "alice.mc10d.qwen.infrastructure-successor.v1.0.2",
+  "execution_run_id": "alice-qwen38-a2-c926d9e355dd",
+  "calibration_id": "alice-qwen38-a1-8e7a384a745496f4",
+  "source_job_id": "575089",
+  "source_result_zip_sha256": "c926d9e355dd6ec83ad18fd78f35265c664e5ea6f317871c20d7af6b0f8d8f5f",
+  "source_workload_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+  "source_critical_files": {
+    "run.json": "23f2092c0e42a900f75bd2c5c85f503a0ed8cae0e278a9dccf846a0385835c7f",
+    "submission.json": "9575612df71ff3a543ec78fa5341d5bb27ed5e66daf87c693729f40ba875c9d8",
+    "submission-intent.json": "c13064b170471110516b2b70f73b80d8a943db7e717c2a58ed08dad008272e5d",
+    "job.sbatch": "a90fa1af5a883d73f72a47fe39799aabea34ca6427740b6bb00ae932cab16449",
+    "worker-started.json": "c174c13c1cf08a860897c36535b68da57461d90d603953750e58442e710f5b45",
+    "worker-finished.json": "ca6616a76e930918dcb397230da5d498c376d04dff6aac3cb79481609c8ce245",
+    "result.json": "e32b52146b52580d88ecda03763e81ebf7587fb21badeb346ddd6c6e052d7a6e",
+    "failure.json": "6a704357b7051bf0731aa6419dc81d0554708b097dd47d8c764b595ee7c9d0cd",
+    "package-manifest.json": "b1d94af265eaac40d29314481358aa0f2a37b072bfa8c5542409fd641387175c"
+  },
+  "authority_basis": "Already approved Qwen public calibration and authorized infrastructure fixes. Exactly one named successor after exact zero-inference parent evidence and live terminal scheduler reconciliation. No profile/task/gate change.",
+  "source_zero_probe_and_task_attempts_required": true,
+  "source_phase_required": "RUNTIME_PREPARATION",
+  "source_error_required": "CERTIFICATE_VERIFY_FAILED",
+  "automatic_requeue": false,
+  "automatic_successor_after_this_attempt": false,
+  "same_model_profile_and_task_requests": true,
+  "old_run_modified": false,
+  "tls_verification_required": true,
+  "telemetry_rule": "Fresh immutable snapshot identity for each different payload; retry exact snapshot bytes after a lost acknowledgement."
+}

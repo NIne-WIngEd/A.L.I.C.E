@@ -1,0 +1,112 @@
+{
+  "artifact_id": "alice.mc10d.qwen-fallback-activation-amendment.v1.draft",
+  "status": "DRAFT_REQUIRES_EXPLICIT_OWNER_ACTIVATION",
+  "owner_ratified": false,
+  "authority_reason": "frozen source binding policy forbids silent fallback activation and requires an explicit later amendment; no replacement family was named in the general audit acceptance",
+  "source_binding_policy_sha256": "c045b20ad44ea240940c550e6fc7447888b84428293a1b9bb2abe89b68cbdc6f",
+  "failure_rows_sha256": "e8bdd16e42f34412597a938a1c8cdca8c29c0779fbbbd45d8800cc51b0121471",
+  "failure_result_sha256": "db55e3842e1600067c44d82a7bb3d9e3b8b856b08c711230be7075834acc0e09",
+  "scope": "activate only the named public qualification fallback; bind the successor family set only after independently verified eligible receipts",
+  "source_families": [
+    "gemma",
+    "glm",
+    "mistral",
+    "granite"
+  ],
+  "proposed_successor_families": [
+    "gemma",
+    "qwen",
+    "mistral",
+    "granite"
+  ],
+  "required_independent_judge_families": 4,
+  "generator_family_excluded": "gptoss",
+  "new_family": "qwen",
+  "new_model_tag": "qwen3.8:27b-q4_K_M",
+  "quantization": "Q4_K_M",
+  "model_digest": null,
+  "model_digest_status": "MUST_RESOLVE_AND_FREEZE_FULL_DIGEST_BEFORE_INFERENCE; never treat a catalog short ID as the full digest",
+  "profile": {
+    "id": "qwen38_thinking_on_public_calibration_v1",
+    "think": true,
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "top_k": 20,
+    "min_p": 0.0,
+    "presence_penalty": 0.0,
+    "repeat_penalty": 1.0,
+    "num_ctx": 8192,
+    "num_predict": 6144,
+    "seed_formula": "9100 + one-based frozen task index",
+    "structured_output_schema_changed": false
+  },
+  "profile_scope": "Qwen only; do not reinterpret or overwrite preserved Gemma, Mistral, Granite or GLM evidence",
+  "budget_difference": "one request up to 6144 tokens per task; do not repeat the 2048/4096/6144 prefix ladder; a failed or incomplete task remains a failed/incomplete qualification result",
+  "public_tasks_sha256": "b3abc2e36e4e93d3f8f6c9398c7c39b6ca2f40f9b3dcbe875ce9005d096f9420",
+  "pass_rule": {
+    "unique_frozen_tasks": 16,
+    "minimum_verdict_matches": 14,
+    "minimum_critical_decision_matches": 6,
+    "critical_decision_fields": [
+      "verdict",
+      "critical_veto"
+    ],
+    "mandatory_hard_anchors": [
+      "Q02_CORE_CONTRADICTION",
+      "Q04_FAKE_SOURCE_HISTORY",
+      "Q05_FAKE_LIVED_MEMORY",
+      "Q11_PERSONALITY_FLATTENING",
+      "Q13_CONTROLLING_PROTECTION"
+    ],
+    "Q01_COMPATIBLE_NOVELTY": "PASS",
+    "Q03_ARBITRARY_HOBBY": "HOLD"
+  },
+  "calibration_only": true,
+  "independent_certification_claimed": false,
+  "compute": {
+    "provider": "magnolia",
+    "accelerator": "none",
+    "partition": "node",
+    "qos": "normal",
+    "requested_ram_gib": 48,
+    "requested_cpus": 20,
+    "exclusive": true,
+    "maximum_job_walltime_hours": 6,
+    "capability_and_throughput_preflight_required": true,
+    "runtime_full_identity_required": true,
+    "kaggle_fallback_automatic": false,
+    "p100_route_enabled": false,
+    "unauthorized_qos_allowed": false
+  },
+  "preserve": {
+    "gemma_v182_rows_reuse": true,
+    "mistral_and_granite_bindings": true,
+    "replacement_count": 63,
+    "deferred_count": 1,
+    "candidate_pool": 287,
+    "main": "0abaed85873c3f8de04765847eb7700b0e20433f"
+  },
+  "required_result_capture": [
+    "exact request and contract hashes",
+    "full returned structured response",
+    "runtime/model identity",
+    "attempt count",
+    "token counts",
+    "durations",
+    "finish reason",
+    "per-task incomplete/format/semantic status",
+    "terminal output before cleanup"
+  ],
+  "v186_success_granted": false,
+  "qualification_granted": false,
+  "pointwise_ready_granted": false,
+  "private_pointwise_execution_granted": false,
+  "breadth_prerequisite_satisfied": false,
+  "A_SYN_acceptance_granted": false,
+  "A_SYN_promotion_granted": false,
+  "model_training_granted": false,
+  "hidden_MC8_access_granted": false,
+  "private_candidates_visible_during_qualification": false,
+  "successor_binding_rule": "verify all four exact family receipts and effective profiles; construct a new lineage with its own identity after successful Qwen qualification; never edit failed v186 evidence into success",
+  "breadth_successor_rule": "existing v104 prerequisite remains blocked; any accepted successor requires an explicit prerequisite migration with exact receipt and ready-bundle hashes"
+}

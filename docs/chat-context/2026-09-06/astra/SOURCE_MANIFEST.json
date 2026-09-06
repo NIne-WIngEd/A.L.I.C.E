@@ -56,6 +56,14 @@
       "original_private_file_id": "libfile_b337a03fe7188191bb48eb8420760eae",
       "public_archive_path": "artifacts/S12-terminal-222711.txt",
       "custody": "reviewed complete terminal log; no credential contents or private candidate text; original bytes preserved"
+    },
+    {
+      "original_name": "ALICE_QWEN_PUBLIC_RESULT_c926d9e355dd.zip",
+      "sha256": "c926d9e355dd6ec83ad18fd78f35265c664e5ea6f317871c20d7af6b0f8d8f5f",
+      "bytes": 19053,
+      "original_private_file_id": "libfile_cd99834b94108191b50334597889c687",
+      "public_archive_path": "tools/qwen-runtime-v102/package/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/source/ALICE_QWEN_PUBLIC_RESULT_c926d9e355dd.zip",
+      "custody": "complete reviewed result; public fictional tasks and infrastructure receipts only; no model responses, private candidate payloads or credential contents"
     }
   ],
   "original_audit_markdown_sha256": "8a93d002b2b2e1e2b571bdcb8808016afc5b8cd76b11f80a93fbe1c3b5193ffb",
@@ -71,7 +79,13 @@
     "original_distribution_artifact_id": "libfile_947c7429f7b481918c8de86b6ea39ac2",
     "custody": "public fictional qualification code, authority and task bytes only; private payloads not included"
   },
-  "active_qwen_transport_repair": {
+  "active_qwen_runtime_successor": {
+    "release": "QWEN_RUNTIME_SUCCESSOR_V102.json",
+    "package_sha256": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
+    "source_and_rebuild": "tools/qwen-runtime-v102/README.md",
+    "distribution_artifact_id": "libfile_0d777b1bfa608191be994b661349d37c"
+  },
+  "historical_qwen_transport_repair": {
     "release": "QWEN_TRANSPORT_REPAIR_V101.json",
     "package_sha256": "ae20351156cdb9dff4ca7674d2fee607c9eb4d3d880dfbb5ffd6d23393047575",
     "distribution_artifact_id": "libfile_70cc4ac6c0108191bb918dbfdd35902d",
