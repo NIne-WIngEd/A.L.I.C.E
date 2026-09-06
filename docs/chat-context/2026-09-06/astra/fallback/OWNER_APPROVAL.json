@@ -1,0 +1,12 @@
+{
+  "artifact_id": "alice.mc10d.qwen-fallback-owner-approval.v1",
+  "recorded_date_utc": "2026-09-06",
+  "owner_message_exact": "approve",
+  "decision": "APPROVED",
+  "approved_draft_sha256": "e16142639f13c9b2191afcfa4221dbf1610abf6af84273b07774fc13a0a1b40b",
+  "approved_draft_context_commit": "a7300c2045ae66de5ecdcb417ca6b9f5ac978c17",
+  "scope": "Activate the exact proposed Qwen3.8 27B Q4_K_M public calibration on Magnolia CPU. Build and run its bounded checked package under the approved resource and evidence contract.",
+  "qualification_result_exists": false,
+  "successor_four_family_binding_exists": false,
+  "breadth_v104_eligible": false
+}
