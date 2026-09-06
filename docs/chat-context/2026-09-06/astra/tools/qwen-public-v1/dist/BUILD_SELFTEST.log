@@ -1,0 +1,40 @@
+test_boolean_integer_confusion_rejected (__main__.ContractTests.test_boolean_integer_confusion_rejected) ... ok
+test_duplicate_final_chunk_rejected (__main__.ContractTests.test_duplicate_final_chunk_rejected) ... ok
+test_duplicate_tasks_rejected (__main__.ContractTests.test_duplicate_tasks_rejected) ... ok
+test_hard_anchor_failure_cannot_hide_in_high_total (__main__.ContractTests.test_hard_anchor_failure_cannot_hide_in_high_total) ... ok
+test_missing_finish_and_missing_metrics_rejected (__main__.ContractTests.test_missing_finish_and_missing_metrics_rejected) ... ok
+test_owner_approval_preserves_ungranted_authority (__main__.ContractTests.test_owner_approval_preserves_ungranted_authority) ... ok
+test_rationale_not_silently_truncated (__main__.ContractTests.test_rationale_not_silently_truncated) ... ok
+test_rejects_duplicate_json_keys_and_nonfinite (__main__.ContractTests.test_rejects_duplicate_json_keys_and_nonfinite) ... ok
+test_rejects_short_model_digest (__main__.ContractTests.test_rejects_short_model_digest) ... ok
+test_secondary_fields_remain_diagnostic (__main__.ContractTests.test_secondary_fields_remain_diagnostic) ... ok
+test_task_requests_keep_gold_out_and_seeds_unique (__main__.ContractTests.test_task_requests_keep_gold_out_and_seeds_unique) ... ok
+test_truncated_response_cannot_pass_even_if_json_valid (__main__.ContractTests.test_truncated_response_cannot_pass_even_if_json_valid) ... ok
+test_connection_loss_then_collection_then_publication_retry_reuses_evidence (__main__.ControllerTests.test_connection_loss_then_collection_then_publication_retry_reuses_evidence) ... ok
+test_final_telemetry_failure_does_not_destroy_results (__main__.LifecycleTests.test_final_telemetry_failure_does_not_destroy_results) ... ok
+test_forged_worker_scores_rejected (__main__.LifecycleTests.test_forged_worker_scores_rejected) ... ok
+test_full_worker_round_trip_and_no_successor_grant (__main__.LifecycleTests.test_full_worker_round_trip_and_no_successor_grant) ... ok
+test_missing_finalization_cannot_grant_qualification (__main__.LifecycleTests.test_missing_finalization_cannot_grant_qualification) ... ok
+test_mutated_gold_or_authority_rejected (__main__.LifecycleTests.test_mutated_gold_or_authority_rejected) ... ok
+test_mutated_request_rejected_even_with_updated_local_hashes (__main__.LifecycleTests.test_mutated_request_rejected_even_with_updated_local_hashes) ... ok
+test_raw_stream_mutation_rejected (__main__.LifecycleTests.test_raw_stream_mutation_rejected) ... ok
+test_result_zip_manifest_and_traversal (__main__.LifecycleTests.test_result_zip_manifest_and_traversal) ... ok
+test_semantic_failure_preserves_all_sixteen_responses (__main__.LifecycleTests.test_semantic_failure_preserves_all_sixteen_responses) ... ok
+test_slow_cpu_stops_before_any_calibration_task (__main__.LifecycleTests.test_slow_cpu_stops_before_any_calibration_task) ... ok
+test_terminal_telemetry_can_recover_without_inference (__main__.LifecycleTests.test_terminal_telemetry_can_recover_without_inference) ... ok
+test_token_exhaustion_is_preserved_without_resampling (__main__.LifecycleTests.test_token_exhaustion_is_preserved_without_resampling) ... ok
+test_isolated_git_publication_idempotent_and_preserves_concurrent_file (__main__.PublicationTests.test_isolated_git_publication_idempotent_and_preserves_concurrent_file) ... ok
+test_public_payload_omits_rationales_and_is_typed (__main__.PublicationTests.test_public_payload_omits_rationales_and_is_typed) ... ok
+test_controller_lock_rejects_concurrent_process_and_releases (__main__.TransportTests.test_controller_lock_rejects_concurrent_process_and_releases) ... ok
+test_cpu_proof_and_digest_drift_fail_closed (__main__.TransportTests.test_cpu_proof_and_digest_drift_fail_closed) ... ok
+test_download_reuses_only_exact_cache (__main__.TransportTests.test_download_reuses_only_exact_cache) ... ok
+test_inflight_transport_failure_never_retries_task (__main__.TransportTests.test_inflight_transport_failure_never_retries_task) ... ok
+test_lost_sbatch_ack_recovered_without_second_job (__main__.TransportTests.test_lost_sbatch_ack_recovered_without_second_job) ... ok
+test_real_loopback_stream_preserves_full_bytes (__main__.TransportTests.test_real_loopback_stream_preserves_full_bytes) ... ok
+test_repeated_launcher_reattaches_one_submission (__main__.TransportTests.test_repeated_launcher_reattaches_one_submission) ... ok
+test_unknown_submission_never_resubmitted (__main__.TransportTests.test_unknown_submission_never_resubmitted) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 1.412s
+
+OK

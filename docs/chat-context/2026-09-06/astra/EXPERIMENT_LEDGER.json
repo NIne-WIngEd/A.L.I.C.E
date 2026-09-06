@@ -79,5 +79,21 @@
       "observed_result": null,
       "numeric_release_threshold": null
     }
+  ],
+  "calibrations": [
+    {
+      "id": "JQ-QWEN-A1",
+      "run_id": "alice-qwen38-a1-8e7a384a745496f4",
+      "purpose": "Test the explicitly approved fallback family on the frozen public calibration before any successor binding",
+      "approval_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+      "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+      "execution_status": "PACKAGE_VERIFIED_LIVE_EXECUTION_PENDING",
+      "observed_result": null,
+      "tasks": 16,
+      "same_pass_rule": true,
+      "independent_validation": false,
+      "latest_pointer": "qwen-public/LATEST_QWEN_PUBLIC.json",
+      "next_dependency": "Verify four exact family receipts and effective profiles; construct successor lineage only if eligible"
+    }
   ]
 }

@@ -1,0 +1,12 @@
+{
+  "schema": "alice.mc10d.qwen.pending-public-pointer.v1",
+  "run_id": "alice-qwen38-a1-8e7a384a745496f4",
+  "status": "OWNER_APPROVED_PACKAGE_READY_LIVE_EXECUTION_PENDING",
+  "summary_path": null,
+  "summary_sha256": null,
+  "qualification_passed": null,
+  "qwen_evaluated": false,
+  "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+  "four_family_binding_created": false,
+  "breadth_v104_eligible": false
+}

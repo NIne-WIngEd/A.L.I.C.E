@@ -1,0 +1,85 @@
+{
+  "schema": "alice.mc10d.qwen.package-manifest.v1",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 9204,
+      "sha256": "57c5c139547cb7ee1dce44475b2dc188ef42c09bcec88e7046160d8c32d23383"
+    },
+    {
+      "path": "authority/approval.json",
+      "bytes": 653,
+      "sha256": "8e7a384a745496f4c4f68996733ddf5220783bc871d852f99577ca0a7287373f"
+    },
+    {
+      "path": "authority/approved.json",
+      "bytes": 4540,
+      "sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55"
+    },
+    {
+      "path": "authority/draft.json",
+      "bytes": 4450,
+      "sha256": "e16142639f13c9b2191afcfa4221dbf1610abf6af84273b07774fc13a0a1b40b"
+    },
+    {
+      "path": "authority/runtime_policy.json",
+      "bytes": 889,
+      "sha256": "a984eac1fa84a0b365679923069c2c0a472f3f6ff359ccccf947ccc3dfff636e"
+    },
+    {
+      "path": "authority/source_binding_policy.json",
+      "bytes": 2279,
+      "sha256": "c045b20ad44ea240940c550e6fc7447888b84428293a1b9bb2abe89b68cbdc6f"
+    },
+    {
+      "path": "authority/tasks.json",
+      "bytes": 7994,
+      "sha256": "b3abc2e36e4e93d3f8f6c9398c7c39b6ca2f40f9b3dcbe875ce9005d096f9420"
+    },
+    {
+      "path": "bootstrap.sh",
+      "bytes": 2438,
+      "sha256": "8d139366b47d438a05faa8f9dd048179efe378fa5e23a5bb5682218524539245"
+    },
+    {
+      "path": "contract.py",
+      "bytes": 12116,
+      "sha256": "e494e46ace0e922388b5a637b2a5d03ac054fd9c254e148a06329fa63aa29b44"
+    },
+    {
+      "path": "controller.py",
+      "bytes": 12960,
+      "sha256": "b1eddb52e73b32ce40aa679576ef99bf538f3f7d4217c6fc36baefb5e960ede3"
+    },
+    {
+      "path": "evidence.py",
+      "bytes": 14261,
+      "sha256": "3aaf8b3983f57f0bc1cb535ae7675b074ec42c7e40025f994c5e7d5b2b21db72"
+    },
+    {
+      "path": "frozen_prompt.py",
+      "bytes": 2885,
+      "sha256": "ba1ec9b84469f8a74ef517acd869e307326369a75c4852fe51df4f93d74d4d6e"
+    },
+    {
+      "path": "publish_context.py",
+      "bytes": 6699,
+      "sha256": "1569f2b0adf7ba08968bfa5c7b37ed5087b71ab2b23ddd3291ba942f07c7ba54"
+    },
+    {
+      "path": "remote_agent.py",
+      "bytes": 12007,
+      "sha256": "a4e96f6cf6867e6b8e3b7dbafd2ced18332d3e0e835139b016addb038702d8c1"
+    },
+    {
+      "path": "selftest_qwen.py",
+      "bytes": 26368,
+      "sha256": "f14e61d218afcfc83ad1166a1b1537c0575b6a48863b0149f54964951d330501"
+    },
+    {
+      "path": "worker.py",
+      "bytes": 24471,
+      "sha256": "b197ce21b0c4b086f622f712ee9b2504bb264bfe5af8789b57dc8fba44d6e000"
+    }
+  ]
+}

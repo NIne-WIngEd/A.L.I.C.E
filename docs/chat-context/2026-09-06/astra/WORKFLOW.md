@@ -41,3 +41,9 @@ Before any future remote submission, reconcile exact existing lifecycle IDs and 
 | Recovery replaces canonical qualification directory before checking its contents | New diagnostic reads downloaded output only and writes to its own run directory. |
 
 Preserve the exact 63 replacements, one deferred item, 287-candidate pool, Gemma v182 rows and existing qualified bindings. The new audit is a continuation, not a restart. Neither version numbers nor green structural validators demonstrate learned identity or memory cognition.
+
+## Approved Qwen implementation checkpoint
+
+Owner activation of the Qwen fallback is recorded in `fallback/OWNER_APPROVAL.json`; no renewed permission is required for that exact public run. `QWEN_RELEASE.json` records the checked package and launcher identities. The implementation carries forward the exact pinned Ollama archive/binary and Python shared-library fix. It uses a durable Slurm submission intent, no automatic requeue, per-task request/stream checkpoints, a fixed token ceiling, independent score reconstruction and terminal telemetry recovery. Resume means attaching or collecting from the same run; it never means silently repeating model judgments.
+
+A source build, a test pass, and a real calibration pass are different evidence states. Future chats must inspect `qwen-public/LATEST_QWEN_PUBLIC.json` and the actual returned result ZIP before advancing any eligibility gate. The package's approved six-hour CPU envelope is not a new GPU quota estimate or scheduler authorization.

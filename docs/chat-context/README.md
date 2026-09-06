@@ -1,23 +1,20 @@
 # A.L.I.C.E. Chat Context Archive
 
-Start with the newest dated handoff. Use canonical main for released source and governance, context for owner decisions and recovered operational evidence, and matching result receipts for completion claims.
+Start with the newest handoff and its actual-result pointer. Canonical main holds released source and governance. Context records owner decisions, reviewed evidence, and pending work. Completion claims require matching real result receipts.
 
-## Latest checkpoint — v186 evidence reviewed, 6 September 2026
+## Latest checkpoint — Qwen approved and package ready, 6 September 2026
 
-1. [Current Astra handoff](2026-09-06/astra/START_HERE.md) and [exact state](2026-09-06/astra/STATE.json)
-2. [Actual GLM findings](2026-09-06/astra/GLM_V186_FINDINGS.md) and [published forensic summary](2026-09-06/astra/forensics/LATEST_V186_GLM.json)
-3. [Proposed Qwen fallback amendment](2026-09-06/astra/fallback/README.md)
-4. [Accepted audit decisions](2026-09-06/astra/AUDIT_DECISIONS.md), [workflow](2026-09-06/astra/WORKFLOW.md), [audit snapshot](2026-09-06/astra/AUDIT_SNAPSHOT.md), [sources](2026-09-06/astra/AUDIT_SOURCE_LEDGER.json), [artifact manifest](2026-09-06/astra/SOURCE_MANIFEST.json)
-5. [Experiment ledger](2026-09-06/astra/EXPERIMENT_LEDGER.json) and [prospective evaluation design](2026-09-06/astra/PROSPECTIVE_JUDGE_VALIDATION.md)
+1. [Current Astra handoff](2026-09-06/astra/START_HERE.md), [current state](2026-09-06/astra/STATE.json), and [latest Qwen result pointer](2026-09-06/astra/qwen-public/LATEST_QWEN_PUBLIC.json)
+2. [Owner approval](2026-09-06/astra/fallback/OWNER_APPROVAL.json), [approved amendment](2026-09-06/astra/fallback/QWEN_FALLBACK_AMENDMENT_V1_APPROVED.json), [release identity](2026-09-06/astra/QWEN_RELEASE.json), and [checked execution package](2026-09-06/astra/tools/qwen-public-v1/README.md)
+3. [Actual GLM findings](2026-09-06/astra/GLM_V186_FINDINGS.md) and [published GLM forensic summary](2026-09-06/astra/forensics/LATEST_V186_GLM.json)
+4. [Accepted audit](2026-09-06/astra/AUDIT_DECISIONS.md), [workflow](2026-09-06/astra/WORKFLOW.md), [full audit snapshot](2026-09-06/astra/AUDIT_SNAPSHOT.md), [sources](2026-09-06/astra/AUDIT_SOURCE_LEDGER.json), [artifact manifest](2026-09-06/astra/SOURCE_MANIFEST.json), [experiment ledger](2026-09-06/astra/EXPERIMENT_LEDGER.json), and [prospective validation](2026-09-06/astra/PROSPECTIVE_JUDGE_VALIDATION.md)
 
-The user ran the forensic collector successfully. The returned raw GLM responses have now been read and reverified. The 9/16 verdict and 3/7 critical-decision result is a semantic calibration failure. Both invented-history hard anchors failed. The public summary matches the uploaded bundle.
-
-The next proposed step is explicit activation of the documented Qwen fallback. Its draft preserves four independent families and existing pass criteria. Activation, exact Qwen digest/runtime preflight and Qwen inference remain pending. Keep the existing 287-candidate pool, 63 replacements, one deferred item and valid judge evidence. v186 success and breadth-v104 eligibility are still unestablished.
+The owner explicitly approved the exact Qwen fallback. Do not ask for that activation again. The new package passed 35 offline tests from a fresh ZIP extraction. Actual Windows/Magnolia execution is pending at this source checkpoint; check the result pointer for later verified telemetry from the user's launcher. Preserve the 287-candidate pool, 63 replacements, one deferred item and valid existing judge evidence. Qwen approval does not establish a four-family successor binding, v186 success, or breadth-v104 eligibility.
 
 ## Earlier context
 
-- [Previous Q04 diagnostic and v186 preparation](2026-09-06/MC10D_GLM_Q04_DIAGNOSTIC_TO_V186.md)
-- [6 September notes](2026-09-06/), [5 September notes](2026-09-05/), [4 September handoffs](2026-09-04/)
-- [31 August source archive and index](2026-08-31/)
+- [Pre-approval handoff](2026-09-06/astra/START_HERE_BEFORE_QWEN_APPROVAL.md) and [state](2026-09-06/astra/STATE_BEFORE_QWEN_APPROVAL.json)
+- [Q04 diagnostic through v186 preparation](2026-09-06/MC10D_GLM_Q04_DIAGNOSTIC_TO_V186.md)
+- [6 September](2026-09-06/), [5 September](2026-09-05/), [4 September](2026-09-04/), and [31 August source archive](2026-08-31/)
 
-Follow dated owner decisions and exact artifact hashes. Do not infer a completed stage from a prepared launcher, package version or telemetry heartbeat. Main remains frozen at 0abaed85873c3f8de04765847eb7700b0e20433f until a separate authorized release change.
+Main remains frozen at `0abaed85873c3f8de04765847eb7700b0e20433f`. Follow dated owner decisions and exact artifact hashes. Do not infer completion from a prepared launcher, package version or heartbeat.
