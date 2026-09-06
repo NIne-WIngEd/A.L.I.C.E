@@ -1,0 +1,55 @@
+{
+  "artifact_id": "alice.astra.source-manifest.2026-09-06.v1",
+  "sources": [
+    {
+      "original_name": "Start-ALICEMC10DPublicJudgeQualificationRebaseV186(1).ps1",
+      "sha256": "8934cb44a057e35a4f2edffb6abad7317404fef454ccb0b95e6fa1402876276c",
+      "bytes": 3758,
+      "original_private_file_id": "libfile_7f4b15e08d9c8191bb24f720810fe3b9",
+      "public_archive_path": "artifacts/Start-ALICEMC10DPublicJudgeQualificationRebaseV186.ps1",
+      "custody": "reviewed public artifact"
+    },
+    {
+      "original_name": "Start-ALICEMC10DControlledSynthesisBreadthV104(1).ps1",
+      "sha256": "f3fa919e8be06b42ede1640a907a002607a66ab3235237874f00c995c9eca8cf",
+      "bytes": 4024,
+      "original_private_file_id": "libfile_d6f255eb1a74819198f548c8c726efc9",
+      "public_archive_path": "artifacts/Start-ALICEMC10DControlledSynthesisBreadthV104.ps1",
+      "custody": "reviewed public artifact"
+    },
+    {
+      "original_name": "ALICE_MC10D_CONTROLLED_SYNTHESIS_BREADTH_AMENDMENT_v1.0.4(1).zip",
+      "sha256": "c8e60d77f66c33ab73c577c2cb4a1bb707aa810c81dcaed0ca04b6b0443cd0ec",
+      "bytes": 17465,
+      "original_private_file_id": "libfile_f8d3218ce6b081918b638a17f96d6b8d",
+      "public_archive_path": "artifacts/ALICE_MC10D_CONTROLLED_SYNTHESIS_BREADTH_AMENDMENT_v1.0.4.zip",
+      "custody": "reviewed public artifact"
+    },
+    {
+      "original_name": "Pasted text(20260906-203440).txt",
+      "sha256": "b98891795bdd0f3b263aafe015dbdaa5cddd52789d6b96f87e7b79d6d931763e",
+      "bytes": 354424,
+      "original_private_file_id": "libfile_12d9e541625c8191acac38614407b159",
+      "public_archive_path": "artifacts/S11-terminal-203440.txt",
+      "custody": "reviewed public artifact"
+    },
+    {
+      "original_name": "ALICE_MC10D_PUBLIC_JUDGE_QUALIFICATION_REBASE_v1.8.6(1).zip",
+      "sha256": "f6eb40965272f9fbd423952345a183cf60d8c981df7502fa83d07528eaf97f87",
+      "bytes": 4894467,
+      "original_private_file_id": "libfile_75a41383daa48191bd2f300e1c550234",
+      "public_archive_path": null,
+      "custody": "retain full ZIP privately; nested source and candidate payloads excluded from public repository"
+    },
+    {
+      "original_name": "ALICE_Astra_Project_Audit_2026-09-06.pdf",
+      "sha256": "fa679833bb68c86a966e5fcee4da18b9b27db7cab13dd456d0cebc7372e51102",
+      "bytes": 195472,
+      "original_private_file_id": "libfile_ec69533956c08191a4aaee61c3b5cacb",
+      "public_archive_path": "AUDIT_SNAPSHOT.md",
+      "custody": "original PDF preserved privately; complete project assessment text copied with current-state preface; raw private sources excluded"
+    }
+  ],
+  "original_audit_markdown_sha256": "8a93d002b2b2e1e2b571bdcb8808016afc5b8cd76b11f80a93fbe1c3b5193ffb",
+  "privacy_note": "Hashes and file IDs are locators, not permission to expose private source content. Never traverse the retained nested archives into public telemetry."
+}

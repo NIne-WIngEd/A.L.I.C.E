@@ -1,0 +1,422 @@
+[
+  {
+    "id": "C21",
+    "title": "Research Frontiers Register",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/docs/RESEARCH_FRONTIERS.md",
+    "note": "F1-F22; explicit unresolved research including developer non-access, unlearning and cross-model continuity."
+  },
+  {
+    "id": "H10",
+    "title": "Stage G continuation archive, Aug29 export",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/a42e6cb07fcccccf1e4e3cc394df460852f668a2/docs/chat-context/2026-08-31/src/S05-stageg-0829.txt",
+    "note": "Targeted complete owner and surrounding implementation passages concerning tournament cost, runtime stalls and completion work."
+  },
+  {
+    "id": "C01",
+    "title": "ALICE README",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/README.md",
+    "note": "Pinned canonical source; read substantive full vision and status."
+  },
+  {
+    "id": "C02",
+    "title": "ALICE Constitution v1.1",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/docs/ALICE_CONSTITUTION.md",
+    "note": "Owner-ratified purpose, sovereignty and capability doctrine."
+  },
+  {
+    "id": "C03",
+    "title": "Memory Architecture v4.1",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/docs/MEMORY_ARCHITECTURE_V4.md",
+    "note": "Owner-ratified logical planes and consistency semantics."
+  },
+  {
+    "id": "C04",
+    "title": "Memory, Identity Formation and Host Learning Architecture v2.1",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md",
+    "note": "Learned identity and formation roles; source/host/self separation."
+  },
+  {
+    "id": "C05",
+    "title": "Stage G Candidate Qualification Matrix",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/docs/STAGE_G_MEMORY_FABRIC_CANDIDATE_QUALIFICATION_MATRIX.md",
+    "note": "Owner-ratified all-candidate qualification obligation."
+  },
+  {
+    "id": "C06",
+    "title": "Roadmap and frontier register",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/docs/ROADMAP.md",
+    "note": "Roadmap v2.4.0 and associated RESEARCH_FRONTIERS.md at same commit."
+  },
+  {
+    "id": "C07",
+    "title": "Evaluation Charter v2",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/docs/EVALUATION_CHARTER.md",
+    "note": "Evaluation, evidence independence and promotion principles."
+  },
+  {
+    "id": "C08",
+    "title": "Memory benchmark baseline",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/docs/MEMORY_BASELINE_BENCHMARK_PLAN.md",
+    "note": "Aug4 synthetic results, baseline d5d311ec; historical, not rerun in this audit."
+  },
+  {
+    "id": "C09",
+    "title": "Workspace and product governance",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/docs/FRIDAY_COGNITIVE_WORKSPACE_AND_PRODUCTION_GOVERNANCE_PLAN.md",
+    "note": "Mission Graph semantics, host isolation, capability precedence, release rules."
+  },
+  {
+    "id": "C10",
+    "title": "Friday YC and Company Plan",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/docs/FRIDAY_YC_AND_COMPANY_PLAN.md",
+    "note": "Historical July27 business and application plan; timing superseded."
+  },
+  {
+    "id": "C11",
+    "title": "External Memory Systems Review",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/docs/MEMORY_EXTERNAL_SYSTEMS_REVIEW.md",
+    "note": "Existing competitor-informed design; avoids crediting this audit for pre-existing ideas."
+  },
+  {
+    "id": "C12",
+    "title": "Formation staging code",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/src/alice_memory/formation.py",
+    "note": "Static inspection: candidate persistence/validation, not learned AMFM inference."
+  },
+  {
+    "id": "C13",
+    "title": "Persistent Stage F/G reference code",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/src/cognitive_kernel/shadow_migration_stage_f_g_persistent.py",
+    "note": "SQLite reference and candidate registry; not proof of every named engine."
+  },
+  {
+    "id": "C14",
+    "title": "Routing contract code",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/src/cognitive_kernel/routing.py",
+    "note": "Static inspection: validates supplied routing decision; no learned routing decision procedure in this module."
+  },
+  {
+    "id": "C15",
+    "title": "Friday prototype",
+    "url": "https://github.com/NIne-WIngEd/Friday/tree/feefb5592b3bca797a2f5713a040466b98d328d0",
+    "note": "README, automation/model.py and memory/memory.py inspected; last push Aug7."
+  },
+  {
+    "id": "C16",
+    "title": "Current continuation handoff",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/a42e6cb07fcccccf1e4e3cc394df460852f668a2/docs/chat-context/2026-09-04/ALICE_MC10D_CONTINUATION_HANDOFF_20260904.md",
+    "note": "Repair counts, current scope, compute paths and durable recovery."
+  },
+  {
+    "id": "C17",
+    "title": "Gemma forensics and decision-centric scoring",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/a42e6cb07fcccccf1e4e3cc394df460852f668a2/docs/chat-context/2026-09-06/MC10D_V182_FORENSICS_TO_V183_DECISION_CENTRIC.md",
+    "note": "Observed v182 results and subsequent rubric amendment."
+  },
+  {
+    "id": "C18",
+    "title": "Latest GLM diagnostic and v186 checkpoint",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/a42e6cb07fcccccf1e4e3cc394df460852f668a2/docs/chat-context/2026-09-06/MC10D_GLM_Q04_DIAGNOSTIC_TO_V186.md",
+    "note": "Latest located Sep6 state; prepared v186 and future breadth amendment."
+  },
+  {
+    "id": "C19",
+    "title": "Compute ledger",
+    "url": "https://github.com/NIne-WIngEd/Rayan-Compute-Ledger/tree/9ea6aba5a1b62b72b6304e6a9b0c9bffceaa4a95",
+    "note": "R25 reconstruction completed; v175 runtime failure recorded. Not a cognition result."
+  },
+  {
+    "id": "C20",
+    "title": "M1 owner ratification",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/0abaed85873c3f8de04765847eb7700b0e20433f/docs/MEMORY_M1_OWNER_RATIFICATION_2026-08-05.md",
+    "note": "Deletion propagation, deployment profiles and learned-state remedies."
+  },
+  {
+    "id": "H01",
+    "title": "Context source index",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/a42e6cb07fcccccf1e4e3cc394df460852f668a2/docs/chat-context/2026-08-31/SOURCE_INDEX.md",
+    "note": "Maps S01-S10 and source hashes. S04 unrelated; S05/S06 near-duplicate exports."
+  },
+  {
+    "id": "H02",
+    "title": "Stage G/G+ memory handoff",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/a42e6cb07fcccccf1e4e3cc394df460852f668a2/docs/chat-context/2026-08-31/src/S02-memory-handoff.md",
+    "note": "Aug23 handoff; G foundation, G+ recollection; H/I/J cutover."
+  },
+  {
+    "id": "H03",
+    "title": "Alice memory continuation",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/a42e6cb07fcccccf1e4e3cc394df460852f668a2/docs/chat-context/2026-08-31/src/S03-alice-memory.txt",
+    "note": "Key owner passages pp53-67; ambitious controlled synthesis and trained personality."
+  },
+  {
+    "id": "H04",
+    "title": "Research UI and product direction",
+    "url": "https://github.com/NIne-WIngEd/A.L.I.C.E/blob/a42e6cb07fcccccf1e4e3cc394df460852f668a2/docs/chat-context/2026-08-31/src/S08-research-ui.txt",
+    "note": "FableSleight/comic discussion; pp437-456 No Disposable Cognition ratification."
+  },
+  {
+    "id": "H05",
+    "title": "All I know about elaina_.pdf",
+    "url": null,
+    "note": "Private source supplied previously, 16 pages, 510 extracted lines. Full text inspected. Owner canon correction in H06 p53. Library ID libfile_6813fb4f59a481918a98e5f2a72a025a."
+  },
+  {
+    "id": "H06",
+    "title": "ChatGPT-Memory Shadow Migration G.pdf",
+    "url": null,
+    "note": "Private 474-page export. Complete relevant windows read: p53, pp67-101, pp294-296, pp334-395, pp465-471. Not read exhaustively. Library ID libfile_41e45e41eaac8191a6ae4bd6a1424a4b."
+  },
+  {
+    "id": "H07",
+    "title": "July13 constitution draft",
+    "url": null,
+    "note": "ALICE_CONSTITUTION_v0.1.0-draft.md, blank ratification. Earliest substantive 2026 planning source located; later ratifications control. Library ID libfile_c63d7618d2b48191bd3ab18a2de2d07f."
+  },
+  {
+    "id": "H08",
+    "title": "Uploaded Fable Sleight website and comic",
+    "url": null,
+    "note": "34e23bf2-dd80-48ad-baf1-624c97a7cb51.zip; all64 comic panels and five HTML content pages inspected as text. Fictional demonstration, not execution evidence."
+  },
+  {
+    "id": "H09",
+    "title": "v182 and v186 implementation packages",
+    "url": null,
+    "note": "Exact archived ZIPs and nested lineage inspected locally; current judge worker/controller inspected statically. No GPU execution. Full package hashes in audit section."
+  },
+  {
+    "id": "R01",
+    "title": "Hindsight is 20/20",
+    "url": "https://arxiv.org/html/2512.12818v1",
+    "note": "Latimer et al.; Dec14 2025, v1. Memory networks, retain/recall/reflect; preprint."
+  },
+  {
+    "id": "R02",
+    "title": "Zep: A Temporal Knowledge Graph Architecture for Agent Memory",
+    "url": "https://arxiv.org/html/2501.13956v1",
+    "note": "Rasmussen et al.; Jan2025, v1. Vendor-authored primary paper."
+  },
+  {
+    "id": "R03",
+    "title": "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory",
+    "url": "https://arxiv.org/html/2504.19413v1",
+    "note": "Chhikara et al.; Apr28 2025, v1. Vendor-authored benchmark study."
+  },
+  {
+    "id": "R04",
+    "title": "A-MEM: Agentic Memory for LLM Agents",
+    "url": "https://arxiv.org/html/2502.12110v11",
+    "note": "Xu et al.; Feb17 2025, revised Oct8 2025. Dynamic note organization."
+  },
+  {
+    "id": "R05",
+    "title": "LongMemEval",
+    "url": "https://arxiv.org/html/2410.10813v2",
+    "note": "Wu et al.; Oct2024, revised Mar4 2025; ICLR2025."
+  },
+  {
+    "id": "R06",
+    "title": "LoCoMo",
+    "url": "https://arxiv.org/abs/2402.17753",
+    "note": "Maharana et al.; Feb2024, ACL2024. Generated and human-edited long conversations."
+  },
+  {
+    "id": "R07",
+    "title": "CloneMem",
+    "url": "https://arxiv.org/html/2601.07023v1",
+    "note": "Hu et al.; Jan11 2026. Synthetic longitudinal personal-memory benchmark."
+  },
+  {
+    "id": "R08",
+    "title": "From Recall to Forgetting: Benchmarking Long-Term Memory for Personalized Agents",
+    "url": "https://arxiv.org/html/2604.20006v1",
+    "note": "Uddin et al.; Apr21 2026; Memora, ACL Findings."
+  },
+  {
+    "id": "R09",
+    "title": "LongMemEval V2",
+    "url": "https://arxiv.org/html/2605.12493v1",
+    "note": "Wu et al.; May12 2026. Workflow, premise-awareness and large-context evaluation."
+  },
+  {
+    "id": "R10",
+    "title": "Continual Learning Bench",
+    "url": "https://arxiv.org/html/2606.05661v1",
+    "note": "Asawa et al.; Jun4 2026. Stateful multi-domain benchmark; preprint."
+  },
+  {
+    "id": "R11",
+    "title": "Recursive Language Models",
+    "url": "https://arxiv.org/abs/2512.24601",
+    "note": "Zhang, Kraska and Khattab; Dec31 2025, revised May11 2026."
+  },
+  {
+    "id": "R12",
+    "title": "Generative-agent simulations of 1,052 individuals",
+    "url": "https://arxiv.org/pdf/2411.10109v3",
+    "note": "Park et al.; originally Nov15 2024, revised Jun28 2026. Revised title/version; test-retest-normalized behavioral similarity."
+  },
+  {
+    "id": "R13",
+    "title": "AI models collapse when trained on recursively generated data",
+    "url": "https://www.nature.com/articles/s41586-024-07566-y",
+    "note": "Shumailov et al.; Nature, Jul24 2024. Recursive replacement risks."
+  },
+  {
+    "id": "R14",
+    "title": "Is Model Collapse Inevitable?",
+    "url": "https://arxiv.org/html/2404.01413v2",
+    "note": "Gerstgrasser et al.; Apr2024. Accumulating original and synthetic data counterexample."
+  },
+  {
+    "id": "R15",
+    "title": "Preference Leakage",
+    "url": "https://arxiv.org/html/2502.01534v3",
+    "note": "Li et al.; Feb3 2025, revised Mar4 2026; ICLR2026. Related generator/judge biases."
+  },
+  {
+    "id": "R16",
+    "title": "Towards a Science of Scaling Agent Systems",
+    "url": "https://arxiv.org/html/2512.08296v3",
+    "note": "Kim et al.; Dec9 2025, revised Apr8 2026. Task-dependent orchestration results."
+  },
+  {
+    "id": "R17",
+    "title": "Memory as Ontology",
+    "url": "https://arxiv.org/html/2603.04740v1",
+    "note": "Li et al.; Mar5 2026. Early cross-model identity prior art with limited validation."
+  },
+  {
+    "id": "R18",
+    "title": "Can a Language Model Learn Facts Continually in Its Weights?",
+    "url": "https://arxiv.org/html/2607.11020v2",
+    "note": "Charles O'Neill; Jul13 2026, revised Jul14. Qwen3 sequential factual-write experiments; preprint."
+  },
+  {
+    "id": "R19",
+    "title": "Persona vectors",
+    "url": "https://www.anthropic.com/research/persona-vectors",
+    "note": "Anthropic; Aug1 2025. Causal interventions on selected model traits."
+  },
+  {
+    "id": "R20",
+    "title": "The Assistant Axis",
+    "url": "https://www.anthropic.com/research/assistant-axis",
+    "note": "Anthropic; Jan19 2026. Persona construction/stabilization across tested open models."
+  },
+  {
+    "id": "R21",
+    "title": "Introducing Nested Learning",
+    "url": "https://research.google/blog/introducing-nested-learning-a-new-ml-paradigm-for-continual-learning/",
+    "note": "Google Research; Nov7 2025, NeurIPS2025 work. Hope proof of concept."
+  },
+  {
+    "id": "R22",
+    "title": "Darwin Godel Machine",
+    "url": "https://sakana.ai/dgm/",
+    "note": "Sakana AI; May30 2025. Empirically tested code-changing agent archive."
+  },
+  {
+    "id": "R23",
+    "title": "AlphaEvolve",
+    "url": "https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/",
+    "note": "Google DeepMind; May14 2025. Evaluator-guided algorithm evolution."
+  },
+  {
+    "id": "V01",
+    "title": "Pickle, YC company description",
+    "url": "https://www.ycombinator.com/companies/pickle-2",
+    "note": "Current public positioning inspected Sep6 2026; not independent performance validation."
+  },
+  {
+    "id": "V02",
+    "title": "Oki",
+    "url": "https://okihome.ai/",
+    "note": "Current product page, Sep6 2026; preorder/prototype claims."
+  },
+  {
+    "id": "V03",
+    "title": "Sentience master plan",
+    "url": "https://sentience.com/master-plan",
+    "note": "Current ambition and architecture claims inspected Sep6; broad completion not established."
+  },
+  {
+    "id": "V04",
+    "title": "Personal AI: Your True Personal AI",
+    "url": "https://www.personal.ai/your-true-personal-ai",
+    "note": "Historical first-party personal-model/Memory Stack account; not a current model-spec guarantee."
+  },
+  {
+    "id": "V05",
+    "title": "Pally September updates",
+    "url": "https://pally.com/whats-new/2026-09",
+    "note": "Dated Sep2026 updates; context, work resumption and reliability fixes."
+  },
+  {
+    "id": "V06",
+    "title": "Rowboat source and release",
+    "url": "https://github.com/rowboatlabs/rowboat/releases/tag/v0.9.1",
+    "note": "Aug27 2026 release; README also inspected for editable memory and provider choice."
+  },
+  {
+    "id": "V07",
+    "title": "HEBB Labs",
+    "url": "https://hebb.io/",
+    "note": "Current Human World Model positioning inspected Sep6 2026; research/product claims not equivalent to measured superiority."
+  },
+  {
+    "id": "V08",
+    "title": "ChatGPT Projects",
+    "url": "https://help.openai.com/en/articles/10169521-using-projects-in-chatgpt",
+    "note": "Official current context/memory documentation inspected Sep6."
+  },
+  {
+    "id": "V09",
+    "title": "ChatGPT Pulse",
+    "url": "https://openai.com/index/introducing-chatgpt-pulse/",
+    "note": "OpenAI announcement Sep25 2025; background personal research."
+  },
+  {
+    "id": "V10",
+    "title": "Claude chat search and memory",
+    "url": "https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context",
+    "note": "Official current documentation inspected Sep6."
+  },
+  {
+    "id": "V11",
+    "title": "Claude memory import/export",
+    "url": "https://support.claude.com/en/articles/12123587-import-and-export-your-memory-from-claude",
+    "note": "Official current documentation inspected Sep6."
+  },
+  {
+    "id": "V12",
+    "title": "Gemini productivity features and Spark",
+    "url": "https://blog.google/innovation-and-ai/products/gemini-app/productivity-features-gemini-live/",
+    "note": "Google; Aug26 2026. Unified context, goals and delegated work."
+  },
+  {
+    "id": "Y01",
+    "title": "Apply to Y Combinator",
+    "url": "https://www.ycombinator.com/apply",
+    "note": "Current Winter2027 cycle verified Sep6 2026."
+  },
+  {
+    "id": "Y02",
+    "title": "YC application guidance",
+    "url": "https://www.ycombinator.com/howtoapply",
+    "note": "Official guidance: clarity, founders, insight and initial foothold. Inspected Sep6."
+  },
+  {
+    "id": "Y03",
+    "title": "YC FAQ",
+    "url": "https://www.ycombinator.com/faq",
+    "note": "Official current early-stage/solo-founder and commitment guidance. Inspected Sep6."
+  },
+  {
+    "id": "Y04",
+    "title": "YC Requests for Startups",
+    "url": "https://www.ycombinator.com/rfs",
+    "note": "Current Fall2026 Consumer Primer theme inspected Sep6; interest, not selection promise."
+  }
+]

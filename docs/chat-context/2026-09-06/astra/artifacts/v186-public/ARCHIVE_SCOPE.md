@@ -1,0 +1,3 @@
+# Partial public source archive
+
+These are the unchanged reviewed text files from the exact original v1.8.6 package. Historical nested ZIPs in authority/ are intentionally absent because they contain private source and candidate payloads. The original PACKAGE_MANIFEST and SHA256SUMS describe the full original package, not this partial archive. This directory is for inspection and is not a complete runnable replacement for the original ZIP. SOURCE_MANIFEST.json above identifies the retained original by exact hash and private file reference. No model response or private training record is included here.

@@ -1,0 +1,43 @@
+# Working agreement and recovered lessons
+
+Rayan explicitly switched ongoing ALICE work to Astra on 6 September 2026. The earlier Sol-default preference is superseded. Work in substantial coherent batches: recover evidence, make one bounded decision, implement it, verify the relevant failure modes, record the result, and leave one executable next step. Do not trade knowledge retention or final cognitive semantics for speed.
+
+## Locations and authority
+
+- Canonical release: `NIne-WIngEd/A.L.I.C.E`, `main`, frozen at `0abaed85873c3f8de04765847eb7700b0e20433f`.
+- Continuity: `alice-context`, `docs/chat-context/README.md`; older source index: `2026-08-31/SOURCE_INDEX.md` (check the tree for exact index filename).
+- Operational history: `alice-mc10b-live`, `alice-mc10c-live`, `alice-telemetry`; compute receipts: `NIne-WIngEd/Rayan-Compute-Ledger`.
+- User machine: `C:\A.L.I.C.E-main`; data/artifacts: `C:\ALICE_Vault`; Downloads contains versioned packages and launchers.
+- Remote archive: `rayan_gdrive:Rayan-Compute`; Magnolia working root: `/homes/01/mxrayan/rayan-compute`.
+- A telemetry heartbeat proves liveness, not useful scientific progress. Publish completed-stage summaries, hashes, failures and actual receipt locations. Never include credentials or private records.
+- Keep context work in an isolated checkout. Do not switch, reset or clean the user's working main checkout. Never force-push context. Reconcile an advanced remote before publishing.
+
+## Package and PowerShell workflow
+
+Use a versioned ZIP and a small PowerShell launcher: SHA-256 verification, fresh extraction, compile gate, meaningful offline selftest, then one bounded action with a deterministic exit and receipt. Preserve this workflow instead of introducing unfamiliar single-file packaging. Resolve the user's Anaconda Python first, then the active Conda environment, then real python.exe applications. Python 3.13 compatibility matters; the user's Qualcomm laptop has no CUDA.
+
+Use script files and argument arrays. Long inline PowerShell-to-SSH command chains have corrupted `$?`, awk `$1`, and newline escaping. Do not embed large scripts into interpolated shell strings. Preserve actual newlines in JSON and Markdown; do not publish literal backslash-n paragraph separators. Native Python exit codes must be captured explicitly rather than depending on PowerShell's treatment of stderr. Do not repurpose HOME or other system variables.
+
+Only remove a disposable run folder created for that exact package. Keep receipts, raw result rows and source artifacts separate and immutable. Validate output before replacing canonical state. A safe recovery reads old outputs; it does not silently overwrite qualified bindings while discovering whether they are valid.
+
+## Compute allocation
+
+Prefer local or Magnolia CPU for extraction, validation, scoring, data preparation and analysis. Use Magnolia for supported jobs whenever it avoids spending scarce Kaggle GPU time. Verify the requested hardware, model footprint and scheduler authorization before placement.
+
+Recovered Magnolia context describes 20-core/128-GB CPU nodes and an earlier 48-GiB, 20-core exclusive request. The authorized P100 allocation exposed about 12 GiB VRAM and did not fit the frozen roughly 30B judge artifact. An A100 path was outside the authorized QOS. These are historical constraints, not a live hardware inventory. Do not change quantization, profiles, CPU/GPU policy or scheduler permissions silently to force a fit. SSH credentials stay on the user's machine.
+
+Before any future remote submission, reconcile exact existing lifecycle IDs and preserve terminal output. An old GPU-hours estimate is not current quota. Do not launch a new identity just because a controller stopped. CPU preflight must resolve transport/runtime/protocol problems before a GPU job. Download results before deleting ephemeral runtime resources.
+
+## What the recent failure chain taught us
+
+| Observed failure | Durable correction |
+|---|---|
+| Transport, helper identity, mounts, runtime/TLS and disk failures | Separate environment readiness from model behavior; exercise captured protocol transitions offline. |
+| Receipt serialization and worker-lineage mismatches | Hash the exact serialized bytes and exact rendered worker; preserve parent and effective-contract lineage. |
+| GLM Q04 thinking exhausted 6,144 / 8,192 / 12,288 budgets with no final answer | Stop blind budget escalation; the ratified v186 profile changed to thinking_off before the fresh semantic result. |
+| v186 GLM then failed semantic gates | Inspect all existing result rows. The later failure is not proof of the earlier empty-content problem recurring. |
+| Repeated rubric amendments after viewing the same public 16 tasks | Label that suite calibration; use prospective independently authored evidence for generalization. Keep MC8 sealed. |
+| Validator trusts embedded gold and collapses task IDs into a dictionary | Diagnostic recomputation must use the frozen external task gold and reject duplicate/missing IDs. Do not infer that tampering caused the actual model failure. |
+| Recovery replaces canonical qualification directory before checking its contents | New diagnostic reads downloaded output only and writes to its own run directory. |
+
+Preserve the exact 63 replacements, one deferred item, 287-candidate pool, Gemma v182 rows and existing qualified bindings. The new audit is a continuation, not a restart. Neither version numbers nor green structural validators demonstrate learned identity or memory cognition.

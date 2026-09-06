@@ -1,0 +1,83 @@
+{
+  "artifact_id": "alice.astra.requirement-experiment-ledger.v1",
+  "status": "accepted research direction; prospective numeric criteria must be frozen before measurement",
+  "experiments": [
+    {
+      "id": "E01",
+      "hypothesis": "Learned identity improves judgment",
+      "baseline": "Same base and retrieval: prompted versus trained identity",
+      "test_design": "Fresh held-out situations grouped by source family",
+      "metrics": "Fidelity, generic softening, exaggeration, biography fabrication",
+      "dependency": "Eligible training corpus and independent evaluation",
+      "execution_status": "NOT_EXECUTED_BY_THIS_CONTINUATION",
+      "observed_result": null,
+      "numeric_release_threshold": null
+    },
+    {
+      "id": "E02",
+      "hypothesis": "AMFM improves memory formation",
+      "baseline": "General-model baseline versus trained AMFM on identical proposals",
+      "test_design": "Independent entity/time/contradiction/source-status/routing tasks",
+      "metrics": "Per-field errors and eligibility mistakes; disclose compute",
+      "dependency": "Eligible AMFM data and training",
+      "execution_status": "NOT_EXECUTED_BY_THIS_CONTINUATION",
+      "observed_result": null,
+      "numeric_release_threshold": null
+    },
+    {
+      "id": "E03",
+      "hypothesis": "Complete fabric conserves meaning",
+      "baseline": "Gold proposals versus learned proposals through same fabric",
+      "test_design": "Correction, time, contradiction, restart and projection cases",
+      "metrics": "Separate formation, storage, projection and retrieval errors",
+      "dependency": "Required Stage G implementation and deployment profile",
+      "execution_status": "NOT_EXECUTED_BY_THIS_CONTINUATION",
+      "observed_result": null,
+      "numeric_release_threshold": null
+    },
+    {
+      "id": "E04",
+      "hypothesis": "Experience improves continuing missions",
+      "baseline": "Persistent learning versus reset/frozen at matched budget",
+      "test_design": "Interrupted mission, rejected advice, corrected premise, mixed outcome",
+      "metrics": "Later success, repeated mistakes, duplicate actions, user effort",
+      "dependency": "Full Mission Graph and phase eligibility",
+      "execution_status": "NOT_EXECUTED_BY_THIS_CONTINUATION",
+      "observed_result": null,
+      "numeric_release_threshold": null
+    },
+    {
+      "id": "E05",
+      "hypothesis": "Structured recollection beats simpler baselines",
+      "baseline": "Simple retrieval and long context versus selected G+ strategies",
+      "test_design": "Prospective streams with time and authority conflicts",
+      "metrics": "Answer/decision utility, latency, token and storage cost",
+      "dependency": "Stage G complete; G+ protocol frozen",
+      "execution_status": "NOT_EXECUTED_BY_THIS_CONTINUATION",
+      "observed_result": null,
+      "numeric_release_threshold": null
+    },
+    {
+      "id": "E06",
+      "hypothesis": "Model replacement preserves continuity",
+      "baseline": "Before/after executive substitution with disclosed migration work",
+      "test_design": "Commitments, values, source attribution and behavior",
+      "metrics": "Retention and calibrated changes; not just successful import",
+      "dependency": "Compatible model candidates and migration eligibility",
+      "execution_status": "NOT_EXECUTED_BY_THIS_CONTINUATION",
+      "observed_result": null,
+      "numeric_release_threshold": null
+    },
+    {
+      "id": "E07",
+      "hypothesis": "Correction/deletion propagates across descendants",
+      "baseline": "Original evidence versus corrected/revoked evidence after rebuild",
+      "test_design": "Live, restart, restore, derived projections and training descendants",
+      "metrics": "Stale evidence use and explicit affected-artifact handling",
+      "dependency": "Complete lineage and revocation implementation",
+      "execution_status": "NOT_EXECUTED_BY_THIS_CONTINUATION",
+      "observed_result": null,
+      "numeric_release_threshold": null
+    }
+  ]
+}

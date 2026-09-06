@@ -1,3 +1,21 @@
-# A.L.I.C.E. Chat Context Archive\n\nThis is the stable entry point for future A.L.I.C.E. working chats so the owner does not need to re-upload long historical chat exports and handoff files on every new conversation.\n\n**Repository location:** branch `alice-context`, path `docs/chat-context/`. This branch is deliberately separate from `main` so archival chat material cannot mutate the pinned/canonical Stage G code baseline.\n\n## Latest checkpoint
+# A.L.I.C.E. Chat Context Archive
 
-Start with [`2026-09-06/MC10D_GLM_Q04_DIAGNOSTIC_TO_V186.md`](./2026-09-06/MC10D_GLM_Q04_DIAGNOSTIC_TO_V186.md). It records the v1.8.5 GLM Q04 failure, the bounded Q04 diagnostic, the v1.8.6 GLM thinking-off runtime-profile amendment, and the gated controlled-synthesis breadth v1.0.4 follow-on. Then read [`2026-09-06/MC10D_V184_WORKER_LINEAGE_TO_V185.md`](./2026-09-06/MC10D_V184_WORKER_LINEAGE_TO_V185.md) and [`2026-09-06/MC10D_V182_FORENSICS_TO_V183_DECISION_CENTRIC.md`](./2026-09-06/MC10D_V182_FORENSICS_TO_V183_DECISION_CENTRIC.md).
+Start with the newest dated handoff. Use canonical main for released source and governance, context for owner decisions and recovered operational evidence, and matching result receipts for completion claims.
+
+## Latest checkpoint — 6 September 2026, Astra continuation
+
+1. [Astra handoff](2026-09-06/astra/START_HERE.md)
+2. [Exact current state](2026-09-06/astra/STATE.json)
+3. [Accepted audit decisions](2026-09-06/astra/AUDIT_DECISIONS.md) and [working agreement](2026-09-06/astra/WORKFLOW.md)
+4. [Accepted audit snapshot](2026-09-06/astra/AUDIT_SNAPSHOT.md), [sources](2026-09-06/astra/AUDIT_SOURCE_LEDGER.json), [artifact manifest](2026-09-06/astra/SOURCE_MANIFEST.json)
+5. [Requirement-to-experiment ledger](2026-09-06/astra/EXPERIMENT_LEDGER.json)
+
+Rayan accepted the audit and switched ongoing work to Astra. The newly supplied terminal log records a v186 GLM semantic calibration failure under thinking_off. Existing output must be inspected without a GPU rerun. v186 success, pointwise readiness and breadth-v104 eligibility are not established. Preserve the existing 287 pool, 63 replacements and one deferred item.
+
+## Earlier context
+
+- [Previous Q04 diagnostic and v186 preparation](2026-09-06/MC10D_GLM_Q04_DIAGNOSTIC_TO_V186.md)
+- [6 September notes](2026-09-06/), [5 September notes](2026-09-05/), [4 September handoffs](2026-09-04/)
+- [31 August source archive and index](2026-08-31/)
+
+Follow dated owner decisions and exact artifact hashes. Do not infer a completed stage from a prepared launcher, package version or telemetry heartbeat. Main remains frozen at 0abaed85873c3f8de04765847eb7700b0e20433f until a separate authorized release change.

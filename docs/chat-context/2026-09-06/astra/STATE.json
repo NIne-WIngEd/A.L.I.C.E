@@ -1,0 +1,43 @@
+{
+  "artifact_id": "alice.astra.continuation-state.2026-09-06.v1",
+  "authority": "owner accepted audit and authorized context update and continuation in this conversation",
+  "lead_assistant": "Astra",
+  "main": "0abaed85873c3f8de04765847eb7700b0e20433f",
+  "context_parent": "a42e6cb07fcccccf1e4e3cc394df460852f668a2",
+  "evidence": "terminal log SHA256 b98891795bdd0f3b263aafe015dbdaa5cddd52789d6b96f87e7b79d6d931763e",
+  "checkpoint": "V186_GLM_SEMANTIC_CALIBRATION_FAILURE",
+  "run_id": "260906185551-e563ae",
+  "glm_profile": {
+    "id": "thinking_off",
+    "think": false
+  },
+  "engine_exit": 1,
+  "controller_exit": 76,
+  "failure_sha256": "9f2f42447b99399338659c721e596a5339bad7d00ee4f188f685438bcd51580c",
+  "gemma_v182_rows_reused": true,
+  "gemma_remote_rerun": false,
+  "remote_cleanup_recorded_in_log": true,
+  "live_remote_state_rechecked": false,
+  "preserved": {
+    "replacements": 63,
+    "deferred": 1,
+    "candidate_pool": 287
+  },
+  "v186_success_established": false,
+  "pointwise_ready_established": false,
+  "breadth_v104_executed_in_supplied_log": false,
+  "breadth_prerequisite_satisfied": false,
+  "acceptance_promotion_training_established": false,
+  "next_action": "READ_EXISTING_PUBLIC_GLM_OUTPUT_OFFLINE_AND_RECOMPUTE_FROZEN_CALIBRATION",
+  "numeric_judge_gates_changed": false,
+  "hidden_MC8_accessed": false,
+  "accepted_plan_changes": [
+    "requirement-to-experiment ledger",
+    "public suite classified as calibration",
+    "consolidated effective contract",
+    "declared deployment profile and risk-based Stage G comparison scope",
+    "complete Mission Graph semantics",
+    "preserve phase ordering and private identity custody"
+  ],
+  "stage_g_scope": "owner-authorized planning amendment; canonical machine-contract migration and evidence still pending; no Stage G closure inferred"
+}
