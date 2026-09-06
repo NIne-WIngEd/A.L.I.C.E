@@ -1,3 +1,15 @@
+# Current continuation — actual v186 evidence reviewed
+
+Read [GLM_V186_FINDINGS.md](GLM_V186_FINDINGS.md) first. The returned Windows bundle was verified against all frozen source bindings. Its matching public summary is already on this branch at 167e1df631a03e3fd51985d4b29e298016821cfb.
+
+GLM thinking_off achieved 9/16 verdict matches, 3/7 critical decisions and 3/5 mandatory anchors. It approved both invented-history anchors and returned no HOLD verdicts. The model/profile remains unqualified. The previous request to collect these rows is completed; do not repeat that collection.
+
+The [explicit Qwen fallback amendment](fallback/README.md) is prepared and checked. It proposes the already-listed qwen3.8:27b-q4_K_M fallback on Magnolia CPU with unchanged scientific pass criteria. It is a draft awaiting explicit activation. No Qwen model has been resolved, run or bound. See STATE.json for the current boundary.
+
+The earlier handoff below is retained as history. Any statement there that the actual rows are still missing or still need collection is superseded by this checkpoint.
+
+---
+
 # Astra continuation — 6 September 2026
 
 ## Owner authorization and reading order

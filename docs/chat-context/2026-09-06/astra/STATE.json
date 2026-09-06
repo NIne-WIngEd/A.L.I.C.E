@@ -5,7 +5,7 @@
   "main": "0abaed85873c3f8de04765847eb7700b0e20433f",
   "context_parent": "a42e6cb07fcccccf1e4e3cc394df460852f668a2",
   "evidence": "terminal log SHA256 b98891795bdd0f3b263aafe015dbdaa5cddd52789d6b96f87e7b79d6d931763e",
-  "checkpoint": "V186_GLM_SEMANTIC_CALIBRATION_FAILURE",
+  "checkpoint": "V186_GLM_FAILURE_REVIEW_COMPLETE_QWEN_FALLBACK_AMENDMENT_PROPOSED",
   "run_id": "260906185551-e563ae",
   "glm_profile": {
     "id": "thinking_off",
@@ -28,7 +28,7 @@
   "breadth_v104_executed_in_supplied_log": false,
   "breadth_prerequisite_satisfied": false,
   "acceptance_promotion_training_established": false,
-  "next_action": "READ_EXISTING_PUBLIC_GLM_OUTPUT_OFFLINE_AND_RECOMPUTE_FROZEN_CALIBRATION",
+  "next_action": "EXPLICIT_DECISION_ON_QWEN_FALLBACK_ACTIVATION_THEN_BOUND_CPU_PREFLIGHT",
   "numeric_judge_gates_changed": false,
   "hidden_MC8_accessed": false,
   "accepted_plan_changes": [
@@ -41,12 +41,26 @@
   ],
   "stage_g_scope": "owner-authorized planning amendment; canonical machine-contract migration and evidence still pending; no Stage G closure inferred",
   "continuation_work": {
-    "status": "OFFLINE_PACKAGE_PREPARED_AND_TESTED; actual Windows evidence pending",
+    "status": "ACTUAL_GLM_OUTPUT_REVIEWED; explicit fallback amendment prepared; activation pending",
     "tool": "tools/v186-forensics-v1/README.md",
     "offline_tests_passed": 20,
     "gpu_jobs_submitted": 0,
     "effective_calibration_contract_consolidated": true,
     "prospective_validation_design_written": true,
     "remote_run_success_claimed": false
-  }
+  },
+  "actual_glm_forensic_bundle_received": true,
+  "actual_glm_rows_reverified": true,
+  "glm_verdict_matches": 9,
+  "glm_critical_decision_matches": 3,
+  "glm_critical_tasks": 7,
+  "glm_hard_anchors_correct": 3,
+  "glm_hard_anchors_required": 5,
+  "glm_hold_predictions": 0,
+  "forensics_publication_commit": "167e1df631a03e3fd51985d4b29e298016821cfb",
+  "forensics_public_summary_sha256": "7b51ae684f528059a7590a07a5a46e218f1de84b325a2bf583f1e05e7008e6e3",
+  "qwen_fallback_ratified": false,
+  "qwen_digest_resolved": false,
+  "qwen_evaluated": false,
+  "fallback_draft_sha256": "e16142639f13c9b2191afcfa4221dbf1610abf6af84273b07774fc13a0a1b40b"
 }

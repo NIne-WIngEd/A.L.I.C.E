@@ -2,19 +2,17 @@
 
 Start with the newest dated handoff. Use canonical main for released source and governance, context for owner decisions and recovered operational evidence, and matching result receipts for completion claims.
 
-## Latest checkpoint — 6 September 2026, Astra continuation
+## Latest checkpoint — v186 evidence reviewed, 6 September 2026
 
-1. [Astra handoff](2026-09-06/astra/START_HERE.md)
-2. [Exact current state](2026-09-06/astra/STATE.json)
-3. [Accepted audit decisions](2026-09-06/astra/AUDIT_DECISIONS.md) and [working agreement](2026-09-06/astra/WORKFLOW.md)
-4. [Accepted audit snapshot](2026-09-06/astra/AUDIT_SNAPSHOT.md), [sources](2026-09-06/astra/AUDIT_SOURCE_LEDGER.json), [artifact manifest](2026-09-06/astra/SOURCE_MANIFEST.json)
-5. [Requirement-to-experiment ledger](2026-09-06/astra/EXPERIMENT_LEDGER.json)
+1. [Current Astra handoff](2026-09-06/astra/START_HERE.md) and [exact state](2026-09-06/astra/STATE.json)
+2. [Actual GLM findings](2026-09-06/astra/GLM_V186_FINDINGS.md) and [published forensic summary](2026-09-06/astra/forensics/LATEST_V186_GLM.json)
+3. [Proposed Qwen fallback amendment](2026-09-06/astra/fallback/README.md)
+4. [Accepted audit decisions](2026-09-06/astra/AUDIT_DECISIONS.md), [workflow](2026-09-06/astra/WORKFLOW.md), [audit snapshot](2026-09-06/astra/AUDIT_SNAPSHOT.md), [sources](2026-09-06/astra/AUDIT_SOURCE_LEDGER.json), [artifact manifest](2026-09-06/astra/SOURCE_MANIFEST.json)
+5. [Experiment ledger](2026-09-06/astra/EXPERIMENT_LEDGER.json) and [prospective evaluation design](2026-09-06/astra/PROSPECTIVE_JUDGE_VALIDATION.md)
 
-Rayan accepted the audit and switched ongoing work to Astra. The newly supplied terminal log records a v186 GLM semantic calibration failure under thinking_off. Existing output must be inspected without a GPU rerun. v186 success, pointwise readiness and breadth-v104 eligibility are not established. Preserve the existing 287 pool, 63 replacements and one deferred item.
+The user ran the forensic collector successfully. The returned raw GLM responses have now been read and reverified. The 9/16 verdict and 3/7 critical-decision result is a semantic calibration failure. Both invented-history hard anchors failed. The public summary matches the uploaded bundle.
 
-## Current execution package
-
-The [v186 offline forensics package](2026-09-06/astra/tools/v186-forensics-v1/README.md) collects existing Windows output and publishes a typed summary to this branch. It passed 20 offline tests; actual vault response rows remain pending. See the [prospective validation design](2026-09-06/astra/PROSPECTIVE_JUDGE_VALIDATION.md) for the accepted scientific direction.
+The next proposed step is explicit activation of the documented Qwen fallback. Its draft preserves four independent families and existing pass criteria. Activation, exact Qwen digest/runtime preflight and Qwen inference remain pending. Keep the existing 287-candidate pool, 63 replacements, one deferred item and valid judge evidence. v186 success and breadth-v104 eligibility are still unestablished.
 
 ## Earlier context
 

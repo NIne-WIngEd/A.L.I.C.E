@@ -1,0 +1,12 @@
+{
+  "artifact_id": "alice.mc10d.qwen-fallback-draft-validation.v1",
+  "draft_sha256": "e16142639f13c9b2191afcfa4221dbf1610abf6af84273b07774fc13a0a1b40b",
+  "source_binding_policy_sha256": "c045b20ad44ea240940c550e6fc7447888b84428293a1b9bb2abe89b68cbdc6f",
+  "frozen_tasks_sha256": "b3abc2e36e4e93d3f8f6c9398c7c39b6ca2f40f9b3dcbe875ce9005d096f9420",
+  "positive_draft_validation": "PASS",
+  "rejected_boundary_mutations": 10,
+  "owner_ratification_established": false,
+  "actual_qwen_model_digest_resolved": false,
+  "qwen_model_evaluated": false,
+  "remote_compute_actions": 0
+}
