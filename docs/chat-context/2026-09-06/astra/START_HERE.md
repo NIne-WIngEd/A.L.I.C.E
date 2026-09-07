@@ -20,12 +20,19 @@ see [separate recovery receipt](QWEN_A2_TERMINAL_RECOVERY.json). This restored
 terminal visibility without repairing Magnolia's helper or reconciling the
 Windows controller state.
 
-Next: retrieve `/homes/01/mxrayan/rayan-compute/bin/rayan-telemetry-push.sh`
-from Magnolia and inspect its actual exit paths. The wrapper discarded raw
-helper stdout/stderr. Exit 74 alone cannot establish authentication, network,
-lock or Git compatibility as the cause. No new execution package is ready.
-Do not rerun v104, delete state, alter the completed revision or infer a3 authority.
-The closed a2 launcher only retries publication; it cannot restart inference.
+The [installed helper review](TELEMETRY_HELPER_REVIEW.json) now identifies
+its explicit exit 74 as retry exhaustion in the Git fetch/push loop. Both Git
+streams are suppressed inside the helper. An independent local reproduction
+also confirms a separate timestamp-driven retry collision (exit 73); it does
+not explain the observed exit 74.
+
+Next: use the [read-only transport receipt](TELEMETRY_TRANSPORT_RECEIPT_RELEASE.json)
+ZIP and launcher. It captures Git version, fetch dry-run and push dry-run with
+the installed SSH wrapper and preserves raw output. Return TRACE_ZIP even if
+commands fail. A new observation cannot recover lost historical stderr.
+There is no new scientific execution package. Keep closed a2 state unchanged;
+do not rerun v104 or infer a3 authority. Inspect the returned Git error before
+selecting the transport repair. The helper itself is not invoked by this check.
 
 Keep Gemma v182, Mistral/Granite bindings, GLM's failed calibration, 287
 candidates, 63 replacements and one deferred slot. Judge binding and breadth

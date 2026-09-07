@@ -93,7 +93,7 @@
       "same_pass_rule": true,
       "independent_validation": false,
       "latest_pointer": "qwen-public/LATEST_QWEN_PUBLIC.json",
-      "next_dependency": "Trace installed telemetry helper and restore reliable publication, then determine an eligible execution path under preserved authority; no resubmission is inferred.",
+      "next_dependency": "Collect the current hidden Git transport error. Then repair only demonstrated transport and immutable publisher defects before determining an eligible execution path.",
       "transport_observation": "QWEN_V100_WINDOWS_TERMINAL_OBSERVATION.json",
       "transport_repair": "QWEN_TRANSPORT_REPAIR_V101.json",
       "native_windows_v100_tests_passed": 35,
@@ -143,11 +143,12 @@
       ],
       "last_invocation_scope": "a2 v104 terminal S15 and independently verified result",
       "current_observation": "QWEN_V104_RESULT_REVIEW.json",
-      "next_operational_action": "READ_INSTALLED_TELEMETRY_HELPER_SOURCE_BEFORE_REPAIR",
+      "next_operational_action": "RUN_READ_ONLY_TELEMETRY_TRANSPORT_RECEIPT",
       "package_revision": "QWEN_PROVIDER_REVISION_V104.json",
       "after_actual_passing_calibration": "Verify four exact family/profile/digest receipts and effective contracts before successor binding and breadth prerequisite migration",
-      "pending_read_only_diagnostic": null,
-      "external_terminal_recovery": "QWEN_A2_TERMINAL_RECOVERY.json"
+      "pending_read_only_diagnostic": "TELEMETRY_TRANSPORT_RECEIPT_RELEASE.json",
+      "external_terminal_recovery": "QWEN_A2_TERMINAL_RECOVERY.json",
+      "current_diagnosis": "TELEMETRY_HELPER_REVIEW.json"
     }
   ],
   "roadmap": "PHASE2_REPLACEMENT_ROADMAP.md",

@@ -1,0 +1,9 @@
+test_actual_shell_stdin_bootstrap_and_native_windows_key (selftest_transport.ReceiptTests.test_actual_shell_stdin_bootstrap_and_native_windows_key) ... ok
+test_actual_timeout_retains_partial_output_and_closes_posix_descendant_pipes (selftest_transport.ReceiptTests.test_actual_timeout_retains_partial_output_and_closes_posix_descendant_pipes) ... ok
+test_nonzero_timeout_and_os_error_retain_available_raw_bytes (selftest_transport.ReceiptTests.test_nonzero_timeout_and_os_error_retain_available_raw_bytes) ... ok
+test_real_local_git_dry_runs_leave_repository_and_remote_unchanged (selftest_transport.ReceiptTests.test_real_local_git_dry_runs_leave_repository_and_remote_unchanged) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.444s
+
+OK

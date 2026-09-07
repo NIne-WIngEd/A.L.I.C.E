@@ -81,7 +81,7 @@
   "prior_local_intent_preserved": true,
   "prior_remote_revision_must_be_absent": true,
   "qwen_evaluated": false,
-  "next_action": "READ_INSTALLED_TELEMETRY_HELPER_SOURCE_BEFORE_REPAIR",
+  "next_action": "RUN_READ_ONLY_TELEMETRY_TRANSPORT_RECEIPT",
   "actual_result_review": "QWEN_V104_RESULT_REVIEW.json",
   "actual_model_digest_scope": "Registry manifest only; runtime not prepared",
   "actual_model_manifest_digest": "25b843619e944cd0ae6069f94ff4e5e26a16e109ccbc0a66a0f05979ed70098e",
@@ -89,5 +89,6 @@
   "native_tests_passed": 66,
   "native_test_seconds": 145.03,
   "rerun_recommended": false,
-  "build_receipt_role": "Immutable build-time evidence; this release index additionally records subsequent actual execution"
+  "build_receipt_role": "Immutable build-time evidence; this release index additionally records subsequent actual execution",
+  "current_diagnosis": "TELEMETRY_HELPER_REVIEW.json"
 }

@@ -1,0 +1,48 @@
+{
+  "schema": "alice.telemetry.transport-receipt.build.v1",
+  "package": "ALICE_TELEMETRY_TRANSPORT_RECEIPT_v1.0.0.zip",
+  "package_sha256": "dc53f84c67f8c286788c856fcffb1bfad189eb4541241d19a94be797a40104a3",
+  "package_bytes": 6815,
+  "launcher": "tools/telemetry-transport-receipt/dist/Start-ALICETelemetryTransportReceiptV100.ps1",
+  "launcher_sha256": "9ff8b0ba823b66190ee30bdb316aa3e500c8591dd7ad5faf28d01deeb3f4c5bb",
+  "package_manifest_sha256": "cb4a99847406c67a257b66fecf0724dcbb9bbb4120e0ed4dd672dfd000604566",
+  "tests_passed": 4,
+  "fresh_zip_extraction_tested": true,
+  "embedded_powershell_manifest_verifier_executed": true,
+  "powershell_native_execution_observed": false,
+  "magnolia_execution_observed": false,
+  "source_helper_sha256": "ba4482728c09313aede5031e682f68e8007c79c9cfa084d3da4b11aa984d0830",
+  "commands": [
+    [
+      "git",
+      "--version"
+    ],
+    [
+      "git",
+      "fetch",
+      "--dry-run",
+      "origin",
+      "main"
+    ],
+    [
+      "git",
+      "push",
+      "--dry-run",
+      "origin",
+      "HEAD:refs/heads/main"
+    ]
+  ],
+  "command_timeouts_seconds": [
+    10,
+    20,
+    20
+  ],
+  "ssh_timeout_seconds": 85,
+  "execution_authority_granted": false,
+  "new_scientific_execution_package": false,
+  "status": "READY_FOR_OWNER_READ_ONLY_TRANSPORT_OBSERVATION",
+  "distribution_artifact_id": "libfile_49777da733d88191a86bbcab680b6b28",
+  "source_and_rebuild": "tools/telemetry-transport-receipt/build_receipt.py",
+  "actual_helper_review": "TELEMETRY_HELPER_REVIEW.json",
+  "next_action": "RUN_READ_ONLY_TELEMETRY_TRANSPORT_RECEIPT"
+}

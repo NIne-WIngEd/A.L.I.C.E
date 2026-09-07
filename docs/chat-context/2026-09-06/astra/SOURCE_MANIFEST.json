@@ -120,6 +120,14 @@
       "original_private_file_id": "libfile_ff57f0ee41e48191bc29432cbb42a335",
       "public_archive_path": "artifacts/S15-terminal-052248.txt",
       "custody": "Reviewed public fictional calibration and infrastructure receipts; no credential contents, private candidate payloads or model responses. Original bytes preserved."
+    },
+    {
+      "original_name": "rayan-telemetry-push.sh",
+      "sha256": "ba4482728c09313aede5031e682f68e8007c79c9cfa084d3da4b11aa984d0830",
+      "bytes": 3056,
+      "original_private_file_id": "libfile_3b9af51710e48191990789774ce805ad",
+      "public_archive_path": "tools/telemetry-transport-receipt/source/rayan-telemetry-push.sh",
+      "custody": "Reviewed helper source with credential locators but no credential contents. Original bytes preserved; never execute this archived copy as a repair."
     }
   ],
   "original_audit_markdown_sha256": "8a93d002b2b2e1e2b571bdcb8808016afc5b8cd76b11f80a93fbe1c3b5193ffb",
@@ -190,5 +198,11 @@
     "status": "QWEN_A2_CLOSED_INITIAL_TELEMETRY_STOP; NOT_EVALUATED",
     "actual_review": "QWEN_V104_RESULT_REVIEW.json",
     "rerun_recommended": false
+  },
+  "active_read_only_telemetry_diagnostic": {
+    "release": "TELEMETRY_TRANSPORT_RECEIPT_RELEASE.json",
+    "package_sha256": "dc53f84c67f8c286788c856fcffb1bfad189eb4541241d19a94be797a40104a3",
+    "distribution_artifact_id": "libfile_49777da733d88191a86bbcab680b6b28",
+    "status": "READY_FOR_OWNER_READ_ONLY_TRANSPORT_OBSERVATION"
   }
 }

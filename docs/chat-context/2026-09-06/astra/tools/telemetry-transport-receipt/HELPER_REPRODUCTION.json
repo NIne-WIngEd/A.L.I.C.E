@@ -1,0 +1,23 @@
+{
+  "source_sha256": "ba4482728c09313aede5031e682f68e8007c79c9cfa084d3da4b11aa984d0830",
+  "scope": "Disposable local Git only. Root path remapped; sleep suppressed; date controlled. Fetch/push errors explicitly injected. No claim these injected errors occurred on Magnolia.",
+  "findings": [
+    {
+      "case": "fetch_failure",
+      "exit": 74,
+      "raw_git_error_lost_inside_helper": true
+    },
+    {
+      "case": "push_failure",
+      "exit": 74,
+      "raw_git_error_lost_inside_helper": true
+    },
+    {
+      "case": "same_payload_later_timestamp",
+      "first_exit": 0,
+      "retry_exit": 73,
+      "original_remote_bundle_preserved": true,
+      "three_input_payloads_unchanged": true
+    }
+  ]
+}

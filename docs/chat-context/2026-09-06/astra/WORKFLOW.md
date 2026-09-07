@@ -2,7 +2,8 @@
 
 Current override: follow [START_HERE](START_HERE.md) and the
 [actual v104 result review](QWEN_V104_RESULT_REVIEW.json). A2 is closed after
-initial telemetry failure. Collect the installed helper source next; earlier
+initial telemetry failure. Its source is reviewed; collect the read-only Git
+transport receipt next (TELEMETRY_TRANSPORT_RECEIPT_RELEASE.json). Earlier
 ready/run instructions below are history.
 
 Rayan explicitly switched ongoing ALICE work to Astra on 6 September 2026. The earlier Sol-default preference is superseded. Work in substantial coherent batches: recover evidence, make one bounded decision, implement it, verify the relevant failure modes, record the result, and leave one executable next step. Do not trade knowledge retention or final cognitive semantics for speed.
@@ -200,3 +201,24 @@ and task completion are distinct observations.
 For this missing source file, a direct native-key SCP copy is sufficient; a new
 diagnostic package and another full selftest pass add no value. Resume a bounded
 repair only after the actual helper establishes which evidence or change is needed.
+
+
+## Installed telemetry helper review — 7 September 2026
+
+The actual supplied helper suppresses Git output internally. Capture receipts at
+the failing command boundary; retaining the caller's output cannot restore an
+inner stream already discarded. Its explicit 74 indicates fetch/push retry
+exhaustion. Lock and immutable collision paths explicitly use 71 and 73.
+
+The helper's own generated metadata is part of the immutable payload. Rebuilding
+published_at on retry changes bundle.sha256 even when all three caller payloads
+are identical. This was reproduced against a disposable local Git remote.
+Freeze the full payload once and validate idempotence through the real installed
+publisher before another eligible compute run. Fixing this collision does not
+explain or resolve the currently hidden Git transport error.
+
+The next receipt uses only three commands and reuses the established Python/SSH
+bootstrap. Record current transport output and selected file stability. Dry-run
+success does not establish local write capability or actual publication success.
+Keep raw diagnostics private until reviewed. No Qwen replay or state reset follows
+a diagnostic result; preserve the scientific authority and closed execution history.
