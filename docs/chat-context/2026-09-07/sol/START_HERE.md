@@ -26,3 +26,15 @@ The replacement is `ALICE_KAGGLE_QWEN_PUBLIC_v1.0.2.zip` with a tiny PowerShell 
 The exact deterministic kernel ref is `mkrayanyan/alice-qwen-k1-v102-55b8e7acb4c1`. The previously validated shared runtime dataset `mkrayanyan/alice-tournament-runtime-50539c5fe9bf` supplies the pinned Ollama v0.32.15 archive so the job does not waste Kaggle ephemeral disk on another 1.42 GB runtime download. The worker still verifies the archive and binary hashes, requires two T4s, proves material model use on both GPUs, performs a pre-model disk gate, then runs the frozen throughput probe and 16 public tasks only.
 
 No private pointwise data. No MC8. No A-SYN acceptance/promotion. No training. Canonical main remains frozen.
+
+## 2026-09-07 Qwen result verified
+
+Qwen public calibration on the frozen Kaggle 2x-T4 profile completed successfully. Returned result ZIP SHA-256: `d5f9f75d33ca92d7455677ba4f04ca8fa090ccba03b3946732671a0403669d53`.
+
+Independent evidence audit verified all 84 manifest-listed files, all task request/response hashes, 16/16 unique complete tasks, exactly one attempt per task, frozen model/profile identity, and the predefined score. Qwen passed with 14/16 verdict matches, 7/7 critical decisions, and 5/5 mandatory hard anchors. This is public calibration only, not independent certification.
+
+Known Qwen public-suite errors are Q09 (expected REJECT, observed HOLD) and Q12 (expected PASS, observed REJECT). Preserve them as challenge debt. Do not tune Qwen on the same 16 tasks and rerun.
+
+Read `MC10D_QWEN_V102_VERIFIED_AND_SYNTHESIS_FIDELITY_GUARDRAILS.md` before any next MC10D package. It locks the bigger-picture E0/E-INF/A-SYN fidelity doctrine and the exact MC10D objective.
+
+Immediate next action: verify preserved Gemma/Mistral/Granite receipts and effective profiles, construct a new truthful Gemma+Qwen+Mistral+Granite successor binding, refreeze the unchanged 287-candidate pool as pointwise-ready, then explicitly migrate the breadth prerequisite. Do not start private pointwise before those gates.
