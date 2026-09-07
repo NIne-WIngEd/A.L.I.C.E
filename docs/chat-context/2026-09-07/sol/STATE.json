@@ -44,14 +44,23 @@
       "mc8": "SEALED",
       "accepted": 0,
       "promoted": 0,
-      "training": false
+      "training": false,
+      "pre_pointwise_consolidation": "V190_PREPARED_NOT_EXECUTED",
+      "next_required_gate": "FOUR_FAMILY_SUCCESSOR_BINDING_AND_287_REFREEZE_AND_BREADTH_MIGRATION"
     },
     "judges": {
       "gemma": "preserved",
       "mistral": "preserved",
       "granite": "preserved",
       "glm": "FAILED_SEMANTIC_ROLE_DO_NOT_RERUN_UNCHANGED",
-      "qwen": "PUBLIC_CALIBRATION_PASSED_KAGGLE_PROFILE_ONLY; NOT_INDEPENDENT_CERTIFICATION"
+      "qwen": "PUBLIC_CALIBRATION_PASSED_KAGGLE_PROFILE_ONLY; NOT_INDEPENDENT_CERTIFICATION",
+      "successor_target": [
+        "gemma",
+        "qwen",
+        "mistral",
+        "granite"
+      ],
+      "successor_binding_created": false
     }
   },
   "qwen_runtime": {
@@ -134,42 +143,55 @@
     "stage_g_closure": true,
     "phase2_retirement": true
   },
-  "next_action": "VERIFY_PRESERVED_GEMMA_MISTRAL_GRANITE_RECEIPTS; CREATE_TRUTHFUL_FOUR_FAMILY_SUCCESSOR_BINDING; REFROZEN_287_POINTWISE_READY; MIGRATE_BREADTH_PREREQUISITE",
+  "next_action": "RUN_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_V190",
   "pending_package": {
-    "provider": "kaggle",
-    "package": "ALICE_KAGGLE_QWEN_PUBLIC_v1.0.2.zip",
-    "package_sha256": "7352FE1A32713D2E85A400E70FFFD656AE05C760F134AE6AE83D87B9D4053006",
-    "launcher": "Start-ALICEKaggleQwenQualificationV102.ps1",
-    "launcher_sha256": "89BA0E1121C829D84A03C05D1B7217CA89AFF5E36E64DDBB2CB7C525DBECD738",
-    "worker_sha256": "35389B3D7B83FA43AC1A358C9610670183544378EFEDE3D095F616D8AA1B4F4A",
-    "controller_sha256": "4DB3219A1AA48994F13D09D52DA7FE73751F2472246A3AEE4F0A96074CCD3F2E",
-    "selftest_sha256": "147D8B25F85304B41E0A25C66E876C0ADC2AA72732B4788837C17792B5B8C700",
-    "deterministic_request_sha256": "55b8e7acb4c16284773f371196d0cb9d6e080eef83f46b41476d45302d6593a3",
-    "deterministic_kernel_ref": "mkrayanyan/alice-qwen-k1-v102-55b8e7acb4c1",
-    "shared_runtime_dataset": "mkrayanyan/alice-tournament-runtime-50539c5fe9bf",
-    "profile_id": "qwen38_thinking_on_public_calibration_kaggle_t4x2_v1",
-    "accelerator": "2x Tesla T4",
-    "public_tasks": 16,
-    "calibration_only": true,
-    "private_pointwise": false,
+    "stage": "MC10D_PRE_POINTWISE_CONSOLIDATION",
+    "package": "ALICE_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_v1.9.0.zip",
+    "package_sha256": "5A83B08399A8AB8A06FAE0DCA7345E87D2355544FC593E7207FDAF17AC97FDD0",
+    "package_bytes": 343792,
+    "launcher": "Start-ALICEMC10DQwenSuccessorRefreezeBreadthV190.ps1",
+    "launcher_sha256": "8ABF9EEB5BF022DEA701AA4F9A007FAFE61E19FCA5A16DEA2267D1A86374E169",
+    "build_receipt": "ALICE_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_v1.9.0_BUILD_RECEIPT.txt",
+    "build_receipt_sha256": "37AC04CFAAF7BB9A58D152D352C80063AFACB5621DADCBA7C87B4F0BF0D59AE1",
+    "controller_sha256": "271C0C63A81F0B3B3372F352C7F25E1CD58CE01C938986444E6999AC2F87A173",
+    "selftest_sha256": "6DC26D664AE2EB4202FE349EB30D9EC8FD59466F1D90F423BA440A94B4D1BC89",
+    "qwen_result_zip_sha256": "d5f9f75d33ca92d7455677ba4f04ca8fa090ccba03b3946732671a0403669d53",
+    "scientific_parent_v172_sha256": "4D9EE7FE7AACB510A1170B5C53B9E9F07D1182FFDC04EE55FA2A533097324533",
+    "freeze_sha256": "22B0ADBCCF442B0B3654F964E35AB77A044AF7623891E2A60C72B06A94ECE9A3",
+    "safe_batch_scope": [
+      "independently_revalidate_exact_qwen_evidence",
+      "recover_and_validate_preserved_gemma_without_inference",
+      "verify_frozen_mistral_and_granite_bindings",
+      "install_no_inference_qwen_adapter",
+      "truthfully_replace_failed_glm_family_with_owner_approved_qwen_successor",
+      "deterministically_refreeze_unchanged_287_candidate_pool",
+      "validate_pointwise_ready_successor_bundle",
+      "create_new_four_family_successor_binding_receipt",
+      "migrate_already_owner_accepted_controlled_synthesis_breadth_prerequisite",
+      "emit_exact_private_pointwise_dispatch_authority"
+    ],
+    "workflow_stop_after_success": "PRIVATE_POINTWISE_REQUIRES_EXACT_NEW_OUTPUT_HASHES_BEFORE_DISPATCH",
+    "remote_inference": false,
+    "private_pointwise_started": false,
     "mc8": false,
+    "full_simulation": false,
     "asyn_acceptance": false,
     "asyn_promotion": false,
     "training": false,
-    "transport": {
-      "metadata_utf8_no_bom": true,
-      "single_code_file": true,
-      "deterministic_identity": true,
-      "push_once": true,
-      "repush_on_404": false,
-      "resume_same_identity": true,
-      "retrieve_before_cleanup": true,
-      "native_exit_receipts": true
-    },
-    "executed": true,
-    "result_zip_sha256": "d5f9f75d33ca92d7455677ba4f04ca8fa090ccba03b3946732671a0403669d53",
-    "qualification_passed": true,
-    "scientific_outcome": "EVALUATED"
+    "executed": false,
+    "audits": {
+      "zip_crc": true,
+      "deterministic_byte_identical_rebuild": true,
+      "fresh_extract_compile": true,
+      "fresh_extract_selftest": true,
+      "qwen_84_file_revalidation": true,
+      "qwen_score_recomputed": true,
+      "v170_patch_patterns": 7,
+      "remote_public_judge_branch_disabled": true,
+      "falsification_families_preserved": 18,
+      "zero_tolerance_vetoes_preserved": 8,
+      "e0_never_generated": true
+    }
   },
   "objective_guardrail": {
     "objective": "Maximize evidence-constrained behavioral and cognitive fidelity to Elaina in A.L.I.C.E. while preserving provenance, uncertainty, corrections, context sensitivity, and Alice's separate post-activation continuity. Do not claim biological or metaphysical identity continuity.",
