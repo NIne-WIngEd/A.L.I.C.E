@@ -75,7 +75,21 @@
       "1.11.1",
       "1.13.4"
     ],
-    "source_build_feasibility": "PENDING_INDEPENDENT_REQUIREMENT_VERIFICATION"
+    "source_build_feasibility": "UPSTREAM_REQUIREMENTS_VERIFIED_REMOTE_BUILD_PROBE_PENDING",
+    "ollama_source": {
+      "version": "0.32.15",
+      "tag": "v0.32.15",
+      "commit": "b7871fc0d1d82fe109536efa3e0e8e411c766c75",
+      "go_mod": "1.26.0",
+      "cmake_minimum": "3.24",
+      "llama_cpp_short_tag": "b10488",
+      "llama_cpp_commit": "9d77fa17254e1dee4b9e92504c91611a60b1359f"
+    },
+    "go_bootstrap": {
+      "version": "1.26.0",
+      "archive": "go1.26.0.linux-amd64.tar.gz",
+      "sha256": "aac1b08a0fb0c4e0a7c1555beb7b59180b05dfc5a3d62e40e9de90cd42f88235"
+    }
   },
   "blocked": {
     "private_pointwise": true,
@@ -85,5 +99,13 @@
     "stage_g_closure": true,
     "phase2_retirement": true
   },
-  "next_action": "VERIFY_PINNED_OLLAMA_SOURCE_BUILD_REQUIREMENTS_AND_CHOOSE_ONE_CONSOLIDATED_COMPATIBLE_RUNTIME_ROUTE_BEFORE_ANY_NEW_EXECUTION"
+  "next_action": "RUN_BOUNDED_MAGNOLIA_SOURCE_RUNTIME_FEASIBILITY_V100_AND_RETURN_RESULT_BEFORE_ANY_QWEN_A4",
+  "pending_package": {
+    "name": "ALICE_MAGNOLIA_SOURCE_RUNTIME_FEASIBILITY_v1.0.0.zip",
+    "sha256": "411791925E9879F51E226ED7BCA7609901243D2F882907216B14B2253870B77B",
+    "launcher": "Start-ALICEMagnoliaSourceRuntimeFeasibilityV100.ps1",
+    "launcher_sha256": "FCBC2C46D56B0684C8E46F93A8CFAFB3122B887040799FDF631301E01EE78F61",
+    "executed": false,
+    "scientific_scope": "INFRASTRUCTURE_ONLY_NO_MODEL_NO_INFERENCE"
+  }
 }
