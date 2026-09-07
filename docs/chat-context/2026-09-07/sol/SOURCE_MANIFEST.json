@@ -1,0 +1,47 @@
+{
+  "schema": "alice.context.sol-handoff.sources.v1",
+  "context_date": "2026-09-07",
+  "parent_context_commit": "5c4f8c01895f4205c629fbb385d4f5e35fcaecfc",
+  "sources": [
+    {
+      "name": "terminal-transcript.txt",
+      "sha256": "7BF836191C290318C010E78747CE482447E56976E7BB49168134C43727B73954",
+      "bytes": 1166,
+      "archived_as": "terminal-transcript.txt",
+      "status": "FULL_PARSED_TEXT_ARCHIVED"
+    },
+    {
+      "name": "Pasted text(20260907-210005).txt",
+      "sha256": "B0A8617AB731B1E6D571C2586830DC984B1E3C912CB046B9B614819EAD4931B1",
+      "bytes": 417741,
+      "archived_as": "Pasted text(20260907-210005).txt",
+      "status": "FULL_PARSED_TEXT_ARCHIVED"
+    },
+    {
+      "name": "Update-GitHub-Context.pdf",
+      "sha256": "1E22A30D133E1E5E142B060F9806D7DDD849860C83F9EFD5A4206D6F4A9227DC",
+      "bytes": 1762643,
+      "archived_as": "Update-GitHub-Context.tail-pages-196-198.txt",
+      "status": "LATEST_DELTA_TEXT_ARCHIVED; PRIOR_HISTORY_ALREADY_REPRESENTED_IN_ALICE_CONTEXT"
+    },
+    {
+      "name": "ALICE_RuntimeRoute_f019bdb2d1c2.zip",
+      "sha256": "11DBC2BD6B7ED7A3BE0CD333986EFB72DBB403D03639DCD8EDFE714202218DFF",
+      "bytes": 483208,
+      "status": "BINARY_SHA_AND_CRITICAL_RESULT_SUMMARY_ARCHIVED"
+    },
+    {
+      "name": "ALICE_MAGNOLIA_RUNTIME_ROUTE_v1.0.0.zip",
+      "sha256": "73E35C340F99D1BB83529DEB11F5FD88729FA2FD94F1F43A418C377A43132155",
+      "bytes": 12481,
+      "status": "SOURCE_TREE_ALREADY_ARCHIVED_UNDER_2026-09-06/astra/tools/runtime-route-survey"
+    },
+    {
+      "name": "Start-ALICEMagnoliaRuntimeRouteV100.ps1",
+      "sha256": "EF7019520C0C2ECFD4704D1CAF23B97EE3044E5758448F1DFEA42437D251CCA6",
+      "bytes": 5040,
+      "status": "EXACT_LAUNCHER_ALREADY_ARCHIVED_UNDER_2026-09-06/astra/tools/runtime-route-survey/dist"
+    }
+  ],
+  "note": "Raw binary uploads are represented by content hashes and the critical observed result summary when the exact binary is not duplicated. Existing release source/launcher already present in alice-context are not copied again."
+}

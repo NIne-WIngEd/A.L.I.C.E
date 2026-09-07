@@ -1,0 +1,89 @@
+{
+  "schema": "alice.context.sol-state.v1",
+  "context_date": "2026-09-07",
+  "canonical_repository": "NIne-WIngEd/A.L.I.C.E",
+  "branches": {
+    "main": "0abaed85873c3f8de04765847eb7700b0e20433f",
+    "alice_context_parent": "5c4f8c01895f4205c629fbb385d4f5e35fcaecfc",
+    "alice_mc10b_live": "86ae99ca11d5c9a5c72f4d8dd22c7ec90eb882ea",
+    "alice_mc10c_live": "53d2fb4060c681fea2097d5d15e9ce4f354e61f5",
+    "alice_telemetry": "956c973af3452706218e45256c0155c516c95d83"
+  },
+  "branch_graph": {
+    "public_branch_count": 25,
+    "historical_planning_feature_fix_docs": "verified ancestors of frozen main",
+    "alice_context": "intentional continuity/archive divergence",
+    "alice_mc10b_live": "intentional live-evidence divergence",
+    "alice_mc10c_live": "intentional live-evidence divergence",
+    "alice_telemetry": "orphan history; no common ancestor with main"
+  },
+  "science": {
+    "mc10b": {
+      "frontier_packets": "60/60",
+      "raw_einf": 720,
+      "einf_accepted_as_history": false,
+      "asyn_generated": false,
+      "training": false
+    },
+    "mc10c": {
+      "eligible_packets": "24/24",
+      "raw_asyn": 288,
+      "unknown_competitors": 24,
+      "accepted": 0,
+      "promoted": 0,
+      "training": false
+    },
+    "mc10d": {
+      "effective_pool": 287,
+      "valid_replacements": 63,
+      "deferred": 1,
+      "retained_originals": 224,
+      "slot63": "DEFERRED_NO_ATTEMPT_4",
+      "slot64": "DONE_NEVER_RERUN",
+      "private_pointwise_started": false,
+      "mc8": "SEALED",
+      "accepted": 0,
+      "promoted": 0,
+      "training": false
+    },
+    "judges": {
+      "gemma": "preserved",
+      "mistral": "preserved",
+      "granite": "preserved",
+      "glm": "FAILED_SEMANTIC_ROLE_DO_NOT_RERUN_UNCHANGED",
+      "qwen": "NOT_EVALUATED"
+    }
+  },
+  "qwen_runtime": {
+    "a1": "CLOSED_ZERO_INFERENCE",
+    "a2": "CLOSED_ZERO_INFERENCE",
+    "a3": "CLOSED_NATIVE_RUNTIME_ABI_STOP_ZERO_INFERENCE",
+    "a3_job_id": "575182",
+    "v105_rerun_forbidden": true,
+    "trace_sha256": "11DBC2BD6B7ED7A3BE0CD333986EFB72DBB403D03639DCD8EDFE714202218DFF",
+    "host_glibc": "2.17",
+    "prebuilt_ollama_requires": "GLIBC_2.28",
+    "container_tools_observed": false,
+    "cmake_module": "3.24.2",
+    "gcc_modules": [
+      "11.4.0",
+      "12.3.0",
+      "13.2.0"
+    ],
+    "observed_go_modules": [
+      "1.9.3",
+      "1.11.1",
+      "1.13.4"
+    ],
+    "source_build_feasibility": "PENDING_INDEPENDENT_REQUIREMENT_VERIFICATION"
+  },
+  "blocked": {
+    "private_pointwise": true,
+    "asyn_acceptance": true,
+    "asyn_promotion": true,
+    "model_training": true,
+    "stage_g_closure": true,
+    "phase2_retirement": true
+  },
+  "next_action": "VERIFY_PINNED_OLLAMA_SOURCE_BUILD_REQUIREMENTS_AND_CHOOSE_ONE_CONSOLIDATED_COMPATIBLE_RUNTIME_ROUTE_BEFORE_ANY_NEW_EXECUTION"
+}

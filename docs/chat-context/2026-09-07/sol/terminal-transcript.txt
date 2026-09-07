@@ -1,0 +1,32 @@
+**********************
+Windows PowerShell transcript start
+Start time: 20260907152217
+Username: NINE_WINGED\rayns
+RunAs User: NINE_WINGED\rayns
+Configuration Name: 
+Machine: NINE_WINGED (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Users\rayns\Downloads\Start-ALICEMagnoliaRuntimeRouteV100.ps1
+Process ID: 12104
+PSVersion: 5.1.26100.9168
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9168
+BuildVersion: 10.0.26100.9168
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+
+
+
+python_compile_gate_passed=true files=3
+
+Reading existing runtime ELF requirements and available container tools. Six bounded commands; no allocation, download, model service or inference.
+
+ALICE_MAGNOLIA_RUNTIME_ROUTE_EXIT=0
+Return TRACE_ZIP and this transcript. Keep a3 closed; do not rerun v105 or start a new qualification.
+**********************
+Windows PowerShell transcript end
+End time: 20260907152229
+**********************
