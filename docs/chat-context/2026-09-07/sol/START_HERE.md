@@ -38,3 +38,15 @@ Known Qwen public-suite errors are Q09 (expected REJECT, observed HOLD) and Q12 
 Read `MC10D_QWEN_V102_VERIFIED_AND_SYNTHESIS_FIDELITY_GUARDRAILS.md` before any next MC10D package. It locks the bigger-picture E0/E-INF/A-SYN fidelity doctrine and the exact MC10D objective.
 
 Immediate next action: verify preserved Gemma/Mistral/Granite receipts and effective profiles, construct a new truthful Gemma+Qwen+Mistral+Granite successor binding, refreeze the unchanged 287-candidate pool as pointwise-ready, then explicitly migrate the breadth prerequisite. Do not start private pointwise before those gates.
+
+## MC10D v1.9.0 consolidated pre-pointwise step
+
+The owner requested that all MC10D work that can safely be combined should be combined. The resulting v1.9.0 package batches every deterministic/local step through the private-pointwise authorization boundary: Qwen evidence revalidation, preserved Gemma recovery, frozen Mistral/Granite verification, Qwen successor adapter, truthful four-family binding, unchanged 287-candidate refreeze, and controlled-synthesis breadth-prerequisite migration.
+
+Package SHA-256: `5A83B08399A8AB8A06FAE0DCA7345E87D2355544FC593E7207FDAF17AC97FDD0`.
+
+Launcher SHA-256: `8ABF9EEB5BF022DEA701AA4F9A007FAFE61E19FCA5A16DEA2267D1A86374E169`.
+
+Read `MC10D_QWEN_SUCCESSOR_V190_PREEXECUTION_BOUNDARY.md` before continuing.
+
+Do not bundle private pointwise or full simulation into this step. Pointwise must first bind the exact v1.9.0 output hashes. Full simulation must then bind the exact frozen pointwise result. Current next action is `RUN_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_V190`.
