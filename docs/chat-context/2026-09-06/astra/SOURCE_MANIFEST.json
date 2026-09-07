@@ -80,6 +80,23 @@
       "original_private_file_id": "libfile_6b3d4a23fc788191812d3138f2ae3f2d",
       "public_archive_path": "tools/qwen-origin-v103/package/ALICE_MC10D_QWEN_ORIGIN_REVISION_v1.0.3/source/ALICE_QWEN_TRACE_05d0a01649cb.zip",
       "custody": "Reviewed infrastructure hashes, selected lifecycle fields, scheduler rows and verified HTTPS HEAD metadata only. No credentials, private candidate content or model payloads."
+    },
+    {
+      "original_name": "Pasted text(20260907-035211).txt",
+      "sha256": "427f6e0b62053f6e568f388ec658bfc4af371110caecfee90c9eb80031967bdf",
+      "bytes": 12438,
+      "original_private_file_id": "libfile_a5d63557cfac81918121f461eae9f44e",
+      "public_archive_path": "artifacts/S14-terminal-035211.txt",
+      "custody": "Complete reviewed terminal bytes; infrastructure metadata and test names only. No credentials, private candidates or model outputs."
+    },
+    {
+      "original_name": "ASTRA_MASTER_CONTINUATION_HANDOFF(1).md",
+      "sha256": "1585cc1110cbe738d1ba68b49f146cc88885285a47f552cf4d7b6e08fc5797ec",
+      "bytes": 41483,
+      "original_private_file_id": "libfile_b008625ee6988191a9a8d0e68fdd03c5",
+      "public_archive_path": "ASTRA_MASTER_CONTINUATION_HANDOFF.md",
+      "github_copy_sha256": "adf59cf2f21ffdbccab695ea212c8b00e69c028cdaa8a6a4512f8dce8d4a4063",
+      "custody": "Already present in Sol context parent; retained unchanged. Uploaded copy adds only a final LF. No duplicate handoff body added."
     }
   ],
   "original_audit_markdown_sha256": "8a93d002b2b2e1e2b571bdcb8808016afc5b8cd76b11f80a93fbe1c3b5193ffb",
@@ -117,7 +134,10 @@
     "source_and_rebuild": "tools/qwen-origin-v103/README.md",
     "distribution_artifact_id": "libfile_0ed0fa9ffd8c819194a28e3bb627958c",
     "run_id": "alice-qwen38-a2-c926d9e355dd",
-    "status": "HOST_TRACE_VERIFIED_A2_UNSUBMITTED_V103_REVISION_READY"
+    "status": "QWEN_V103_SOURCE_SCHEDULER_STOP_RAW_PROVIDER_RECEIPT_REQUIRED",
+    "rerun_recommended": false,
+    "actual_terminal_review": "QWEN_V103_TERMINAL_REVIEW.json",
+    "new_package_released": false
   },
   "completed_read_only_diagnostic": {
     "release": "QWEN_READ_ONLY_TRACE_RELEASE.json",

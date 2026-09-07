@@ -1,0 +1,104 @@
+(base) PS C:\A.L.I.C.E-main> powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$HOME\Downloads\Start-ALICEQwenReadOnlyTraceV100.ps1"
+diagnostic_package_sha256=E8741E855B5BF2EC7A8F0CB782D7C9779654CDB5970327ECCD8FCBA39B60D39A
+PYTHON=C:\Users\rayns\anaconda3\python.exe
+diagnostic_manifest_verified=true files=5
+compile_gate_passed=true files=3
+test_file_mismatch_unreadable_and_non_regular_are_distinct (selftest_trace.TraceTests.test_file_mismatch_unreadable_and_non_regular_are_distinct) ... ok
+test_local_collection_and_ssh_failure_preserve_existing_controller_state (selftest_trace.TraceTests.test_local_collection_and_ssh_failure_preserve_existing_controller_state) ... ok
+test_no_ca_makes_no_network_request_and_http_downgrade_is_refused (selftest_trace.TraceTests.test_no_ca_makes_no_network_request_and_http_downgrade_is_refused) ... ok
+test_origin_report_distinguishes_export_name_from_package_manifest (selftest_trace.TraceTests.test_origin_report_distinguishes_export_name_from_package_manifest) ... ok
+test_scheduler_failure_is_unknown_and_rows_include_wrong_source_identity (selftest_trace.TraceTests.test_scheduler_failure_is_unknown_and_rows_include_wrong_source_identity) ... ok
+test_ssh_uses_script_stdin_and_preserves_native_windows_key (selftest_trace.TraceTests.test_ssh_uses_script_stdin_and_preserves_native_windows_key) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.153s
+
+OK
+Reading the existing source and a2 state. No job submission, model download, inference, package staging or state repair.
+action=READ_ONLY_HOST_TRACE; no package staging, job submission, inference or state repair
+checking=source origins; a2 state; scheduler; system CA; two HTTPS HEAD endpoints
+TRACE_ZIP=C:\Users\rayns\Downloads\ALICE_QwenTrace_a6e13a71e268\ALICE_QWEN_TRACE_05d0a01649cb.zip
+TRACE_SHA256=02ba19cdef702762efa0644aa2da83bfafcab9459c2ba501bb00978b9a8d544d
+diagnostic_status=COLLECTED
+No calibration outcome or new execution authority is inferred. Return the TRACE_ZIP.
+ALICE_QWEN_READ_ONLY_TRACE_EXIT=0
+Return the TRACE_ZIP printed above and this transcript. Do not rerun v102 to repair this stop.
+(base) PS C:\A.L.I.C.E-main> powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$HOME\Downloads\Start-ALICEAstraQwenQualificationV103.ps1"
+package_sha256=05E1E8AA3FA1233D8ACB25DA5E87A93B211791F5E568DB850F83DCA3499630F2
+PYTHON=C:\Users\rayns\anaconda3\python.exe
+package_manifest_verified=true files=32
+python_compile_gate_passed=true files=16
+test_any_prior_probe_or_task_intent_blocks_successor (selftest_infrastructure.InfrastructureTests.test_any_prior_probe_or_task_intent_blocks_successor) ... ok
+test_cached_manifest_reuses_frozen_bytes_without_refetch (selftest_infrastructure.InfrastructureTests.test_cached_manifest_reuses_frozen_bytes_without_refetch) ... ok
+test_changed_parent_result_is_refused (selftest_infrastructure.InfrastructureTests.test_changed_parent_result_is_refused) ... ok
+test_changed_snapshot_uses_new_id_and_retry_preserves_exact_bytes (selftest_infrastructure.InfrastructureTests.test_changed_snapshot_uses_new_id_and_retry_preserves_exact_bytes) ... ok
+test_explicit_ca_context_keeps_chain_and_hostname_checks (selftest_infrastructure.InfrastructureTests.test_explicit_ca_context_keeps_chain_and_hostname_checks) ... ok
+test_external_https_downgrade_is_refused (selftest_infrastructure.InfrastructureTests.test_external_https_downgrade_is_refused) ... ok
+test_failed_preflight_cannot_reach_sbatch_or_write_submission_intent (selftest_infrastructure.InfrastructureTests.test_failed_preflight_cannot_reach_sbatch_or_write_submission_intent) ... ok
+test_live_source_scheduler_identity_must_match_closed_failure (selftest_infrastructure.InfrastructureTests.test_live_source_scheduler_identity_must_match_closed_failure) ... ok
+test_missing_or_invalid_ca_stops_without_network (selftest_infrastructure.InfrastructureTests.test_missing_or_invalid_ca_stops_without_network) ... ok
+test_probe_and_all_sixteen_requests_match_original_v100_hashes (selftest_infrastructure.InfrastructureTests.test_probe_and_all_sixteen_requests_match_original_v100_hashes) ... ok
+test_source_is_exact_zero_inference_failure_and_remains_unchanged (selftest_infrastructure.InfrastructureTests.test_source_is_exact_zero_inference_failure_and_remains_unchanged) ... ok
+test_successful_preflight_captures_source_tls_and_frozen_manifest_together (selftest_infrastructure.InfrastructureTests.test_successful_preflight_captures_source_tls_and_frozen_manifest_together) ... ok
+test_windows_paths_stay_native_only_for_local_arguments (selftest_infrastructure.InfrastructureTests.test_windows_paths_stay_native_only_for_local_arguments) ... ok
+test_boolean_integer_confusion_rejected (selftest_qwen.ContractTests.test_boolean_integer_confusion_rejected) ... ok
+test_duplicate_final_chunk_rejected (selftest_qwen.ContractTests.test_duplicate_final_chunk_rejected) ... ok
+test_duplicate_tasks_rejected (selftest_qwen.ContractTests.test_duplicate_tasks_rejected) ... ok
+test_hard_anchor_failure_cannot_hide_in_high_total (selftest_qwen.ContractTests.test_hard_anchor_failure_cannot_hide_in_high_total) ... ok
+test_missing_finish_and_missing_metrics_rejected (selftest_qwen.ContractTests.test_missing_finish_and_missing_metrics_rejected) ... ok
+test_owner_approval_preserves_ungranted_authority (selftest_qwen.ContractTests.test_owner_approval_preserves_ungranted_authority) ... ok
+test_rationale_not_silently_truncated (selftest_qwen.ContractTests.test_rationale_not_silently_truncated) ... ok
+test_rejects_duplicate_json_keys_and_nonfinite (selftest_qwen.ContractTests.test_rejects_duplicate_json_keys_and_nonfinite) ... ok
+test_rejects_short_model_digest (selftest_qwen.ContractTests.test_rejects_short_model_digest) ... ok
+test_secondary_fields_remain_diagnostic (selftest_qwen.ContractTests.test_secondary_fields_remain_diagnostic) ... ok
+test_task_requests_keep_gold_out_and_seeds_unique (selftest_qwen.ContractTests.test_task_requests_keep_gold_out_and_seeds_unique) ... ok
+test_truncated_response_cannot_pass_even_if_json_valid (selftest_qwen.ContractTests.test_truncated_response_cannot_pass_even_if_json_valid) ... ok
+test_connection_loss_then_collection_then_publication_retry_reuses_evidence (selftest_qwen.ControllerTests.test_connection_loss_then_collection_then_publication_retry_reuses_evidence) ... ok
+test_final_telemetry_failure_does_not_destroy_results (selftest_qwen.LifecycleTests.test_final_telemetry_failure_does_not_destroy_results) ... ok
+test_forged_worker_scores_rejected (selftest_qwen.LifecycleTests.test_forged_worker_scores_rejected) ... ok
+test_full_worker_round_trip_and_no_successor_grant (selftest_qwen.LifecycleTests.test_full_worker_round_trip_and_no_successor_grant) ... ok
+test_missing_finalization_cannot_grant_qualification (selftest_qwen.LifecycleTests.test_missing_finalization_cannot_grant_qualification) ... ok
+test_mutated_gold_or_authority_rejected (selftest_qwen.LifecycleTests.test_mutated_gold_or_authority_rejected) ... ok
+test_mutated_request_rejected_even_with_updated_local_hashes (selftest_qwen.LifecycleTests.test_mutated_request_rejected_even_with_updated_local_hashes) ... ok
+test_raw_stream_mutation_rejected (selftest_qwen.LifecycleTests.test_raw_stream_mutation_rejected) ... ok
+test_result_zip_manifest_and_traversal (selftest_qwen.LifecycleTests.test_result_zip_manifest_and_traversal) ... ok
+test_semantic_failure_preserves_all_sixteen_responses (selftest_qwen.LifecycleTests.test_semantic_failure_preserves_all_sixteen_responses) ... ok
+test_slow_cpu_stops_before_any_calibration_task (selftest_qwen.LifecycleTests.test_slow_cpu_stops_before_any_calibration_task) ... ok
+test_terminal_telemetry_can_recover_without_inference (selftest_qwen.LifecycleTests.test_terminal_telemetry_can_recover_without_inference) ... ok
+test_token_exhaustion_is_preserved_without_resampling (selftest_qwen.LifecycleTests.test_token_exhaustion_is_preserved_without_resampling) ... ok
+test_isolated_git_publication_idempotent_and_preserves_concurrent_file (selftest_qwen.PublicationTests.test_isolated_git_publication_idempotent_and_preserves_concurrent_file) ... ok
+test_public_payload_omits_rationales_and_is_typed (selftest_qwen.PublicationTests.test_public_payload_omits_rationales_and_is_typed) ... ok
+test_controller_lock_rejects_concurrent_process_and_releases (selftest_qwen.TransportTests.test_controller_lock_rejects_concurrent_process_and_releases) ... ok
+test_cpu_proof_and_digest_drift_fail_closed (selftest_qwen.TransportTests.test_cpu_proof_and_digest_drift_fail_closed) ... ok
+test_download_reuses_only_exact_cache (selftest_qwen.TransportTests.test_download_reuses_only_exact_cache) ... ok
+test_inflight_transport_failure_never_retries_task (selftest_qwen.TransportTests.test_inflight_transport_failure_never_retries_task) ... ok
+test_lost_sbatch_ack_recovered_without_second_job (selftest_qwen.TransportTests.test_lost_sbatch_ack_recovered_without_second_job) ... ok
+test_real_loopback_stream_preserves_full_bytes (selftest_qwen.TransportTests.test_real_loopback_stream_preserves_full_bytes) ... ok
+test_repeated_launcher_reattaches_one_submission (selftest_qwen.TransportTests.test_repeated_launcher_reattaches_one_submission) ... ok
+test_unknown_submission_never_resubmitted (selftest_qwen.TransportTests.test_unknown_submission_never_resubmitted) ... ok
+test_actual_new_collector_exports_revision_lineage_and_verifier_detects_tampering (selftest_revision.RevisionTests.test_actual_new_collector_exports_revision_lineage_and_verifier_detects_tampering) ... ok
+test_actual_old_v102_submit_refuses_revised_descriptor (selftest_revision.RevisionTests.test_actual_old_v102_submit_refuses_revised_descriptor) ... ok
+test_changed_local_state_stops_before_archive_or_network (selftest_revision.RevisionTests.test_changed_local_state_stops_before_archive_or_network) ... ok
+test_changed_original_worker_refuses_before_revision_or_submission (selftest_revision.RevisionTests.test_changed_original_worker_refuses_before_revision_or_submission) ... ok
+test_correct_export_copy_cannot_mask_changed_original_package (selftest_revision.RevisionTests.test_correct_export_copy_cannot_mask_changed_original_package) ... ok
+test_each_interrupted_revision_write_resumes_with_same_archives_and_identity (selftest_revision.RevisionTests.test_each_interrupted_revision_write_resumes_with_same_archives_and_identity) ... ok
+test_existing_a2_job_or_any_execution_marker_refuses_revision (selftest_revision.RevisionTests.test_existing_a2_job_or_any_execution_marker_refuses_revision) ... ok
+test_failed_source_queue_query_cannot_be_interpreted_as_absence (selftest_revision.RevisionTests.test_failed_source_queue_query_cannot_be_interpreted_as_absence) ... ok
+test_lost_revision_ack_then_controller_resume_submits_only_one_job (selftest_revision.RevisionTests.test_lost_revision_ack_then_controller_resume_submits_only_one_job) ... ok
+test_new_descriptor_without_intent_is_not_inferred_as_completed_revision (selftest_revision.RevisionTests.test_new_descriptor_without_intent_is_not_inferred_as_completed_revision) ... ok
+test_original_collector_live_layout_now_verifies_without_materializing_export (selftest_revision.RevisionTests.test_original_collector_live_layout_now_verifies_without_materializing_export) ... ok
+test_successful_revision_preserves_exact_prior_bytes_and_source (selftest_revision.RevisionTests.test_successful_revision_preserves_exact_prior_bytes_and_source) ... ok
+
+----------------------------------------------------------------------
+Ran 60 tests in 56.284s
+
+OK
+Verified a2 source-origin repair. Preserve prior state, record the package revision, then continue the same approved public Qwen calibration: Magnolia CPU, 20 CPUs, 48 GiB, six-hour limit.
+package_revision=V102_TO_V103_BEFORE_SUBMISSION; original state archived
+transport_diagnostics=C:\ALICE_Vault\tools\alice-astra\qwen-fallback-a2\runs\alice-qwen38-a2-c926d9e355dd\controller-diagnostics.jsonl
+
+QWEN_DETERMINISTIC_STOP: Stop: Source queue query failed; absence is unknown
+Return this terminal output. Existing attempts and prior judge evidence remain preserved.
+ALICE_ASTRA_QWEN_V103_EXIT=76
+Return the result ZIP if produced and this transcript. Keep the recorded run state; do not switch models or retry old stages.
+(base) PS C:\A.L.I.C.E-main>

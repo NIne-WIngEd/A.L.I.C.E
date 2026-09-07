@@ -1,37 +1,34 @@
-# Current continuation — v103 scheduler stop under review, 7 September 2026
+# Current continuation — host trace confirmed, v103 ready, 7 September 2026
 
-Read the [master continuity handoff](ASTRA_MASTER_CONTINUATION_HANDOFF.md) first.
-Sol's latest context is the parent of this review. Its routing, synthesis doctrine,
-scientific state and phase requirements remain authoritative.
+> **Master continuity note:** Before any new execution or recovery work, read [ASTRA_MASTER_CONTINUATION_HANDOFF.md](ASTRA_MASTER_CONTINUATION_HANDOFF.md). It consolidates the scientific state, Astra failure lessons, Magnolia provider contract, current v103 scheduler stop, Qwen continuation rules, synthesis doctrine, and Astra-primary / Sol-fallback handoff policy.
 
-The returned v103 terminal passed 60 native Windows tests and stopped during
-remote `revise` with `Source queue query failed; absence is unknown` (exit 76).
-Read the [actual terminal review](QWEN_V103_TERMINAL_REVIEW.json),
-[Astra's provider review](QWEN_V103_PROVIDER_REVIEW.md) and [current state](STATE.json).
-The earlier v103-ready directions are superseded by this observed stop.
 
-## Next action
+The actual host diagnostic confirms the v102 source-origin bug and shows a2
+unsubmitted at `2026-09-07T02:28:15Z`. The original manifest is in its package
+directory with the expected hash; it is not a live run file. Both installed
+packages and eight critical source records match. Both verified HTTPS HEAD
+checks returned 200. Read the [findings](QWEN_HOST_TRACE_FINDINGS.md),
+[actual host review](QWEN_HOST_TRACE_REVIEW.json) and [current state](STATE.json).
 
-Obtain one bounded read-only raw scheduler and a2 revision receipt as specified
-in section 8 of the master handoff. Capture the exact argv, exit, stdout and
-stderr for the live-user queue, historical source accounting, a2 accounting and
-source-job queue comparison. Include local revision intent/archive/acknowledgement
-and remote descriptor/revision/submission/probe/task markers. The local v103
-intent must be reconciled even though the active remote revision was not
-established. Do not create a new package or execution identity before this review.
+## Next executable step
 
-The leading hypothesis is the historical source-job query. The prior diagnostic
-used a user-wide queue query, while v103 checked `squeue -j 575089`. Its test
-fixtures assumed success. The actual failing query's inner error was discarded,
-so a precise Slurm rejection has not yet been established. Source-origin checks
-passed before this new stop. Released code proves this invocation stopped before
-its remote revision writes and submission; a current host inventory is pending.
+Use [the v103 launcher and instructions](tools/qwen-origin-v103/README.md) with
+[its exact release identity](QWEN_PRE_SUBMISSION_REVISION_V103.json). V103 uses
+shared package-origin rules for live verification and evidence export. It
+preserves the exact old a2 state, descriptor and preflight failure, then records
+an explicit pre-submission package revision under the existing locks. It checks
+live source and scheduler evidence before changing a2's active package reference.
+It then continues the same already approved public CPU calibration. There is no
+manual state deletion, a3 execution identity or renewed approval requirement.
 
-V103 native Windows execution is now observed. Qwen inference and qualification
-remain unobserved. Preserve the exact release as history and do not rerun it for
-this deterministic stop. No new executable repair is issued by this review.
-[Previous handoff](START_HERE_BEFORE_V103_PROVIDER_REVIEW.md) and
-[state](STATE_BEFORE_V103_PROVIDER_REVIEW.json) preserve the Sol-parent snapshot.
+The final ZIP passed 60 offline tests, including the real original collector,
+separate package/run/export fixtures, five interrupted revision writes, lost
+acknowledgements and one-job submission across reruns. Native v103 Windows and
+actual Magnolia execution are pending. The model digest, compute-node throughput
+and Qwen result are still unresolved. Return its RESULT_ZIP and transcript.
+Earlier v102 and diagnostic launchers are historical; do not rerun them to repair
+the captured stop. [The pre-v103 handoff](START_HERE_BEFORE_QWEN_V103.md) and
+[state](STATE_BEFORE_QWEN_V103.json) preserve the previous checkpoint.
 
 ## Authority and actual outcomes
 

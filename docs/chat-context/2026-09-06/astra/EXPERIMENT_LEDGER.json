@@ -87,8 +87,8 @@
       "purpose": "Test the explicitly approved fallback family on the frozen public calibration before any successor binding",
       "approval_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
       "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
-      "execution_status": "HOST_TRACE_VERIFIED_A2_UNSUBMITTED_V103_REVISION_READY",
-      "observed_result": "Source a1 TLS preparation failure; actual host trace confirms a2 unsubmitted after the v102 origin stop. V103 revision prepared; no Qwen judgment observed.",
+      "execution_status": "QWEN_V103_SOURCE_SCHEDULER_STOP_RAW_PROVIDER_RECEIPT_REQUIRED",
+      "observed_result": "V103 passed 60 native Windows tests, then remote revise stopped at source queue query. No Qwen judgment observed.",
       "tasks": 16,
       "same_pass_rule": true,
       "independent_validation": false,
@@ -111,7 +111,7 @@
         {
           "run_id": "alice-qwen38-a2-c926d9e355dd",
           "job_id": null,
-          "status": "QWEN_A2_V102_PRE_SUBMISSION_SOURCE_ORIGIN_STOP",
+          "status": "QWEN_V103_SOURCE_SCHEDULER_STOP_RAW_PROVIDER_RECEIPT_REQUIRED",
           "native_windows_tests_passed": 48,
           "controller_exit": 76,
           "this_invocation_reached_submission": false,
@@ -123,12 +123,20 @@
           "scheduler_job_observed": false,
           "prepared_revision_id": "a2-origin-v103-02ba19cdef70",
           "prepared_revision_package_sha256": "05e1e8aa3fa1233d8acb25da5e87a93b211791f5e568db850f83dca3499630f2",
-          "revision_executed": false
+          "revision_executed": false,
+          "native_windows_v103_tests_passed": 60,
+          "v103_controller_exit": 76,
+          "v103_remote_action": "revise",
+          "v103_this_invocation_reached_submission": false,
+          "revision_completed_established": false,
+          "post_v103_live_state_rechecked": false,
+          "raw_source_scheduler_error_known": false,
+          "local_revision_intent_reconciliation_required": true
         }
       ],
       "last_invocation_scope": "a2 v102 terminal S13, not source a1 job 575089",
-      "current_observation": "QWEN_HOST_TRACE_REVIEW.json",
-      "next_operational_action": "Run v103 explicit revision of existing prepared a2, then the same approved CPU calibration",
+      "current_observation": "QWEN_V103_TERMINAL_REVIEW.json",
+      "next_operational_action": "READ_ONLY_RAW_SCHEDULER_AND_A2_REVISION_INVENTORY",
       "package_revision": "QWEN_PRE_SUBMISSION_REVISION_V103.json"
     }
   ]

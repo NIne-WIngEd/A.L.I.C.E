@@ -1,0 +1,32 @@
+{
+  "schema": "alice.v103.released-boundary-review.v1",
+  "scope": "Offline reproduction of released control flow; synthetic scheduler rejection and local timestamp fixture; no actual Magnolia diagnosis inferred",
+  "released_package_sha256": "05e1e8aa3fa1233d8acb25da5e87a93b211791f5e568db850f83dca3499630f2",
+  "scheduler": {
+    "argv": [
+      "squeue",
+      "-h",
+      "-j",
+      "575089",
+      "-o",
+      "%A|%j|%T"
+    ],
+    "synthetic_exit_code": 91,
+    "synthetic_stderr": "SYNTHETIC_PROVIDER_REJECTION: deliberately not an observed Magnolia error",
+    "returned_stop": "Source queue query failed; absence is unknown",
+    "inner_error_preserved": false,
+    "accounting_called_after_failure": false
+  },
+  "replacement_package": {
+    "same_revision_id_different_package_sha_rejected": true,
+    "stop": "immutable evidence differs: intent.json",
+    "original_controller_state_preserved": true,
+    "original_intent_preserved": true
+  },
+  "expected_production_v103_local_intent_sha256": "e24f2dd6eb7d725a1099e30abde0c83a26a0bee04928fa47d078d134f67853a8",
+  "production_local_intent_path": "C:/ALICE_Vault/tools/alice-astra/qwen-fallback-a2/revisions/a2-origin-v103-02ba19cdef70/intent.json",
+  "live_remote_calls": 0,
+  "model_jobs_submitted": 0,
+  "source_files_changed": false,
+  "current_actual_raw_scheduler_exit_and_stderr_known": false
+}

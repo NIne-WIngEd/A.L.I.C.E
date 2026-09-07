@@ -1,19 +1,21 @@
 # A.L.I.C.E. Chat Context Archive
 
-Start with the current handoff and actual-result pointer. Context records owner
-decisions, reviewed evidence and pending work. A release build is not an outcome.
+Read the [master continuation handoff](2026-09-06/astra/ASTRA_MASTER_CONTINUATION_HANDOFF.md),
+then [START_HERE](2026-09-06/astra/START_HERE.md) and [STATE](2026-09-06/astra/STATE.json).
+Astra is primary while available. Sol supplies continuity during capacity limits
+or repeated execution failure. Continue from the newest observed evidence.
 
-## Latest checkpoint
+Current checkpoint: v103 passed 60 native Windows tests, then stopped in remote
+source scheduler reconciliation before this invocation could revise or submit a2.
+Read [Astra’s review of Sol’s findings](2026-09-06/astra/QWEN_V103_PROVIDER_REVIEW.md)
+and [the actual terminal observation](2026-09-06/astra/QWEN_V103_TERMINAL_REVIEW.json).
+The next boundary is a read-only raw scheduler and local/remote revision receipt.
+No new Qwen release is ready. Do not resume old v103-ready directions.
 
-Start with [`2026-09-06/astra/ASTRA_MASTER_CONTINUATION_HANDOFF.md`](./2026-09-06/astra/ASTRA_MASTER_CONTINUATION_HANDOFF.md). It is the master continuity contract for Astra-primary / Sol-fallback A.L.I.C.E. development. It consolidates the current MC10D/Qwen state, the synthetic-data doctrine, all recovered Astra execution failures and fixes, the Magnolia provider contract, and the required handoff protocol. Then read [`2026-09-06/astra/START_HERE.md`](./2026-09-06/astra/START_HERE.md) and [`2026-09-06/astra/STATE.json`](./2026-09-06/astra/STATE.json) for the latest observed checkpoint.
+The [actual Qwen result pointer](2026-09-06/astra/qwen-public/LATEST_QWEN_PUBLIC.json)
+still records source a1's zero-inference TLS failure. E01–E07 remain unexecuted.
+Main stays `0abaed85873c3f8de04765847eb7700b0e20433f`. Earlier releases and evidence
+are history, not new scientific authority.
 
-## Earlier context
-
-- [Pre-v103 handoff](2026-09-06/astra/START_HERE_BEFORE_QWEN_V103.md) and [state](2026-09-06/astra/STATE_BEFORE_QWEN_V103.json)
-- [Pre-approval handoff](2026-09-06/astra/START_HERE_BEFORE_QWEN_APPROVAL.md) and [state](2026-09-06/astra/STATE_BEFORE_QWEN_APPROVAL.json)
-- [Q04 diagnostic through v186 preparation](2026-09-06/MC10D_GLM_Q04_DIAGNOSTIC_TO_V186.md)
-- [6 September](2026-09-06/), [5 September](2026-09-05/), [4 September](2026-09-04/), and [31 August source archive](2026-08-31/)
-
-Main remains frozen at `0abaed85873c3f8de04765847eb7700b0e20433f`. Follow dated
-owner decisions and exact artifact hashes. Never infer scientific completion
-from a prepared launcher, package version or heartbeat.
+Earlier sources: [6 September](2026-09-06/), [5 September](2026-09-05/),
+[4 September](2026-09-04/), and [31 August](2026-08-31/).

@@ -1,4 +1,14 @@
-# Active Qwen launcher: v103, same prepared a2 execution
+# Historical v103 launcher — scheduler stop requires review
+
+The owner ran this exact release. Sixty native Windows tests passed. Remote
+`revise` stopped at `Source queue query failed; absence is unknown` before this
+invocation's remote revision writes or submission. Do not rerun this launcher
+for the captured stop. Follow the [provider review](../../QWEN_V103_PROVIDER_REVIEW.md)
+and [actual terminal review](../../QWEN_V103_TERMINAL_REVIEW.json).
+
+The package, launcher and build receipt remain immutable historical evidence.
+The instructions below describe the original release checkpoint.
+
 
 The actual host trace confirmed the source-origin error and unsubmitted a2
 state. [Findings](../../QWEN_HOST_TRACE_FINDINGS.md), [reviewed host facts](../../QWEN_HOST_TRACE_REVIEW.json),

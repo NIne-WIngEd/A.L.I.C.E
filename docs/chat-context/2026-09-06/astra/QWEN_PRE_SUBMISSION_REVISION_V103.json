@@ -65,7 +65,7 @@
   },
   "local_state_fixture_scope": "Synthetic local timestamps; production requires the exact observed state hash",
   "live_scheduler_and_tls_scope": "Actual uploaded diagnostic observation; revision and job behavior tested offline; live v103 pending",
-  "status": "VERIFIED_HOST_ORIGIN_REPAIR_READY; SAME_A2_REVISION_AND_CALIBRATION_NOT_YET_EXECUTED",
+  "status": "QWEN_V103_SOURCE_SCHEDULER_STOP_RAW_PROVIDER_RECEIPT_REQUIRED",
   "distribution_artifact_id": "libfile_0ed0fa9ffd8c819194a28e3bb627958c",
   "launcher_path": "tools/qwen-origin-v103/dist/Start-ALICEAstraQwenQualificationV103.ps1",
   "source_and_rebuild": "tools/qwen-origin-v103/README.md",
@@ -78,5 +78,17 @@
   "new_attempt_or_provider_fallback_authority": false,
   "private_pointwise_or_breadth_authority_granted": false,
   "old_launchers_rerun_recommended": false,
-  "next_action": "Run the v103 launcher on the owner machine; it revises exact prepared a2, then attaches or submits once"
+  "next_action": "READ_ONLY_RAW_SCHEDULER_AND_A2_REVISION_INVENTORY",
+  "native_windows_tested": true,
+  "actual_native_windows_tests_passed": 60,
+  "actual_native_windows_test_seconds": 56.284,
+  "actual_controller_exit": 76,
+  "actual_remote_agent_reached": true,
+  "actual_remote_revision_completion_established": false,
+  "actual_terminal_review": "QWEN_V103_TERMINAL_REVIEW.json",
+  "actual_provider_review": "QWEN_V103_PROVIDER_REVIEW.md",
+  "rerun_recommended": false,
+  "build_fields_are_historical": true,
+  "native_powershell_executed_scope": "Historical Linux build field; actual native owner execution is recorded separately",
+  "actual_magnolia_ssh_executed_scope": "Historical build field; owner v103 remote revise reached source scheduler guard"
 }

@@ -1,5 +1,9 @@
 # Working agreement and recovered lessons
 
+Current override: read [Sol’s master handoff](ASTRA_MASTER_CONTINUATION_HANDOFF.md) and
+[the v103 provider review](QWEN_V103_PROVIDER_REVIEW.md). The observed v103 scheduler
+stop supersedes historical active/ready launcher directions below.
+
 Rayan explicitly switched ongoing ALICE work to Astra on 6 September 2026. The earlier Sol-default preference is superseded. Work in substantial coherent batches: recover evidence, make one bounded decision, implement it, verify the relevant failure modes, record the result, and leave one executable next step. Do not trade knowledge retention or final cognitive semantics for speed.
 
 ## Locations and authority
@@ -111,3 +115,34 @@ throughput gate. The six native diagnostic tests and sixty offline v103 tests
 have different scope. No native v103 or scientific pass has yet been received.
 Do not rerun the original a1 launcher to clear its historical telemetry state;
 its terminal ledger recovery has a separate immutable receipt.
+
+
+## V103 provider review — 7 September 2026
+
+Astra used different scheduler query shapes in the real diagnostic and production
+guard. Tests accepted the unobserved shape through programmed successful replies.
+Provider tests must consume raw actual command observations. The same read-only
+functions and arguments must serve preflight and production state interpretation.
+Do not treat a nearby successful query as proof of a different query.
+
+Preserve every scheduler command receipt before applying assertions. Store argv,
+exit code, raw stdout/stderr and observation time. A high-level SSH stop and a
+stderr byte count cannot support the next diagnosis. A completed source job may
+be absent from the active controller; exact accounting remains a separate authority.
+Do not ignore failed queue queries to compensate for choosing the wrong query.
+
+Reconcile local intent before changing release identity. V103 writes its immutable
+local intent before remote revision. Another package hash under that revision ID
+conflicts even when the remote revision never completes. Archive and interpret
+both sides of the transaction before selecting a successor or recovery action.
+Never delete intent to make a new launcher run.
+
+Consolidate provider behavior instead of creating another science package for
+scheduler diagnostics. Existing science remains frozen. New packages must name
+the exact changed provider/workload contract and its actual evidence. Keep prior
+packages as historical records; avoid making old wrappers live dependencies.
+
+Current agent routing is Astra primary while available and Sol fallback for
+capacity or repeated failure. Resume from the newest shared observed checkpoint.
+Before handoff, update both narrative and machine-readable state so neither
+continues to recommend a launcher invalidated by the latest terminal.
