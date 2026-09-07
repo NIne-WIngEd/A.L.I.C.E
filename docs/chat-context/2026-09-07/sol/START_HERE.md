@@ -60,3 +60,15 @@ Current package: `ALICE_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_v1.9.1.zip` SHA-25
 Current launcher: `Start-ALICEMC10DQwenSuccessorRefreezeBreadthV191.ps1` SHA-256 `E03304DED31E0A9492DE111428B27A0044AEACD91BD7D245CC9D37C708154E02`.
 
 Read `MC10D_V190_VALIDATOR_STOP_AND_V191_TECHNICAL_SUCCESSOR.md`. Next action: `RUN_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_V191`.
+
+## MC10D v1.9.2 current execution boundary
+
+v1.9.1 reached the correct 287-candidate Gemma+Qwen+Mistral+Granite refreeze and scenario freeze, then exposed a second independent GLM hard-code in the compact historical pointwise-ready validator. v1.9.2 audits and migrates the entire legacy family-set surface instead of fixing one assertion at a time.
+
+Package SHA-256: `5BA15F6807A66FEA8601333F809F3C798E0621F95B4C9A9383BFEBD940873A39`.
+
+Launcher SHA-256: `C87BF4ABCAA59B7970C6CDB7CF9FA562929DADD71CFF215EA9AA0F04726D017E`.
+
+Read `MC10D_V191_SECOND_VALIDATOR_STOP_AND_V192_WHOLE_VALIDATOR_FIX.md`.
+
+Next action: `RUN_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_V192`.
