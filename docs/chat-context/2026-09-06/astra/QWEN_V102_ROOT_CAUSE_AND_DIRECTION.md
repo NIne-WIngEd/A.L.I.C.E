@@ -1,5 +1,7 @@
 # V102: evidence-origin failure and the decision it blocks
 
+> Update, 7 September: the actual host trace is verified and the explicit v103 revision is ready. Follow the [current findings](QWEN_HOST_TRACE_FINDINGS.md). Instructions below describe the earlier checkpoint.
+
 ## Finding
 
 This stop is a defect in Astra's v102 recovery verifier and its test fixture.

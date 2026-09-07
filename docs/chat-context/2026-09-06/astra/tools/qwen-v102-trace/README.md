@@ -1,5 +1,7 @@
 # Next action: read-only Magnolia trace
 
+> Update, 7 September: the actual host trace is verified and the explicit v103 revision is ready. Follow the [current findings](../../QWEN_HOST_TRACE_FINDINGS.md). Instructions below describe the earlier checkpoint.
+
 V102 stopped before submission because its source verifier confused package
 projections in an evidence ZIP with files in the live run directory.
 Read the [complete diagnosis and project dependency](../../QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md)

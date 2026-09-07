@@ -87,8 +87,8 @@
       "purpose": "Test the explicitly approved fallback family on the frozen public calibration before any successor binding",
       "approval_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
       "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
-      "execution_status": "QWEN_A2_V102_PRE_SUBMISSION_SOURCE_ORIGIN_STOP",
-      "observed_result": "Source a1 stopped at runtime TLS preparation; a2 v102 stopped at evidence-origin preflight. No Qwen judgments observed.",
+      "execution_status": "HOST_TRACE_VERIFIED_A2_UNSUBMITTED_V103_REVISION_READY",
+      "observed_result": "Source a1 TLS preparation failure; actual host trace confirms a2 unsubmitted after the v102 origin stop. V103 revision prepared; no Qwen judgment observed.",
       "tasks": 16,
       "same_pass_rule": true,
       "independent_validation": false,
@@ -116,12 +116,20 @@
           "controller_exit": 76,
           "this_invocation_reached_submission": false,
           "scientific_outcome": "NOT_EVALUATED",
-          "live_current_state_rechecked": false
+          "live_current_state_rechecked": true,
+          "observed_at": "2026-09-07T02:28:15Z",
+          "task_intents_observed": 0,
+          "scheduler_queries_succeeded": true,
+          "scheduler_job_observed": false,
+          "prepared_revision_id": "a2-origin-v103-02ba19cdef70",
+          "prepared_revision_package_sha256": "05e1e8aa3fa1233d8acb25da5e87a93b211791f5e568db850f83dca3499630f2",
+          "revision_executed": false
         }
       ],
       "last_invocation_scope": "a2 v102 terminal S13, not source a1 job 575089",
-      "current_observation": "QWEN_V102_TERMINAL_OBSERVATION.json",
-      "next_operational_action": "Read-only source/package origin and a2 state trace"
+      "current_observation": "QWEN_HOST_TRACE_REVIEW.json",
+      "next_operational_action": "Run v103 explicit revision of existing prepared a2, then the same approved CPU calibration",
+      "package_revision": "QWEN_PRE_SUBMISSION_REVISION_V103.json"
     }
   ]
 }

@@ -1,0 +1,798 @@
+{
+  "compute_job_submitted_by_diagnostic": false,
+  "execution_authority_granted": false,
+  "inference_requested_by_diagnostic": false,
+  "local_controller_states_unchanged": true,
+  "local_state_after": {
+    "current": {
+      "bytes": 365,
+      "expected_sha256": null,
+      "fields": {
+        "amendment_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+        "package_sha256": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
+        "phase": "PREPARED",
+        "run_id": "alice-qwen38-a2-c926d9e355dd",
+        "staged": true
+      },
+      "known_failure_markers": [],
+      "path": "C:/ALICE_Vault/tools/alice-astra/qwen-fallback-a2/controller-state.json",
+      "sha256": "29479dbd86e7c03e731f87b47ff0b1fcebcb0e6a1e1c12bf1e903e8f7ea1e026",
+      "status": "PRESENT"
+    },
+    "source": {
+      "bytes": 872,
+      "expected_sha256": null,
+      "fields": {
+        "amendment_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+        "job_id": "575089",
+        "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+        "phase": "TELEMETRY_PUBLICATION_PENDING",
+        "run_id": "alice-qwen38-a1-8e7a384a745496f4",
+        "staged": true,
+        "telemetry_pending": true
+      },
+      "known_failure_markers": [],
+      "path": "C:/ALICE_Vault/tools/alice-astra/qwen-fallback-a1/controller-state.json",
+      "sha256": "795412d29708e4d8047600203e8d6a45cbff97de049474e5c52a82b5f0221fc1",
+      "status": "PRESENT"
+    }
+  },
+  "local_state_before": {
+    "current": {
+      "bytes": 365,
+      "expected_sha256": null,
+      "fields": {
+        "amendment_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+        "package_sha256": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
+        "phase": "PREPARED",
+        "run_id": "alice-qwen38-a2-c926d9e355dd",
+        "staged": true
+      },
+      "known_failure_markers": [],
+      "path": "C:/ALICE_Vault/tools/alice-astra/qwen-fallback-a2/controller-state.json",
+      "sha256": "29479dbd86e7c03e731f87b47ff0b1fcebcb0e6a1e1c12bf1e903e8f7ea1e026",
+      "status": "PRESENT"
+    },
+    "source": {
+      "bytes": 872,
+      "expected_sha256": null,
+      "fields": {
+        "amendment_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+        "job_id": "575089",
+        "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+        "phase": "TELEMETRY_PUBLICATION_PENDING",
+        "run_id": "alice-qwen38-a1-8e7a384a745496f4",
+        "staged": true,
+        "telemetry_pending": true
+      },
+      "known_failure_markers": [],
+      "path": "C:/ALICE_Vault/tools/alice-astra/qwen-fallback-a1/controller-state.json",
+      "sha256": "795412d29708e4d8047600203e8d6a45cbff97de049474e5c52a82b5f0221fc1",
+      "status": "PRESENT"
+    }
+  },
+  "observed_at": "2026-09-07T02:28:13Z",
+  "policy_sha256": "560bf467fd775e2c26ababbf12ffc41d37829174ad3ad660c2e1c43cf99fb235",
+  "read_only": true,
+  "remote": {
+    "current_files": {
+      "infrastructure-preflight-failure.json": {
+        "bytes": 159,
+        "expected_sha256": null,
+        "fields": {
+          "class": "Stop",
+          "job_submitted": false,
+          "observed_at": "2026-09-06T23:41:21Z",
+          "status": "STOP"
+        },
+        "known_failure_markers": [
+          "Source failure evidence differs: package-manifest.json"
+        ],
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/infrastructure-preflight-failure.json",
+        "sha256": "ed82423691e22325c8d70bd3f7d89385a9b8da26c808ac6206e489b4d2c746be",
+        "status": "PRESENT"
+      },
+      "infrastructure-preflight.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/infrastructure-preflight.json",
+        "status": "MISSING"
+      },
+      "job.sbatch": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/job.sbatch",
+        "status": "MISSING"
+      },
+      "model-lock.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/model-lock.json",
+        "status": "MISSING"
+      },
+      "model-manifest.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/model-manifest.json",
+        "status": "MISSING"
+      },
+      "parent-reconciliation.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/parent-reconciliation.json",
+        "status": "MISSING"
+      },
+      "result.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/result.json",
+        "status": "MISSING"
+      },
+      "run.json": {
+        "bytes": 277,
+        "expected_sha256": null,
+        "fields": {
+          "amendment_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+          "package_sha256": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
+          "run_id": "alice-qwen38-a2-c926d9e355dd"
+        },
+        "known_failure_markers": [],
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/run.json",
+        "sha256": "d666848088f00b6eb98f0503f035b6d0e77ee7557a4453fc89fca275d5339e27",
+        "status": "PRESENT"
+      },
+      "sbatch-response.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/sbatch-response.json",
+        "status": "MISSING"
+      },
+      "submission-intent.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/submission-intent.json",
+        "status": "MISSING"
+      },
+      "submission.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/submission.json",
+        "status": "MISSING"
+      },
+      "tls-trust.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/tls-trust.json",
+        "status": "MISSING"
+      },
+      "worker-finished.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/worker-finished.json",
+        "status": "MISSING"
+      },
+      "worker-started.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/worker-started.json",
+        "status": "MISSING"
+      }
+    },
+    "current_id": "alice-qwen38-a2-c926d9e355dd",
+    "current_progress_markers": {
+      "effective-contract.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/effective-contract.json",
+        "status": "MISSING"
+      },
+      "model-lock.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/model-lock.json",
+        "status": "MISSING"
+      },
+      "probe-attempt.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/probe-attempt.json",
+        "status": "MISSING"
+      },
+      "probe-response.ndjson": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/probe-response.ndjson",
+        "status": "MISSING"
+      },
+      "runtime.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/runtime.json",
+        "status": "MISSING"
+      }
+    },
+    "current_task_intents": {
+      "count": 0,
+      "paths": [],
+      "truncated": false
+    },
+    "execution_authority_granted": false,
+    "https": {
+      "ca_bytes": 256909,
+      "ca_certificates": 158,
+      "ca_path": "/etc/pki/tls/certs/ca-bundle.crt",
+      "ca_sha256": "2caeaa56be4a7d157cabda910375fb844f18d76202ac9cdf7d1981160953fd03",
+      "candidates": [
+        {
+          "path": "/etc/pki/tls/certs/ca-bundle.crt",
+          "readable": true
+        },
+        {
+          "path": "/etc/ssl/certs/ca-certificates.crt",
+          "readable": false
+        },
+        {
+          "path": "/etc/ssl/cert.pem",
+          "readable": false
+        }
+      ],
+      "check_hostname": true,
+      "endpoints": [
+        {
+          "final_host": "release-assets.githubusercontent.com",
+          "http_status": 200,
+          "method": "HEAD",
+          "name": "pinned_ollama_runtime",
+          "status": "RESPONSE",
+          "url": "https://github.com/ollama/ollama/releases/download/v0.32.15/ollama-linux-amd64.tar.zst"
+        },
+        {
+          "final_host": "registry.ollama.ai",
+          "http_status": 200,
+          "method": "HEAD",
+          "name": "approved_public_model_manifest",
+          "status": "RESPONSE",
+          "url": "https://registry.ollama.ai/v2/library/qwen3.8/manifests/27b-q4_K_M"
+        }
+      ],
+      "openssl": "OpenSSL 3.0.9 30 May 2023",
+      "scope": "login node only; HEAD requests; no body download or model lock",
+      "status": "OBSERVED",
+      "verify_mode": "CERT_REQUIRED"
+    },
+    "next_action": "RETURN_DIAGNOSTIC_FOR_REVIEW; no submission or repair is performed",
+    "observed_at": "2026-09-07T02:28:15Z",
+    "packages": {
+      "current": {
+        "files": {
+          "PACKAGE_MANIFEST.json": {
+            "bytes": 3810,
+            "expected_sha256": "8be514e23f7f818dee449c0c4feb74f8cd1231e2438be3d8cd02601b81b12686",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/PACKAGE_MANIFEST.json",
+            "sha256": "8be514e23f7f818dee449c0c4feb74f8cd1231e2438be3d8cd02601b81b12686",
+            "status": "MATCH"
+          },
+          "README.md": {
+            "bytes": 6066,
+            "expected_sha256": "f61f4d53312c2a1f0ad1d8a2d2e7f78ae796b410bf8eb1cef8bb8c09da6a4699",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/README.md",
+            "sha256": "f61f4d53312c2a1f0ad1d8a2d2e7f78ae796b410bf8eb1cef8bb8c09da6a4699",
+            "status": "MATCH"
+          },
+          "authority/approval.json": {
+            "bytes": 653,
+            "expected_sha256": "8e7a384a745496f4c4f68996733ddf5220783bc871d852f99577ca0a7287373f",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/authority/approval.json",
+            "sha256": "8e7a384a745496f4c4f68996733ddf5220783bc871d852f99577ca0a7287373f",
+            "status": "MATCH"
+          },
+          "authority/approved.json": {
+            "bytes": 4540,
+            "expected_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/authority/approved.json",
+            "sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+            "status": "MATCH"
+          },
+          "authority/draft.json": {
+            "bytes": 4450,
+            "expected_sha256": "e16142639f13c9b2191afcfa4221dbf1610abf6af84273b07774fc13a0a1b40b",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/authority/draft.json",
+            "sha256": "e16142639f13c9b2191afcfa4221dbf1610abf6af84273b07774fc13a0a1b40b",
+            "status": "MATCH"
+          },
+          "authority/infra_recovery.json": {
+            "bytes": 2000,
+            "expected_sha256": "9fb3d2a6b02bf1ad2f61ad05c9686d05b86faf4540230d40382fc87c0a77a287",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/authority/infra_recovery.json",
+            "sha256": "9fb3d2a6b02bf1ad2f61ad05c9686d05b86faf4540230d40382fc87c0a77a287",
+            "status": "MATCH"
+          },
+          "authority/request_hashes_v100.json": {
+            "bytes": 1824,
+            "expected_sha256": "800d52675f06d74d9ed2c4e69a9e29eb73e21916ac2b9906826611e39afe50bf",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/authority/request_hashes_v100.json",
+            "sha256": "800d52675f06d74d9ed2c4e69a9e29eb73e21916ac2b9906826611e39afe50bf",
+            "status": "MATCH"
+          },
+          "authority/runtime_policy.json": {
+            "bytes": 889,
+            "expected_sha256": "a984eac1fa84a0b365679923069c2c0a472f3f6ff359ccccf947ccc3dfff636e",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/authority/runtime_policy.json",
+            "sha256": "a984eac1fa84a0b365679923069c2c0a472f3f6ff359ccccf947ccc3dfff636e",
+            "status": "MATCH"
+          },
+          "authority/source_binding_policy.json": {
+            "bytes": 2279,
+            "expected_sha256": "c045b20ad44ea240940c550e6fc7447888b84428293a1b9bb2abe89b68cbdc6f",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/authority/source_binding_policy.json",
+            "sha256": "c045b20ad44ea240940c550e6fc7447888b84428293a1b9bb2abe89b68cbdc6f",
+            "status": "MATCH"
+          },
+          "authority/tasks.json": {
+            "bytes": 7994,
+            "expected_sha256": "b3abc2e36e4e93d3f8f6c9398c7c39b6ca2f40f9b3dcbe875ce9005d096f9420",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/authority/tasks.json",
+            "sha256": "b3abc2e36e4e93d3f8f6c9398c7c39b6ca2f40f9b3dcbe875ce9005d096f9420",
+            "status": "MATCH"
+          },
+          "bootstrap.sh": {
+            "bytes": 2428,
+            "expected_sha256": "1e401cfeea6847a837e7d28bdab3f4f0b5cf1638a3199a4730002f2960a96fab",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/bootstrap.sh",
+            "sha256": "1e401cfeea6847a837e7d28bdab3f4f0b5cf1638a3199a4730002f2960a96fab",
+            "status": "MATCH"
+          },
+          "contract.py": {
+            "bytes": 12164,
+            "expected_sha256": "4944b328d750046321bda8b1953495c22209dd13a448d775e80b76a1c22993b3",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/contract.py",
+            "sha256": "4944b328d750046321bda8b1953495c22209dd13a448d775e80b76a1c22993b3",
+            "status": "MATCH"
+          },
+          "controller.py": {
+            "bytes": 13163,
+            "expected_sha256": "e23795eb06a2b8837a59b20ed185c1a78fd3084b74c7c5400a38318700c3cc06",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/controller.py",
+            "sha256": "e23795eb06a2b8837a59b20ed185c1a78fd3084b74c7c5400a38318700c3cc06",
+            "status": "MATCH"
+          },
+          "evidence.py": {
+            "bytes": 14664,
+            "expected_sha256": "b5be2ec7b19c5f82121b6e50b472168af7d2ca5f96c336da0c3e9fa59ce17444",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/evidence.py",
+            "sha256": "b5be2ec7b19c5f82121b6e50b472168af7d2ca5f96c336da0c3e9fa59ce17444",
+            "status": "MATCH"
+          },
+          "fixtures/test-ca.pem": {
+            "bytes": 1310,
+            "expected_sha256": "ab6933a81e6f0d142e6d5f58ed465589d899a523c2752055761af11d4ee38f2b",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/fixtures/test-ca.pem",
+            "sha256": "ab6933a81e6f0d142e6d5f58ed465589d899a523c2752055761af11d4ee38f2b",
+            "status": "MATCH"
+          },
+          "frozen_prompt.py": {
+            "bytes": 2885,
+            "expected_sha256": "ba1ec9b84469f8a74ef517acd869e307326369a75c4852fe51df4f93d74d4d6e",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/frozen_prompt.py",
+            "sha256": "ba1ec9b84469f8a74ef517acd869e307326369a75c4852fe51df4f93d74d4d6e",
+            "status": "MATCH"
+          },
+          "infra_recovery.py": {
+            "bytes": 6292,
+            "expected_sha256": "33145ed881a93cb4b1c2c2229132655c43aa6799f224b74ff6d409e61fec1afc",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/infra_recovery.py",
+            "sha256": "33145ed881a93cb4b1c2c2229132655c43aa6799f224b74ff6d409e61fec1afc",
+            "status": "MATCH"
+          },
+          "publish_context.py": {
+            "bytes": 6699,
+            "expected_sha256": "1569f2b0adf7ba08968bfa5c7b37ed5087b71ab2b23ddd3291ba942f07c7ba54",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/publish_context.py",
+            "sha256": "1569f2b0adf7ba08968bfa5c7b37ed5087b71ab2b23ddd3291ba942f07c7ba54",
+            "status": "MATCH"
+          },
+          "remote_agent.py": {
+            "bytes": 10118,
+            "expected_sha256": "ba2f71b8770b45318e5ff761b0804904f070c260086912bc785681ec0e2e186d",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/remote_agent.py",
+            "sha256": "ba2f71b8770b45318e5ff761b0804904f070c260086912bc785681ec0e2e186d",
+            "status": "MATCH"
+          },
+          "secure_https.py": {
+            "bytes": 2299,
+            "expected_sha256": "8113197ed63bdee6ad92b290523af190d13c6a190a714dc0ddf6609d19594511",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/secure_https.py",
+            "sha256": "8113197ed63bdee6ad92b290523af190d13c6a190a714dc0ddf6609d19594511",
+            "status": "MATCH"
+          },
+          "selftest_infrastructure.py": {
+            "bytes": 11356,
+            "expected_sha256": "9db0cd31e55b16687145a08c4bc14aad55ec387bbc93eec2029d2e0ed9b67a8f",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/selftest_infrastructure.py",
+            "sha256": "9db0cd31e55b16687145a08c4bc14aad55ec387bbc93eec2029d2e0ed9b67a8f",
+            "status": "MATCH"
+          },
+          "selftest_qwen.py": {
+            "bytes": 28038,
+            "expected_sha256": "4f1c3849c6ee7760ce02ba866ae26e57e9f2f7ac49d92ef8bb9d915b04173363",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/selftest_qwen.py",
+            "sha256": "4f1c3849c6ee7760ce02ba866ae26e57e9f2f7ac49d92ef8bb9d915b04173363",
+            "status": "MATCH"
+          },
+          "source/ALICE_QWEN_PUBLIC_RESULT_c926d9e355dd.zip": {
+            "bytes": 19053,
+            "expected_sha256": "c926d9e355dd6ec83ad18fd78f35265c664e5ea6f317871c20d7af6b0f8d8f5f",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/source/ALICE_QWEN_PUBLIC_RESULT_c926d9e355dd.zip",
+            "sha256": "c926d9e355dd6ec83ad18fd78f35265c664e5ea6f317871c20d7af6b0f8d8f5f",
+            "status": "MATCH"
+          },
+          "telemetry_snapshots.py": {
+            "bytes": 8904,
+            "expected_sha256": "d1413ddd329540f8fc5b77641e38bc7ce3af730a84a431d6319013e3deb2e36e",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/telemetry_snapshots.py",
+            "sha256": "d1413ddd329540f8fc5b77641e38bc7ce3af730a84a431d6319013e3deb2e36e",
+            "status": "MATCH"
+          },
+          "worker.py": {
+            "bytes": 22696,
+            "expected_sha256": "f32ccc9ae3cd952fa1f5a66c608ea1fa307839fa6c56f407224e4a573837b1c3",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/worker.py",
+            "sha256": "f32ccc9ae3cd952fa1f5a66c608ea1fa307839fa6c56f407224e4a573837b1c3",
+            "status": "MATCH"
+          }
+        },
+        "root": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2",
+        "zip": {
+          "bytes": 85662,
+          "expected_sha256": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
+          "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999.zip",
+          "sha256": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
+          "status": "MATCH"
+        }
+      },
+      "source": {
+        "files": {
+          "PACKAGE_MANIFEST.json": {
+            "bytes": 2517,
+            "expected_sha256": "b1d94af265eaac40d29314481358aa0f2a37b072bfa8c5542409fd641387175c",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/PACKAGE_MANIFEST.json",
+            "sha256": "b1d94af265eaac40d29314481358aa0f2a37b072bfa8c5542409fd641387175c",
+            "status": "MATCH"
+          },
+          "README.md": {
+            "bytes": 9204,
+            "expected_sha256": "57c5c139547cb7ee1dce44475b2dc188ef42c09bcec88e7046160d8c32d23383",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/README.md",
+            "sha256": "57c5c139547cb7ee1dce44475b2dc188ef42c09bcec88e7046160d8c32d23383",
+            "status": "MATCH"
+          },
+          "authority/approval.json": {
+            "bytes": 653,
+            "expected_sha256": "8e7a384a745496f4c4f68996733ddf5220783bc871d852f99577ca0a7287373f",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/authority/approval.json",
+            "sha256": "8e7a384a745496f4c4f68996733ddf5220783bc871d852f99577ca0a7287373f",
+            "status": "MATCH"
+          },
+          "authority/approved.json": {
+            "bytes": 4540,
+            "expected_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/authority/approved.json",
+            "sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+            "status": "MATCH"
+          },
+          "authority/draft.json": {
+            "bytes": 4450,
+            "expected_sha256": "e16142639f13c9b2191afcfa4221dbf1610abf6af84273b07774fc13a0a1b40b",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/authority/draft.json",
+            "sha256": "e16142639f13c9b2191afcfa4221dbf1610abf6af84273b07774fc13a0a1b40b",
+            "status": "MATCH"
+          },
+          "authority/runtime_policy.json": {
+            "bytes": 889,
+            "expected_sha256": "a984eac1fa84a0b365679923069c2c0a472f3f6ff359ccccf947ccc3dfff636e",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/authority/runtime_policy.json",
+            "sha256": "a984eac1fa84a0b365679923069c2c0a472f3f6ff359ccccf947ccc3dfff636e",
+            "status": "MATCH"
+          },
+          "authority/source_binding_policy.json": {
+            "bytes": 2279,
+            "expected_sha256": "c045b20ad44ea240940c550e6fc7447888b84428293a1b9bb2abe89b68cbdc6f",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/authority/source_binding_policy.json",
+            "sha256": "c045b20ad44ea240940c550e6fc7447888b84428293a1b9bb2abe89b68cbdc6f",
+            "status": "MATCH"
+          },
+          "authority/tasks.json": {
+            "bytes": 7994,
+            "expected_sha256": "b3abc2e36e4e93d3f8f6c9398c7c39b6ca2f40f9b3dcbe875ce9005d096f9420",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/authority/tasks.json",
+            "sha256": "b3abc2e36e4e93d3f8f6c9398c7c39b6ca2f40f9b3dcbe875ce9005d096f9420",
+            "status": "MATCH"
+          },
+          "bootstrap.sh": {
+            "bytes": 2438,
+            "expected_sha256": "8d139366b47d438a05faa8f9dd048179efe378fa5e23a5bb5682218524539245",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/bootstrap.sh",
+            "sha256": "8d139366b47d438a05faa8f9dd048179efe378fa5e23a5bb5682218524539245",
+            "status": "MATCH"
+          },
+          "contract.py": {
+            "bytes": 12116,
+            "expected_sha256": "e494e46ace0e922388b5a637b2a5d03ac054fd9c254e148a06329fa63aa29b44",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/contract.py",
+            "sha256": "e494e46ace0e922388b5a637b2a5d03ac054fd9c254e148a06329fa63aa29b44",
+            "status": "MATCH"
+          },
+          "controller.py": {
+            "bytes": 12960,
+            "expected_sha256": "b1eddb52e73b32ce40aa679576ef99bf538f3f7d4217c6fc36baefb5e960ede3",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/controller.py",
+            "sha256": "b1eddb52e73b32ce40aa679576ef99bf538f3f7d4217c6fc36baefb5e960ede3",
+            "status": "MATCH"
+          },
+          "evidence.py": {
+            "bytes": 14261,
+            "expected_sha256": "3aaf8b3983f57f0bc1cb535ae7675b074ec42c7e40025f994c5e7d5b2b21db72",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/evidence.py",
+            "sha256": "3aaf8b3983f57f0bc1cb535ae7675b074ec42c7e40025f994c5e7d5b2b21db72",
+            "status": "MATCH"
+          },
+          "frozen_prompt.py": {
+            "bytes": 2885,
+            "expected_sha256": "ba1ec9b84469f8a74ef517acd869e307326369a75c4852fe51df4f93d74d4d6e",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/frozen_prompt.py",
+            "sha256": "ba1ec9b84469f8a74ef517acd869e307326369a75c4852fe51df4f93d74d4d6e",
+            "status": "MATCH"
+          },
+          "publish_context.py": {
+            "bytes": 6699,
+            "expected_sha256": "1569f2b0adf7ba08968bfa5c7b37ed5087b71ab2b23ddd3291ba942f07c7ba54",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/publish_context.py",
+            "sha256": "1569f2b0adf7ba08968bfa5c7b37ed5087b71ab2b23ddd3291ba942f07c7ba54",
+            "status": "MATCH"
+          },
+          "remote_agent.py": {
+            "bytes": 12007,
+            "expected_sha256": "a4e96f6cf6867e6b8e3b7dbafd2ced18332d3e0e835139b016addb038702d8c1",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/remote_agent.py",
+            "sha256": "a4e96f6cf6867e6b8e3b7dbafd2ced18332d3e0e835139b016addb038702d8c1",
+            "status": "MATCH"
+          },
+          "selftest_qwen.py": {
+            "bytes": 26368,
+            "expected_sha256": "f14e61d218afcfc83ad1166a1b1537c0575b6a48863b0149f54964951d330501",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/selftest_qwen.py",
+            "sha256": "f14e61d218afcfc83ad1166a1b1537c0575b6a48863b0149f54964951d330501",
+            "status": "MATCH"
+          },
+          "worker.py": {
+            "bytes": 24471,
+            "expected_sha256": "b197ce21b0c4b086f622f712ee9b2504bb264bfe5af8789b57dc8fba44d6e000",
+            "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/worker.py",
+            "sha256": "b197ce21b0c4b086f622f712ee9b2504bb264bfe5af8789b57dc8fba44d6e000",
+            "status": "MATCH"
+          }
+        },
+        "root": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0",
+        "zip": {
+          "bytes": 55454,
+          "expected_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+          "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e.zip",
+          "sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+          "status": "MATCH"
+        }
+      }
+    },
+    "python_executable": "/modules/pkgs/common/python/3.11.5/bin/python3.11",
+    "python_version": "3.11.5",
+    "read_only": true,
+    "scheduler": {
+      "current_accounting": {
+        "argv": [
+          "sacct",
+          "-X",
+          "-n",
+          "-P",
+          "-u",
+          "mxrayan",
+          "--starttime",
+          "2026-09-06",
+          "--name",
+          "alice-qwen38-a2-c926d9e355dd",
+          "--format",
+          "JobIDRaw,JobName%100,State,ExitCode"
+        ],
+        "exit_code": 0,
+        "matching_rows": [],
+        "query_succeeded": true,
+        "stderr_bytes": 0
+      },
+      "queue": {
+        "argv": [
+          "squeue",
+          "-h",
+          "-u",
+          "mxrayan",
+          "-o",
+          "%A|%j|%T"
+        ],
+        "exit_code": 0,
+        "matching_rows": [],
+        "query_succeeded": true,
+        "stderr_bytes": 0
+      },
+      "source_accounting": {
+        "argv": [
+          "sacct",
+          "-X",
+          "-n",
+          "-P",
+          "--starttime",
+          "2026-09-06",
+          "-j",
+          "575089",
+          "--format",
+          "JobIDRaw,JobName%100,State,ExitCode"
+        ],
+        "exit_code": 0,
+        "matching_rows": [
+          [
+            "575089",
+            "alice-qwen38-a1-8e7a384a745496f4",
+            "FAILED",
+            "76:0"
+          ]
+        ],
+        "query_succeeded": true,
+        "stderr_bytes": 0
+      }
+    },
+    "schema": "alice.qwen.read-only-remote-trace.v1",
+    "source_files": {
+      "failure.json": {
+        "bytes": 229,
+        "expected_sha256": "6a704357b7051bf0731aa6419dc81d0554708b097dd47d8c764b595ee7c9d0cd",
+        "fields": {
+          "class": "URLError",
+          "phase": "RUNTIME_PREPARATION",
+          "recorded_at": "2026-09-06T23:01:27Z"
+        },
+        "known_failure_markers": [
+          "CERTIFICATE_VERIFY_FAILED"
+        ],
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/failure.json",
+        "sha256": "6a704357b7051bf0731aa6419dc81d0554708b097dd47d8c764b595ee7c9d0cd",
+        "status": "MATCH"
+      },
+      "job.sbatch": {
+        "bytes": 1246,
+        "expected_sha256": "a90fa1af5a883d73f72a47fe39799aabea34ca6427740b6bb00ae932cab16449",
+        "json_status": "INVALID_JSON",
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/job.sbatch",
+        "sha256": "a90fa1af5a883d73f72a47fe39799aabea34ca6427740b6bb00ae932cab16449",
+        "status": "MATCH"
+      },
+      "package-manifest.json": {
+        "expected_sha256": "b1d94af265eaac40d29314481358aa0f2a37b072bfa8c5542409fd641387175c",
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/package-manifest.json",
+        "status": "MISSING"
+      },
+      "result.json": {
+        "bytes": 5676,
+        "expected_sha256": "e32b52146b52580d88ecda03763e81ebf7587fb21badeb346ddd6c6e052d7a6e",
+        "fields": {
+          "effective_contract_sha256": null,
+          "model_tag": "qwen3.8:27b-q4_K_M",
+          "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+          "qualification_passed": false,
+          "run_id": "alice-qwen38-a1-8e7a384a745496f4",
+          "runtime_preflight_passed": false,
+          "status": "INCOMPLETE_OR_PREFLIGHT_STOP",
+          "tasks_attempted": 0
+        },
+        "known_failure_markers": [],
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/result.json",
+        "sha256": "e32b52146b52580d88ecda03763e81ebf7587fb21badeb346ddd6c6e052d7a6e",
+        "status": "MATCH"
+      },
+      "run.json": {
+        "bytes": 281,
+        "expected_sha256": "23f2092c0e42a900f75bd2c5c85f503a0ed8cae0e278a9dccf846a0385835c7f",
+        "fields": {
+          "amendment_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+          "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+          "run_id": "alice-qwen38-a1-8e7a384a745496f4"
+        },
+        "known_failure_markers": [],
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/run.json",
+        "sha256": "23f2092c0e42a900f75bd2c5c85f503a0ed8cae0e278a9dccf846a0385835c7f",
+        "status": "MATCH"
+      },
+      "submission-intent.json": {
+        "bytes": 425,
+        "expected_sha256": "c13064b170471110516b2b70f73b80d8a943db7e717c2a58ed08dad008272e5d",
+        "fields": {
+          "amendment_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+          "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+          "recorded_at": "2026-09-06T23:01:20Z",
+          "run_id": "alice-qwen38-a1-8e7a384a745496f4",
+          "state": "SUBMIT_INTENT"
+        },
+        "known_failure_markers": [],
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/submission-intent.json",
+        "sha256": "c13064b170471110516b2b70f73b80d8a943db7e717c2a58ed08dad008272e5d",
+        "status": "MATCH"
+      },
+      "submission.json": {
+        "bytes": 395,
+        "expected_sha256": "9575612df71ff3a543ec78fa5341d5bb27ed5e66daf87c693729f40ba875c9d8",
+        "fields": {
+          "amendment_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+          "job_id": "575089",
+          "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+          "recorded_at": "2026-09-06T23:01:20Z",
+          "run_id": "alice-qwen38-a1-8e7a384a745496f4",
+          "state": "SUBMITTED"
+        },
+        "known_failure_markers": [],
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/submission.json",
+        "sha256": "9575612df71ff3a543ec78fa5341d5bb27ed5e66daf87c693729f40ba875c9d8",
+        "status": "MATCH"
+      },
+      "worker-finished.json": {
+        "bytes": 218,
+        "expected_sha256": "ca6616a76e930918dcb397230da5d498c376d04dff6aac3cb79481609c8ce245",
+        "fields": {
+          "finished_at": "2026-09-06T23:01:28Z",
+          "run_id": "alice-qwen38-a1-8e7a384a745496f4"
+        },
+        "known_failure_markers": [],
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/worker-finished.json",
+        "sha256": "ca6616a76e930918dcb397230da5d498c376d04dff6aac3cb79481609c8ce245",
+        "status": "MATCH"
+      },
+      "worker-started.json": {
+        "bytes": 184,
+        "expected_sha256": "c174c13c1cf08a860897c36535b68da57461d90d603953750e58442e710f5b45",
+        "fields": {
+          "job_id": "575089",
+          "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+          "run_id": "alice-qwen38-a1-8e7a384a745496f4",
+          "started_at": "2026-09-06T23:01:23Z"
+        },
+        "known_failure_markers": [],
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/worker-started.json",
+        "sha256": "c174c13c1cf08a860897c36535b68da57461d90d603953750e58442e710f5b45",
+        "status": "MATCH"
+      }
+    },
+    "source_id": "alice-qwen38-a1-8e7a384a745496f4",
+    "source_progress_markers": {
+      "effective-contract.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/effective-contract.json",
+        "status": "MISSING"
+      },
+      "model-lock.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/model-lock.json",
+        "status": "MISSING"
+      },
+      "probe-attempt.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/probe-attempt.json",
+        "status": "MISSING"
+      },
+      "probe-response.ndjson": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/probe-response.ndjson",
+        "status": "MISSING"
+      },
+      "runtime.json": {
+        "expected_sha256": null,
+        "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/runtime.json",
+        "status": "MISSING"
+      }
+    },
+    "source_task_intents": {
+      "count": 0,
+      "paths": [],
+      "truncated": false
+    },
+    "telemetry_helper": {
+      "bytes": 3056,
+      "expected_sha256": null,
+      "path": "/homes/01/mxrayan/rayan-compute/bin/rayan-telemetry-push.sh",
+      "sha256": "ba4482728c09313aede5031e682f68e8007c79c9cfa084d3da4b11aa984d0830",
+      "status": "PRESENT"
+    }
+  },
+  "remote_script_sha256": "05cdc98cd85bbf2f2aa60c65155dbb8319f477520fc175a668d2f397911d7c33",
+  "schema": "alice.qwen.read-only-trace-bundle.v1",
+  "ssh_exit_code": 0,
+  "ssh_stderr_bytes": 0,
+  "transport_error_markers": [],
+  "transport_status": "COLLECTED"
+}

@@ -1,0 +1,280 @@
+{
+  "schema": "alice.qwen.actual-host-trace-review.v1",
+  "status": "HOST_ORIGINS_CONFIRMED; A2_UNSUBMITTED_AT_OBSERVATION; V103_READY_FOR_OWNER_MACHINE",
+  "context_parent": "2d7dc5f7540f4b1b60e95ddbef8d9d02836cf679",
+  "trace_archive": "tools/qwen-origin-v103/package/ALICE_MC10D_QWEN_ORIGIN_REVISION_v1.0.3/source/ALICE_QWEN_TRACE_05d0a01649cb.zip",
+  "trace_zip_sha256": "02ba19cdef702762efa0644aa2da83bfafcab9459c2ba501bb00978b9a8d544d",
+  "trace_report_sha256": "05d0a01649cba659a3875d9265eb6958fcc304771e1a807bec36bddebb55654b",
+  "trace_original_file_id": "libfile_6b3d4a23fc788191812d3138f2ae3f2d",
+  "remote_observed_at": "2026-09-07T02:28:15Z",
+  "local_observed_at": "2026-09-07T02:28:13Z",
+  "trace_manifest_verified": true,
+  "released_diagnostic_policy_sha256": "560bf467fd775e2c26ababbf12ffc41d37829174ad3ad660c2e1c43cf99fb235",
+  "released_diagnostic_remote_script_sha256": "05cdc98cd85bbf2f2aa60c65155dbb8319f477520fc175a668d2f397911d7c33",
+  "read_only": true,
+  "ssh_exit_code": 0,
+  "local_controller_states_unchanged": true,
+  "native_diagnostic_terminal": {
+    "source": "owner-pasted transcript in this conversation",
+    "tests_passed": 6,
+    "seconds_reported": 0.153,
+    "status": "COLLECTED",
+    "exit_code": 0,
+    "separate_original_text_file_received": false
+  },
+  "origin_finding": {
+    "incorrect_live_run_location": {
+      "expected_sha256": "b1d94af265eaac40d29314481358aa0f2a37b072bfa8c5542409fd641387175c",
+      "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a1-8e7a384a745496f4/package-manifest.json",
+      "status": "MISSING"
+    },
+    "actual_manifest": {
+      "bytes": 2517,
+      "expected_sha256": "b1d94af265eaac40d29314481358aa0f2a37b072bfa8c5542409fd641387175c",
+      "path": "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/PACKAGE_MANIFEST.json",
+      "sha256": "b1d94af265eaac40d29314481358aa0f2a37b072bfa8c5542409fd641387175c",
+      "status": "MATCH"
+    },
+    "original_package_files_matched_including_manifest": 17,
+    "v102_package_files_matched_including_manifest": 25,
+    "both_original_package_zips_matched": true,
+    "source_run_critical_files_matched": 8,
+    "causal_conclusion": "v102 used an exported member name as its physical source-run origin; the package and source bytes are intact"
+  },
+  "a2": {
+    "run_id": "alice-qwen38-a2-c926d9e355dd",
+    "descriptor": {
+      "bytes": 277,
+      "expected_sha256": null,
+      "fields": {
+        "amendment_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+        "package_sha256": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
+        "run_id": "alice-qwen38-a2-c926d9e355dd"
+      },
+      "known_failure_markers": [],
+      "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/run.json",
+      "sha256": "d666848088f00b6eb98f0503f035b6d0e77ee7557a4453fc89fca275d5339e27",
+      "status": "PRESENT"
+    },
+    "preflight_failure": {
+      "bytes": 159,
+      "expected_sha256": null,
+      "fields": {
+        "class": "Stop",
+        "job_submitted": false,
+        "observed_at": "2026-09-06T23:41:21Z",
+        "status": "STOP"
+      },
+      "known_failure_markers": [
+        "Source failure evidence differs: package-manifest.json"
+      ],
+      "path": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a2-c926d9e355dd/infrastructure-preflight-failure.json",
+      "sha256": "ed82423691e22325c8d70bd3f7d89385a9b8da26c808ac6206e489b4d2c746be",
+      "status": "PRESENT"
+    },
+    "checked_missing_lifecycle_files": [
+      "infrastructure-preflight.json",
+      "job.sbatch",
+      "model-lock.json",
+      "model-manifest.json",
+      "parent-reconciliation.json",
+      "result.json",
+      "sbatch-response.json",
+      "submission-intent.json",
+      "submission.json",
+      "tls-trust.json",
+      "worker-finished.json",
+      "worker-started.json"
+    ],
+    "checked_missing_progress_markers": [
+      "effective-contract.json",
+      "model-lock.json",
+      "probe-attempt.json",
+      "probe-response.ndjson",
+      "runtime.json"
+    ],
+    "task_intents": {
+      "count": 0,
+      "paths": [],
+      "truncated": false
+    },
+    "local_state": {
+      "bytes": 365,
+      "expected_sha256": null,
+      "fields": {
+        "amendment_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+        "package_sha256": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
+        "phase": "PREPARED",
+        "run_id": "alice-qwen38-a2-c926d9e355dd",
+        "staged": true
+      },
+      "known_failure_markers": [],
+      "path": "C:/ALICE_Vault/tools/alice-astra/qwen-fallback-a2/controller-state.json",
+      "sha256": "29479dbd86e7c03e731f87b47ff0b1fcebcb0e6a1e1c12bf1e903e8f7ea1e026",
+      "status": "PRESENT"
+    },
+    "model_probe_or_task_evidence_observed": false,
+    "scheduler_job_observed": false
+  },
+  "a1": {
+    "run_id": "alice-qwen38-a1-8e7a384a745496f4",
+    "job_id": "575089",
+    "scientific_outcome": "NOT_EVALUATED",
+    "task_intents": {
+      "count": 0,
+      "paths": [],
+      "truncated": false
+    },
+    "local_state": {
+      "bytes": 872,
+      "expected_sha256": null,
+      "fields": {
+        "amendment_sha256": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+        "job_id": "575089",
+        "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+        "phase": "TELEMETRY_PUBLICATION_PENDING",
+        "run_id": "alice-qwen38-a1-8e7a384a745496f4",
+        "staged": true,
+        "telemetry_pending": true
+      },
+      "known_failure_markers": [],
+      "path": "C:/ALICE_Vault/tools/alice-astra/qwen-fallback-a1/controller-state.json",
+      "sha256": "795412d29708e4d8047600203e8d6a45cbff97de049474e5c52a82b5f0221fc1",
+      "status": "PRESENT"
+    },
+    "actual_result_pointer_unchanged": "qwen-public/LATEST_QWEN_PUBLIC.json",
+    "separate_terminal_ledger_commit": "3f42de3531b396ee53c1aab797852ce18ac88f14"
+  },
+  "scheduler": {
+    "current_accounting": {
+      "argv": [
+        "sacct",
+        "-X",
+        "-n",
+        "-P",
+        "-u",
+        "mxrayan",
+        "--starttime",
+        "2026-09-06",
+        "--name",
+        "alice-qwen38-a2-c926d9e355dd",
+        "--format",
+        "JobIDRaw,JobName%100,State,ExitCode"
+      ],
+      "exit_code": 0,
+      "matching_rows": [],
+      "query_succeeded": true,
+      "stderr_bytes": 0
+    },
+    "queue": {
+      "argv": [
+        "squeue",
+        "-h",
+        "-u",
+        "mxrayan",
+        "-o",
+        "%A|%j|%T"
+      ],
+      "exit_code": 0,
+      "matching_rows": [],
+      "query_succeeded": true,
+      "stderr_bytes": 0
+    },
+    "source_accounting": {
+      "argv": [
+        "sacct",
+        "-X",
+        "-n",
+        "-P",
+        "--starttime",
+        "2026-09-06",
+        "-j",
+        "575089",
+        "--format",
+        "JobIDRaw,JobName%100,State,ExitCode"
+      ],
+      "exit_code": 0,
+      "matching_rows": [
+        [
+          "575089",
+          "alice-qwen38-a1-8e7a384a745496f4",
+          "FAILED",
+          "76:0"
+        ]
+      ],
+      "query_succeeded": true,
+      "stderr_bytes": 0
+    }
+  },
+  "https": {
+    "ca_bytes": 256909,
+    "ca_certificates": 158,
+    "ca_path": "/etc/pki/tls/certs/ca-bundle.crt",
+    "ca_sha256": "2caeaa56be4a7d157cabda910375fb844f18d76202ac9cdf7d1981160953fd03",
+    "candidates": [
+      {
+        "path": "/etc/pki/tls/certs/ca-bundle.crt",
+        "readable": true
+      },
+      {
+        "path": "/etc/ssl/certs/ca-certificates.crt",
+        "readable": false
+      },
+      {
+        "path": "/etc/ssl/cert.pem",
+        "readable": false
+      }
+    ],
+    "check_hostname": true,
+    "endpoints": [
+      {
+        "final_host": "release-assets.githubusercontent.com",
+        "http_status": 200,
+        "method": "HEAD",
+        "name": "pinned_ollama_runtime",
+        "status": "RESPONSE",
+        "url": "https://github.com/ollama/ollama/releases/download/v0.32.15/ollama-linux-amd64.tar.zst"
+      },
+      {
+        "final_host": "registry.ollama.ai",
+        "http_status": 200,
+        "method": "HEAD",
+        "name": "approved_public_model_manifest",
+        "status": "RESPONSE",
+        "url": "https://registry.ollama.ai/v2/library/qwen3.8/manifests/27b-q4_K_M"
+      }
+    ],
+    "openssl": "OpenSSL 3.0.9 30 May 2023",
+    "scope": "login node only; HEAD requests; no body download or model lock",
+    "status": "OBSERVED",
+    "verify_mode": "CERT_REQUIRED"
+  },
+  "telemetry_helper": {
+    "bytes": 3056,
+    "expected_sha256": null,
+    "path": "/homes/01/mxrayan/rayan-compute/bin/rayan-telemetry-push.sh",
+    "sha256": "ba4482728c09313aede5031e682f68e8007c79c9cfa084d3da4b11aa984d0830",
+    "status": "PRESENT"
+  },
+  "annotation_caveat": "job.sbatch is a Bash script, so its diagnostic INVALID_JSON annotation is expected; its exact byte hash is MATCH. No script corruption is inferred.",
+  "decision": {
+    "package_revision": "a2-origin-v103-02ba19cdef70",
+    "release": "QWEN_PRE_SUBMISSION_REVISION_V103.json",
+    "same_existing_a2_execution": true,
+    "source_a1_modified": false,
+    "scientific_contract_changed": false,
+    "requires_exact_observed_local_state": true,
+    "live_scheduler_and_source_rechecked_before_revision": true,
+    "prior_descriptor_and_failure_archived_before_active_reference_change": true
+  },
+  "actual_v103_windows_or_magnolia_execution_established": false,
+  "model_digest_resolved": false,
+  "qwen_qualification_established": false,
+  "cognitive_experiments_executed": false,
+  "limits": [
+    "Host observation is point-in-time and rechecked before revision.",
+    "HTTPS was login-node HEAD only; no runtime body verification, model lock or compute-node throughput was established.",
+    "Raw local controller state was not uploaded; the launcher verifies and archives it on the owner machine.",
+    "Offline scheduler/model fixtures are not remote execution or qualification evidence."
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "alice.qwen.pre-submission-revision.v1.0.3",
+  "revision_id": "a2-origin-v103-02ba19cdef70",
+  "execution_run_id": "alice-qwen38-a2-c926d9e355dd",
+  "old_package_name": "ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2",
+  "old_package_sha256": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
+  "old_package_manifest_sha256": "8be514e23f7f818dee449c0c4feb74f8cd1231e2438be3d8cd02601b81b12686",
+  "old_descriptor_sha256": "d666848088f00b6eb98f0503f035b6d0e77ee7557a4453fc89fca275d5339e27",
+  "old_preflight_failure_sha256": "ed82423691e22325c8d70bd3f7d89385a9b8da26c808ac6206e489b4d2c746be",
+  "old_local_state_sha256": "29479dbd86e7c03e731f87b47ff0b1fcebcb0e6a1e1c12bf1e903e8f7ea1e026",
+  "trace_zip_sha256": "02ba19cdef702762efa0644aa2da83bfafcab9459c2ba501bb00978b9a8d544d",
+  "trace_report_sha256": "05d0a01649cba659a3875d9265eb6958fcc304771e1a807bec36bddebb55654b",
+  "trace_observed_at": "2026-09-07T02:28:15Z",
+  "same_approved_calibration": true,
+  "scientific_authority_changed": false,
+  "source_a1_mutation_allowed": false,
+  "new_run_id_allowed": false,
+  "automatic_additional_attempt_allowed": false,
+  "revision_allowed_only_before_submission": true
+}

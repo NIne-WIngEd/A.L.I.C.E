@@ -51,7 +51,7 @@ A source build, a test pass, and a real calibration pass are different evidence 
 
 ## Windows transport repair checkpoint
 
-`QWEN_V100_WINDOWS_TRANSFER_FINDINGS.md` records the reproduced defect and `QWEN_TRANSPORT_REPAIR_V101.json` identifies the active launcher. The original v100 workload ZIP and stable run ID remain frozen. The repair wraps that exact ZIP and adjusts only local remote-address metadata after authority validation. Never replace its original workload identity with the transport wrapper's ZIP hash in controller state. No manual state cleanup, new run or approval is required.
+`QWEN_V100_WINDOWS_TRANSFER_FINDINGS.md` records the reproduced defect and `QWEN_TRANSPORT_REPAIR_V101.json` identifies the historical v101 launcher. The original v100 workload ZIP and stable run ID remain frozen. The repair wraps that exact ZIP and adjusts only local remote-address metadata after authority validation. Never replace its original workload identity with the transport wrapper's ZIP hash in controller state. No manual state cleanup, new run or approval is required.
 
 The supplied native Windows log passed all 35 original tests, then stopped before submission. The repair release passed 11 focused tests on Linux. One actual bash reproduction is intentionally skipped by the next Windows selftest; the other 10 run before live transport. Keep these observations separate from actual Magnolia success. Record a client repair receipt in both the fresh launcher folder and the persistent run archive. Return the transcript and actual result ZIP for verification after the next run.
 
@@ -70,8 +70,9 @@ the larger purpose before choosing a change. Work in evidence-led batches.
 Astra's v102 source verifier incorrectly used the exported ZIP layout as the
 live run layout. Its 48 passing native Windows tests recreated the same mistake.
 The real collector reproduction is recorded in `QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md`.
-Use the read-only trace as the next step; earlier v102-ready directions above
-are historical. The actual a2 stop is before source HTTPS and new submission.
+The actual read-only trace is now received in `QWEN_HOST_TRACE_REVIEW.json`.
+Use the v103 release as the next step; earlier launchers above are historical.
+The captured a2 stop was before source HTTPS and new submission.
 
 For every evidence member, distinguish producer, physical origin, exported name,
 expected bytes and authority. Exercise real producer-to-consumer transitions.
@@ -85,3 +86,28 @@ The bounded judge task serves eligible synthetic candidate evaluation. Measure
 progress toward learned identity, AMFM, continuing missions and memory correctness
 with the experiment ledger; package releases are operational work, not evidence
 of those capabilities. Preserve existing approval and CPU/Kaggle preferences.
+
+
+## Confirmed origins and recoverable revision — 7 September 2026
+
+The host trace confirms intact package/source bytes and the missing exported
+name in the live run. Keep one package-projection rule for live verification
+and result collection. The expected manifest must come from its original
+package; a copied export cannot establish that origin. Check the full original
+package and ZIP, not only the convenient manifest file.
+
+An unsubmitted descriptor still carries identity. V103 requires the exact
+observed local state and preserves it before remote mutation. The remote
+revision uses the original submission lock, checks for jobs and execution
+markers, preserves original descriptor/failure bytes, writes intent first and
+records completion after the active reference changes. Retry only the exact
+recorded transition. A new descriptor without that history is a stop. Test the
+actual old launcher rejecting revised state and lost acknowledgements causing
+attachment, not duplicate submission.
+
+The trace's HTTPS success is login-node HEAD evidence only. Preserve certificate
+verification, pinned runtime, full model digest resolution and the compute-node
+throughput gate. The six native diagnostic tests and sixty offline v103 tests
+have different scope. No native v103 or scientific pass has yet been received.
+Do not rerun the original a1 launcher to clear its historical telemetry state;
+its terminal ledger recovery has a separate immutable receipt.

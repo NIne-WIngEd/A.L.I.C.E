@@ -72,6 +72,14 @@
       "original_private_file_id": "libfile_d3e6092d881c819196694dcae2130e0e",
       "public_archive_path": "artifacts/S13-terminal-234202.txt",
       "custody": "Complete reviewed terminal history; public calibration and operational metadata only; no credential contents or private candidate payloads; original bytes preserved"
+    },
+    {
+      "original_name": "ALICE_QWEN_TRACE_05d0a01649cb.zip",
+      "sha256": "02ba19cdef702762efa0644aa2da83bfafcab9459c2ba501bb00978b9a8d544d",
+      "bytes": 6379,
+      "original_private_file_id": "libfile_6b3d4a23fc788191812d3138f2ae3f2d",
+      "public_archive_path": "tools/qwen-origin-v103/package/ALICE_MC10D_QWEN_ORIGIN_REVISION_v1.0.3/source/ALICE_QWEN_TRACE_05d0a01649cb.zip",
+      "custody": "Reviewed infrastructure hashes, selected lifecycle fields, scheduler rows and verified HTTPS HEAD metadata only. No credentials, private candidate content or model payloads."
     }
   ],
   "original_audit_markdown_sha256": "8a93d002b2b2e1e2b571bdcb8808016afc5b8cd76b11f80a93fbe1c3b5193ffb",
@@ -92,7 +100,7 @@
     "package_sha256": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
     "source_and_rebuild": "tools/qwen-runtime-v102/README.md",
     "distribution_artifact_id": "libfile_0d777b1bfa608191be994b661349d37c",
-    "status": "QWEN_A2_V102_PRE_SUBMISSION_SOURCE_ORIGIN_STOP",
+    "status": "HISTORICAL_V102_ORIGIN_STOP; EXPLICIT_V103_REVISION_READY",
     "rerun_recommended": false
   },
   "historical_qwen_transport_repair": {
@@ -103,10 +111,21 @@
     "source_and_rebuild": "tools/qwen-transport-v101/README.md",
     "custody": "public client transport repair and unchanged frozen fictional workload only"
   },
-  "next_read_only_diagnostic": {
+  "active_qwen_package_revision": {
+    "release": "QWEN_PRE_SUBMISSION_REVISION_V103.json",
+    "package_sha256": "05e1e8aa3fa1233d8acb25da5e87a93b211791f5e568db850f83dca3499630f2",
+    "source_and_rebuild": "tools/qwen-origin-v103/README.md",
+    "distribution_artifact_id": "libfile_0ed0fa9ffd8c819194a28e3bb627958c",
+    "run_id": "alice-qwen38-a2-c926d9e355dd",
+    "status": "HOST_TRACE_VERIFIED_A2_UNSUBMITTED_V103_REVISION_READY"
+  },
+  "completed_read_only_diagnostic": {
     "release": "QWEN_READ_ONLY_TRACE_RELEASE.json",
     "package_sha256": "e8741e855b5bf2ec7a8f0cb782d7c9779654cdb5970327eccd8fcba39b60d39a",
     "source_and_rebuild": "tools/qwen-v102-trace/README.md",
-    "distribution_artifact_id": "libfile_b58a05993be0819198b68246da9e4533"
+    "distribution_artifact_id": "libfile_b58a05993be0819198b68246da9e4533",
+    "actual_review": "QWEN_HOST_TRACE_REVIEW.json",
+    "trace_zip_sha256": "02ba19cdef702762efa0644aa2da83bfafcab9459c2ba501bb00978b9a8d544d",
+    "native_tests_passed": 6
   }
 }

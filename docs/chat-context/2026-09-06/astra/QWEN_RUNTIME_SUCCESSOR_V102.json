@@ -58,7 +58,12 @@
   "actual_native_windows_tests_passed": 48,
   "actual_controller_exit": 76,
   "rerun_recommended": false,
-  "next_action": "QWEN_READ_ONLY_TRACE_RELEASE.json",
+  "next_action": "QWEN_PRE_SUBMISSION_REVISION_V103.json",
   "build_receipt_is_historical": true,
-  "current_source_defect_reproduced": true
+  "current_source_defect_reproduced": true,
+  "actual_host_review": "QWEN_HOST_TRACE_REVIEW.json",
+  "revision_available": true,
+  "revision_executed": false,
+  "actual_state_verified_at": "2026-09-07T02:28:15Z",
+  "historical_package_and_build_unchanged": true
 }

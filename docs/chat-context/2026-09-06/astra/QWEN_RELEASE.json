@@ -31,13 +31,15 @@
   "v100_terminal_exit": 74,
   "v100_terminal_reached_slurm_submission": false,
   "launcher_role": "historical v100 launcher; use active_windows_launcher for recovery",
-  "active_windows_launcher": "tools/qwen-v102-trace/dist/Start-ALICEQwenReadOnlyTraceV100.ps1",
+  "active_windows_launcher": "tools/qwen-origin-v103/dist/Start-ALICEAstraQwenQualificationV103.ps1",
   "active_runtime_successor": "QWEN_RUNTIME_SUCCESSOR_V102.json",
   "source_actual_result_review": "QWEN_V101_RESULT_REVIEW.json",
   "historical_windows_transport_repair": "QWEN_TRANSPORT_REPAIR_V101.json",
-  "active_windows_launcher_role": "read-only diagnostic; does not execute qualification",
-  "active_diagnostic": "QWEN_READ_ONLY_TRACE_RELEASE.json",
-  "current_execution_status": "QWEN_A2_V102_PRE_SUBMISSION_SOURCE_ORIGIN_STOP",
+  "active_windows_launcher_role": "v103 explicit package revision of existing unsubmitted a2, then unchanged approved calibration",
+  "active_diagnostic": null,
+  "current_execution_status": "HOST_TRACE_VERIFIED_A2_UNSUBMITTED_V103_REVISION_READY",
   "actual_scheduler_job_id_scope": "original v100 workload executed through v101 transport wrapper",
-  "current_execution_job_id": null
+  "current_execution_job_id": null,
+  "active_package_revision": "QWEN_PRE_SUBMISSION_REVISION_V103.json",
+  "historical_diagnostic": "QWEN_READ_ONLY_TRACE_RELEASE.json"
 }

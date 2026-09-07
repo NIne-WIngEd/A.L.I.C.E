@@ -1,0 +1,19 @@
+{
+  "schema": "alice.mc10d.qwen.runtime-policy.v1",
+  "version": "0.32.15",
+  "archive_name": "ollama-linux-amd64.tar.zst",
+  "archive_size": 1422416084,
+  "archive_sha256": "50539c5fe9bf85887733355098dcdb266b433cb8c73fa180713417e9ed6e42bb",
+  "binary_sha256": "eb99a47aad366636488ebd9c163a9180254dffcfdfe359939f9aabc36e2399c8",
+  "archive_url": "https://github.com/ollama/ollama/releases/download/v0.32.15/ollama-linux-amd64.tar.zst",
+  "source_worker_sha256": "931607aa75ac8fe16d7792acfe86be37aa0ba1e17d269170c677d0f8b132551d",
+  "public_probe": {
+    "purpose": "CPU throughput and supported thinking/structured API preflight only; not a calibration task",
+    "num_predict": 128,
+    "projection_margin": 1.2,
+    "cleanup_reserve_seconds": 300
+  },
+  "no_runtime_substitution": true,
+  "new_dedicated_model_cache": "cache/models/qwen38-public-v1",
+  "maximum_prepare_seconds": 7200
+}
