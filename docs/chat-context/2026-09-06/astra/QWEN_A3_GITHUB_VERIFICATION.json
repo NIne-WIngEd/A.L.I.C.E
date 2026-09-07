@@ -1,0 +1,86 @@
+{
+  "schema": "alice.qwen-a3.github-verification.v1",
+  "context_parent": "a6419819161c88876a1a0e8fdaa0be4e19c9f168",
+  "context_tree": "a133e7c19b96f00b2a8a2562c34fba06fece5e9a",
+  "main": "0abaed85873c3f8de04765847eb7700b0e20433f",
+  "summary_path": "docs/chat-context/2026-09-06/astra/qwen-public/alice-qwen38-a3-750881d854fa/61854a5a28d61315/summary.json",
+  "summary_sha256": "61854a5a28d613155925d3f0ee643203b0c98628633256f5850123103666cc20",
+  "summary_bytes_match": true,
+  "ledger_commit": "82ec29affa0282412fb1d49b8f0f67fd8ea8d277",
+  "ledger_tree": "6836dfe8b543e56c6542ff2fc8e74e3529e264fd",
+  "all_25_snapshot_blobs_match": true,
+  "expected": {
+    "runs/alice-qwen38-a3-750881d854fa-t-1e0397509ee5f6f7/application.log": "598ed6ab534c670094c02244890cc427e991f612",
+    "runs/alice-qwen38-a3-750881d854fa-t-1e0397509ee5f6f7/bundle.sha256": "bb122d07f17f5f9ac6eaa59ecb0873d159cb54f7",
+    "runs/alice-qwen38-a3-750881d854fa-t-1e0397509ee5f6f7/manifest.json": "3959b995654039fc88334125b2b833d52d19c64a",
+    "runs/alice-qwen38-a3-750881d854fa-t-1e0397509ee5f6f7/receipt.json": "b15bf3093521a9d795be800784e564a064d8729a",
+    "runs/alice-qwen38-a3-750881d854fa-t-1e0397509ee5f6f7/telemetry.json": "1b4f6751d1da9f79b779c79a40b3969d8b806c80",
+    "runs/alice-qwen38-a3-750881d854fa-t-af7735f672162b8a/application.log": "8a89c3148cc1f00c77cd851bbec6ef95789d5a30",
+    "runs/alice-qwen38-a3-750881d854fa-t-af7735f672162b8a/bundle.sha256": "a302598342ef4f62ed9c93459de1f92df99b7eeb",
+    "runs/alice-qwen38-a3-750881d854fa-t-af7735f672162b8a/manifest.json": "d939fd4fbbaf35a08c5cf294fcd1bad4c18219bf",
+    "runs/alice-qwen38-a3-750881d854fa-t-af7735f672162b8a/receipt.json": "4b35007e997517952b968281df87604d57c4984c",
+    "runs/alice-qwen38-a3-750881d854fa-t-af7735f672162b8a/telemetry.json": "74c7c1105441352592f4a9f074e53c536391b820",
+    "runs/alice-qwen38-a3-750881d854fa-t-b90d39b37ed44412/application.log": "005f990518abb7de6ade1fcf56e45da5134f6d4e",
+    "runs/alice-qwen38-a3-750881d854fa-t-b90d39b37ed44412/bundle.sha256": "467f3fc78b80dcfd2cb15f96e6744c2b78d72400",
+    "runs/alice-qwen38-a3-750881d854fa-t-b90d39b37ed44412/manifest.json": "2c1f60810b8e46ff1d33e1c185ac4a436e4c343a",
+    "runs/alice-qwen38-a3-750881d854fa-t-b90d39b37ed44412/receipt.json": "74f48c6fca9ee1e82f470a323fa458ad53ad9fd0",
+    "runs/alice-qwen38-a3-750881d854fa-t-b90d39b37ed44412/telemetry.json": "eab65626c0a46d048010627cc166bff3d8e2a609",
+    "runs/alice-qwen38-a3-750881d854fa-t-e211b936ddf1af68/application.log": "22f17d9f4182e0cbdfc4b171ff65e976c9e5c409",
+    "runs/alice-qwen38-a3-750881d854fa-t-e211b936ddf1af68/bundle.sha256": "355456d19ad20743c28ab821c46ff0cecc2026cf",
+    "runs/alice-qwen38-a3-750881d854fa-t-e211b936ddf1af68/manifest.json": "18555f05f3df9697bd901dfd7b43933861c071d3",
+    "runs/alice-qwen38-a3-750881d854fa-t-e211b936ddf1af68/receipt.json": "c129ff22ad3c69652f91ebfa473deb1a7dacb17e",
+    "runs/alice-qwen38-a3-750881d854fa-t-e211b936ddf1af68/telemetry.json": "ae577c30f3bfb6b2253ec874d9c6ab01604d2de0",
+    "runs/alice-qwen38-a3-750881d854fa-t-fc661d89f5698d6c/application.log": "1446c6e9bea77b46b12cfa19e15655fdacea7acb",
+    "runs/alice-qwen38-a3-750881d854fa-t-fc661d89f5698d6c/bundle.sha256": "ef137a281200f249c7835be77b4d114f8d60db42",
+    "runs/alice-qwen38-a3-750881d854fa-t-fc661d89f5698d6c/manifest.json": "4cc30026142365217755bff370f8a7350d44a414",
+    "runs/alice-qwen38-a3-750881d854fa-t-fc661d89f5698d6c/receipt.json": "41aaa404eecbf68621f12df93cbd123b443492b1",
+    "runs/alice-qwen38-a3-750881d854fa-t-fc661d89f5698d6c/telemetry.json": "6bdb0c1ea24c6312658abda9c529f8b10720726c"
+  },
+  "publications": [
+    {
+      "exit_code": 0,
+      "fetched_base": "cf4eda66d3ec94708ad9550f20daddc909349831",
+      "finished_at": "2026-09-07T08:02:10.205199+00:00",
+      "published": true,
+      "run_id": "alice-qwen38-a3-750881d854fa-t-1e0397509ee5f6f7",
+      "started_at": "2026-09-07T08:02:07.254093+00:00",
+      "verified_commit": "82ec29affa0282412fb1d49b8f0f67fd8ea8d277"
+    },
+    {
+      "exit_code": 0,
+      "fetched_base": "ed6cd401245eefc269237af5222534b3ebbf76b1",
+      "finished_at": "2026-09-07T07:55:07.341618+00:00",
+      "published": true,
+      "run_id": "alice-qwen38-a3-750881d854fa-t-af7735f672162b8a",
+      "started_at": "2026-09-07T07:55:04.206334+00:00",
+      "verified_commit": "ddb40059b63b39e859db7e25f4f5940674265dfc"
+    },
+    {
+      "exit_code": 0,
+      "fetched_base": "c667b0a864bbc33ed9f2dc715b692d65e57dfd5c",
+      "finished_at": "2026-09-07T08:00:08.846807+00:00",
+      "published": true,
+      "run_id": "alice-qwen38-a3-750881d854fa-t-b90d39b37ed44412",
+      "started_at": "2026-09-07T08:00:04.551493+00:00",
+      "verified_commit": "cf4eda66d3ec94708ad9550f20daddc909349831"
+    },
+    {
+      "exit_code": 0,
+      "fetched_base": "7dfff68a8fe100243c8ac63a97d1c4a568201cd7",
+      "finished_at": "2026-09-07T07:55:04.010258+00:00",
+      "published": true,
+      "run_id": "alice-qwen38-a3-750881d854fa-t-e211b936ddf1af68",
+      "started_at": "2026-09-07T07:55:00.503604+00:00",
+      "verified_commit": "ed6cd401245eefc269237af5222534b3ebbf76b1"
+    },
+    {
+      "exit_code": 0,
+      "fetched_base": "ddb40059b63b39e859db7e25f4f5940674265dfc",
+      "finished_at": "2026-09-07T07:56:19.639783+00:00",
+      "published": true,
+      "run_id": "alice-qwen38-a3-750881d854fa-t-fc661d89f5698d6c",
+      "started_at": "2026-09-07T07:56:16.876780+00:00",
+      "verified_commit": "c667b0a864bbc33ed9f2dc715b692d65e57dfd5c"
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "schema": "alice.qwen.v105.actual-result-review.v1",
+  "review_date": "2026-09-07",
+  "context_parent": "a6419819161c88876a1a0e8fdaa0be4e19c9f168",
+  "status": "A3_CLOSED_NATIVE_RUNTIME_ABI_STOP; QWEN_NOT_EVALUATED",
+  "execution_run_id": "alice-qwen38-a3-750881d854fa",
+  "scheduler_job_id": "575182",
+  "source_zip": "artifacts/ALICE_QWEN_PUBLIC_RESULT_4728ed529d37.zip",
+  "source_zip_sha256": "4728ed529d3780de849bc0753f81db50de2c305abf843eb71e59361ef950054e",
+  "source_zip_bytes": 97234,
+  "source_library_id": "libfile_4e2630a12bc481918fef67364a625475",
+  "verification": {
+    "original_v105_extract_verified_and_analyze_used": true,
+    "evidence_manifest_members_verified": 45,
+    "nested_publisher_archive_and_outer_streams_verified": true,
+    "rebuilt_summary_bytes_match_github": true,
+    "summary_sha256": "61854a5a28d613155925d3f0ee643203b0c98628633256f5850123103666cc20",
+    "summary_path": "docs/chat-context/2026-09-06/astra/qwen-public/alice-qwen38-a3-750881d854fa/61854a5a28d61315/summary.json",
+    "github_receipt": "QWEN_A3_GITHUB_VERIFICATION.json"
+  },
+  "native_windows_observation": {
+    "source": "Owner supplied V105 terminal in this conversation",
+    "package_sha256": "98c8c5dc625fc04235ed1046deec94a016ad890b1ddd920e1e8556f113685a9f",
+    "manifest_files": 32,
+    "compiled_python_files": 15,
+    "tests_run": 12,
+    "tests_passed": 11,
+    "tests_skipped": 1,
+    "seconds": 39.922,
+    "skipped_scope": "POSIX Git publisher integration; passed in the Linux release build",
+    "controller_exit": 76,
+    "context_commit": "a6419819161c88876a1a0e8fdaa0be4e19c9f168",
+    "scheduler_terminal_state": "FAILED",
+    "tasks_completed": 0,
+    "tasks_attempted": 0
+  },
+  "failure": {
+    "class": "Stop",
+    "message": "pinned Ollama exited before readiness; inspect retained server log",
+    "phase": "MODEL_PREPARATION",
+    "recorded_at": "2026-09-07T08:02:07Z"
+  },
+  "native_loader_stderr_exact": "/homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a3-750881d854fa/runtime/bin/ollama: /usr/lib64/libc.so.6: version `GLIBC_2.28' not found (required by /homes/01/mxrayan/rayan-compute/runs/alice-qwen38-a3-750881d854fa/runtime/bin/ollama)\n",
+  "root_cause": "Pinned Ollama could not start: host /usr/lib64/libc.so.6 does not provide required GLIBC_2.28. The process exited before server readiness.",
+  "accountability": "Astra failed to carry known Magnolia CentOS 7 / glibc 2.17 compatibility constraints into runtime preflight. Hash verification and synthetic startup tests did not establish native execution. Model preparation preceded executable compatibility and empty-service readiness.",
+  "earlier_context": {
+    "source_kind": "Recovered Personal Context USER_FACT dated 2026-09-03T18:51:57Z; distinct from current raw a3 receipt",
+    "reported_host": "CentOS 7, glibc 2.17",
+    "previous_success_scope": "Earlier Magnolia Python/PyTorch and infrastructure checks were not Ollama qualification. Original v186 judge code used the Kaggle tournament runtime.",
+    "current_raw_receipt_scope": "A3 directly proves missing GLIBC_2.28; fresh getconf and software availability are not yet observed.",
+    "available_compatible_container_or_userland_established": false
+  },
+  "runtime": {
+    "binary_sha256": "eb99a47aad366636488ebd9c163a9180254dffcfdfe359939f9aabc36e2399c8",
+    "binary_bytes": 39159472,
+    "archive_sha256": "50539c5fe9bf85887733355098dcdb266b433cb8c73fa180713417e9ed6e42bb",
+    "archive_version": "0.32.15",
+    "decoder": {
+      "backend": "zstandard",
+      "files": [
+        {
+          "path": "zstandard/__init__.py",
+          "sha256": "5dd909e0b60a946a0b08deaf57545d17dc044f5df4040beec55f7ef6c6fecd11"
+        },
+        {
+          "path": "zstandard/__init__.pyi",
+          "sha256": "8f9f3d95bde368d7483c73a28c24fadc14df69673f145703346d3d327ac8a030"
+        },
+        {
+          "path": "zstandard/_cffi.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "0cd90a4eeedf490a3207a8ca0eca69b73b887b464509407ebc058007d9f94e55"
+        },
+        {
+          "path": "zstandard/backend_c.cpython-311-x86_64-linux-gnu.so",
+          "sha256": "532a86d3bc0f420a4f7038bf6039c93b55e6f149d7a314b17dbb27750788964d"
+        },
+        {
+          "path": "zstandard/backend_cffi.py",
+          "sha256": "0b268ae515d511531f1c6e76068123efb8f725b4f62484aa11e887fadc1975ce"
+        },
+        {
+          "path": "zstandard/py.typed",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "zstandard-0.25.0.dist-info/INSTALLER",
+          "sha256": "ceebae7b8927a3227e5303cf5e0f1f7b34bb542ad7250ac03fbcde36ec2f1508"
+        },
+        {
+          "path": "zstandard-0.25.0.dist-info/METADATA",
+          "sha256": "03d37736b26b9ae48451dd17026d93dffbd252fb708c1a2a9ae1be0c0966de92"
+        },
+        {
+          "path": "zstandard-0.25.0.dist-info/RECORD",
+          "sha256": "60b819ad15a19d9dcff0906cf3ffd86d7c5033c4c5bbf0c6176a377ea52b1e2e"
+        },
+        {
+          "path": "zstandard-0.25.0.dist-info/REQUESTED",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "zstandard-0.25.0.dist-info/WHEEL",
+          "sha256": "fc216f202603999940607b7c2fb667de7f8118b8fc76464b40fa76d8f8b2e491"
+        },
+        {
+          "path": "zstandard-0.25.0.dist-info/licenses/LICENSE",
+          "sha256": "788fe85e53724a40b299051c4abc9cf74d42b27e7968325b80891c25f79adb4b"
+        },
+        {
+          "path": "zstandard-0.25.0.dist-info/top_level.txt",
+          "sha256": "27ec23f78a4f69d6388a915a6a7ad8065acc6e53927a01184bca3f2dda20ae95"
+        }
+      ],
+      "install_report_sha256": "d5c079a41e48f92e4f56ddc47e90270e67caf03ea6b7d7bc84c41a96ea9d42b2",
+      "pinned_runtime_archive_verified": true,
+      "version": "0.25.0"
+    },
+    "tar_zstd_warning_was_terminal_cause": false,
+    "empty_service_ready": false,
+    "model_loaded": false,
+    "cpu_probe_attempted": false,
+    "task_attempts": 0,
+    "effective_contract_sha256": null
+  },
+  "model_manifest_sha256": "25b843619e944cd0ae6069f94ff4e5e26a16e109ccbc0a66a0f05979ed70098e",
+  "model_cache": "Five model blobs were downloaded and verified before startup failed. Preserve them and verify bytes before reuse; this does not establish a loaded model.",
+  "worker_finished": {
+    "application_exit_code": 76,
+    "finished_at": "2026-09-07T08:02:10Z",
+    "result_sha256": "beef73311da7d741c8591505c8ae2bbe172429741e7fe217984c99ce51b8116b",
+    "run_id": "alice-qwen38-a3-750881d854fa",
+    "telemetry_exit_code": 0
+  },
+  "telemetry": {
+    "publication_invocations": 5,
+    "all_exit_zero": true,
+    "all_25_github_snapshot_blobs_match_returned_journals": true,
+    "terminal_snapshot": "alice-qwen38-a3-750881d854fa-t-1e0397509ee5f6f7",
+    "terminal_commit": "82ec29affa0282412fb1d49b8f0f67fd8ea8d277",
+    "terminal_pending": false
+  },
+  "scientific_outcome": "NOT_EVALUATED",
+  "qualification_passed": false,
+  "calibration_only": true,
+  "no_authority": {
+    "A_SYN_acceptance": false,
+    "A_SYN_promotion": false,
+    "breadth_v104_eligible": false,
+    "four_family_binding_created": false,
+    "hidden_MC8_used": false,
+    "independent_certification": false,
+    "model_training": false,
+    "pointwise_ready": false,
+    "private_candidates_used": false,
+    "private_pointwise_authorized": false
+  },
+  "closed_jobs_preserved": [
+    "575089",
+    "575155",
+    "575182"
+  ],
+  "new_execution_identity_prepared": false,
+  "rerun_v105_recommended": false,
+  "next_action": "READ_EXISTING_RUNTIME_AND_AVAILABLE_ROUTES",
+  "next_release": "MAGNOLIA_RUNTIME_ROUTE_RELEASE.json",
+  "route_decision": "Read available runtime/container commands, modules and actual ELF requirements first. If a supported compatible userland exists, freeze its identity and prove ABI plus empty-service readiness before model preparation. Availability on a login node is not compute-node qualification. No host libc replacement, changed model or automatic GPU fallback.",
+  "purpose": "Recover a valid public judge calibration needed for candidate evaluation, then advance the existing learned identity and memory experiment plan. Infrastructure closure is not E01-E07 evidence or Stage G acceptance."
+}

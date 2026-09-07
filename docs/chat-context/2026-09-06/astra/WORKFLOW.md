@@ -249,3 +249,27 @@ Actual repair closure: Magnolia Git 1.8.3.1 passed all seven publisher checks. L
 
 
 A3 continuation: keep one fixed successor ID and a separate qwen-fallback-a3 controller directory. Verify both closed parent packages at their original physical origins. Preserve the exact worker and all 17 request hashes. Capture nested publisher output and raw Git journals in the returned result. Produce a client STOP_ZIP even before sbatch, so available raw failure evidence does not require another diagnostic round trip. Native Windows and Magnolia runtime observations must remain separate from local test claims.
+
+
+## V105 native runtime compatibility — 7 September 2026
+
+The actual a3 server log reports GLIBC_2.28 missing from host libc. Earlier
+context already documented Magnolia CentOS 7/glibc 2.17. Astra failed to apply
+that constraint before preparing the model. A matching binary/archive hash
+proves identity, not host compatibility. Synthetic service fixtures cannot
+prove native startup, and successful Kaggle execution cannot qualify Magnolia.
+
+Before model preparation in any future eligible runtime, prove the pinned
+executable and required CPU libraries can load under the selected userland,
+then prove empty-service readiness on the execution host. Record the userland
+identity separately from the runtime, model and scientific request contract.
+Do not upgrade host libc, silently swap runtime pins or infer a usable container
+from generic documentation. Read actual software/module availability first.
+Keep login-node inventory separate from compute-node execution evidence.
+
+The a3 zstd fallback succeeded; its warning is not the terminal cause. All five
+publisher invocations succeeded, including the terminal snapshot. Do not repeat
+successful telemetry diagnostics. Preserve verified model cache bytes and all
+closed a1/a2/a3 evidence; no reset, resubmission or automatic a4. Keep the next
+survey small by reusing the established raw transport collector unchanged.
+See QWEN_V105_RESULT_REVIEW.json and MAGNOLIA_RUNTIME_ROUTE_RELEASE.json.

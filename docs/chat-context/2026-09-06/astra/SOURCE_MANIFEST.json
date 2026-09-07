@@ -144,6 +144,14 @@
       "original_private_file_id": "libfile_6c0e77107e8c819188383f8006aa1bb5",
       "public_archive_path": "artifacts/ALICE_PublisherRepair_f3dc451ff517.zip",
       "custody": "Original returned repair ZIP: public telemetry payloads, helper source, hashes and raw Git journals; no private key contents or private candidate data."
+    },
+    {
+      "original_name": "ALICE_QWEN_PUBLIC_RESULT_4728ed529d37.zip",
+      "sha256": "4728ed529d3780de849bc0753f81db50de2c305abf843eb71e59361ef950054e",
+      "bytes": 97234,
+      "original_private_file_id": "libfile_4e2630a12bc481918fef67364a625475",
+      "public_archive_path": "artifacts/ALICE_QWEN_PUBLIC_RESULT_4728ed529d37.zip",
+      "custody": "Reviewed original result ZIP: public fictional task gold, runtime/model hashes and operational journals; no private candidate payloads, private key contents or model responses."
     }
   ],
   "original_audit_markdown_sha256": "8a93d002b2b2e1e2b571bdcb8808016afc5b8cd76b11f80a93fbe1c3b5193ffb",
@@ -236,6 +244,15 @@
     "run_id": "alice-qwen38-a3-750881d854fa",
     "package_sha256": "98c8c5dc625fc04235ed1046deec94a016ad890b1ddd920e1e8556f113685a9f",
     "distribution_artifact_id": "libfile_bacaa2c867e48191825a16e57b33d5d4",
-    "status": "READY_NOT_SUBMITTED"
+    "status": "A3_CLOSED_NATIVE_RUNTIME_ABI_STOP; QWEN_NOT_EVALUATED",
+    "actual_review": "QWEN_V105_RESULT_REVIEW.json",
+    "rerun_recommended": false
+  },
+  "active_runtime_route_survey": {
+    "release": "MAGNOLIA_RUNTIME_ROUTE_RELEASE.json",
+    "package_sha256": "73e35c340f99d1bb83529deb11f5fd88729fa2fd94f1f43a418c377a43132155",
+    "distribution_artifact_id": "libfile_b58cec99888c81919149e57ab25a1397",
+    "status": "READY_FOR_READ_ONLY_SURVEY",
+    "source_and_rebuild": "tools/runtime-route-survey/build_release.py"
   }
 }

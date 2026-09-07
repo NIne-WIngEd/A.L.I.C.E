@@ -1,0 +1,8 @@
+test_changed_source_stops_before_queries_and_altered_elf_is_refused (selftest_runtime.RuntimeSurveyTests.test_changed_source_stops_before_queries_and_altered_elf_is_refused) ... ok
+test_literal_stdin_program_and_failed_ssh_preserve_local_state_and_bytes (selftest_runtime.RuntimeSurveyTests.test_literal_stdin_program_and_failed_ssh_preserve_local_state_and_bytes) ... ok
+test_six_query_receipts_preserve_missing_tools_and_source_bytes (selftest_runtime.RuntimeSurveyTests.test_six_query_receipts_preserve_missing_tools_and_source_bytes) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.013s
+
+OK

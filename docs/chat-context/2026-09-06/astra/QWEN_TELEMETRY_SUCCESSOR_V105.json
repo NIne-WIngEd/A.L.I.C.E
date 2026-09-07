@@ -1,6 +1,6 @@
 {
   "schema": "alice.mc10d.qwen.explicit-successor.build.v1.0.5",
-  "status": "READY_FOR_OWNER_EXECUTION",
+  "status": "A3_CLOSED_NATIVE_RUNTIME_ABI_STOP; QWEN_NOT_EVALUATED",
   "package": "ALICE_MC10D_QWEN_TELEMETRY_SUCCESSOR_v1.0.5.zip",
   "package_sha256": "98c8c5dc625fc04235ed1046deec94a016ad890b1ddd920e1e8556f113685a9f",
   "package_bytes": 508846,
@@ -32,8 +32,8 @@
   "real_local_git_publisher_to_capture_to_archive_tested": true,
   "raw_rpc_and_publisher_failure_bytes_tested": true,
   "full_synthetic_worker_collector_verifier_tested": true,
-  "native_windows_execution_observed": false,
-  "actual_magnolia_a3_submission_observed": false,
+  "native_windows_execution_observed": true,
+  "actual_magnolia_a3_submission_observed": true,
   "model_inference_executed": false,
   "scientific_outcome": "NOT_EVALUATED",
   "automatic_successor_after_attempt": false,
@@ -43,9 +43,15 @@
   "distribution_artifact_id": "libfile_bacaa2c867e48191825a16e57b33d5d4",
   "source_and_rebuild": "tools/qwen-successor-v105/build_release.py",
   "actual_publisher_review": "TELEMETRY_PUBLISHER_REPAIR_RESULT_REVIEW.json",
-  "next_action": "RUN_EXPLICIT_A3_PUBLIC_CALIBRATION_V105",
+  "next_action": "READ_EXISTING_RUNTIME_AND_AVAILABLE_ROUTES",
   "native_windows_test_expectation": "12 tests: 11 portable checks and one POSIX Git integration skipped on Windows; all 12 passed in the Linux release build.",
-  "actual_a3_result_exists": false,
+  "actual_a3_result_exists": true,
   "continuation_authority": "Original exact public calibration approval plus the owner instruction to continue in this conversation. No new scientific scope. A3 is explicitly named; no automatic successor is allowed.",
-  "limits": "Actual Magnolia runtime, loaded model, CPU throughput and Qwen judgments remain unobserved. Do not count synthetic test responses as qualification evidence."
+  "limits": "Native Ollama ABI failure observed before readiness. No probe or task. All five telemetry publications verified. Qwen remains NOT_EVALUATED; a3 is closed.",
+  "actual_scheduler_job_id": "575182",
+  "actual_result_review": "QWEN_V105_RESULT_REVIEW.json",
+  "actual_result_zip_sha256": "4728ed529d3780de849bc0753f81db50de2c305abf843eb71e59361ef950054e",
+  "native_tests_passed": 11,
+  "native_tests_skipped": 1,
+  "rerun_recommended": false
 }
