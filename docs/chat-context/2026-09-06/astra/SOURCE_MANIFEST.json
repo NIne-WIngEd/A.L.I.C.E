@@ -230,5 +230,12 @@
     "status": "INSTALLED_AND_TERMINAL_RETRY_VERIFIED",
     "actual_review": "TELEMETRY_PUBLISHER_REPAIR_RESULT_REVIEW.json",
     "terminal_commit": "7dfff68a8fe100243c8ac63a97d1c4a568201cd7"
+  },
+  "active_qwen_successor": {
+    "release": "QWEN_TELEMETRY_SUCCESSOR_V105.json",
+    "run_id": "alice-qwen38-a3-750881d854fa",
+    "package_sha256": "98c8c5dc625fc04235ed1046deec94a016ad890b1ddd920e1e8556f113685a9f",
+    "distribution_artifact_id": "libfile_bacaa2c867e48191825a16e57b33d5d4",
+    "status": "READY_NOT_SUBMITTED"
   }
 }

@@ -93,7 +93,7 @@
       "same_pass_rule": true,
       "independent_validation": false,
       "latest_pointer": "qwen-public/LATEST_QWEN_PUBLIC.json",
-      "next_dependency": "Execute the unchanged public calibration through one explicit successor after live closed-parent and installed-publisher checks. No Qwen judgment has yet been attempted.",
+      "next_dependency": "Run the unchanged 128-token CPU probe. If the original budget gate passes, execute the 16 frozen public requests and independently rebuild the returned results.",
       "transport_observation": "QWEN_V100_WINDOWS_TERMINAL_OBSERVATION.json",
       "transport_repair": "QWEN_TRANSPORT_REPAIR_V101.json",
       "native_windows_v100_tests_passed": 35,
@@ -138,19 +138,25 @@
           "v104_package_sha256": "edc325f70513cfe6e0e27289ba05132e2defbfdf306dcafd0550740955293647",
           "v104_revision_id": "a2-provider-v104-3c5ed8da35dc",
           "v104_executed": true,
-          "current_revision_id": "a2-provider-v104-3c5ed8da35dc"
+          "current_revision_id": "a2-provider-v104-3c5ed8da35dc",
+          "terminal_publisher_recovered": true,
+          "terminal_recovery_commit": "7dfff68a8fe100243c8ac63a97d1c4a568201cd7",
+          "terminal_recovery_review": "TELEMETRY_PUBLISHER_REPAIR_RESULT_REVIEW.json"
         }
       ],
       "last_invocation_scope": "a2 v104 terminal S15 and independently verified result",
       "current_observation": "QWEN_V104_RESULT_REVIEW.json",
-      "next_operational_action": "PREPARE_EXPLICIT_SOURCE_BOUND_PUBLIC_CALIBRATION_SUCCESSOR",
+      "next_operational_action": "RUN_EXPLICIT_A3_PUBLIC_CALIBRATION_V105",
       "package_revision": "QWEN_PROVIDER_REVISION_V104.json",
       "after_actual_passing_calibration": "Verify four exact family/profile/digest receipts and effective contracts before successor binding and breadth prerequisite migration",
       "pending_read_only_diagnostic": null,
       "external_terminal_recovery": "QWEN_A2_TERMINAL_RECOVERY.json",
       "current_diagnosis": "TELEMETRY_GIT183_RESULT_REVIEW.json",
       "pending_infrastructure_repair": null,
-      "current_infrastructure_review": "TELEMETRY_PUBLISHER_REPAIR_RESULT_REVIEW.json"
+      "current_infrastructure_review": "TELEMETRY_PUBLISHER_REPAIR_RESULT_REVIEW.json",
+      "planned_execution": "QWEN_TELEMETRY_SUCCESSOR_V105.json",
+      "planned_run_id": "alice-qwen38-a3-750881d854fa",
+      "planned_execution_status": "READY_NOT_SUBMITTED"
     }
   ],
   "roadmap": "PHASE2_REPLACEMENT_ROADMAP.md",

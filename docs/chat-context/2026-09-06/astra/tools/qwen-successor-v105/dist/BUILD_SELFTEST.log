@@ -1,0 +1,19 @@
+transport_diagnostics=/tmp/alice-a3-test-zok7minq/runs/alice-qwen38-a3-750881d854fa/controller-diagnostics.jsonl
+raw ssh stderr
+test_exact_both_parent_origins_and_frozen_manifest_without_source_mutation (selftest_successor.SuccessorTests.test_exact_both_parent_origins_and_frozen_manifest_without_source_mutation) ... ok
+test_full_worker_collector_verifier_and_tampered_request_refused (selftest_successor.SuccessorTests.test_full_worker_collector_verifier_and_tampered_request_refused) ... ok
+test_native_key_and_remote_posix_address_and_failure_stop_zip (selftest_successor.SuccessorTests.test_native_key_and_remote_posix_address_and_failure_stop_zip) ... ok
+test_original_probe_and_all_task_requests_are_byte_exact (selftest_successor.SuccessorTests.test_original_probe_and_all_task_requests_are_byte_exact) ... ok
+test_prior_probe_attempt_changed_parent_and_unknown_scheduler_each_block (selftest_successor.SuccessorTests.test_prior_probe_attempt_changed_parent_and_unknown_scheduler_each_block) ... ok
+test_publisher_drift_prevents_submission_and_preserves_old_states (selftest_successor.SuccessorTests.test_publisher_drift_prevents_submission_and_preserves_old_states) ... ok
+test_raw_nonzero_and_timeout_bytes_survive_collection (selftest_successor.SuccessorTests.test_raw_nonzero_and_timeout_bytes_survive_collection) ... ok
+test_real_git_publisher_to_capture_to_archive_and_identical_retry (selftest_successor.SuccessorTests.test_real_git_publisher_to_capture_to_archive_and_identical_retry) ... ok
+test_slow_cpu_stops_after_probe_with_zero_tasks (selftest_successor.SuccessorTests.test_slow_cpu_stops_after_probe_with_zero_tasks) ... ok
+test_submission_acknowledgement_loss_never_creates_second_job (selftest_successor.SuccessorTests.test_submission_acknowledgement_loss_never_creates_second_job) ... ok
+test_token_exhaustion_preserved_without_request_retry (selftest_successor.SuccessorTests.test_token_exhaustion_preserved_without_request_retry) ... ok
+test_unresolved_intent_never_resubmits (selftest_successor.SuccessorTests.test_unresolved_intent_never_resubmits) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 2.477s
+
+OK

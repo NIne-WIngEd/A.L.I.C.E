@@ -1,33 +1,44 @@
-# Current continuation — publisher repaired; public calibration pending
+# Current continuation — Qwen a3 ready after verified publisher recovery
 
-Read [STATE](STATE.json), the [verified repair result](TELEMETRY_PUBLISHER_REPAIR_RESULT_REVIEW.json),
-and the [master handoff](ASTRA_MASTER_CONTINUATION_HANDOFF.md).
+Read [STATE](STATE.json), the [a3 release](QWEN_TELEMETRY_SUCCESSOR_V105.json),
+the [verified repair](TELEMETRY_PUBLISHER_REPAIR_RESULT_REVIEW.json), and the
+[master handoff](ASTRA_MASTER_CONTINUATION_HANDOFF.md).
 
-Magnolia ran all seven publisher tests on its actual Git 1.8.3.1, installed the
-exact checked helper, published the closed a2 terminal snapshot and verified an
-identical retry. GitHub commit 7dfff68 adds only the two missing metadata files;
-the three original payload files are unchanged. The retry created no commit.
-The original helper, a2 evidence and cached ledger checkout were preserved.
-The Windows a2 controller remains unchanged; its historical pending flag does
-not negate the independently verified external recovery. Do not rerun v104.
+The shared publisher repair is complete. Magnolia's actual Git 1.8.3.1 passed
+all seven publisher checks. GitHub commit 7dfff68 added only the two missing
+terminal metadata files. Both publication calls succeeded. The identical retry
+created no commit. Original a2 evidence and the Windows controller stayed unchanged.
 
-Next: prepare one separately identified infrastructure execution of the already
-approved Qwen public calibration, bound to the exact closed zero-inference a1/a2
-evidence and installed publisher. Verify parents live before submission and
-export raw publisher journals with results. Do not reset or resubmit a2.
-The historical no-automatic-successor rule remains: no launcher may generate
-another execution identity or retry a probe/task after an attempted request.
+Next: save the v1.0.5 ZIP and Start-ALICEAstraQwenQualificationV105.ps1 in Downloads
+and run the launcher. This starts one separately identified execution,
+alice-qwen38-a3-750881d854fa, under the existing public calibration approval.
+It checks both closed parent runs and the exact installed publisher before
+submission. Native Windows execution and actual a3 submission remain pending.
+Do not rerun v104, reset a2, or alter historical results to clear a pending flag.
 
-Qwen remains NOT_EVALUATED: zero probes and zero of the 16 task requests attempted.
-Registry manifest resolution is established; loaded runtime and CPU throughput
-remain unverified. The original profile, requests, gates and six-hour Magnolia
-CPU budget apply. There is no automatic Kaggle/GPU fallback.
+The existing worker, runtime pin, approved profile and 17 request hashes remain
+unchanged. A3 reuses a2's frozen model manifest. Magnolia remains CPU-only:
+20 CPUs, 48 GiB exclusive, node/normal, six hours. The 128-token probe must pass
+the original worst-case budget gate before the 16 calibration tasks. No probe
+or task retries, automatic successor or Kaggle fallback are allowed.
 
-Keep the historical result pointer and separate repair evidence. Gemma v182,
-Mistral/Granite bindings, failed GLM results, 287 candidates, 63 replacements and
-one deferred slot remain preserved. Private pointwise, breadth, acceptance,
-promotion, training and MC8 remain gated.
+All 12 checks passed from a fresh ZIP, including real local Git publication
+through the new evidence capture and a complete synthetic worker/collector/
+verifier round trip. They also cover parent mismatch, failed scheduler queries,
+publisher drift, lost submission acknowledgement and slow-CPU rejection.
+The publisher's raw Git journals and outer stdout/stderr travel with results.
+Pre-submission/transport stops produce STOP_ZIP. A downloaded result rejected
+by verification is separately retained as RAW_RESULT_ZIP. Return the printed
+ZIPs and terminal transcript; do not discard an unsuccessful result.
 
-Follow the [Phase 2 replacement roadmap](PHASE2_REPLACEMENT_ROADMAP.md): Stage G
-is open, E05 belongs in G+, and final replacement requires accepted Stage J.
-Main remains 0abaed85873c3f8de04765847eb7700b0e20433f.
+Qwen is still NOT_EVALUATED. Its runtime, loaded model and throughput are not
+established by manifest resolution or offline tests. If Qwen passes actual
+public calibration, verify the exact four family/profile/digest receipts before
+constructing the successor binding and migrating the breadth prerequisite.
+
+The actual public result pointer remains at closed a2 until a verified new result
+arrives. Preserve Gemma v182, Mistral/Granite, failed GLM results, 287 candidates,
+63 replacements and one deferred slot. Private pointwise, breadth, acceptance,
+promotion, training and MC8 remain gated. The [Phase 2 roadmap](PHASE2_REPLACEMENT_ROADMAP.md)
+still requires Stage G, G+, H, I and J with their acceptance gates. Main remains
+0abaed85873c3f8de04765847eb7700b0e20433f.

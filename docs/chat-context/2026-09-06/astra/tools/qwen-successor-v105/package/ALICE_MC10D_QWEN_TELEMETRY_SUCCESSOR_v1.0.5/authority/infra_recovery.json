@@ -1,0 +1,83 @@
+{
+  "schema": "alice.mc10d.qwen.explicit-infrastructure-successor.v1.0.5",
+  "execution_run_id": "alice-qwen38-a3-750881d854fa",
+  "calibration_id": "alice-qwen38-a1-8e7a384a745496f4",
+  "authority_basis": "Existing owner approval 591dbc0781b1df8e11f0eea7d743952724722bae authorizes this exact bounded public calibration; continuing infrastructure work is authorized in this conversation. This separately named execution follows independently verified zero-inference a1 and a2 failures and a verified shared-publisher repair. No old execution is reset.",
+  "original_scientific_workload_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+  "owner_approval_sha256": "8e7a384a745496f4c4f68996733ddf5220783bc871d852f99577ca0a7287373f",
+  "automatic_successor_after_this_attempt": false,
+  "automatic_requeue": false,
+  "probe_or_task_retry_allowed": false,
+  "parents": [
+    {
+      "label": "a1",
+      "run_id": "alice-qwen38-a1-8e7a384a745496f4",
+      "job_id": "575089",
+      "result_archive": "ALICE_QWEN_PUBLIC_RESULT_c926d9e355dd.zip",
+      "result_archive_sha256": "c926d9e355dd6ec83ad18fd78f35265c664e5ea6f317871c20d7af6b0f8d8f5f",
+      "package_name": "ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0",
+      "package_archive": "ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0.zip",
+      "package_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+      "critical_files": {
+        "run.json": "23f2092c0e42a900f75bd2c5c85f503a0ed8cae0e278a9dccf846a0385835c7f",
+        "submission.json": "9575612df71ff3a543ec78fa5341d5bb27ed5e66daf87c693729f40ba875c9d8",
+        "submission-intent.json": "c13064b170471110516b2b70f73b80d8a943db7e717c2a58ed08dad008272e5d",
+        "job.sbatch": "a90fa1af5a883d73f72a47fe39799aabea34ca6427740b6bb00ae932cab16449",
+        "worker-started.json": "c174c13c1cf08a860897c36535b68da57461d90d603953750e58442e710f5b45",
+        "worker-finished.json": "ca6616a76e930918dcb397230da5d498c376d04dff6aac3cb79481609c8ce245",
+        "result.json": "e32b52146b52580d88ecda03763e81ebf7587fb21badeb346ddd6c6e052d7a6e",
+        "failure.json": "6a704357b7051bf0731aa6419dc81d0554708b097dd47d8c764b595ee7c9d0cd",
+        "package-manifest.json": "b1d94af265eaac40d29314481358aa0f2a37b072bfa8c5542409fd641387175c"
+      },
+      "phase": "RUNTIME_PREPARATION",
+      "error": "<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1006)>",
+      "scheduler_state": "FAILED",
+      "scheduler_exit": "76:0"
+    },
+    {
+      "label": "a2",
+      "run_id": "alice-qwen38-a2-c926d9e355dd",
+      "job_id": "575155",
+      "result_archive": "ALICE_QWEN_PUBLIC_RESULT_750881d854fa.zip",
+      "result_archive_sha256": "750881d854fa15df220347dc19c3091fcb0a5630c6a87ca30cf9fa3b4114eb33",
+      "package_name": "ALICE_MC10D_QWEN_PROVIDER_REVISION_v1.0.4",
+      "package_archive": "ALICE_MC10D_QWEN_PROVIDER_REVISION_v1.0.4.zip",
+      "package_sha256": "edc325f70513cfe6e0e27289ba05132e2defbfdf306dcafd0550740955293647",
+      "critical_files": {
+        "run.json": "8822368909a17fc243f1e8c8cafb721c8df930401035cd83457bd779f1f2afc6",
+        "submission.json": "a774fb22223b89f5078cc2bd156460f92113650304eed576b48713d028e9a5bf",
+        "submission-intent.json": "0eae71b4888935b47898d467b348964d24bbd011ed91e3ea3cc842b50044278a",
+        "job.sbatch": "9d7ab4acddb7aeb07e776eee799d8251b507ff275c1e7a417a23a160cea0c518",
+        "worker-started.json": "b42bcb106284c4b3a390d6a627fe7eba40baaec5b061ef03a5ff924121cedeb6",
+        "worker-finished.json": "cef2de900be2c3ad129dbe7e11df5a79e33579014450e73f22f38a806110216a",
+        "result.json": "829e1e0bd81ac49bbe581c6597fd78b18252963507b7d9563ac99accb9b85097",
+        "failure.json": "2d623d6b2cd2c3ae80f013239cc4e5f4ebdb63ddf33713842282a15e4051a133",
+        "package-manifest.json": "175551e9b446c775cf613ef81c49524159aced7de197fc1c0d7f524f4de91c09",
+        "package-revision.json": "45bb22d1fd5fb1a1008a27e6409f26e4340dceeef066cb3e947e6c750e580441",
+        "parent-reconciliation.json": "520bcd5fba8ad0d072cbf99c0bdfc99fbc0ef91bd2bd2344bf7e728729d7aecb",
+        "infrastructure-preflight.json": "7cb1f1c08f8df8a02978c62778bcdcc56d58102278ec1672f0ffc9cb0cb113d2",
+        "model-lock.json": "37c38829919c11962d7a3a55a0f0b95205cb0834081653bb6735baff2ce79a20",
+        "model-manifest.json": "25b843619e944cd0ae6069f94ff4e5e26a16e109ccbc0a66a0f05979ed70098e"
+      },
+      "phase": "PREFLIGHT",
+      "error": "Initial immutable GitHub telemetry failed; inference not started",
+      "scheduler_state": "FAILED",
+      "scheduler_exit": "76:0"
+    }
+  ],
+  "local_a2_state_relative": "tools/alice-astra/qwen-fallback-a2/controller-state.json",
+  "local_a2_state_sha256": "4471d9c3f547ea6668e5d5b97eef1949eeb0199f429fbe98fc2c7083e79d4c10",
+  "installed_helper_sha256": "81e7fcabd7f793b52b1f3efdfd58fc4002cba93b65299602bee044399ce989a0",
+  "installed_wrapper_sha256": "7ddc10dff3fa2ae387c1b2e023d770c6047e5d076ab4ef837247b22dc8870120",
+  "publisher_repair_zip_sha256": "259cf9f6171914ba886957db35cd2eeedc788b79a20b7afc97fb0cbd5f7aa9e8",
+  "publisher_proofs": {
+    "telemetry/publisher-receipts/alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed/037b7fb483d34889a89f05380090e526/result.json": "253429ac35fd35fbfdf73b029bce5dd542597a51461ae0f8918db7d37348c048",
+    "telemetry/publisher-receipts/alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed/83d5d7eb6b4c492991922d742913346a/result.json": "8244c4856002c679635166cd2b4000460d5f84c689341b7058e2788d8466c417"
+  },
+  "verified_terminal_commit": "7dfff68a8fe100243c8ac63a97d1c4a568201cd7",
+  "frozen_model_manifest_sha256": "25b843619e944cd0ae6069f94ff4e5e26a16e109ccbc0a66a0f05979ed70098e",
+  "scientific_profile_tasks_and_gates_changed": false,
+  "old_runs_modified": false,
+  "resource_contract": "Magnolia node/normal, 20 CPUs, 48 GiB exclusive, no GPU, six hours; 128-token probe and original worst-case gate before the 16 requests.",
+  "purpose": "Establish whether the named Qwen judge meets public calibration prerequisites for the identity/memory experiments; no qualification or migration acceptance is granted by infrastructure success."
+}

@@ -1,0 +1,100 @@
+{
+  "v104_package_sha256": "edc325f70513cfe6e0e27289ba05132e2defbfdf306dcafd0550740955293647",
+  "unchanged": {
+    "worker.py": "f32ccc9ae3cd952fa1f5a66c608ea1fa307839fa6c56f407224e4a573837b1c3",
+    "secure_https.py": "8113197ed63bdee6ad92b290523af190d13c6a190a714dc0ddf6609d19594511",
+    "publish_context.py": "1569f2b0adf7ba08968bfa5c7b37ed5087b71ab2b23ddd3291ba942f07c7ba54",
+    "frozen_prompt.py": "ba1ec9b84469f8a74ef517acd869e307326369a75c4852fe51df4f93d74d4d6e",
+    "magnolia_scheduler.py": "d52861e9cc5d9710e848cebc3518c86c20b715ce8d15d98b5822181b17d3b23e",
+    "evidence_origins.py": "feec3cff3981c41fd1f906a88ba91c8e278c16e2388b96f085f826e340c3bdda",
+    "authority/approval.json": "8e7a384a745496f4c4f68996733ddf5220783bc871d852f99577ca0a7287373f",
+    "authority/approved.json": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+    "authority/draft.json": "e16142639f13c9b2191afcfa4221dbf1610abf6af84273b07774fc13a0a1b40b",
+    "authority/tasks.json": "b3abc2e36e4e93d3f8f6c9398c7c39b6ca2f40f9b3dcbe875ce9005d096f9420",
+    "authority/runtime_policy.json": "a984eac1fa84a0b365679923069c2c0a472f3f6ff359ccccf947ccc3dfff636e",
+    "authority/source_binding_policy.json": "c045b20ad44ea240940c550e6fc7447888b84428293a1b9bb2abe89b68cbdc6f",
+    "authority/request_hashes_v100.json": "800d52675f06d74d9ed2c4e69a9e29eb73e21916ac2b9906826611e39afe50bf"
+  },
+  "changed_or_added": [
+    {
+      "path": "README.md",
+      "v104_sha256": "82d00e14a4e55344abef254d3518df49eedf4a89b3bf02b3c7fad188b5914cb9",
+      "a3_sha256": "703f25b9b20be6d946062faa3bba05eef125c079987f229e7ae7ca099dd77fc4"
+    },
+    {
+      "path": "authority/infra_recovery.json",
+      "v104_sha256": "1abd853327748e27112ac92d2986a5b247619f2cc7497b0f96ce9ccdc1785b25",
+      "a3_sha256": "9e5e3705767cc9bfcbbe80d8c61ad09b3e704ff50d072cc94ee9f8afcd296925"
+    },
+    {
+      "path": "bootstrap.sh",
+      "v104_sha256": "3dc7fa3b32806311e996341b16ff7b32035a28c6536301776b3e29ec96c25844",
+      "a3_sha256": "93a090dd22f8b3c41f55bf3519edaaa1002345ed92dce24c2aae1d19b9278588"
+    },
+    {
+      "path": "contract.py",
+      "v104_sha256": "6f92c1c61ad1d844a64c38b23940c48acf93fcd4ce6020386a78827244ff1b56",
+      "a3_sha256": "3570cf7c55a972a24586535d7644ff304b24618224b6315837312438aed4e178"
+    },
+    {
+      "path": "controller.py",
+      "v104_sha256": "edc030621d0a18159a1f182b31fc3d9a74cacdcc19c159a17118fb5cefe9881d",
+      "a3_sha256": "c36f2cc241e0b571d89c7e53f033e03992981a4d34443c3c2de049c84941f2c5"
+    },
+    {
+      "path": "evidence.py",
+      "v104_sha256": "9bf43f1bd37abb1b48ac8d985ca018668a1d3f5c4a8b8ccc23e19bebbf24e40e",
+      "a3_sha256": "93f329840395c09cde108146d709746e5b0b429c372f5d3abdf14d06f0523e1d"
+    },
+    {
+      "path": "fixtures/publisher.py",
+      "v104_sha256": null,
+      "a3_sha256": "d780ee55598b5134ee8319507683fdf510c4acfa1eaf9bf393d6bd5d1adf65eb"
+    },
+    {
+      "path": "fixtures/rayan-telemetry-push.sh",
+      "v104_sha256": null,
+      "a3_sha256": "81e7fcabd7f793b52b1f3efdfd58fc4002cba93b65299602bee044399ce989a0"
+    },
+    {
+      "path": "infra_recovery.py",
+      "v104_sha256": "5d55b0e0e12cea9774e856d3bc5f776e65c527e95fdb9ecd8e1c49a9ddae55a3",
+      "a3_sha256": "8b0f42aa9666a338864c1a22193bba460f96e1c46db15bbbe52414b33521d590"
+    },
+    {
+      "path": "publisher_capture.py",
+      "v104_sha256": null,
+      "a3_sha256": "9b13739acf83ae343ff608264acc70219e6dbc4254e7dd0b0c05ed670b021605"
+    },
+    {
+      "path": "remote_agent.py",
+      "v104_sha256": "3ada793d39ec1ebfa9b7e317d0d349292f8995c3c002d6cc3ea2a8db4687aa7f",
+      "a3_sha256": "4dac78cbb910ce0460018127cb5734182a156ea6cf5c9f7869a0e959a33ea219"
+    },
+    {
+      "path": "selftest_successor.py",
+      "v104_sha256": null,
+      "a3_sha256": "36ec82b479800118c0162129eb648bfc0c00dc5c40d72a3836b4842f81f289cf"
+    },
+    {
+      "path": "source/ALICE_MC10D_QWEN_PROVIDER_REVISION_v1.0.4.zip",
+      "v104_sha256": null,
+      "a3_sha256": "edc325f70513cfe6e0e27289ba05132e2defbfdf306dcafd0550740955293647"
+    },
+    {
+      "path": "source/ALICE_PublisherRepair_f3dc451ff517.zip",
+      "v104_sha256": null,
+      "a3_sha256": "259cf9f6171914ba886957db35cd2eeedc788b79a20b7afc97fb0cbd5f7aa9e8"
+    },
+    {
+      "path": "source/ALICE_QWEN_PUBLIC_RESULT_750881d854fa.zip",
+      "v104_sha256": null,
+      "a3_sha256": "750881d854fa15df220347dc19c3091fcb0a5630c6a87ca30cf9fa3b4114eb33"
+    },
+    {
+      "path": "telemetry_snapshots.py",
+      "v104_sha256": "d1413ddd329540f8fc5b77641e38bc7ce3af730a84a431d6319013e3deb2e36e",
+      "a3_sha256": "b0e86ed8810a57437c7cbd72824b2add0254c9cda18ee70b08be1fc62c336195"
+    }
+  ]
+}

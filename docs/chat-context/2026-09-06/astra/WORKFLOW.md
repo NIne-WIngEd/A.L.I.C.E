@@ -1,6 +1,6 @@
 # Working agreement and recovered lessons
 
-Current override: follow [START_HERE](START_HERE.md) and the [verified publisher repair](TELEMETRY_PUBLISHER_REPAIR_RESULT_REVIEW.json). Repair installation and terminal retry are complete. Older diagnostic and repair instructions below are historical.
+Current override: follow [START_HERE](START_HERE.md) and the [explicit a3 release](QWEN_TELEMETRY_SUCCESSOR_V105.json). The publisher is installed and verified. A3 is prepared under the existing public calibration approval; live execution remains pending. Older diagnostics, a2 revisions and repair instructions below are historical.
 
 Rayan explicitly switched ongoing ALICE work to Astra on 6 September 2026. The earlier Sol-default preference is superseded. Work in substantial coherent batches: recover evidence, make one bounded decision, implement it, verify the relevant failure modes, record the result, and leave one executable next step. Do not trade knowledge retention or final cognitive semantics for speed.
 
@@ -246,3 +246,6 @@ identity, and do not replay closed a2 to clear a telemetry flag.
 
 
 Actual repair closure: Magnolia Git 1.8.3.1 passed all seven publisher checks. Live GitHub append and identical retry were independently verified at 7dfff68. Preserve this receipt; do not ask the owner to repeat successful diagnostics. Existing public calibration approval persists, but each explicit infrastructure execution must preserve closed parents and the original scientific contract. No automatic successor follows a failed execution.
+
+
+A3 continuation: keep one fixed successor ID and a separate qwen-fallback-a3 controller directory. Verify both closed parent packages at their original physical origins. Preserve the exact worker and all 17 request hashes. Capture nested publisher output and raw Git journals in the returned result. Produce a client STOP_ZIP even before sbatch, so available raw failure evidence does not require another diagnostic round trip. Native Windows and Magnolia runtime observations must remain separate from local test claims.
