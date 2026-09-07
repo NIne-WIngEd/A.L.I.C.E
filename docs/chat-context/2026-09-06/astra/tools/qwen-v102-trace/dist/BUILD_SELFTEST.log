@@ -1,0 +1,11 @@
+test_file_mismatch_unreadable_and_non_regular_are_distinct (selftest_trace.TraceTests.test_file_mismatch_unreadable_and_non_regular_are_distinct) ... ok
+test_local_collection_and_ssh_failure_preserve_existing_controller_state (selftest_trace.TraceTests.test_local_collection_and_ssh_failure_preserve_existing_controller_state) ... ok
+test_no_ca_makes_no_network_request_and_http_downgrade_is_refused (selftest_trace.TraceTests.test_no_ca_makes_no_network_request_and_http_downgrade_is_refused) ... ok
+test_origin_report_distinguishes_export_name_from_package_manifest (selftest_trace.TraceTests.test_origin_report_distinguishes_export_name_from_package_manifest) ... ok
+test_scheduler_failure_is_unknown_and_rows_include_wrong_source_identity (selftest_trace.TraceTests.test_scheduler_failure_is_unknown_and_rows_include_wrong_source_identity) ... ok
+test_ssh_uses_script_stdin_and_preserves_native_windows_key (selftest_trace.TraceTests.test_ssh_uses_script_stdin_and_preserves_native_windows_key) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.015s
+
+OK

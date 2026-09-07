@@ -64,6 +64,14 @@
       "original_private_file_id": "libfile_cd99834b94108191b50334597889c687",
       "public_archive_path": "tools/qwen-runtime-v102/package/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/source/ALICE_QWEN_PUBLIC_RESULT_c926d9e355dd.zip",
       "custody": "complete reviewed result; public fictional tasks and infrastructure receipts only; no model responses, private candidate payloads or credential contents"
+    },
+    {
+      "original_name": "Pasted text(20260906-234202).txt",
+      "sha256": "818e6ce00c2cc9d3993c99ec503c01fc9eba080614b0b7c8ecf2f9f79336728b",
+      "bytes": 33682,
+      "original_private_file_id": "libfile_d3e6092d881c819196694dcae2130e0e",
+      "public_archive_path": "artifacts/S13-terminal-234202.txt",
+      "custody": "Complete reviewed terminal history; public calibration and operational metadata only; no credential contents or private candidate payloads; original bytes preserved"
     }
   ],
   "original_audit_markdown_sha256": "8a93d002b2b2e1e2b571bdcb8808016afc5b8cd76b11f80a93fbe1c3b5193ffb",
@@ -83,7 +91,9 @@
     "release": "QWEN_RUNTIME_SUCCESSOR_V102.json",
     "package_sha256": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
     "source_and_rebuild": "tools/qwen-runtime-v102/README.md",
-    "distribution_artifact_id": "libfile_0d777b1bfa608191be994b661349d37c"
+    "distribution_artifact_id": "libfile_0d777b1bfa608191be994b661349d37c",
+    "status": "QWEN_A2_V102_PRE_SUBMISSION_SOURCE_ORIGIN_STOP",
+    "rerun_recommended": false
   },
   "historical_qwen_transport_repair": {
     "release": "QWEN_TRANSPORT_REPAIR_V101.json",
@@ -92,5 +102,11 @@
     "frozen_workload_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
     "source_and_rebuild": "tools/qwen-transport-v101/README.md",
     "custody": "public client transport repair and unchanged frozen fictional workload only"
+  },
+  "next_read_only_diagnostic": {
+    "release": "QWEN_READ_ONLY_TRACE_RELEASE.json",
+    "package_sha256": "e8741e855b5bf2ec7a8f0cb782d7c9779654cdb5970327eccd8fcba39b60d39a",
+    "source_and_rebuild": "tools/qwen-v102-trace/README.md",
+    "distribution_artifact_id": "libfile_b58a05993be0819198b68246da9e4533"
   }
 }

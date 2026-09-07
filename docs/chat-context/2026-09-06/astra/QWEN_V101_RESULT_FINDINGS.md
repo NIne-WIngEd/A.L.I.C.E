@@ -1,5 +1,7 @@
 # Qwen job 575089: verified infrastructure failure and v102 continuation
 
+> Current checkpoint, 7 September: v102 stopped before submission at the source evidence-origin check. Do not rerun it to repair this stop. Use the read-only trace linked from the [current diagnosis](QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md). Execution-pending or ready instructions below describe the earlier checkpoint.
+
 The complete uploaded result ZIP was checked against its exact SHA-256 and the original workload authority. Every manifest member verified. Recomputing the public summary produced `7248ad930b77e2a391c1c12a852728e9e6f122bce3d07e48f64415919306fbf7`, exactly matching the summary published by the user's launcher in context commit `e3f14b46db3ef4094d62536a2c4293ec769db507`.
 
 [Structured review](QWEN_V101_RESULT_REVIEW.json) locates the complete original ZIP and all evidence hashes. The user reported 10 portable v101 tests passed and one intended POSIX-only skip in 1.243 seconds. Upload, Slurm submission, collection, download and context publication all worked. The path repair is now supported by actual execution.

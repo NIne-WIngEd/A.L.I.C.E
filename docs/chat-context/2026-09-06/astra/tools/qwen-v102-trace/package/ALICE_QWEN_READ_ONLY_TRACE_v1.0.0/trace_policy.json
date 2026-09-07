@@ -1,0 +1,114 @@
+{
+  "schema": "alice.qwen.read-only-trace-policy.v1",
+  "remote_root": "/homes/01/mxrayan/rayan-compute",
+  "source_id": "alice-qwen38-a1-8e7a384a745496f4",
+  "current_id": "alice-qwen38-a2-c926d9e355dd",
+  "source_critical_files": {
+    "run.json": "23f2092c0e42a900f75bd2c5c85f503a0ed8cae0e278a9dccf846a0385835c7f",
+    "submission.json": "9575612df71ff3a543ec78fa5341d5bb27ed5e66daf87c693729f40ba875c9d8",
+    "submission-intent.json": "c13064b170471110516b2b70f73b80d8a943db7e717c2a58ed08dad008272e5d",
+    "job.sbatch": "a90fa1af5a883d73f72a47fe39799aabea34ca6427740b6bb00ae932cab16449",
+    "worker-started.json": "c174c13c1cf08a860897c36535b68da57461d90d603953750e58442e710f5b45",
+    "worker-finished.json": "ca6616a76e930918dcb397230da5d498c376d04dff6aac3cb79481609c8ce245",
+    "result.json": "e32b52146b52580d88ecda03763e81ebf7587fb21badeb346ddd6c6e052d7a6e",
+    "failure.json": "6a704357b7051bf0731aa6419dc81d0554708b097dd47d8c764b595ee7c9d0cd",
+    "package-manifest.json": "b1d94af265eaac40d29314481358aa0f2a37b072bfa8c5542409fd641387175c"
+  },
+  "packages": {
+    "source": {
+      "run_id": "alice-qwen38-a1-8e7a384a745496f4",
+      "name": "ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0",
+      "zip_sha256": "bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e",
+      "manifest_sha256": "b1d94af265eaac40d29314481358aa0f2a37b072bfa8c5542409fd641387175c",
+      "files": {
+        "README.md": "57c5c139547cb7ee1dce44475b2dc188ef42c09bcec88e7046160d8c32d23383",
+        "authority/approval.json": "8e7a384a745496f4c4f68996733ddf5220783bc871d852f99577ca0a7287373f",
+        "authority/approved.json": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+        "authority/draft.json": "e16142639f13c9b2191afcfa4221dbf1610abf6af84273b07774fc13a0a1b40b",
+        "authority/runtime_policy.json": "a984eac1fa84a0b365679923069c2c0a472f3f6ff359ccccf947ccc3dfff636e",
+        "authority/source_binding_policy.json": "c045b20ad44ea240940c550e6fc7447888b84428293a1b9bb2abe89b68cbdc6f",
+        "authority/tasks.json": "b3abc2e36e4e93d3f8f6c9398c7c39b6ca2f40f9b3dcbe875ce9005d096f9420",
+        "bootstrap.sh": "8d139366b47d438a05faa8f9dd048179efe378fa5e23a5bb5682218524539245",
+        "contract.py": "e494e46ace0e922388b5a637b2a5d03ac054fd9c254e148a06329fa63aa29b44",
+        "controller.py": "b1eddb52e73b32ce40aa679576ef99bf538f3f7d4217c6fc36baefb5e960ede3",
+        "evidence.py": "3aaf8b3983f57f0bc1cb535ae7675b074ec42c7e40025f994c5e7d5b2b21db72",
+        "frozen_prompt.py": "ba1ec9b84469f8a74ef517acd869e307326369a75c4852fe51df4f93d74d4d6e",
+        "publish_context.py": "1569f2b0adf7ba08968bfa5c7b37ed5087b71ab2b23ddd3291ba942f07c7ba54",
+        "remote_agent.py": "a4e96f6cf6867e6b8e3b7dbafd2ced18332d3e0e835139b016addb038702d8c1",
+        "selftest_qwen.py": "f14e61d218afcfc83ad1166a1b1537c0575b6a48863b0149f54964951d330501",
+        "worker.py": "b197ce21b0c4b086f622f712ee9b2504bb264bfe5af8789b57dc8fba44d6e000"
+      }
+    },
+    "current": {
+      "run_id": "alice-qwen38-a2-c926d9e355dd",
+      "name": "ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2",
+      "zip_sha256": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
+      "manifest_sha256": "8be514e23f7f818dee449c0c4feb74f8cd1231e2438be3d8cd02601b81b12686",
+      "files": {
+        "README.md": "f61f4d53312c2a1f0ad1d8a2d2e7f78ae796b410bf8eb1cef8bb8c09da6a4699",
+        "authority/approval.json": "8e7a384a745496f4c4f68996733ddf5220783bc871d852f99577ca0a7287373f",
+        "authority/approved.json": "28102a66b0408d7a63abb36dbf86571172318215834f807076952715bc70ff55",
+        "authority/draft.json": "e16142639f13c9b2191afcfa4221dbf1610abf6af84273b07774fc13a0a1b40b",
+        "authority/infra_recovery.json": "9fb3d2a6b02bf1ad2f61ad05c9686d05b86faf4540230d40382fc87c0a77a287",
+        "authority/request_hashes_v100.json": "800d52675f06d74d9ed2c4e69a9e29eb73e21916ac2b9906826611e39afe50bf",
+        "authority/runtime_policy.json": "a984eac1fa84a0b365679923069c2c0a472f3f6ff359ccccf947ccc3dfff636e",
+        "authority/source_binding_policy.json": "c045b20ad44ea240940c550e6fc7447888b84428293a1b9bb2abe89b68cbdc6f",
+        "authority/tasks.json": "b3abc2e36e4e93d3f8f6c9398c7c39b6ca2f40f9b3dcbe875ce9005d096f9420",
+        "bootstrap.sh": "1e401cfeea6847a837e7d28bdab3f4f0b5cf1638a3199a4730002f2960a96fab",
+        "contract.py": "4944b328d750046321bda8b1953495c22209dd13a448d775e80b76a1c22993b3",
+        "controller.py": "e23795eb06a2b8837a59b20ed185c1a78fd3084b74c7c5400a38318700c3cc06",
+        "evidence.py": "b5be2ec7b19c5f82121b6e50b472168af7d2ca5f96c336da0c3e9fa59ce17444",
+        "fixtures/test-ca.pem": "ab6933a81e6f0d142e6d5f58ed465589d899a523c2752055761af11d4ee38f2b",
+        "frozen_prompt.py": "ba1ec9b84469f8a74ef517acd869e307326369a75c4852fe51df4f93d74d4d6e",
+        "infra_recovery.py": "33145ed881a93cb4b1c2c2229132655c43aa6799f224b74ff6d409e61fec1afc",
+        "publish_context.py": "1569f2b0adf7ba08968bfa5c7b37ed5087b71ab2b23ddd3291ba942f07c7ba54",
+        "remote_agent.py": "ba2f71b8770b45318e5ff761b0804904f070c260086912bc785681ec0e2e186d",
+        "secure_https.py": "8113197ed63bdee6ad92b290523af190d13c6a190a714dc0ddf6609d19594511",
+        "selftest_infrastructure.py": "9db0cd31e55b16687145a08c4bc14aad55ec387bbc93eec2029d2e0ed9b67a8f",
+        "selftest_qwen.py": "4f1c3849c6ee7760ce02ba866ae26e57e9f2f7ac49d92ef8bb9d915b04173363",
+        "source/ALICE_QWEN_PUBLIC_RESULT_c926d9e355dd.zip": "c926d9e355dd6ec83ad18fd78f35265c664e5ea6f317871c20d7af6b0f8d8f5f",
+        "telemetry_snapshots.py": "d1413ddd329540f8fc5b77641e38bc7ce3af730a84a431d6319013e3deb2e36e",
+        "worker.py": "f32ccc9ae3cd952fa1f5a66c608ea1fa307839fa6c56f407224e4a573837b1c3"
+      }
+    }
+  },
+  "current_files": [
+    "run.json",
+    "submission.json",
+    "submission-intent.json",
+    "job.sbatch",
+    "sbatch-response.json",
+    "worker-started.json",
+    "worker-finished.json",
+    "infrastructure-preflight-failure.json",
+    "parent-reconciliation.json",
+    "infrastructure-preflight.json",
+    "tls-trust.json",
+    "model-lock.json",
+    "model-manifest.json",
+    "result.json"
+  ],
+  "progress_markers": [
+    "probe-attempt.json",
+    "probe-response.ndjson",
+    "runtime.json",
+    "model-lock.json",
+    "effective-contract.json"
+  ],
+  "ca_paths": [
+    "/etc/pki/tls/certs/ca-bundle.crt",
+    "/etc/ssl/certs/ca-certificates.crt",
+    "/etc/ssl/cert.pem"
+  ],
+  "https_endpoints": [
+    {
+      "name": "pinned_ollama_runtime",
+      "url": "https://github.com/ollama/ollama/releases/download/v0.32.15/ollama-linux-amd64.tar.zst"
+    },
+    {
+      "name": "approved_public_model_manifest",
+      "url": "https://registry.ollama.ai/v2/library/qwen3.8/manifests/27b-q4_K_M"
+    }
+  ],
+  "no_qualification_or_submission_authority": true
+}

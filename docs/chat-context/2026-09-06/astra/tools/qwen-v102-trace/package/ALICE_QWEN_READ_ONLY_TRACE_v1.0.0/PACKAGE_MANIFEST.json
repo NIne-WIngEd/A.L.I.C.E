@@ -1,0 +1,29 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1780,
+      "sha256": "cca23fca1631235142703f72525e4939c19942d29c7d1df5950327b60499bc6b"
+    },
+    {
+      "path": "collect_trace.py",
+      "bytes": 6822,
+      "sha256": "f8c05527e5dc873fc869cee86e49212023c38ed2705e7a93f977f1aeca070ee6"
+    },
+    {
+      "path": "remote_trace.py",
+      "bytes": 9468,
+      "sha256": "985bcd2f84aab763b3c9d739151e3d0d74721b234ceefe4b293033b3cbd60b57"
+    },
+    {
+      "path": "selftest_trace.py",
+      "bytes": 6929,
+      "sha256": "5e6f9120a5f5b8fd2d370d83de807293e7b87c4e5f0460be886b2839790e65f4"
+    },
+    {
+      "path": "trace_policy.json",
+      "bytes": 6794,
+      "sha256": "560bf467fd775e2c26ababbf12ffc41d37829174ad3ad660c2e1c43cf99fb235"
+    }
+  ]
+}

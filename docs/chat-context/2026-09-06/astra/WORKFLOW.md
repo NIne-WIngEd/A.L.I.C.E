@@ -62,3 +62,26 @@ The v101 result confirmed two regressions. Job 575089 stopped before any inferen
 Carry the earlier explicit CA policy into every external HTTPS client and dependent process. Preserve certificate and hostname verification. Test the endpoint and freeze the model manifest before scheduler submission. Each changed telemetry payload must use its own immutable snapshot identity. Retry saved bytes under the same snapshot ID only. Never overwrite an old ledger run to clear a collision.
 
 V102 uses one named source-bound infrastructure successor after exact zero-inference source evidence and live terminal reconciliation. The old job/state remain intact. Original probe/task request hashes are checked independently. Full worker-lifecycle tests now model the actual immutable publisher. The source terminal failure was appended through the GitHub connector under a separate snapshot; the original ZIP remains an unchanged historical record.
+
+## V102 producer/consumer boundary lesson — 7 September 2026
+
+Rayan explicitly instructed: do not make blind hotfixes; trace the failure and
+the larger purpose before choosing a change. Work in evidence-led batches.
+Astra's v102 source verifier incorrectly used the exported ZIP layout as the
+live run layout. Its 48 passing native Windows tests recreated the same mistake.
+The real collector reproduction is recorded in `QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md`.
+Use the read-only trace as the next step; earlier v102-ready directions above
+are historical. The actual a2 stop is before source HTTPS and new submission.
+
+For every evidence member, distinguish producer, physical origin, exported name,
+expected bytes and authority. Exercise real producer-to-consumer transitions.
+Fixtures must model package storage, live runs and exported bundles separately.
+Check scheduler exit status before interpreting empty output. Preserve failed
+pre-submission descriptors; a changed package must have explicit revision lineage.
+Do not erase state, remove a hash check or copy exported metadata into the source
+run to satisfy an incorrect locator. Test counts do not replace these proofs.
+
+The bounded judge task serves eligible synthetic candidate evaluation. Measure
+progress toward learned identity, AMFM, continuing missions and memory correctness
+with the experiment ledger; package releases are operational work, not evidence
+of those capabilities. Preserve existing approval and CPU/Kaggle preferences.

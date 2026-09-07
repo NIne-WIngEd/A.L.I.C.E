@@ -1,5 +1,7 @@
 # Active Windows launcher: Qwen transport repair v1.0.1
 
+> Current checkpoint, 7 September: v102 stopped before submission at the source evidence-origin check. Do not rerun it to repair this stop. Use the read-only trace linked from the [current diagnosis](../../QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md). Execution-pending or ready instructions below describe the earlier checkpoint.
+
 > Current execution uses the [v102 infrastructure successor](../qwen-runtime-v102/README.md). V101 transport is now verified. Source job 575089 is closed after a zero-inference TLS failure. Statements below about pending v101 execution describe the earlier checkpoint.
 
 Use [Start-ALICEAstraQwenQualificationV101.ps1](dist/Start-ALICEAstraQwenQualificationV101.ps1) with the released `ALICE_MC10D_QWEN_WINDOWS_TRANSPORT_REPAIR_v1.0.1.zip`. Save both in Downloads. The new ZIP includes the exact original v100 workload ZIP. No separate v100 download is needed.

@@ -35,7 +35,7 @@
   "immutable_ledger_lifecycle_tested": true,
   "pre_submission_tls_failure_blocks_sbatch_tested": true,
   "old_run_modified": false,
-  "status": "QWEN_A1_CLOSED_TLS_PREFLIGHT_FAILURE_A2_V102_READY",
+  "status": "QWEN_A2_V102_PRE_SUBMISSION_SOURCE_ORIGIN_STOP",
   "distribution_artifact_id": "libfile_0d777b1bfa608191be994b661349d37c",
   "launcher_path": "tools/qwen-runtime-v102/dist/Start-ALICEAstraQwenQualificationV102.ps1",
   "source_and_rebuild": "tools/qwen-runtime-v102/README.md",
@@ -52,5 +52,13 @@
   "old_state_migration_or_deletion": false,
   "global_telemetry_helper_changed": false,
   "private_pointwise_or_breadth_authority_granted": false,
-  "context_parent": "e3f14b46db3ef4094d62536a2c4293ec769db507"
+  "context_parent": "e3f14b46db3ef4094d62536a2c4293ec769db507",
+  "native_windows_tested": true,
+  "actual_terminal_observation": "QWEN_V102_TERMINAL_OBSERVATION.json",
+  "actual_native_windows_tests_passed": 48,
+  "actual_controller_exit": 76,
+  "rerun_recommended": false,
+  "next_action": "QWEN_READ_ONLY_TRACE_RELEASE.json",
+  "build_receipt_is_historical": true,
+  "current_source_defect_reproduced": true
 }

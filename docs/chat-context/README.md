@@ -1,15 +1,23 @@
 # A.L.I.C.E. Chat Context Archive
 
-Start with the newest handoff and its actual-result pointer. Canonical main holds released source and governance. Context records owner decisions, reviewed evidence, and pending work. Completion claims require matching real result receipts.
+Start with the current handoff and the actual-result pointer. Context records
+owner decisions, reviewed evidence and pending work; code builds are not outcomes.
 
-## Latest checkpoint — a1 runtime failure verified; v102 ready, 6 September 2026
+## Latest checkpoint — v102 origin defect traced, 7 September 2026
 
-1. [Current Astra handoff](2026-09-06/astra/START_HERE.md), [current state](2026-09-06/astra/STATE.json), and [latest Qwen result pointer](2026-09-06/astra/qwen-public/LATEST_QWEN_PUBLIC.json)
-2. [Owner approval](2026-09-06/astra/fallback/OWNER_APPROVAL.json), [approved amendment](2026-09-06/astra/fallback/QWEN_FALLBACK_AMENDMENT_V1_APPROVED.json), [release identity](2026-09-06/astra/QWEN_RELEASE.json), and [active v102 launcher](2026-09-06/astra/tools/qwen-runtime-v102/README.md) and [successor identity](2026-09-06/astra/QWEN_RUNTIME_SUCCESSOR_V102.json)
-3. [Actual GLM findings](2026-09-06/astra/GLM_V186_FINDINGS.md) and [published GLM forensic summary](2026-09-06/astra/forensics/LATEST_V186_GLM.json)
-4. [Accepted audit](2026-09-06/astra/AUDIT_DECISIONS.md), [workflow](2026-09-06/astra/WORKFLOW.md), [full audit snapshot](2026-09-06/astra/AUDIT_SNAPSHOT.md), [sources](2026-09-06/astra/AUDIT_SOURCE_LEDGER.json), [artifact manifest](2026-09-06/astra/SOURCE_MANIFEST.json), [experiment ledger](2026-09-06/astra/EXPERIMENT_LEDGER.json), and [prospective validation](2026-09-06/astra/PROSPECTIVE_JUDGE_VALIDATION.md)
+1. [Current Astra handoff](2026-09-06/astra/START_HERE.md), [state](2026-09-06/astra/STATE.json) and [latest actual Qwen result](2026-09-06/astra/qwen-public/LATEST_QWEN_PUBLIC.json).
+2. [V102 root cause and project dependency](2026-09-06/astra/QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md), [actual terminal observation](2026-09-06/astra/QWEN_V102_TERMINAL_OBSERVATION.json), and [next read-only trace](2026-09-06/astra/tools/qwen-v102-trace/README.md).
+3. [Accepted audit](2026-09-06/astra/AUDIT_DECISIONS.md), [workflow](2026-09-06/astra/WORKFLOW.md), [experiment ledger](2026-09-06/astra/EXPERIMENT_LEDGER.json), and [prospective validation](2026-09-06/astra/PROSPECTIVE_JUDGE_VALIDATION.md).
+4. [Recorded owner approval](2026-09-06/astra/fallback/OWNER_APPROVAL.json), [approved scientific amendment](2026-09-06/astra/fallback/QWEN_FALLBACK_AMENDMENT_V1_APPROVED.json), [GLM findings](2026-09-06/astra/GLM_V186_FINDINGS.md), and [artifact manifest](2026-09-06/astra/SOURCE_MANIFEST.json).
 
-The owner already approved the Qwen fallback. The actual v101 run verified transport and returned job 575089's TLS preflight failure. No model or probe/task attempt occurred. [Actual result review](2026-09-06/astra/QWEN_V101_RESULT_FINDINGS.md) records the independent recomputation and separate immutable terminal telemetry recovery. V102 restores the earlier CA policy and ledger identity rule. It passed 48 tests and checks the exact zero-inference parent plus HTTPS before one named CPU successor. Actual v102 execution is pending. Preserve the source result while consulting the latest result pointer for subsequent real evidence. No four-family binding or downstream eligibility is established.
+V102 passed 48 native Windows tests but its live source verifier assumed the
+exported ZIP layout. The unmodified original collector reproduces that error.
+The reported invocation stopped before new submission, HTTPS or inference.
+Observe actual Magnolia file origins and a2 state before selecting an explicit
+repair. No replacement qualification package is released. Preserve a1's actual
+TLS failure and the original a2 descriptor. Qwen has produced no judgments;
+there is no new family binding or downstream eligibility. The owner's existing
+Qwen approval remains valid. The next tool is read-only.
 
 ## Earlier context
 

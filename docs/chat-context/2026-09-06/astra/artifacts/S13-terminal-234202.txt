@@ -1,0 +1,377 @@
+mc10d_v172_package_verified=true files=6
+mc10d_v170_package_verified=true files=10
+mc10d_v160_package_verified=true files=11
+mc10d_v172_package_manifest_verified=true
+successful_slot64_required=true replacements=63 deferred_slots=1 effective_pool=287
+slot64_regeneration_allowed=false
+v171_failed_controller_sha256=24D3BD28C460B73312C32993A8B51DBDCF80A5E6E1C9852234440648819A317D
+v171_bad_helper_config_id_bound=true value=alice.MC10D.public-judge-helper-config.v1.7.1
+frozen_preflight_required_helper_config_id=true value=alice.MC10D.public-judge-helper-config.v1.2.0
+v172_corrected_helper_config_id=true value=alice.MC10D.public-judge-helper-config.v1.2.0
+v171_failed_dataset_reconciliation_required_before_new_create=true
+scratch_patch_exactly_reversible=true
+frozen_gemma_model_unchanged=true tag=gemma4:31b-it-q4_K_M
+frozen_glm_model_unchanged=true tag=glm-4.7-flash:q4_K_M
+public_qualification_tasks=16
+private_candidate_files=0
+hidden_MC8_files=0
+A_SYN_acceptance=false
+A_SYN_promotion=false
+model_training=false
+pointwise_screen_started=false
+mc10d_v172_judge_schema_recovery_selftest_passed=true
+source_scientific_authority_hashes_verified=true
+amended_worker_single_change_verified=true change=num_predict_ladder_only
+thinking_enabled_scope_verified=true families=gemma,glm
+qualification_thresholds_unchanged=true
+tasks_unchanged=true count=16
+q12_canonical_hash_verified=true
+private_candidate_tuning=false hidden_MC8=false
+qualification_authority_not_granted_by_amendment=true
+mc10d_public_judge_budget_amendment_validator_passed=true
+remote_execution_absent=true
+owner_ratification_gate_present=true
+scientific_execution_absent=true
+mc10d_public_judge_budget_amendment_selftest_passed=true
+source_budget_amended_worker_verified=true
+source_target_clarification_single_change_verified=true
+clarification_semantics_source_core_to_target_persona=true
+name_difference_alone_is_not_actor_mismatch=true
+source_history_transfer_still_forbidden=true
+tasks_unchanged=true count=16
+gold_labels_unchanged=true
+qualification_thresholds_unchanged=true
+ratified_budget_ladder_unchanged=true ladder=2048,4096,6144
+scope_families=gemma,glm
+preexisting_bound_families_unchanged=mistral,granite
+private_candidate_tuning=false hidden_MC8=false
+qualification_authority_not_granted_by_amendment=true
+mc10d_public_judge_source_target_clarification_validator_passed=true
+remote_execution_absent=true
+owner_ratification_gate_present=true
+scientific_execution_absent=true
+mc10d_public_judge_source_target_clarification_selftest_passed=true
+v172_parent_selftest_pass=true
+budget_amendment_selftest_pass=true
+source_target_clarification_selftest_pass=true
+mc10d_v172_package_verified=true files=6
+mc10d_v170_package_verified=true files=10
+mc10d_v160_package_verified=true files=11
+alice_autonomous_personality_completion_v1_1_hardening_valid=true
+recursive_self_contamination_risks=12
+critical_risks=5
+dual_frontier_required=true
+pseudogap_calibration_required=true
+A_SYN_counts_as_independent_E0_family=false
+synthetic_parent_may_increase_source_person_truth_confidence=false
+synthetic_unobserved_history_allowed=false
+evaluation_suites_after_hardening=22
+hardening_owner_ratified=false
+pipeline_execution_enabled=false
+autonomous_A_SYN_promotion_enabled=false
+E_INF_generated_count=0
+A_SYN_generated_count=0
+model_training_performed=false
+stage_g_provenance_blocker_passed=false
+stage_g_closed=false
+mc10d_v11_package_verified=true files=40
+main
+0abaed85873c3f8de04765847eb7700b0e20433f
+0abaed85873c3f8de04765847eb7700b0e20433f
+frozen_repo_readonly_baseline_verified=true
+input_preexecution_freeze_recursive_manifest_verified=true files=57
+MC10B_FULL_EINF_FRONTIER_VALID=true
+packaged_pilot_audit_source_layout_verified=true
++ C:\Users\rayns\anaconda3\python.exe C:\ALICE_Vault\datasets\memory_stage_g2\alice.stage-g2.g2a.gold-semantic-decomposition.v1\audits\alice-mc10c-asyn-raw-generation-v1\validate_alice_mc10c_asyn_raw_generation_v1.py C:\ALICE_Vault\datasets\memory_stage_g2\alice.stage-g2.g2a.gold-semantic-decomposition.v1\audits\alice-mc10c-asyn-raw-generation-v1
+autonomous_personality_completion_owner_ratified_v1_valid=true
+v1_owner_ratified=true
+v1_1_hardening_owner_ratified=true
+evaluation_suites=22
+dual_frontier_required=true
+pseudogap_calibration_required=true
+MC2_shadow_E0_reaudit_allowed=true
+MC10_analysis_only_ontology_discovery_allowed=true
+recalibration_v3_scaffold_owner_ratified=false
+pipeline_execution_enabled=false
+autonomous_A_SYN_promotion_enabled=false
+E_INF_generation_enabled=false
+A_SYN_generation_enabled=false
+E_INF_generated_count=0
+A_SYN_generated_count=0
+model_training_performed=false
+stage_g_provenance_blocker_passed=false
+stage_g_closed=false
+mc10d_owner_ratified_personality_doctrine_bound=true
+mc10d_repair_v170_independent_revalidation=true replacements=63 deferred_slots=1 effective_pool=287
+v172_bound_successful_slot64_state=true replacements=63 deferred_slots=1 effective_pool=287 slot64_regeneration_allowed=false
+v170_gemma_resource_failure_bound=true receipt_sha256=1866B4AC05EA3DEB80E1409E055D1B26175FEA0D5CD148241061D080719700F7 free_bytes=18692198400 required_min_bytes=20942723615 private_data_used=false
+v172_helper_config_schema_correction_bound=true failed_v171_id=v1.7.1 required_frozen_id=v1.2.0
+Kaggle CLI 2.2.4
+v171_failed_helper_lifecycle_already_reconciled=true receipt_sha256=AFB5DB429CE6AB4C7A94D7B9F225CB3C4465385137EDB0678A7810CE69D42E32
+ratified_budget_source_target_decision_scoring_glm_profile_bound=true glm_profile=thinking_off ladder=2048,4096,6144
+v186_gemma_preserved_rows_recovered=true remote_rerun=false
+v172_judges_pending=glm
+
+===== CREATE TRANSIENT KAGGLE DATASET =====
++ C:\Users\rayns\anaconda3\Scripts\kaggle.EXE datasets create -p C:\Users\rayns\AppData\Local\Temp\alice-mc10d-v172-fu677s_u\judge-helper-dataset -r skip -t
++ C:\Users\rayns\anaconda3\Scripts\kaggle.EXE kernels push -p C:\Users\rayns\AppData\Local\Temp\alice-mc10d-v172-fu677s_u\alice-mc10d-jp185-p16-260906185551-e563ae-a1-dir
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jp185-p16-260906185551-e563ae-a1
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jp185-p16-260906185551-e563ae-a1
+kaggle_status=COMPLETE ref=mkrayanyan/alice-mc10d-jp185-p16-260906185551-e563ae-a1
+remote_kernel_cleanup=true ref=mkrayanyan/alice-mc10d-jp185-p16-260906185551-e563ae-a1
+kaggle_terminal_status=COMPLETE ref=mkrayanyan/alice-mc10d-jp185-p16-260906185551-e563ae-a1
+kaggle_cpu_public_judge_helper_preflight_v172_pass=true
++ C:\Users\rayns\anaconda3\Scripts\kaggle.EXE kernels push -p C:\Users\rayns\AppData\Local\Temp\alice-mc10d-v172-fu677s_u\judge-glm --accelerator NvidiaTeslaT4
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=RUNNING ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_status=ERROR ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+remote_kernel_cleanup=true ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+kaggle_terminal_status=ERROR ref=mkrayanyan/alice-mc10d-jg-gpu186-glm-260906185551-e563ae
+v172_public_judge_failure_receipt=C:\ALICE_Vault\datasets\memory_stage_g2\alice.stage-g2.g2a.gold-semantic-decomposition.v1\audits\alice-mc10d-repair-qualify-refreeze-v1-3.work\judge_qualification\download-v186-glm-260906185551-e563ae\output\mc10d_public_judge_qualification_failure.json sha256=9F2F42447B99399338659C721E596A5339BAD7D00EE4F188F685438BCD51580C
+remote_dataset_reconcile_attempt=mkrayanyan/alice-mc10d-data-j186260906185551-e563ae reason=COMPLETED_PUBLIC_JUDGE_HELPER_DATASET_CLEANUP_V172
+remote_dataset_cleanup=true ref=mkrayanyan/alice-mc10d-data-j186260906185551-e563ae
+MC10D_V172_FAILED: public judge qualification failed glm {"failure_class":"RuntimeError","family":"glm","message":"public fictional judge-role qualification failed semantic gates","private_data_used":false,"traceback":"Traceback (most recent call last):\n  File \"/kaggle/src/script.py\", line 93, in main\n    req(passed,'public fictional judge-role qualification failed semantic gates');print('mc10d_public_judge_role_qualification_pass=true family='+TARGET_FAMILY,flush=True);return 0\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/src/script.py\", line 13, in req\n    if not c:raise RuntimeError(m)\n             ^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: public fictional judge-role qualification failed semantic gates\n"}
+
+Traceback (most recent call last):
+  File "C:\Users\rayns\Downloads\ALICE_MC10D_PUBLIC_JUDGE_QUALIFICATION_REBASE_v1.8.6_RUN\ALICE_MC10D_PUBLIC_JUDGE_QUALIFICATION_REBASE_v1.8.6\mc10d_public_judge_qualification_engine_v186.py", line 208, in <module>
+    code=main();sys.exit(int(code or 0))
+  File "C:\Users\rayns\Downloads\ALICE_MC10D_PUBLIC_JUDGE_QUALIFICATION_REBASE_v1.8.6_RUN\ALICE_MC10D_PUBLIC_JUDGE_QUALIFICATION_REBASE_v1.8.6\mc10d_public_judge_qualification_engine_v186.py", line 195, in main
+    raise E('public judge qualification failed '+f+' '+fail.read_text(encoding='utf-8',errors='replace')[:3000])
+E: public judge qualification failed glm {"failure_class":"RuntimeError","family":"glm","message":"public fictional judge-role qualification failed semantic gates","private_data_used":false,"traceback":"Traceback (most recent call last):\n  File \"/kaggle/src/script.py\", line 93, in main\n    req(passed,'public fictional judge-role qualification failed semantic gates');print('mc10d_public_judge_role_qualification_pass=true family='+TARGET_FAMILY,flush=True);return 0\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/src/script.py\", line 13, in req\n    if not c:raise RuntimeError(m)\n             ^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: public fictional judge-role qualification failed semantic gates\n"}
+
+v186_engine_exit=1
+MC10D_V186_DETERMINISTIC_STOP: v186 engine rc 1
+MC10D_V186_EXIT=76
+Deterministic stop. Preserve state. Do not blind-rerun.
+(base) PS C:\A.L.I.C.E-main> powershell -NoProfile -ExecutionPolicy Bypass -File "$HOME\Downloads\Start-ALICEAstraForensicsV100.ps1"
+package_sha256=6A20AC96AD24300939478D704FBA6F56C1143CCDF5C6F91CEF5B4A130B8B6722
+PYTHON=C:\Users\rayns\anaconda3\python.exe
+package_manifest_verified=true files=8
+python_compile_gate_passed=true files=3
+test_missing_evidence_does_not_create_output (__main__.CollectionTests.test_missing_evidence_does_not_create_output) ... ok
+test_output_cannot_be_inside_source_vault (__main__.CollectionTests.test_output_cannot_be_inside_source_vault) ... ok
+test_publication_failure_preserves_collection_and_returns_75 (__main__.CollectionTests.test_publication_failure_preserves_collection_and_returns_75) ... ok
+test_read_only_collection_rerun_and_bundle_contents (__main__.CollectionTests.test_read_only_collection_rerun_and_bundle_contents) ... ok
+test_source_change_during_collection_stops (__main__.CollectionTests.test_source_change_during_collection_stops) ... ok
+test_symlink_source_refused_where_supported (__main__.CollectionTests.test_symlink_source_refused_where_supported) ... skipped 'symlink creation unavailable for this user'
+test_append_idempotence_and_main_preservation (__main__.GitTests.test_append_idempotence_and_main_preservation) ... context_publish_stage=fetch attempt=1
+context_publish_stage=push
+context_publish_stage=fetch attempt=1
+context_publish_stage=fetch attempt=1
+ok
+test_concurrent_context_advance_is_preserved (__main__.GitTests.test_concurrent_context_advance_is_preserved) ... context_publish_stage=fetch attempt=1
+context_publish_stage=push
+context_publish_stage=fetch attempt=2
+context_publish_stage=push
+ok
+test_boolean_gold_cannot_be_integer (__main__.ScoreTests.test_boolean_gold_cannot_be_integer) ... ok
+test_duplicate_missing_unknown_task_ids (__main__.ScoreTests.test_duplicate_missing_unknown_task_ids) ... ok
+test_exact_model_runtime_and_rendered_worker (__main__.ScoreTests.test_exact_model_runtime_and_rendered_worker) ... ok
+test_forged_counter_and_pass_cannot_override_rows (__main__.ScoreTests.test_forged_counter_and_pass_cannot_override_rows) ... ok
+test_gold_tampering_is_not_a_new_source_of_truth (__main__.ScoreTests.test_gold_tampering_is_not_a_new_source_of_truth) ... ok
+test_hard_anchor_failure_preserved_even_with_15_verdicts_and_6_critical (__main__.ScoreTests.test_hard_anchor_failure_preserved_even_with_15_verdicts_and_6_critical) ... ok
+test_privacy_and_authority_flags_required (__main__.ScoreTests.test_privacy_and_authority_flags_required) ... ok
+test_rationale_length_is_a_diagnostic_not_new_semantic_gate (__main__.ScoreTests.test_rationale_length_is_a_diagnostic_not_new_semantic_gate) ... ok
+test_reordered_rows_are_scored_by_frozen_id (__main__.ScoreTests.test_reordered_rows_are_scored_by_frozen_id) ... ok
+test_response_schema_and_self_reported_flags (__main__.ScoreTests.test_response_schema_and_self_reported_flags) ... ok
+test_stale_failure_and_duplicate_json_keys (__main__.ScoreTests.test_stale_failure_and_duplicate_json_keys) ... ok
+test_threshold_boundaries_and_no_upgrading_failure_to_pass (__main__.ScoreTests.test_threshold_boundaries_and_no_upgrading_failure_to_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 14.549s
+
+OK (skipped=1)
+Collecting existing public GLM output. Remote compute jobs: zero. Git publication follows collection.
+FORENSICS_OUTPUT_DIRECTORY=C:\Users\rayns\Downloads\ALICE_V186_FORENSICS_d8e8914ec3c6
+FORENSICS_RESULT_BUNDLE=C:\Users\rayns\Downloads\ALICE_V186_FORENSICS_d8e8914ec3c6.zip
+recorded_calibration_passed=false collection_integrity_verified=true gpu_jobs_submitted=0
+failed_gates=at_least_14_verdict_matches,at_least_6_critical_decision_matches,all_five_hard_anchors_correct,arbitrary_hobby_hold
+context_publish_stage=fetch attempt=1
+context_publish_stage=push
+CONTEXT_COMMIT=167e1df631a03e3fd51985d4b29e298016821cfb
+ALICE_ASTRA_FORENSICS_V100_EXIT=0
+ALICE_ASTRA_FORENSICS_V100_EXIT=0
+(base) PS C:\A.L.I.C.E-main> powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$HOME\Downloads\Start-ALICEAstraQwenQualificationV100.ps1"
+package_sha256=BC7C76C29A4F0FCFBD4567A610737EC5BB2052E7165677562959AC4DCA7C959E
+PYTHON=C:\Users\rayns\anaconda3\python.exe
+package_manifest_verified=true files=16
+python_compile_gate_passed=true files=8
+test_boolean_integer_confusion_rejected (__main__.ContractTests.test_boolean_integer_confusion_rejected) ... ok
+test_duplicate_final_chunk_rejected (__main__.ContractTests.test_duplicate_final_chunk_rejected) ... ok
+test_duplicate_tasks_rejected (__main__.ContractTests.test_duplicate_tasks_rejected) ... ok
+test_hard_anchor_failure_cannot_hide_in_high_total (__main__.ContractTests.test_hard_anchor_failure_cannot_hide_in_high_total) ... ok
+test_missing_finish_and_missing_metrics_rejected (__main__.ContractTests.test_missing_finish_and_missing_metrics_rejected) ... ok
+test_owner_approval_preserves_ungranted_authority (__main__.ContractTests.test_owner_approval_preserves_ungranted_authority) ... ok
+test_rationale_not_silently_truncated (__main__.ContractTests.test_rationale_not_silently_truncated) ... ok
+test_rejects_duplicate_json_keys_and_nonfinite (__main__.ContractTests.test_rejects_duplicate_json_keys_and_nonfinite) ... ok
+test_rejects_short_model_digest (__main__.ContractTests.test_rejects_short_model_digest) ... ok
+test_secondary_fields_remain_diagnostic (__main__.ContractTests.test_secondary_fields_remain_diagnostic) ... ok
+test_task_requests_keep_gold_out_and_seeds_unique (__main__.ContractTests.test_task_requests_keep_gold_out_and_seeds_unique) ... ok
+test_truncated_response_cannot_pass_even_if_json_valid (__main__.ContractTests.test_truncated_response_cannot_pass_even_if_json_valid) ... ok
+test_connection_loss_then_collection_then_publication_retry_reuses_evidence (__main__.ControllerTests.test_connection_loss_then_collection_then_publication_retry_reuses_evidence) ... ok
+test_final_telemetry_failure_does_not_destroy_results (__main__.LifecycleTests.test_final_telemetry_failure_does_not_destroy_results) ... ok
+test_forged_worker_scores_rejected (__main__.LifecycleTests.test_forged_worker_scores_rejected) ... ok
+test_full_worker_round_trip_and_no_successor_grant (__main__.LifecycleTests.test_full_worker_round_trip_and_no_successor_grant) ... ok
+test_missing_finalization_cannot_grant_qualification (__main__.LifecycleTests.test_missing_finalization_cannot_grant_qualification) ... ok
+test_mutated_gold_or_authority_rejected (__main__.LifecycleTests.test_mutated_gold_or_authority_rejected) ... ok
+test_mutated_request_rejected_even_with_updated_local_hashes (__main__.LifecycleTests.test_mutated_request_rejected_even_with_updated_local_hashes) ... ok
+test_raw_stream_mutation_rejected (__main__.LifecycleTests.test_raw_stream_mutation_rejected) ... ok
+test_result_zip_manifest_and_traversal (__main__.LifecycleTests.test_result_zip_manifest_and_traversal) ... ok
+test_semantic_failure_preserves_all_sixteen_responses (__main__.LifecycleTests.test_semantic_failure_preserves_all_sixteen_responses) ... ok
+test_slow_cpu_stops_before_any_calibration_task (__main__.LifecycleTests.test_slow_cpu_stops_before_any_calibration_task) ... ok
+test_terminal_telemetry_can_recover_without_inference (__main__.LifecycleTests.test_terminal_telemetry_can_recover_without_inference) ... ok
+test_token_exhaustion_is_preserved_without_resampling (__main__.LifecycleTests.test_token_exhaustion_is_preserved_without_resampling) ... ok
+test_isolated_git_publication_idempotent_and_preserves_concurrent_file (__main__.PublicationTests.test_isolated_git_publication_idempotent_and_preserves_concurrent_file) ... ok
+test_public_payload_omits_rationales_and_is_typed (__main__.PublicationTests.test_public_payload_omits_rationales_and_is_typed) ... ok
+test_controller_lock_rejects_concurrent_process_and_releases (__main__.TransportTests.test_controller_lock_rejects_concurrent_process_and_releases) ... ok
+test_cpu_proof_and_digest_drift_fail_closed (__main__.TransportTests.test_cpu_proof_and_digest_drift_fail_closed) ... ok
+test_download_reuses_only_exact_cache (__main__.TransportTests.test_download_reuses_only_exact_cache) ... ok
+test_inflight_transport_failure_never_retries_task (__main__.TransportTests.test_inflight_transport_failure_never_retries_task) ... ok
+test_lost_sbatch_ack_recovered_without_second_job (__main__.TransportTests.test_lost_sbatch_ack_recovered_without_second_job) ... ok
+test_real_loopback_stream_preserves_full_bytes (__main__.TransportTests.test_real_loopback_stream_preserves_full_bytes) ... ok
+test_repeated_launcher_reattaches_one_submission (__main__.TransportTests.test_repeated_launcher_reattaches_one_submission) ... ok
+test_unknown_submission_never_resubmitted (__main__.TransportTests.test_unknown_submission_never_resubmitted) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 69.568s
+
+OK
+Approved public Qwen calibration: Magnolia CPU, 20 CPUs, 48 GiB, six-hour job limit. Reruns attach to the same run.
+run_id=alice-qwen38-a1-8e7a384a745496f4
+persistent_state=C:\ALICE_Vault\tools\alice-astra\qwen-fallback-a1\controller-state.json
+live_telemetry=https://github.com/NIne-WIngEd/Rayan-Compute-Ledger/tree/main/runs/alice-qwen38-a1-8e7a384a745496f4
+transport_diagnostics=C:\ALICE_Vault\tools\alice-astra\qwen-fallback-a1\runs\alice-qwen38-a1-8e7a384a745496f4\controller-diagnostics.jsonl
+scp: dest open "/homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e.zip.upload-88c1cb7ec673": No such file or directory
+scp: failed to upload file C:/Users/rayns/Downloads/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0.zip to /homes/01/mxrayan/rayan-compute/packages/alice-qwen38-a1-8e7a384a745496f4/bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e.zip.upload-88c1cb7ec673
+
+QWEN_RUN_PENDING: Package transfer interrupted before validation; rerun the same launcher. Run the same launcher to resume monitoring/collection. No automatic new job.
+ALICE_ASTRA_QWEN_V100_EXIT=74
+Connection or monitoring pending. Rerun this launcher to attach to the same job.
+(base) PS C:\A.L.I.C.E-main> powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$HOME\Downloads\Start-ALICEAstraQwenQualificationV101.ps1"
+repair_package_sha256=AE20351156CDB9DFF4CA7674D2FEE607C9EB4D3D880DFBB5FFD6D23393047575
+PYTHON=C:\Users\rayns\anaconda3\python.exe
+package_manifest_verified=true files=4
+python_compile_gate_passed=true files=2
+test_actual_download_accepts_posix_server_and_verifies_bytes (__main__.TransportRepairTests.test_actual_download_accepts_posix_server_and_verifies_bytes) ... ok
+test_actual_upload_method_emits_posix_mkdir_scp_and_move (__main__.TransportRepairTests.test_actual_upload_method_emits_posix_mkdir_scp_and_move) ... ok
+test_altered_workload_zip_stops_before_extracting (__main__.TransportRepairTests.test_altered_workload_zip_stops_before_extracting) ... ok
+test_original_windows_representation_reproduces_both_bad_boundaries (__main__.TransportRepairTests.test_original_windows_representation_reproduces_both_bad_boundaries) ... ok
+test_original_workload_remains_byte_exact_after_repair (__main__.TransportRepairTests.test_original_workload_remains_byte_exact_after_repair) ... ok
+test_posix_server_download_receipt_was_rejected_before_repair (__main__.TransportRepairTests.test_posix_server_download_receipt_was_rejected_before_repair) ... ok
+test_real_shell_before_and_after_on_distinct_client_server_paths (__main__.TransportRepairTests.test_real_shell_before_and_after_on_distinct_client_server_paths) ... skipped 'actual POSIX shell reproduction is exercised in the Linux release build'
+test_repair_uses_posix_only_for_remote_addresses (__main__.TransportRepairTests.test_repair_uses_posix_only_for_remote_addresses) ... ok
+test_reuses_prepared_or_submitted_state_without_identity_migration (__main__.TransportRepairTests.test_reuses_prepared_or_submitted_state_without_identity_migration) ... ok
+test_unexpected_root_and_run_are_refused (__main__.TransportRepairTests.test_unexpected_root_and_run_are_refused) ... ok
+test_wrong_server_path_is_not_normalized_into_acceptance (__main__.TransportRepairTests.test_wrong_server_path_is_not_normalized_into_acceptance) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 1.243s
+
+OK (skipped=1)
+Windows remote-path repair verified. Reusing the exact approved v100 workload and the existing run ID.
+transport_repair=WINDOWS_CLIENT_REMOTE_POSIX_PATHS
+frozen_workload_sha256=bc7c76c29a4f0fcfbd4567a610737ec5bb2052e7165677562959ac4dca7c959e
+remote_root=/homes/01/mxrayan/rayan-compute
+existing_run_id_preserved=alice-qwen38-a1-8e7a384a745496f4
+client_transport_receipt=C:\ALICE_Vault\tools\alice-astra\qwen-fallback-a1\runs\alice-qwen38-a1-8e7a384a745496f4\client-transport\v101-70447fa410207171.json
+run_id=alice-qwen38-a1-8e7a384a745496f4
+persistent_state=C:\ALICE_Vault\tools\alice-astra\qwen-fallback-a1\controller-state.json
+live_telemetry=https://github.com/NIne-WIngEd/Rayan-Compute-Ledger/tree/main/runs/alice-qwen38-a1-8e7a384a745496f4
+magnolia_job_id=575089
+scheduler=RUNNING phase=AWAITING_WORKER tasks_completed=0/16 tasks_attempted=0/16
+scheduler=FAILED phase=INCOMPLETE_OR_PREFLIGHT_STOP tasks_completed=0/16 tasks_attempted=0/16
+RESULT_ZIP=C:\Users\rayns\Downloads\ALICE_QWEN_PUBLIC_RESULT_c926d9e355dd.zip
+RESULT_SHA256=c926d9e355dd6ec83ad18fd78f35265c664e5ea6f317871c20d7af6b0f8d8f5f
+qualification_passed=false calibration_only=true
+context_publish_stage=fetch attempt=1
+context_publish_stage=push
+context_commit=e3f14b46db3ef4094d62536a2c4293ec769db507
+TERMINAL_TELEMETRY_PENDING: context and verified results are preserved. The same launcher retries terminal telemetry without inference.
+ALICE_ASTRA_QWEN_V101_EXIT=75
+Evidence preserved. Rerun this launcher to retry context or terminal telemetry publication.
+(base) PS C:\A.L.I.C.E-main> powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$HOME\Downloads\Start-ALICEAstraQwenQualificationV102.ps1"
+package_sha256=F196F3B91604F5C35CA594DF001C10A6C1CEC87AA2962E544FADC3BA99FA9999
+PYTHON=C:\Users\rayns\anaconda3\python.exe
+package_manifest_verified=true files=24
+python_compile_gate_passed=true files=12
+test_any_prior_probe_or_task_intent_blocks_successor (selftest_infrastructure.InfrastructureTests.test_any_prior_probe_or_task_intent_blocks_successor) ... ok
+test_cached_manifest_reuses_frozen_bytes_without_refetch (selftest_infrastructure.InfrastructureTests.test_cached_manifest_reuses_frozen_bytes_without_refetch) ... ok
+test_changed_parent_result_is_refused (selftest_infrastructure.InfrastructureTests.test_changed_parent_result_is_refused) ... ok
+test_changed_snapshot_uses_new_id_and_retry_preserves_exact_bytes (selftest_infrastructure.InfrastructureTests.test_changed_snapshot_uses_new_id_and_retry_preserves_exact_bytes) ... ok
+test_explicit_ca_context_keeps_chain_and_hostname_checks (selftest_infrastructure.InfrastructureTests.test_explicit_ca_context_keeps_chain_and_hostname_checks) ... ok
+test_external_https_downgrade_is_refused (selftest_infrastructure.InfrastructureTests.test_external_https_downgrade_is_refused) ... ok
+test_failed_preflight_cannot_reach_sbatch_or_write_submission_intent (selftest_infrastructure.InfrastructureTests.test_failed_preflight_cannot_reach_sbatch_or_write_submission_intent) ... ok
+test_live_source_scheduler_identity_must_match_closed_failure (selftest_infrastructure.InfrastructureTests.test_live_source_scheduler_identity_must_match_closed_failure) ... ok
+test_missing_or_invalid_ca_stops_without_network (selftest_infrastructure.InfrastructureTests.test_missing_or_invalid_ca_stops_without_network) ... ok
+test_probe_and_all_sixteen_requests_match_original_v100_hashes (selftest_infrastructure.InfrastructureTests.test_probe_and_all_sixteen_requests_match_original_v100_hashes) ... ok
+test_source_is_exact_zero_inference_failure_and_remains_unchanged (selftest_infrastructure.InfrastructureTests.test_source_is_exact_zero_inference_failure_and_remains_unchanged) ... ok
+test_successful_preflight_captures_source_tls_and_frozen_manifest_together (selftest_infrastructure.InfrastructureTests.test_successful_preflight_captures_source_tls_and_frozen_manifest_together) ... ok
+test_windows_paths_stay_native_only_for_local_arguments (selftest_infrastructure.InfrastructureTests.test_windows_paths_stay_native_only_for_local_arguments) ... ok
+test_boolean_integer_confusion_rejected (selftest_qwen.ContractTests.test_boolean_integer_confusion_rejected) ... ok
+test_duplicate_final_chunk_rejected (selftest_qwen.ContractTests.test_duplicate_final_chunk_rejected) ... ok
+test_duplicate_tasks_rejected (selftest_qwen.ContractTests.test_duplicate_tasks_rejected) ... ok
+test_hard_anchor_failure_cannot_hide_in_high_total (selftest_qwen.ContractTests.test_hard_anchor_failure_cannot_hide_in_high_total) ... ok
+test_missing_finish_and_missing_metrics_rejected (selftest_qwen.ContractTests.test_missing_finish_and_missing_metrics_rejected) ... ok
+test_owner_approval_preserves_ungranted_authority (selftest_qwen.ContractTests.test_owner_approval_preserves_ungranted_authority) ... ok
+test_rationale_not_silently_truncated (selftest_qwen.ContractTests.test_rationale_not_silently_truncated) ... ok
+test_rejects_duplicate_json_keys_and_nonfinite (selftest_qwen.ContractTests.test_rejects_duplicate_json_keys_and_nonfinite) ... ok
+test_rejects_short_model_digest (selftest_qwen.ContractTests.test_rejects_short_model_digest) ... ok
+test_secondary_fields_remain_diagnostic (selftest_qwen.ContractTests.test_secondary_fields_remain_diagnostic) ... ok
+test_task_requests_keep_gold_out_and_seeds_unique (selftest_qwen.ContractTests.test_task_requests_keep_gold_out_and_seeds_unique) ... ok
+test_truncated_response_cannot_pass_even_if_json_valid (selftest_qwen.ContractTests.test_truncated_response_cannot_pass_even_if_json_valid) ... ok
+test_connection_loss_then_collection_then_publication_retry_reuses_evidence (selftest_qwen.ControllerTests.test_connection_loss_then_collection_then_publication_retry_reuses_evidence) ... ok
+test_final_telemetry_failure_does_not_destroy_results (selftest_qwen.LifecycleTests.test_final_telemetry_failure_does_not_destroy_results) ... ok
+test_forged_worker_scores_rejected (selftest_qwen.LifecycleTests.test_forged_worker_scores_rejected) ... ok
+test_full_worker_round_trip_and_no_successor_grant (selftest_qwen.LifecycleTests.test_full_worker_round_trip_and_no_successor_grant) ... ok
+test_missing_finalization_cannot_grant_qualification (selftest_qwen.LifecycleTests.test_missing_finalization_cannot_grant_qualification) ... ok
+test_mutated_gold_or_authority_rejected (selftest_qwen.LifecycleTests.test_mutated_gold_or_authority_rejected) ... ok
+test_mutated_request_rejected_even_with_updated_local_hashes (selftest_qwen.LifecycleTests.test_mutated_request_rejected_even_with_updated_local_hashes) ... ok
+test_raw_stream_mutation_rejected (selftest_qwen.LifecycleTests.test_raw_stream_mutation_rejected) ... ok
+test_result_zip_manifest_and_traversal (selftest_qwen.LifecycleTests.test_result_zip_manifest_and_traversal) ... ok
+test_semantic_failure_preserves_all_sixteen_responses (selftest_qwen.LifecycleTests.test_semantic_failure_preserves_all_sixteen_responses) ... ok
+test_slow_cpu_stops_before_any_calibration_task (selftest_qwen.LifecycleTests.test_slow_cpu_stops_before_any_calibration_task) ... ok
+test_terminal_telemetry_can_recover_without_inference (selftest_qwen.LifecycleTests.test_terminal_telemetry_can_recover_without_inference) ... ok
+test_token_exhaustion_is_preserved_without_resampling (selftest_qwen.LifecycleTests.test_token_exhaustion_is_preserved_without_resampling) ... ok
+test_isolated_git_publication_idempotent_and_preserves_concurrent_file (selftest_qwen.PublicationTests.test_isolated_git_publication_idempotent_and_preserves_concurrent_file) ... ok
+test_public_payload_omits_rationales_and_is_typed (selftest_qwen.PublicationTests.test_public_payload_omits_rationales_and_is_typed) ... ok
+test_controller_lock_rejects_concurrent_process_and_releases (selftest_qwen.TransportTests.test_controller_lock_rejects_concurrent_process_and_releases) ... ok
+test_cpu_proof_and_digest_drift_fail_closed (selftest_qwen.TransportTests.test_cpu_proof_and_digest_drift_fail_closed) ... ok
+test_download_reuses_only_exact_cache (selftest_qwen.TransportTests.test_download_reuses_only_exact_cache) ... ok
+test_inflight_transport_failure_never_retries_task (selftest_qwen.TransportTests.test_inflight_transport_failure_never_retries_task) ... ok
+test_lost_sbatch_ack_recovered_without_second_job (selftest_qwen.TransportTests.test_lost_sbatch_ack_recovered_without_second_job) ... ok
+test_real_loopback_stream_preserves_full_bytes (selftest_qwen.TransportTests.test_real_loopback_stream_preserves_full_bytes) ... ok
+test_repeated_launcher_reattaches_one_submission (selftest_qwen.TransportTests.test_repeated_launcher_reattaches_one_submission) ... ok
+test_unknown_submission_never_resubmitted (selftest_qwen.TransportTests.test_unknown_submission_never_resubmitted) ... ok
+
+----------------------------------------------------------------------
+Ran 48 tests in 114.520s
+
+OK
+Approved public Qwen calibration: Magnolia CPU, 20 CPUs, 48 GiB, six-hour job limit. Reruns attach to the same run.
+run_id=alice-qwen38-a2-c926d9e355dd
+persistent_state=C:\ALICE_Vault\tools\alice-astra\qwen-fallback-a2\controller-state.json
+calibration_id=alice-qwen38-a1-8e7a384a745496f4
+source_job_preserved=575089
+live_telemetry_snapshot_prefix=alice-qwen38-a2-c926d9e355dd-t-
+transport_diagnostics=C:\ALICE_Vault\tools\alice-astra\qwen-fallback-a2\runs\alice-qwen38-a2-c926d9e355dd\controller-diagnostics.jsonl
+
+QWEN_DETERMINISTIC_STOP: Stop: Source failure evidence differs: package-manifest.json
+Return this terminal output. Existing attempts and prior judge evidence remain preserved.
+ALICE_ASTRA_QWEN_V102_EXIT=76
+Return the result ZIP if produced and this transcript. Keep the recorded run state; do not switch models or retry old stages.
+(base) PS C:\A.L.I.C.E-main>

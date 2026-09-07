@@ -1,5 +1,7 @@
 # Qwen fallback — owner approved, 6 September 2026
 
+> Current checkpoint, 7 September: v102 stopped before submission at the source evidence-origin check. Do not rerun it to repair this stop. Use the read-only trace linked from the [current diagnosis](../QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md). Execution-pending or ready instructions below describe the earlier checkpoint.
+
 > Current execution uses the [v102 infrastructure successor](../tools/qwen-runtime-v102/README.md). V101 transport is now verified. Source job 575089 is closed after a zero-inference TLS failure. Statements below about pending v101 execution describe the earlier checkpoint.
 
 Rayan explicitly approved the exact proposed amendment with the message “approve”. [Owner approval](OWNER_APPROVAL.json) binds the unchanged [historical draft](QWEN_FALLBACK_AMENDMENT_V1_DRAFT.json) by SHA-256. [Effective approved amendment](QWEN_FALLBACK_AMENDMENT_V1_APPROVED.json) is the authority for the bounded public qualification package implemented in [Qwen public qualification v1.0.0](../tools/qwen-public-v1/README.md).

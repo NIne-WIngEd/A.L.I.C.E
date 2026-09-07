@@ -1,0 +1,34 @@
+{
+  "schema": "alice.qwen.v102.collector-boundary-reproduction.v1",
+  "environment": "local simulation using unmodified released production collector and verifier",
+  "actual_magnolia_filesystem_observed": false,
+  "source_zip_sha256": "c926d9e355dd6ec83ad18fd78f35265c664e5ea6f317871c20d7af6b0f8d8f5f",
+  "original_collector_sha256": "a4e96f6cf6867e6b8e3b7dbafd2ced18332d3e0e835139b016addb038702d8c1",
+  "v102_verifier_sha256": "33145ed881a93cb4b1c2c2229132655c43aa6799f224b74ff6d409e61fec1afc",
+  "package_projection_members": [
+    "authority/approval.json",
+    "authority/approved.json",
+    "authority/draft.json",
+    "authority/runtime_policy.json",
+    "authority/source_binding_policy.json",
+    "authority/tasks.json",
+    "package-manifest.json"
+  ],
+  "eight_run_origin_critical_files_match": {
+    "run.json": true,
+    "submission.json": true,
+    "submission-intent.json": true,
+    "job.sbatch": true,
+    "worker-started.json": true,
+    "worker-finished.json": true,
+    "result.json": true,
+    "failure.json": true
+  },
+  "actual_collector_export_accepted_by_v102": true,
+  "same_collector_live_layout_rejected_by_v102": "Source failure evidence differs: package-manifest.json",
+  "collector_creates_manifest_in_live_run": false,
+  "preexisting_source_files_unchanged_by_collection": true,
+  "changed_package_same_run_descriptor_error": "immutable evidence differs: run.json",
+  "scheduler_and_telemetry_mocked": true,
+  "model_or_network_requests": 0
+}

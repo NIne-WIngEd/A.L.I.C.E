@@ -1,5 +1,7 @@
 # Active Qwen Windows launcher: v1.0.2
 
+> Current checkpoint, 7 September: v102 stopped before submission at the source evidence-origin check. Do not rerun it to repair this stop. Use the read-only trace linked from the [current diagnosis](../../QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md). Execution-pending or ready instructions below describe the earlier checkpoint.
+
 Use [Start-ALICEAstraQwenQualificationV102.ps1](dist/Start-ALICEAstraQwenQualificationV102.ps1) with `ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2.zip`. Save both in Downloads and run:
 
 ```powershell
