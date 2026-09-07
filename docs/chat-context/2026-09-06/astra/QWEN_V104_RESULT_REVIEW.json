@@ -1,0 +1,162 @@
+{
+  "schema": "alice.astra.qwen-v104-actual-result-review.v1",
+  "date": "2026-09-07",
+  "context_parent": "9a8116ce1c8b2d127a0d47c5341e900570603546",
+  "execution_run_id": "alice-qwen38-a2-c926d9e355dd",
+  "job_id": "575155",
+  "status": "QWEN_A2_CLOSED_INITIAL_TELEMETRY_STOP; NOT_EVALUATED",
+  "scientific_outcome": "NOT_EVALUATED",
+  "result_zip_sha256": "750881d854fa15df220347dc19c3091fcb0a5630c6a87ca30cf9fa3b4114eb33",
+  "result_zip_bytes": 33369,
+  "result_zip": "artifacts/ALICE_QWEN_PUBLIC_RESULT_750881d854fa.zip",
+  "terminal": "artifacts/S15-terminal-052248.txt",
+  "terminal_sha256": "3d646cabe60773916fc996cc3b0a0917da372f5e39022301030729bfba1e1b8e",
+  "evidence_manifest_sha256": "6900c1045f34620dfb4924186ba042dd3f4feb0ba9829af007a3609d3c80ef3b",
+  "raw_result_sha256": "829e1e0bd81ac49bbe581c6597fd78b18252963507b7d9563ac99accb9b85097",
+  "verification": "All archive manifest members verified; actual v104 evidence.extract_verified and evidence.analyze independently rerun.",
+  "native_windows_tests": {
+    "passed": 66,
+    "seconds": 145.03,
+    "scope": "Owner transcript; operational selftests, not calibration"
+  },
+  "revision": {
+    "id": "a2-provider-v104-3c5ed8da35dc",
+    "completed": true,
+    "package_sha256": "edc325f70513cfe6e0e27289ba05132e2defbfdf306dcafd0550740955293647",
+    "remote_receipt_sha256": "45bb22d1fd5fb1a1008a27e6409f26e4340dceeef066cb3e947e6c750e580441",
+    "local_acknowledgement_reported_in_terminal": true,
+    "source_a1_job_preserved": "575089",
+    "same_a2_identity": true
+  },
+  "login_node_preflight": {
+    "ca_sha256": "2caeaa56be4a7d157cabda910375fb844f18d76202ac9cdf7d1981160953fd03",
+    "checked_at": "2026-09-07T05:20:38Z",
+    "execution_run_id": "alice-qwen38-a2-c926d9e355dd",
+    "model_manifest_sha256": "25b843619e944cd0ae6069f94ff4e5e26a16e109ccbc0a66a0f05979ed70098e",
+    "model_service_started": false,
+    "parent_reconciliation_sha256": "520bcd5fba8ad0d072cbf99c0bdfc99fbc0ef91bd2bd2344bf7e728729d7aecb",
+    "probe_or_task_attempted": false,
+    "runtime_https_head_status": 200,
+    "runtime_redirect_host": "release-assets.githubusercontent.com",
+    "schema": "alice.mc10d.infrastructure-preflight.v1",
+    "source_job_id": "575089",
+    "status": "PASS",
+    "tls_trust_sha256": "57ac2ce1bba5b9d76688aac89e411991d94b34a3222c2eb987a028c5684a19f9"
+  },
+  "model_manifest": {
+    "tag": "qwen3.8:27b-q4_K_M",
+    "full_manifest_digest": "25b843619e944cd0ae6069f94ff4e5e26a16e109ccbc0a66a0f05979ed70098e",
+    "resolved_at": "2026-09-07T05:20:38Z",
+    "scope": "Resolved registry manifest; no loaded runtime or inference identity verified"
+  },
+  "runtime_prepared": false,
+  "model_service_started": false,
+  "probe_attempted": false,
+  "tasks_attempted": 0,
+  "tasks_required": 16,
+  "effective_contract": null,
+  "worker_started": {
+    "job_id": "575155",
+    "package_sha256": "edc325f70513cfe6e0e27289ba05132e2defbfdf306dcafd0550740955293647",
+    "run_id": "alice-qwen38-a2-c926d9e355dd",
+    "started_at": "2026-09-07T05:20:41Z"
+  },
+  "failure": {
+    "class": "Stop",
+    "message": "Initial immutable GitHub telemetry failed; inference not started",
+    "phase": "PREFLIGHT",
+    "recorded_at": "2026-09-07T05:20:59Z"
+  },
+  "worker_finished": {
+    "application_exit_code": 76,
+    "finished_at": "2026-09-07T05:21:16Z",
+    "result_sha256": "829e1e0bd81ac49bbe581c6597fd78b18252963507b7d9563ac99accb9b85097",
+    "run_id": "alice-qwen38-a2-c926d9e355dd",
+    "telemetry_exit_code": 74
+  },
+  "telemetry_attempts": [
+    {
+      "diagnostic_markers": [],
+      "execution_run_id": "alice-qwen38-a2-c926d9e355dd",
+      "exit_code": 74,
+      "ledger_url": "https://github.com/NIne-WIngEd/Rayan-Compute-Ledger/tree/main/runs/alice-qwen38-a2-c926d9e355dd-t-de1cb157a00bdbb0",
+      "observed_at": "2026-09-07T05:20:59Z",
+      "payload_sha256": {
+        "application.log": "cb65a7358f1b7419c28b2fa6505fc1a5a0f91462568cfa392c7ece643b675bee",
+        "manifest.json": "859f13928d0589ab3eb910f52dfecada6d98785c0f751f0752004b9eaab50038",
+        "receipt.json": "a333e046d13b4fd94c4983f690103e6f7c558c6ab93eb486173dd954335048cb"
+      },
+      "phase": "PREFLIGHT",
+      "raw_model_responses_published": false,
+      "schema": "alice.mc10d.immutable-telemetry-snapshot.v1",
+      "slurm_job_id": "575155",
+      "snapshot_id": "alice-qwen38-a2-c926d9e355dd-t-de1cb157a00bdbb0",
+      "snapshot_path": "telemetry-events/alice-qwen38-a2-c926d9e355dd-t-de1cb157a00bdbb0",
+      "status": "RUNNING"
+    },
+    {
+      "diagnostic_markers": [],
+      "execution_run_id": "alice-qwen38-a2-c926d9e355dd",
+      "exit_code": 74,
+      "ledger_url": "https://github.com/NIne-WIngEd/Rayan-Compute-Ledger/tree/main/runs/alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed",
+      "observed_at": "2026-09-07T05:21:16Z",
+      "payload_sha256": {
+        "application.log": "dc2358cdb72f872a3036b184e9143432d0d9216ca1bf91937bf903a18d85a3b7",
+        "manifest.json": "b0d545d80912d829203f532114ab7e813c8ba1c8cad0588a343554b2cc2376dc",
+        "receipt.json": "96d16fbc806dec33add04d70b22ce9b4fe8e076f20648a8a1e1fb4fd57121fe1"
+      },
+      "phase": "INCOMPLETE_OR_PREFLIGHT_STOP",
+      "raw_model_responses_published": false,
+      "schema": "alice.mc10d.immutable-telemetry-snapshot.v1",
+      "slurm_job_id": "575155",
+      "snapshot_id": "alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed",
+      "snapshot_path": "telemetry-events/alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed",
+      "status": "FAILED"
+    },
+    {
+      "diagnostic_markers": [],
+      "execution_run_id": "alice-qwen38-a2-c926d9e355dd",
+      "exit_code": 74,
+      "ledger_url": "https://github.com/NIne-WIngEd/Rayan-Compute-Ledger/tree/main/runs/alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed",
+      "observed_at": "2026-09-07T05:22:03Z",
+      "payload_sha256": {
+        "application.log": "dc2358cdb72f872a3036b184e9143432d0d9216ca1bf91937bf903a18d85a3b7",
+        "manifest.json": "b0d545d80912d829203f532114ab7e813c8ba1c8cad0588a343554b2cc2376dc",
+        "receipt.json": "96d16fbc806dec33add04d70b22ce9b4fe8e076f20648a8a1e1fb4fd57121fe1"
+      },
+      "phase": "INCOMPLETE_OR_PREFLIGHT_STOP",
+      "raw_model_responses_published": false,
+      "schema": "alice.mc10d.immutable-telemetry-snapshot.v1",
+      "slurm_job_id": "575155",
+      "snapshot_id": "alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed",
+      "snapshot_path": "telemetry-events/alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed",
+      "status": "FAILED"
+    }
+  ],
+  "failure_boundary": "Telemetry.start -> telemetry_snapshots.publish_stored -> installed rayan-telemetry-push.sh, before prepare_runtime",
+  "inner_helper_cause": "UNKNOWN: helper exit 74 is retained, raw stdout/stderr are discarded, no selected diagnostic marker matched",
+  "engineering_error": "The preserved v102 telemetry wrapper filters diagnostics instead of preserving raw helper command receipts. Passing synthetic lifecycle tests did not validate the installed helper boundary.",
+  "context_auto_publication_commit": "9a8116ce1c8b2d127a0d47c5341e900570603546",
+  "launcher_exit": 75,
+  "original_terminal_publication_exit": 74,
+  "external_terminal_recovery": "QWEN_A2_TERMINAL_RECOVERY.json",
+  "original_public_summary_preserved": "qwen-public/alice-qwen38-a2-c926d9e355dd/c136b4d0cecc8143/summary.json",
+  "next_action": "READ_INSTALLED_TELEMETRY_HELPER_SOURCE_BEFORE_REPAIR",
+  "missing_file": "/homes/01/mxrayan/rayan-compute/bin/rayan-telemetry-push.sh",
+  "next_action_reason": "Inspect the actual installed exit paths and retained log locations before selecting a targeted diagnostic or repair; the supplied bundle and available repository sources do not contain this helper body.",
+  "v104_rerun_recommended": false,
+  "rerun_scope": "The closed a2 launcher retries publication only; it does not restart inference. Terminal visibility was recovered separately. No a2 reset or new a3 is prepared.",
+  "scientific_authority": {
+    "private_pointwise_authorized": false,
+    "pointwise_ready": false,
+    "breadth_v104_eligible": false,
+    "A_SYN_acceptance": false,
+    "A_SYN_promotion": false,
+    "model_training": false,
+    "hidden_MC8_used": false,
+    "private_candidates_used": false,
+    "independent_certification": false,
+    "four_family_binding_created": false
+  },
+  "purpose": "Establish the approved fallback public calibration before any eligible successor judge binding, then proceed toward Alice identity and memory experiments at their roadmap dependencies. This stop adds no scientific result."
+}

@@ -104,6 +104,22 @@
       "original_private_file_id": "libfile_34a25e8ef6e08191a7b9d4897500b3da",
       "public_archive_path": "tools/qwen-provider-v104/package/ALICE_MC10D_QWEN_PROVIDER_REVISION_v1.0.4/source/ALICE_MAGNOLIA_PROVIDER_TRACE_15f4edccafa3.zip",
       "custody": "Reviewed raw scheduler observations and selected infrastructure lifecycle/revision metadata. No credential contents, private candidate data or model outputs. Original ZIP bytes retained."
+    },
+    {
+      "original_name": "ALICE_QWEN_PUBLIC_RESULT_750881d854fa.zip",
+      "sha256": "750881d854fa15df220347dc19c3091fcb0a5630c6a87ca30cf9fa3b4114eb33",
+      "bytes": 33369,
+      "original_private_file_id": "libfile_5913b09983c08191a49f657148f7b1ab",
+      "public_archive_path": "artifacts/ALICE_QWEN_PUBLIC_RESULT_750881d854fa.zip",
+      "custody": "Reviewed public fictional calibration and infrastructure receipts; no credential contents, private candidate payloads or model responses. Original bytes preserved."
+    },
+    {
+      "original_name": "Pasted text(20260907-052248).txt",
+      "sha256": "3d646cabe60773916fc996cc3b0a0917da372f5e39022301030729bfba1e1b8e",
+      "bytes": 15450,
+      "original_private_file_id": "libfile_ff57f0ee41e48191bc29432cbb42a335",
+      "public_archive_path": "artifacts/S15-terminal-052248.txt",
+      "custody": "Reviewed public fictional calibration and infrastructure receipts; no credential contents, private candidate payloads or model responses. Original bytes preserved."
     }
   ],
   "original_audit_markdown_sha256": "8a93d002b2b2e1e2b571bdcb8808016afc5b8cd76b11f80a93fbe1c3b5193ffb",
@@ -171,6 +187,8 @@
     "package_sha256": "edc325f70513cfe6e0e27289ba05132e2defbfdf306dcafd0550740955293647",
     "distribution_artifact_id": "libfile_40036e70561081919247225eb361a90b",
     "source_and_rebuild": "tools/qwen-provider-v104/build_release.py",
-    "status": "READY_FOR_OWNER_WINDOWS_EXECUTION; LIVE_REVISION_AND_CALIBRATION_PENDING"
+    "status": "QWEN_A2_CLOSED_INITIAL_TELEMETRY_STOP; NOT_EVALUATED",
+    "actual_review": "QWEN_V104_RESULT_REVIEW.json",
+    "rerun_recommended": false
   }
 }

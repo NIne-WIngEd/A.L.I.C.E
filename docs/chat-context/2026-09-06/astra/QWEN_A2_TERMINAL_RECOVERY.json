@@ -1,0 +1,25 @@
+{
+  "schema": "alice.astra.external-terminal-telemetry-recovery.v1",
+  "execution_run_id": "alice-qwen38-a2-c926d9e355dd",
+  "slurm_job_id": "575155",
+  "snapshot_id": "alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed",
+  "source_result_zip_sha256": "750881d854fa15df220347dc19c3091fcb0a5630c6a87ca30cf9fa3b4114eb33",
+  "repository": "NIne-WIngEd/Rayan-Compute-Ledger",
+  "branch": "main",
+  "parent_commit": "3f42de3531b396ee53c1aab797852ce18ac88f14",
+  "commit": "4af0dd237ca862c605c2ee9b70c0f1df4b69263c",
+  "ledger_url": "https://github.com/NIne-WIngEd/Rayan-Compute-Ledger/tree/main/runs/alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed",
+  "payload_sha256": {
+    "application.log": "dc2358cdb72f872a3036b184e9143432d0d9216ca1bf91937bf903a18d85a3b7",
+    "manifest.json": "b0d545d80912d829203f532114ab7e813c8ba1c8cad0588a343554b2cc2376dc",
+    "receipt.json": "96d16fbc806dec33add04d70b22ce9b4fe8e076f20648a8a1e1fb4fd57121fe1"
+  },
+  "published_through": "GitHub connector; append exact existing terminal payloads",
+  "remote_blob_hashes_verified": true,
+  "original_result_modified": false,
+  "magnolia_helper_repaired": false,
+  "local_controller_state_modified": false,
+  "new_job_submitted": false,
+  "inference_executed": false,
+  "scope": "Separate recovery of terminal visibility. Original failed publication receipts and historical summary remain byte-exact. The Windows controller was not reconciled by this connector action."
+}

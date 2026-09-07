@@ -1,8 +1,9 @@
 # Working agreement and recovered lessons
 
 Current override: follow [START_HERE](START_HERE.md) and the
-[observed provider review](MAGNOLIA_PROVIDER_TRACE_REVIEW.json). V104 is the
-current explicit revision; all earlier ready/stop instructions below are history.
+[actual v104 result review](QWEN_V104_RESULT_REVIEW.json). A2 is closed after
+initial telemetry failure. Collect the installed helper source next; earlier
+ready/run instructions below are history.
 
 Rayan explicitly switched ongoing ALICE work to Astra on 6 September 2026. The earlier Sol-default preference is superseded. Work in substantial coherent batches: recover evidence, make one bounded decision, implement it, verify the relevant failure modes, record the result, and leave one executable next step. Do not trade knowledge retention or final cognitive semantics for speed.
 
@@ -179,3 +180,23 @@ Keep fault investigations bounded. Reuse existing evidence and tests. Avoid
 repeating the full audit or regenerating roadmap documents for one provider
 failure. Make one necessary implementation/verification/context batch. A passing
 local test suite never substitutes for the live provider or scientific result.
+
+
+## V104 actual telemetry boundary — 7 September 2026
+
+V104 reached submission and passed login-node source/TLS preflight. The first
+immutable snapshot publication then returned 74 before runtime preparation.
+The wrapper retained selected diagnostic substrings but discarded the helper's
+raw output. Apply the existing raw-command-receipt lesson to telemetry too.
+Inspect the installed helper before attributing the exit or changing behavior.
+Synthetic publisher tests cannot establish that installed helper's compatibility.
+
+The connector recovered the exact terminal snapshot. Keep that recovery separate
+from the original failed host receipts and local controller state. Do not replay
+closed inference, reset state or bypass the initial telemetry gate to clear a
+publication failure. Manifest resolution, runtime preparation, a throughput probe
+and task completion are distinct observations.
+
+For this missing source file, a direct native-key SCP copy is sufficient; a new
+diagnostic package and another full selftest pass add no value. Resume a bounded
+repair only after the actual helper establishes which evidence or change is needed.
