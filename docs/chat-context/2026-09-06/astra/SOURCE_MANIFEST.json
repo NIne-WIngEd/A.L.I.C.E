@@ -117,7 +117,7 @@
     "package_sha256": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
     "source_and_rebuild": "tools/qwen-runtime-v102/README.md",
     "distribution_artifact_id": "libfile_0d777b1bfa608191be994b661349d37c",
-    "status": "HISTORICAL_V102_ORIGIN_STOP; EXPLICIT_V103_REVISION_READY",
+    "status": "HISTORICAL_V102_ORIGIN_STOP; V103_SUBSEQUENTLY_STOPPED_IN_SOURCE_SCHEDULER_RECONCILIATION",
     "rerun_recommended": false
   },
   "historical_qwen_transport_repair": {
@@ -147,5 +147,15 @@
     "actual_review": "QWEN_HOST_TRACE_REVIEW.json",
     "trace_zip_sha256": "02ba19cdef702762efa0644aa2da83bfafcab9459c2ba501bb00978b9a8d544d",
     "native_tests_passed": 6
-  }
+  },
+  "pending_read_only_provider_diagnostic": {
+    "release": "MAGNOLIA_PROVIDER_TRACE_RELEASE.json",
+    "package_sha256": "93bcbebee4ea6a402ecd3dbe03cca57aa8f0e2858433f793878c5bddf24316fa",
+    "source_and_rebuild": "tools/magnolia-provider-trace/README.md",
+    "distribution_artifact_id": "libfile_d20acfbcf7ac8191be6083f1f0f5339b",
+    "status": "READ_ONLY_DIAGNOSTIC_READY; LIVE_RECEIPT_PENDING",
+    "actual_receipt_received": false,
+    "custody": "Diagnostic code and fixed infrastructure metadata locators only; no credentials or candidate payloads. Returned raw observations require review before public archival."
+  },
+  "phase2_replacement_roadmap": "PHASE2_REPLACEMENT_ROADMAP.md"
 }

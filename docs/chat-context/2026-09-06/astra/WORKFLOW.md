@@ -2,7 +2,8 @@
 
 Current override: read [Sol’s master handoff](ASTRA_MASTER_CONTINUATION_HANDOFF.md) and
 [the v103 provider review](QWEN_V103_PROVIDER_REVIEW.md). The observed v103 scheduler
-stop supersedes historical active/ready launcher directions below.
+stop supersedes historical active/ready launcher directions below. The only active
+launcher is the [read-only provider trace](MAGNOLIA_PROVIDER_TRACE_RELEASE.json).
 
 Rayan explicitly switched ongoing ALICE work to Astra on 6 September 2026. The earlier Sol-default preference is superseded. Work in substantial coherent batches: recover evidence, make one bounded decision, implement it, verify the relevant failure modes, record the result, and leave one executable next step. Do not trade knowledge retention or final cognitive semantics for speed.
 
@@ -146,3 +147,22 @@ Current agent routing is Astra primary while available and Sol fallback for
 capacity or repeated failure. Resume from the newest shared observed checkpoint.
 Before handoff, update both narrative and machine-readable state so neither
 continues to recommend a launcher invalidated by the latest terminal.
+
+
+## Read-only provider observation and roadmap — 7 September 2026
+
+The provider trace uses the exact v103 user queue, source accounting, a2 accounting
+and historical-job comparison arguments. Preserve raw bytes before interpreting
+them. Scheduler failures are collected independently. Keep local and remote
+inventories before and after the observation; concurrent changes leave an explicit
+incomplete result. SSH timeout/nonzero/malformed responses still retain available
+raw transport and local evidence in a result ZIP. No trace exit grants execution.
+
+The nine offline tests use synthetic results, including error cases. They verify
+the collector's behavior; the returned real provider receipt is still required.
+Never claim that a later trace recovers a lost earlier stderr message.
+
+Follow PHASE2_REPLACEMENT_ROADMAP.md. Stage G acceptance, G+ recollection and the
+H/I/J authority stages remain distinct. E05 follows accepted G. Translate the
+accepted deployment-profile scope amendment into machine policy and acceptance
+evidence before Stage G closure. Final replacement requires accepted Stage J.

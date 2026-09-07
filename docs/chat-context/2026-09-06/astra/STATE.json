@@ -28,7 +28,7 @@
   "breadth_v104_executed_in_supplied_log": false,
   "breadth_prerequisite_satisfied": false,
   "acceptance_promotion_training_established": false,
-  "next_action": "READ_ONLY_RAW_SCHEDULER_AND_A2_REVISION_INVENTORY",
+  "next_action": "RUN_READ_ONLY_MAGNOLIA_PROVIDER_TRACE_AND_RETURN_RECEIPT",
   "numeric_judge_gates_changed": false,
   "hidden_MC8_accessed": false,
   "accepted_plan_changes": [
@@ -74,7 +74,12 @@
     "v103_remote_revision_writes_reached_in_failed_invocation": false,
     "read_only_host_observation_scope": "Historical pre-v103 observation at 02:28:15Z; new raw scheduler/revision inventory required",
     "raw_scheduler_command_journal_received": false,
-    "provider_adapter_consolidation_required": true
+    "provider_adapter_consolidation_required": true,
+    "provider_trace_release": "MAGNOLIA_PROVIDER_TRACE_RELEASE.json",
+    "provider_trace_offline_tests_passed": 9,
+    "provider_trace_native_execution_observed": false,
+    "provider_trace_actual_receipt_received": false,
+    "provider_trace_is_new_scientific_execution_package": false
   },
   "actual_glm_forensic_bundle_received": true,
   "actual_glm_rows_reverified": true,
@@ -108,7 +113,7 @@
     "prospective_validation_design_written": true,
     "remote_run_success_claimed": false
   },
-  "checkpoint_context_parent": "8d67b3d08687aed5dbfd7cd02568255e29e98177",
+  "checkpoint_context_parent": "c06da32bca63c9c1334594e4aa146c08241f66de",
   "qwen_transport_repair": "QWEN_TRANSPORT_REPAIR_V101.json",
   "qwen_last_controller_exit": 76,
   "qwen_last_invocation_reached_submission": false,
@@ -124,7 +129,7 @@
   "qwen_latest_result_zip_sha256": "c926d9e355dd6ec83ad18fd78f35265c664e5ea6f317871c20d7af6b0f8d8f5f",
   "latest_review_date": "2026-09-07",
   "qwen_current_observation": "QWEN_V103_TERMINAL_REVIEW.json",
-  "qwen_read_only_diagnostic": "QWEN_READ_ONLY_TRACE_RELEASE.json",
+  "qwen_read_only_diagnostic": "MAGNOLIA_PROVIDER_TRACE_RELEASE.json",
   "qwen_latest_diagnosis": "QWEN_V103_PROVIDER_REVIEW.md",
   "qwen_v102_launcher_rerun_recommended": false,
   "qwen_pre_submission_revision": "QWEN_PRE_SUBMISSION_REVISION_V103.json",
@@ -132,7 +137,7 @@
   "qwen_active_package_execution_status": "V103_NATIVE_TESTS_PASSED_REMOTE_REVISE_STOPPED",
   "qwen_live_a2_package_sha256_at_observation": "f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999",
   "qwen_host_observed_at": "2026-09-07T02:28:15Z",
-  "qwen_read_only_diagnostic_exit": 0,
+  "qwen_read_only_diagnostic_exit": null,
   "qwen_actual_revision_executed": null,
   "live_remote_state_rechecked_scope": "Historical GLM field; actual Qwen host state separately rechecked in QWEN_HOST_TRACE_REVIEW.json",
   "qwen_last_executed_launcher": "tools/qwen-origin-v103/dist/Start-ALICEAstraQwenQualificationV103.ps1",
@@ -145,5 +150,26 @@
   "qwen_local_revision_intent_observed_directly": false,
   "qwen_new_release_ready": false,
   "master_continuation_handoff": "ASTRA_MASTER_CONTINUATION_HANDOFF.md",
-  "agent_routing": "Astra primary while capacity is available; Sol continuity fallback for limits or repeated failure"
+  "agent_routing": "Astra primary while capacity is available; Sol continuity fallback for limits or repeated failure",
+  "qwen_previous_read_only_diagnostic": "QWEN_READ_ONLY_TRACE_RELEASE.json",
+  "qwen_previous_read_only_diagnostic_exit": 0,
+  "active_read_only_diagnostic": {
+    "release": "MAGNOLIA_PROVIDER_TRACE_RELEASE.json",
+    "launcher": "tools/magnolia-provider-trace/dist/Start-ALICEMagnoliaProviderTraceV100.ps1",
+    "archive_sha256": "93bcbebee4ea6a402ecd3dbe03cca57aa8f0e2858433f793878c5bddf24316fa",
+    "launcher_sha256": "e80c402eec7e95c3c5882d796d4c3df7281882c2564bfaee3edb4ce009af85c9",
+    "status": "READ_ONLY_DIAGNOSTIC_READY; LIVE_RECEIPT_PENDING",
+    "native_execution_observed": false,
+    "raw_receipt_received": false
+  },
+  "phase2_replacement_roadmap": "PHASE2_REPLACEMENT_ROADMAP.md",
+  "migration_checkpoint": {
+    "stage": "G",
+    "subtask": "MC10D_PUBLIC_JUDGE_QUALIFICATION_PROVIDER_DIAGNOSIS",
+    "phase2_current_released_authority": true,
+    "stage_g_owner_acceptance_established": false,
+    "full_replacement_gate": "Stage J evaluation passes and Rayan accepts its result",
+    "e05_dependency": "Stage G complete; G+ protocol frozen",
+    "stage_g_scope_machine_policy_migration_complete": false
+  }
 }

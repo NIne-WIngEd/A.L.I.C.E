@@ -1,7 +1,7 @@
-# Current continuation — v103 scheduler stop under review, 7 September 2026
+# Current continuation — read-only provider trace ready, 7 September 2026
 
 Read the [master continuity handoff](ASTRA_MASTER_CONTINUATION_HANDOFF.md) first.
-Sol's latest context is the parent of this review. Its routing, synthesis doctrine,
+Sol's handoff is preserved in this continuation's history. Its routing, synthesis doctrine,
 scientific state and phase requirements remain authoritative.
 
 The returned v103 terminal passed 60 native Windows tests and stopped during
@@ -12,13 +12,23 @@ The earlier v103-ready directions are superseded by this observed stop.
 
 ## Next action
 
-Obtain one bounded read-only raw scheduler and a2 revision receipt as specified
-in section 8 of the master handoff. Capture the exact argv, exit, stdout and
-stderr for the live-user queue, historical source accounting, a2 accounting and
-source-job queue comparison. Include local revision intent/archive/acknowledgement
-and remote descriptor/revision/submission/probe/task markers. The local v103
-intent must be reconciled even though the active remote revision was not
-established. Do not create a new package or execution identity before this review.
+Run the [read-only Magnolia provider trace](MAGNOLIA_PROVIDER_TRACE_RELEASE.json)
+once and return its TRACE_ZIP and transcript. Download the exact ZIP and
+[thin PowerShell launcher](tools/magnolia-provider-trace/dist/Start-ALICEMagnoliaProviderTraceV100.ps1)
+beside each other. The release records both hashes and the retained distribution.
+Its nine tests passed from fresh extraction; native Windows execution and the
+new Magnolia observation are pending. This is a diagnostic, not a Qwen repair.
+
+It captures all eleven raw command results and both sides of the a2 revision
+before and after observation. A failed comparison does not discard the other
+results. Keep all existing intents, states and execution identities. Do not
+rerun v103 or create a new execution package to clear the current stop. A new
+trace cannot reconstruct the original nested stderr that was already discarded.
+
+Read the [complete Phase 2 replacement roadmap](PHASE2_REPLACEMENT_ROADMAP.md)
+for the current MC10D checkpoint, remaining identity/memory experiments and
+G → G+ → H → I → J dependencies. Final replacement requires Stage J to pass
+and Rayan to accept it. E05 belongs in G+, after accepted Stage G.
 
 The leading hypothesis is the historical source-job query. The prior diagnostic
 used a user-wide queue query, while v103 checked `squeue -j 575089`. Its test

@@ -1,0 +1,16 @@
+diagnostic_manifest_verified=true files=5
+compile_gate_passed=true files=3
+test_capture_limit_is_explicit_and_full_stream_hash_is_not_prefix_hash (selftest_provider_trace.ProviderTraceTests.test_capture_limit_is_explicit_and_full_stream_hash_is_not_prefix_hash) ... ok
+test_client_uses_native_key_and_script_stdin_and_retains_provider_failure_bundle (selftest_provider_trace.ProviderTraceTests.test_client_uses_native_key_and_script_stdin_and_retains_provider_failure_bundle) ... ok
+test_concurrent_state_change_is_reported_without_changing_its_bytes (selftest_provider_trace.ProviderTraceTests.test_concurrent_state_change_is_reported_without_changing_its_bytes) ... ok
+test_exact_distinct_query_shapes_preserve_error_bytes_and_all_other_receipts (selftest_provider_trace.ProviderTraceTests.test_exact_distinct_query_shapes_preserve_error_bytes_and_all_other_receipts) ... ok
+test_missing_nonregular_unreadable_and_linked_parent_are_distinct (selftest_provider_trace.ProviderTraceTests.test_missing_nonregular_unreadable_and_linked_parent_are_distinct) ... ok
+test_missing_tools_still_preserve_local_evidence_without_attempting_ssh (selftest_provider_trace.ProviderTraceTests.test_missing_tools_still_preserve_local_evidence_without_attempting_ssh) ... ok
+test_partial_revision_is_observed_byte_exact_without_repair (selftest_provider_trace.ProviderTraceTests.test_partial_revision_is_observed_byte_exact_without_repair) ... ok
+test_scheduler_timeout_retains_partial_raw_streams (selftest_provider_trace.ProviderTraceTests.test_scheduler_timeout_retains_partial_raw_streams) ... ok
+test_transport_error_timeout_and_invalid_json_all_preserve_existing_state_and_raw_bytes (selftest_provider_trace.ProviderTraceTests.test_transport_error_timeout_and_invalid_json_all_preserve_existing_state_and_raw_bytes) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.106s
+
+OK

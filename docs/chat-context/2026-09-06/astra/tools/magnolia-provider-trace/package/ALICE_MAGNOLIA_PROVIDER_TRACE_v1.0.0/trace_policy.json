@@ -1,0 +1,289 @@
+{
+  "schema": "alice.magnolia.read-only-provider-trace-policy.v1",
+  "remote_root": "/homes/01/mxrayan/rayan-compute",
+  "source_id": "alice-qwen38-a1-8e7a384a745496f4",
+  "current_id": "alice-qwen38-a2-c926d9e355dd",
+  "source_job_id": "575089",
+  "context_parent": "c06da32bca63c9c1334594e4aa146c08241f66de",
+  "read_only": true,
+  "execution_authority_granted": false,
+  "purpose": "Record raw scheduler results and both sides of the existing a2 revision; no workload or repair",
+  "commands": [
+    {
+      "name": "host_time",
+      "argv": [
+        "date",
+        "-Is"
+      ]
+    },
+    {
+      "name": "host_name",
+      "argv": [
+        "hostname"
+      ]
+    },
+    {
+      "name": "host_user",
+      "argv": [
+        "id",
+        "-un"
+      ]
+    },
+    {
+      "name": "scheduler_program_paths",
+      "argv": [
+        "bash",
+        "-c",
+        "command -v squeue sacct scontrol sbatch"
+      ]
+    },
+    {
+      "name": "squeue_version",
+      "argv": [
+        "squeue",
+        "--version"
+      ]
+    },
+    {
+      "name": "sacct_version",
+      "argv": [
+        "sacct",
+        "--version"
+      ]
+    },
+    {
+      "name": "controller_ping",
+      "argv": [
+        "scontrol",
+        "ping"
+      ]
+    },
+    {
+      "name": "active_user_queue",
+      "argv": [
+        "squeue",
+        "-h",
+        "-u",
+        "mxrayan",
+        "-o",
+        "%A|%j|%T"
+      ]
+    },
+    {
+      "name": "source_historical_accounting",
+      "argv": [
+        "sacct",
+        "-X",
+        "-n",
+        "-P",
+        "--starttime",
+        "2026-09-06",
+        "-j",
+        "575089",
+        "--format",
+        "JobIDRaw,JobName%100,State,ExitCode"
+      ]
+    },
+    {
+      "name": "current_accounting_exact_v103",
+      "argv": [
+        "sacct",
+        "-X",
+        "-n",
+        "-P",
+        "-u",
+        "mxrayan",
+        "--starttime",
+        "2026-09-06",
+        "--name",
+        "alice-qwen38-a2-c926d9e355dd",
+        "--format",
+        "JobIDRaw,JobName%100,State"
+      ]
+    },
+    {
+      "name": "source_job_queue_comparison_only",
+      "argv": [
+        "squeue",
+        "-h",
+        "-j",
+        "575089",
+        "-o",
+        "%A|%j|%T"
+      ]
+    }
+  ],
+  "local_inventory": {
+    "files": [
+      {
+        "path": "tools/alice-astra/qwen-fallback-a2/controller-state.json",
+        "raw": true,
+        "expected_sha256": "29479dbd86e7c03e731f87b47ff0b1fcebcb0e6a1e1c12bf1e903e8f7ea1e026"
+      },
+      {
+        "path": "tools/alice-astra/qwen-fallback-a1/controller-state.json",
+        "raw": true,
+        "expected_sha256": "795412d29708e4d8047600203e8d6a45cbff97de049474e5c52a82b5f0221fc1"
+      },
+      {
+        "path": "tools/alice-astra/qwen-fallback-a2/runs/alice-qwen38-a2-c926d9e355dd/controller-diagnostics.jsonl",
+        "raw": true
+      },
+      {
+        "path": "tools/rayan-compute/provider-neutral/r13-r17-receipt.json",
+        "raw": false,
+        "expected_sha256": "490dc2983a5d2d1f605b0fa8799f75fcd2e2e93a6dd8a0c9a6a7824332fe56e1"
+      },
+      {
+        "path": "tools/rayan-compute/infrastructure/r18-r25-receipt-v1.0.4.json",
+        "raw": false,
+        "expected_sha256": "400113e93b855c4ba65e2d2b04b5798b55652cec1d15817c45e98b5214760abd"
+      }
+    ],
+    "groups": [
+      {
+        "path": "tools/alice-astra/qwen-fallback-a2/revisions",
+        "files": [
+          "controller-state-v102.json",
+          "intent.json",
+          "remote-receipt.json"
+        ],
+        "raw": true
+      }
+    ]
+  },
+  "remote_inventory": {
+    "files": [
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/run.json",
+        "raw": true,
+        "expected_sha256": "d666848088f00b6eb98f0503f035b6d0e77ee7557a4453fc89fca275d5339e27"
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/package-revision.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/infrastructure-preflight-failure.json",
+        "raw": true,
+        "expected_sha256": "ed82423691e22325c8d70bd3f7d89385a9b8da26c808ac6206e489b4d2c746be"
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/submission-intent.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/submission.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/sbatch-response.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/job.sbatch",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/scheduler-status.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/worker-started.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/worker-finished.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/runtime.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/model-lock.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/model-manifest.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/effective-contract.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/probe-attempt.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/probe-request.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/probe-response.ndjson",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/result.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/preflight.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/infrastructure-preflight.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/parent-reconciliation.json",
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/tls-trust.json",
+        "raw": true
+      },
+      {
+        "path": "packages/alice-qwen38-a2-c926d9e355dd/f196f3b91604f5c35ca594df001c10a6c1cec87aa2962e544fadc3ba99fa9999/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/PACKAGE_MANIFEST.json",
+        "raw": false,
+        "expected_sha256": "8be514e23f7f818dee449c0c4feb74f8cd1231e2438be3d8cd02601b81b12686"
+      },
+      {
+        "path": "packages/alice-qwen38-a2-c926d9e355dd/05e1e8aa3fa1233d8acb25da5e87a93b211791f5e568db850f83dca3499630f2/ALICE_MC10D_QWEN_ORIGIN_REVISION_v1.0.3/PACKAGE_MANIFEST.json",
+        "raw": false,
+        "expected_sha256": "83481f51adad45b78064b49232c4f05ed5a98729c80b0d7815924c11dcb9fac7"
+      }
+    ],
+    "groups": [
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/revisions",
+        "files": [
+          "run-v102.json",
+          "preflight-failure-v102.json",
+          "intent.json",
+          "receipt.json"
+        ],
+        "raw": true
+      },
+      {
+        "path": "runs/alice-qwen38-a2-c926d9e355dd/tasks",
+        "files": [
+          "attempt.json",
+          "record.json",
+          "request.json",
+          "response.ndjson"
+        ],
+        "raw": false
+      }
+    ]
+  },
+  "expected_files": {
+    "local:tools/alice-astra/qwen-fallback-a2/revisions/a2-origin-v103-02ba19cdef70/intent.json": "e24f2dd6eb7d725a1099e30abde0c83a26a0bee04928fa47d078d134f67853a8",
+    "remote:runs/alice-qwen38-a2-c926d9e355dd/revisions/a2-origin-v103-02ba19cdef70/intent.json": "e24f2dd6eb7d725a1099e30abde0c83a26a0bee04928fa47d078d134f67853a8",
+    "local:tools/alice-astra/qwen-fallback-a2/revisions/a2-origin-v103-02ba19cdef70/controller-state-v102.json": "29479dbd86e7c03e731f87b47ff0b1fcebcb0e6a1e1c12bf1e903e8f7ea1e026",
+    "local:tools/alice-astra/qwen-fallback-a2/revisions/a2-origin-v103-02ba19cdef70/remote-receipt.json": "5bbb6f9c32367a00fafb67ac56ee28b3845837ee502f0881ef1c54ffd4777f8f",
+    "remote:runs/alice-qwen38-a2-c926d9e355dd/revisions/a2-origin-v103-02ba19cdef70/run-v102.json": "d666848088f00b6eb98f0503f035b6d0e77ee7557a4453fc89fca275d5339e27",
+    "remote:runs/alice-qwen38-a2-c926d9e355dd/revisions/a2-origin-v103-02ba19cdef70/preflight-failure-v102.json": "ed82423691e22325c8d70bd3f7d89385a9b8da26c808ac6206e489b4d2c746be"
+  }
+}

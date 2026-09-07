@@ -1,0 +1,30 @@
+{
+  "schema": "alice.provider-trace.package-manifest.v1",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2876,
+      "sha256": "1c10693b11b7d1c7b29f9d26b69db7846eb9d9fbbb30ce3a9347a1af08bdb4dc"
+    },
+    {
+      "path": "collect_provider_trace.py",
+      "bytes": 8519,
+      "sha256": "b8760f26dc26dd46bad81dacdfa142957012e4c0586cd3c2c5313baf97e06a2d"
+    },
+    {
+      "path": "selftest_provider_trace.py",
+      "bytes": 10131,
+      "sha256": "aef9e65fc4b54b3f0353d1871bdd10f578de8713dd4eafd6130ef08040c09e12"
+    },
+    {
+      "path": "trace_policy.json",
+      "bytes": 8371,
+      "sha256": "6328e2fd709dcbbea04dcaefe78cf9fcc827109e8df34bd6c67ba8827b397424"
+    },
+    {
+      "path": "trace_provider.py",
+      "bytes": 7831,
+      "sha256": "6b07a6ab03ea5a8f5c0f10f2f7ff0a8860a04df3808e2d1ee189977aeaab2194"
+    }
+  ]
+}
