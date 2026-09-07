@@ -1,9 +1,8 @@
 # Working agreement and recovered lessons
 
-Current override: read [Sol’s master handoff](ASTRA_MASTER_CONTINUATION_HANDOFF.md) and
-[the v103 provider review](QWEN_V103_PROVIDER_REVIEW.md). The observed v103 scheduler
-stop supersedes historical active/ready launcher directions below. The only active
-launcher is the [read-only provider trace](MAGNOLIA_PROVIDER_TRACE_RELEASE.json).
+Current override: follow [START_HERE](START_HERE.md) and the
+[observed provider review](MAGNOLIA_PROVIDER_TRACE_REVIEW.json). V104 is the
+current explicit revision; all earlier ready/stop instructions below are history.
 
 Rayan explicitly switched ongoing ALICE work to Astra on 6 September 2026. The earlier Sol-default preference is superseded. Work in substantial coherent batches: recover evidence, make one bounded decision, implement it, verify the relevant failure modes, record the result, and leave one executable next step. Do not trade knowledge retention or final cognitive semantics for speed.
 
@@ -166,3 +165,17 @@ Follow PHASE2_REPLACEMENT_ROADMAP.md. Stage G acceptance, G+ recollection and th
 H/I/J authority stages remain distinct. E05 follows accepted G. Translate the
 accepted deployment-profile scope amendment into machine policy and acceptance
 evidence before Stage G closure. Final replacement requires accepted Stage J.
+
+
+## Confirmed provider boundary and resource discipline — 7 September 2026
+
+The real source-job query exits 1 with Invalid job id; user-wide queue and exact
+accounting succeed. Reuse one shared scheduler boundary across reconciliation,
+lookup and monitoring. Preserve raw receipts before interpreting every result.
+Retain the unfinished local intent and bind its explicit supersession; another
+remote revision or local acknowledgement requires review, not deletion.
+
+Keep fault investigations bounded. Reuse existing evidence and tests. Avoid
+repeating the full audit or regenerating roadmap documents for one provider
+failure. Make one necessary implementation/verification/context batch. A passing
+local test suite never substitutes for the live provider or scientific result.

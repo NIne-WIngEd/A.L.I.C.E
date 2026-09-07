@@ -1,0 +1,53 @@
+{
+  "artifact_id": "alice.MC10D.judge-binding.v1",
+  "generator_family": "gptoss",
+  "required_independent_judge_families": 4,
+  "selection_basis": "preexisting public qualification / prior frozen tournament judging evidence only; never private MC10D candidate performance",
+  "preferred_family_order": [
+    "gemma",
+    "glm",
+    "mistral",
+    "granite",
+    "qwen",
+    "muse"
+  ],
+  "explicitly_excluded_families": {
+    "gptoss": "generated the current candidate pool",
+    "olmo": "prior judging score-scale defect makes it unsuitable for this gate",
+    "nemotron": "prior invalid/unstable outputs; not silently elevated to critical judge"
+  },
+  "candidate_tags": {
+    "gemma": "gemma4:31b-it-q4_K_M",
+    "glm": "glm-4.7-flash:q4_K_M",
+    "mistral": "mistral-small3.2:24b-instruct-2506-q4_K_M",
+    "granite": "granite4.1:30b-q4_K_M",
+    "qwen": "qwen3.8:27b-q4_K_M",
+    "muse": "muse-glimmer:30b-q4_K_M"
+  },
+  "known_digest_constraints": {
+    "gemma4:31b-it-q4_K_M": "6316f0629137b426c9d9b853ffc4c8209589f30ee39aebede6285096c0ff47e7",
+    "glm-4.7-flash:q4_K_M": "4475827791a269b02c8ec49b1c3bc1abb5846bacf3fae015b75d33986322d8f6"
+  },
+  "mistral_and_granite_digest_rule": "derive exact digest from preexisting frozen model_receipt.json bytes; never invent or fetch a newer tag",
+  "required_receipt_evidence": [
+    "model_receipt_with_exact_tag_and_digest",
+    "prior_judge_mode_or_public_judge_smoke_evidence",
+    "accepted_or_complete_prior_stage_evidence",
+    "frozen_profile_or_deterministically_recoverable_profile"
+  ],
+  "one_candidate_per_prompt": true,
+  "pointwise_not_comparative": true,
+  "judge_disagreement_measured": true,
+  "high_disagreement_disposition": "REQUEUE_OR_DEFER",
+  "judge_consensus_is_truth_evidence": false,
+  "binding_fails_closed_if_four_families_cannot_be_proven": true,
+  "required_family_set_for_this_preexecution_freeze": [
+    "gemma",
+    "glm",
+    "mistral",
+    "granite"
+  ],
+  "fallback_family_activation": "NOT_ALLOWED_SILENTLY; qwen/muse require an explicit later amendment if one of the four cannot be proven",
+  "missing_required_family_disposition": "PUBLIC_FICTIONAL_JUDGE_ROLE_QUALIFICATION_REQUIRED_BEFORE_PRIVATE_MC10D_JUDGING",
+  "private_MC10D_candidates_may_be_used_to_select_or_tune_judges": false
+}

@@ -2,7 +2,7 @@
   "schema": "alice.magnolia.read-only-provider-trace-release.v1",
   "date": "2026-09-07",
   "context_parent": "c06da32bca63c9c1334594e4aa146c08241f66de",
-  "status": "READ_ONLY_DIAGNOSTIC_READY; LIVE_RECEIPT_PENDING",
+  "status": "COMPLETED_AND_REVIEWED; DIAGNOSTIC_NOT_CURRENT_NEXT_ACTION",
   "purpose": "Collect the raw provider and a2 revision observations specified in Sol master handoff section 8",
   "owner_authority": "Owner instructed: do that, referring explicitly to the read-only raw scheduler receipt and local/remote revision inventory",
   "archive": "ALICE_MAGNOLIA_PROVIDER_TRACE_v1.0.0.zip",
@@ -16,8 +16,8 @@
   "package_manifest_sha256": "1470ccd65106942be4dab8d2f6b32e390f754648c0d5ecc3c7f9b1d931a314b8",
   "offline_tests_passed": 9,
   "fresh_zip_tested": true,
-  "native_windows_execution_observed": false,
-  "actual_magnolia_observation_received": false,
+  "native_windows_execution_observed": true,
+  "actual_magnolia_observation_received": true,
   "workload_changed": false,
   "new_qwen_execution_release": false,
   "execution_authority_granted": false,
@@ -48,5 +48,8 @@
   },
   "historical_limit": "A new observation cannot reconstruct raw stderr already discarded during the earlier v103 invocation",
   "scientific_status": "QWEN_NOT_EVALUATED; MC10D_PRIVATE_WORK_NOT_READY; STAGE_G_OPEN; PHASE2_CURRENT_AUTHORITY",
-  "next_action": "Owner runs this diagnostic once, returns TRACE_ZIP and transcript; review evidence before selecting any execution repair"
+  "next_action": "Use current STATE and v104 release; no diagnostic rerun requested.",
+  "native_tests_passed": 9,
+  "actual_review": "MAGNOLIA_PROVIDER_TRACE_REVIEW.json",
+  "actual_trace_sha256": "3c5ed8da35dcc875427be0263132b10d68a78540e7cad0d46dfc1f223d7bc567"
 }
