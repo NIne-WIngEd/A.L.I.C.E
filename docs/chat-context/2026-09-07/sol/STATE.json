@@ -75,7 +75,7 @@
       "1.11.1",
       "1.13.4"
     ],
-    "source_build_feasibility": "UPSTREAM_REQUIREMENTS_VERIFIED_REMOTE_BUILD_PROBE_PENDING",
+    "source_build_feasibility": "MAGNOLIA_PROBE_EXECUTED_JOB_575231_TERMINAL_FAILED_RESULT_NOT_COLLECTED_LOCAL_PATH_CHECK_BUG",
     "ollama_source": {
       "version": "0.32.15",
       "tag": "v0.32.15",
@@ -89,7 +89,11 @@
       "version": "1.26.0",
       "archive": "go1.26.0.linux-amd64.tar.gz",
       "sha256": "aac1b08a0fb0c4e0a7c1555beb7b59180b05dfc5a3d62e40e9de90cd42f88235"
-    }
+    },
+    "source_build_job_id": "575231",
+    "source_build_probe_rerun": false,
+    "magnolia_status": "PAUSED_BY_OWNER_DIRECTION; DO_NOT_SPEND_MORE TIME ON PROVIDER INFRASTRUCTURE UNLESS NEW EVIDENCE REQUIRES IT",
+    "collection_bug": "Windows controller compared a POSIX remote result path through pathlib.Path semantics and raised 'unexpected result path' after the job was terminal. This was a controller defect, not a scientific Qwen result."
   },
   "blocked": {
     "private_pointwise": true,
@@ -99,13 +103,20 @@
     "stage_g_closure": true,
     "phase2_retirement": true
   },
-  "next_action": "RUN_BOUNDED_MAGNOLIA_SOURCE_RUNTIME_FEASIBILITY_V100_AND_RETURN_RESULT_BEFORE_ANY_QWEN_A4",
+  "next_action": "RUN_KAGGLE_DUAL_T4_QWEN_PUBLIC_CALIBRATION_V100",
   "pending_package": {
-    "name": "ALICE_MAGNOLIA_SOURCE_RUNTIME_FEASIBILITY_v1.0.0.zip",
-    "sha256": "411791925E9879F51E226ED7BCA7609901243D2F882907216B14B2253870B77B",
-    "launcher": "Start-ALICEMagnoliaSourceRuntimeFeasibilityV100.ps1",
-    "launcher_sha256": "FCBC2C46D56B0684C8E46F93A8CFAFB3122B887040799FDF631301E01EE78F61",
-    "executed": false,
-    "scientific_scope": "INFRASTRUCTURE_ONLY_NO_MODEL_NO_INFERENCE"
+    "provider": "kaggle",
+    "worker": "ALICE_Kaggle_Qwen_Public_Calibration_v1_0_0.py",
+    "worker_sha256": "8BF89028BB9798FA60FEFA23F0CE1FAD3DA1E380CE6C7D6CCE33593D58011CB8",
+    "launcher": "Start-ALICEKaggleQwenQualificationV100.ps1",
+    "launcher_sha256": "C5228489F73585D94BB5F69E61213597841654A4A4B82DDE85B8AC6CB9B625E2",
+    "profile_id": "qwen38_thinking_on_public_calibration_kaggle_t4x2_v1",
+    "accelerator": "2x Tesla T4",
+    "public_tasks": 16,
+    "calibration_only": true,
+    "private_pointwise": false,
+    "mc8": false,
+    "training": false,
+    "executed": false
   }
 }
