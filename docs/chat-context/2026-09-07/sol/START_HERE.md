@@ -50,3 +50,13 @@ Launcher SHA-256: `8ABF9EEB5BF022DEA701AA4F9A007FAFE61E19FCA5A16DEA2267D1A86374E
 Read `MC10D_QWEN_SUCCESSOR_V190_PREEXECUTION_BOUNDARY.md` before continuing.
 
 Do not bundle private pointwise or full simulation into this step. Pointwise must first bind the exact v1.9.0 output hashes. Full simulation must then bind the exact frozen pointwise result. Current next action is `RUN_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_V190`.
+
+## MC10D v1.9.1 current execution boundary
+
+v1.9.0 reached the correct 287-candidate Gemma+Qwen+Mistral+Granite refreeze but stopped because the copied historical v1.7 pointwise-ready validator still hard-coded GLM. This was a deterministic validator migration bug, not a scientific failure.
+
+Current package: `ALICE_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_v1.9.1.zip` SHA-256 `397EE77874D9D2AF7AE197AF5EC3FEB478D222930D46F22AE52C953B31023D72`.
+
+Current launcher: `Start-ALICEMC10DQwenSuccessorRefreezeBreadthV191.ps1` SHA-256 `E03304DED31E0A9492DE111428B27A0044AEACD91BD7D245CC9D37C708154E02`.
+
+Read `MC10D_V190_VALIDATOR_STOP_AND_V191_TECHNICAL_SUCCESSOR.md`. Next action: `RUN_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_V191`.
