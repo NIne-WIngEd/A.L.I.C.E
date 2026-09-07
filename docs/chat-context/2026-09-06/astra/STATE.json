@@ -5,7 +5,7 @@
   "main": "0abaed85873c3f8de04765847eb7700b0e20433f",
   "context_parent": "a42e6cb07fcccccf1e4e3cc394df460852f668a2",
   "evidence": "Owner-returned v104 result ZIP SHA256 750881d854fa15df220347dc19c3091fcb0a5630c6a87ca30cf9fa3b4114eb33",
-  "checkpoint": "QWEN_TELEMETRY_GIT183_CAUSE_CONFIRMED_REPAIR_READY",
+  "checkpoint": "SHARED_PUBLISHER_REPAIRED_AND_A2_TERMINAL_VERIFIED",
   "run_id": "260906185551-e563ae",
   "glm_profile": {
     "id": "thinking_off",
@@ -28,7 +28,7 @@
   "breadth_v104_executed_in_supplied_log": false,
   "breadth_prerequisite_satisfied": false,
   "acceptance_promotion_training_established": false,
-  "next_action": "RUN_GUARDED_PUBLISHER_REPAIR_AND_CLOSED_A2_TERMINAL_VERIFY",
+  "next_action": "PREPARE_EXPLICIT_SOURCE_BOUND_PUBLIC_CALIBRATION_SUCCESSOR",
   "numeric_judge_gates_changed": false,
   "hidden_MC8_accessed": false,
   "accepted_plan_changes": [
@@ -98,7 +98,9 @@
     "telemetry_transport_diagnostic_actual_receipt_received": true,
     "publisher_repair_local_tests_passed": 9,
     "publisher_repair_actual_host_tests_required": 7,
-    "publisher_repair_actual_magnolia_execution_pending": true
+    "publisher_repair_actual_magnolia_execution_pending": false,
+    "publisher_repair_actual_host_tests_passed": 7,
+    "publisher_repair_installed_and_live_verified": true
   },
   "actual_glm_forensic_bundle_received": true,
   "actual_glm_rows_reverified": true,
@@ -132,7 +134,7 @@
     "prospective_validation_design_written": true,
     "remote_run_success_claimed": false
   },
-  "checkpoint_context_parent": "9a8116ce1c8b2d127a0d47c5341e900570603546",
+  "checkpoint_context_parent": "7e5cc9464aa95daf1ded2b007e96890aa5c610f4",
   "qwen_transport_repair": "QWEN_TRANSPORT_REPAIR_V101.json",
   "qwen_last_controller_exit": 75,
   "qwen_last_invocation_reached_submission": true,
@@ -142,7 +144,7 @@
   "qwen_source_scheduler_job_id": "575089",
   "qwen_last_source_scheduler_state": "FAILED",
   "qwen_source_scientific_outcome": "NOT_EVALUATED",
-  "qwen_external_terminal_ledger_commit": "4af0dd237ca862c605c2ee9b70c0f1df4b69263c",
+  "qwen_external_terminal_ledger_commit": "7dfff68a8fe100243c8ac63a97d1c4a568201cd7",
   "qwen_prior_v100_terminal_sha256": "78b19e9e4f53a977547b639b839ba9988628eade5d970984f7961cfa72fa24ff",
   "qwen_prior_v100_terminal_observation": "QWEN_V100_WINDOWS_TERMINAL_OBSERVATION.json",
   "qwen_latest_result_zip_sha256": "750881d854fa15df220347dc19c3091fcb0a5630c6a87ca30cf9fa3b4114eb33",
@@ -176,7 +178,7 @@
   "phase2_replacement_roadmap": "PHASE2_REPLACEMENT_ROADMAP.md",
   "migration_checkpoint": {
     "stage": "G",
-    "subtask": "MC10D_PUBLIC_JUDGE_QUALIFICATION_TELEMETRY_BLOCKED",
+    "subtask": "MC10D_PUBLIC_JUDGE_QUALIFICATION_INFRASTRUCTURE_REPAIRED_CALIBRATION_PENDING",
     "phase2_current_released_authority": true,
     "stage_g_owner_acceptance_established": false,
     "full_replacement_gate": "Stage J evaluation passes and Rayan accepts its result",
@@ -210,7 +212,9 @@
   "qwen_helper_source_sha256": "ba4482728c09313aede5031e682f68e8007c79c9cfa084d3da4b11aa984d0830",
   "qwen_telemetry_retry_defect_reproduced": true,
   "qwen_telemetry_git_transport_cause_known": true,
-  "qwen_current_infrastructure_review": "TELEMETRY_GIT183_RESULT_REVIEW.json",
+  "qwen_current_infrastructure_review": "TELEMETRY_PUBLISHER_REPAIR_RESULT_REVIEW.json",
   "qwen_telemetry_cause_scope": "Version-specific stale tracking reference; historical per-attempt stderr was discarded",
-  "active_infrastructure_repair": "TELEMETRY_PUBLISHER_REPAIR_RELEASE.json"
+  "active_infrastructure_repair": null,
+  "qwen_installed_telemetry_helper_sha256": "81e7fcabd7f793b52b1f3efdfd58fc4002cba93b65299602bee044399ce989a0",
+  "qwen_external_terminal_recovery_verified": true
 }

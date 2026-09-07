@@ -1,9 +1,6 @@
 # Working agreement and recovered lessons
 
-Current override: follow [START_HERE](START_HERE.md) and the
-[actual Git trace review](TELEMETRY_GIT183_RESULT_REVIEW.json). The read-only
-transport trace is complete. Use the guarded publisher repair next; earlier
-diagnostic and execution recommendations below are historical.
+Current override: follow [START_HERE](START_HERE.md) and the [verified publisher repair](TELEMETRY_PUBLISHER_REPAIR_RESULT_REVIEW.json). Repair installation and terminal retry are complete. Older diagnostic and repair instructions below are historical.
 
 Rayan explicitly switched ongoing ALICE work to Astra on 6 September 2026. The earlier Sol-default preference is superseded. Work in substantial coherent batches: recover evidence, make one bounded decision, implement it, verify the relevant failure modes, record the result, and leave one executable next step. Do not trade knowledge retention or final cognitive semantics for speed.
 
@@ -246,3 +243,6 @@ is operational verification; it grants no Qwen inference or Stage G acceptance.
 The next eligible workload must bind the helper identity and export its journal.
 Do not substitute infrastructure repair package hashes for scientific workload
 identity, and do not replay closed a2 to clear a telemetry flag.
+
+
+Actual repair closure: Magnolia Git 1.8.3.1 passed all seven publisher checks. Live GitHub append and identical retry were independently verified at 7dfff68. Preserve this receipt; do not ask the owner to repeat successful diagnostics. Existing public calibration approval persists, but each explicit infrastructure execution must preserve closed parents and the original scientific contract. No automatic successor follows a failed execution.

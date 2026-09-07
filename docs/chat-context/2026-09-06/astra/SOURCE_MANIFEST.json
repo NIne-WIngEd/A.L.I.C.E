@@ -136,6 +136,14 @@
       "original_private_file_id": "libfile_3f2b50519468819188bc0a0cbc53e750",
       "public_archive_path": "artifacts/ALICE_TelemetryTransport_4f071227d9ec.zip",
       "custody": "Reviewed Git command receipts, selected file hashes and SSH wrapper source. No private key contents, private candidates or model outputs. Original ZIP bytes preserved."
+    },
+    {
+      "original_name": "ALICE_PublisherRepair_f3dc451ff517.zip",
+      "sha256": "259cf9f6171914ba886957db35cd2eeedc788b79a20b7afc97fb0cbd5f7aa9e8",
+      "bytes": 67681,
+      "original_private_file_id": "libfile_6c0e77107e8c819188383f8006aa1bb5",
+      "public_archive_path": "artifacts/ALICE_PublisherRepair_f3dc451ff517.zip",
+      "custody": "Original returned repair ZIP: public telemetry payloads, helper source, hashes and raw Git journals; no private key contents or private candidate data."
     }
   ],
   "original_audit_markdown_sha256": "8a93d002b2b2e1e2b571bdcb8808016afc5b8cd76b11f80a93fbe1c3b5193ffb",
@@ -219,6 +227,8 @@
     "package_sha256": "9c7dcc00e29f4fafd1eaa1b57f108dee23d9538acc7f4a9940f2a51eb2057d83",
     "new_helper_sha256": "81e7fcabd7f793b52b1f3efdfd58fc4002cba93b65299602bee044399ce989a0",
     "distribution_artifact_id": "libfile_64a1f60575b08191a17a5caca56fc218",
-    "status": "READY_FOR_OWNER_GUARDED_INSTALL_AND_TERMINAL_VERIFY"
+    "status": "INSTALLED_AND_TERMINAL_RETRY_VERIFIED",
+    "actual_review": "TELEMETRY_PUBLISHER_REPAIR_RESULT_REVIEW.json",
+    "terminal_commit": "7dfff68a8fe100243c8ac63a97d1c4a568201cd7"
   }
 }

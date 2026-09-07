@@ -1,41 +1,33 @@
-# Current continuation — old Git publisher cause confirmed
+# Current continuation — publisher repaired; public calibration pending
 
-Read the [master handoff](ASTRA_MASTER_CONTINUATION_HANDOFF.md),
-[state](STATE.json), and [actual Git trace review](TELEMETRY_GIT183_RESULT_REVIEW.json).
-Astra remains primary while available; Sol is the continuity fallback.
+Read [STATE](STATE.json), the [verified repair result](TELEMETRY_PUBLISHER_REPAIR_RESULT_REVIEW.json),
+and the [master handoff](ASTRA_MASTER_CONTINUATION_HANDOFF.md).
 
-The 05:57:25Z receipt confirms Git 1.8.3.1, successful fetch dry-run and
-non-fast-forward push rejection. Exact observed hashes identify cached main and
-origin/main at ec4d378 while FETCH_HEAD is already at 3f42de3. The installed helper
-fetches origin main and then builds on origin/main. Before Git 1.8.4 that fetch
-does not refresh the tracking reference. The actual references, installed code
-and upstream release notes establish the defect. Lost earlier stderr stays lost.
+Magnolia ran all seven publisher tests on its actual Git 1.8.3.1, installed the
+exact checked helper, published the closed a2 terminal snapshot and verified an
+identical retry. GitHub commit 7dfff68 adds only the two missing metadata files;
+the three original payload files are unchanged. The retry created no commit.
+The original helper, a2 evidence and cached ledger checkout were preserved.
+The Windows a2 controller remains unchanged; its historical pending flag does
+not negate the independently verified external recovery. Do not rerun v104.
 
-Next: the [publisher repair](TELEMETRY_PUBLISHER_REPAIR_RELEASE.json).
-Save its exact ZIP and launcher in Downloads and run the launcher. It checks
-the observed helper/wrapper and closed a2 hashes, runs seven tests on Magnolia's
-actual Git, backs up the original helper and installs the exact replacement.
-It then verifies the already-failed terminal snapshot and an identical retry.
-Return RESULT_ZIP and the transcript, including on failure.
+Next: prepare one separately identified infrastructure execution of the already
+approved Qwen public calibration, bound to the exact closed zero-inference a1/a2
+evidence and installed publisher. Verify parents live before submission and
+export raw publisher journals with results. Do not reset or resubmit a2.
+The historical no-automatic-successor rule remains: no launcher may generate
+another execution identity or retry a probe/task after an attempted request.
 
-The replacement explicitly refreshes the tracking ref and uses the fetched parent.
-It preserves cached metadata, records raw Git receipts and uses a private index
-to avoid resetting the shared checkout. A raw push of the cached local HEAD is
-therefore not the repaired publisher's verification path. Use its actual receipt.
-Nine local release checks passed. Actual installation/publication remain pending.
+Qwen remains NOT_EVALUATED: zero probes and zero of the 16 task requests attempted.
+Registry manifest resolution is established; loaded runtime and CPU throughput
+remain unverified. The original profile, requests, gates and six-hour Magnolia
+CPU budget apply. There is no automatic Kaggle/GPU fallback.
 
-Qwen is still NOT_EVALUATED. A2 job 575155 is closed with zero probe/task attempts.
-V104 revision and login-node TLS/manifest preflight succeeded before telemetry
-stopped the worker. The manifest is resolved; runtime/model/throughput and the
-16 public requests are still unexecuted. Do not rerun v104, reset a2, or infer a3
-authority. A future eligible execution must bind the installed helper and retain
-its raw command journal. The repair ZIP hash never replaces the Qwen workload hash.
+Keep the historical result pointer and separate repair evidence. Gemma v182,
+Mistral/Granite bindings, failed GLM results, 287 candidates, 63 replacements and
+one deferred slot remain preserved. Private pointwise, breadth, acceptance,
+promotion, training and MC8 remain gated.
 
-Keep the actual public result pointer and separate terminal recovery history.
-Gemma v182, Mistral/Granite bindings, GLM's failed calibration, 287 candidates,
-63 replacements and one deferred slot remain unchanged. Private pointwise work,
-breadth, acceptance, promotion, training and MC8 remain gated.
-
-Follow the [Phase 2 replacement roadmap](PHASE2_REPLACEMENT_ROADMAP.md).
-Stage G remains open; E05 belongs in G+. Final replacement requires accepted
-Stage J. Main remains frozen at 0abaed85873c3f8de04765847eb7700b0e20433f.
+Follow the [Phase 2 replacement roadmap](PHASE2_REPLACEMENT_ROADMAP.md): Stage G
+is open, E05 belongs in G+, and final replacement requires accepted Stage J.
+Main remains 0abaed85873c3f8de04765847eb7700b0e20433f.

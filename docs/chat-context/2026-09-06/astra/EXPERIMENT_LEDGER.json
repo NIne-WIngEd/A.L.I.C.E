@@ -93,7 +93,7 @@
       "same_pass_rule": true,
       "independent_validation": false,
       "latest_pointer": "qwen-public/LATEST_QWEN_PUBLIC.json",
-      "next_dependency": "Verify the shared publisher on actual Magnolia Git before determining an eligible public-calibration execution. Closed a2 and all scientific contracts remain preserved.",
+      "next_dependency": "Execute the unchanged public calibration through one explicit successor after live closed-parent and installed-publisher checks. No Qwen judgment has yet been attempted.",
       "transport_observation": "QWEN_V100_WINDOWS_TERMINAL_OBSERVATION.json",
       "transport_repair": "QWEN_TRANSPORT_REPAIR_V101.json",
       "native_windows_v100_tests_passed": 35,
@@ -143,13 +143,14 @@
       ],
       "last_invocation_scope": "a2 v104 terminal S15 and independently verified result",
       "current_observation": "QWEN_V104_RESULT_REVIEW.json",
-      "next_operational_action": "RUN_GUARDED_PUBLISHER_REPAIR_AND_CLOSED_A2_TERMINAL_VERIFY",
+      "next_operational_action": "PREPARE_EXPLICIT_SOURCE_BOUND_PUBLIC_CALIBRATION_SUCCESSOR",
       "package_revision": "QWEN_PROVIDER_REVISION_V104.json",
       "after_actual_passing_calibration": "Verify four exact family/profile/digest receipts and effective contracts before successor binding and breadth prerequisite migration",
       "pending_read_only_diagnostic": null,
       "external_terminal_recovery": "QWEN_A2_TERMINAL_RECOVERY.json",
       "current_diagnosis": "TELEMETRY_GIT183_RESULT_REVIEW.json",
-      "pending_infrastructure_repair": "TELEMETRY_PUBLISHER_REPAIR_RELEASE.json"
+      "pending_infrastructure_repair": null,
+      "current_infrastructure_review": "TELEMETRY_PUBLISHER_REPAIR_RESULT_REVIEW.json"
     }
   ],
   "roadmap": "PHASE2_REPLACEMENT_ROADMAP.md",
