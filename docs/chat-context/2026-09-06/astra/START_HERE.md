@@ -1,5 +1,8 @@
 # Current continuation — host trace confirmed, v103 ready, 7 September 2026
 
+> **Master continuity note:** Before any new execution or recovery work, read [ASTRA_MASTER_CONTINUATION_HANDOFF.md](ASTRA_MASTER_CONTINUATION_HANDOFF.md). It consolidates the scientific state, Astra failure lessons, Magnolia provider contract, current v103 scheduler stop, Qwen continuation rules, synthesis doctrine, and Astra-primary / Sol-fallback handoff policy.
+
+
 The actual host diagnostic confirms the v102 source-origin bug and shows a2
 unsubmitted at `2026-09-07T02:28:15Z`. The original manifest is in its package
 directory with the expected hash; it is not a live run file. Both installed
