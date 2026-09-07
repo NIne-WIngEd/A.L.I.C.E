@@ -93,7 +93,10 @@
     "source_build_job_id": "575231",
     "source_build_probe_rerun": false,
     "magnolia_status": "PAUSED_BY_OWNER_DIRECTION; DO_NOT_SPEND_MORE TIME ON PROVIDER INFRASTRUCTURE UNLESS NEW EVIDENCE REQUIRES IT",
-    "collection_bug": "Windows controller compared a POSIX remote result path through pathlib.Path semantics and raised 'unexpected result path' after the job was terminal. This was a controller defect, not a scientific Qwen result."
+    "collection_bug": "Windows controller compared a POSIX remote result path through pathlib.Path semantics and raised 'unexpected result path' after the job was terminal. This was a controller defect, not a scientific Qwen result.",
+    "kaggle_v100_launcher_result": "LOCAL_STOP_MISSING_STALE_ALICE_KAGGLE_WRAPPER_ZERO_REMOTE_EXECUTION",
+    "kaggle_v101_launcher_result": "LOCAL_STOP_UTF8_BOM_IN_KERNEL_METADATA_ZERO_REMOTE_EXECUTION",
+    "kaggle_v102_status": "PREPARED_SELFTESTED_NOT_EXECUTED"
   },
   "blocked": {
     "private_pointwise": true,
@@ -103,20 +106,38 @@
     "stage_g_closure": true,
     "phase2_retirement": true
   },
-  "next_action": "RUN_KAGGLE_DUAL_T4_QWEN_PUBLIC_CALIBRATION_V100",
+  "next_action": "RUN_KAGGLE_QWEN_PUBLIC_V102_DETERMINISTIC_PUSH_ONCE",
   "pending_package": {
     "provider": "kaggle",
-    "worker": "ALICE_Kaggle_Qwen_Public_Calibration_v1_0_0.py",
-    "worker_sha256": "8BF89028BB9798FA60FEFA23F0CE1FAD3DA1E380CE6C7D6CCE33593D58011CB8",
-    "launcher": "Start-ALICEKaggleQwenQualificationV100.ps1",
-    "launcher_sha256": "C5228489F73585D94BB5F69E61213597841654A4A4B82DDE85B8AC6CB9B625E2",
+    "package": "ALICE_KAGGLE_QWEN_PUBLIC_v1.0.2.zip",
+    "package_sha256": "7352FE1A32713D2E85A400E70FFFD656AE05C760F134AE6AE83D87B9D4053006",
+    "launcher": "Start-ALICEKaggleQwenQualificationV102.ps1",
+    "launcher_sha256": "89BA0E1121C829D84A03C05D1B7217CA89AFF5E36E64DDBB2CB7C525DBECD738",
+    "worker_sha256": "35389B3D7B83FA43AC1A358C9610670183544378EFEDE3D095F616D8AA1B4F4A",
+    "controller_sha256": "4DB3219A1AA48994F13D09D52DA7FE73751F2472246A3AEE4F0A96074CCD3F2E",
+    "selftest_sha256": "147D8B25F85304B41E0A25C66E876C0ADC2AA72732B4788837C17792B5B8C700",
+    "deterministic_request_sha256": "55b8e7acb4c16284773f371196d0cb9d6e080eef83f46b41476d45302d6593a3",
+    "deterministic_kernel_ref": "mkrayanyan/alice-qwen-k1-v102-55b8e7acb4c1",
+    "shared_runtime_dataset": "mkrayanyan/alice-tournament-runtime-50539c5fe9bf",
     "profile_id": "qwen38_thinking_on_public_calibration_kaggle_t4x2_v1",
     "accelerator": "2x Tesla T4",
     "public_tasks": 16,
     "calibration_only": true,
     "private_pointwise": false,
     "mc8": false,
+    "asyn_acceptance": false,
+    "asyn_promotion": false,
     "training": false,
+    "transport": {
+      "metadata_utf8_no_bom": true,
+      "single_code_file": true,
+      "deterministic_identity": true,
+      "push_once": true,
+      "repush_on_404": false,
+      "resume_same_identity": true,
+      "retrieve_before_cleanup": true,
+      "native_exit_receipts": true
+    },
     "executed": false
   }
 }
