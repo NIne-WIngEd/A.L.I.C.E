@@ -1,10 +1,9 @@
 # Working agreement and recovered lessons
 
 Current override: follow [START_HERE](START_HERE.md) and the
-[actual v104 result review](QWEN_V104_RESULT_REVIEW.json). A2 is closed after
-initial telemetry failure. Its source is reviewed; collect the read-only Git
-transport receipt next (TELEMETRY_TRANSPORT_RECEIPT_RELEASE.json). Earlier
-ready/run instructions below are history.
+[actual Git trace review](TELEMETRY_GIT183_RESULT_REVIEW.json). The read-only
+transport trace is complete. Use the guarded publisher repair next; earlier
+diagnostic and execution recommendations below are historical.
 
 Rayan explicitly switched ongoing ALICE work to Astra on 6 September 2026. The earlier Sol-default preference is superseded. Work in substantial coherent batches: recover evidence, make one bounded decision, implement it, verify the relevant failure modes, record the result, and leave one executable next step. Do not trade knowledge retention or final cognitive semantics for speed.
 
@@ -222,3 +221,28 @@ bootstrap. Record current transport output and selected file stability. Dry-run
 success does not establish local write capability or actual publication success.
 Keep raw diagnostics private until reviewed. No Qwen replay or state reset follows
 a diagnostic result; preserve the scientific authority and closed execution history.
+
+
+## Git 1.8.3 tracking references and publisher recovery — 7 September 2026
+
+The source-only fetch command did not update origin/main before Git 1.8.4.
+Do not test provider synchronization only on modern Git or assume FETCH_HEAD
+and the tracking reference are interchangeable. Use an explicit destination
+refspec and verify the actual fetched parent before constructing an append.
+The observed reference hashes match an old checkout despite a newer FETCH_HEAD.
+Connector appends exposed this latent assumption; suppressing Git output hid it.
+
+The new shared publisher uses a private index and commit-tree so it can retain
+the user's cached checkout and local branch. Every append has the freshly fetched
+parent and never uses force. Preserve concurrent remote additions. Complete a
+partial connector snapshot only if its existing files are byte-identical. Freeze
+all spool bytes, including wrapper metadata, across retries. Keep raw command
+receipts private for owner review instead of losing them at nested boundaries.
+
+Run the production publisher tests with the installed Magnolia Git before the
+atomic helper replacement. Preserve the original helper and existing a2 evidence.
+Then require a real terminal append and a byte-identical idempotent retry. This
+is operational verification; it grants no Qwen inference or Stage G acceptance.
+The next eligible workload must bind the helper identity and export its journal.
+Do not substitute infrastructure repair package hashes for scientific workload
+identity, and do not replay closed a2 to clear a telemetry flag.

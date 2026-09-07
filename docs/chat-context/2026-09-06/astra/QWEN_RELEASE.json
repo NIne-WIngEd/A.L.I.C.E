@@ -35,8 +35,8 @@
   "active_runtime_successor": "QWEN_RUNTIME_SUCCESSOR_V102.json",
   "source_actual_result_review": "QWEN_V101_RESULT_REVIEW.json",
   "historical_windows_transport_repair": "QWEN_TRANSPORT_REPAIR_V101.json",
-  "active_windows_launcher_role": "No scientific execution launcher recommended; use the bounded read-only transport receipt",
-  "active_diagnostic": "TELEMETRY_TRANSPORT_RECEIPT_RELEASE.json",
+  "active_windows_launcher_role": "No scientific launcher recommended; use the guarded shared-publisher repair and closed terminal verification",
+  "active_diagnostic": null,
   "current_execution_status": "QWEN_A2_CLOSED_INITIAL_TELEMETRY_STOP; NOT_EVALUATED",
   "actual_scheduler_job_id_scope": "original v100 workload executed through v101 transport wrapper",
   "current_execution_job_id": "575155",
@@ -44,9 +44,10 @@
   "historical_diagnostic": "QWEN_READ_ONLY_TRACE_RELEASE.json",
   "last_executed_windows_launcher": "tools/qwen-provider-v104/dist/Start-ALICEAstraQwenQualificationV104.ps1",
   "current_observation": "QWEN_V104_RESULT_REVIEW.json",
-  "next_action": "RUN_READ_ONLY_TELEMETRY_TRANSPORT_RECEIPT",
+  "next_action": "RUN_GUARDED_PUBLISHER_REPAIR_AND_CLOSED_A2_TERMINAL_VERIFY",
   "current_manifest_digest": "25b843619e944cd0ae6069f94ff4e5e26a16e109ccbc0a66a0f05979ed70098e",
   "current_loaded_model_digest": null,
   "external_terminal_recovery": "QWEN_A2_TERMINAL_RECOVERY.json",
-  "current_diagnosis": "TELEMETRY_HELPER_REVIEW.json"
+  "current_diagnosis": "TELEMETRY_GIT183_RESULT_REVIEW.json",
+  "active_infrastructure_repair": "TELEMETRY_PUBLISHER_REPAIR_RELEASE.json"
 }

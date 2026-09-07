@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2733,
+      "sha256": "448fed0b88a3645d2c5919954ff030c45706a918d2b54a2cd8c2bd017ece4647"
+    },
+    {
+      "path": "collect_transport.py",
+      "bytes": 8467,
+      "sha256": "385b835deaf2fa5283f8288fc88fea9ff5d4d0d63bbda5b0895bab23105b254d"
+    },
+    {
+      "path": "publisher.py",
+      "bytes": 11717,
+      "sha256": "d780ee55598b5134ee8319507683fdf510c4acfa1eaf9bf393d6bd5d1adf65eb"
+    },
+    {
+      "path": "rayan-telemetry-push.sh",
+      "bytes": 12201,
+      "sha256": "81e7fcabd7f793b52b1f3efdfd58fc4002cba93b65299602bee044399ce989a0"
+    },
+    {
+      "path": "repair-plan.json",
+      "bytes": 2030,
+      "sha256": "9f389ad6bde70a42f03bdd6af51a63e1bd32ab71cf4d561be791ef337e61067d"
+    },
+    {
+      "path": "repair_publisher.py",
+      "bytes": 12957,
+      "sha256": "86428471c76f9dda0b10d7b63614fb869bb9b8ecb45e6a66354f230efab4131a"
+    },
+    {
+      "path": "selftest_installer.py",
+      "bytes": 2399,
+      "sha256": "a2804ad66a3ade8b9da5e5f56e124dbb610c5116aef9143c0b217020c934a846"
+    },
+    {
+      "path": "selftest_publisher.py",
+      "bytes": 8181,
+      "sha256": "d722bf231a1fe848d331c988b386217ffc3bea1121dfab08a9308a428ced409f"
+    }
+  ]
+}

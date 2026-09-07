@@ -43,7 +43,7 @@
   "offline_reproduction_scope": "Disposable local Git only. Root path remapped; sleep suppressed; date controlled. Fetch/push errors explicitly injected. No claim these injected errors occurred on Magnolia.",
   "additional_static_boundary": "The helper may wait 120 seconds for its lock while the caller uses a 90-second timeout. This is a separate static mismatch, not evidence that it caused the observed exit 74.",
   "connector_recovery_scope": "Ledger commit 4af0dd237ca862c605c2ee9b70c0f1df4b69263c preserved the exact three terminal payloads. It did not publish helper-generated telemetry.json/bundle.sha256 or repair the host helper.",
-  "next_action": "RUN_READ_ONLY_TELEMETRY_TRANSPORT_RECEIPT",
+  "next_action": "RUN_GUARDED_PUBLISHER_REPAIR_AND_CLOSED_A2_TERMINAL_VERIFY",
   "next_release": "TELEMETRY_TRANSPORT_RECEIPT_RELEASE.json",
   "new_diagnostic_scope": "Three bounded login-node commands using the installed GIT_SSH wrapper. Dry-run Git operations and before/after selected metadata; no helper execution or telemetry publish.",
   "next_evidence_limit": "A later dry run identifies current transport behavior. It cannot recreate lost historical stderr, test local fetch writes, or establish complete live publication compatibility.",
@@ -52,5 +52,7 @@
   "new_model_job_submitted": false,
   "a2_reset_or_a3_prepared": false,
   "stage_g_closed": false,
-  "purpose": "Reliable public fallback qualification is a prerequisite to eligible judge binding and later identity/memory experiments. No Alice capability evidence was produced by this infrastructure review."
+  "purpose": "Reliable public fallback qualification is a prerequisite to eligible judge binding and later identity/memory experiments. No Alice capability evidence was produced by this infrastructure review.",
+  "subsequent_actual_result_review": "TELEMETRY_GIT183_RESULT_REVIEW.json",
+  "subsequent_finding": "The returned Git 1.8.3.1 trace and exact reference hashes establish the stale tracking-reference defect. Earlier unknown-cause fields describe the pre-trace review."
 }

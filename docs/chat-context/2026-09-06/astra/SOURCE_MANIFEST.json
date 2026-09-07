@@ -128,6 +128,14 @@
       "original_private_file_id": "libfile_3b9af51710e48191990789774ce805ad",
       "public_archive_path": "tools/telemetry-transport-receipt/source/rayan-telemetry-push.sh",
       "custody": "Reviewed helper source with credential locators but no credential contents. Original bytes preserved; never execute this archived copy as a repair."
+    },
+    {
+      "original_name": "ALICE_TelemetryTransport_4f071227d9ec.zip",
+      "sha256": "9d2cfd97538efc0ca7b573e16f985781eb3fae3818b87f900e57ec9b76b754b9",
+      "bytes": 14457,
+      "original_private_file_id": "libfile_3f2b50519468819188bc0a0cbc53e750",
+      "public_archive_path": "artifacts/ALICE_TelemetryTransport_4f071227d9ec.zip",
+      "custody": "Reviewed Git command receipts, selected file hashes and SSH wrapper source. No private key contents, private candidates or model outputs. Original ZIP bytes preserved."
     }
   ],
   "original_audit_markdown_sha256": "8a93d002b2b2e1e2b571bdcb8808016afc5b8cd76b11f80a93fbe1c3b5193ffb",
@@ -203,6 +211,14 @@
     "release": "TELEMETRY_TRANSPORT_RECEIPT_RELEASE.json",
     "package_sha256": "dc53f84c67f8c286788c856fcffb1bfad189eb4541241d19a94be797a40104a3",
     "distribution_artifact_id": "libfile_49777da733d88191a86bbcab680b6b28",
-    "status": "READY_FOR_OWNER_READ_ONLY_TRANSPORT_OBSERVATION"
+    "status": "COMPLETED_AND_REVIEWED",
+    "actual_review": "TELEMETRY_GIT183_RESULT_REVIEW.json"
+  },
+  "active_shared_publisher_repair": {
+    "release": "TELEMETRY_PUBLISHER_REPAIR_RELEASE.json",
+    "package_sha256": "9c7dcc00e29f4fafd1eaa1b57f108dee23d9538acc7f4a9940f2a51eb2057d83",
+    "new_helper_sha256": "81e7fcabd7f793b52b1f3efdfd58fc4002cba93b65299602bee044399ce989a0",
+    "distribution_artifact_id": "libfile_64a1f60575b08191a17a5caca56fc218",
+    "status": "READY_FOR_OWNER_GUARDED_INSTALL_AND_TERMINAL_VERIFY"
   }
 }

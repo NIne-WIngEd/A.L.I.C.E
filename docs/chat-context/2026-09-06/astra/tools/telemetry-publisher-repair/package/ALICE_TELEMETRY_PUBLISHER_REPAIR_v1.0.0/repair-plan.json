@@ -1,0 +1,24 @@
+{
+  "schema": "alice.telemetry.publisher-repair.plan.v1",
+  "revision_id": "git183-publisher-v100-81e7fcabd7f7",
+  "old_helper_sha256": "ba4482728c09313aede5031e682f68e8007c79c9cfa084d3da4b11aa984d0830",
+  "new_helper_sha256": "81e7fcabd7f793b52b1f3efdfd58fc4002cba93b65299602bee044399ce989a0",
+  "ssh_wrapper_sha256": "7ddc10dff3fa2ae387c1b2e023d770c6047e5d076ab4ef837247b22dc8870120",
+  "origin": "git@ssh.github.com:NIne-WIngEd/Rayan-Compute-Ledger.git",
+  "snapshot_id": "alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed",
+  "payload_dir": "runs/alice-qwen38-a2-c926d9e355dd/telemetry-events/alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed",
+  "stage": "MC10D_QWEN_PUBLIC_CALIBRATION_V1",
+  "job_id": "575155",
+  "a2_guard_sha256": {
+    "runs/alice-qwen38-a2-c926d9e355dd/worker-finished.json": "cef2de900be2c3ad129dbe7e11df5a79e33579014450e73f22f38a806110216a",
+    "runs/alice-qwen38-a2-c926d9e355dd/result.json": "829e1e0bd81ac49bbe581c6597fd78b18252963507b7d9563ac99accb9b85097",
+    "runs/alice-qwen38-a2-c926d9e355dd/run.json": "8822368909a17fc243f1e8c8cafb721c8df930401035cd83457bd779f1f2afc6",
+    "runs/alice-qwen38-a2-c926d9e355dd/submission.json": "a774fb22223b89f5078cc2bd156460f92113650304eed576b48713d028e9a5bf",
+    "runs/alice-qwen38-a2-c926d9e355dd/telemetry-events/alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed/application.log": "dc2358cdb72f872a3036b184e9143432d0d9216ca1bf91937bf903a18d85a3b7",
+    "runs/alice-qwen38-a2-c926d9e355dd/telemetry-events/alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed/manifest.json": "b0d545d80912d829203f532114ab7e813c8ba1c8cad0588a343554b2cc2376dc",
+    "runs/alice-qwen38-a2-c926d9e355dd/telemetry-events/alice-qwen38-a2-c926d9e355dd-t-161d1ba71ed308ed/receipt.json": "96d16fbc806dec33add04d70b22ce9b4fe8e076f20648a8a1e1fb4fd57121fe1"
+  },
+  "remote_operation": "Install exact shared publisher revision after actual-host tests; verify closed a2 terminal publication twice with unchanged payload",
+  "scientific_execution_authorized": false,
+  "a2_resubmission": false
+}

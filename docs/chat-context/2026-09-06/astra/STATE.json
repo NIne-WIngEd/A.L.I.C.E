@@ -5,7 +5,7 @@
   "main": "0abaed85873c3f8de04765847eb7700b0e20433f",
   "context_parent": "a42e6cb07fcccccf1e4e3cc394df460852f668a2",
   "evidence": "Owner-returned v104 result ZIP SHA256 750881d854fa15df220347dc19c3091fcb0a5630c6a87ca30cf9fa3b4114eb33",
-  "checkpoint": "QWEN_A2_CLOSED_INITIAL_TELEMETRY_STOP; NOT_EVALUATED",
+  "checkpoint": "QWEN_TELEMETRY_GIT183_CAUSE_CONFIRMED_REPAIR_READY",
   "run_id": "260906185551-e563ae",
   "glm_profile": {
     "id": "thinking_off",
@@ -28,7 +28,7 @@
   "breadth_v104_executed_in_supplied_log": false,
   "breadth_prerequisite_satisfied": false,
   "acceptance_promotion_training_established": false,
-  "next_action": "RUN_READ_ONLY_TELEMETRY_TRANSPORT_RECEIPT",
+  "next_action": "RUN_GUARDED_PUBLISHER_REPAIR_AND_CLOSED_A2_TERMINAL_VERIFY",
   "numeric_judge_gates_changed": false,
   "hidden_MC8_accessed": false,
   "accepted_plan_changes": [
@@ -91,8 +91,14 @@
     "v104_initial_telemetry_helper_exit": 74,
     "v104_inference_attempts": 0,
     "telemetry_helper_review": "TELEMETRY_HELPER_REVIEW.json",
-    "telemetry_transport_diagnostic_native_execution_pending": true,
-    "telemetry_transport_diagnostic_tests_passed": 4
+    "telemetry_transport_diagnostic_native_execution_pending": false,
+    "telemetry_transport_diagnostic_tests_passed": 4,
+    "telemetry_transport_diagnostic_native_tests_passed": 4,
+    "telemetry_transport_diagnostic_native_test_seconds": 3.716,
+    "telemetry_transport_diagnostic_actual_receipt_received": true,
+    "publisher_repair_local_tests_passed": 9,
+    "publisher_repair_actual_host_tests_required": 7,
+    "publisher_repair_actual_magnolia_execution_pending": true
   },
   "actual_glm_forensic_bundle_received": true,
   "actual_glm_rows_reverified": true,
@@ -143,7 +149,7 @@
   "latest_review_date": "2026-09-07",
   "qwen_current_observation": "QWEN_V104_RESULT_REVIEW.json",
   "qwen_read_only_diagnostic": "TELEMETRY_TRANSPORT_RECEIPT_RELEASE.json",
-  "qwen_latest_diagnosis": "TELEMETRY_HELPER_REVIEW.json",
+  "qwen_latest_diagnosis": "TELEMETRY_GIT183_RESULT_REVIEW.json",
   "qwen_v102_launcher_rerun_recommended": false,
   "qwen_pre_submission_revision": "QWEN_PROVIDER_REVISION_V104.json",
   "qwen_active_launcher": null,
@@ -166,7 +172,7 @@
   "agent_routing": "Astra primary while capacity is available; Sol continuity fallback for limits or repeated failure",
   "qwen_previous_read_only_diagnostic": "QWEN_READ_ONLY_TRACE_RELEASE.json",
   "qwen_previous_read_only_diagnostic_exit": 0,
-  "active_read_only_diagnostic": "TELEMETRY_TRANSPORT_RECEIPT_RELEASE.json",
+  "active_read_only_diagnostic": null,
   "phase2_replacement_roadmap": "PHASE2_REPLACEMENT_ROADMAP.md",
   "migration_checkpoint": {
     "stage": "G",
@@ -197,11 +203,14 @@
   "qwen_v104_launcher_rerun_recommended": false,
   "qwen_source_a1_external_terminal_ledger_commit": "3f42de3531b396ee53c1aab797852ce18ac88f14",
   "qwen_external_terminal_recovery": "QWEN_A2_TERMINAL_RECOVERY.json",
-  "qwen_telemetry_helper_inner_cause_known": false,
+  "qwen_telemetry_helper_inner_cause_known": true,
   "qwen_local_controller_terminal_publication_reconciled": false,
   "qwen_local_revision_intent_fields_scope": "Historical observed v103 intent preserved in v104 lineage; no longer an active pre-submission revision recommendation",
   "qwen_helper_source_received": true,
   "qwen_helper_source_sha256": "ba4482728c09313aede5031e682f68e8007c79c9cfa084d3da4b11aa984d0830",
   "qwen_telemetry_retry_defect_reproduced": true,
-  "qwen_telemetry_git_transport_cause_known": false
+  "qwen_telemetry_git_transport_cause_known": true,
+  "qwen_current_infrastructure_review": "TELEMETRY_GIT183_RESULT_REVIEW.json",
+  "qwen_telemetry_cause_scope": "Version-specific stale tracking reference; historical per-attempt stderr was discarded",
+  "active_infrastructure_repair": "TELEMETRY_PUBLISHER_REPAIR_RELEASE.json"
 }

@@ -1,45 +1,41 @@
-# Current continuation — a2 stopped before inference
+# Current continuation — old Git publisher cause confirmed
 
 Read the [master handoff](ASTRA_MASTER_CONTINUATION_HANDOFF.md),
-[state](STATE.json) and [verified v104 result review](QWEN_V104_RESULT_REVIEW.json).
+[state](STATE.json), and [actual Git trace review](TELEMETRY_GIT183_RESULT_REVIEW.json).
 Astra remains primary while available; Sol is the continuity fallback.
 
-V104 completed the explicit revision of the same a2. Magnolia job **575155**
-started after source reconciliation, verified login-node HTTPS and registry
-manifest resolution passed. The worker stopped at initial telemetry publication:
-the installed helper exited **74** before runtime preparation or inference.
-All 16 public tasks are **NOT_ATTEMPTED**. Qwen remains **NOT_EVALUATED**.
-The 66 native Windows selftests passed in 145.030 seconds; they do not establish
-live helper compatibility or scientific qualification. The resolved manifest
-digest is not evidence of a loaded model, CPU throughput or an effective contract.
+The 05:57:25Z receipt confirms Git 1.8.3.1, successful fetch dry-run and
+non-fast-forward push rejection. Exact observed hashes identify cached main and
+origin/main at ec4d378 while FETCH_HEAD is already at 3f42de3. The installed helper
+fetches origin main and then builds on origin/main. Before Git 1.8.4 that fetch
+does not refresh the tracking reference. The actual references, installed code
+and upstream release notes establish the defect. Lost earlier stderr stays lost.
 
-The actual result is already in [LATEST_QWEN_PUBLIC](qwen-public/LATEST_QWEN_PUBLIC.json).
-Its original failed publication receipts remain historical evidence. The exact
-terminal payloads were subsequently appended through the GitHub connector;
-see [separate recovery receipt](QWEN_A2_TERMINAL_RECOVERY.json). This restored
-terminal visibility without repairing Magnolia's helper or reconciling the
-Windows controller state.
+Next: the [publisher repair](TELEMETRY_PUBLISHER_REPAIR_RELEASE.json).
+Save its exact ZIP and launcher in Downloads and run the launcher. It checks
+the observed helper/wrapper and closed a2 hashes, runs seven tests on Magnolia's
+actual Git, backs up the original helper and installs the exact replacement.
+It then verifies the already-failed terminal snapshot and an identical retry.
+Return RESULT_ZIP and the transcript, including on failure.
 
-The [installed helper review](TELEMETRY_HELPER_REVIEW.json) now identifies
-its explicit exit 74 as retry exhaustion in the Git fetch/push loop. Both Git
-streams are suppressed inside the helper. An independent local reproduction
-also confirms a separate timestamp-driven retry collision (exit 73); it does
-not explain the observed exit 74.
+The replacement explicitly refreshes the tracking ref and uses the fetched parent.
+It preserves cached metadata, records raw Git receipts and uses a private index
+to avoid resetting the shared checkout. A raw push of the cached local HEAD is
+therefore not the repaired publisher's verification path. Use its actual receipt.
+Nine local release checks passed. Actual installation/publication remain pending.
 
-Next: use the [read-only transport receipt](TELEMETRY_TRANSPORT_RECEIPT_RELEASE.json)
-ZIP and launcher. It captures Git version, fetch dry-run and push dry-run with
-the installed SSH wrapper and preserves raw output. Return TRACE_ZIP even if
-commands fail. A new observation cannot recover lost historical stderr.
-There is no new scientific execution package. Keep closed a2 state unchanged;
-do not rerun v104 or infer a3 authority. Inspect the returned Git error before
-selecting the transport repair. The helper itself is not invoked by this check.
+Qwen is still NOT_EVALUATED. A2 job 575155 is closed with zero probe/task attempts.
+V104 revision and login-node TLS/manifest preflight succeeded before telemetry
+stopped the worker. The manifest is resolved; runtime/model/throughput and the
+16 public requests are still unexecuted. Do not rerun v104, reset a2, or infer a3
+authority. A future eligible execution must bind the installed helper and retain
+its raw command journal. The repair ZIP hash never replaces the Qwen workload hash.
 
-Keep Gemma v182, Mistral/Granite bindings, GLM's failed calibration, 287
-candidates, 63 replacements and one deferred slot. Judge binding and breadth
-prerequisite migration require eligible actual calibration evidence. Private
-candidate evaluation, acceptance, promotion, training and MC8 remain gated.
+Keep the actual public result pointer and separate terminal recovery history.
+Gemma v182, Mistral/Granite bindings, GLM's failed calibration, 287 candidates,
+63 replacements and one deferred slot remain unchanged. Private pointwise work,
+breadth, acceptance, promotion, training and MC8 remain gated.
 
 Follow the [Phase 2 replacement roadmap](PHASE2_REPLACEMENT_ROADMAP.md).
-Stage G is still open; E05 belongs in G+. Final replacement requires Stage J
-passing and Rayan's acceptance. Main was reverified unchanged at
-`0abaed85873c3f8de04765847eb7700b0e20433f`.
+Stage G remains open; E05 belongs in G+. Final replacement requires accepted
+Stage J. Main remains frozen at 0abaed85873c3f8de04765847eb7700b0e20433f.

@@ -1,0 +1,79 @@
+{
+  "schema": "alice.telemetry.git183.actual-result-review.v1",
+  "date": "2026-09-07",
+  "context_parent": "19b29c4e78ebd1b2fa19cf43795e45b71c7a58eb",
+  "source_zip": "artifacts/ALICE_TelemetryTransport_4f071227d9ec.zip",
+  "source_zip_sha256": "9d2cfd97538efc0ca7b573e16f985781eb3fae3818b87f900e57ec9b76b754b9",
+  "source_library_file_id": "libfile_3f2b50519468819188bc0a0cbc53e750",
+  "verification": "ZIP manifest and raw transport streams verified; stable before/after inventories; no parse errors",
+  "observed_at": "2026-09-07T05:57:25.957414+00:00",
+  "finished_at": "2026-09-07T05:57:27.579140+00:00",
+  "native_windows_diagnostic_tests_passed": 4,
+  "native_windows_diagnostic_test_seconds": 3.716,
+  "native_test_evidence": "Owner terminal message supplied with this result",
+  "git_version": "1.8.3.1",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "ada2ebf0e85b211f303fa1a7cdc7f214df0ad6359651b90d0103225e0297117c",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "git",
+        "fetch",
+        "--dry-run",
+        "origin",
+        "main"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "99c099ffba62e90bd1d7f82a0dbe277cdb81460c44eb338121cc0adab2715ded"
+    },
+    {
+      "argv": [
+        "git",
+        "push",
+        "--dry-run",
+        "origin",
+        "HEAD:refs/heads/main"
+      ],
+      "exit_code": 1,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "096e42d5f414a896466460a33b5f6dc3098dc6a9c98ada937dde5f20e1434648"
+    }
+  ],
+  "observed_push_error": "non-fast-forward; cached HEAD is behind the remote",
+  "selected_files_stable": true,
+  "reference_identification": {
+    "method": "Recorded file sizes and SHA256 matched against exact known Git reference bytes, including newline and FETCH_HEAD description",
+    "local_main_and_origin_main": "ec4d37861c837ca524d2a472157681847674a565",
+    "local_ref_bytes_sha256": "58c8be1582d519591379ae51fe22e92954c3cc8f889aa03307e45846214a76e2",
+    "fetch_head": "3f42de3531b396ee53c1aab797852ce18ac88f14",
+    "fetch_head_bytes": "3f42de3531b396ee53c1aab797852ce18ac88f14\t\tbranch 'main' of ssh.github.com:NIne-WIngEd/Rayan-Compute-Ledger\n",
+    "fetch_head_bytes_sha256": "11e44af8b0666693169fc7252b258718465bfda3910dcf2b400c5cdb18bc7127",
+    "github_ledger_head_at_review": "4af0dd237ca862c605c2ee9b70c0f1df4b69263c"
+  },
+  "root_cause": "The installed helper fetches origin main without a destination refspec, then checks out origin/main. Git 1.8.3.1 refreshes FETCH_HEAD but not that tracking reference for this command. A remote append therefore leaves the helper repeatedly building on stale origin/main; pushes are rejected.",
+  "primary_compatibility_source": "https://github.com/git/git/blob/v1.8.4/Documentation/RelNotes/1.8.4.txt",
+  "historical_stderr_recovered": false,
+  "causal_evidence_scope": "A deterministic version-specific defect is established by actual reference hashes, actual Git version, installed code and Git release notes. The old invocation suppressed its individual Git errors; those historical bytes remain unavailable.",
+  "contributing_error": "Astra did not account for the documented old Git fetch behavior after advancing the ledger through the connector. Modern Git tests masked the tracking-reference assumption.",
+  "separate_retry_defect": "Previously reproduced timestamp regeneration causes code 73 on identical-payload retries. It is repaired together with the demonstrated fetch-parent bug and raw receipt loss.",
+  "repair": "TELEMETRY_PUBLISHER_REPAIR_RELEASE.json",
+  "next_action": "RUN_GUARDED_PUBLISHER_REPAIR_AND_CLOSED_A2_TERMINAL_VERIFY",
+  "repair_scope": "Shared publisher only. Explicit tracking refspec, fresh fetched parent, private index, preserved cached metadata, raw private command receipts, original helper backup and verified terminal replay only.",
+  "actual_magnolia_repair_observed": false,
+  "actual_remote_tests_required": 7,
+  "local_tests_passed": 9,
+  "next_execution_requirement": "After reviewing the actual publisher repair receipt, determine an eligible new execution path. Bind the installed helper identity and retain its command journal in successor evidence. Never reset or resubmit closed a2.",
+  "scientific_outcome": "NOT_EVALUATED",
+  "qwen_tasks_attempted": 0,
+  "new_execution_identity_prepared": false,
+  "stage_g_closed": false,
+  "main": "0abaed85873c3f8de04765847eb7700b0e20433f"
+}

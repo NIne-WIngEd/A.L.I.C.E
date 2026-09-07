@@ -1,0 +1,14 @@
+test_guarded_install_preserves_original_retry_and_unexpected_live_change (selftest_installer.InstallerTests.test_guarded_install_preserves_original_retry_and_unexpected_live_change) ... ok
+test_real_stdin_program_compiles_and_unknown_helper_stops_before_staging (selftest_installer.InstallerTests.test_real_stdin_program_compiles_and_unknown_helper_stops_before_staging) ... ok
+test_source_compiles_and_invalid_identity_stops_before_spool_creation (selftest_publisher.PortableTests.test_source_compiles_and_invalid_identity_stops_before_spool_creation) ... ok
+test_competing_append_rebuilds_on_fresh_parent_without_force (selftest_publisher.PublisherTests.test_competing_append_rebuilds_on_fresh_parent_without_force) ... ok
+test_identical_partial_connector_snapshot_can_be_completed_without_rewriting_payload (selftest_publisher.PublisherTests.test_identical_partial_connector_snapshot_can_be_completed_without_rewriting_payload) ... ok
+test_retry_freezes_metadata_and_changed_input_cannot_overwrite (selftest_publisher.PublisherTests.test_retry_freezes_metadata_and_changed_input_cannot_overwrite) ... ok
+test_split_log_retains_original_part_schema_and_is_idempotent (selftest_publisher.PublisherTests.test_split_log_retains_original_part_schema_and_is_idempotent) ... ok
+test_stale_ref_reproduction_and_destination_refspec_repair_preserve_checkout (selftest_publisher.PublisherTests.test_stale_ref_reproduction_and_destination_refspec_repair_preserve_checkout) ... ok
+test_transport_failure_keeps_raw_error_and_releases_owned_lock (selftest_publisher.PublisherTests.test_transport_failure_keeps_raw_error_and_releases_owned_lock) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 9.063s
+
+OK

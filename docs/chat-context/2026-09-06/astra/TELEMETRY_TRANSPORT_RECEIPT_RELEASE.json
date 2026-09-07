@@ -9,8 +9,8 @@
   "tests_passed": 4,
   "fresh_zip_extraction_tested": true,
   "embedded_powershell_manifest_verifier_executed": true,
-  "powershell_native_execution_observed": false,
-  "magnolia_execution_observed": false,
+  "powershell_native_execution_observed": true,
+  "magnolia_execution_observed": true,
   "source_helper_sha256": "ba4482728c09313aede5031e682f68e8007c79c9cfa084d3da4b11aa984d0830",
   "commands": [
     [
@@ -40,9 +40,13 @@
   "ssh_timeout_seconds": 85,
   "execution_authority_granted": false,
   "new_scientific_execution_package": false,
-  "status": "READY_FOR_OWNER_READ_ONLY_TRANSPORT_OBSERVATION",
+  "status": "EXECUTED_ON_WINDOWS_AND_MAGNOLIA; ACTUAL_RECEIPT_REVIEWED",
   "distribution_artifact_id": "libfile_49777da733d88191a86bbcab680b6b28",
   "source_and_rebuild": "tools/telemetry-transport-receipt/build_receipt.py",
   "actual_helper_review": "TELEMETRY_HELPER_REVIEW.json",
-  "next_action": "RUN_READ_ONLY_TELEMETRY_TRANSPORT_RECEIPT"
+  "next_action": "RUN_GUARDED_PUBLISHER_REPAIR_AND_CLOSED_A2_TERMINAL_VERIFY",
+  "native_tests_passed": 4,
+  "native_test_seconds": 3.716,
+  "actual_result_sha256": "9d2cfd97538efc0ca7b573e16f985781eb3fae3818b87f900e57ec9b76b754b9",
+  "actual_review": "TELEMETRY_GIT183_RESULT_REVIEW.json"
 }

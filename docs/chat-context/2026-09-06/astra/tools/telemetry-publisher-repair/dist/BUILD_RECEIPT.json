@@ -1,0 +1,19 @@
+{
+  "schema": "alice.telemetry.publisher-repair.build.v1",
+  "package": "ALICE_TELEMETRY_PUBLISHER_REPAIR_v1.0.0.zip",
+  "package_sha256": "9c7dcc00e29f4fafd1eaa1b57f108dee23d9538acc7f4a9940f2a51eb2057d83",
+  "package_bytes": 24690,
+  "launcher": "Start-ALICETelemetryPublisherRepairV100.ps1",
+  "launcher_sha256": "eb3663b971e418bc89c44f06eaa2331362ff6337035efdf5305f92f39733fd1b",
+  "new_helper_sha256": "81e7fcabd7f793b52b1f3efdfd58fc4002cba93b65299602bee044399ce989a0",
+  "revision_id": "git183-publisher-v100-81e7fcabd7f7",
+  "package_manifest_sha256": "91b5638cb1611f7662acbcf88572c157f98e8dd7caa51ba102c19f5c818f77a9",
+  "local_tests_passed": 9,
+  "actual_host_publisher_tests_required_before_install": 7,
+  "fresh_zip_tested": true,
+  "native_windows_execution_observed": false,
+  "actual_magnolia_installation_or_publication_observed": false,
+  "exact_original_helper_backup_required": true,
+  "new_scientific_execution": false,
+  "modern_git_fixture_scope": "Real local repositories; --refmap= models old source-only fetch behavior. Actual Magnolia gate uses unmodified Git 1.8.3.1."
+}
