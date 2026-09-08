@@ -45,7 +45,7 @@
       "accepted": 0,
       "promoted": 0,
       "training": false,
-      "pre_pointwise_consolidation": "V191_DETERMINISTIC_SECOND_VALIDATOR_STOP; V192_TECHNICAL_SUCCESSOR_PREPARED_NOT_EXECUTED",
+      "pre_pointwise_consolidation": "V192_SCIENTIFIC_REFREEZE_COMPLETE_OUTER_ARCHIVE_SHAPE_STOP; V193_POST_REFREEZE_RECOVERY_PREPARED",
       "next_required_gate": "FOUR_FAMILY_SUCCESSOR_BINDING_AND_287_REFREEZE_AND_BREADTH_MIGRATION",
       "v190_observed": {
         "effective_pool": 287,
@@ -101,6 +101,36 @@
         "failure_class": "DETERMINISTIC_LEGACY_POINTWISE_VALIDATOR_SECOND_FAMILY_ASSERTION",
         "root_cause": "v1.9.1 patched the receipt judge_families assertion but missed the same legacy family literal in the binding receipt assertion. The correct gemma,qwen,mistral,granite successor state was rejected by RuntimeError: binding.",
         "scientific_failure": false,
+        "remote_inference_started": false
+      },
+      "v192_observed": {
+        "effective_pool": 287,
+        "deferred_slots": 1,
+        "families": [
+          "gemma",
+          "qwen",
+          "mistral",
+          "granite"
+        ],
+        "four_family_binding_complete": true,
+        "full_scenario_freeze_complete": true,
+        "scenario_probe_upper_bound": 55104,
+        "internal_pointwise_ready_validator_passed": true,
+        "canonical_atomic_publish_complete": true,
+        "pointwise_ready_bundle_sha256": "5CC3C64EF4E64D75BD41E860F34CCD8FE8C882EEDBB6F6C6D0F68CB13218EF30",
+        "private_pointwise_started": false,
+        "mc8": false,
+        "full_simulation": false,
+        "asyn_accepted": 0,
+        "asyn_promoted": 0,
+        "training": false,
+        "exit": 76
+      },
+      "v192_stop": {
+        "failure_class": "DETERMINISTIC_OUTER_VALIDATOR_ARCHIVE_SHAPE_ASSUMPTION",
+        "root_cause": "Historical v1.7 pointwise-ready ZIP is flat/multi-top-level. v1.9.2 outer validate_ready incorrectly called one_root() after the internal successor validator, canonical atomic publish, and exact ZIP creation had already succeeded.",
+        "scientific_failure": false,
+        "historical_refreeze_rerun_required": false,
         "remote_inference_started": false
       }
     },
@@ -199,40 +229,18 @@
     "stage_g_closure": true,
     "phase2_retirement": true
   },
-  "next_action": "RUN_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_V192",
+  "next_action": "RUN_MC10D_POST_REFREEZE_RECOVERY_V193",
   "pending_package": {
-    "stage": "MC10D_PRE_POINTWISE_CONSOLIDATION_TECHNICAL_SUCCESSOR",
-    "package": "ALICE_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_v1.9.2.zip",
-    "package_sha256": "5BA15F6807A66FEA8601333F809F3C798E0621F95B4C9A9383BFEBD940873A39",
-    "package_bytes": 377046,
-    "launcher": "Start-ALICEMC10DQwenSuccessorRefreezeBreadthV192.ps1",
-    "launcher_sha256": "C87BF4ABCAA59B7970C6CDB7CF9FA562929DADD71CFF215EA9AA0F04726D017E",
-    "build_receipt": "ALICE_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_v1.9.2_BUILD_RECEIPT.txt",
-    "build_receipt_sha256": "1382347D43B2182136DDFB15C64083FA9E06B4369B23BFBE7C28CAD56A226FBA",
-    "technical_parent_v191_sha256": "397EE77874D9D2AF7AE197AF5EC3FEB478D222930D46F22AE52C953B31023D72",
-    "v191_terminal_sha256": "AF16543469016BC80A7DF6AA88CDCE63F033273DF28ADB9506B85C4AA2548620",
-    "scientific_parent_v172_sha256": "4D9EE7FE7AACB510A1170B5C53B9E9F07D1182FFDC04EE55FA2A533097324533",
-    "freeze_sha256": "22B0ADBCCF442B0B3654F964E35AB77A044AF7623891E2A60C72B06A94ECE9A3",
-    "technical_fix_only": "Audit the entire copied 29-line legacy pointwise-ready validator. Require the exact historical family literal to occur exactly twice, replace both GLM family-set assertions with Qwen, require receipt and binding successor anchors exactly once each, require zero historical literals, compile, then validate.",
-    "audits": {
-      "zip_crc": true,
-      "deterministic_byte_identical_rebuild": true,
-      "fresh_extract_compile": true,
-      "fresh_extract_selftest": true,
-      "qwen_84_file_revalidation": true,
-      "qwen_score_recomputed": true,
-      "v170_patch_patterns": 8,
-      "legacy_family_literal_expected_count": 2,
-      "legacy_family_literal_replaced_count": 2,
-      "receipt_assertion_successorized": true,
-      "binding_assertion_successorized": true,
-      "residual_legacy_family_literal": 0,
-      "v190_regression_covered": true,
-      "v191_regression_covered": true,
-      "falsification_families_preserved": 18,
-      "zero_tolerance_vetoes_preserved": 8,
-      "e0_never_generated": true
-    },
+    "stage": "MC10D_POST_REFREEZE_RECOVERY_AND_PRIVATE_POINTWISE_INPUT_FREEZE",
+    "package": "ALICE_MC10D_QWEN_SUCCESSOR_POSTREFREEZE_RECOVERY_v1.9.3.zip",
+    "package_sha256": "8A8AC8C9FAA1C999E6F1236F80BC04FBA625F10CA9B3DF4D9F9FF94D2EBC8D9D",
+    "package_bytes": 18207,
+    "launcher": "Start-ALICEMC10DPostRefreezeRecoveryV193.ps1",
+    "launcher_sha256": "28C90285AAAFA1EE8C3E57A38EA67A18ED74C5D8EC29FD3B59A1E03C70567D53",
+    "build_receipt": "ALICE_MC10D_QWEN_SUCCESSOR_POSTREFREEZE_RECOVERY_v1.9.3_BUILD_RECEIPT.txt",
+    "build_receipt_sha256": "3F811258D983B8AA4415F5E5AB0A3030C6DBB4627F0D5B27853BAFC407AE8D2B",
+    "exact_input_pointwise_ready_sha256": "5CC3C64EF4E64D75BD41E860F34CCD8FE8C882EEDBB6F6C6D0F68CB13218EF30",
+    "historical_refreeze_rerun": false,
     "remote_inference": false,
     "private_pointwise_started": false,
     "mc8": false,
@@ -240,7 +248,24 @@
     "asyn_acceptance": false,
     "asyn_promotion": false,
     "training": false,
-    "executed": false
+    "outputs_expected": [
+      "ALICE_MC10D_POINTWISE_DISPATCH_AUTHORITY_v1.9.3.json",
+      "ALICE_MC10D_POINTWISE_BUNDLE_LAYOUT_v1.9.3.json",
+      "ALICE_MC10D_PRIVATE_POINTWISE_INPUT_FREEZE_v1.9.3.zip",
+      "ALICE_MC10D_PRIVATE_POINTWISE_INPUT_FREEZE_RECEIPT_v1.9.3.json"
+    ],
+    "audits": {
+      "flat_archive_regression": true,
+      "wrapped_archive_supported": true,
+      "ambiguous_archive_fail_closed": true,
+      "archive_tree_must_match_canonical_atomic_publish": true,
+      "qwen_adapter_revalidated": true,
+      "gemma_preserved_gate_revalidated": true,
+      "e0_never_generated": true,
+      "falsification_families_preserved": 18,
+      "zero_tolerance_vetoes_preserved": 8,
+      "powershell_native_stderr_exit_preservation": true
+    }
   },
   "objective_guardrail": {
     "objective": "Maximize evidence-constrained behavioral and cognitive fidelity to Elaina in A.L.I.C.E. while preserving provenance, uncertainty, corrections, context sensitivity, and Alice's separate post-activation continuity. Do not claim biological or metaphysical identity continuity.",
