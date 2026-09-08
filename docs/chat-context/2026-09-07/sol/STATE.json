@@ -198,11 +198,21 @@
         },
         "second_chunk": {
           "kernel_ref": "mkrayanyan/alice-mc10d-pw-gem-72982fb837f5",
-          "terminal": "FAILED",
-          "controller_exit": 76,
-          "exact_worker_failure": "PENDING_READ_ONLY_LOCAL_EVIDENCE_DIAGNOSIS"
+          "historical_local_dispatch_state_terminal": "FAILED",
+          "historical_local_output_validated": false,
+          "exact_remote_result_sha256": "5FC39E5DA3E54B683224EFAD8E458A70034AAB89088E97DC516204755C0E7B31",
+          "exact_remote_result_status": "PARTIAL_SOFT_CHECKPOINT",
+          "exact_v200_validate_remote_zip": true,
+          "tasks_supplied": 163,
+          "tasks_completed": 119,
+          "next_offset": 119,
+          "valid_rows": 106,
+          "invalid_rows": 13,
+          "job_failure_json": false,
+          "worker_scientific_failure": false,
+          "provider_control_plane_failure": true
         },
-        "minimum_preserved_progress": "Gemma 124/287",
+        "minimum_preserved_progress": "Gemma 243/287",
         "private_pointwise_started": true,
         "pointwise_frozen": false,
         "mc8": false,
@@ -210,7 +220,25 @@
         "asyn_accepted": 0,
         "asyn_promoted": 0,
         "training": false,
-        "blind_rerun_forbidden": true
+        "blind_rerun_forbidden": true,
+        "gemma_rows": {
+          "first_checkpoint": 124,
+          "second_recovered_checkpoint": 119,
+          "combined": 243,
+          "valid": 212,
+          "invalid": 31,
+          "remaining_unattempted": 44
+        },
+        "root_cause": {
+          "class": "KAGGLE_STATUS_PARSER_FALSE_FAILED_ON_NONZERO_STDERR",
+          "detail": "v2.0.0 status_token searched stdout+stderr for bare terminal words before requiring status-command success. Non-zero Kaggle CLI DNS stderr contained 'Failed to resolve api.kaggle.com', which was misparsed as FAILED. Read-only output retrieval later returned a manifest-valid PARTIAL_SOFT_CHECKPOINT.",
+          "cli_evidence": [
+            "status returncode=1 ConnectTimeoutError",
+            "list-reconcile returncode=1 NameResolutionError",
+            "status returncode=1 NameResolutionError containing 'Failed to resolve'",
+            "read-only kernels output later returncode=0"
+          ]
+        }
       }
     },
     "judges": {
@@ -308,44 +336,27 @@
     "stage_g_closure": true,
     "phase2_retirement": true
   },
-  "next_action": "RUN_MC10D_V200_GEMMA_SECOND_CHUNK_FORENSIC_V3_DIRECT_PYTHON",
+  "next_action": "RUN_MC10D_V201_RECOVER_PARALLEL_POINTWISE",
   "pending_package": {
-    "stage": "MC10D_BLINDED_PRIVATE_POINTWISE_THEN_SIMULATION_FALSIFICATION",
-    "package": "ALICE_MC10D_PRIVATE_POINTWISE_SIMFALSIFY_v2.0.0.zip",
-    "package_sha256": "9DB60EE723F4804F2443AF0A4290D40CC14865D28DF4867634B76688AA1812AA",
-    "package_bytes": 36873,
-    "launcher": "Start-ALICEMC10DPrivatePointwiseSimFalsifyV200.ps1",
-    "launcher_sha256": "1093E18BDC9486B8EB0026E435FB366049B8A9AF2F7C88C9B033396F6091472C",
-    "build_receipt": "ALICE_MC10D_PRIVATE_POINTWISE_SIMFALSIFY_v2.0.0_BUILD_RECEIPT.txt",
-    "build_receipt_sha256": "EF7ACAB117E7E3F9DA6F4686E5A8D4B145A86588ED69CB7886A788A1F9C62158",
+    "stage": "MC10D_PRIVATE_POINTWISE_RECOVERY_AND_BOUNDED_PARALLEL_COMPLETION",
+    "controller": "ALICE_MC10D_V201_RECOVER_PARALLEL_POINTWISE.py",
+    "controller_sha256": "4DAFE1AB65A263D3009C977317CFE1340579728CF9ECC188CA75E898FE267654",
+    "build_receipt": "ALICE_MC10D_V201_RECOVER_PARALLEL_POINTWISE_BUILD_RECEIPT.txt",
+    "build_receipt_sha256": "486CA986AE09746F2FCE9C6C2D0680CE2E4C9B044442BBAA45F7EF71DF6DC612",
+    "exact_parent_v200_sha256": "9DB60EE723F4804F2443AF0A4290D40CC14865D28DF4867634B76688AA1812AA",
     "exact_input_freeze_sha256": "F232721A412D24304BE05DA100BFE27D6CA6B0124E7D1AC504AC14D85197EF01",
-    "historical_refreeze_rerun": false,
-    "private_pointwise_started": false,
+    "gemma_recovered_rows": 243,
+    "gemma_remaining_unattempted": 44,
+    "max_kaggle_concurrent_gpu_commits": 2,
+    "provider_cap_auto_downgrade_to_one": true,
+    "nonzero_status_stderr_never_terminal": true,
+    "magnolia_used": false,
+    "pointwise_only": true,
     "mc8_before_pointwise_freeze": false,
     "asyn_acceptance": false,
     "asyn_promotion": false,
     "training": false,
-    "executed": false,
-    "audits": {
-      "deterministic_byte_identical_rebuild": true,
-      "zip_crc": true,
-      "fresh_extract_compile": true,
-      "fresh_extract_selftest": true,
-      "exact_v194_parent_revalidated": true,
-      "candidates": 287,
-      "packets": 24,
-      "unknown_competitors": 24,
-      "scenario_probe_upper_bound": 55104,
-      "falsification_families": 18,
-      "zero_tolerance_vetoes": 8,
-      "real_candidate_ids_uploaded": false,
-      "real_packet_ids_uploaded": false,
-      "generator_identity_uploaded": false,
-      "validated_local_output_resume_without_kaggle": true,
-      "validated_local_infrastructure_stop_preserved_as_failure": true,
-      "push_once_contract": true,
-      "native_exit_preservation": true
-    }
+    "executed": false
   },
   "objective_guardrail": {
     "objective": "Maximize evidence-constrained behavioral and cognitive fidelity to Elaina in A.L.I.C.E. while preserving provenance, uncertainty, corrections, context sensitivity, and Alice's separate post-activation continuity. Do not claim biological or metaphysical identity continuity.",
@@ -357,21 +368,14 @@
     "mc10d_objective": "Produce a defensible pointwise-ready and simulation/falsification-tested candidate set for MC10E SELECT/ABSTAIN, not maximize candidate acceptance. All 18 falsification families and all 8 zero-tolerance vetoes remain in force."
   },
   "pending_diagnostic": {
-    "version": "v3",
+    "version": "v3_COMPLETE",
     "script": "ALICE_MC10D_V200_GEMMA_SECOND_CHUNK_FORENSIC_v3.py",
     "script_sha256": "C989D9BB1A21C83A70214A29D73F2FA08773FC918F1B90254652EFC140A1116C",
-    "build_receipt_sha256": "15DCF8CD89B93CE806329CAC3109F0CB5675E50F33B47A401822B2D1FB2EC888",
-    "architecture": "single Python process; no PowerShell",
-    "exact_v200_package_sha256": "9DB60EE723F4804F2443AF0A4290D40CC14865D28DF4867634B76688AA1812AA",
-    "previous_ref": "mkrayanyan/alice-mc10d-pw-gem-f804a0b652ea",
-    "failed_ref": "mkrayanyan/alice-mc10d-pw-gem-72982fb837f5",
-    "exact_v200_controller_validator_reused": true,
-    "local_evidence_first": true,
-    "remote_fallback": "read-only kaggle kernels output only",
-    "kaggle_push": false,
-    "kaggle_delete": false,
-    "scientific_mutation": false,
-    "MC8": false
+    "result": "FORENSIC_EVIDENCE_READY",
+    "second_result_sha256": "5FC39E5DA3E54B683224EFAD8E458A70034AAB89088E97DC516204755C0E7B31",
+    "second_result_status": "PARTIAL_SOFT_CHECKPOINT",
+    "recovered_rows": 119,
+    "no_mutation": true
   },
   "provider_parallelism_review": {
     "scientific_workflow_allows_parallel_judge_families": true,
@@ -388,6 +392,15 @@
       "model fit/performance for exact Mistral/Granite/Gemma v200 profiles has not been prospectively proven on 2x P100"
     ],
     "decision": "DO_NOT_USE_MAGNOLIA_FOR_CURRENT_MC10D_JUDGE_INFERENCE",
-    "safer_future_optimization": "after failed Gemma chunk is diagnosed, consider a concurrency-only Kaggle successor that runs independent judge families in parallel if quota/concurrency permits"
+    "safer_future_optimization": "after failed Gemma chunk is diagnosed, consider a concurrency-only Kaggle successor that runs independent judge families in parallel if quota/concurrency permits",
+    "current_v201_kaggle_parallelism": {
+      "enabled": true,
+      "max_concurrent": 2,
+      "account_cap_unknown_until_provider_admission": true,
+      "explicit_session_cap_behavior": "downgrade to 1 only after exact remote absence is proven",
+      "quota_rejection_behavior": "hard stop",
+      "total_gpu_quota_consumption_not_reduced": true,
+      "wall_clock_reduced_if_two_commit_slots_available": true
+    }
   }
 }
