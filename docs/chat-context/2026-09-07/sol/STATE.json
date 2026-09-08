@@ -40,7 +40,7 @@
       "retained_originals": 224,
       "slot63": "DEFERRED_NO_ATTEMPT_4",
       "slot64": "DONE_NEVER_RERUN",
-      "private_pointwise_started": false,
+      "private_pointwise_started": true,
       "mc8": "SEALED",
       "accepted": 0,
       "promoted": 0,
@@ -185,6 +185,32 @@
         "asyn_promoted": 0,
         "training": false,
         "exit": 0
+      },
+      "v200_runtime": {
+        "package_sha256": "9DB60EE723F4804F2443AF0A4290D40CC14865D28DF4867634B76688AA1812AA",
+        "phase": "POINTWISE",
+        "family": "gemma",
+        "first_chunk": {
+          "kernel_ref": "mkrayanyan/alice-mc10d-pw-gem-f804a0b652ea",
+          "terminal": "COMPLETE",
+          "preserved_completed": 124,
+          "total": 287
+        },
+        "second_chunk": {
+          "kernel_ref": "mkrayanyan/alice-mc10d-pw-gem-72982fb837f5",
+          "terminal": "FAILED",
+          "controller_exit": 76,
+          "exact_worker_failure": "PENDING_READ_ONLY_LOCAL_EVIDENCE_DIAGNOSIS"
+        },
+        "minimum_preserved_progress": "Gemma 124/287",
+        "private_pointwise_started": true,
+        "pointwise_frozen": false,
+        "mc8": false,
+        "full_simulation": false,
+        "asyn_accepted": 0,
+        "asyn_promoted": 0,
+        "training": false,
+        "blind_rerun_forbidden": true
       }
     },
     "judges": {
@@ -282,7 +308,7 @@
     "stage_g_closure": true,
     "phase2_retirement": true
   },
-  "next_action": "RUN_MC10D_PRIVATE_POINTWISE_SIMFALSIFY_V200_AUTO",
+  "next_action": "RUN_V200_GEMMA_SECOND_CHUNK_READ_ONLY_DIAGNOSTIC",
   "pending_package": {
     "stage": "MC10D_BLINDED_PRIVATE_POINTWISE_THEN_SIMULATION_FALSIFICATION",
     "package": "ALICE_MC10D_PRIVATE_POINTWISE_SIMFALSIFY_v2.0.0.zip",
@@ -329,5 +355,15 @@
     "quality_strategy": "Prefer conditional, relationship-aware, state-aware, public/private-aware, conflict-aware and longitudinal fidelity over stereotype matching. Novel compatible behaviors receive extra challenge rather than automatic rejection. Repairable defects get new IDs and full retest. Preserve rare/contradictory traits instead of flattening personality.",
     "authority": "E0 remains strongest. E-INF and A-SYN stay provenance-separated. A-SYN cannot count as independent E0 family or raise source-person truth confidence through ancestry or volume.",
     "mc10d_objective": "Produce a defensible pointwise-ready and simulation/falsification-tested candidate set for MC10E SELECT/ABSTAIN, not maximize candidate acceptance. All 18 falsification families and all 8 zero-tolerance vetoes remain in force."
+  },
+  "pending_diagnostic": {
+    "script": "Start-ALICEMC10DV200GemmaSecondChunkReadOnlyDiagnostic.ps1",
+    "sha256": "4CB0391D6552CBD64EDF2F87B7A09F6F673626A905557A3A91EF0D0C6BE2F0AD",
+    "target_ref": "mkrayanyan/alice-mc10d-pw-gem-72982fb837f5",
+    "previous_ref": "mkrayanyan/alice-mc10d-pw-gem-f804a0b652ea",
+    "kaggle_push": false,
+    "kaggle_delete": false,
+    "scientific_mutation": false,
+    "remote_output_fallback": "read-only kernels output only if local result ZIP absent"
   }
 }
