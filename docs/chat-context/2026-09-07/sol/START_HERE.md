@@ -72,3 +72,17 @@ Launcher SHA-256: `C87BF4ABCAA59B7970C6CDB7CF9FA562929DADD71CFF215EA9AA0F04726D0
 Read `MC10D_V191_SECOND_VALIDATOR_STOP_AND_V192_WHOLE_VALIDATOR_FIX.md`.
 
 Next action: `RUN_MC10D_QWEN_SUCCESSOR_REFREEZE_BREADTH_V192`.
+
+## MC10D v1.9.3 current boundary
+
+v1.9.2 completed the actual 287-candidate successor refreeze, passed the internal pointwise-ready validator, atomically published the canonical ready tree, and created pointwise-ready ZIP SHA-256 `5CC3C64EF4E64D75BD41E860F34CCD8FE8C882EEDBB6F6C6D0F68CB13218EF30`.
+
+Its exit 76 occurred afterward because the outer validator assumed a single wrapper directory around the historically flat v1.7 ZIP. **Do not rerun the historical refreeze.**
+
+Current package: `ALICE_MC10D_QWEN_SUCCESSOR_POSTREFREEZE_RECOVERY_v1.9.3.zip` SHA-256 `8A8AC8C9FAA1C999E6F1236F80BC04FBA625F10CA9B3DF4D9F9FF94D2EBC8D9D`.
+
+Current launcher: `Start-ALICEMC10DPostRefreezeRecoveryV193.ps1` SHA-256 `28C90285AAAFA1EE8C3E57A38EA67A18ED74C5D8EC29FD3B59A1E03C70567D53`.
+
+Read `MC10D_V192_POST_REFREEZE_STOP_AND_V193_RECOVERY.md`.
+
+Next action: `RUN_MC10D_POST_REFREEZE_RECOVERY_V193`.
