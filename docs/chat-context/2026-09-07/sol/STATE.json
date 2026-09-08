@@ -308,7 +308,7 @@
     "stage_g_closure": true,
     "phase2_retirement": true
   },
-  "next_action": "RUN_V200_GEMMA_SECOND_CHUNK_READ_ONLY_DIAGNOSTIC_V2",
+  "next_action": "RUN_MC10D_V200_GEMMA_SECOND_CHUNK_FORENSIC_V3_DIRECT_PYTHON",
   "pending_package": {
     "stage": "MC10D_BLINDED_PRIVATE_POINTWISE_THEN_SIMULATION_FALSIFICATION",
     "package": "ALICE_MC10D_PRIVATE_POINTWISE_SIMFALSIFY_v2.0.0.zip",
@@ -357,21 +357,37 @@
     "mc10d_objective": "Produce a defensible pointwise-ready and simulation/falsification-tested candidate set for MC10E SELECT/ABSTAIN, not maximize candidate acceptance. All 18 falsification families and all 8 zero-tolerance vetoes remain in force."
   },
   "pending_diagnostic": {
-    "version": "v2",
-    "python": "ALICE_MC10D_V200_GEMMA_SECOND_CHUNK_READ_ONLY_DIAGNOSTIC_v2.py",
-    "python_sha256": "EBBBB316F7405E2AA7CA11D1EA9934A76C60538698DE91EF28FD4B8907631D7A",
-    "launcher": "Start-ALICEMC10DV200GemmaSecondChunkReadOnlyDiagnosticV2.ps1",
-    "launcher_sha256": "FEDD53718FF1E885CC2868F4970300A0C6E213490949C0C574DC7CCF323855E4",
-    "build_receipt_sha256": "781224C076EC1C99395F9D71513CDF2EFCDF5CC6A9E94D633BE1183D3B04CF19",
-    "supersedes_launcher_sha256": "4CB0391D6552CBD64EDF2F87B7A09F6F673626A905557A3A91EF0D0C6BE2F0AD",
-    "v1_local_failure": "Windows PowerShell 5.1 ArgumentException at return @($Matches) over Generic.List[object]; zero evidence read before failure, zero Kaggle action, zero scientific mutation.",
-    "architecture": "tiny PowerShell launcher plus Python diagnostic",
-    "target_ref": "mkrayanyan/alice-mc10d-pw-gem-72982fb837f5",
+    "version": "v3",
+    "script": "ALICE_MC10D_V200_GEMMA_SECOND_CHUNK_FORENSIC_v3.py",
+    "script_sha256": "C989D9BB1A21C83A70214A29D73F2FA08773FC918F1B90254652EFC140A1116C",
+    "build_receipt_sha256": "15DCF8CD89B93CE806329CAC3109F0CB5675E50F33B47A401822B2D1FB2EC888",
+    "architecture": "single Python process; no PowerShell",
+    "exact_v200_package_sha256": "9DB60EE723F4804F2443AF0A4290D40CC14865D28DF4867634B76688AA1812AA",
     "previous_ref": "mkrayanyan/alice-mc10d-pw-gem-f804a0b652ea",
+    "failed_ref": "mkrayanyan/alice-mc10d-pw-gem-72982fb837f5",
+    "exact_v200_controller_validator_reused": true,
+    "local_evidence_first": true,
+    "remote_fallback": "read-only kaggle kernels output only",
     "kaggle_push": false,
     "kaggle_delete": false,
     "scientific_mutation": false,
-    "remote_output_fallback": "read-only kaggle kernels output only if no local result or raw output evidence",
-    "selftest": true
+    "MC8": false
+  },
+  "provider_parallelism_review": {
+    "scientific_workflow_allows_parallel_judge_families": true,
+    "current_v200_controller_executes_families_sequentially": true,
+    "current_v200_worker_requires_exactly_2x_Tesla_T4": true,
+    "qwen_profile_provider_bound_to_kaggle_2xT4": true,
+    "magnolia_current_route_authorized": false,
+    "magnolia_reasons": [
+      "accessible gpu route proven only on gpu partition with 2x P100-12GB node; current v200 worker rejects non-T4 hardware",
+      "A100 nodes exist on suliaoma but user's bxmlarg/bxmarg QOS test returned Invalid qos specification",
+      "CentOS 7 host glibc 2.17 is incompatible with pinned Ollama 0.32.15 prebuilt runtime requiring GLIBC_2.28",
+      "no Apptainer/Singularity route was observed",
+      "Magnolia source-runtime/provider adapter remained unqualified and previously produced repeated infrastructure failures",
+      "model fit/performance for exact Mistral/Granite/Gemma v200 profiles has not been prospectively proven on 2x P100"
+    ],
+    "decision": "DO_NOT_USE_MAGNOLIA_FOR_CURRENT_MC10D_JUDGE_INFERENCE",
+    "safer_future_optimization": "after failed Gemma chunk is diagnosed, consider a concurrency-only Kaggle successor that runs independent judge families in parallel if quota/concurrency permits"
   }
 }
