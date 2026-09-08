@@ -239,6 +239,41 @@
             "read-only kernels output later returncode=0"
           ]
         }
+      },
+      "v200_gemma_forensic": {
+        "first_checkpoint": {
+          "kernel_ref": "mkrayanyan/alice-mc10d-pw-gem-f804a0b652ea",
+          "result_sha256": "E2E553DCE4608FE75AD141A7D1E34D2502ADCB69908C80BAB6229B9BEED6E4C6",
+          "rows": 124,
+          "valid": 106,
+          "invalid": 18,
+          "status": "PARTIAL_SOFT_CHECKPOINT"
+        },
+        "second_checkpoint": {
+          "kernel_ref": "mkrayanyan/alice-mc10d-pw-gem-72982fb837f5",
+          "result_sha256": "5FC39E5DA3E54B683224EFAD8E458A70034AAB89088E97DC516204755C0E7B31",
+          "rows": 119,
+          "valid": 106,
+          "invalid": 13,
+          "status": "PARTIAL_SOFT_CHECKPOINT",
+          "job_failure": false
+        },
+        "combined_rows": 243,
+        "combined_valid": 212,
+        "combined_invalid": 31,
+        "remaining_gemma": 44,
+        "v200_false_failed_root_cause": "nonzero Kaggle CLI DNS/API stderr containing 'Failed to resolve' was parsed as bare FAILED terminal token; remote output later validated as PARTIAL_SOFT_CHECKPOINT",
+        "pointwise_freeze_created": false,
+        "mc8_opened": false
+      },
+      "v201_stop": {
+        "failure_class": "LOCAL_PRE_DISPATCH_KEY_ERROR",
+        "error": "KeyError:'kaggle_owner'",
+        "root_cause": "v2.0.1 logging line referenced policy['kaggle_owner']; exact v2.0.0 policy defines kaggle_username",
+        "new_kaggle_push": false,
+        "new_remote_identity": false,
+        "inference_repeated": false,
+        "scientific_failure": false
       }
     },
     "judges": {
@@ -336,27 +371,36 @@
     "stage_g_closure": true,
     "phase2_retirement": true
   },
-  "next_action": "RUN_MC10D_V201_RECOVER_PARALLEL_POINTWISE",
+  "next_action": "RUN_MC10D_V202_RECOVER_PARALLEL_POINTWISE",
   "pending_package": {
-    "stage": "MC10D_PRIVATE_POINTWISE_RECOVERY_AND_BOUNDED_PARALLEL_COMPLETION",
-    "controller": "ALICE_MC10D_V201_RECOVER_PARALLEL_POINTWISE.py",
-    "controller_sha256": "4DAFE1AB65A263D3009C977317CFE1340579728CF9ECC188CA75E898FE267654",
-    "build_receipt": "ALICE_MC10D_V201_RECOVER_PARALLEL_POINTWISE_BUILD_RECEIPT.txt",
-    "build_receipt_sha256": "486CA986AE09746F2FCE9C6C2D0680CE2E4C9B044442BBAA45F7EF71DF6DC612",
-    "exact_parent_v200_sha256": "9DB60EE723F4804F2443AF0A4290D40CC14865D28DF4867634B76688AA1812AA",
-    "exact_input_freeze_sha256": "F232721A412D24304BE05DA100BFE27D6CA6B0124E7D1AC504AC14D85197EF01",
+    "stage": "MC10D_RECOVER_GEMMA_AND_BOUNDED_PARALLEL_PRIVATE_POINTWISE",
+    "script": "ALICE_MC10D_V202_RECOVER_PARALLEL_POINTWISE.py",
+    "script_sha256": "625BE13F717CC1C9028B9321CE5AB91AF8125D63E7CCBF6DB2D3BA2328BF71C2",
+    "build_receipt": "ALICE_MC10D_V202_RECOVER_PARALLEL_POINTWISE_BUILD_RECEIPT.txt",
+    "build_receipt_sha256": "C3C523F99A3045DA243FB5C6752DB0036244765FF053B0597F39618140B108DA",
+    "parent_v200_sha256": "9DB60EE723F4804F2443AF0A4290D40CC14865D28DF4867634B76688AA1812AA",
+    "input_freeze_sha256": "F232721A412D24304BE05DA100BFE27D6CA6B0124E7D1AC504AC14D85197EF01",
     "gemma_recovered_rows": 243,
-    "gemma_remaining_unattempted": 44,
-    "max_kaggle_concurrent_gpu_commits": 2,
-    "provider_cap_auto_downgrade_to_one": true,
-    "nonzero_status_stderr_never_terminal": true,
+    "gemma_remaining": 44,
+    "mistral_remaining": 287,
+    "qwen_remaining": 287,
+    "granite_remaining": 287,
+    "max_concurrent_kaggle_gpu_commits": 2,
     "magnolia_used": false,
-    "pointwise_only": true,
-    "mc8_before_pointwise_freeze": false,
+    "mc8_opened": false,
     "asyn_acceptance": false,
     "asyn_promotion": false,
     "training": false,
-    "executed": false
+    "executed": false,
+    "audits": {
+      "exact_policy_key_dispatch_path": true,
+      "false_failed_status_parser_regression": true,
+      "four_family_scheduler_offline": true,
+      "observed_max_parallel_remote_calls": 2,
+      "duplicate_identical_forensic_copies_tolerated": true,
+      "external_capacity_loop_bounded": true,
+      "remote_soft_seconds": 17100
+    }
   },
   "objective_guardrail": {
     "objective": "Maximize evidence-constrained behavioral and cognitive fidelity to Elaina in A.L.I.C.E. while preserving provenance, uncertainty, corrections, context sensitivity, and Alice's separate post-activation continuity. Do not claim biological or metaphysical identity continuity.",
