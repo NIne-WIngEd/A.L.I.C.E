@@ -141,3 +141,39 @@ Current successor:
 
 Next action: `RUN_MC10D_V201_RECOVER_PARALLEL_POINTWISE`.
 
+## MC10D v2.0.2 current boundary
+
+The first two Gemma private-pointwise checkpoints are now both independently validated:
+
+- 124 rows, SHA-256 `E2E553DCE4608FE75AD141A7D1E34D2502ADCB69908C80BAB6229B9BEED6E4C6`
+- 119 rows, SHA-256 `5FC39E5DA3E54B683224EFAD8E458A70034AAB89088E97DC516204755C0E7B31`
+
+Combined Gemma progress = **243/287** (212 valid, 31 technical-invalid, 44 unattempted).
+
+The v2.0.0 apparent second-job `FAILED` was a local control-plane parse defect: non-zero Kaggle DNS/API stderr containing `Failed to resolve` was misread as a remote FAILED status. The recovered remote result is a valid `PARTIAL_SOFT_CHECKPOINT` with no job failure.
+
+v2.0.1 then stopped locally before any new Kaggle push because it referenced the nonexistent policy key `kaggle_owner`. The exact parent policy key is `kaggle_username`.
+
+Current runnable successor:
+
+`ALICE_MC10D_V202_RECOVER_PARALLEL_POINTWISE.py`
+
+SHA-256:
+`625BE13F717CC1C9028B9321CE5AB91AF8125D63E7CCBF6DB2D3BA2328BF71C2`
+
+It reuses the exact v2.0.0 worker and exact private blind map. It runs at most two Kaggle GPU commit jobs concurrently and automatically downgrades to one slot on an explicit provider session-cap rejection with proven remote absence.
+
+Magnolia remains unauthorized for this workload.
+
+Current scientific boundary:
+- Gemma: 243/287 complete, 44 remaining
+- Qwen: 0/287
+- Mistral: 0/287
+- Granite: 0/287
+- pointwise freeze: absent
+- MC8: sealed
+- A-SYN accepted/promoted: 0
+- training: false
+
+Next action: `RUN_MC10D_V202_RECOVER_PARALLEL_POINTWISE`.
+
