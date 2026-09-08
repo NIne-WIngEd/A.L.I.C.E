@@ -45,8 +45,8 @@
       "accepted": 0,
       "promoted": 0,
       "training": false,
-      "pre_pointwise_consolidation": "V193_SCHEMA_COMPATIBILITY_STOP; V194_POST_REFREEZE_RECOVERY_PREPARED",
-      "next_required_gate": "FOUR_FAMILY_SUCCESSOR_BINDING_AND_287_REFREEZE_AND_BREADTH_MIGRATION",
+      "pre_pointwise_consolidation": "COMPLETE_V194",
+      "next_required_gate": "BLINDED_PRIVATE_POINTWISE_THEN_POST_POINTWISE_MC8_SIMULATION_FALSIFICATION",
       "v190_observed": {
         "effective_pool": 287,
         "deferred_slots": 1,
@@ -159,6 +159,32 @@
         "historical_refreeze_rerun_required": false,
         "remote_inference_started": false,
         "terminal_transcript_sha256": "3252AE39303CB1D175149FDA2DDC6976DAAB30CE89C00E279741CAD2F640A98B"
+      },
+      "v194_observed": {
+        "exact_v192_ready_sha256": "5CC3C64EF4E64D75BD41E860F34CCD8FE8C882EEDBB6F6C6D0F68CB13218EF30",
+        "effective_pool": 287,
+        "deferred_slots": 1,
+        "families": [
+          "gemma",
+          "qwen",
+          "mistral",
+          "granite"
+        ],
+        "four_family_successor_binding_created": true,
+        "controlled_synthesis_breadth_prerequisite_migrated_and_ratified": true,
+        "scenario_probe_upper_bound": 55104,
+        "pointwise_dispatch_authority_sha256": "277C41AE07A96EBFFC714D55D8DAB9CB2E2E5BD922814C7D2EFE8BE04519800D",
+        "pointwise_layout_sha256": "63FD0B3464BE0F41296D8B14C0A141C286EF5DB1B345311A5DEA74BE20AC3A2A",
+        "private_pointwise_input_freeze_sha256": "F232721A412D24304BE05DA100BFE27D6CA6B0124E7D1AC504AC14D85197EF01",
+        "private_pointwise_input_freeze_receipt_sha256": "6254D296CDD19463E9F277AAC48BC7096E5BD3967243A886242C3C03925745DD",
+        "pre_pointwise_gate_complete": true,
+        "private_pointwise_started": false,
+        "mc8": false,
+        "full_simulation": false,
+        "asyn_accepted": 0,
+        "asyn_promoted": 0,
+        "training": false,
+        "exit": 0
       }
     },
     "judges": {
@@ -173,7 +199,7 @@
         "mistral",
         "granite"
       ],
-      "successor_binding_created": false
+      "successor_binding_created": true
     }
   },
   "qwen_runtime": {
@@ -249,60 +275,51 @@
     }
   },
   "blocked": {
-    "private_pointwise": true,
+    "private_pointwise": false,
     "asyn_acceptance": true,
     "asyn_promotion": true,
     "model_training": true,
     "stage_g_closure": true,
     "phase2_retirement": true
   },
-  "next_action": "RUN_MC10D_POST_REFREEZE_RECOVERY_V194",
+  "next_action": "RUN_MC10D_PRIVATE_POINTWISE_SIMFALSIFY_V200_AUTO",
   "pending_package": {
-    "stage": "MC10D_POST_REFREEZE_RECOVERY_AND_PRIVATE_POINTWISE_INPUT_FREEZE",
-    "package": "ALICE_MC10D_QWEN_SUCCESSOR_POSTREFREEZE_RECOVERY_v1.9.4.zip",
-    "package_sha256": "215C671664B560B8DD13EAD150B7D8BEDFE6A9A8D38DD8E4CCB9BD98F7D3906D",
-    "package_bytes": 22077,
-    "launcher": "Start-ALICEMC10DPostRefreezeRecoveryV194.ps1",
-    "launcher_sha256": "DCD9AD4BD2267BB1141927097E485B1B66AD3A19DBF6E86D21130980B0B6ADEA",
-    "build_receipt": "ALICE_MC10D_QWEN_SUCCESSOR_POSTREFREEZE_RECOVERY_v1.9.4_BUILD_RECEIPT.txt",
-    "build_receipt_sha256": "00879C351227740512DE208DA1F3E272E8EDAC0429D4D58C9E54D12AC6189C8D",
-    "exact_input_pointwise_ready_sha256": "5CC3C64EF4E64D75BD41E860F34CCD8FE8C882EEDBB6F6C6D0F68CB13218EF30",
-    "technical_parent_v193_package_sha256": "8A8AC8C9FAA1C999E6F1236F80BC04FBA625F10CA9B3DF4D9F9FF94D2EBC8D9D",
-    "v193_terminal_transcript_sha256": "3252AE39303CB1D175149FDA2DDC6976DAAB30CE89C00E279741CAD2F640A98B",
+    "stage": "MC10D_BLINDED_PRIVATE_POINTWISE_THEN_SIMULATION_FALSIFICATION",
+    "package": "ALICE_MC10D_PRIVATE_POINTWISE_SIMFALSIFY_v2.0.0.zip",
+    "package_sha256": "9DB60EE723F4804F2443AF0A4290D40CC14865D28DF4867634B76688AA1812AA",
+    "package_bytes": 36873,
+    "launcher": "Start-ALICEMC10DPrivatePointwiseSimFalsifyV200.ps1",
+    "launcher_sha256": "1093E18BDC9486B8EB0026E435FB366049B8A9AF2F7C88C9B033396F6091472C",
+    "build_receipt": "ALICE_MC10D_PRIVATE_POINTWISE_SIMFALSIFY_v2.0.0_BUILD_RECEIPT.txt",
+    "build_receipt_sha256": "EF7ACAB117E7E3F9DA6F4686E5A8D4B145A86588ED69CB7886A788A1F9C62158",
+    "exact_input_freeze_sha256": "F232721A412D24304BE05DA100BFE27D6CA6B0124E7D1AC504AC14D85197EF01",
     "historical_refreeze_rerun": false,
-    "remote_inference": false,
     "private_pointwise_started": false,
-    "mc8": false,
-    "full_simulation": false,
+    "mc8_before_pointwise_freeze": false,
     "asyn_acceptance": false,
     "asyn_promotion": false,
     "training": false,
-    "technical_fix_only": "Gemma identity remains strictly bound to exact v1.9.2 binding; legacy Gemma result identity fields are optional-but-if-present-must-match; preserved 16-row Gemma score is recomputed exactly.",
+    "executed": false,
     "audits": {
-      "package_manifest_files": 9,
-      "zip_crc": true,
       "deterministic_byte_identical_rebuild": true,
+      "zip_crc": true,
       "fresh_extract_compile": true,
       "fresh_extract_selftest": true,
-      "v193_sparse_gemma_result_schema_regression": true,
-      "conflicting_result_identity_fail_closed": true,
-      "conflicting_bound_identity_fail_closed": true,
-      "flat_archive_regression": true,
-      "wrapped_archive_supported": true,
-      "ambiguous_archive_fail_closed": true,
-      "deterministic_output_zip_rebuild": true,
-      "historical_refreeze_call_absent": true,
-      "e0_never_generated": true,
-      "falsification_families_preserved": 18,
-      "zero_tolerance_vetoes_preserved": 8
-    },
-    "outputs_expected": [
-      "ALICE_MC10D_POINTWISE_DISPATCH_AUTHORITY_v1.9.4.json",
-      "ALICE_MC10D_POINTWISE_BUNDLE_LAYOUT_v1.9.4.json",
-      "ALICE_MC10D_PRIVATE_POINTWISE_INPUT_FREEZE_v1.9.4.zip",
-      "ALICE_MC10D_PRIVATE_POINTWISE_INPUT_FREEZE_RECEIPT_v1.9.4.json"
-    ],
-    "executed": false
+      "exact_v194_parent_revalidated": true,
+      "candidates": 287,
+      "packets": 24,
+      "unknown_competitors": 24,
+      "scenario_probe_upper_bound": 55104,
+      "falsification_families": 18,
+      "zero_tolerance_vetoes": 8,
+      "real_candidate_ids_uploaded": false,
+      "real_packet_ids_uploaded": false,
+      "generator_identity_uploaded": false,
+      "validated_local_output_resume_without_kaggle": true,
+      "validated_local_infrastructure_stop_preserved_as_failure": true,
+      "push_once_contract": true,
+      "native_exit_preservation": true
+    }
   },
   "objective_guardrail": {
     "objective": "Maximize evidence-constrained behavioral and cognitive fidelity to Elaina in A.L.I.C.E. while preserving provenance, uncertainty, corrections, context sensitivity, and Alice's separate post-activation continuity. Do not claim biological or metaphysical identity continuity.",
