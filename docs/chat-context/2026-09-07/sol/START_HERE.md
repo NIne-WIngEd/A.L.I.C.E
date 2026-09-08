@@ -115,3 +115,29 @@ Read `MC10D_V194_SUCCESS_AND_V200_EXECUTION.md`.
 
 Next action: `RUN_MC10D_PRIVATE_POINTWISE_SIMFALSIFY_V200_AUTO`.
 
+## MC10D v2.0.1 current boundary — recovered Gemma checkpoint
+
+The v2.0.0 second Gemma job did **not** scientifically fail. Read-only forensic recovery retrieved exact result ZIP SHA-256 `5FC39E5DA3E54B683224EFAD8E458A70034AAB89088E97DC516204755C0E7B31`, validated by the exact v2.0.0 controller as `PARTIAL_SOFT_CHECKPOINT` with 119 sequential rows.
+
+Combined Gemma durable pointwise prefix:
+- first checkpoint = 124 rows
+- second recovered checkpoint = 119 rows
+- combined = 243 / 287
+- valid = 212
+- invalid technical rows = 31
+- unattempted = 44
+
+Root cause of the local v2.0.0 exit 76: the status parser searched non-zero Kaggle CLI stderr for bare terminal words. DNS error text containing `Failed to resolve api.kaggle.com` was misparsed as remote terminal `FAILED`.
+
+Current successor:
+- `ALICE_MC10D_V201_RECOVER_PARALLEL_POINTWISE.py`
+- SHA-256 `4DAFE1AB65A263D3009C977317CFE1340579728CF9ECC188CA75E898FE267654`
+- exact v2.0.0 worker/model profiles unchanged
+- max two concurrent Kaggle GPU commit jobs
+- automatic downgrade to one slot only after explicit provider session-cap rejection + exact remote absence proof
+- explicit GPU quota rejection fails closed
+- pointwise only; MC8 remains sealed
+- Magnolia is not used.
+
+Next action: `RUN_MC10D_V201_RECOVER_PARALLEL_POINTWISE`.
+
