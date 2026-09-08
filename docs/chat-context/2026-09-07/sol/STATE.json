@@ -308,7 +308,7 @@
     "stage_g_closure": true,
     "phase2_retirement": true
   },
-  "next_action": "RUN_V200_GEMMA_SECOND_CHUNK_READ_ONLY_DIAGNOSTIC",
+  "next_action": "RUN_V200_GEMMA_SECOND_CHUNK_READ_ONLY_DIAGNOSTIC_V2",
   "pending_package": {
     "stage": "MC10D_BLINDED_PRIVATE_POINTWISE_THEN_SIMULATION_FALSIFICATION",
     "package": "ALICE_MC10D_PRIVATE_POINTWISE_SIMFALSIFY_v2.0.0.zip",
@@ -357,13 +357,21 @@
     "mc10d_objective": "Produce a defensible pointwise-ready and simulation/falsification-tested candidate set for MC10E SELECT/ABSTAIN, not maximize candidate acceptance. All 18 falsification families and all 8 zero-tolerance vetoes remain in force."
   },
   "pending_diagnostic": {
-    "script": "Start-ALICEMC10DV200GemmaSecondChunkReadOnlyDiagnostic.ps1",
-    "sha256": "4CB0391D6552CBD64EDF2F87B7A09F6F673626A905557A3A91EF0D0C6BE2F0AD",
+    "version": "v2",
+    "python": "ALICE_MC10D_V200_GEMMA_SECOND_CHUNK_READ_ONLY_DIAGNOSTIC_v2.py",
+    "python_sha256": "EBBBB316F7405E2AA7CA11D1EA9934A76C60538698DE91EF28FD4B8907631D7A",
+    "launcher": "Start-ALICEMC10DV200GemmaSecondChunkReadOnlyDiagnosticV2.ps1",
+    "launcher_sha256": "FEDD53718FF1E885CC2868F4970300A0C6E213490949C0C574DC7CCF323855E4",
+    "build_receipt_sha256": "781224C076EC1C99395F9D71513CDF2EFCDF5CC6A9E94D633BE1183D3B04CF19",
+    "supersedes_launcher_sha256": "4CB0391D6552CBD64EDF2F87B7A09F6F673626A905557A3A91EF0D0C6BE2F0AD",
+    "v1_local_failure": "Windows PowerShell 5.1 ArgumentException at return @($Matches) over Generic.List[object]; zero evidence read before failure, zero Kaggle action, zero scientific mutation.",
+    "architecture": "tiny PowerShell launcher plus Python diagnostic",
     "target_ref": "mkrayanyan/alice-mc10d-pw-gem-72982fb837f5",
     "previous_ref": "mkrayanyan/alice-mc10d-pw-gem-f804a0b652ea",
     "kaggle_push": false,
     "kaggle_delete": false,
     "scientific_mutation": false,
-    "remote_output_fallback": "read-only kernels output only if local result ZIP absent"
+    "remote_output_fallback": "read-only kaggle kernels output only if no local result or raw output evidence",
+    "selftest": true
   }
 }
