@@ -86,3 +86,17 @@ Current launcher: `Start-ALICEMC10DPostRefreezeRecoveryV193.ps1` SHA-256 `28C902
 Read `MC10D_V192_POST_REFREEZE_STOP_AND_V193_RECOVERY.md`.
 
 Next action: `RUN_MC10D_POST_REFREEZE_RECOVERY_V193`.
+
+## MC10D v1.9.4 current boundary
+
+v1.9.3 verified the exact v1.9.2 pointwise-ready bundle, the flat historical archive layout, the 287-candidate Gemma+Qwen+Mistral+Granite binding, the 55,104-probe scenario geometry, and equality with the 83-file canonical atomically published Vault tree. It stopped only because the recovery validator incorrectly required legacy Gemma result JSON identity fields that may be absent.
+
+Do not rerun the historical refreeze.
+
+Current package: `ALICE_MC10D_QWEN_SUCCESSOR_POSTREFREEZE_RECOVERY_v1.9.4.zip` SHA-256 `215C671664B560B8DD13EAD150B7D8BEDFE6A9A8D38DD8E4CCB9BD98F7D3906D`.
+
+Current launcher: `Start-ALICEMC10DPostRefreezeRecoveryV194.ps1` SHA-256 `DCD9AD4BD2267BB1141927097E485B1B66AD3A19DBF6E86D21130980B0B6ADEA`.
+
+Read `MC10D_V193_GEMMA_SCHEMA_STOP_AND_V194_RECOVERY.md`.
+
+Next action: `RUN_MC10D_POST_REFREEZE_RECOVERY_V194`.
