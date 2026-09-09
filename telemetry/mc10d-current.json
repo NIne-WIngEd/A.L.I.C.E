@@ -1,0 +1,46 @@
+{
+  "schema": "alice.mc10d.public-sanitized-telemetry.v1",
+  "updated_utc": "2026-09-08T23:38:00Z",
+  "canonical_main": "0abaed85873c3f8de04765847eb7700b0e20433f",
+  "stage": "MC10D_PRIVATE_POINTWISE_QWEN_QUOTA_CUTOVER",
+  "primary_families": {
+    "gemma": {
+      "rows": 287,
+      "status": "COMPLETE_OWNER_OBSERVED"
+    },
+    "mistral": {
+      "rows": 287,
+      "status": "COMPLETE_OWNER_OBSERVED"
+    },
+    "granite": {
+      "rows": 287,
+      "status": "COMPLETE_OWNER_OBSERVED"
+    }
+  },
+  "qwen": {
+    "first_ref": "mkrayanyan/alice-mc10d-pw-qwn-25bd1518edcf",
+    "first_rows": 81,
+    "first_result_sha256": "5DAE423EFC3DBCD6D3170210A0C2F47BF20242CC7467542412B40390C01178EC",
+    "current_existing_ref": "mkrayanyan/alice-mc10d-pw-qwn-7b7d6e4f972e",
+    "current_status": "RUNNING_OWNER_OBSERVED",
+    "no_new_qwen_identity_authorized": true
+  },
+  "quota_cutover": {
+    "script": "ALICE_MC10D_V203_QWEN_QUOTA_CUTOVER.py",
+    "script_sha256": "58CE883C7901A7CCB13BC29F16CB4DF03E773FADE00DEE652D4DB30073AEF4DD",
+    "final_pointwise_freeze_created": false,
+    "mc8_opened": false,
+    "full_simulation_started": false
+  },
+  "authority": {
+    "A_SYN_acceptance": false,
+    "A_SYN_promotion": false,
+    "model_training": false
+  },
+  "privacy": {
+    "public_sanitized": true,
+    "raw_candidate_payloads_exposed": false,
+    "E0_spans_exposed": false,
+    "judge_rationales_exposed": false
+  }
+}
