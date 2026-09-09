@@ -1,0 +1,40 @@
+{
+  "schema": "alice.mc10d.public-sanitized-quota-cutover.v1",
+  "timestamp_utc": "2026-09-08T23:38:00Z",
+  "canonical_main": "0abaed85873c3f8de04765847eb7700b0e20433f",
+  "stage": "MC10D_PRIVATE_POINTWISE_OWNER_HYBRID_CUTOVER",
+  "primary_families_complete": {
+    "gemma": 287,
+    "mistral": 287,
+    "granite": 287
+  },
+  "qwen": {
+    "durable_rows": 81,
+    "durable_result_sha256": "5DAE423EFC3DBCD6D3170210A0C2F47BF20242CC7467542412B40390C01178EC",
+    "abandoned_running_ref": "mkrayanyan/alice-mc10d-pw-qwn-7b7d6e4f972e",
+    "abandoned_output_consumed": false
+  },
+  "owner_rule": {
+    "primary_3of3_clean_direct_pass": true,
+    "primary_2of3_plus_fourth_clean_passes": true,
+    "primary_0or1_clean_fails": true,
+    "primary_hard_block_nonoverridable": true,
+    "missing_or_invalid_qwen_for_primary_2of3_uses_blinded_substitute_judge": true
+  },
+  "authority": {
+    "pointwise_freeze_created": false,
+    "MC8_opened": false,
+    "full_simulation_started": false,
+    "A_SYN_acceptance": false,
+    "A_SYN_promotion": false,
+    "model_training": false
+  },
+  "privacy": {
+    "public_sanitized": true,
+    "raw_private_payloads_exposed": false
+  },
+  "v204": {
+    "script_sha256": "E086126B416ACC6739817947C720D87FCB6F61811C5526A6FE6B1DBD81F547A4",
+    "build_receipt_sha256": "B7BB829C74BBA4A554AC26E62E13D281870CEFECE41A2AFD5633B97C45C57169"
+  }
+}
