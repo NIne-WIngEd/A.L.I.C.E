@@ -1,0 +1,38 @@
+{
+  "schema": "alice.mc10d.public-telemetry.v2.0.5-pre-freeze",
+  "canonical_main": "0abaed85873c3f8de04765847eb7700b0e20433f",
+  "stage": "MC10D_ASTRA_FOURTH_JUDGE_COMPLETE_PRE_HYBRID_FREEZE",
+  "astra": {
+    "adjudicator": "astra_work",
+    "input_bundle_sha256": "E1EC8CCA72DF2FF73CF3565E74D8F6C82FE08B4BF73BA6F6EBC64CD111286CF9",
+    "result_sha256": "4018FFB88FACA6CFB755350B96D5C2D8927D62924BCC540D5CDD4A5429CF9DC9",
+    "rows": 26,
+    "clean_pass": 8,
+    "nonclean_or_invalid": 18,
+    "pass_verdicts": 8,
+    "hold_verdicts": 6,
+    "reject_verdicts": 12,
+    "valid_rows": 23,
+    "invalid_rows": 3
+  },
+  "expected_hybrid_geometry": {
+    "simulation_eligible": 216,
+    "pointwise_reject_owner_hybrid": 71,
+    "candidate_count": 287
+  },
+  "authority": {
+    "hybrid_pointwise_freeze_created": false,
+    "mc8_opened": false,
+    "full_simulation_started": false,
+    "A_SYN_acceptance": false,
+    "A_SYN_promotion": false,
+    "model_training": false
+  },
+  "privacy": {
+    "public_sanitized": true,
+    "raw_candidate_text": false,
+    "e0_spans": false,
+    "judge_rationales": false,
+    "raw_astra_rows": false
+  }
+}
