@@ -1,0 +1,45 @@
+{
+  "schema": "alice.mc10d.public-telemetry.v2.0.5",
+  "canonical_main": "0abaed85873c3f8de04765847eb7700b0e20433f",
+  "stage": "MC10D_HYBRID_POINTWISE_FROZEN",
+  "hybrid_pointwise_freeze_sha256": "8495B3C4B3207511D615BD0B7788EB064114B3F763E7E4299EDCC1EE869617B7",
+  "candidate_count": 287,
+  "simulation_eligible": 216,
+  "pointwise_reject_owner_hybrid": 71,
+  "decision_basis": {
+    "primary_3of3_clean": 200,
+    "primary_2of3_plus_qwen_clean": 8,
+    "primary_2of3_plus_astra_clean": 8,
+    "astra_nonclean_or_invalid": 18
+  },
+  "astra": {
+    "adjudicator": "astra_work",
+    "rows": 26,
+    "clean_pass": 8,
+    "nonclean_or_invalid": 18,
+    "result_sha256": "4018FFB88FACA6CFB755350B96D5C2D8927D62924BCC540D5CDD4A5429CF9DC9",
+    "manual_bundle_sha256": "E1EC8CCA72DF2FF73CF3565E74D8F6C82FE08B4BF73BA6F6EBC64CD111286CF9"
+  },
+  "qwen": {
+    "durable_rows_credited": 81,
+    "durable_result_sha256": "5DAE423EFC3DBCD6D3170210A0C2F47BF20242CC7467542412B40390C01178EC"
+  },
+  "authority": {
+    "pointwise_freeze_complete": true,
+    "mc8_opened": false,
+    "full_simulation_started": false,
+    "A_SYN_acceptance": false,
+    "A_SYN_promotion": false,
+    "model_training": false,
+    "stage_g_closed": false,
+    "phase2_replaced": false
+  },
+  "privacy": {
+    "public_sanitized": true,
+    "raw_candidate_text": false,
+    "e0_spans": false,
+    "blind_map": false,
+    "judge_rationales": false,
+    "private_simulation_payload": false
+  }
+}
