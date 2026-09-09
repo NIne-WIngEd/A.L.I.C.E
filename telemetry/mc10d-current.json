@@ -1,59 +1,60 @@
 {
   "schema": "alice.mc10d.public-sanitized-telemetry.v2",
-  "updated_utc": "2026-09-09T05:35:00Z",
+  "updated_utc": "2026-09-09T06:58:00Z",
   "canonical_main": "0abaed85873c3f8de04765847eb7700b0e20433f",
-  "stage": "MC10D_MAGNOLIA_CLOSED_KAGGLE_DURABLE_SIMFALSIFY_PENDING",
+  "stage": "MC10D_KAGGLE_DURABLE_FULL_V120_RELEASE_READY",
   "pointwise": {
     "hybrid_freeze_sha256": "8495B3C4B3207511D615BD0B7788EB064114B3F763E7E4299EDCC1EE869617B7",
     "candidate_count": 287,
     "simulation_eligible": 216,
-    "pointwise_reject_owner_hybrid": 71,
-    "primary_families_complete": ["gemma", "mistral", "granite"],
-    "qwen_durable_rows_credited": 81,
-    "qwen_durable_result_sha256": "5DAE423EFC3DBCD6D3170210A0C2F47BF20242CC7467542412B40390C01178EC",
-    "astra_fourth_judge_rows": 26
+    "pointwise_reject_owner_hybrid": 71
   },
   "post_pointwise": {
     "mc8_post_pointwise_verified": true,
     "simulation_payload_sha256": "7D217570C167575E24630E3BE150786B260C16518D0349EF2EF94E1A088A0925",
     "simulation_eligible": 216,
     "packets_covered": 24,
-    "base_candidate_scenarios": 13824,
-    "paraphrase_probe_obligations": 41472,
     "family_candidate_obligations": 864,
     "nominal_model_requests": 2592,
     "simulation_started": false
   },
   "provider": {
     "magnolia_closed_for_mc10d": true,
-    "magnolia_a100_authorized": false,
-    "magnolia_a100_last_job_id": 575309,
-    "magnolia_p100x2_route_qualified": true,
-    "magnolia_p100x2_route_job_id": 575311,
-    "magnolia_v102_provider_job_id": 575324,
-    "magnolia_v102_result_sha256": "FBA6A039393319C711CEC7DDCC2A87FEEF3AE14A49574D41387817913651FC9E",
-    "magnolia_v102_status": "STOPPED_NOT_PROVIDER_EQUIVALENT",
-    "magnolia_v103_remote_started": false,
-    "magnolia_v103_final_attempt_result": "REFUSED_PRECONDITION_V102_FAILURE_CLASS_MISMATCH",
     "further_magnolia_attempts_authorized": false,
-    "next_provider": "KAGGLE_2XT4_DURABLE_CHECKPOINT_RESUME"
+    "next_provider": "KAGGLE_2XT4",
+    "kaggle_release_package_sha256": "CA0E924B662397B31DFF48613EACF329E90EDED22EA7BED53AC91DA07ECDF90A",
+    "kaggle_release_launcher_sha256": "19524629DC5CAF66CFAA47FE3891EEE742F398D7F92CD3078442640220D8EC17"
   },
   "execution_contract": {
     "single_active_gpu_job": true,
     "family_order": ["mistral", "granite", "gemma", "qwen"],
-    "completion_modes": ["FULL_FOUR_FAMILY_EVALUATION", "EARLY_DEFINITIVE_FAIL_PROOF"],
-    "pass_requires_full_four_family_evaluation": true,
-    "early_termination_can_only_fail": true,
-    "technical_missing_invalid_is_semantic_failure": false,
-    "checkpoint_durable_requires_drive_roundtrip_sha_match": true
+    "full_four_family_attempt_coverage_required": true,
+    "early_definitive_fail_shortcut": false,
+    "technical_invalid_semantic_failure": false,
+    "technical_invalid_semantic_retry": false,
+    "checkpoint_durable_requires_drive_roundtrip_sha_match": true,
+    "quota_window_local_budget_seconds": 21600,
+    "quota_window_account_reserve_seconds": 3600,
+    "max_remote_soft_seconds": 7200
   },
-  "next": "RUN_KAGGLE_DURABLE_CHECKPOINT_RESUME_SIMFALSIFY",
+  "remaining_mc10d_pipeline": [
+    "MC8_LIVE_REVERIFY",
+    "FULL_FOUR_FAMILY_SIMULATION_FALSIFICATION",
+    "UNACCEPTED_SYNTHETIC_SIMULATION_LEDGER",
+    "EXACT_V200_GATES_FALSIFICATION_VETOES",
+    "MC10D_SIMFALSIFY_FREEZE",
+    "MC10D_DECISION_FREEZE",
+    "MC10E_SELECT_ABSTAIN_PROPOSAL",
+    "FINAL_DRIVE_ROUNDTRIP_DURABILITY"
+  ],
+  "next": "RUN_V120_FIRST_QUOTA_WINDOW",
   "authority": {
     "A_SYN_acceptance": false,
     "A_SYN_promotion": false,
     "model_training": false,
     "stage_g_closed": false,
-    "phase2_replaced": false
+    "phase2_replaced": false,
+    "MC10E_auto_execution": false
   },
   "privacy": {
     "public_sanitized": true,
