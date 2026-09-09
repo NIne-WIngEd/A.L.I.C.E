@@ -1,0 +1,44 @@
+{
+  "schema": "alice.mc10d.public-telemetry.v2.0.6.2",
+  "canonical_main": "0abaed85873c3f8de04765847eb7700b0e20433f",
+  "stage": "MC10D_MAGNOLIA_P100X2_ROUTE_QUALIFIED_RUNTIME_EQUIVALENCE_PENDING",
+  "hybrid_pointwise_freeze_sha256": "8495B3C4B3207511D615BD0B7788EB064114B3F763E7E4299EDCC1EE869617B7",
+  "candidate_count": 287,
+  "simulation_eligible": 216,
+  "pointwise_reject_owner_hybrid": 71,
+  "simulation_payload_sha256": "7D217570C167575E24630E3BE150786B260C16518D0349EF2EF94E1A088A0925",
+  "magnolia_a100": {
+    "last_actual_job_id": 575309,
+    "route_authorized": false,
+    "reason": "PARTITION_REQUIRES_BXMARG_OWNER_ONLY_AUTHORIZED_FOR_NORMAL"
+  },
+  "magnolia_p100x2": {
+    "actual_job_id": 575311,
+    "partition": "gpu",
+    "qos": "normal",
+    "gres": "gpu:p100:2",
+    "scheduler_state": "COMPLETED",
+    "exit_code": "0:0",
+    "actual_p100_devices_visible": 2,
+    "probe_completed": true,
+    "route_qualification_pass": true,
+    "route_output_sha256": "F152A2BF9D7EF9EB4AEA7FA767A09DCB5F5013C38FB7AECC625103A8BF157623",
+    "runtime_equivalence_qualified": false,
+    "public_model_equivalence_qualified": false
+  },
+  "next": "QUALIFY_EXACT_OLLAMA_0_32_15_SOURCE_RUNTIME_THEN_PUBLIC_MODEL_EQUIVALENCE",
+  "authority": {
+    "mc8_post_pointwise_verified": true,
+    "simulation_started": false,
+    "A_SYN_acceptance": false,
+    "A_SYN_promotion": false,
+    "model_training": false,
+    "stage_g_closed": false,
+    "phase2_replaced": false
+  },
+  "privacy": {
+    "public_sanitized": true,
+    "raw_private_payloads": false,
+    "private_inference_performed_on_magnolia": false
+  }
+}
