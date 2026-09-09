@@ -1,8 +1,8 @@
 {
   "schema": "alice.mc10d.public-sanitized-telemetry.v2",
-  "updated_utc": "2026-09-09T07:25:00Z",
+  "updated_utc": "2026-09-09T22:39:00Z",
   "canonical_main": "0abaed85873c3f8de04765847eb7700b0e20433f",
-  "stage": "MC10D_KAGGLE_DURABLE_FULL_V121_RELEASE_READY",
+  "stage": "MC10D_KAGGLE_DURABLE_FULL_V122_RELEASE_READY",
   "pointwise": {
     "hybrid_freeze_sha256": "8495B3C4B3207511D615BD0B7788EB064114B3F763E7E4299EDCC1EE869617B7",
     "candidate_count": 287,
@@ -16,17 +16,41 @@
     "packets_covered": 24,
     "family_candidate_obligations": 864,
     "nominal_model_requests": 2592,
-    "simulation_started": false
+    "simulation_started": true,
+    "v121_source_family": "mistral",
+    "v121_source_attempts": 23,
+    "v121_source_valid": 0,
+    "v121_source_technical_invalid": 23,
+    "v121_source_failure_stage": "scenario_batch_1",
+    "v121_source_failure_fingerprint": "Stop:non-stop finish",
+    "v121_source_checkpoint_sha256": "98B98D8475C56F32C9328AA174DD618DDD895E14C49B35C1F5DFBA91A65F5B15"
   },
   "provider": {
     "magnolia_closed_for_mc10d": true,
     "further_magnolia_attempts_authorized": false,
     "next_provider": "KAGGLE_2XT4",
-    "v120_remote_started": false,
-    "v120_stop": "PRE_KAGGLE_SIMULATION_PAYLOAD_CANONICALIZATION_GATE",
-    "v120_observed_wrong_payload_sha256": "FEB8412F0932EE8B5AF076FAE5D9F69A229205EEA1253E91D56DA0C04BEB73FC",
-    "kaggle_release_package_sha256": "CCAD30102A88FC414E625F57606F7482B01BCBB778E3811F3EF2B4DC0045AFF9",
-    "kaggle_release_launcher_sha256": "9214EE2C1B233A3EBB6B9D4B8C6E83EFF9EE7628FD9907470287A00FE5302FFB"
+    "v121_source_job_id": "4953D4C9DC03F29F71270786985FD29E583922CF9FF1423FF17D48BE5AFED880",
+    "v121_source_quota_spent_seconds": 7200,
+    "v121_nested_job_result_authority_recovered": true,
+    "kaggle_release_package_sha256": "7C384AA619E0260C62F35E10CEFDD6DB6BA2DDD724E124C7F8D5D0AACE510B80",
+    "kaggle_release_launcher_sha256": "97950287D52D99650515190A5E750062253B0BFE77473289A043F864E9CAC1DA",
+    "kaggle_release_build_audit_sha256": "058FB0E71A5258CA2A36EAD0A37990AA514316489E8ED7FADF7850CE5605E00B"
+  },
+  "technical_context_capacity_repair": {
+    "id": "MC10D_TECHNICAL_CONTEXT_CAPACITY_REPAIR_V1",
+    "service_context_before": 8192,
+    "service_context_after": 32768,
+    "qwen_num_ctx_before": 8192,
+    "qwen_num_ctx_after": 32768,
+    "source_attempts_superseded": 23,
+    "source_attempts_semantic_authority": false,
+    "one_repair_replay_only": true,
+    "public_capacity_canary_required_per_family": true,
+    "public_capacity_canary_min_request_bytes": 44000,
+    "scenario_batch_geometry_changed": false,
+    "scientific_prompts_changed": false,
+    "model_identities_changed": false,
+    "aggregation_gates_changed": false
   },
   "execution_contract": {
     "single_active_gpu_job": true,
@@ -39,19 +63,22 @@
     "terminal_partial_candidate_evidence_checkpointed_before_stop": true,
     "quota_window_local_budget_seconds": 21600,
     "quota_window_account_reserve_seconds": 3600,
-    "max_remote_soft_seconds": 7200
+    "quota_window_spent_seconds": 7200,
+    "max_remote_soft_seconds": 5400,
+    "min_seconds_before_new_candidate": 1800,
+    "zero_valid_repaired_private_job_blocks_further_automatic_gpu_spend": true
   },
   "remaining_mc10d_pipeline": [
     "MC8_LIVE_REVERIFY",
     "FULL_FOUR_FAMILY_SIMULATION_FALSIFICATION",
     "UNACCEPTED_SYNTHETIC_SIMULATION_LEDGER",
     "EXACT_V200_GATES_FALSIFICATION_VETOES",
-    "MC10D_SIMFALSIFY_FREEZE",
-    "MC10D_DECISION_FREEZE",
-    "MC10E_SELECT_ABSTAIN_PROPOSAL",
+    "MC10D_SIMFALSIFY_FREEZE_V2_0_8",
+    "MC10D_DECISION_FREEZE_V2_0_8",
+    "MC10E_SELECT_ABSTAIN_PROPOSAL_V2_0_8",
     "FINAL_DRIVE_ROUNDTRIP_DURABILITY"
   ],
-  "next": "RUN_V121_FIRST_QUOTA_WINDOW",
+  "next": "RUN_V122_CURRENT_QUOTA_WINDOW_NO_NewQuotaWindow",
   "authority": {
     "A_SYN_acceptance": false,
     "A_SYN_promotion": false,
