@@ -1,0 +1,53 @@
+{
+  "schema": "alice.mc10d.public-telemetry.v2.0.4",
+  "canonical_main": "0abaed85873c3f8de04765847eb7700b0e20433f",
+  "stage": "MC10D_POINTWISE_HYBRID_CUTOVER",
+  "primary_complete": {
+    "gemma": 287,
+    "mistral": 287,
+    "granite": 287
+  },
+  "qwen": {
+    "credited_rows": 81,
+    "total": 287,
+    "first_result_sha256": "5DAE423EFC3DBCD6D3170210A0C2F47BF20242CC7467542412B40390C01178EC"
+  },
+  "hybrid_counts": {
+    "primary_3_clean": 200,
+    "primary_2_clean": 80,
+    "primary_1_clean": 7,
+    "primary_0_clean": 0,
+    "primary_hard_block": 50,
+    "qwen_observed": 81,
+    "qwen_clean": 60,
+    "qwen_nonclean_valid": 21,
+    "qwen_invalid": 0,
+    "direct_pass_primary_3of3": 200,
+    "pass_primary_2of3_plus_qwen": 8,
+    "fail_primary_2of3_plus_qwen": 3,
+    "manual_fourth_needed_primary_2of3": 26,
+    "fail_cannot_reach_3of4": 7,
+    "fail_primary_hard_block": 43,
+    "primary_3of3_with_qwen_dissent_ignored_by_owner_rule": 12,
+    "primary_3of3_with_qwen_hard_block_ignored_by_owner_rule": 2
+  },
+  "manual_bundle": {
+    "rows": 26,
+    "sha256": "E1EC8CCA72DF2FF73CF3565E74D8F6C82FE08B4BF73BA6F6EBC64CD111286CF9",
+    "raw_private_payload_embedded": false
+  },
+  "authority": {
+    "pointwise_freeze": false,
+    "mc8_opened": false,
+    "full_simulation_started": false,
+    "A_SYN_acceptance": false,
+    "A_SYN_promotion": false,
+    "model_training": false
+  },
+  "privacy": {
+    "public_sanitized": true,
+    "raw_candidate_text": false,
+    "e0_spans": false,
+    "judge_rationales": false
+  }
+}
