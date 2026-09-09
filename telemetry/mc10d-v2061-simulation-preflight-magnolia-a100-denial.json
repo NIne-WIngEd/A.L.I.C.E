@@ -1,0 +1,38 @@
+{
+  "schema": "alice.mc10d.public-telemetry.v2.0.6.1",
+  "canonical_main": "0abaed85873c3f8de04765847eb7700b0e20433f",
+  "stage": "MC10D_POST_HYBRID_POINTWISE_SIMULATION_PREFLIGHT",
+  "hybrid_pointwise_freeze_sha256": "8495B3C4B3207511D615BD0B7788EB064114B3F763E7E4299EDCC1EE869617B7",
+  "candidate_count": 287,
+  "simulation_eligible": 216,
+  "pointwise_reject_owner_hybrid": 71,
+  "simulation_payload_sha256": "7D217570C167575E24630E3BE150786B260C16518D0349EF2EF94E1A088A0925",
+  "packets_covered": 24,
+  "base_candidate_scenarios": 13824,
+  "paraphrase_probe_obligations": 41472,
+  "family_candidate_obligations": 864,
+  "nominal_model_requests": 2592,
+  "magnolia_a100": {
+    "actual_job_id": 575309,
+    "partition": "suliaoma",
+    "requested_qos": "normal",
+    "requested_gres": "gpu:a100:1",
+    "state": "PENDING",
+    "reason": "QOS_NOT_PERMITTED_PARTITION_REQUIRES_BXMARG",
+    "owner_qos": "normal",
+    "partition_allow_qos": "bxmarg",
+    "owner_bxmarg_authorized": false,
+    "route_authorized": false
+  },
+  "authority": {
+    "mc8_post_pointwise_verified": true,
+    "simulation_started": false,
+    "A_SYN_acceptance": false,
+    "A_SYN_promotion": false,
+    "model_training": false
+  },
+  "privacy": {
+    "public_sanitized": true,
+    "raw_private_payloads": false
+  }
+}
