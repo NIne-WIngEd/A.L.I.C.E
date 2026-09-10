@@ -1,8 +1,8 @@
 {
   "schema": "alice.mc10d.public-sanitized-telemetry.v2",
-  "updated_utc": "2026-09-10T01:55:00Z",
+  "updated_utc": "2026-09-10T02:40:00Z",
   "canonical_main": "0abaed85873c3f8de04765847eb7700b0e20433f",
-  "stage": "MC10D_KAGGLE_DURABLE_FULL_V123_R1_LAUNCHER_READY",
+  "stage": "MC10D_KAGGLE_V123_R2_RELEASE_READY",
   "pointwise": {
     "hybrid_freeze_sha256": "8495B3C4B3207511D615BD0B7788EB064114B3F763E7E4299EDCC1EE869617B7",
     "candidate_count": 287,
@@ -12,103 +12,56 @@
   "post_pointwise": {
     "mc8_post_pointwise_verified": true,
     "simulation_payload_sha256": "7D217570C167575E24630E3BE150786B260C16518D0349EF2EF94E1A088A0925",
-    "simulation_eligible": 216,
-    "packets_covered": 24,
     "simulation_started": true,
-    "v121_source_attempts": 23,
-    "v121_source_valid": 0,
-    "v121_source_technical_invalid": 23,
-    "v121_source_checkpoint_sha256": "98B98D8475C56F32C9328AA174DD618DDD895E14C49B35C1F5DFBA91A65F5B15"
-  },
-  "v122_forensic": {
-    "kernel_ref": "mkrayanyan/alice-mc10d-sf-mis-abc67430d799",
-    "job_id": "ABC67430D799CD766BC97D78471580EC451528EA3C48A51720C3798C4F25DB1C",
-    "terminal_status": "ERROR",
-    "exact_failure": "Stop: context amendment binding",
-    "controller_embedded_key": "technical_context_capacity_amendment_id",
-    "worker_required_key": "context_capacity_amendment_id",
-    "root_cause": "CONTROLLER_WORKER_EMBEDDED_AMENDMENT_KEY_MISMATCH",
-    "provider_log_last_event_seconds": 6.920935308,
-    "worker_entered": false,
-    "public_canary_started": false,
-    "private_candidate_attempts": 0,
-    "old_5400_second_charge_was_measured_runtime": false
+    "v121_mistral_attempts": 23,
+    "v121_valid": 0,
+    "v121_technical_invalid": 23,
+    "v121_common_failure": "scenario_batch_1 / Stop:non-stop finish"
   },
   "provider": {
+    "provider": "KAGGLE_2XT4",
     "magnolia_closed_for_mc10d": true,
-    "further_magnolia_attempts_authorized": false,
-    "next_provider": "KAGGLE_2XT4",
-    "kaggle_release_package_sha256": "4BA1F35B77ADDA667EEEC67430C123A8D4545EA09D221154AA28430BFCDD51CD",
-    "kaggle_release_launcher_sha256": "5722DCAE3A30D81DCEC18F3A7A2D3D0B4DA94E34924339F970BF4815063FB8E4",
-    "kaggle_release_build_audit_sha256": "6BEC94F0CC8D173916C3083C903386FAB5E3CF94DE74F9554584A1F418B1E605",
-    "v123_first_launcher_remote_started": false,
-    "v123_first_launcher_stop": "LOCAL_EXTERNAL_COMPILE_GATE_POWERSHELL_NATIVE_ARG_QUOTING",
-    "v123_r1_launcher_only_repair": true
-  },
-  "quota": {
-    "local_budget_total_seconds": 21600,
-    "protected_account_reserve_seconds": 3600,
-    "v121_corrected_charge_seconds": 5460,
-    "v122_corrected_charge_seconds": 60,
-    "corrected_migrated_spend_seconds": 5520,
-    "local_budget_remaining_seconds": 16080,
-    "values_are_local_safety_accounting_not_kaggle_ui_billing": true
-  },
-  "technical_context_capacity_repair": {
-    "id": "MC10D_TECHNICAL_CONTEXT_CAPACITY_REPAIR_V1",
-    "service_context_after": 32768,
-    "qwen_num_ctx_after": 32768,
-    "v122_never_reached_capacity_probe": true,
-    "v123_public_context_probe_required": true,
-    "v123_public_schema_probe_required": true,
-    "v123_one_private_pilot_required_before_scaleout": true
+    "v122_root_cause": "PRE_WORKER_EMBEDDED_JOB_KEY_MISMATCH",
+    "v122_private_candidates_attempted": 0,
+    "v123_r1_root_cause": "LOCAL_CONTROLLER_UNDEFINED_V121_SOURCE_JOB_ID",
+    "v123_r1_kaggle_submission": false,
+    "v123_r1_gpu_spend_seconds": 0,
+    "release_package": "ALICE_MC10D_KAGGLE_DURABLE_FULL_MC10D_v1.2.3-R2.zip",
+    "release_package_sha256": "4ED7E8490D7E6C7A6B98266F1DA304BD2F7387228566793F38F56DE0576F68F9",
+    "release_launcher_sha256": "1EAA693C2E77C9DF1BFDE42B22A28595BBB77CAAD2B85616D3B6B1F1688DAB90",
+    "release_build_audit_sha256": "59AD088C58BE8C08EE173592D9D7FC0864ABDCC4E8DE1F16085BE8E3FE4B4104"
   },
   "execution_contract": {
+    "corrected_migrated_spend_seconds": 5520,
+    "local_budget_total_seconds": 21600,
+    "protected_account_reserve_seconds": 3600,
+    "local_budget_remaining_seconds": 16080,
     "single_active_gpu_job": true,
-    "family_order": [
-      "mistral",
-      "granite",
-      "gemma",
-      "qwen"
-    ],
+    "first_family_job": ["PUBLIC_CONTEXT_PROBE", "PUBLIC_SCHEMA_PROBE", "ONE_PRIVATE_PILOT"],
+    "pilot_soft_seconds": 2700,
+    "later_soft_seconds_max": 3600,
+    "later_private_task_limit": 12,
     "full_four_family_attempt_coverage_required": true,
     "early_definitive_fail_shortcut": false,
     "technical_invalid_semantic_failure": false,
-    "technical_invalid_semantic_retry": false,
-    "checkpoint_durable_requires_drive_roundtrip_sha_match": true,
-    "first_family_job_private_task_limit": 1,
-    "first_family_job_soft_seconds": 2700,
-    "later_job_soft_seconds_max": 3600,
-    "normal_job_task_limit": 12,
-    "min_seconds_before_new_candidate": 900,
-    "provider_logs_collected_before_quota_accounting": true,
-    "worker_entered_receipt_precedes_embedded_binding": true
+    "checkpoint_durable_requires_drive_roundtrip_sha_match": true
   },
-  "remaining_mc10d_pipeline": [
-    "MC8_LIVE_REVERIFY",
-    "FULL_FOUR_FAMILY_SIMULATION_FALSIFICATION",
-    "UNACCEPTED_SYNTHETIC_SIMULATION_LEDGER",
-    "EXACT_V200_GATES_FALSIFICATION_VETOES",
-    "MC10D_SIMFALSIFY_FREEZE_V2_0_9",
-    "MC10D_DECISION_FREEZE_V2_0_9",
-    "MC10E_SELECT_ABSTAIN_PROPOSAL_V2_0_9",
-    "FINAL_DRIVE_ROUNDTRIP_DURABILITY"
-  ],
-  "next": "RUN_V123_R1_CURRENT_QUOTA_WINDOW_NO_NewQuotaWindow",
+  "r2_regression": {
+    "offline_tests": 22,
+    "controller_global_name_resolution": true,
+    "executable_v122_to_v123_migration": true,
+    "deterministic_rebuild_byte_identical": true,
+    "clean_external_compile": true,
+    "manifest_verification": true,
+    "zip_crc": true
+  },
+  "next": "RUN_V123_R2_CURRENT_QUOTA_WINDOW_NO_NewQuotaWindow",
   "authority": {
     "A_SYN_acceptance": false,
     "A_SYN_promotion": false,
     "model_training": false,
     "stage_g_closed": false,
     "phase2_replaced": false,
-    "MC10E_auto_execution": false,
-    "new_gpu_submission_authorized": true
-  },
-  "privacy": {
-    "public_sanitized": true,
-    "raw_candidate_payloads_exposed": false,
-    "E0_spans_exposed": false,
-    "private_simulation_payload_exposed": false,
-    "MC8_hidden_material_sent_to_models": false
+    "MC10E_auto_execution": false
   }
 }
