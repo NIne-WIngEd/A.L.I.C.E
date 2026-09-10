@@ -1,8 +1,8 @@
 {
   "schema": "alice.mc10d.public-sanitized-telemetry.v2",
-  "updated_utc": "2026-09-10T01:39:00Z",
+  "updated_utc": "2026-09-10T01:55:00Z",
   "canonical_main": "0abaed85873c3f8de04765847eb7700b0e20433f",
-  "stage": "MC10D_KAGGLE_DURABLE_FULL_V123_RELEASE_READY",
+  "stage": "MC10D_KAGGLE_DURABLE_FULL_V123_R1_LAUNCHER_READY",
   "pointwise": {
     "hybrid_freeze_sha256": "8495B3C4B3207511D615BD0B7788EB064114B3F763E7E4299EDCC1EE869617B7",
     "candidate_count": 287,
@@ -39,8 +39,11 @@
     "further_magnolia_attempts_authorized": false,
     "next_provider": "KAGGLE_2XT4",
     "kaggle_release_package_sha256": "4BA1F35B77ADDA667EEEC67430C123A8D4545EA09D221154AA28430BFCDD51CD",
-    "kaggle_release_launcher_sha256": "98501C5D67290BA59382D01F520DF6F6679E51E8B914BB83EF263B5468E8E939",
-    "kaggle_release_build_audit_sha256": "6BEC94F0CC8D173916C3083C903386FAB5E3CF94DE74F9554584A1F418B1E605"
+    "kaggle_release_launcher_sha256": "5722DCAE3A30D81DCEC18F3A7A2D3D0B4DA94E34924339F970BF4815063FB8E4",
+    "kaggle_release_build_audit_sha256": "6BEC94F0CC8D173916C3083C903386FAB5E3CF94DE74F9554584A1F418B1E605",
+    "v123_first_launcher_remote_started": false,
+    "v123_first_launcher_stop": "LOCAL_EXTERNAL_COMPILE_GATE_POWERSHELL_NATIVE_ARG_QUOTING",
+    "v123_r1_launcher_only_repair": true
   },
   "quota": {
     "local_budget_total_seconds": 21600,
@@ -62,7 +65,12 @@
   },
   "execution_contract": {
     "single_active_gpu_job": true,
-    "family_order": ["mistral", "granite", "gemma", "qwen"],
+    "family_order": [
+      "mistral",
+      "granite",
+      "gemma",
+      "qwen"
+    ],
     "full_four_family_attempt_coverage_required": true,
     "early_definitive_fail_shortcut": false,
     "technical_invalid_semantic_failure": false,
@@ -86,7 +94,7 @@
     "MC10E_SELECT_ABSTAIN_PROPOSAL_V2_0_9",
     "FINAL_DRIVE_ROUNDTRIP_DURABILITY"
   ],
-  "next": "RUN_V123_CURRENT_QUOTA_WINDOW_NO_NewQuotaWindow",
+  "next": "RUN_V123_R1_CURRENT_QUOTA_WINDOW_NO_NewQuotaWindow",
   "authority": {
     "A_SYN_acceptance": false,
     "A_SYN_promotion": false,
