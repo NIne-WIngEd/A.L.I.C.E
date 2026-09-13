@@ -1,44 +1,49 @@
-# Hosted-Model Output Training Boundary — 2026-09-13
+# Hosted-Model Output Training Boundary — Owner Authorization Correction — 2026-09-13
 
-**Status:** active lineage-safety rule  
-**Scope:** permanent A.L.I.C.E.-native checkpoints and any artifact intended for later Fable/commercial reuse
+**Status:** active owner-directed lineage rule; supersedes the earlier advisory-only restriction in this file  
+**Scope:** A.L.I.C.E. and Fable model-development curricula, process traces, and permanent checkpoints
 
-## Why this rule exists
+## Owner correction
 
-The current OpenAI terms applicable to ChatGPT/Services restrict use of Service Output to develop AI models that compete with OpenAI, subject to whatever separate agreement or permitted exception may apply to the account. Fable is intended as a consumer AI product, so A.L.I.C.E. should not build a commercializable training lineage that depends on ChatGPT-generated supervision without explicit contractual clearance.
+The owner has explicitly stated that the project has permission to use Sol/ChatGPT-produced teaching material for A.L.I.C.E. and Fable development and has directed that this material not be removed from the training lineage.
 
-This is a lineage-safety rule, not a judgment about model quality and not legal advice.
+This repository records that authorization as an owner assertion. It does not attempt to restate confidential agreement language or claim independent legal verification beyond the owner's representation.
+
+The earlier blanket treatment of Sol/ChatGPT/Astra output as advisory-only is therefore superseded for owner-authorized project material.
 
 ## Active rule
 
-OpenAI/ChatGPT/Astra/Sol service output is **advisory-only by default** for permanent model development.
+Teacher material may enter the A.L.I.C.E./Fable training workflow when all of the following are true:
 
-It may be used to discuss architecture, inspect failures, propose methods, or help the owner reason about the project, but it must not be silently inserted as training rows, preference labels, synthetic identity data, or teacher targets for a permanent checkpoint intended for Fable/commercial reuse unless the owner has a separate agreement or verified permission covering that use.
+1. the owner explicitly authorizes that teacher/source for the intended project use;
+2. the exact curriculum artifact is integrity-bound by SHA256 or Git blob hash;
+3. the actor/model origin is recorded;
+4. the authorization scope is recorded;
+5. private/public custody rules are still respected; and
+6. the material passes the same semantic, provenance, held-out, and regression checks as other curriculum.
 
-The N0 training code therefore requires an explicit curriculum manifest recording origin, rights/license review, content hash, and `training_authorized=true` before targeted curriculum training can run.
+Authorization removes an origin-based veto. It does not remove normal data-quality or provenance checks.
 
-## Approved curriculum origins by default
+## Sol teacher role
 
-A curriculum may be training-authorized when its provenance and applicable rights permit the intended use, for example:
+Sol is the primary development-time teacher for the EIPM build. Sol may create semantic, pragmatic, social, emotional, evidence-grounding, ranking, ACFP-alignment, graph-alignment, and later failure-repair curricula.
 
-- owner-authored material;
-- deterministic transformations of appropriately licensed/public-domain source material;
-- public datasets whose licenses permit the intended training use;
-- outputs produced locally by a self-hosted model under a license/terms path that permits the intended model-development use;
-- future native FBM output once FBM itself has a clean training lineage.
+For Elaina-specific identity targets, Sol remains a curriculum constructor and evaluator rather than historical authority. Canonical Elaina evidence and governed derived substrate determine identity truth/targets.
 
-Every such corpus still requires its own manifest and source/rights record.
+## Restored N0 seed
 
-## Sol-authored seed generated on 2026-09-13
+`training/eipm/n0/sol_curriculum_seed_v0.1.jsonl` is restored as an active owner-authorized N0 curriculum artifact.
 
-A small Sol-authored N0 curriculum seed was created during implementation before the current terms check was refreshed. It is retained only as a historical/advisory design example in Git history. It is **not training-authorized** and must not be used for a permanent Alice/Fable checkpoint under this default rule.
+Its manifest is `training/eipm/n0/sol_curriculum_seed_v0.1.origin.json`.
 
-Its useful lesson is structural: semantic teaching should be expressed as context-conditioned candidate comparison with calibrated ties when multiple answers are genuinely supported. Equivalent training rows should be produced from an approved source path.
+The restored artifact retains its original Git blob identity so its provenance from the 2026-09-13 Sol curriculum commit is auditable.
 
 ## FBM implication
 
-The `fable-builder-model` branch may record high-level observable construction procedures for project continuity, but future FBM training data must carry its own origin/rights manifest. ChatGPT process traces are not automatically FBM training-authorized merely because they are useful documentation.
+Sol/Astra/other teacher work should be captured as reusable builder operations when useful. Fable Builder Model training material must retain actor, procedure, constraints, outcome, and owner authorization/provenance. The objective is to preserve the construction knowledge rather than erase it because of the tool that originally performed the operation.
 
-## No-bureaucracy interpretation
+## What is unchanged
 
-This rule is intentionally one manifest check, not a new qualification phase. Once a source/generator path is cleared, the build continues directly. The goal is to keep permanent Alice/Fable weights reconstructible and commercially clean while preserving the mainstreamed development loop.
+This correction does **not** authorize the first private Elaina identity gradient by itself. The existing explicit owner gate for that irreversible transition remains separate.
+
+Private Elaina payloads remain out of public Git. Source authority, E0/E-INF/A-SYN distinctions, held-out evaluation, checkpoint integrity, and regression testing remain unchanged.

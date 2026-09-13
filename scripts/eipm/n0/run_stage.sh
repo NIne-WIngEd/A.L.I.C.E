@@ -10,9 +10,26 @@ SOURCE_CONFIG="${ALICE_N0_SOURCE_CONFIG:-$ROOT/configs/eipm/n0/public_corpus_boo
 CORPUS_DIR="$WORKDIR/corpus"
 TOKENIZER_DIR="$WORKDIR/tokenizer"
 CHECKPOINT_DIR="$WORKDIR/checkpoints"
+RANKER_DIR="$WORKDIR/ranker"
+CURRICULUM="${ALICE_N0_CURRICULUM:-$ROOT/training/eipm/n0/sol_curriculum_seed_v0.1.jsonl}"
+CURRICULUM_MANIFEST="${ALICE_N0_CURRICULUM_MANIFEST:-$ROOT/training/eipm/n0/sol_curriculum_seed_v0.1.origin.json}"
 
-mkdir -p "$WORKDIR" "$CHECKPOINT_DIR"
+mkdir -p "$WORKDIR" "$CHECKPOINT_DIR" "$RANKER_DIR"
 export PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}"
+
+latest_mlm_checkpoint() {
+  if [[ -n "${N0_MLM_CHECKPOINT:-}" ]]; then
+    printf '%s\n' "$N0_MLM_CHECKPOINT"
+    return
+  fi
+  local latest
+  latest="$(find "$CHECKPOINT_DIR" -maxdepth 2 -type d -path '*/model' | sort | tail -n 1 || true)"
+  if [[ -z "$latest" ]]; then
+    echo "No MLM checkpoint found. Set N0_MLM_CHECKPOINT or run train-mlm first." >&2
+    exit 2
+  fi
+  printf '%s\n' "$latest"
+}
 
 case "$STAGE" in
   corpus-smoke)
@@ -82,14 +99,33 @@ case "$STAGE" in
       --mixed-precision "${N0_MIXED_PRECISION:-auto}"
     ;;
 
+  train-curriculum)
+    if [[ ! -f "$TOKENIZER_DIR/tokenizer.json" ]]; then
+      echo "Tokenizer must exist before train-curriculum" >&2
+      exit 2
+    fi
+    MLM_CHECKPOINT="$(latest_mlm_checkpoint)"
+    accelerate launch "$ROOT/scripts/eipm/n0/train_curriculum_ranker.py" \
+      --config "$CONFIG" \
+      --tokenizer-dir "$TOKENIZER_DIR" \
+      --mlm-checkpoint "$MLM_CHECKPOINT" \
+      --curriculum "$CURRICULUM" \
+      --curriculum-manifest "$CURRICULUM_MANIFEST" \
+      --output-dir "$RANKER_DIR" \
+      --max-length "${N0_CURRICULUM_MAX_LENGTH:-512}" \
+      --batch-size "${N0_CURRICULUM_BATCH_SIZE:-4}" \
+      --epochs "${N0_CURRICULUM_EPOCHS:-3}" \
+      --learning-rate "${N0_CURRICULUM_LR:-2e-5}"
+    ;;
+
   *)
     cat >&2 <<EOF
-usage: $0 {corpus-smoke|corpus|tokenizer|preflight|train-mlm}
+usage: $0 {corpus-smoke|corpus|tokenizer|preflight|train-mlm|train-curriculum}
 
 Private work directory defaults to:
   $WORKDIR
 
-Override with ALICE_N0_WORKDIR. The script never writes private identity data.
+Override with ALICE_N0_WORKDIR. N0 stages do not write private identity data.
 EOF
     exit 2
     ;;
