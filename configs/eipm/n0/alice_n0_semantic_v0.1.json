@@ -1,0 +1,58 @@
+{
+  "schema_version": "0.1",
+  "model_id": "alice-n0-semantic-v0.1",
+  "status": "active_initial_build_config",
+  "architecture": {
+    "family": "native_bidirectional_transformer_encoder",
+    "third_party_weight_initialization": false,
+    "num_hidden_layers": 24,
+    "hidden_size": 896,
+    "num_attention_heads": 14,
+    "head_dim": 64,
+    "intermediate_size": 3584,
+    "activation": "geglu",
+    "normalization": "pre_norm",
+    "position_encoding": "rope",
+    "attention_pattern": {
+      "type": "alternating_local_global",
+      "local_window_tokens": 512,
+      "global_every_n_layers": 4
+    },
+    "max_train_sequence_length_initial": 4096,
+    "long_context_continuation_target_if_needed": 8192,
+    "tie_input_output_embeddings": true,
+    "approx_parameter_count": 350000000
+  },
+  "tokenizer": {
+    "type": "byte_fallback_bpe",
+    "vocab_size": 48000,
+    "training_data_class": "approved_public_n0_only",
+    "private_identity_text_in_tokenizer_training": false
+  },
+  "training": {
+    "primary_objective": "dynamic_span_aware_masked_language_modeling",
+    "curriculum_source": "sol_primary_with_optional_specialist_support",
+    "fixed_total_token_budget": null,
+    "stop_rule": "continue_while_material_capability_gain_justifies_compute",
+    "checkpoint_policy": "resumable_hashed_lineage"
+  },
+  "data": {
+    "manifest": "docs/eipm/n0/public_source_manifest_v0.1.json",
+    "use_only_training_allowed_sources": true,
+    "primary_broad_source_family": "Common Pile / Comma when per-source rights permit",
+    "private_identity_data_stage": "N1_or_later"
+  },
+  "evaluation": {
+    "external_judge_committee_required": false,
+    "direct_sol_evaluation": true,
+    "owner_review": true,
+    "held_out_regression_required": true,
+    "failure_driven_repair": true
+  },
+  "governance": {
+    "owner_private_gradient_authorization_required": true,
+    "preserve_source_provenance": true,
+    "preserve_private_public_boundary": true,
+    "parallel_fbm_process_capture": true
+  }
+}
