@@ -5,107 +5,84 @@ import argparse
 import json
 import random
 from pathlib import Path
-from typing import Any
 
 import torch
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import DataLoader
 
 from alice_personality.n0.config import load_n0_config
-from alice_personality.n0.curriculum import sha256_file, validate_curriculum_manifest
+from alice_personality.n0.curriculum import (
+    sha256_file,
+    validate_curriculum_manifest,
+    validate_curriculum_rows,
+)
+from alice_personality.n0.curriculum_data import (
+    CurriculumCollator,
+    CurriculumDataset,
+    load_tokenizer,
+    score_group,
+)
 from alice_personality.n0.ranker import build_ranker_from_mlm_checkpoint, listwise_preference_loss
 
 
-class CurriculumDataset(Dataset):
-    def __init__(self, path: str | Path, split: str) -> None:
-        self.rows: list[dict[str, Any]] = []
-        with Path(path).open("r", encoding="utf-8") as handle:
-            for line in handle:
-                if not line.strip():
-                    continue
-                row = json.loads(line)
-                if row.get("split", "train") == split:
-                    self.rows.append(row)
-        if not self.rows:
-            raise ValueError(f"no curriculum rows found for split={split}")
-
-    def __len__(self) -> int:
-        return len(self.rows)
-
-    def __getitem__(self, index: int) -> dict[str, Any]:
-        return self.rows[index]
-
-
-class CurriculumCollator:
-    def __init__(self, tokenizer: Any, max_length: int) -> None:
-        self.tokenizer = tokenizer
-        self.max_length = max_length
-
-    def __call__(self, rows: list[dict[str, Any]]) -> dict[str, Any]:
-        prompts: list[str] = []
-        candidates: list[str] = []
-        group_sizes: list[int] = []
-        preferred_masks: list[torch.Tensor] = []
-        ids: list[str] = []
-
-        for row in rows:
-            row_candidates = list(row["candidates"])
-            preferred = set(int(x) for x in row["preferred_indices"])
-            if not row_candidates or not preferred:
-                raise ValueError(f"invalid curriculum row {row.get('id')}")
-            if max(preferred) >= len(row_candidates):
-                raise ValueError(f"preferred index out of range in {row.get('id')}")
-
-            ids.append(str(row["id"]))
-            group_sizes.append(len(row_candidates))
-            preferred_masks.append(
-                torch.tensor([index in preferred for index in range(len(row_candidates))], dtype=torch.bool)
-            )
-            prompts.extend([str(row["prompt"])] * len(row_candidates))
-            candidates.extend(str(candidate) for candidate in row_candidates)
-
-        encoded = self.tokenizer(
-            prompts,
-            candidates,
-            padding=True,
-            truncation=True,
-            max_length=self.max_length,
-            return_tensors="pt",
-        )
-        return {
-            "input_ids": encoded["input_ids"],
-            "attention_mask": encoded["attention_mask"],
-            "group_sizes": group_sizes,
-            "preferred_masks": preferred_masks,
-            "ids": ids,
-        }
-
-
-def evaluate(model, dataloader, accelerator) -> dict[str, float]:
+def evaluate(model, dataloader, accelerator, competencies: list[str]) -> dict[str, object]:
     model.eval()
-    correct = 0
-    total = 0
-    tie_exact = 0
+    competency_index = {name: index for index, name in enumerate(competencies)}
+    overall = torch.zeros(4, device=accelerator.device, dtype=torch.float64)
+    by_competency = torch.zeros(
+        (len(competencies), 4), device=accelerator.device, dtype=torch.float64
+    )
+
     with torch.no_grad():
         for batch in dataloader:
             scores = model(batch["input_ids"], batch["attention_mask"])
             offset = 0
-            for size, preferred in zip(batch["group_sizes"], batch["preferred_masks"]):
+            for size, preferred, competency in zip(
+                batch["group_sizes"],
+                batch["preferred_masks"],
+                batch["competencies"],
+            ):
                 group_scores = scores[offset : offset + size]
                 offset += size
-                preferred = preferred.to(group_scores.device)
-                top = torch.argmax(group_scores).item()
-                correct += int(bool(preferred[top]))
-                total += 1
-                max_score = group_scores.max()
-                predicted_tie = torch.isclose(group_scores, max_score, rtol=0.0, atol=1e-6)
-                tie_exact += int(torch.equal(predicted_tie, preferred))
-    stats = torch.tensor([correct, total, tie_exact], device=accelerator.device, dtype=torch.float64)
-    stats = accelerator.reduce(stats, reduction="sum")
-    return {
-        "top1_accuracy": float(stats[0] / stats[1].clamp_min(1)),
-        "tie_exact_rate": float(stats[2] / stats[1].clamp_min(1)),
-        "examples": int(stats[1].item()),
+                result = score_group(group_scores, preferred)
+                values = torch.tensor(
+                    [
+                        float(result["top_supported"]),
+                        1.0,
+                        float(result["supported_set_separated"]),
+                        float(result["separation_margin"]),
+                    ],
+                    device=accelerator.device,
+                    dtype=torch.float64,
+                )
+                overall += values
+                by_competency[competency_index[competency]] += values
+
+    overall = accelerator.reduce(overall, reduction="sum")
+    by_competency = accelerator.reduce(by_competency, reduction="sum")
+
+    examples = max(int(overall[1].item()), 1)
+    result: dict[str, object] = {
+        "top1_accuracy": float(overall[0].item() / examples),
+        "supported_set_separation_rate": float(overall[2].item() / examples),
+        "mean_separation_margin": float(overall[3].item() / examples),
+        "examples": int(overall[1].item()),
+        "per_competency": {},
     }
+
+    per_competency: dict[str, dict[str, float | int]] = {}
+    for name, index in competency_index.items():
+        stats = by_competency[index]
+        count = int(stats[1].item())
+        if count == 0:
+            continue
+        per_competency[name] = {
+            "top1_accuracy": float(stats[0].item() / count),
+            "supported_set_separation_rate": float(stats[2].item() / count),
+            "mean_separation_margin": float(stats[3].item() / count),
+            "examples": count,
+        }
+    result["per_competency"] = per_competency
+    return result
 
 
 def main() -> None:
@@ -127,29 +104,42 @@ def main() -> None:
     try:
         from accelerate import Accelerator
         from safetensors.torch import save_file
-        from transformers import AutoTokenizer
     except ImportError as exc:
         raise SystemExit("Install requirements-n0.txt before curriculum training") from exc
 
     curriculum_manifest = validate_curriculum_manifest(args.curriculum, args.curriculum_manifest)
+    curriculum_summary = validate_curriculum_rows(args.curriculum)
 
     random.seed(args.seed)
     torch.manual_seed(args.seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(args.seed)
+
     config = load_n0_config(args.config)
     accelerator = Accelerator(
-        mixed_precision=("bf16" if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else "fp16")
+        mixed_precision=(
+            "bf16" if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else "fp16"
+        )
         if torch.cuda.is_available()
         else "no"
     )
 
-    tokenizer = AutoTokenizer.from_pretrained(args.tokenizer_dir, use_fast=True)
+    tokenizer = load_tokenizer(args.tokenizer_dir)
+    if len(tokenizer) != config.vocab_size:
+        raise SystemExit(f"tokenizer size {len(tokenizer)} != config vocab {config.vocab_size}")
+
     model = build_ranker_from_mlm_checkpoint(args.mlm_checkpoint, hidden_size=config.hidden_size)
 
     train_set = CurriculumDataset(args.curriculum, "train")
     dev_set = CurriculumDataset(args.curriculum, "dev")
+    competencies = sorted({str(row["competency"]) for row in dev_set.rows})
     collator = CurriculumCollator(tokenizer, args.max_length)
-    train_loader = DataLoader(train_set, batch_size=args.batch_size, shuffle=True, collate_fn=collator)
-    dev_loader = DataLoader(dev_set, batch_size=args.batch_size, shuffle=False, collate_fn=collator)
+    train_loader = DataLoader(
+        train_set, batch_size=args.batch_size, shuffle=True, collate_fn=collator
+    )
+    dev_loader = DataLoader(
+        dev_set, batch_size=args.batch_size, shuffle=False, collate_fn=collator
+    )
 
     decay, no_decay = [], []
     for name, parameter in model.named_parameters():
@@ -173,6 +163,7 @@ def main() -> None:
     )
 
     best_accuracy = -1.0
+    best_separation = -1.0
     output = Path(args.output_dir)
     output.mkdir(parents=True, exist_ok=True)
 
@@ -183,36 +174,68 @@ def main() -> None:
         for batch in train_loader:
             optimizer.zero_grad(set_to_none=True)
             scores = model(batch["input_ids"], batch["attention_mask"])
-            loss = listwise_preference_loss(scores, batch["group_sizes"], batch["preferred_masks"])
+            loss = listwise_preference_loss(
+                scores,
+                batch["group_sizes"],
+                batch["preferred_masks"],
+            )
             accelerator.backward(loss)
             accelerator.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
-            running_loss += float(loss.detach())
+            running_loss += float(loss.detach().cpu())
             batches += 1
 
-        metrics = evaluate(model, dev_loader, accelerator)
+        metrics = evaluate(model, dev_loader, accelerator, competencies)
         if accelerator.is_main_process:
-            print(json.dumps({"epoch": epoch, "train_loss": running_loss / max(batches, 1), **metrics}))
+            print(
+                json.dumps(
+                    {
+                        "epoch": epoch,
+                        "train_loss": running_loss / max(batches, 1),
+                        **metrics,
+                    },
+                    sort_keys=True,
+                )
+            )
 
-        if metrics["top1_accuracy"] > best_accuracy:
-            best_accuracy = metrics["top1_accuracy"]
+        accuracy = float(metrics["top1_accuracy"])
+        separation = float(metrics["supported_set_separation_rate"])
+        improved = accuracy > best_accuracy or (
+            accuracy == best_accuracy and separation > best_separation
+        )
+        if improved:
+            best_accuracy = accuracy
+            best_separation = separation
             accelerator.wait_for_everyone()
             if accelerator.is_main_process:
                 unwrapped = accelerator.unwrap_model(model)
-                state = {key: value.detach().cpu().contiguous() for key, value in unwrapped.state_dict().items()}
+                state = {
+                    key: value.detach().cpu().contiguous()
+                    for key, value in unwrapped.state_dict().items()
+                }
                 save_file(state, str(output / "ranker.safetensors"))
+                (output / "best_dev_metrics.json").write_text(
+                    json.dumps(metrics, indent=2, sort_keys=True) + "\n",
+                    encoding="utf-8",
+                )
                 receipt = {
                     "model_id": config.model_id,
                     "stage": "N0_targeted_curriculum_ranker",
                     "best_dev_top1_accuracy": best_accuracy,
+                    "best_dev_supported_set_separation_rate": best_separation,
+                    "best_dev_metrics_file": "best_dev_metrics.json",
                     "curriculum_sha256": sha256_file(Path(args.curriculum)),
-                    "curriculum_manifest_sha256": sha256_file(Path(args.curriculum_manifest)),
+                    "curriculum_manifest_sha256": sha256_file(
+                        Path(args.curriculum_manifest)
+                    ),
                     "curriculum_origin_type": curriculum_manifest["origin_type"],
+                    "curriculum_actor": curriculum_manifest.get("actor"),
+                    "curriculum_summary": curriculum_summary,
                     "config_sha256": sha256_file(Path(args.config)),
                     "seed": args.seed,
                     "epochs_completed": epoch,
                     "mlm_checkpoint": args.mlm_checkpoint,
-                    "private_identity_gradient": False
+                    "private_identity_gradient": False,
                 }
                 (output / "receipt.json").write_text(
                     json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8"
