@@ -1,0 +1,47 @@
+{
+  "schema": "fable.builder-event.v0.1",
+  "event_id": "FBM-BUILD-20260913-N0-FAILURE-LOOP-001",
+  "actor": "sol",
+  "actor_instance": "GPT-5.6 Sol",
+  "owner_authorized": true,
+  "private_payload_included": false,
+  "objective": "Advance the Alice-native N0 semantic/judgment build from a runnable curriculum trainer into a failure-driven teaching loop without adding a separate qualification bureaucracy.",
+  "source_project": "NIne-WIngEd/A.L.I.C.E",
+  "source_branch": "alice-eipm-v1-build",
+  "source_tip_after_operation": "102771b397b0d3ce9125f3b0908e0c1dfb45c8a1",
+  "teacher_seed": {
+    "artifact": "training/fbm/bootstrap/sol_curriculum_seed_v0.1.jsonl",
+    "rows": 60,
+    "origin": "owner_authorized_service_teacher"
+  },
+  "problem_signals": [
+    "The N0 preflight still contained an obsolete global 300M-to-400M parameter gate even though model scale is supposed to follow observed capability and efficiency evidence.",
+    "Curriculum training reported only coarse aggregate accuracy, which was insufficient for targeted teacher repair.",
+    "The ranker path used generic tokenizer directory loading even though the native tokenizer builder guarantees tokenizer.json directly.",
+    "There was no first-class command that emitted row-level failures for the next teaching pass."
+  ],
+  "builder_actions": [
+    "Converted the configured approximately 350M size into an initial reference rather than a ceiling and removed the global parameter-band failure gate.",
+    "Added structural curriculum validation for stable IDs, splits, competencies, candidate sets, preferred-index bounds, and duplicate detection.",
+    "Centralized curriculum collation, tokenizer loading, and candidate-group scoring utilities.",
+    "Added supported-set separation and separation-margin metrics so multi-valid-answer rows are evaluated without demanding numerically exact score ties.",
+    "Added per-competency development metrics to locate semantic, pragmatic, social, epistemic, ranking, or alignment weaknesses directly.",
+    "Added a deterministic evaluation stage that writes metrics, predictions, and only the failed or insufficiently separated rows for failure-driven repair."
+  ],
+  "reusable_builder_procedure": [
+    "Start from a provenance-bound teacher curriculum and a native semantic checkpoint.",
+    "Train the generic candidate-comparison head.",
+    "Evaluate by competency and by supported-set separation rather than one scalar only.",
+    "Materialize the concrete failing rows and their score margins.",
+    "Generate the next teacher batch specifically for those failure families while retaining a held-out regression set.",
+    "Change model scale only when recurring failures indicate capacity is the bottleneck rather than data, objective, or implementation."
+  ],
+  "guardrails_retained": [
+    "No private Elaina identity payload is placed on the public branch.",
+    "No private identity gradient is authorized by this event.",
+    "Owner-authorized Sol teaching material remains provenance-bound rather than erased.",
+    "Canonical Elaina evidence remains the authority for Elaina-specific identity targets in N1 and later."
+  ],
+  "builder_lesson": "A useful builder does not turn evaluation into a parallel bureaucracy. It converts evaluation failures directly into the next targeted teaching operation and keeps scale decisions evidence-driven.",
+  "status": "captured_for_fbm_bootstrap"
+}
