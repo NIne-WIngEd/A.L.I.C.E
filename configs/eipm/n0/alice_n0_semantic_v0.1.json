@@ -4,6 +4,7 @@
   "status": "active_initial_build_config",
   "architecture": {
     "family": "native_bidirectional_transformer_encoder",
+    "implementation_mechanics": "transformers.ModernBertForMaskedLM",
     "third_party_weight_initialization": false,
     "num_hidden_layers": 24,
     "hidden_size": 896,
@@ -19,18 +20,33 @@
       "global_every_n_layers": 4
     },
     "max_train_sequence_length_initial": 4096,
+    "max_position_embeddings": 8192,
     "long_context_continuation_target_if_needed": 8192,
     "tie_input_output_embeddings": true,
+    "attention_dropout": 0.0,
+    "embedding_dropout": 0.0,
+    "mlp_dropout": 0.0,
     "approx_parameter_count": 350000000
   },
   "tokenizer": {
     "type": "byte_fallback_bpe",
     "vocab_size": 48000,
     "training_data_class": "approved_public_n0_only",
-    "private_identity_text_in_tokenizer_training": false
+    "private_identity_text_in_tokenizer_training": false,
+    "special_token_ids": {
+      "pad": 0,
+      "unk": 1,
+      "cls": 2,
+      "sep": 3,
+      "mask": 4
+    }
   },
   "training": {
     "primary_objective": "dynamic_span_aware_masked_language_modeling",
+    "sequence_lengths": [512, 1024, 2048, 4096],
+    "mlm_probability": 0.15,
+    "mean_mask_span": 3.0,
+    "max_mask_span": 10,
     "curriculum_source": "sol_primary_with_optional_specialist_support",
     "fixed_total_token_budget": null,
     "stop_rule": "continue_while_material_capability_gain_justifies_compute",
