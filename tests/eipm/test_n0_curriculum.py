@@ -6,8 +6,35 @@ import json
 import pytest
 import torch
 
-from alice_personality.n0.curriculum import git_blob_sha1, validate_curriculum_manifest
+from alice_personality.n0.curriculum import (
+    git_blob_sha1,
+    validate_curriculum_manifest,
+    validate_curriculum_rows,
+)
+from alice_personality.n0.curriculum_data import score_group
 from alice_personality.n0.ranker import listwise_preference_loss
+
+
+def valid_row(row_id: str = "x", split: str = "train") -> dict[str, object]:
+    return {
+        "id": row_id,
+        "competency": "SEM-01",
+        "split": split,
+        "task": "candidate_ranking",
+        "prompt": "Which candidate is supported?",
+        "candidates": ["supported", "unsupported"],
+        "preferred_indices": [0],
+        "rationale": "fixture",
+        "source": "test",
+    }
+
+
+def write_valid_curriculum(path) -> None:
+    rows = [valid_row("train-1", "train"), valid_row("dev-1", "dev")]
+    path.write_text(
+        "".join(json.dumps(row) + "\n" for row in rows),
+        encoding="utf-8",
+    )
 
 
 def test_listwise_preference_loss_rewards_supported_tie() -> None:
@@ -17,6 +44,44 @@ def test_listwise_preference_loss_rewards_supported_tie() -> None:
     good = listwise_preference_loss(scores_good, [3], preferred)
     bad = listwise_preference_loss(scores_bad, [3], preferred)
     assert good < bad
+
+
+def test_score_group_accepts_supported_set_above_negative() -> None:
+    result = score_group(
+        torch.tensor([2.0, 1.5, -1.0]),
+        torch.tensor([True, True, False]),
+    )
+    assert result["top_supported"] is True
+    assert result["supported_set_separated"] is True
+    assert result["separation_margin"] > 0
+
+
+def test_score_group_flags_supported_alternative_below_negative() -> None:
+    result = score_group(
+        torch.tensor([2.0, -2.0, 1.0]),
+        torch.tensor([True, True, False]),
+    )
+    assert result["top_supported"] is True
+    assert result["supported_set_separated"] is False
+    assert result["separation_margin"] < 0
+
+
+def test_curriculum_rows_require_train_and_dev_and_unique_ids(tmp_path) -> None:
+    curriculum = tmp_path / "curriculum.jsonl"
+    write_valid_curriculum(curriculum)
+    summary = validate_curriculum_rows(curriculum)
+    assert summary["row_count"] == 2
+    assert summary["split_counts"]["train"] == 1
+    assert summary["split_counts"]["dev"] == 1
+
+    duplicate = tmp_path / "duplicate.jsonl"
+    row = valid_row("same", "train")
+    duplicate.write_text(
+        json.dumps(row) + "\n" + json.dumps({**row, "split": "dev"}) + "\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="duplicate curriculum id"):
+        validate_curriculum_rows(duplicate)
 
 
 def test_curriculum_manifest_allows_standard_authorized_origin(tmp_path) -> None:
