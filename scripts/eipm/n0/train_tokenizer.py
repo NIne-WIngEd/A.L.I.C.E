@@ -31,6 +31,7 @@ def main() -> None:
         from tokenizers.models import BPE
         from tokenizers.normalizers import NFC
         from tokenizers.pre_tokenizers import ByteLevel
+        from tokenizers.processors import TemplateProcessing
         from tokenizers.trainers import BpeTrainer
     except ImportError as exc:
         raise SystemExit("Install requirements-n0.txt before training the tokenizer") from exc
@@ -39,6 +40,11 @@ def main() -> None:
     tokenizer.normalizer = NFC()
     tokenizer.pre_tokenizer = ByteLevel(add_prefix_space=False, use_regex=True)
     tokenizer.decoder = ByteLevelDecoder()
+    tokenizer.post_processor = TemplateProcessing(
+        single="[CLS] $A [SEP]",
+        pair="[CLS] $A [SEP] $B [SEP]",
+        special_tokens=[("[CLS]", 2), ("[SEP]", 3)],
+    )
 
     trainer = BpeTrainer(
         vocab_size=args.vocab_size,

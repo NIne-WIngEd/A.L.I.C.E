@@ -45,6 +45,8 @@ def main() -> None:
     parser.add_argument("--weight-decay", type=float, default=0.1)
     parser.add_argument("--save-every", type=int, default=1000)
     parser.add_argument("--seed", type=int, default=1337)
+    parser.add_argument("--mixed-precision", choices=["auto", "no", "fp16", "bf16"], default="auto")
+    parser.add_argument("--no-gradient-checkpointing", action="store_true")
     args = parser.parse_args()
 
     try:
@@ -60,7 +62,19 @@ def main() -> None:
         raise SystemExit(f"sequence length must be one of {config.train_sequence_lengths}")
 
     seed_everything(args.seed)
-    accelerator = Accelerator(gradient_accumulation_steps=args.grad_accum, mixed_precision="bf16")
+    if args.mixed_precision == "auto":
+        if not torch.cuda.is_available():
+            mixed_precision = "no"
+        elif torch.cuda.is_bf16_supported():
+            mixed_precision = "bf16"
+        else:
+            mixed_precision = "fp16"
+    else:
+        mixed_precision = args.mixed_precision
+    accelerator = Accelerator(
+        gradient_accumulation_steps=args.grad_accum,
+        mixed_precision=mixed_precision,
+    )
 
     tokenizer = PreTrainedTokenizerFast(
         tokenizer_file=str(tokenizer_path),
@@ -74,6 +88,8 @@ def main() -> None:
         raise SystemExit(f"tokenizer size {len(tokenizer)} != config vocab {config.vocab_size}")
 
     model = build_masked_lm(config)
+    if not args.no_gradient_checkpointing and hasattr(model, "gradient_checkpointing_enable"):
+        model.gradient_checkpointing_enable()
     total, trainable = count_parameters(model)
     if accelerator.is_main_process:
         print(json.dumps({"parameters_total": total, "parameters_trainable": trainable}))
@@ -99,12 +115,22 @@ def main() -> None:
         pin_memory=torch.cuda.is_available(),
     )
 
+    decay, no_decay = [], []
+    for name, parameter in model.named_parameters():
+        if not parameter.requires_grad:
+            continue
+        if "bias" in name.lower() or "norm" in name.lower():
+            no_decay.append(parameter)
+        else:
+            decay.append(parameter)
     optimizer = torch.optim.AdamW(
-        model.parameters(),
+        [
+            {"params": decay, "weight_decay": args.weight_decay},
+            {"params": no_decay, "weight_decay": 0.0},
+        ],
         lr=args.learning_rate,
         betas=(0.9, 0.95),
         eps=1e-8,
-        weight_decay=args.weight_decay,
     )
     scheduler = get_cosine_schedule_with_warmup(
         optimizer,
@@ -118,11 +144,13 @@ def main() -> None:
     model.train()
     step = 0
     running_loss = 0.0
+    local_tokens_seen = 0
 
     while step < args.max_steps:
         saw_batch = False
         for batch in dataloader:
             saw_batch = True
+            local_tokens_seen += int(batch["attention_mask"].sum().item())
             with accelerator.accumulate(model):
                 outputs = model(**batch)
                 loss = outputs.loss
@@ -144,6 +172,8 @@ def main() -> None:
                     accelerator.wait_for_everyone()
                     checkpoint_dir = output_dir / f"step-{step:08d}"
                     accelerator.save_state(str(checkpoint_dir / "accelerator_state"))
+                    token_tensor = torch.tensor(local_tokens_seen, device=accelerator.device, dtype=torch.long)
+                    global_tokens = int(accelerator.reduce(token_tensor, reduction="sum").item())
                     if accelerator.is_main_process:
                         unwrapped = accelerator.unwrap_model(model)
                         unwrapped.save_pretrained(checkpoint_dir / "model", safe_serialization=True)
@@ -152,6 +182,7 @@ def main() -> None:
                             "model_id": config.model_id,
                             "step": step,
                             "sequence_length": args.sequence_length,
+                            "tokens_seen_since_launch": global_tokens,
                             "seed": args.seed,
                             "config_sha256": sha256_file(config_path),
                             "tokenizer_sha256": sha256_file(tokenizer_path),
@@ -160,7 +191,10 @@ def main() -> None:
                             "parameters_trainable": trainable,
                             "torch_version": torch.__version__,
                             "cuda_available": torch.cuda.is_available(),
-                            "world_size": accelerator.num_processes
+                            "world_size": accelerator.num_processes,
+                            "mixed_precision": mixed_precision,
+                            "gradient_checkpointing": not args.no_gradient_checkpointing,
+                            "private_identity_gradient": False,
                         }
                         (checkpoint_dir / "receipt.json").write_text(
                             json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8"
