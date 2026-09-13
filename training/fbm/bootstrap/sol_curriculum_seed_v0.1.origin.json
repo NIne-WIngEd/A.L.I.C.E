@@ -1,0 +1,22 @@
+{
+  "schema": "alice.eipm.n0.curriculum-origin.v0.2",
+  "artifact": "training/eipm/n0/sol_curriculum_seed_v0.1.jsonl",
+  "training_authorized": true,
+  "private_identity_data": false,
+  "origin_type": "owner_authorized_service_teacher",
+  "actor": "sol",
+  "actor_instance": "GPT-5.6 Sol",
+  "created_on": "2026-09-13",
+  "owner_authorization_asserted": true,
+  "owner_authorization_recorded_on": "2026-09-13",
+  "authorization_scope": "A.L.I.C.E. and Fable model-development curriculum and builder-process capture as explicitly directed by the owner",
+  "provenance_or_authorization": "Owner explicitly represents that permission exists for this project use and directs that Sol-authored teaching seeds remain active. This manifest records that representation without claiming independent legal verification or reproducing confidential agreement terms.",
+  "permanent_weight_use_allowed": true,
+  "fbm_process_capture_allowed": true,
+  "curriculum_git_blob_sha1": "e926ad2cba24678f60101edc0d040987773e4036",
+  "source_commit": "610c8098d78c0d97454afb271a4f4f36724238eb",
+  "source_commit_message": "eipm: add Sol semantic ranking curriculum",
+  "row_count": 60,
+  "quality_gate": "normal N0 semantic/provenance/held-out/regression checks; no origin-based veto",
+  "private_identity_gradient_authorized": false
+}
