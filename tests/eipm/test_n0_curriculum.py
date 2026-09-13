@@ -1,28 +1,13 @@
 from __future__ import annotations
 
+import hashlib
 import json
-from pathlib import Path
 
+import pytest
 import torch
 
+from alice_personality.n0.curriculum import validate_curriculum_manifest
 from alice_personality.n0.ranker import listwise_preference_loss
-
-
-CURRICULUM = Path("training/eipm/n0/sol_curriculum_seed_v0.1.jsonl")
-
-
-def test_curriculum_seed_schema_and_coverage() -> None:
-    rows = [json.loads(line) for line in CURRICULUM.read_text(encoding="utf-8").splitlines() if line.strip()]
-    assert len(rows) == 60
-    assert len({row["id"] for row in rows}) == len(rows)
-    assert {row["split"] for row in rows} == {"train", "dev"}
-    assert len({row["competency"] for row in rows}) == 43
-    for row in rows:
-        assert row["task"] == "candidate_ranking"
-        assert len(row["candidates"]) >= 2
-        assert row["preferred_indices"]
-        assert max(row["preferred_indices"]) < len(row["candidates"])
-        assert row["source"] == "sol_authored"
 
 
 def test_listwise_preference_loss_rewards_supported_tie() -> None:
@@ -32,3 +17,47 @@ def test_listwise_preference_loss_rewards_supported_tie() -> None:
     good = listwise_preference_loss(scores_good, [3], preferred)
     bad = listwise_preference_loss(scores_bad, [3], preferred)
     assert good < bad
+
+
+def test_curriculum_manifest_requires_training_authority_and_hash(tmp_path) -> None:
+    curriculum = tmp_path / "curriculum.jsonl"
+    curriculum.write_text('{"id":"x"}\n', encoding="utf-8")
+    digest = hashlib.sha256(curriculum.read_bytes()).hexdigest()
+    manifest_path = tmp_path / "manifest.json"
+    manifest_path.write_text(
+        json.dumps(
+            {
+                "training_authorized": True,
+                "private_identity_data": False,
+                "origin_type": "self_hosted_permissive_model",
+                "curriculum_sha256": digest,
+                "rights_or_license": "Apache-2.0-compatible-output-workflow",
+                "terms_or_license_reviewed": True,
+            }
+        ),
+        encoding="utf-8",
+    )
+    loaded = validate_curriculum_manifest(curriculum, manifest_path)
+    assert loaded["origin_type"] == "self_hosted_permissive_model"
+
+
+def test_curriculum_manifest_rejects_openai_service_output(tmp_path) -> None:
+    curriculum = tmp_path / "curriculum.jsonl"
+    curriculum.write_text('{"id":"x"}\n', encoding="utf-8")
+    digest = hashlib.sha256(curriculum.read_bytes()).hexdigest()
+    manifest_path = tmp_path / "manifest.json"
+    manifest_path.write_text(
+        json.dumps(
+            {
+                "training_authorized": True,
+                "private_identity_data": False,
+                "origin_type": "openai_service_output",
+                "curriculum_sha256": digest,
+                "rights_or_license": "service-output",
+                "terms_or_license_reviewed": True,
+            }
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="prohibited"):
+        validate_curriculum_manifest(curriculum, manifest_path)

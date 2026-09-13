@@ -1,0 +1,71 @@
+{
+  "schema": "alice.eipm.n0.public-corpus-sources.v0.1",
+  "purpose": "Initial public-domain-heavy N0 semantic corpus. Every accepted row must carry an explicitly allowed document license.",
+  "sources": [
+    {
+      "source_id": "common_pile_project_gutenberg_filtered",
+      "repo_id": "common-pile/project_gutenberg_filtered",
+      "revision": "main",
+      "split": "train",
+      "text_field": "text",
+      "license_field": "metadata.license",
+      "allowed_license_values": ["Public Domain"],
+      "require_row_license": true,
+      "provenance_field": "metadata.provenance",
+      "url_field": "metadata.url",
+      "id_field": "id"
+    },
+    {
+      "source_id": "common_pile_pre_1929_books_filtered",
+      "repo_id": "common-pile/pre_1929_books_filtered",
+      "revision": "main",
+      "split": "train",
+      "text_field": "text",
+      "license_field": "metadata.license",
+      "allowed_license_values": ["Public Domain"],
+      "require_row_license": true,
+      "provenance_field": "metadata.provenance",
+      "url_field": "metadata.url",
+      "id_field": "id"
+    },
+    {
+      "source_id": "common_pile_regulations_filtered",
+      "repo_id": "common-pile/regulations_filtered",
+      "revision": "main",
+      "split": "train",
+      "text_field": "text",
+      "license_field": "metadata.license",
+      "allowed_license_values": ["Public Domain"],
+      "require_row_license": true,
+      "provenance_field": "metadata.provenance",
+      "url_field": "metadata.url",
+      "id_field": "id"
+    },
+    {
+      "source_id": "common_pile_usgpo_filtered",
+      "repo_id": "common-pile/usgpo_filtered",
+      "revision": "main",
+      "split": "train",
+      "text_field": "text",
+      "license_field": "metadata.license",
+      "allowed_license_values": ["Public Domain"],
+      "require_row_license": true,
+      "provenance_field": "metadata.provenance",
+      "url_field": "metadata.url",
+      "id_field": "id"
+    },
+    {
+      "source_id": "common_pile_python_peps_filtered",
+      "repo_id": "common-pile/python_enhancement_proposals_filtered",
+      "revision": "main",
+      "split": "train",
+      "text_field": "text",
+      "license_field": "metadata.license",
+      "allowed_license_values": ["Public Domain"],
+      "require_row_license": true,
+      "provenance_field": "metadata.provenance",
+      "url_field": "metadata.url",
+      "id_field": "id"
+    }
+  ]
+}

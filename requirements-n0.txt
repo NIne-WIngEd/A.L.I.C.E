@@ -3,3 +3,5 @@ transformers>=5.0,<6
 tokenizers>=0.21,<1
 accelerate>=1.6,<2
 safetensors>=0.5,<1
+datasets>=3.6,<5
+huggingface-hub>=0.30,<2

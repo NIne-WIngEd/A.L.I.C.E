@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import random
 from pathlib import Path
@@ -12,15 +11,8 @@ import torch
 from torch.utils.data import DataLoader, Dataset
 
 from alice_personality.n0.config import load_n0_config
+from alice_personality.n0.curriculum import sha256_file, validate_curriculum_manifest
 from alice_personality.n0.ranker import build_ranker_from_mlm_checkpoint, listwise_preference_loss
-
-
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
 
 
 class CurriculumDataset(Dataset):
@@ -122,6 +114,7 @@ def main() -> None:
     parser.add_argument("--tokenizer-dir", required=True)
     parser.add_argument("--mlm-checkpoint", required=True, help="Directory containing the N0 MLM model")
     parser.add_argument("--curriculum", required=True)
+    parser.add_argument("--curriculum-manifest", required=True)
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--max-length", type=int, default=512)
     parser.add_argument("--batch-size", type=int, default=4)
@@ -137,6 +130,8 @@ def main() -> None:
         from transformers import AutoTokenizer
     except ImportError as exc:
         raise SystemExit("Install requirements-n0.txt before curriculum training") from exc
+
+    curriculum_manifest = validate_curriculum_manifest(args.curriculum, args.curriculum_manifest)
 
     random.seed(args.seed)
     torch.manual_seed(args.seed)
@@ -211,6 +206,8 @@ def main() -> None:
                     "stage": "N0_targeted_curriculum_ranker",
                     "best_dev_top1_accuracy": best_accuracy,
                     "curriculum_sha256": sha256_file(Path(args.curriculum)),
+                    "curriculum_manifest_sha256": sha256_file(Path(args.curriculum_manifest)),
+                    "curriculum_origin_type": curriculum_manifest["origin_type"],
                     "config_sha256": sha256_file(Path(args.config)),
                     "seed": args.seed,
                     "epochs_completed": epoch,
