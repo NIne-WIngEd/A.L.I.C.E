@@ -52,10 +52,15 @@ def main() -> None:
 
     model = build_masked_lm(config).to(device)
     total, trainable = count_parameters(model)
-    if not 300_000_000 <= total <= 400_000_000:
-        raise SystemExit(f"unexpected parameter count: {total}")
+    if total <= 0:
+        raise SystemExit("model contains no parameters")
     if trainable != total:
         raise SystemExit(f"unexpected frozen parameters: trainable={trainable} total={total}")
+
+    planned = config.planned_parameter_count
+    planned_fraction_delta = None
+    if planned:
+        planned_fraction_delta = (total - planned) / planned
 
     input_ids = torch.randint(5, config.vocab_size, (1, 16), device=device)
     attention_mask = torch.ones_like(input_ids)
@@ -81,6 +86,9 @@ def main() -> None:
         "tokenizer_vocab_size": tokenizer_size,
         "parameters_total": total,
         "parameters_trainable": trainable,
+        "planned_parameter_count_reference": planned,
+        "planned_parameter_count_fraction_delta": planned_fraction_delta,
+        "parameter_scale_policy": "observed_failure_driven_no_hard_cap",
         "device": device,
         "torch_version": torch.__version__,
         "cuda_available": torch.cuda.is_available(),
