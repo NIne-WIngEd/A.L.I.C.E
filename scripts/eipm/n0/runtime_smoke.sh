@@ -5,6 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 PYTHON="${PYTHON:-python}"
 WORKDIR="${ALICE_N0_WORKDIR:-$ROOT/.alice-private/n0-runtime-smoke}"
 REQUIRE_CUDA="${N0_SMOKE_REQUIRE_CUDA:-1}"
+MIN_CUDA_DEVICES="${N0_SMOKE_MIN_CUDA_DEVICES:-1}"
 LOG_DIR="$WORKDIR/runtime-smoke-logs"
 
 if [[ -e "$WORKDIR/corpus-smoke/corpus_receipt.json" || -d "$WORKDIR/corpus-smoke/shards" ]]; then
@@ -36,6 +37,7 @@ HOST="$(hostname 2>/dev/null || printf 'unknown')"
   echo "root=$ROOT"
   echo "workdir=$WORKDIR"
   echo "python=$PYTHON"
+  echo "min_cuda_devices=$MIN_CUDA_DEVICES"
   echo
   echo "===== DISK ====="
   df -h "$WORKDIR" || true
@@ -95,11 +97,11 @@ if missing:
     raise SystemExit("missing or broken N0 dependencies: " + ", ".join(missing))
 PY
 
-CUDA_AVAILABLE="$("$PYTHON" - <<'PY'
+read -r CUDA_AVAILABLE CUDA_DEVICE_COUNT < <("$PYTHON" - <<'PY'
 import torch
-print("1" if torch.cuda.is_available() else "0")
+print("1" if torch.cuda.is_available() else "0", torch.cuda.device_count())
 PY
-)"
+)
 if [[ "$REQUIRE_CUDA" == "1" && "$CUDA_AVAILABLE" != "1" ]]; then
   cat >&2 <<EOF
 CUDA is required for this runtime smoke by default, but torch.cuda.is_available() is false.
@@ -107,6 +109,10 @@ Run this inside the intended GPU allocation/runtime, or set N0_SMOKE_REQUIRE_CUD
 only when intentionally testing a sufficiently provisioned CPU runtime.
 EOF
   exit 3
+fi
+if [[ "$REQUIRE_CUDA" == "1" && "$CUDA_DEVICE_COUNT" -lt "$MIN_CUDA_DEVICES" ]]; then
+  echo "Runtime exposes $CUDA_DEVICE_COUNT CUDA device(s), but this smoke requires at least $MIN_CUDA_DEVICES." >&2
+  exit 4
 fi
 
 run_stage() {
@@ -128,6 +134,7 @@ export N0_RUNTIME_SMOKE_COMPLETED_AT="$COMPLETED_AT"
 export N0_RUNTIME_SMOKE_GIT_HEAD="$GIT_HEAD"
 export N0_RUNTIME_SMOKE_GIT_BRANCH="$GIT_BRANCH"
 export N0_RUNTIME_SMOKE_HOST="$HOST"
+export N0_RUNTIME_SMOKE_CUDA_COUNT="$CUDA_DEVICE_COUNT"
 
 "$PYTHON" - <<'PY'
 import hashlib
@@ -166,7 +173,7 @@ for path in [log_dir / "environment.txt", log_dir / "python-runtime.json"]:
         artifacts.append(artifact(path))
 
 receipt = {
-    "schema": "alice.eipm.n0.runtime-smoke-receipt.v0.1",
+    "schema": "alice.eipm.n0.runtime-smoke-receipt.v0.2",
     "status": "PASS",
     "started_at": os.environ["N0_RUNTIME_SMOKE_STARTED_AT"],
     "completed_at": os.environ["N0_RUNTIME_SMOKE_COMPLETED_AT"],
@@ -174,6 +181,7 @@ receipt = {
     "git_branch": os.environ["N0_RUNTIME_SMOKE_GIT_BRANCH"],
     "git_head": os.environ["N0_RUNTIME_SMOKE_GIT_HEAD"],
     "workdir": str(workdir),
+    "cuda_device_count": int(os.environ["N0_RUNTIME_SMOKE_CUDA_COUNT"]),
     "artifacts": artifacts,
     "private_identity_gradient": False,
     "private_identity_data": False,
