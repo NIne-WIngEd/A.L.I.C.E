@@ -1,0 +1,253 @@
+{
+  "schema": "alice.eipm.n0.public-source-manifest.v0.1",
+  "generated_on": "2026-09-13",
+  "purpose": "N0-R2 source/license gate for identity-neutral public semantic bootstrap and evaluation candidates.",
+  "authority_boundary": "A source listed here is not E0/E-INF/A-SYN authority. TRAIN_ALLOWED only means the reviewed license/source terms presently permit use in the N0 public training workflow subject to the recorded conditions. This is an engineering provenance decision, not legal advice.",
+  "status_values": ["TRAIN_ALLOWED", "EVAL_ONLY", "RESEARCH_ONLY", "REJECT"],
+  "sources": [
+    {
+      "source_id": "common_pile_v0_1_comma_training",
+      "name": "Common Pile v0.1 / Comma v0.1 training dataset",
+      "role": ["pretraining_candidate"],
+      "status": "TRAIN_ALLOWED",
+      "source_url": "https://huggingface.co/datasets/common-pile/comma_v0.1_training_dataset",
+      "revision": "main@5afc546-or-later-source-license-preserving-revision",
+      "license_expression": "per-document/per-source open licenses or public domain; no single unified corpus license",
+      "license_verified": true,
+      "commercial_use": "yes_with_per_source_obligations",
+      "redistribution": "yes_with_per_source_obligations",
+      "attribution_or_sharealike": "varies_by_source_and_document",
+      "conditions": [
+        "Preserve source identity and applicable per-source/per-document license metadata in the A.L.I.C.E. training lineage ledger.",
+        "Do not relabel the consolidated dataset as MIT; the Common Pile maintainers explicitly rejected a unified MIT license for this corpus.",
+        "Filter or quarantine any document whose source/license metadata cannot be resolved to a license compatible with the intended use.",
+        "Retain an attribution/export ledger for sources whose licenses require it."
+      ],
+      "evidence": [
+        "https://arxiv.org/abs/2506.05209",
+        "https://huggingface.co/datasets/common-pile/comma_v0.1_training_dataset",
+        "https://huggingface.co/datasets/common-pile/comma_v0.1_training_dataset/discussions/2"
+      ],
+      "notes": "Preferred large-scale N0 foundation candidate because the project was intentionally built from public-domain/openly licensed text. The Common Pile authors also document possible license-laundering/metadata errors, so lineage and per-source license filtering remain mandatory."
+    },
+    {
+      "source_id": "common_pile_raw_v0_1",
+      "name": "Common Pile v0.1 raw collection",
+      "role": ["pretraining_candidate", "source_audit"],
+      "status": "TRAIN_ALLOWED",
+      "source_url": "https://huggingface.co/common-pile",
+      "revision": "v0.1-collection-current-2026-09-13",
+      "license_expression": "per-corpus/per-document open licenses or public domain",
+      "license_verified": true,
+      "commercial_use": "yes_with_per_source_obligations",
+      "redistribution": "yes_with_per_source_obligations",
+      "attribution_or_sharealike": "varies_by_source_and_document",
+      "conditions": [
+        "Use only constituent corpora/documents whose exact license metadata is preserved and compatible with the intended training use.",
+        "Prefer the maintained/current source revision over stale training snapshots when licensing corrections were made.",
+        "Record source-level filtering and exact extraction code hashes."
+      ],
+      "evidence": [
+        "https://arxiv.org/abs/2506.05209",
+        "https://huggingface.co/common-pile",
+        "https://huggingface.co/blog/stellaathena/common-pile"
+      ],
+      "notes": "The paper reports 30 public-domain/open-license sources and excludes NC/ND content under its open-license definition. Individual dataset cards warn that licensing metadata can still be imperfect."
+    },
+    {
+      "source_id": "fineweb",
+      "name": "HuggingFaceFW FineWeb",
+      "role": ["pretraining_research_comparator"],
+      "status": "RESEARCH_ONLY",
+      "source_url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb",
+      "revision": "main-current-2026-09-13",
+      "license_expression": "ODC-By-1.0 dataset/database license; additionally subject to Common Crawl Terms of Use and underlying source terms",
+      "license_verified": true,
+      "commercial_use": "not_cleared_by_collection_license_alone",
+      "redistribution": "subject_to_odc_by_commoncrawl_and_underlying_source_terms",
+      "attribution_or_sharealike": "ODC-By attribution plus source-specific obligations may apply",
+      "conditions": [
+        "Do not promote to TRAIN_ALLOWED merely because the dataset wrapper is ODC-By.",
+        "Underlying web-page rights/terms require a separate product/legal decision.",
+        "May be used for public research comparisons that do not enter permanent A.L.I.C.E. training weights."
+      ],
+      "evidence": [
+        "https://huggingface.co/datasets/HuggingFaceFW/fineweb"
+      ],
+      "notes": "Useful quality/data-pipeline comparator; not the default startup/commercial training foundation."
+    },
+    {
+      "source_id": "paws",
+      "name": "PAWS / PAWS-Wiki",
+      "role": ["training_candidate", "evaluation_candidate", "paraphrase_semantics"],
+      "status": "TRAIN_ALLOWED",
+      "source_url": "https://github.com/google-research-datasets/paws",
+      "revision": "archived-master-current-2026-09-13",
+      "license_expression": "custom Google dataset license: may be freely used for any purpose; acknowledgement appreciated",
+      "license_verified": true,
+      "commercial_use": "yes",
+      "redistribution": "yes_per_license_text",
+      "attribution_or_sharealike": "acknowledgement_appreciated_not_required_by_text",
+      "conditions": [
+        "Preserve source citation and exact archive revision in lineage.",
+        "Hold out final evaluation pairs before any curriculum/synthetic generation."
+      ],
+      "evidence": [
+        "https://github.com/google-research-datasets/paws/blob/master/LICENSE"
+      ],
+      "notes": "Strong candidate for SEM-02 and surface-robustness testing."
+    },
+    {
+      "source_id": "snli_1_0",
+      "name": "Stanford Natural Language Inference Corpus (SNLI 1.0)",
+      "role": ["training_candidate", "evaluation_candidate", "nli"],
+      "status": "TRAIN_ALLOWED",
+      "source_url": "https://nlp.stanford.edu/projects/snli/",
+      "revision": "SNLI-1.0",
+      "license_expression": "CC-BY-SA-4.0",
+      "license_verified": true,
+      "commercial_use": "yes_under_cc_by_sa",
+      "redistribution": "yes_under_cc_by_sa",
+      "attribution_or_sharealike": "attribution_and_sharealike_required_for_licensed_material",
+      "conditions": [
+        "Record CC-BY-SA attribution and source-corpus lineage.",
+        "Before model release, obtain a project-level determination for how share-alike obligations apply to redistributed derived artifacts/weights.",
+        "Preserve the official train/dev/test boundary and contamination keys."
+      ],
+      "evidence": [
+        "https://nlp.stanford.edu/projects/snli/"
+      ],
+      "notes": "License permits commercial use, but share-alike obligations require explicit downstream compliance planning."
+    },
+    {
+      "source_id": "multinli_1_0",
+      "name": "Multi-Genre Natural Language Inference (MultiNLI)",
+      "role": ["training_candidate", "evaluation_candidate", "nli"],
+      "status": "TRAIN_ALLOWED",
+      "source_url": "https://cims.nyu.edu/~sbowman/multinli/",
+      "revision": "corpus-release-described-in-paper",
+      "license_expression": "mixed permissive/open licenses: majority OANC; fiction includes CC-BY-SA-3.0, CC-BY-3.0, and US public-domain works",
+      "license_verified": true,
+      "commercial_use": "yes_with_subset_obligations",
+      "redistribution": "yes_with_subset_obligations",
+      "attribution_or_sharealike": "varies_by_genre/source",
+      "conditions": [
+        "Preserve genre/source-specific license metadata where available.",
+        "Track CC-BY-SA and CC-BY attribution obligations separately from public-domain material.",
+        "Do not substitute the MIT license of the baseline-code repository for the corpus licenses."
+      ],
+      "evidence": [
+        "https://cims.nyu.edu/~sbowman/multinli/paper.pdf",
+        "https://github.com/nyu-mll/multiNLI"
+      ],
+      "notes": "The corpus paper explicitly states it may be modified and redistributed for typical ML uses and describes the mixed source licenses."
+    },
+    {
+      "source_id": "anli",
+      "name": "Adversarial Natural Language Inference (ANLI)",
+      "role": ["research_evaluation_candidate", "nli"],
+      "status": "RESEARCH_ONLY",
+      "source_url": "https://github.com/facebookresearch/anli",
+      "revision": "archived-repository-current-2026-09-13",
+      "license_expression": "CC-BY-NC-4.0",
+      "license_verified": true,
+      "commercial_use": "no",
+      "redistribution": "noncommercial_under_license",
+      "attribution_or_sharealike": "attribution_required; noncommercial restriction",
+      "conditions": [
+        "Do not include in permanent commercial/startup training data.",
+        "Do not use as a release gate if that use would fall outside the noncommercial license.",
+        "Keep as optional research-only comparison unless separately relicensed."
+      ],
+      "evidence": [
+        "https://github.com/facebookresearch/anli"
+      ],
+      "notes": "Explicit NC restriction blocks default commercial training use."
+    },
+    {
+      "source_id": "goemotions",
+      "name": "GoEmotions",
+      "role": ["emotion_research_candidate", "evaluation_candidate"],
+      "status": "RESEARCH_ONLY",
+      "source_url": "https://github.com/google-research/google-research/tree/master/goemotions",
+      "revision": "master-current-2026-09-13",
+      "license_expression": "repository code is Apache-2.0; dataset text is derived from Reddit comments and requires separate content-rights/terms review",
+      "license_verified": false,
+      "commercial_use": "not_cleared",
+      "redistribution": "not_cleared",
+      "attribution_or_sharealike": "repository-level Apache notice does not by itself resolve source-comment rights",
+      "conditions": [
+        "Do not infer that Apache-2.0 on the code repository automatically licenses Reddit comment content for permanent model training.",
+        "Resolve original content/Reddit terms and dataset-specific rights before promotion to TRAIN_ALLOWED."
+      ],
+      "evidence": [
+        "https://github.com/google-research/google-research/blob/master/goemotions/README.md",
+        "https://www.research.google/blog/goemotions-a-dataset-for-fine-grained-emotion-classification/"
+      ],
+      "notes": "Semantically useful for EMO-01, but startup/commercial training permission is not treated as established by the repository license alone."
+    },
+    {
+      "source_id": "pub_pragmatics_understanding_benchmark",
+      "name": "PUB: Pragmatics Understanding Benchmark",
+      "role": ["pragmatics_evaluation_candidate"],
+      "status": "RESEARCH_ONLY",
+      "source_url": "https://aclanthology.org/2024.findings-acl.719/",
+      "revision": "paper-release",
+      "license_expression": "dataset artifact license not yet verified in N0-R2",
+      "license_verified": false,
+      "commercial_use": "not_cleared",
+      "redistribution": "not_cleared",
+      "attribution_or_sharealike": "pending",
+      "conditions": [
+        "Keep research-only until exact dataset repository and artifact license are verified.",
+        "If cleared, reserve a contamination-locked held-out portion because this suite directly measures N0 pragmatics."
+      ],
+      "evidence": [
+        "https://aclanthology.org/2024.findings-acl.719/"
+      ],
+      "notes": "High diagnostic value; no training authorization yet."
+    },
+    {
+      "source_id": "implied_meaning_preference",
+      "name": "ImpliedMeaningPreference",
+      "role": ["pragmatics_training_research_candidate", "pragmatics_evaluation_candidate"],
+      "status": "RESEARCH_ONLY",
+      "source_url": "https://aclanthology.org/2025.findings-acl.1218/",
+      "revision": "paper-release",
+      "license_expression": "dataset artifact license not yet verified in N0-R2",
+      "license_verified": false,
+      "commercial_use": "not_cleared",
+      "redistribution": "not_cleared",
+      "attribution_or_sharealike": "pending",
+      "conditions": [
+        "Keep research-only until exact dataset artifact license is verified.",
+        "If later used for training, preserve its correct/incorrect reasoning structure rather than flattening to generic text."
+      ],
+      "evidence": [
+        "https://aclanthology.org/2025.findings-acl.1218/"
+      ],
+      "notes": "Potentially valuable curriculum for pragmatic distinctions, but not yet license-cleared."
+    },
+    {
+      "source_id": "pace_pragmatic_hallucination",
+      "name": "PaCE pragmatic/literal grounding benchmark",
+      "role": ["literal_grounding_evaluation_candidate", "pragmatics_evaluation_candidate"],
+      "status": "RESEARCH_ONLY",
+      "source_url": "https://aclanthology.org/2026.findings-acl.959/",
+      "revision": "paper-release",
+      "license_expression": "dataset artifact license not yet verified in N0-R2",
+      "license_verified": false,
+      "commercial_use": "not_cleared",
+      "redistribution": "not_cleared",
+      "attribution_or_sharealike": "pending",
+      "conditions": [
+        "Keep research-only until exact released artifact/license is verified.",
+        "Preserve as a held-out literal-grounding diagnostic if cleared."
+      ],
+      "evidence": [
+        "https://aclanthology.org/2026.findings-acl.959/"
+      ],
+      "notes": "Important counterweight to over-inference: N0 must improve pragmatics without pragmatic hallucination."
+    }
+  ]
+}
