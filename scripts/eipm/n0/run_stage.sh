@@ -11,10 +11,11 @@ CORPUS_DIR="$WORKDIR/corpus"
 TOKENIZER_DIR="$WORKDIR/tokenizer"
 CHECKPOINT_DIR="$WORKDIR/checkpoints"
 RANKER_DIR="$WORKDIR/ranker"
+EVAL_DIR="$WORKDIR/evaluation"
 CURRICULUM="${ALICE_N0_CURRICULUM:-$ROOT/training/eipm/n0/sol_curriculum_seed_v0.1.jsonl}"
 CURRICULUM_MANIFEST="${ALICE_N0_CURRICULUM_MANIFEST:-$ROOT/training/eipm/n0/sol_curriculum_seed_v0.1.origin.json}"
 
-mkdir -p "$WORKDIR" "$CHECKPOINT_DIR" "$RANKER_DIR"
+mkdir -p "$WORKDIR" "$CHECKPOINT_DIR" "$RANKER_DIR" "$EVAL_DIR"
 export PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}"
 
 latest_mlm_checkpoint() {
@@ -118,9 +119,29 @@ case "$STAGE" in
       --learning-rate "${N0_CURRICULUM_LR:-2e-5}"
     ;;
 
+  evaluate-curriculum)
+    if [[ ! -f "$RANKER_DIR/ranker.safetensors" ]]; then
+      echo "Ranker checkpoint must exist before evaluate-curriculum" >&2
+      exit 2
+    fi
+    MLM_CHECKPOINT="$(latest_mlm_checkpoint)"
+    "$PYTHON" "$ROOT/scripts/eipm/n0/evaluate_curriculum_ranker.py" \
+      --config "$CONFIG" \
+      --tokenizer-dir "$TOKENIZER_DIR" \
+      --mlm-checkpoint "$MLM_CHECKPOINT" \
+      --ranker "$RANKER_DIR/ranker.safetensors" \
+      --curriculum "$CURRICULUM" \
+      --curriculum-manifest "$CURRICULUM_MANIFEST" \
+      --output-dir "$EVAL_DIR" \
+      --split "${N0_EVAL_SPLIT:-dev}" \
+      --max-length "${N0_CURRICULUM_MAX_LENGTH:-512}" \
+      --batch-size "${N0_EVAL_BATCH_SIZE:-8}" \
+      --device "${N0_EVAL_DEVICE:-auto}"
+    ;;
+
   *)
     cat >&2 <<EOF
-usage: $0 {corpus-smoke|corpus|tokenizer|preflight|train-mlm|train-curriculum}
+usage: $0 {corpus-smoke|corpus|tokenizer|preflight|train-mlm|train-curriculum|evaluate-curriculum}
 
 Private work directory defaults to:
   $WORKDIR
