@@ -1,0 +1,50 @@
+{
+  "schema": "fable.builder-event.v0.1",
+  "event_id": "FBM-BUILD-20260913-N0-LINEAGE-BOUNDED-COMPUTE-001",
+  "actor": "sol",
+  "actor_instance": "GPT-5.6 Sol",
+  "owner_authorized": true,
+  "private_payload_included": false,
+  "source_project": "NIne-WIngEd/A.L.I.C.E",
+  "source_branch": "alice-eipm-v1-build",
+  "source_tip_after_operation": "8ccca2e1fa2b4c776117ec1d951c545ba78759c4",
+  "objective": "Make the first real N0 run safe to execute on scarce GPU/storage without turning safeguards into a separate validation project.",
+  "problem_signals": [
+    "A smoke corpus and real corpus shared the same path, which could contaminate the training lineage or make a later receipt ambiguous.",
+    "The original corpus command could materialize an unexpectedly large public dataset before the first semantic checkpoint had proven useful.",
+    "Tokenizer training was not explicitly bound to the exact corpus shard hashes used to create it.",
+    "The MLM trainer could checkpoint model files but did not preserve enough optimizer/runtime/corpus lineage to resume an interrupted allocation safely.",
+    "A target-runtime failure could still waste GPU time if package, CUDA, tokenizer, or backward compatibility were discovered only after the long run began."
+  ],
+  "builder_actions": [
+    "Separated smoke corpus/tokenizer directories from the first real corpus/tokenizer lineage.",
+    "Made the first real corpus bounded by accepted characters per source and required an explicit opt-in for intentionally unbounded materialization.",
+    "Added a corpus receipt verifier that checks active source-config identity, resolved source revisions, every manifested shard byte count, and every shard SHA256.",
+    "Added tokenizer receipts that bind the tokenizer SHA256 to the exact corpus shard hashes and code revision used to train it.",
+    "Made MLM checkpoints resumable with Accelerator state and receipts that bind model/config/tokenizer/corpus/code/runtime lineage plus cumulative token counts.",
+    "Added a one-command target-runtime smoke that records environment/CUDA state, materializes a sample, trains the native tokenizer, executes a backward model preflight, and emits a hashed PASS receipt."
+  ],
+  "reusable_builder_procedure": [
+    "Keep cheap smoke artifacts physically separate from real training artifacts.",
+    "Before the first long run, bound data volume so architecture/objective failures can be discovered before storage or compute scales unnecessarily.",
+    "Hash data shards before tokenizer/model training and carry those hashes forward into downstream receipts.",
+    "Checkpoint optimizer/scheduler/runtime state together with model weights so allocation boundaries do not force semantic retraining from zero.",
+    "Run dependency, CUDA, tokenizer, forward, and backward checks inside the actual target runtime before requesting a long GPU allocation.",
+    "After the first checkpoint, let measured capability failures decide whether to add teaching data, change objectives, or scale the model."
+  ],
+  "anti_patterns": [
+    "Do not use a smoke dataset as the real training corpus merely because the path happens to exist.",
+    "Do not materialize an unbounded corpus before checking available storage and the value of the first bounded checkpoint.",
+    "Do not accept a checkpoint whose data/tokenizer ancestry cannot be reconstructed from hashes and receipts.",
+    "Do not spend scarce GPU time discovering import/runtime errors that a target-runtime smoke can catch first.",
+    "Do not convert these integrity checks into a separate multi-judge qualification bureaucracy."
+  ],
+  "guardrails_retained": [
+    "No private Elaina payload enters public Git.",
+    "No private E0/E-INF/A-SYN gradient is authorized by this operation.",
+    "Sol teaching seeds remain owner-authorized and preserved.",
+    "Model size remains failure-driven rather than locked to the current approximately 350M reference."
+  ],
+  "builder_lesson": "The best lightweight training pipeline makes the expensive step boring: data, tokenizer, runtime, code, and checkpoint ancestry are already verified before the GPU run starts, and the resulting failures feed directly into the next build decision.",
+  "status": "captured_for_fbm_bootstrap"
+}
