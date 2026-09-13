@@ -2,12 +2,21 @@
 
 **Status:** continuity handoff. No permanent EIPM weights created.
 
-The requested post-curation N0 frontier research pass has now been completed far enough to proceed to **qualification tooling**, not target-scale training.
+The requested post-curation N0 frontier research pass has now been completed far enough to proceed to qualification tooling rather than target-scale training.
 
 The full implementation-facing research decision was committed to `alice-eipm-v1-build`:
 
-- commit: `ed9ad923b4b19e6fb913ee4bf216fb28bccd4d2d`
+- research-plan commit: `ed9ad923b4b19e6fb913ee4bf216fb28bccd4d2d`
 - file: `docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md`
+
+N0-R1 has now also been started and its initial registry/policy are committed:
+
+- registry commit: `6bdd981ce66bb3c3d3cba9d95f0fddf85e68ebaf`
+- policy commit: `16cfa567062106b7a0b7c751194b4596b1a12b08`
+- `docs/eipm/n0/competency_registry_v0.1.tsv`
+- `docs/eipm/n0/COMPETENCY_REGISTRY_POLICY_v0.1.md`
+
+The registry defines 43 identity-neutral N0 competencies across core semantics, temporal/causal reasoning, pragmatics, social/emotional cognition, grounding/epistemics, judgment/ranking, and ACFP/graph alignment. Candidate datasets remain `PENDING_N0_R2_EXACT_LICENSE_REVIEW`; appearing in the registry does not authorize training use.
 
 ## Ratified owner correction carried forward
 
@@ -94,18 +103,19 @@ The 13,719 alternate policy branches remain **unordered alternatives**, not auto
 
 ## Current next action
 
-The next active task is **N0-R1: build the competency/evaluation registry**. It should be machine-readable and define each competency, candidate public datasets, license status, training/eval role, contamination key, metric, and gate.
+**N0-R1 initial registry is complete.** Its candidate dataset rows are intentionally not authorized yet because exact license/provenance review is N0-R2.
+
+Current next active task: **N0-R2 public data/license manifest builder and exact dataset/source review.**
 
 Then:
 
-1. N0-R2 public data/license manifest builder;
-2. N0-R3 tokenizer bake-off harness;
-3. N0-R4 teacher qualification harness;
-4. N0-R5 public-data architecture mechanics matrix;
-5. N0-R6 scaling pilot;
-6. N0-R7 target N0 freeze;
-7. N0-R8 final owner/Astra pre-weight review;
-8. N0-R9 first permanent native semantic checkpoint;
-9. N1/N2/N3 private identity learning.
+1. N0-R3 tokenizer bake-off harness;
+2. N0-R4 teacher qualification harness;
+3. N0-R5 public-data architecture mechanics matrix;
+4. N0-R6 scaling pilot;
+5. N0-R7 target N0 freeze;
+6. N0-R8 final owner/Astra pre-weight review;
+7. N0-R9 first permanent native semantic checkpoint;
+8. N1/N2/N3 private identity learning.
 
 No target-scale/private identity-gradient run is authorized before that sequence reaches its gate.
