@@ -31,6 +31,7 @@ class N0BuildConfig:
     cls_token_id: int
     sep_token_id: int
     mask_token_id: int
+    planned_parameter_count: int | None
 
     @classmethod
     def from_dict(cls, raw: dict[str, Any]) -> "N0BuildConfig":
@@ -43,6 +44,7 @@ class N0BuildConfig:
             {"pad": 0, "unk": 1, "cls": 2, "sep": 3, "mask": 4},
         )
         sequence_lengths = training.get("sequence_lengths", [512, 1024, 2048, 4096])
+        planned_parameters = architecture.get("approx_parameter_count")
         return cls(
             model_id=raw["model_id"],
             vocab_size=int(tokenizer["vocab_size"]),
@@ -72,6 +74,9 @@ class N0BuildConfig:
             cls_token_id=int(special["cls"]),
             sep_token_id=int(special["sep"]),
             mask_token_id=int(special["mask"]),
+            planned_parameter_count=(
+                int(planned_parameters) if planned_parameters is not None else None
+            ),
         )
 
     def validate(self) -> None:
@@ -100,6 +105,8 @@ class N0BuildConfig:
             raise ValueError("mlm_probability must be between zero and one")
         if self.mean_mask_span <= 0 or self.max_mask_span < 1:
             raise ValueError("invalid span masking parameters")
+        if self.planned_parameter_count is not None and self.planned_parameter_count <= 0:
+            raise ValueError("planned_parameter_count must be positive when provided")
 
 
 def load_n0_config(path: str | Path) -> N0BuildConfig:
