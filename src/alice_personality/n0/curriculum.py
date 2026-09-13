@@ -7,6 +7,17 @@ from typing import Any
 
 
 OWNER_AUTHORIZED_ORIGINS = {"owner_authorized_service_teacher"}
+ALLOWED_SPLITS = {"train", "dev", "test"}
+REQUIRED_ROW_FIELDS = {
+    "id",
+    "competency",
+    "split",
+    "task",
+    "prompt",
+    "candidates",
+    "preferred_indices",
+    "source",
+}
 
 
 def sha256_file(path: str | Path) -> str:
@@ -21,6 +32,93 @@ def git_blob_sha1(path: str | Path) -> str:
     data = Path(path).read_bytes()
     header = f"blob {len(data)}\0".encode("utf-8")
     return hashlib.sha1(header + data).hexdigest()
+
+
+def validate_curriculum_rows(curriculum_path: str | Path) -> dict[str, Any]:
+    path = Path(curriculum_path)
+    ids: set[str] = set()
+    split_counts = {split: 0 for split in sorted(ALLOWED_SPLITS)}
+    competency_counts: dict[str, int] = {}
+    rows = 0
+
+    with path.open("r", encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, start=1):
+            if not line.strip():
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"invalid JSON on curriculum line {line_number}") from exc
+
+            missing = REQUIRED_ROW_FIELDS.difference(row)
+            if missing:
+                raise ValueError(
+                    f"curriculum line {line_number} missing fields: {sorted(missing)}"
+                )
+
+            row_id = str(row["id"]).strip()
+            if not row_id:
+                raise ValueError(f"curriculum line {line_number} has empty id")
+            if row_id in ids:
+                raise ValueError(f"duplicate curriculum id: {row_id}")
+            ids.add(row_id)
+
+            split = str(row["split"])
+            if split not in ALLOWED_SPLITS:
+                raise ValueError(f"curriculum row {row_id} has unsupported split={split!r}")
+            split_counts[split] += 1
+
+            if str(row["task"]) != "candidate_ranking":
+                raise ValueError(
+                    f"curriculum row {row_id} task must be 'candidate_ranking' for the N0 ranker"
+                )
+
+            competency = str(row["competency"]).strip()
+            if not competency:
+                raise ValueError(f"curriculum row {row_id} has empty competency")
+            competency_counts[competency] = competency_counts.get(competency, 0) + 1
+
+            if not str(row["prompt"]).strip():
+                raise ValueError(f"curriculum row {row_id} has empty prompt")
+            if not str(row["source"]).strip():
+                raise ValueError(f"curriculum row {row_id} has empty source")
+
+            candidates = row["candidates"]
+            preferred = row["preferred_indices"]
+            if not isinstance(candidates, list) or len(candidates) < 2:
+                raise ValueError(f"curriculum row {row_id} must have at least two candidates")
+            if any(not str(candidate).strip() for candidate in candidates):
+                raise ValueError(f"curriculum row {row_id} contains an empty candidate")
+            if not isinstance(preferred, list) or not preferred:
+                raise ValueError(f"curriculum row {row_id} must have preferred_indices")
+
+            try:
+                preferred_ints = [int(index) for index in preferred]
+            except (TypeError, ValueError) as exc:
+                raise ValueError(
+                    f"curriculum row {row_id} preferred_indices must be integers"
+                ) from exc
+
+            if len(set(preferred_ints)) != len(preferred_ints):
+                raise ValueError(f"curriculum row {row_id} repeats a preferred index")
+            if min(preferred_ints) < 0 or max(preferred_ints) >= len(candidates):
+                raise ValueError(f"curriculum row {row_id} preferred index out of range")
+
+            rows += 1
+
+    if rows == 0:
+        raise ValueError("curriculum contains no rows")
+    if split_counts["train"] == 0:
+        raise ValueError("curriculum contains no train rows")
+    if split_counts["dev"] == 0:
+        raise ValueError("curriculum contains no dev rows")
+
+    return {
+        "row_count": rows,
+        "split_counts": split_counts,
+        "competency_counts": dict(sorted(competency_counts.items())),
+        "unique_ids": len(ids),
+    }
 
 
 def validate_curriculum_manifest(
