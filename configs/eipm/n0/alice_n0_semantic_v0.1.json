@@ -26,7 +26,9 @@
     "attention_dropout": 0.0,
     "embedding_dropout": 0.0,
     "mlp_dropout": 0.0,
-    "approx_parameter_count": 350000000
+    "approx_parameter_count": 350000000,
+    "parameter_count_role": "initial_reference_not_ceiling",
+    "scale_policy": "change_scale_when_observed_capability_or_efficiency_evidence_justifies_it"
   },
   "tokenizer": {
     "type": "byte_fallback_bpe",
@@ -43,7 +45,12 @@
   },
   "training": {
     "primary_objective": "dynamic_span_aware_masked_language_modeling",
-    "sequence_lengths": [512, 1024, 2048, 4096],
+    "sequence_lengths": [
+      512,
+      1024,
+      2048,
+      4096
+    ],
     "mlm_probability": 0.15,
     "mean_mask_span": 3.0,
     "max_mask_span": 10,
