@@ -34,6 +34,20 @@ latest_mlm_checkpoint() {
   printf '%s\n' "$latest"
 }
 
+latest_mlm_step_dir() {
+  if [[ -n "${N0_MLM_STEP_DIR:-}" ]]; then
+    printf '%s\n' "$N0_MLM_STEP_DIR"
+    return
+  fi
+  local latest
+  latest="$(find "$CHECKPOINT_DIR" -maxdepth 1 -type d -name 'step-*' | sort | tail -n 1 || true)"
+  if [[ -z "$latest" || ! -f "$latest/receipt.json" || ! -d "$latest/model" ]]; then
+    echo "No complete MLM step checkpoint found. Set N0_MLM_STEP_DIR or run train-mlm first." >&2
+    exit 2
+  fi
+  printf '%s\n' "$latest"
+}
+
 collect_shards() {
   local root="$1"
   find "$root/shards" -type f -name '*.jsonl' 2>/dev/null | sort
@@ -179,10 +193,32 @@ EOF
       --grad-accum "${N0_GRAD_ACCUM:-16}" \
       --max-steps "${N0_MAX_STEPS:-10000}" \
       --warmup-steps "${N0_WARMUP_STEPS:-500}" \
+      --scheduler-total-steps "${N0_SCHEDULER_TOTAL_STEPS:-10000}" \
       --save-every "${N0_SAVE_EVERY:-1000}" \
       --learning-rate "${N0_LEARNING_RATE:-3e-4}" \
       --mixed-precision "${N0_MIXED_PRECISION:-auto}" \
       "${RESUME_ARG[@]}"
+    ;;
+
+  evaluate-mlm)
+    if [[ ! -f "$TOKENIZER_DIR/tokenizer.json" || ! -f "$TOKENIZER_DIR/tokenizer_receipt.json" ]]; then
+      echo "Tokenizer must exist before evaluate-mlm" >&2
+      exit 2
+    fi
+    STEP_DIR="$(latest_mlm_step_dir)"
+    "$PYTHON" "$ROOT/scripts/eipm/n0/evaluate_mlm.py" \
+      --config "$CONFIG" \
+      --checkpoint-dir "$STEP_DIR" \
+      --tokenizer "$TOKENIZER_DIR/tokenizer.json" \
+      --tokenizer-receipt "$TOKENIZER_DIR/tokenizer_receipt.json" \
+      --corpus-dir "$CORPUS_DIR" \
+      --source-config "$SOURCE_CONFIG" \
+      --sequence-length "${N0_EVAL_SEQUENCE_LENGTH:-512}" \
+      --batch-size "${N0_MLM_EVAL_BATCH_SIZE:-4}" \
+      --max-batches "${N0_MLM_EVAL_MAX_BATCHES:-256}" \
+      --seed "${N0_MLM_EVAL_SEED:-424242}" \
+      --device "${N0_MLM_EVAL_DEVICE:-auto}" \
+      --output "$EVAL_DIR/mlm-dev-$(basename "$STEP_DIR").json"
     ;;
 
   train-curriculum)
@@ -226,7 +262,7 @@ EOF
 
   *)
     cat >&2 <<EOF
-usage: $0 {corpus-smoke|tokenizer-smoke|preflight-smoke|corpus-bootstrap|corpus|verify-corpus|tokenizer|preflight|train-mlm|train-curriculum|evaluate-curriculum}
+usage: $0 {corpus-smoke|tokenizer-smoke|preflight-smoke|corpus-bootstrap|corpus|verify-corpus|tokenizer|preflight|train-mlm|evaluate-mlm|train-curriculum|evaluate-curriculum}
 
 Private work directory defaults to:
   $WORKDIR
