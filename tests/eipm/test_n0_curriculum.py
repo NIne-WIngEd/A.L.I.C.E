@@ -11,7 +11,7 @@ from alice_personality.n0.curriculum import (
     validate_curriculum_manifest,
     validate_curriculum_rows,
 )
-from alice_personality.n0.curriculum_data import score_group
+from alice_personality.n0.curriculum_data import CurriculumDataset, score_group
 from alice_personality.n0.ranker import listwise_preference_loss
 
 
@@ -82,6 +82,39 @@ def test_curriculum_rows_require_train_and_dev_and_unique_ids(tmp_path) -> None:
     )
     with pytest.raises(ValueError, match="duplicate curriculum id"):
         validate_curriculum_rows(duplicate)
+
+
+def test_curriculum_dataset_combines_governed_shards(tmp_path) -> None:
+    first = tmp_path / "first.jsonl"
+    second = tmp_path / "second.jsonl"
+    first.write_text(
+        json.dumps(valid_row("train-a", "train"))
+        + "\n"
+        + json.dumps(valid_row("dev-a", "dev"))
+        + "\n",
+        encoding="utf-8",
+    )
+    second.write_text(
+        json.dumps(valid_row("train-b", "train"))
+        + "\n"
+        + json.dumps(valid_row("dev-b", "dev"))
+        + "\n",
+        encoding="utf-8",
+    )
+
+    train = CurriculumDataset([first, second], "train")
+    dev = CurriculumDataset([first, second], "dev")
+    assert [row["id"] for row in train.rows] == ["train-a", "train-b"]
+    assert [row["id"] for row in dev.rows] == ["dev-a", "dev-b"]
+
+
+def test_curriculum_dataset_rejects_cross_shard_duplicate_ids(tmp_path) -> None:
+    first = tmp_path / "first.jsonl"
+    second = tmp_path / "second.jsonl"
+    first.write_text(json.dumps(valid_row("same", "train")) + "\n", encoding="utf-8")
+    second.write_text(json.dumps(valid_row("same", "dev")) + "\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="duplicate curriculum id across shards"):
+        CurriculumDataset([first, second], "train")
 
 
 def test_curriculum_manifest_allows_standard_authorized_origin(tmp_path) -> None:
