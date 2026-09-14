@@ -1,0 +1,21 @@
+{
+  "schema": "alice.eipm.n0.teacher-bank.v0.4a",
+  "status": "authoring_in_progress",
+  "purpose": "Governed public N0 v0.2 principle/rationale teaching bank. This registry is not a private-gradient authorization.",
+  "shards": [
+    {"curriculum":"training/eipm/n0/sol_curriculum_seed_v0.1.jsonl","manifest":"training/eipm/n0/sol_curriculum_seed_v0.1.origin.json","generation":"legacy_seed","principle_tag_required":false},
+    {"curriculum":"training/eipm/n0/sol_curriculum_coverage_v0.2.jsonl","manifest":"training/eipm/n0/sol_curriculum_coverage_v0.2.origin.json","generation":"legacy_coverage","principle_tag_required":false},
+    {"curriculum":"training/eipm/n0/sol_curriculum_repair_v0.3.jsonl","manifest":"training/eipm/n0/sol_curriculum_repair_v0.3.origin.json","generation":"legacy_failure_repair","principle_tag_required":false},
+    {"curriculum":"training/eipm/n0/sol_curriculum_principles_semantic_v0.4a.jsonl","manifest":"training/eipm/n0/sol_curriculum_principles_semantic_v0.4a.origin.json","generation":"principle_bank_v04a","principle_tag_required":true},
+    {"curriculum":"training/eipm/n0/sol_curriculum_principles_pragmatic_social_v0.4a.jsonl","manifest":"training/eipm/n0/sol_curriculum_principles_pragmatic_social_v0.4a.origin.json","generation":"principle_bank_v04a","principle_tag_required":true},
+    {"curriculum":"training/eipm/n0/sol_curriculum_principles_epistemic_alignment_v0.4a.jsonl","manifest":"training/eipm/n0/sol_curriculum_principles_epistemic_alignment_v0.4a.origin.json","generation":"principle_bank_v04a","principle_tag_required":true}
+  ],
+  "legacy_rows": 128,
+  "v04a_rows": 215,
+  "registered_rows_expected": 343,
+  "full_multitask_minimum_rows": 1000,
+  "initial_readiness_target_rows": 2500,
+  "full_multitask_gate_expected_open": false,
+  "private_identity_data": false,
+  "private_identity_gradient_authorized": false
+}
