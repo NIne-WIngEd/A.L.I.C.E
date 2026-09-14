@@ -86,7 +86,7 @@ def evaluate(model, dataloader, accelerator, competencies: list[str]) -> dict[st
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Train the N0 universal semantic candidate ranker.")
+    parser = argparse.ArgumentParser(description="Train or probe the N0 universal semantic candidate ranker.")
     parser.add_argument("--config", required=True)
     parser.add_argument("--tokenizer-dir", required=True)
     parser.add_argument("--mlm-checkpoint", required=True, help="Directory containing the N0 MLM model")
@@ -99,6 +99,14 @@ def main() -> None:
     parser.add_argument("--learning-rate", type=float, default=2e-5)
     parser.add_argument("--weight-decay", type=float, default=0.01)
     parser.add_argument("--seed", type=int, default=20260913)
+    parser.add_argument(
+        "--freeze-backbone",
+        action="store_true",
+        help=(
+            "Train only the ranking head. Use this as a diagnostic of what the MLM backbone "
+            "already represents; it must not be described as semantic fine-tuning of the backbone."
+        ),
+    )
     args = parser.parse_args()
 
     try:
@@ -145,13 +153,22 @@ def main() -> None:
         raise SystemExit(f"tokenizer size {len(tokenizer)} != config vocab {config.vocab_size}")
 
     model = build_ranker_from_mlm_checkpoint(args.mlm_checkpoint, hidden_size=config.hidden_size)
+    if args.freeze_backbone:
+        for parameter in model.backbone.parameters():
+            parameter.requires_grad = False
 
     train_set = CurriculumDataset(args.curriculum, "train")
     dev_set = CurriculumDataset(args.curriculum, "dev")
-    competencies = sorted({str(row["competency"]) for row in dev_set.rows})
+    competencies = sorted(
+        {str(row["competency"]) for row in train_set.rows}
+        | {str(row["competency"]) for row in dev_set.rows}
+    )
     collator = CurriculumCollator(tokenizer, args.max_length)
     train_loader = DataLoader(
         train_set, batch_size=args.batch_size, shuffle=True, collate_fn=collator
+    )
+    train_eval_loader = DataLoader(
+        train_set, batch_size=args.batch_size, shuffle=False, collate_fn=collator
     )
     dev_loader = DataLoader(
         dev_set, batch_size=args.batch_size, shuffle=False, collate_fn=collator
@@ -165,6 +182,9 @@ def main() -> None:
             no_decay.append(parameter)
         else:
             decay.append(parameter)
+    if not decay and not no_decay:
+        raise SystemExit("no trainable ranker parameters remain")
+
     optimizer = torch.optim.AdamW(
         [
             {"params": decay, "weight_decay": args.weight_decay},
@@ -174,8 +194,17 @@ def main() -> None:
         betas=(0.9, 0.98),
     )
 
-    model, optimizer, train_loader, dev_loader = accelerator.prepare(
-        model, optimizer, train_loader, dev_loader
+    model, optimizer, train_loader, train_eval_loader, dev_loader = accelerator.prepare(
+        model, optimizer, train_loader, train_eval_loader, dev_loader
+    )
+
+    trainable_parameters = sum(
+        parameter.numel()
+        for parameter in accelerator.unwrap_model(model).parameters()
+        if parameter.requires_grad
+    )
+    total_parameters = sum(
+        parameter.numel() for parameter in accelerator.unwrap_model(model).parameters()
     )
 
     best_accuracy = -1.0
@@ -185,6 +214,8 @@ def main() -> None:
 
     for epoch in range(1, args.epochs + 1):
         model.train()
+        if args.freeze_backbone:
+            accelerator.unwrap_model(model).backbone.eval()
         running_loss = 0.0
         batches = 0
         for batch in train_loader:
@@ -201,21 +232,24 @@ def main() -> None:
             running_loss += float(loss.detach().cpu())
             batches += 1
 
-        metrics = evaluate(model, dev_loader, accelerator, competencies)
+        train_metrics = evaluate(model, train_eval_loader, accelerator, competencies)
+        dev_metrics = evaluate(model, dev_loader, accelerator, competencies)
         if accelerator.is_main_process:
             print(
                 json.dumps(
                     {
                         "epoch": epoch,
                         "train_loss": running_loss / max(batches, 1),
-                        **metrics,
+                        "freeze_backbone": args.freeze_backbone,
+                        "train": train_metrics,
+                        "dev": dev_metrics,
                     },
                     sort_keys=True,
                 )
             )
 
-        accuracy = float(metrics["top1_accuracy"])
-        separation = float(metrics["supported_set_separation_rate"])
+        accuracy = float(dev_metrics["top1_accuracy"])
+        separation = float(dev_metrics["supported_set_separation_rate"])
         improved = accuracy > best_accuracy or (
             accuracy == best_accuracy and separation > best_separation
         )
@@ -231,15 +265,27 @@ def main() -> None:
                 }
                 save_file(state, str(output / "ranker.safetensors"))
                 (output / "best_dev_metrics.json").write_text(
-                    json.dumps(metrics, indent=2, sort_keys=True) + "\n",
+                    json.dumps(dev_metrics, indent=2, sort_keys=True) + "\n",
+                    encoding="utf-8",
+                )
+                (output / "best_train_metrics.json").write_text(
+                    json.dumps(train_metrics, indent=2, sort_keys=True) + "\n",
                     encoding="utf-8",
                 )
                 receipt = {
                     "model_id": config.model_id,
-                    "stage": "N0_targeted_curriculum_ranker",
+                    "stage": (
+                        "N0_frozen_semantic_probe"
+                        if args.freeze_backbone
+                        else "N0_targeted_curriculum_ranker"
+                    ),
+                    "freeze_backbone": args.freeze_backbone,
+                    "total_parameters": total_parameters,
+                    "trainable_parameters": trainable_parameters,
                     "best_dev_top1_accuracy": best_accuracy,
                     "best_dev_supported_set_separation_rate": best_separation,
                     "best_dev_metrics_file": "best_dev_metrics.json",
+                    "best_train_metrics_file": "best_train_metrics.json",
                     "curricula": curriculum_entries,
                     "config_sha256": sha256_file(Path(args.config)),
                     "seed": args.seed,
