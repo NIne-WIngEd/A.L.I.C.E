@@ -227,6 +227,7 @@ def main() -> None:
     if step >= args.max_steps:
         if accelerator.is_main_process:
             print(json.dumps({"status": "already_complete", "step": step, "max_steps": args.max_steps}))
+        accelerator.end_training()
         return
 
     model.train()
@@ -328,6 +329,8 @@ def main() -> None:
                     break
         if not saw_batch:
             raise RuntimeError("training dataset produced zero batches")
+
+    accelerator.end_training()
 
 
 if __name__ == "__main__":
