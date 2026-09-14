@@ -36,13 +36,13 @@ The approximately 350M N0 configuration is an initial engineering reference, not
 
 ## Successful Magnolia P100 smoke
 
-Tracked command:
+Tracked command used for qualification:
 
 ```bash
 sbatch scripts/eipm/n0/magnolia_p100x2_runtime_smoke.sbatch
 ```
 
-Result returned by owner:
+Authoritative successful result returned by owner:
 
 - job: `575527`
 - state: `COMPLETED`
@@ -57,36 +57,100 @@ Result returned by owner:
 - actual parameter count: 352,184,960
 - `runtime_smoke_receipt.json`: `status=PASS`
 - stderr empty
-- branch/head at execution: `alice-eipm-v1-build@22a129784af5a5a456d6e5f5f49f9b3cc48ac386`
+- execution branch/head: `alice-eipm-v1-build@22a129784af5a5a456d6e5f5f49f9b3cc48ac386`
 
-Public summary is recorded at:
+Public summary:
 
 `docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md`
 
-This closes basic target-runtime construction/backprop mechanics. It does not by itself close distributed training/checkpoint-resume mechanics.
+The runtime-smoke gate is closed. Do not rerun it merely to reconfirm the environment.
+
+## Magnolia runtime discoveries retained
+
+The working account has a legacy CentOS 7 / glibc 2.17 host environment. Default host `python` is Python 2.7.5. Although a Python 3.11 module exists, the modern PyTorch CUDA runtime required by N0 is not a valid native fit for that glibc baseline.
+
+Native pip/Conda retries and building PyTorch from source are not the active path.
+
+Validated user-space route:
+
+- udocker 1.3.17;
+- execution mode P2;
+- Debian 12 container;
+- Python 3.11.16 inside the container;
+- glibc 2.36 inside the container;
+- PyTorch `2.7.1+cu118`;
+- two P100 devices;
+- container name after owner namespace cleanup: `rayan-n0-base`.
+
+NVIDIA bindings must be refreshed on the allocated compute node with `udocker setup --nvidia --force` before the stage starts.
+
+Two failed tracked attempts are useful negative evidence:
+
+- `575524` failed because placing a fake Python shim first in `PATH` caused udocker to recursively resolve the same shim through `/usr/bin/env python`, eventually exhausting process creation;
+- `575525` separated the shim successfully and reached Python 3.11 plus both P100s, but wrapping each Python invocation in a fresh udocker process failed during `corpus-smoke` with an Intel oneMKL / `libtorch_cpu.so` load failure.
+
+The stable rule is therefore:
+
+> Run the whole N0 stage inside one udocker session. Do not proxy individual Python calls through udocker.
+
+External wrapper job `575523` first proved that boundary. Tracked job `575527` reproduced it successfully.
+
+## Owner-private Magnolia namespace
+
+The owner requested that Magnolia-visible work identify Rayan rather than exposing `alice` names to peers, while all work remains inside the owner's directory.
+
+Canonical Magnolia layout:
+
+```text
+$HOME/rayan-compute/
+├── rayan-eipm-main/
+├── rayan-n0/
+├── udocker-store/
+├── udocker-tmp/
+└── tools/
+```
+
+Canonical paths/names:
+
+- repository clone: `$HOME/rayan-compute/rayan-eipm-main`
+- runtime tree: `$HOME/rayan-compute/rayan-n0`
+- udocker container: `rayan-n0-base`
+- future scheduler/output namespace: `rayan-n0-*`
+
+The owner verified `rayan-compute`, `rayan-eipm-main`, `rayan-n0`, `udocker-store`, and `udocker-tmp` as owner-only (`drwx------`). A search under `$HOME` found no remaining `A.L.I.C.E-main`, `ALICE-main`, or `alice-main` clone.
+
+Important distinction: external Magnolia directory/container/job/output names use `rayan`; tracked internal project identifiers and interfaces such as `ALICE_N0_WORKDIR`, the repository identity, provenance labels, and A.L.I.C.E. source names remain unchanged.
 
 ## Current build state
 
-`alice-eipm-v1-build` current tip:
+`alice-eipm-v1-build` current tip after this Magnolia hardening pass:
 
-- `277745d2cdcc1a7928936d1c5244009450992520`
+- `fbee8a5b88a2be21cb1967a19c81abde0716af6d`
 
-The branch now additionally contains:
+The branch contains:
 
-- `train_mlm_p100x2_ddp_mechanics.sh` — a deliberately non-promotable two-leg DDP mechanics test;
-- `magnolia_p100x2_ddp_mechanics.sbatch` — the exact 2×P100 job wrapper;
+- `train_mlm_p100x2_ddp_mechanics.sh` — deliberately non-promotable two-leg DDP mechanics test;
+- `magnolia_p100x2_ddp_mechanics.sbatch` — exact 2×P100 DDP mechanics wrapper;
+- `magnolia_udocker_exec.sh` — shared whole-stage udocker execution boundary;
+- udocker-routed runtime smoke, DDP mechanics, and bounded MLM pilot sbatch wrappers;
+- Magnolia-visible `rayan-n0-*` SLURM/output naming;
+- `$HOME/rayan-compute/rayan-n0/...` default runtime paths;
+- runtime-result documentation containing the failure chronology and validated environment.
+
+DDP mechanics design retained:
+
 - leg 1 trains only to step 4 and saves distributed accelerator/model/tokenizer state;
 - leg 2 resumes from that exact step-4 state and continues to step 8;
 - PASS requires world size 2, fp16, correct resume ancestry, and increasing cumulative token count;
-- the final `ddp_mechanics_receipt.json` explicitly marks the checkpoint non-promotable and private-data-free.
+- final `ddp_mechanics_receipt.json` marks the checkpoint non-promotable and private-data-free.
 
 The meaningful 200-step public N0 pilot remains prepared, but it should not run until the cheaper DDP/resume uncertainty is closed and the real bounded corpus/tokenizer lineage has been prepared.
 
 ## Active compute route
 
-The owner does **not** have usable Magnolia A100 access from the actual working account/directory path. Do not plan N0 around A100 unless that access changes later.
+Do not assume Magnolia A100 access from this working account unless access is explicitly revalidated later.
 
-Active Magnolia route:
+Active proven route:
 
 - partition `gpu`
 - QOS `normal`
@@ -98,26 +162,40 @@ Kaggle remains fallback/overflow. Preserve Kaggle quota while Magnolia P100 can 
 
 ## FBM state
 
-`fable-builder-model` current tip:
+`fable-builder-model` current tip after recording this chat's infrastructure lessons:
 
-- `17663e5e04f5a2c16e2dc672b20c48e2e9ae167a`
+- `73b6575b5ceb5edc4689c70a45d4d338dc03b430`
 
-FBM now captures both the compute-route correction and the successful runtime-smoke/next-cheapest-uncertainty pattern. The reusable lesson is: each build-time compute test should eliminate one real uncertainty and immediately target only the next unresolved one.
+FBM now retains three linked builder lessons around this route: adapt to the real owner-available hardware; advance compute in the cheapest evidence-producing increments; and place containerization at the validated stage boundary rather than repeatedly wrapping interpreter calls.
 
 ## Immediate operational pointer
 
-Use the already-passed smoke lineage. Do not rebuild it.
+The local Magnolia clone was intentionally renamed and will be behind GitHub until pulled. Do not recreate the old `A.L.I.C.E-main` directory.
 
-From the A.L.I.C.E. repo root on Magnolia:
+From Magnolia:
 
 ```bash
-git switch alice-eipm-v1-build
+cd "$HOME/rayan-compute/rayan-eipm-main"
+git checkout alice-eipm-v1-build
 git pull --ff-only
-export N0_SMOKE_WORKDIR="$HOME/rayan-compute/alice-n0/p100x2-runtime-smoke-575527"
-sbatch --export=ALL,N0_SMOKE_WORKDIR="$N0_SMOKE_WORKDIR" scripts/eipm/n0/magnolia_p100x2_ddp_mechanics.sbatch
 ```
 
-This next job is intentionally tiny. It exists only to prove 2-process P100 training plus state save/resume. It does not create a promotable N0 checkpoint and does not touch private identity data.
+The successful smoke lineage now lives under the renamed private runtime tree:
+
+```bash
+export N0_SMOKE_WORKDIR="$HOME/rayan-compute/rayan-n0/p100x2-runtime-smoke-575527"
+```
+
+After pulling the hardened build branch, the tracked DDP wrapper itself handles the validated udocker boundary. The temporary `BASH_ENV` compatibility hook used to qualify job 575527 is historical evidence and is no longer the preferred launch mechanism.
+
+Submit the next tiny mechanics test with:
+
+```bash
+sbatch --export=ALL,N0_SMOKE_WORKDIR="$N0_SMOKE_WORKDIR" \
+  scripts/eipm/n0/magnolia_p100x2_ddp_mechanics.sbatch
+```
+
+This next job exists only to prove two-process P100 training plus state save/resume. It does not create a promotable N0 checkpoint and does not touch private identity data.
 
 If PASS, build the real bounded public corpus/tokenizer lineage next and then run the 200-step meaningful N0 MLM pilot.
 
@@ -127,4 +205,4 @@ No private E0/E-INF/A-SYN gradient is authorized by this continuation note. That
 
 Sol can continue repository design, curriculum construction, result interpretation, failure repair, and branch maintenance independently.
 
-Rayan's next needed contribution is only to submit the tiny 2×P100 DDP mechanics job and return its stdout/stderr plus `ddp_mechanics_receipt.json`. No private-gradient decision is needed yet.
+Rayan's next needed contribution is only to sync the hardened branch to Magnolia and submit the tiny 2×P100 DDP mechanics job when ready. No private-gradient decision is needed yet.
