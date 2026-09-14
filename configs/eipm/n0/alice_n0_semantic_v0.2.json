@@ -60,19 +60,19 @@
       },
       "candidate_preference": {
         "enabled": true,
-        "role": "compare_plausible_interpretations_and_responses",
+        "role": "compare_plausible_interpretations_responses_and_delivery_plans",
         "base_weight": 0.10,
         "teacher_rows_must_be_governed": true
       },
       "principle_rationale_alignment": {
         "enabled": true,
-        "role": "teach_why_supported_behavior_or_interpretation_is_preferred",
+        "role": "teach_why_supported_behavior_interpretation_or_delivery_is_preferred",
         "base_weight": 0.10,
         "rationale_text_must_supply_gradient": true
       },
       "semantic_contrastive": {
         "enabled": true,
-        "role": "shape_paraphrase_and_semantic_equivalence_geometry",
+        "role": "shape_paraphrase_semantic_equivalence_and_reusable_principle_geometry",
         "base_weight": 0.10,
         "temperature": 0.05
       },
@@ -87,7 +87,10 @@
       "teacher_rows_are_not_identity_rows": true,
       "rationale_is_training_signal": true,
       "do_not_repeat_tiny_teacher_set_indefinitely": true,
+      "public_competencies_registered": 51,
+      "voice_expression_competencies": 8,
       "principle_rows_minimum_before_full_multitask_training": 1000,
+      "coverage_gate_overrides_row_floor": true,
       "principle_rows_target_before_n0_readiness": 2500
     },
     "fixed_total_token_budget": null,
@@ -106,6 +109,9 @@
   },
   "evaluation": {
     "fixed_suite": "evaluation/eipm/n0/n0_v02_fixed_readiness_base_v0.1.jsonl",
+    "voice_fixed_suite": "evaluation/eipm/n0/n0_v02_voice_readiness_base_v0.1.jsonl",
+    "voice_first_interaction_required": true,
+    "voice_expression_contract": "docs/eipm/EIPM_VOICE_FIRST_INTERACTION_CONTRACT_v1.0.md",
     "fixed_suite_compiler": "scripts/eipm/n0/compile_n0_v02_fixed_eval.py",
     "candidate_order_invariance_required": true,
     "paraphrase_invariance_required": true,
@@ -115,7 +121,8 @@
     "owner_review": true,
     "external_judge_committee_required": false,
     "failure_driven_repair": true,
-    "promotion_forbidden_on_training_loss_only": true
+    "promotion_forbidden_on_training_loss_only": true,
+    "text_only_readiness_is_insufficient_for_voice_first_identity": true
   },
   "compute": {
     "primary_accelerator": "2x_Tesla_P100_PCIE_12GB",
@@ -131,6 +138,8 @@
     "preserve_source_provenance": true,
     "preserve_private_public_boundary": true,
     "parallel_fbm_process_capture": true,
-    "v01_pathfinder_weights_must_not_initialize_v02": true
+    "v01_pathfinder_weights_must_not_initialize_v02": true,
+    "voice_first_design_requirement_authorized": true,
+    "voice_first_requirement_does_not_authorize_private_elaina_gradient": true
   }
 }
