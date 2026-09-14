@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=alice-n0-p100-smoke
+#SBATCH --job-name=rayan-n0-p100-smoke
 #SBATCH --partition=gpu
 #SBATCH --qos=normal
 #SBATCH --gres=gpu:p100:2
@@ -8,22 +8,21 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=32G
 #SBATCH --time=01:00:00
-#SBATCH --output=alice-n0-p100-smoke-%j.out
-#SBATCH --error=alice-n0-p100-smoke-%j.err
+#SBATCH --output=rayan-n0-p100-smoke-%j.out
+#SBATCH --error=rayan-n0-p100-smoke-%j.err
 
 set -euo pipefail
 
 ROOT="${SLURM_SUBMIT_DIR:-$PWD}"
 if [[ ! -f "$ROOT/scripts/eipm/n0/runtime_smoke.sh" ]]; then
-  echo "Submit this job from the A.L.I.C.E. repository root." >&2
+  echo "Submit this job from the repository root." >&2
   echo "SLURM_SUBMIT_DIR=$ROOT" >&2
   exit 2
 fi
 
 cd "$ROOT"
 
-export PYTHON="${ALICE_N0_PYTHON:-${PYTHON:-python}}"
-export ALICE_N0_WORKDIR="${ALICE_N0_WORKDIR:-$HOME/rayan-compute/alice-n0/p100x2-runtime-smoke-${SLURM_JOB_ID}}"
+export ALICE_N0_WORKDIR="${ALICE_N0_WORKDIR:-$HOME/rayan-compute/rayan-n0/p100x2-runtime-smoke-${SLURM_JOB_ID}}"
 export N0_SMOKE_REQUIRE_CUDA=1
 export N0_SMOKE_MIN_CUDA_DEVICES=2
 
@@ -39,11 +38,8 @@ mkdir -p "$ALICE_N0_WORKDIR"
   echo "submit_dir=${SLURM_SUBMIT_DIR:-unknown}"
   echo "repo_root=$ROOT"
   echo "workdir=$ALICE_N0_WORKDIR"
-  echo "python=$PYTHON"
+  echo "container=${RAYAN_N0_CONTAINER:-rayan-n0-base}"
   echo "cuda_visible_devices=${CUDA_VISIBLE_DEVICES:-unset}"
-  echo
-  which "$PYTHON" || true
-  "$PYTHON" --version || true
   echo
   nvidia-smi || true
   echo
@@ -62,7 +58,11 @@ for name in "${GPU_NAMES[@]:0:2}"; do
   fi
 done
 
-bash "$ROOT/scripts/eipm/n0/runtime_smoke.sh"
+# Run the complete smoke inside one validated user-space container session.
+# Do not proxy individual Python calls through udocker: that path was proven
+# fragile on Magnolia and can recurse through /usr/bin/env or destabilize MKL.
+bash "$ROOT/scripts/eipm/n0/magnolia_udocker_exec.sh" \
+  "$ROOT/scripts/eipm/n0/runtime_smoke.sh"
 
 echo "===== MAGNOLIA P100X2 N0 SMOKE COMPLETE ====="
 date -Is
