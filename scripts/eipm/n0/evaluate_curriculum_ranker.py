@@ -31,8 +31,8 @@ def main() -> None:
     parser.add_argument("--tokenizer-dir", required=True)
     parser.add_argument("--mlm-checkpoint", required=True)
     parser.add_argument("--ranker", required=True, help="ranker.safetensors produced by training")
-    parser.add_argument("--curriculum", required=True)
-    parser.add_argument("--curriculum-manifest", required=True)
+    parser.add_argument("--curriculum", action="append", required=True)
+    parser.add_argument("--curriculum-manifest", action="append", required=True)
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--split", choices=["train", "dev", "test"], default="dev")
     parser.add_argument("--max-length", type=int, default=512)
@@ -45,8 +45,25 @@ def main() -> None:
     except ImportError as exc:
         raise SystemExit("Install requirements-n0.txt before curriculum evaluation") from exc
 
-    manifest = validate_curriculum_manifest(args.curriculum, args.curriculum_manifest)
-    curriculum_summary = validate_curriculum_rows(args.curriculum)
+    if len(args.curriculum) != len(args.curriculum_manifest):
+        raise SystemExit("repeat --curriculum and --curriculum-manifest the same number of times")
+
+    curriculum_entries: list[dict[str, object]] = []
+    for curriculum_path, manifest_path in zip(args.curriculum, args.curriculum_manifest):
+        manifest = validate_curriculum_manifest(curriculum_path, manifest_path)
+        summary = validate_curriculum_rows(curriculum_path)
+        curriculum_entries.append(
+            {
+                "path": curriculum_path,
+                "sha256": sha256_file(Path(curriculum_path)),
+                "manifest_path": manifest_path,
+                "manifest_sha256": sha256_file(Path(manifest_path)),
+                "origin_type": manifest["origin_type"],
+                "actor": manifest.get("actor"),
+                "summary": summary,
+            }
+        )
+
     config = load_n0_config(args.config)
     tokenizer = load_tokenizer(args.tokenizer_dir)
     if len(tokenizer) != config.vocab_size:
@@ -167,10 +184,7 @@ def main() -> None:
         "model_id": config.model_id,
         "split": args.split,
         "config_sha256": sha256_file(Path(args.config)),
-        "curriculum_sha256": sha256_file(Path(args.curriculum)),
-        "curriculum_manifest_sha256": sha256_file(Path(args.curriculum_manifest)),
-        "curriculum_origin_type": manifest["origin_type"],
-        "curriculum_summary": curriculum_summary,
+        "curricula": curriculum_entries,
         "mlm_checkpoint": args.mlm_checkpoint,
         "ranker_sha256": sha256_file(Path(args.ranker)),
         "metrics": summary,
