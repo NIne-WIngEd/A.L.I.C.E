@@ -121,6 +121,24 @@ The owner verified `rayan-compute`, `rayan-eipm-main`, `rayan-n0`, `udocker-stor
 
 Important distinction: external Magnolia directory/container/job/output names use `rayan`; tracked internal project identifiers and interfaces such as `ALICE_N0_WORKDIR`, the repository identity, provenance labels, and A.L.I.C.E. source names remain unchanged.
 
+## Real N0 lineage state before pilot
+
+The real persistent N0 training lineage has **not** yet been created. Before the namespace rename, the audit returned `n0-v01_not_created` and all three real pilot prerequisites were missing:
+
+- `corpus/corpus_receipt.json`
+- `tokenizer/tokenizer.json`
+- `tokenizer/tokenizer_receipt.json`
+
+After the namespace cleanup, the canonical future real-work root is:
+
+```text
+$HOME/rayan-compute/rayan-n0/n0-v01
+```
+
+Do not copy the successful smoke corpus/tokenizer into this real lineage merely to satisfy those paths. Smoke artifacts are qualification artifacts and stay separate from the real bounded `corpus-bootstrap` -> `tokenizer` lineage.
+
+The Magnolia scheduler audit showed CPU-only partitions in addition to the P100 route, including the default `node` partition with no GPU GRES. Prefer CPU allocation for real corpus bootstrap and tokenizer preparation so scarce P100 allocation is not consumed by CPU-bound preprocessing.
+
 ## Current build state
 
 `alice-eipm-v1-build` current tip after this Magnolia hardening pass:
