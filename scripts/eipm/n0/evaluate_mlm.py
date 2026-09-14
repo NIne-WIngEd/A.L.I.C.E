@@ -24,7 +24,9 @@ def sha256_file(path: str | Path) -> str:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Evaluate an N0 MLM checkpoint on the deterministic held-out dev split.")
+    parser = argparse.ArgumentParser(
+        description="Evaluate an N0 MLM checkpoint on the deterministic held-out dev split."
+    )
     parser.add_argument("--config", required=True)
     parser.add_argument("--checkpoint-dir", required=True)
     parser.add_argument("--tokenizer", required=True)
@@ -35,6 +37,16 @@ def main() -> None:
     parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--max-batches", type=int, default=256)
     parser.add_argument("--seed", type=int, default=424242)
+    parser.add_argument(
+        "--mask-repeats",
+        type=int,
+        default=8,
+        help=(
+            "Repeat evaluation over the exact same held-out documents with deterministic "
+            "independent masking seeds. This reduces masking variance without pretending "
+            "that training documents are newly held out."
+        ),
+    )
     parser.add_argument("--device", choices=["auto", "cpu", "cuda"], default="auto")
     parser.add_argument("--output", default=None)
     args = parser.parse_args()
@@ -61,8 +73,8 @@ def main() -> None:
     config = load_n0_config(config_path)
     if args.sequence_length not in config.train_sequence_lengths:
         raise SystemExit(f"sequence length must be one of {config.train_sequence_lengths}")
-    if args.batch_size < 1 or args.max_batches < 1:
-        raise SystemExit("batch-size and max-batches must be positive")
+    if args.batch_size < 1 or args.max_batches < 1 or args.mask_repeats < 1:
+        raise SystemExit("batch-size, max-batches, and mask-repeats must be positive")
 
     corpus_verification = verify_corpus_receipt(corpus_dir, source_config)
     checkpoint_receipt = json.loads(checkpoint_receipt_path.read_text(encoding="utf-8"))
@@ -106,53 +118,95 @@ def main() -> None:
     model.eval()
 
     shard_paths = [Path(path) for path in corpus_verification["shard_paths"]]
-    dataset = PackedJSONLIterableDataset(
-        paths=shard_paths,
-        tokenizer=tokenizer,
-        sequence_length=args.sequence_length,
-        split="dev",
-    )
-    collator = SpanMLMCollator(
-        tokenizer=tokenizer,
-        mlm_probability=config.mlm_probability,
-        mean_span=config.mean_mask_span,
-        max_span=config.max_mask_span,
-        seed=args.seed,
-    )
-    dataloader = DataLoader(
-        dataset,
-        batch_size=args.batch_size,
-        collate_fn=collator,
-        num_workers=0,
-        pin_memory=(device.type == "cuda"),
-    )
 
     weighted_loss_sum = 0.0
-    masked_tokens = 0
-    visible_tokens = 0
-    batches = 0
+    masked_tokens_total = 0
+    visible_token_exposures = 0
+    batches_total = 0
+    reference_visible_tokens: int | None = None
+    per_repeat: list[dict[str, int | float]] = []
 
     with torch.inference_mode():
-        for batch in dataloader:
-            if batches >= args.max_batches:
-                break
-            labels = batch["labels"]
-            batch_masked = int((labels != -100).sum().item())
-            if batch_masked == 0:
-                continue
-            visible_tokens += int(batch["attention_mask"].sum().item())
-            batch = {key: value.to(device) for key, value in batch.items()}
-            outputs = model(**batch)
-            weighted_loss_sum += float(outputs.loss.detach().cpu()) * batch_masked
-            masked_tokens += batch_masked
-            batches += 1
+        for repeat_index in range(args.mask_repeats):
+            repeat_seed = args.seed + repeat_index * 1_000_003
+            dataset = PackedJSONLIterableDataset(
+                paths=shard_paths,
+                tokenizer=tokenizer,
+                sequence_length=args.sequence_length,
+                split="dev",
+            )
+            collator = SpanMLMCollator(
+                tokenizer=tokenizer,
+                mlm_probability=config.mlm_probability,
+                mean_span=config.mean_mask_span,
+                max_span=config.max_mask_span,
+                seed=repeat_seed,
+            )
+            dataloader = DataLoader(
+                dataset,
+                batch_size=args.batch_size,
+                collate_fn=collator,
+                num_workers=0,
+                pin_memory=(device.type == "cuda"),
+            )
 
-    if batches == 0 or masked_tokens == 0:
-        raise RuntimeError("held-out dev split produced no evaluable masked tokens")
+            repeat_weighted_loss = 0.0
+            repeat_masked_tokens = 0
+            repeat_visible_tokens = 0
+            repeat_batches = 0
 
-    mean_nll = weighted_loss_sum / masked_tokens
+            for batch in dataloader:
+                if repeat_batches >= args.max_batches:
+                    break
+                labels = batch["labels"]
+                batch_masked = int((labels != -100).sum().item())
+                if batch_masked == 0:
+                    continue
+                repeat_visible_tokens += int(batch["attention_mask"].sum().item())
+                batch = {key: value.to(device) for key, value in batch.items()}
+                outputs = model(**batch)
+                repeat_weighted_loss += float(outputs.loss.detach().cpu()) * batch_masked
+                repeat_masked_tokens += batch_masked
+                repeat_batches += 1
+
+            if repeat_batches == 0 or repeat_masked_tokens == 0:
+                raise RuntimeError(
+                    f"held-out dev split produced no evaluable masked tokens for repeat {repeat_index}"
+                )
+
+            if reference_visible_tokens is None:
+                reference_visible_tokens = repeat_visible_tokens
+            elif repeat_visible_tokens != reference_visible_tokens:
+                raise RuntimeError(
+                    "held-out document exposure changed across mask repeats; deterministic dev set violated"
+                )
+
+            repeat_nll = repeat_weighted_loss / repeat_masked_tokens
+            per_repeat.append(
+                {
+                    "repeat": repeat_index,
+                    "mask_seed": repeat_seed,
+                    "batches": repeat_batches,
+                    "visible_tokens": repeat_visible_tokens,
+                    "masked_tokens": repeat_masked_tokens,
+                    "mean_masked_token_nll": repeat_nll,
+                    "masked_token_perplexity": (
+                        math.exp(repeat_nll) if repeat_nll < 80 else float("inf")
+                    ),
+                }
+            )
+            weighted_loss_sum += repeat_weighted_loss
+            masked_tokens_total += repeat_masked_tokens
+            visible_token_exposures += repeat_visible_tokens
+            batches_total += repeat_batches
+
+    mean_nll = weighted_loss_sum / masked_tokens_total
+    repeat_nlls = [float(item["mean_masked_token_nll"]) for item in per_repeat]
+    repeat_mean = sum(repeat_nlls) / len(repeat_nlls)
+    repeat_variance = sum((value - repeat_mean) ** 2 for value in repeat_nlls) / len(repeat_nlls)
+
     result = {
-        "schema": "alice.eipm.n0.mlm-evaluation.v0.1",
+        "schema": "alice.eipm.n0.mlm-evaluation.v0.2",
         "status": "PASS",
         "model_id": config.model_id,
         "checkpoint_step": int(checkpoint_receipt["step"]),
@@ -161,12 +215,18 @@ def main() -> None:
         "tokenizer_sha256": sha256_file(tokenizer_path),
         "split": "dev",
         "sequence_length": args.sequence_length,
-        "mask_seed": args.seed,
-        "batches": batches,
-        "masked_tokens": masked_tokens,
-        "visible_tokens": visible_tokens,
+        "base_mask_seed": args.seed,
+        "mask_repeats": args.mask_repeats,
+        "heldout_documents_reused_across_mask_repeats": True,
+        "reference_visible_tokens": reference_visible_tokens,
+        "visible_token_exposures": visible_token_exposures,
+        "batches_total": batches_total,
+        "masked_tokens_total": masked_tokens_total,
         "mean_masked_token_nll": mean_nll,
         "masked_token_perplexity": math.exp(mean_nll) if mean_nll < 80 else float("inf"),
+        "repeat_mean_nll": repeat_mean,
+        "repeat_nll_stddev": math.sqrt(repeat_variance),
+        "per_repeat": per_repeat,
         "device": str(device),
         "private_identity_data": False,
         "private_identity_gradient": False,
