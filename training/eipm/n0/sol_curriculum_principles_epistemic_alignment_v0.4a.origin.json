@@ -1,0 +1,23 @@
+{
+  "schema": "alice.eipm.n0.curriculum-origin.v0.3",
+  "artifact": "training/eipm/n0/sol_curriculum_principles_epistemic_alignment_v0.4a.jsonl",
+  "training_authorized": true,
+  "private_identity_data": false,
+  "origin_type": "owner_authorized_service_teacher",
+  "actor": "sol",
+  "actor_instance": "GPT-5.6 Sol",
+  "created_on": "2026-09-14",
+  "owner_authorization_asserted": true,
+  "owner_authorization_recorded_on": "2026-09-14",
+  "authorization_scope": "Public N0 semantic/pragmatic/judgment foundation teaching for A.L.I.C.E.; no Elaina-specific or private identity gradient",
+  "provenance_or_authorization": "Owner directed Sol to continue teaching A.L.I.C.E. efficiently under the N0 v0.2 frontier-research plan. This shard contains independently authored public epistemic, ranking, and structured-alignment principle examples. It does not contain private identity material.",
+  "permanent_weight_use_allowed": true,
+  "fbm_process_capture_allowed": true,
+  "curriculum_git_blob_sha1": "fd39080d58f7b9526804e4ae8237bd4ececbc504",
+  "row_count": 90,
+  "split_counts": {"train": 72, "dev": 18, "test": 0},
+  "principle_tag_required": true,
+  "targeted_competencies": ["EPI-01","EPI-02","EPI-03","EPI-04","EPI-05","EPI-06","EPI-07","RANK-01","RANK-02","RANK-03","RANK-04","RANK-05","ALIGN-01","ALIGN-02","ALIGN-03","ALIGN-04","ALIGN-05","ALIGN-06"],
+  "purpose": "First N0 v0.2 principle-bank expansion: five independent scenarios per targeted competency, with rationale text as gradient-bearing supervision and reusable principle tags.",
+  "private_identity_gradient_authorized": false
+}
