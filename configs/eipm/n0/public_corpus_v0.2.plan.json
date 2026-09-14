@@ -1,0 +1,113 @@
+{
+  "schema": "alice.eipm.n0.public-corpus-mixture-plan.v0.2",
+  "status": "planned_not_activated",
+  "purpose": "Broader rights-clean public semantic corpus for N0 v0.2. No source is active until exact revision, row schema, license values, and provenance fields are verified and frozen.",
+  "source_family": "Common Pile v0.1 filtered datasets",
+  "global_requirements": {
+    "exact_revision_required": true,
+    "row_level_license_required": true,
+    "row_level_provenance_required": true,
+    "normalization_receipt_required": true,
+    "exact_dedup_required": true,
+    "near_dedup_preferred_before_scale_up": true,
+    "private_identity_data": false,
+    "source_token_share_ceiling": 0.125,
+    "benchmark_text_exclusion_required": true
+  },
+  "mixture": [
+    {
+      "category": "reference_encyclopedic",
+      "target_share": 0.15,
+      "sources": [
+        {"repo_id": "common-pile/wikimedia_filtered", "target_share": 0.10},
+        {"repo_id": "common-pile/wikiteam_filtered", "target_share": 0.05}
+      ]
+    },
+    {
+      "category": "science_research",
+      "target_share": 0.20,
+      "sources": [
+        {"repo_id": "common-pile/arxiv_abstracts_filtered", "target_share": 0.08},
+        {"repo_id": "common-pile/arxiv_papers_filtered", "target_share": 0.06},
+        {"repo_id": "common-pile/pubmed_filtered", "target_share": 0.06}
+      ]
+    },
+    {
+      "category": "educational_qa_explanation",
+      "target_share": 0.18,
+      "sources": [
+        {"repo_id": "common-pile/stackexchange_filtered", "target_share": 0.10},
+        {"repo_id": "common-pile/stackv2_edu_filtered", "target_share": 0.08}
+      ]
+    },
+    {
+      "category": "conversation_and_spoken_pragmatics",
+      "target_share": 0.15,
+      "sources": [
+        {"repo_id": "common-pile/ubuntu_irc_filtered", "target_share": 0.07},
+        {"repo_id": "common-pile/youtube_filtered", "target_share": 0.08}
+      ]
+    },
+    {
+      "category": "books_longform",
+      "target_share": 0.15,
+      "sources": [
+        {"repo_id": "common-pile/project_gutenberg_filtered", "target_share": 0.06},
+        {"repo_id": "common-pile/pre_1929_books_filtered", "target_share": 0.05},
+        {"repo_id": "common-pile/doab_filtered", "target_share": 0.03},
+        {"repo_id": "common-pile/public_domain_review_filtered", "target_share": 0.01}
+      ]
+    },
+    {
+      "category": "software_code_discussion",
+      "target_share": 0.06,
+      "sources": [
+        {"repo_id": "common-pile/github_archive_filtered", "target_share": 0.05},
+        {"repo_id": "common-pile/python_enhancement_proposals_filtered", "target_share": 0.01}
+      ]
+    },
+    {
+      "category": "government_legal_deliberation",
+      "target_share": 0.06,
+      "sources": [
+        {"repo_id": "common-pile/usgpo_filtered", "target_share": 0.025},
+        {"repo_id": "common-pile/regulations_filtered", "target_share": 0.015},
+        {"repo_id": "common-pile/uk_hansard_filtered", "target_share": 0.02}
+      ]
+    },
+    {
+      "category": "news_expository",
+      "target_share": 0.05,
+      "sources": [
+        {"repo_id": "common-pile/news_filtered", "target_share": 0.05}
+      ]
+    }
+  ],
+  "source_activation_contract": {
+    "default_status": "schema_verification_required",
+    "required_fields_to_freeze_per_source": [
+      "repo_id",
+      "revision",
+      "split",
+      "text_field",
+      "license_field",
+      "allowed_license_values",
+      "provenance_field",
+      "id_field"
+    ],
+    "rule": "A source must not enter tokenizer or model training until its exact revision and row-level rights/provenance schema have been verified and written into an activated manifest."
+  },
+  "tokenizer_sampling": {
+    "retrain_v02_tokenizer": true,
+    "vocab_size": 48000,
+    "sample_by_mixture_share": true,
+    "minimum_distinct_categories": 7,
+    "single_source_sample_ceiling": 0.125
+  },
+  "training_scale_policy": {
+    "prepare_unique_text_for_low_billions_token_regime": true,
+    "fixed_token_target": null,
+    "stop_by": "fixed_heldout_capability_gain_per_gpu_hour",
+    "do_not_repeat_small_corpus_for_convenience": true
+  }
+}
