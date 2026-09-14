@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import sys
 from pathlib import Path
 
 import pytest
@@ -12,9 +13,11 @@ MATERIALIZER = ROOT / "scripts/eipm/n0/materialize_public_corpus_v02.py"
 
 
 def load_materializer_module():
-    spec = importlib.util.spec_from_file_location("alice_n0_v02_materializer", MATERIALIZER)
+    name = "alice_n0_v02_materializer"
+    spec = importlib.util.spec_from_file_location(name, MATERIALIZER)
     assert spec is not None and spec.loader is not None
     module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
     spec.loader.exec_module(module)
     return module
 
