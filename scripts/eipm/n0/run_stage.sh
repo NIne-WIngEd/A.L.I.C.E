@@ -14,8 +14,25 @@ TOKENIZER_DIR="$WORKDIR/tokenizer"
 CHECKPOINT_DIR="$WORKDIR/checkpoints"
 RANKER_DIR="$WORKDIR/ranker"
 EVAL_DIR="$WORKDIR/evaluation"
-CURRICULUM="${ALICE_N0_CURRICULUM:-$ROOT/training/eipm/n0/sol_curriculum_seed_v0.1.jsonl}"
-CURRICULUM_MANIFEST="${ALICE_N0_CURRICULUM_MANIFEST:-$ROOT/training/eipm/n0/sol_curriculum_seed_v0.1.origin.json}"
+
+CURRICULUM_ARGS=()
+if [[ -n "${ALICE_N0_CURRICULUM:-}" || -n "${ALICE_N0_CURRICULUM_MANIFEST:-}" ]]; then
+  if [[ -z "${ALICE_N0_CURRICULUM:-}" || -z "${ALICE_N0_CURRICULUM_MANIFEST:-}" ]]; then
+    echo "ALICE_N0_CURRICULUM and ALICE_N0_CURRICULUM_MANIFEST must be set together." >&2
+    exit 2
+  fi
+  CURRICULUM_ARGS+=(
+    --curriculum "$ALICE_N0_CURRICULUM"
+    --curriculum-manifest "$ALICE_N0_CURRICULUM_MANIFEST"
+  )
+else
+  CURRICULUM_ARGS+=(
+    --curriculum "$ROOT/training/eipm/n0/sol_curriculum_seed_v0.1.jsonl"
+    --curriculum-manifest "$ROOT/training/eipm/n0/sol_curriculum_seed_v0.1.origin.json"
+    --curriculum "$ROOT/training/eipm/n0/sol_curriculum_coverage_v0.2.jsonl"
+    --curriculum-manifest "$ROOT/training/eipm/n0/sol_curriculum_coverage_v0.2.origin.json"
+  )
+fi
 
 mkdir -p "$WORKDIR" "$CHECKPOINT_DIR" "$RANKER_DIR" "$EVAL_DIR"
 export PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}"
@@ -231,8 +248,7 @@ EOF
       --config "$CONFIG" \
       --tokenizer-dir "$TOKENIZER_DIR" \
       --mlm-checkpoint "$MLM_CHECKPOINT" \
-      --curriculum "$CURRICULUM" \
-      --curriculum-manifest "$CURRICULUM_MANIFEST" \
+      "${CURRICULUM_ARGS[@]}" \
       --output-dir "$RANKER_DIR" \
       --max-length "${N0_CURRICULUM_MAX_LENGTH:-512}" \
       --batch-size "${N0_CURRICULUM_BATCH_SIZE:-4}" \
@@ -251,8 +267,7 @@ EOF
       --tokenizer-dir "$TOKENIZER_DIR" \
       --mlm-checkpoint "$MLM_CHECKPOINT" \
       --ranker "$RANKER_DIR/ranker.safetensors" \
-      --curriculum "$CURRICULUM" \
-      --curriculum-manifest "$CURRICULUM_MANIFEST" \
+      "${CURRICULUM_ARGS[@]}" \
       --output-dir "$EVAL_DIR" \
       --split "${N0_EVAL_SPLIT:-dev}" \
       --max-length "${N0_CURRICULUM_MAX_LENGTH:-512}" \
