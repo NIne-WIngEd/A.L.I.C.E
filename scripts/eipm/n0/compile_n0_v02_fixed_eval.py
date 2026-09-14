@@ -12,9 +12,9 @@ REQUIRED = {
     "id",
     "competency",
     "prompt",
+    "prompt_paraphrase",
     "candidates",
     "preferred_indices",
-    "paraphrase_group",
 }
 
 
@@ -40,6 +40,10 @@ def load_base(path: Path) -> list[dict[str, Any]]:
         if row_id in seen:
             raise ValueError(f"duplicate benchmark id: {row_id}")
         seen.add(row_id)
+        if not str(row["prompt"]).strip() or not str(row["prompt_paraphrase"]).strip():
+            raise ValueError(f"benchmark row requires two non-empty prompt forms: {row_id}")
+        if str(row["prompt"]).strip() == str(row["prompt_paraphrase"]).strip():
+            raise ValueError(f"benchmark paraphrase must differ from original prompt: {row_id}")
         candidates = list(row["candidates"])
         preferred = [int(x) for x in row["preferred_indices"]]
         if len(candidates) < 2 or not preferred:
@@ -54,15 +58,27 @@ def load_base(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
-def rotate_row(row: dict[str, Any], shift: int) -> dict[str, Any]:
+def compile_variant(
+    row: dict[str, Any],
+    *,
+    paraphrase_variant: int,
+    shift: int,
+) -> dict[str, Any]:
     candidates = list(row["candidates"])
     n = len(candidates)
     shift %= n
     order = list(range(n))[shift:] + list(range(n))[:shift]
     inverse = {old: new for new, old in enumerate(order)}
-    compiled = dict(row)
-    compiled["id"] = f"{row['id']}.order{shift}"
+    prompt = row["prompt"] if paraphrase_variant == 0 else row["prompt_paraphrase"]
+    compiled = {
+        key: value
+        for key, value in row.items()
+        if key not in {"prompt_paraphrase", "candidates", "preferred_indices"}
+    }
+    compiled["id"] = f"{row['id']}.p{paraphrase_variant}.order{shift}"
     compiled["base_id"] = row["id"]
+    compiled["prompt"] = prompt
+    compiled["paraphrase_variant"] = paraphrase_variant
     compiled["candidate_order_variant"] = shift
     compiled["candidates"] = [candidates[index] for index in order]
     compiled["preferred_indices"] = sorted(inverse[int(index)] for index in row["preferred_indices"])
@@ -77,7 +93,8 @@ def main() -> None:
     parser.add_argument("--output", required=True)
     parser.add_argument("--manifest", required=True)
     parser.add_argument("--order-variants", type=int, default=3)
-    parser.add_argument("--minimum-cases-per-competency", type=int, default=2)
+    parser.add_argument("--minimum-cases-per-competency", type=int, default=1)
+    parser.add_argument("--expected-competencies", type=int, default=43)
     args = parser.parse_args()
 
     base = Path(args.base)
@@ -86,20 +103,26 @@ def main() -> None:
     rows = load_base(base)
 
     counts = Counter(str(row["competency"]) for row in rows)
+    if len(counts) != args.expected_competencies:
+        raise ValueError(
+            f"fixed suite expected {args.expected_competencies} competencies, found {len(counts)}"
+        )
     under = {name: count for name, count in counts.items() if count < args.minimum_cases_per_competency}
     if under:
         raise ValueError(f"benchmark competencies below minimum case count: {under}")
 
-    paraphrase_counts = Counter(str(row["paraphrase_group"]) for row in rows)
-    weak_groups = sorted(name for name, count in paraphrase_counts.items() if count < 2)
-    if weak_groups:
-        raise ValueError(f"paraphrase groups must contain at least two cases: {weak_groups[:10]}")
-
     compiled: list[dict[str, Any]] = []
     for row in rows:
         variants = min(max(args.order_variants, 1), len(row["candidates"]))
-        for shift in range(variants):
-            compiled.append(rotate_row(row, shift))
+        for paraphrase_variant in (0, 1):
+            for shift in range(variants):
+                compiled.append(
+                    compile_variant(
+                        row,
+                        paraphrase_variant=paraphrase_variant,
+                        shift=shift,
+                    )
+                )
 
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(
@@ -115,8 +138,8 @@ def main() -> None:
         "base_rows": len(rows),
         "compiled_rows": len(compiled),
         "competencies": dict(sorted(counts.items())),
-        "paraphrase_groups": len(paraphrase_counts),
-        "candidate_order_variants": args.order_variants,
+        "paraphrase_variants_per_base": 2,
+        "candidate_order_variants_requested": args.order_variants,
         "eval_only": True,
         "training_authorized": False,
         "private_identity_data": False,
