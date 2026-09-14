@@ -17,27 +17,29 @@
   "mixture": [
     {
       "category": "reference_encyclopedic",
-      "target_share": 0.15,
+      "target_share": 0.14,
       "sources": [
         {"repo_id": "common-pile/wikimedia_filtered", "target_share": 0.10},
-        {"repo_id": "common-pile/wikiteam_filtered", "target_share": 0.05}
+        {"repo_id": "common-pile/wikiteam_filtered", "target_share": 0.04}
       ]
     },
     {
       "category": "science_research",
-      "target_share": 0.20,
+      "target_share": 0.16,
       "sources": [
-        {"repo_id": "common-pile/arxiv_abstracts_filtered", "target_share": 0.08},
-        {"repo_id": "common-pile/arxiv_papers_filtered", "target_share": 0.06},
+        {"repo_id": "common-pile/arxiv_abstracts_filtered", "target_share": 0.05},
+        {"repo_id": "common-pile/arxiv_papers_filtered", "target_share": 0.05},
         {"repo_id": "common-pile/pubmed_filtered", "target_share": 0.06}
       ]
     },
     {
       "category": "educational_qa_explanation",
-      "target_share": 0.18,
+      "target_share": 0.22,
       "sources": [
-        {"repo_id": "common-pile/stackexchange_filtered", "target_share": 0.10},
-        {"repo_id": "common-pile/stackv2_edu_filtered", "target_share": 0.08}
+        {"repo_id": "common-pile/stackexchange_filtered", "target_share": 0.09},
+        {"repo_id": "common-pile/libretexts_filtered", "target_share": 0.05},
+        {"repo_id": "common-pile/pressbooks_filtered", "target_share": 0.05},
+        {"repo_id": "common-pile/oercommons_filtered", "target_share": 0.03}
       ]
     },
     {
@@ -50,11 +52,11 @@
     },
     {
       "category": "books_longform",
-      "target_share": 0.15,
+      "target_share": 0.12,
       "sources": [
-        {"repo_id": "common-pile/project_gutenberg_filtered", "target_share": 0.06},
-        {"repo_id": "common-pile/pre_1929_books_filtered", "target_share": 0.05},
-        {"repo_id": "common-pile/doab_filtered", "target_share": 0.03},
+        {"repo_id": "common-pile/project_gutenberg_filtered", "target_share": 0.04},
+        {"repo_id": "common-pile/pre_1929_books_filtered", "target_share": 0.03},
+        {"repo_id": "common-pile/doab_filtered", "target_share": 0.04},
         {"repo_id": "common-pile/public_domain_review_filtered", "target_share": 0.01}
       ]
     },
@@ -62,7 +64,8 @@
       "category": "software_code_discussion",
       "target_share": 0.06,
       "sources": [
-        {"repo_id": "common-pile/github_archive_filtered", "target_share": 0.05},
+        {"repo_id": "common-pile/stackv2_edu_filtered", "target_share": 0.03},
+        {"repo_id": "common-pile/github_archive_filtered", "target_share": 0.02},
         {"repo_id": "common-pile/python_enhancement_proposals_filtered", "target_share": 0.01}
       ]
     },
@@ -77,9 +80,9 @@
     },
     {
       "category": "news_expository",
-      "target_share": 0.05,
+      "target_share": 0.09,
       "sources": [
-        {"repo_id": "common-pile/news_filtered", "target_share": 0.05}
+        {"repo_id": "common-pile/news_filtered", "target_share": 0.09}
       ]
     }
   ],
@@ -102,7 +105,15 @@
     "vocab_size": 48000,
     "sample_by_mixture_share": true,
     "minimum_distinct_categories": 7,
-    "single_source_sample_ceiling": 0.125
+    "single_source_sample_ceiling": 0.125,
+    "deterministic_source_balancing_required": true
+  },
+  "storage_and_tranche_policy": {
+    "do_not_require_full_corpus_residency_on_magnolia": true,
+    "build_deterministic_source_balanced_tranches": true,
+    "tranche_rebuildable_from_exact_source_revisions": true,
+    "archive_or_delete_consumed_tranche_only_after_checkpoint_and_receipt": true,
+    "magnolia_home_pressure_is_a_design_constraint": true
   },
   "training_scale_policy": {
     "prepare_unique_text_for_low_billions_token_regime": true,
