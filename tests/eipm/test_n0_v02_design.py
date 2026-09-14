@@ -8,6 +8,7 @@ import torch
 
 from alice_personality.n0.config import load_n0_config
 from alice_personality.n0.v02_objectives import (
+    multi_positive_contrastive_loss,
     principle_alignment_examples,
     principle_alignment_loss,
     symmetric_contrastive_loss,
@@ -61,6 +62,20 @@ def test_v02_mixture_is_balanced_and_not_activated_without_rights_schema() -> No
     ]
     assert sum(source_shares) == pytest.approx(1.0)
     assert max(source_shares) <= 0.125
+    assert raw["tokenizer_sampling"]["deterministic_source_balancing_required"] is True
+    assert raw["storage_and_tranche_policy"]["do_not_require_full_corpus_residency_on_magnolia"] is True
+
+    by_category = {
+        group["category"]: {source["repo_id"] for source in group["sources"]}
+        for group in raw["mixture"]
+    }
+    assert "common-pile/stackv2_edu_filtered" not in by_category["educational_qa_explanation"]
+    assert "common-pile/stackv2_edu_filtered" in by_category["software_code_discussion"]
+    assert {
+        "common-pile/libretexts_filtered",
+        "common-pile/pressbooks_filtered",
+        "common-pile/oercommons_filtered",
+    }.issubset(by_category["educational_qa_explanation"])
 
 
 def test_fixed_v02_suite_is_eval_only_and_covers_all_43_competencies() -> None:
@@ -77,6 +92,7 @@ def test_rationale_becomes_gradient_bearing_supervision() -> None:
     row = {
         "id": "x",
         "competency": "EPI-04",
+        "principle_tag": "preserve_uncertainty",
         "prompt": "Weak evidence supports two readings. What should happen?",
         "candidates": ["preserve uncertainty", "claim certainty"],
         "preferred_indices": [0],
@@ -86,6 +102,7 @@ def test_rationale_becomes_gradient_bearing_supervision() -> None:
     examples = principle_alignment_examples(row)
     assert [example["label"] for example in examples] == [1.0, 0.0]
     assert all(example["rationale"] == row["rationale"] for example in examples)
+    assert all(example["principle_tag"] == "preserve_uncertainty" for example in examples)
 
     logits = torch.tensor([2.0, -2.0])
     labels = torch.tensor([1.0, 0.0])
@@ -103,3 +120,28 @@ def test_contrastive_and_weighted_objectives_are_finite() -> None:
         {"span_mlm": 0.7, "semantic_contrastive": 0.1},
     )
     assert combined.item() == pytest.approx(1.875)
+
+
+def test_multi_positive_contrastive_does_not_make_same_principle_false_negatives() -> None:
+    semantic = torch.tensor(
+        [
+            [1.0, 0.0, 0.0],
+            [0.95, 0.05, 0.0],
+            [0.0, 1.0, 0.0],
+        ]
+    )
+    rationale = torch.tensor(
+        [
+            [1.0, 0.0, 0.0],
+            [0.98, 0.02, 0.0],
+            [0.0, 1.0, 0.0],
+        ]
+    )
+    loss = multi_positive_contrastive_loss(
+        semantic,
+        rationale,
+        ["preserve_uncertainty", "preserve_uncertainty", "relation_direction"],
+        temperature=0.1,
+    )
+    assert torch.isfinite(loss)
+    assert loss.item() >= 0.0
