@@ -86,7 +86,7 @@ This remains the broad language/context objective.
 - every preferred and nonpreferred candidate can be paired with the governing rationale;
 - preferred candidates form positive candidate/rationale pairs and unsupported candidates form negatives.
 
-Implemented in `src/alice_personality/n0/v02_objectives.py`.
+Implemented in `src/alice_personality/n0/v02_objectives.py` and represented in `src/alice_personality/n0/v02_model.py`.
 
 This corrects the v0.1 weakness where rationales existed in JSON but were not part of the trained input/objective.
 
@@ -130,9 +130,9 @@ The initial frozen base has exactly one unseen content case for each of the 43 N
 
 - 43 content cases;
 - 2 prompt forms per content case;
-- up to 3 candidate-order rotations;
+- up to 3 candidate-order rotations, limited by the number of candidates in that case.
 
-for **258 fixed scoring instances**.
+The current v0.1 base compiles deterministically to **256 fixed scoring instances**. Most cases produce six variants; the pairwise RANK-01 case produces four. The compiler and CPU preflight compute this count from the benchmark rather than hard-code it.
 
 The suite is explicitly eval-only and training-authorized=false. It must never be added to the teacher corpus.
 
@@ -160,11 +160,13 @@ Before any v0.2 GPU allocation, preflight must verify:
 - native/random initialization rule;
 - 30% masking;
 - mixture weights and source ceilings;
-- fixed-suite integrity and 258-row compilation;
+- fixed-suite integrity and deterministic invariance expansion;
 - current teacher rows all contain rationale supervision;
-- exact model construction succeeds in the validated container;
+- exact multi-objective model construction succeeds in the validated container;
 - exact parameter count lies inside the approved 110M–180M envelope;
 - private identity gradient remains false.
+
+Wrapper: `scripts/eipm/n0/magnolia_cpu_n0_v02_preflight.sh`
 
 The preflight itself does **not** authorize GPU training.
 
