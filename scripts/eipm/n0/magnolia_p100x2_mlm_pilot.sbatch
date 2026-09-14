@@ -32,15 +32,27 @@ export N0_MIXED_PRECISION="${N0_MIXED_PRECISION:-fp16}"
 mkdir -p "$ALICE_N0_WORKDIR"
 
 {
-  echo "===== MAGNOLIA P100X2 N0 MLM PILOT ====="
+  echo "===== MAGNOLIA P100X2 N0 MLM — FIRST DURABLE TRAINING SEGMENT ====="
   date -Is
+  echo "lineage=real_public_n0"
+  echo "qualification_only=false"
+  echo "purpose=durable_semantic_backbone_training"
+  echo "resume_policy=continue_from_checkpoint_do_not_restart"
   echo "job_id=${SLURM_JOB_ID:-unknown}"
   echo "job_name=${SLURM_JOB_NAME:-unknown}"
   echo "node=${SLURMD_NODENAME:-$(hostname)}"
   echo "repo_root=$ROOT"
   echo "workdir=$ALICE_N0_WORKDIR"
+  echo "checkpoint_dir=$ALICE_N0_WORKDIR/checkpoints"
   echo "container=${RAYAN_N0_CONTAINER:-rayan-n0-base}"
   echo "cuda_visible_devices=${CUDA_VISIBLE_DEVICES:-unset}"
+  echo "sequence_length=$N0_SEQUENCE_LENGTH"
+  echo "micro_batch_size=$N0_MICRO_BATCH_SIZE"
+  echo "grad_accum=$N0_GRAD_ACCUM"
+  echo "max_steps=$N0_MAX_STEPS"
+  echo "warmup_steps=$N0_WARMUP_STEPS"
+  echo "save_every=$N0_SAVE_EVERY"
+  echo "mixed_precision=$N0_MIXED_PRECISION"
   nvidia-smi || true
   df -h "$ALICE_N0_WORKDIR" || true
 } | tee "$ALICE_N0_WORKDIR/p100x2-pilot-${SLURM_JOB_ID}.environment.txt"
@@ -48,5 +60,5 @@ mkdir -p "$ALICE_N0_WORKDIR"
 bash "$ROOT/scripts/eipm/n0/magnolia_udocker_exec.sh" \
   "$ROOT/scripts/eipm/n0/train_mlm_p100x2.sh"
 
-echo "===== MAGNOLIA P100X2 N0 MLM PILOT COMPLETE ====="
+echo "===== FIRST DURABLE PUBLIC N0 MLM SEGMENT COMPLETE ====="
 date -Is
