@@ -1,0 +1,21 @@
+{
+  "schema": "alice.eipm.n0.curriculum-origin.v0.2",
+  "artifact": "training/eipm/n0/sol_curriculum_coverage_v0.2.jsonl",
+  "training_authorized": true,
+  "private_identity_data": false,
+  "origin_type": "owner_authorized_service_teacher",
+  "actor": "sol",
+  "actor_instance": "GPT-5.6 Sol",
+  "created_on": "2026-09-14",
+  "owner_authorization_asserted": true,
+  "owner_authorization_recorded_on": "2026-09-14",
+  "authorization_scope": "A.L.I.C.E. and Fable model-development curriculum and builder-process capture as explicitly directed by the owner",
+  "provenance_or_authorization": "Owner explicitly directs Sol to continue teaching the A.L.I.C.E. personality-model foundation. This shard contains only generic semantic, pragmatic, social, epistemic, ranking, and structured-alignment teaching examples; it contains no private Elaina identity data.",
+  "permanent_weight_use_allowed": true,
+  "fbm_process_capture_allowed": true,
+  "curriculum_git_blob_sha1": "3fe5da5d31c31e84cc66e88221f5178cb1d9efb3",
+  "row_count": 26,
+  "purpose": "complete missing train/dev competency coverage in the original 60-row Sol N0 seed without replacing or mutating that seed",
+  "quality_gate": "normal N0 semantic/provenance/held-out/regression checks; failure-driven expansion after observed model evidence",
+  "private_identity_gradient_authorized": false
+}
