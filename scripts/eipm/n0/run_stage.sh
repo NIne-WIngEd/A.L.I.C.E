@@ -234,6 +234,7 @@ EOF
       --batch-size "${N0_MLM_EVAL_BATCH_SIZE:-4}" \
       --max-batches "${N0_MLM_EVAL_MAX_BATCHES:-256}" \
       --seed "${N0_MLM_EVAL_SEED:-424242}" \
+      --mask-repeats "${N0_MLM_EVAL_MASK_REPEATS:-8}" \
       --device "${N0_MLM_EVAL_DEVICE:-auto}" \
       --output "$EVAL_DIR/mlm-dev-$(basename "$STEP_DIR").json"
     ;;
