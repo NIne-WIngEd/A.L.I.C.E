@@ -75,6 +75,9 @@ echo "mixed_precision=${N0_MIXED_PRECISION:-fp16}"
 accelerate launch \
   --multi_gpu \
   --num_processes 2 \
+  --num_machines 1 \
+  --mixed_precision "${N0_MIXED_PRECISION:-fp16}" \
+  --dynamo_backend no \
   --main_process_port "$PORT" \
   "$ROOT/scripts/eipm/n0/train_mlm.py" \
   --config "$CONFIG" \
