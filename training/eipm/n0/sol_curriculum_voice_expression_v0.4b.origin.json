@@ -1,0 +1,23 @@
+{
+  "schema": "alice.eipm.n0.curriculum-origin.v0.3",
+  "artifact": "training/eipm/n0/sol_curriculum_voice_expression_v0.4b.jsonl",
+  "training_authorized": true,
+  "private_identity_data": false,
+  "origin_type": "owner_authorized_service_teacher",
+  "actor": "sol",
+  "actor_instance": "GPT-5.6 Sol",
+  "created_on": "2026-09-14",
+  "owner_authorization_asserted": true,
+  "owner_authorization_recorded_on": "2026-09-14",
+  "authorization_scope": "Public N0 voice-expression and prosody foundation teaching for A.L.I.C.E.; no Elaina-specific or private identity gradient",
+  "provenance_or_authorization": "Owner explicitly stated that A.L.I.C.E. will be used mostly through voice and that the personality model must control tone and emotion efficiently. This shard teaches generic public spoken-expression operations needed before later Elaina-derived voice behavior is introduced under the private identity boundary.",
+  "permanent_weight_use_allowed": true,
+  "fbm_process_capture_allowed": true,
+  "curriculum_git_blob_sha1": "8763d2f09d4861f779b2827973eae9d7639423a2",
+  "row_count": 40,
+  "split_counts": {"train": 32, "dev": 8, "test": 0},
+  "principle_tag_required": true,
+  "targeted_competencies": ["VOICE-01","VOICE-02","VOICE-03","VOICE-04","VOICE-05","VOICE-06","VOICE-07","VOICE-08"],
+  "purpose": "Voice-first N0 foundation: five independent scenarios per spoken-expression competency so later Elaina-derived identity learning can control emotional and prosodic delivery rather than only lexical choice.",
+  "private_identity_gradient_authorized": false
+}
