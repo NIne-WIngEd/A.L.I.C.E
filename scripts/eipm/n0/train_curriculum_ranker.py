@@ -90,8 +90,8 @@ def main() -> None:
     parser.add_argument("--config", required=True)
     parser.add_argument("--tokenizer-dir", required=True)
     parser.add_argument("--mlm-checkpoint", required=True, help="Directory containing the N0 MLM model")
-    parser.add_argument("--curriculum", required=True)
-    parser.add_argument("--curriculum-manifest", required=True)
+    parser.add_argument("--curriculum", action="append", required=True)
+    parser.add_argument("--curriculum-manifest", action="append", required=True)
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--max-length", type=int, default=512)
     parser.add_argument("--batch-size", type=int, default=4)
@@ -107,8 +107,24 @@ def main() -> None:
     except ImportError as exc:
         raise SystemExit("Install requirements-n0.txt before curriculum training") from exc
 
-    curriculum_manifest = validate_curriculum_manifest(args.curriculum, args.curriculum_manifest)
-    curriculum_summary = validate_curriculum_rows(args.curriculum)
+    if len(args.curriculum) != len(args.curriculum_manifest):
+        raise SystemExit("repeat --curriculum and --curriculum-manifest the same number of times")
+
+    curriculum_entries: list[dict[str, object]] = []
+    for curriculum_path, manifest_path in zip(args.curriculum, args.curriculum_manifest):
+        manifest = validate_curriculum_manifest(curriculum_path, manifest_path)
+        summary = validate_curriculum_rows(curriculum_path)
+        curriculum_entries.append(
+            {
+                "path": curriculum_path,
+                "sha256": sha256_file(Path(curriculum_path)),
+                "manifest_path": manifest_path,
+                "manifest_sha256": sha256_file(Path(manifest_path)),
+                "origin_type": manifest["origin_type"],
+                "actor": manifest.get("actor"),
+                "summary": summary,
+            }
+        )
 
     random.seed(args.seed)
     torch.manual_seed(args.seed)
@@ -224,13 +240,7 @@ def main() -> None:
                     "best_dev_top1_accuracy": best_accuracy,
                     "best_dev_supported_set_separation_rate": best_separation,
                     "best_dev_metrics_file": "best_dev_metrics.json",
-                    "curriculum_sha256": sha256_file(Path(args.curriculum)),
-                    "curriculum_manifest_sha256": sha256_file(
-                        Path(args.curriculum_manifest)
-                    ),
-                    "curriculum_origin_type": curriculum_manifest["origin_type"],
-                    "curriculum_actor": curriculum_manifest.get("actor"),
-                    "curriculum_summary": curriculum_summary,
+                    "curricula": curriculum_entries,
                     "config_sha256": sha256_file(Path(args.config)),
                     "seed": args.seed,
                     "epochs_completed": epoch,
