@@ -1,0 +1,136 @@
+{
+  "schema_version": "0.2",
+  "model_id": "alice-n0-semantic-v0.2",
+  "status": "design_implemented_gpu_hold",
+  "supersedes_production_candidate": "alice-n0-semantic-v0.1",
+  "preserve_baseline_checkpoint": "alice-n0-semantic-v0.1@step-00001000",
+  "architecture": {
+    "family": "native_bidirectional_transformer_encoder",
+    "implementation_mechanics": "transformers.ModernBertForMaskedLM",
+    "third_party_weight_initialization": false,
+    "num_hidden_layers": 16,
+    "hidden_size": 640,
+    "num_attention_heads": 10,
+    "head_dim": 64,
+    "intermediate_size": 2560,
+    "activation": "geglu",
+    "normalization": "pre_norm",
+    "position_encoding": "rope",
+    "attention_pattern": {
+      "type": "alternating_local_global",
+      "local_window_tokens": 512,
+      "global_every_n_layers": 4
+    },
+    "max_train_sequence_length_initial": 4096,
+    "max_position_embeddings": 8192,
+    "long_context_continuation_target_if_needed": 8192,
+    "tie_input_output_embeddings": true,
+    "attention_dropout": 0.0,
+    "embedding_dropout": 0.0,
+    "mlp_dropout": 0.0,
+    "approx_parameter_count": 140000000,
+    "parameter_count_role": "compute_budget_reference_pending_exact_cpu_build",
+    "scale_policy": "increase_only_if_fixed_generalization_and_capacity_evidence_outweighs_more_data_or_better_objectives"
+  },
+  "tokenizer": {
+    "type": "byte_fallback_bpe",
+    "vocab_size": 48000,
+    "training_data_class": "approved_public_n0_v02_balanced_only",
+    "retrain_for_v02": true,
+    "private_identity_text_in_tokenizer_training": false,
+    "special_token_ids": {
+      "pad": 0,
+      "unk": 1,
+      "cls": 2,
+      "sep": 3,
+      "mask": 4
+    }
+  },
+  "training": {
+    "primary_objective": "multi_objective_native_semantic_representation_learning",
+    "sequence_lengths": [512, 1024, 2048, 4096],
+    "mlm_probability": 0.30,
+    "mean_mask_span": 3.0,
+    "max_mask_span": 10,
+    "objectives": {
+      "span_mlm": {
+        "enabled": true,
+        "role": "broad_language_and_context_modeling",
+        "base_weight": 0.70
+      },
+      "candidate_preference": {
+        "enabled": true,
+        "role": "compare_plausible_interpretations_and_responses",
+        "base_weight": 0.10,
+        "teacher_rows_must_be_governed": true
+      },
+      "principle_rationale_alignment": {
+        "enabled": true,
+        "role": "teach_why_supported_behavior_or_interpretation_is_preferred",
+        "base_weight": 0.10,
+        "rationale_text_must_supply_gradient": true
+      },
+      "semantic_contrastive": {
+        "enabled": true,
+        "role": "shape_paraphrase_and_semantic_equivalence_geometry",
+        "base_weight": 0.10,
+        "temperature": 0.05
+      },
+      "replaced_token_detection": {
+        "enabled": false,
+        "role": "future_sample_efficiency_ablation",
+        "activation_rule": "activate_only_if_measured_gpu_hour_efficiency_beats_current_objective_mix"
+      }
+    },
+    "curriculum_policy": {
+      "public_semantic_teacher": "sol_primary_with_optional_specialist_support",
+      "teacher_rows_are_not_identity_rows": true,
+      "rationale_is_training_signal": true,
+      "do_not_repeat_tiny_teacher_set_indefinitely": true,
+      "principle_rows_minimum_before_full_multitask_training": 1000,
+      "principle_rows_target_before_n0_readiness": 2500
+    },
+    "fixed_total_token_budget": null,
+    "stop_rule": "continue_while_fixed_heldout_capability_gain_per_gpu_hour_materially_justifies_compute",
+    "checkpoint_policy": "resumable_hashed_lineage",
+    "initial_precision": "fp16_on_p100",
+    "gradient_checkpointing": true
+  },
+  "data": {
+    "mixture_plan": "configs/eipm/n0/public_corpus_v0.2.plan.json",
+    "use_only_training_allowed_sources": true,
+    "row_level_license_required": true,
+    "row_level_provenance_required": true,
+    "private_identity_data_stage": "N1_or_later",
+    "source_token_share_ceiling": 0.125
+  },
+  "evaluation": {
+    "fixed_suite": "evaluation/eipm/n0/n0_v02_fixed_readiness_base_v0.1.jsonl",
+    "fixed_suite_compiler": "scripts/eipm/n0/compile_n0_v02_fixed_eval.py",
+    "candidate_order_invariance_required": true,
+    "paraphrase_invariance_required": true,
+    "held_out_regression_required": true,
+    "multiturn_context_required_before_n1": true,
+    "direct_sol_evaluation": true,
+    "owner_review": true,
+    "external_judge_committee_required": false,
+    "failure_driven_repair": true,
+    "promotion_forbidden_on_training_loss_only": true
+  },
+  "compute": {
+    "primary_accelerator": "2x_Tesla_P100_PCIE_12GB",
+    "remote_compute_role": "durable_weight_updates_and_material_evaluation_only",
+    "gpu_hold_until_cpu_preflight_passes": true,
+    "first_gpu_segment_rule": "bounded_segment_with_pre_and_post_fixed_eval",
+    "decision_metric": "fixed_generalization_delta_per_gpu_hour",
+    "raw_mlm_loss_is_not_a_promotion_metric": true
+  },
+  "governance": {
+    "owner_private_gradient_authorization_required": true,
+    "private_identity_gradient": false,
+    "preserve_source_provenance": true,
+    "preserve_private_public_boundary": true,
+    "parallel_fbm_process_capture": true,
+    "v01_pathfinder_weights_must_not_initialize_v02": true
+  }
+}
