@@ -10,7 +10,7 @@ from pathlib import Path
 
 from alice_personality.n0.config import load_n0_config
 from alice_personality.n0.curriculum import validate_curriculum_manifest, validate_curriculum_rows
-from alice_personality.n0.model import build_masked_lm, count_parameters
+from alice_personality.n0.v02_model import AliceN0V02Model
 from alice_personality.n0.v02_objectives import validate_teacher_row_for_v02
 
 
@@ -59,6 +59,9 @@ def main() -> None:
         raise SystemExit("fixed N0 v0.2 base suite must contain exactly one base for all 43 competencies")
     if any(row.get("training_authorized") is not False for row in benchmark_rows):
         raise SystemExit("fixed readiness benchmark must never authorize training")
+    expected_compiled_rows = sum(
+        2 * min(3, len(row["candidates"])) for row in benchmark_rows
+    )
 
     curricula = [
         (
@@ -100,14 +103,20 @@ def main() -> None:
             check=True,
         )
         compiled_receipt = json.loads(receipt.read_text(encoding="utf-8"))
-        if int(compiled_receipt["compiled_rows"]) != 258:
-            raise SystemExit("fixed suite should compile to 258 invariance-scored rows")
+        if int(compiled_receipt["compiled_rows"]) != expected_compiled_rows:
+            raise SystemExit(
+                "fixed suite compiled-row count does not match deterministic invariance expansion"
+            )
 
     model_parameters = None
     trainable_parameters = None
+    auxiliary_head_parameters = None
     if not args.skip_model_build:
-        model = build_masked_lm(config)
-        model_parameters, trainable_parameters = count_parameters(model)
+        model = AliceN0V02Model(config)
+        report = model.parameter_report()
+        model_parameters = int(report["total_parameters"])
+        trainable_parameters = int(report["trainable_parameters"])
+        auxiliary_head_parameters = int(report["auxiliary_head_parameters"])
         if not 110_000_000 <= model_parameters <= 180_000_000:
             raise SystemExit(
                 f"exact N0 v0.2 parameter count {model_parameters} outside approved 110M-180M range"
@@ -118,12 +127,13 @@ def main() -> None:
         "model_id": config.model_id,
         "exact_parameters": model_parameters,
         "trainable_parameters": trainable_parameters,
+        "auxiliary_head_parameters": auxiliary_head_parameters,
         "planned_parameter_reference": config.planned_parameter_count,
         "mlm_probability": config.mlm_probability,
         "teacher_rows_available_now": teacher_rows,
         "teacher_rows_minimum_for_full_multitask": raw_config["training"]["curriculum_policy"]["principle_rows_minimum_before_full_multitask_training"],
         "fixed_base_rows": len(benchmark_rows),
-        "fixed_compiled_rows": 258,
+        "fixed_compiled_rows": expected_compiled_rows,
         "corpus_plan_status": mixture["status"],
         "corpus_source_count": sum(len(group["sources"]) for group in mixture["mixture"]),
         "private_identity_gradient": False,
