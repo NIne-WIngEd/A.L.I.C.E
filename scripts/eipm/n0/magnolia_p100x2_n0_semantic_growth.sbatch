@@ -13,6 +13,15 @@
 
 set -euo pipefail
 
+# Frontier audit 2026-09-14: N0 v0.1 is preserved as a pathfinder baseline,
+# not the production route. Refuse accidental GPU spend unless the owner
+# deliberately overrides this hold for a controlled retrospective ablation.
+if [[ "${ALLOW_N0_V01_SEMANTIC_GROWTH:-0}" != "1" ]]; then
+  echo "N0 v0.1 semantic-growth job is on hold by N0_FRONTIER_RESEARCH_AUDIT_20260914.md." >&2
+  echo "Production work moved to N0 v0.2. Set ALLOW_N0_V01_SEMANTIC_GROWTH=1 only for an explicit controlled ablation." >&2
+  exit 3
+fi
+
 ROOT="${SLURM_SUBMIT_DIR:-$PWD}"
 if [[ ! -f "$ROOT/scripts/eipm/n0/grow_n0_semantic_p100x2_segment.sh" ]]; then
   echo "Submit this job from the repository root." >&2
@@ -35,7 +44,7 @@ export N0_MIXED_PRECISION="${N0_MIXED_PRECISION:-fp16}"
 mkdir -p "$ALICE_N0_WORKDIR"
 
 {
-  echo "===== MAGNOLIA P100X2 N0 SEMANTIC GROWTH ====="
+  echo "===== MAGNOLIA P100X2 N0 V0.1 SEMANTIC GROWTH — OVERRIDE ABLATION ====="
   date -Is
   echo "job_id=${SLURM_JOB_ID:-unknown}"
   echo "node=${SLURMD_NODENAME:-$(hostname)}"
@@ -47,7 +56,7 @@ mkdir -p "$ALICE_N0_WORKDIR"
   echo "save_every=$N0_SAVE_EVERY"
   echo "sequence_length=$N0_SEQUENCE_LENGTH"
   echo "private_identity_gradient=false"
-  echo "purpose=public_semantic_representation_growth_then_fixed_readiness_probe"
+  echo "purpose=controlled_v01_retrospective_ablation_only"
   nvidia-smi || true
   df -h "$ALICE_N0_WORKDIR" || true
 } | tee "$ALICE_N0_WORKDIR/p100x2-sem-grow-${SLURM_JOB_ID}.environment.txt"
@@ -55,5 +64,5 @@ mkdir -p "$ALICE_N0_WORKDIR"
 bash "$ROOT/scripts/eipm/n0/magnolia_udocker_exec.sh" \
   "$ROOT/scripts/eipm/n0/grow_n0_semantic_p100x2_segment.sh"
 
-echo "===== MAGNOLIA P100X2 N0 SEMANTIC GROWTH COMPLETE ====="
+echo "===== MAGNOLIA P100X2 N0 V0.1 SEMANTIC GROWTH OVERRIDE COMPLETE ====="
 date -Is
