@@ -15,6 +15,10 @@ from alice_personality.n0.config import load_n0_config
 from alice_personality.n0.corpus_receipt import verify_corpus_receipt
 from alice_personality.n0.data import PackedJSONLIterableDataset, SpanMLMCollator
 from alice_personality.n0.model import build_masked_lm, count_parameters
+from alice_personality.n0.training_schedule import (
+    accelerated_scheduler_steps,
+    validate_scheduler_horizon,
+)
 
 
 def sha256_file(path: str | Path) -> str:
@@ -75,6 +79,16 @@ def main() -> None:
     parser.add_argument("--grad-accum", type=int, default=16)
     parser.add_argument("--max-steps", type=int, default=10_000)
     parser.add_argument("--warmup-steps", type=int, default=500)
+    parser.add_argument(
+        "--scheduler-total-steps",
+        type=int,
+        default=None,
+        help=(
+            "Global optimizer-step horizon for the LR schedule. This is independent of "
+            "the current segment's --max-steps so checkpointed training can continue "
+            "without redefining the schedule at every short run. Defaults to --max-steps."
+        ),
+    )
     parser.add_argument("--learning-rate", type=float, default=3e-4)
     parser.add_argument("--weight-decay", type=float, default=0.1)
     parser.add_argument("--save-every", type=int, default=1000)
@@ -93,6 +107,16 @@ def main() -> None:
         from transformers import PreTrainedTokenizerFast, get_cosine_schedule_with_warmup
     except ImportError as exc:
         raise SystemExit("Install requirements-n0.txt before N0 training") from exc
+
+    scheduler_total_steps = args.scheduler_total_steps or args.max_steps
+    try:
+        validate_scheduler_horizon(
+            max_steps=args.max_steps,
+            warmup_steps=args.warmup_steps,
+            scheduler_total_steps=scheduler_total_steps,
+        )
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
 
     config_path = Path(args.config)
     tokenizer_path = Path(args.tokenizer)
@@ -188,20 +212,52 @@ def main() -> None:
         betas=(0.9, 0.95),
         eps=1e-8,
     )
+
+    # Accelerate's scheduler wrapper advances the wrapped scheduler once per
+    # process when split_batches=False. N0 expresses LR horizons in *global*
+    # optimizer updates, so translate them to the scheduler's internal step
+    # count before prepare(). This keeps 2xP100 DDP from consuming the cosine
+    # schedule twice as fast as intended.
+    scheduler_warmup_steps_internal = accelerated_scheduler_steps(
+        args.warmup_steps,
+        num_processes=accelerator.num_processes,
+        split_batches=accelerator.split_batches,
+    )
+    scheduler_total_steps_internal = accelerated_scheduler_steps(
+        scheduler_total_steps,
+        num_processes=accelerator.num_processes,
+        split_batches=accelerator.split_batches,
+    )
     scheduler = get_cosine_schedule_with_warmup(
         optimizer,
-        num_warmup_steps=args.warmup_steps,
-        num_training_steps=args.max_steps,
+        num_warmup_steps=scheduler_warmup_steps_internal,
+        num_training_steps=scheduler_total_steps_internal,
     )
     model, optimizer, dataloader, scheduler = accelerator.prepare(
         model, optimizer, dataloader, scheduler
     )
+
+    if accelerator.is_main_process:
+        print(
+            json.dumps(
+                {
+                    "scheduler_total_steps_global": scheduler_total_steps,
+                    "scheduler_total_steps_internal": scheduler_total_steps_internal,
+                    "scheduler_warmup_steps_global": args.warmup_steps,
+                    "scheduler_warmup_steps_internal": scheduler_warmup_steps_internal,
+                    "scheduler_num_processes": accelerator.num_processes,
+                    "scheduler_split_batches": accelerator.split_batches,
+                },
+                sort_keys=True,
+            )
+        )
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     step = 0
     previous_global_tokens = 0
     resume_parent = None
+    legacy_scheduler_rebase = False
     if args.resume_from:
         resume_dir = Path(args.resume_from)
         receipt_path = resume_dir / "receipt.json"
@@ -220,9 +276,23 @@ def main() -> None:
             previous.get("tokens_seen_total", previous.get("tokens_seen_since_launch", 0))
         )
         resume_parent = str(resume_dir)
+        legacy_scheduler_rebase = (
+            previous.get("scheduler_total_steps_global") is None
+            and accelerator.num_processes > 1
+            and not accelerator.split_batches
+        )
         accelerator.load_state(str(state_dir))
         if accelerator.is_main_process:
-            print(json.dumps({"resume_from": resume_parent, "resume_step": step}))
+            print(
+                json.dumps(
+                    {
+                        "resume_from": resume_parent,
+                        "resume_step": step,
+                        "legacy_scheduler_rebase": legacy_scheduler_rebase,
+                    },
+                    sort_keys=True,
+                )
+            )
 
     if step >= args.max_steps:
         if accelerator.is_main_process:
@@ -286,7 +356,7 @@ def main() -> None:
                         unwrapped.save_pretrained(model_dir, safe_serialization=True)
                         tokenizer.save_pretrained(tokenizer_dir)
                         receipt = {
-                            "schema": "alice.eipm.n0.mlm-checkpoint-receipt.v0.2",
+                            "schema": "alice.eipm.n0.mlm-checkpoint-receipt.v0.3",
                             "model_id": config.model_id,
                             "step": step,
                             "sequence_length": args.sequence_length,
@@ -313,6 +383,13 @@ def main() -> None:
                             "world_size": accelerator.num_processes,
                             "mixed_precision": mixed_precision,
                             "gradient_checkpointing": not args.no_gradient_checkpointing,
+                            "scheduler_total_steps_global": scheduler_total_steps,
+                            "scheduler_total_steps_internal": scheduler_total_steps_internal,
+                            "scheduler_warmup_steps_global": args.warmup_steps,
+                            "scheduler_warmup_steps_internal": scheduler_warmup_steps_internal,
+                            "scheduler_split_batches": accelerator.split_batches,
+                            "scheduler_num_processes": accelerator.num_processes,
+                            "legacy_scheduler_rebase": legacy_scheduler_rebase,
                             "git_revision": code_revision,
                             "resume_parent": resume_parent,
                             "model_artifact_sha256": directory_hashes(model_dir),
