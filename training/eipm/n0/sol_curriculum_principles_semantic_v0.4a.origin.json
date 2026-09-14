@@ -1,0 +1,23 @@
+{
+  "schema": "alice.eipm.n0.curriculum-origin.v0.3",
+  "artifact": "training/eipm/n0/sol_curriculum_principles_semantic_v0.4a.jsonl",
+  "training_authorized": true,
+  "private_identity_data": false,
+  "origin_type": "owner_authorized_service_teacher",
+  "actor": "sol",
+  "actor_instance": "GPT-5.6 Sol",
+  "created_on": "2026-09-14",
+  "owner_authorization_asserted": true,
+  "owner_authorization_recorded_on": "2026-09-14",
+  "authorization_scope": "Public N0 semantic/pragmatic/judgment foundation teaching for A.L.I.C.E.; no Elaina-specific or private identity gradient",
+  "provenance_or_authorization": "Owner directed Sol to continue teaching A.L.I.C.E. efficiently under the N0 v0.2 frontier-research plan. This shard contains independently authored public semantic, causal, and temporal principle examples. It does not contain private identity material.",
+  "permanent_weight_use_allowed": true,
+  "fbm_process_capture_allowed": true,
+  "curriculum_git_blob_sha1": "2088d49e2da0ceeee68901b811020b162084e005",
+  "row_count": 55,
+  "split_counts": {"train": 44, "dev": 11, "test": 0},
+  "principle_tag_required": true,
+  "targeted_competencies": ["SEM-01","SEM-02","SEM-03","SEM-04","SEM-05","SEM-06","SEM-07","CAUS-01","CAUS-02","CAUS-03","TEMP-01"],
+  "purpose": "First N0 v0.2 principle-bank expansion: five independent scenarios per targeted competency, with rationale text as gradient-bearing supervision and reusable principle tags.",
+  "private_identity_gradient_authorized": false
+}
