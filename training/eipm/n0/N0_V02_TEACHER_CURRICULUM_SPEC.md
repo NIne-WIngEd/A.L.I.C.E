@@ -24,9 +24,10 @@ Every trainable row must contain:
 - a concise `rationale` explaining the governing principle;
 - governed `source` / origin metadata.
 
-Rows may optionally include:
+Existing v0.1/v0.2/v0.3 seed rows remain admissible without a `principle_tag` when they otherwise satisfy the rationale contract. **Every newly authored v0.4+ row must also include a stable `principle_tag`.** The tag names the reusable semantic rule being taught, for example `preserve_uncertainty`, `respect_information_state`, `relation_direction`, `do_not_invent_missing_fields`, or `avoid_denial_of_antecedent`.
 
-- `principle_tag` for a reusable rule such as `preserve_uncertainty`, `respect_information_state`, or `do_not_invent_missing_fields`;
+Rows may additionally include:
+
 - `difficulty`;
 - `hard_negative_type`;
 - `invariance_group`;
@@ -45,6 +46,8 @@ Rows may optionally include:
 8. Social/emotional cases must avoid stereotypes and unsupported mind-reading.
 9. Epistemic cases must distinguish direct evidence, inference, uncertainty, hypothetical/counterfactual provenance, and out-of-distribution inputs.
 10. Structured-alignment cases must preserve relation direction, evidence linkage, unknown fields, and update/conflict semantics.
+11. Principle tags must be reused across genuinely different scenarios that instantiate the same rule; they must not become one unique tag per row.
+12. Contrastive batches should treat examples with the same principle tag as multiple positives rather than accidental negatives.
 
 ## Scale policy
 
@@ -68,7 +71,10 @@ For one teacher row:
 
 - candidate preference loss trains which candidate set is supported;
 - candidate/rationale compatibility trains whether a candidate is consistent with the governing reason;
-- semantic/rationale contrastive loss pulls the supported semantic representation toward its governing rationale and away from unrelated rationales.
+- semantic/rationale contrastive loss pulls supported semantic representations toward governing principles and away from unrelated principles;
+- examples sharing a `principle_tag` are multi-positive peers for contrastive learning rather than false negatives.
+
+Contrastive learning should use **preferred/supported candidates** as the positive semantic side. Unsupported candidates remain valuable hard negatives for candidate preference and rationale-compatibility objectives, but they must not be treated as positive semantic/rationale pairs.
 
 The implementation lives in:
 
