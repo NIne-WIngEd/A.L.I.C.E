@@ -26,6 +26,44 @@ export N0_MLM_EVAL_SEED="${N0_MLM_EVAL_SEED:-424242}"
 
 export PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}"
 
+echo "===== FAIL-FAST TEACHING CODE CHECK ====="
+python -m py_compile \
+  "$ROOT/src/alice_personality/n0/training_schedule.py" \
+  "$ROOT/src/alice_personality/n0/curriculum.py" \
+  "$ROOT/src/alice_personality/n0/curriculum_data.py" \
+  "$ROOT/scripts/eipm/n0/train_mlm.py" \
+  "$ROOT/scripts/eipm/n0/evaluate_mlm.py" \
+  "$ROOT/scripts/eipm/n0/train_curriculum_ranker.py" \
+  "$ROOT/scripts/eipm/n0/evaluate_curriculum_ranker.py"
+
+python - "$ROOT" <<'PY'
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+from alice_personality.n0.training_schedule import accelerated_scheduler_steps
+from alice_personality.n0.curriculum import validate_curriculum_manifest, validate_curriculum_rows
+from alice_personality.n0.curriculum_data import CurriculumDataset
+
+assert accelerated_scheduler_steps(200, num_processes=2, split_batches=False) == 400
+assert accelerated_scheduler_steps(20, num_processes=2, split_batches=False) == 40
+
+seed = root / "training/eipm/n0/sol_curriculum_seed_v0.1.jsonl"
+seed_manifest = root / "training/eipm/n0/sol_curriculum_seed_v0.1.origin.json"
+coverage = root / "training/eipm/n0/sol_curriculum_coverage_v0.2.jsonl"
+coverage_manifest = root / "training/eipm/n0/sol_curriculum_coverage_v0.2.origin.json"
+
+assert validate_curriculum_rows(seed)["row_count"] == 60
+assert validate_curriculum_rows(coverage)["row_count"] == 26
+validate_curriculum_manifest(seed, seed_manifest)
+validate_curriculum_manifest(coverage, coverage_manifest)
+train = CurriculumDataset([seed, coverage], "train")
+dev = CurriculumDataset([seed, coverage], "dev")
+assert train.rows and dev.rows
+assert len({str(row["id"]) for row in train.rows + dev.rows}) == len(train) + len(dev)
+print("teaching_code_preflight=PASS")
+PY
+
 if [[ ! -f "$PARENT/receipt.json" || ! -d "$PARENT/model" || ! -d "$PARENT/accelerator_state" ]]; then
   echo "Parent checkpoint is incomplete: $PARENT" >&2
   exit 2
