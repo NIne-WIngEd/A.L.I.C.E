@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
@@ -9,15 +10,30 @@ from torch.utils.data import Dataset
 
 
 class CurriculumDataset(Dataset):
-    def __init__(self, path: str | Path, split: str) -> None:
+    def __init__(self, paths: str | Path | Sequence[str | Path], split: str) -> None:
+        if isinstance(paths, (str, Path)):
+            path_list = [Path(paths)]
+        else:
+            path_list = [Path(path) for path in paths]
+        if not path_list:
+            raise ValueError("at least one curriculum path is required")
+
         self.rows: list[dict[str, Any]] = []
-        with Path(path).open("r", encoding="utf-8") as handle:
-            for line in handle:
-                if not line.strip():
-                    continue
-                row = json.loads(line)
-                if row.get("split", "train") == split:
-                    self.rows.append(row)
+        seen_ids: set[str] = set()
+        for path in path_list:
+            with path.open("r", encoding="utf-8") as handle:
+                for line in handle:
+                    if not line.strip():
+                        continue
+                    row = json.loads(line)
+                    row_id = str(row.get("id", "")).strip()
+                    if not row_id:
+                        raise ValueError(f"curriculum row in {path} is missing id")
+                    if row_id in seen_ids:
+                        raise ValueError(f"duplicate curriculum id across shards: {row_id}")
+                    seen_ids.add(row_id)
+                    if row.get("split", "train") == split:
+                        self.rows.append(row)
         if not self.rows:
             raise ValueError(f"no curriculum rows found for split={split}")
 
