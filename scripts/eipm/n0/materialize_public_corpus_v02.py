@@ -29,8 +29,8 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def stable_split(text_sha256: str) -> str:
-    bucket = int(text_sha256[:8], 16) % 10_000
+def stable_split(document_sha256: str) -> str:
+    bucket = int(document_sha256[:8], 16) % 10_000
     if bucket < 10:
         return "test"
     if bucket < 20:
@@ -47,8 +47,53 @@ def nested_get(row: dict[str, Any], dotted: str) -> Any:
     return current
 
 
-def partition_match(text_sha256: str, index: int, count: int) -> bool:
-    return int(text_sha256[8:24], 16) % count == index
+def partition_match(document_sha256: str, index: int, count: int) -> bool:
+    return int(document_sha256[8:24], 16) % count == index
+
+
+def chunk_text(text: str, max_chars: int, min_chars: int) -> Iterator[str]:
+    """Deterministically split very large source records without crossing document lineage.
+
+    Common Pile book/government rows can contain entire books or reports. Treating one
+    huge row as one sampling unit caused a single document to overshoot a source budget
+    by more than 100%. Chunks stay within the same document split/partition and are cut
+    at whitespace when practical.
+    """
+    if max_chars < min_chars:
+        raise ValueError("max_chars must be >= min_chars")
+    start = 0
+    n = len(text)
+    while start < n:
+        end = min(n, start + max_chars)
+        if end < n:
+            window = text[start:end]
+            # Prefer a paragraph/newline boundary, then ordinary whitespace, but do
+            # not create a tiny chunk merely to hit a boundary.
+            floor = max(min_chars, max_chars // 2)
+            cut = window.rfind("\n", floor)
+            if cut < floor:
+                cut = window.rfind(" ", floor)
+            if cut >= floor:
+                end = start + cut
+        piece = text[start:end].strip()
+        if len(piece) >= min_chars:
+            yield piece
+        start = max(end, start + 1)
+
+
+def trim_to_budget(text: str, remaining: int, min_chars: int) -> str:
+    if len(text) <= remaining:
+        return text
+    if remaining < min_chars:
+        return ""
+    candidate = text[:remaining]
+    floor = max(min_chars, int(remaining * 0.75))
+    cut = candidate.rfind("\n", floor)
+    if cut < floor:
+        cut = candidate.rfind(" ", floor)
+    if cut >= floor:
+        candidate = candidate[:cut]
+    return candidate.strip()
 
 
 @dataclass
@@ -105,8 +150,11 @@ def load_source_rows(repo_id: str, revision: str, split: str) -> tuple[str, Iter
 def validate_manifest(config: dict[str, Any]) -> list[dict[str, Any]]:
     if config.get("status") != "activated_public_n0_v02":
         raise SystemExit("N0 v0.2 materialization requires the activated source manifest")
-    if config.get("global_requirements", {}).get("private_identity_data") is not False:
+    requirements = config.get("global_requirements", {})
+    if requirements.get("private_identity_data") is not False:
         raise SystemExit("activated N0 v0.2 manifest must declare private_identity_data=false")
+    if requirements.get("private_identity_gradient") is not False:
+        raise SystemExit("activated N0 v0.2 manifest must declare private_identity_gradient=false")
 
     sources = config.get("sources")
     if not isinstance(sources, list) or not sources:
@@ -148,6 +196,7 @@ def main() -> None:
     parser.add_argument("--minimum-fill-ratio", type=float, default=0.95)
     parser.add_argument("--shard-mb", type=int, default=128)
     parser.add_argument("--min-chars", type=int, default=80)
+    parser.add_argument("--max-document-chunk-chars", type=int, default=16_000)
     args = parser.parse_args()
 
     if args.target_total_chars < 1:
@@ -156,6 +205,8 @@ def main() -> None:
         raise SystemExit("invalid deterministic partition index/count")
     if not 0.0 < args.minimum_fill_ratio <= 1.0:
         raise SystemExit("--minimum-fill-ratio must be in (0,1]")
+    if args.max_document_chunk_chars < args.min_chars:
+        raise SystemExit("--max-document-chunk-chars must be >= --min-chars")
 
     config_path = Path(args.source_config)
     config = json.loads(config_path.read_text(encoding="utf-8"))
@@ -169,22 +220,25 @@ def main() -> None:
     shard_dir.mkdir(parents=True, exist_ok=True)
 
     db = sqlite3.connect(output_dir / "exact_dedup.sqlite3")
-    db.execute("CREATE TABLE seen (text_sha256 TEXT PRIMARY KEY)")
+    db.execute("CREATE TABLE seen_documents (sha256 TEXT PRIMARY KEY)")
+    db.execute("CREATE TABLE seen_chunks (sha256 TEXT PRIMARY KEY)")
     db.commit()
 
     receipt: dict[str, Any] = {
-        "schema": "alice.eipm.n0.public-corpus-receipt.v0.2",
+        "schema": "alice.eipm.n0.public-corpus-receipt.v0.2.1",
         "source_config_sha256": sha256_file(config_path),
         "target_total_chars": args.target_total_chars,
         "partition_index": args.partition_index,
         "partition_count": args.partition_count,
         "minimum_fill_ratio": args.minimum_fill_ratio,
+        "max_document_chunk_chars": args.max_document_chunk_chars,
         "sources": [],
         "private_identity_data": False,
         "private_identity_gradient": False,
         "license_gate": "row_license_must_match_source_specific_allowlist",
         "exact_revision_required": True,
         "source_balanced": True,
+        "document_level_split_and_partition": True,
     }
 
     failures: list[str] = []
@@ -206,26 +260,25 @@ def main() -> None:
         char_budget = max(1, round(args.target_total_chars * target_share))
 
         resolved_revision, rows = load_source_rows(repo_id, revision, split)
-        writer = ShardWriter(
-            root=shard_dir,
-            source_id=source_id,
-            target_bytes=args.shard_mb * 1024 * 1024,
-        )
+        writer = ShardWriter(shard_dir, source_id, args.shard_mb * 1024 * 1024)
         counters = {
             "seen": 0,
+            "accepted_documents": 0,
             "accepted": 0,
             "short_or_empty": 0,
             "license_rejected": 0,
             "partition_rejected": 0,
-            "exact_duplicate": 0,
+            "exact_document_duplicate": 0,
+            "exact_chunk_duplicate": 0,
             "accepted_chars": 0,
         }
 
         try:
             for row in rows:
+                if counters["accepted_chars"] >= char_budget:
+                    break
                 counters["seen"] += 1
-                raw_text = nested_get(row, text_field)
-                text = normalize_text("" if raw_text is None else str(raw_text))
+                text = normalize_text(str(nested_get(row, text_field) or ""))
                 if len(text) < args.min_chars:
                     counters["short_or_empty"] += 1
                     continue
@@ -235,44 +288,63 @@ def main() -> None:
                     counters["license_rejected"] += 1
                     continue
 
-                digest = sha256_text(text)
-                if not partition_match(digest, args.partition_index, args.partition_count):
+                document_sha = sha256_text(text)
+                if not partition_match(document_sha, args.partition_index, args.partition_count):
                     counters["partition_rejected"] += 1
                     continue
-
-                inserted = db.execute(
-                    "INSERT OR IGNORE INTO seen(text_sha256) VALUES (?)", (digest,)
-                ).rowcount
-                if inserted == 0:
-                    counters["exact_duplicate"] += 1
+                if db.execute(
+                    "INSERT OR IGNORE INTO seen_documents(sha256) VALUES (?)", (document_sha,)
+                ).rowcount == 0:
+                    counters["exact_document_duplicate"] += 1
                     continue
 
-                output_row = {
-                    "text": text,
-                    "text_sha256": digest,
-                    "split": stable_split(digest),
-                    "source_id": source_id,
-                    "source_category": source["category"],
-                    "source_target_share": target_share,
-                    "source_repo": repo_id,
-                    "source_revision": resolved_revision,
-                    "source_record_id": str(nested_get(row, id_field) or ""),
-                    "source_provenance": nested_get(row, provenance_field),
-                    "source_url": nested_get(row, url_field),
-                    "license_expression": str(row_license),
-                }
-                writer.write(output_row)
-                counters["accepted"] += 1
-                counters["accepted_chars"] += len(text)
-                total_accepted_rows += 1
-                total_accepted_chars += len(text)
+                source_record_id = str(nested_get(row, id_field) or "")
+                document_split = stable_split(document_sha)
+                wrote_document = False
+                for chunk_index, raw_chunk in enumerate(
+                    chunk_text(text, args.max_document_chunk_chars, args.min_chars)
+                ):
+                    remaining = char_budget - counters["accepted_chars"]
+                    chunk = trim_to_budget(raw_chunk, remaining, args.min_chars)
+                    if not chunk:
+                        break
+                    chunk_sha = sha256_text(chunk)
+                    if db.execute(
+                        "INSERT OR IGNORE INTO seen_chunks(sha256) VALUES (?)", (chunk_sha,)
+                    ).rowcount == 0:
+                        counters["exact_chunk_duplicate"] += 1
+                        continue
 
-                if counters["accepted"] % 10_000 == 0:
+                    writer.write(
+                        {
+                            "text": chunk,
+                            "text_sha256": chunk_sha,
+                            "document_sha256": document_sha,
+                            "document_chunk_index": chunk_index,
+                            "split": document_split,
+                            "source_id": source_id,
+                            "source_category": source["category"],
+                            "source_target_share": target_share,
+                            "source_repo": repo_id,
+                            "source_revision": resolved_revision,
+                            "source_record_id": source_record_id,
+                            "source_provenance": nested_get(row, provenance_field),
+                            "source_url": nested_get(row, url_field),
+                            "license_expression": str(row_license),
+                        }
+                    )
+                    wrote_document = True
+                    counters["accepted"] += 1
+                    counters["accepted_chars"] += len(chunk)
+                    total_accepted_rows += 1
+                    total_accepted_chars += len(chunk)
+                    if counters["accepted_chars"] >= char_budget:
+                        break
+                if wrote_document:
+                    counters["accepted_documents"] += 1
+                if counters["accepted"] and counters["accepted"] % 10_000 == 0:
                     db.commit()
                     print(json.dumps({"source_id": source_id, **counters}, sort_keys=True))
-
-                if counters["accepted_chars"] >= char_budget:
-                    break
         finally:
             writer.close()
             db.commit()
@@ -318,23 +390,18 @@ def main() -> None:
 
     receipt_path = output_dir / "corpus_receipt.json"
     receipt_path.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(
-        json.dumps(
-            {
-                "status": receipt["status"],
-                "receipt": str(receipt_path),
-                "receipt_sha256": sha256_file(receipt_path),
-                "accepted_rows": total_accepted_rows,
-                "accepted_chars": total_accepted_chars,
-                "source_count": len(sources),
-                "partition_index": args.partition_index,
-                "partition_count": args.partition_count,
-                "private_identity_data": False,
-                "private_identity_gradient": False,
-            },
-            sort_keys=True,
-        )
-    )
+    print(json.dumps({
+        "status": receipt["status"],
+        "receipt": str(receipt_path),
+        "receipt_sha256": sha256_file(receipt_path),
+        "accepted_rows": total_accepted_rows,
+        "accepted_chars": total_accepted_chars,
+        "source_count": len(sources),
+        "partition_index": args.partition_index,
+        "partition_count": args.partition_count,
+        "private_identity_data": False,
+        "private_identity_gradient": False,
+    }, sort_keys=True))
     if failures:
         for failure in failures:
             print(f"FILL_FAILURE {failure}")
