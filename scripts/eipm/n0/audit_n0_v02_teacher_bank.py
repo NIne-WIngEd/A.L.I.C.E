@@ -31,8 +31,20 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
-def normalized_prompt(text: str) -> str:
+def normalized_text(text: str) -> str:
     return " ".join(text.lower().split())
+
+
+def item_fingerprint(prompt: str, candidates: list[Any]) -> str:
+    """Fingerprint the semantic item rather than a generic instruction stem.
+
+    Prompts such as "Which pair is closest in meaning?" are legitimate reusable
+    task instructions. Leakage/duplication requires the same normalized prompt
+    *and* the same candidate content. This preserves the frozen-eval boundary
+    without falsely rejecting independent examples that share a generic stem.
+    """
+    candidate_text = "\x1e".join(normalized_text(str(value)) for value in candidates)
+    return normalized_text(prompt) + "\x1f" + candidate_text
 
 
 def main() -> None:
@@ -61,7 +73,7 @@ def main() -> None:
 
     fixed_rows: list[dict[str, Any]] = []
     fixed_suite_reports: list[dict[str, Any]] = []
-    fixed_prompts: set[str] = set()
+    fixed_items: set[str] = set()
     expected_competencies: set[str] = set()
 
     for raw_path in fixed_specs:
@@ -74,9 +86,10 @@ def main() -> None:
         for row in rows:
             if row.get("eval_only") is not True or row.get("training_authorized") is not False:
                 raise SystemExit(f"fixed eval row is not eval-only: {row.get('id')} in {path}")
-            fixed_prompts.add(normalized_prompt(str(row.get("prompt", ""))))
+            candidates = list(row.get("candidates", []))
+            fixed_items.add(item_fingerprint(str(row.get("prompt", "")), candidates))
             if row.get("prompt_paraphrase"):
-                fixed_prompts.add(normalized_prompt(str(row["prompt_paraphrase"])))
+                fixed_items.add(item_fingerprint(str(row["prompt_paraphrase"]), candidates))
         expected_competencies.update(competencies)
         fixed_rows.extend(rows)
         fixed_suite_reports.append(
@@ -94,7 +107,7 @@ def main() -> None:
         )
 
     all_ids: set[str] = set()
-    all_prompts: set[str] = set()
+    all_items: set[str] = set()
     competency_split: dict[str, Counter[str]] = defaultdict(Counter)
     principle_counts: Counter[str] = Counter()
     preferred_position_counts: Counter[int] = Counter()
@@ -130,12 +143,12 @@ def main() -> None:
                 failures.append(f"cross-shard duplicate row id: {row_id}")
             all_ids.add(row_id)
 
-            prompt = normalized_prompt(str(row["prompt"]))
-            if prompt in all_prompts:
-                failures.append(f"cross-shard exact duplicate prompt: {row_id}")
-            all_prompts.add(prompt)
-            if prompt in fixed_prompts:
-                failures.append(f"teacher prompt copies frozen eval wording: {row_id}")
+            fingerprint = item_fingerprint(str(row["prompt"]), list(row["candidates"]))
+            if fingerprint in all_items:
+                failures.append(f"cross-shard exact duplicate semantic item: {row_id}")
+            all_items.add(fingerprint)
+            if fingerprint in fixed_items:
+                failures.append(f"teacher semantic item copies frozen eval content: {row_id}")
 
             competency = str(row["competency"])
             split = str(row["split"])
@@ -206,8 +219,6 @@ def main() -> None:
     if len(voice_competencies) != expected_voice:
         failures.append(f"voice competency count expected {expected_voice}, got {len(voice_competencies)}")
 
-    # Preserve the original 0.4a wave exactly: four train and one dev example
-    # for each of the 43 original competencies.
     if generation_rows["principle_bank_v04a"] != 215:
         failures.append(
             f"v0.4a should contain 215 rows, got {generation_rows['principle_bank_v04a']}"
@@ -219,8 +230,6 @@ def main() -> None:
                 f"v0.4a distribution mismatch for {competency}: train={counts['train']} dev={counts['dev']}"
             )
 
-    # Voice-first 0.4b adds four train and one independent dev example for each
-    # of the eight new public spoken-expression competencies.
     if generation_rows["voice_principle_bank_v04b"] != 40:
         failures.append(
             f"v0.4b voice wave should contain 40 rows, got {generation_rows['voice_principle_bank_v04b']}"
