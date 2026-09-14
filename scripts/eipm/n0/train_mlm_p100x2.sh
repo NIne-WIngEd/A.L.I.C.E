@@ -69,8 +69,11 @@ echo "sequence_length=${N0_SEQUENCE_LENGTH:-512}"
 echo "micro_batch_size=${N0_MICRO_BATCH_SIZE:-1}"
 echo "grad_accum=${N0_GRAD_ACCUM:-16}"
 echo "max_steps=${N0_MAX_STEPS:-200}"
+echo "scheduler_total_steps=${N0_SCHEDULER_TOTAL_STEPS:-10000}"
+echo "warmup_steps=${N0_WARMUP_STEPS:-20}"
 echo "save_every=${N0_SAVE_EVERY:-100}"
 echo "mixed_precision=${N0_MIXED_PRECISION:-fp16}"
+echo "resume_from=${N0_RESUME_FROM:-none}"
 
 accelerate launch \
   --multi_gpu \
@@ -92,6 +95,7 @@ accelerate launch \
   --grad-accum "${N0_GRAD_ACCUM:-16}" \
   --max-steps "${N0_MAX_STEPS:-200}" \
   --warmup-steps "${N0_WARMUP_STEPS:-20}" \
+  --scheduler-total-steps "${N0_SCHEDULER_TOTAL_STEPS:-10000}" \
   --save-every "${N0_SAVE_EVERY:-100}" \
   --learning-rate "${N0_LEARNING_RATE:-3e-4}" \
   --mixed-precision "${N0_MIXED_PRECISION:-fp16}" \
