@@ -32,38 +32,61 @@ public semantic corpus
 
 ## Parameter scale correction
 
-The approximately 350M N0 configuration is an initial engineering reference, not a global model-size requirement or ceiling. Scale changes are driven by observed capability or efficiency evidence.
+The approximately 350M N0 configuration is an initial engineering reference, not a global model-size requirement or ceiling. The first real instantiation has now been measured at **352,184,960 parameters** on the actual P100 runtime. Scale changes remain evidence-driven.
+
+## Successful Magnolia P100 smoke
+
+Tracked command:
+
+```bash
+sbatch scripts/eipm/n0/magnolia_p100x2_runtime_smoke.sbatch
+```
+
+Result returned by owner:
+
+- job: `575527`
+- state: `COMPLETED`
+- exit: `0:0`
+- elapsed: `00:06:59`
+- node: `gpu001`
+- 2 × Tesla P100 visible
+- CUDA available
+- 48k tokenizer trained and verified
+- native N0 construction PASS
+- forward/backward preflight PASS
+- actual parameter count: 352,184,960
+- `runtime_smoke_receipt.json`: `status=PASS`
+- stderr empty
+- branch/head at execution: `alice-eipm-v1-build@22a129784af5a5a456d6e5f5f49f9b3cc48ac386`
+
+Public summary is recorded at:
+
+`docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md`
+
+This closes basic target-runtime construction/backprop mechanics. It does not by itself close distributed training/checkpoint-resume mechanics.
 
 ## Current build state
 
-`alice-eipm-v1-build`:
+`alice-eipm-v1-build` current tip:
 
-- current tip after the P100 correction/build pass: `22a129784af5a5a456d6e5f5f49f9b3cc48ac386`
+- `277745d2cdcc1a7928936d1c5244009450992520`
 
-The branch contains a directly executable N0 pipeline:
+The branch now additionally contains:
 
-- the 60-row owner-authorized Sol curriculum is active and provenance-bound;
-- curriculum rows receive structural validation before training;
-- native tokenizer loading is explicit from `tokenizer.json`;
-- candidate evaluation distinguishes top-1 correctness from supported-set separation;
-- development metrics are emitted per competency;
-- `evaluate-curriculum` emits concrete failed rows for the next Sol repair batch;
-- public corpus receipts bind active source config, exact resolved source revisions, shard sizes, and SHA256 values;
-- tokenizer receipts bind the tokenizer to the exact corpus lineage;
-- MLM checkpoints save Accelerator state and are resumable across allocation boundaries;
-- checkpoint receipts bind config/tokenizer/corpus/code/runtime lineage and cumulative token counts;
-- smoke corpus/tokenizer artifacts are separated from real training lineage;
-- the first real corpus path is bounded by default (`corpus-bootstrap`);
-- runtime smoke now supports a required minimum CUDA-device count;
-- the stale Magnolia A100 execution artifacts were removed after the owner corrected the access assumption;
-- the active Magnolia route is the previously proven 2×P100 route;
-- an explicit 2×P100 distributed MLM launcher and bounded 200-step pilot job are ready.
+- `train_mlm_p100x2_ddp_mechanics.sh` — a deliberately non-promotable two-leg DDP mechanics test;
+- `magnolia_p100x2_ddp_mechanics.sbatch` — the exact 2×P100 job wrapper;
+- leg 1 trains only to step 4 and saves distributed accelerator/model/tokenizer state;
+- leg 2 resumes from that exact step-4 state and continues to step 8;
+- PASS requires world size 2, fp16, correct resume ancestry, and increasing cumulative token count;
+- the final `ddp_mechanics_receipt.json` explicitly marks the checkpoint non-promotable and private-data-free.
+
+The meaningful 200-step public N0 pilot remains prepared, but it should not run until the cheaper DDP/resume uncertainty is closed and the real bounded corpus/tokenizer lineage has been prepared.
 
 ## Active compute route
 
 The owner does **not** have usable Magnolia A100 access from the actual working account/directory path. Do not plan N0 around A100 unless that access changes later.
 
-The previously proven usable Magnolia route is:
+Active Magnolia route:
 
 - partition `gpu`
 - QOS `normal`
@@ -71,49 +94,37 @@ The previously proven usable Magnolia route is:
 - observed node `gpu001`
 - two Tesla P100-PCIE-12GB devices
 
-The P100 smoke verifies both the device count and device family before N0 preflight.
-
-Kaggle remains the fallback/overflow route. Preserve Kaggle quota when Magnolia P100 can perform the same stage. Use Kaggle if Magnolia is blocked, materially too slow, or incompatible with a required runtime.
+Kaggle remains fallback/overflow. Preserve Kaggle quota while Magnolia P100 can perform the same stage.
 
 ## FBM state
 
-`fable-builder-model`:
+`fable-builder-model` current tip:
 
-- current tip after the compute-route correction trace: `53ccb5bfac576b07b974f79c2bd7367ec5ac4d2a`
+- `17663e5e04f5a2c16e2dc672b20c48e2e9ae167a`
 
-FBM retains:
-
-- the exact owner-authorized Sol bootstrap seed;
-- the failure-driven teaching-loop builder event;
-- bounded-compute/lineage lessons;
-- the infrastructure-correction lesson: owner/device reality outranks an idealized accelerator assumption, and a future builder must adapt the training plan to the actually available machine.
+FBM now captures both the compute-route correction and the successful runtime-smoke/next-cheapest-uncertainty pattern. The reusable lesson is: each build-time compute test should eliminate one real uncertainty and immediately target only the next unresolved one.
 
 ## Immediate operational pointer
 
-Repository-side preparation has reached the real target-runtime boundary.
+Use the already-passed smoke lineage. Do not rebuild it.
 
-From the A.L.I.C.E. repo root on Magnolia, with the intended N0 Python/Conda environment active:
+From the A.L.I.C.E. repo root on Magnolia:
 
 ```bash
 git switch alice-eipm-v1-build
 git pull --ff-only
-sbatch scripts/eipm/n0/magnolia_p100x2_runtime_smoke.sbatch
+export N0_SMOKE_WORKDIR="$HOME/rayan-compute/alice-n0/p100x2-runtime-smoke-575527"
+sbatch --export=ALL,N0_SMOKE_WORKDIR="$N0_SMOKE_WORKDIR" scripts/eipm/n0/magnolia_p100x2_ddp_mechanics.sbatch
 ```
 
-The smoke performs no private identity training. It verifies the 2×P100 route, public corpus smoke, tokenizer, native model construction, and CUDA backward pass.
+This next job is intentionally tiny. It exists only to prove 2-process P100 training plus state save/resume. It does not create a promotable N0 checkpoint and does not touch private identity data.
 
-After a clean smoke, prepare the bounded public corpus/tokenizer in the persistent N0 workdir and submit:
-
-```bash
-sbatch scripts/eipm/n0/magnolia_p100x2_mlm_pilot.sbatch
-```
-
-The default pilot is intentionally bounded to 200 optimizer steps, sequence length 512, micro-batch 1 per process, gradient accumulation 16, two P100 processes, fp16, and checkpoints at steps 100 and 200. Those defaults can be changed from observed evidence instead of guesswork.
+If PASS, build the real bounded public corpus/tokenizer lineage next and then run the 200-step meaningful N0 MLM pilot.
 
 No private E0/E-INF/A-SYN gradient is authorized by this continuation note. That transition remains an explicit owner action. Private curated payloads remain outside public Git.
 
 ## Current owner-help boundary
 
-Sol can continue repository design, teaching-curriculum construction, failure analysis, and branch maintenance independently.
+Sol can continue repository design, curriculum construction, result interpretation, failure repair, and branch maintenance independently.
 
-The current piece Sol cannot execute from chat is the real Magnolia GPU allocation. Rayan's next needed contribution is only to submit the 2×P100 smoke job and return its stdout/stderr/receipt. No private-gradient decision is needed yet.
+Rayan's next needed contribution is only to submit the tiny 2×P100 DDP mechanics job and return its stdout/stderr plus `ddp_mechanics_receipt.json`. No private-gradient decision is needed yet.
