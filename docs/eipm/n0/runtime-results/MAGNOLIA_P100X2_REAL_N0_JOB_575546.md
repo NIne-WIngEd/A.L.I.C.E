@@ -1,10 +1,10 @@
 # Magnolia 2×P100 Real N0 Training — Job 575546
 
 **Date:** 2026-09-14  
-**Status:** completed successfully  
+**Status:** completed successfully; durable weights retained; LR scheduler defect identified before continuation  
 **Role:** first durable real N0 MLM learning segment on the imported public corpus/tokenizer lineage
 
-## Scheduler result
+## Scheduler/job result
 
 - job: `575546`
 - name: `rayan-n0-p100-pilot`
@@ -12,56 +12,87 @@
 - exit code: `0:0`
 - elapsed: `00:21:57`
 - node: `gpu001`
-- requested/observed route: 2× Tesla P100-PCIE-12GB
+- observed route: 2× Tesla P100-PCIE-12GB
 
-This run is not a runtime/DDP qualification. Those gates were already closed earlier. This is durable N0 learning state.
+This run is real N0 learning state, not runtime/DDP qualification. Runtime and distributed-mechanics gates were already closed before this job.
 
-## Durable checkpoint evidence
+## Step-200 durable checkpoint
 
-The canonical workdir contains both:
+Canonical checkpoint:
 
-- `checkpoints/step-00000100/receipt.json`
-- `checkpoints/step-00000200/receipt.json`
+`$HOME/rayan-compute/rayan-n0/n0-v01/checkpoints/step-00000200`
 
-The step-100 receipt was inspected directly and records:
+Receipt facts:
 
+- schema: `alice.eipm.n0.mlm-checkpoint-receipt.v0.2`
 - model id: `alice-n0-semantic-v0.1`
-- step: `100`
+- step: `200`
 - sequence length: `512`
 - world size: `2`
 - mixed precision: `fp16`
 - gradient checkpointing: `true`
 - parameters total/trainable: `352,184,960`
-- tokens seen total at step 100: `1,638,400`
+- tokens seen this launch/total: `3,276,800`
 - corpus receipt SHA-256: `6cf717095e0eea4e790d0c852014a8047fd5ffc9f30550b2445c8a992a0bc293`
 - corpus verified bytes: `422,476,606`
 - corpus verified shards: `5`
 - tokenizer SHA-256: `9ce759f063d92acfdfd65b24ee8f4cad180d7dd8a37fef1a5da8a67df0a8b88d`
+- tokenizer receipt SHA-256: `821520db2ee5005fbbad800e0bcc4b0747610b68564526ed312296724fdbd844`
 - tokenizer origin git revision: `cb23ac483d0ec5bcc9107f895ada0a6a9c8c34ba`
 - training code git revision: `79d4b2d0b4c3bff8932dbc5c5a68f79256d59b9e`
+- step-200 `model.safetensors` SHA-256: `120eb602cb118eb2e45057362208be2b0835646812c557e8a5c044502f327cbf`
 - private identity gradient: `false`
 - resume parent: `null`
 
-The step-100 model artifact hash includes:
+The step-100 and step-200 checkpoints are both retained. Job `575547` was a duplicate submission attempt and must not be treated as a second learning segment.
 
-- `model.safetensors`: `d9ed1faf1e777f2985ab8c8957f2faf0ef990ed85461c0632feddd7554df87a1`
+## Observed learning curve
 
-The presence of the step-200 receipt after scheduler completion proves the run reached the requested terminal checkpoint. The exact step-200 receipt and loss trajectory must be inspected before choosing the next training horizon; do not infer or fabricate its values from step 100.
+Training loss moved from `9.6375` at step 10 to `6.5328` at step 200. Selected points:
 
-## Duplicate-run prevention
+| Global step | loss | logged LR |
+| ---: | ---: | ---: |
+| 10 | 9.6375 | 3.000e-4 |
+| 20 | 7.6938 | 2.910e-4 |
+| 30 | 7.2067 | 2.649e-4 |
+| 70 | 6.8518 | 7.500e-5 |
+| 100 | 6.9379 | 0.0 |
+| 150 | 6.8595 | 1.760e-4 |
+| 180 | 6.5640 | 2.910e-4 |
+| 200 | 6.5328 | 2.910e-4 |
 
-A second submission, job `575547`, was recognized as a duplicate attempt after job 575546 was already the active real training run. Do not treat the launcher as an instruction to restart from step zero. Durable checkpoint state is authoritative.
+The weights learned useful signal and are retained. However, the LR trace exposed a concrete scheduler configuration defect: the cosine schedule reached zero at global step 100 and then rose again, even though the run target was 200 optimizer updates.
 
-Before any future N0 MLM submission:
+## Root cause and repair
 
-1. inspect the latest canonical `step-*/receipt.json`;
-2. inspect the latest real learning loss trajectory;
-3. choose the next target based on model evidence;
-4. resume from the exact latest checkpoint;
-5. never repeat a completed learning segment solely because the launcher is reusable.
+N0 passed the unscaled global `max_steps=200` and `warmup_steps=20` directly into the wrapped scheduler. With Accelerate and `split_batches=False`, `AcceleratedScheduler` advances the underlying scheduler once per process for each synchronized optimizer update. On 2-process DDP, the underlying scheduler therefore consumed approximately two scheduler steps per global optimizer update. The 200-step cosine horizon was exhausted at about global step 100, after which the cosine lambda continued into its next half-cycle and increased the LR again.
 
-## Next model-building boundary
+This is a training-control bug, not a model-architecture or data-lineage failure.
 
-Inspect job 575546 stdout/loss trend plus `step-00000200/receipt.json`. Then decide the next durable N0 MLM continuation horizon from learning evidence. Continue model development in parallel on the semantic/judgment curriculum and N1/N2 identity-learning stack. No additional Magnolia infrastructure qualification is warranted unless a concrete new failure appears.
+The build now repairs it by:
+
+1. expressing scheduler horizon/warmup in global optimizer updates;
+2. converting those values to Accelerate-internal scheduler steps using process count when `split_batches=false`;
+3. separating the LR schedule horizon from the current segment stop step;
+4. recording global/internal scheduler horizons in checkpoint receipt schema v0.3;
+5. marking continuation from this v0.2 checkpoint as a legacy scheduler rebase;
+6. adding deterministic held-out MLM evaluation before longer continuation decisions.
+
+The step-200 optimizer/model state remains usable. The next run must resume this exact checkpoint with the repaired schedule. It must not restart from random initialization or repeat steps 0–200.
+
+## Warnings classified
+
+- Magnolia host kernel `3.10.0` is below Accelerate's recommended Linux kernel. This is a known route risk; job 575546 still completed normally.
+- tied `decoder.weight` save warning is expected for tied embeddings. Reload behavior was already proven during prior DDP resume mechanics. No evidence of checkpoint corruption appeared.
+
+## Next learning boundary
+
+Do not spend another remote run merely to prove infrastructure. Continue model teaching/building in Git first:
+
+- repair scheduler semantics (done in tracked code);
+- add deterministic held-out MLM evaluation (done in tracked code);
+- expand Sol-authored semantic/judgment teaching data;
+- preserve step-200 as the parent for the next N0 learning segment;
+- choose the next segment length from held-out and training evidence rather than a repeated pilot ritual.
 
 No private E0/E-INF/A-SYN gradient is authorized by this result.
