@@ -75,6 +75,9 @@ run_train() {
   accelerate launch \
     --multi_gpu \
     --num_processes 2 \
+    --num_machines 1 \
+    --mixed_precision fp16 \
+    --dynamo_backend no \
     --main_process_port "$PORT" \
     "$ROOT/scripts/eipm/n0/train_mlm.py" \
     --config "$CONFIG" \
