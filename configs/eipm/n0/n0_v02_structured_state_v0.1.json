@@ -1,10 +1,14 @@
 {
   "schema": "alice.eipm.n0.structured-state.v0.1",
-  "status": "MECHANICS_READY_NO_GRADIENT_AUTHORIZED",
+  "status": "MECHANICS_OBJECTIVE_AND_CURRICULUM_COMPILER_READY_NO_GRADIENT_AUTHORIZED",
   "parent_semantic_model": "alice-n0-semantic-v0.2",
   "parent_ratification": "configs/eipm/n0/n0_v02_semantic_base_ratification_v0.1.json",
   "parent_checkpoint": "targeted-repair-v0.1/step-00000080",
   "role": "identity-neutral typed state encoding before graph/fusion/private identity learning",
+  "implementation": "src/alice_personality/n0/structured_state.py",
+  "objective_implementation": "src/alice_personality/n0/structured_state_objectives.py",
+  "curriculum_compiler": "scripts/eipm/n0/build_n0_v02_structured_state_curriculum.py",
+  "prepare_runner": "scripts/eipm/n0/run_n0_v02_structured_state_prepare.sh",
   "architecture": {
     "semantic_size": 640,
     "state_size": 256,
@@ -15,7 +19,8 @@
     "max_fields": 64,
     "positional_embeddings": false,
     "pooling": "learned_query_attention",
-    "order_policy": "permutation_equivariant_fields_and_permutation_invariant_pooled_state"
+    "order_policy": "permutation_equivariant_fields_and_permutation_invariant_pooled_state",
+    "exact_branch_parameter_count": 1656064
   },
   "typed_feature_channels": {
     "field_type": 64,
@@ -25,6 +30,21 @@
     "confidence": "continuous_0_to_1",
     "missing_state": "explicit_boolean",
     "semantic_field_value": "640d_from_ratified_semantic_substrate_or_cache"
+  },
+  "objective_mix": {
+    "semantic_summary_alignment": 0.45,
+    "rationale_compatibility": 0.30,
+    "field_semantic_preservation": 0.15,
+    "field_order_consistency": 0.10,
+    "alignment_temperature": 0.07
+  },
+  "curriculum_policy": {
+    "source": "existing_governed_public_teacher_bank_v0.5",
+    "source_rows": 1020,
+    "text_generation_by_compiler": false,
+    "text_transform": "verbatim_prompt_candidate_and_rationale_only",
+    "preserve_train_dev_split": true,
+    "activation_authorized_before_prepare_receipt": false
   },
   "serving_policy": {
     "routine_max_fields": 32,
@@ -44,13 +64,13 @@
     "private_identity_data": false,
     "private_identity_gradient": false,
     "gradient_authorized": false,
-    "next_required_artifact": "public identity-neutral structured-state curriculum with field-order/missingness/provenance alignment targets"
+    "next_required_artifact": "structured-state preparation receipt from compiled governed teacher bank"
   },
-  "next_after_mechanics": [
-    "public structured-state curriculum",
-    "semantic-state alignment objective",
-    "bounded CPU mechanics tests",
-    "then one small public gradient pilot only if the curriculum is ready"
+  "next_after_prepare": [
+    "inspect compiled row and label counts",
+    "authorize one bounded public structured-state gradient pilot only if preparation passes",
+    "keep semantic step080 frozen during the first pilot",
+    "measure whether typed-state branch adds held-out capability before graph/fusion work"
   ],
   "anti_mc10d_rule": "do not create a separate qualification program; mechanics tests guard the imminent structured-state capability update only"
 }
