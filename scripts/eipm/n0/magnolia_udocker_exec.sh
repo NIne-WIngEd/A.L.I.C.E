@@ -51,10 +51,16 @@ ARGS=(
   --env="PYTHON=python"
 )
 
+# Forward only the stage controls that are intentionally part of the N0
+# runtime contract. In particular, v0.2 workdir/checkpoint overrides must cross
+# the udocker boundary rather than silently falling back to container-local
+# defaults. The normal v0.2 default remains derived from the mounted repo root,
+# never container $HOME (/root).
 for name in \
   CUDA_VISIBLE_DEVICES \
   PYTHONPATH \
   ALICE_N0_WORKDIR \
+  ALICE_N0_V02_WORKDIR \
   N0_SMOKE_WORKDIR \
   N0_SMOKE_REQUIRE_CUDA \
   N0_SMOKE_MIN_CUDA_DEVICES \
@@ -71,7 +77,18 @@ for name in \
   N0_MIXED_PRECISION \
   N0_RESUME_FROM \
   N0_MAIN_PROCESS_PORT \
+  N0_V02_CORPUS_DIR \
+  N0_V02_TOKENIZER_DIR \
+  N0_V02_TEACHER_DIR \
+  N0_V02_RUN_ROOT \
+  N0_V02_FIRST_TRANCHE_ROOT \
+  N0_V02_TEACHER_DEV_EVAL_ROOT \
+  N0_V02_SEED \
+  N0_V02_MAX_STEPS \
+  N0_V02_SAVE_EVERY \
   HF_HOME \
+  HF_HUB_OFFLINE \
+  TRANSFORMERS_OFFLINE \
   TOKENIZERS_PARALLELISM
   do
     if [[ -n "${!name:-}" ]]; then
