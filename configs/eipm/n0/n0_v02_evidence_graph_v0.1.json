@@ -1,26 +1,41 @@
 {
   "schema": "alice.eipm.n0.evidence-graph.v0.1",
-  "status": "MECHANICS_READY_NO_GRAPH_GRADIENT_AUTHORIZED",
+  "status": "MECHANICS_READY_AWAITING_PUBLIC_RELATION_CURRICULUM",
   "parent_semantic_model": "alice-n0-semantic-v0.2",
   "parent_semantic_checkpoint": "targeted-repair-v0.1/step-00000080",
   "structured_state_dependency": "configs/eipm/n0/n0_v02_structured_state_v0.1.json",
+  "structured_state_checkpoint": "structured-state-pilot-v0.1/step-00000080",
   "implementation": "src/alice_personality/n0/evidence_graph.py",
   "memory_relation_compiler": "src/alice_personality/n0/evidence_graph_data.py",
-  "role": "relation-aware public evidence reasoning over contextualized structured-state fields without changing the semantic core or structured-state pilot lineage",
+  "role": "relation-aware public evidence reasoning over contextualized structured-state fields with capability-first capacity scaling",
   "architecture": {
     "semantic_size": 640,
-    "graph_size": 256,
-    "graph_layers": 1,
+    "current_graph_size": 256,
+    "current_graph_layers": 1,
     "num_relation_types": 64,
-    "max_fields": 64,
-    "max_edges": 256,
+    "current_max_fields": 64,
+    "current_max_edges": 256,
+    "shape_limits_are_current_implementation_defaults_not_global_capability_ceilings": true,
     "position_embeddings": false,
     "query_conditioned_pooling": true,
     "base_structured_field_weight_prior": true,
     "base_weight_scale": 0.5,
-    "exact_sidecar_parameter_count": 937728,
-    "semantic_core_parameter_growth": 0,
-    "structured_state_parameter_growth": 0
+    "current_sidecar_parameter_count": 937728,
+    "parameter_count_role": "initial_implementation_fact_not_target_or_ceiling"
+  },
+  "capacity_policy": {
+    "hard_parameter_ceiling": null,
+    "capability_and_personality_fidelity_have_priority_over_minimal_parameter_count": true,
+    "allowed_growth": [
+      "wider_graph_state",
+      "additional_message_passing_layers",
+      "additional_relation_specific_capacity",
+      "larger_query_conditioning",
+      "joint_structured_graph_fusion",
+      "semantic_core_adaptation_when_later_evidence_justifies_it"
+    ],
+    "scale_trigger": "increase capacity whenever controlled heldout evidence shows the current architecture is bottlenecking relation reasoning evidence fidelity temporal reasoning contradiction handling or eventual personality fidelity",
+    "efficiency_rule": "after capability requirements are met prefer the least wasteful architecture; speed or size may never justify a meaningful loss in the personality objective"
   },
   "relation_vocabulary": {
     "0": "pad",
@@ -55,19 +70,23 @@
     "field_states_may_be_cached": true,
     "query_changes_pooling_without_reencoding_structured_fields": true,
     "graph_library_dependency": false,
-    "semantic_core_reencode_required_for_relation_only_change": false
+    "semantic_core_reencode_required_for_relation_only_change": false,
+    "serving_efficiency_is_secondary_to_capability_fidelity": true
   },
   "training_boundary": {
     "public_identity_neutral_only": true,
     "private_identity_data": false,
     "private_identity_gradient": false,
+    "structured_parent_selected": true,
+    "structured_parent_checkpoint": "step-00000080",
     "graph_gradient_authorized": false,
-    "reason": "structured-state pilot lineage remains independently ratified and must be selected or rejected before graph/evidence gradient activation"
+    "reason": "the parent is ready; graph gradients open after a real public relation curriculum and capability objective exist, not after satisfying any parameter-count target"
   },
   "required_before_graph_gradient": [
-    "run_and_select_or_reject_the_existing_bounded_structured_state_pilot",
     "build_failure_driven_public_relation_curriculum_without_private_identity_content",
-    "define_relation_and_query_conditioned_capability_metrics"
+    "define_relation_query_temporal_conflict_and_evidence_selection_objectives",
+    "define heldout capability metrics that can reveal undercapacity rather than rewarding small size"
   ],
-  "anti_mc10d_rule": "do not create a standalone infrastructure qualification program; graph evaluation exists only to select or reject a concrete relation-aware capability update"
+  "anti_mc10d_rule": "do not create a standalone infrastructure qualification program; graph evaluation exists only to select reject or scale a concrete relation-aware capability update",
+  "owner_capacity_rule": "no rigid parameter-count target; use as much model capacity as the personality objective requires while rejecting capacity that adds cost without capability"
 }
