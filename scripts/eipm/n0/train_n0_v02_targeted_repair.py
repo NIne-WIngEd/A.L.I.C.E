@@ -16,6 +16,7 @@ from alice_personality.n0.config import load_n0_config
 from alice_personality.n0.curriculum import validate_curriculum_manifest, validate_curriculum_rows
 from alice_personality.n0.curriculum_data import CurriculumDataset, load_tokenizer
 from alice_personality.n0.data import PackedJSONLIterableDataset, SpanMLMCollator
+from alice_personality.n0.training_schedule import accelerated_scheduler_steps
 from alice_personality.n0.v02_model import AliceN0V02Model
 from alice_personality.n0.v02_training import (
     TeacherMultitaskCollator,
@@ -41,9 +42,6 @@ REPAIR_FAMILIES = {
     "VOICE-05+SOC-04",
 }
 
-# One bounded repair step keeps broad language pressure while concentrating
-# most gradient on the observed semantic failures. The weights intentionally
-# sum to 1.0 and do not change the deployed model graph.
 LOSS_WEIGHTS = {
     "public_mlm_replay": 0.15,
     "targeted_repair_teacher": 0.55,
@@ -203,6 +201,8 @@ def save_checkpoint(
     seed: int,
     mixed_precision: str,
     max_steps: int,
+    scheduler_warmup_internal: int,
+    scheduler_total_internal: int,
     loss_sums: dict[str, float],
 ) -> None:
     from safetensors.torch import save_file
@@ -263,6 +263,8 @@ def save_checkpoint(
             "learning_rate": learning_rate,
             "top_backbone_layers_trainable": top_layers,
             "trainability": trainability,
+            "scheduler_warmup_internal": scheduler_warmup_internal,
+            "scheduler_total_internal": scheduler_total_internal,
             "serving_graph_unchanged": True,
             "parameter_growth": 0,
             "context_length_growth": 0,
@@ -444,10 +446,20 @@ def main() -> None:
         betas=(0.9, 0.95),
         eps=1e-8,
     )
+    scheduler_warmup_internal = accelerated_scheduler_steps(
+        args.warmup_steps,
+        num_processes=accelerator.num_processes,
+        split_batches=accelerator.split_batches,
+    )
+    scheduler_total_internal = accelerated_scheduler_steps(
+        args.max_steps,
+        num_processes=accelerator.num_processes,
+        split_batches=accelerator.split_batches,
+    )
     scheduler = get_cosine_schedule_with_warmup(
         optimizer,
-        num_warmup_steps=args.warmup_steps,
-        num_training_steps=args.max_steps,
+        num_warmup_steps=scheduler_warmup_internal,
+        num_training_steps=scheduler_total_internal,
     )
 
     model, optimizer, mlm_loader, repair_loader, replay_loader, scheduler = accelerator.prepare(
@@ -473,6 +485,8 @@ def main() -> None:
             "loss_weights": LOSS_WEIGHTS,
             "teacher_component_weights": TEACHER_COMPONENT_WEIGHTS,
             "trainability": trainability,
+            "scheduler_warmup_internal": scheduler_warmup_internal,
+            "scheduler_total_internal": scheduler_total_internal,
             "max_steps": args.max_steps,
             "serving_graph_unchanged": True,
             "private_identity_gradient": False,
@@ -562,6 +576,8 @@ def main() -> None:
                 seed=args.seed,
                 mixed_precision=args.mixed_precision,
                 max_steps=args.max_steps,
+                scheduler_warmup_internal=scheduler_warmup_internal,
+                scheduler_total_internal=scheduler_total_internal,
                 loss_sums=loss_sums,
             )
 
