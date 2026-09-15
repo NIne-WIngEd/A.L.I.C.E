@@ -3,8 +3,8 @@ from __future__ import annotations
 import torch
 
 from alice_memory.temporal import MemoryRelation
+from alice_personality.n0.evidence_graph import EvidenceRelationType
 from alice_personality.n0.evidence_graph_data import compile_memory_relation_graph
-from alice_personality.n0.structured_state import EvidenceRelationType
 
 
 def relation(
