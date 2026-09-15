@@ -7,7 +7,6 @@ from .evidence_graph import (
     EvidenceRelationType,
     relation_type_id,
 )
-from .evidence_graph_data import CompiledEvidenceGraph, compile_memory_relation_graph
 from .model import build_masked_lm, count_parameters
 from .structured_state import StructuredStateConfig, StructuredStateEncoder
 
@@ -22,6 +21,4 @@ __all__ = [
     "EvidenceGraphEncoder",
     "EvidenceRelationType",
     "relation_type_id",
-    "CompiledEvidenceGraph",
-    "compile_memory_relation_graph",
 ]
