@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import subprocess
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -17,6 +18,11 @@ EXPECTED_PARAMETERS = 136_594_435
 EXPECTED_TRAIN_ROWS = 51 * 15
 EXPECTED_DEV_ROWS = 51 * 5
 EXPECTED_COMPETENCIES = 51
+CONFIG_REPO_PATH = "configs/eipm/n0/alice_n0_semantic_v0.2.json"
+
+
+def sha256_bytes(data: bytes) -> str:
+    return hashlib.sha256(data).hexdigest()
 
 
 def sha256_file(path: str | Path) -> str:
@@ -32,11 +38,25 @@ def require(condition: bool, message: str) -> None:
         raise SystemExit(message)
 
 
+def git_blob(repo_root: Path, revision: str, repo_path: str) -> bytes:
+    proc = subprocess.run(
+        ["git", "-C", str(repo_root), "show", f"{revision}:{repo_path}"],
+        capture_output=True,
+        check=False,
+    )
+    require(
+        proc.returncode == 0,
+        f"cannot resolve training-time Git blob {revision}:{repo_path}: "
+        f"{proc.stderr.decode('utf-8', errors='replace').strip()}",
+    )
+    return proc.stdout
+
+
 def verify_checkpoint(
     *,
+    repo_root: Path,
     checkpoint: Path,
     step: int,
-    config_sha256: str,
     tokenizer_sha256: str,
     teacher_registry_sha256: str,
     teacher_audit_sha256: str,
@@ -56,7 +76,27 @@ def verify_checkpoint(
     require(receipt.get("random_initialization_only") is True, f"step {step} is not random-init lineage")
     require(receipt.get("v01_weights_used") is False, f"step {step} unexpectedly used v0.1 weights")
     require(int(receipt.get("exact_parameter_count", 0)) == EXPECTED_PARAMETERS, f"parameter-count drift at step {step}")
-    require(receipt.get("config_sha256") == config_sha256, f"config hash mismatch at step {step}")
+
+    # The active config is a living governance record and was intentionally
+    # updated after the tranche to record its results. Bind each checkpoint to
+    # the exact config blob at the receipt's own Git revision instead of
+    # incorrectly requiring today's config SHA to equal the training-time SHA.
+    git_revision = str(receipt.get("git_revision") or "").strip()
+    require(git_revision, f"checkpoint receipt at step {step} has no git_revision")
+    training_config_blob = git_blob(repo_root, git_revision, CONFIG_REPO_PATH)
+    training_config_sha256 = sha256_bytes(training_config_blob)
+    require(
+        receipt.get("config_sha256") == training_config_sha256,
+        f"training-time config hash mismatch at step {step}",
+    )
+    training_config = json.loads(training_config_blob.decode("utf-8"))
+    require(training_config.get("model_id") == EXPECTED_MODEL_ID, f"training-time model_id mismatch at step {step}")
+    require(
+        int((training_config.get("architecture") or {}).get("exact_parameter_count", 0))
+        == EXPECTED_PARAMETERS,
+        f"training-time parameter-count drift at step {step}",
+    )
+
     require(receipt.get("tokenizer_sha256") == tokenizer_sha256, f"tokenizer hash mismatch at step {step}")
     require(receipt.get("teacher_registry_sha256") == teacher_registry_sha256, f"teacher registry hash mismatch at step {step}")
     require(receipt.get("teacher_audit_sha256") == teacher_audit_sha256, f"teacher audit hash mismatch at step {step}")
@@ -87,10 +127,11 @@ def verify_checkpoint(
     return {
         "step": step,
         "receipt_sha256": sha256_file(receipt_path),
+        "training_git_revision": git_revision,
+        "training_config_sha256": training_config_sha256,
         "ranker_sha256": receipt["ranker_sha256"],
         "full_model_sha256": receipt["full_model_sha256"],
         "mlm_artifact_count": len(observed_mlm),
-        "git_revision": receipt.get("git_revision"),
         "world_size": receipt.get("world_size"),
         "mixed_precision": receipt.get("mixed_precision"),
     }
@@ -118,12 +159,14 @@ def main() -> None:
     for required in (config_path, tokenizer_path, registry_path, audit_path):
         require(required.is_file(), f"missing challenge preflight input: {required}")
 
-    config = json.loads(config_path.read_text(encoding="utf-8"))
-    require(config.get("model_id") == EXPECTED_MODEL_ID, "challenge config model_id mismatch")
-    architecture = config.get("architecture") or {}
+    active_config = json.loads(config_path.read_text(encoding="utf-8"))
+    require(active_config.get("model_id") == EXPECTED_MODEL_ID, "challenge config model_id mismatch")
+    architecture = active_config.get("architecture") or {}
     require(int(architecture.get("exact_parameter_count", 0)) == EXPECTED_PARAMETERS, "challenge config parameter-count drift")
-    governance = config.get("governance") or {}
+    governance = active_config.get("governance") or {}
     require(governance.get("private_identity_gradient") is False, "challenge config unexpectedly enables private identity gradient")
+    training = active_config.get("training") or {}
+    require(training.get("next_gradient_rule") == "no_additional_gradient_until_expanded_generalization_challenge_compares_step250_and_step500", "active config no longer preserves the post-tranche gradient hold")
 
     curriculum_paths, teacher_report = verify_teacher_registry(repo_root, registry_path, audit_path)
     require(int(teacher_report.get("registered_rows", 0)) == 1020, "teacher registry no longer binds exactly 1020 rows")
@@ -145,7 +188,7 @@ def main() -> None:
     require(len(dev_counts) == EXPECTED_COMPETENCIES and all(value == 5 for value in dev_counts.values()), "teacher dev split must contain 5 rows for every competency")
     require(set(train_counts) == set(dev_counts), "teacher train/dev competency sets differ")
 
-    config_sha256 = sha256_file(config_path)
+    active_config_sha256 = sha256_file(config_path)
     tokenizer_sha256 = sha256_file(tokenizer_path)
     registry_sha256 = sha256_file(registry_path)
     audit_sha256 = sha256_file(audit_path)
@@ -154,20 +197,34 @@ def main() -> None:
     for step in (250, 500):
         checkpoint = tranche_root / "checkpoints" / f"step-{step:08d}"
         checkpoints[f"step-{step:08d}"] = verify_checkpoint(
+            repo_root=repo_root,
             checkpoint=checkpoint,
             step=step,
-            config_sha256=config_sha256,
             tokenizer_sha256=tokenizer_sha256,
             teacher_registry_sha256=registry_sha256,
             teacher_audit_sha256=audit_sha256,
         )
 
+    require(
+        checkpoints["step-00000250"]["training_config_sha256"]
+        == checkpoints["step-00000500"]["training_config_sha256"],
+        "step250 and step500 were not trained under the same config blob",
+    )
+    require(
+        checkpoints["step-00000250"]["training_git_revision"]
+        == checkpoints["step-00000500"]["training_git_revision"],
+        "step250 and step500 receipts report different training Git revisions",
+    )
+
     summary = {
-        "schema": "alice.eipm.n0.v02-teacher-dev-challenge-preflight.v0.1",
+        "schema": "alice.eipm.n0.v02-teacher-dev-challenge-preflight.v0.2",
         "status": "PASS",
         "status_meaning": "lineage_split_and_artifact_integrity_only",
         "model_id": EXPECTED_MODEL_ID,
-        "config_sha256": config_sha256,
+        "active_config_sha256": active_config_sha256,
+        "training_config_sha256": checkpoints["step-00000250"]["training_config_sha256"],
+        "training_git_revision": checkpoints["step-00000250"]["training_git_revision"],
+        "active_config_is_post_training_governance_record": True,
         "tokenizer_sha256": tokenizer_sha256,
         "teacher_registry_sha256": registry_sha256,
         "teacher_audit_sha256": audit_sha256,
