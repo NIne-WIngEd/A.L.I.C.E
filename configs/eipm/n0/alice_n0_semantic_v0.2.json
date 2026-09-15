@@ -1,7 +1,7 @@
 {
   "schema_version": "0.2",
   "model_id": "alice-n0-semantic-v0.2",
-  "status": "design_implemented_gpu_hold",
+  "status": "public_multitask_gate_open_first_tranche_ready",
   "supersedes_production_candidate": "alice-n0-semantic-v0.1",
   "preserve_baseline_checkpoint": "alice-n0-semantic-v0.1@step-00001000",
   "architecture": {
@@ -28,8 +28,10 @@
     "attention_dropout": 0.0,
     "embedding_dropout": 0.0,
     "mlp_dropout": 0.0,
-    "approx_parameter_count": 140000000,
-    "parameter_count_role": "compute_budget_reference_pending_exact_cpu_build",
+    "approx_parameter_count": 136594435,
+    "exact_parameter_count": 136594435,
+    "exact_auxiliary_head_parameters": 537475,
+    "parameter_count_role": "exact_validated_cpu_construction",
     "scale_policy": "increase_only_if_fixed_generalization_and_capacity_evidence_outweighs_more_data_or_better_objectives"
   },
   "tokenizer": {
@@ -37,6 +39,7 @@
     "vocab_size": 48000,
     "training_data_class": "approved_public_n0_v02_balanced_only",
     "retrain_for_v02": true,
+    "validated_tokenizer_version": "v0.2.1",
     "private_identity_text_in_tokenizer_training": false,
     "special_token_ids": {
       "pad": 0,
@@ -91,7 +94,30 @@
       "voice_expression_competencies": 8,
       "principle_rows_minimum_before_full_multitask_training": 1000,
       "coverage_gate_overrides_row_floor": true,
-      "principle_rows_target_before_n0_readiness": 2500
+      "validated_public_teacher_rows": 1020,
+      "minimum_train_scenarios_per_competency": 15,
+      "minimum_dev_scenarios_per_competency": 5,
+      "full_multitask_gate_open": true,
+      "principle_rows_target_before_n0_readiness": 2500,
+      "remaining_rows_to_historical_readiness_target": 1480,
+      "expansion_after_gate": "failure_driven_and_cross_competency_first_not_blind_quota_filling"
+    },
+    "first_public_tranche": {
+      "sequence_length": 512,
+      "optimizer_steps": 500,
+      "save_steps": [250, 500],
+      "mlm_micro_batch_per_process": 1,
+      "mlm_gradient_accumulation": 8,
+      "teacher_batch_per_process": 2,
+      "teacher_max_length": 256,
+      "learning_rate": 0.0003,
+      "warmup_steps": 100,
+      "scheduler_horizon_steps": 10000,
+      "weight_decay": 0.1,
+      "precision": "fp16",
+      "pre_and_post_fixed_core_eval": true,
+      "pre_and_post_fixed_voice_eval": true,
+      "random_seed": 20260914
     },
     "fixed_total_token_budget": null,
     "stop_rule": "continue_while_fixed_heldout_capability_gain_per_gpu_hour_materially_justifies_compute",
@@ -100,7 +126,8 @@
     "gradient_checkpointing": true
   },
   "data": {
-    "mixture_plan": "configs/eipm/n0/public_corpus_v0.2.plan.json",
+    "mixture_plan": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
+    "first_tranche_corpus_role": "bounded_balanced_public_v021_material_already_verified_on_magnolia",
     "use_only_training_allowed_sources": true,
     "row_level_license_required": true,
     "row_level_provenance_required": true,
@@ -127,8 +154,11 @@
   "compute": {
     "primary_accelerator": "2x_Tesla_P100_PCIE_12GB",
     "remote_compute_role": "durable_weight_updates_and_material_evaluation_only",
-    "gpu_hold_until_cpu_preflight_passes": true,
+    "cpu_preflight_passed": true,
+    "gpu_hold_until_cpu_preflight_passes": false,
+    "public_multitask_gate_passed": true,
     "first_gpu_segment_rule": "bounded_segment_with_pre_and_post_fixed_eval",
+    "first_gpu_segment_time_ceiling_hours": 4,
     "decision_metric": "fixed_generalization_delta_per_gpu_hour",
     "raw_mlm_loss_is_not_a_promotion_metric": true
   },
