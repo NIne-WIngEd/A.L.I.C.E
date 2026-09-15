@@ -42,6 +42,7 @@ def compile_teacher_row(row: dict[str, Any], split: str) -> list[dict[str, Any]]
             {
                 "id": f"{row_id}.structured.c{index}",
                 "source_teacher_id": row_id,
+                "source_candidate_index": index,
                 "split": split,
                 "competency": competency,
                 "principle_tag": principle_tag,
@@ -67,7 +68,12 @@ def compile_teacher_row(row: dict[str, Any], split: str) -> list[dict[str, Any]]
                         "missing": False,
                     },
                 ],
-                "target_text": rationale,
+                "semantic_target": {
+                    "mode": "context_candidate_pair",
+                    "text_a": prompt,
+                    "text_b": candidate,
+                },
+                "rationale_text": rationale,
                 "compatibility_label": 1 if index in preferred else 0,
                 "text_generated_by_compiler": False,
             }
@@ -114,7 +120,7 @@ def main() -> None:
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
 
     manifest = {
-        "schema": "alice.eipm.n0.v02-structured-state-curriculum.v0.1",
+        "schema": "alice.eipm.n0.v02-structured-state-curriculum.v0.2",
         "status": "COMPILED_NOT_ACTIVATED",
         "source_teacher_registry": str(registry),
         "source_teacher_registry_sha256": sha256_file(registry),
@@ -128,12 +134,14 @@ def main() -> None:
         "compiled_split_counts": dict(sorted(split_counts.items())),
         "compatibility_label_counts": {str(k): v for k, v in sorted(label_counts.items())},
         "competency_count": len(competency_counts),
+        "semantic_target_mode": "context_candidate_pair",
+        "rationale_target_separate": True,
         "text_generated_by_compiler": False,
         "field_type_ids": FIELD_TYPE_IDS,
         "provenance_ids": PROVENANCE_IDS,
         "relation_role_ids": RELATION_ROLE_IDS,
         "temporal_scope_ids": TEMPORAL_SCOPE_IDS,
-        "activation_authorized": False
+        "activation_authorized": False,
     }
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
     manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
