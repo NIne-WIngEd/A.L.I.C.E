@@ -32,10 +32,11 @@ def test_v02_architecture_is_native_compute_efficient_and_30pct_masked() -> None
     assert config.hidden_size // config.num_attention_heads == 64
     assert config.intermediate_size == 2560
     assert config.mlm_probability == pytest.approx(0.30)
-    assert config.planned_parameter_count == 140_000_000
+    assert config.planned_parameter_count == 136_594_435
 
     raw = json.loads(CONFIG.read_text(encoding="utf-8"))
     assert raw["architecture"]["third_party_weight_initialization"] is False
+    assert raw["architecture"]["exact_parameter_count"] == 136_594_435
     assert raw["governance"]["private_identity_gradient"] is False
     assert raw["governance"]["v01_pathfinder_weights_must_not_initialize_v02"] is True
 
