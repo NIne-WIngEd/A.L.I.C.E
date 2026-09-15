@@ -80,16 +80,16 @@ echo "objective_weights=mlm:0.70,preference:0.10,rationale:0.10,contrastive:0.10
 echo "network_required=false"
 echo "private_identity_gradient=false"
 
-# One fail-fast code check inside the real learning allocation. This is not a
-# separate qualification stage; it simply prevents spending the allocation on
-# a syntax/import error.
+# Fail immediately on code/import damage inside the real learning allocation.
+# This is not a separate qualification stage.
 python -m py_compile \
   "$ROOT/src/alice_personality/n0/v02_model.py" \
   "$ROOT/src/alice_personality/n0/v02_training.py" \
   "$ROOT/scripts/eipm/n0/export_n0_v02_initial.py" \
   "$ROOT/scripts/eipm/n0/train_n0_v02_multitask.py" \
   "$ROOT/scripts/eipm/n0/compile_n0_v02_fixed_eval.py" \
-  "$ROOT/scripts/eipm/n0/evaluate_n0_v02_fixed.py"
+  "$ROOT/scripts/eipm/n0/evaluate_n0_v02_fixed.py" \
+  "$ROOT/scripts/eipm/n0/evaluate_n0_v02_mlm.py"
 
 CORE_COMPILED="$EVAL_ROOT/core-fixed-compiled.jsonl"
 CORE_RECEIPT="$EVAL_ROOT/core-fixed-receipt.json"
@@ -112,7 +112,7 @@ python "$ROOT/scripts/eipm/n0/compile_n0_v02_fixed_eval.py" \
   --minimum-cases-per-competency 1 \
   --expected-competencies 8
 
-# Freeze the exact random starting point and score it before any optimizer step.
+# Freeze and score the random starting point before any optimizer step.
 python "$ROOT/scripts/eipm/n0/export_n0_v02_initial.py" \
   --config "$CONFIG" \
   --output-dir "$BASELINE_ROOT" \
@@ -140,8 +140,22 @@ python "$ROOT/scripts/eipm/n0/evaluate_n0_v02_fixed.py" \
   --batch-size 4 \
   --device cuda
 
-# This is the first permanent native N0 v0.2 weight update. No v0.1 weights
-# and no private Elaina material are permitted anywhere in this invocation.
+python "$ROOT/scripts/eipm/n0/evaluate_n0_v02_mlm.py" \
+  --config "$CONFIG" \
+  --model-dir "$BASELINE_ROOT/mlm" \
+  --model-receipt "$BASELINE_ROOT/receipt.json" \
+  --tokenizer-dir "$TOKENIZER_DIR" \
+  --corpus-dir "$CORPUS_DIR" \
+  --source-config "$SOURCE_CONFIG" \
+  --sequence-length 512 \
+  --batch-size 4 \
+  --max-batches 128 \
+  --mask-repeats 4 \
+  --device cuda \
+  --output "$EVAL_ROOT/step-00000000-mlm.json"
+
+# First permanent native v0.2 update. No v0.1 weights and no private Elaina
+# material are permitted anywhere in this invocation.
 accelerate launch \
   --multi_gpu \
   --num_processes 2 \
@@ -175,7 +189,8 @@ for STEP in 250 500; do
   if (( STEP > MAX_STEPS )); then
     continue
   fi
-  STEP_DIR="$CHECKPOINT_ROOT/step-$(printf '%08d' "$STEP")"
+  KEY="step-$(printf '%08d' "$STEP")"
+  STEP_DIR="$CHECKPOINT_ROOT/$KEY"
   if [[ ! -f "$STEP_DIR/receipt.json" ]]; then
     echo "Expected checkpoint missing: $STEP_DIR" >&2
     exit 6
@@ -188,7 +203,7 @@ for STEP in 250 500; do
     --ranker "$STEP_DIR/ranker.safetensors" \
     --benchmark "$CORE_COMPILED" \
     --benchmark-receipt "$CORE_RECEIPT" \
-    --output-dir "$EVAL_ROOT/step-$(printf '%08d' "$STEP")-core" \
+    --output-dir "$EVAL_ROOT/$KEY-core" \
     --batch-size 4 \
     --device cuda
 
@@ -199,9 +214,23 @@ for STEP in 250 500; do
     --ranker "$STEP_DIR/ranker.safetensors" \
     --benchmark "$VOICE_COMPILED" \
     --benchmark-receipt "$VOICE_RECEIPT" \
-    --output-dir "$EVAL_ROOT/step-$(printf '%08d' "$STEP")-voice" \
+    --output-dir "$EVAL_ROOT/$KEY-voice" \
     --batch-size 4 \
     --device cuda
+
+  python "$ROOT/scripts/eipm/n0/evaluate_n0_v02_mlm.py" \
+    --config "$CONFIG" \
+    --model-dir "$STEP_DIR/mlm" \
+    --model-receipt "$STEP_DIR/receipt.json" \
+    --tokenizer-dir "$TOKENIZER_DIR" \
+    --corpus-dir "$CORPUS_DIR" \
+    --source-config "$SOURCE_CONFIG" \
+    --sequence-length 512 \
+    --batch-size 4 \
+    --max-batches 128 \
+    --mask-repeats 4 \
+    --device cuda \
+    --output "$EVAL_ROOT/$KEY-mlm.json"
 done
 
 python - "$RUN_ROOT" "$MAX_STEPS" <<'PY'
@@ -230,6 +259,12 @@ for step in steps:
             "full_invariance_pass_rate": metrics["full_invariance_pass_rate"],
             "mean_margin": metrics["mean_margin"],
         }
+    mlm = json.loads((root / "eval" / f"{key}-mlm.json").read_text(encoding="utf-8"))
+    summary["steps"][key]["mlm"] = {
+        "mean_masked_token_nll": mlm["mean_masked_token_nll"],
+        "masked_token_perplexity": mlm["masked_token_perplexity"],
+        "repeat_nll_stddev": mlm["repeat_nll_stddev"],
+    }
 (root / "first_tranche_summary.json").write_text(
     json.dumps(summary, indent=2, sort_keys=True) + "\n",
     encoding="utf-8",
