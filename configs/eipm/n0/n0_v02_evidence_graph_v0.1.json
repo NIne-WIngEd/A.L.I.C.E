@@ -1,12 +1,17 @@
 {
   "schema": "alice.eipm.n0.evidence-graph.v0.1",
-  "status": "MECHANICS_READY_AWAITING_PUBLIC_RELATION_CURRICULUM",
+  "status": "CPU_PREPARATION_PASSED_CAPABILITY_PILOT_AUTHORIZED",
   "parent_semantic_model": "alice-n0-semantic-v0.2",
   "parent_semantic_checkpoint": "targeted-repair-v0.1/step-00000080",
   "structured_state_dependency": "configs/eipm/n0/n0_v02_structured_state_v0.1.json",
   "structured_state_checkpoint": "structured-state-pilot-v0.1/step-00000080",
   "implementation": "src/alice_personality/n0/evidence_graph.py",
+  "objective_implementation": "src/alice_personality/n0/evidence_graph_objectives.py",
   "memory_relation_compiler": "src/alice_personality/n0/evidence_graph_data.py",
+  "curriculum_compiler": "scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py",
+  "prepare_runner": "scripts/eipm/n0/run_n0_v02_evidence_graph_prepare.sh",
+  "pilot_trainer": "scripts/eipm/n0/train_n0_v02_evidence_graph_pilot.py",
+  "pilot_runner": "scripts/eipm/n0/run_n0_v02_evidence_graph_pilot.sh",
   "role": "relation-aware public evidence reasoning over contextualized structured-state fields with capability-first capacity scaling",
   "architecture": {
     "semantic_size": 640,
@@ -65,6 +70,62 @@
     "edge_overflow_policy": "fail_closed_no_silent_truncation",
     "private_plaintext_required_by_relation_compiler": false
   },
+  "public_relation_curriculum": {
+    "status": "PREPARATION_PASSED",
+    "schema": "alice.eipm.n0.v02-evidence-graph-curriculum.v0.1",
+    "rows": 240,
+    "train_rows": 180,
+    "dev_rows": 60,
+    "families": 10,
+    "soft_evidence_targets": true,
+    "semantic_summary_targets": true,
+    "relation_counterfactual_training": true,
+    "historical_query_coverage": true,
+    "unresolved_conflict_coverage": true,
+    "multi_hop_coverage": true,
+    "private_identity_content": false,
+    "hard_parameter_ceiling": null,
+    "cpu_tests_passed": 23
+  },
+  "pilot": {
+    "authorized": true,
+    "authorization_scope": "one capability-first three-variant public relation-learning comparison",
+    "semantic_core_trainable": false,
+    "semantic_vectors_cached_once": true,
+    "variants": [
+      {
+        "name": "compact_graph_only",
+        "graph_size": 256,
+        "graph_layers": 1,
+        "structured_trainable": false
+      },
+      {
+        "name": "compact_joint",
+        "graph_size": 256,
+        "graph_layers": 1,
+        "structured_trainable": true
+      },
+      {
+        "name": "expanded_joint_512x2",
+        "graph_size": 512,
+        "graph_layers": 2,
+        "structured_trainable": true
+      }
+    ],
+    "max_steps_per_variant": 240,
+    "save_steps": [80, 160, 240],
+    "joint_parent_anchor_weight": 0.05,
+    "selection_priority": [
+      "preserve_ratified_structured_capability",
+      "worst_family_evidence_fidelity",
+      "macro_evidence_fidelity",
+      "semantic_conclusion_quality",
+      "relation_counterfactual_dependence",
+      "efficiency_only_after_capability"
+    ],
+    "additional_capacity_may_be_required_after_this_pilot": true,
+    "automatic_production_promotion": false
+  },
   "serving_policy": {
     "routine_graph_is_sparse": true,
     "field_states_may_be_cached": true,
@@ -79,14 +140,11 @@
     "private_identity_gradient": false,
     "structured_parent_selected": true,
     "structured_parent_checkpoint": "step-00000080",
-    "graph_gradient_authorized": false,
-    "reason": "the parent is ready; graph gradients open after a real public relation curriculum and capability objective exist, not after satisfying any parameter-count target"
+    "graph_gradient_authorized": true,
+    "joint_structured_graph_gradient_authorized": true,
+    "semantic_core_gradient_authorized": false,
+    "reason": "the public relation curriculum and capability objectives passed CPU preparation; this authorization is for one bounded architecture comparison and imposes no parameter-count ceiling"
   },
-  "required_before_graph_gradient": [
-    "build_failure_driven_public_relation_curriculum_without_private_identity_content",
-    "define_relation_query_temporal_conflict_and_evidence_selection_objectives",
-    "define heldout capability metrics that can reveal undercapacity rather than rewarding small size"
-  ],
   "anti_mc10d_rule": "do not create a standalone infrastructure qualification program; graph evaluation exists only to select reject or scale a concrete relation-aware capability update",
   "owner_capacity_rule": "no rigid parameter-count target; use as much model capacity as the personality objective requires while rejecting capacity that adds cost without capability"
 }
