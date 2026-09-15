@@ -7,12 +7,12 @@ import torch
 
 from alice_memory.temporal import MemoryRelation
 
-from .structured_state import relation_type_id
+from .evidence_graph import relation_type_id
 
 
 @dataclass(frozen=True)
 class CompiledEvidenceGraph:
-    """One padded public relation graph ready for ``StructuredStateEncoder``.
+    """One padded public relation graph ready for ``EvidenceGraphEncoder``.
 
     Tensor shapes include a leading batch dimension of one so the result can
     be passed directly to the encoder or concatenated by a future collator.
