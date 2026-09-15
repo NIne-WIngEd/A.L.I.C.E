@@ -1,6 +1,6 @@
 {
   "schema": "alice.eipm.n0.structured-state.v0.1",
-  "status": "MECHANICS_OBJECTIVE_AND_CURRICULUM_COMPILER_READY_NO_GRADIENT_AUTHORIZED",
+  "status": "PREPARATION_PASSED_BOUNDED_PUBLIC_PILOT_AUTHORIZED",
   "parent_semantic_model": "alice-n0-semantic-v0.2",
   "parent_ratification": "configs/eipm/n0/n0_v02_semantic_base_ratification_v0.1.json",
   "parent_checkpoint": "targeted-repair-v0.1/step-00000080",
@@ -9,6 +9,7 @@
   "objective_implementation": "src/alice_personality/n0/structured_state_objectives.py",
   "curriculum_compiler": "scripts/eipm/n0/build_n0_v02_structured_state_curriculum.py",
   "prepare_runner": "scripts/eipm/n0/run_n0_v02_structured_state_prepare.sh",
+  "pilot_trainer": "scripts/eipm/n0/train_n0_v02_structured_state_pilot.py",
   "architecture": {
     "semantic_size": 640,
     "state_size": 256,
@@ -36,7 +37,22 @@
     "rationale_compatibility": 0.30,
     "field_semantic_preservation": 0.15,
     "field_order_consistency": 0.10,
-    "alignment_temperature": 0.07
+    "alignment_temperature": 0.07,
+    "semantic_target": "context_candidate_pair_encoded_by_frozen_step080",
+    "rationale_target": "separate_governed_rationale_encoding",
+    "compatibility_class_balance": "global_train_negative_to_positive_pos_weight"
+  },
+  "preparation_evidence": {
+    "v01_mechanics_tests_passed": 16,
+    "v01_compiled_rows": 3039,
+    "v01_train_rows": 2279,
+    "v01_dev_rows": 760,
+    "v01_negative_labels": 2001,
+    "v01_positive_labels": 1038,
+    "v01_competencies": 51,
+    "v01_text_generated_by_compiler": false,
+    "pre_gradient_issue_found": "semantic alignment and rationale compatibility originally shared one target; fixed before any structured gradient",
+    "corrected_curriculum_version": "v0.2"
   },
   "curriculum_policy": {
     "source": "existing_governed_public_teacher_bank_v0.5",
@@ -44,7 +60,25 @@
     "text_generation_by_compiler": false,
     "text_transform": "verbatim_prompt_candidate_and_rationale_only",
     "preserve_train_dev_split": true,
-    "activation_authorized_before_prepare_receipt": false
+    "semantic_and_rationale_targets_must_be_separate": true
+  },
+  "pilot": {
+    "authorized": true,
+    "max_steps": 240,
+    "save_steps": [80, 160, 240],
+    "train_batch_size": 64,
+    "learning_rate": 0.0003,
+    "weight_decay": 0.05,
+    "warmup_steps": 20,
+    "semantic_parent_trainable_parameters": 0,
+    "semantic_vectors_precomputed_once": true,
+    "selection_priority": [
+      "grouped_preferred_top1_accuracy",
+      "compatibility_balanced_accuracy",
+      "semantic_alignment_cosine",
+      "earlier_checkpoint"
+    ],
+    "automatic_production_promotion": false
   },
   "serving_policy": {
     "routine_max_fields": 32,
@@ -63,14 +97,13 @@
     "public_structured_alignment_only": true,
     "private_identity_data": false,
     "private_identity_gradient": false,
-    "gradient_authorized": false,
-    "next_required_artifact": "structured-state preparation receipt from compiled governed teacher bank"
+    "gradient_authorized": true,
+    "authorization_scope": "one_bounded_public_structured_state_pilot_only"
   },
-  "next_after_prepare": [
-    "inspect compiled row and label counts",
-    "authorize one bounded public structured-state gradient pilot only if preparation passes",
-    "keep semantic step080 frozen during the first pilot",
-    "measure whether typed-state branch adds held-out capability before graph/fusion work"
+  "next_after_pilot": [
+    "inspect heldout structured-state capability metrics",
+    "ratify the smallest useful checkpoint or reject the pilot",
+    "if ratified proceed to graph/evidence alignment or cross-context fusion rather than repeating structured tuning"
   ],
-  "anti_mc10d_rule": "do not create a separate qualification program; mechanics tests guard the imminent structured-state capability update only"
+  "anti_mc10d_rule": "do not create a separate qualification program; evaluation exists only to select or reject the imminent structured-state capability update"
 }
