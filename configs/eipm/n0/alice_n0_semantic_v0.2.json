@@ -1,9 +1,26 @@
 {
   "schema_version": "0.2",
   "model_id": "alice-n0-semantic-v0.2",
-  "status": "novel_cross_challenge_step250_selected_targeted_repair_ready",
+  "status": "semantic_base_ratified_repair_step080_structured_state_mechanics_ready",
   "supersedes_production_candidate": "alice-n0-semantic-v0.1",
   "preserve_baseline_checkpoint": "alice-n0-semantic-v0.1@step-00001000",
+  "semantic_base_ratification": {
+    "status": "RATIFIED_SEMANTIC_BASE_NOT_FULL_EIPM_PROMOTION",
+    "manifest": "configs/eipm/n0/n0_v02_semantic_base_ratification_v0.1.json",
+    "checkpoint": "targeted-repair-v0.1/step-00000080",
+    "parent_checkpoint": "first-tranche-v0.1/step-00000250",
+    "full_model_sha256": "6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43",
+    "ranker_sha256": "b9f98bf2827580a9e266276d08e221c568885df2c04c4437b77d6e6f9638cbf7",
+    "novel_top1": 0.875,
+    "novel_full_invariance": 0.875,
+    "repair_dev_top1": 0.8,
+    "teacher_dev_top1": 0.8736842105263158,
+    "teacher_dev_full_invariance": 0.8745098039215686,
+    "warm_three_candidate_p100_p95_ms": 37.80382387340069,
+    "private_identity_gradient": false,
+    "production_promotion_authorized": false,
+    "n0_complete": false
+  },
   "architecture": {
     "family": "native_bidirectional_transformer_encoder",
     "implementation_mechanics": "transformers.ModernBertForMaskedLM",
@@ -166,8 +183,11 @@
       "interpretation": "step250_is_more_accurate_on_novel_examples_and_far_less_overconfident_when_wrong"
     },
     "targeted_repair": {
-      "status": "READY_TO_RUN",
+      "status": "PASS_SELECTED_STEP080",
+      "magnolia_job": 575589,
       "parent_checkpoint": "step-00000250",
+      "selected_checkpoint": "step-00000080",
+      "selection_artifact": "$HOME/rayan-compute/rayan-n0/n0-v02/post-repair-selection-v0.1/post_repair_selection.json",
       "curriculum": "data/eipm/n0/n0_v02_targeted_repair_v0.1.jsonl",
       "manifest": "data/eipm/n0/n0_v02_targeted_repair_v0.1.manifest.json",
       "train_rows": 20,
@@ -182,12 +202,34 @@
         "targeted_repair_teacher": 0.55,
         "governed_teacher_replay": 0.30
       },
+      "selected_metrics": {
+        "repair_dev_top1": 0.8,
+        "teacher_dev_top1": 0.8736842105263158,
+        "teacher_dev_full_invariance": 0.8745098039215686,
+        "novel_top1": 0.875,
+        "novel_full_invariance": 0.875,
+        "novel_failed_example_mean_abs_score": 3.270193786256843
+      },
       "parameter_growth": 0,
       "context_growth": 0,
       "runtime_adapter_required": false,
-      "promotion_authorized_before_post_repair_eval": false
+      "semantic_base_ratified": true,
+      "production_promotion_authorized": false
     },
-    "next_gradient_rule": "only_bounded_targeted_repair_from_step250_is_authorized; broad continuation and step500 continuation are forbidden until repair evidence",
+    "structured_state_next": {
+      "status": "MECHANICS_READY_NO_GRADIENT_AUTHORIZED",
+      "config": "configs/eipm/n0/n0_v02_structured_state_v0.1.json",
+      "implementation": "src/alice_personality/n0/structured_state.py",
+      "semantic_parent": "targeted-repair-v0.1/step-00000080",
+      "internal_state_size": 256,
+      "layers": 2,
+      "heads": 4,
+      "parameter_budget": 2500000,
+      "actual_parameter_count": 1656064,
+      "private_identity_gradient": false,
+      "next_required_artifact": "public_identity_neutral_structured_state_curriculum"
+    },
+    "next_gradient_rule": "broad semantic continuation is closed; only a bounded public identity-neutral structured-state alignment pilot may be authorized after its curriculum and mechanics tests pass; private identity gradients remain forbidden",
     "fixed_total_token_budget": null,
     "stop_rule": "continue_while_fixed_heldout_capability_gain_per_gpu_hour_materially_justifies_compute",
     "checkpoint_policy": "resumable_hashed_lineage",
@@ -211,6 +253,9 @@
     "current_fixed_suite_saturated": true,
     "expanded_challenge_completed": true,
     "selected_checkpoint_for_repair": 250,
+    "ratified_semantic_checkpoint": "targeted-repair-v0.1/step-00000080",
+    "post_repair_selection_completed": true,
+    "post_repair_selection_schema": "alice.eipm.n0.v02-post-repair-selection.v0.1",
     "challenge_eval_compare_checkpoints": [250, 500],
     "challenge_eval_focus": [
       "new_heldout_scenarios",
@@ -226,7 +271,6 @@
       "heldout_repair_dev",
       "255_row_teacher_dev_regression",
       "frozen_novel_cross_challenge",
-      "fixed_core_and_voice_regression",
       "latency_fast_path"
     ],
     "voice_first_interaction_required": true,
@@ -248,11 +292,12 @@
     "primary_accelerator": "2x_Tesla_P100_PCIE_12GB",
     "remote_compute_role": "durable_weight_updates_and_material_evaluation_only",
     "cpu_preflight_passed": true,
-    "gpu_hold_until_cpu_preflight_passes": false,
+    "gpu_hold_until_cpu_preflight_passes": true,
     "public_multitask_gate_passed": true,
     "first_gpu_segment_passed": true,
     "first_gpu_segment_job": 575583,
-    "next_compute_action": "targeted_repair_from_step250_only",
+    "next_compute_action": "none_until_public_structured_state_curriculum_is_ready",
+    "next_model_action": "build_public_identity_neutral_structured_state_curriculum_and_alignment_objective",
     "decision_metric": "capability_latency_and_gpu_hour_pareto_not_accuracy_alone",
     "raw_mlm_loss_is_not_a_promotion_metric": true,
     "routine_inference_must_be_interactive": true,
@@ -267,6 +312,7 @@
     "v01_pathfinder_weights_must_not_initialize_v02": true,
     "voice_first_design_requirement_authorized": true,
     "voice_first_requirement_does_not_authorize_private_elaina_gradient": true,
+    "semantic_base_ratification_does_not_authorize_n1": true,
     "anti_mc10d_rule": "validation_and_infrastructure_may_guard_imminent_alice_work_but_may_not_replace_model_data_memory_or_product_capability_work"
   }
 }
