@@ -119,6 +119,19 @@ class _EvidenceGraphLayer(nn.Module):
         status[int(EvidenceRelationType.CONFLICTS_WITH)] = -0.35
         self.register_buffer("relation_status_prior", status, persistent=True)
 
+    def _messages(
+        self,
+        node_state: torch.Tensor,
+        relation: torch.Tensor,
+        confidence: torch.Tensor,
+        active: torch.Tensor,
+    ) -> torch.Tensor:
+        message = self.source_projection(node_state)
+        message = message + relation + self.edge_confidence_projection(confidence)
+        message = torch.nn.functional.silu(self.message_norm(message))
+        message = message * confidence
+        return message * active.to(message.dtype).unsqueeze(-1)
+
     def forward(
         self,
         x: torch.Tensor,
@@ -153,11 +166,12 @@ class _EvidenceGraphLayer(nn.Module):
 
         relation = self.relation_embedding(edge_type_ids).reshape(-1, width)
         confidence = edge_confidence.to(dtype=dtype).clamp(0.0, 1.0).reshape(-1, 1)
-        message = self.source_projection(flat_x[source_flat])
-        message = message + relation + self.edge_confidence_projection(confidence)
-        message = torch.nn.functional.silu(self.message_norm(message))
-        message = message * confidence
-        message = message * active_flat.to(dtype).unsqueeze(-1)
+        message = self._messages(
+            flat_x[source_flat],
+            relation,
+            confidence,
+            active_flat,
+        )
 
         aggregate = torch.zeros_like(flat_x)
         aggregate.index_add_(0, target_flat, message)
@@ -165,17 +179,26 @@ class _EvidenceGraphLayer(nn.Module):
         degree.index_add_(0, target_flat, active_flat.to(dtype).unsqueeze(-1))
 
         # Stored conflict edges are canonicalized to one direction, but the
-        # semantic relation is symmetric. Mirror only conflict messages.
+        # semantic relation is symmetric. Mirror a message from target->source
+        # using the target node representation, not the original source state.
         conflict = active & (edge_type_ids == int(EvidenceRelationType.CONFLICTS_WITH))
         conflict_flat = conflict.reshape(-1)
-        reverse_message = message * conflict_flat.to(dtype).unsqueeze(-1)
+        reverse_message = self._messages(
+            flat_x[target_flat],
+            relation,
+            confidence,
+            conflict_flat,
+        )
         aggregate.index_add_(0, source_flat, reverse_message)
         degree.index_add_(0, source_flat, conflict_flat.to(dtype).unsqueeze(-1))
 
         aggregate = aggregate / degree.clamp_min(1.0)
         aggregate = aggregate.reshape(batch, fields, width)
-        updated = self.update_projection(torch.cat([x, aggregate], dim=-1))
-        x = self.output_norm(x + updated)
+        has_message = degree.reshape(batch, fields, 1) > 0
+        candidate = self.output_norm(
+            x + self.update_projection(torch.cat([x, aggregate], dim=-1))
+        )
+        x = torch.where(has_message, candidate, x)
 
         status_bias = torch.zeros(batch * fields, device=device, dtype=dtype)
         edge_prior = self.relation_status_prior[edge_type_ids].to(dtype).reshape(-1)
@@ -339,13 +362,18 @@ class StructuredStateEncoder(nn.Module):
             raise ValueError("edge_type_ids must be an integer tensor")
         if edge_index.dtype not in (torch.int32, torch.int64):
             raise ValueError("edge_index must be an integer tensor")
+        if edge_type_ids.numel() and (
+            edge_type_ids.min().item() < 0
+            or edge_type_ids.max().item() >= self.config.num_relation_types
+        ):
+            raise ValueError("edge_type_ids contains an unsupported relation id")
         if edge_valid_mask.any():
             active_index = edge_index[edge_valid_mask]
             if active_index.min().item() < 0 or active_index.max().item() >= fields:
                 raise ValueError("active edge_index contains a field index outside the valid range")
             active_types = edge_type_ids[edge_valid_mask]
-            if active_types.min().item() <= 0 or active_types.max().item() >= self.config.num_relation_types:
-                raise ValueError("active edge_type_ids contains an unsupported relation id")
+            if active_types.min().item() <= 0:
+                raise ValueError("active edges may not use the PAD relation id")
         return True
 
     def forward(
@@ -412,7 +440,7 @@ class StructuredStateEncoder(nn.Module):
             assert edge_type_ids is not None
             assert edge_confidence is not None
             assert edge_valid_mask is not None
-            for graph_layer in self.graph_layers:
+            for layer_index, graph_layer in enumerate(self.graph_layers):
                 x, layer_status, layer_norm = graph_layer(
                     x,
                     edge_index=edge_index,
@@ -421,7 +449,8 @@ class StructuredStateEncoder(nn.Module):
                     edge_valid_mask=edge_valid_mask,
                     valid_mask=valid_mask,
                 )
-                status_bias = status_bias + layer_status
+                if layer_index == 0:
+                    status_bias = layer_status
                 relation_update_norm = relation_update_norm + layer_norm
 
         query = self.pool_query.unsqueeze(0).expand(batch, -1)
