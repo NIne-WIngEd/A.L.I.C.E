@@ -23,6 +23,8 @@ cd "$ROOT"
 export RAYAN_UDOCKER_NVIDIA=1
 export TOKENIZERS_PARALLELISM="${TOKENIZERS_PARALLELISM:-true}"
 
+ENV_DIR="$HOME/rayan-compute/rayan-n0"
+mkdir -p "$ENV_DIR"
 {
   echo "===== MAGNOLIA P100 N0 V0.2 TEACHER-DEV CHALLENGE ====="
   date -Is
@@ -33,7 +35,7 @@ export TOKENIZERS_PARALLELISM="${TOKENIZERS_PARALLELISM:-true}"
   echo "eval_only=true"
   echo "private_identity_gradient=false"
   nvidia-smi || true
-} | tee "$HOME/rayan-compute/rayan-n0/n0-v02-dev-${SLURM_JOB_ID:-unknown}.environment.txt"
+} | tee "$ENV_DIR/n0-v02-dev-${SLURM_JOB_ID:-unknown}.environment.txt"
 
 bash "$ROOT/scripts/eipm/n0/magnolia_udocker_exec.sh" \
   "$ROOT/scripts/eipm/n0/run_n0_v02_teacher_dev_challenge.sh"
