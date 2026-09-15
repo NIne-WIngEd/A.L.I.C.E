@@ -1,6 +1,6 @@
 {
   "schema": "alice.eipm.n0.structured-state.v0.1",
-  "status": "PREPARATION_PASSED_BOUNDED_PUBLIC_PILOT_AUTHORIZED",
+  "status": "PILOT_PASS_STEP080_RATIFIED_CURRENT_BASE",
   "parent_semantic_model": "alice-n0-semantic-v0.2",
   "parent_ratification": "configs/eipm/n0/n0_v02_semantic_base_ratification_v0.1.json",
   "parent_checkpoint": "targeted-repair-v0.1/step-00000080",
@@ -18,10 +18,12 @@
     "feedforward_size": 512,
     "dropout": 0.0,
     "max_fields": 64,
+    "max_fields_role": "current_tensor_shape_not_global_capability_ceiling",
     "positional_embeddings": false,
     "pooling": "learned_query_attention",
     "order_policy": "permutation_equivariant_fields_and_permutation_invariant_pooled_state",
-    "exact_branch_parameter_count": 1656064
+    "current_ratified_branch_parameter_count": 1656064,
+    "parameter_count_role": "observed_checkpoint_fact_not_architecture_ceiling"
   },
   "typed_feature_channels": {
     "field_type": 64,
@@ -63,47 +65,66 @@
     "semantic_and_rationale_targets_must_be_separate": true
   },
   "pilot": {
-    "authorized": true,
-    "max_steps": 240,
-    "save_steps": [80, 160, 240],
+    "completed": true,
+    "historical_max_steps": 240,
+    "historical_save_steps": [80, 160, 240],
     "train_batch_size": 64,
     "learning_rate": 0.0003,
     "weight_decay": 0.05,
     "warmup_steps": 20,
     "semantic_parent_trainable_parameters": 0,
     "semantic_vectors_precomputed_once": true,
+    "selected_checkpoint": "step-00000080",
+    "selected_checkpoint_sha256": "77e9793f50bf1ada2f5f22b59e5cd023668af9392921886102fbdc3b7fee186b",
+    "selected_metrics": {
+      "grouped_preferred_top1_accuracy": 0.796078431372549,
+      "compatibility_balanced_accuracy": 0.666489414992409,
+      "mean_semantic_alignment_cosine": 0.15910235726225533,
+      "mean_field_preservation_cosine": 0.9082964715596876,
+      "mean_permutation_cosine": 0.9999999860399648
+    },
+    "random_baseline_grouped_preferred_top1_accuracy": 0.5686274509803921,
     "selection_priority": [
       "grouped_preferred_top1_accuracy",
       "compatibility_balanced_accuracy",
       "semantic_alignment_cosine",
       "earlier_checkpoint"
     ],
-    "automatic_production_promotion": false
+    "automatic_production_promotion": false,
+    "additional_repeat_pilot_authorized": false
   },
   "serving_policy": {
     "routine_max_fields": 32,
     "architectural_max_fields": 64,
+    "field_limits_are_current_serving_defaults_not_personality_capability_ceiling": true,
     "semantic_field_vectors_may_be_cached": true,
     "full_conversation_reencoding_required": false,
     "private_text_tokenization_inside_structured_branch": false
   },
   "parameter_policy": {
-    "branch_parameter_budget": 2500000,
-    "semantic_core_parameter_growth": 0,
-    "identity_specific_parameters": 0,
-    "increase_only_after_measured_capability_bottleneck": true
+    "hard_parameter_ceiling": null,
+    "current_ratified_parameter_count": 1656064,
+    "current_count_is_not_a_future_architecture_limit": true,
+    "capability_and_personality_fidelity_have_priority_over_parameter_minimization": true,
+    "capacity_policy": "increase_width_depth_heads_or_additional_modules whenever controlled evidence shows that additional capacity is needed for the personality objective",
+    "efficiency_policy": "among architectures that satisfy capability and fidelity requirements prefer the lower latency memory and compute cost; never preserve a smaller parameter count by accepting a meaningful capability loss",
+    "semantic_core_parameter_growth": "allowed_when_later_capability_evidence_justifies_it",
+    "identity_specific_parameters": 0
   },
   "training_boundary": {
     "public_structured_alignment_only": true,
     "private_identity_data": false,
     "private_identity_gradient": false,
-    "gradient_authorized": true,
-    "authorization_scope": "one_bounded_public_structured_state_pilot_only"
+    "structured_pilot_complete": true,
+    "additional_structured_gradient_authorized": false,
+    "reason": "step080 is the current ratified structured base; subsequent capacity changes require a concrete capability objective rather than a fixed parameter ceiling"
   },
   "next_after_pilot": [
-    "inspect heldout structured-state capability metrics",
-    "ratify the smallest useful checkpoint or reject the pilot",
-    "if ratified proceed to graph/evidence alignment or cross-context fusion rather than repeating structured tuning"
+    "use ratified structured step080 as the current typed-state parent",
+    "build public identity-neutral graph/evidence curriculum and objectives",
+    "allow graph or structured capacity growth if capability evidence requires it",
+    "continue toward fusion and multi-view personality representation without a fixed parameter target"
   ],
-  "anti_mc10d_rule": "do not create a separate qualification program; evaluation exists only to select or reject the imminent structured-state capability update"
+  "anti_mc10d_rule": "do not create a separate qualification program; evaluation exists only to select or reject imminent model capability work",
+  "owner_capacity_rule": "there is no rigid parameter-count target for the personality model; use as much capacity as the purpose requires while avoiding compute that does not improve capability or fidelity"
 }
