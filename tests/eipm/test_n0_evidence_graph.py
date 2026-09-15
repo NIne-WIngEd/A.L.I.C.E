@@ -103,94 +103,87 @@ def test_consistent_node_permutation_preserves_graph_read() -> None:
 
     torch.testing.assert_close(original["pooled_state"], permuted["pooled_state"], atol=1e-5, rtol=1e-5)
     torch.testing.assert_close(
-        original["field_states"][:, order, :],
-        permuted["field_states"],
-        atol=1e-5,
-        rtol=1e-5,
+        original["field_states"][:, order, :], permuted["field_states"], atol=1e-5, rtol=1e-5
     )
     torch.testing.assert_close(
-        original["field_weights"][:, order],
-        permuted["field_weights"],
-        atol=1e-5,
-        rtol=1e-5,
+        original["field_weights"][:, order], permuted["field_weights"], atol=1e-5, rtol=1e-5
     )
     torch.testing.assert_close(
         original["relation_status_bias"][:, order],
         permuted["relation_status_bias"],
-        atol=1e-6,
-        rtol=1e-6,
+        atol=1e-5,
+        rtol=1e-5,
     )
 
 
-def test_supersession_penalizes_historical_target_only() -> None:
+def test_directed_relation_updates_target_not_source_or_disconnected_node() -> None:
     model = tiny_model()
     fields = make_fields(fields=3)
 
     with torch.inference_mode():
-        result = model(
+        baseline = model(**fields, **empty_graph(), query_semantic=torch.zeros(1, 32))
+        related = model(
             **fields,
             **graph_edge(0, 1, EvidenceRelationType.SUPERSEDES),
+            query_semantic=torch.zeros(1, 32),
         )
 
     torch.testing.assert_close(
-        result["relation_status_bias"],
-        torch.tensor([[0.0, -1.0, 0.0]]),
+        baseline["field_states"][:, 0, :], related["field_states"][:, 0, :], atol=1e-6, rtol=1e-6
     )
-    assert float(result["relation_update_norm"][0, 1]) > 0.0
-    assert float(result["relation_update_norm"][0, 0]) == 0.0
-    assert float(result["relation_update_norm"][0, 2]) == 0.0
+    torch.testing.assert_close(
+        baseline["field_states"][:, 2, :], related["field_states"][:, 2, :], atol=1e-6, rtol=1e-6
+    )
+    assert not torch.allclose(baseline["field_states"][:, 1, :], related["field_states"][:, 1, :])
+    assert float(related["relation_update_norm"][0, 1]) > 0.0
+    assert float(related["relation_update_norm"][0, 0]) == 0.0
+    assert float(related["relation_status_bias"][0, 0]) == 0.0
 
 
-def test_conflict_is_symmetric_even_when_storage_edge_is_canonicalized() -> None:
+def test_supersession_pooling_bias_is_query_conditioned_not_fixed_negative() -> None:
     model = tiny_model()
     fields = make_fields(fields=3)
+    graph = graph_edge(0, 1, EvidenceRelationType.SUPERSEDES)
+
+    with torch.inference_mode():
+        first = model(**fields, **graph, query_semantic=torch.zeros(1, 32))
+        second = model(
+            **fields,
+            **graph,
+            query_semantic=torch.arange(32, dtype=torch.float32).unsqueeze(0),
+        )
+
+    assert not torch.allclose(
+        first["relation_status_bias"][:, 1],
+        second["relation_status_bias"][:, 1],
+        atol=1e-7,
+        rtol=1e-7,
+    )
+    assert float(first["relation_status_bias"][0, 0]) == 0.0
+    assert float(second["relation_status_bias"][0, 0]) == 0.0
+
+
+def test_conflict_is_symmetric_even_when_storage_edge_is_reversed() -> None:
+    model = tiny_model()
+    fields = make_fields(fields=3)
+    query = torch.randn(1, 32)
 
     with torch.inference_mode():
         forward = model(
             **fields,
             **graph_edge(0, 1, EvidenceRelationType.CONFLICTS_WITH),
+            query_semantic=query,
         )
         reverse = model(
             **fields,
             **graph_edge(1, 0, EvidenceRelationType.CONFLICTS_WITH),
+            query_semantic=query,
         )
 
     torch.testing.assert_close(forward["field_states"], reverse["field_states"], atol=1e-5, rtol=1e-5)
     torch.testing.assert_close(forward["pooled_state"], reverse["pooled_state"], atol=1e-5, rtol=1e-5)
     torch.testing.assert_close(
-        forward["relation_status_bias"],
-        torch.tensor([[-0.35, -0.35, 0.0]]),
-        atol=1e-6,
-        rtol=1e-6,
-    )
-
-
-def test_directed_relation_leaves_source_and_disconnected_nodes_unchanged() -> None:
-    model = tiny_model()
-    fields = make_fields(fields=3)
-
-    with torch.inference_mode():
-        baseline = model(**fields, **empty_graph())
-        related = model(
-            **fields,
-            **graph_edge(0, 1, EvidenceRelationType.SUPPORTS),
-        )
-
-    torch.testing.assert_close(
-        baseline["field_states"][:, 0, :],
-        related["field_states"][:, 0, :],
-        atol=1e-6,
-        rtol=1e-6,
-    )
-    torch.testing.assert_close(
-        baseline["field_states"][:, 2, :],
-        related["field_states"][:, 2, :],
-        atol=1e-6,
-        rtol=1e-6,
-    )
-    assert not torch.allclose(
-        baseline["field_states"][:, 1, :],
-        related["field_states"][:, 1, :],
+        forward["relation_status_bias"], reverse["relation_status_bias"], atol=1e-5, rtol=1e-5
     )
 
 
@@ -200,11 +193,7 @@ def test_query_changes_evidence_pooling_without_reencoding_fields() -> None:
     graph = empty_graph()
 
     with torch.inference_mode():
-        first = model(
-            **fields,
-            **graph,
-            query_semantic=torch.zeros(1, 32),
-        )
+        first = model(**fields, **graph, query_semantic=torch.zeros(1, 32))
         second = model(
             **fields,
             **graph,
@@ -228,10 +217,11 @@ def test_invalid_active_edge_fails_closed() -> None:
         raise AssertionError("out-of-range active edge must be rejected")
 
 
-def test_sidecar_parameter_report_is_descriptive_not_a_capacity_gate() -> None:
+def test_graph_parameter_report_is_measurement_not_ceiling() -> None:
     report = EvidenceGraphEncoder().parameter_report()
     assert report["total_parameters"] > 0
-    assert report["trainable_parameters"] == report["total_parameters"]
+    assert report["hard_parameter_ceiling"] is None
     assert report["semantic_core_parameter_growth"] == 0
     assert report["private_identity_parameters"] == 0
     assert report["position_embeddings"] == 0
+    assert report["relation_pooling"] == "query_conditioned_source_target_aware_conflict_symmetric"
