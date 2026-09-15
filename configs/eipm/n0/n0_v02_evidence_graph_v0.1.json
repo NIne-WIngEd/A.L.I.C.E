@@ -1,0 +1,73 @@
+{
+  "schema": "alice.eipm.n0.evidence-graph.v0.1",
+  "status": "MECHANICS_READY_NO_GRAPH_GRADIENT_AUTHORIZED",
+  "parent_semantic_model": "alice-n0-semantic-v0.2",
+  "parent_semantic_checkpoint": "targeted-repair-v0.1/step-00000080",
+  "structured_state_dependency": "configs/eipm/n0/n0_v02_structured_state_v0.1.json",
+  "implementation": "src/alice_personality/n0/evidence_graph.py",
+  "memory_relation_compiler": "src/alice_personality/n0/evidence_graph_data.py",
+  "role": "relation-aware public evidence reasoning over contextualized structured-state fields without changing the semantic core or structured-state pilot lineage",
+  "architecture": {
+    "semantic_size": 640,
+    "graph_size": 256,
+    "graph_layers": 1,
+    "num_relation_types": 64,
+    "max_fields": 64,
+    "max_edges": 256,
+    "position_embeddings": false,
+    "query_conditioned_pooling": true,
+    "base_structured_field_weight_prior": true,
+    "base_weight_scale": 0.5,
+    "exact_sidecar_parameter_count": 937728,
+    "semantic_core_parameter_growth": 0,
+    "structured_state_parameter_growth": 0
+  },
+  "relation_vocabulary": {
+    "0": "pad",
+    "1": "supports",
+    "2": "corrects",
+    "3": "supersedes",
+    "4": "conflicts_with",
+    "5": "derived_from",
+    "6": "causes",
+    "7": "temporal_successor"
+  },
+  "relation_semantics": {
+    "direction": "source_to_target",
+    "corrects": "replacement_to_historical_record",
+    "supersedes": "replacement_to_historical_record",
+    "conflicts_with": "symmetric_even_when_memory_storage_keeps_one_canonical_edge",
+    "supports_target_pool_prior": 0.2,
+    "corrects_target_pool_prior": -1.0,
+    "supersedes_target_pool_prior": -1.0,
+    "conflicts_both_endpoints_pool_prior": -0.35,
+    "confidence_weighted": true
+  },
+  "memory_core_alignment": {
+    "authoritative_relation_contract": "alice_memory.temporal.MemoryRelation",
+    "compiler_preserves_from_memory_id_to_memory_id_direction": true,
+    "external_slice_edges_are_ignored": true,
+    "edge_overflow_policy": "fail_closed_no_silent_truncation",
+    "private_plaintext_required_by_relation_compiler": false
+  },
+  "serving_policy": {
+    "routine_graph_is_sparse": true,
+    "field_states_may_be_cached": true,
+    "query_changes_pooling_without_reencoding_structured_fields": true,
+    "graph_library_dependency": false,
+    "semantic_core_reencode_required_for_relation_only_change": false
+  },
+  "training_boundary": {
+    "public_identity_neutral_only": true,
+    "private_identity_data": false,
+    "private_identity_gradient": false,
+    "graph_gradient_authorized": false,
+    "reason": "structured-state pilot lineage remains independently ratified and must be selected or rejected before graph/evidence gradient activation"
+  },
+  "required_before_graph_gradient": [
+    "run_and_select_or_reject_the_existing_bounded_structured_state_pilot",
+    "build_failure_driven_public_relation_curriculum_without_private_identity_content",
+    "define_relation_and_query_conditioned_capability_metrics"
+  ],
+  "anti_mc10d_rule": "do not create a standalone infrastructure qualification program; graph evaluation exists only to select or reject a concrete relation-aware capability update"
+}
