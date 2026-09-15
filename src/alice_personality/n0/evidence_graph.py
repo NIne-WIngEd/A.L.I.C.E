@@ -49,7 +49,11 @@ def relation_type_id(name: str) -> int:
 
 @dataclass(frozen=True)
 class EvidenceGraphConfig:
-    """Compact relation sidecar over contextualized structured-state fields."""
+    """Relation-aware evidence sidecar over structured-state fields.
+
+    Shape values are implementation settings, never global personality-model
+    capability ceilings.
+    """
 
     semantic_size: int = 640
     graph_size: int = 256
@@ -87,13 +91,6 @@ class _DirectedRelationLayer(nn.Module):
         )
         self.output_norm = nn.LayerNorm(d)
 
-        status = torch.zeros(config.num_relation_types)
-        status[int(EvidenceRelationType.SUPPORTS)] = 0.20
-        status[int(EvidenceRelationType.CORRECTS)] = -1.00
-        status[int(EvidenceRelationType.SUPERSEDES)] = -1.00
-        status[int(EvidenceRelationType.CONFLICTS_WITH)] = -0.35
-        self.register_buffer("relation_status_prior", status, persistent=True)
-
     def _messages(
         self,
         node_state: torch.Tensor,
@@ -116,7 +113,7 @@ class _DirectedRelationLayer(nn.Module):
         edge_confidence: torch.Tensor,
         edge_valid_mask: torch.Tensor,
         valid_mask: torch.Tensor,
-    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    ) -> tuple[torch.Tensor, torch.Tensor]:
         batch, fields, width = x.shape
         device = x.device
         dtype = x.dtype
@@ -170,31 +167,16 @@ class _DirectedRelationLayer(nn.Module):
             x + self.update_projection(torch.cat([x, aggregate], dim=-1))
         )
         x = torch.where(has_message, candidate, x)
-
-        status_bias = torch.zeros(batch * fields, device=device, dtype=dtype)
-        edge_prior = self.relation_status_prior[edge_type_ids].to(dtype).reshape(-1)
-        weighted_prior = edge_prior * confidence.reshape(-1) * active_flat.to(dtype)
-        status_bias.index_add_(0, target_flat, weighted_prior)
-        status_bias.index_add_(
-            0,
-            source_flat,
-            weighted_prior * conflict_flat.to(dtype),
-        )
-
-        return (
-            x,
-            status_bias.reshape(batch, fields),
-            aggregate.norm(dim=-1),
-        )
+        return x, aggregate.norm(dim=-1)
 
 
 class EvidenceGraphEncoder(nn.Module):
     """Relation-aware public evidence sidecar for N0.
 
-    ``field_states`` are contextualized 640d outputs from the separately
-    ratified ``StructuredStateEncoder``. Keeping this module separate preserves
-    the structured-state pilot's exact parameter lineage and lets graph/evidence
-    learning be authorized or rejected independently.
+    Relation propagation is directional, while relation *selection* is
+    query-conditioned. This distinction is necessary for memory fidelity: a
+    superseded record should usually lose weight for a current-state question,
+    but it may be the correct evidence for a historical question.
     """
 
     def __init__(self, config: EvidenceGraphConfig | None = None) -> None:
@@ -211,6 +193,20 @@ class EvidenceGraphEncoder(nn.Module):
         self.pool_query = nn.Parameter(torch.empty(d))
         nn.init.normal_(self.pool_query, mean=0.0, std=d ** -0.5)
         self.query_projection = nn.Linear(self.config.semantic_size, d, bias=False)
+
+        # Pooling relation effects are learned from query + relation + endpoints.
+        # There is intentionally no fixed "superseded = bad" scalar prior.
+        self.pool_relation_embedding = nn.Embedding(
+            self.config.num_relation_types,
+            d,
+            padding_idx=0,
+        )
+        self.relation_pool_mlp = nn.Sequential(
+            nn.Linear(4 * d, d),
+            nn.SiLU(),
+            nn.Linear(d, 2),
+        )
+
         self.field_output_projection = nn.Linear(d, self.config.semantic_size)
         self.pooled_output_projection = nn.Linear(d, self.config.semantic_size)
 
@@ -283,6 +279,55 @@ class EvidenceGraphEncoder(nn.Module):
                 raise ValueError("base_field_weights must be finite and non-negative")
         return batch, fields
 
+    def _query_conditioned_relation_bias(
+        self,
+        *,
+        x: torch.Tensor,
+        query: torch.Tensor,
+        edge_index: torch.Tensor,
+        edge_type_ids: torch.Tensor,
+        edge_confidence: torch.Tensor,
+        edge_valid_mask: torch.Tensor,
+        valid_mask: torch.Tensor,
+    ) -> torch.Tensor:
+        batch, fields, width = x.shape
+        source = edge_index[..., 0].clamp(0, fields - 1)
+        target = edge_index[..., 1].clamp(0, fields - 1)
+        batch_index = torch.arange(batch, device=x.device).unsqueeze(1).expand_as(source)
+        active = (
+            edge_valid_mask
+            & valid_mask[batch_index, source]
+            & valid_mask[batch_index, target]
+        )
+
+        source_state = x[batch_index, source]
+        target_state = x[batch_index, target]
+        relation = self.pool_relation_embedding(edge_type_ids)
+        query_state = query.unsqueeze(1).expand(-1, source.size(1), -1)
+        pair = torch.cat([query_state, relation, source_state, target_state], dim=-1)
+        endpoint_bias = self.relation_pool_mlp(pair)
+        confidence = edge_confidence.to(x.dtype).clamp(0.0, 1.0).squeeze(-1)
+        endpoint_bias = endpoint_bias * confidence.unsqueeze(-1)
+        endpoint_bias = endpoint_bias * active.to(x.dtype).unsqueeze(-1)
+
+        flat_bias = torch.zeros(batch * fields, device=x.device, dtype=x.dtype)
+        offsets = (torch.arange(batch, device=x.device) * fields).unsqueeze(1)
+        source_flat = (source + offsets).reshape(-1)
+        target_flat = (target + offsets).reshape(-1)
+
+        target_bias = endpoint_bias[..., 0].reshape(-1)
+        source_bias = endpoint_bias[..., 1].reshape(-1)
+        flat_bias.index_add_(0, target_flat, target_bias)
+
+        # Conflict is symmetric. Other relation directions retain source->target
+        # semantics, but the source can still win through semantic query pooling.
+        conflict = (
+            active
+            & (edge_type_ids == int(EvidenceRelationType.CONFLICTS_WITH))
+        ).to(x.dtype).reshape(-1)
+        flat_bias.index_add_(0, source_flat, source_bias * conflict)
+        return flat_bias.reshape(batch, fields)
+
     def forward(
         self,
         *,
@@ -307,10 +352,9 @@ class EvidenceGraphEncoder(nn.Module):
         )
 
         x = self.input_norm(self.input_projection(field_states))
-        status_bias = torch.zeros(batch, fields, device=x.device, dtype=x.dtype)
-        relation_update_norm = torch.zeros_like(status_bias)
-        for layer_index, layer in enumerate(self.layers):
-            x, layer_status, layer_norm = layer(
+        relation_update_norm = torch.zeros(batch, fields, device=x.device, dtype=x.dtype)
+        for layer in self.layers:
+            x, layer_norm = layer(
                 x,
                 edge_index=edge_index,
                 edge_type_ids=edge_type_ids,
@@ -318,8 +362,6 @@ class EvidenceGraphEncoder(nn.Module):
                 edge_valid_mask=edge_valid_mask,
                 valid_mask=valid_mask,
             )
-            if layer_index == 0:
-                status_bias = layer_status
             relation_update_norm = relation_update_norm + layer_norm
 
         query = self.pool_query.unsqueeze(0).expand(batch, -1)
@@ -327,8 +369,18 @@ class EvidenceGraphEncoder(nn.Module):
             query = query + self.query_projection(query_semantic)
         query = torch.nn.functional.normalize(query, dim=-1)
 
+        relation_status_bias = self._query_conditioned_relation_bias(
+            x=x,
+            query=query,
+            edge_index=edge_index,
+            edge_type_ids=edge_type_ids,
+            edge_confidence=edge_confidence,
+            edge_valid_mask=edge_valid_mask,
+            valid_mask=valid_mask,
+        )
+
         pool_scores = torch.einsum("bfd,bd->bf", x, query) / math.sqrt(self.config.graph_size)
-        pool_scores = pool_scores + status_bias
+        pool_scores = pool_scores + relation_status_bias
         if base_field_weights is not None and self.config.base_weight_scale > 0.0:
             base_prior = base_field_weights.to(x.dtype).clamp_min(1e-6).log()
             pool_scores = pool_scores + self.config.base_weight_scale * base_prior
@@ -340,7 +392,7 @@ class EvidenceGraphEncoder(nn.Module):
             "field_states": self.field_output_projection(x),
             "pooled_state": self.pooled_output_projection(pooled),
             "field_weights": field_weights,
-            "relation_status_bias": status_bias,
+            "relation_status_bias": relation_status_bias,
             "relation_update_norm": relation_update_norm,
             "valid_mask": valid_mask,
         }
@@ -360,4 +412,6 @@ class EvidenceGraphEncoder(nn.Module):
             "position_embeddings": 0,
             "private_identity_parameters": 0,
             "semantic_core_parameter_growth": 0,
+            "hard_parameter_ceiling": None,
+            "relation_pooling": "query_conditioned_source_target_aware",
         }
