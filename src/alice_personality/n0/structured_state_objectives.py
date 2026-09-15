@@ -63,6 +63,7 @@ def binary_rationale_compatibility_loss(
     labels: torch.Tensor,
     *,
     logit_scale: torch.Tensor | float = 5.0,
+    positive_weight: torch.Tensor | float | None = None,
 ) -> torch.Tensor:
     """Positive/negative compatibility against governed rationale supervision."""
     if structured.shape != rationale.shape or structured.ndim != 2:
@@ -72,24 +73,42 @@ def binary_rationale_compatibility_loss(
     structured = F.normalize(structured, dim=-1)
     rationale = F.normalize(rationale, dim=-1)
     logits = (structured * rationale).sum(dim=-1) * logit_scale
-    return F.binary_cross_entropy_with_logits(logits, labels.to(logits.dtype))
+    pos_weight = None
+    if positive_weight is not None:
+        pos_weight = torch.as_tensor(positive_weight, dtype=logits.dtype, device=logits.device)
+        if pos_weight.numel() != 1 or not torch.isfinite(pos_weight) or pos_weight.item() <= 0.0:
+            raise ValueError("positive_weight must be one finite positive scalar")
+    return F.binary_cross_entropy_with_logits(
+        logits,
+        labels.to(logits.dtype),
+        pos_weight=pos_weight,
+    )
 
 
 def structured_state_objective(
     *,
     pooled_state: torch.Tensor,
-    target_semantic: torch.Tensor,
+    semantic_target: torch.Tensor,
+    rationale_target: torch.Tensor,
     field_states: torch.Tensor,
     field_semantic: torch.Tensor,
     valid_mask: torch.Tensor,
     permuted_pooled_state: torch.Tensor,
     compatibility_labels: torch.Tensor,
+    compatibility_positive_weight: torch.Tensor | float | None = None,
     alignment_weight: float = 0.45,
     compatibility_weight: float = 0.30,
     field_preservation_weight: float = 0.15,
     permutation_weight: float = 0.10,
     temperature: float = 0.07,
 ) -> dict[str, torch.Tensor]:
+    """Joint identity-neutral structured-state objective.
+
+    `semantic_target` represents the meaning of the structured fields themselves.
+    `rationale_target` is separate governed supervision used only for compatibility.
+    Keeping these targets distinct prevents negative candidates from being pulled
+    toward the same rationale that they are simultaneously trained to reject.
+    """
     weights = {
         "alignment": alignment_weight,
         "compatibility": compatibility_weight,
@@ -103,13 +122,14 @@ def structured_state_objective(
 
     alignment = symmetric_semantic_alignment_loss(
         pooled_state,
-        target_semantic,
+        semantic_target,
         temperature=temperature,
     )
     compatibility = binary_rationale_compatibility_loss(
         pooled_state,
-        target_semantic,
+        rationale_target,
         compatibility_labels,
+        positive_weight=compatibility_positive_weight,
     )
     field_preservation = masked_field_preservation_loss(
         field_states,
