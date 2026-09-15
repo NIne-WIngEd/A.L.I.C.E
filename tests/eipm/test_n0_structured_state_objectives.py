@@ -44,18 +44,32 @@ def test_permutation_consistency_is_zero_for_identical_pooled_state() -> None:
     assert loss.item() == pytest.approx(0.0, abs=1e-6)
 
 
-def test_compatibility_loss_prefers_correct_signs() -> None:
+def test_compatibility_loss_prefers_correct_signs_and_accepts_class_weight() -> None:
     structured = torch.tensor([[1.0, 0.0], [1.0, 0.0]])
     rationale = torch.tensor([[1.0, 0.0], [-1.0, 0.0]])
     labels = torch.tensor([1.0, 0.0])
-    loss = binary_rationale_compatibility_loss(structured, rationale, labels)
-    assert loss.item() < 0.1
+    loss = binary_rationale_compatibility_loss(
+        structured,
+        rationale,
+        labels,
+        positive_weight=2.0,
+    )
+    assert loss.item() < 0.15
+
+    with pytest.raises(ValueError, match="positive_weight"):
+        binary_rationale_compatibility_loss(
+            structured,
+            rationale,
+            labels,
+            positive_weight=0.0,
+        )
 
 
-def test_combined_objective_is_finite_and_weighted() -> None:
+def test_combined_objective_uses_distinct_semantic_and_rationale_targets() -> None:
     torch.manual_seed(11)
     pooled = torch.randn(4, 8)
-    target = pooled + 0.05 * torch.randn(4, 8)
+    semantic_target = pooled + 0.05 * torch.randn(4, 8)
+    rationale_target = torch.randn(4, 8)
     fields = torch.randn(4, 3, 8)
     field_semantic = fields + 0.05 * torch.randn(4, 3, 8)
     valid = torch.ones(4, 3, dtype=torch.bool)
@@ -63,12 +77,14 @@ def test_combined_objective_is_finite_and_weighted() -> None:
 
     result = structured_state_objective(
         pooled_state=pooled,
-        target_semantic=target,
+        semantic_target=semantic_target,
+        rationale_target=rationale_target,
         field_states=fields,
         field_semantic=field_semantic,
         valid_mask=valid,
         permuted_pooled_state=pooled.clone(),
         compatibility_labels=labels,
+        compatibility_positive_weight=2.0,
     )
     assert set(result) == {
         "loss",
@@ -79,10 +95,26 @@ def test_combined_objective_is_finite_and_weighted() -> None:
     }
     assert all(torch.isfinite(value) for value in result.values())
 
+    changed_rationale = -rationale_target
+    changed = structured_state_objective(
+        pooled_state=pooled,
+        semantic_target=semantic_target,
+        rationale_target=changed_rationale,
+        field_states=fields,
+        field_semantic=field_semantic,
+        valid_mask=valid,
+        permuted_pooled_state=pooled.clone(),
+        compatibility_labels=labels,
+        compatibility_positive_weight=2.0,
+    )
+    assert changed["alignment"].item() == pytest.approx(result["alignment"].item())
+    assert changed["compatibility"].item() != pytest.approx(result["compatibility"].item())
+
     with pytest.raises(ValueError, match="sum to 1.0"):
         structured_state_objective(
             pooled_state=pooled,
-            target_semantic=target,
+            semantic_target=semantic_target,
+            rationale_target=rationale_target,
             field_states=fields,
             field_semantic=field_semantic,
             valid_mask=valid,
