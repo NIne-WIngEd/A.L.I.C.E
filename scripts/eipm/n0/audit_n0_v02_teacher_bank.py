@@ -35,6 +35,14 @@ def normalized_text(text: str) -> str:
     return " ".join(text.lower().split())
 
 
+def display_path(path: Path) -> str:
+    """Use repo-relative paths when possible and preserve valid external runtime paths."""
+    resolved = path.resolve()
+    if resolved == ROOT or ROOT in resolved.parents:
+        return str(resolved.relative_to(ROOT))
+    return str(resolved)
+
+
 def item_fingerprint(prompt: str, candidates: list[Any]) -> str:
     """Fingerprint the semantic item rather than a generic instruction stem.
 
@@ -94,7 +102,7 @@ def main() -> None:
         fixed_rows.extend(rows)
         fixed_suite_reports.append(
             {
-                "path": str(path.relative_to(ROOT)),
+                "path": display_path(path),
                 "rows": len(rows),
                 "competencies": len(competencies),
             }
@@ -172,6 +180,7 @@ def main() -> None:
                 expected_source = {
                     "principle_bank_v04a": "sol_authored_principle_bank_v04a",
                     "voice_principle_bank_v04b": "sol_authored_voice_principle_bank_v04b",
+                    "coverage_wave_v05": "sol_authored_coverage_wave_v05",
                 }.get(generation)
                 if expected_source and str(row.get("source")) != expected_source:
                     failures.append(
@@ -184,7 +193,7 @@ def main() -> None:
 
         shard_reports.append(
             {
-                "curriculum": str(curriculum.relative_to(ROOT)),
+                "curriculum": display_path(curriculum),
                 "rows": len(rows),
                 "split_counts": row_report["split_counts"],
                 "competencies": len(row_report["competency_counts"]),
@@ -199,15 +208,29 @@ def main() -> None:
     if total_rows != registered_expected:
         failures.append(f"registered row count expected {registered_expected}, got {total_rows}")
 
+    if "v05_rows" in registry:
+        expected_v05_rows = int(registry["v05_rows"])
+        if generation_rows["coverage_wave_v05"] != expected_v05_rows:
+            failures.append(
+                f"v0.5 coverage wave expected {expected_v05_rows} rows, got {generation_rows['coverage_wave_v05']}"
+            )
+
     missing_competencies = sorted(expected_competencies.difference(competency_split))
     if missing_competencies:
         failures.append(f"missing competencies: {missing_competencies}")
 
+    minimum_train = int(registry.get("minimum_train_scenarios_per_competency", 1))
+    minimum_dev = int(registry.get("minimum_dev_scenarios_per_competency", 1))
+    if minimum_train < 1 or minimum_dev < 1:
+        failures.append("per-competency train/dev minimums must be positive")
+
     for competency in sorted(expected_competencies):
         counts = competency_split[competency]
-        if counts["train"] < 1 or counts["dev"] < 1:
+        if counts["train"] < minimum_train or counts["dev"] < minimum_dev:
             failures.append(
-                f"competency lacks train/dev support: {competency} train={counts['train']} dev={counts['dev']}"
+                "competency below coverage floor: "
+                f"{competency} train={counts['train']}/{minimum_train} "
+                f"dev={counts['dev']}/{minimum_dev}"
             )
 
     core_competencies = {c for c in expected_competencies if not c.startswith("VOICE-")}
@@ -260,13 +283,14 @@ def main() -> None:
     full_minimum = int(registry.get("full_multitask_minimum_rows", 1000))
     readiness_target = int(registry.get("initial_readiness_target_rows", 2500))
     coverage_gate_ok = all(
-        competency_split[c]["train"] >= 1 and competency_split[c]["dev"] >= 1
+        competency_split[c]["train"] >= minimum_train
+        and competency_split[c]["dev"] >= minimum_dev
         for c in expected_competencies
     )
     report = {
-        "schema": "alice.eipm.n0.teacher-bank-audit.v0.4b",
+        "schema": "alice.eipm.n0.teacher-bank-audit.v0.5",
         "status": "PASS" if not failures else "FAIL",
-        "registry": str(registry_path.relative_to(ROOT)),
+        "registry": display_path(registry_path),
         "fixed_eval_suites": fixed_suite_reports,
         "registered_rows": total_rows,
         "unique_ids": len(all_ids),
@@ -275,11 +299,14 @@ def main() -> None:
         "voice_competencies": len(voice_competencies),
         "v04a_rows": generation_rows["principle_bank_v04a"],
         "v04b_voice_rows": generation_rows["voice_principle_bank_v04b"],
+        "v05_rows": generation_rows["coverage_wave_v05"],
         "distinct_principle_tags_v04plus": len(principle_counts),
         "preferred_position_counts_single_preference_v04plus": dict(sorted(preferred_position_counts.items())),
         "preferred_position_fraction_single_preference_v04plus": preferred_fraction,
         "full_multitask_minimum_rows": full_minimum,
         "rows_remaining_to_full_multitask_minimum": max(0, full_minimum - total_rows),
+        "minimum_train_scenarios_per_competency": minimum_train,
+        "minimum_dev_scenarios_per_competency": minimum_dev,
         "coverage_gate_ok": coverage_gate_ok,
         "full_multitask_gate_open": total_rows >= full_minimum and coverage_gate_ok and not failures,
         "initial_readiness_target_rows": readiness_target,
