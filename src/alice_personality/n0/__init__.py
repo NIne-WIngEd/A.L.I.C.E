@@ -1,24 +1,27 @@
-"""N0 native semantic and structured-state foundation for the A.L.I.C.E. personality model."""
+"""N0 native semantic, structured-state, and evidence-graph foundation."""
 
 from .config import N0BuildConfig, load_n0_config
-from .evidence_graph_data import CompiledEvidenceGraph, compile_memory_relation_graph
-from .model import build_masked_lm, count_parameters
-from .structured_state import (
+from .evidence_graph import (
+    EvidenceGraphConfig,
+    EvidenceGraphEncoder,
     EvidenceRelationType,
-    StructuredStateConfig,
-    StructuredStateEncoder,
     relation_type_id,
 )
+from .evidence_graph_data import CompiledEvidenceGraph, compile_memory_relation_graph
+from .model import build_masked_lm, count_parameters
+from .structured_state import StructuredStateConfig, StructuredStateEncoder
 
 __all__ = [
     "N0BuildConfig",
     "load_n0_config",
     "build_masked_lm",
     "count_parameters",
-    "EvidenceRelationType",
-    "relation_type_id",
     "StructuredStateConfig",
     "StructuredStateEncoder",
+    "EvidenceGraphConfig",
+    "EvidenceGraphEncoder",
+    "EvidenceRelationType",
+    "relation_type_id",
     "CompiledEvidenceGraph",
     "compile_memory_relation_graph",
 ]
