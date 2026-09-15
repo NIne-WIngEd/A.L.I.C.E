@@ -179,6 +179,8 @@ def save_checkpoint(
             "mlm_probability": 0.30,
             "mlm_grad_accum_per_optimizer_step": mlm_grad_accum,
             "teacher_batch_size_per_process": teacher_batch_size,
+            "public_corpus_shuffle_seed": seed,
+            "public_corpus_shuffle_method": "sha256(seed:text_sha256)_global_train_row_order",
             "objective_weights": OBJECTIVE_WEIGHTS,
             "mean_objective_losses_since_launch": average_losses,
             "mlm_tokens_seen_total_across_processes": global_tokens,
@@ -330,6 +332,7 @@ def main() -> None:
         tokenizer=tokenizer,
         sequence_length=args.sequence_length,
         split="train",
+        shuffle_seed=args.seed,
     )
     mlm_loader = DataLoader(
         mlm_dataset,
@@ -414,6 +417,7 @@ def main() -> None:
                     "teacher_train_rows": len(teacher_dataset),
                     "teacher_competencies": int(teacher_report["competency_count"]),
                     "corpus_sources": len(corpus_receipt["sources"]),
+                    "corpus_shuffle_seed": args.seed,
                     "sequence_length": args.sequence_length,
                     "mlm_grad_accum": args.mlm_grad_accum,
                     "objective_weights": OBJECTIVE_WEIGHTS,
