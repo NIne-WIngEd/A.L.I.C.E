@@ -1,7 +1,7 @@
 {
   "schema_version": "0.2",
   "model_id": "alice-n0-semantic-v0.2",
-  "status": "public_multitask_gate_open_first_tranche_ready",
+  "status": "first_public_multitask_tranche_passed_challenge_eval_required",
   "supersedes_production_candidate": "alice-n0-semantic-v0.1",
   "preserve_baseline_checkpoint": "alice-n0-semantic-v0.1@step-00001000",
   "architecture": {
@@ -103,6 +103,9 @@
       "expansion_after_gate": "failure_driven_and_cross_competency_first_not_blind_quota_filling"
     },
     "first_public_tranche": {
+      "status": "PASS",
+      "magnolia_job": 575583,
+      "elapsed": "00:25:52",
       "sequence_length": 512,
       "optimizer_steps": 500,
       "save_steps": [250, 500],
@@ -115,10 +118,27 @@
       "scheduler_horizon_steps": 10000,
       "weight_decay": 0.1,
       "precision": "fp16",
-      "pre_and_post_fixed_core_eval": true,
-      "pre_and_post_fixed_voice_eval": true,
-      "random_seed": 20260914
+      "random_seed": 20260914,
+      "step_250": {
+        "core_top1": 0.9765625,
+        "core_full_invariance": 0.9767441860465116,
+        "voice_top1": 1.0,
+        "voice_full_invariance": 1.0,
+        "mlm_mean_nll": 7.069161061591374,
+        "mlm_perplexity": 1175.161732270166
+      },
+      "step_500": {
+        "core_top1": 0.9765625,
+        "core_full_invariance": 0.9767441860465116,
+        "voice_top1": 1.0,
+        "voice_full_invariance": 1.0,
+        "mlm_mean_nll": 6.660787895483231,
+        "mlm_perplexity": 781.1661720231687,
+        "sole_fixed_core_failure": "N0V02-FIX-ALIGN-01"
+      },
+      "interpretation": "semantic_MLM_improved_250_to_500_but_small_fixed_ranker_suite_saturated_and_preference_margins_grew_without_accuracy_gain"
     },
+    "next_gradient_rule": "no_additional_gradient_until_expanded_generalization_challenge_compares_step250_and_step500",
     "fixed_total_token_budget": null,
     "stop_rule": "continue_while_fixed_heldout_capability_gain_per_gpu_hour_materially_justifies_compute",
     "checkpoint_policy": "resumable_hashed_lineage",
@@ -137,6 +157,20 @@
   "evaluation": {
     "fixed_suite": "evaluation/eipm/n0/n0_v02_fixed_readiness_base_v0.1.jsonl",
     "voice_fixed_suite": "evaluation/eipm/n0/n0_v02_voice_readiness_base_v0.1.jsonl",
+    "fixed_suite_current_scope": "43_core_base_plus_8_voice_base_cases_with_order_and_paraphrase_variants",
+    "current_fixed_suite_saturated": true,
+    "challenge_eval_required_before_more_training": true,
+    "challenge_eval_compare_checkpoints": [250, 500],
+    "challenge_eval_focus": [
+      "new_heldout_scenarios",
+      "hard_negatives",
+      "cross_competency_cases",
+      "ambiguity_and_ties",
+      "calibration_and_margin_growth",
+      "multi_turn_context",
+      "voice_expression_generalization",
+      "ALIGN-01_event_role_repair_signal"
+    ],
     "voice_first_interaction_required": true,
     "voice_expression_contract": "docs/eipm/EIPM_VOICE_FIRST_INTERACTION_CONTRACT_v1.0.md",
     "fixed_suite_compiler": "scripts/eipm/n0/compile_n0_v02_fixed_eval.py",
@@ -157,8 +191,9 @@
     "cpu_preflight_passed": true,
     "gpu_hold_until_cpu_preflight_passes": false,
     "public_multitask_gate_passed": true,
-    "first_gpu_segment_rule": "bounded_segment_with_pre_and_post_fixed_eval",
-    "first_gpu_segment_time_ceiling_hours": 4,
+    "first_gpu_segment_passed": true,
+    "first_gpu_segment_job": 575583,
+    "next_compute_action": "expanded_challenge_evaluation_only_before_more_gradient_updates",
     "decision_metric": "fixed_generalization_delta_per_gpu_hour",
     "raw_mlm_loss_is_not_a_promotion_metric": true
   },
