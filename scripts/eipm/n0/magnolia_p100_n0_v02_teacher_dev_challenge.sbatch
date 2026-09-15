@@ -23,6 +23,11 @@ cd "$ROOT"
 export RAYAN_UDOCKER_NVIDIA=1
 export TOKENIZERS_PARALLELISM="${TOKENIZERS_PARALLELISM:-true}"
 
+# Keep the old pre-hardening teacher-dev evidence immutable. The hardened
+# comparison uses a fresh v0.2 namespace so the fail-closed runner never
+# collides with or overwrites teacher-dev-challenge-v0.1.
+export N0_V02_TEACHER_DEV_EVAL_ROOT="${N0_V02_TEACHER_DEV_EVAL_ROOT:-$HOME/rayan-compute/rayan-n0/n0-v02/teacher-dev-challenge-v0.2}"
+
 ENV_DIR="$HOME/rayan-compute/rayan-n0"
 mkdir -p "$ENV_DIR"
 {
@@ -33,6 +38,7 @@ mkdir -p "$ENV_DIR"
   echo "repo_root=$ROOT"
   echo "gpu_request=1xP100"
   echo "eval_only=true"
+  echo "teacher_dev_eval_root=$N0_V02_TEACHER_DEV_EVAL_ROOT"
   echo "private_identity_gradient=false"
   nvidia-smi || true
 } | tee "$ENV_DIR/n0-v02-dev-${SLURM_JOB_ID:-unknown}.environment.txt"
