@@ -1,0 +1,69 @@
+{
+  "schema": "alice.eipm.n0.efficiency-policy.v0.1",
+  "status": "ACTIVE",
+  "model_id": "alice-n0-semantic-v0.2",
+  "purpose": "Keep N0 capability work on an interactive latency and efficiency Pareto frontier. Capability gains that create multi-second or multi-minute routine-turn latency are not acceptable production wins.",
+  "current_architecture": {
+    "family": "ModernBERT-style native bidirectional encoder",
+    "exact_parameters": 136594435,
+    "layers": 16,
+    "hidden_size": 640,
+    "attention": "alternating local/global",
+    "default_training_sequence_length": 512,
+    "serving_graph_growth_allowed_for_current_repair": false
+  },
+  "frontier_research_watch": {
+    "retain_now": [
+      "ModernBERT hardware-aware encoder design, alternating local/global attention, packing/unpadding",
+      "memory-efficient exact attention where supported by deployment hardware"
+    ],
+    "ablate_only_if_measured_bottleneck": [
+      "Gated DeltaNet / hybrid linear-attention layers",
+      "Kimi Delta Attention / Kimi Linear style hybridization",
+      "Mamba-2 / state-space hybrid blocks",
+      "Titans-style learned long-term memory"
+    ],
+    "reason_not_to_switch_blindly": "The newer recurrent/linear architectures are compelling for long-context autoregressive scaling but are not yet established as a strict quality/latency replacement for this bidirectional N0 ranking workload. Architecture changes require measured Pareto evidence, not novelty alone."
+  },
+  "interactive_fast_path": {
+    "default_context_tokens_max": 512,
+    "long_context_is_escalation_path": true,
+    "do_not_reencode_full_conversation_history_each_turn": true,
+    "memory_strategy": "retrieve compact relevant memory/state first; cache stable memory-item embeddings; cross-encode only the small final candidate set",
+    "cross_encoder_candidate_budget_default": 3,
+    "candidate_budget_growth_requires_measured_need": true,
+    "static_memory_embedding_cache_allowed": true,
+    "bidirectional_prefix_kv_cache_assumed": false,
+    "cold_start_measured_separately": true
+  },
+  "latency_targets": {
+    "status": "engineering targets pending reference-hardware benchmark",
+    "warm_n0_semantic_p50_ms_preferred": 200,
+    "warm_n0_semantic_p95_ms_max": 500,
+    "routine_turn_multi_second_n0_latency_acceptable": false,
+    "routine_turn_multi_minute_latency_acceptable": false,
+    "latency_gate_scope": "normal <=512-token fast path with <=3 cross-encoded candidates on the selected deployment target",
+    "promotion_rule": "A capability candidate that materially regresses the latency budget must be compressed, routed behind an escalation path, or rejected."
+  },
+  "memory_and_compute_rules": {
+    "no_default_8k_context_every_turn": true,
+    "no_external_model_committee_on_routine_turns": true,
+    "no_iterative_self_judge_loop_on_routine_turns": true,
+    "no_runtime_adapter_required_for_targeted_repair": true,
+    "quantization_after_quality_parity": true,
+    "preferred_serving_precision": "hardware-dependent: FP16/BF16 on suitable GPU; INT8 or NPU-native quantization only after parity validation",
+    "p100_is_training_route_not_production_architecture_constraint": true,
+    "flashattention3_hopper_specific_not_assumed_on_p100": true
+  },
+  "repair_20260915": {
+    "parent_checkpoint": "step-00000250",
+    "parameter_growth": 0,
+    "context_growth": 0,
+    "runtime_adapter_growth": 0,
+    "selective_update": "top 4 backbone layers plus semantic/ranking heads",
+    "broad_replay": true,
+    "goal": "repair observed reasoning failures while preserving the deployed architecture and avoiding step-500 confidence inflation"
+  },
+  "anti_mc10d_rule": "Infrastructure and benchmarks may guard real model work, but they may not become the project. Every validation gate must either protect an imminent weight/data/architecture change or directly measure a product capability needed for A.L.I.C.E. Repeated infrastructure qualification without new A.L.I.C.E. capability work is forbidden.",
+  "private_identity_gradient": false
+}
