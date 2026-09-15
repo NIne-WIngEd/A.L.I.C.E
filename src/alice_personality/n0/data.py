@@ -21,7 +21,16 @@ def stable_document_split(text_sha256: str) -> str:
 
 
 class PackedJSONLIterableDataset(IterableDataset):
-    """Stream normalized JSONL and pack documents into fixed-length sequences."""
+    """Read normalized JSONL and pack documents into fixed-length sequences.
+
+    ``shuffle_seed`` is optional so legacy N0 behavior remains unchanged. When
+    supplied, all rows in the requested split are ordered by a deterministic
+    hash of ``seed:text_sha256`` before packing. This is important for bounded
+    v0.2 tranches: the materialized shard paths are grouped by source, so simply
+    stopping after a few million tokens would otherwise expose only the first
+    alphabetical source families instead of a representative slice of the
+    already-balanced 21-source corpus.
+    """
 
     def __init__(
         self,
@@ -29,14 +38,16 @@ class PackedJSONLIterableDataset(IterableDataset):
         tokenizer: Any,
         sequence_length: int,
         split: str = "train",
+        shuffle_seed: int | None = None,
     ) -> None:
         super().__init__()
         self.paths = [Path(path) for path in paths]
         self.tokenizer = tokenizer
         self.sequence_length = sequence_length
         self.split = split
+        self.shuffle_seed = shuffle_seed
 
-    def _rows(self) -> Iterator[dict[str, Any]]:
+    def _source_rows(self) -> Iterator[dict[str, Any]]:
         for path in self.paths:
             with path.open("r", encoding="utf-8") as handle:
                 for line in handle:
@@ -46,6 +57,21 @@ class PackedJSONLIterableDataset(IterableDataset):
                     row_split = row.get("split") or stable_document_split(row["text_sha256"])
                     if row_split == self.split:
                         yield row
+
+    def _rows(self) -> Iterator[dict[str, Any]]:
+        if self.shuffle_seed is None:
+            yield from self._source_rows()
+            return
+
+        keyed: list[tuple[str, dict[str, Any]]] = []
+        prefix = f"{self.shuffle_seed}:"
+        for row in self._source_rows():
+            text_sha = str(row["text_sha256"])
+            order_key = hashlib.sha256((prefix + text_sha).encode("utf-8")).hexdigest()
+            keyed.append((order_key, row))
+        keyed.sort(key=lambda item: item[0])
+        for _, row in keyed:
+            yield row
 
     def __iter__(self) -> Iterator[dict[str, torch.Tensor]]:
         buffer: list[int] = [self.tokenizer.cls_token_id]
