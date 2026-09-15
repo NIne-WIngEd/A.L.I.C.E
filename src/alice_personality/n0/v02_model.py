@@ -124,6 +124,55 @@ class AliceN0V02Model(nn.Module):
         rationale = self.project_rationale(rationale_input_ids, rationale_attention_mask)
         return self.principle_alignment_from_projected(semantic, rationale)
 
+    def forward(
+        self,
+        *,
+        task: str,
+        input_ids: torch.Tensor | None = None,
+        attention_mask: torch.Tensor | None = None,
+        labels: torch.Tensor | None = None,
+        candidate_input_ids: torch.Tensor | None = None,
+        candidate_attention_mask: torch.Tensor | None = None,
+        rationale_input_ids: torch.Tensor | None = None,
+        rationale_attention_mask: torch.Tensor | None = None,
+    ) -> Any:
+        """DDP-safe forward entry point for the two N0 v0.2 training paths.
+
+        Conditional task dispatch keeps every backbone call inside the wrapped
+        model's forward method. This matters for DistributedDataParallel: the
+        trainer must not bypass the wrapper by calling ``model.module`` during
+        gradient-bearing work.
+        """
+        if task == "mlm":
+            if input_ids is None or attention_mask is None or labels is None:
+                raise ValueError("task=mlm requires input_ids, attention_mask, and labels")
+            return self.forward_mlm(input_ids, attention_mask, labels)
+
+        if task == "teacher":
+            if (
+                candidate_input_ids is None
+                or candidate_attention_mask is None
+                or rationale_input_ids is None
+                or rationale_attention_mask is None
+            ):
+                raise ValueError("task=teacher requires candidate and rationale tensors")
+            if candidate_input_ids.size(1) != rationale_input_ids.size(1):
+                raise ValueError("teacher candidate/rationale sequence widths must match")
+
+            candidate_count = candidate_input_ids.size(0)
+            joined_ids = torch.cat([candidate_input_ids, rationale_input_ids], dim=0)
+            joined_mask = torch.cat([candidate_attention_mask, rationale_attention_mask], dim=0)
+            pooled = self.encode(joined_ids, joined_mask)
+            candidate_pooled = pooled[:candidate_count]
+            rationale_pooled = pooled[candidate_count:]
+            return {
+                "scores": self.score_pooled(candidate_pooled),
+                "semantic": self.project_semantic_pooled(candidate_pooled),
+                "rationale": self.project_rationale_pooled(rationale_pooled),
+            }
+
+        raise ValueError(f"unsupported N0 v0.2 task: {task!r}")
+
     def parameter_report(self) -> dict[str, int]:
         total = sum(parameter.numel() for parameter in self.parameters())
         trainable = sum(parameter.numel() for parameter in self.parameters() if parameter.requires_grad)
