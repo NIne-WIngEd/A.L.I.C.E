@@ -1,0 +1,67 @@
+{
+  "schema": "alice.eipm.n0.v02-semantic-base-ratification.v0.1",
+  "status": "RATIFIED_SEMANTIC_BASE_NOT_FULL_EIPM_PROMOTION",
+  "model_id": "alice-n0-semantic-v0.2",
+  "selected_checkpoint": "targeted-repair-v0.1/step-00000080",
+  "selected_parent": "first-tranche-v0.1/step-00000250",
+  "selection_artifact": "$HOME/rayan-compute/rayan-n0/n0-v02/post-repair-selection-v0.1/post_repair_selection.json",
+  "selection_code_revision": "0944240eb4424c1986d445567868eb592338bb32",
+  "training_job": 575589,
+  "checkpoint_hashes": {
+    "full_model_sha256": "6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43",
+    "ranker_sha256": "b9f98bf2827580a9e266276d08e221c568885df2c04c4437b77d6e6f9638cbf7"
+  },
+  "capability_evidence": {
+    "repair_dev": {
+      "top1_accuracy": 0.8,
+      "separation_rate": 0.8,
+      "failures": 2,
+      "parent_top1_accuracy": 0.6
+    },
+    "teacher_dev": {
+      "top1_accuracy": 0.8736842105263158,
+      "full_invariance_pass_rate": 0.8745098039215686,
+      "parent_top1_accuracy": 0.8736842105263158,
+      "parent_full_invariance_pass_rate": 0.8745098039215686
+    },
+    "novel_cross_competency": {
+      "top1_accuracy": 0.875,
+      "separation_rate": 0.875,
+      "full_invariance_pass_rate": 0.875,
+      "failures": [
+        "N0V02-NOVEL-ALIGNTEMP-02",
+        "N0V02-NOVEL-SEMRANK-02",
+        "N0V02-NOVEL-VOICESOC-01"
+      ],
+      "mean_abs_score_on_failed_examples": 3.270193786256843,
+      "parent_top1_accuracy": 0.8125,
+      "parent_full_invariance_pass_rate": 0.7916666666666666
+    }
+  },
+  "latency_sanity": {
+    "hardware": "Tesla P100-PCIE-12GB",
+    "candidate_count": 3,
+    "interactive_sequence_length": 64,
+    "end_to_end_p50_ms": 32.46055170893669,
+    "end_to_end_p95_ms": 37.80382387340069,
+    "model_only_p50_ms": 13.3785679936409,
+    "model_only_p95_ms": 16.145253740251064,
+    "stress_512_model_only_p50_ms": 67.0014526695013,
+    "stress_512_model_only_p95_ms": 67.36296713352203,
+    "warm_interactive_target_ms_p95": 500.0,
+    "target_pass": true,
+    "production_slo_claim": false
+  },
+  "selection_reason": "step80 improves novel and targeted held-out capability over the parent without teacher-dev aggregate regression; step120 ties targeted/novel correctness but is more overconfident on failures and slightly regresses teacher-dev",
+  "architecture_changed": false,
+  "parameter_growth": 0,
+  "context_growth": 0,
+  "runtime_adapter_required": false,
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "semantic_base_ratified": true,
+  "n0_complete": false,
+  "next_capability": "identity-neutral typed structured-state encoding and semantic-state alignment",
+  "next_private_gradient_authorized": false
+}
