@@ -40,7 +40,6 @@ _RELATION_NAME_TO_ID = {
 
 
 def relation_type_id(name: str) -> int:
-    """Resolve a governed public relation name to its stable integer id."""
     try:
         return int(_RELATION_NAME_TO_ID[name.strip().lower()])
     except KeyError as exc:
@@ -49,11 +48,7 @@ def relation_type_id(name: str) -> int:
 
 @dataclass(frozen=True)
 class EvidenceGraphConfig:
-    """Relation-aware evidence sidecar over structured-state fields.
-
-    Shape values are implementation settings, never global personality-model
-    capability ceilings.
-    """
+    """Relation-aware evidence sidecar over structured-state fields."""
 
     semantic_size: int = 640
     graph_size: int = 256
@@ -138,10 +133,7 @@ class _DirectedRelationLayer(nn.Module):
         relation = self.relation_embedding(edge_type_ids).reshape(-1, width)
         confidence = edge_confidence.to(dtype=dtype).clamp(0.0, 1.0).reshape(-1, 1)
         message = self._messages(
-            flat_x[source_flat],
-            relation,
-            confidence,
-            active_flat,
+            flat_x[source_flat], relation, confidence, active_flat
         )
 
         aggregate = torch.zeros_like(flat_x)
@@ -152,10 +144,7 @@ class _DirectedRelationLayer(nn.Module):
         conflict = active & (edge_type_ids == int(EvidenceRelationType.CONFLICTS_WITH))
         conflict_flat = conflict.reshape(-1)
         reverse_message = self._messages(
-            flat_x[target_flat],
-            relation,
-            confidence,
-            conflict_flat,
+            flat_x[target_flat], relation, confidence, conflict_flat
         )
         aggregate.index_add_(0, source_flat, reverse_message)
         degree.index_add_(0, source_flat, conflict_flat.to(dtype).unsqueeze(-1))
@@ -173,10 +162,10 @@ class _DirectedRelationLayer(nn.Module):
 class EvidenceGraphEncoder(nn.Module):
     """Relation-aware public evidence sidecar for N0.
 
-    Relation propagation is directional, while relation *selection* is
-    query-conditioned. This distinction is necessary for memory fidelity: a
-    superseded record should usually lose weight for a current-state question,
-    but it may be the correct evidence for a historical question.
+    Message propagation follows stored relation direction. Pooling relation
+    effects are learned from the query and endpoint content. This allows the
+    same supersession edge to favor the new record for a current-state query
+    and the old record for a historical query.
     """
 
     def __init__(self, config: EvidenceGraphConfig | None = None) -> None:
@@ -193,20 +182,19 @@ class EvidenceGraphEncoder(nn.Module):
         self.pool_query = nn.Parameter(torch.empty(d))
         nn.init.normal_(self.pool_query, mean=0.0, std=d ** -0.5)
         self.query_projection = nn.Linear(self.config.semantic_size, d, bias=False)
-
-        # Pooling relation effects are learned from query + relation + endpoints.
-        # There is intentionally no fixed "superseded = bad" scalar prior.
         self.pool_relation_embedding = nn.Embedding(
-            self.config.num_relation_types,
-            d,
-            padding_idx=0,
+            self.config.num_relation_types, d, padding_idx=0
         )
-        self.relation_pool_mlp = nn.Sequential(
+        self.directed_relation_pool_mlp = nn.Sequential(
             nn.Linear(4 * d, d),
             nn.SiLU(),
-            nn.Linear(d, 2),
+            nn.Linear(d, 1),
         )
-
+        self.conflict_pool_mlp = nn.Sequential(
+            nn.Linear(4 * d, d),
+            nn.SiLU(),
+            nn.Linear(d, 1),
+        )
         self.field_output_projection = nn.Linear(d, self.config.semantic_size)
         self.pooled_output_projection = nn.Linear(d, self.config.semantic_size)
 
@@ -290,7 +278,7 @@ class EvidenceGraphEncoder(nn.Module):
         edge_valid_mask: torch.Tensor,
         valid_mask: torch.Tensor,
     ) -> torch.Tensor:
-        batch, fields, width = x.shape
+        batch, fields, _width = x.shape
         source = edge_index[..., 0].clamp(0, fields - 1)
         target = edge_index[..., 1].clamp(0, fields - 1)
         batch_index = torch.arange(batch, device=x.device).unsqueeze(1).expand_as(source)
@@ -304,28 +292,43 @@ class EvidenceGraphEncoder(nn.Module):
         target_state = x[batch_index, target]
         relation = self.pool_relation_embedding(edge_type_ids)
         query_state = query.unsqueeze(1).expand(-1, source.size(1), -1)
-        pair = torch.cat([query_state, relation, source_state, target_state], dim=-1)
-        endpoint_bias = self.relation_pool_mlp(pair)
         confidence = edge_confidence.to(x.dtype).clamp(0.0, 1.0).squeeze(-1)
-        endpoint_bias = endpoint_bias * confidence.unsqueeze(-1)
-        endpoint_bias = endpoint_bias * active.to(x.dtype).unsqueeze(-1)
+
+        directed_features = torch.cat(
+            [query_state, relation, source_state, target_state], dim=-1
+        )
+        target_bias = self.directed_relation_pool_mlp(directed_features).squeeze(-1)
+        target_bias = target_bias * confidence * active.to(x.dtype)
+
+        symmetric_features = torch.cat(
+            [
+                query_state,
+                relation,
+                source_state + target_state,
+                (source_state - target_state).abs(),
+            ],
+            dim=-1,
+        )
+        conflict_bias = self.conflict_pool_mlp(symmetric_features).squeeze(-1)
+        conflict = active & (
+            edge_type_ids == int(EvidenceRelationType.CONFLICTS_WITH)
+        )
+        conflict_bias = conflict_bias * confidence * conflict.to(x.dtype)
+
+        # Directed relations apply their learned relevance to the relation
+        # target. Conflicts instead apply one symmetric relevance value to both
+        # endpoints, independent of storage orientation.
+        directed = active & ~conflict
+        target_bias = target_bias * directed.to(x.dtype)
 
         flat_bias = torch.zeros(batch * fields, device=x.device, dtype=x.dtype)
         offsets = (torch.arange(batch, device=x.device) * fields).unsqueeze(1)
         source_flat = (source + offsets).reshape(-1)
         target_flat = (target + offsets).reshape(-1)
-
-        target_bias = endpoint_bias[..., 0].reshape(-1)
-        source_bias = endpoint_bias[..., 1].reshape(-1)
-        flat_bias.index_add_(0, target_flat, target_bias)
-
-        # Conflict is symmetric. Other relation directions retain source->target
-        # semantics, but the source can still win through semantic query pooling.
-        conflict = (
-            active
-            & (edge_type_ids == int(EvidenceRelationType.CONFLICTS_WITH))
-        ).to(x.dtype).reshape(-1)
-        flat_bias.index_add_(0, source_flat, source_bias * conflict)
+        flat_bias.index_add_(0, target_flat, target_bias.reshape(-1))
+        flat_conflict = conflict_bias.reshape(-1)
+        flat_bias.index_add_(0, target_flat, flat_conflict)
+        flat_bias.index_add_(0, source_flat, flat_conflict)
         return flat_bias.reshape(batch, fields)
 
     def forward(
@@ -413,5 +416,5 @@ class EvidenceGraphEncoder(nn.Module):
             "private_identity_parameters": 0,
             "semantic_core_parameter_growth": 0,
             "hard_parameter_ceiling": None,
-            "relation_pooling": "query_conditioned_source_target_aware",
+            "relation_pooling": "query_conditioned_source_target_aware_conflict_symmetric",
         }
