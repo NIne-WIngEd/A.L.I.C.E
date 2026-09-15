@@ -42,12 +42,13 @@ This teacher-dev gate is **not** the complete expanded N0 challenge. Even if one
 
 ## Hardening added before the gate
 
-The build branch was advanced from the recovered head `c67fbbe526b29efdc940d7065476c349658cfa48` to `0c2fa5fdf0d126461b7ae38808d322dfa3c5c693` with four continuation commits:
+The build branch was advanced from the recovered head `c67fbbe526b29efdc940d7065476c349658cfa48` to `6dbf9685ca7621c329e13588ea148d7c47883841` with five continuation commits:
 
-1. `2c6c442785da2405c2ba79c1c081d6d3dfac2411` — adds fail-closed challenge preflight. It verifies config/tokenizer/teacher hashes, both checkpoint receipts, full-model/ranker/MLM artifact hashes, exact step lineage, and zero train/dev ID overlap.
+1. `2c6c442785da2405c2ba79c1c081d6d3dfac2411` — adds fail-closed challenge preflight. It verifies tokenizer/teacher hashes, both checkpoint receipts, full-model/ranker/MLM artifact hashes, exact step lineage, and zero train/dev ID overlap.
 2. `271340c8b3dcb4973564a2e37ea07c092167191a` — wires that preflight into the dev challenge and makes the comparison receipt explicit that execution `PASS` is not semantic promotion, the scope is teacher-dev only, the full expanded challenge is unsatisfied, and additional gradient is unauthorized.
 3. `6abd43df8dad6fec4e8ab290d10bed21dacc9ed1` — preserves v0.2 workdir/checkpoint/evaluation overrides across the udocker boundary so host-side controls cannot silently disappear inside the container.
 4. `0c2fa5fdf0d126461b7ae38808d322dfa3c5c693` — hardens Magnolia environment logging by creating the private runtime directory before `tee`.
+5. `6dbf9685ca7621c329e13588ea148d7c47883841` — corrects a subtle lineage false-positive before runtime: the active config is intentionally a post-training governance record and therefore has a different SHA from the config used to produce the checkpoints. The preflight now verifies each checkpoint receipt against the exact config blob at its recorded training Git revision, while validating the current active config separately. Step 250 and step 500 must bind to the same training config and Git revision.
 
 ## Non-regression rules recovered from the prior chat and branches
 
@@ -63,6 +64,7 @@ These are engineering knowledge, not experiments to repeat:
 - **Kaggle transport rule if it is needed later:** Windows PowerShell is only a thin launcher. Python owns JSON, state, and native Kaggle CLI calls. PowerShell 5.1 `Set-Content -Encoding UTF8` introduced a BOM and broke `kernel-metadata.json`; do not repeat it. Metadata must be UTF-8 without BOM. Kernel identity is deterministic. Push exactly once, wait for stabilization, poll the same identity, retrieve output only after terminal state, hash-verify output, and never blind-repush after an ambiguous/404 state.
 - **No node roulette for known DNS failure.** Once the same outbound DNS failure repeated on a second CPU node, that route was closed rather than hotfixed repeatedly.
 - **Do not rerun completed jobs blindly.** Inspect existing receipts/checkpoints first. Preserve step 250 and step 500.
+- **Training-time artifact hashes and active governance files are different concepts.** When an active config is legitimately amended after training to record results or gates, validate old checkpoints against the config blob at their recorded Git revision rather than forcing the current config SHA to match.
 - **Known non-blocking warnings:** the Magnolia 3.10 kernel warning did not prevent the completed run; the ModernBERT MLM-head `UNEXPECTED` warning is expected when loading the MLM checkpoint as a backbone for ranker evaluation.
 - **Build Alice directly.** Validation stays compact and failure-driven. Do not recreate MC10-style model/judge/qualification bureaucracy.
 - **Identity boundary remains closed.** N0 is still public semantic/pragmatic learning. N1 private Elaina gradients remain unauthorized until the owner explicitly opens that gate.
@@ -73,4 +75,4 @@ Continue the paired workflow: build A.L.I.C.E. -> preserve the reusable construc
 
 ## Continuation rule
 
-At the next runtime boundary, pull `alice-eipm-v1-build`, run only the one-P100 teacher-dev challenge above, return its stdout/stderr plus `teacher_dev_challenge_comparison.json`, and inspect the result before authoring the novel challenge or any new training segment.
+At the next runtime boundary, pull `alice-eipm-v1-build`, run only the one-P100 teacher-dev challenge above, return its stdout/stderr plus `challenge_preflight.json` and `teacher_dev_challenge_comparison.json`, and inspect the result before authoring the novel challenge or any new training segment.
