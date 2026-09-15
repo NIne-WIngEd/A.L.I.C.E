@@ -47,6 +47,8 @@ def verify_public_corpus_v021(
     source_config = json.loads(source_config_path.read_text(encoding="utf-8"))
     if source_config.get("schema") != EXPECTED_SOURCE_SCHEMA:
         raise ValueError("unexpected v0.2.1 source-manifest schema")
+    if source_config.get("status") != "activated_public_n0_v02":
+        raise ValueError("v0.2.1 public source manifest is not activated")
     if receipt.get("source_config_sha256") != sha256_file(source_config_path):
         raise ValueError("corpus source-config hash mismatch")
 
@@ -162,8 +164,9 @@ class TeacherMultitaskCollator:
         preferred_masks: list[torch.Tensor] = []
         principle_tags: list[str] = []
         ids: list[str] = []
+        candidate_rationale_index: list[int] = []
 
-        for row in rows:
+        for row_index, row in enumerate(rows):
             validate_teacher_row_for_v02(row)
             row_candidates = [str(value) for value in row["candidates"]]
             preferred = {int(value) for value in row["preferred_indices"]}
@@ -174,20 +177,21 @@ class TeacherMultitaskCollator:
             )
             prompts.extend([str(row["prompt"])] * len(row_candidates))
             candidates.extend(row_candidates)
+            candidate_rationale_index.extend([row_index] * len(row_candidates))
             rationales.append(str(row["rationale"]))
             principle_tags.append(str(row.get("principle_tag") or row["competency"]))
 
         candidate = self.tokenizer(
             prompts,
             candidates,
-            padding=True,
+            padding="max_length",
             truncation=True,
             max_length=self.max_length,
             return_tensors="pt",
         )
         rationale = self.tokenizer(
             rationales,
-            padding=True,
+            padding="max_length",
             truncation=True,
             max_length=self.max_length,
             return_tensors="pt",
@@ -197,6 +201,7 @@ class TeacherMultitaskCollator:
             "candidate_attention_mask": candidate["attention_mask"],
             "rationale_input_ids": rationale["input_ids"],
             "rationale_attention_mask": rationale["attention_mask"],
+            "candidate_rationale_index": torch.tensor(candidate_rationale_index, dtype=torch.long),
             "group_sizes": group_sizes,
             "preferred_masks": preferred_masks,
             "principle_tags": principle_tags,
@@ -210,28 +215,29 @@ def teacher_objective_losses(
     *,
     temperature: float = 0.05,
 ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
-    candidate_pooled = model.encode(batch["candidate_input_ids"], batch["candidate_attention_mask"])
-    scores = model.score_pooled(candidate_pooled)
+    outputs = model(
+        task="teacher",
+        candidate_input_ids=batch["candidate_input_ids"],
+        candidate_attention_mask=batch["candidate_attention_mask"],
+        rationale_input_ids=batch["rationale_input_ids"],
+        rationale_attention_mask=batch["rationale_attention_mask"],
+        candidate_rationale_index=batch["candidate_rationale_index"],
+    )
+    scores = outputs["scores"]
+    semantic = outputs["semantic"]
+    rationale = outputs["rationale"]
+    alignment_logits = outputs["alignment_logits"]
+
     preference = listwise_preference_loss(scores, batch["group_sizes"], batch["preferred_masks"])
 
-    rationale_pooled = model.encode(batch["rationale_input_ids"], batch["rationale_attention_mask"])
-    semantic = model.project_semantic_pooled(candidate_pooled)
-    rationale = model.project_rationale_pooled(rationale_pooled)
-
-    rationale_per_candidate: list[torch.Tensor] = []
     labels: list[torch.Tensor] = []
     positive_indices: list[int] = []
     offset = 0
-    for row_index, (size, preferred) in enumerate(zip(batch["group_sizes"], batch["preferred_masks"])):
-        rationale_per_candidate.append(rationale[row_index].unsqueeze(0).expand(size, -1))
+    for size, preferred in zip(batch["group_sizes"], batch["preferred_masks"]):
         labels.append(preferred.to(device=semantic.device, dtype=semantic.dtype))
         first_preferred = int(torch.nonzero(preferred, as_tuple=False)[0].item())
         positive_indices.append(offset + first_preferred)
         offset += size
-
-    alignment_logits = model.principle_alignment_from_projected(
-        semantic, torch.cat(rationale_per_candidate, dim=0)
-    )
     alignment = principle_alignment_loss(alignment_logits, torch.cat(labels, dim=0))
 
     selected = semantic[
