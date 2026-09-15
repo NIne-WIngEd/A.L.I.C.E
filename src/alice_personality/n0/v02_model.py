@@ -13,14 +13,9 @@ from .model import build_masked_lm
 class AliceN0V02Model(nn.Module):
     """Native N0 v0.2 semantic representation model.
 
-    One random-initialized ModernBERT-family encoder supports four public N0
-    learning signals:
-      1. span MLM for broad language/context modeling,
-      2. candidate preference scoring,
-      3. candidate/rationale compatibility,
-      4. semantic/rationale contrastive geometry.
-
-    The rationale and ranking heads are generic semantic-learning heads. They do
+    One random-initialized ModernBERT-family encoder supports span MLM,
+    candidate preference, rationale compatibility, and semantic/rationale
+    contrastive learning. These heads remain public semantic machinery and do
     not authorize or contain private Elaina identity gradients.
     """
 
@@ -92,25 +87,13 @@ class AliceN0V02Model(nn.Module):
         similarity = (semantic * rationale).sum(dim=-1)
         return similarity * self.principle_scale.exp() + self.principle_bias
 
-    def score_candidates(
-        self,
-        input_ids: torch.Tensor,
-        attention_mask: torch.Tensor,
-    ) -> torch.Tensor:
+    def score_candidates(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
         return self.score_pooled(self.encode(input_ids, attention_mask))
 
-    def project_semantic(
-        self,
-        input_ids: torch.Tensor,
-        attention_mask: torch.Tensor,
-    ) -> torch.Tensor:
+    def project_semantic(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
         return self.project_semantic_pooled(self.encode(input_ids, attention_mask))
 
-    def project_rationale(
-        self,
-        input_ids: torch.Tensor,
-        attention_mask: torch.Tensor,
-    ) -> torch.Tensor:
+    def project_rationale(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
         return self.project_rationale_pooled(self.encode(input_ids, attention_mask))
 
     def principle_alignment_logits(
@@ -135,14 +118,9 @@ class AliceN0V02Model(nn.Module):
         candidate_attention_mask: torch.Tensor | None = None,
         rationale_input_ids: torch.Tensor | None = None,
         rationale_attention_mask: torch.Tensor | None = None,
+        candidate_rationale_index: torch.Tensor | None = None,
     ) -> Any:
-        """DDP-safe forward entry point for the two N0 v0.2 training paths.
-
-        Conditional task dispatch keeps every backbone call inside the wrapped
-        model's forward method. This matters for DistributedDataParallel: the
-        trainer must not bypass the wrapper by calling ``model.module`` during
-        gradient-bearing work.
-        """
+        """DDP-safe forward entry point for both public N0 v0.2 paths."""
         if task == "mlm":
             if input_ids is None or attention_mask is None or labels is None:
                 raise ValueError("task=mlm requires input_ids, attention_mask, and labels")
@@ -154,8 +132,9 @@ class AliceN0V02Model(nn.Module):
                 or candidate_attention_mask is None
                 or rationale_input_ids is None
                 or rationale_attention_mask is None
+                or candidate_rationale_index is None
             ):
-                raise ValueError("task=teacher requires candidate and rationale tensors")
+                raise ValueError("task=teacher requires candidate/rationale tensors and index map")
             if candidate_input_ids.size(1) != rationale_input_ids.size(1):
                 raise ValueError("teacher candidate/rationale sequence widths must match")
 
@@ -165,10 +144,16 @@ class AliceN0V02Model(nn.Module):
             pooled = self.encode(joined_ids, joined_mask)
             candidate_pooled = pooled[:candidate_count]
             rationale_pooled = pooled[candidate_count:]
+            semantic = self.project_semantic_pooled(candidate_pooled)
+            rationale = self.project_rationale_pooled(rationale_pooled)
+            rationale_for_candidate = rationale[candidate_rationale_index]
             return {
                 "scores": self.score_pooled(candidate_pooled),
-                "semantic": self.project_semantic_pooled(candidate_pooled),
-                "rationale": self.project_rationale_pooled(rationale_pooled),
+                "semantic": semantic,
+                "rationale": rationale,
+                "alignment_logits": self.principle_alignment_from_projected(
+                    semantic, rationale_for_candidate
+                ),
             }
 
         raise ValueError(f"unsupported N0 v0.2 task: {task!r}")
