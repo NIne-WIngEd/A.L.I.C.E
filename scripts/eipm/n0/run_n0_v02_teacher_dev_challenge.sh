@@ -21,8 +21,10 @@ for required in \
   "$TEACHER_REGISTRY" \
   "$TEACHER_AUDIT" \
   "$CONFIG" \
+  "$TRANCHE_ROOT/checkpoints/step-00000250/receipt.json" \
   "$TRANCHE_ROOT/checkpoints/step-00000250/mlm/config.json" \
   "$TRANCHE_ROOT/checkpoints/step-00000250/ranker.safetensors" \
+  "$TRANCHE_ROOT/checkpoints/step-00000500/receipt.json" \
   "$TRANCHE_ROOT/checkpoints/step-00000500/mlm/config.json" \
   "$TRANCHE_ROOT/checkpoints/step-00000500/ranker.safetensors"
 do
@@ -38,7 +40,20 @@ if [[ -e "$OUT_ROOT" && -n "$(find "$OUT_ROOT" -mindepth 1 -maxdepth 1 -print -q
 fi
 mkdir -p "$OUT_ROOT"
 
-python -m py_compile "$ROOT/scripts/eipm/n0/evaluate_n0_v02_teacher_dev.py"
+python -m py_compile \
+  "$ROOT/scripts/eipm/n0/preflight_n0_v02_teacher_dev_challenge.py" \
+  "$ROOT/scripts/eipm/n0/evaluate_n0_v02_teacher_dev.py"
+
+# Bind this evaluation to the exact first-tranche artifacts before consuming
+# P100 time. This verifies both checkpoint receipts/hashes and proves that the
+# 255-row dev split is disjoint from the 765-row teacher train split by row ID.
+python "$ROOT/scripts/eipm/n0/preflight_n0_v02_teacher_dev_challenge.py" \
+  --config "$CONFIG" \
+  --tokenizer-dir "$TOKENIZER_DIR" \
+  --teacher-registry "$TEACHER_REGISTRY" \
+  --teacher-audit "$TEACHER_AUDIT" \
+  --tranche-root "$TRANCHE_ROOT" \
+  | tee "$OUT_ROOT/challenge_preflight.json"
 
 CUDA_COUNT="$(python - <<'PY'
 import torch
@@ -57,6 +72,9 @@ echo "tranche_root=$TRANCHE_ROOT"
 echo "teacher_dev_rows_expected=255"
 echo "candidate_order_variants=3"
 echo "checkpoints=250,500"
+echo "challenge_scope=held_out_teacher_dev_only"
+echo "full_expanded_challenge_satisfied=false"
+echo "additional_gradient_authorized=false"
 echo "private_identity_gradient=false"
 
 for STEP in 250 500; do
@@ -83,10 +101,16 @@ from pathlib import Path
 
 root = Path(sys.argv[1])
 summary = {
-    "schema": "alice.eipm.n0.v02-teacher-dev-challenge-comparison.v0.1",
+    "schema": "alice.eipm.n0.v02-teacher-dev-challenge-comparison.v0.2",
     "status": "PASS",
+    "status_meaning": "evaluation_completed_and_artifacts_valid_not_model_promotion",
+    "scope": "held_out_teacher_dev_only",
     "eval_only": True,
+    "private_identity_data": False,
     "private_identity_gradient": False,
+    "full_expanded_challenge_satisfied": False,
+    "additional_gradient_authorized": False,
+    "novel_cross_competency_challenge_required": True,
     "checkpoints": {},
 }
 for step in (250, 500):
@@ -121,6 +145,24 @@ elif s500["top1_accuracy"] < s250["top1_accuracy"]:
 else:
     provisional = "tie_requires_novel_challenge_and_mlm_consideration"
 summary["provisional_generalization_winner"] = provisional
+summary["step500_minus_step250"] = {
+    field: s500[field] - s250[field]
+    for field in (
+        "top1_accuracy",
+        "separation_rate",
+        "full_order_invariance_pass_rate",
+        "mean_margin",
+        "median_margin",
+        "margin_p10",
+        "margin_p90",
+        "mean_abs_score",
+        "max_abs_score",
+    )
+}
+summary["next_rule"] = (
+    "inspect_dev_failures_and_score_growth_then_author_novel_cross_competency_"
+    "hard_negative_ambiguity_multiturn_and_voice_challenge_before_any_new_gradient"
+)
 
 (root / "teacher_dev_challenge_comparison.json").write_text(
     json.dumps(summary, indent=2, sort_keys=True) + "\n",
