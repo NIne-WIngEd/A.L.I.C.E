@@ -73,27 +73,45 @@ class AliceN0V02Model(nn.Module):
             labels=labels,
         )
 
+    def score_pooled(self, pooled: torch.Tensor) -> torch.Tensor:
+        return self.preference_scorer(pooled).squeeze(-1)
+
+    def project_semantic_pooled(self, pooled: torch.Tensor) -> torch.Tensor:
+        return F.normalize(self.semantic_projection(pooled), dim=-1)
+
+    def project_rationale_pooled(self, pooled: torch.Tensor) -> torch.Tensor:
+        return F.normalize(self.rationale_projection(pooled), dim=-1)
+
+    def principle_alignment_from_projected(
+        self,
+        semantic: torch.Tensor,
+        rationale: torch.Tensor,
+    ) -> torch.Tensor:
+        if semantic.shape != rationale.shape:
+            raise ValueError("semantic and rationale projected batches must align one-to-one")
+        similarity = (semantic * rationale).sum(dim=-1)
+        return similarity * self.principle_scale.exp() + self.principle_bias
+
     def score_candidates(
         self,
         input_ids: torch.Tensor,
         attention_mask: torch.Tensor,
     ) -> torch.Tensor:
-        pooled = self.encode(input_ids, attention_mask)
-        return self.preference_scorer(pooled).squeeze(-1)
+        return self.score_pooled(self.encode(input_ids, attention_mask))
 
     def project_semantic(
         self,
         input_ids: torch.Tensor,
         attention_mask: torch.Tensor,
     ) -> torch.Tensor:
-        return F.normalize(self.semantic_projection(self.encode(input_ids, attention_mask)), dim=-1)
+        return self.project_semantic_pooled(self.encode(input_ids, attention_mask))
 
     def project_rationale(
         self,
         input_ids: torch.Tensor,
         attention_mask: torch.Tensor,
     ) -> torch.Tensor:
-        return F.normalize(self.rationale_projection(self.encode(input_ids, attention_mask)), dim=-1)
+        return self.project_rationale_pooled(self.encode(input_ids, attention_mask))
 
     def principle_alignment_logits(
         self,
@@ -104,10 +122,7 @@ class AliceN0V02Model(nn.Module):
     ) -> torch.Tensor:
         semantic = self.project_semantic(semantic_input_ids, semantic_attention_mask)
         rationale = self.project_rationale(rationale_input_ids, rationale_attention_mask)
-        if semantic.shape != rationale.shape:
-            raise ValueError("semantic and rationale batches must align one-to-one")
-        similarity = (semantic * rationale).sum(dim=-1)
-        return similarity * self.principle_scale.exp() + self.principle_bias
+        return self.principle_alignment_from_projected(semantic, rationale)
 
     def parameter_report(self) -> dict[str, int]:
         total = sum(parameter.numel() for parameter in self.parameters())
