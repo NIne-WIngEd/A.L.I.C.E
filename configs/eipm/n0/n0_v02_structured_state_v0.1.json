@@ -1,0 +1,56 @@
+{
+  "schema": "alice.eipm.n0.structured-state.v0.1",
+  "status": "MECHANICS_READY_NO_GRADIENT_AUTHORIZED",
+  "parent_semantic_model": "alice-n0-semantic-v0.2",
+  "parent_ratification": "configs/eipm/n0/n0_v02_semantic_base_ratification_v0.1.json",
+  "parent_checkpoint": "targeted-repair-v0.1/step-00000080",
+  "role": "identity-neutral typed state encoding before graph/fusion/private identity learning",
+  "architecture": {
+    "semantic_size": 640,
+    "state_size": 256,
+    "num_layers": 2,
+    "num_heads": 4,
+    "feedforward_size": 512,
+    "dropout": 0.0,
+    "max_fields": 64,
+    "positional_embeddings": false,
+    "pooling": "learned_query_attention",
+    "order_policy": "permutation_equivariant_fields_and_permutation_invariant_pooled_state"
+  },
+  "typed_feature_channels": {
+    "field_type": 64,
+    "provenance_class": 16,
+    "relation_role": 64,
+    "temporal_scope": 16,
+    "confidence": "continuous_0_to_1",
+    "missing_state": "explicit_boolean",
+    "semantic_field_value": "640d_from_ratified_semantic_substrate_or_cache"
+  },
+  "serving_policy": {
+    "routine_max_fields": 32,
+    "architectural_max_fields": 64,
+    "semantic_field_vectors_may_be_cached": true,
+    "full_conversation_reencoding_required": false,
+    "private_text_tokenization_inside_structured_branch": false
+  },
+  "parameter_policy": {
+    "branch_parameter_budget": 2500000,
+    "semantic_core_parameter_growth": 0,
+    "identity_specific_parameters": 0,
+    "increase_only_after_measured_capability_bottleneck": true
+  },
+  "training_boundary": {
+    "public_structured_alignment_only": true,
+    "private_identity_data": false,
+    "private_identity_gradient": false,
+    "gradient_authorized": false,
+    "next_required_artifact": "public identity-neutral structured-state curriculum with field-order/missingness/provenance alignment targets"
+  },
+  "next_after_mechanics": [
+    "public structured-state curriculum",
+    "semantic-state alignment objective",
+    "bounded CPU mechanics tests",
+    "then one small public gradient pilot only if the curriculum is ready"
+  ],
+  "anti_mc10d_rule": "do not create a separate qualification program; mechanics tests guard the imminent structured-state capability update only"
+}
