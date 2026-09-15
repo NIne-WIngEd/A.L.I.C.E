@@ -1,0 +1,129 @@
+{
+  "schema": "alice.eipm.n0.evidence-graph.v0.2",
+  "status": "FIRST_PILOT_DIAGNOSED_SPECIALIST_PILOT_AUTHORIZED",
+  "parent_semantic_model": "alice-n0-semantic-v0.2",
+  "parent_semantic_checkpoint": "targeted-repair-v0.1/step-00000080",
+  "structured_parent_checkpoint": "structured-state-pilot-v0.1/step-00000080",
+  "shared_structured_parent_policy": "immutable_generic_typed_state_view",
+  "graph_implementation": "src/alice_personality/n0/evidence_graph.py",
+  "specialist_view_implementation": "src/alice_personality/n0/evidence_view_adapter.py",
+  "objective_implementation": "src/alice_personality/n0/evidence_graph_objectives.py",
+  "curriculum": "evidence-graph-curriculum-v0.1",
+  "capacity_policy": {
+    "hard_parameter_ceiling": null,
+    "capability_and_personality_fidelity_first": true,
+    "efficiency_secondary_after_capability": true,
+    "parameter_counts_are_checkpoint_and_configuration_facts_not_global_limits": true,
+    "future_width_depth_heads_and_specialist_modules_may_grow_when_heldout_capability_requires_it": true
+  },
+  "first_pilot_evidence": {
+    "status": "COMPLETE_DIAGNOSTIC_NOT_RATIFIED",
+    "magnolia_job": 575604,
+    "elapsed": "00:01:34",
+    "comparison": "evidence-graph-pilot-v0.1/evidence_graph_pilot_comparison.json",
+    "compact_graph_only_step240": {
+      "family_macro_target_support_mass": 0.6949287444353105,
+      "family_min_target_support_mass": 0.4632357656955719,
+      "mean_summary_cosine": 0.9650824288527171,
+      "counterfactual_positive_rate": 1.0,
+      "structured_grouped_top1": 0.796078431372549
+    },
+    "compact_joint_step240": {
+      "family_macro_target_support_mass": 0.8850235203901928,
+      "family_min_target_support_mass": 0.6445056001345316,
+      "supersession_historical_target_support_mass": 0.6445056001345316,
+      "mean_summary_cosine": 0.9695353547732035,
+      "structured_grouped_top1": 0.7137254901960784
+    },
+    "expanded_joint_step240": {
+      "family_macro_target_support_mass": 0.8848500450452169,
+      "family_min_target_support_mass": 0.672313799460729,
+      "supersession_historical_target_support_mass": 0.672313799460729,
+      "mean_summary_cosine": 0.9777603964010875,
+      "counterfactual_positive_rate": 1.0,
+      "structured_grouped_top1": 0.6862745098039216
+    },
+    "diagnosis": {
+      "joint_adaptation_materially_improved_relation_capability": true,
+      "direct_joint_training_caused_unacceptable_shared_structured_interference": true,
+      "additional_graph_capacity_improved_worst_family_but_not_macro_average": true,
+      "supersession_historical_remained_the_weakest_family": true,
+      "graph_only_selector_winner_is_not_ratified_as_final_architecture": true
+    }
+  },
+  "architecture_correction": {
+    "removed_fixed_relation_pooling_priors": [
+      "supports_plus_0.2",
+      "corrects_minus_1.0",
+      "supersedes_minus_1.0",
+      "conflict_minus_0.35"
+    ],
+    "reason": "relation relevance is query dependent; a superseded memory can be wrong for a current-state query and correct for a historical query",
+    "relation_pooling": "learned_query_conditioned_source_target_aware",
+    "conflict_pooling": "learned_query_conditioned_symmetric_under_endpoint_reversal",
+    "message_passing_direction": "source_to_target_except_symmetric_conflict_exchange",
+    "historical_memory_may_receive_positive_relevance_when_query_requests_history": true
+  },
+  "multi_view_specialization": {
+    "enabled": true,
+    "shared_structured_checkpoint_mutated": false,
+    "shared_structured_capability_preserved_by_architecture": true,
+    "specialist_role": "query_conditioned_relation_specific_view_for_evidence_reasoning",
+    "specialist_adapter_is_trainable": true,
+    "graph_is_trainable": true,
+    "semantic_core_trainable": false,
+    "specialist_view_can_diverge_from_generic_structured_view_without_overwriting_it": true,
+    "roadmap_alignment": "early_multi_view_representation_mechanics_before_later_cross_context_fusion"
+  },
+  "specialist_pilot": {
+    "authorized": true,
+    "trainer": "scripts/eipm/n0/train_n0_v02_evidence_graph_specialized.py",
+    "runner": "scripts/eipm/n0/run_n0_v02_evidence_graph_specialized.sh",
+    "launcher": "scripts/eipm/n0/magnolia_p100_n0_v02_evidence_graph_specialized.sbatch",
+    "reuse_prior_semantic_cache": true,
+    "variants": [
+      {
+        "name": "specialized_compact_384x2_graph256x1",
+        "adapter_size": 384,
+        "adapter_layers": 2,
+        "adapter_heads": 6,
+        "adapter_feedforward_size": 1536,
+        "graph_size": 256,
+        "graph_layers": 1
+      },
+      {
+        "name": "specialized_expanded_640x3_graph512x2",
+        "adapter_size": 640,
+        "adapter_layers": 3,
+        "adapter_heads": 10,
+        "adapter_feedforward_size": 2560,
+        "graph_size": 512,
+        "graph_layers": 2
+      }
+    ],
+    "max_steps_per_variant": 240,
+    "save_steps": [80, 160, 240],
+    "selection_priority": [
+      "worst_family_evidence_fidelity",
+      "macro_evidence_fidelity",
+      "supersession_historical_fidelity",
+      "semantic_summary_fidelity",
+      "relation_counterfactual_dependence",
+      "distribution_quality",
+      "earlier_checkpoint_if_capability_ties"
+    ],
+    "parameter_count_not_used_to_override_capability": true,
+    "automatic_production_promotion": false
+  },
+  "training_boundary": {
+    "public_identity_neutral_only": true,
+    "private_identity_data": false,
+    "private_identity_gradient": false,
+    "shared_structured_parent_gradient": false,
+    "specialist_adapter_gradient": true,
+    "graph_gradient": true,
+    "semantic_core_gradient": false
+  },
+  "anti_mc10d_rule": "this is one concrete model comparison using an existing cache; do not turn the evidence specialist stage into an infrastructure qualification program",
+  "owner_capacity_rule": "use as much capacity as required for full personality fidelity; optimize size and speed only after capability requirements are satisfied"
+}
