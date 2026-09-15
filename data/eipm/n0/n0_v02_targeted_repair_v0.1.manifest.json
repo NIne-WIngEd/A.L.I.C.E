@@ -1,0 +1,31 @@
+{
+  "schema": "alice.eipm.n0.targeted-repair-curriculum.v0.1",
+  "status": "authorized_public_failure_driven_repair",
+  "actor": "gpt-5.6-sol",
+  "origin_type": "sol_failure_driven_public_teacher",
+  "training_authorized": true,
+  "private_identity_data": false,
+  "private_identity_gradient_authorized": false,
+  "curriculum_git_blob_sha1": "1a77fb5c00abc20e62eaf1f3ca251b71e8d3154a",
+  "row_count": 30,
+  "train_rows": 20,
+  "dev_rows": 10,
+  "failure_families": [
+    "ALIGN-01+TEMP-01",
+    "SEM-04+RANK-03",
+    "PRAG-03+SOC-03",
+    "SEM-06+SOC-02",
+    "VOICE-05+SOC-04"
+  ],
+  "source_evaluation": {
+    "magnolia_job": 575588,
+    "novel_challenge_schema": "alice.eipm.n0.v02-novel-cross-challenge-comparison.v0.1",
+    "selected_parent_checkpoint": "step-00000250",
+    "selection_reason": "higher_novel_top1_with_same_full_invariance_and_far_lower_wrong_answer_score_magnitude_than_step500"
+  },
+  "contamination_rule": "novel challenge rows remain eval-only and are not copied into training; repair rows are independently authored analogues of observed failure principles",
+  "provenance_or_authorization": "Public synthetic semantic supervision authored from failure categories revealed by the frozen novel challenge. No private identity material is present. Training is authorized only for the N0 public semantic repair path.",
+  "intended_use": "bounded targeted repair with replay from the existing governed public teacher bank; not a replacement for broad public pretraining",
+  "additional_parameter_growth_authorized": false,
+  "additional_context_growth_authorized": false
+}
