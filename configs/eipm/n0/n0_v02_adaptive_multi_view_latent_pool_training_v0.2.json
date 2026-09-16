@@ -41,13 +41,14 @@
     "schedule_role": "finite_experiment_control_not_model_capacity_limit"
   },
   "objective_weights": {
-    "best_slot_semantic": 0.30,
-    "pooled_alignment": 0.18,
-    "slot_redundancy": 0.20,
-    "view_coverage": 0.08,
+    "best_slot_semantic": 0.27,
+    "pooled_alignment": 0.15,
+    "slot_redundancy": 0.18,
+    "view_coverage": 0.06,
+    "view_semantic_coverage": 0.12,
     "view_specialization": 0.10,
     "channel_coverage": 0.04,
-    "counterfactual_margin": 0.10
+    "counterfactual_margin": 0.08
   },
   "objective_policy": {
     "old_unnormalized_smoothmax_forbidden": true,
@@ -57,8 +58,11 @@
     "best_slot_target_alignment": true,
     "pooled_convenience_readout_alignment": true,
     "near_duplicate_slot_penalty": true,
+    "available_source_view_semantic_recoverability": true,
     "permutation_free_view_specialization": true,
-    "available_view_coverage": true,
+    "view_specialization_weighted_by_actual_source_view_disagreement": true,
+    "consensus_views_not_forced_into_artificial_distinctions": true,
+    "available_view_attention_coverage": true,
     "source_and_contextualized_channel_reachability": true,
     "target_grounded_decisive_view_counterfactual": true
   },
@@ -69,11 +73,14 @@
     "family_min_pooled_semantic_cosine_min": 0.84,
     "mean_pairwise_offdiag_slot_cosine_max": 0.97,
     "mean_centered_slot_effective_rank_min": 0.10,
-    "mean_view_specialization_min": 0.05,
+    "mean_min_available_view_best_slot_semantic_cosine_min": 0.55,
+    "source_view_semantic_coverage_improvement_over_random_min": 0.20,
+    "mean_disagreement_weighted_view_specialization_min": 0.05,
+    "view_specialization_improvement_over_random_min": 0.02,
     "mean_min_available_view_best_slot_attention_min": 0.12,
     "mean_min_channel_best_slot_attention_min": 0.10,
     "missing_view_attention_max": 0.000001,
-    "gate_role": "development_anti_collapse_and_capability_gate_not_final_ratification"
+    "gate_role": "development_anti_collapse_content_preservation_and_capability_gate_not_final_ratification"
   },
   "checkpoint_selection": {
     "use_training_dev_only": true,
