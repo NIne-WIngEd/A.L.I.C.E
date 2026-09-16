@@ -1,0 +1,88 @@
+{
+  "schema": "alice.eipm.n0.v02-cross-context-fusion-ratification.v0.1",
+  "status": "RATIFIED_PUBLIC_N0_FUSION_BASE_NOT_FULL_EIPM_PROMOTION",
+  "selected_fusion": {
+    "checkpoint": "cross-context-fusion-repair-training-v0.2/repair-step-00000240",
+    "repair_step": 240,
+    "total_fusion_update_count": 480,
+    "sha256": "4d51494beb788f74ddc03590da05ea00f0e36574294649c2cd5d438f9472e577",
+    "implementation": "src/alice_personality/n0/cross_context_fusion_anchored.py",
+    "architecture": "multi_stream_self_refinement_plus_gated_bidirectional_cross_attention_with_explicit_source_anchors",
+    "parameters": 116981764,
+    "parameter_count_role": "checkpoint_lineage_fact_not_architecture_ceiling",
+    "hard_parameter_ceiling": null,
+    "view_count_ceiling": null,
+    "source_anchor_capacity_ceiling": null
+  },
+  "parent_stack": {
+    "semantic": "targeted-repair-v0.1/step-00000080",
+    "structured": "structured-state-pilot-v0.1/step-00000080",
+    "evidence_view_adapter": "evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080",
+    "relation_graph": "relation-repair-v0.1/step-00000080",
+    "evidence_ratification_manifest": "configs/eipm/n0/n0_v02_evidence_specialist_ratification_v0.1.json",
+    "parents_mutated_by_fusion_training": false
+  },
+  "source_anchor_contract": {
+    "exact_source_summary_channel": true,
+    "exact_source_token_channel": true,
+    "contextualized_views_preserved": true,
+    "source_anchor_summary_max_abs_error": 0.0,
+    "source_anchor_token_max_abs_error": 0.0
+  },
+  "historical_frozen_challenge_v0_2": {
+    "status": "FAIL_PRESELECTED_CANDIDATE_NOT_ELIGIBLE_FOR_RATIFICATION",
+    "immutable_historical_result": true,
+    "reclassified_as_pass": false,
+    "post_result_finding": "validator_overconstrained_latent_routing_with_hand_authored_exact_soft_percentages",
+    "model_weights_changed_after_v0_2": false,
+    "v0_2_failed_result_sha256": "33a0ec9b6ad73165197e02bcd0997754a44d9404a6b4cada7293a7f28fd38cc9"
+  },
+  "confirmatory_constraint_challenge_v0_3": {
+    "spec": "configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.3.json",
+    "challenge_sha256": "862ddf77771a90b860d80e7724b591ee776e4fd5637577e31fdc1ce33346ebaa",
+    "challenge_manifest_sha256": "d526d49b1ebacd621aba5305cba7596ed4261469b9f6857275442b590f58cb58",
+    "challenge_spec_sha256": "c4e3e923ecf252598cf08df7ab4e2d630d90701ada1378eeb3d19105d3269ed0",
+    "repair_comparison_sha256": "690a926d020b5931913f100f867c9e4cfa674293f2735f047f9ce6ac3621a4c3",
+    "rows": 160,
+    "families": 20,
+    "candidate_preselected_before_challenge": true,
+    "candidate_weights_changed_after_v0_2": false,
+    "checkpoint_selection_performed_on_challenge": false,
+    "challenge_rows_used_for_training": false,
+    "gradient_performed": false,
+    "routing_validation": "behavioral_constraints_not_exact_soft_distribution_similarity",
+    "status": "PASS_UNCHANGED_CANDIDATE_ELIGIBLE_FOR_FUSION_RATIFICATION",
+    "metrics": {
+      "routing_constraint_pass_rate": 1.0,
+      "family_min_routing_constraint_pass_rate": 1.0,
+      "singleton_required_top_accuracy": 1.0,
+      "fused_semantic_cosine": 0.949729336053133,
+      "family_min_fused_semantic_cosine": 0.9197454825043678,
+      "contextualized_source_cosine": 0.9280260573876532,
+      "disagreement_geometry_mae": 0.03407624921528622,
+      "mean_routing_constraint_violation": 0.0,
+      "missing_view_max_weight": 0.0,
+      "source_anchor_summary_max_abs_error": 0.0,
+      "source_anchor_token_max_abs_error": 0.0
+    }
+  },
+  "routing_validation_doctrine": "docs/eipm/EIPM_FUSION_ROUTING_VALIDATION_DOCTRINE_2026-09-16.md",
+  "routing_contract": {
+    "exact_soft_distribution_is_ground_truth": false,
+    "behavioral_constraints_are_primary": true,
+    "allowed_forms": [
+      "allowed_top_view_sets",
+      "minimum_view_mass",
+      "maximum_view_mass",
+      "pairwise_dominance_margins",
+      "set_mass_bounds",
+      "missing_view_zero",
+      "query_sensitive_reversal"
+    ]
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false,
+  "next_stage": "adaptive_multi_view_latent_pooling"
+}
