@@ -1,0 +1,14 @@
+{
+  "schema": "alice.telemetry.n0.parent-value-path-cpu-harness.v0.1",
+  "date": "2026-09-16",
+  "status": "CPU_COLLECTION_FAILURE_NO_MODEL_EVIDENCE_CORRECTED_PENDING_REPREPARATION",
+  "failure_stage": "pytest_collection_before_diagnostic_execution",
+  "error": "ModuleNotFoundError: No module named scripts",
+  "root_cause": "test import path did not match scripts/eipm/n0 PYTHONPATH-root runtime contract",
+  "gpu_used": false,
+  "gradient_performed": false,
+  "model_evidence": false,
+  "latent_weights_changed": false,
+  "scale_authorized": false,
+  "corrected_prep_schema": "alice.eipm.n0.v02-parent-value-path-diagnostic-preparation.v0.1.1"
+}
