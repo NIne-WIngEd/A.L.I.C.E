@@ -45,14 +45,24 @@ Objective:
 - hard best-slot semantic set requirement, so duplicate target slots receive no extra semantic reward;
 - pooled convenience-readout alignment;
 - near-duplicate penalty without requiring orthogonal personality traits;
-- permutation-free view-specialization objective;
-- view and source/context channel coverage;
+- every available ratified source view must be semantically recoverable by at least one latent slot;
+- permutation-free view specialization is weighted by actual source-view disagreement, so consensus views are not forced into artificial distinctions;
+- view-attention and source/context-channel coverage;
 - decisive-source counterfactual sensitivity only on genuinely decisive rows;
+- centered effective-rank measurement after common semantic mode removal;
 - no exact routing-percentage supervision.
+
+Authoritative execution trainer for this run:
+
+`scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py`
+
+Earlier `v0_2` / `v0_2_1` trainer drafts remain in Git history for auditability but are not execution entrypoints.
 
 ## Development gate philosophy
 
-The v0.2 training/dev gate is an anti-collapse capability gate, not final ratification and not a personality ontology. It checks semantic usefulness, minimum evidence/channel reachability, zero missing-view attention, nontrivial effective slot rank, and nontrivial view specialization.
+The v0.2 training/dev gate is an anti-collapse/content-preservation capability gate, not final ratification and not a personality ontology. It checks semantic usefulness, ratified-source semantic recoverability, minimum evidence/channel reachability, zero missing-view attention, nontrivial effective slot rank, and disagreement-conditioned specialization.
+
+The gate also requires source-view semantic coverage and disagreement-weighted specialization to improve over the fresh random v0.2 initialization. This prevents static architecture priors from being mistaken for learned capability.
 
 A passing development checkpoint still requires a new untouched latent-pool challenge before ratification.
 
