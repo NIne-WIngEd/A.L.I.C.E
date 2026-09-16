@@ -10,6 +10,8 @@ FUSION_CACHE="$FAILED_ROOT/ratified_fusion_cache.pt"
 LATENT_CONFIG="$ROOT/configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_v0.2.json"
 TRAINING_CONFIG="$ROOT/configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_training_v0.2.json"
 FUSION_RATIFICATION="$ROOT/configs/eipm/n0/n0_v02_cross_context_fusion_ratification_v0.1.json"
+LATENT_MODEL="$ROOT/src/alice_personality/n0/adaptive_multi_view_latent_pool_v0_2.py"
+LATENT_OBJECTIVES="$ROOT/src/alice_personality/n0/adaptive_multi_view_latent_pool_objectives_v0_2.py"
 TRAINER_BASE="$ROOT/scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py"
 TRAINER="$ROOT/scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py"
 PREP_ROOT="$WORKDIR/adaptive-multi-view-latent-pool-prep-v0.2"
@@ -27,6 +29,8 @@ for required in \
   "$LATENT_CONFIG" \
   "$TRAINING_CONFIG" \
   "$FUSION_RATIFICATION" \
+  "$LATENT_MODEL" \
+  "$LATENT_OBJECTIVES" \
   "$TRAINER_BASE" \
   "$TRAINER"
 do
@@ -37,8 +41,8 @@ do
 done
 
 python -m py_compile \
-  "$ROOT/src/alice_personality/n0/adaptive_multi_view_latent_pool_v0_2.py" \
-  "$ROOT/src/alice_personality/n0/adaptive_multi_view_latent_pool_objectives_v0_2.py" \
+  "$LATENT_MODEL" \
+  "$LATENT_OBJECTIVES" \
   "$TRAINER_BASE" \
   "$TRAINER"
 
@@ -50,7 +54,7 @@ pytest -q \
 rm -rf "$PREP_ROOT"
 mkdir -p "$PREP_ROOT"
 
-python - "$ROOT" "$FAILED_COMPARISON" "$PARENT_CACHE" "$FUSION_CACHE" "$LATENT_CONFIG" "$TRAINING_CONFIG" "$FUSION_RATIFICATION" "$TRAINER" "$PREP_RECEIPT" <<'PY'
+python - "$ROOT" "$FAILED_COMPARISON" "$PARENT_CACHE" "$FUSION_CACHE" "$LATENT_CONFIG" "$TRAINING_CONFIG" "$FUSION_RATIFICATION" "$LATENT_MODEL" "$LATENT_OBJECTIVES" "$TRAINER" "$PREP_RECEIPT" <<'PY'
 import hashlib
 import json
 from pathlib import Path
@@ -64,7 +68,19 @@ from alice_personality.n0.adaptive_multi_view_latent_pool_v0_2 import (
 )
 from train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale import load_config
 
-root, failed_path, parent_path, fusion_cache_path, latent_path, training_path, ratification_path, trainer_path, receipt_path = map(Path, sys.argv[1:10])
+(
+    root,
+    failed_path,
+    parent_path,
+    fusion_cache_path,
+    latent_path,
+    training_path,
+    ratification_path,
+    latent_model_path,
+    latent_objectives_path,
+    trainer_path,
+    receipt_path,
+) = map(Path, sys.argv[1:12])
 
 
 def sha(path: Path) -> str:
@@ -138,12 +154,16 @@ if sum(1 for value in parent.get("splits", []) if value == "dev") != 128:
     raise SystemExit("parent cache dev split drift")
 
 receipt = {
-    "schema": "alice.eipm.n0.v02-adaptive-multi-view-latent-pool-preparation.v0.2",
+    "schema": "alice.eipm.n0.v02-adaptive-multi-view-latent-pool-preparation.v0.2.1",
     "status": "PASS",
     "git_revision": head,
     "failed_v0_1_job": 575670,
     "failed_v0_1_status": failed["status"],
     "failed_v0_1_latent_weights_reused": False,
+    "prior_v0_2_infrastructure_failure_job": 575673,
+    "prior_v0_2_infrastructure_failure_stage": "random_baseline_before_any_optimizer_step",
+    "prior_v0_2_infrastructure_failure_gradient_performed": False,
+    "mixed_precision_semantic_boundaries_fp32": True,
     "failure_diagnosis": "objective_rewarded_duplicate_target_slots_and_independent_cross_attention_permitted_uncompetitive_slot_binding",
     "parent_cache_sha256": parent_sha,
     "fusion_cache_sha256": fusion_cache_sha,
@@ -151,6 +171,8 @@ receipt = {
     "fusion_ratification_sha256": sha(ratification_path),
     "latent_config_sha256": sha(latent_path),
     "training_config_sha256": sha(training_path),
+    "latent_model_sha256": sha(latent_model_path),
+    "latent_objectives_sha256": sha(latent_objectives_path),
     "trainer_sha256": sha(trainer_path),
     "latent_parameter_report": report,
     "training_rows": 384,
@@ -181,6 +203,9 @@ echo "adaptive_latent_pool_v0_2_prepare_pass=true"
 echo "preparation_receipt=$PREP_RECEIPT"
 echo "failed_v0_1_preserved=true"
 echo "failed_v0_1_latent_weights_reused=false"
+echo "prior_v0_2_infrastructure_failure_job=575673"
+echo "prior_v0_2_infrastructure_failure_gradient_performed=false"
+echo "mixed_precision_semantic_boundaries_fp32=true"
 echo "competitive_cross_attention=true"
 echo "duplicate_target_slot_reward_forbidden=true"
 echo "available_source_view_semantic_recoverability=true"
