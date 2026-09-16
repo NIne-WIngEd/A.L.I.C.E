@@ -1,0 +1,104 @@
+{
+  "schema": "alice.eipm.n0.evidence-graph.v0.3",
+  "status": "RELATION_ESSENTIAL_FAILURE_DIAGNOSED_REPAIR_AUTHORIZED",
+  "semantic_parent": "targeted-repair-v0.1/step-00000080",
+  "structured_parent": "structured-state-pilot-v0.1/step-00000080",
+  "specialist_parent": "evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080",
+  "specialist_parent_adapter_sha256": "50eeeea3dfff5b6bddaa8da667b6b6c2f917dc668b1acd0410923822ae5ad2df",
+  "specialist_parent_graph_sha256": "67ef4d27804c37e48c2b965d974e8285f45cd824a14ce11f87f762f9236f68db",
+  "architecture": {
+    "shared_structured_parent_mutated": false,
+    "evidence_view_adapter": {
+      "size": 640,
+      "layers": 3,
+      "heads": 10,
+      "feedforward_size": 2560,
+      "trainable_in_repair": false,
+      "role": "preserve the strong evidence-specialized field view learned in the first specialist pilot"
+    },
+    "graph": {
+      "size": 512,
+      "layers": 2,
+      "implementation": "src/alice_personality/n0/evidence_graph_dual_endpoint.py",
+      "parent_implementation": "src/alice_personality/n0/evidence_graph.py",
+      "change": "directed relations receive distinct query-conditioned source-endpoint and target-endpoint evidence roles; conflicts remain symmetric",
+      "parent_compatibility": "v0.2 graph checkpoints load with strict=false; only the new source_relation_pool_mlp is missing and its final layer is zero-initialized"
+    }
+  },
+  "relation_essential_evidence": {
+    "job_id": 575616,
+    "status": "NEEDS_RELATION_REPAIR",
+    "frozen_training_authorized": false,
+    "best_checkpoint_before_repair": "specialized_expanded_640x3_graph512x2/step-00000080",
+    "best_pair_flip_accuracy": 0.65,
+    "best_example_top1_accuracy": 0.800000011920929,
+    "best_family_min_pair_flip_accuracy": 0.0,
+    "failure_families": {
+      "causal_chain": 0.0,
+      "causes_direction": 0.0,
+      "corrects_direction": 0.25,
+      "temporal_direction": 0.5
+    },
+    "capacity_observation": "expanded specialist materially outperformed compact specialist on the relation-essential challenge even though the easier ordinary graph dev set had shown little size benefit",
+    "diagnosis": "relation direction and endpoint role are undertrained and underrepresented; this is not evidence for a generic parameter increase"
+  },
+  "repair_curriculum": {
+    "schema": "alice.eipm.n0.v02-relation-repair-curriculum.v0.1",
+    "source": "deterministic_public_independent_relation_analogues",
+    "rows": 320,
+    "pairs": 160,
+    "train_rows": 240,
+    "dev_rows": 80,
+    "train_pairs": 120,
+    "dev_pairs": 40,
+    "families": 10,
+    "paired_text_and_query_identical": true,
+    "relation_structure_flips_target": true,
+    "frozen_relation_essential_challenge_rows_used_for_training": false,
+    "private_identity_content": false
+  },
+  "repair_training": {
+    "authorized": true,
+    "scope": "one bounded public dual-endpoint relation-read repair",
+    "semantic_core_trainable": false,
+    "structured_parent_trainable": false,
+    "evidence_view_adapter_trainable": false,
+    "graph_trainable_scope": [
+      "source_relation_pool_mlp",
+      "directed_relation_pool_mlp",
+      "conflict_pool_mlp",
+      "pool_relation_embedding",
+      "query_projection",
+      "pool_query"
+    ],
+    "ordinary_graph_replay": true,
+    "repair_pair_objective": true,
+    "paired_graph_counterfactual_objective": true,
+    "max_steps": 160,
+    "save_steps": [40, 80, 120, 160],
+    "learning_rate": 0.0001,
+    "hard_parameter_ceiling": null
+  },
+  "selection_policy": {
+    "repair_dev_priority": [
+      "ordinary_graph_replay_retention_floor",
+      "worst_family_pair_flip_accuracy",
+      "overall_pair_flip_accuracy",
+      "pair_flip_margin",
+      "ordinary_graph_replay_capability",
+      "earlier_checkpoint"
+    ],
+    "final_ratification_requires_untouched_frozen_relation_essential_challenge": true,
+    "frozen_challenge_training_use_forbidden": true
+  },
+  "capacity_policy": {
+    "hard_parameter_ceiling": null,
+    "capability_and_personality_fidelity_first": true,
+    "efficiency_secondary": true,
+    "rule": "retain capacity when harder heldout evidence demonstrates a capability benefit; do not scale generically when a specific architectural or supervision bottleneck is identified"
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "anti_mc10d_rule": "this repair exists only to address the concrete frozen relation-essential failure and must terminate in a ratify/reject decision rather than an open-ended tuning program"
+}
