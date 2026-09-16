@@ -14,6 +14,10 @@ export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM="${TOKENIZERS_PARALLELISM:-true}"
 
 python -m py_compile \
+  "$ROOT/src/alice_personality/n0/v02_model.py" \
+  "$ROOT/src/alice_personality/n0/structured_state.py" \
+  "$ROOT/src/alice_personality/n0/evidence_view_adapter.py" \
+  "$ROOT/src/alice_personality/n0/evidence_graph.py" \
   "$ROOT/src/alice_personality/n0/cross_context_fusion.py" \
   "$ROOT/src/alice_personality/n0/cross_context_fusion_objectives.py" \
   "$ROOT/scripts/eipm/n0/build_n0_v02_cross_context_fusion_curriculum.py" \
@@ -21,7 +25,8 @@ python -m py_compile \
 
 pytest -q \
   "$ROOT/tests/eipm/test_n0_cross_context_fusion.py" \
-  "$ROOT/tests/eipm/test_n0_cross_context_fusion_objectives.py"
+  "$ROOT/tests/eipm/test_n0_cross_context_fusion_objectives.py" \
+  "$ROOT/tests/eipm/test_n0_no_accidental_capability_ceilings.py"
 
 mkdir -p "$OUT_ROOT"
 python "$ROOT/scripts/eipm/n0/build_n0_v02_cross_context_fusion_curriculum_v0_2.py" \
@@ -42,11 +47,17 @@ if policy.get("full_scale_model") is not True or policy.get("reduced_capability_
     raise SystemExit("fusion must be governed as the full-scale model, not a reduced pilot")
 if policy.get("generic_fallback_architecture") is not False:
     raise SystemExit("generic fallback fusion architecture is forbidden")
+if policy.get("finite_checkpoint_tensor_shapes_are_migratable_not_permanent_product_limits") is not True:
+    raise SystemExit("finite checkpoint shapes must remain migratable")
 arch = config.get("architecture", {})
-if arch.get("family") != "tri_stream_self_refinement_plus_gated_bidirectional_cross_attention":
+if arch.get("family") != "multi_stream_self_refinement_plus_gated_bidirectional_cross_attention":
     raise SystemExit("frontier fusion architecture family drift")
 if arch.get("bidirectional_cross_attention") is not True or arch.get("query_conditioned_cross_view_gating") is not True:
     raise SystemExit("frontier cross-view exchange mechanics missing")
+if arch.get("view_count_ceiling") is not None:
+    raise SystemExit("unexpected fusion view-count ceiling")
+if arch.get("checkpoint_view_vocabulary_migratable") is not True:
+    raise SystemExit("fusion checkpoint view vocabulary must remain migratable")
 if arch.get("hard_parameter_ceiling") is not None:
     raise SystemExit("unexpected fusion parameter ceiling")
 if config.get("gradient_authorization", {}).get("authorized") is not False:
@@ -70,7 +81,11 @@ if manifest.get("private_identity_content") is not False:
 if manifest.get("training_authorized") is not False:
     raise SystemExit("fusion curriculum unexpectedly authorizes gradient")
 print("cross_context_fusion_prepare_pass=true")
-print("fusion_architecture=full_scale_frontier_tri_stream_gated_bidirectional_cross_attention")
+print("fusion_architecture=full_scale_frontier_multi_stream_gated_bidirectional_cross_attention")
+print("current_instantiated_public_views=3")
+print("view_count_ceiling=none")
+print("field_node_edge_runtime_ceilings=none")
+print("semantic_token_level_representation=true")
 print("reduced_capability_pilot=false")
 print("generic_fallback_architecture=false")
 print("fusion_curriculum_schema=v0.2")
