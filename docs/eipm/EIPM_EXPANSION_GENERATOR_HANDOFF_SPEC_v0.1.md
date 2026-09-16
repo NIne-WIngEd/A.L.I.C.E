@@ -2,6 +2,7 @@
 
 **Status:** implementation handoff; subordinate to owner-ratified EIPM hard rules  
 **Date:** 2026-09-10  
+**Clarification:** 2026-09-16 capability-limit audit  
 **Scope:** generation of new E-INF and A-SYN proposals only
 
 ## Purpose
@@ -20,6 +21,7 @@ Expand the Elaina-derived identity/personality substrate before EIPM-v1 corpus f
 8. Existing E0/E-INF/A-SYN inputs are read-only.
 9. Generator outputs remain proposals until independently curated.
 10. No gradient update, model training, or target-scale EIPM weight generation is authorized.
+11. No planning batch size, row target, context packet size, coverage taxonomy, or corpus freeze in this handoff is a permanent personality-capability ceiling.
 
 ## Input set
 
@@ -47,9 +49,13 @@ At minimum consider values, judgment, boundaries, privacy, trust, affection, hum
 
 Mark each cell as `covered`, `weak`, `missing`, `redundant`, or `unsupported` using only the supplied evidence and existing proposals.
 
+The taxonomy is an audit/search instrument, not a closed ontology. New dimensions or combinations must be added whenever source evidence or measured behavior reveals territory the current map does not represent.
+
 ### Phase B — generate proposals for weak/missing cells
 
-For each selected cell, use the smallest relevant E0 evidence packet plus accepted/usable inference context available in the supplied substrate. Generate multiple competing branches.
+For each selected cell, use the **smallest sufficient** E0 evidence packet plus accepted/usable inference context available in the supplied substrate. "Smallest sufficient" means no irrelevant context is sent merely for bulk; it does not authorize truncating evidence that could materially change the judgment. Expand across sources, time, relationship context, or contradictory evidence whenever necessary.
+
+Generate multiple competing branches.
 
 For E-INF proposals, distinguish evidence-derived tendencies from unsupported invention. Include an explicit historical-UNKNOWN competitor when the evidence does not justify a historical claim.
 
@@ -65,7 +71,7 @@ Before emitting a proposal, compare it with existing E-INF/A-SYN material and pr
 
 Generation is coverage-driven rather than quota-driven. Continue while new proposals add meaningful non-duplicative behavioral territory. Report cells that remain unsupported instead of fabricating historical certainty.
 
-Use iterative waves so independent curation can influence the next wave. Initial planning target for Wave 1: up to 500 E-INF proposals and up to 1,000 A-SYN proposals, stopping early if marginal novelty collapses. Later waves are generated only after the accepted/rejected results are fed back into an updated coverage map.
+Use iterative waves so independent curation can influence the next wave. The historical Wave 1 planning target of up to 500 E-INF proposals and up to 1,000 A-SYN proposals was an execution/batching control only. It was never a corpus or personality-space ceiling. Later waves and targeted regeneration remain available whenever accepted/rejected results or later fidelity measurements expose additional coverage needs.
 
 ## Required proposal schema
 
@@ -99,6 +105,8 @@ Each proposed row must contain at least:
 
 Do not present generator confidence as probability that a historical claim is true.
 
+The schema itself is extensible. Additional fields must be added when necessary to preserve source nuance, provenance, temporal dependence, relationship dependence, uncertainty, or another fidelity-relevant distinction. Schema convenience must never force information loss.
+
 ## Required output package
 
 Return a ZIP containing:
@@ -118,11 +126,15 @@ The manifest must record input file hashes, generator/model identity, generation
 
 ## Independent curation boundary
 
-The generation model must not perform the final acceptance decision. Sol independently curates each proposal. Ambiguous Elaina-fidelity decisions may be escalated to the owner. Plausible rejected alternatives may be preserved as hard negatives. Only after curation and global consistency analysis can accepted material enter the frozen EIPM training corpus.
+The generation model must not perform the final acceptance decision. Sol independently curates each proposal. Ambiguous Elaina-fidelity decisions may be escalated to the owner.
+
+A plausible branch that is not selected remains a competing or co-valid hypothesis when evidence permits. It may become a hard negative only when it is genuinely contradicted, incompatible, provenance-invalid, or otherwise wrong for the supervised judgment. "Not selected" must never be treated as equivalent to "false."
+
+Only after curation and global consistency analysis can accepted material enter a review-frozen EIPM training corpus. That freeze is a lineage snapshot and may be reopened through governed targeted regeneration when later fidelity evidence exposes a gap.
 
 ## Weight gate
 
-This handoff does not authorize training. Before the first private EIPM gradient update or target-scale weight generation, the owner must receive the explicit final pre-weight review request and approve proceeding.
+This handoff does not authorize training. Before the first private EIPM gradient update or target-scale weight generation, the owner must receive the explicit final pre-weight review request and approve proceeding. That gate validates provenance and lineage; it is not a capacity limit.
 
 ## Third-party service terms
 
