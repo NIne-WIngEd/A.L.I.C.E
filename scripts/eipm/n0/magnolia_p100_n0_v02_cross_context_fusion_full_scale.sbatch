@@ -4,7 +4,7 @@
 #SBATCH --qos=normal
 #SBATCH --gres=gpu:p100:1
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=40G
+#SBATCH --mem=32G
 #SBATCH --time=00:45:00
 #SBATCH --output=rayan-n0-fusion-%j.out
 #SBATCH --error=rayan-n0-fusion-%j.err
