@@ -1,0 +1,95 @@
+{
+  "schema": "alice.eipm.n0.v02-adaptive-multi-view-latent-pool.v0.2",
+  "status": "FAILURE_DRIVEN_SUCCESSOR_MECHANICS_READY_NO_GRADIENT_AUTHORIZED",
+  "supersedes": "configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_v0.1.json",
+  "supersession_reason": "v0.1 training showed complete slot collapse despite strong semantic readout; audit found an unnormalized logsumexp semantic objective that rewarded duplicate target-aligned slots and independent per-slot cross-attention that allowed all slots to consume the same evidence without competition",
+  "parent_fusion_ratification": "configs/eipm/n0/n0_v02_cross_context_fusion_ratification_v0.1.json",
+  "parent_fusion_checkpoint": "cross-context-fusion-repair-training-v0.2/repair-step-00000240",
+  "parent_fusion_sha256": "4d51494beb788f74ddc03590da05ea00f0e36574294649c2cd5d438f9472e577",
+  "failed_predecessor": {
+    "training_job": 575670,
+    "status": "FAIL_NO_LATENT_POOL_CHECKPOINT_CLEARED_TRAINING_DEV_GATE",
+    "output": "adaptive-multi-view-latent-pool-training-v0.1",
+    "observed_failure": "all trained checkpoints reached mean_max_offdiag_slot_cosine approximately 1.0",
+    "upstream_parent_failure": false,
+    "capacity_bottleneck_proven": false,
+    "resume_failed_latent_weights": false,
+    "restart_successor_from_fresh_latent_initialization": true
+  },
+  "architecture": {
+    "implementation": "src/alice_personality/n0/adaptive_multi_view_latent_pool_v0_2.py",
+    "family": "competitive_query_conditioned_multi_slot_attention_over_source_and_contextualized_view_channels",
+    "semantic_size": 640,
+    "latent_size": 640,
+    "current_instantiated_slots": 12,
+    "latent_layers": 3,
+    "num_heads": 10,
+    "feedforward_size": 2560,
+    "dropout": 0.0,
+    "current_instantiated_view_count": 3,
+    "current_public_views": [
+      "semantic_raw_context",
+      "typed_structured_context",
+      "relation_evidence_context"
+    ],
+    "input_channels": [
+      "exact_source_tokens",
+      "contextualized_fusion_tokens"
+    ],
+    "competition_temperature": 1.0,
+    "competitive_normalization": "input_token_ownership_across_slots_then_per_slot_evidence_normalization",
+    "slot_self_exchange": "learned_and_initially_gated_down_not_disabled",
+    "initial_self_exchange_gate_logit": -2.0,
+    "query_conditioned_slots": true,
+    "view_identity_explicit": true,
+    "channel_identity_explicit": true,
+    "view_reliability_explicit": true,
+    "fusion_routing_used_as_feature_not_probability_target": true,
+    "missing_view_supported": true,
+    "multi_slot_state_is_primary_output": true,
+    "single_pooled_state_is_convenience_readout_only": true,
+    "slot_count_ceiling": null,
+    "view_count_ceiling": null,
+    "hard_parameter_ceiling": null,
+    "parameter_count_status": "measure_after_cpu_construction_not_a_design_limit"
+  },
+  "architecture_policy": {
+    "full_scale_model": true,
+    "reduced_capability_pilot": false,
+    "generic_fallback_architecture": false,
+    "slots_are_not_named_personality_traits": true,
+    "slot_order_has_no_semantic_authority": true,
+    "slot_specialization_is_emergent_and_permutation_free": true,
+    "slot_count_is_checkpoint_shape_not_personality_ontology": true,
+    "do_not_increase_parameter_count_until_failure_evidence_shows_capacity_bottleneck": true,
+    "architecture_may_expand_or_change_when_measured_capability_or_later_identity_fidelity_requires_it": true,
+    "capability_and_personality_fidelity_before_efficiency": true,
+    "finite_training_schedule_does_not_define_model_capacity": true
+  },
+  "objective_correction": {
+    "old_unnormalized_smoothmax_retired": true,
+    "duplicate_target_slots_receive_extra_semantic_reward": false,
+    "semantic_set_requirement": "at_least_one_strong_target_aligned_slot",
+    "near_duplicate_slots_penalized_without_forcing_orthogonal_personality_traits": true,
+    "view_specialization": "mutual_information_style_permutation_free",
+    "view_coverage_is_representation_coverage_not_decision_authority": true,
+    "exact_routing_percentage_supervision": false
+  },
+  "initial_training_policy": {
+    "parent_fusion_frozen_initially": true,
+    "freeze_reason": "isolate the corrected latent-pool architecture and objective; this is a stage control not a permanent freeze",
+    "progressive_unfreezing_allowed_if_measured_capability_requires_it": true,
+    "private_identity_gradient": false,
+    "public_identity_neutral_only": true
+  },
+  "capacity_policy": {
+    "hard_parameter_ceiling": null,
+    "slot_count_ceiling": null,
+    "view_count_ceiling": null,
+    "parameter_counts_are_lineage_measurements_not_design_limits": true,
+    "successor_may_scale_slots_width_depth_heads_or_views_if_real_capability_evidence_requires_it": true
+  },
+  "production_promotion_authorized": false,
+  "n0_complete": false,
+  "next_required_artifact": "same_revision_cpu_gate_then_fresh_full_scale_v0.2_latent_training"
+}
