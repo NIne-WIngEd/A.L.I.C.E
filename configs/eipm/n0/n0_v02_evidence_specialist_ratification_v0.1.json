@@ -1,0 +1,53 @@
+{
+  "schema": "alice.eipm.n0.v02-evidence-specialist-ratification.v0.1",
+  "status": "RATIFIED_PUBLIC_EVIDENCE_SPECIALIST_NOT_FULL_EIPM_PROMOTION",
+  "semantic_parent": {
+    "checkpoint": "targeted-repair-v0.1/step-00000080",
+    "parameters": 136594435,
+    "mutated_by_evidence_training": false
+  },
+  "structured_parent": {
+    "checkpoint": "structured-state-pilot-v0.1/step-00000080",
+    "parameters": 1656064,
+    "mutated_by_evidence_training": false
+  },
+  "evidence_view_adapter": {
+    "checkpoint": "evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080",
+    "sha256": "50eeeea3dfff5b6bddaa8da667b6b6c2f917dc668b1acd0410923822ae5ad2df",
+    "parameters": 16002561,
+    "mutated_by_relation_repair": false
+  },
+  "relation_graph": {
+    "checkpoint": "relation-repair-v0.1/step-00000080",
+    "implementation": "src/alice_personality/n0/evidence_graph_dual_endpoint.py",
+    "sha256": "ec9942bd71a39c8552804322f1a36b7a6c5f009446e56423c80e59479ad8fa79",
+    "parameters": 6664963,
+    "architecture": "query_conditioned_dual_endpoint_relation_read"
+  },
+  "frozen_relation_essential_gate": {
+    "job": 575618,
+    "examples": 80,
+    "pairs": 40,
+    "families": 10,
+    "pair_flip_accuracy": 1.0,
+    "family_min_pair_flip_accuracy": 1.0,
+    "mean_pair_relation_flip_margin": 0.910261157155037,
+    "mean_permutation_cosine": 1.0,
+    "mean_target_mass": 0.9387510418891907,
+    "challenge_used_for_training": false
+  },
+  "ordinary_replay_retention": {
+    "family_macro_target_support_mass": 0.9831965605417887,
+    "family_min_target_support_mass": 0.934688925743103,
+    "mean_summary_cosine": 0.9651773393154144
+  },
+  "selection_policy": "earliest_checkpoint_clearing_all_frozen_relation_and_ordinary_replay_gates",
+  "public_stack_parameter_count_before_fusion": 160918023,
+  "parameter_count_role": "descriptive_lineage_fact_not_architecture_ceiling",
+  "hard_parameter_ceiling": null,
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false,
+  "next_stage": "cross_context_fusion_and_multi_view_integration"
+}
