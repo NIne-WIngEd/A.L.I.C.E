@@ -1,6 +1,6 @@
 {
   "schema": "alice.eipm.n0.stack-state.v0.2",
-  "status": "SOURCE_ANCHORED_FUSION_REPAIR_PASSED_CONFIRMATORY_CHALLENGE_V0_2_REQUIRED",
+  "status": "FUSION_V0_2_EXACT_ROUTING_VALIDATOR_RETIRED_CONSTRAINT_CONFIRMATORY_V0_3_REQUIRED",
   "authoritative_for_current_stage": true,
   "historical_semantic_training_manifest": "configs/eipm/n0/alice_n0_semantic_v0.2.json",
   "capability_limit_audit": {
@@ -37,29 +37,10 @@
     "current_context_windows_and_serving_budgets_are_migratable_defaults": true
   },
   "ratified_public_stack": {
-    "semantic": {
-      "checkpoint": "targeted-repair-v0.1/step-00000080",
-      "parameters": 136594435,
-      "token_level_representation_api": true
-    },
-    "structured": {
-      "checkpoint": "structured-state-pilot-v0.1/step-00000080",
-      "parameters": 1656064,
-      "field_count_limit": null
-    },
-    "evidence_adapter": {
-      "checkpoint": "evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080",
-      "parameters": 16002561,
-      "field_count_limit": null
-    },
-    "evidence_graph": {
-      "checkpoint": "relation-repair-v0.1/step-00000080",
-      "parameters": 6664963,
-      "sha256": "ec9942bd71a39c8552804322f1a36b7a6c5f009446e56423c80e59479ad8fa79",
-      "node_count_limit": null,
-      "edge_count_limit": null,
-      "relation_vocabulary": "migratable_checkpoint_vocabulary"
-    },
+    "semantic": {"checkpoint": "targeted-repair-v0.1/step-00000080", "parameters": 136594435, "token_level_representation_api": true},
+    "structured": {"checkpoint": "structured-state-pilot-v0.1/step-00000080", "parameters": 1656064, "field_count_limit": null},
+    "evidence_adapter": {"checkpoint": "evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080", "parameters": 16002561, "field_count_limit": null},
+    "evidence_graph": {"checkpoint": "relation-repair-v0.1/step-00000080", "parameters": 6664963, "sha256": "ec9942bd71a39c8552804322f1a36b7a6c5f009446e56423c80e59479ad8fa79", "node_count_limit": null, "edge_count_limit": null, "relation_vocabulary": "migratable_checkpoint_vocabulary"},
     "total_parameters_before_fusion": 160918023
   },
   "evidence_ratification": {
@@ -97,14 +78,7 @@
     "may_inform_failure_categories": true,
     "may_supply_training_rows": false,
     "may_supply_training_templates": false,
-    "step240": {
-      "family_macro_routing_similarity": 0.9227234901239475,
-      "family_min_routing_similarity": 0.8476811423897743,
-      "fused_semantic_cosine": 0.9443701598793268,
-      "contextualized_view_preservation_cosine": 0.8126243089297505,
-      "disagreement_geometry_mae": 0.04909189363631109,
-      "missing_view_max_weight": 0.0
-    }
+    "step240": {"family_macro_routing_similarity": 0.9227234901239475, "family_min_routing_similarity": 0.8476811423897743, "fused_semantic_cosine": 0.9443701598793268, "contextualized_view_preservation_cosine": 0.8126243089297505, "disagreement_geometry_mae": 0.04909189363631109, "missing_view_max_weight": 0.0}
   },
   "fusion_repair": {
     "job_id": 575621,
@@ -113,12 +87,6 @@
     "elapsed": "00:02:06",
     "architecture": "multi_stream_self_refinement_plus_gated_bidirectional_cross_attention_with_explicit_source_anchors",
     "implementation": "src/alice_personality/n0/cross_context_fusion_anchored.py",
-    "objective": "src/alice_personality/n0/cross_context_fusion_repair_objectives.py",
-    "training_config": "configs/eipm/n0/n0_v02_cross_context_fusion_repair_training_v0.2.json",
-    "curriculum_builder": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_repair_curriculum_v0_3.py",
-    "trainer": "scripts/eipm/n0/train_n0_v02_cross_context_fusion_repair_full_scale.py",
-    "parent_fusion_step": 240,
-    "parent_fusion_sha256": "9b2a7a120539e9c6a254ea5a47d30a0c9c827d76c18dc46822ee171303bb8d14",
     "parameters": 116981764,
     "full_scale_model": true,
     "reduced_capability_pilot": false,
@@ -127,16 +95,12 @@
     "exact_source_summary_channel": true,
     "exact_source_token_channel": true,
     "contextualized_channel_remains_free_to_diverge_when_capability_requires": true,
-    "repair_curriculum_base_rows": 320,
-    "repair_curriculum_new_rows": 192,
     "repair_curriculum_total_rows": 512,
     "row_count_is_training_tranche_not_cap": true,
     "frozen_challenge_rows_reused": false,
-    "frozen_challenge_templates_reused": false,
-    "frozen_challenge_entities_reused": false,
     "hard_parameter_ceiling": null,
     "view_count_ceiling": null,
-    "status": "PASS_FULL_SCALE_REPAIR_READY_FOR_NEW_UNTOUCHED_CHALLENGE",
+    "status": "PASS_FULL_SCALE_REPAIR_READY_FOR_CONFIRMATORY_EVALUATION",
     "provisional_winner_repair_step": 240,
     "provisional_winner_total_fusion_update_count": 480,
     "provisional_winner_sha256": "4d51494beb788f74ddc03590da05ea00f0e36574294649c2cd5d438f9472e577",
@@ -151,37 +115,74 @@
       "source_anchor_summary_max_abs_error": 0.0,
       "source_anchor_token_max_abs_error": 0.0
     },
-    "ratified": false,
-    "required_after_success": "single_candidate_new_untouched_fusion_challenge_v0.2_before_ratification"
+    "ratified": false
   },
   "fusion_confirmatory_challenge_v0_2": {
-    "spec": "configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.2.json",
-    "builder": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py",
-    "prepare_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_frozen_challenge_v0_2_prepare.sh",
-    "evaluator": "scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py",
-    "evaluation_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_frozen_challenge_v0_2_eval.sh",
-    "magnolia_launcher": "scripts/eipm/n0/magnolia_p100_n0_v02_cross_context_fusion_frozen_challenge_v0_2.sbatch",
+    "job_id": 575622,
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:00:55",
+    "challenge_sha256": "2ee4790e573b6a952e9270e7c0ab6586ae14b3c0b30125a98d85bcaa11f234b8",
     "rows": 136,
     "families": 17,
+    "candidate_repair_step": 240,
+    "candidate_fusion_sha256": "4d51494beb788f74ddc03590da05ea00f0e36574294649c2cd5d438f9472e577",
+    "candidate_preselected_before_challenge": true,
+    "checkpoint_selection_on_challenge": false,
+    "challenge_rows_used_for_training": false,
+    "gradient_performed": false,
+    "private_identity_gradient": false,
+    "status": "FAIL_PRESELECTED_CANDIDATE_NOT_ELIGIBLE_FOR_RATIFICATION",
+    "immutable_historical_result": true,
+    "retired_for_future_ratification": true,
+    "metrics": {
+      "family_macro_routing_similarity": 0.9373158878263306,
+      "family_min_routing_similarity": 0.8328953012824059,
+      "decisive_view_accuracy": 1.0,
+      "fused_semantic_cosine": 0.9412938864792094,
+      "contextualized_source_cosine": 0.9272583435910443,
+      "disagreement_geometry_mae": 0.036315091238494086,
+      "missing_view_max_weight": 0.0,
+      "source_anchor_summary_max_abs_error": 0.0,
+      "source_anchor_token_max_abs_error": 0.0
+    },
+    "post_result_validator_audit": {
+      "finding": "exact hand_authored soft routing percentages overconstrained latent routing and mixed behaviorally necessary evidence selection with arbitrary internal percentage matching",
+      "examples": ["consensus_one_stale exact 0.34/0.33/0.33 target", "lexical_distractor_low_authority exact 0.08/0.48/0.44 target"],
+      "v0_2_thresholds_changed_retroactively": false,
+      "v0_2_reclassified_as_pass": false,
+      "model_gradient_authorized_from_this_finding": false,
+      "model_weights_changed_after_v0_2": false,
+      "correct_next_action": "correct_validator_then_evaluate_same_model_before_any_new_gradient"
+    }
+  },
+  "fusion_routing_validation": {
+    "doctrine": "docs/eipm/EIPM_FUSION_ROUTING_VALIDATION_DOCTRINE_2026-09-16.md",
+    "implementation": "src/alice_personality/n0/cross_context_fusion_routing_constraints.py",
+    "exact_soft_distribution_is_ground_truth": false,
+    "allowed_supervision": ["allowed_top_view_sets", "minimum_view_mass", "maximum_view_mass", "pairwise_dominance_margins", "set_mass_bounds", "missing_view_zero"],
+    "future_training_rule": "if_more_fusion_gradient_is_needed_use_constraint_or_set_valued_routing_objectives_unless_calibrated_probabilistic_targets_exist"
+  },
+  "fusion_confirmatory_challenge_v0_3": {
+    "spec": "configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.3.json",
+    "builder": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py",
+    "prepare_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_frozen_challenge_v0_3_prepare.sh",
+    "evaluator": "scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py",
+    "evaluation_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_frozen_challenge_v0_3_eval.sh",
+    "magnolia_launcher": "scripts/eipm/n0/magnolia_p100_n0_v02_cross_context_fusion_frozen_challenge_v0_3.sbatch",
+    "rows": 160,
+    "families": 20,
     "candidate_preselected_before_challenge": true,
     "candidate_repair_step": 240,
     "candidate_fusion_sha256": "4d51494beb788f74ddc03590da05ea00f0e36574294649c2cd5d438f9472e577",
+    "candidate_weights_changed_after_v0_2": false,
     "checkpoint_selection_on_challenge_forbidden": true,
+    "exact_target_routing_distribution_used_for_ratification": false,
+    "routing_validation": "behavioral_constraints_not_exact_soft_distribution_similarity",
     "thresholds_frozen_before_results": true,
     "training_use_forbidden": true,
     "private_identity_gradient": false,
-    "ratification_gate": {
-      "family_min_routing_similarity_min": 0.90,
-      "family_macro_routing_similarity_min": 0.94,
-      "decisive_view_accuracy_min": 0.95,
-      "fused_semantic_cosine_min": 0.90,
-      "source_anchor_summary_max_abs_error_max": 0.0,
-      "source_anchor_token_max_abs_error_max": 0.0,
-      "disagreement_geometry_mae_max": 0.12,
-      "missing_view_max_weight_max": 0.000001
-    },
-    "contextualized_source_cosine_is_report_only": true,
-    "status": "READY_TO_FREEZE_BEFORE_ANY_RESULT"
+    "status": "READY_TO_FREEZE_BEFORE_ANY_V0_3_RESULT"
   },
   "future_identity_architecture_guardrails": {
     "explicit_identity_concept_bank_open_ontology": true,
@@ -192,12 +193,13 @@
     "raw_source_spans_remain_available_alongside_structure": true
   },
   "current_stage": {
-    "name": "cross_context_fusion_single_candidate_confirmatory_challenge_v0.2",
+    "name": "cross_context_fusion_constraint_confirmatory_challenge_v0.3",
     "gradient_authorized": false,
     "challenge_training_use_authorized": false,
+    "model_weights_changed_after_v0_2": false,
     "private_identity_gradient": false,
     "production_promotion_authorized": false,
-    "next_action": "freeze_confirmatory_v0.2_on_exact_revision_then_evaluate_only_preselected_repair_step240_once_on_p100"
+    "next_action": "freeze_v0.3_on_exact_revision_then_evaluate_unchanged_preselected_repair_step240_once_on_p100"
   },
   "private_identity_data": false,
   "private_identity_gradient": false,
