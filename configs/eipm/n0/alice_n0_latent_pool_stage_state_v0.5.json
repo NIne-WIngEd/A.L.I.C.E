@@ -1,0 +1,81 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.5",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.4.json",
+  "status": "LATENT_POOL_V02_DIAGNOSTIC_EXPOSES_UPSTREAM_VALUE_DISCRIMINATION_CONFOUND_NO_RATIFICATION_REPAIR_OR_SCALE_YET",
+  "candidate": {
+    "step": 360,
+    "sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4",
+    "parameters": 29557764,
+    "weights_changed_after_v0_2_challenge": false,
+    "ratified": false
+  },
+  "frozen_challenge_v0_2": {
+    "status": "FAIL_PRESELECTED_CANDIDATE_NOT_ELIGIBLE_FOR_LATENT_POOL_RATIFICATION",
+    "immutable_historical_result": true,
+    "reclassified_as_pass": false,
+    "challenge_rows_used_for_training": false,
+    "gradient_performed": false,
+    "failed_family": "missing_structured_evidence",
+    "failed_gate": "counterfactual_family_min_drop"
+  },
+  "value_contrast_diagnostic_v0_2": {
+    "status": "DIAGNOSTIC_ONLY_NO_RATIFICATION_EFFECT",
+    "rows": 32,
+    "families": 4,
+    "query_conditioned_contrast_contract": true,
+    "global_current_value_assumption": false,
+    "challenge_rows_used_for_training": false,
+    "gradient_performed": false,
+    "candidate_weights_changed": false,
+    "overall": {
+      "target_foil_semantic_separation": 0.009924205020070076,
+      "required_source_contains_target_value_rate": 1.0,
+      "required_source_prefers_target_rate": 0.59375,
+      "required_source_target_vs_foil_margin": 0.0022809499059803784,
+      "normal_latent_set_prefers_target_rate": 0.9375,
+      "normal_latent_set_target_vs_foil_margin": 0.016335993190295994,
+      "counterfactual_latent_set_target_vs_foil_margin": 0.0143133889650926,
+      "latent_set_margin_drop": 0.002022604225203395,
+      "normal_pooled_prefers_target_rate": 0.28125,
+      "pooled_margin_drop": -0.00010925531387329102,
+      "absolute_target_cosine_drop": 0.08747471310198307
+    },
+    "missing_structured_evidence": {
+      "target_foil_semantic_separation": 0.013950437307357788,
+      "required_source_prefers_target_rate": 0.25,
+      "required_source_target_vs_foil_margin": -0.0075212642550468445,
+      "normal_latent_set_prefers_target_rate": 0.75,
+      "normal_latent_set_target_vs_foil_margin": 0.016449838876724243,
+      "counterfactual_latent_set_target_vs_foil_margin": 0.015193291008472443,
+      "latent_set_margin_drop": 0.0012565478682518005,
+      "absolute_target_cosine_drop": -0.00983363389968872
+    }
+  },
+  "interpretation": {
+    "latent_pool_failure_proven": false,
+    "capacity_bottleneck_proven": false,
+    "scale_now": false,
+    "reason": "the required source contains the target value on every diagnostic row but its own pooled source representation does not reliably prefer the target over the matched foil; in missing_structured_evidence it prefers the target on only 25 percent of rows and has a negative mean target-vs-foil margin. Therefore the current value-contrast chain is confounded upstream of the latent pool and cannot cleanly attribute the frozen counterfactual failure to latent capacity or causal use.",
+    "historical_v0_2_fail_still_binding": true,
+    "diagnostic_can_reclassify_historical_fail": false
+  },
+  "next_required_work": {
+    "stage": "UPSTREAM_QUERY_CONDITIONED_VALUE_DISCRIMINATION_AUDIT_BEFORE_LATENT_REPAIR_OR_SCALE",
+    "requirements": [
+      "measure value discrimination at raw token/span and pooled source-view levels separately",
+      "verify whether source pooling or semantic target geometry loses current-vs-foil identity",
+      "use query-conditioned or value-aware readouts rather than full-sentence cosine when necessary",
+      "do not train on frozen challenge or diagnostic rows",
+      "do not change latent weights until the upstream separability chain is valid",
+      "do not scale solely to satisfy a metric whose required source representation is itself non-discriminative"
+    ]
+  },
+  "hard_parameter_ceiling": null,
+  "slot_count_ceiling": null,
+  "view_count_ceiling": null,
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
