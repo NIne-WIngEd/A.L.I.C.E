@@ -1,0 +1,81 @@
+{
+  "schema": "alice.eipm.n0.v02-cross-context-fusion-frozen-challenge.v0.2",
+  "status": "FROZEN_CONFIRMATORY_CHALLENGE_SPEC_NO_RESULTS_OBSERVED",
+  "purpose": "single-candidate untouched confirmatory gate for the preselected full-scale source-anchored fusion repair checkpoint",
+  "creation_rule": "candidate and thresholds are committed before any v0.2 challenge result is observed",
+  "training_use": "FORBIDDEN",
+  "private_identity_content": false,
+  "identity_authority": false,
+  "gradient_authorized": false,
+  "candidate_selection": {
+    "preselected_before_challenge": true,
+    "repair_step": 240,
+    "total_fusion_update_count": 480,
+    "checkpoint": "cross-context-fusion-repair-training-v0.2/repair-step-00000240",
+    "fusion_sha256": "4d51494beb788f74ddc03590da05ea00f0e36574294649c2cd5d438f9472e577",
+    "selection_source": "cross-context-fusion-repair-training-v0.2/cross_context_fusion_repair_comparison.json",
+    "selection_metric_order": "worst_family_routing_then_macro_routing_then_decisive_then_semantic_then_anchor_exactness_then_contextualized_alignment_then_geometry_then_earlier",
+    "challenge_may_not_select_a_different_checkpoint": true
+  },
+  "challenge": {
+    "rows": 128,
+    "families": 16,
+    "rows_per_family": 8,
+    "data_origin": "deterministic_public_independent_confirmatory_fusion_templates_v0.2",
+    "original_training_rows_reused": false,
+    "repair_training_rows_reused": false,
+    "retired_challenge_rows_reused": false,
+    "training_entities_reused": false,
+    "training_text_templates_reused": false,
+    "retired_challenge_entities_reused": false,
+    "retired_challenge_text_templates_reused": false,
+    "targets": [
+      "historical query over superseded state",
+      "current query over three-step update chain",
+      "temporal successor current and previous-state discrimination",
+      "correction against stale majority",
+      "support aggregation",
+      "derived-from chain reasoning",
+      "causal chain reasoning",
+      "unresolved conflict without false collapse",
+      "semantic authority under stale structured context",
+      "structured authority under ambiguous prose",
+      "reliability reversal",
+      "missing-view conflict resolution",
+      "missing-view historical retrieval",
+      "lexically attractive low-authority distractors",
+      "cross-view consensus with one stale source",
+      "exact source-anchor integrity under contextualization"
+    ]
+  },
+  "ratification_gate": {
+    "family_min_routing_similarity_min": 0.90,
+    "family_macro_routing_similarity_min": 0.94,
+    "decisive_view_accuracy_min": 0.95,
+    "fused_semantic_cosine_min": 0.90,
+    "source_anchor_summary_max_abs_error_max": 0.0,
+    "source_anchor_token_max_abs_error_max": 0.0,
+    "disagreement_geometry_mae_max": 0.12,
+    "missing_view_max_weight_max": 0.000001,
+    "contextualized_source_cosine": "reported_not_hard_gated_because_contextualization_is_allowed_to_diverge_when_useful",
+    "all_numeric_thresholds_required": true,
+    "thresholds_are_frozen_before_results": true
+  },
+  "decision_policy": [
+    "evaluate_only_the_preselected_repair_step_240_candidate",
+    "candidate_must_pass_every_frozen_numeric_gate",
+    "no_checkpoint_selection_on_challenge_v0.2",
+    "pass_authorizes_fusion_ratification_manifest_not_production_promotion",
+    "failure_retires_challenge_v0.2_and_requires_new_failure_driven_work"
+  ],
+  "anti_tuning_rule": "challenge v0.2 rows, entities, and templates may not be used for training or checkpoint selection in this ratification decision",
+  "capacity_policy": {
+    "hard_parameter_ceiling": null,
+    "view_count_ceiling": null,
+    "source_anchor_capacity_ceiling": null,
+    "failure_does_not_authorize_model_shrinking_for_efficiency": true,
+    "capability_and_personality_fidelity_first": true
+  },
+  "production_promotion_authorized": false,
+  "private_identity_gradient": false
+}
