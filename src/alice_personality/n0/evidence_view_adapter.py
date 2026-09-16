@@ -13,7 +13,10 @@ class EvidenceViewAdapterConfig:
 
     Parameter counts are configuration facts, not capability ceilings. The
     adapter exists so relation learning can specialize without overwriting the
-    ratified generic structured representation.
+    ratified structured representation.
+
+    ``max_fields`` is a legacy/checkpoint operating-shape hint only. Runtime
+    validation does not impose it as a field-count ceiling.
     """
 
     semantic_size: int = 640
@@ -37,7 +40,7 @@ class EvidenceViewAdapterConfig:
         if not 0.0 <= self.dropout < 1.0:
             raise ValueError("dropout must be in [0, 1)")
         if self.max_fields < 1:
-            raise ValueError("max_fields must be positive")
+            raise ValueError("legacy max_fields operating-shape hint must be positive")
         if self.base_prior_scale < 0.0:
             raise ValueError("base_prior_scale must be non-negative")
 
@@ -90,10 +93,8 @@ class EvidenceViewAdapter(nn.Module):
             raise ValueError(
                 f"semantic width mismatch: expected {self.config.semantic_size}, observed {semantic}"
             )
-        if fields > self.config.max_fields:
-            raise ValueError(
-                f"field count {fields} exceeds configured max_fields={self.config.max_fields}"
-            )
+        if fields < 1:
+            raise ValueError("evidence view requires at least one field slot")
         if valid_mask.shape != (batch, fields) or valid_mask.dtype != torch.bool:
             raise ValueError("valid_mask must be bool with shape [batch, fields]")
         if not torch.all(valid_mask.any(dim=1)):
@@ -163,5 +164,7 @@ class EvidenceViewAdapter(nn.Module):
             "feedforward_size": self.config.feedforward_size,
             "position_embeddings": 0,
             "private_identity_parameters": 0,
+            "field_count_limit": None,
+            "legacy_max_fields_operating_shape_hint": self.config.max_fields,
             "hard_parameter_ceiling": None,
         }
