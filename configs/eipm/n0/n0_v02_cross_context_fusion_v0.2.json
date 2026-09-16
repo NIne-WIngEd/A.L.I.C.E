@@ -2,7 +2,7 @@
   "schema": "alice.eipm.n0.v02-cross-context-fusion.v0.2",
   "status": "FULL_SCALE_FRONTIER_MECHANICS_READY_NO_GRADIENT_AUTHORIZED",
   "supersedes": "configs/eipm/n0/n0_v02_cross_context_fusion_v0.1.json",
-  "supersession_reason": "v0.1 used a single flattened Transformer stream; v0.2 is the intended full-scale N0 tri-stream gated bidirectional cross-attention architecture before any fusion gradient was performed",
+  "supersession_reason": "v0.1 used a single flattened Transformer stream; v0.2 is the intended full-scale N0 multi-stream gated bidirectional cross-attention architecture before any fusion gradient was performed",
   "parents": {
     "semantic": "targeted-repair-v0.1/step-00000080",
     "structured": "structured-state-pilot-v0.1/step-00000080",
@@ -12,7 +12,7 @@
   },
   "architecture": {
     "implementation": "src/alice_personality/n0/cross_context_fusion.py",
-    "family": "tri_stream_self_refinement_plus_gated_bidirectional_cross_attention",
+    "family": "multi_stream_self_refinement_plus_gated_bidirectional_cross_attention",
     "semantic_size": 640,
     "fusion_size": 640,
     "interaction_stages": 4,
@@ -20,10 +20,18 @@
     "feedforward_size": 2560,
     "activation": "geglu",
     "dropout": 0.0,
-    "input_views": [
+    "current_instantiated_view_count": 3,
+    "current_public_views": [
       "semantic_raw_context",
       "typed_structured_context",
       "relation_evidence_context"
+    ],
+    "view_count_ceiling": null,
+    "checkpoint_view_vocabulary_migratable": true,
+    "future_view_expansion_without_fusion_family_replacement": true,
+    "anticipated_later_views_include": [
+      "explicit_identity_concept_context",
+      "governed_residual_concept_context"
     ],
     "per_view_self_refinement": true,
     "bidirectional_cross_attention": true,
@@ -34,6 +42,7 @@
     "missing_view_supported": true,
     "preserve_contextualized_views_for_later_adaptive_multi_view_pooling": true,
     "parent_residual_preservation": true,
+    "parent_token_views_exact_at_initialization": true,
     "new_positional_embeddings": false,
     "hard_parameter_ceiling": null,
     "parameter_count_status": "measure_after_cpu_construction_not_a_design_limit"
@@ -43,22 +52,24 @@
     "reduced_capability_pilot": false,
     "generic_fallback_architecture": false,
     "frontier_architecture_selected_for_alice_role": true,
-    "architecture_may_scale_or_change_only_when_measured_capability_evidence_requires_it": true,
+    "architecture_may_scale_or_change_when_measured_capability_or_fidelity_evidence_requires_it": true,
     "capability_and_personality_fidelity_before_efficiency": true,
     "efficiency_role": "secondary_selector_among_capability_sufficient_architectures",
-    "bounded_training_run_does_not_mean_reduced_model": true
+    "bounded_training_run_does_not_mean_reduced_model": true,
+    "finite_checkpoint_tensor_shapes_are_migratable_not_permanent_product_limits": true
   },
   "frontier_basis": {
     "gated_representation_refinement": "adaptive discrimination-oriented refinement rather than static pooled readout",
-    "cross_representation_exchange": "gated cross-attention between heterogeneous semantic structured and graph representations",
+    "cross_representation_exchange": "gated cross-attention between heterogeneous semantic structured graph and later concept representations",
     "adaptive_routing": "query and reliability conditioned view routing while retaining per-view outputs",
     "disagreement_preservation": "cross-view conflict remains observable for later uncertainty and IDP heads"
   },
   "capability_policy": {
-    "primary_objective": "preserve_and_integrate_complementary_context_without_collapsing_personality_relevant_nuance",
+    "primary_objective": "preserve_and_integrate_complementary context without collapsing personality-relevant nuance",
     "do_not_accept": [
       "static_view_average_as_final_fusion",
       "single_flattened_context_stream_as_final_fusion_architecture",
+      "fixed_global_view_count_as_product_limit",
       "single_view_dominance_without_task_evidence",
       "loss_of_raw_semantic_nuance",
       "loss_of_structured_constraints",
@@ -81,7 +92,8 @@
     "missing_view_cases": true,
     "structured_and_evidence_permutation_invariance_where_semantically_applicable": true,
     "parent_capability_retention": true,
-    "cross_view_exchange_must_be_causally_used_when_required": true
+    "cross_view_exchange_must_be_causally_used_when_required": true,
+    "no_accidental_field_node_edge_or_view_count_ceilings": true
   },
   "private_identity_data": false,
   "production_promotion_authorized": false,
