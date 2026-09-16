@@ -1,0 +1,70 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.6",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.5.json",
+  "status": "PARENT_VALUE_PATH_LOCALIZATION_DIAGNOSTIC_READY_FOR_CPU_PREP_NO_LATENT_REPAIR_OR_SCALE",
+  "candidate": {
+    "step": 360,
+    "sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4",
+    "parameters": 29557764,
+    "weights_changed": false,
+    "ratified": false
+  },
+  "binding_history": {
+    "latent_frozen_challenge_v0_2": "FAIL_PRESELECTED_CANDIDATE_NOT_ELIGIBLE_FOR_LATENT_POOL_RATIFICATION",
+    "historical_fail_reclassified": false,
+    "value_contrast_diagnostic_v0_2": "DIAGNOSTIC_ONLY_NO_RATIFICATION_EFFECT",
+    "latent_failure_proven": false,
+    "capacity_bottleneck_proven": false
+  },
+  "upstream_confound": {
+    "overall_required_source_prefers_target_rate": 0.59375,
+    "missing_structured_evidence_required_source_prefers_target_rate": 0.25,
+    "missing_structured_evidence_required_source_margin": -0.0075212642550468445,
+    "reason_for_localization": "source_view_summaries are transformed parent representations rather than raw source text embeddings; evidence view is the query-conditioned evidence graph pooled state, so direct sentence-embedding cosine cannot distinguish graph selection failure from representation-space mismatch"
+  },
+  "parent_value_path_diagnostic_v0_1": {
+    "status": "READY_FOR_CPU_PREPARATION_NOT_EVALUATED",
+    "contract_doc": "docs/eipm/N0_PARENT_VALUE_PATH_DIAGNOSTIC_CONTRACT_2026-09-16.md",
+    "evaluator": "scripts/eipm/n0/diagnose_n0_v02_parent_value_path_v0_1.py",
+    "prepare": "scripts/eipm/n0/run_n0_v02_parent_value_path_diagnostic_v0_1_prepare.sh",
+    "runner": "scripts/eipm/n0/run_n0_v02_parent_value_path_diagnostic_v0_1.sh",
+    "launcher": "scripts/eipm/n0/magnolia_p100_n0_v02_parent_value_path_diagnostic_v0_1.sbatch",
+    "tests": "tests/eipm/test_n0_parent_value_path_diagnostic_v0_1.py",
+    "contrast_rows": 32,
+    "canonical_build_parent_cache_path_used": true,
+    "canonical_parent_trace_parity_required": true,
+    "forward_hooks_capture_without_parent_mutation": true,
+    "measurements": [
+      "semantic_target_vs_foil_separation",
+      "raw_text_masked_mean_vs_pooled_encoder_value_margin",
+      "raw_field_semantic_value_margin",
+      "structured_field_state_and_weight_selection",
+      "evidence_adapter_field_state_and_weight_selection",
+      "evidence_graph_field_state_and_weight_selection",
+      "evidence_graph_relation_status_bias_target_vs_foil",
+      "structured_and_graph_pooled_target_vs_foil_margin"
+    ],
+    "ratification_effect": false,
+    "challenge_rows_used_for_training": false,
+    "gradient_performed": false
+  },
+  "decision_tree": {
+    "graph_selection_failure": "repair_evidence_graph_query_conditioned_pooling_before_latent_work",
+    "graph_selection_correct_but_pooled_cosine_inverted": "replace_cross_space_value_metric_without_parent_or_latent_training",
+    "semantic_pooled_encoder_correct_but_masked_mean_wrong": "repair_semantic_source_view_pooling_before_latent_work",
+    "semantic_value_geometry_weak_at_direct_encoder_level": "audit_semantic_objective_or_value_aware_readout_before_downstream_work",
+    "no_upstream_failure_and_valid_value_signal_reaches_latent": "then_reassess_latent_causal_use_and_capacity"
+  },
+  "scale_decision": {
+    "scale_now": false,
+    "hard_parameter_ceiling": null,
+    "slot_count_ceiling": null,
+    "view_count_ceiling": null,
+    "scale_only_after_localized_capacity_or_fidelity_bottleneck": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
