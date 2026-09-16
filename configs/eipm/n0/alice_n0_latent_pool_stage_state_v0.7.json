@@ -1,0 +1,46 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.7",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.6.json",
+  "status": "PARENT_VALUE_PATH_CPU_HARNESS_CORRECTED_PENDING_REPREPARATION_NO_MODEL_EVIDENCE_FROM_FAILED_GATE",
+  "candidate": {
+    "step": 360,
+    "sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4",
+    "weights_changed": false,
+    "ratified": false
+  },
+  "prior_cpu_gate_failure": {
+    "stage": "pytest_collection_before_diagnostic_execution",
+    "reason": "test imported scripts.eipm.n0 as a package even though udocker preparation exposes scripts/eipm/n0 as a PYTHONPATH root",
+    "model_evidence": false,
+    "gradient_performed": false,
+    "gpu_used": false,
+    "parent_diagnostic_executed": false
+  },
+  "corrected_test_contract": {
+    "module_import": "from diagnose_n0_v02_parent_value_path_v0_1 import ...",
+    "pythonpath_root": "scripts/eipm/n0",
+    "prep_schema": "alice.eipm.n0.v02-parent-value-path-diagnostic-preparation.v0.1.1",
+    "runner_requires_corrected_prep_schema": true,
+    "runner_hash_checks_test": true,
+    "historical_cpu_failure_preserved_in_receipt": true
+  },
+  "parent_value_path_diagnostic": {
+    "purpose": "localize value discrimination through semantic, structured, evidence-adapter, and evidence-graph parent representations before any latent repair or scaling",
+    "canonical_parent_path_required": true,
+    "canonical_parent_trace_parity_required": true,
+    "graph_field_weight_and_relation_bias_measured": true,
+    "challenge_rows_used_for_training": false,
+    "gradient_performed": false,
+    "ratification_effect": false
+  },
+  "scale_decision": {
+    "scale_now": false,
+    "hard_parameter_ceiling": null,
+    "scale_only_after_localized_capacity_or_fidelity_bottleneck": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
