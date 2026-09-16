@@ -9,9 +9,11 @@ FUSION_CACHE="$FAILED_ROOT/ratified_fusion_cache.pt"
 LATENT_CONFIG="$ROOT/configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_v0.2.json"
 TRAINING_CONFIG="$ROOT/configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_training_v0.2.json"
 FUSION_RATIFICATION="$ROOT/configs/eipm/n0/n0_v02_cross_context_fusion_ratification_v0.1.json"
+LATENT_MODEL="$ROOT/src/alice_personality/n0/adaptive_multi_view_latent_pool_v0_2.py"
+LATENT_OBJECTIVES="$ROOT/src/alice_personality/n0/adaptive_multi_view_latent_pool_objectives_v0_2.py"
 PREP_RECEIPT="$WORKDIR/adaptive-multi-view-latent-pool-prep-v0.2/preparation_receipt.json"
 TRAINER="$ROOT/scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py"
-OUTPUT_ROOT="$WORKDIR/adaptive-multi-view-latent-pool-training-v0.2"
+OUTPUT_ROOT="$WORKDIR/adaptive-multi-view-latent-pool-training-v0.2.1"
 
 export PYTHONPATH="$ROOT/src:$ROOT/scripts/eipm/n0${PYTHONPATH:+:$PYTHONPATH}"
 export HF_HUB_OFFLINE=1
@@ -24,6 +26,8 @@ for required in \
   "$LATENT_CONFIG" \
   "$TRAINING_CONFIG" \
   "$FUSION_RATIFICATION" \
+  "$LATENT_MODEL" \
+  "$LATENT_OBJECTIVES" \
   "$PREP_RECEIPT" \
   "$TRAINER"
 do
@@ -33,14 +37,24 @@ do
   fi
 done
 
-python - "$PREP_RECEIPT" "$PARENT_CACHE" "$FUSION_CACHE" "$LATENT_CONFIG" "$TRAINING_CONFIG" "$FUSION_RATIFICATION" "$TRAINER" <<'PY'
+python - "$PREP_RECEIPT" "$PARENT_CACHE" "$FUSION_CACHE" "$LATENT_CONFIG" "$TRAINING_CONFIG" "$FUSION_RATIFICATION" "$LATENT_MODEL" "$LATENT_OBJECTIVES" "$TRAINER" <<'PY'
 import hashlib
 import json
 from pathlib import Path
 import subprocess
 import sys
 
-receipt_path, parent_path, fusion_cache_path, latent_path, training_path, ratification_path, trainer_path = map(Path, sys.argv[1:8])
+(
+    receipt_path,
+    parent_path,
+    fusion_cache_path,
+    latent_path,
+    training_path,
+    ratification_path,
+    latent_model_path,
+    latent_objectives_path,
+    trainer_path,
+) = map(Path, sys.argv[1:10])
 
 
 def sha(path: Path) -> str:
@@ -62,6 +76,8 @@ for path, key in [
     (latent_path, "latent_config_sha256"),
     (training_path, "training_config_sha256"),
     (ratification_path, "fusion_ratification_sha256"),
+    (latent_model_path, "latent_model_sha256"),
+    (latent_objectives_path, "latent_objectives_sha256"),
     (trainer_path, "trainer_sha256"),
 ]:
     if receipt.get(key) != sha(path):
@@ -70,6 +86,10 @@ if receipt.get("public_latent_pool_v0_2_gradient_authorized_after_prep") is not 
     raise SystemExit("competitive latent-pool v0.2 gradient authorization missing")
 if receipt.get("failed_v0_1_latent_weights_reused") is not False:
     raise SystemExit("failed latent-pool v0.1 weights must not be reused")
+if receipt.get("prior_v0_2_infrastructure_failure_gradient_performed") is not False:
+    raise SystemExit("job 575673 must remain recorded as pre-gradient infrastructure failure")
+if receipt.get("mixed_precision_semantic_boundaries_fp32") is not True:
+    raise SystemExit("mixed precision semantic boundary repair not certified")
 if receipt.get("private_identity_gradient") is not False:
     raise SystemExit("private identity gradient boundary crossed")
 print("adaptive_latent_pool_v0_2_same_revision_gate=true")
@@ -77,6 +97,8 @@ print(f"git_revision={head}")
 print(f"parent_cache_sha256={receipt['parent_cache_sha256']}")
 print(f"fusion_cache_sha256={receipt['fusion_cache_sha256']}")
 print(f"ratified_fusion_sha256={receipt['ratified_fusion_sha256']}")
+print(f"latent_model_sha256={receipt['latent_model_sha256']}")
+print(f"latent_objectives_sha256={receipt['latent_objectives_sha256']}")
 PY
 
 CUDA_COUNT="$(python - <<'PY'
@@ -90,15 +112,18 @@ if [[ "$CUDA_COUNT" -lt 1 ]]; then
 fi
 
 if [[ -e "$OUTPUT_ROOT" ]]; then
-  echo "Refusing to overwrite competitive latent-pool v0.2 output: $OUTPUT_ROOT" >&2
+  echo "Refusing to overwrite competitive latent-pool v0.2.1 output: $OUTPUT_ROOT" >&2
   exit 4
 fi
 
-echo "===== N0 V0.2 COMPETITIVE ADAPTIVE MULTI-VIEW LATENT POOL TRAINING ====="
+echo "===== N0 V0.2.1 COMPETITIVE ADAPTIVE MULTI-VIEW LATENT POOL TRAINING ====="
 date -Is
 echo "full_scale_model=true"
 echo "fresh_latent_initialization=true"
 echo "failed_v0_1_latent_weights_reused=false"
+echo "prior_v0_2_infrastructure_failure_job=575673"
+echo "prior_v0_2_infrastructure_failure_gradient_performed=false"
+echo "mixed_precision_semantic_boundaries_fp32=true"
 echo "competitive_cross_attention=true"
 echo "duplicate_target_slot_reward_forbidden=true"
 echo "source_view_semantic_recoverability=true"
@@ -117,6 +142,6 @@ python "$TRAINER" \
   --prep-receipt "$PREP_RECEIPT" \
   --output-dir "$OUTPUT_ROOT"
 
-echo "===== N0 V0.2 COMPETITIVE ADAPTIVE MULTI-VIEW LATENT POOL TRAINING COMPLETE ====="
+echo "===== N0 V0.2.1 COMPETITIVE ADAPTIVE MULTI-VIEW LATENT POOL TRAINING COMPLETE ====="
 date -Is
 echo "comparison=$OUTPUT_ROOT/adaptive_multi_view_latent_pool_v0_2_comparison.json"
