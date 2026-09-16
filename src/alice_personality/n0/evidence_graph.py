@@ -10,12 +10,16 @@ from torch import nn
 
 
 class EvidenceRelationType(IntEnum):
-    """Stable public relation ids for the N0 evidence graph.
+    """Stable seed relation ids for the current public N0 evidence checkpoint.
 
     Direction follows Memory Core: ``source -> target``. ``CORRECTS`` and
     ``SUPERSEDES`` therefore point from the replacement record to the
     historical record. ``CONFLICTS_WITH`` is semantically symmetric even when
     storage keeps one canonical edge.
+
+    This enum is a checkpoint vocabulary, not a claim that A.L.I.C.E.'s final
+    relation ontology is closed. New relation semantics require an explicit
+    vocabulary/checkpoint migration so provenance is never silently aliased.
     """
 
     PAD = 0
@@ -43,12 +47,21 @@ def relation_type_id(name: str) -> int:
     try:
         return int(_RELATION_NAME_TO_ID[name.strip().lower()])
     except KeyError as exc:
-        raise ValueError(f"unsupported evidence relation type: {name!r}") from exc
+        raise ValueError(
+            f"relation {name!r} is not present in this checkpoint vocabulary; "
+            "expand/migrate the relation registry rather than aliasing it"
+        ) from exc
 
 
 @dataclass(frozen=True)
 class EvidenceGraphConfig:
-    """Relation-aware evidence sidecar over structured-state fields."""
+    """Relation-aware evidence sidecar over structured-state fields.
+
+    ``max_fields`` and ``max_edges`` are retained as legacy/checkpoint
+    operating-shape hints. They are not runtime capability ceilings. The graph
+    accepts any node/edge count that the active compute path can represent.
+    ``num_relation_types`` is a migratable checkpoint vocabulary size.
+    """
 
     semantic_size: int = 640
     graph_size: int = 256
@@ -64,9 +77,9 @@ class EvidenceGraphConfig:
         if self.graph_layers < 1:
             raise ValueError("graph_layers must be positive")
         if self.max_fields < 1 or self.max_edges < 1:
-            raise ValueError("max_fields and max_edges must be positive")
+            raise ValueError("legacy operating-shape hints must be positive")
         if self.num_relation_types <= int(EvidenceRelationType.TEMPORAL_SUCCESSOR):
-            raise ValueError("num_relation_types is too small for the stable relation vocabulary")
+            raise ValueError("num_relation_types is too small for the current checkpoint vocabulary")
         if self.base_weight_scale < 0.0:
             raise ValueError("base_weight_scale must be non-negative")
 
@@ -217,10 +230,8 @@ class EvidenceGraphEncoder(nn.Module):
             raise ValueError(
                 f"semantic width mismatch: expected {self.config.semantic_size}, observed {semantic}"
             )
-        if fields > self.config.max_fields:
-            raise ValueError(
-                f"field count {fields} exceeds configured max_fields={self.config.max_fields}"
-            )
+        if fields < 1:
+            raise ValueError("evidence graph requires at least one field slot")
         if valid_mask.shape != (batch, fields) or valid_mask.dtype != torch.bool:
             raise ValueError("valid_mask must be bool with shape [batch, fields]")
         if not torch.all(valid_mask.any(dim=1)):
@@ -229,8 +240,6 @@ class EvidenceGraphEncoder(nn.Module):
         if edge_index.ndim != 3 or edge_index.shape[0] != batch or edge_index.shape[2] != 2:
             raise ValueError("edge_index must have shape [batch, edges, 2]")
         edges = edge_index.shape[1]
-        if edges > self.config.max_edges:
-            raise ValueError(f"edge count {edges} exceeds configured max_edges={self.config.max_edges}")
         if edge_type_ids.shape != (batch, edges):
             raise ValueError("edge_type_ids must have shape [batch, edges]")
         if edge_confidence.shape != (batch, edges, 1):
@@ -247,7 +256,9 @@ class EvidenceGraphEncoder(nn.Module):
             edge_type_ids.min().item() < 0
             or edge_type_ids.max().item() >= self.config.num_relation_types
         ):
-            raise ValueError("edge_type_ids contains an unsupported relation id")
+            raise ValueError(
+                "edge_type_ids exceeds this checkpoint vocabulary; migrate/expand the relation registry"
+            )
         if edge_valid_mask.any():
             active_index = edge_index[edge_valid_mask]
             if active_index.min().item() < 0 or active_index.max().item() >= fields:
@@ -315,9 +326,6 @@ class EvidenceGraphEncoder(nn.Module):
         )
         conflict_bias = conflict_bias * confidence * conflict.to(x.dtype)
 
-        # Directed relations apply their learned relevance to the relation
-        # target. Conflicts instead apply one symmetric relevance value to both
-        # endpoints, independent of storage orientation.
         directed = active & ~conflict
         target_bias = target_bias * directed.to(x.dtype)
 
@@ -412,6 +420,11 @@ class EvidenceGraphEncoder(nn.Module):
             "graph_size": self.config.graph_size,
             "graph_layers": self.config.graph_layers,
             "relation_types": self.config.num_relation_types,
+            "relation_vocabulary_role": "migratable_checkpoint_vocabulary_not_ontology_ceiling",
+            "field_count_limit": None,
+            "edge_count_limit": None,
+            "legacy_max_fields_operating_shape_hint": self.config.max_fields,
+            "legacy_max_edges_operating_shape_hint": self.config.max_edges,
             "position_embeddings": 0,
             "private_identity_parameters": 0,
             "semantic_core_parameter_growth": 0,
