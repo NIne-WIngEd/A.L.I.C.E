@@ -1,0 +1,90 @@
+{
+  "schema": "alice.eipm.n0.v02-cross-context-fusion.v0.2",
+  "status": "FULL_SCALE_FRONTIER_MECHANICS_READY_NO_GRADIENT_AUTHORIZED",
+  "supersedes": "configs/eipm/n0/n0_v02_cross_context_fusion_v0.1.json",
+  "supersession_reason": "v0.1 used a single flattened Transformer stream; v0.2 is the intended full-scale N0 tri-stream gated bidirectional cross-attention architecture before any fusion gradient was performed",
+  "parents": {
+    "semantic": "targeted-repair-v0.1/step-00000080",
+    "structured": "structured-state-pilot-v0.1/step-00000080",
+    "evidence_view_adapter": "evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080",
+    "relation_graph": "relation-repair-v0.1/step-00000080",
+    "evidence_ratification_manifest": "configs/eipm/n0/n0_v02_evidence_specialist_ratification_v0.1.json"
+  },
+  "architecture": {
+    "implementation": "src/alice_personality/n0/cross_context_fusion.py",
+    "family": "tri_stream_self_refinement_plus_gated_bidirectional_cross_attention",
+    "semantic_size": 640,
+    "fusion_size": 640,
+    "interaction_stages": 4,
+    "num_heads": 10,
+    "feedforward_size": 2560,
+    "activation": "geglu",
+    "dropout": 0.0,
+    "input_views": [
+      "semantic_raw_context",
+      "typed_structured_context",
+      "relation_evidence_context"
+    ],
+    "per_view_self_refinement": true,
+    "bidirectional_cross_attention": true,
+    "query_conditioned_cross_view_gating": true,
+    "reliability_conditioned_cross_view_gating": true,
+    "view_identity_explicit": true,
+    "view_reliability_explicit": true,
+    "missing_view_supported": true,
+    "preserve_contextualized_views_for_later_adaptive_multi_view_pooling": true,
+    "parent_residual_preservation": true,
+    "new_positional_embeddings": false,
+    "hard_parameter_ceiling": null,
+    "parameter_count_status": "measure_after_cpu_construction_not_a_design_limit"
+  },
+  "architecture_policy": {
+    "full_scale_model": true,
+    "reduced_capability_pilot": false,
+    "generic_fallback_architecture": false,
+    "frontier_architecture_selected_for_alice_role": true,
+    "architecture_may_scale_or_change_only_when_measured_capability_evidence_requires_it": true,
+    "capability_and_personality_fidelity_before_efficiency": true,
+    "efficiency_role": "secondary_selector_among_capability_sufficient_architectures",
+    "bounded_training_run_does_not_mean_reduced_model": true
+  },
+  "frontier_basis": {
+    "gated_representation_refinement": "adaptive discrimination-oriented refinement rather than static pooled readout",
+    "cross_representation_exchange": "gated cross-attention between heterogeneous semantic structured and graph representations",
+    "adaptive_routing": "query and reliability conditioned view routing while retaining per-view outputs",
+    "disagreement_preservation": "cross-view conflict remains observable for later uncertainty and IDP heads"
+  },
+  "capability_policy": {
+    "primary_objective": "preserve_and_integrate_complementary_context_without_collapsing_personality_relevant_nuance",
+    "do_not_accept": [
+      "static_view_average_as_final_fusion",
+      "single_flattened_context_stream_as_final_fusion_architecture",
+      "single_view_dominance_without_task_evidence",
+      "loss_of_raw_semantic_nuance",
+      "loss_of_structured_constraints",
+      "loss_of_relation_or_provenance_evidence",
+      "smoothing_away_real_cross_view_disagreement"
+    ]
+  },
+  "gradient_authorization": {
+    "authorized": false,
+    "scope": null,
+    "parents_trainable": false,
+    "private_identity_gradient": false
+  },
+  "evaluation_requirements": {
+    "semantic_decisive_cases": true,
+    "structured_decisive_cases": true,
+    "evidence_decisive_cases": true,
+    "cross_view_agreement_cases": true,
+    "cross_view_conflict_cases": true,
+    "missing_view_cases": true,
+    "structured_and_evidence_permutation_invariance_where_semantically_applicable": true,
+    "parent_capability_retention": true,
+    "cross_view_exchange_must_be_causally_used_when_required": true
+  },
+  "private_identity_data": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false,
+  "next_required_artifact": "provenance_correct_public_cross_context_fusion_curriculum_and_full_scale_training_gate"
+}
