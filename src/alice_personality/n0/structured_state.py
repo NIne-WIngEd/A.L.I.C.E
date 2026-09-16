@@ -15,6 +15,11 @@ class StructuredStateConfig:
     The branch intentionally carries no positional embeddings. Fields whose
     order is not semantically meaningful therefore remain permutation
     equivariant, while the pooled state is permutation invariant.
+
+    ``max_fields`` is retained only as a legacy/checkpoint operating-shape hint.
+    It is not a capability ceiling and is not enforced by the encoder. Successor
+    data paths may supply as many fields as memory/compute permit without an
+    architecture redesign.
     """
 
     semantic_size: int = 640
@@ -39,7 +44,7 @@ class StructuredStateConfig:
         if self.feedforward_size < self.state_size:
             raise ValueError("feedforward_size must be >= state_size")
         if self.max_fields < 1:
-            raise ValueError("max_fields must be positive")
+            raise ValueError("legacy max_fields operating-shape hint must be positive")
         if not 0.0 <= self.dropout < 1.0:
             raise ValueError("dropout must be in [0, 1)")
 
@@ -113,10 +118,8 @@ class StructuredStateEncoder(nn.Module):
             raise ValueError(
                 f"semantic width mismatch: expected {self.config.semantic_size}, observed {semantic}"
             )
-        if fields > self.config.max_fields:
-            raise ValueError(
-                f"field count {fields} exceeds configured max_fields={self.config.max_fields}"
-            )
+        if fields < 1:
+            raise ValueError("structured state requires at least one field slot")
 
         expected = (batch, fields)
         for name, value in (
@@ -206,4 +209,7 @@ class StructuredStateEncoder(nn.Module):
             "num_heads": self.config.num_heads,
             "position_embeddings": 0,
             "private_identity_parameters": 0,
+            "field_count_limit": None,
+            "legacy_max_fields_operating_shape_hint": self.config.max_fields,
+            "hard_parameter_ceiling": None,
         }
