@@ -11,7 +11,7 @@ LATENT_CONFIG="$ROOT/configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_v0.2
 TRAINING_CONFIG="$ROOT/configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_training_v0.2.json"
 FUSION_RATIFICATION="$ROOT/configs/eipm/n0/n0_v02_cross_context_fusion_ratification_v0.1.json"
 TRAINER_BASE="$ROOT/scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py"
-TRAINER="$ROOT/scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_1_full_scale.py"
+TRAINER="$ROOT/scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py"
 PREP_ROOT="$WORKDIR/adaptive-multi-view-latent-pool-prep-v0.2"
 PREP_RECEIPT="$PREP_ROOT/preparation_receipt.json"
 
@@ -111,8 +111,13 @@ if training.get("capacity_policy", {}).get("hard_parameter_ceiling") is not None
     raise SystemExit("v0.2 training config contains a hard parameter ceiling")
 if training.get("capacity_policy", {}).get("slot_count_ceiling") is not None:
     raise SystemExit("v0.2 training config contains a slot ceiling")
-if training.get("objective_policy", {}).get("old_unnormalized_smoothmax_forbidden") is not True:
+policy = training.get("objective_policy", {})
+if policy.get("old_unnormalized_smoothmax_forbidden") is not True:
     raise SystemExit("v0.2 objective correction gate missing")
+if policy.get("available_source_view_semantic_recoverability") is not True:
+    raise SystemExit("v0.2 source-view semantic coverage gate missing")
+if policy.get("consensus_views_not_forced_into_artificial_distinctions") is not True:
+    raise SystemExit("v0.2 consensus-safe specialization gate missing")
 
 model = AdaptiveMultiViewLatentPoolV02(load_config(latent_path)).eval()
 report = model.parameter_report()
@@ -121,7 +126,6 @@ if report.get("competitive_cross_attention") is not True:
 if report.get("hard_parameter_ceiling") is not None or report.get("slot_count_ceiling") is not None:
     raise SystemExit("latent v0.2 parameter report contains a hard capability ceiling")
 
-# Re-open caches on CPU to verify they are structurally usable without altering them.
 parent = torch.load(parent_path, map_location="cpu", weights_only=False)
 fusion = torch.load(fusion_cache_path, map_location="cpu", weights_only=False)
 if len(parent.get("ids", [])) != 512:
@@ -154,6 +158,8 @@ receipt = {
     "competitive_cross_attention": True,
     "old_unnormalized_smoothmax_forbidden": True,
     "duplicate_target_slot_reward_forbidden": True,
+    "available_source_view_semantic_recoverability": True,
+    "consensus_views_not_forced_into_artificial_distinctions": True,
     "exact_routing_percentage_supervision": False,
     "fixed_slot_trait_labels": False,
     "frozen_challenge_rows_used_for_training": False,
@@ -177,6 +183,8 @@ echo "failed_v0_1_preserved=true"
 echo "failed_v0_1_latent_weights_reused=false"
 echo "competitive_cross_attention=true"
 echo "duplicate_target_slot_reward_forbidden=true"
+echo "available_source_view_semantic_recoverability=true"
+echo "consensus_views_not_forced_into_artificial_distinctions=true"
 echo "training_rows=384 dev_rows=128"
 echo "public_latent_pool_v0_2_gradient_authorized_after_prep=true"
 echo "private_identity_gradient=false"
