@@ -61,15 +61,16 @@ python "$ROOT/scripts/eipm/n0/build_n0_v02_relation_repair_curriculum.py" \
   --output "$REPAIR_CURRICULUM" \
   --manifest "$REPAIR_MANIFEST"
 
-python - <<'PY'
+python - "$REPAIR_MANIFEST" <<'PY'
 import json
+import sys
 from pathlib import Path
 cfg = json.loads(Path("configs/eipm/n0/n0_v02_evidence_graph_v0.3.json").read_text())
 if cfg.get("repair_training", {}).get("authorized") is not True:
     raise SystemExit("relation repair is not authorized")
 if cfg.get("capacity_policy", {}).get("hard_parameter_ceiling") is not None:
     raise SystemExit("unexpected hard parameter ceiling")
-manifest = json.loads(Path("$REPAIR_MANIFEST").read_text())
+manifest = json.loads(Path(sys.argv[1]).read_text())
 if manifest.get("frozen_relation_essential_challenge_rows_used_for_training") is not False:
     raise SystemExit("frozen challenge leak detected")
 if manifest.get("training_authorized") is not True:
