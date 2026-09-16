@@ -113,11 +113,13 @@ def test_parameter_report_declares_full_scale_frontier_architecture() -> None:
     report = CrossContextFusion().parameter_report()
     assert report["total_parameters"] > 0
     assert report["hard_parameter_ceiling"] is None
+    assert report["view_count_ceiling"] is None
     assert report["private_identity_parameters"] == 0
     assert report["preserves_contextualized_views"] is True
+    assert report["parent_token_views_exact_at_initialization"] is True
     assert report["full_scale_n0_candidate"] is True
     assert report["reduced_pilot_model"] is False
     assert report["bidirectional_cross_attention"] is True
     assert report["gated_cross_view_exchange"] is True
     assert report["fusion_stages"] == 4
-    assert report["fusion_family"] == "tri_stream_self_refinement_plus_gated_bidirectional_cross_attention"
+    assert report["fusion_family"] == "multi_stream_self_refinement_plus_gated_bidirectional_cross_attention"
