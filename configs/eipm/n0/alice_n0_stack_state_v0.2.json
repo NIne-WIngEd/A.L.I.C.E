@@ -1,6 +1,6 @@
 {
   "schema": "alice.eipm.n0.stack-state.v0.2",
-  "status": "EVIDENCE_SPECIALIST_RATIFIED_CAPABILITY_LIMIT_AUDIT_COMPLETE_FULL_SCALE_FUSION_PREP_REQUIRED",
+  "status": "FULL_SCALE_FUSION_TRAINED_STEP240_PROVISIONAL_FROZEN_CHALLENGE_REQUIRED",
   "authoritative_for_current_stage": true,
   "historical_semantic_training_manifest": "configs/eipm/n0/alice_n0_semantic_v0.2.json",
   "capability_limit_audit": {
@@ -84,6 +84,50 @@
     "ordinary_replay_macro_target_support_mass": 0.9831965605417887,
     "ordinary_replay_min_target_support_mass": 0.934688925743103
   },
+  "fusion_training": {
+    "job_id": 575619,
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:01:59",
+    "architecture": "multi_stream_self_refinement_plus_gated_bidirectional_cross_attention",
+    "full_scale_model": true,
+    "reduced_capability_pilot": false,
+    "parameters": 116981764,
+    "candidate_steps": [80, 160, 240],
+    "step80_gate_pass": false,
+    "step160_gate_pass": true,
+    "step240_gate_pass": true,
+    "provisional_winner_step": 240,
+    "provisional_winner_sha256": "9b2a7a120539e9c6a254ea5a47d30a0c9c827d76c18dc46822ee171303bb8d14",
+    "provisional_winner_metrics": {
+      "decisive_view_accuracy": 1.0,
+      "family_macro_routing_similarity": 0.9835125721991063,
+      "family_min_routing_similarity": 0.9738669022917747,
+      "fused_semantic_cosine": 0.9652088388800621,
+      "view_preservation_cosine": 0.9507347898823875,
+      "disagreement_geometry_mae": 0.03989659285871312,
+      "missing_view_max_weight": 0.0
+    },
+    "parents_mutated": false,
+    "private_identity_data": false,
+    "private_identity_gradient": false,
+    "production_promotion_authorized": false,
+    "ratified": false,
+    "required_before_ratification": "untouched_frozen_cross_context_fusion_challenge"
+  },
+  "fusion_frozen_challenge": {
+    "spec": "configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.1.json",
+    "builder": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge.py",
+    "prepare_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_frozen_challenge_prepare.sh",
+    "evaluator": "scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge.py",
+    "evaluation_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_frozen_challenge_eval.sh",
+    "magnolia_launcher": "scripts/eipm/n0/magnolia_p100_n0_v02_cross_context_fusion_frozen_challenge.sbatch",
+    "rows": 96,
+    "families": 12,
+    "thresholds_frozen_before_results": true,
+    "training_use_forbidden": true,
+    "status": "READY_TO_FREEZE_AND_EVALUATE"
+  },
   "future_identity_architecture_guardrails": {
     "explicit_identity_concept_bank_open_ontology": true,
     "residual_concept_bank_bounded_by_governance_not_fixed_capacity": true,
@@ -93,21 +137,16 @@
     "raw_source_spans_remain_available_alongside_structure": true
   },
   "current_stage": {
-    "name": "cross_context_fusion",
-    "config": "configs/eipm/n0/n0_v02_cross_context_fusion_v0.2.json",
-    "implementation": "src/alice_personality/n0/cross_context_fusion.py",
+    "name": "cross_context_fusion_frozen_challenge",
+    "fusion_config": "configs/eipm/n0/n0_v02_cross_context_fusion_v0.2.json",
+    "challenge_config": "configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.1.json",
     "architecture_family": "multi_stream_self_refinement_plus_gated_bidirectional_cross_attention",
     "full_scale_model": true,
-    "reduced_capability_pilot": false,
-    "generic_fallback_architecture": false,
     "current_instantiated_public_views": 3,
     "view_count_ceiling": null,
-    "future_checkpoint_view_expansion_supported": true,
-    "objective": "src/alice_personality/n0/cross_context_fusion_objectives.py",
-    "curriculum_compiler": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_curriculum_v0_2.py",
-    "preparation_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_prepare_v0_2.sh",
     "gradient_authorized": false,
-    "next_action": "run_cpu_full_scale_fusion_mechanics_curriculum_and_no_accidental_ceiling_gate_then_authorize_full_scale_fusion_training"
+    "challenge_training_use_authorized": false,
+    "next_action": "freeze_untouched_96_row_challenge_on_cpu_then_evaluate_steps_80_160_240_once_on_p100_before_ratification"
   },
   "private_identity_data": false,
   "private_identity_gradient": false,
