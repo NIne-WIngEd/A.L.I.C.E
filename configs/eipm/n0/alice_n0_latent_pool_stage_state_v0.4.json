@@ -1,0 +1,82 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.4",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.3.json",
+  "status": "V02_FROZEN_FAIL_PRESERVED_DIAGNOSTIC_V01_CONTRACT_FAILED_V02_EXPLICIT_CONTRAST_CPU_GATE_REQUIRED",
+  "candidate": {
+    "step": 360,
+    "sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4",
+    "parameters": 29557764,
+    "weights_changed_after_v0_2_challenge": false,
+    "ratified": false
+  },
+  "frozen_challenge_v0_2": {
+    "job_id": 575682,
+    "status": "FAIL_PRESELECTED_CANDIDATE_NOT_ELIGIBLE_FOR_LATENT_POOL_RATIFICATION",
+    "immutable_historical_result": true,
+    "reclassified_as_pass": false,
+    "all_non_counterfactual_gates_passed": true,
+    "only_failed_gate": "counterfactual_family_min_drop",
+    "failed_family": "missing_structured_evidence",
+    "failed_family_absolute_target_cosine_drop": -0.009834006428718567,
+    "challenge_rows_used_for_training": false,
+    "gradient_performed": false
+  },
+  "failed_value_contrast_diagnostic_v0_1": {
+    "job_id": 575683,
+    "state": "FAILED",
+    "exit_code": "1:0",
+    "elapsed": "00:00:12",
+    "result_available": false,
+    "model_diagnostic_conclusion_available": false,
+    "failure_stage": "contrast_semantics_reconstruction_before_model_measurement",
+    "observed_error": "current value 'dense' not found in target for N0V02-LATCHAL2-SUPERSESSION_HISTORICAL-01",
+    "root_cause": "gpu_evaluator_applied_global_current_value_assumption_to_query_conditioned_historical_rows_and_built_foils_for_all_challenge_rows_instead_of_only_explicit_counterfactual_cases",
+    "hotfix_wrapper_forbidden": true,
+    "historical_v0_2_result_reclassified": false
+  },
+  "diagnostic_contract_audit": {
+    "document": "docs/eipm/N0_LATENT_VALUE_CONTRAST_DIAGNOSTIC_CONTRACT_AUDIT_2026-09-16.md",
+    "semantic_meaning_must_be_materialized_before_gpu": true,
+    "evaluator_may_not_infer_target_semantics_from_family_name_or_row_id": true,
+    "query_conditioned_answer_semantics": true,
+    "global_current_value_assumption": false
+  },
+  "value_contrast_diagnostic_v0_2": {
+    "compiler": "scripts/eipm/n0/compile_n0_v02_latent_pool_value_contrast_contract_v0_2.py",
+    "tests": "tests/eipm/test_n0_latent_pool_value_contrast_contract_v0_2.py",
+    "diagnostic": "scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py",
+    "prepare_runner": "scripts/eipm/n0/run_n0_v02_latent_pool_counterfactual_value_contrast_diagnostic_v0_2_prepare.sh",
+    "run_runner": "scripts/eipm/n0/run_n0_v02_latent_pool_counterfactual_value_contrast_diagnostic_v0_2.sh",
+    "magnolia_launcher": "scripts/eipm/n0/magnolia_p100_n0_v02_latent_pool_counterfactual_value_contrast_diagnostic_v0_2.sbatch",
+    "contrast_rows": 32,
+    "eligible_families": [
+      "missing_structured_evidence",
+      "novel_semantic_authority",
+      "novel_structured_authority",
+      "semantic_reliability_reversal"
+    ],
+    "historical_query_rows_included": false,
+    "uncertainty_rows_included": false,
+    "target_and_foil_materialized_before_gpu": true,
+    "semantic_separability_reported": true,
+    "required_source_value_margin_reported": true,
+    "permutation_free_latent_set_value_margin_reported": true,
+    "pooled_value_margin_reported": true,
+    "pre_fusion_counterfactual": true,
+    "ratification_effect": false,
+    "gradient_performed": false
+  },
+  "scale_decision": {
+    "scale_now": false,
+    "reason": "job_575683_produced_no_model_measurement_and_v0_2_absolute_sentence_cosine_failure_still_requires_value_discrimination_sensitivity_audit",
+    "scale_or_repair_requires_valid_causal_measurement_chain": true,
+    "hard_parameter_ceiling": null,
+    "slot_count_ceiling": null,
+    "view_count_ceiling": null
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
