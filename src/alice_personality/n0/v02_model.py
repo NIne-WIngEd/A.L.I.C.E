@@ -17,6 +17,10 @@ class AliceN0V02Model(nn.Module):
     candidate preference, rationale compatibility, and semantic/rationale
     contrastive learning. These heads remain public semantic machinery and do
     not authorize or contain private Elaina identity gradients.
+
+    Token-level states remain first-class outputs. Mean pooling is a convenient
+    compatibility readout, not a representational bottleneck for fusion or the
+    eventual personality model.
     """
 
     def __init__(self, config: N0BuildConfig, projection_size: int = 256) -> None:
@@ -52,9 +56,27 @@ class AliceN0V02Model(nn.Module):
         mask = attention_mask.to(hidden.dtype).unsqueeze(-1)
         return (hidden * mask).sum(dim=1) / mask.sum(dim=1).clamp_min(1.0)
 
-    def encode(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
+    def encode_tokens(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
+        """Return contextual token states without collapsing sequence information."""
         outputs = self.backbone(input_ids=input_ids, attention_mask=attention_mask)
-        return self._mean_pool(outputs.last_hidden_state, attention_mask)
+        return outputs.last_hidden_state
+
+    def encode_views(
+        self,
+        input_ids: torch.Tensor,
+        attention_mask: torch.Tensor,
+    ) -> dict[str, torch.Tensor]:
+        """Return both token-level and pooled semantic views from one backbone pass."""
+        token_states = self.encode_tokens(input_ids, attention_mask)
+        return {
+            "token_states": token_states,
+            "pooled_state": self._mean_pool(token_states, attention_mask),
+            "attention_mask": attention_mask,
+        }
+
+    def encode(self, input_ids: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
+        """Compatibility pooled readout; not the only semantic representation."""
+        return self.encode_views(input_ids, attention_mask)["pooled_state"]
 
     def forward_mlm(
         self,
@@ -158,7 +180,7 @@ class AliceN0V02Model(nn.Module):
 
         raise ValueError(f"unsupported N0 v0.2 task: {task!r}")
 
-    def parameter_report(self) -> dict[str, int]:
+    def parameter_report(self) -> dict[str, int | bool]:
         total = sum(parameter.numel() for parameter in self.parameters())
         trainable = sum(parameter.numel() for parameter in self.parameters() if parameter.requires_grad)
         heads = sum(
@@ -170,4 +192,6 @@ class AliceN0V02Model(nn.Module):
             "total_parameters": total,
             "trainable_parameters": trainable,
             "auxiliary_head_parameters": heads,
+            "token_level_representation_available": True,
+            "pooled_readout_is_capability_ceiling": False,
         }
