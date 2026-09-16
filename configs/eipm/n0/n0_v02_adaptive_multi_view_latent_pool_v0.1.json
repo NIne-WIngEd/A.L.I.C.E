@@ -1,0 +1,103 @@
+{
+  "schema": "alice.eipm.n0.v02-adaptive-multi-view-latent-pool.v0.1",
+  "status": "FULL_SCALE_MECHANICS_READY_NO_GRADIENT_AUTHORIZED",
+  "parent_fusion_ratification": "configs/eipm/n0/n0_v02_cross_context_fusion_ratification_v0.1.json",
+  "parent_fusion_checkpoint": "cross-context-fusion-repair-training-v0.2/repair-step-00000240",
+  "parent_fusion_sha256": "4d51494beb788f74ddc03590da05ea00f0e36574294649c2cd5d438f9472e577",
+  "architecture": {
+    "implementation": "src/alice_personality/n0/adaptive_multi_view_latent_pool.py",
+    "family": "query_conditioned_multi_slot_cross_attention_over_source_and_contextualized_view_channels",
+    "semantic_size": 640,
+    "latent_size": 640,
+    "current_instantiated_slots": 12,
+    "latent_layers": 3,
+    "num_heads": 10,
+    "feedforward_size": 2560,
+    "dropout": 0.0,
+    "current_instantiated_view_count": 3,
+    "current_public_views": [
+      "semantic_raw_context",
+      "typed_structured_context",
+      "relation_evidence_context"
+    ],
+    "input_channels": [
+      "exact_source_tokens",
+      "contextualized_fusion_tokens"
+    ],
+    "query_conditioned_slots": true,
+    "view_identity_explicit": true,
+    "channel_identity_explicit": true,
+    "view_reliability_explicit": true,
+    "fusion_routing_used_as_feature_not_probability_target": true,
+    "missing_view_supported": true,
+    "per_slot_view_attention_exposed": true,
+    "per_slot_channel_attention_exposed": true,
+    "slot_pair_geometry_exposed": true,
+    "multi_slot_state_is_primary_output": true,
+    "single_pooled_state_is_convenience_readout_only": true,
+    "slot_count_ceiling": null,
+    "view_count_ceiling": null,
+    "hard_parameter_ceiling": null,
+    "parameter_count_status": "measure_after_cpu_construction_not_a_design_limit"
+  },
+  "architecture_policy": {
+    "full_scale_model": true,
+    "reduced_capability_pilot": false,
+    "generic_fallback_architecture": false,
+    "slots_are_not_named_personality_traits": true,
+    "slot_semantics_may_emerge_and_must_be_measured_not_assumed": true,
+    "slot_count_is_checkpoint_shape_not_personality_ontology": true,
+    "architecture_may_expand_or_change_when_measured_capability_or_later_identity_fidelity_requires_it": true,
+    "capability_and_personality_fidelity_before_efficiency": true,
+    "finite_training_schedule_does_not_define_model_capacity": true
+  },
+  "purpose": {
+    "primary": "preserve_multiple_complementary judgment-relevant summaries instead of collapsing ratified fusion into one CLS-style bottleneck",
+    "must_preserve": [
+      "semantic nuance",
+      "typed constraints",
+      "relation and provenance evidence",
+      "source anchors",
+      "cross-view disagreement",
+      "query-sensitive historical versus current interpretation",
+      "missing-view state"
+    ]
+  },
+  "initial_training_policy": {
+    "parent_fusion_frozen_initially": true,
+    "freeze_reason": "isolate whether the latent pool learns useful multi-view readout before allowing upstream adaptation; this is a stage control not a permanent freeze",
+    "progressive_unfreezing_allowed_if_measured_capability_requires_it": true,
+    "private_identity_gradient": false,
+    "public_identity_neutral_only": true
+  },
+  "objective_requirements": {
+    "semantic_target_alignment": true,
+    "query_sensitive_reversal": true,
+    "view_coverage_without_forced_exact_routing_percentages": true,
+    "slot_diversity_without_fixed_trait_labels": true,
+    "source_channel_causal_use": true,
+    "contextualized_channel_causal_use": true,
+    "missing_view_invariance": true,
+    "counterfactual_decisive_view_sensitivity": true,
+    "parent_fusion_regression_retention": true
+  },
+  "evaluation_requirements": {
+    "multi_slot_noncollapse": true,
+    "query_pair_current_vs_historical": true,
+    "semantic_structured_evidence_decisive_cases": true,
+    "consensus_without_forced_uniform_slot_use": true,
+    "unresolved_conflict_preservation": true,
+    "missing_view_safety": true,
+    "source_anchor_path_available": true,
+    "heldout_public_challenge_before_ratification": true
+  },
+  "gradient_authorization": {
+    "authorized": false,
+    "scope": null,
+    "parent_fusion_trainable": false,
+    "private_identity_gradient": false
+  },
+  "production_promotion_authorized": false,
+  "n0_complete": false,
+  "next_required_artifact": "public_identity_neutral_latent_pool_curriculum_objectives_and_full_scale_training_gate"
+}
