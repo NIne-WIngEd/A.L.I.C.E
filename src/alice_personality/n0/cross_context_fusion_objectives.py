@@ -38,6 +38,9 @@ def soft_distribution_cross_entropy(
         raise ValueError("available must be bool")
     if (target < 0).any() or not torch.isfinite(target).all():
         raise ValueError("target view distribution must be finite and non-negative")
+    unavailable_target_mass = target.masked_select(~available)
+    if unavailable_target_mass.numel() and torch.any(unavailable_target_mass > 1e-8):
+        raise ValueError("fusion target may assign mass only to an available view")
     masked_target = target * available.to(target.dtype)
     denominator = masked_target.sum(dim=-1, keepdim=True)
     if not torch.all(denominator > 0):
