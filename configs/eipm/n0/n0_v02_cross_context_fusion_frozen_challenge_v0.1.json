@@ -1,0 +1,64 @@
+{
+  "schema": "alice.eipm.n0.v02-cross-context-fusion-frozen-challenge.v0.1",
+  "status": "FROZEN_CHALLENGE_SPEC_NO_RESULTS_OBSERVED",
+  "purpose": "untouched generalization gate before ratifying any cross-context fusion checkpoint",
+  "creation_rule": "challenge specification and thresholds are committed before any challenge result is observed",
+  "training_use": "FORBIDDEN",
+  "private_identity_content": false,
+  "identity_authority": false,
+  "gradient_authorized": false,
+  "checkpoint_candidates": [80, 160, 240],
+  "challenge": {
+    "rows": 96,
+    "families": 12,
+    "rows_per_family": 8,
+    "data_origin": "deterministic_public_independent_fusion_challenge_templates",
+    "training_curriculum_rows_reused": false,
+    "training_entities_reused": false,
+    "training_text_templates_reused": false,
+    "targets": [
+      "novel lexical transfer",
+      "semantic decisiveness under weak structured evidence",
+      "structured decisiveness under hedged prose",
+      "multi-hop supersession",
+      "evidence correction against stale cross-view consensus",
+      "unresolved symmetric conflict",
+      "reliability-conditioned routing",
+      "missing-view robustness",
+      "distractor resistance",
+      "three-way temporal conflict",
+      "cross-view consensus",
+      "disagreement preservation"
+    ]
+  },
+  "ratification_gate": {
+    "family_min_routing_similarity_min": 0.85,
+    "family_macro_routing_similarity_min": 0.92,
+    "decisive_view_accuracy_min": 0.90,
+    "fused_semantic_cosine_min": 0.88,
+    "view_preservation_cosine_min": 0.88,
+    "disagreement_geometry_mae_max": 0.15,
+    "missing_view_max_weight_max": 0.000001,
+    "all_thresholds_required": true,
+    "thresholds_are_frozen_before_results": true
+  },
+  "selection_policy": [
+    "must_pass_full_ratification_gate",
+    "higher_worst_family_routing_similarity",
+    "higher_macro_family_routing_similarity",
+    "higher_decisive_view_accuracy",
+    "higher_fused_semantic_cosine",
+    "higher_view_preservation_cosine",
+    "lower_disagreement_geometry_mae",
+    "earlier_checkpoint_if_capability_is_tied"
+  ],
+  "anti_tuning_rule": "challenge results may ratify, reject, or identify failure-driven successor work; challenge rows may not be folded into training for the same ratification decision",
+  "capacity_policy": {
+    "hard_parameter_ceiling": null,
+    "view_count_ceiling": null,
+    "failure_does_not_authorize_model_shrinking_for_efficiency": true,
+    "capability_and_personality_fidelity_first": true
+  },
+  "production_promotion_authorized": false,
+  "private_identity_gradient": false
+}
