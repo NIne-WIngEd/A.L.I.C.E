@@ -1,0 +1,64 @@
+{
+  "schema": "alice.eipm.n0.v02-adaptive-multi-view-latent-pool-frozen-challenge-spec.v0.2",
+  "status": "FROZEN_CONFIRMATORY_SPEC_NO_RESULTS_OBSERVED",
+  "purpose": "Confirm the unchanged preselected competitive latent-pool checkpoint under a corrected full-stack causal intervention that removes uniquely necessary source views before parent encoding and cross-context fusion.",
+  "historical_v0_1": {
+    "status": "FAIL_PRESELECTED_CANDIDATE_NOT_ELIGIBLE_FOR_LATENT_POOL_RATIFICATION",
+    "immutable_historical_result": true,
+    "reclassified_as_pass": false,
+    "rows_reused": false,
+    "post_result_finding": "counterfactual_removed_view_only_after_cross_context_fusion_so_information_could_have_already_propagated_to_other_contextualized_streams",
+    "model_weights_changed_after_v0_1": false
+  },
+  "candidate_selection": {
+    "candidate_step": 360,
+    "latent_pool_sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4",
+    "selected_on_training_dev_before_any_v0_1_or_v0_2_challenge_result": true,
+    "checkpoint_selection_on_challenge_forbidden": true,
+    "candidate_weights_changed_after_v0_1": false
+  },
+  "challenge": {
+    "rows": 160,
+    "families": 20,
+    "rows_per_family": 8,
+    "source_authority": "public_synthetic_evaluation_only",
+    "training_use": "FORBIDDEN",
+    "private_identity_content": false,
+    "generated_text": true,
+    "identity_authority": false,
+    "slot_permutation_invariant_evaluation": true,
+    "exact_routing_percentage_supervision": false,
+    "fixed_slot_trait_labels": false,
+    "counterfactual_required_rows": 32,
+    "counterfactual_policy": "only_uniquely_necessary_authority_view_is_removed",
+    "counterfactual_intervention_point": "before_parent_cache_and_before_cross_context_fusion",
+    "counterfactual_rebuilds_parent_and_fusion_representations": true
+  },
+  "ratification_gate": {
+    "thresholds_are_frozen_before_results": true,
+    "best_slot_semantic_cosine_min": 0.92,
+    "family_min_best_slot_semantic_cosine_min": 0.86,
+    "pooled_semantic_cosine_min": 0.90,
+    "family_min_pooled_semantic_cosine_min": 0.84,
+    "mean_pairwise_offdiag_slot_cosine_max": 0.75,
+    "mean_centered_slot_effective_rank_min": 0.12,
+    "mean_min_available_view_best_slot_semantic_cosine_min": 0.70,
+    "mean_disagreement_weighted_view_specialization_min": 0.50,
+    "mean_min_available_view_best_slot_attention_min": 0.10,
+    "mean_min_channel_best_slot_attention_min": 0.10,
+    "missing_view_attention_max": 0.000001,
+    "counterfactual_required_rows_mean_target_drop_min": 0.02,
+    "counterfactual_family_min_mean_target_drop_min": 0.005,
+    "mean_max_offdiag_slot_cosine_is_gate": false
+  },
+  "governance": {
+    "challenge_rows_used_for_training": false,
+    "training_authorized": false,
+    "gradient_performed": false,
+    "checkpoint_selection_performed_on_challenge": false,
+    "threshold_changes_after_results_forbidden": true,
+    "private_identity_data": false,
+    "private_identity_gradient": false,
+    "production_promotion_authorized": false
+  }
+}
