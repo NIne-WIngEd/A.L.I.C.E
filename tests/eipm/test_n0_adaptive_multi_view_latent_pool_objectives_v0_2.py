@@ -7,6 +7,7 @@ from alice_personality.n0.adaptive_multi_view_latent_pool_objectives_v0_2 import
     centered_slot_effective_rank,
     normalized_view_specialization,
     slot_redundancy_loss,
+    source_view_best_slot_cosine,
     source_view_disagreement_weight,
     source_view_semantic_coverage_loss,
     view_specialization_loss,
@@ -58,6 +59,36 @@ def test_source_view_semantic_coverage_requires_each_available_view_to_be_recove
     bad = source_view_semantic_coverage_loss(only_first, source, available)
     assert torch.allclose(good, torch.zeros_like(good), atol=1e-7, rtol=0.0)
     assert bad > good + 0.5
+
+
+def test_source_view_metrics_accept_fp16_latents_with_fp32_parent_cache() -> None:
+    """Regression for Magnolia job 575673 mixed-autocast evaluation failure."""
+    latent = torch.tensor(
+        [[[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]],
+        dtype=torch.float16,
+    )
+    source = torch.eye(3, dtype=torch.float32).unsqueeze(0)
+    available = torch.tensor([[True, True, True]])
+    best = source_view_best_slot_cosine(latent, source)
+    loss = source_view_semantic_coverage_loss(latent, source, available)
+    assert best.dtype == torch.float32
+    assert torch.allclose(best, torch.ones_like(best), atol=1e-6, rtol=0.0)
+    assert loss.dtype == torch.float32
+    assert torch.allclose(loss, torch.zeros_like(loss), atol=1e-6, rtol=0.0)
+
+
+def test_best_slot_semantic_loss_accepts_fp16_latents_with_fp32_target() -> None:
+    latent = torch.tensor(
+        [[[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]]],
+        dtype=torch.float16,
+        requires_grad=True,
+    )
+    target = torch.tensor([[1.0, 0.0, 0.0]], dtype=torch.float32)
+    loss = best_slot_semantic_alignment_loss(latent, target)
+    assert loss.dtype == torch.float32
+    loss.backward()
+    assert latent.grad is not None
+    assert torch.isfinite(latent.grad).all()
 
 
 def test_specialization_pressure_disappears_for_semantic_consensus() -> None:
