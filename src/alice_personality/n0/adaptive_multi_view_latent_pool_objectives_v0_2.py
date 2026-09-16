@@ -8,13 +8,14 @@ import torch.nn.functional as F
 
 @dataclass(frozen=True)
 class LatentPoolV02ObjectiveWeights:
-    best_slot_semantic: float = 0.30
-    pooled_alignment: float = 0.18
-    slot_redundancy: float = 0.20
-    view_coverage: float = 0.08
+    best_slot_semantic: float = 0.27
+    pooled_alignment: float = 0.15
+    slot_redundancy: float = 0.18
+    view_coverage: float = 0.06
+    view_semantic_coverage: float = 0.12
     view_specialization: float = 0.10
     channel_coverage: float = 0.04
-    counterfactual_margin: float = 0.10
+    counterfactual_margin: float = 0.08
 
 
 def _require_unit_interval(name: str, value: float) -> None:
@@ -26,15 +27,7 @@ def best_slot_semantic_alignment_loss(
     latent_slots: torch.Tensor,
     target_semantic: torch.Tensor,
 ) -> torch.Tensor:
-    """Require at least one useful target-aligned slot without rewarding copies.
-
-    The failed v0.1 objective used an unnormalized log-sum-exp smooth maximum.
-    With S slots that term increases by temperature*log(S) when all slots copy
-    the same target, so duplicate slots were explicitly rewarded. A hard set
-    maximum expresses the actual requirement: the set must contain a strong
-    target-relevant slot, while additional slots remain free to preserve other
-    judgment-relevant evidence.
-    """
+    """Require one useful target-aligned slot without rewarding duplicate copies."""
     if latent_slots.ndim != 3 or target_semantic.ndim != 2:
         raise ValueError("latent_slots must be [batch, slots, dim] and target_semantic [batch, dim]")
     if latent_slots.shape[0] != target_semantic.shape[0] or latent_slots.shape[2] != target_semantic.shape[1]:
@@ -90,19 +83,50 @@ def view_coverage_loss(
     return selected.pow(2).mean()
 
 
+def source_view_best_slot_cosine(
+    latent_slots: torch.Tensor,
+    source_view_summaries: torch.Tensor,
+) -> torch.Tensor:
+    """Return [batch, views] best-slot cosine for each ratified source view."""
+    if latent_slots.ndim != 3 or source_view_summaries.ndim != 3:
+        raise ValueError("latent slots and source view summaries must both be rank 3")
+    if latent_slots.shape[0] != source_view_summaries.shape[0] or latent_slots.shape[2] != source_view_summaries.shape[2]:
+        raise ValueError("latent/source-view semantic dimensions mismatch")
+    slots = F.normalize(latent_slots, dim=-1)
+    views = F.normalize(source_view_summaries, dim=-1)
+    cosine = torch.einsum("bsd,bvd->bsv", slots, views)
+    return cosine.max(dim=1).values
+
+
+def source_view_semantic_coverage_loss(
+    latent_slots: torch.Tensor,
+    source_view_summaries: torch.Tensor,
+    view_available: torch.Tensor,
+) -> torch.Tensor:
+    """Require every available ratified source view to remain recoverable.
+
+    This is representation coverage, not decision authority. A stale or
+    contradictory view still needs to remain representable for historical,
+    provenance, and uncertainty reasoning. No fixed slot-to-view assignment is
+    introduced because the best matching slot is selected independently for
+    each view and example.
+    """
+    best = source_view_best_slot_cosine(latent_slots, source_view_summaries)
+    if view_available.shape != best.shape:
+        raise ValueError("view_available shape mismatch for semantic coverage")
+    selected = (1.0 - best).masked_select(view_available)
+    if selected.numel() == 0:
+        return best.sum() * 0.0
+    return selected.mean()
+
+
 def normalized_view_specialization(
     view_attention_mass: torch.Tensor,
     view_available: torch.Tensor,
     *,
     eps: float = 1e-8,
 ) -> torch.Tensor:
-    """Per-example mutual-information style specialization score in [0, 1].
-
-    It is permutation-free and does not name slot roles. A high score means
-    different slots make different use of available views while the slot set as
-    a whole still spans those views. Examples with only one available view are
-    neutral and receive score 1 because specialization is not identifiable.
-    """
+    """Per-example permutation-free mutual-information-style specialization."""
     if view_attention_mass.ndim != 3:
         raise ValueError("view_attention_mass must be [batch, slots, views]")
     if view_available.shape != (view_attention_mass.shape[0], view_attention_mass.shape[2]):
@@ -123,11 +147,47 @@ def normalized_view_specialization(
     return torch.where(available_count > 1, score.clamp(0.0, 1.0), torch.ones_like(score))
 
 
+def source_view_disagreement_weight(
+    source_view_summaries: torch.Tensor,
+    view_available: torch.Tensor,
+    *,
+    eps: float = 1e-8,
+) -> torch.Tensor:
+    """Estimate when view specialization is actually warranted.
+
+    Near-consensus views should not be artificially forced into separate latent
+    meanings. Distinct/conflicting views create stronger pressure for different
+    slots to bind to different evidence. The weight is derived only from the
+    ratified source representations and availability mask.
+    """
+    if source_view_summaries.ndim != 3:
+        raise ValueError("source_view_summaries must be [batch, views, dim]")
+    if view_available.shape != source_view_summaries.shape[:2]:
+        raise ValueError("view_available shape mismatch for disagreement")
+    normalized = F.normalize(source_view_summaries, dim=-1)
+    cosine = torch.einsum("bvd,bwd->bvw", normalized, normalized)
+    pair = view_available.unsqueeze(2) & view_available.unsqueeze(1)
+    eye = torch.eye(pair.shape[1], device=pair.device, dtype=torch.bool).unsqueeze(0)
+    pair = pair & ~eye
+    count = pair.sum(dim=(1, 2))
+    summed = torch.where(pair, cosine, torch.zeros_like(cosine)).sum(dim=(1, 2))
+    mean_cosine = summed / count.clamp_min(1).to(cosine.dtype)
+    disagreement = (1.0 - mean_cosine).clamp(0.0, 1.0)
+    return torch.where(count > 0, disagreement, torch.zeros_like(disagreement))
+
+
 def view_specialization_loss(
     view_attention_mass: torch.Tensor,
     view_available: torch.Tensor,
+    source_view_summaries: torch.Tensor,
 ) -> torch.Tensor:
-    return (1.0 - normalized_view_specialization(view_attention_mass, view_available)).mean()
+    """Encourage specialization only in proportion to real view disagreement."""
+    specialization = normalized_view_specialization(view_attention_mass, view_available)
+    weight = source_view_disagreement_weight(source_view_summaries, view_available)
+    weighted = (1.0 - specialization) * weight
+    if float(weight.detach().sum()) <= 1e-8:
+        return weighted.sum() * 0.0
+    return weighted.sum() / weight.sum().clamp_min(1e-8)
 
 
 def channel_coverage_loss(
@@ -166,13 +226,7 @@ def centered_slot_effective_rank(
     *,
     eps: float = 1e-8,
 ) -> torch.Tensor:
-    """Normalized effective rank of slot-specific residual directions.
-
-    Common semantic content is removed by centering over slots first. Thus this
-    metric does not demand that slots forget shared context merely to look
-    different. A collapsed slot set has rank 0; diverse residual structure
-    approaches 1 relative to the maximum S-1 centered rank.
-    """
+    """Normalized effective rank of slot-specific residual directions."""
     if latent_slots.ndim != 3 or latent_slots.shape[1] < 2:
         raise ValueError("latent_slots must be [batch, slots, dim] with at least two slots")
     centered = latent_slots.float() - latent_slots.float().mean(dim=1, keepdim=True)
@@ -192,6 +246,7 @@ def adaptive_latent_pool_v0_2_objective(
     latent_slots: torch.Tensor,
     pooled_state: torch.Tensor,
     target_semantic: torch.Tensor,
+    source_view_summaries: torch.Tensor,
     view_attention_mass: torch.Tensor,
     view_available: torch.Tensor,
     channel_attention_mass: torch.Tensor,
@@ -203,7 +258,16 @@ def adaptive_latent_pool_v0_2_objective(
     pooled = pooled_semantic_alignment_loss(pooled_state, target_semantic)
     redundancy = slot_redundancy_loss(latent_slots)
     coverage = view_coverage_loss(view_attention_mass, view_available)
-    specialization = view_specialization_loss(view_attention_mass, view_available)
+    semantic_coverage = source_view_semantic_coverage_loss(
+        latent_slots,
+        source_view_summaries,
+        view_available,
+    )
+    specialization = view_specialization_loss(
+        view_attention_mass,
+        view_available,
+        source_view_summaries,
+    )
     channel = channel_coverage_loss(channel_attention_mass)
     if counterfactual_slots is None:
         counterfactual = latent_slots.sum() * 0.0
@@ -218,6 +282,7 @@ def adaptive_latent_pool_v0_2_objective(
         + w.pooled_alignment * pooled
         + w.slot_redundancy * redundancy
         + w.view_coverage * coverage
+        + w.view_semantic_coverage * semantic_coverage
         + w.view_specialization * specialization
         + w.channel_coverage * channel
         + w.counterfactual_margin * counterfactual
@@ -228,6 +293,7 @@ def adaptive_latent_pool_v0_2_objective(
         "pooled_alignment": pooled,
         "slot_redundancy": redundancy,
         "view_coverage": coverage,
+        "view_semantic_coverage": semantic_coverage,
         "view_specialization": specialization,
         "channel_coverage": channel,
         "counterfactual_margin": counterfactual,
