@@ -23,6 +23,19 @@ def _require_unit_interval(name: str, value: float) -> None:
         raise ValueError(f"{name} must be in [0, 1]")
 
 
+def _semantic_normalize(value: torch.Tensor) -> torch.Tensor:
+    """Normalize semantic vectors in FP32 across autocast/cache boundaries.
+
+    Ratified parent caches are intentionally stored in FP32, while latent
+    states are produced under CUDA FP16 autocast during training/evaluation.
+    PyTorch einsum requires matching dtypes. More importantly, semantic cosine
+    and rank diagnostics are numerically safer in FP32. Casting here preserves
+    gradients back through the latent tensor while making the metric/objective
+    boundary deterministic across mixed-precision execution.
+    """
+    return F.normalize(value.float(), dim=-1)
+
+
 def best_slot_semantic_alignment_loss(
     latent_slots: torch.Tensor,
     target_semantic: torch.Tensor,
@@ -32,8 +45,8 @@ def best_slot_semantic_alignment_loss(
         raise ValueError("latent_slots must be [batch, slots, dim] and target_semantic [batch, dim]")
     if latent_slots.shape[0] != target_semantic.shape[0] or latent_slots.shape[2] != target_semantic.shape[1]:
         raise ValueError("latent/target shape mismatch")
-    target = F.normalize(target_semantic, dim=-1).unsqueeze(1)
-    cosine = (F.normalize(latent_slots, dim=-1) * target).sum(dim=-1)
+    target = _semantic_normalize(target_semantic).unsqueeze(1)
+    cosine = (_semantic_normalize(latent_slots) * target).sum(dim=-1)
     return (1.0 - cosine.max(dim=1).values).mean()
 
 
@@ -43,7 +56,7 @@ def pooled_semantic_alignment_loss(
 ) -> torch.Tensor:
     if pooled_state.shape != target_semantic.shape:
         raise ValueError("pooled_state and target_semantic must have the same shape")
-    return (1.0 - F.cosine_similarity(pooled_state, target_semantic, dim=-1)).mean()
+    return (1.0 - F.cosine_similarity(pooled_state.float(), target_semantic.float(), dim=-1)).mean()
 
 
 def slot_redundancy_loss(
@@ -55,7 +68,7 @@ def slot_redundancy_loss(
     _require_unit_interval("similarity_margin", similarity_margin)
     if latent_slots.ndim != 3 or latent_slots.shape[1] < 2:
         raise ValueError("latent_slots must contain at least two slots")
-    normalized = F.normalize(latent_slots, dim=-1)
+    normalized = _semantic_normalize(latent_slots)
     cosine = torch.einsum("bsd,btd->bst", normalized, normalized)
     count = cosine.shape[1]
     diagonal = torch.eye(count, device=cosine.device, dtype=torch.bool).unsqueeze(0)
@@ -75,7 +88,7 @@ def view_coverage_loss(
         raise ValueError("view_attention_mass must be [batch, slots, views]")
     if view_available.shape != (view_attention_mass.shape[0], view_attention_mass.shape[2]):
         raise ValueError("view_available shape mismatch")
-    best = view_attention_mass.max(dim=1).values
+    best = view_attention_mass.float().max(dim=1).values
     deficits = F.relu(minimum_best_slot_mass - best)
     selected = deficits.masked_select(view_available)
     if selected.numel() == 0:
@@ -87,13 +100,13 @@ def source_view_best_slot_cosine(
     latent_slots: torch.Tensor,
     source_view_summaries: torch.Tensor,
 ) -> torch.Tensor:
-    """Return [batch, views] best-slot cosine for each ratified source view."""
+    """Return [batch, views] FP32 best-slot cosine for each ratified source view."""
     if latent_slots.ndim != 3 or source_view_summaries.ndim != 3:
         raise ValueError("latent slots and source view summaries must both be rank 3")
     if latent_slots.shape[0] != source_view_summaries.shape[0] or latent_slots.shape[2] != source_view_summaries.shape[2]:
         raise ValueError("latent/source-view semantic dimensions mismatch")
-    slots = F.normalize(latent_slots, dim=-1)
-    views = F.normalize(source_view_summaries, dim=-1)
+    slots = _semantic_normalize(latent_slots)
+    views = _semantic_normalize(source_view_summaries)
     cosine = torch.einsum("bsd,bvd->bsv", slots, views)
     return cosine.max(dim=1).values
 
@@ -133,8 +146,8 @@ def normalized_view_specialization(
         raise ValueError("view_available shape mismatch")
     mass = torch.where(
         view_available.unsqueeze(1),
-        view_attention_mass.clamp_min(0.0),
-        torch.zeros_like(view_attention_mass),
+        view_attention_mass.float().clamp_min(0.0),
+        torch.zeros_like(view_attention_mass, dtype=torch.float32),
     )
     per_slot = mass / mass.sum(dim=-1, keepdim=True).clamp_min(eps)
     slot_entropy = -(per_slot * per_slot.clamp_min(eps).log()).sum(dim=-1).mean(dim=1)
@@ -164,7 +177,7 @@ def source_view_disagreement_weight(
         raise ValueError("source_view_summaries must be [batch, views, dim]")
     if view_available.shape != source_view_summaries.shape[:2]:
         raise ValueError("view_available shape mismatch for disagreement")
-    normalized = F.normalize(source_view_summaries, dim=-1)
+    normalized = _semantic_normalize(source_view_summaries)
     cosine = torch.einsum("bvd,bwd->bvw", normalized, normalized)
     pair = view_available.unsqueeze(2) & view_available.unsqueeze(1)
     eye = torch.eye(pair.shape[1], device=pair.device, dtype=torch.bool).unsqueeze(0)
@@ -198,7 +211,7 @@ def channel_coverage_loss(
     if channel_attention_mass.ndim != 3 or channel_attention_mass.shape[-1] != 2:
         raise ValueError("channel_attention_mass must be [batch, slots, 2]")
     _require_unit_interval("minimum_best_slot_mass", minimum_best_slot_mass)
-    best = channel_attention_mass.max(dim=1).values
+    best = channel_attention_mass.float().max(dim=1).values
     return F.relu(minimum_best_slot_mass - best).pow(2).mean()
 
 
@@ -215,9 +228,9 @@ def counterfactual_target_margin_loss(
         raise ValueError("correct/counterfactual slot shape mismatch")
     if correct_slots.ndim != 3 or target_semantic.shape != correct_slots[:, 0].shape:
         raise ValueError("target shape mismatch")
-    target = F.normalize(target_semantic, dim=-1).unsqueeze(1)
-    correct = (F.normalize(correct_slots, dim=-1) * target).sum(dim=-1).max(dim=1).values
-    corrupted = (F.normalize(counterfactual_slots, dim=-1) * target).sum(dim=-1).max(dim=1).values
+    target = _semantic_normalize(target_semantic).unsqueeze(1)
+    correct = (_semantic_normalize(correct_slots) * target).sum(dim=-1).max(dim=1).values
+    corrupted = (_semantic_normalize(counterfactual_slots) * target).sum(dim=-1).max(dim=1).values
     return F.relu(margin - (correct - corrupted)).mean()
 
 
@@ -270,7 +283,7 @@ def adaptive_latent_pool_v0_2_objective(
     )
     channel = channel_coverage_loss(channel_attention_mass)
     if counterfactual_slots is None:
-        counterfactual = latent_slots.sum() * 0.0
+        counterfactual = latent_slots.float().sum() * 0.0
     else:
         counterfactual = counterfactual_target_margin_loss(
             latent_slots,
