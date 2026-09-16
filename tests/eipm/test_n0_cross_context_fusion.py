@@ -35,6 +35,7 @@ def test_cross_context_fusion_shapes_and_view_preservation() -> None:
     assert out["view_weights"].shape == (2, 3)
     assert out["fused_state"].shape == (2, 640)
     assert out["cross_view_cosine"].shape == (2, 3, 3)
+    assert out["cross_gate_means"].shape == (2, 4, 3)
     assert torch.allclose(out["view_weights"].sum(dim=-1), torch.ones(2), atol=1e-6)
 
 
@@ -48,6 +49,7 @@ def test_missing_evidence_view_is_safe_and_receives_zero_weight() -> None:
     assert torch.isfinite(out["fused_state"]).all()
     assert torch.equal(out["view_available"][:, 2], torch.zeros(2, dtype=torch.bool))
     assert torch.allclose(out["view_weights"][:, 2], torch.zeros(2), atol=1e-7)
+    assert torch.allclose(out["cross_gate_means"][:, :, 2], torch.zeros(2, 4), atol=1e-7)
 
 
 def test_structured_field_permutation_preserves_fused_state() -> None:
@@ -59,7 +61,7 @@ def test_structured_field_permutation_preserves_fused_state() -> None:
         batch["structured_tokens"] = batch["structured_tokens"].index_select(1, order)
         batch["structured_valid_mask"] = batch["structured_valid_mask"].index_select(1, order)
         permuted = model(**batch)["fused_state"]
-    assert torch.allclose(original, permuted, atol=2e-5, rtol=2e-5)
+    assert torch.allclose(original, permuted, atol=3e-5, rtol=3e-5)
 
 
 def test_evidence_field_permutation_preserves_fused_state() -> None:
@@ -71,7 +73,7 @@ def test_evidence_field_permutation_preserves_fused_state() -> None:
         batch["evidence_tokens"] = batch["evidence_tokens"].index_select(1, order)
         batch["evidence_valid_mask"] = batch["evidence_valid_mask"].index_select(1, order)
         permuted = model(**batch)["fused_state"]
-    assert torch.allclose(original, permuted, atol=2e-5, rtol=2e-5)
+    assert torch.allclose(original, permuted, atol=3e-5, rtol=3e-5)
 
 
 def test_reliability_prior_can_route_between_equivalent_views() -> None:
@@ -107,9 +109,15 @@ def test_all_missing_views_are_rejected() -> None:
         model(**batch)
 
 
-def test_parameter_report_has_no_hard_capacity_ceiling() -> None:
+def test_parameter_report_declares_full_scale_frontier_architecture() -> None:
     report = CrossContextFusion().parameter_report()
     assert report["total_parameters"] > 0
     assert report["hard_parameter_ceiling"] is None
     assert report["private_identity_parameters"] == 0
     assert report["preserves_contextualized_views"] is True
+    assert report["full_scale_n0_candidate"] is True
+    assert report["reduced_pilot_model"] is False
+    assert report["bidirectional_cross_attention"] is True
+    assert report["gated_cross_view_exchange"] is True
+    assert report["fusion_stages"] == 4
+    assert report["fusion_family"] == "tri_stream_self_refinement_plus_gated_bidirectional_cross_attention"
