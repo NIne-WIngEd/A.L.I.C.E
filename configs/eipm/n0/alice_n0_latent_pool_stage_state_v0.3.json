@@ -1,0 +1,59 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.3",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.2.json",
+  "status": "COMPETITIVE_LATENT_POOL_V02_FROZEN_FAIL_VALUE_CONTRAST_DIAGNOSTIC_REQUIRED_BEFORE_REPAIR_OR_SCALE",
+  "candidate": {
+    "step": 360,
+    "sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4",
+    "parameters": 29557764,
+    "weights_changed_after_v0_2_challenge": false,
+    "ratified": false
+  },
+  "frozen_challenge_v0_2": {
+    "job_id": 575682,
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "status": "FAIL_PRESELECTED_CANDIDATE_NOT_ELIGIBLE_FOR_LATENT_POOL_RATIFICATION",
+    "immutable_historical_result": true,
+    "reclassified_as_pass": false,
+    "challenge_rows_used_for_training": false,
+    "gradient_performed": false,
+    "counterfactual_intervention_point": "before_parent_cache_and_before_cross_context_fusion",
+    "all_non_counterfactual_gates_passed": true,
+    "only_failed_gate": "counterfactual_family_min_drop",
+    "failed_family": "missing_structured_evidence",
+    "failed_family_absolute_target_cosine_drop": -0.009834006428718567,
+    "overall_counterfactual_mean_target_drop": 0.08747776597738266,
+    "best_slot_semantic_cosine": 0.9685229972004891,
+    "family_min_best_slot_semantic_cosine": 0.9286976754665375,
+    "pooled_semantic_cosine": 0.9585086710751056,
+    "family_min_pooled_semantic_cosine": 0.9359443932771683,
+    "mean_centered_slot_effective_rank": 0.20437721498310565,
+    "mean_disagreement_weighted_view_specialization": 0.9683985842425366,
+    "mean_min_available_view_best_slot_semantic_cosine": 0.8840856967493892,
+    "mean_pairwise_offdiag_slot_cosine": 0.4317779541015625,
+    "missing_view_attention_max": 0.0
+  },
+  "diagnostic": {
+    "script": "scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py",
+    "runner": "scripts/eipm/n0/run_n0_v02_latent_pool_counterfactual_value_contrast_diagnostic_v0_1.sh",
+    "magnolia_launcher": "scripts/eipm/n0/magnolia_p100_n0_v02_latent_pool_counterfactual_value_contrast_diagnostic_v0_1.sbatch",
+    "purpose": "distinguish_absolute_sentence_cosine_insensitivity_from_value_level_causal_failure",
+    "ratification_effect": "NONE_DIAGNOSTIC_ONLY",
+    "challenge_rows_used_for_training": false,
+    "gradient_performed": false
+  },
+  "scale_decision": {
+    "scale_now": false,
+    "reason": "single_failed_absolute_cosine_counterfactual_gate_does_not_yet_isolate_capacity_bottleneck",
+    "repair_or_scale_requires_value_level_diagnostic_evidence": true,
+    "hard_parameter_ceiling": null,
+    "slot_count_ceiling": null,
+    "view_count_ceiling": null
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
