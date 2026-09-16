@@ -1,4 +1,4 @@
-from scripts.eipm.n0.diagnose_n0_v02_parent_value_path_v0_1 import contains_value, field_indices
+from diagnose_n0_v02_parent_value_path_v0_1 import contains_value, field_indices
 
 
 def test_contains_value_uses_token_boundaries_for_numeric_values() -> None:
