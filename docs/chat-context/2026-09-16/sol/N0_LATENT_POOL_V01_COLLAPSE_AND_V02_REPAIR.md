@@ -61,21 +61,22 @@ The failure does NOT prove 12 slots, 640 width, or 3 layers are too small. Do no
 - hard best-slot semantic set requirement; duplicate target slots give no extra semantic reward;
 - pooled convenience-readout alignment;
 - near-duplicate penalty without requiring orthogonal personality traits;
-- permutation-free mutual-information-style view specialization;
-- available-view coverage;
+- every available ratified source view must be semantically recoverable by at least one latent slot;
+- view specialization is permutation-free and weighted by actual source-view disagreement, so consensus views are not forced into artificial distinctions;
+- available-view attention coverage;
 - exact-source + contextualized channel coverage;
 - decisive-source counterfactual sensitivity;
 - centered effective-rank metric after removing common slot mode;
 - no exact routing percentage supervision.
 
-### Counterfactual scope correction
+### Trainer corrections before execution
 
-The first v0.2 trainer draft would have accidentally applied a counterfactual margin to non-decisive rows by replacing only decisive rows and leaving copies elsewhere. This was caught before execution.
+An early v0.2 draft would have applied counterfactual pressure to non-decisive rows. This was caught before any execution. A later pass added source-view semantic recoverability and disagreement-conditioned specialization so slots cannot satisfy the gate by merely having different attention patterns or arbitrary residual geometry.
 
-Authoritative execution wrapper:
-`scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_1_full_scale.py`
+Authoritative execution trainer:
+`scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py`
 
-It applies the counterfactual margin only on genuinely decisive rows.
+Earlier v0.2/v0.2.1 trainer drafts remain in Git history for auditability but are not execution entrypoints.
 
 ## Reuse policy
 
@@ -86,7 +87,7 @@ Do NOT reuse any v0.1 latent weights.
 
 ## v0.2 training/dev gate
 
-This is a development anti-collapse/capability gate, NOT final ratification and NOT a trait taxonomy.
+This is a development anti-collapse/content-preservation capability gate, NOT final ratification and NOT a trait taxonomy.
 
 Current frozen development requirements:
 - best slot semantic cosine >= 0.90
@@ -95,8 +96,11 @@ Current frozen development requirements:
 - family-min pooled >= 0.84
 - mean pairwise off-diagonal slot cosine <= 0.97
 - mean centered slot effective rank >= 0.10
-- mean view specialization >= 0.05
-- available-view best-slot coverage >= 0.12
+- weakest available source-view best-slot semantic cosine mean >= 0.55
+- source-view semantic coverage improves over fresh random initialization by >= 0.20
+- disagreement-weighted view specialization >= 0.05
+- disagreement-weighted specialization improves over fresh random initialization by >= 0.02
+- available-view best-slot attention coverage >= 0.12
 - source/context channel coverage >= 0.10
 - missing-view attention <= 1e-6
 
