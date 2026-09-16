@@ -5,26 +5,30 @@ from dataclasses import dataclass
 from typing import Any
 
 import torch
+import torch.nn.functional as F
 from torch import nn
 
 
 @dataclass(frozen=True)
 class CrossContextFusionConfig:
-    """Identity-neutral fusion over semantic, structured, and evidence views.
+    """Full-scale identity-neutral N0 cross-context fusion.
 
-    Parameter counts are measurements, not ceilings. The module preserves each
-    contextualized view separately so later multi-view pooling can retain
-    distinct evidence rather than relying on one collapsed representation.
+    This is the intended N0 fusion architecture, not a reduced rehearsal model.
+    It preserves semantic, structured, and evidence streams separately while
+    allowing repeated gated bidirectional cross-attention between them.
+
+    Parameter counts are measurements, never capability ceilings.
     """
 
     semantic_size: int = 640
     fusion_size: int = 640
-    num_layers: int = 3
+    num_layers: int = 4
     num_heads: int = 10
     feedforward_size: int = 2560
     dropout: float = 0.0
     num_views: int = 3
     reliability_prior_scale: float = 0.5
+    cross_gate_bias: float = -1.0
 
     def validate(self) -> None:
         if self.semantic_size < 1 or self.fusion_size < 1:
@@ -36,20 +40,177 @@ class CrossContextFusionConfig:
         if self.feedforward_size < self.fusion_size:
             raise ValueError("feedforward_size must be >= fusion_size")
         if self.num_views != 3:
-            raise ValueError("N0 v0.2 fusion currently defines exactly three public input views")
+            raise ValueError("N0 fusion defines exactly three public input views")
         if not 0.0 <= self.dropout < 1.0:
             raise ValueError("dropout must be in [0, 1)")
         if self.reliability_prior_scale < 0.0:
             raise ValueError("reliability_prior_scale must be non-negative")
 
 
-class CrossContextFusion(nn.Module):
-    """Fuse public semantic, typed-state, and evidence contexts.
+class _GEGLU(nn.Module):
+    def __init__(self, width: int, hidden: int, dropout: float) -> None:
+        super().__init__()
+        self.in_proj = nn.Linear(width, 2 * hidden)
+        self.out_proj = nn.Linear(hidden, width)
+        self.dropout = nn.Dropout(dropout)
 
-    Each view contributes a learned summary token plus its contextual tokens.
-    The encoder has no new positional embeddings: semantic tokens already carry
-    upstream positional information, while structured/evidence fields retain
-    their order-robust semantics. View identity and reliability are explicit.
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        value, gate = self.in_proj(x).chunk(2, dim=-1)
+        return self.out_proj(self.dropout(value * F.gelu(gate)))
+
+
+class _TriStreamFusionBlock(nn.Module):
+    """One full interaction stage over three preserved context streams."""
+
+    def __init__(self, config: CrossContextFusionConfig) -> None:
+        super().__init__()
+        d = config.fusion_size
+        self.num_views = config.num_views
+        self.self_norm = nn.ModuleList(nn.LayerNorm(d) for _ in range(self.num_views))
+        self.self_attention = nn.ModuleList(
+            nn.MultiheadAttention(
+                d,
+                config.num_heads,
+                dropout=config.dropout,
+                batch_first=True,
+            )
+            for _ in range(self.num_views)
+        )
+        self.cross_query_norm = nn.ModuleList(nn.LayerNorm(d) for _ in range(self.num_views))
+        self.cross_source_norm = nn.ModuleList(nn.LayerNorm(d) for _ in range(self.num_views))
+        self.cross_attention = nn.ModuleList(
+            nn.MultiheadAttention(
+                d,
+                config.num_heads,
+                dropout=config.dropout,
+                batch_first=True,
+            )
+            for _ in range(self.num_views)
+        )
+        self.gate_reliability = nn.ModuleList(nn.Linear(2, d) for _ in range(self.num_views))
+        self.cross_gate = nn.ModuleList(
+            nn.Sequential(
+                nn.Linear(2 * d, d),
+                nn.SiLU(),
+                nn.Linear(d, d),
+            )
+            for _ in range(self.num_views)
+        )
+        for gate in self.cross_gate:
+            final = gate[-1]
+            assert isinstance(final, nn.Linear)
+            nn.init.constant_(final.bias, config.cross_gate_bias)
+
+        self.ffn_norm = nn.ModuleList(nn.LayerNorm(d) for _ in range(self.num_views))
+        self.ffn = nn.ModuleList(
+            _GEGLU(d, config.feedforward_size, config.dropout)
+            for _ in range(self.num_views)
+        )
+
+    @staticmethod
+    def _safe_attention(
+        attention: nn.MultiheadAttention,
+        query: torch.Tensor,
+        key_value: torch.Tensor,
+        *,
+        query_valid: torch.Tensor,
+        key_valid: torch.Tensor,
+    ) -> torch.Tensor:
+        if key_value.size(1) < 1:
+            return torch.zeros_like(query)
+        safe_key_valid = key_valid.clone()
+        missing_source = ~safe_key_valid.any(dim=1)
+        safe_key_value = key_value
+        if missing_source.any():
+            safe_key_value = key_value.clone()
+            safe_key_value[missing_source, 0] = 0.0
+            safe_key_valid[missing_source, 0] = True
+        output, _ = attention(
+            query,
+            safe_key_value,
+            safe_key_value,
+            key_padding_mask=~safe_key_valid,
+            need_weights=False,
+        )
+        active = query_valid & (~missing_source).unsqueeze(1)
+        return torch.where(active.unsqueeze(-1), output, torch.zeros_like(output))
+
+    def forward(
+        self,
+        streams: list[torch.Tensor],
+        masks: list[torch.Tensor],
+        *,
+        query: torch.Tensor,
+        reliability: torch.Tensor,
+    ) -> tuple[list[torch.Tensor], torch.Tensor]:
+        refined: list[torch.Tensor] = []
+        for view_id in range(self.num_views):
+            normed = self.self_norm[view_id](streams[view_id])
+            attended = self._safe_attention(
+                self.self_attention[view_id],
+                normed,
+                normed,
+                query_valid=masks[view_id],
+                key_valid=masks[view_id],
+            )
+            value = streams[view_id] + attended
+            value = torch.where(masks[view_id].unsqueeze(-1), value, torch.zeros_like(value))
+            refined.append(value)
+
+        exchanged: list[torch.Tensor] = []
+        gate_means: list[torch.Tensor] = []
+        available = torch.stack([mask.any(dim=1) for mask in masks], dim=1)
+        for target_id in range(self.num_views):
+            source_ids = [idx for idx in range(self.num_views) if idx != target_id]
+            target = refined[target_id]
+            target_norm = self.cross_query_norm[target_id](target)
+            source = torch.cat(
+                [self.cross_source_norm[target_id](refined[idx]) for idx in source_ids],
+                dim=1,
+            )
+            source_mask = torch.cat([masks[idx] for idx in source_ids], dim=1)
+            cross = self._safe_attention(
+                self.cross_attention[target_id],
+                target_norm,
+                source,
+                query_valid=masks[target_id],
+                key_valid=source_mask,
+            )
+
+            source_available = available[:, source_ids].to(reliability.dtype)
+            source_reliability = (
+                reliability[:, source_ids] * source_available
+            ).sum(dim=1) / source_available.sum(dim=1).clamp_min(1.0)
+            rel_features = torch.stack(
+                [reliability[:, target_id], source_reliability], dim=-1
+            )
+            gate_context = query + self.gate_reliability[target_id](rel_features)
+            gate_context = gate_context.unsqueeze(1).expand(-1, target.size(1), -1)
+            gate = torch.sigmoid(
+                self.cross_gate[target_id](torch.cat([target_norm, gate_context], dim=-1))
+            )
+            has_cross_source = source_mask.any(dim=1, keepdim=True).unsqueeze(-1)
+            active = masks[target_id].unsqueeze(-1) & has_cross_source
+            gate = torch.where(active, gate, torch.zeros_like(gate))
+            value = target + gate * cross
+            value = value + self.ffn[target_id](self.ffn_norm[target_id](value))
+            value = torch.where(masks[target_id].unsqueeze(-1), value, torch.zeros_like(value))
+            exchanged.append(value)
+            denom = masks[target_id].sum(dim=1).clamp_min(1).to(gate.dtype)
+            gate_mean = (gate.mean(dim=-1) * masks[target_id].to(gate.dtype)).sum(dim=1) / denom
+            gate_means.append(gate_mean)
+
+        return exchanged, torch.stack(gate_means, dim=1)
+
+
+class CrossContextFusion(nn.Module):
+    """Frontier tri-stream fusion for semantic, typed-state, and evidence context.
+
+    The three streams remain distinct through every stage. Each stream first
+    self-refines, then queries the other two streams through gated cross-attention.
+    Reliability and the current semantic query influence the exchange gates.
+    The output preserves each contextualized stream for the later adaptive
+    multi-view latent pool while also exposing a fused public N0 state.
     """
 
     SEMANTIC_VIEW = 0
@@ -72,19 +233,11 @@ class CrossContextFusion(nn.Module):
         )
         self.summary_tokens = nn.Parameter(torch.empty(self.config.num_views, d))
         nn.init.normal_(self.summary_tokens, mean=0.0, std=d ** -0.5)
-        self.input_norm = nn.LayerNorm(d)
-
-        layer = nn.TransformerEncoderLayer(
-            d_model=d,
-            nhead=self.config.num_heads,
-            dim_feedforward=self.config.feedforward_size,
-            dropout=self.config.dropout,
-            activation="gelu",
-            batch_first=True,
-            norm_first=True,
+        self.input_norm = nn.ModuleList(nn.LayerNorm(d) for _ in range(self.config.num_views))
+        self.blocks = nn.ModuleList(
+            _TriStreamFusionBlock(self.config) for _ in range(self.config.num_layers)
         )
-        self.encoder = nn.TransformerEncoder(layer, num_layers=self.config.num_layers)
-        self.output_norm = nn.LayerNorm(d)
+        self.output_norm = nn.ModuleList(nn.LayerNorm(d) for _ in range(self.config.num_views))
 
         self.fusion_query = nn.Parameter(torch.empty(d))
         nn.init.normal_(self.fusion_query, mean=0.0, std=d ** -0.5)
@@ -96,6 +249,7 @@ class CrossContextFusion(nn.Module):
         self.token_output_projection = nn.Linear(d, self.config.semantic_size, bias=False)
         self.summary_output_projection = nn.Linear(d, self.config.semantic_size, bias=False)
         self.fused_output_projection = nn.Linear(d, self.config.semantic_size, bias=False)
+        self.token_residual_scale = nn.Parameter(torch.full((self.config.num_views,), 0.10))
 
     def _validate_view(
         self,
@@ -108,6 +262,8 @@ class CrossContextFusion(nn.Module):
             raise ValueError(f"{name}_tokens must have shape [batch, tokens, semantic_size]")
         if tokens.shape[0] != batch or tokens.shape[2] != self.config.semantic_size:
             raise ValueError(f"{name}_tokens shape mismatch")
+        if tokens.shape[1] < 1:
+            raise ValueError(f"{name}_tokens must reserve at least one token slot")
         if valid_mask.shape != tokens.shape[:2] or valid_mask.dtype != torch.bool:
             raise ValueError(f"{name}_valid_mask must be bool with shape [batch, tokens]")
         if not torch.isfinite(tokens).all():
@@ -124,7 +280,7 @@ class CrossContextFusion(nn.Module):
         evidence_valid_mask: torch.Tensor,
         query_semantic: torch.Tensor,
         view_reliability: torch.Tensor,
-    ) -> int:
+    ) -> tuple[int, torch.Tensor]:
         if query_semantic.ndim != 2 or query_semantic.shape[1] != self.config.semantic_size:
             raise ValueError("query_semantic must have shape [batch, semantic_size]")
         batch = query_semantic.shape[0]
@@ -149,28 +305,29 @@ class CrossContextFusion(nn.Module):
         )
         if not torch.all(available.any(dim=1)):
             raise ValueError("every example must provide at least one fusion view")
-        return batch
+        return batch, available
 
-    def _prepare_view(
+    def _prepare_stream(
         self,
         tokens: torch.Tensor,
         valid_mask: torch.Tensor,
         *,
         view_id: int,
         reliability: torch.Tensor,
+        query: torch.Tensor,
     ) -> tuple[torch.Tensor, torch.Tensor]:
         batch = tokens.shape[0]
-        projected = self.input_projection(tokens)
         view = self.view_embedding.weight[view_id].view(1, 1, -1)
         rel = self.reliability_projection(reliability.view(batch, 1, 1))
-        projected = projected + view + rel
-
+        projected = self.input_projection(tokens) + view + rel
         summary = self.summary_tokens[view_id].view(1, 1, -1).expand(batch, -1, -1)
-        summary = summary + view + rel
+        summary = summary + view + rel + query.unsqueeze(1)
         available = valid_mask.any(dim=1, keepdim=True)
-        group = torch.cat([summary, projected], dim=1)
+        stream = torch.cat([summary, projected], dim=1)
         mask = torch.cat([available, valid_mask], dim=1)
-        return group, mask
+        stream = self.input_norm[view_id](stream)
+        stream = torch.where(mask.unsqueeze(-1), stream, torch.zeros_like(stream))
+        return stream, mask
 
     def forward(
         self,
@@ -184,7 +341,7 @@ class CrossContextFusion(nn.Module):
         query_semantic: torch.Tensor,
         view_reliability: torch.Tensor,
     ) -> dict[str, torch.Tensor]:
-        batch = self._validate_inputs(
+        batch, available = self._validate_inputs(
             semantic_tokens=semantic_tokens,
             semantic_valid_mask=semantic_valid_mask,
             structured_tokens=structured_tokens,
@@ -194,43 +351,40 @@ class CrossContextFusion(nn.Module):
             query_semantic=query_semantic,
             view_reliability=view_reliability,
         )
+        source_tokens = [semantic_tokens, structured_tokens, evidence_tokens]
+        source_masks = [semantic_valid_mask, structured_valid_mask, evidence_valid_mask]
+        query = self.query_projection(query_semantic)
 
-        groups: list[torch.Tensor] = []
+        streams: list[torch.Tensor] = []
         masks: list[torch.Tensor] = []
-        lengths: list[int] = []
-        for view_id, (tokens, mask) in enumerate(
-            (
-                (semantic_tokens, semantic_valid_mask),
-                (structured_tokens, structured_valid_mask),
-                (evidence_tokens, evidence_valid_mask),
-            )
-        ):
-            group, group_mask = self._prepare_view(
+        for view_id, (tokens, mask) in enumerate(zip(source_tokens, source_masks)):
+            stream, stream_mask = self._prepare_stream(
                 tokens,
                 mask,
                 view_id=view_id,
                 reliability=view_reliability[:, view_id],
+                query=query,
             )
-            groups.append(group)
-            masks.append(group_mask)
-            lengths.append(group.shape[1])
+            streams.append(stream)
+            masks.append(stream_mask)
 
-        x = self.input_norm(torch.cat(groups, dim=1))
-        combined_mask = torch.cat(masks, dim=1)
-        x = self.encoder(x, src_key_padding_mask=~combined_mask)
-        x = self.output_norm(x)
+        block_gate_means: list[torch.Tensor] = []
+        for block in self.blocks:
+            streams, gate_means = block(
+                streams,
+                masks,
+                query=query,
+                reliability=view_reliability,
+            )
+            block_gate_means.append(gate_means)
 
-        offsets = [0, lengths[0], lengths[0] + lengths[1]]
-        summaries = torch.stack([x[:, offset] for offset in offsets], dim=1)
-        available = torch.stack(
-            [semantic_valid_mask.any(dim=1), structured_valid_mask.any(dim=1), evidence_valid_mask.any(dim=1)],
-            dim=1,
-        )
-        query = torch.nn.functional.normalize(
-            self.fusion_query.unsqueeze(0).expand(batch, -1) + self.query_projection(query_semantic),
+        streams = [self.output_norm[idx](stream) for idx, stream in enumerate(streams)]
+        summaries = torch.stack([stream[:, 0] for stream in streams], dim=1)
+        route_query = F.normalize(
+            self.fusion_query.unsqueeze(0).expand(batch, -1) + query,
             dim=-1,
         )
-        query_expand = query.unsqueeze(1).expand(-1, self.config.num_views, -1)
+        query_expand = route_query.unsqueeze(1).expand(-1, self.config.num_views, -1)
         score_features = torch.cat(
             [summaries, query_expand, summaries * query_expand], dim=-1
         )
@@ -241,25 +395,28 @@ class CrossContextFusion(nn.Module):
         view_weights = torch.softmax(scores, dim=-1)
         fused = torch.einsum("bv,bvd->bd", view_weights, summaries)
 
-        semantic_start = 1
-        structured_start = offsets[1] + 1
-        evidence_start = offsets[2] + 1
-        semantic_context = x[:, semantic_start : semantic_start + semantic_tokens.shape[1]]
-        structured_context = x[:, structured_start : structured_start + structured_tokens.shape[1]]
-        evidence_context = x[:, evidence_start : evidence_start + evidence_tokens.shape[1]]
+        contextualized_tokens: list[torch.Tensor] = []
+        for view_id, (stream, source, valid) in enumerate(zip(streams, source_tokens, source_masks)):
+            delta = self.token_output_projection(stream[:, 1:])
+            scale = torch.tanh(self.token_residual_scale[view_id])
+            output = source + scale * delta
+            output = torch.where(valid.unsqueeze(-1), output, source)
+            contextualized_tokens.append(output)
 
-        normalized = torch.nn.functional.normalize(summaries, dim=-1)
+        summary_output = self.summary_output_projection(summaries)
+        normalized = F.normalize(summary_output, dim=-1)
         cross_view_cosine = torch.einsum("bvd,bwd->bvw", normalized, normalized)
 
         return {
-            "semantic_tokens": self.token_output_projection(semantic_context),
-            "structured_tokens": self.token_output_projection(structured_context),
-            "evidence_tokens": self.token_output_projection(evidence_context),
-            "view_summaries": self.summary_output_projection(summaries),
+            "semantic_tokens": contextualized_tokens[self.SEMANTIC_VIEW],
+            "structured_tokens": contextualized_tokens[self.STRUCTURED_VIEW],
+            "evidence_tokens": contextualized_tokens[self.EVIDENCE_VIEW],
+            "view_summaries": summary_output,
             "view_weights": view_weights,
             "fused_state": self.fused_output_projection(fused),
             "cross_view_cosine": cross_view_cosine,
             "view_available": available,
+            "cross_gate_means": torch.stack(block_gate_means, dim=1),
         }
 
     def parameter_report(self) -> dict[str, Any]:
@@ -270,12 +427,18 @@ class CrossContextFusion(nn.Module):
             "trainable_parameters": trainable,
             "semantic_size": self.config.semantic_size,
             "fusion_size": self.config.fusion_size,
-            "layers": self.config.num_layers,
+            "fusion_stages": self.config.num_layers,
             "heads": self.config.num_heads,
             "feedforward_size": self.config.feedforward_size,
             "input_views": 3,
+            "fusion_family": "tri_stream_self_refinement_plus_gated_bidirectional_cross_attention",
+            "full_scale_n0_candidate": True,
+            "reduced_pilot_model": False,
             "view_identity_explicit": True,
+            "view_reliability_explicit": True,
             "missing_view_supported": True,
+            "gated_cross_view_exchange": True,
+            "bidirectional_cross_attention": True,
             "preserves_contextualized_views": True,
             "position_embeddings_added": 0,
             "private_identity_parameters": 0,
