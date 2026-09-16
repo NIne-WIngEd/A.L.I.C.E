@@ -1,0 +1,94 @@
+{
+  "schema": "alice.eipm.n0.v02-cross-context-fusion-repair-training.v0.2",
+  "status": "CONDITIONALLY_AUTHORIZED_AFTER_SAME_REVISION_REPAIR_PREP_PASS",
+  "architecture": {
+    "implementation": "src/alice_personality/n0/cross_context_fusion_anchored.py",
+    "class": "SourceAnchoredCrossContextFusion",
+    "base_config": "configs/eipm/n0/n0_v02_cross_context_fusion_v0.2.json",
+    "full_scale_model": true,
+    "reduced_capability_pilot": false,
+    "generic_fallback_architecture": false,
+    "source_anchor_parameter_cost": 0,
+    "hard_parameter_ceiling": null,
+    "view_count_ceiling": null
+  },
+  "fusion_parent": {
+    "checkpoint": "cross-context-fusion-training-v0.1/step-00000240",
+    "sha256": "9b2a7a120539e9c6a254ea5a47d30a0c9c827d76c18dc46822ee171303bb8d14",
+    "status": "FAILED_FROZEN_CHALLENGE_NOT_RATIFIED",
+    "weights_reused": true,
+    "architecture_migration_changes_existing_parameter_tensors": false
+  },
+  "parents": {
+    "semantic": "targeted-repair-v0.1/step-00000080",
+    "structured": "structured-state-pilot-v0.1/step-00000080",
+    "evidence_adapter": "evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080",
+    "evidence_graph": "relation-repair-v0.1/step-00000080",
+    "frozen_in_this_repair_run": true,
+    "freeze_is_permanent": false,
+    "progressive_or_end_to_end_unfreeze_allowed_if_fidelity_requires": true
+  },
+  "curriculum": {
+    "schema": "alice.eipm.n0.v02-cross-context-fusion-repair-curriculum.v0.3",
+    "base_rows": 320,
+    "repair_rows": 192,
+    "rows": 512,
+    "train_rows": 384,
+    "dev_rows": 128,
+    "repair_families": 8,
+    "row_count_is_training_tranche_not_cap": true,
+    "frozen_challenge_rows_reused": false,
+    "frozen_challenge_text_templates_reused": false,
+    "frozen_challenge_entities_reused": false,
+    "private_identity_content": false
+  },
+  "optimization": {
+    "trainable": ["cross_context_fusion"],
+    "max_steps": 240,
+    "save_steps": [80, 160, 240],
+    "train_batch_size": 4,
+    "eval_batch_size": 8,
+    "learning_rate": 0.00005,
+    "warmup_steps": 20,
+    "weight_decay": 0.05,
+    "precision": "fp16_autocast",
+    "seed": 2026091602,
+    "run_step_bound_is_compute_control_not_model_limit": true
+  },
+  "objective": {
+    "fused_semantic": 0.35,
+    "view_routing": 0.40,
+    "contextualized_source_alignment": 0.10,
+    "disagreement_geometry": 0.15,
+    "source_preservation_is_structural_not_loss_only": true,
+    "target_mass_on_missing_view_is_invalid": true
+  },
+  "selection": {
+    "primary": [
+      "worst_family_routing_similarity",
+      "macro_family_routing_similarity",
+      "decisive_view_accuracy",
+      "fused_semantic_cosine",
+      "source_anchor_exactness",
+      "contextualized_source_cosine",
+      "disagreement_geometry_fidelity",
+      "earlier_checkpoint_when_capability_is_tied"
+    ],
+    "must_not_regress_against_repair_baseline": [
+      "decisive_view_accuracy",
+      "fused_semantic_cosine"
+    ],
+    "source_anchor_max_abs_error_required": 0.0,
+    "parameter_count_used_as_capacity_ceiling": false,
+    "efficiency_only_after_capability_sufficiency": true
+  },
+  "authorization": {
+    "public_fusion_gradient_authorized": true,
+    "condition": "same_git_revision_repair_preparation_receipt_status_PASS",
+    "failed_frozen_challenge_may_inform_failure_categories": true,
+    "failed_frozen_challenge_rows_may_be_used_for_training": false,
+    "private_identity_gradient": false,
+    "production_promotion_authorized": false
+  },
+  "next_after_successful_repair": "build_new_untouched_fusion_challenge_v0.2_before_ratification"
+}
