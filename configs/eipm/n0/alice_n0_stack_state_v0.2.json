@@ -1,8 +1,23 @@
 {
   "schema": "alice.eipm.n0.stack-state.v0.2",
-  "status": "EVIDENCE_SPECIALIST_RATIFIED_FULL_SCALE_FRONTIER_FUSION_PREP_REQUIRED",
+  "status": "EVIDENCE_SPECIALIST_RATIFIED_CAPABILITY_LIMIT_AUDIT_COMPLETE_FULL_SCALE_FUSION_PREP_REQUIRED",
   "authoritative_for_current_stage": true,
   "historical_semantic_training_manifest": "configs/eipm/n0/alice_n0_semantic_v0.2.json",
+  "capability_limit_audit": {
+    "status": "COMPLETE_FOR_PRE_FUSION_LINEAGE",
+    "document": "docs/eipm/EIPM_CAPABILITY_LIMIT_AUDIT_2026-09-16.md",
+    "audit_scope": "project doctrine through private substrate generation curation N0 semantic structured evidence graph and pre-gradient fusion",
+    "validation_is_not_limitation": true,
+    "temporary_execution_controls_are_not_product_limits": true,
+    "no_accidental_field_count_ceiling": true,
+    "no_accidental_graph_node_or_edge_count_ceiling": true,
+    "no_permanent_fusion_view_count_ceiling": true,
+    "semantic_token_level_states_are_first_class": true,
+    "plausible_alternative_not_equal_negative": true,
+    "evidence_packet_rule": "smallest_sufficient_not_smallest_regardless_of_context",
+    "finite_checkpoint_vocabularies_are_migratable": true,
+    "corpus_freezes_are_lineage_snapshots_not_permanent_coverage_limits": true
+  },
   "supersedes_stale_next_stage_fields": {
     "file": "configs/eipm/n0/alice_n0_semantic_v0.2.json",
     "paths": [
@@ -19,34 +34,45 @@
     "historical_paths_may_contain_pilot": true,
     "historical_path_names_do_not_imply_reduced_architecture": true,
     "generic_fallback_first": false,
-    "architecture_selection_rule": "build_the_most_capable_frontier_architecture_justified_for_alice_role_then_change_or_scale_only_from_measured_capability_evidence",
+    "architecture_selection_rule": "build_the_most_capable_frontier_architecture_justified_for_alice_role_then_change_or_scale_from_measured_capability_or_fidelity_evidence",
     "do_not_build_small_then_replace_with_real_model": true
   },
   "capacity_policy": {
     "hard_parameter_ceiling": null,
     "parameter_counts_are_lineage_measurements_not_design_limits": true,
+    "field_node_edge_count_ceilings": null,
+    "fusion_view_count_ceiling": null,
+    "concept_count_ceiling": null,
+    "latent_slot_count_ceiling": null,
     "capability_and_personality_fidelity_before_efficiency": true,
     "scale_when_measured_capacity_bottleneck_requires_it": true,
-    "efficiency_is_secondary_among_capability_sufficient_designs": true
+    "efficiency_is_secondary_among_capability_sufficient_designs": true,
+    "current_context_windows_and_serving_budgets_are_migratable_defaults": true
   },
   "ratified_public_stack": {
     "semantic": {
       "checkpoint": "targeted-repair-v0.1/step-00000080",
-      "parameters": 136594435
+      "parameters": 136594435,
+      "token_level_representation_api": true
     },
     "structured": {
       "checkpoint": "structured-state-pilot-v0.1/step-00000080",
       "parameters": 1656064,
+      "field_count_limit": null,
       "historical_directory_name_only": "the word pilot in this frozen artifact path is legacy naming and does not define current development policy"
     },
     "evidence_adapter": {
       "checkpoint": "evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080",
-      "parameters": 16002561
+      "parameters": 16002561,
+      "field_count_limit": null
     },
     "evidence_graph": {
       "checkpoint": "relation-repair-v0.1/step-00000080",
       "parameters": 6664963,
-      "sha256": "ec9942bd71a39c8552804322f1a36b7a6c5f009446e56423c80e59479ad8fa79"
+      "sha256": "ec9942bd71a39c8552804322f1a36b7a6c5f009446e56423c80e59479ad8fa79",
+      "node_count_limit": null,
+      "edge_count_limit": null,
+      "relation_vocabulary": "migratable_checkpoint_vocabulary"
     },
     "total_parameters_before_fusion": 160918023
   },
@@ -58,19 +84,30 @@
     "ordinary_replay_macro_target_support_mass": 0.9831965605417887,
     "ordinary_replay_min_target_support_mass": 0.934688925743103
   },
+  "future_identity_architecture_guardrails": {
+    "explicit_identity_concept_bank_open_ontology": true,
+    "residual_concept_bank_bounded_by_governance_not_fixed_capacity": true,
+    "adaptive_multi_view_pool_not_single_cls": true,
+    "latent_slot_structure_learned_or_ablated_not_fixed_trait_taxonomy": true,
+    "idp_distributional_multi_head_not_single_scalar": true,
+    "raw_source_spans_remain_available_alongside_structure": true
+  },
   "current_stage": {
     "name": "cross_context_fusion",
     "config": "configs/eipm/n0/n0_v02_cross_context_fusion_v0.2.json",
     "implementation": "src/alice_personality/n0/cross_context_fusion.py",
-    "architecture_family": "tri_stream_self_refinement_plus_gated_bidirectional_cross_attention",
+    "architecture_family": "multi_stream_self_refinement_plus_gated_bidirectional_cross_attention",
     "full_scale_model": true,
     "reduced_capability_pilot": false,
     "generic_fallback_architecture": false,
+    "current_instantiated_public_views": 3,
+    "view_count_ceiling": null,
+    "future_checkpoint_view_expansion_supported": true,
     "objective": "src/alice_personality/n0/cross_context_fusion_objectives.py",
     "curriculum_compiler": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_curriculum_v0_2.py",
     "preparation_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_prepare_v0_2.sh",
     "gradient_authorized": false,
-    "next_action": "run_cpu_full_scale_frontier_fusion_mechanics_and_curriculum_gate_then_train_that_same_architecture_if_passed"
+    "next_action": "run_cpu_full_scale_fusion_mechanics_curriculum_and_no_accidental_ceiling_gate_then_authorize_full_scale_fusion_training"
   },
   "private_identity_data": false,
   "private_identity_gradient": false,
