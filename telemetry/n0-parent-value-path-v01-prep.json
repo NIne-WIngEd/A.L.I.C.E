@@ -1,0 +1,20 @@
+{
+  "schema": "alice.telemetry.n0.parent-value-path.v0.1-prep",
+  "date": "2026-09-16",
+  "stage": "PARENT_VALUE_PATH_LOCALIZATION_DIAGNOSTIC_READY_FOR_CPU_PREP",
+  "latent_candidate_step": 360,
+  "latent_candidate_sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4",
+  "latent_candidate_ratified": false,
+  "latent_weights_changed": false,
+  "historical_frozen_challenge_v0_2_status": "FAIL_PRESELECTED_CANDIDATE_NOT_ELIGIBLE_FOR_LATENT_POOL_RATIFICATION",
+  "value_contrast_v0_2_status": "DIAGNOSTIC_ONLY_NO_RATIFICATION_EFFECT",
+  "overall_required_source_prefers_target_rate": 0.59375,
+  "missing_structured_evidence_required_source_prefers_target_rate": 0.25,
+  "next_diagnostic": "parent_value_path_v0.1",
+  "canonical_parent_trace_parity_required": true,
+  "graph_field_weight_and_relation_bias_measured": true,
+  "gradient_performed": false,
+  "challenge_rows_used_for_training": false,
+  "scale_authorized": false,
+  "private_identity_gradient": false
+}
