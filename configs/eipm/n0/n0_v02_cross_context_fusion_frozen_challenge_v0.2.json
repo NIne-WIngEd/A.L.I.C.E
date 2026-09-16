@@ -18,8 +18,8 @@
     "challenge_may_not_select_a_different_checkpoint": true
   },
   "challenge": {
-    "rows": 128,
-    "families": 16,
+    "rows": 136,
+    "families": 17,
     "rows_per_family": 8,
     "data_origin": "deterministic_public_independent_confirmatory_fusion_templates_v0.2",
     "original_training_rows_reused": false,
