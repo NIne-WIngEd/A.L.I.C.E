@@ -1,12 +1,11 @@
 {
   "schema": "alice.eipm.n0.stack-state.v0.2",
-  "status": "FULL_SCALE_FUSION_TRAINED_STEP240_PROVISIONAL_FROZEN_CHALLENGE_REQUIRED",
+  "status": "FUSION_FROZEN_CHALLENGE_FAILED_SOURCE_ANCHORED_FULL_SCALE_REPAIR_READY",
   "authoritative_for_current_stage": true,
   "historical_semantic_training_manifest": "configs/eipm/n0/alice_n0_semantic_v0.2.json",
   "capability_limit_audit": {
     "status": "COMPLETE_FOR_PRE_FUSION_LINEAGE",
     "document": "docs/eipm/EIPM_CAPABILITY_LIMIT_AUDIT_2026-09-16.md",
-    "audit_scope": "project doctrine through private substrate generation curation N0 semantic structured evidence graph and pre-gradient fusion",
     "validation_is_not_limitation": true,
     "temporary_execution_controls_are_not_product_limits": true,
     "no_accidental_field_count_ceiling": true,
@@ -18,21 +17,9 @@
     "finite_checkpoint_vocabularies_are_migratable": true,
     "corpus_freezes_are_lineage_snapshots_not_permanent_coverage_limits": true
   },
-  "supersedes_stale_next_stage_fields": {
-    "file": "configs/eipm/n0/alice_n0_semantic_v0.2.json",
-    "paths": [
-      "training.structured_state_next.status",
-      "training.structured_state_next.parameter_budget",
-      "training.structured_state_next.next_required_artifact",
-      "training.next_gradient_rule"
-    ],
-    "reason": "those fields describe a historical pre-ratification state and must not be interpreted as current architecture limits or authorization"
-  },
   "terminology_and_scale_policy": {
     "pilot_term_for_new_model_components": "deprecated",
     "bounded_run_meaning": "bounded compute and checkpoint schedule for the actual full-scale architecture, never a reduced-capability toy model",
-    "historical_paths_may_contain_pilot": true,
-    "historical_path_names_do_not_imply_reduced_architecture": true,
     "generic_fallback_first": false,
     "architecture_selection_rule": "build_the_most_capable_frontier_architecture_justified_for_alice_role_then_change_or_scale_from_measured_capability_or_fidelity_evidence",
     "do_not_build_small_then_replace_with_real_model": true
@@ -58,8 +45,7 @@
     "structured": {
       "checkpoint": "structured-state-pilot-v0.1/step-00000080",
       "parameters": 1656064,
-      "field_count_limit": null,
-      "historical_directory_name_only": "the word pilot in this frozen artifact path is legacy naming and does not define current development policy"
+      "field_count_limit": null
     },
     "evidence_adapter": {
       "checkpoint": "evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080",
@@ -93,40 +79,82 @@
     "full_scale_model": true,
     "reduced_capability_pilot": false,
     "parameters": 116981764,
-    "candidate_steps": [80, 160, 240],
-    "step80_gate_pass": false,
-    "step160_gate_pass": true,
-    "step240_gate_pass": true,
     "provisional_winner_step": 240,
     "provisional_winner_sha256": "9b2a7a120539e9c6a254ea5a47d30a0c9c827d76c18dc46822ee171303bb8d14",
-    "provisional_winner_metrics": {
-      "decisive_view_accuracy": 1.0,
-      "family_macro_routing_similarity": 0.9835125721991063,
-      "family_min_routing_similarity": 0.9738669022917747,
-      "fused_semantic_cosine": 0.9652088388800621,
-      "view_preservation_cosine": 0.9507347898823875,
-      "disagreement_geometry_mae": 0.03989659285871312,
-      "missing_view_max_weight": 0.0
-    },
-    "parents_mutated": false,
-    "private_identity_data": false,
-    "private_identity_gradient": false,
-    "production_promotion_authorized": false,
-    "ratified": false,
-    "required_before_ratification": "untouched_frozen_cross_context_fusion_challenge"
+    "training_dev_gate_pass": true,
+    "ratified": false
   },
-  "fusion_frozen_challenge": {
-    "spec": "configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.1.json",
-    "builder": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge.py",
-    "prepare_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_frozen_challenge_prepare.sh",
-    "evaluator": "scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge.py",
-    "evaluation_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_frozen_challenge_eval.sh",
-    "magnolia_launcher": "scripts/eipm/n0/magnolia_p100_n0_v02_cross_context_fusion_frozen_challenge.sbatch",
+  "fusion_frozen_challenge_v0_1": {
+    "job_id": 575620,
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:00:59",
+    "challenge_sha256": "3dd254b24b73054552f1530248cfaab3d942c3abb129f5a9cd5f6a7b1f0611bb",
     "rows": 96,
     "families": 12,
     "thresholds_frozen_before_results": true,
     "training_use_forbidden": true,
-    "status": "READY_TO_FREEZE_AND_EVALUATE"
+    "gradient_performed": false,
+    "private_identity_gradient": false,
+    "status": "FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION",
+    "ratification_candidate": null,
+    "step240": {
+      "decisive_view_accuracy": 1.0,
+      "family_macro_routing_similarity": 0.9227234901239475,
+      "family_min_routing_similarity": 0.8476811423897743,
+      "fused_semantic_cosine": 0.9443701598793268,
+      "contextualized_view_preservation_cosine": 0.8126243089297505,
+      "disagreement_geometry_mae": 0.04909189363631109,
+      "missing_view_max_weight": 0.0,
+      "worst_family": "evidence_corrects_stale_consensus"
+    },
+    "failed_requirements": {
+      "family_min_routing_similarity": {
+        "required": 0.85,
+        "observed": 0.8476811423897743
+      },
+      "view_preservation_cosine": {
+        "required": 0.88,
+        "observed": 0.8126243089297505
+      }
+    },
+    "diagnostic_conclusion": "routing_generalization_is_close_but_not_sufficient_and_the_original_interface_conflated_contextualized_view_state_with_lossless_parent_preservation",
+    "retired_for_future_ratification_after_informing_repair": true,
+    "may_inform_failure_categories": true,
+    "may_supply_training_rows": false,
+    "may_supply_training_templates": false
+  },
+  "fusion_repair": {
+    "architecture": "multi_stream_self_refinement_plus_gated_bidirectional_cross_attention_with_explicit_source_anchors",
+    "implementation": "src/alice_personality/n0/cross_context_fusion_anchored.py",
+    "objective": "src/alice_personality/n0/cross_context_fusion_repair_objectives.py",
+    "training_config": "configs/eipm/n0/n0_v02_cross_context_fusion_repair_training_v0.2.json",
+    "curriculum_builder": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_repair_curriculum_v0_3.py",
+    "trainer": "scripts/eipm/n0/train_n0_v02_cross_context_fusion_repair_full_scale.py",
+    "prepare_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_repair_prepare.sh",
+    "training_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_repair_full_scale.sh",
+    "magnolia_launcher": "scripts/eipm/n0/magnolia_p100_n0_v02_cross_context_fusion_repair_full_scale.sbatch",
+    "parent_fusion_step": 240,
+    "parent_fusion_sha256": "9b2a7a120539e9c6a254ea5a47d30a0c9c827d76c18dc46822ee171303bb8d14",
+    "full_scale_model": true,
+    "reduced_capability_pilot": false,
+    "generic_fallback_architecture": false,
+    "existing_parameter_tensors_changed_by_anchor_migration": false,
+    "source_anchor_parameter_cost": 0,
+    "exact_source_summary_channel": true,
+    "exact_source_token_channel": true,
+    "contextualized_channel_remains_unconstrained_by_anchor_capacity": true,
+    "repair_curriculum_base_rows": 320,
+    "repair_curriculum_new_rows": 192,
+    "repair_curriculum_total_rows": 512,
+    "row_count_is_training_tranche_not_cap": true,
+    "frozen_challenge_rows_reused": false,
+    "frozen_challenge_templates_reused": false,
+    "frozen_challenge_entities_reused": false,
+    "hard_parameter_ceiling": null,
+    "view_count_ceiling": null,
+    "status": "READY_FOR_SAME_REVISION_CPU_PREP_THEN_GPU_REPAIR",
+    "required_after_success": "new_untouched_fusion_challenge_v0.2_before_ratification"
   },
   "future_identity_architecture_guardrails": {
     "explicit_identity_concept_bank_open_ontology": true,
@@ -137,16 +165,11 @@
     "raw_source_spans_remain_available_alongside_structure": true
   },
   "current_stage": {
-    "name": "cross_context_fusion_frozen_challenge",
-    "fusion_config": "configs/eipm/n0/n0_v02_cross_context_fusion_v0.2.json",
-    "challenge_config": "configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.1.json",
-    "architecture_family": "multi_stream_self_refinement_plus_gated_bidirectional_cross_attention",
-    "full_scale_model": true,
-    "current_instantiated_public_views": 3,
-    "view_count_ceiling": null,
-    "gradient_authorized": false,
-    "challenge_training_use_authorized": false,
-    "next_action": "freeze_untouched_96_row_challenge_on_cpu_then_evaluate_steps_80_160_240_once_on_p100_before_ratification"
+    "name": "cross_context_fusion_source_anchored_failure_driven_repair",
+    "gradient_authorized": "conditional_on_same_revision_repair_preparation_pass",
+    "private_identity_gradient": false,
+    "production_promotion_authorized": false,
+    "next_action": "run_source_anchored_repair_cpu_gate_then_train_full_scale_repair_from_step240_on_independent_public_repair_curriculum"
   },
   "private_identity_data": false,
   "private_identity_gradient": false,
