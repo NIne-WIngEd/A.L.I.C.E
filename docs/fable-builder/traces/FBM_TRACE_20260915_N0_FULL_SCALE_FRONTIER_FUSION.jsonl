@@ -1,0 +1,4 @@
+{"date":"2026-09-15","scope":"n0_cross_context_fusion","lesson":"Do not use 'pilot' to mean a reduced model. Bounded compute is acceptable; reduced-capability architecture is not. Train the actual full-scale stage architecture from the start."}
+{"date":"2026-09-15","scope":"architecture_selection","lesson":"Do not default to a generic architecture first. Choose the strongest frontier architecture justified for A.L.I.C.E.'s role; change or scale only from measured capability evidence."}
+{"date":"2026-09-15","scope":"fusion_objective","lesson":"Never silently renormalize supervision after masking unavailable views. Positive target mass on an unavailable view is a data-contract error and must fail closed."}
+{"date":"2026-09-15","scope":"fusion_architecture","lesson":"Preserve heterogeneous semantic, structured, and graph/evidence streams. Use explicit gated cross-view exchange and keep disagreements observable for later uncertainty/IDP heads."}
