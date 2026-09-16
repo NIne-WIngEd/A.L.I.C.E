@@ -6,7 +6,7 @@ WORKDIR="${ALICE_N0_V02_WORKDIR:-$(dirname "$ROOT")/rayan-n0/n0-v02}"
 OUT_ROOT="$WORKDIR/cross-context-fusion-curriculum-v0.2"
 CURRICULUM="$OUT_ROOT/cross_context_fusion_curriculum.jsonl"
 MANIFEST="$OUT_ROOT/cross_context_fusion_manifest.json"
-CONFIG="$ROOT/configs/eipm/n0/n0_v02_cross_context_fusion_v0.1.json"
+CONFIG="$ROOT/configs/eipm/n0/n0_v02_cross_context_fusion_v0.2.json"
 
 export PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}"
 export HF_HUB_OFFLINE=1
@@ -35,9 +35,19 @@ import sys
 
 config = json.loads(Path(sys.argv[1]).read_text())
 manifest = json.loads(Path(sys.argv[2]).read_text())
-if config.get("status") != "MECHANICS_READY_NO_GRADIENT_AUTHORIZED":
+if config.get("status") != "FULL_SCALE_FRONTIER_MECHANICS_READY_NO_GRADIENT_AUTHORIZED":
     raise SystemExit("fusion config status drift")
-if config.get("architecture", {}).get("hard_parameter_ceiling") is not None:
+policy = config.get("architecture_policy", {})
+if policy.get("full_scale_model") is not True or policy.get("reduced_capability_pilot") is not False:
+    raise SystemExit("fusion must be governed as the full-scale model, not a reduced pilot")
+if policy.get("generic_fallback_architecture") is not False:
+    raise SystemExit("generic fallback fusion architecture is forbidden")
+arch = config.get("architecture", {})
+if arch.get("family") != "tri_stream_self_refinement_plus_gated_bidirectional_cross_attention":
+    raise SystemExit("frontier fusion architecture family drift")
+if arch.get("bidirectional_cross_attention") is not True or arch.get("query_conditioned_cross_view_gating") is not True:
+    raise SystemExit("frontier cross-view exchange mechanics missing")
+if arch.get("hard_parameter_ceiling") is not None:
     raise SystemExit("unexpected fusion parameter ceiling")
 if config.get("gradient_authorization", {}).get("authorized") is not False:
     raise SystemExit("fusion gradient unexpectedly authorized")
@@ -60,6 +70,9 @@ if manifest.get("private_identity_content") is not False:
 if manifest.get("training_authorized") is not False:
     raise SystemExit("fusion curriculum unexpectedly authorizes gradient")
 print("cross_context_fusion_prepare_pass=true")
+print("fusion_architecture=full_scale_frontier_tri_stream_gated_bidirectional_cross_attention")
+print("reduced_capability_pilot=false")
+print("generic_fallback_architecture=false")
 print("fusion_curriculum_schema=v0.2")
 print("fusion_rows=320 train_rows=240 dev_rows=80 families=10")
 print("data_origin=deterministic_public_synthetic_template")
