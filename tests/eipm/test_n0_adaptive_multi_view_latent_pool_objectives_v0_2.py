@@ -7,6 +7,9 @@ from alice_personality.n0.adaptive_multi_view_latent_pool_objectives_v0_2 import
     centered_slot_effective_rank,
     normalized_view_specialization,
     slot_redundancy_loss,
+    source_view_disagreement_weight,
+    source_view_semantic_coverage_loss,
+    view_specialization_loss,
 )
 
 
@@ -44,6 +47,32 @@ def test_view_specialization_is_permutation_free_and_rewards_distinct_use() -> N
     permuted_score = normalized_view_specialization(specialized[:, [4, 1, 5, 0, 3, 2]], available)
     assert specialized_score > uniform_score + 0.5
     assert torch.allclose(specialized_score, permuted_score, atol=1e-6, rtol=1e-6)
+
+
+def test_source_view_semantic_coverage_requires_each_available_view_to_be_recoverable() -> None:
+    available = torch.tensor([[True, True, True]])
+    source = torch.eye(3).unsqueeze(0)
+    all_views = torch.eye(3).unsqueeze(0)
+    only_first = torch.tensor([[[1.0, 0.0, 0.0], [1.0, 0.0, 0.0], [1.0, 0.0, 0.0]]])
+    good = source_view_semantic_coverage_loss(all_views, source, available)
+    bad = source_view_semantic_coverage_loss(only_first, source, available)
+    assert torch.allclose(good, torch.zeros_like(good), atol=1e-7, rtol=0.0)
+    assert bad > good + 0.5
+
+
+def test_specialization_pressure_disappears_for_semantic_consensus() -> None:
+    available = torch.tensor([[True, True, True]])
+    uniform_attention = torch.full((1, 6, 3), 1.0 / 3.0)
+    consensus = torch.tensor([[[1.0, 0.0], [1.0, 0.0], [1.0, 0.0]]])
+    disagreement = torch.tensor([[[1.0, 0.0], [0.0, 1.0], [-1.0, 0.0]]])
+    consensus_weight = source_view_disagreement_weight(consensus, available)
+    disagreement_weight = source_view_disagreement_weight(disagreement, available)
+    assert float(consensus_weight) < 1e-6
+    assert float(disagreement_weight) > 0.5
+    consensus_loss = view_specialization_loss(uniform_attention, available, consensus)
+    disagreement_loss = view_specialization_loss(uniform_attention, available, disagreement)
+    assert torch.allclose(consensus_loss, torch.zeros_like(consensus_loss), atol=1e-7, rtol=0.0)
+    assert disagreement_loss > 0.5
 
 
 def test_centered_effective_rank_detects_collapse_without_penalizing_common_mode() -> None:
