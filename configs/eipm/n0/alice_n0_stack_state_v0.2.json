@@ -1,6 +1,6 @@
 {
   "schema": "alice.eipm.n0.stack-state.v0.2",
-  "status": "EVIDENCE_SPECIALIST_RATIFIED_FUSION_MECHANICS_PREP_REQUIRED",
+  "status": "EVIDENCE_SPECIALIST_RATIFIED_FULL_SCALE_FRONTIER_FUSION_PREP_REQUIRED",
   "authoritative_for_current_stage": true,
   "historical_semantic_training_manifest": "configs/eipm/n0/alice_n0_semantic_v0.2.json",
   "supersedes_stale_next_stage_fields": {
@@ -11,7 +11,16 @@
       "training.structured_state_next.next_required_artifact",
       "training.next_gradient_rule"
     ],
-    "reason": "those fields describe a pre-pilot state and must not be interpreted as current architecture limits or authorization"
+    "reason": "those fields describe a historical pre-ratification state and must not be interpreted as current architecture limits or authorization"
+  },
+  "terminology_and_scale_policy": {
+    "pilot_term_for_new_model_components": "deprecated",
+    "bounded_run_meaning": "bounded compute and checkpoint schedule for the actual full-scale architecture, never a reduced-capability toy model",
+    "historical_paths_may_contain_pilot": true,
+    "historical_path_names_do_not_imply_reduced_architecture": true,
+    "generic_fallback_first": false,
+    "architecture_selection_rule": "build_the_most_capable_frontier_architecture_justified_for_alice_role_then_change_or_scale_only_from_measured_capability_evidence",
+    "do_not_build_small_then_replace_with_real_model": true
   },
   "capacity_policy": {
     "hard_parameter_ceiling": null,
@@ -27,7 +36,8 @@
     },
     "structured": {
       "checkpoint": "structured-state-pilot-v0.1/step-00000080",
-      "parameters": 1656064
+      "parameters": 1656064,
+      "historical_directory_name_only": "the word pilot in this frozen artifact path is legacy naming and does not define current development policy"
     },
     "evidence_adapter": {
       "checkpoint": "evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080",
@@ -50,13 +60,17 @@
   },
   "current_stage": {
     "name": "cross_context_fusion",
-    "config": "configs/eipm/n0/n0_v02_cross_context_fusion_v0.1.json",
+    "config": "configs/eipm/n0/n0_v02_cross_context_fusion_v0.2.json",
     "implementation": "src/alice_personality/n0/cross_context_fusion.py",
+    "architecture_family": "tri_stream_self_refinement_plus_gated_bidirectional_cross_attention",
+    "full_scale_model": true,
+    "reduced_capability_pilot": false,
+    "generic_fallback_architecture": false,
     "objective": "src/alice_personality/n0/cross_context_fusion_objectives.py",
     "curriculum_compiler": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_curriculum_v0_2.py",
     "preparation_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_prepare_v0_2.sh",
     "gradient_authorized": false,
-    "next_action": "run_cpu_fusion_mechanics_and_curriculum_preparation_gate"
+    "next_action": "run_cpu_full_scale_frontier_fusion_mechanics_and_curriculum_gate_then_train_that_same_architecture_if_passed"
   },
   "private_identity_data": false,
   "private_identity_gradient": false,
