@@ -1,0 +1,96 @@
+{
+  "schema": "alice.eipm.n0.v02-adaptive-multi-view-latent-pool-training.v0.2",
+  "status": "PUBLIC_IDENTITY_NEUTRAL_FULL_SCALE_TRAINING_GATE_READY_AFTER_CPU_PREP",
+  "architecture_config": "configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_v0.2.json",
+  "failed_predecessor": {
+    "job": 575670,
+    "comparison_status": "FAIL_NO_LATENT_POOL_CHECKPOINT_CLEARED_TRAINING_DEV_GATE",
+    "failure_class": "slot_collapse_due_objective_and_attention_symmetry",
+    "failed_latent_weights_reused": false
+  },
+  "fusion_parent": {
+    "ratification_manifest": "configs/eipm/n0/n0_v02_cross_context_fusion_ratification_v0.1.json",
+    "checkpoint": "cross-context-fusion-repair-training-v0.2/repair-step-00000240",
+    "sha256": "4d51494beb788f74ddc03590da05ea00f0e36574294649c2cd5d438f9472e577",
+    "frozen_initially": true,
+    "permanent_freeze": false
+  },
+  "training_data": {
+    "source": "cross-context-fusion-repair-curriculum-v0.3/cross_context_fusion_repair_curriculum.jsonl",
+    "expected_rows": 512,
+    "expected_train_rows": 384,
+    "expected_dev_rows": 128,
+    "public_identity_neutral": true,
+    "existing_target_view_distribution_ignored_as_supervision": true,
+    "routing_distribution_role": "ratified_fusion_feature_only",
+    "frozen_challenge_v0_1_rows_used": false,
+    "frozen_challenge_v0_2_rows_used": false,
+    "frozen_challenge_v0_3_rows_used": false,
+    "row_count_is_training_tranche_not_cap": true
+  },
+  "optimization": {
+    "steps": 360,
+    "batch_size": 8,
+    "learning_rate": 0.00025,
+    "weight_decay": 0.01,
+    "warmup_steps": 40,
+    "gradient_clip_norm": 1.0,
+    "precision": "fp16_on_cuda",
+    "save_steps": [120, 240, 360],
+    "seed": 20260917,
+    "schedule_role": "finite_experiment_control_not_model_capacity_limit"
+  },
+  "objective_weights": {
+    "best_slot_semantic": 0.30,
+    "pooled_alignment": 0.18,
+    "slot_redundancy": 0.20,
+    "view_coverage": 0.08,
+    "view_specialization": 0.10,
+    "channel_coverage": 0.04,
+    "counterfactual_margin": 0.10
+  },
+  "objective_policy": {
+    "old_unnormalized_smoothmax_forbidden": true,
+    "duplicate_target_slot_reward_forbidden": true,
+    "exact_routing_percentage_loss": false,
+    "fixed_slot_semantic_labels": false,
+    "best_slot_target_alignment": true,
+    "pooled_convenience_readout_alignment": true,
+    "near_duplicate_slot_penalty": true,
+    "permutation_free_view_specialization": true,
+    "available_view_coverage": true,
+    "source_and_contextualized_channel_reachability": true,
+    "target_grounded_decisive_view_counterfactual": true
+  },
+  "training_dev_gate": {
+    "best_slot_semantic_cosine_min": 0.90,
+    "pooled_semantic_cosine_min": 0.90,
+    "family_min_best_slot_semantic_cosine_min": 0.86,
+    "family_min_pooled_semantic_cosine_min": 0.84,
+    "mean_pairwise_offdiag_slot_cosine_max": 0.97,
+    "mean_centered_slot_effective_rank_min": 0.10,
+    "mean_view_specialization_min": 0.05,
+    "mean_min_available_view_best_slot_attention_min": 0.12,
+    "mean_min_channel_best_slot_attention_min": 0.10,
+    "missing_view_attention_max": 0.000001,
+    "gate_role": "development_anti_collapse_and_capability_gate_not_final_ratification"
+  },
+  "checkpoint_selection": {
+    "use_training_dev_only": true,
+    "frozen_challenge_selection_forbidden": true,
+    "prefer_earliest_checkpoint_when_capability_score_is_tied": true,
+    "random_initialization_baseline_required": true,
+    "final_ratification_requires_new_untouched_challenge": true
+  },
+  "capacity_policy": {
+    "hard_parameter_ceiling": null,
+    "slot_count_ceiling": null,
+    "view_count_ceiling": null,
+    "capability_and_personality_fidelity_before_efficiency": true,
+    "do_not_scale_merely_to_fix_an_objective_bug": true,
+    "scale_or_change_pool_if_measured_post_fix_capability_bottleneck_requires_it": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
