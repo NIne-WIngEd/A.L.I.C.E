@@ -1,0 +1,79 @@
+{
+  "schema": "alice.eipm.n0.v02-cross-context-fusion-training.v0.1",
+  "status": "CONDITIONALLY_AUTHORIZED_AFTER_SAME_REVISION_PREP_PASS",
+  "architecture_config": "configs/eipm/n0/n0_v02_cross_context_fusion_v0.2.json",
+  "full_scale_model": true,
+  "reduced_capability_pilot": false,
+  "generic_fallback_architecture": false,
+  "parents": {
+    "semantic": "targeted-repair-v0.1/step-00000080",
+    "structured": "structured-state-pilot-v0.1/step-00000080",
+    "evidence_adapter": "evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080",
+    "evidence_graph": "relation-repair-v0.1/step-00000080"
+  },
+  "curriculum": {
+    "schema": "alice.eipm.n0.v02-cross-context-fusion-curriculum.v0.2",
+    "rows": 320,
+    "train_rows": 240,
+    "dev_rows": 80,
+    "families": 10,
+    "current_view_order": ["semantic", "structured", "evidence"],
+    "current_view_count_is_not_a_ceiling": true,
+    "data_origin": "deterministic_public_synthetic_template",
+    "identity_authority": false,
+    "failure_driven_expansion_allowed": true,
+    "row_count_is_training_tranche_not_cap": true
+  },
+  "optimization": {
+    "trainable": ["cross_context_fusion"],
+    "semantic_parent_trainable_in_this_run": false,
+    "structured_parent_trainable_in_this_run": false,
+    "evidence_adapter_trainable_in_this_run": false,
+    "evidence_graph_trainable_in_this_run": false,
+    "parent_freeze_is_permanent": false,
+    "progressive_or_end_to_end_unfreeze_allowed_if_fidelity_requires": true,
+    "max_steps": 240,
+    "save_steps": [80, 160, 240],
+    "train_batch_size": 4,
+    "eval_batch_size": 8,
+    "learning_rate": 0.0001,
+    "warmup_steps": 20,
+    "weight_decay": 0.05,
+    "precision": "fp16_autocast",
+    "seed": 20260916,
+    "run_bounds_are_compute_controls_not_architecture_limits": true
+  },
+  "objective": {
+    "fused_semantic": 0.40,
+    "view_routing": 0.25,
+    "view_preservation": 0.20,
+    "disagreement_preservation": 0.15,
+    "target_mass_on_missing_view_is_invalid": true
+  },
+  "selection": {
+    "primary": [
+      "worst_family_routing_similarity",
+      "macro_family_routing_similarity",
+      "decisive_view_accuracy",
+      "fused_semantic_cosine",
+      "view_preservation_cosine",
+      "disagreement_geometry_fidelity",
+      "earlier_checkpoint_when_capability_is_tied"
+    ],
+    "parameter_count_used_as_capacity_ceiling": false,
+    "efficiency_only_after_capability_sufficiency": true
+  },
+  "authorization": {
+    "public_fusion_gradient_authorized": true,
+    "condition": "same_git_revision_cross_context_fusion_preparation_receipt_status_PASS",
+    "private_identity_gradient": false,
+    "production_promotion_authorized": false
+  },
+  "capacity_policy": {
+    "hard_parameter_ceiling": null,
+    "field_node_edge_count_ceiling": null,
+    "fusion_view_count_ceiling": null,
+    "context_window_is_migratable": true,
+    "capability_and_personality_fidelity_first": true
+  }
+}
