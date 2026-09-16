@@ -60,6 +60,14 @@
     "slot_collapse_must_not_be_accepted": true,
     "final_ratification_requires_new_untouched_challenge": true
   },
+  "authorization": {
+    "public_latent_pool_gradient_conditionally_authorized_after_same_revision_prep_pass": true,
+    "authorized_scope": "adaptive_multi_view_latent_pool_only",
+    "fusion_parent_trainable": false,
+    "upstream_parents_trainable": false,
+    "private_identity_gradient": false,
+    "production_promotion_authorized": false
+  },
   "capacity_policy": {
     "hard_parameter_ceiling": null,
     "slot_count_ceiling": null,
