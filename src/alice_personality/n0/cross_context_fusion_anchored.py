@@ -21,10 +21,10 @@ class SourceAnchoredCrossContextFusion(CrossContextFusion):
     1. fusion must be free to contextualize a view; and
     2. downstream identity reasoning must never lose the ratified parent view.
 
-    This migration keeps the learned contextualized summaries unchanged and
-    adds the exact parent summaries as first-class outputs.  No information is
-    discarded and no capacity ceiling is introduced.  Later adaptive pooling
-    may consume either or both channels.
+    This migration keeps the learned contextualized representations unchanged
+    and adds the exact parent token streams and summaries as first-class
+    outputs. No information is discarded and no capacity ceiling is
+    introduced. Later adaptive pooling may consume either or both channels.
     """
 
     def __init__(self, config: CrossContextFusionConfig | None = None) -> None:
@@ -92,12 +92,17 @@ class SourceAnchoredCrossContextFusion(CrossContextFusion):
             source_view_summaries=source_view_summaries,
             available=result["view_available"],
         )
+        source_tokens = [
+            torch.where(mask.unsqueeze(-1), tokens, torch.zeros_like(tokens))
+            for tokens, mask in zip(view_tokens, view_valid_masks)
+        ]
 
         # Backward-compatible alias: view_summaries remains the learned fusion
-        # representation.  The source anchor is now explicit instead of being
-        # approximated through a cosine penalty.
+        # representation. The exact parent representations are now available
+        # separately instead of being reconstructed through a cosine penalty.
         result["contextualized_view_summaries"] = contextualized
         result["source_view_summaries"] = source
+        result["source_view_tokens"] = source_tokens
         return result
 
     def forward(
@@ -144,6 +149,7 @@ class SourceAnchoredCrossContextFusion(CrossContextFusion):
                     "_with_explicit_source_anchors"
                 ),
                 "explicit_source_view_anchor_channel": True,
+                "explicit_source_token_anchor_channel": True,
                 "source_anchor_parameter_cost": 0,
                 "contextualized_and_source_views_both_exposed": True,
                 "source_anchor_capacity_ceiling": None,
