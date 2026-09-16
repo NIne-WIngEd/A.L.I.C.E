@@ -33,15 +33,15 @@ if [[ -e "$OUT_ROOT" && -n "$(find "$OUT_ROOT" -mindepth 1 -maxdepth 1 -print -q
   exit 3
 fi
 
-python -m py_compile "$DIAGNOSTIC"
+python -m py_compile "$DIAGNOSTIC" "$TEST"
 pytest -q "$TEST"
 mkdir -p "$OUT_ROOT"
 
-python - "$ROOT" "$CHALLENGE" "$CONTRACT" "$MANIFEST" "$VALUE_RESULT" "$DIAGNOSTIC" "$SEMANTIC" "$STRUCTURED" "$EVIDENCE_ADAPTER" "$EVIDENCE_GRAPH" "$PREP" <<'PY'
+python - "$ROOT" "$CHALLENGE" "$CONTRACT" "$MANIFEST" "$VALUE_RESULT" "$DIAGNOSTIC" "$TEST" "$SEMANTIC" "$STRUCTURED" "$EVIDENCE_ADAPTER" "$EVIDENCE_GRAPH" "$PREP" <<'PY'
 import hashlib,json,subprocess,sys
 from datetime import datetime,timezone
 from pathlib import Path
-root,challenge,contract,manifest_path,value_result,diagnostic,semantic,structured,adapter,graph,prep_path=map(Path,sys.argv[1:])
+root,challenge,contract,manifest_path,value_result,diagnostic,test_file,semantic,structured,adapter,graph,prep_path=map(Path,sys.argv[1:])
 
 def sha(path):
     h=hashlib.sha256()
@@ -60,7 +60,7 @@ if value.get('status')!='DIAGNOSTIC_ONLY_NO_RATIFICATION_EFFECT': raise SystemEx
 if value.get('challenge_sha256')!=sha(challenge) or value.get('contrast_contract_sha256')!=sha(contract): raise SystemExit('value result lineage drift')
 if value.get('interpretation_contract',{}).get('gradient_performed') is not False: raise SystemExit('value diagnostic governance drift')
 receipt={
- 'schema':'alice.eipm.n0.v02-parent-value-path-diagnostic-preparation.v0.1',
+ 'schema':'alice.eipm.n0.v02-parent-value-path-diagnostic-preparation.v0.1.1',
  'status':'PASS_PARENT_VALUE_PATH_DIAGNOSTIC_READY_FOR_GPU',
  'created_at':datetime.now(timezone.utc).isoformat(),
  'git_revision':head,
@@ -69,6 +69,7 @@ receipt={
  'contrast_manifest_sha256':sha(manifest_path),
  'value_contrast_result_sha256':sha(value_result),
  'diagnostic_sha256':sha(diagnostic),
+ 'test_sha256':sha(test_file),
  'semantic_checkpoint_sha256':sha(semantic),
  'structured_checkpoint_sha256':sha(structured),
  'evidence_adapter_sha256':sha(adapter),
@@ -78,6 +79,11 @@ receipt={
  'forward_hook_capture_only_no_parent_mutation':True,
  'canonical_parent_trace_parity_required':True,
  'graph_field_weight_and_relation_bias_measured':True,
+ 'prior_cpu_gate_failure_stage':'pytest_collection_before_diagnostic_execution',
+ 'prior_cpu_gate_failure_reason':'test_import_assumed_scripts_package_not_available_in_udocker_pytest_path',
+ 'prior_cpu_gate_failure_model_evidence':False,
+ 'prior_cpu_gate_failure_gradient_performed':False,
+ 'test_import_contract':'scripts_eipm_n0_is_pythonpath_root_and_diagnostic_is_top_level_script_module',
  'challenge_rows_used_for_training':False,
  'gradient_performed':False,
  'ratification_effect':False,
@@ -88,11 +94,12 @@ receipt={
 }
 prep_path.write_text(json.dumps(receipt,indent=2,sort_keys=True)+'\n',encoding='utf-8')
 print(json.dumps(receipt,indent=2,sort_keys=True))
-print('parent_value_path_v01_prepare_pass=true')
+print('parent_value_path_v011_prepare_pass=true')
 print(f'git_revision={head}')
 print('contrast_rows=32')
 print('canonical_parent_trace_parity_required=true')
 print('graph_field_weight_and_relation_bias_measured=true')
+print('prior_cpu_gate_failure_model_evidence=false')
 print('gradient_performed=false')
 print(f'preparation_receipt={prep_path}')
 PY
