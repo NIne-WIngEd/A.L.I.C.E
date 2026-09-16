@@ -14,8 +14,13 @@ class CrossContextFusionConfig:
     """Full-scale identity-neutral N0 cross-context fusion.
 
     This is the intended N0 fusion architecture, not a reduced rehearsal model.
-    It preserves semantic, structured, and evidence streams separately while
-    allowing repeated gated bidirectional cross-attention between them.
+    It preserves heterogeneous context streams separately while allowing
+    repeated gated bidirectional cross-attention between them.
+
+    ``num_views`` is the view vocabulary instantiated by a particular
+    checkpoint. It is migratable and is not an architecture ceiling. N0 starts
+    with three public views; later governed concept/residual views may expand
+    the checkpoint without replacing the fusion family.
 
     Parameter counts are measurements, never capability ceilings.
     """
@@ -39,8 +44,8 @@ class CrossContextFusionConfig:
             raise ValueError("fusion_size must be divisible by num_heads")
         if self.feedforward_size < self.fusion_size:
             raise ValueError("feedforward_size must be >= fusion_size")
-        if self.num_views != 3:
-            raise ValueError("N0 fusion defines exactly three public input views")
+        if self.num_views < 2:
+            raise ValueError("cross-context fusion requires at least two instantiated views")
         if not 0.0 <= self.dropout < 1.0:
             raise ValueError("dropout must be in [0, 1)")
         if self.reliability_prior_scale < 0.0:
@@ -59,8 +64,8 @@ class _GEGLU(nn.Module):
         return self.out_proj(self.dropout(value * F.gelu(gate)))
 
 
-class _TriStreamFusionBlock(nn.Module):
-    """One full interaction stage over three preserved context streams."""
+class _MultiStreamFusionBlock(nn.Module):
+    """One full interaction stage over all instantiated context streams."""
 
     def __init__(self, config: CrossContextFusionConfig) -> None:
         super().__init__()
@@ -143,6 +148,9 @@ class _TriStreamFusionBlock(nn.Module):
         query: torch.Tensor,
         reliability: torch.Tensor,
     ) -> tuple[list[torch.Tensor], torch.Tensor]:
+        if len(streams) != self.num_views or len(masks) != self.num_views:
+            raise ValueError("fusion block view count does not match checkpoint topology")
+
         refined: list[torch.Tensor] = []
         for view_id in range(self.num_views):
             normed = self.self_norm[view_id](streams[view_id])
@@ -204,13 +212,17 @@ class _TriStreamFusionBlock(nn.Module):
 
 
 class CrossContextFusion(nn.Module):
-    """Frontier tri-stream fusion for semantic, typed-state, and evidence context.
+    """Frontier multi-stream fusion for heterogeneous personality context.
 
-    The three streams remain distinct through every stage. Each stream first
-    self-refines, then queries the other two streams through gated cross-attention.
-    Reliability and the current semantic query influence the exchange gates.
-    The output preserves each contextualized stream for the later adaptive
-    multi-view latent pool while also exposing a fused public N0 state.
+    N0 instantiates semantic, typed-state, and evidence streams. The same
+    architecture is view-extensible for later explicit identity-concept and
+    governed residual-concept streams. A checkpoint migration expands view
+    embeddings/modules; no fixed global maximum is asserted.
+
+    Every stream remains distinct through each stage. Each stream self-refines,
+    then queries all other instantiated streams through gated cross-attention.
+    Reliability and the current semantic query influence exchange gates. The
+    outputs preserve each contextualized stream for adaptive multi-view pooling.
     """
 
     SEMANTIC_VIEW = 0
@@ -235,7 +247,7 @@ class CrossContextFusion(nn.Module):
         nn.init.normal_(self.summary_tokens, mean=0.0, std=d ** -0.5)
         self.input_norm = nn.ModuleList(nn.LayerNorm(d) for _ in range(self.config.num_views))
         self.blocks = nn.ModuleList(
-            _TriStreamFusionBlock(self.config) for _ in range(self.config.num_layers)
+            _MultiStreamFusionBlock(self.config) for _ in range(self.config.num_layers)
         )
         self.output_norm = nn.ModuleList(nn.LayerNorm(d) for _ in range(self.config.num_views))
 
@@ -249,7 +261,10 @@ class CrossContextFusion(nn.Module):
         self.token_output_projection = nn.Linear(d, self.config.semantic_size, bias=False)
         self.summary_output_projection = nn.Linear(d, self.config.semantic_size, bias=False)
         self.fused_output_projection = nn.Linear(d, self.config.semantic_size, bias=False)
-        self.token_residual_scale = nn.Parameter(torch.full((self.config.num_views,), 0.10))
+        # Parent token views are exact at initialization. The learned residual
+        # path opens only through gradient rather than perturbing ratified input
+        # representations before fusion has learned anything.
+        self.token_residual_scale = nn.Parameter(torch.zeros(self.config.num_views))
 
     def _validate_view(
         self,
@@ -269,40 +284,35 @@ class CrossContextFusion(nn.Module):
         if not torch.isfinite(tokens).all():
             raise ValueError(f"{name}_tokens contains non-finite values")
 
-    def _validate_inputs(
+    def _validate_view_batch(
         self,
         *,
-        semantic_tokens: torch.Tensor,
-        semantic_valid_mask: torch.Tensor,
-        structured_tokens: torch.Tensor,
-        structured_valid_mask: torch.Tensor,
-        evidence_tokens: torch.Tensor,
-        evidence_valid_mask: torch.Tensor,
+        view_tokens: list[torch.Tensor],
+        view_valid_masks: list[torch.Tensor],
         query_semantic: torch.Tensor,
         view_reliability: torch.Tensor,
     ) -> tuple[int, torch.Tensor]:
+        if len(view_tokens) != self.config.num_views or len(view_valid_masks) != self.config.num_views:
+            raise ValueError(
+                "supplied view count does not match this checkpoint; migrate/expand the checkpoint "
+                "when adding new view types"
+            )
         if query_semantic.ndim != 2 or query_semantic.shape[1] != self.config.semantic_size:
             raise ValueError("query_semantic must have shape [batch, semantic_size]")
         batch = query_semantic.shape[0]
         if not torch.isfinite(query_semantic).all():
             raise ValueError("query_semantic contains non-finite values")
-        self._validate_view("semantic", semantic_tokens, semantic_valid_mask, batch)
-        self._validate_view("structured", structured_tokens, structured_valid_mask, batch)
-        self._validate_view("evidence", evidence_tokens, evidence_valid_mask, batch)
+        for view_id, (tokens, mask) in enumerate(zip(view_tokens, view_valid_masks)):
+            self._validate_view(f"view_{view_id}", tokens, mask, batch)
         if view_reliability.shape != (batch, self.config.num_views):
-            raise ValueError("view_reliability must have shape [batch, 3]")
+            raise ValueError(
+                f"view_reliability must have shape [batch, {self.config.num_views}]"
+            )
         if not torch.isfinite(view_reliability).all():
             raise ValueError("view_reliability contains non-finite values")
         if (view_reliability < 0).any() or (view_reliability > 1).any():
             raise ValueError("view_reliability must be in [0, 1]")
-        available = torch.stack(
-            [
-                semantic_valid_mask.any(dim=1),
-                structured_valid_mask.any(dim=1),
-                evidence_valid_mask.any(dim=1),
-            ],
-            dim=1,
-        )
+        available = torch.stack([mask.any(dim=1) for mask in view_valid_masks], dim=1)
         if not torch.all(available.any(dim=1)):
             raise ValueError("every example must provide at least one fusion view")
         return batch, available
@@ -329,35 +339,31 @@ class CrossContextFusion(nn.Module):
         stream = torch.where(mask.unsqueeze(-1), stream, torch.zeros_like(stream))
         return stream, mask
 
-    def forward(
+    def forward_views(
         self,
         *,
-        semantic_tokens: torch.Tensor,
-        semantic_valid_mask: torch.Tensor,
-        structured_tokens: torch.Tensor,
-        structured_valid_mask: torch.Tensor,
-        evidence_tokens: torch.Tensor,
-        evidence_valid_mask: torch.Tensor,
+        view_tokens: list[torch.Tensor],
+        view_valid_masks: list[torch.Tensor],
         query_semantic: torch.Tensor,
         view_reliability: torch.Tensor,
-    ) -> dict[str, torch.Tensor]:
-        batch, available = self._validate_inputs(
-            semantic_tokens=semantic_tokens,
-            semantic_valid_mask=semantic_valid_mask,
-            structured_tokens=structured_tokens,
-            structured_valid_mask=structured_valid_mask,
-            evidence_tokens=evidence_tokens,
-            evidence_valid_mask=evidence_valid_mask,
+    ) -> dict[str, Any]:
+        """Fuse every view instantiated by this checkpoint.
+
+        There is no architecture-level maximum view count. ``num_views`` is a
+        checkpoint tensor shape. New view families are added by explicit state
+        migration/initialization so existing learned views retain their lineage.
+        """
+        batch, available = self._validate_view_batch(
+            view_tokens=view_tokens,
+            view_valid_masks=view_valid_masks,
             query_semantic=query_semantic,
             view_reliability=view_reliability,
         )
-        source_tokens = [semantic_tokens, structured_tokens, evidence_tokens]
-        source_masks = [semantic_valid_mask, structured_valid_mask, evidence_valid_mask]
         query = self.query_projection(query_semantic)
 
         streams: list[torch.Tensor] = []
         masks: list[torch.Tensor] = []
-        for view_id, (tokens, mask) in enumerate(zip(source_tokens, source_masks)):
+        for view_id, (tokens, mask) in enumerate(zip(view_tokens, view_valid_masks)):
             stream, stream_mask = self._prepare_stream(
                 tokens,
                 mask,
@@ -396,7 +402,7 @@ class CrossContextFusion(nn.Module):
         fused = torch.einsum("bv,bvd->bd", view_weights, summaries)
 
         contextualized_tokens: list[torch.Tensor] = []
-        for view_id, (stream, source, valid) in enumerate(zip(streams, source_tokens, source_masks)):
+        for view_id, (stream, source, valid) in enumerate(zip(streams, view_tokens, view_valid_masks)):
             delta = self.token_output_projection(stream[:, 1:])
             scale = torch.tanh(self.token_residual_scale[view_id])
             output = source + scale * delta
@@ -408,9 +414,7 @@ class CrossContextFusion(nn.Module):
         cross_view_cosine = torch.einsum("bvd,bwd->bvw", normalized, normalized)
 
         return {
-            "semantic_tokens": contextualized_tokens[self.SEMANTIC_VIEW],
-            "structured_tokens": contextualized_tokens[self.STRUCTURED_VIEW],
-            "evidence_tokens": contextualized_tokens[self.EVIDENCE_VIEW],
+            "contextualized_view_tokens": contextualized_tokens,
             "view_summaries": summary_output,
             "view_weights": view_weights,
             "fused_state": self.fused_output_projection(fused),
@@ -418,6 +422,40 @@ class CrossContextFusion(nn.Module):
             "view_available": available,
             "cross_gate_means": torch.stack(block_gate_means, dim=1),
         }
+
+    def forward(
+        self,
+        *,
+        semantic_tokens: torch.Tensor,
+        semantic_valid_mask: torch.Tensor,
+        structured_tokens: torch.Tensor,
+        structured_valid_mask: torch.Tensor,
+        evidence_tokens: torch.Tensor,
+        evidence_valid_mask: torch.Tensor,
+        query_semantic: torch.Tensor,
+        view_reliability: torch.Tensor,
+    ) -> dict[str, Any]:
+        """Compatibility N0 wrapper for the current three public views."""
+        if self.config.num_views != 3:
+            raise ValueError(
+                "named semantic/structured/evidence forward is for the three-view N0 checkpoint; "
+                "use forward_views for an expanded checkpoint"
+            )
+        result = self.forward_views(
+            view_tokens=[semantic_tokens, structured_tokens, evidence_tokens],
+            view_valid_masks=[
+                semantic_valid_mask,
+                structured_valid_mask,
+                evidence_valid_mask,
+            ],
+            query_semantic=query_semantic,
+            view_reliability=view_reliability,
+        )
+        contextualized = result["contextualized_view_tokens"]
+        result["semantic_tokens"] = contextualized[self.SEMANTIC_VIEW]
+        result["structured_tokens"] = contextualized[self.STRUCTURED_VIEW]
+        result["evidence_tokens"] = contextualized[self.EVIDENCE_VIEW]
+        return result
 
     def parameter_report(self) -> dict[str, Any]:
         total = sum(parameter.numel() for parameter in self.parameters())
@@ -430,8 +468,10 @@ class CrossContextFusion(nn.Module):
             "fusion_stages": self.config.num_layers,
             "heads": self.config.num_heads,
             "feedforward_size": self.config.feedforward_size,
-            "input_views": 3,
-            "fusion_family": "tri_stream_self_refinement_plus_gated_bidirectional_cross_attention",
+            "instantiated_view_count": self.config.num_views,
+            "view_count_ceiling": None,
+            "view_count_role": "migratable_checkpoint_topology_not_architecture_ceiling",
+            "fusion_family": "multi_stream_self_refinement_plus_gated_bidirectional_cross_attention",
             "full_scale_n0_candidate": True,
             "reduced_pilot_model": False,
             "view_identity_explicit": True,
@@ -440,6 +480,7 @@ class CrossContextFusion(nn.Module):
             "gated_cross_view_exchange": True,
             "bidirectional_cross_attention": True,
             "preserves_contextualized_views": True,
+            "parent_token_views_exact_at_initialization": True,
             "position_embeddings_added": 0,
             "private_identity_parameters": 0,
             "hard_parameter_ceiling": None,
