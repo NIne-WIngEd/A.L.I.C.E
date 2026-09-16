@@ -9,6 +9,7 @@ CONTRACT="$VALUE_ROOT/contrast_contract.jsonl"
 MANIFEST="$VALUE_ROOT/contrast_manifest.json"
 VALUE_RESULT="$VALUE_ROOT/value_contrast_diagnostic.json"
 DIAGNOSTIC="$ROOT/scripts/eipm/n0/diagnose_n0_v02_parent_value_path_v0_1.py"
+TEST="$ROOT/tests/eipm/test_n0_parent_value_path_diagnostic_v0_1.py"
 OUT_ROOT="$WORKDIR/parent-value-path-diagnostic-v0.1"
 PREP="$OUT_ROOT/preparation_receipt.json"
 OUTPUT="$OUT_ROOT/result.json"
@@ -27,7 +28,7 @@ export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=true
 
-for required in "$CHALLENGE" "$CONTRACT" "$MANIFEST" "$VALUE_RESULT" "$DIAGNOSTIC" "$PREP" "$SEMANTIC_CONFIG" "$SEMANTIC" "$TOKENIZER_DIR/tokenizer.json" "$STRUCTURED_CONFIG" "$STRUCTURED" "$EVIDENCE_ADAPTER" "$EVIDENCE_GRAPH"; do
+for required in "$CHALLENGE" "$CONTRACT" "$MANIFEST" "$VALUE_RESULT" "$DIAGNOSTIC" "$TEST" "$PREP" "$SEMANTIC_CONFIG" "$SEMANTIC" "$TOKENIZER_DIR/tokenizer.json" "$STRUCTURED_CONFIG" "$STRUCTURED" "$EVIDENCE_ADAPTER" "$EVIDENCE_GRAPH"; do
   if [[ ! -f "$required" ]]; then
     echo "Missing parent value-path diagnostic artifact: $required" >&2
     exit 2
@@ -39,10 +40,10 @@ if [[ -e "$OUTPUT" ]]; then
   exit 3
 fi
 
-python - "$ROOT" "$PREP" "$CHALLENGE" "$CONTRACT" "$MANIFEST" "$VALUE_RESULT" "$DIAGNOSTIC" "$SEMANTIC" "$STRUCTURED" "$EVIDENCE_ADAPTER" "$EVIDENCE_GRAPH" <<'PY'
+python - "$ROOT" "$PREP" "$CHALLENGE" "$CONTRACT" "$MANIFEST" "$VALUE_RESULT" "$DIAGNOSTIC" "$TEST" "$SEMANTIC" "$STRUCTURED" "$EVIDENCE_ADAPTER" "$EVIDENCE_GRAPH" <<'PY'
 import hashlib,json,subprocess,sys
 from pathlib import Path
-root,prep_path,challenge,contract,manifest,value_result,diagnostic,semantic,structured,adapter,graph=map(Path,sys.argv[1:])
+root,prep_path,challenge,contract,manifest,value_result,diagnostic,test_file,semantic,structured,adapter,graph=map(Path,sys.argv[1:])
 def sha(path):
     h=hashlib.sha256()
     with path.open('rb') as f:
@@ -50,19 +51,23 @@ def sha(path):
     return h.hexdigest()
 prep=json.loads(prep_path.read_text(encoding='utf-8'))
 head=subprocess.check_output(['git','rev-parse','HEAD'],text=True,cwd=root).strip()
+if prep.get('schema')!='alice.eipm.n0.v02-parent-value-path-diagnostic-preparation.v0.1.1': raise SystemExit('parent value-path preparation schema drift')
 if prep.get('status')!='PASS_PARENT_VALUE_PATH_DIAGNOSTIC_READY_FOR_GPU': raise SystemExit('parent value-path preparation missing')
 if prep.get('git_revision')!=head: raise SystemExit(f"parent value-path prep stale: prep={prep.get('git_revision')} current={head}")
 for path,key in [
  (challenge,'challenge_sha256'),(contract,'contrast_contract_sha256'),(manifest,'contrast_manifest_sha256'),
- (value_result,'value_contrast_result_sha256'),(diagnostic,'diagnostic_sha256'),
+ (value_result,'value_contrast_result_sha256'),(diagnostic,'diagnostic_sha256'),(test_file,'test_sha256'),
  (semantic,'semantic_checkpoint_sha256'),(structured,'structured_checkpoint_sha256'),
  (adapter,'evidence_adapter_sha256'),(graph,'evidence_graph_sha256')]:
     if prep.get(key)!=sha(path): raise SystemExit(f'parent value-path artifact drift: {key}')
+if prep.get('prior_cpu_gate_failure_model_evidence') is not False or prep.get('prior_cpu_gate_failure_gradient_performed') is not False: raise SystemExit('prior CPU failure lineage drift')
+if prep.get('test_import_contract')!='scripts_eipm_n0_is_pythonpath_root_and_diagnostic_is_top_level_script_module': raise SystemExit('parent diagnostic import contract drift')
 if prep.get('canonical_parent_path_required') is not True or prep.get('canonical_parent_trace_parity_required') is not True: raise SystemExit('parent-path parity contract drift')
 if prep.get('graph_field_weight_and_relation_bias_measured') is not True: raise SystemExit('graph selection instrumentation missing')
 if prep.get('gradient_performed') is not False or prep.get('ratification_effect') is not False or prep.get('scale_authorized') is not False: raise SystemExit('parent diagnostic governance drift')
-print('parent_value_path_v01_same_revision_gate=true')
+print('parent_value_path_v011_same_revision_gate=true')
 print(f'git_revision={head}')
+print('prior_cpu_gate_failure_model_evidence=false')
 print('canonical_parent_trace_parity_required=true')
 print('graph_field_weight_and_relation_bias_measured=true')
 print('gradient_performed=false')
