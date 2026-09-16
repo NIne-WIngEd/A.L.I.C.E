@@ -1,6 +1,6 @@
 {
   "schema": "alice.eipm.n0.stack-state.v0.2",
-  "status": "FUSION_FROZEN_CHALLENGE_FAILED_SOURCE_ANCHORED_FULL_SCALE_REPAIR_READY",
+  "status": "SOURCE_ANCHORED_FUSION_REPAIR_PASSED_CONFIRMATORY_CHALLENGE_V0_2_REQUIRED",
   "authoritative_for_current_stage": true,
   "historical_semantic_training_manifest": "configs/eipm/n0/alice_n0_semantic_v0.2.json",
   "capability_limit_audit": {
@@ -92,58 +92,41 @@
     "challenge_sha256": "3dd254b24b73054552f1530248cfaab3d942c3abb129f5a9cd5f6a7b1f0611bb",
     "rows": 96,
     "families": 12,
-    "thresholds_frozen_before_results": true,
-    "training_use_forbidden": true,
-    "gradient_performed": false,
-    "private_identity_gradient": false,
     "status": "FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION",
-    "ratification_candidate": null,
+    "retired_for_future_ratification_after_informing_repair": true,
+    "may_inform_failure_categories": true,
+    "may_supply_training_rows": false,
+    "may_supply_training_templates": false,
     "step240": {
-      "decisive_view_accuracy": 1.0,
       "family_macro_routing_similarity": 0.9227234901239475,
       "family_min_routing_similarity": 0.8476811423897743,
       "fused_semantic_cosine": 0.9443701598793268,
       "contextualized_view_preservation_cosine": 0.8126243089297505,
       "disagreement_geometry_mae": 0.04909189363631109,
-      "missing_view_max_weight": 0.0,
-      "worst_family": "evidence_corrects_stale_consensus"
-    },
-    "failed_requirements": {
-      "family_min_routing_similarity": {
-        "required": 0.85,
-        "observed": 0.8476811423897743
-      },
-      "view_preservation_cosine": {
-        "required": 0.88,
-        "observed": 0.8126243089297505
-      }
-    },
-    "diagnostic_conclusion": "routing_generalization_is_close_but_not_sufficient_and_the_original_interface_conflated_contextualized_view_state_with_lossless_parent_preservation",
-    "retired_for_future_ratification_after_informing_repair": true,
-    "may_inform_failure_categories": true,
-    "may_supply_training_rows": false,
-    "may_supply_training_templates": false
+      "missing_view_max_weight": 0.0
+    }
   },
   "fusion_repair": {
+    "job_id": 575621,
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:02:06",
     "architecture": "multi_stream_self_refinement_plus_gated_bidirectional_cross_attention_with_explicit_source_anchors",
     "implementation": "src/alice_personality/n0/cross_context_fusion_anchored.py",
     "objective": "src/alice_personality/n0/cross_context_fusion_repair_objectives.py",
     "training_config": "configs/eipm/n0/n0_v02_cross_context_fusion_repair_training_v0.2.json",
     "curriculum_builder": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_repair_curriculum_v0_3.py",
     "trainer": "scripts/eipm/n0/train_n0_v02_cross_context_fusion_repair_full_scale.py",
-    "prepare_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_repair_prepare.sh",
-    "training_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_repair_full_scale.sh",
-    "magnolia_launcher": "scripts/eipm/n0/magnolia_p100_n0_v02_cross_context_fusion_repair_full_scale.sbatch",
     "parent_fusion_step": 240,
     "parent_fusion_sha256": "9b2a7a120539e9c6a254ea5a47d30a0c9c827d76c18dc46822ee171303bb8d14",
+    "parameters": 116981764,
     "full_scale_model": true,
     "reduced_capability_pilot": false,
     "generic_fallback_architecture": false,
-    "existing_parameter_tensors_changed_by_anchor_migration": false,
     "source_anchor_parameter_cost": 0,
     "exact_source_summary_channel": true,
     "exact_source_token_channel": true,
-    "contextualized_channel_remains_unconstrained_by_anchor_capacity": true,
+    "contextualized_channel_remains_free_to_diverge_when_capability_requires": true,
     "repair_curriculum_base_rows": 320,
     "repair_curriculum_new_rows": 192,
     "repair_curriculum_total_rows": 512,
@@ -153,8 +136,52 @@
     "frozen_challenge_entities_reused": false,
     "hard_parameter_ceiling": null,
     "view_count_ceiling": null,
-    "status": "READY_FOR_SAME_REVISION_CPU_PREP_THEN_GPU_REPAIR",
-    "required_after_success": "new_untouched_fusion_challenge_v0.2_before_ratification"
+    "status": "PASS_FULL_SCALE_REPAIR_READY_FOR_NEW_UNTOUCHED_CHALLENGE",
+    "provisional_winner_repair_step": 240,
+    "provisional_winner_total_fusion_update_count": 480,
+    "provisional_winner_sha256": "4d51494beb788f74ddc03590da05ea00f0e36574294649c2cd5d438f9472e577",
+    "provisional_winner_metrics": {
+      "family_macro_routing_similarity": 0.9885677920171508,
+      "family_min_routing_similarity": 0.9807335833708445,
+      "decisive_view_accuracy": 1.0,
+      "fused_semantic_cosine": 0.9693831051699817,
+      "contextualized_source_cosine": 0.9529840919408905,
+      "disagreement_geometry_mae": 0.023420968729624292,
+      "missing_view_max_weight": 0.0,
+      "source_anchor_summary_max_abs_error": 0.0,
+      "source_anchor_token_max_abs_error": 0.0
+    },
+    "ratified": false,
+    "required_after_success": "single_candidate_new_untouched_fusion_challenge_v0.2_before_ratification"
+  },
+  "fusion_confirmatory_challenge_v0_2": {
+    "spec": "configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.2.json",
+    "builder": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py",
+    "prepare_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_frozen_challenge_v0_2_prepare.sh",
+    "evaluator": "scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py",
+    "evaluation_runner": "scripts/eipm/n0/run_n0_v02_cross_context_fusion_frozen_challenge_v0_2_eval.sh",
+    "magnolia_launcher": "scripts/eipm/n0/magnolia_p100_n0_v02_cross_context_fusion_frozen_challenge_v0_2.sbatch",
+    "rows": 136,
+    "families": 17,
+    "candidate_preselected_before_challenge": true,
+    "candidate_repair_step": 240,
+    "candidate_fusion_sha256": "4d51494beb788f74ddc03590da05ea00f0e36574294649c2cd5d438f9472e577",
+    "checkpoint_selection_on_challenge_forbidden": true,
+    "thresholds_frozen_before_results": true,
+    "training_use_forbidden": true,
+    "private_identity_gradient": false,
+    "ratification_gate": {
+      "family_min_routing_similarity_min": 0.90,
+      "family_macro_routing_similarity_min": 0.94,
+      "decisive_view_accuracy_min": 0.95,
+      "fused_semantic_cosine_min": 0.90,
+      "source_anchor_summary_max_abs_error_max": 0.0,
+      "source_anchor_token_max_abs_error_max": 0.0,
+      "disagreement_geometry_mae_max": 0.12,
+      "missing_view_max_weight_max": 0.000001
+    },
+    "contextualized_source_cosine_is_report_only": true,
+    "status": "READY_TO_FREEZE_BEFORE_ANY_RESULT"
   },
   "future_identity_architecture_guardrails": {
     "explicit_identity_concept_bank_open_ontology": true,
@@ -165,11 +192,12 @@
     "raw_source_spans_remain_available_alongside_structure": true
   },
   "current_stage": {
-    "name": "cross_context_fusion_source_anchored_failure_driven_repair",
-    "gradient_authorized": "conditional_on_same_revision_repair_preparation_pass",
+    "name": "cross_context_fusion_single_candidate_confirmatory_challenge_v0.2",
+    "gradient_authorized": false,
+    "challenge_training_use_authorized": false,
     "private_identity_gradient": false,
     "production_promotion_authorized": false,
-    "next_action": "run_source_anchored_repair_cpu_gate_then_train_full_scale_repair_from_step240_on_independent_public_repair_curriculum"
+    "next_action": "freeze_confirmatory_v0.2_on_exact_revision_then_evaluate_only_preselected_repair_step240_once_on_p100"
   },
   "private_identity_data": false,
   "private_identity_gradient": false,
