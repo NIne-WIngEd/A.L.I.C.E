@@ -1,0 +1,67 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.2",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.1.json",
+  "status": "COMPETITIVE_LATENT_POOL_V01_CHALLENGE_FAILED_POST_FUSION_INTERVENTION_AUDITED_V02_PREFUSION_CONFIRMATORY_PENDING",
+  "candidate": {
+    "step": 360,
+    "sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4",
+    "parameters": 29557764,
+    "candidate_preselected_on_training_dev": true,
+    "weights_changed_after_v0_1_challenge": false,
+    "ratified": false
+  },
+  "stack_scale": {
+    "semantic_parameters": 136594435,
+    "structured_parameters": 1656064,
+    "evidence_adapter_parameters": 16002561,
+    "evidence_graph_parameters": 6664963,
+    "fusion_parameters": 116981764,
+    "latent_pool_parameters": 29557764,
+    "total_parameters_through_latent_pool": 307457551,
+    "parameter_count_role": "descriptive_checkpoint_fact_not_capacity_ceiling",
+    "hard_parameter_ceiling": null,
+    "slot_count_ceiling": null,
+    "view_count_ceiling": null
+  },
+  "scale_decision": {
+    "scale_now": false,
+    "reason": "no_valid_measurement_currently_demonstrates_capacity_bottleneck",
+    "audit": "docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md",
+    "scale_when_measured_capability_or_fidelity_requires_it": true
+  },
+  "historical_v0_1_challenge": {
+    "status": "FAIL_PRESELECTED_CANDIDATE_NOT_ELIGIBLE_FOR_LATENT_POOL_RATIFICATION",
+    "immutable_historical_result": true,
+    "reclassified_as_pass": false,
+    "candidate_weights_changed_after_result": false,
+    "all_non_counterfactual_gates_passed": true,
+    "only_failed_gate": "counterfactual_family_min_drop",
+    "failed_family": "missing_structured_evidence",
+    "post_result_audit_finding": "counterfactual_ablation_occurred_after_cross_context_fusion_and_could_not_remove_information_already_transferred_into_other_contextualized_streams",
+    "challenge_rows_reused_for_v0_2": false,
+    "gradient_authorized_from_v0_1_failure": false
+  },
+  "confirmatory_v0_2": {
+    "spec": "configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0.2.json",
+    "builder": "scripts/eipm/n0/build_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py",
+    "evaluator": "scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py",
+    "prepare_runner": "scripts/eipm/n0/run_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2_prepare.sh",
+    "run_runner": "scripts/eipm/n0/run_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.sh",
+    "magnolia_launcher": "scripts/eipm/n0/magnolia_p100_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.sbatch",
+    "rows": 160,
+    "families": 20,
+    "counterfactual_required_rows": 32,
+    "counterfactual_intervention_point": "before_parent_cache_and_before_cross_context_fusion",
+    "rebuild_parent_and_fusion_representations": true,
+    "candidate_step": 360,
+    "candidate_sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4",
+    "checkpoint_selection_on_challenge_forbidden": true,
+    "training_use": "FORBIDDEN",
+    "gradient_performed": false
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
