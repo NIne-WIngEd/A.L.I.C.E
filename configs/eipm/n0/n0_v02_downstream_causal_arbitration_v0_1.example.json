@@ -1,0 +1,68 @@
+{
+  "protocol_version": "n0_downstream_causal_arbitration_v0.1",
+  "experiment_id": "REPLACE_WITH_RUN_ID",
+  "source_revision": "REPLACE_WITH_FROZEN_SOURCE_REVISION",
+  "invariants": {
+    "diagnostic_only": true,
+    "training_enabled": false,
+    "ratifies_repair": false,
+    "scale_authorized": false,
+    "promotion_authorized": false
+  },
+  "common_inputs": {
+    "evaluator_script": {
+      "path": "REPLACE_WITH_EVALUATOR_PATH",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    },
+    "latent_checkpoint": {
+      "path": "REPLACE_WITH_FROZEN_LATENT_CHECKPOINT_PATH",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    },
+    "evaluator_config": {
+      "path": "REPLACE_WITH_FROZEN_EVALUATOR_CONFIG_PATH",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    },
+    "evaluation_set": {
+      "path": "REPLACE_WITH_FROZEN_EVALUATION_SET_PATH",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    }
+  },
+  "arms": {
+    "canonical": {
+      "label": "canonical_graph",
+      "graph": {
+        "path": "REPLACE_WITH_CANONICAL_GRAPH_PATH",
+        "sha256": "REPLACE_WITH_64_HEX_SHA256"
+      }
+    },
+    "candidate": {
+      "label": "relation_endpoint_repair_step_00000200",
+      "graph": {
+        "path": "REPLACE_WITH_REPAIRED_GRAPH_PATH",
+        "sha256": "REPLACE_WITH_64_HEX_SHA256"
+      }
+    }
+  },
+  "evaluator_argv": [
+    "python",
+    "{evaluator_script}",
+    "--graph",
+    "{graph_path}",
+    "--latent-checkpoint",
+    "{latent_checkpoint}",
+    "--config",
+    "{evaluator_config}",
+    "--evaluation-set",
+    "{evaluation_set}",
+    "--output",
+    "{output_path}"
+  ],
+  "metrics": [
+    {
+      "path": "REPLACE_WITH_PREDECLARED_METRIC_PATH",
+      "direction": "higher",
+      "atol": 0.0,
+      "rtol": 0.0
+    }
+  ]
+}
