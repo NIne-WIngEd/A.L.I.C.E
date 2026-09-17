@@ -1,0 +1,73 @@
+{
+  "protocol_version": "n0_downstream_full_stack_graph_evaluator_v0.1",
+  "source_revision": "REPLACE_WITH_FROZEN_40_HEX_COMMIT",
+  "invariants": {
+    "diagnostic_only": true,
+    "training_enabled": false,
+    "ratifies_repair": false,
+    "promotion_authorized": false,
+    "scale_authorized": false,
+    "graph_checkpoint_is_only_arm_variant": true,
+    "proxy_graph_transform_used": false
+  },
+  "external_inputs": {
+    "latent_checkpoint": {
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    },
+    "evaluation_set": {
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    }
+  },
+  "artifacts": {
+    "latent_config": {
+      "path": "REPLACE_WITH_LATENT_CONFIG_PATH",
+      "artifact_type": "file",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    },
+    "semantic_config": {
+      "path": "REPLACE_WITH_SEMANTIC_CONFIG_PATH",
+      "artifact_type": "file",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    },
+    "semantic_checkpoint": {
+      "path": "REPLACE_WITH_SEMANTIC_CHECKPOINT_PATH",
+      "artifact_type": "directory_tree",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    },
+    "tokenizer_dir": {
+      "path": "REPLACE_WITH_TOKENIZER_DIR_PATH",
+      "artifact_type": "directory_tree",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    },
+    "structured_config": {
+      "path": "REPLACE_WITH_STRUCTURED_CONFIG_PATH",
+      "artifact_type": "file",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    },
+    "structured_checkpoint": {
+      "path": "REPLACE_WITH_STRUCTURED_CHECKPOINT_PATH",
+      "artifact_type": "directory_tree",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    },
+    "evidence_adapter": {
+      "path": "REPLACE_WITH_EVIDENCE_ADAPTER_PATH",
+      "artifact_type": "file",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    },
+    "fusion_checkpoint": {
+      "path": "REPLACE_WITH_FUSION_CHECKPOINT_PATH",
+      "artifact_type": "directory_tree",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    },
+    "fusion_config": {
+      "path": "REPLACE_WITH_FUSION_CONFIG_PATH",
+      "artifact_type": "file",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    },
+    "fusion_ratification": {
+      "path": "REPLACE_WITH_FUSION_RATIFICATION_PATH",
+      "artifact_type": "file",
+      "sha256": "REPLACE_WITH_64_HEX_SHA256"
+    }
+  }
+}
