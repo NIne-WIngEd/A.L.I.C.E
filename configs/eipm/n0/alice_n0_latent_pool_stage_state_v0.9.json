@@ -1,0 +1,141 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.9",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.8.json",
+  "status": "SELECTOR_PRIOR_HEAD_REPAIR_FAILED_ENDPOINT_ROLE_DEFECT_LOCALIZED_ENDPOINT_READ_REPAIR_IMPLEMENTED_PENDING_PREP_AND_GPU",
+  "latent_candidate": {
+    "step": 360,
+    "sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4",
+    "weights_changed": false,
+    "ratified": false
+  },
+  "selector_repair_v0_1_result": {
+    "runtime_path": "rayan-n0/n0-v02/evidence-selector-repair-v0.1/training/result.json",
+    "sha256": "80968a34a9bb7dbf3ffa549b1410f45001451700bbdf6404ad8ec667f89288c6",
+    "status": "FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX",
+    "heldout_gate_pass": false,
+    "heldout_pair_accuracy": 0.3958333333333333,
+    "heldout_row_accuracy": 0.4895833333333333,
+    "heldout_family_min_pair_accuracy": 0.0,
+    "source_role_family_pair_accuracy": {
+      "corrects_source": 1.0,
+      "supersedes_source": 1.0,
+      "temporal_successor_source": 1.0,
+      "mixed_correct_support_source": 0.16666666666666666
+    },
+    "target_role_family_pair_accuracy": {
+      "corrects_target": 0.0,
+      "supersedes_target": 0.0,
+      "supports_target": 0.0,
+      "conflict_support_target": 0.0
+    },
+    "heldout_target_role_graph_margins": {
+      "corrects_target": -0.9999297062555949,
+      "supersedes_target": -0.9861237704753876,
+      "supports_target": -0.7501773734887441,
+      "conflict_support_target": -0.7469794054826101
+    },
+    "heldout_source_role_graph_margins": {
+      "corrects_source": 0.8262119094530741,
+      "supersedes_source": 0.8949342370033264,
+      "temporal_successor_source": 0.9318523903687795
+    },
+    "baseline_replay_macro_target_support_mass": 0.9831965565681458,
+    "baseline_replay_min_target_support_mass": 0.934688945611318,
+    "selected_failed_checkpoint": "step-00000160",
+    "selected_failed_adapter_sha256": "b5062d121dfae8ab925faed7376185773d1265ffa5c3a83dfe63d72a291b126c",
+    "selected_failed_replay_macro_target_support_mass": 0.9570393651723862,
+    "selected_failed_replay_min_target_support_mass": 0.7637394666671753,
+    "failed_adapter_promoted": false,
+    "failed_adapter_used_as_next_parent": false,
+    "interpretation": "prior_head_only_changes_cannot_resolve_relation_endpoint_role_selection; target_endpoint_queries_remain_systematically_inverted_even_when_adapter_candidate_mass_improves, while source_endpoint_queries remain strong"
+  },
+  "causal_localization": {
+    "primary_defect": "query_conditioned_relation_endpoint_role_read",
+    "evidence_adapter_starvation_is_sufficient_explanation": false,
+    "latent_capacity_implicated": false,
+    "semantic_parent_reopened": false,
+    "structured_parent_reopened": false,
+    "reason": "paired examples keep non-relation adapter inputs identical while target identity flips only with relation orientation; source-role queries succeed and target-role queries fail, localizing the next repair to relation endpoint read rather than latent capacity"
+  },
+  "relation_endpoint_repair_v0_2": {
+    "builder": "scripts/eipm/n0/build_n0_v02_relation_endpoint_repair_curriculum_v0_2.py",
+    "trainer": "scripts/eipm/n0/train_n0_v02_relation_endpoint_repair_v0_2.py",
+    "runner": "scripts/eipm/n0/run_n0_v02_relation_endpoint_repair_v0_2.sh",
+    "magnolia_job": "scripts/eipm/n0/magnolia_p100_n0_v02_relation_endpoint_repair_v0_2.sbatch",
+    "parent_adapter": "evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080/evidence_view_adapter.safetensors",
+    "parent_graph": "relation-repair-v0.1/step-00000080/evidence_graph_dual_endpoint.safetensors",
+    "failed_selector_repair_adapter_used_as_parent": false,
+    "trainable_scope": [
+      "source_relation_pool_mlp",
+      "directed_relation_pool_mlp",
+      "pool_relation_embedding",
+      "query_projection",
+      "pool_query"
+    ],
+    "trainable_scope_description": "query_conditioned_source_target_relation_read_only",
+    "trainable_scope_is_permanent_architecture_limit": false,
+    "conflict_pool_frozen_for_initial_causal_repair": true,
+    "conflict_pool_freeze_is_permanent_architecture_limit": false,
+    "message_passing_frozen_for_initial_causal_repair": true,
+    "message_passing_freeze_is_permanent_architecture_limit": false,
+    "evidence_adapter_frozen": true,
+    "semantic_parent_frozen": true,
+    "structured_parent_frozen": true,
+    "fresh_public_synthetic_families": 8,
+    "pairs_per_family": 32,
+    "train_pairs_per_family": 20,
+    "dev_pairs_per_family": 6,
+    "test_pairs_per_family": 6,
+    "max_steps_operating_budget": 200,
+    "checkpoint_interval_operating_budget": 40,
+    "curriculum_and_training_counts_are_operating_budgets_not_architecture_limits": true,
+    "prior_selector_repair_v0_1_test_rows_reused": false,
+    "frozen_latent_challenge_rows_used_for_training": false,
+    "parent_value_path_diagnostic_rows_used_for_training": false,
+    "graph_pooled_cosine_is_optimization_target": false,
+    "ordinary_replay_preservation_required": true,
+    "dev_only_checkpoint_selection": true,
+    "fresh_heldout_test_evaluated_once": true,
+    "automatic_rerun_or_hotfix_authorized": false,
+    "pass_next_action": "run_existing_latent_frontier_challenge_once_with_original_adapter_and_selected_repaired_graph",
+    "fail_next_action": "inspect_the_single_heldout_endpoint_role_failure_and_choose_one_causal_next_change"
+  },
+  "scale_decision": {
+    "scale_now": false,
+    "reason": "the current failure is localized to an upstream relation endpoint read and therefore does not establish latent capacity insufficiency",
+    "hard_parameter_ceiling": null,
+    "hard_parameter_floor": null,
+    "current_width_depth_slots_relation_vocabulary_field_counts_training_steps_and_curriculum_sizes_are_not_final_capability_limits": true,
+    "do_not_hold_capacity_constant_if_future_evidence_localizes_an_expressivity_bottleneck": true,
+    "do_not_increase_capacity_without_localized_evidence": true,
+    "endpoint_read_scope_escalation": {
+      "eligible_if": "fresh heldout endpoint-role repair fails and the failure localizes to endpoint-read expressivity rather than objective/data/authority semantics",
+      "allowed_changes": "broaden graph relation-read trainable scope, alter relevant read architecture, or increase relevant capacity as required by evidence",
+      "current_relation_read_only_scope_is_not_a_ceiling": true
+    },
+    "latent_scale_escalation": {
+      "eligible_if": "a repaired parent trace verifies the correct target signal at the latent input and the latent pool still loses or cannot represent it",
+      "method": "bounded capacity study around the current operating point using fidelity, counterfactual behavior, latency, memory, and compute evidence",
+      "preset_target_parameter_count": null,
+      "preset_maximum_parameter_count": null,
+      "preset_minimum_parameter_count": null,
+      "avoid_under_scaling": "increase relevant latent width, depth, slot count, or other capacity when a localized capacity bottleneck persists",
+      "avoid_over_scaling": "stop capacity growth when additional capacity no longer improves the relevant fidelity frontier or creates unacceptable latency/resource cost"
+    }
+  },
+  "anti_loop_policy": {
+    "one_causal_change_per_failed_model_gate": true,
+    "automatic_hotfix_chain": false,
+    "rerun_identical_failed_model_experiment_without_state_change": false,
+    "infrastructure_failure_is_not_model_evidence": true,
+    "already_valid_preparation_is_idempotently_reused": true,
+    "preserve_stale_or_prior_evidence_instead_of_deleting_it_to_pass": true,
+    "validation_must_change_a_real_decision_or_stop": true,
+    "failed_selector_checkpoint_must_not_be_promoted_by_convenience": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
