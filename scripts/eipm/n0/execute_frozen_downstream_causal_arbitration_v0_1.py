@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import subprocess
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -36,6 +37,59 @@ def require_mapping(value: Any, label: str) -> Mapping[str, Any]:
     if not isinstance(value, Mapping):
         raise ExecutionFreezeError(f"{label} must be an object")
     return value
+
+
+def verify_repository_source_freeze(
+    *, repo_root: Path, expected_revision: str
+) -> dict[str, Any]:
+    """Fail closed if any tracked repository content differs from frozen HEAD.
+
+    Untracked run outputs are intentionally allowed. Every tracked source/config
+    file, including transitive Python imports not listed in the arbitration
+    manifest, must still match the immutable source revision.
+    """
+    repo_root = repo_root.resolve()
+    try:
+        head_result = subprocess.run(
+            ["git", "-C", str(repo_root), "rev-parse", "HEAD"],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+    except OSError as exc:
+        raise ExecutionFreezeError(f"unable to resolve Git HEAD: {exc}") from exc
+    if head_result.returncode != 0:
+        raise ExecutionFreezeError(
+            f"git rev-parse failed with status {head_result.returncode}"
+        )
+    observed = head_result.stdout.strip().lower()
+    if observed != expected_revision.lower():
+        raise ExecutionFreezeError(
+            f"repository HEAD drift: expected {expected_revision.lower()}, got {observed}"
+        )
+
+    try:
+        diff_result = subprocess.run(
+            ["git", "-C", str(repo_root), "diff", "--quiet", "HEAD", "--"],
+            check=False,
+        )
+    except OSError as exc:
+        raise ExecutionFreezeError(
+            f"unable to verify tracked worktree freeze: {exc}"
+        ) from exc
+    if diff_result.returncode == 1:
+        raise ExecutionFreezeError(
+            "tracked repository content changed after source freeze; refusing execution"
+        )
+    if diff_result.returncode != 0:
+        raise ExecutionFreezeError(
+            f"git diff freeze check failed with status {diff_result.returncode}"
+        )
+    return {
+        "repo_root": str(repo_root),
+        "source_revision": observed,
+        "tracked_worktree_clean": True,
+    }
 
 
 def verify_preflight_freeze(
@@ -103,6 +157,7 @@ def execute(
     preflight_receipt_path: Path,
     output_path: Path,
     observed_source_revision: str | None = None,
+    enforce_repository_source_freeze: bool = True,
 ) -> dict[str, Any]:
     arb = load_sibling(
         "downstream_causal_arbitration_execute_v02",
@@ -112,9 +167,8 @@ def execute(
         "downstream_full_stack_graph_evaluator_execute_v01",
         "downstream_full_stack_graph_evaluator_v0_1.py",
     )
-    revision = observed_source_revision or full_eval.git_revision(
-        Path(__file__).resolve().parents[3]
-    )
+    repo_root = Path(__file__).resolve().parents[3]
+    revision = observed_source_revision or full_eval.git_revision(repo_root)
     freeze = verify_preflight_freeze(
         manifest_path=manifest_path,
         preflight_receipt_path=preflight_receipt_path,
@@ -122,6 +176,11 @@ def execute(
         arb=arb,
         full_eval=full_eval,
     )
+    if enforce_repository_source_freeze:
+        verify_repository_source_freeze(
+            repo_root=repo_root,
+            expected_revision=freeze["source_revision"],
+        )
     if output_path.resolve().exists():
         raise ExecutionFreezeError(f"refusing to overwrite output: {output_path.resolve()}")
     try:
@@ -149,6 +208,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             manifest_path=args.manifest,
             preflight_receipt_path=args.preflight_receipt,
             output_path=args.output,
+            enforce_repository_source_freeze=True,
         )
     except ExecutionFreezeError as exc:
         print(f"ERROR: {exc}")

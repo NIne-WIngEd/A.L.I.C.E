@@ -3,6 +3,8 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest import mock
 
 EXEC = Path(__file__).parents[3] / "scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py"
 SPEC = importlib.util.spec_from_file_location("execute_arb_v01", EXEC)
@@ -114,6 +116,36 @@ class ExecuteFrozenArbitrationTests(unittest.TestCase):
         self.policy.write_text('{"changed":true}\n', encoding="utf-8")
         with self.assertRaises(MOD.ExecutionFreezeError):
             self.verify()
+
+    def test_repository_source_freeze_accepts_clean_tracked_tree(self):
+        clean = SimpleNamespace(returncode=0, stdout=self.revision + "\n")
+        diff = SimpleNamespace(returncode=0, stdout="")
+        with mock.patch.object(MOD.subprocess, "run", side_effect=[clean, diff]):
+            result = MOD.verify_repository_source_freeze(
+                repo_root=self.root,
+                expected_revision=self.revision,
+            )
+        self.assertTrue(result["tracked_worktree_clean"])
+        self.assertEqual(result["source_revision"], self.revision)
+
+    def test_repository_source_freeze_rejects_tracked_drift(self):
+        clean = SimpleNamespace(returncode=0, stdout=self.revision + "\n")
+        dirty = SimpleNamespace(returncode=1, stdout="")
+        with mock.patch.object(MOD.subprocess, "run", side_effect=[clean, dirty]):
+            with self.assertRaises(MOD.ExecutionFreezeError):
+                MOD.verify_repository_source_freeze(
+                    repo_root=self.root,
+                    expected_revision=self.revision,
+                )
+
+    def test_repository_source_freeze_rejects_head_drift(self):
+        changed = SimpleNamespace(returncode=0, stdout=("b" * 40) + "\n")
+        with mock.patch.object(MOD.subprocess, "run", return_value=changed):
+            with self.assertRaises(MOD.ExecutionFreezeError):
+                MOD.verify_repository_source_freeze(
+                    repo_root=self.root,
+                    expected_revision=self.revision,
+                )
 
 
 if __name__ == "__main__":
