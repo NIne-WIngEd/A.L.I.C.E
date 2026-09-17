@@ -29,3 +29,11 @@ The evaluator emits the existing latent-pool `corrected_evaluate` metrics plus t
 ## Governance
 
 This evaluator is diagnostic only. It has no optimizer, training, promotion, repair-ratification, or scaling path. A downstream `IMPROVEMENT` classification still does not ratify the endpoint repair; it only feeds the separate post-arbitration decision gate, which can authorize at most one final frozen challenge.
+
+## Preparation and one-shot execution
+
+`prepare_downstream_causal_arbitration_v0_1.py` is the only preparation path. It receives the real runtime artifact locations and a separately frozen metric policy. It computes every file and directory-tree hash, writes the inner stack manifest, writes the outer arbitration manifest, and immediately runs the v0.2 preflight. It refuses to overwrite any preparation receipt.
+
+The metric policy must cover the complete downstream metric surface with the declared directions above. It must state that it was selected before arm results and that no arm result was observed. Tolerances remain policy inputs rather than being invented by the preparation code.
+
+`execute_frozen_downstream_causal_arbitration_v0_1.py` consumes the outer manifest plus its preflight receipt. Before running either arm it rechecks the outer manifest SHA-256, source revision, common-input fingerprint, common-input bindings, arm bindings, metric list, and metric-policy hash. If any of those changed after preflight, execution stops. This makes the intended operational boundary explicit: prepare once, freeze, then execute once without pulling, switching branches, regenerating artifacts, or editing inputs in between.

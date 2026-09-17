@@ -1,0 +1,85 @@
+{
+  "protocol_version": "n0_downstream_causal_arbitration_metric_policy_v0.1",
+  "selected_before_arm_results": true,
+  "results_observed": false,
+  "metrics": [
+    {
+      "path": "metrics.best_slot_semantic_cosine",
+      "direction": "higher",
+      "atol": "REPLACE_WITH_FROZEN_ATOL",
+      "rtol": "REPLACE_WITH_FROZEN_RTOL"
+    },
+    {
+      "path": "metrics.family_min_best_slot_semantic_cosine",
+      "direction": "higher",
+      "atol": "REPLACE_WITH_FROZEN_ATOL",
+      "rtol": "REPLACE_WITH_FROZEN_RTOL"
+    },
+    {
+      "path": "metrics.pooled_semantic_cosine",
+      "direction": "higher",
+      "atol": "REPLACE_WITH_FROZEN_ATOL",
+      "rtol": "REPLACE_WITH_FROZEN_RTOL"
+    },
+    {
+      "path": "metrics.family_min_pooled_semantic_cosine",
+      "direction": "higher",
+      "atol": "REPLACE_WITH_FROZEN_ATOL",
+      "rtol": "REPLACE_WITH_FROZEN_RTOL"
+    },
+    {
+      "path": "metrics.mean_pairwise_offdiag_slot_cosine",
+      "direction": "lower",
+      "atol": "REPLACE_WITH_FROZEN_ATOL",
+      "rtol": "REPLACE_WITH_FROZEN_RTOL"
+    },
+    {
+      "path": "metrics.mean_centered_slot_effective_rank",
+      "direction": "higher",
+      "atol": "REPLACE_WITH_FROZEN_ATOL",
+      "rtol": "REPLACE_WITH_FROZEN_RTOL"
+    },
+    {
+      "path": "metrics.mean_min_available_view_best_slot_semantic_cosine",
+      "direction": "higher",
+      "atol": "REPLACE_WITH_FROZEN_ATOL",
+      "rtol": "REPLACE_WITH_FROZEN_RTOL"
+    },
+    {
+      "path": "metrics.mean_disagreement_weighted_view_specialization",
+      "direction": "higher",
+      "atol": "REPLACE_WITH_FROZEN_ATOL",
+      "rtol": "REPLACE_WITH_FROZEN_RTOL"
+    },
+    {
+      "path": "metrics.mean_min_available_view_best_slot_attention",
+      "direction": "higher",
+      "atol": "REPLACE_WITH_FROZEN_ATOL",
+      "rtol": "REPLACE_WITH_FROZEN_RTOL"
+    },
+    {
+      "path": "metrics.mean_min_channel_best_slot_attention",
+      "direction": "higher",
+      "atol": "REPLACE_WITH_FROZEN_ATOL",
+      "rtol": "REPLACE_WITH_FROZEN_RTOL"
+    },
+    {
+      "path": "metrics.missing_view_attention_max",
+      "direction": "lower",
+      "atol": "REPLACE_WITH_FROZEN_ATOL",
+      "rtol": "REPLACE_WITH_FROZEN_RTOL"
+    },
+    {
+      "path": "counterfactual_metrics.counterfactual_mean_target_drop",
+      "direction": "higher",
+      "atol": "REPLACE_WITH_FROZEN_ATOL",
+      "rtol": "REPLACE_WITH_FROZEN_RTOL"
+    },
+    {
+      "path": "counterfactual_metrics.counterfactual_family_min_mean_target_drop",
+      "direction": "higher",
+      "atol": "REPLACE_WITH_FROZEN_ATOL",
+      "rtol": "REPLACE_WITH_FROZEN_RTOL"
+    }
+  ]
+}
