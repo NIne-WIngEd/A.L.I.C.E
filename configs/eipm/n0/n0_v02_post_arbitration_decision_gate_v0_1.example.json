@@ -1,0 +1,18 @@
+{
+  "protocol_version": "n0_post_arbitration_decision_gate_v0.1",
+  "decision_id": "REPLACE_WITH_FROZEN_DECISION_ID",
+  "arbitration_receipt": {
+    "path": "REPLACE_WITH_IMMUTABLE_ARBITRATION_RECEIPT.json",
+    "sha256": "REPLACE_WITH_64_HEX_SHA256"
+  },
+  "expected_source_revision": "REPLACE_WITH_40_HEX_GIT_COMMIT",
+  "expected_arbitration_manifest_sha256": "REPLACE_WITH_64_HEX_SHA256",
+  "expected_common_fingerprint": "REPLACE_WITH_64_HEX_SHA256",
+  "invariants": {
+    "ratifies_repair": false,
+    "training_enabled": false,
+    "promotion_authorized": false,
+    "scale_authorized": false,
+    "n0_ready": false
+  }
+}
