@@ -1,0 +1,98 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.8",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.7.json",
+  "status": "PARENT_VALUE_PATH_DIAGNOSTIC_LOCALIZED_EVIDENCE_SELECTOR_STARVATION_REPAIR_IMPLEMENTED_PENDING_PREP_AND_GPU",
+  "candidate": {
+    "step": 360,
+    "sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4",
+    "weights_changed": false,
+    "ratified": false
+  },
+  "parent_value_path_diagnostic": {
+    "executed": true,
+    "rows": 32,
+    "canonical_parent_trace_parity_passed": true,
+    "gradient_performed": false,
+    "ratification_effect": false,
+    "scale_authorized": false,
+    "runtime_result_path": "rayan-n0/n0-v02/parent-value-path-diagnostic-v0.1/result.json",
+    "runtime_result_hash_must_be_preserved_with_execution_evidence": true,
+    "localization": {
+      "missing_structured_evidence": {
+        "evidence_adapter_behavior": "strong_foil_starvation_before_relation_graph_read",
+        "relation_status_behavior": "target_signal_present_and_reliably_directional",
+        "evidence_graph_behavior": "partial_target_recovery_not_sufficient_to_overcome_adapter_prior",
+        "latent_capacity_implicated_by_this_diagnostic": false
+      },
+      "semantic_required_routes": "target_signal_present_enough_to_avoid_reopening_semantic_parent_without_new_evidence",
+      "interpretation": "repair_the_localized_selector_prior_before_any_latent_capacity_change"
+    }
+  },
+  "evidence_selector_repair_v0_1": {
+    "builder": "scripts/eipm/n0/build_n0_v02_evidence_selector_repair_curriculum_v0_1.py",
+    "trainer": "scripts/eipm/n0/train_n0_v02_evidence_selector_repair_v0_1.py",
+    "runner": "scripts/eipm/n0/run_n0_v02_evidence_selector_repair_v0_1.sh",
+    "magnolia_job": "scripts/eipm/n0/magnolia_p100_n0_v02_evidence_selector_repair_v0_1.sbatch",
+    "parent_adapter": "evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080",
+    "parent_graph": "relation-repair-v0.1/step-00000080",
+    "trainable_scope": "evidence_view_adapter.prior_head_only_for_initial_localized_repair",
+    "trainable_scope_is_permanent_architecture_limit": false,
+    "evidence_graph_frozen": true,
+    "adapter_field_state_transform_frozen": true,
+    "semantic_parent_frozen": true,
+    "structured_parent_frozen": true,
+    "fresh_public_synthetic_families": 8,
+    "pairs_per_family": 32,
+    "train_pairs_per_family": 20,
+    "dev_pairs_per_family": 6,
+    "test_pairs_per_family": 6,
+    "curriculum_counts_are_operating_budget_not_architecture_ceiling": true,
+    "paired_adapter_inputs_identical_while_relation_target_flips": true,
+    "frozen_latent_challenge_rows_used_for_training": false,
+    "parent_value_path_diagnostic_rows_used_for_training": false,
+    "graph_pooled_cosine_is_optimization_target": false,
+    "ordinary_replay_preservation_required": true,
+    "dev_only_checkpoint_selection": true,
+    "heldout_test_evaluated_once": true,
+    "automatic_rerun_or_hotfix_authorized": false,
+    "pass_next_action": "run_existing_latent_frontier_challenge_once_with_repaired_adapter_and_unchanged_relation_graph",
+    "fail_next_action": "inspect_the_single_heldout_failure_and_choose_one_causal_next_change"
+  },
+  "scale_decision": {
+    "scale_now": false,
+    "reason": "current_failure_is_localized_upstream_of_latent_capacity",
+    "hard_parameter_ceiling": null,
+    "hard_parameter_floor": null,
+    "current_slot_width_depth_and_field_counts_are_operating_points_not_capability_limits": true,
+    "do_not_hold_capacity_constant_if_future_evidence_localizes_an_expressivity_bottleneck": true,
+    "do_not_increase_capacity_without_localized_evidence": true,
+    "selector_scope_escalation": {
+      "eligible_if": "heldout_selector_repair_fails_and_failure_remains_selector_expressivity_after_relation_signal_is_verified",
+      "allowed_changes": "broaden_adapter_trainable_scope_or_capacity_as_required_by_evidence",
+      "prior_head_only_is_not_a_ceiling": true
+    },
+    "latent_scale_escalation": {
+      "eligible_if": "target_signal_is_verified_at_latent_input_but_is_lost_or_insufficient_inside_latent_pool",
+      "method": "bounded_capacity_study_around_current_operating_point_with_fidelity_latency_and_resource_evidence",
+      "preset_target_parameter_count": null,
+      "preset_maximum_parameter_count": null,
+      "preset_minimum_parameter_count": null,
+      "avoid_under_scaling": "increase_width_depth_slots_or_other_relevant_capacity_when_a_localized_capacity_bottleneck_persists",
+      "avoid_over_scaling": "stop_capacity_growth_when_additional_capacity_no_longer_improves_the_relevant_fidelity_frontier_or_unacceptably_harms_latency_resource_budget"
+    }
+  },
+  "anti_loop_policy": {
+    "one_causal_change_per_failed_model_gate": true,
+    "automatic_hotfix_chain": false,
+    "rerun_identical_failed_model_experiment_without_state_change": false,
+    "infrastructure_failure_is_not_model_evidence": true,
+    "already_valid_preparation_is_idempotently_reused": true,
+    "preserve_stale_or_prior_evidence_instead_of_deleting_it_to_pass": true,
+    "validation_must_change_a_real_decision_or_stop": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
