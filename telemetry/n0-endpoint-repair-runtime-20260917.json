@@ -1,0 +1,41 @@
+{
+  "schema": "alice.telemetry.n0.endpoint-role-repair-runtime.v0.2",
+  "date": "2026-09-17",
+  "build_head": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+  "runtime_status": "ENDPOINT_ROLE_DISCRIMINATION_REPAIRED_FORMAL_REPLAY_FLOOR_NOT_GREEN_DOWNSTREAM_ARBITRATION_NEXT",
+  "formal_result_status": "FAIL_ENDPOINT_ROLE_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX",
+  "formal_failure_class": "replay_preservation_floor",
+  "endpoint_behavior_failure": false,
+  "seed": 20260917,
+  "magnolia_job_id": 575718,
+  "magnolia_node": "gpu001",
+  "elapsed": "00:01:14",
+  "selected_checkpoint": "step-00000200",
+  "selected_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+  "heldout": {
+    "pair_accuracy": 1.0,
+    "row_accuracy": 1.0,
+    "family_count": 8,
+    "family_min_pair_accuracy": 1.0,
+    "mean_graph_target_margin_approx": 0.8701
+  },
+  "replay": {
+    "top1_support_accuracy": 1.0,
+    "baseline_macro_target_support_mass": 0.9831965565681458,
+    "selected_macro_target_support_mass_approx": 0.9810,
+    "temporal_previous_support_confidence_approx": 0.8612,
+    "additional_conversation_recovered_support_mass_approx": 0.89568,
+    "additional_conversation_recovered_gate": ">0.90",
+    "additional_conversation_recovered_field_name_repo_bound": false
+  },
+  "failed_selector_adapter_used_as_parent": false,
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "latent_weights_changed": false,
+  "production_promotion_authorized": false,
+  "automatic_rerun_authorized": false,
+  "next_experiment": "frozen original-graph versus repaired-graph downstream latent arbitration with identical frozen adapter and latent frontier",
+  "next_experiment_retraining": false,
+  "architecture_research_required_before_new_component_or_scale_change": true,
+  "provenance_note": "The exact endpoint checkpoint SHA and core heldout/replay metrics are recovered from prior runtime discussion; the ~0.89568 replay value is preserved as conversation-recovered because its exact raw result field was not present in the current repository state."
+}
