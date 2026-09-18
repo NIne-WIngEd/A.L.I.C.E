@@ -613,14 +613,20 @@ def main() -> None:
         ),
         default="",
     )
-    context_head_time = (
+    context_branch_head_time = (
         context_branch_row.get("head_committed_at")
         if context_branch_row else None
     )
+    active_handoff_time = (
+        latest_handoff.get("last_changed_at")
+        if latest_handoff else None
+    )
     continuity_stale_for_frontier = bool(
         newest_frontier_time
-        and context_head_time
-        and newest_frontier_time > context_head_time
+        and (
+            not active_handoff_time
+            or newest_frontier_time > active_handoff_time
+        )
     )
 
     active_mission_state = {
@@ -646,7 +652,8 @@ def main() -> None:
             "stale_relative_to_unmerged_experiment_frontier":
                 continuity_stale_for_frontier,
             "newest_experiment_frontier_time": newest_frontier_time or None,
-            "continuity_branch_head_time": context_head_time,
+            "active_handoff_last_changed_at": active_handoff_time,
+            "context_branch_head_time": context_branch_head_time,
         },
         "execution_rule": (
             "The stable build base and continuity overlay are not sufficient "
