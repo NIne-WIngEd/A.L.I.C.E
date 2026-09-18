@@ -1,7 +1,7 @@
 {
-  "request_id": "n0-query-relation-role-router-ready-20260918-001",
-  "question": "Resolve the current N0 state after job 575798 failed at dev without heldout exposure. Identify the active handoff, maximal experiment frontier, external research checkpoint, raw-query relation-role router architecture, anti-loop rule requiring architecture audit after another failure, and the single authorized next action.",
-  "budget": 1400,
+  "request_id": "n0-qrr-infra-retry-575799-20260918-001",
+  "question": "Resolve current N0 QRR state after Magnolia job 575799 failed in preflight before training. Confirm it is infrastructure-only due to stale 575798 receipt key, identify corrected QRR head and CI result, preserve the partial original output, and identify the single authorized retry directory/action. Confirm architecture unchanged and no model evidence from 575799.",
+  "budget": 1100,
   "traversal": "bfs",
   "contexts": [
     "call",
