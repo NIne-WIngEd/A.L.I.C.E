@@ -12,6 +12,7 @@ on:
       - ".github/workflows/graphify-sync.yml"
       - ".github/workflows/context-catalog.yml"
       - "scripts/context/**"
+      - "CATALOG_REBUILD_TRIGGER.txt"
   workflow_dispatch:
 
 permissions:
