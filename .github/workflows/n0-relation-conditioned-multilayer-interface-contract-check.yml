@@ -64,7 +64,7 @@ jobs:
             "RelationConditionedMultiLayerQueryInterface",
             "relation_layer_candidate_mask",
             "relation_layer_audit_prior",
-            "relation-conditioned token",
+            "relation_embedding",
             "token_scores = torch.einsum",
             "layer_weights",
             "edge_relation_query_state",
