@@ -1,0 +1,139 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.12",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json",
+  "status": "RELATION_SEMANTIC_GROUNDING_V0_1_VALID_FAIL_LOCALIZED_TO_SHARED_READ_ENTANGLEMENT;ZERO_INIT_SEMANTIC_ROLE_RESIDUAL_IMPLEMENTED_PENDING_PRE_GPU_CI_AND_ONE_P100_RUN",
+  "n0_complete": false,
+  "stable_build_base": {
+    "branch": "alice-eipm-v1-build",
+    "commit": "021c5021a98104b35f9c8e94b19e48d21f25f132"
+  },
+  "current_experiment_branch": "alice-eipm-v1-relation-semantic-role-residual",
+  "preserved_lineage": {
+    "endpoint_parent_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+    "endpoint_parent_downstream_classification": "IMPROVEMENT",
+    "final_frozen_challenge_job": 575794,
+    "final_frozen_challenge_rerun_authorized": false,
+    "frozen_threshold_change_authorized": false,
+    "missing_evidence_localization_job": 575795,
+    "missing_evidence_localization": "EVIDENCE_GRAPH_RELATION_SELECTION_REMAINS_DEFECTIVE",
+    "missing_evidence_localization_result_sha256": "1733bf1a5fdc4f979beab6d5198bfb6a77a0e17b4fc96adc134dafd03dd5ebbe",
+    "failed_relation_semantic_job": 575797,
+    "failed_relation_semantic_result_sha256": "cfd2a6aee3ba2e441363700cf0d57917cf7cf16c3c81b2a789b5c1ecf3614980",
+    "failed_relation_semantic_status": "FAIL_RELATION_SEMANTIC_GROUNDING_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX",
+    "failed_selected_checkpoint": "step-00000080",
+    "failed_selected_graph_sha256": "af71588237028354cc249bdbac3bc2a285a793b62fef72c8910dcbe6f1cf3f20",
+    "failed_semantic_heldout_pair_accuracy": 0.4444444444444444,
+    "failed_semantic_heldout_family_min_pair_accuracy": 0,
+    "failed_semantic_heldout_row_accuracy": 0.6111111111111112,
+    "failed_semantic_heldout_mean_graph_target_margin": -0.15873396520813307,
+    "failed_selected_endpoint_role_dev_pair_accuracy": 0.7083333333333334,
+    "baseline_endpoint_role_dev_pair_accuracy": 0.9583333333333334,
+    "ordinary_replay_selected_macro_target_support_mass": 0.972196204463641,
+    "ordinary_replay_baseline_macro_target_support_mass": 0.9810025155544281
+  },
+  "causal_localization": {
+    "current_target": "relation_semantic_role_composition",
+    "evidence": [
+      "every v0.1 trained checkpoint retained semantic worst-family dev pair accuracy 0.0",
+      "every v0.1 trained checkpoint degraded explicit endpoint-role behavior relative to the step-200 parent",
+      "ordinary replay remained comparatively healthy",
+      "shared query-conditioned relation-read parameters were the only mutable model path"
+    ],
+    "conclusion": "natural relation-semantic grounding and explicit endpoint-role skill are entangled when optimized through the same mutable parent relation-read parameters",
+    "not_currently_localized_to": [
+      "structured_state_encoder",
+      "graph_message_passing",
+      "cross_context_fusion",
+      "latent_pool_capacity",
+      "general_parameter_count"
+    ],
+    "scale_bottleneck_established": false
+  },
+  "repair_v0_2": {
+    "architecture": "zero_initialized_signed_source_target_semantic_role_residual",
+    "source": "src/alice_personality/n0/evidence_graph_semantic_role_residual.py",
+    "builder": "scripts/eipm/n0/build_n0_v02_relation_semantic_role_residual_curriculum_v0_2.py",
+    "trainer": "scripts/eipm/n0/train_n0_v02_relation_semantic_role_residual_v0_2.py",
+    "runner": "scripts/eipm/n0/run_n0_v02_relation_semantic_role_residual_v0_2.sh",
+    "magnolia_job": "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_role_residual_v0_2.sbatch",
+    "parent_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+    "parent_graph_parameters_trainable": false,
+    "parent_endpoint_graph_parameters_must_remain_exact": true,
+    "trainable_scope": [
+      "semantic_role_query_adapter",
+      "semantic_role_delta_mlp"
+    ],
+    "residual_semantics": "positive_delta_prefers_relation_source_negative_delta_prefers_relation_target",
+    "residual_inputs": [
+      "query_semantics_after_existing_parent_query_projection",
+      "relation_type_embedding"
+    ],
+    "endpoint_content_not_required_for_role_delta": true,
+    "zero_initialized_parent_parity_required": true,
+    "conflict_relations_receive_no_role_delta": true,
+    "ordinary_replay_anchor": true,
+    "endpoint_role_train_replay_anchor": true,
+    "semantic_v0_2": {
+      "relation_families": [
+        "corrects_current",
+        "corrects_previous",
+        "supersedes_current",
+        "supersedes_previous",
+        "temporal_current",
+        "temporal_previous",
+        "causes_cause",
+        "causes_effect",
+        "supports_supported",
+        "supports_supporter",
+        "derived_item",
+        "derived_basis"
+      ],
+      "pairs_per_family": 36,
+      "train_pairs_per_family": 24,
+      "dev_pairs_per_family": 6,
+      "test_pairs_per_family": 6,
+      "equal_non_relation_metadata": true,
+      "query_names_endpoint_role_explicitly": false,
+      "relation_semantic_v0_1_rows_reused": false,
+      "endpoint_repair_v0_2_heldout_rows_reused": false,
+      "frozen_challenge_rows_used_for_training": false,
+      "missing_evidence_localization_rows_used_for_training": false
+    },
+    "heldout_policy": {
+      "open_only_if_parent_preservation_passes": true,
+      "open_only_if_semantic_dev_readiness_passes": true,
+      "if_no_eligible_checkpoint": "stop_without_heldout_exposure",
+      "automatic_hotfix_after_fail": false
+    },
+    "max_steps_operating_budget": 240,
+    "max_steps_is_capability_ceiling": false,
+    "hard_parameter_ceiling": null,
+    "scale_authorized": false
+  },
+  "scale_decision": {
+    "scale_now": false,
+    "reason": "575797 shows interference in a shared mutable role-read path, not an established inability of the model to represent the capability; the next change isolates composition before any width/depth study",
+    "current_shapes_are_operating_points_not_product_limits": true,
+    "hard_parameter_ceiling": null,
+    "future_scale_eligible_if": "a valid trace shows a correctly grounded relation-semantic signal reaches a frozen downstream module and that module cannot preserve or use it despite objective alignment"
+  },
+  "anti_loop_policy": {
+    "one_causal_change_per_failed_model_gate": true,
+    "automatic_hotfix_chain": false,
+    "rerun_job_575794": false,
+    "rerun_job_575795_without_state_change": false,
+    "rerun_job_575797_without_state_change": false,
+    "change_frozen_thresholds": false,
+    "train_on_frozen_challenge_rows": false,
+    "train_on_localization_rows": false,
+    "reuse_relation_semantic_v0_1_rows": false,
+    "reuse_endpoint_v0_2_heldout_test": false,
+    "open_new_heldout_before_dev_readiness": false,
+    "infrastructure_failure_is_not_model_evidence": true,
+    "failed_results_remain_immutable": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
