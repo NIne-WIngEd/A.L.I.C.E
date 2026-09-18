@@ -25,18 +25,6 @@ TEXT_EXTS = {
 
 DOC_EXTS = {".md", ".txt", ".json", ".jsonl", ".yaml", ".yml", ".toml", ".tsv"}
 
-KNOWLEDGE_BRANCH_PATTERNS = (
-    r"^main$",
-    r"^alice-context$",
-    r"^fable-builder-model$",
-    r"^alice-mc10[bc]-live$",
-    r"^alice-eipm-v1-",
-    r"^docs/",
-    r"^planning/",
-    r"^feat/memory",
-    r"^fix/governance",
-)
-
 FAILURE_TERMS = (
     "failure", "failed", "error", "repair", "incident", "forensic", "recovery",
     "fallback", "magnolia", "kaggle", "udocker", "powershell", "hotfix",
@@ -286,7 +274,12 @@ def supersession_hits(text: str, limit: int = 12) -> list[dict]:
 
 
 def branch_is_knowledge_surface(name: str) -> bool:
-    return any(re.search(pattern, name) for pattern in KNOWLEDGE_BRANCH_PATTERNS)
+    # Branch selection is intentionally inclusive. The caller already excludes
+    # tmp-* and the context-substrate branch itself. Do not guess which ALICE
+    # branch is important enough to index; keep every remaining branch
+    # qualified by its own name/commit and let authority/freshness filtering
+    # decide whether it matters to a task.
+    return True
 
 
 def write_json(path: Path, obj) -> None:
@@ -694,6 +687,7 @@ def main() -> None:
             "Catalog entries are source pointers, not truth promotions.",
             "Branch-specific records stay branch-qualified.",
             "Private external sources are intentionally excluded from public Git.",
+            "Every non-temporary Git branch is a branch-qualified knowledge surface.",
         ],
     }
     write_json(OUT / "CATALOG_STATUS.json", summary)
