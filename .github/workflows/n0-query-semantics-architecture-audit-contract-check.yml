@@ -1,0 +1,137 @@
+name: N0 Query Semantics Architecture Audit Contract Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-query-semantics-architecture-audit
+    paths:
+      - "scripts/eipm/n0/audit_n0_v02_query_semantic_representations_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_query_semantics_architecture_audit_v0_1.sh"
+      - "scripts/eipm/n0/magnolia_n0_v02_query_semantics_architecture_audit_v0_1.sbatch"
+      - "scripts/eipm/n0/magnolia_udocker_exec.sh"
+      - "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.14.json"
+      - ".github/workflows/n0-query-semantics-architecture-audit-contract-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/eipm/n0/audit_n0_v02_query_semantic_representations_v0_1.py
+          bash -n scripts/eipm/n0/run_n0_v02_query_semantics_architecture_audit_v0_1.sh
+          bash -n scripts/eipm/n0/magnolia_n0_v02_query_semantics_architecture_audit_v0_1.sbatch
+          bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
+
+      - name: No-gradient audit contract
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("scripts/eipm/n0/audit_n0_v02_query_semantic_representations_v0_1.py").read_text()
+          required=[
+            "torch.set_grad_enabled(False)",
+            "torch.inference_mode()",
+            '"gradient_performed": False',
+            '"optimizer_created": False',
+            '"model_parameters_mutated": False',
+            "trained_semantic_projection",
+            "token_late_interaction",
+            "raw_mean_pool",
+            "no_automatic_model_change",
+            "qrr_v0_3_rows_used",
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("audit contract missing "+repr(missing))
+          forbidden=[
+            ".backward(",
+            "torch.optim.",
+            "optimizer.step",
+            "requires_grad = True",
+            "save_file(",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present: raise SystemExit("gradient/mutation behavior leaked into audit "+repr(present))
+          print("no_gradient_audit_contract=PASS")
+          PY
+
+      - name: Representation coverage contract
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("scripts/eipm/n0/audit_n0_v02_query_semantic_representations_v0_1.py").read_text()
+          required=[
+            "model.encode_views",
+            "model.project_semantic_pooled",
+            "symmetric_late_interaction",
+            "mean_opposite_role_pair_distance",
+            "role_direction_consistency",
+            '"corrects"',
+            '"supersedes"',
+            '"temporal_successor"',
+            '"causes"',
+            '"supports"',
+            '"derived_from"',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("representation coverage missing "+repr(missing))
+          print("representation_coverage=PASS")
+          PY
+
+      - name: Runner binds valid 575800 failure
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          r=Path("scripts/eipm/n0/run_n0_v02_query_semantics_architecture_audit_v0_1.sh").read_text()
+          required=[
+            "0f7917446d9f23c5d58e1eb1e1e5641a8df38da1a4730926a90d73ec044305a0",
+            "FAIL_QUERY_RELATION_ROLE_ROUTER_DEV_STOP_NO_HELDOUT_EXPOSURE",
+            "architecture_level_audit_required_before_any_further_gradient_run",
+            "semantic_heldout_test_evaluated",
+            "parent_graph_parameters_exactly_unchanged",
+            "gradient_performed=false",
+            "model_mutation=false",
+            "heldout_rows_used=false",
+          ]
+          missing=[x for x in required if x not in r]
+          if missing: raise SystemExit("575800 binding missing "+repr(missing))
+          forbidden=["git pull","git checkout","git switch","sbatch"]
+          present=[x for x in forbidden if x in r]
+          if present: raise SystemExit("runtime mutation leaked "+repr(present))
+          print("qrr_binding=PASS")
+          PY
+
+      - name: State freezes gradient work
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.14.json").read_text())
+          if s["anti_loop_policy"]["gradient_work_frozen_until_audit"] is not True:
+              raise SystemExit("gradient freeze missing")
+          if s["anti_loop_policy"]["no_qrr_v0_4"] is not True:
+              raise SystemExit("automatic router v0.4 reopened")
+          if s["architecture_decision_policy"]["no_decision_before_audit_result"] is not True:
+              raise SystemExit("premature architecture decision allowed")
+          if s["scale_decision"]["scale_now"] is not False:
+              raise SystemExit("premature scale authorization")
+          if s["scale_decision"]["hard_parameter_ceiling"] is not None:
+              raise SystemExit("hard ceiling reintroduced")
+          if s["n0_complete"] is not False:
+              raise SystemExit("N0 completion drift")
+          w=Path("scripts/eipm/n0/magnolia_udocker_exec.sh").read_text()
+          if "ALICE_N0_QUERY_SEMANTICS_AUDIT_DIR" not in w:
+              raise SystemExit("udocker audit output forwarding missing")
+          print("state_gradient_freeze=PASS")
+          PY
