@@ -1,0 +1,108 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.15",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.14.json",
+  "status": "QUERY_SEMANTICS_AUDIT_575801_COMPLETE_MIXED;TOKEN_LEVEL_STRONGER_BUT_CAUSES_SUPPORTS_AT_CHANCE;GRADIENT_WORK_REMAINS_FROZEN;LAYERWISE_NO_GRADIENT_AUDIT_READY",
+  "n0_complete": false,
+  "stable_build_base": {
+    "branch": "alice-eipm-v1-build",
+    "commit": "021c5021a98104b35f9c8e94b19e48d21f25f132"
+  },
+  "current_experiment_branch": "alice-eipm-v1-query-semantics-architecture-audit",
+  "preserved_evidence": {
+    "query_semantics_audit_job": 575801,
+    "query_semantics_audit_state": "COMPLETED",
+    "query_semantics_audit_exit_code": "0:0",
+    "query_semantics_audit_result_sha256": "8bb4aa0f249b763342d78f5bf0f2f960a0bd73fafa67d18f8e0e7342f62f24b6",
+    "gradient_performed": false,
+    "model_parameters_mutated": false,
+    "heldout_rows_used": false,
+    "scale_authorized": false,
+    "role_accuracy": {
+      "raw_mean_pool": 0.5625,
+      "trained_semantic_projection": 0.5625,
+      "token_late_interaction": 0.6875
+    },
+    "mean_opposite_role_pair_distance": {
+      "raw_mean_pool": 0.05102736999591192,
+      "trained_semantic_projection": 0.013605944812297821,
+      "token_late_interaction": 0.11760250230630238
+    },
+    "token_relation_accuracy": {
+      "corrects": 0.875,
+      "supersedes": 0.75,
+      "temporal_successor": 0.75,
+      "derived_from": 0.75,
+      "causes": 0.5,
+      "supports": 0.5
+    }
+  },
+  "architecture_conclusion": {
+    "semantic_projection_swap_authorized": false,
+    "immediate_token_graph_training_authorized": false,
+    "findings": [
+      "final-layer token states preserve materially more directional relation information than either pooled view",
+      "the trained semantic projection does not improve directional role accuracy and compresses opposite-role distance",
+      "causes and supports remain at chance even with token-level late interaction",
+      "the failure is therefore mixed: pooling/interface loss for some relations plus unresolved upstream semantic weakness for others"
+    ],
+    "next_question": "whether directional causes/supports semantics exist in earlier frozen transformer layers and are lost by final-layer shaping"
+  },
+  "external_research_basis": {
+    "note": "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
+    "sources": [
+      "ColBERT late interaction",
+      "Probing Linguistic Features of Sentence-Level Representations in Neural Relation Extraction",
+      "Probing Relational Knowledge in Language Models via Word Analogies",
+      "Identifying Linear Relational Concepts in Large Language Models",
+      "Do Language Models Encode Semantic Relations? Probing and Sparse Feature Analysis"
+    ],
+    "conclusion": "relation-direction signal can be layer-dependent; inspect frozen layerwise token representations before deciding between a new language-graph interface and semantic retraining"
+  },
+  "layerwise_audit_v0_1": {
+    "script": "scripts/eipm/n0/audit_n0_v02_query_semantic_layers_v0_1.py",
+    "runner": "scripts/eipm/n0/run_n0_v02_query_semantics_layerwise_audit_v0_1.sh",
+    "magnolia_job": "scripts/eipm/n0/magnolia_n0_v02_query_semantics_layerwise_audit_v0_1.sbatch",
+    "previous_audit_sha256": "8bb4aa0f249b763342d78f5bf0f2f960a0bd73fafa67d18f8e0e7342f62f24b6",
+    "frozen_backbone_layers": 16,
+    "include_embedding_output": true,
+    "compare_each_layer": [
+      "token_late_interaction_role_accuracy",
+      "mean_pool_role_accuracy",
+      "opposite_role_pair_distance",
+      "per_relation_causes_accuracy",
+      "per_relation_supports_accuracy"
+    ],
+    "gradient_performed": false,
+    "optimizer_allowed": false,
+    "model_mutation_allowed": false,
+    "heldout_rows_used": false,
+    "automatic_model_change_after_result": false
+  },
+  "decision_policy": {
+    "if_mid_layer_restores_causes_supports": "design a token-level relation-aware language-to-graph interface tapping the informative frozen layer(s); do not retrain the graph selector against final pooled queries",
+    "if_no_layer_restores_causes_supports": "stop evidence-graph repair and reopen public semantic representation learning/objectives for directional causal/support semantics",
+    "no_training_before_layerwise_result_interpretation": true
+  },
+  "anti_loop_policy": {
+    "gradient_work_frozen_until_layerwise_audit_interpreted": true,
+    "no_qrr_v0_4": true,
+    "no_router_patch": true,
+    "no_loss_weight_patch": true,
+    "no_training_length_patch": true,
+    "no_semantic_projection_swap_without_evidence": true,
+    "no_token_graph_training_before_layerwise_localization": true,
+    "no_frozen_challenge_rerun": true,
+    "no_threshold_change": true,
+    "no_heldout_opening": true
+  },
+  "scale_decision": {
+    "scale_now": false,
+    "reason": "575801 shows representation/interface localization, not a proven global capacity bottleneck",
+    "hard_parameter_ceiling": null,
+    "current_shapes_are_operating_points_not_product_limits": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
