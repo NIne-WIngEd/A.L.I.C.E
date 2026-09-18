@@ -1,21 +1,21 @@
 {
-  "request_id": "coverage-router-doc-only-002",
-  "question": "Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?",
-  "budget": 1400,
+  "request_id": "coverage-router-code-topology-001",
+  "question": "Where in code is the query-conditioned relation endpoint-role read implemented, and which functions or modules connect that implementation to the downstream latent frontier path?",
+  "budget": 2200,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-18T02:05:18.419621+00:00",
+  "generated_at_utc": "2026-09-18T02:05:53.548406+00:00",
   "authority": "navigation-only",
   "routing_decision": {
     "graphify_mode": "auto",
-    "graphify_used": false,
-    "reason": "document/branch/private routing is sufficient",
-    "private_external_route_recommended": true
+    "graphify_used": true,
+    "reason": "question requires code topology",
+    "private_external_route_recommended": false
   },
-  "graphify_used": false,
+  "graphify_used": true,
   "graph_build": {
     "source_work_branch": "alice-eipm-v1-build",
     "source_work_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -28,21 +28,22 @@
   },
   "catalog_result": {
     "schema": "alice-context-catalog-query-v1",
-    "question": "Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?",
+    "question": "Where in code is the query-conditioned relation endpoint-role read implemented, and which functions or modules connect that implementation to the downstream latent frontier path?",
     "query_tokens": [
-      "magnolia",
-      "lineage",
-      "import",
-      "failure",
-      "produced",
-      "usr/local/bin/python",
-      "cannot",
-      "execute",
-      "binary",
-      "file",
-      "command-boundary",
-      "correction",
-      "fixed"
+      "code",
+      "query-conditioned",
+      "relation",
+      "endpoint-role",
+      "read",
+      "implemented",
+      "functions",
+      "modules",
+      "connect",
+      "implementation",
+      "downstream",
+      "latent",
+      "frontier",
+      "path"
     ],
     "catalog_status": {
       "schema": "alice-context-catalog-status-v1",
@@ -181,283 +182,191 @@
     },
     "hits": [
       {
-        "score": 82,
+        "score": 56,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_PUBLIC_LINEAGE_IMPORT_20260914.md",
-        "blob_sha": "45e7f5ed2da02f98e3c52c0a1bef999aedf65d83",
-        "category": "runtime_receipt",
-        "title": "Magnolia Public N0 Lineage Import — 2026-09-14",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "network",
-          "runtime-results",
-          "smoke",
-          "udocker"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 8
-      },
-      {
-        "score": 66,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-13/sol/N0_KAGGLE_CPU_LINEAGE_SUCCESS_AND_MAGNOLIA_IMPORT.md",
-        "blob_sha": "514d3f5faffda3e184f18dd4d7fe7a08262413a2",
-        "category": "working_context",
-        "title": "N0 Kaggle CPU Lineage Success and Magnolia Import — 2026-09-14",
-        "declared": {},
-        "matched_terms": [
-          "dns",
-          "egress",
-          "failed",
-          "kaggle",
-          "magnolia",
-          "network",
-          "powershell"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 3
-      },
-      {
-        "score": 53,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/N0_V02_TOKENIZER_CORPUS_V01_FILL_FAILURE_20260914.md",
-        "blob_sha": "5322eda4c941c872777feeb70eec28bfce037827",
-        "category": "runtime_receipt",
-        "title": "N0 v0.2 tokenizer-corpus v0.1 fill failure and correction",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "runtime-results"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 4
-      },
-      {
-        "score": 52,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/KAGGLE_CPU_PUBLIC_LINEAGE_V102_20260914.md",
-        "blob_sha": "1590c8e4b29564ed969ba136202c9b7ef3b0be09",
-        "category": "runtime_receipt",
-        "title": "Kaggle CPU Public N0 Lineage v1.0.2 — 2026-09-14",
-        "declared": {},
-        "matched_terms": [
-          "dns",
-          "failed",
-          "failure",
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "network",
-          "powershell",
-          "runtime-results"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "supersession",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 5
-      },
-      {
-        "score": 51,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md",
-        "blob_sha": "a8be2d6d77884b715635b5a97d3b3e7abbb93e67",
-        "category": "working_context",
-        "title": "MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "kaggle",
-          "magnolia"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 3
-      },
-      {
-        "score": 48,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/KAGGLE_CPU_REAL_LINEAGE_FALLBACK_2026-09-14.md",
-        "blob_sha": "5bd3fe18ae072031acf90a4f063f1787559d2197",
+        "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
+        "blob_sha": "83b65bc91215216f5637f99090f28c56940553b7",
         "category": "design_document",
-        "title": "Kaggle CPU fallback for the real N0 public lineage — 2026-09-14",
-        "declared": {},
+        "title": "A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13",
+        "declared": {
+          "status": " research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.",
+          "supersession": " this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it."
+        },
         "matched_terms": [
-          "dns",
-          "error",
-          "failed",
-          "failure",
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "network",
-          "udocker"
+          "benchmark",
+          "frontier",
+          "literature",
+          "research"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "failure",
+          "frontier",
           "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 4
-      },
-      {
-        "score": 46,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-06/astra/QWEN_V100_WINDOWS_TRANSFER_FINDINGS.md",
-        "blob_sha": "b459c383f5505113ab0ab948c89b1f8b0765a69c",
-        "category": "working_context",
-        "title": "Qwen v100 Windows transfer failure and v101 repair",
-        "declared": {},
-        "matched_terms": [
-          "egress",
-          "failed",
           "failure",
-          "forensic",
-          "magnolia",
-          "powershell",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
+          "supersession",
           "lexical"
         ],
         "lexical_body_hits": 6
       },
       {
-        "score": 46,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/N0_ADAPTIVE_LATENT_POOL_V01_FAILURE_AND_V02_REPAIR_2026-09-16.md",
-        "blob_sha": "f52cd22657c2545c5af7dd3e7aa2f0923a6ee144",
+        "score": 50,
+        "branch": "alice-eipm-v1-causal-arbitration-binding",
+        "branch_scope": "branch_specific",
+        "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+        "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
         "category": "design_document",
-        "title": "N0 Adaptive Multi-View Latent Pool v0.1 Failure and v0.2 Repair — 2026-09-16",
+        "title": "N0 downstream causal arbitration v0.1",
         "declared": {},
         "matched_terms": [
-          "failed",
-          "failure",
-          "magnolia",
-          "repair"
+          "frontier"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "failure",
+          "frontier",
           "document",
+          "failure",
           "lexical"
         ],
-        "lexical_body_hits": 4
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 50,
+        "branch": "alice-eipm-v1-downstream-arbitration",
+        "branch_scope": "branch_specific",
+        "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+        "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
+        "category": "design_document",
+        "title": "N0 downstream causal arbitration v0.1",
+        "declared": {},
+        "matched_terms": [
+          "frontier"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "frontier",
+          "document",
+          "failure",
+          "lexical"
+        ],
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 50,
+        "branch": "alice-eipm-v1-post-arbitration-gate",
+        "branch_scope": "branch_specific",
+        "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+        "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
+        "category": "design_document",
+        "title": "N0 downstream causal arbitration v0.1",
+        "declared": {},
+        "matched_terms": [
+          "frontier"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "frontier",
+          "document",
+          "failure",
+          "lexical"
+        ],
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 48,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
+        "blob_sha": "c44ed89c28153b7496910f099851ddf576176574",
+        "category": "working_context",
+        "title": "N0 Endpoint Repair and Downstream Arbitration Handoff",
+        "declared": {
+          "status": "`FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`."
+        },
+        "matched_terms": [
+          "architecture research",
+          "frontier",
+          "research"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "frontier",
+          "document",
+          "failure",
+          "lexical"
+        ],
+        "lexical_body_hits": 5
       },
       {
         "score": 46,
-        "branch": "fable-builder-model",
+        "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": "docs/fable-builder/traces/FBM_TRACE_20260913_COMPUTE_ROUTE_CORRECTION.jsonl",
-        "blob_sha": "4e035f1b5317964c974a8c6a98de727b1fb60f1e",
-        "category": "design_document",
-        "title": "FBM_TRACE_20260913_COMPUTE_ROUTE_CORRECTION.jsonl",
-        "declared": {},
+        "path": "docs/chat-context/2026-09-10/sol/EIPM_NATIVE_FRONTIER_ARCHITECTURE_RESEARCH.md",
+        "blob_sha": "786ef85d01add48f1bb605d1d2810ead3be42c02",
+        "category": "working_context",
+        "title": "A.L.I.C.E.-Native EIPM Frontier Architecture Research — 2026-09-10",
+        "declared": {
+          "owner_constraint": " third-party models may be disposable research, generation, or engineering tools. Third-party model weights must not be required by the permanent A.L.I.C.E. Elaina Identity / Personality Model (EIPM). The permanent EIPM weights must be A.L.I.C.E.-native and trained from A.L.I.C.E.-controlled initialization/training lineage.",
+          "status": " working frontier recommendation on `alice-context`; not canonical `main`; no A.L.I.C.E. weights created.",
+          "supersession": " this note supersedes the earlier working recommendation that treated `Qwen3.8-27B + A.L.I.C.E. LoRA` as the permanent EIPM. Qwen may remain an optional disposable teacher/mechanics tool where licensing permits. Its weights are not part of the EIPM."
+        },
         "matched_terms": [
-          "failure",
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "repair",
-          "smoke"
+          "architecture research",
+          "benchmark",
+          "frontier",
+          "research"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "failure",
+          "frontier",
           "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 5
+      },
+      {
+        "score": 46,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json",
+        "blob_sha": "ef3aec6bfe73ad93ae158f03c9b8554472a9cf99",
+        "category": "configuration_state",
+        "title": "alice_n0_latent_pool_stage_state_v0.9.json",
+        "declared": {},
+        "matched_terms": [
+          "frontier"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "frontier",
+          "supersession",
+          "document",
+          "failure",
           "lexical"
         ],
         "lexical_body_hits": 5
       },
       {
         "score": 45,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-14/sol/N0_V021_MAGNOLIA_NETWORK_FAILOVER_TO_OFFLINE_DERIVATION.md",
-        "blob_sha": "c9e0acae619f0d46aa676c8d34486847e3716361",
-        "category": "working_context",
-        "title": "N0 v0.2.1 Magnolia network failure -> offline tokenizer corpus derivation",
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "README.md",
+        "blob_sha": "1cc2548da0d66945189668dcd9256f65ce4176f9",
+        "category": "project_readme",
+        "title": "A.L.I.C.E.",
         "declared": {},
         "matched_terms": [
-          "error",
-          "failed",
-          "failure",
-          "magnolia",
-          "network"
+          "benchmark",
+          "frontier",
+          "research"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "failure",
+          "frontier",
           "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 3
-      },
-      {
-        "score": 44,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-06/astra/QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md",
-        "blob_sha": "eae538185e1c0f2266362b7f41e59dab136a43f4",
-        "category": "working_context",
-        "title": "V102: evidence-origin failure and the decision it blocks",
-        "declared": {},
-        "matched_terms": [
-          "failed",
           "failure",
-          "fallback",
-          "incident",
-          "magnolia",
-          "powershell",
-          "recovery",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
+          "supersession",
           "lexical"
         ],
         "lexical_body_hits": 6
@@ -466,248 +375,295 @@
         "score": 44,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-13/sol/N0_IMPORT_PASS_AND_MODEL_BUILD_CONTINUATION.md",
-        "blob_sha": "556fb49acce73632a30d4826123920c37bad82c1",
+        "path": "docs/chat-context/2026-08-31/src/S05-stageg-0829.txt",
+        "blob_sha": "97c35b9ccb7f70f90289439435b3c7ee14146b0f",
         "category": "working_context",
-        "title": "N0 Import PASS and Model-Build Continuation — 2026-09-14",
+        "title": "Example Python pseudocode to run models locally and score them:",
         "declared": {},
         "matched_terms": [
-          "dns",
-          "failed",
-          "failure",
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "network",
-          "smoke",
-          "udocker"
+          "benchmark",
+          "literature",
+          "research"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "failure",
+          "frontier",
           "document",
+          "failure",
+          "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 4
+        "lexical_body_hits": 9
       },
       {
         "score": 44,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-14/sol/N0_MAGNOLIA_DNS_BOUNDARY_AND_KAGGLE_CPU_FALLBACK.md",
-        "blob_sha": "19cfd6ac34d7aa3464b2d8fe43a3c0931f166d96",
+        "path": "docs/chat-context/2026-08-31/src/S06-stageg-0831.txt",
+        "blob_sha": "c8f855c8d69f3ed555257366d4c8bbb380fa66b6",
         "category": "working_context",
-        "title": "N0 Magnolia DNS boundary and Kaggle CPU fallback — 2026-09-14",
+        "title": "Example Python pseudocode to run models locally and score them:",
         "declared": {},
         "matched_terms": [
-          "dns",
-          "error",
-          "failed",
-          "failure",
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "network"
+          "benchmark",
+          "literature",
+          "research"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "failure",
+          "frontier",
           "document",
+          "failure",
+          "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 4
-      },
-      {
-        "score": 44,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md",
-        "blob_sha": "77ff7dda3d28fef326ceb8e6af7db799879c876b",
-        "category": "runtime_receipt",
-        "title": "Magnolia 2×P100 N0 Runtime Smoke — Job 575527",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "magnolia",
-          "runtime-results",
-          "smoke",
-          "udocker"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 4
-      },
-      {
-        "score": 44,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/N0_V021_MAGNOLIA_NETWORK_FAILOVER_20260914.md",
-        "blob_sha": "bbd962c2b822a11a6ec446bf6bf9fc123a71e280",
-        "category": "runtime_receipt",
-        "title": "N0 v0.2.1 tokenizer corpus: Magnolia network failover",
-        "declared": {},
-        "matched_terms": [
-          "dns",
-          "error",
-          "failure",
-          "kaggle",
-          "magnolia",
-          "network",
-          "runtime-results"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 4
+        "lexical_body_hits": 9
       },
       {
         "score": 43,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
-        "blob_sha": "caa8ea529fc219d8d0004bd2c5cb5e2cebebc852",
-        "category": "runtime_receipt",
-        "title": "Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571",
-        "declared": {
-          "status": "completed payload"
-        },
-        "matched_terms": [
-          "error",
-          "failed",
-          "failure",
-          "magnolia",
-          "repair",
-          "runtime-results"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 2
-      },
-      {
-        "score": 42,
-        "branch": "alice-context",
+        "branch": "docs/public-alice-readme",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-06/astra/tools/magnolia-provider-trace/package/ALICE_MAGNOLIA_PROVIDER_TRACE_v1.0.0/README.md",
-        "blob_sha": "fb3c6704573c0c5cdf8624123a6df2a5fdca7975",
-        "category": "working_context",
-        "title": "Read-only Magnolia provider and a2 revision observation",
+        "path": "README.md",
+        "blob_sha": "ae43acf85a75bf51bb7c3cd6a572de635877a9ec",
+        "category": "project_readme",
+        "title": "A.L.I.C.E.",
         "declared": {},
         "matched_terms": [
-          "error",
-          "failed",
-          "failure",
-          "magnolia"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 4
-      },
-      {
-        "score": 42,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md",
-        "blob_sha": "0fd59429e3c85c66ad4674cf2cfd94a84016410c",
-        "category": "working_context",
-        "title": "Fusion frozen challenge failure + source-anchored repair — 2026-09-16",
-        "declared": {
-          "status": "`FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`."
-        },
-        "matched_terms": [
-          "error",
-          "failed",
-          "failure",
-          "fallback",
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 4
-      },
-      {
-        "score": 42,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/N0_V02_VOICE_FIRST_REQUIREMENT_AND_AUDIT_IMPORT_FIX_20260914.md",
-        "blob_sha": "706c7fc1bc16277972d4794f0a978733b08965b6",
-        "category": "runtime_receipt",
-        "title": "N0 v0.2 Voice-First Requirement and Teacher-Audit Import Fix",
-        "declared": {
-          "status": " active; rerun one upgraded teacher-bank audit"
-        },
-        "matched_terms": [
-          "error",
-          "failed",
-          "failure",
-          "magnolia",
-          "network",
-          "repair",
-          "runtime-results",
-          "udocker"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
+          "benchmark",
           "frontier",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 3
-      },
-      {
-        "score": 40,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md",
-        "blob_sha": "be2ffe0bb87a8f835d36698854aa620db7694b99",
-        "category": "runtime_receipt",
-        "title": "Magnolia 2×P100 Real N0 Training — Job 575546",
-        "declared": {
-          "status": " completed successfully; durable weights retained; LR scheduler defect identified before continuation"
-        },
-        "matched_terms": [
-          "failure",
-          "magnolia",
-          "repair",
-          "runtime-results"
+          "research"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "failure",
+          "frontier",
           "document",
+          "failure",
+          "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 3
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 43,
+        "branch": "feat/memory-m2-1-claim-authority-prototype",
+        "branch_scope": "branch_specific",
+        "path": "README.md",
+        "blob_sha": "153cfe02fffb1f085d299dd4292acb11cd8a9539",
+        "category": "project_readme",
+        "title": "A.L.I.C.E.",
+        "declared": {},
+        "matched_terms": [
+          "benchmark",
+          "frontier",
+          "research"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "frontier",
+          "document",
+          "failure",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 43,
+        "branch": "feat/memory-m2-2-shadow-adjudication",
+        "branch_scope": "branch_specific",
+        "path": "README.md",
+        "blob_sha": "153cfe02fffb1f085d299dd4292acb11cd8a9539",
+        "category": "project_readme",
+        "title": "A.L.I.C.E.",
+        "declared": {},
+        "matched_terms": [
+          "benchmark",
+          "frontier",
+          "research"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "frontier",
+          "document",
+          "failure",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 43,
+        "branch": "feat/memory-m2-3-projection-prototype",
+        "branch_scope": "branch_specific",
+        "path": "README.md",
+        "blob_sha": "153cfe02fffb1f085d299dd4292acb11cd8a9539",
+        "category": "project_readme",
+        "title": "A.L.I.C.E.",
+        "declared": {},
+        "matched_terms": [
+          "benchmark",
+          "frontier",
+          "research"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "frontier",
+          "document",
+          "failure",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 43,
+        "branch": "feat/memory-m2-4-bounded-serving",
+        "branch_scope": "branch_specific",
+        "path": "README.md",
+        "blob_sha": "153cfe02fffb1f085d299dd4292acb11cd8a9539",
+        "category": "project_readme",
+        "title": "A.L.I.C.E.",
+        "declared": {},
+        "matched_terms": [
+          "benchmark",
+          "frontier",
+          "research"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "frontier",
+          "document",
+          "failure",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 43,
+        "branch": "feat/memory-m2-5-durable-curation-workflows",
+        "branch_scope": "branch_specific",
+        "path": "README.md",
+        "blob_sha": "153cfe02fffb1f085d299dd4292acb11cd8a9539",
+        "category": "project_readme",
+        "title": "A.L.I.C.E.",
+        "declared": {},
+        "matched_terms": [
+          "benchmark",
+          "frontier",
+          "research"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "frontier",
+          "document",
+          "failure",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 43,
+        "branch": "feat/memory-m2-6-deletion-propagation",
+        "branch_scope": "branch_specific",
+        "path": "README.md",
+        "blob_sha": "153cfe02fffb1f085d299dd4292acb11cd8a9539",
+        "category": "project_readme",
+        "title": "A.L.I.C.E.",
+        "declared": {},
+        "matched_terms": [
+          "benchmark",
+          "frontier",
+          "research"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "frontier",
+          "document",
+          "failure",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 43,
+        "branch": "feat/memory-m2-closeout-shadow-admission",
+        "branch_scope": "branch_specific",
+        "path": "README.md",
+        "blob_sha": "153cfe02fffb1f085d299dd4292acb11cd8a9539",
+        "category": "project_readme",
+        "title": "A.L.I.C.E.",
+        "declared": {},
+        "matched_terms": [
+          "benchmark",
+          "frontier",
+          "research"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "frontier",
+          "document",
+          "failure",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 43,
+        "branch": "feat/memory-m2-kernel-contracts",
+        "branch_scope": "branch_specific",
+        "path": "README.md",
+        "blob_sha": "ae43acf85a75bf51bb7c3cd6a572de635877a9ec",
+        "category": "project_readme",
+        "title": "A.L.I.C.E.",
+        "declared": {},
+        "matched_terms": [
+          "benchmark",
+          "frontier",
+          "research"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "frontier",
+          "document",
+          "failure",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 43,
+        "branch": "feat/memory-shadow-migration-stage-a-b",
+        "branch_scope": "branch_specific",
+        "path": "README.md",
+        "blob_sha": "9f216bbdd47cd6e43bace71018b7d04500ed50a0",
+        "category": "project_readme",
+        "title": "A.L.I.C.E.",
+        "declared": {},
+        "matched_terms": [
+          "benchmark",
+          "frontier",
+          "research"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "frontier",
+          "document",
+          "failure",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 6
       }
     ],
-    "private_external_route_recommended": true,
-    "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
+    "private_external_route_recommended": false,
+    "private_external_route_reason": null,
     "authority": "routing-only"
   },
-  "graphify_result_text": "",
+  "graphify_result_text": "Graph: graphify-out/graph.json (10832 nodes) | Traversal: BFS depth=2 | Start: ['._query_conditioned_relation_bias()', 'relation()', 'Evidence graph read that gives directed relations distinct source/target roles.…', 'codes()', 'test_supersession_pooling_bias_is_query_conditioned_not_fixed_negative()', 'connect()', 'DualEndpointEvidenceGraphEncoder', 'Frontier multi-stream fusion for heterogeneous personality context. N0…', 'test_component_false_implementation_states_are_registered_without_contract_mutation()', 'LatentPoolDataset', 'test_private_runtime_loader_supports_dataclass_modules()', 'Path', 'query()', '.read()', 'role_summary()'] | Context: call, import (explicit) | 219 nodes found\n\n[!] TRUNCATED: showing 54 of 219 nodes (~2200-token budget). The answer may be among the 165 cut nodes — raise the token budget (CLI: --budget) or narrow the query (e.g. context_filter=['call'], or get_node for a specific symbol).\n\nNODE ._query_conditioned_relation_bias() [src=src/alice_personality/n0/evidence_graph_dual_endpoint.py loc=L42 community=26]\nNODE relation() [src=tests/eipm/test_n0_evidence_graph_data.py loc=L10 community=53]\nNODE Evidence graph read that gives directed relations distinct source/target roles.… [src=src/alice_personality/n0/evidence_graph_dual_endpoint.py loc=L16 community=26]\nNODE codes() [src=tests/phase3/test_conversation_response_validation_adversarial.py loc=L18 community=43]\nNODE test_supersession_pooling_bias_is_query_conditioned_not_fixed_negative() [src=tests/eipm/test_n0_evidence_graph.py loc=L143 community=53]\nNODE connect() [src=tests/phase4/test_information_live_http.py loc=L227 community=248]\nNODE DualEndpointEvidenceGraphEncoder [src=src/alice_personality/n0/evidence_graph_dual_endpoint.py loc=L15 community=26]\nNODE Frontier multi-stream fusion for heterogeneous personality context. N0… [src=src/alice_personality/n0/cross_context_fusion.py loc=L215 community=55]\nNODE test_component_false_implementation_states_are_registered_without_contract_mutation() [src=tests/governance/test_memory_capability_ceiling.py loc=L235 community=92]\nNODE LatentPoolDataset [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L142 community=5]\nNODE test_private_runtime_loader_supports_dataclass_modules() [src=tests/phase4/test_information_live_research_script.py loc=L37 community=92]\nNODE Path [src= loc= community=148]\nNODE query() [src=tests/phase4/_information_live_research_helpers.py loc=L21 community=80]\nNODE .read() [src=tests/phase1/test_grounded_response_resilience.py loc=L31 community=12]\nNODE role_summary() [src=scripts/eipm/n0/train_n0_v02_relation_endpoint_repair_v0_2.py loc=L104 community=26]\nNODE validate_conversation_response() [src=src/alice_conversation/response_validation.py loc=L223 community=43]\nNODE eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L1 community=5]\nNODE response() [src=tests/phase3/_response_validation_helpers.py loc=L12 community=43]\nNODE eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py loc=L1 community=5]\nNODE diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py loc=L1 community=5]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_relation_endpoint_repair_v0_2.py loc=L167 community=26]\nNODE diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py loc=L1 community=5]\nNODE train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py loc=L1 community=5]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L416 community=5]\nNODE .create() [src=src/alice_information/contracts.py loc=L238 community=49]\nNODE main() [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py loc=L73 community=5]\nNODE main() [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py loc=L46 community=5]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py loc=L127 community=5]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L174 community=5]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py loc=L336 community=28]\nNODE test_information_live_claims.py [src=tests/phase4/test_information_live_claims.py loc=L1 community=80]\nNODE make_fields() [src=tests/eipm/test_n0_evidence_graph.py loc=L29 community=53]\nNODE tiny_model() [src=tests/eipm/test_n0_evidence_graph.py loc=L13 community=53]\nNODE request() [src=tests/phase4/_information_live_research_helpers.py loc=L30 community=21]\nNODE save_checkpoint() [src=scripts/eipm/n0/train_n0_v02_relation_endpoint_repair_v0_2.py loc=L114 community=26]\nNODE graph_edge() [src=tests/eipm/test_n0_evidence_graph.py loc=L46 community=53]\nNODE test_claim_planner_is_deterministic_and_bounded_to_two_sources() [src=tests/phase4/test_information_live_claims.py loc=L78 community=80]\nNODE test_claim_planner_returns_exact_source_sentence_and_span() [src=tests/phase4/test_information_live_claims.py loc=L60 community=80]\nNODE test_compiler_refuses_silent_edge_truncation() [src=tests/eipm/test_n0_evidence_graph_data.py loc=L89 community=53]\nNODE test_compiler_uses_authoritative_memory_relation_direction() [src=tests/eipm/test_n0_evidence_graph_data.py loc=L25 community=53]\nNODE test_external_relations_are_not_included_in_graph_slice() [src=tests/eipm/test_n0_evidence_graph_data.py loc=L52 community=53]\nNODE test_relation_confidence_is_explicit_and_bounded() [src=tests/eipm/test_n0_evidence_graph_data.py loc=L67 community=53]\nNODE test_prompt_injection_text_inside_grounding_does_not_authorize_action_claim() [src=tests/phase3/test_conversation_response_validation_adversarial.py loc=L109 community=43]\nNODE test_unknown_token_cannot_be_smuggled_next_to_valid_token() [src=tests/phase3/test_conversation_response_validation_adversarial.py loc=L134 community=43]\nNODE mean() [src=scripts/eipm/n0/train_n0_v02_relation_endpoint_repair_v0_2.py loc=L108 community=26]\nNODE _false_implemented() [src=tests/governance/test_memory_capability_ceiling.py loc=L82 community=92]\nNODE test_dependency_building_language_is_rejected() [src=tests/phase3/test_conversation_response_validation_adversarial.py loc=L73 community=43]\nNODE test_fabricated_action_completion_is_rejected() [src=tests/phase3/test_conversation_response_validation_adversarial.py loc=L38 community=43]\nNODE test_fabricated_capability_claim_is_rejected() [src=tests/phase3/test_conversation_response_validation_adversarial.py loc=L56 community=43]\nNODE test_hidden_reasoning_disclosure_is_rejected() [src=tests/phase3/test_conversation_response_validation_adversarial.py loc=L88 community=43]\nNODE test_invented_personal_fact_without_grounding_is_rejected() [src=tests/phase3/test_conversation_response_validation_adversarial.py loc=L103 community=43]\nNODE _load_script_module() [src=tests/phase4/test_information_live_research_script.py loc=L6 community=92]\nNODE pathlib [src= loc= community=2]\nNODE json [src= loc= community=2]\n... (truncated — 165 more nodes cut by ~2200-token budget. Narrow with context_filter=['call'] or use get_node for a specific symbol)\n",
   "graphify_stderr": ""
 }

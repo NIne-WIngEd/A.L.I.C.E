@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: coverage-router-doc-only-002
-- Question: Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?
+- Request: coverage-router-code-topology-001
+- Question: Where in code is the query-conditioned relation endpoint-role read implemented, and which functions or modules connect that implementation to the downstream latent frontier path?
 - Source: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 
@@ -17,26 +17,47 @@
 
 ## Source pointers
 
-- [82] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_PUBLIC_LINEAGE_IMPORT_20260914.md — Magnolia Public N0 Lineage Import — 2026-09-14
-- [66] alice-context:docs/chat-context/2026-09-13/sol/N0_KAGGLE_CPU_LINEAGE_SUCCESS_AND_MAGNOLIA_IMPORT.md — N0 Kaggle CPU Lineage Success and Magnolia Import — 2026-09-14
-- [53] alice-eipm-v1-build:docs/eipm/n0/runtime-results/N0_V02_TOKENIZER_CORPUS_V01_FILL_FAILURE_20260914.md — N0 v0.2 tokenizer-corpus v0.1 fill failure and correction
-- [52] alice-eipm-v1-build:docs/eipm/n0/runtime-results/KAGGLE_CPU_PUBLIC_LINEAGE_V102_20260914.md — Kaggle CPU Public N0 Lineage v1.0.2 — 2026-09-14
-- [51] alice-context:docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md — MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready
-- [48] alice-eipm-v1-build:docs/eipm/n0/KAGGLE_CPU_REAL_LINEAGE_FALLBACK_2026-09-14.md — Kaggle CPU fallback for the real N0 public lineage — 2026-09-14
-- [46] alice-context:docs/chat-context/2026-09-06/astra/QWEN_V100_WINDOWS_TRANSFER_FINDINGS.md — Qwen v100 Windows transfer failure and v101 repair
-- [46] alice-eipm-v1-build:docs/eipm/N0_ADAPTIVE_LATENT_POOL_V01_FAILURE_AND_V02_REPAIR_2026-09-16.md — N0 Adaptive Multi-View Latent Pool v0.1 Failure and v0.2 Repair — 2026-09-16
-- [46] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260913_COMPUTE_ROUTE_CORRECTION.jsonl — FBM_TRACE_20260913_COMPUTE_ROUTE_CORRECTION.jsonl
-- [45] alice-context:docs/chat-context/2026-09-14/sol/N0_V021_MAGNOLIA_NETWORK_FAILOVER_TO_OFFLINE_DERIVATION.md — N0 v0.2.1 Magnolia network failure -> offline tokenizer corpus derivation
-- [44] alice-context:docs/chat-context/2026-09-06/astra/QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md — V102: evidence-origin failure and the decision it blocks
-- [44] alice-context:docs/chat-context/2026-09-13/sol/N0_IMPORT_PASS_AND_MODEL_BUILD_CONTINUATION.md — N0 Import PASS and Model-Build Continuation — 2026-09-14
+- [56] alice-eipm-v1-build:docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md — A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13
+  - status:  research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.
+  - supersession:  this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it.
+- [50] alice-eipm-v1-causal-arbitration-binding:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
+- [50] alice-eipm-v1-downstream-arbitration:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
+- [50] alice-eipm-v1-post-arbitration-gate:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
+- [48] alice-context:docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md — N0 Endpoint Repair and Downstream Arbitration Handoff
+  - status: `FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`.
+- [46] alice-context:docs/chat-context/2026-09-10/sol/EIPM_NATIVE_FRONTIER_ARCHITECTURE_RESEARCH.md — A.L.I.C.E.-Native EIPM Frontier Architecture Research — 2026-09-10
+  - status:  working frontier recommendation on `alice-context`; not canonical `main`; no A.L.I.C.E. weights created.
+  - supersession:  this note supersedes the earlier working recommendation that treated `Qwen3.8-27B + A.L.I.C.E. LoRA` as the permanent EIPM. Qwen may remain an optional disposable teacher/mechanics tool where licensing permits. Its weights are not part of the EIPM.
+- [46] alice-eipm-v1-build:configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json — alice_n0_latent_pool_stage_state_v0.9.json
+- [45] alice-eipm-v1-build:README.md — A.L.I.C.E.
+- [44] alice-context:docs/chat-context/2026-08-31/src/S05-stageg-0829.txt — Example Python pseudocode to run models locally and score them:
+- [44] alice-context:docs/chat-context/2026-08-31/src/S06-stageg-0831.txt — Example Python pseudocode to run models locally and score them:
+- [43] docs/public-alice-readme:README.md — A.L.I.C.E.
+- [43] feat/memory-m2-1-claim-authority-prototype:README.md — A.L.I.C.E.
 
 ## Graphify navigation hints
 
+- ._query_conditioned_relation_bias() -> src/alice_personality/n0/evidence_graph_dual_endpoint.py:L42
+- relation() -> tests/eipm/test_n0_evidence_graph_data.py:L10
+- Evidence graph read that gives directed relations distinct source/target roles.… -> src/alice_personality/n0/evidence_graph_dual_endpoint.py:L16
+- codes() -> tests/phase3/test_conversation_response_validation_adversarial.py:L18
+- test_supersession_pooling_bias_is_query_conditioned_not_fixed_negative() -> tests/eipm/test_n0_evidence_graph.py:L143
+- connect() -> tests/phase4/test_information_live_http.py:L227
+- DualEndpointEvidenceGraphEncoder -> src/alice_personality/n0/evidence_graph_dual_endpoint.py:L15
+- Frontier multi-stream fusion for heterogeneous personality context. N0… -> src/alice_personality/n0/cross_context_fusion.py:L215
+- test_component_false_implementation_states_are_registered_without_contract_mutation() -> tests/governance/test_memory_capability_ceiling.py:L235
+- LatentPoolDataset -> scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py:L142
+- test_private_runtime_loader_supports_dataclass_modules() -> tests/phase4/test_information_live_research_script.py:L37
+- Path -> :
+- query() -> tests/phase4/_information_live_research_helpers.py:L21
+- .read() -> tests/phase1/test_grounded_response_resilience.py:L31
+- role_summary() -> scripts/eipm/n0/train_n0_v02_relation_endpoint_repair_v0_2.py:L104
+- validate_conversation_response() -> src/alice_conversation/response_validation.py:L223
 
 ## External/private routing
 
-- Recommended: True
-- Reason: host-specific operational history may contain newer failure lessons than public receipts
+- Recommended: False
+- Reason: None
 
 ## Trust contract
 

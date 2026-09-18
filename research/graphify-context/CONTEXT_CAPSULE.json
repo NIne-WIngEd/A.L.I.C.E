@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v1",
-  "request_id": "coverage-router-doc-only-002",
-  "question": "Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?",
-  "generated_at_utc": "2026-09-18T02:05:18.419621+00:00",
+  "request_id": "coverage-router-code-topology-001",
+  "question": "Where in code is the query-conditioned relation endpoint-role read implemented, and which functions or modules connect that implementation to the downstream latent frontier path?",
+  "generated_at_utc": "2026-09-18T02:05:53.548406+00:00",
   "source_freshness": {
     "source_branch": "alice-eipm-v1-build",
     "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -78,283 +78,191 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 82,
+      "score": 56,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
-      "path": "docs/eipm/n0/runtime-results/MAGNOLIA_PUBLIC_LINEAGE_IMPORT_20260914.md",
-      "blob_sha": "45e7f5ed2da02f98e3c52c0a1bef999aedf65d83",
-      "category": "runtime_receipt",
-      "title": "Magnolia Public N0 Lineage Import — 2026-09-14",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
-        "fallback",
-        "kaggle",
-        "magnolia",
-        "network",
-        "runtime-results",
-        "smoke",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 8
-    },
-    {
-      "score": 66,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-13/sol/N0_KAGGLE_CPU_LINEAGE_SUCCESS_AND_MAGNOLIA_IMPORT.md",
-      "blob_sha": "514d3f5faffda3e184f18dd4d7fe7a08262413a2",
-      "category": "working_context",
-      "title": "N0 Kaggle CPU Lineage Success and Magnolia Import — 2026-09-14",
-      "declared": {},
-      "matched_terms": [
-        "dns",
-        "egress",
-        "failed",
-        "kaggle",
-        "magnolia",
-        "network",
-        "powershell"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 3
-    },
-    {
-      "score": 53,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/n0/runtime-results/N0_V02_TOKENIZER_CORPUS_V01_FILL_FAILURE_20260914.md",
-      "blob_sha": "5322eda4c941c872777feeb70eec28bfce037827",
-      "category": "runtime_receipt",
-      "title": "N0 v0.2 tokenizer-corpus v0.1 fill failure and correction",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
-        "runtime-results"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 4
-    },
-    {
-      "score": 52,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/n0/runtime-results/KAGGLE_CPU_PUBLIC_LINEAGE_V102_20260914.md",
-      "blob_sha": "1590c8e4b29564ed969ba136202c9b7ef3b0be09",
-      "category": "runtime_receipt",
-      "title": "Kaggle CPU Public N0 Lineage v1.0.2 — 2026-09-14",
-      "declared": {},
-      "matched_terms": [
-        "dns",
-        "failed",
-        "failure",
-        "fallback",
-        "kaggle",
-        "magnolia",
-        "network",
-        "powershell",
-        "runtime-results"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "supersession",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 5
-    },
-    {
-      "score": 51,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md",
-      "blob_sha": "a8be2d6d77884b715635b5a97d3b3e7abbb93e67",
-      "category": "working_context",
-      "title": "MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
-        "kaggle",
-        "magnolia"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 3
-    },
-    {
-      "score": 48,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/n0/KAGGLE_CPU_REAL_LINEAGE_FALLBACK_2026-09-14.md",
-      "blob_sha": "5bd3fe18ae072031acf90a4f063f1787559d2197",
+      "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
+      "blob_sha": "83b65bc91215216f5637f99090f28c56940553b7",
       "category": "design_document",
-      "title": "Kaggle CPU fallback for the real N0 public lineage — 2026-09-14",
-      "declared": {},
+      "title": "A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13",
+      "declared": {
+        "status": " research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.",
+        "supersession": " this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it."
+      },
       "matched_terms": [
-        "dns",
-        "error",
-        "failed",
-        "failure",
-        "fallback",
-        "kaggle",
-        "magnolia",
-        "network",
-        "udocker"
+        "benchmark",
+        "frontier",
+        "literature",
+        "research"
       ],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
+        "frontier",
         "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 4
-    },
-    {
-      "score": 46,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-06/astra/QWEN_V100_WINDOWS_TRANSFER_FINDINGS.md",
-      "blob_sha": "b459c383f5505113ab0ab948c89b1f8b0765a69c",
-      "category": "working_context",
-      "title": "Qwen v100 Windows transfer failure and v101 repair",
-      "declared": {},
-      "matched_terms": [
-        "egress",
-        "failed",
         "failure",
-        "forensic",
-        "magnolia",
-        "powershell",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
+        "supersession",
         "lexical"
       ],
       "lexical_body_hits": 6
     },
     {
-      "score": 46,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/N0_ADAPTIVE_LATENT_POOL_V01_FAILURE_AND_V02_REPAIR_2026-09-16.md",
-      "blob_sha": "f52cd22657c2545c5af7dd3e7aa2f0923a6ee144",
+      "score": 50,
+      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "branch_scope": "branch_specific",
+      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
       "category": "design_document",
-      "title": "N0 Adaptive Multi-View Latent Pool v0.1 Failure and v0.2 Repair — 2026-09-16",
+      "title": "N0 downstream causal arbitration v0.1",
       "declared": {},
       "matched_terms": [
-        "failed",
-        "failure",
-        "magnolia",
-        "repair"
+        "frontier"
       ],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
+        "frontier",
         "document",
+        "failure",
         "lexical"
       ],
-      "lexical_body_hits": 4
+      "lexical_body_hits": 6
+    },
+    {
+      "score": 50,
+      "branch": "alice-eipm-v1-downstream-arbitration",
+      "branch_scope": "branch_specific",
+      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
+      "category": "design_document",
+      "title": "N0 downstream causal arbitration v0.1",
+      "declared": {},
+      "matched_terms": [
+        "frontier"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 6
+    },
+    {
+      "score": 50,
+      "branch": "alice-eipm-v1-post-arbitration-gate",
+      "branch_scope": "branch_specific",
+      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
+      "category": "design_document",
+      "title": "N0 downstream causal arbitration v0.1",
+      "declared": {},
+      "matched_terms": [
+        "frontier"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 6
+    },
+    {
+      "score": 48,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
+      "blob_sha": "c44ed89c28153b7496910f099851ddf576176574",
+      "category": "working_context",
+      "title": "N0 Endpoint Repair and Downstream Arbitration Handoff",
+      "declared": {
+        "status": "`FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`."
+      },
+      "matched_terms": [
+        "architecture research",
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 5
     },
     {
       "score": 46,
-      "branch": "fable-builder-model",
+      "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/fable-builder/traces/FBM_TRACE_20260913_COMPUTE_ROUTE_CORRECTION.jsonl",
-      "blob_sha": "4e035f1b5317964c974a8c6a98de727b1fb60f1e",
-      "category": "design_document",
-      "title": "FBM_TRACE_20260913_COMPUTE_ROUTE_CORRECTION.jsonl",
-      "declared": {},
+      "path": "docs/chat-context/2026-09-10/sol/EIPM_NATIVE_FRONTIER_ARCHITECTURE_RESEARCH.md",
+      "blob_sha": "786ef85d01add48f1bb605d1d2810ead3be42c02",
+      "category": "working_context",
+      "title": "A.L.I.C.E.-Native EIPM Frontier Architecture Research — 2026-09-10",
+      "declared": {
+        "owner_constraint": " third-party models may be disposable research, generation, or engineering tools. Third-party model weights must not be required by the permanent A.L.I.C.E. Elaina Identity / Personality Model (EIPM). The permanent EIPM weights must be A.L.I.C.E.-native and trained from A.L.I.C.E.-controlled initialization/training lineage.",
+        "status": " working frontier recommendation on `alice-context`; not canonical `main`; no A.L.I.C.E. weights created.",
+        "supersession": " this note supersedes the earlier working recommendation that treated `Qwen3.8-27B + A.L.I.C.E. LoRA` as the permanent EIPM. Qwen may remain an optional disposable teacher/mechanics tool where licensing permits. Its weights are not part of the EIPM."
+      },
       "matched_terms": [
-        "failure",
-        "fallback",
-        "kaggle",
-        "magnolia",
-        "repair",
-        "smoke"
+        "architecture research",
+        "benchmark",
+        "frontier",
+        "research"
       ],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
+        "frontier",
         "document",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 5
+    },
+    {
+      "score": 46,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json",
+      "blob_sha": "ef3aec6bfe73ad93ae158f03c9b8554472a9cf99",
+      "category": "configuration_state",
+      "title": "alice_n0_latent_pool_stage_state_v0.9.json",
+      "declared": {},
+      "matched_terms": [
+        "frontier"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "supersession",
+        "document",
+        "failure",
         "lexical"
       ],
       "lexical_body_hits": 5
     },
     {
       "score": 45,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-14/sol/N0_V021_MAGNOLIA_NETWORK_FAILOVER_TO_OFFLINE_DERIVATION.md",
-      "blob_sha": "c9e0acae619f0d46aa676c8d34486847e3716361",
-      "category": "working_context",
-      "title": "N0 v0.2.1 Magnolia network failure -> offline tokenizer corpus derivation",
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "README.md",
+      "blob_sha": "1cc2548da0d66945189668dcd9256f65ce4176f9",
+      "category": "project_readme",
+      "title": "A.L.I.C.E.",
       "declared": {},
       "matched_terms": [
-        "error",
-        "failed",
-        "failure",
-        "magnolia",
-        "network"
+        "benchmark",
+        "frontier",
+        "research"
       ],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
+        "frontier",
         "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 3
-    },
-    {
-      "score": 44,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-06/astra/QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md",
-      "blob_sha": "eae538185e1c0f2266362b7f41e59dab136a43f4",
-      "category": "working_context",
-      "title": "V102: evidence-origin failure and the decision it blocks",
-      "declared": {},
-      "matched_terms": [
-        "failed",
         "failure",
-        "fallback",
-        "incident",
-        "magnolia",
-        "powershell",
-        "recovery",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
+        "supersession",
         "lexical"
       ],
       "lexical_body_hits": 6
@@ -363,34 +271,247 @@
       "score": 44,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-13/sol/N0_IMPORT_PASS_AND_MODEL_BUILD_CONTINUATION.md",
-      "blob_sha": "556fb49acce73632a30d4826123920c37bad82c1",
+      "path": "docs/chat-context/2026-08-31/src/S05-stageg-0829.txt",
+      "blob_sha": "97c35b9ccb7f70f90289439435b3c7ee14146b0f",
       "category": "working_context",
-      "title": "N0 Import PASS and Model-Build Continuation — 2026-09-14",
+      "title": "Example Python pseudocode to run models locally and score them:",
       "declared": {},
       "matched_terms": [
-        "dns",
-        "failed",
-        "failure",
-        "fallback",
-        "kaggle",
-        "magnolia",
-        "network",
-        "smoke",
-        "udocker"
+        "benchmark",
+        "literature",
+        "research"
       ],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
+        "frontier",
         "document",
+        "failure",
+        "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 4
+      "lexical_body_hits": 9
+    },
+    {
+      "score": 44,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-08-31/src/S06-stageg-0831.txt",
+      "blob_sha": "c8f855c8d69f3ed555257366d4c8bbb380fa66b6",
+      "category": "working_context",
+      "title": "Example Python pseudocode to run models locally and score them:",
+      "declared": {},
+      "matched_terms": [
+        "benchmark",
+        "literature",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 9
+    },
+    {
+      "score": 43,
+      "branch": "docs/public-alice-readme",
+      "branch_scope": "branch_specific",
+      "path": "README.md",
+      "blob_sha": "ae43acf85a75bf51bb7c3cd6a572de635877a9ec",
+      "category": "project_readme",
+      "title": "A.L.I.C.E.",
+      "declared": {},
+      "matched_terms": [
+        "benchmark",
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 6
+    },
+    {
+      "score": 43,
+      "branch": "feat/memory-m2-1-claim-authority-prototype",
+      "branch_scope": "branch_specific",
+      "path": "README.md",
+      "blob_sha": "153cfe02fffb1f085d299dd4292acb11cd8a9539",
+      "category": "project_readme",
+      "title": "A.L.I.C.E.",
+      "declared": {},
+      "matched_terms": [
+        "benchmark",
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 6
     }
   ],
-  "graphify_navigation_hints": [],
-  "private_external_route_recommended": true,
-  "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
+  "graphify_navigation_hints": [
+    {
+      "label": "._query_conditioned_relation_bias()",
+      "source": "src/alice_personality/n0/evidence_graph_dual_endpoint.py",
+      "location": "L42",
+      "community": "26"
+    },
+    {
+      "label": "relation()",
+      "source": "tests/eipm/test_n0_evidence_graph_data.py",
+      "location": "L10",
+      "community": "53"
+    },
+    {
+      "label": "Evidence graph read that gives directed relations distinct source/target roles.…",
+      "source": "src/alice_personality/n0/evidence_graph_dual_endpoint.py",
+      "location": "L16",
+      "community": "26"
+    },
+    {
+      "label": "codes()",
+      "source": "tests/phase3/test_conversation_response_validation_adversarial.py",
+      "location": "L18",
+      "community": "43"
+    },
+    {
+      "label": "test_supersession_pooling_bias_is_query_conditioned_not_fixed_negative()",
+      "source": "tests/eipm/test_n0_evidence_graph.py",
+      "location": "L143",
+      "community": "53"
+    },
+    {
+      "label": "connect()",
+      "source": "tests/phase4/test_information_live_http.py",
+      "location": "L227",
+      "community": "248"
+    },
+    {
+      "label": "DualEndpointEvidenceGraphEncoder",
+      "source": "src/alice_personality/n0/evidence_graph_dual_endpoint.py",
+      "location": "L15",
+      "community": "26"
+    },
+    {
+      "label": "Frontier multi-stream fusion for heterogeneous personality context. N0…",
+      "source": "src/alice_personality/n0/cross_context_fusion.py",
+      "location": "L215",
+      "community": "55"
+    },
+    {
+      "label": "test_component_false_implementation_states_are_registered_without_contract_mutation()",
+      "source": "tests/governance/test_memory_capability_ceiling.py",
+      "location": "L235",
+      "community": "92"
+    },
+    {
+      "label": "LatentPoolDataset",
+      "source": "scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py",
+      "location": "L142",
+      "community": "5"
+    },
+    {
+      "label": "test_private_runtime_loader_supports_dataclass_modules()",
+      "source": "tests/phase4/test_information_live_research_script.py",
+      "location": "L37",
+      "community": "92"
+    },
+    {
+      "label": "Path",
+      "source": "",
+      "location": "",
+      "community": "148"
+    },
+    {
+      "label": "query()",
+      "source": "tests/phase4/_information_live_research_helpers.py",
+      "location": "L21",
+      "community": "80"
+    },
+    {
+      "label": ".read()",
+      "source": "tests/phase1/test_grounded_response_resilience.py",
+      "location": "L31",
+      "community": "12"
+    },
+    {
+      "label": "role_summary()",
+      "source": "scripts/eipm/n0/train_n0_v02_relation_endpoint_repair_v0_2.py",
+      "location": "L104",
+      "community": "26"
+    },
+    {
+      "label": "validate_conversation_response()",
+      "source": "src/alice_conversation/response_validation.py",
+      "location": "L223",
+      "community": "43"
+    },
+    {
+      "label": "eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
+      "source": "scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
+      "location": "L1",
+      "community": "5"
+    },
+    {
+      "label": "response()",
+      "source": "tests/phase3/_response_validation_helpers.py",
+      "location": "L12",
+      "community": "43"
+    },
+    {
+      "label": "eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py",
+      "source": "scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py",
+      "location": "L1",
+      "community": "5"
+    },
+    {
+      "label": "diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py",
+      "source": "scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py",
+      "location": "L1",
+      "community": "5"
+    },
+    {
+      "label": "main()",
+      "source": "scripts/eipm/n0/train_n0_v02_relation_endpoint_repair_v0_2.py",
+      "location": "L167",
+      "community": "26"
+    },
+    {
+      "label": "diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py",
+      "source": "scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py",
+      "location": "L1",
+      "community": "5"
+    },
+    {
+      "label": "train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py",
+      "source": "scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py",
+      "location": "L1",
+      "community": "5"
+    },
+    {
+      "label": "main()",
+      "source": "scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py",
+      "location": "L416",
+      "community": "5"
+    }
+  ],
+  "private_external_route_recommended": false,
+  "private_external_route_reason": null,
   "trust_contract": [
     "This capsule routes retrieval; it is not canonical A.L.I.C.E. truth.",
     "Open consequential claims in the original branch/path source before acting.",
