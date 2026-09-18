@@ -341,8 +341,8 @@ def validate_stack_inputs(
     fusion_config: Path,
     fusion_ratification: Path,
 ) -> None:
-    external = require_mapping(stack.get("common_external_inputs"), "stack.common_external_inputs")
-    artifacts = require_mapping(stack.get("common_stack_artifacts"), "stack.common_stack_artifacts")
+    external = require_mapping(stack.get("external_inputs"), "stack.external_inputs")
+    artifacts = require_mapping(stack.get("artifacts"), "stack.artifacts")
 
     eval_spec = require_mapping(external.get("evaluation_set"), "stack.evaluation_set")
     checked_file(challenge.resolve(), str(eval_spec.get("sha256")), "frozen challenge")
