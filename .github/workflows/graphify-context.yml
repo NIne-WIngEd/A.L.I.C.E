@@ -1,0 +1,70 @@
+name: Graphify Context Substrate
+
+on:
+  push:
+    branches:
+      - research/graphify-context-substrate
+    paths-ignore:
+      - "graphify-out/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-code-graph:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout research branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Graphify
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install graphifyy
+
+      - name: Build deterministic code graph
+        run: |
+          graphify extract . --code-only
+
+      - name: Record source state
+        shell: bash
+        run: |
+          mkdir -p research/graphify-context
+          {
+            echo "{"
+            echo "  \"source_branch\": \"$GITHUB_REF_NAME\","
+            echo "  \"source_commit\": \"$GITHUB_SHA\","
+            echo "  \"workflow_run_id\": \"$GITHUB_RUN_ID\","
+            echo "  \"graph_mode\": \"code-only\","
+            echo "  \"authority\": \"navigation-only\""
+            echo "}"
+          } > research/graphify-context/LAST_GRAPH_BUILD.json
+
+      - name: Commit persistent context artifacts
+        shell: bash
+        run: |
+          git config user.name "alice-context-graph-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          git add graphify-out/graph.json
+          if [ -f graphify-out/GRAPH_REPORT.md ]; then
+            git add graphify-out/GRAPH_REPORT.md
+          fi
+          git add research/graphify-context/LAST_GRAPH_BUILD.json
+
+          if git diff --cached --quiet; then
+            echo "No graph changes."
+            exit 0
+          fi
+
+          git commit -m "research: refresh Graphify context graph"
+          git push
