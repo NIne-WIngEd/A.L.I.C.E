@@ -24,7 +24,7 @@ Write-Host "branch=$branch"
 
 $installed = Get-Command graphify -ErrorAction SilentlyContinue
 if (-not $installed) {
-    uv tool install graphifyy
+    uv tool install graphifyy==0.9.63
 }
 
 if ($CodeOnly) {
