@@ -2,8 +2,9 @@
   "source_work_branch": "alice-eipm-v1-build",
   "source_work_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
   "research_branch": "research/graphify-context-substrate",
-  "research_commit": "e776315e494a0049e8861969c7ad12770b67791e",
-  "workflow_run_id": "35295890826",
+  "research_commit": "d774a3ae231e6d49c35554e284238c10deea3b99",
+  "workflow_run_id": "35296246491",
   "graph_mode": "code-only",
+  "extraction_tree": "exact-source-worktree",
   "authority": "navigation-only"
 }
