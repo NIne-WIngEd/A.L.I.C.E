@@ -1,0 +1,33 @@
+{
+  "schema": "alice.telemetry.n0.arbitration-calibration-complete.v0.1",
+  "date": "2026-09-17",
+  "magnolia_job_id": 575760,
+  "state": "CALIBRATION_COMPLETE",
+  "source_revision": "6c930788da42ad9964c4b5bf6067be3b7d6bfd06",
+  "node": "gpu001",
+  "elapsed": "00:02:22",
+  "exit_code": "0:0",
+  "candidate_graph_supplied": false,
+  "candidate_arm_result_observed": false,
+  "canonical_graph_sha256": "ec9942bd71a39c8552804322f1a36b7a6c5f009446e56423c80e59479ad8fa79",
+  "repeat_count": 2,
+  "canonical_repeat_sha256": [
+    "e4d38f3fc70013435ee2c015d543b89dacd727d18906ff5d7534390889f54a62",
+    "e4d38f3fc70013435ee2c015d543b89dacd727d18906ff5d7534390889f54a62"
+  ],
+  "repeatability_exact_match": true,
+  "metric_policy": {
+    "relative_tolerance": 0,
+    "absolute_floor": 0.000001,
+    "selected_before_arm_results": true,
+    "results_observed": false,
+    "sha256": "035eb35fbecad38adc94148743899de831876e2584cb18975aeb7a59db863b63"
+  },
+  "receipt_sha256": "ca389ad1a210fe64ffe1460ada63362a3a6c05a2703c19e1e9d5ff487cd7537c",
+  "diagnostic_only": true,
+  "gradient_performed": false,
+  "promotion_authorized": false,
+  "scale_authorized": false,
+  "n0_complete": false,
+  "next_action": "frozen canonical-vs-step-200 full-stack causal arbitration"
+}
