@@ -28,8 +28,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-          cache: "pip"
-          cache-dependency-path: "research/graphify-context/requirements-graphify.txt"
 
       - name: Fetch all context branches and detect catalog drift
         shell: bash
@@ -246,6 +244,15 @@ jobs:
           )
           print(json.dumps(decision,ensure_ascii=False))
           PY
+
+      - name: Cache Graphify pip downloads
+        if: env.USE_GRAPHIFY == 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: graphify-pip-${{ runner.os }}-py312-${{ hashFiles('research/graphify-context/requirements-graphify.txt') }}
+          restore-keys: |
+            graphify-pip-${{ runner.os }}-py312-
 
       - name: Install Graphify when required
         shell: bash
