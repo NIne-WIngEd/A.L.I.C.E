@@ -8,6 +8,7 @@ on:
       - "scripts/eipm/n0/*downstream*arbitration*.py"
       - "scripts/eipm/n0/*downstream*arbitration*.sh"
       - "scripts/eipm/n0/*downstream*arbitration*.sbatch"
+      - "scripts/eipm/n0/magnolia_udocker_exec.sh"
       - "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py"
       - "tests/eipm/n0/test_*downstream*arbitration*.py"
       - "tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py"
@@ -32,6 +33,7 @@ jobs:
           bash -n scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh
           bash -n scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch
           bash -n scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch
+          bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
 
       - name: Python syntax
         run: |
@@ -74,6 +76,17 @@ jobs:
           present=[item for item in forbidden if item in text]
           if present:
               raise SystemExit("forbidden arbitration runner behavior: " + repr(present))
+
+          wrapper=Path("scripts/eipm/n0/magnolia_udocker_exec.sh").read_text(encoding="utf-8")
+          forwarded=[
+              "ALICE_REPO_ROOT",
+              "ALICE_N0_WORKDIR",
+              "ALICE_N0_ARB_CAL_DIR",
+              "ALICE_N0_ARB_DIR",
+          ]
+          missing_env=[name for name in forwarded if name not in wrapper]
+          if missing_env:
+              raise SystemExit("udocker wrapper missing arbitration env forwarding: " + repr(missing_env))
 
           print("runner_safety_contract=PASS")
           PY
