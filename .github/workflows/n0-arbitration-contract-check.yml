@@ -10,6 +10,9 @@ on:
       - "scripts/eipm/n0/*downstream*arbitration*.sbatch"
       - "scripts/eipm/n0/magnolia_udocker_exec.sh"
       - "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py"
+      - "scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh"
+      - "scripts/eipm/n0/magnolia_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sbatch"
       - "tests/eipm/n0/test_*downstream*arbitration*.py"
       - "tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py"
       - ".github/workflows/n0-arbitration-contract-check.yml"
@@ -33,11 +36,13 @@ jobs:
           bash -n scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh
           bash -n scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch
           bash -n scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch
+          bash -n scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh
+          bash -n scripts/eipm/n0/magnolia_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sbatch
           bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
 
       - name: Python syntax
         run: |
-          python -m py_compile             scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py             scripts/eipm/n0/downstream_causal_arbitration_v0_1.py             scripts/eipm/n0/downstream_causal_arbitration_v0_2.py             scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py             scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py             scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py             scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py             scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py
+          python -m py_compile             scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py             scripts/eipm/n0/downstream_causal_arbitration_v0_1.py             scripts/eipm/n0/downstream_causal_arbitration_v0_2.py             scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py             scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py             scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py             scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py             scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py             scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py
 
       - name: N0 import-root smoke
         shell: bash
@@ -98,12 +103,14 @@ jobs:
 
           calibration=Path("scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh").read_text(encoding="utf-8")
           arbitration=Path("scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh").read_text(encoding="utf-8")
+          final_challenge=Path("scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh").read_text(encoding="utf-8")
           required_pythonpath='export PYTHONPATH="$ROOT/src:$ROOT/scripts/eipm/n0${PYTHONPATH:+:$PYTHONPATH}"'
           missing_pythonpath=[
               name
               for name,body in (
                   ("calibration",calibration),
                   ("arbitration",arbitration),
+                  ("final_challenge",final_challenge),
               )
               if required_pythonpath not in body
           ]
@@ -119,10 +126,32 @@ jobs:
               "ALICE_N0_WORKDIR",
               "ALICE_N0_ARB_CAL_DIR",
               "ALICE_N0_ARB_DIR",
+              "ALICE_N0_FINAL_CHALLENGE_DIR",
           ]
           missing_env=[name for name in forwarded if name not in wrapper]
           if missing_env:
               raise SystemExit("udocker wrapper missing arbitration env forwarding: " + repr(missing_env))
+
+          final_required=[
+              "run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
+              "automatic_rerun=false",
+              "relation-endpoint-repair-v0.2/training/step-00000200",
+          ]
+          final_missing=[item for item in final_required if item not in final_challenge]
+          if final_missing:
+              raise SystemExit("missing final challenge safety bindings: " + repr(final_missing))
+
+          final_forbidden=[
+              "--learning-rate",
+              "--max-steps",
+              "train_n0_",
+              "git pull",
+              "git checkout",
+              "git switch",
+          ]
+          final_present=[item for item in final_forbidden if item in final_challenge]
+          if final_present:
+              raise SystemExit("forbidden final challenge runner behavior: " + repr(final_present))
 
           print("runner_safety_contract=PASS")
           PY
