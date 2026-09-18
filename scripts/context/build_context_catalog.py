@@ -426,6 +426,79 @@ def main() -> None:
             out.append(row)
         return out
 
+    # Build a dual-layer active mission pointer. Source-branch stage state
+    # remains implementation authority, while the newest branch-qualified N0
+    # continuity handoff may contain later observed runtime evidence.
+    handoff_candidates = []
+    handoff_re = re.compile(
+        r"^docs/chat-context/(\\d{4}-\\d{2}-\\d{2})/sol/.*N0.*HANDOFF.*\\.md$",
+        re.I,
+    )
+    for row in doc_rows:
+        if row.get("branch") != "alice-context":
+            continue
+        m = handoff_re.match(str(row.get("path", "")))
+        if not m:
+            continue
+        handoff_candidates.append((m.group(1), row))
+
+    latest_handoff = None
+    if handoff_candidates:
+        _date, row = max(handoff_candidates, key=lambda item: (item[0], item[1]["path"]))
+        handoff_text = safe_text(
+            remote_ref("alice-context"), row["path"], row.get("size")
+        ) or ""
+
+        build_head_match = re.search(
+            r"Current build head:\\s*`([0-9a-f]{40})`", handoff_text, re.I
+        )
+        magnolia_job_match = re.search(
+            r"Magnolia job:\\s*`?(\\d+)`?", handoff_text, re.I
+        )
+
+        def section_excerpt(name: str, limit: int = 2600) -> str | None:
+            pattern = re.compile(
+                rf"^##\\s+{re.escape(name)}\\s*$([\\s\\S]*?)(?=^##\\s+|\\Z)",
+                re.I | re.M,
+            )
+            match = pattern.search(handoff_text)
+            if not match:
+                return None
+            return match.group(1).strip()[:limit]
+
+        latest_handoff = {
+            "branch": "alice-context",
+            "path": row["path"],
+            "blob_sha": row["blob_sha"],
+            "title": row["title"],
+            "date": _date,
+            "current_build_head_declared": (
+                build_head_match.group(1) if build_head_match else None
+            ),
+            "magnolia_job_observed": (
+                magnolia_job_match.group(1) if magnolia_job_match else None
+            ),
+            "authoritative_build_state_excerpt": section_excerpt("Authoritative build state"),
+            "runtime_result_excerpt": section_excerpt("Magnolia runtime result"),
+            "next_experiment_excerpt": section_excerpt("Next experiment: frozen downstream arbitration"),
+            "authority": "branch-qualified-continuity-overlay",
+        }
+
+    active_mission_state = {
+        "schema": "alice-context-active-mission-state-v1",
+        "source_branch": SOURCE_BRANCH,
+        "source_commit": source_sha,
+        "implementation_state": active_n0_state,
+        "continuity_overlay": latest_handoff,
+        "execution_rule": (
+            "Implementation config governs committed model/build state. "
+            "A newer continuity overlay may supersede its observed runtime status "
+            "and next-action wording. Open the original handoff before execution."
+        ),
+        "authority": "routing-and-freshness-only",
+    }
+    write_json(OUT / "ACTIVE_MISSION_STATE.json", active_mission_state)
+
     write_jsonl(OUT / "DOCUMENT_CATALOG.jsonl", dedupe(doc_rows))
     write_jsonl(OUT / "FAILURE_LESSON_CATALOG.jsonl", dedupe(failure_rows))
     write_jsonl(OUT / "FRONTIER_RESEARCH_CATALOG.jsonl", dedupe(research_rows))
@@ -439,6 +512,8 @@ def main() -> None:
         "knowledge_branch_count": sum(1 for x in branch_rows if x["knowledge_surface"]),
         "source_file_count": len(source_rows),
         "active_n0_state_present": active_n0_state is not None,
+        "active_mission_state_present": True,
+        "continuity_overlay_present": latest_handoff is not None,
         "document_pointer_count": len(dedupe(doc_rows)),
         "failure_lesson_pointer_count": len(dedupe(failure_rows)),
         "frontier_research_pointer_count": len(dedupe(research_rows)),
