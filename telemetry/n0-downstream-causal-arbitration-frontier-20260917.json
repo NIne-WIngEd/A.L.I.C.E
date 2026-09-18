@@ -1,0 +1,55 @@
+{
+  "schema": "alice.telemetry.n0.downstream-causal-arbitration-frontier.v0.1",
+  "date": "2026-09-17",
+  "stable_build_base": {
+    "branch": "alice-eipm-v1-build",
+    "commit": "021c5021a98104b35f9c8e94b19e48d21f25f132"
+  },
+  "frontier": {
+    "branch": "alice-eipm-v1-causal-arbitration-binding",
+    "commit": "d49d6e7f45c15905ca8ec5a33d1ac14c3aef3d59",
+    "ahead_of_stable_build": 23,
+    "behind_stable_build": 0,
+    "canonical_promotion": false
+  },
+  "last_model_runtime": {
+    "magnolia_job_id": 575718,
+    "selected_checkpoint": "step-00000200",
+    "selected_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f"
+  },
+  "arbitration": {
+    "canonical_only_calibration_required": true,
+    "candidate_observed_during_calibration": false,
+    "candidate_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+    "full_stack": true,
+    "graph_checkpoint_only_arm_variant": true,
+    "frozen_downstream_weights": true,
+    "automatic_final_challenge": false,
+    "training_authorized": false,
+    "promotion_authorized": false,
+    "scale_authorized": false,
+    "n0_complete": false
+  },
+  "magnolia": {
+    "runtime_boundary": "whole-stage udocker",
+    "repo_path": "$HOME/rayan-compute/rayan-eipm-main",
+    "n0_workdir": "$HOME/rayan-compute/rayan-n0/n0-v02",
+    "calibration_job": "scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch",
+    "arbitration_job": "scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch",
+    "required_forwarded_env": [
+      "ALICE_REPO_ROOT",
+      "ALICE_N0_WORKDIR",
+      "ALICE_N0_ARB_CAL_DIR",
+      "ALICE_N0_ARB_DIR"
+    ]
+  },
+  "pre_gpu_validation": {
+    "workflow": "N0 Arbitration Contract Check",
+    "workflow_run_id": 35299070068,
+    "result": "PASS"
+  },
+  "next_action": "run canonical-only metric calibration on Magnolia from the tested frontier head; inspect calibration receipt before submitting frozen arbitration",
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "model_gradient_performed_since_job_575718": false
+}
