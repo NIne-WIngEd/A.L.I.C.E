@@ -1,5 +1,5 @@
 {
-  "request_id": "coverage-g2-buried-doc-fact-003",
+  "request_id": "coverage-g2-doc-route-no-graph-001",
   "question": "Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?",
   "budget": 1500,
   "traversal": "bfs",
@@ -7,8 +7,15 @@
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-18T01:53:23.872478+00:00",
+  "generated_at_utc": "2026-09-18T01:55:21.369569+00:00",
   "authority": "navigation-only",
+  "routing_decision": {
+    "graphify_mode": "auto",
+    "graphify_used": true,
+    "reason": "question requires code topology",
+    "private_external_route_recommended": true
+  },
+  "graphify_used": true,
   "graph_build": {
     "source_work_branch": "alice-eipm-v1-build",
     "source_work_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",

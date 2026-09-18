@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v1",
-  "request_id": "coverage-g2-buried-doc-fact-003",
+  "request_id": "coverage-g2-doc-route-no-graph-001",
   "question": "Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?",
-  "generated_at_utc": "2026-09-18T01:53:23.872478+00:00",
+  "generated_at_utc": "2026-09-18T01:55:21.369569+00:00",
   "source_freshness": {
     "source_branch": "alice-eipm-v1-build",
     "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
