@@ -60,6 +60,31 @@ FBM logging must not block or delay Alice training, evaluation, or debugging.
 
 If time is limited, build Alice first and record the compact trace immediately after the material step.
 
+## Architecture-audit capture rule
+
+From N0 onward, architecture-level failures and no-gradient diagnostics are material FBM seeds and must be captured just like successful training steps.
+
+Capture at least:
+
+- the failed capability boundary;
+- why another local repair was stopped;
+- the representation or interface hypothesis that replaced hotfixing;
+- the no-gradient diagnostic used to test that hypothesis;
+- the resulting architecture decision boundary;
+- negative evidence showing what **not** to train next.
+
+Examples include:
+
+- repair-loop stop -> architecture audit;
+- pooled-vs-token representation comparison;
+- layerwise semantic probing;
+- evidence that a final-layer interface hides capability present in intermediate layers;
+- evidence that a capability is genuinely absent upstream and should move the build frontier back to representation learning.
+
+These traces are especially valuable because they teach FBM how to decide **where to intervene**, not merely how to produce another patch.
+
+Do not wait for owner reminders. A material architecture audit should emit its compact FBM trace as part of the same development milestone.
+
 ## Stage continuity
 
 The same rule applies across:
