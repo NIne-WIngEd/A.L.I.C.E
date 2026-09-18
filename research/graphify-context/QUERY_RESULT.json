@@ -1,13 +1,13 @@
 {
-  "request_id": "n0-localize-missing-structured-evidence-20260918-001",
-  "question": "After final frozen challenge job 575794 failed only counterfactual_family_min_drop for family missing_structured_evidence with negative target drop, localize the code and prior evidence needed to determine whether the harmful structured contribution enters at structured parent encoding, reliability/target-view semantics, cross-context fusion, or adaptive latent consumption. Identify any existing diagnostics for parent-value path, view ablation, source reliability, missing structured evidence, pre-fusion counterfactuals, and any prior rejected causes. Do not use or propose rerunning frozen challenge rows. Point to the exact current files/functions on the maximal experiment frontier and the safest fresh diagnostic design outside frozen challenge rows.",
-  "budget": 2600,
+  "request_id": "n0-missing-evidence-localization-ready-20260918-001",
+  "question": "What is the exact current N0 state after final frozen challenge job 575794 and what single fresh non-challenge localization run is now authorized? Identify the maximal experiment frontier, active handoff, failing gate/family, anti-loop constraints, and the ready Magnolia localization runner.",
+  "budget": 1500,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-18T17:55:23.446885+00:00",
+  "generated_at_utc": "2026-09-18T18:05:50.352918+00:00",
   "authority": "navigation-only",
   "routing_decision": {
     "graphify_mode": "auto",
@@ -17,7 +17,7 @@
     "graph_source_commit": null,
     "graph_source_reason": null,
     "graph_rebuild_required": false,
-    "private_external_route_recommended": false
+    "private_external_route_recommended": true
   },
   "graphify_used": false,
   "graph_build": {
@@ -33,90 +33,43 @@
   },
   "catalog_result": {
     "schema": "alice-context-catalog-query-v1",
-    "question": "After final frozen challenge job 575794 failed only counterfactual_family_min_drop for family missing_structured_evidence with negative target drop, localize the code and prior evidence needed to determine whether the harmful structured contribution enters at structured parent encoding, reliability/target-view semantics, cross-context fusion, or adaptive latent consumption. Identify any existing diagnostics for parent-value path, view ablation, source reliability, missing structured evidence, pre-fusion counterfactuals, and any prior rejected causes. Do not use or propose rerunning frozen challenge rows. Point to the exact current files/functions on the maximal experiment frontier and the safest fresh diagnostic design outside frozen challenge rows.",
+    "question": "What is the exact current N0 state after final frozen challenge job 575794 and what single fresh non-challenge localization run is now authorized? Identify the maximal experiment frontier, active handoff, failing gate/family, anti-loop constraints, and the ready Magnolia localization runner.",
     "query_tokens": [
+      "exact",
+      "state",
       "after",
       "final",
       "frozen",
       "challenge",
       "job",
       "575794",
-      "failed",
-      "only",
-      "counterfactual_family_min_drop",
-      "family",
-      "missing_structured_evidence",
-      "negative",
-      "target",
-      "drop",
-      "localize",
-      "code",
-      "prior",
-      "evidence",
-      "needed",
-      "determine",
-      "whether",
-      "harmful",
-      "structured",
-      "contribution",
-      "enters",
-      "structured",
-      "parent",
-      "encoding",
-      "reliability/target-view",
-      "semantics",
-      "cross-context",
-      "fusion",
-      "adaptive",
-      "latent",
-      "consumption",
+      "single",
+      "fresh",
+      "non-challenge",
+      "localization",
+      "run",
+      "authorized",
       "identify",
-      "any",
-      "existing",
-      "diagnostics",
-      "parent-value",
-      "path",
-      "view",
-      "ablation",
-      "source",
-      "reliability",
-      "missing",
-      "structured",
-      "evidence",
-      "pre-fusion",
-      "counterfactuals",
-      "any",
-      "prior",
-      "rejected",
-      "causes",
-      "not",
-      "use",
-      "propose",
-      "rerunning",
-      "frozen",
-      "challenge",
-      "rows",
-      "point",
-      "exact",
-      "files/functions",
       "maximal",
       "experiment",
       "frontier",
-      "safest",
-      "fresh",
-      "diagnostic",
-      "design",
-      "outside",
-      "frozen",
-      "challenge",
-      "rows"
+      "active",
+      "handoff",
+      "failing",
+      "gate/family",
+      "anti-loop",
+      "constraints",
+      "ready",
+      "magnolia",
+      "localization",
+      "runner"
     ],
     "catalog_status": {
       "schema": "alice-context-catalog-status-v1",
       "source_branch": "alice-eipm-v1-build",
       "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "branch_count": 30,
-      "knowledge_branch_count": 30,
+      "branch_count": 31,
+      "knowledge_branch_count": 31,
       "source_file_count": 1238,
       "active_n0_state_present": true,
       "active_mission_state_present": true,
@@ -124,10 +77,10 @@
       "unmerged_experiment_frontier_present": true,
       "unmerged_experiment_maximal_head_count": 1,
       "continuity_stale_relative_to_experiment_frontier": true,
-      "document_pointer_count": 2121,
-      "failure_lesson_pointer_count": 873,
-      "frontier_research_pointer_count": 401,
-      "supersession_pointer_count": 222,
+      "document_pointer_count": 2137,
+      "failure_lesson_pointer_count": 888,
+      "frontier_research_pointer_count": 407,
+      "supersession_pointer_count": 223,
       "authority": "routing-only",
       "notes": [
         "Catalog entries are source pointers, not truth promotions.",
@@ -206,28 +159,30 @@
       },
       "continuity_branch_head": {
         "branch": "alice-context",
-        "head": "2d6bfbffafb7a7fffe8060c972ee60cb4f96a1bb",
-        "head_committed_at": "2026-09-18T12:41:23-05:00",
-        "head_message": "context: hand off N0 final frozen challenge frontier"
+        "head": "69a91c84fc14e07ad9657b8cdf71f673ad6665f7",
+        "head_committed_at": "2026-09-18T13:05:20-05:00",
+        "head_message": "context: mark fresh missing-evidence localization ready"
       },
       "unmerged_experiment_frontier": {
         "schema": "alice-context-unmerged-experiment-frontier-v1",
         "stable_build_branch": "alice-eipm-v1-build",
         "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "candidate_count": 3,
+        "candidate_count": 4,
         "maximal_head_count": 1,
         "maximal_heads": [
           {
-            "branch": "alice-eipm-v1-causal-arbitration-binding",
-            "head": "ae1be5f811ceea772d138b35191278b8a304d023",
-            "head_committed_at": "2026-09-18T12:47:22-05:00",
-            "head_message": "fix(n0): align final challenge with frozen stack manifest schema",
-            "ahead": 33,
+            "branch": "alice-eipm-v1-missing-evidence-localization",
+            "head": "6183ed9be59a75fc7c5118312099a0875b8bab6d",
+            "head_committed_at": "2026-09-18T13:04:44-05:00",
+            "head_message": "fix(n0): separate graph selection from value geometry in localization",
+            "ahead": 42,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-            "changed_file_count_vs_source_merge_base": 35,
+            "changed_file_count_vs_source_merge_base": 41,
             "changed_paths_vs_source_merge_base": [
               ".github/workflows/n0-arbitration-contract-check.yml",
+              ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
@@ -238,7 +193,9 @@
               "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
               "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
               "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+              "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
               "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+              "scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py",
               "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
               "scripts/eipm/n0/downstream_causal_arbitration_v0_2.py",
               "scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py",
@@ -247,6 +204,7 @@
               "scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch",
               "scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch",
               "scripts/eipm/n0/magnolia_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sbatch",
+              "scripts/eipm/n0/magnolia_n0_v02_missing_evidence_path_localization_v0_1.sbatch",
               "scripts/eipm/n0/magnolia_udocker_exec.sh",
               "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
               "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
@@ -254,6 +212,7 @@
               "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
               "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
               "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
               "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
@@ -267,6 +226,60 @@
           }
         ],
         "all_ahead_candidates": [
+          {
+            "branch": "alice-eipm-v1-missing-evidence-localization",
+            "head": "6183ed9be59a75fc7c5118312099a0875b8bab6d",
+            "head_committed_at": "2026-09-18T13:04:44-05:00",
+            "head_message": "fix(n0): separate graph selection from value geometry in localization",
+            "ahead": 42,
+            "behind": 0,
+            "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+            "changed_file_count_vs_source_merge_base": 41,
+            "changed_paths_vs_source_merge_base": [
+              ".github/workflows/n0-arbitration-contract-check.yml",
+              ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
+              "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
+              "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+              "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
+              "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
+              "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+              "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+              "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+              "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+              "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+              "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+              "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
+              "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+              "scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py",
+              "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
+              "scripts/eipm/n0/downstream_causal_arbitration_v0_2.py",
+              "scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py",
+              "scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py",
+              "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
+              "scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch",
+              "scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch",
+              "scripts/eipm/n0/magnolia_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sbatch",
+              "scripts/eipm/n0/magnolia_n0_v02_missing_evidence_path_localization_v0_1.sbatch",
+              "scripts/eipm/n0/magnolia_udocker_exec.sh",
+              "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
+              "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
+              "scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
+              "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
+              "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+              "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
+              "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
+              "tests/eipm/n0/test_downstream_full_stack_graph_evaluator_v0_1.py",
+              "tests/eipm/n0/test_execute_frozen_downstream_causal_arbitration_v0_1.py",
+              "tests/eipm/n0/test_finalize_downstream_causal_arbitration_v0_1.py",
+              "tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py",
+              "tests/eipm/n0/test_prepare_downstream_causal_arbitration_v0_1.py"
+            ],
+            "authority": "unmerged-experiment-pointer"
+          },
           {
             "branch": "alice-eipm-v1-causal-arbitration-binding",
             "head": "ae1be5f811ceea772d138b35191278b8a304d023",
@@ -362,9 +375,9 @@
       },
       "continuity_freshness": {
         "stale_relative_to_unmerged_experiment_frontier": true,
-        "newest_experiment_frontier_time": "2026-09-18T12:47:22-05:00",
+        "newest_experiment_frontier_time": "2026-09-18T13:04:44-05:00",
         "active_handoff_last_changed_at": "2026-09-18T12:41:23-05:00",
-        "context_branch_head_time": "2026-09-18T12:41:23-05:00"
+        "context_branch_head_time": "2026-09-18T13:05:20-05:00"
       },
       "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
       "authority": "routing-and-freshness-only"
@@ -418,7 +431,7 @@
     },
     "hits": [
       {
-        "score": 184,
+        "score": 152,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
@@ -447,16 +460,121 @@
         "currentness_adjustment": 30
       },
       {
-        "score": 156,
+        "score": 125,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
+        "blob_sha": "5055fd6d52f800315695dae8ad0d3564514274dd",
+        "category": "working_context",
+        "title": "N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization",
+        "declared": {
+          "status": " final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 19
+      },
+      {
+        "score": 88,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0.1.json",
-        "blob_sha": "b3b386588d6bc9be536f40034203a78b000b07d2",
-        "category": "configuration_state",
-        "title": "n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0.1.json",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md",
+        "blob_sha": "435efa0bf1c2e58ecd5929e4fd25c03cc6f9cd5b",
+        "category": "runtime_receipt",
+        "title": "Magnolia single-P100 N0 teacher diagnostic — job 575565",
         "declared": {},
         "matched_terms": [
+          "failed",
           "failure",
+          "magnolia",
+          "repair",
+          "runtime-results"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 8,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 86,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md",
+        "blob_sha": "77ff7dda3d28fef326ceb8e6af7db799879c876b",
+        "category": "runtime_receipt",
+        "title": "Magnolia 2×P100 N0 Runtime Smoke — Job 575527",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "magnolia",
+          "runtime-results",
+          "smoke",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 7,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 86,
+        "branch": "alice-eipm-v1-missing-evidence-localization",
+        "branch_scope": "branch_specific",
+        "path": ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
+        "blob_sha": "74aa2f5a2fb22f50c95da567cacec8ad26130d15",
+        "category": "repository_file",
+        "title": "n0-missing-evidence-localization-contract-check.yml",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "magnolia",
+          "repair",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 6,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 85,
+        "branch": "fable-builder-model",
+        "branch_scope": "branch_specific",
+        "path": "docs/fable-builder/traces/2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl",
+        "blob_sha": "dd9b39a6333344be9a3690220608496213fdbc47",
+        "category": "design_document",
+        "title": "2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
           "repair"
         ],
         "supersession_hints": [],
@@ -465,21 +583,131 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 6,
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 83,
+        "branch": "alice-telemetry",
+        "branch_scope": "branch_specific",
+        "path": "telemetry/n0-final-frozen-challenge-valid-fail-575794.json",
+        "blob_sha": "b2002f4ea83cadc8dce424f2edc3aa2d9586fd6d",
+        "category": "repository_file",
+        "title": "n0-final-frozen-challenge-valid-fail-575794.json",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 5
+      },
+      {
+        "score": 77,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_DDP_JOB_575537.md",
+        "blob_sha": "101c3de692ac07f418f2134c23f2c6245e1703f5",
+        "category": "runtime_receipt",
+        "title": "Magnolia 2×P100 N0 DDP Mechanics — Job 575537",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "magnolia",
+          "runtime-results",
+          "smoke",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 7,
         "currentness_adjustment": 4
       },
       {
-        "score": 148,
+        "score": 77,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0.2.json",
-        "blob_sha": "476d6cf8617bd44412e0e4fef6bddd345a1f4c58",
-        "category": "configuration_state",
-        "title": "n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0.2.json",
-        "declared": {},
-        "matched_terms": [],
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_N0_CONTINUATION_JOB_575548.md",
+        "blob_sha": "f8a37086738f1a7ff8256697aa0d78e711e8b6fb",
+        "category": "runtime_receipt",
+        "title": "Magnolia N0 continuation — job 575548",
+        "declared": {
+          "status": " completed successfully"
+        },
+        "matched_terms": [
+          "magnolia",
+          "repair",
+          "runtime-results"
+        ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 5,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 77,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md",
+        "blob_sha": "be2ffe0bb87a8f835d36698854aa620db7694b99",
+        "category": "runtime_receipt",
+        "title": "Magnolia 2×P100 Real N0 Training — Job 575546",
+        "declared": {
+          "status": " completed successfully; durable weights retained; LR scheduler defect identified before continuation"
+        },
+        "matched_terms": [
+          "failure",
+          "magnolia",
+          "repair",
+          "runtime-results"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 7,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 77,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
+        "blob_sha": "caa8ea529fc219d8d0004bd2c5cb5e2cebebc852",
+        "category": "runtime_receipt",
+        "title": "Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571",
+        "declared": {
+          "status": "completed payload"
+        },
+        "matched_terms": [
+          "error",
+          "failed",
+          "failure",
+          "magnolia",
+          "repair",
+          "runtime-results"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
           "document",
           "lexical"
         ],
@@ -487,21 +715,89 @@
         "currentness_adjustment": 4
       },
       {
-        "score": 144,
-        "branch": "alice-context",
+        "score": 75,
+        "branch": "alice-eipm-v1-missing-evidence-localization",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md",
-        "blob_sha": "0fd59429e3c85c66ad4674cf2cfd94a84016410c",
-        "category": "working_context",
-        "title": "Fusion frozen challenge failure + source-anchored repair — 2026-09-16",
+        "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+        "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
+        "category": "design_document",
+        "title": "N0 downstream causal arbitration — Magnolia execution contract",
+        "declared": {},
+        "matched_terms": [
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 7,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 73,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/MAGNOLIA_P100X2_RUNTIME_SMOKE_2026-09-13.md",
+        "blob_sha": "83ab8ec25221b2a6903a2502b2019f9a8a901ec3",
+        "category": "design_document",
+        "title": "Magnolia 2×P100 N0 Runtime Smoke — 2026-09-13",
         "declared": {
-          "status": "`FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`."
+          "status": " ready for owner execution"
         },
         "matched_terms": [
-          "error",
+          "fallback",
+          "kaggle",
+          "magnolia",
+          "smoke"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 7,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 73,
+        "branch": "alice-eipm-v1-missing-evidence-localization",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+        "blob_sha": "eee60bbaeba09923431699702aa18d3d559dd85a",
+        "category": "design_document",
+        "title": "N0 downstream causal arbitration finalization v0.1",
+        "declared": {},
+        "matched_terms": [
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 6,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 69,
+        "branch": "alice-eipm-v1-missing-evidence-localization",
+        "branch_scope": "branch_specific",
+        "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
+        "blob_sha": "59cc72e3de333c59776e78a2ed3a8e2a1e56c529",
+        "category": "configuration_state",
+        "title": "alice_n0_latent_pool_stage_state_v0.10.json",
+        "declared": {},
+        "matched_terms": [
           "failed",
           "failure",
-          "fallback",
+          "hotfix",
           "magnolia",
           "repair"
         ],
@@ -512,11 +808,37 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 18,
-        "currentness_adjustment": -15
+        "lexical_body_hits": 5,
+        "currentness_adjustment": 25
       },
       {
-        "score": 138,
+        "score": 68,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md",
+        "blob_sha": "7fa503d6e7b78a80d4a632471e0f03f080dc615c",
+        "category": "runtime_receipt",
+        "title": "N0 Frontier Research Audit — 2026-09-14",
+        "declared": {
+          "status": "hold the step-1000 -> step-2500 GPU job pending N0 v0.2 redesign**."
+        },
+        "matched_terms": [
+          "magnolia",
+          "runtime-results"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 6,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 67,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-16/sol/FULL_SCALE_FUSION_JOB575619_AND_FROZEN_CHALLENGE.md",
@@ -535,170 +857,35 @@
           "document",
           "lexical"
         ],
+        "lexical_body_hits": 8,
+        "currentness_adjustment": -15
+      },
+      {
+        "score": 67,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md",
+        "blob_sha": "079f972af73945d7babb8cfe5185977ed9d43e8a",
+        "category": "working_context",
+        "title": "N0 causal-arbitration frontier ready for Magnolia calibration",
+        "declared": {},
+        "matched_terms": [
+          "magnolia",
+          "repair",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
         "lexical_body_hits": 15,
         "currentness_adjustment": -15
       },
       {
-        "score": 134,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md",
-        "blob_sha": "5bf63241b821ece2c6b74fc0512c575bd7db9c6e",
-        "category": "design_document",
-        "title": "N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "supersession",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 19,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 132,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.3.json",
-        "blob_sha": "c57a1750bc13fed8d4a5c1d479c75d1b2a73078b",
-        "category": "configuration_state",
-        "title": "n0_v02_cross_context_fusion_frozen_challenge_v0.3.json",
-        "declared": {},
-        "matched_terms": [
-          "error",
-          "failed",
-          "failure",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 9,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 130,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.1.json",
-        "blob_sha": "d575d8fb7fe658e002807292e994afb515063544",
-        "category": "configuration_state",
-        "title": "n0_v02_cross_context_fusion_frozen_challenge_v0.1.json",
-        "declared": {},
-        "matched_terms": [
-          "failure"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 7,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 130,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.2.json",
-        "blob_sha": "adee96e4da0c491f8dff99ee7a0b484b9179820a",
-        "category": "configuration_state",
-        "title": "n0_v02_cross_context_fusion_frozen_challenge_v0.2.json",
-        "declared": {},
-        "matched_terms": [
-          "error",
-          "failure",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 6,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 124,
-        "branch": "fable-builder-model",
-        "branch_scope": "branch_specific",
-        "path": "docs/fable-builder/traces/FBM_TRACE_20260916_FUSION_FROZEN_CHALLENGE.jsonl",
-        "blob_sha": "b6db512a53e90ced0baa537a1d26c86f035108ac",
-        "category": "design_document",
-        "title": "FBM_TRACE_20260916_FUSION_FROZEN_CHALLENGE.jsonl",
-        "declared": {},
-        "matched_terms": [
-          "failure"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 6
-      },
-      {
-        "score": 122,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-16/sol/N0_LATENT_V02_FROZEN_FAIL_VALUE_CONTRAST_DIAGNOSTIC.md",
-        "blob_sha": "ca2aae33536b80025cbc07b87e842f477d9187c7",
-        "category": "working_context",
-        "title": "N0 latent pool v0.2 frozen challenge: valid fail, value-contrast diagnostic required",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 19,
-        "currentness_adjustment": -15
-      },
-      {
-        "score": 95,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-15/sol/N0_V02_STRUCTURED_TO_EVIDENCE_GRAPH_HANDOFF.md",
-        "blob_sha": "db60e6e30e9c553db9e8a5065402201824bcc51a",
-        "category": "working_context",
-        "title": "N0 v0.2 Structured-State -> Evidence Graph Handoff",
-        "declared": {},
-        "matched_terms": [
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "supersession",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 12,
-        "currentness_adjustment": -15
-      },
-      {
-        "score": 92,
+        "score": 62,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
@@ -721,175 +908,34 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 27,
+        "lexical_body_hits": 11,
         "currentness_adjustment": 4
       },
       {
-        "score": 90,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/N0_PARENT_VALUE_PATH_DIAGNOSTIC_CONTRACT_2026-09-16.md",
-        "blob_sha": "78cc6adbfd0706aec649c2a214f2078854aaa0cc",
-        "category": "design_document",
-        "title": "N0 Parent Value-Path Diagnostic Contract — 2026-09-16",
-        "declared": {},
-        "matched_terms": [
-          "failure",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 16,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 88,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/N0_ADAPTIVE_LATENT_POOL_V01_FAILURE_AND_V02_REPAIR_2026-09-16.md",
-        "blob_sha": "f52cd22657c2545c5af7dd3e7aa2f0923a6ee144",
-        "category": "design_document",
-        "title": "N0 Adaptive Multi-View Latent Pool v0.1 Failure and v0.2 Repair — 2026-09-16",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 15,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 83,
-        "branch": "fable-builder-model",
+        "score": 62,
+        "branch": "alice-eipm-v1-missing-evidence-localization",
         "branch_scope": "branch_specific",
-        "path": "docs/fable-builder/traces/FBM_TRACE_20260916_FUSION_SOURCE_ANCHOR_REPAIR.jsonl",
-        "blob_sha": "ea9d4021998c51c7439e69386412bebf3b969511",
+        "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+        "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
         "category": "design_document",
-        "title": "FBM_TRACE_20260916_FUSION_SOURCE_ANCHOR_REPAIR.jsonl",
+        "title": "N0 downstream causal arbitration v0.1",
         "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 2,
-            "text": "{\"trace_id\":\"FBM-20260916-FUSION-SOURCE-ANCHOR-02\",\"date\":\"2026-09-16\",\"category\":\"evaluation_integrity\",\"trigger\":\"A frozen challenge exposed failures that informed architecture and curriculum repair.\",\"lesson\":\"Once an untouched challenge informs repair decisions, it is no longer untouched for the repaired model and must be retired from ratification use. It may remain diagnostic evidence only.\",\"general_rule\":\"Never train on frozen challenge rows. After failure-driven repair, author a new inde"
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 14
-      },
-      {
-        "score": 82,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-15/sol/N0_V02_NOVEL_CHALLENGE_REPAIR_AND_EFFICIENCY.md",
-        "blob_sha": "1b719feb54c736b0d842e920fb1ce333b2efa196",
-        "category": "working_context",
-        "title": "N0 v0.2 novel challenge, targeted repair, and efficiency constraint",
-        "declared": {
-          "decision": "step 250 is the only authorized repair parent. Step 500 is rejected as a repair parent. It is less accurate on the novel set and much more confident on wrong examples."
-        },
         "matched_terms": [
-          "failed",
-          "failure",
-          "magnolia",
-          "repair"
+          "frontier"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "failure",
           "frontier",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 13,
-        "currentness_adjustment": -15
-      },
-      {
-        "score": 78,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-15/sol/N0_V02_STRUCTURED_TARGET_SPLIT_AND_PILOT.md",
-        "blob_sha": "35e1aaac0d8cd715f0493837e90ec57361deb6cc",
-        "category": "working_context",
-        "title": "N0 v0.2 structured-state target split and pilot",
-        "declared": {},
-        "matched_terms": [
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
           "failure",
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 7,
-        "currentness_adjustment": -15
-      },
-      {
-        "score": 78,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-16/sol/N0_LATENT_V021_DEV_PASS_CONFIRMATORY_CHALLENGE_PENDING.md",
-        "blob_sha": "ba34821f56158ff5b3380626c52cb00f7f128fce",
-        "category": "working_context",
-        "title": "N0 Latent Pool v0.2.1 — Dev Pass, Confirmatory Challenge Pending",
-        "declared": {},
-        "matched_terms": [
-          "failure",
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "supersession",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 13,
-        "currentness_adjustment": -15
-      },
-      {
-        "score": 78,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "configs/eipm/n0/n0_v02_structured_state_v0.1.json",
-        "blob_sha": "c9967447b00512445e457462f6c3e62953ac7202",
-        "category": "configuration_state",
-        "title": "n0_v02_structured_state_v0.1.json",
-        "declared": {},
-        "matched_terms": [
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 7,
-        "currentness_adjustment": 4
+        "lexical_body_hits": 6,
+        "currentness_adjustment": 25
       }
     ],
-    "private_external_route_recommended": false,
-    "private_external_route_reason": null,
+    "private_external_route_recommended": true,
+    "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
     "authority": "routing-only"
   },
   "graphify_result_text": "",

@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-localize-missing-structured-evidence-20260918-001
-- Question: After final frozen challenge job 575794 failed only counterfactual_family_min_drop for family missing_structured_evidence with negative target drop, localize the code and prior evidence needed to determine whether the harmful structured contribution enters at structured parent encoding, reliability/target-view semantics, cross-context fusion, or adaptive latent consumption. Identify any existing diagnostics for parent-value path, view ablation, source reliability, missing structured evidence, pre-fusion counterfactuals, and any prior rejected causes. Do not use or propose rerunning frozen challenge rows. Point to the exact current files/functions on the maximal experiment frontier and the safest fresh diagnostic design outside frozen challenge rows.
+- Request: n0-missing-evidence-localization-ready-20260918-001
+- Question: What is the exact current N0 state after final frozen challenge job 575794 and what single fresh non-challenge localization run is now authorized? Identify the maximal experiment frontier, active handoff, failing gate/family, anti-loop constraints, and the ready Magnolia localization runner.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: False
@@ -18,24 +18,27 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-causal-arbitration-binding @ ae1be5f811ceea772d138b35191278b8a304d023 — fix(n0): align final challenge with frozen stack manifest schema
+- alice-eipm-v1-missing-evidence-localization @ 6183ed9be59a75fc7c5118312099a0875b8bab6d — fix(n0): separate graph selection from value geometry in localization
 
 ## Source pointers
 
-- [184] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
+- [152] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
   - status:  one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized
-- [156] alice-eipm-v1-build:configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0.1.json — n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0.1.json
-- [148] alice-eipm-v1-build:configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0.2.json — n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0.2.json
-- [144] alice-context:docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md — Fusion frozen challenge failure + source-anchored repair — 2026-09-16
-  - status: `FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`.
-- [138] alice-context:docs/chat-context/2026-09-16/sol/FULL_SCALE_FUSION_JOB575619_AND_FROZEN_CHALLENGE.md — Full-Scale Fusion Job 575619 + Frozen Challenge Gate — 2026-09-16
-- [134] alice-eipm-v1-build:docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md — N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16
-- [132] alice-eipm-v1-build:configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.3.json — n0_v02_cross_context_fusion_frozen_challenge_v0.3.json
-- [130] alice-eipm-v1-build:configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.1.json — n0_v02_cross_context_fusion_frozen_challenge_v0.1.json
-- [130] alice-eipm-v1-build:configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.2.json — n0_v02_cross_context_fusion_frozen_challenge_v0.2.json
-- [124] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260916_FUSION_FROZEN_CHALLENGE.jsonl — FBM_TRACE_20260916_FUSION_FROZEN_CHALLENGE.jsonl
-- [122] alice-context:docs/chat-context/2026-09-16/sol/N0_LATENT_V02_FROZEN_FAIL_VALUE_CONTRAST_DIAGNOSTIC.md — N0 latent pool v0.2 frozen challenge: valid fail, value-contrast diagnostic required
-- [95] alice-context:docs/chat-context/2026-09-15/sol/N0_V02_STRUCTURED_TO_EVIDENCE_GRAPH_HANDOFF.md — N0 v0.2 Structured-State -> Evidence Graph Handoff
+- [125] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md — N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization
+  - status:  final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged
+- [88] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md — Magnolia single-P100 N0 teacher diagnostic — job 575565
+- [86] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md — Magnolia 2×P100 N0 Runtime Smoke — Job 575527
+- [86] alice-eipm-v1-missing-evidence-localization:.github/workflows/n0-missing-evidence-localization-contract-check.yml — n0-missing-evidence-localization-contract-check.yml
+- [85] fable-builder-model:docs/fable-builder/traces/2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl — 2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl
+- [83] alice-telemetry:telemetry/n0-final-frozen-challenge-valid-fail-575794.json — n0-final-frozen-challenge-valid-fail-575794.json
+- [77] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_DDP_JOB_575537.md — Magnolia 2×P100 N0 DDP Mechanics — Job 575537
+- [77] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_N0_CONTINUATION_JOB_575548.md — Magnolia N0 continuation — job 575548
+  - status:  completed successfully
+- [77] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md — Magnolia 2×P100 Real N0 Training — Job 575546
+  - status:  completed successfully; durable weights retained; LR scheduler defect identified before continuation
+- [77] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md — Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571
+  - status: completed payload
+- [75] alice-eipm-v1-missing-evidence-localization:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
 
 ## Graphify navigation hints
 
@@ -43,8 +46,8 @@
 
 ## External/private routing
 
-- Recommended: False
-- Reason: None
+- Recommended: True
+- Reason: host-specific operational history may contain newer failure lessons than public receipts
 
 ## Trust contract
 
