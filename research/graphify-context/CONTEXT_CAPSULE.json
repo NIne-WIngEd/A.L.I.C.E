@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v1",
-  "request_id": "coverage-g7-comic-continuous-memory-001",
-  "question": "What does the A.L.I.C.E. comic require from continuous memory across years, especially remembering why an old decision worked then, why it later stopped working, and what changed?",
-  "generated_at_utc": "2026-09-18T01:48:09.682233+00:00",
+  "request_id": "coverage-g2-buried-doc-fact-002",
+  "question": "Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?",
+  "generated_at_utc": "2026-09-18T01:52:19.168207+00:00",
   "source_freshness": {
     "source_branch": "alice-eipm-v1-build",
     "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -78,376 +78,392 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 50,
+      "score": 58,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
-      "path": "docs/MEMORY_ARCHITECTURE_HOLD.md",
-      "blob_sha": "a6164eaee37a23211d7c8270540a06f1f21fa672",
-      "category": "design_document",
-      "title": "A.L.I.C.E. Memory Architecture Hold — Supersession Record",
+      "path": "docs/eipm/n0/runtime-results/MAGNOLIA_PUBLIC_LINEAGE_IMPORT_20260914.md",
+      "blob_sha": "45e7f5ed2da02f98e3c52c0a1bef999aedf65d83",
+      "category": "runtime_receipt",
+      "title": "Magnolia Public N0 Lineage Import — 2026-09-14",
       "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 4,
-          "text": "**Superseded by:** `docs/MEMORY_CAPABILITY_EXPANSION_AND_RATIFICATION_PROGRAM.md`"
-        },
-        {
-          "line": 12,
-          "text": "Its broad research and technology restrictions are now retired from the ratified governing text. The accepted authority topology remains valuable. Physical-topology assumptions and general research pauses do not govern Memory Architecture v4.1."
-        }
+      "matched_terms": [
+        "failed",
+        "failure",
+        "fallback",
+        "kaggle",
+        "magnolia",
+        "network",
+        "runtime-results",
+        "smoke",
+        "udocker"
       ],
+      "supersession_hints": [],
       "catalogs": [
-        "supersession",
-        "document",
-        "frontier"
+        "failure",
+        "document"
       ]
     },
     {
-      "score": 41,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/MEMORY_M1_DECISION_REGISTER.md",
-      "blob_sha": "76196d3a8503b8462aaeff4e3abf5b443f38e2ca",
-      "category": "design_document",
-      "title": "Memory M1 Decision Register",
-      "declared": {
-        "status": " M1-DX0 through M1-D9 owner-ratified on 2026-08-05"
-      },
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 120,
-          "text": "Authority is explicit and profile-bound. Automated adjudication may accept, revise, supersede, dispute, quarantine, merge, split, or reject candidates according to authority class, evidence, confidence, consequence, and evaluation."
-        }
+      "score": 54,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-13/sol/N0_KAGGLE_CPU_LINEAGE_SUCCESS_AND_MAGNOLIA_IMPORT.md",
+      "blob_sha": "514d3f5faffda3e184f18dd4d7fe7a08262413a2",
+      "category": "working_context",
+      "title": "N0 Kaggle CPU Lineage Success and Magnolia Import — 2026-09-14",
+      "declared": {},
+      "matched_terms": [
+        "dns",
+        "egress",
+        "failed",
+        "kaggle",
+        "magnolia",
+        "network",
+        "powershell"
       ],
+      "supersession_hints": [],
       "catalogs": [
-        "supersession",
-        "document",
         "failure",
-        "frontier"
+        "document",
+        "supersession"
+      ]
+    },
+    {
+      "score": 39,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md",
+      "blob_sha": "a8be2d6d77884b715635b5a97d3b3e7abbb93e67",
+      "category": "working_context",
+      "title": "MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready",
+      "declared": {},
+      "matched_terms": [
+        "failed",
+        "failure",
+        "kaggle",
+        "magnolia"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document"
       ]
     },
     {
       "score": 37,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
-      "path": "docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md",
-      "blob_sha": "4fefefacb52147e59b50110c10bbdb1f15f90349",
-      "category": "design_document",
-      "title": "A.L.I.C.E. Memory Identity, Formation, Host Learning, and Repository Lifecycle",
-      "declared": {
-        "status": " Owner-ratified architecture decision"
-      },
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 412,
-          "text": "Once Friday is well established and A.L.I.C.E. no longer benefits from being publicly developed, the A.L.I.C.E. repository is intended to become private."
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "document",
-        "failure",
-        "frontier"
-      ]
-    },
-    {
-      "score": 35,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-08-31/src/S02-memory-handoff.md",
-      "blob_sha": "ed39916872576a12f9c4e26fc7ff2170c60b63a6",
-      "category": "working_context",
-      "title": "A.L.I.C.E. Stage G / G+ Memory Architecture Handoff",
+      "path": "docs/eipm/n0/runtime-results/N0_V02_TOKENIZER_CORPUS_V01_FILL_FAILURE_20260914.md",
+      "blob_sha": "5322eda4c941c872777feeb70eec28bfce037827",
+      "category": "runtime_receipt",
+      "title": "N0 v0.2 tokenizer-corpus v0.1 fill failure and correction",
       "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 741,
-          "text": "Do not use:"
-        },
-        {
-          "line": 745,
-          "text": "→ Phase 2 retired"
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "document",
+      "matched_terms": [
+        "failed",
         "failure",
-        "frontier"
+        "runtime-results"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document"
       ]
     },
     {
       "score": 35,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-13/sol/N0_FRONTIER_RESEARCH_DECISION.md",
-      "blob_sha": "2cba72977eee06c1ca1a7ce20a89b646557324c9",
+      "path": "docs/chat-context/2026-09-08/sol/MC10D_V206_STOP_V2061_AND_MAGNOLIA_A100_REVIEW.md",
+      "blob_sha": "393ff028b5aaf6f5d6ff568d47d80a2fbccaff3f",
       "category": "working_context",
-      "title": "A.L.I.C.E. N0 Frontier Research Decision — 2026-09-13",
-      "declared": {
-        "status": " continuity handoff. No permanent EIPM weights created."
-      },
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 25,
-          "text": "The previous `~100M–400M` / `~400M` language was a working research hypothesis for one specialist architecture. It is superseded as a sizing constraint. A.L.I.C.E. may use a much smaller or much larger EIPM if measured competency and owner-evaluated identity fidelity justify it."
-        }
+      "title": "MC10D v2.0.6 local extraction stop, v2.0.6.1 repair, and Magnolia A100 route review",
+      "declared": {},
+      "matched_terms": [
+        "failed",
+        "fallback",
+        "kaggle",
+        "magnolia",
+        "network",
+        "repair"
       ],
+      "supersession_hints": [],
       "catalogs": [
-        "supersession",
-        "document",
         "failure",
-        "frontier"
+        "document"
       ]
     },
     {
       "score": 35,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
-      "path": "docs/MEMORY_POLICY.md",
-      "blob_sha": "f6cc3cc8acdfd4c10755de6174c11cdc94d11dda",
-      "category": "design_document",
-      "title": "A.L.I.C.E. Memory and Knowledge Policy",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 51,
-          "text": "Forgetting may be deliberate when information is obsolete, harmful to accuracy, revoked, superseded, no longer useful, or disproportionately costly relative to its expected future value."
-        }
+      "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
+      "blob_sha": "caa8ea529fc219d8d0004bd2c5cb5e2cebebc852",
+      "category": "runtime_receipt",
+      "title": "Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571",
+      "declared": {
+        "status": "completed payload"
+      },
+      "matched_terms": [
+        "error",
+        "failed",
+        "failure",
+        "magnolia",
+        "repair",
+        "runtime-results"
       ],
+      "supersession_hints": [],
       "catalogs": [
-        "supersession",
+        "failure",
         "document",
-        "failure"
+        "frontier"
       ]
     },
     {
-      "score": 35,
-      "branch": "docs/memory-identity-host-learning-ratification-v2",
+      "score": 33,
+      "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md",
-      "blob_sha": "0c7aa2e059b305e9988bd5708ae2c8dd6220ae64",
-      "category": "design_document",
-      "title": "A.L.I.C.E. Memory Identity, Formation, Host Learning, and Repository Lifecycle",
-      "declared": {
-        "status": " Owner-ratified architecture decision"
-      },
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 395,
-          "text": "Once Friday is well established and A.L.I.C.E. no longer benefits from being publicly developed, the A.L.I.C.E. repository is intended to become private."
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "document",
+      "path": "docs/chat-context/2026-09-14/sol/N0_V021_MAGNOLIA_NETWORK_FAILOVER_TO_OFFLINE_DERIVATION.md",
+      "blob_sha": "c9e0acae619f0d46aa676c8d34486847e3716361",
+      "category": "working_context",
+      "title": "N0 v0.2.1 Magnolia network failure -> offline tokenizer corpus derivation",
+      "declared": {},
+      "matched_terms": [
+        "error",
+        "failed",
         "failure",
-        "frontier"
+        "magnolia",
+        "network"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document"
+      ]
+    },
+    {
+      "score": 32,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/KAGGLE_CPU_REAL_LINEAGE_FALLBACK_2026-09-14.md",
+      "blob_sha": "5bd3fe18ae072031acf90a4f063f1787559d2197",
+      "category": "design_document",
+      "title": "Kaggle CPU fallback for the real N0 public lineage — 2026-09-14",
+      "declared": {},
+      "matched_terms": [
+        "dns",
+        "error",
+        "failed",
+        "failure",
+        "fallback",
+        "kaggle",
+        "magnolia",
+        "network",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document"
+      ]
+    },
+    {
+      "score": 32,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/runtime-results/KAGGLE_CPU_PUBLIC_LINEAGE_V102_20260914.md",
+      "blob_sha": "1590c8e4b29564ed969ba136202c9b7ef3b0be09",
+      "category": "runtime_receipt",
+      "title": "Kaggle CPU Public N0 Lineage v1.0.2 — 2026-09-14",
+      "declared": {},
+      "matched_terms": [
+        "dns",
+        "failed",
+        "failure",
+        "fallback",
+        "kaggle",
+        "magnolia",
+        "network",
+        "powershell",
+        "runtime-results"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document"
       ]
     },
     {
       "score": 30,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
-      "path": "docs/MEMORY_EXTERNAL_SYSTEMS_REVIEW.md",
-      "blob_sha": "09202f40f5b6460231e96dde58733f9cdaf9d98e",
+      "path": "docs/PHASE_3_LOCAL_CONVERSATIONAL_RUNTIME.md",
+      "blob_sha": "411d39428d46c5610e8c5efea38c08721833e49f",
       "category": "design_document",
-      "title": "External Memory Systems Code and Architecture Review",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 276,
-          "text": "- cancel or supersede duplicate in-flight jobs;"
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "document",
+      "title": "Phase 3.7 — Local Conversational Runtime and CLI",
+      "declared": {
+        "status": " Implementation milestone"
+      },
+      "matched_terms": [
         "failure",
-        "frontier"
+        "fallback",
+        "powershell",
+        "repair",
+        "smoke"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document"
       ]
     },
     {
       "score": 30,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
-      "path": "docs/MEMORY_RECORD_AND_PROVENANCE_STANDARD.md",
-      "blob_sha": "3f3a2d14753cee9b3f36aba0d880ff226bd65016",
+      "path": "docs/eipm/N0_ADAPTIVE_LATENT_POOL_V01_FAILURE_AND_V02_REPAIR_2026-09-16.md",
+      "blob_sha": "f52cd22657c2545c5af7dd3e7aa2f0923a6ee144",
       "category": "design_document",
-      "title": "Memory Record and Provenance Standard — Polyglot Cognitive Fabric",
-      "declared": {
-        "status": " Owner-ratified under Memory M1 on 2026-08-05"
-      },
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 44,
-          "text": "supersedes[]"
-        },
-        {
-          "line": 87,
-          "text": "Records the authority, rule, evidence considered, alternatives, confidence, outcome, and rollback path for add, revise, supersede, dispute, quarantine, merge, split, or reject decisions."
-        }
+      "title": "N0 Adaptive Multi-View Latent Pool v0.1 Failure and v0.2 Repair — 2026-09-16",
+      "declared": {},
+      "matched_terms": [
+        "failed",
+        "failure",
+        "magnolia",
+        "repair"
       ],
+      "supersession_hints": [],
       "catalogs": [
-        "supersession",
-        "document",
-        "failure"
+        "failure",
+        "document"
       ]
     },
     {
       "score": 30,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
-      "path": "docs/PHASE_2_MEMORY_CORE_ARCHITECTURE.md",
-      "blob_sha": "e9da5ee5c2c2ebcfadbdb7693ef52c9363b2cafd",
-      "category": "design_document",
-      "title": "Phase 2 — Memory Core Architecture",
-      "declared": {
-        "status": " P2.0–P2.9 implemented; Phase 2 complete"
-      },
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 151,
-          "text": "- superseded."
-        },
-        {
-          "line": 267,
-          "text": "Later information may supersede current-state interpretation without deleting history."
-        },
-        {
-          "line": 281,
-          "text": "- supersedes;"
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "document",
-        "failure",
-        "frontier"
-      ]
-    },
-    {
-      "score": 28,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-08-31/src/S03-alice-memory.txt",
-      "blob_sha": "939cbd8c91c95d3b82dd9d3ce34145faee92d97c",
-      "category": "working_context",
-      "title": "S03-alice-memory.txt",
+      "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md",
+      "blob_sha": "77ff7dda3d28fef326ceb8e6af7db799879c876b",
+      "category": "runtime_receipt",
+      "title": "Magnolia 2×P100 N0 Runtime Smoke — Job 575527",
       "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 399,
-          "text": "doctrine became clearer would destroy provenance. Gate v7 instead supersedes their interpretation."
-        },
-        {
-          "line": 1383,
-          "text": "I’m treating the historical validator inconsistencies as expected rather than current failures. The current authority supersedes the older"
-        },
-        {
-          "line": 1432,
-          "text": "superseded by v7; the provenance blocker and Stage G remain open, while MC4D is now permitted."
-        },
-        {
-          "line": 2321,
-          "text": "I’m checking whether the later Gate-v7/MC4A-B contract intentionally superseded that older P1 requirement. If it did, MC4 is"
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "document",
+      "matched_terms": [
+        "failed",
         "failure",
-        "frontier"
-      ]
-    },
-    {
-      "score": 28,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-13/sol/MAINSTREAMED_EIPM_AND_FABLE_BUILDER_DECISION.md",
-      "blob_sha": "442dcd15c74fc8832dd3ed723368f19480101800",
-      "category": "working_context",
-      "title": "Mainstreamed EIPM + Fable Builder Decision",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 15,
-          "text": "The earlier staged N0 R1/R2/R3/R4/R5/R6/R7 sequence is no longer the required execution path. The streamlined sequence is N0A native foundation, N0B preprocessing/curriculum, N0C first native checkpoint, N0D direct evaluation/repair, then N1 private identity learning when authorized."
-        }
+        "magnolia",
+        "runtime-results",
+        "smoke",
+        "udocker"
       ],
+      "supersession_hints": [],
       "catalogs": [
-        "supersession",
-        "document",
-        "failure"
+        "failure",
+        "document"
       ]
     }
   ],
   "graphify_navigation_hints": [
     {
-      "label": "decision",
-      "source": "policies/friday_release_attestation_schema.json",
-      "location": "L145",
-      "community": "172"
-    },
-    {
-      "label": "decision()",
-      "source": "tests/phase5/attention_workspace_helpers.py",
-      "location": "L74",
-      "community": "130"
-    },
-    {
-      "label": "require()",
-      "source": "scripts/eipm/n0/preflight_n0_v02_teacher_dev_challenge.py",
-      "location": "L36",
-      "community": "30"
-    },
-    {
-      "label": "test_response_wrapper_rejects_split_verified_source_set_across_sentences()",
-      "source": "tests/phase4/test_information_conversation_bridge.py",
-      "location": "L628",
-      "community": "54"
-    },
-    {
-      "label": "_changed_lines()",
-      "source": "scripts/audit_capability_barriers.py",
-      "location": "L488",
-      "community": "131"
-    },
-    {
-      "label": "test_same_key_memory_requires_later_transition_aware_promotion()",
-      "source": "tests/phase2/test_memory_candidate_promotion.py",
-      "location": "L322",
-      "community": "116"
-    },
-    {
-      "label": "MemoryUnitEnvelope",
-      "source": "src/cognitive_kernel/memory_contracts.py",
-      "location": "L377",
-      "community": "1"
-    },
-    {
-      "label": "hhem_holdout.py",
-      "source": "src/alice_vault/hhem_holdout.py",
+      "label": "import_external_public_lineage.py",
+      "source": "scripts/eipm/n0/import_external_public_lineage.py",
       "location": "L1",
-      "community": "45"
+      "community": "143"
     },
     {
-      "label": "InterruptThenRespondModel",
-      "source": "tests/phase3/test_conversation_orchestration_resume.py",
-      "location": "L24",
+      "label": "command()",
+      "source": "tests/phase3/test_conversation_orchestration_failures.py",
+      "location": "L33",
       "community": "34"
+    },
+    {
+      "label": "binary_metrics()",
+      "source": "src/alice_vault/query_claim_relevance_holdout.py",
+      "location": "L151",
+      "community": "20"
+    },
+    {
+      "label": "binding()",
+      "source": "tests/phase5/test_memory_m2_foundation_contracts.py",
+      "location": "L99",
+      "community": "193"
+    },
+    {
+      "label": "binary_rationale_compatibility_loss()",
+      "source": "src/alice_personality/n0/structured_state_objectives.py",
+      "location": "L60",
+      "community": "102"
+    },
+    {
+      "label": ".boundary()",
+      "source": "src/alice_conversation/cli_policy.py",
+      "location": "L67",
+      "community": "162"
+    },
+    {
+      "label": "test_duplicate_resolution_cannot_be_rebound_to_second_target()",
+      "source": "tests/phase2/test_memory_candidate_security_gates.py",
+      "location": "L499",
+      "community": "108"
+    },
+    {
+      "label": "correction_current()",
+      "source": "scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py",
+      "location": "L166",
+      "community": "174"
+    },
+    {
+      "label": ".execute()",
+      "source": "src/cognitive_kernel/tier_transition_store.py",
+      "location": "L696",
+      "community": "3"
+    },
+    {
+      "label": "_failure()",
+      "source": "src/alice_information/brave_search_live.py",
+      "location": "L72",
+      "community": "186"
+    },
+    {
+      "label": "file_sha256()",
+      "source": "src/alice_vault/inventory.py",
+      "location": "L131",
+      "community": "185"
+    },
+    {
+      "label": "FixedRows",
+      "source": "scripts/eipm/n0/evaluate_n0_v02_fixed.py",
+      "location": "L26",
+      "community": "23"
+    },
+    {
+      "label": "rayan_n0_kaggle_cpu_lineage_controller_v102.py",
+      "source": "scripts/eipm/n0/rayan_n0_kaggle_cpu_lineage_controller_v102.py",
+      "location": "L1",
+      "community": "132"
+    },
+    {
+      "label": "local_plan()",
+      "source": "tests/phase4/test_information_research_execution.py",
+      "location": "L276",
+      "community": "65"
+    },
+    {
+      "label": "magnolia_cpu_n0_v02_tokenizer.sh",
+      "source": "scripts/eipm/n0/magnolia_cpu_n0_v02_tokenizer.sh",
+      "location": "L1",
+      "community": "244"
+    },
+    {
+      "label": "P4.10c private live acceptance and exact-commit closure. The record produced by…",
+      "source": "src/alice_information/live_acceptance.py",
+      "location": "L1",
+      "community": "40"
+    },
+    {
+      "label": "PYTHONPATH",
+      "source": "scripts/eipm/n0/continue_mlm_p100x2_segment.sh",
+      "location": "L27",
+      "community": "187"
     },
     {
       "label": "pathlib",
@@ -462,16 +478,10 @@
       "community": "2"
     },
     {
-      "label": "cognitive_kernel/__init__.py",
-      "source": "src/cognitive_kernel/__init__.py",
-      "location": "L1",
-      "community": "13"
-    },
-    {
-      "label": "dataclasses",
-      "source": "",
-      "location": "",
-      "community": "4"
+      "label": "require_identifier()",
+      "source": "src/cognitive_kernel/canonical.py",
+      "location": "L60",
+      "community": "0"
     },
     {
       "label": "typing",
@@ -480,68 +490,26 @@
       "community": "5"
     },
     {
-      "label": "collections",
-      "source": "",
-      "location": "",
-      "community": "51"
-    },
-    {
-      "label": "m2_closeout_evaluation.py",
-      "source": "src/cognitive_kernel/m2_closeout_evaluation.py",
-      "location": "L1",
-      "community": "1"
-    },
-    {
-      "label": "uuid",
-      "source": "",
-      "location": "",
-      "community": "20"
-    },
-    {
-      "label": "datetime",
-      "source": "",
-      "location": "",
-      "community": "45"
-    },
-    {
-      "label": "bounded_serving_prototype.py",
-      "source": "src/cognitive_kernel/bounded_serving_prototype.py",
-      "location": "L1",
-      "community": "25"
-    },
-    {
-      "label": "claim_authority_prototype.py",
-      "source": "src/cognitive_kernel/claim_authority_prototype.py",
-      "location": "L1",
-      "community": "41"
-    },
-    {
-      "label": "judge_calibration.py",
-      "source": "src/alice_vault/judge_calibration.py",
-      "location": "L1",
-      "community": "33"
-    },
-    {
-      "label": "shadow_adjudication_prototype.py",
-      "source": "src/cognitive_kernel/shadow_adjudication_prototype.py",
-      "location": "L1",
-      "community": "29"
-    },
-    {
-      "label": "claim_contracts.py",
-      "source": "src/cognitive_kernel/claim_contracts.py",
-      "location": "L1",
+      "label": "normalize_timestamp()",
+      "source": "src/cognitive_kernel/canonical.py",
+      "location": "L92",
       "community": "0"
     },
     {
-      "label": "adjudication_contracts.py",
-      "source": "src/cognitive_kernel/adjudication_contracts.py",
-      "location": "L1",
-      "community": "1"
+      "label": "argparse",
+      "source": "",
+      "location": "",
+      "community": "2"
+    },
+    {
+      "label": "hashlib",
+      "source": "",
+      "location": "",
+      "community": "4"
     }
   ],
   "private_external_route_recommended": true,
-  "private_external_route_reason": "question references a private/external source class",
+  "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
   "trust_contract": [
     "This capsule routes retrieval; it is not canonical A.L.I.C.E. truth.",
     "Open consequential claims in the original branch/path source before acting.",

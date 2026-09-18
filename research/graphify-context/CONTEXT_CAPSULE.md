@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: coverage-g7-comic-continuous-memory-001
-- Question: What does the A.L.I.C.E. comic require from continuous memory across years, especially remembering why an old decision worked then, why it later stopped working, and what changed?
+- Request: coverage-g2-buried-doc-fact-002
+- Question: Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?
 - Source: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 
@@ -17,48 +17,44 @@
 
 ## Source pointers
 
-- [50] alice-eipm-v1-build:docs/MEMORY_ARCHITECTURE_HOLD.md — A.L.I.C.E. Memory Architecture Hold — Supersession Record
-- [41] alice-eipm-v1-build:docs/MEMORY_M1_DECISION_REGISTER.md — Memory M1 Decision Register
-  - status:  M1-DX0 through M1-D9 owner-ratified on 2026-08-05
-- [37] alice-eipm-v1-build:docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md — A.L.I.C.E. Memory Identity, Formation, Host Learning, and Repository Lifecycle
-  - status:  Owner-ratified architecture decision
-- [35] alice-context:docs/chat-context/2026-08-31/src/S02-memory-handoff.md — A.L.I.C.E. Stage G / G+ Memory Architecture Handoff
-- [35] alice-context:docs/chat-context/2026-09-13/sol/N0_FRONTIER_RESEARCH_DECISION.md — A.L.I.C.E. N0 Frontier Research Decision — 2026-09-13
-  - status:  continuity handoff. No permanent EIPM weights created.
-- [35] alice-eipm-v1-build:docs/MEMORY_POLICY.md — A.L.I.C.E. Memory and Knowledge Policy
-- [35] docs/memory-identity-host-learning-ratification-v2:docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md — A.L.I.C.E. Memory Identity, Formation, Host Learning, and Repository Lifecycle
-  - status:  Owner-ratified architecture decision
-- [30] alice-eipm-v1-build:docs/MEMORY_EXTERNAL_SYSTEMS_REVIEW.md — External Memory Systems Code and Architecture Review
-- [30] alice-eipm-v1-build:docs/MEMORY_RECORD_AND_PROVENANCE_STANDARD.md — Memory Record and Provenance Standard — Polyglot Cognitive Fabric
-  - status:  Owner-ratified under Memory M1 on 2026-08-05
-- [30] alice-eipm-v1-build:docs/PHASE_2_MEMORY_CORE_ARCHITECTURE.md — Phase 2 — Memory Core Architecture
-  - status:  P2.0–P2.9 implemented; Phase 2 complete
-- [28] alice-context:docs/chat-context/2026-08-31/src/S03-alice-memory.txt — S03-alice-memory.txt
-- [28] alice-context:docs/chat-context/2026-09-13/sol/MAINSTREAMED_EIPM_AND_FABLE_BUILDER_DECISION.md — Mainstreamed EIPM + Fable Builder Decision
+- [58] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_PUBLIC_LINEAGE_IMPORT_20260914.md — Magnolia Public N0 Lineage Import — 2026-09-14
+- [54] alice-context:docs/chat-context/2026-09-13/sol/N0_KAGGLE_CPU_LINEAGE_SUCCESS_AND_MAGNOLIA_IMPORT.md — N0 Kaggle CPU Lineage Success and Magnolia Import — 2026-09-14
+- [39] alice-context:docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md — MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready
+- [37] alice-eipm-v1-build:docs/eipm/n0/runtime-results/N0_V02_TOKENIZER_CORPUS_V01_FILL_FAILURE_20260914.md — N0 v0.2 tokenizer-corpus v0.1 fill failure and correction
+- [35] alice-context:docs/chat-context/2026-09-08/sol/MC10D_V206_STOP_V2061_AND_MAGNOLIA_A100_REVIEW.md — MC10D v2.0.6 local extraction stop, v2.0.6.1 repair, and Magnolia A100 route review
+- [35] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md — Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571
+  - status: completed payload
+- [33] alice-context:docs/chat-context/2026-09-14/sol/N0_V021_MAGNOLIA_NETWORK_FAILOVER_TO_OFFLINE_DERIVATION.md — N0 v0.2.1 Magnolia network failure -> offline tokenizer corpus derivation
+- [32] alice-eipm-v1-build:docs/eipm/n0/KAGGLE_CPU_REAL_LINEAGE_FALLBACK_2026-09-14.md — Kaggle CPU fallback for the real N0 public lineage — 2026-09-14
+- [32] alice-eipm-v1-build:docs/eipm/n0/runtime-results/KAGGLE_CPU_PUBLIC_LINEAGE_V102_20260914.md — Kaggle CPU Public N0 Lineage v1.0.2 — 2026-09-14
+- [30] alice-eipm-v1-build:docs/PHASE_3_LOCAL_CONVERSATIONAL_RUNTIME.md — Phase 3.7 — Local Conversational Runtime and CLI
+  - status:  Implementation milestone
+- [30] alice-eipm-v1-build:docs/eipm/N0_ADAPTIVE_LATENT_POOL_V01_FAILURE_AND_V02_REPAIR_2026-09-16.md — N0 Adaptive Multi-View Latent Pool v0.1 Failure and v0.2 Repair — 2026-09-16
+- [30] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md — Magnolia 2×P100 N0 Runtime Smoke — Job 575527
 
 ## Graphify navigation hints
 
-- decision -> policies/friday_release_attestation_schema.json:L145
-- decision() -> tests/phase5/attention_workspace_helpers.py:L74
-- require() -> scripts/eipm/n0/preflight_n0_v02_teacher_dev_challenge.py:L36
-- test_response_wrapper_rejects_split_verified_source_set_across_sentences() -> tests/phase4/test_information_conversation_bridge.py:L628
-- _changed_lines() -> scripts/audit_capability_barriers.py:L488
-- test_same_key_memory_requires_later_transition_aware_promotion() -> tests/phase2/test_memory_candidate_promotion.py:L322
-- MemoryUnitEnvelope -> src/cognitive_kernel/memory_contracts.py:L377
-- hhem_holdout.py -> src/alice_vault/hhem_holdout.py:L1
-- InterruptThenRespondModel -> tests/phase3/test_conversation_orchestration_resume.py:L24
-- pathlib -> :
-- json -> :
-- cognitive_kernel/__init__.py -> src/cognitive_kernel/__init__.py:L1
-- dataclasses -> :
-- typing -> :
-- collections -> :
-- m2_closeout_evaluation.py -> src/cognitive_kernel/m2_closeout_evaluation.py:L1
+- import_external_public_lineage.py -> scripts/eipm/n0/import_external_public_lineage.py:L1
+- command() -> tests/phase3/test_conversation_orchestration_failures.py:L33
+- binary_metrics() -> src/alice_vault/query_claim_relevance_holdout.py:L151
+- binding() -> tests/phase5/test_memory_m2_foundation_contracts.py:L99
+- binary_rationale_compatibility_loss() -> src/alice_personality/n0/structured_state_objectives.py:L60
+- .boundary() -> src/alice_conversation/cli_policy.py:L67
+- test_duplicate_resolution_cannot_be_rebound_to_second_target() -> tests/phase2/test_memory_candidate_security_gates.py:L499
+- correction_current() -> scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py:L166
+- .execute() -> src/cognitive_kernel/tier_transition_store.py:L696
+- _failure() -> src/alice_information/brave_search_live.py:L72
+- file_sha256() -> src/alice_vault/inventory.py:L131
+- FixedRows -> scripts/eipm/n0/evaluate_n0_v02_fixed.py:L26
+- rayan_n0_kaggle_cpu_lineage_controller_v102.py -> scripts/eipm/n0/rayan_n0_kaggle_cpu_lineage_controller_v102.py:L1
+- local_plan() -> tests/phase4/test_information_research_execution.py:L276
+- magnolia_cpu_n0_v02_tokenizer.sh -> scripts/eipm/n0/magnolia_cpu_n0_v02_tokenizer.sh:L1
+- P4.10c private live acceptance and exact-commit closure. The record produced by… -> src/alice_information/live_acceptance.py:L1
 
 ## External/private routing
 
 - Recommended: True
-- Reason: question references a private/external source class
+- Reason: host-specific operational history may contain newer failure lessons than public receipts
 
 ## Trust contract
 
