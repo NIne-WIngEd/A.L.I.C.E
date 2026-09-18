@@ -1,0 +1,113 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.14",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.13.json",
+  "status": "QRR_V0_3_VALID_DEV_FAIL_NO_HELDOUT;GRADIENT_WORK_FROZEN;QUERY_SEMANTIC_REPRESENTATION_ARCHITECTURE_AUDIT_IMPLEMENTED_PENDING_ONE_NO_GRADIENT_P100_RUN",
+  "n0_complete": false,
+  "stable_build_base": {
+    "branch": "alice-eipm-v1-build",
+    "commit": "021c5021a98104b35f9c8e94b19e48d21f25f132"
+  },
+  "current_experiment_branch": "alice-eipm-v1-query-semantics-architecture-audit",
+  "preserved_evidence": {
+    "qrr_job_id": 575800,
+    "qrr_job_state": "COMPLETED",
+    "qrr_exit_code": "0:0",
+    "qrr_result_sha256": "0f7917446d9f23c5d58e1eb1e1e5641a8df38da1a4730926a90d73ec044305a0",
+    "qrr_status": "FAIL_QUERY_RELATION_ROLE_ROUTER_DEV_STOP_NO_HELDOUT_EXPOSURE",
+    "qrr_preservation_candidate_keys": [
+      "step-00000120",
+      "step-00000160",
+      "step-00000200",
+      "step-00000240",
+      "step-00000260"
+    ],
+    "qrr_eligible_candidate_keys": [],
+    "qrr_best_dev_checkpoint": "step-00000260",
+    "qrr_semantic_heldout_test_evaluated": false,
+    "qrr_semantic_heldout_rows_opened_after_training": false,
+    "qrr_parent_graph_parameters_exactly_unchanged": true,
+    "qrr_scale_authorized": false,
+    "qrr_n0_complete": false,
+    "qrr_final_role_accuracy": 0.5,
+    "qrr_final_family_min_role_accuracy": 0,
+    "qrr_failure_pattern": "role-direction collapse: source-seeking families and target-seeking families are not jointly separable; model converges to one global endpoint preference at a time",
+    "qrr_next_action": "architecture_level_audit_required_before_any_further_gradient_run"
+  },
+  "architecture_audit_findings": {
+    "graph_query_representation_currently_used": "raw_640d_mean_pool_from_AliceN0V02Model.encode",
+    "semantic_model_token_states_available": true,
+    "semantic_model_pooled_readout_is_capability_ceiling": false,
+    "semantic_projection_exists": true,
+    "semantic_projection_width": 256,
+    "semantic_projection_receives_multitask_contrastive_gradient": true,
+    "graph_currently_uses_semantic_projection": false,
+    "graph_currently_uses_token_level_query_states": false,
+    "hypothesis_status": "must_be_measured_not_assumed",
+    "hypothesis": "directional relation semantics may exist in trained semantic projection or token-level states but be weakened by the raw mean-pooled compatibility interface"
+  },
+  "external_research_basis": {
+    "completed": true,
+    "sources": [
+      "AdapterFusion",
+      "ColBERT and late-interaction work",
+      "relation-extraction representation probing",
+      "predicate-argument enriched sentence encoders",
+      "relation-aware language-graph transformers",
+      "question-adaptive relation-aware graph attention"
+    ],
+    "conclusion": "before another graph architecture, empirically determine which frozen semantic representation preserves directional role meaning; if token-level semantics are stronger, move language-relation interaction before graph reduction"
+  },
+  "query_semantics_audit_v0_1": {
+    "research_note": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+    "script": "scripts/eipm/n0/audit_n0_v02_query_semantic_representations_v0_1.py",
+    "runner": "scripts/eipm/n0/run_n0_v02_query_semantics_architecture_audit_v0_1.sh",
+    "magnolia_job": "scripts/eipm/n0/magnolia_n0_v02_query_semantics_architecture_audit_v0_1.sbatch",
+    "gradient_performed": false,
+    "optimizer_allowed": false,
+    "model_mutation_allowed": false,
+    "fresh_audit_queries": true,
+    "heldout_rows_used": false,
+    "qrr_rows_used": false,
+    "prior_semantic_repair_rows_used": false,
+    "representations_compared": [
+      "raw_mean_pool_640",
+      "trained_semantic_projection_256",
+      "token_level_symmetric_late_interaction"
+    ],
+    "measurements": [
+      "relation_conditioned_role_gloss_accuracy",
+      "source_target_opposite_query_pair_distance",
+      "source_minus_target_direction_consistency_across_paraphrases"
+    ],
+    "no_frozen_capability_threshold": true,
+    "automatic_model_change_after_audit": false
+  },
+  "architecture_decision_policy": {
+    "if_trained_projection_outperforms_raw_pool": "redesign graph query interface around trained semantic representation or full-width compatible semantic projection; do not train another role router",
+    "if_token_level_outperforms_pooled_views": "move language↔relation interaction to token-level cross-attention/late-interaction before graph field selection",
+    "if_all_views_fail": "stop graph repair; reopen semantic representation learning/objectives and directional semantic coverage",
+    "no_decision_before_audit_result": true
+  },
+  "anti_loop_policy": {
+    "gradient_work_frozen_until_audit": true,
+    "no_qrr_v0_4": true,
+    "no_loss_weight_patch": true,
+    "no_more_steps_patch": true,
+    "no_router_width_patch": true,
+    "no_frozen_challenge_rerun": true,
+    "no_threshold_change": true,
+    "no_heldout_opening": true,
+    "failed_results_immutable": true,
+    "infrastructure_failure_is_not_model_evidence": true
+  },
+  "scale_decision": {
+    "scale_now": false,
+    "reason": "current evidence localizes failure to semantic representation/interface ambiguity, not proven insufficient model capacity",
+    "hard_parameter_ceiling": null,
+    "current_shapes_are_operating_points_not_product_limits": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
