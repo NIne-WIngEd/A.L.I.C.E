@@ -1,0 +1,39 @@
+{
+  "schema": "alice.telemetry.n0.downstream-causal-arbitration-complete.v0.1",
+  "date": "2026-09-18",
+  "magnolia_job_id": 575792,
+  "source_revision": "6c930788da42ad9964c4b5bf6067be3b7d6bfd06",
+  "status": "COMPLETE",
+  "classification": "IMPROVEMENT",
+  "decision": "AUTHORIZE_ONE_FINAL_FROZEN_CHALLENGE",
+  "canonical_graph_sha256": "ec9942bd71a39c8552804322f1a36b7a6c5f009446e56423c80e59479ad8fa79",
+  "candidate_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+  "improved_metrics": [
+    {
+      "path": "metrics.mean_min_available_view_best_slot_semantic_cosine",
+      "canonical": 0.8840856967493892,
+      "candidate": 0.8845639722421765,
+      "delta": 0.00047827549278733894
+    },
+    {
+      "path": "metrics.mean_disagreement_weighted_view_specialization",
+      "canonical": 0.9683985842425366,
+      "candidate": 0.9685274347536997,
+      "delta": 0.00012885051116318103
+    }
+  ],
+  "harmed_metrics": [],
+  "arbitration_result_sha256": "430e1b5c51f6157c0d40d95728f278b5400df13fb6d30e822bb197ab9fe110a5",
+  "gate_receipt_sha256": "dba2a7de9354445762f7d264f4d9fd6f6a56687c749fb8d9e0b1c34433c57775",
+  "finalization_receipt_sha256": "f58cdc215ef912bb0aa12343cde560d88077bdb1aff9f7465b51f187dfbcbf31",
+  "final_frozen_challenge_authorized": true,
+  "final_frozen_challenge_limit": 1,
+  "candidate_graph_promoted": false,
+  "training_authorized": false,
+  "promotion_authorized": false,
+  "scale_authorized": false,
+  "n0_complete": false,
+  "execution_frontier": "e535a2a63c2c2bdfe13843171b391096c4c5019e",
+  "execution_ci_run": 35375712216,
+  "next_action": "run existing frozen v0.2 latent challenge once with original adapter and selected repaired graph through the new arbitration-bound one-shot runner"
+}
