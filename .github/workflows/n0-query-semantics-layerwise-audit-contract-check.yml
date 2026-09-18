@@ -1,0 +1,139 @@
+name: N0 Query Semantics Layerwise Audit Contract Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-query-semantics-architecture-audit
+    paths:
+      - "scripts/eipm/n0/audit_n0_v02_query_semantic_layers_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_query_semantics_layerwise_audit_v0_1.sh"
+      - "scripts/eipm/n0/magnolia_n0_v02_query_semantics_layerwise_audit_v0_1.sbatch"
+      - "scripts/eipm/n0/magnolia_udocker_exec.sh"
+      - "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.15.json"
+      - ".github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile             scripts/eipm/n0/audit_n0_v02_query_semantic_layers_v0_1.py             scripts/eipm/n0/audit_n0_v02_query_semantic_representations_v0_1.py
+          bash -n scripts/eipm/n0/run_n0_v02_query_semantics_layerwise_audit_v0_1.sh
+          bash -n scripts/eipm/n0/magnolia_n0_v02_query_semantics_layerwise_audit_v0_1.sbatch
+          bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
+
+      - name: No-gradient layerwise contract
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("scripts/eipm/n0/audit_n0_v02_query_semantic_layers_v0_1.py").read_text()
+          required=[
+            "torch.set_grad_enabled(False)",
+            "@torch.inference_mode()",
+            "output_hidden_states=True",
+            "return_dict=True",
+            '"gradient_performed": False',
+            '"optimizer_created": False',
+            '"model_parameters_mutated": False',
+            "token_late_interaction_role_accuracy",
+            "mean_pool_role_accuracy",
+            "causes_token",
+            "supports_token",
+            "if_mid_layer_restores_causes_supports",
+            "if_no_layer_restores_causes_supports",
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("layerwise audit contract missing "+repr(missing))
+          forbidden=[
+            ".backward(",
+            "torch.optim.",
+            "optimizer.step",
+            "requires_grad = True",
+            "save_file(",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present: raise SystemExit("gradient/mutation leaked into layerwise audit "+repr(present))
+          print("no_gradient_layerwise_contract=PASS")
+          PY
+
+      - name: Bind exact 575801 evidence
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          r=Path("scripts/eipm/n0/run_n0_v02_query_semantics_layerwise_audit_v0_1.sh").read_text()
+          required=[
+            "8bb4aa0f249b763342d78f5bf0f2f960a0bd73fafa67d18f8e0e7342f62f24b6",
+            "COMPLETE_NO_GRADIENT_ARCHITECTURE_AUDIT",
+            "0.6875",
+            "0.5625",
+            'for family in ("causes","supports")',
+            "gradient_performed=false",
+            "model_mutation=false",
+            "heldout_rows_used=false",
+          ]
+          missing=[x for x in required if x not in r]
+          if missing: raise SystemExit("575801 binding missing "+repr(missing))
+          forbidden=["git pull","git checkout","git switch","sbatch"]
+          present=[x for x in forbidden if x in r]
+          if present: raise SystemExit("runtime repo mutation leaked "+repr(present))
+          print("audit_575801_binding=PASS")
+          PY
+
+      - name: Layer coverage and decision contract
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("scripts/eipm/n0/audit_n0_v02_query_semantic_layers_v0_1.py").read_text()
+          required=[
+            "len(q[\"hidden_states\"]) - 1",
+            "is_embedding_output",
+            "is_final_layer",
+            "best_token_late_interaction",
+            "best_mean_pool",
+            "per_relation",
+            '"causes"',
+            '"supports"',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("layer coverage missing "+repr(missing))
+          print("layer_coverage_contract=PASS")
+          PY
+
+      - name: State keeps gradient work frozen
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.15.json").read_text())
+          if s["anti_loop_policy"]["gradient_work_frozen_until_layerwise_audit_interpreted"] is not True:
+              raise SystemExit("gradient work reopened")
+          if s["anti_loop_policy"]["no_token_graph_training_before_layerwise_localization"] is not True:
+              raise SystemExit("premature token graph training opened")
+          if s["architecture_conclusion"]["immediate_token_graph_training_authorized"] is not False:
+              raise SystemExit("token graph training authorized prematurely")
+          if s["architecture_conclusion"]["semantic_projection_swap_authorized"] is not False:
+              raise SystemExit("semantic projection swap authorized prematurely")
+          if s["scale_decision"]["scale_now"] is not False:
+              raise SystemExit("scale reopened")
+          if s["scale_decision"]["hard_parameter_ceiling"] is not None:
+              raise SystemExit("hard parameter ceiling reintroduced")
+          if s["n0_complete"] is not False:
+              raise SystemExit("N0 completion drift")
+          w=Path("scripts/eipm/n0/magnolia_udocker_exec.sh").read_text()
+          if "ALICE_N0_QUERY_SEMANTICS_LAYER_AUDIT_DIR" not in w:
+              raise SystemExit("udocker layerwise audit env missing")
+          print("state_gradient_freeze=PASS")
+          PY
