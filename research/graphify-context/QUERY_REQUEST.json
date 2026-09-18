@@ -1,7 +1,7 @@
 {
-  "request_id": "n0-live-code-path-and-next-stage-20260917-001",
-  "question": "On the current maximal N0 experiment frontier, where in code is the production N0 path from semantic representation through structured state, evidence graph, source-anchored cross-context fusion, adaptive multi-view latent workspace, canonical repeatability calibration, frozen downstream causal arbitration, finalization, and post-arbitration gate? Identify the exact current next executable stage, the functions/scripts that enforce provenance/frozen-arm safety, and any hard-coded capacity or validation behavior in this path that would contradict the current no-hard-ceiling capability doctrine.",
-  "budget": 2800,
+  "request_id": "n0-post-arbitration-final-challenge-ready-20260918-001",
+  "question": "What is the exact current N0 state after Magnolia job 575792, which experiment frontier is current, what did downstream causal arbitration conclude, and what is the single authorized next model execution?",
+  "budget": 1400,
   "traversal": "bfs",
   "contexts": [
     "call",
