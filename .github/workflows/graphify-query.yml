@@ -26,7 +26,8 @@ jobs:
       - name: Refuse stale graph
         shell: bash
         run: |
-          git fetch origin "$GRAPHIFY_SOURCE_BRANCH"
+          set -euo pipefail
+          git fetch origin "+refs/heads/$GRAPHIFY_SOURCE_BRANCH:refs/remotes/origin/$GRAPHIFY_SOURCE_BRANCH"
           LIVE_SOURCE_COMMIT="$(git rev-parse "origin/$GRAPHIFY_SOURCE_BRANCH")"
           export LIVE_SOURCE_COMMIT
           python - <<'PY'
@@ -133,11 +134,49 @@ jobs:
           )
           PY
 
-      - name: Commit scoped query result
+      - name: Publish result on latest research head
         shell: bash
         run: |
+          set -euo pipefail
           git config user.name "alice-context-query-bot"
           git config user.email "actions@users.noreply.github.com"
+
+          TMP_DIR="$(mktemp -d)"
+          cp research/graphify-context/QUERY_RESULT.json "$TMP_DIR/QUERY_RESULT.json"
+
+          git fetch origin             "+refs/heads/$GITHUB_REF_NAME:refs/remotes/origin/$GITHUB_REF_NAME"             "+refs/heads/$GRAPHIFY_SOURCE_BRANCH:refs/remotes/origin/$GRAPHIFY_SOURCE_BRANCH"
+
+          LIVE_SOURCE_COMMIT="$(git rev-parse "origin/$GRAPHIFY_SOURCE_BRANCH")"
+          export LIVE_SOURCE_COMMIT TMP_DIR
+
+          git reset --hard "origin/$GITHUB_REF_NAME"
+
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          current_request = json.loads(
+              Path("research/graphify-context/QUERY_REQUEST.json").read_text(encoding="utf-8")
+          )
+          result = json.loads(
+              (Path(os.environ["TMP_DIR"]) / "QUERY_RESULT.json").read_text(encoding="utf-8")
+          )
+
+          if current_request.get("request_id") != result.get("request_id"):
+              raise SystemExit(
+                  "STALE_QUERY_RESULT: request changed while query was running; refusing to publish old result"
+              )
+
+          recorded_source = result.get("graph_build", {}).get("source_work_commit")
+          live_source = os.environ["LIVE_SOURCE_COMMIT"]
+          if recorded_source != live_source:
+              raise SystemExit(
+                  f"STALE_QUERY_RESULT: graph source {recorded_source!r} != live source {live_source}"
+              )
+          PY
+
+          cp "$TMP_DIR/QUERY_RESULT.json" research/graphify-context/QUERY_RESULT.json
           git add research/graphify-context/QUERY_RESULT.json
 
           if git diff --cached --quiet; then
@@ -146,4 +185,4 @@ jobs:
           fi
 
           git commit -m "research: update Graphify scoped query result"
-          git push
+          git push origin "HEAD:$GITHUB_REF_NAME"
