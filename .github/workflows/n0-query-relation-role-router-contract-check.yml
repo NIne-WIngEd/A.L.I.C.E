@@ -1,0 +1,146 @@
+name: N0 Query Relation Role Router Contract Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-query-relation-role-router
+    paths:
+      - "src/alice_personality/n0/evidence_graph_query_relation_role_router.py"
+      - "scripts/eipm/n0/build_n0_v02_query_relation_role_router_curriculum_v0_3.py"
+      - "scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py"
+      - "scripts/eipm/n0/run_n0_v02_query_relation_role_router_v0_3.sh"
+      - "scripts/eipm/n0/magnolia_n0_v02_query_relation_role_router_v0_3.sbatch"
+      - "scripts/eipm/n0/magnolia_udocker_exec.sh"
+      - "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.13.json"
+      - ".github/workflows/n0-query-relation-role-router-contract-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile             src/alice_personality/n0/evidence_graph_query_relation_role_router.py             scripts/eipm/n0/build_n0_v02_query_relation_role_router_curriculum_v0_3.py             scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py
+          bash -n scripts/eipm/n0/run_n0_v02_query_relation_role_router_v0_3.sh
+          bash -n scripts/eipm/n0/magnolia_n0_v02_query_relation_role_router_v0_3.sbatch
+          bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
+
+      - name: External research gate
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md").read_text()
+          required=["Progressive Neural Networks","Side-Tuning","Ladder Side-Tuning","AdapterFusion","Neural Bellman-Ford Networks","Heterogeneous Graph Transformer","Hypernetwork Knowledge Graph Embeddings","architecture-level audit"]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("research gate missing "+repr(missing))
+          print("external_research_gate=PASS")
+          PY
+
+      - name: Router architecture contract
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("src/alice_personality/n0/evidence_graph_query_relation_role_router.py").read_text()
+          required=[
+            "QueryRelationRoleRouterEvidenceGraphEncoder",
+            "query_semantic: torch.Tensor",
+            "semantic_query_side",
+            "semantic_relation_side",
+            "SOURCE = 0","TARGET = 1","DEFER = 2",
+            "final.bias[self.DEFER] = 12.0",
+            "parent = super().forward",
+            "(1.0 - alpha) * parent[\"field_weights\"]",
+            "alpha * semantic_weights",
+            "raw_query_semantic_plus_relation_type_side_path",
+            "probability_level_gated_expert_mixture",
+            '"hard_parameter_ceiling"] = None',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("router architecture missing "+repr(missing))
+          forbidden=["self.query_projection(query_semantic)","semantic_role_delta_mlp"]
+          present=[x for x in forbidden if x in t]
+          if present: raise SystemExit("old bottleneck/residual leaked into router "+repr(present))
+          print("router_architecture_contract=PASS")
+          PY
+
+      - name: Fresh curriculum and lexical split
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("scripts/eipm/n0/build_n0_v02_query_relation_role_router_curriculum_v0_3.py").read_text()
+          required=[
+            '"train":30','"dev":8','"test":8',
+            "train_dev_test_templates_lexically_disjoint",
+            "subject_pools_split_disjoint","attribute_value_pools_split_disjoint",
+            "direct_semantic_role_supervision",
+            '"relation_semantic_v0_1_rows_reused":False',
+            '"role_residual_v0_2_rows_reused":False',
+            '"frozen_latent_challenge_rows_used_for_training":False',
+            '"missing_evidence_localization_rows_used_for_training":False',
+            '"endpoint_repair_v0_2_heldout_rows_reused":False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("curriculum isolation missing "+repr(missing))
+          forbidden=["N0V02-RELGROUND-","N0V02-RELROLE2-","N0V02-MSEFRESH-"]
+          present=[x for x in forbidden if x in t]
+          if present: raise SystemExit("old row ids leaked "+repr(present))
+          print("fresh_curriculum_contract=PASS")
+          PY
+
+      - name: Direct routing and anti-loop trainer contract
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py").read_text()
+          required=[
+            "semantic_role_ce","defer_ce",
+            "QueryRelationRoleRouterEvidenceGraphEncoder.DEFER",
+            "raw_query_relation_role_router_side_network_only",
+            "parent_query_projection_used_by_router",
+            "probability_level_gated_expert_mixture",
+            "FAIL_QUERY_RELATION_ROLE_ROUTER_DEV_STOP_NO_HELDOUT_EXPOSURE",
+            "architecture_level_audit_required_before_any_further_gradient_run",
+            "PASS_QUERY_RELATION_ROLE_ROUTER_HELDOUT_READY_FOR_ONE_FRESH_DOWNSTREAM_CAUSAL_CHECK",
+            '"semantic_heldout_test_evaluated":False',
+            '"role_residual_v0_2_rows_reused":False',
+            '"scale_authorized":False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("trainer contract missing "+repr(missing))
+          forbidden=["set_endpoint_read_trainable","automatic_hotfix_authorized\":True"]
+          present=[x for x in forbidden if x in t]
+          if present: raise SystemExit("repair-loop behavior leaked "+repr(present))
+          print("direct_routing_anti_loop_contract=PASS")
+          PY
+
+      - name: Runtime evidence and state policy
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=Path("scripts/eipm/n0/run_n0_v02_query_relation_role_router_v0_3.sh").read_text()
+          for x in ["d9abbd6d3da3030361201a8a32f84aa8bf458fb5bebcc07db241a217b3557d8e","external_architecture_research_completed","failure_requires_architecture_level_audit_before_further_gradient_run","parent_query_projection_is_router_input\":False","raw_query_semantic_is_router_input\":True"]:
+            if x not in r: raise SystemExit("runner evidence missing "+x)
+          for x in ["git pull","git checkout","git switch","fresh_relation_flip_rows.jsonl"]:
+            if x in r: raise SystemExit("forbidden runtime behavior "+x)
+          s=json.loads(Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.13.json").read_text())
+          if s["n0_complete"] is not False or s["router_v0_3"]["failure_policy"]!="architecture_level_audit_required_before_any_further_gradient_run":
+            raise SystemExit("state anti-loop drift")
+          if s["router_v0_3"]["hard_parameter_ceiling"] is not None or s["router_v0_3"]["scale_authorized"] is not False:
+            raise SystemExit("ceiling/scale drift")
+          w=Path("scripts/eipm/n0/magnolia_udocker_exec.sh").read_text()
+          if "ALICE_N0_QUERY_RELATION_ROLE_ROUTER_DIR" not in w: raise SystemExit("udocker env forwarding missing")
+          print("runtime_state_policy=PASS")
+          PY
