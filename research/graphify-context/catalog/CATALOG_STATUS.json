@@ -1,0 +1,18 @@
+{
+  "schema": "alice-context-catalog-status-v1",
+  "source_branch": "alice-eipm-v1-build",
+  "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+  "branch_count": 30,
+  "knowledge_branch_count": 28,
+  "source_file_count": 1238,
+  "document_pointer_count": 2074,
+  "failure_lesson_pointer_count": 840,
+  "frontier_research_pointer_count": 378,
+  "supersession_pointer_count": 218,
+  "authority": "routing-only",
+  "notes": [
+    "Catalog entries are source pointers, not truth promotions.",
+    "Branch-specific records stay branch-qualified.",
+    "Private external sources are intentionally excluded from public Git."
+  ]
+}

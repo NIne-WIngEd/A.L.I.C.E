@@ -1,0 +1,307 @@
+{
+  "schema": "alice-context-branch-catalog-v1",
+  "source_branch": "alice-eipm-v1-build",
+  "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+  "branches": [
+    {
+      "branch": "alice-context",
+      "head": "0a2afa48cddb46e6dd17112d90d06ffcfa8727cc",
+      "status": "diverged",
+      "ahead": 183,
+      "behind": 459,
+      "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
+      "changed_file_count_vs_source_merge_base": 535,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-eipm-v1-build",
+      "head": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "status": "identical",
+      "ahead": 0,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "head": "8dab1e5debf48e09ebdbab49815e0938fda25a30",
+      "status": "ahead",
+      "ahead": 17,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 27,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-eipm-v1-downstream-arbitration",
+      "head": "7fd22358cd6b6384ac914d100c87f93e2236da18",
+      "status": "ahead",
+      "ahead": 6,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 6,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-eipm-v1-post-arbitration-gate",
+      "head": "00a95d2690641605964f91a79aa1358e05f3edbf",
+      "status": "ahead",
+      "ahead": 7,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 9,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-mc10b-live",
+      "head": "86ae99ca11d5c9a5c72f4d8dd22c7ec90eb882ea",
+      "status": "diverged",
+      "ahead": 3097,
+      "behind": 459,
+      "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
+      "changed_file_count_vs_source_merge_base": 1022,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-mc10c-live",
+      "head": "53d2fb4060c681fea2097d5d15e9ce4f354e61f5",
+      "status": "diverged",
+      "ahead": 471,
+      "behind": 459,
+      "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
+      "changed_file_count_vs_source_merge_base": 17,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-telemetry",
+      "head": "a02ff234774c7791dd495ec7f884e52ce3b7fcf7",
+      "status": "unrelated",
+      "ahead": 22,
+      "behind": 675,
+      "merge_base": null,
+      "changed_file_count_vs_source_merge_base": 1251,
+      "knowledge_surface": false
+    },
+    {
+      "branch": "docs/memory-identity-host-learning-ratification-v2",
+      "head": "c7e4e29079890674b420b16d5207157a798feb81",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 462,
+      "merge_base": "c7e4e29079890674b420b16d5207157a798feb81",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "docs/public-alice-readme",
+      "head": "d5a46ed524704c212128b050a1eefe7e925fb957",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 501,
+      "merge_base": "d5a46ed524704c212128b050a1eefe7e925fb957",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "docs/stage-g-candidate-qualification-matrix-v2",
+      "head": "6dd023c7baf380bb3d63fb75053b4aa99da4dc98",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 460,
+      "merge_base": "6dd023c7baf380bb3d63fb75053b4aa99da4dc98",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "fable-builder-model",
+      "head": "fdce28586e42d01b19c35d897311e4dcc3e3d78b",
+      "status": "diverged",
+      "ahead": 74,
+      "behind": 446,
+      "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
+      "changed_file_count_vs_source_merge_base": 74,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/memory-m2-1-claim-authority-prototype",
+      "head": "4e7bf81508d37ece5b54eb9ab2ff8c2facf46f3d",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 486,
+      "merge_base": "4e7bf81508d37ece5b54eb9ab2ff8c2facf46f3d",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/memory-m2-2-shadow-adjudication",
+      "head": "eeae325e7365d1cff1a1947fd9f390b33056b533",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 484,
+      "merge_base": "eeae325e7365d1cff1a1947fd9f390b33056b533",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/memory-m2-3-projection-prototype",
+      "head": "acccd8dedf7f2089db61d5c2da7e8ba83969c054",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 482,
+      "merge_base": "acccd8dedf7f2089db61d5c2da7e8ba83969c054",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/memory-m2-4-bounded-serving",
+      "head": "d6c2412d5bf2496d79723acf3a27c41a6bb20fd3",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 480,
+      "merge_base": "d6c2412d5bf2496d79723acf3a27c41a6bb20fd3",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/memory-m2-5-durable-curation-workflows",
+      "head": "38528dfb22ff58abd5a73c86c54eed4250e13c43",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 478,
+      "merge_base": "38528dfb22ff58abd5a73c86c54eed4250e13c43",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/memory-m2-6-deletion-propagation",
+      "head": "fbb92dfb4267fdc38140dbf26fd941ed68d4bcfa",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 476,
+      "merge_base": "fbb92dfb4267fdc38140dbf26fd941ed68d4bcfa",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/memory-m2-closeout-shadow-admission",
+      "head": "b69d3b688680a0fb36a1a21030f077a6bfd1c8b9",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 474,
+      "merge_base": "b69d3b688680a0fb36a1a21030f077a6bfd1c8b9",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/memory-m2-kernel-contracts",
+      "head": "4b23f4417fca1c22cf431b652094ff212538be5e",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 490,
+      "merge_base": "4b23f4417fca1c22cf431b652094ff212538be5e",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/memory-shadow-migration-stage-a-b",
+      "head": "771357f2c89b5653b64f2f37faccadebc7eefcef",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 472,
+      "merge_base": "771357f2c89b5653b64f2f37faccadebc7eefcef",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/memory-shadow-migration-stage-c-e",
+      "head": "4eadb952c2d8f32d95a80e738ddaf82078b1b6d1",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 470,
+      "merge_base": "4eadb952c2d8f32d95a80e738ddaf82078b1b6d1",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/memory-shadow-migration-stage-d",
+      "head": "35d404f4d8140efac0ef2c3ff68dca8ba74c5193",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 468,
+      "merge_base": "35d404f4d8140efac0ef2c3ff68dca8ba74c5193",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/memory-shadow-migration-stage-f-g",
+      "head": "69b6ae84155fe7a68d8151000e9f2f465b22a4be",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 466,
+      "merge_base": "69b6ae84155fe7a68d8151000e9f2f465b22a4be",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/memory-shadow-migration-stage-f-g-persistent",
+      "head": "b7a9199735bdddcc0f48bbef8090d4e8aafa7f9c",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 464,
+      "merge_base": "b7a9199735bdddcc0f48bbef8090d4e8aafa7f9c",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "feat/phase5-storage-capacity-safety",
+      "head": "2c24a3117276853dae382bfef66a4d00608d66d4",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 503,
+      "merge_base": "2c24a3117276853dae382bfef66a4d00608d66d4",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": false
+    },
+    {
+      "branch": "fix/governance-capability-audit-baseline",
+      "head": "8e1b8a3c0f355b816304e6d64770a705fdf052a9",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 492,
+      "merge_base": "8e1b8a3c0f355b816304e6d64770a705fdf052a9",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "fix/governance-memory-m2-capability-ceiling",
+      "head": "6047e283839787e4026c2f9d47fd5aed456272a8",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 488,
+      "merge_base": "6047e283839787e4026c2f9d47fd5aed456272a8",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "main",
+      "head": "0abaed85873c3f8de04765847eb7700b0e20433f",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 459,
+      "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "planning/memory-v4-m1-ratification",
+      "head": "534c6b87caed58816983b1c03abb9f6019b0ac17",
+      "status": "behind",
+      "ahead": 0,
+      "behind": 494,
+      "merge_base": "534c6b87caed58816983b1c03abb9f6019b0ac17",
+      "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    }
+  ]
+}
