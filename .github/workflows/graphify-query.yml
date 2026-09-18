@@ -90,10 +90,12 @@ jobs:
 
           question=str(request.get("question","")).lower()
           code_terms=(
-              "code","implementation","function","class","module","import","dependency",
-              "call graph","source file","trainer","evaluator","runner","script","stack trace",
+              "in code","code path","implementation path","which implementation",
+              "where in code","which function","which class","which module",
+              "call graph","code dependency","source file","trainer code",
+              "evaluator code","runner code","script implementation","stack trace",
               "test failure","config field","crosscontextfusion","model.py","__init__",
-              "which component","which implementation","where in code",
+              "src/","scripts/",".py","()",
           )
           if mode == "always":
               use=True
