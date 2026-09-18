@@ -1,4 +1,5 @@
-# Prevent the context scaffold from indexing itself.
+# Prevent the external context scaffold from indexing itself.
+# This file is part of the research substrate, not A.L.I.C.E. runtime authority.
 graphify-out/
 research/graphify-context/
 .github/workflows/graphify-context.yml
