@@ -1,7 +1,7 @@
 {
-  "request_id": "coverage-frontier-capsule-v2-003",
-  "question": "What is the current N0 scientific state now, including the stable build base, the latest continuity handoff, and any newer unmerged experiment frontier that must be inspected before the next execution?",
-  "budget": 1800,
+  "request_id": "coverage-frontier-codegraph-001",
+  "question": "Where in code is the full-stack downstream causal arbitration source binding enforced, and which functions connect canonical-only calibration to frozen arbitration execution, finalization, and the post-arbitration decision gate?",
+  "budget": 2600,
   "traversal": "bfs",
   "contexts": [
     "call",
