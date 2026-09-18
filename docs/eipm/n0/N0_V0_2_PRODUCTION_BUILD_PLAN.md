@@ -33,7 +33,17 @@ Reference design:
 - 48k byte-fallback BPE;
 - expected parameter class ~140M, with the exact count required from CPU model construction before any GPU job.
 
-Why this scale: the EIPM is a semantic/judgment representation and policy component, not a world-knowledge generator. Under 2x P100, a smaller native backbone buys substantially more token exposure, more experiments per GPU-hour, and lower later N1/N2 adaptation cost. Capacity may increase later only if fixed held-out failures demonstrate a capacity bottleneck rather than a data/objective bottleneck.
+Why this operating point: the EIPM is a semantic/judgment representation and policy component, not a world-knowledge generator. Under 2x P100, this native backbone buys substantially more token exposure and better capability gain per GPU-hour than spending the same budget on unused dense width. This is an operating point for the current semantic checkpoint lineage, not a capability ceiling.
+
+### Capability-first architecture contract
+
+N0 is being built as the full production personality-model foundation, not as a deliberately reduced pilot model. The complete N0 path is heterogeneous: semantic representation -> structured state -> evidence graph -> source-anchored cross-context fusion -> adaptive multi-view latent workspace. Diagnostic experiments must exercise that real path unless the experiment is explicitly about one isolated component.
+
+No current number in this document is a permanent limit on model capability. Hidden width, depth, context capacity, attention pattern, expert count, graph width/depth, latent slots, memory capacity, or module count may expand when capability evidence requires it. The current values are resource-aware operating points for the active lineage.
+
+Architecture selection is capability-first and frontier-informed. Prefer architectures and kernels that improve quality per unit compute, memory bandwidth, latency, or serving cost without removing representational capacity. Efficiency is an optimization objective only among designs that preserve the required personality fidelity and capability. Compute scarcity is not permission to make a permanent architectural compromise.
+
+The semantic backbone also is not required to remain a generic transformer if a stronger encoder or hybrid design becomes justified. Future revisions may introduce better attention layouts, conditional computation, recurrence/memory, or other frontier mechanisms. Such changes must preserve provenance, public/private boundaries, and reproducible evaluation.
 
 ## 2. Tokenizer
 
@@ -118,7 +128,7 @@ Use the 0.70 / 0.10 / 0.10 / 0.10 objective weights as an initial mixture, then 
 
 ### Phase C — context-length growth
 
-Do not pay long-context cost early. Move from 512 to 1024 and later 2048/4096 only after short-context representation gains are healthy and the fixed suite shows failures that actually require longer context.
+Do not pay long-context cost early when it does not improve capability. Move from 512 to 1024 and later 2048/4096 as measured operating points. Those values are not a maximum context ceiling. Continue extending context or add more efficient memory/retrieval mechanisms when the fixed suite shows capability that depends on longer or persistent context.
 
 ## 6. Fixed evaluation
 
@@ -163,7 +173,7 @@ Before any v0.2 GPU allocation, preflight must verify:
 - fixed-suite integrity and deterministic invariance expansion;
 - current teacher rows all contain rationale supervision;
 - exact multi-objective model construction succeeds in the validated container;
-- exact parameter count lies inside the approved 110M–180M envelope;
+- exact parameter count lies inside the approved 110M–180M envelope for this specific v0.2 semantic operating point; this envelope is not a permanent N0 or A.L.I.C.E. parameter ceiling;
 - private identity gradient remains false.
 
 Wrapper: `scripts/eipm/n0/magnolia_cpu_n0_v02_preflight.sh`
