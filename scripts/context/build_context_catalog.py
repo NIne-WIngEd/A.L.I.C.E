@@ -100,6 +100,34 @@ def branch_sha(branch: str) -> str:
     return git("rev-parse", remote_ref(branch)).strip()
 
 
+def branch_head_metadata(branch: str) -> dict:
+    raw = git(
+        "log", "-1",
+        "--format=%cI%x00%s",
+        remote_ref(branch),
+    ).rstrip("\n")
+    if "\x00" in raw:
+        committed_at, message = raw.split("\x00", 1)
+    else:
+        committed_at, message = None, raw
+    return {
+        "head_committed_at": committed_at,
+        "head_message": message,
+    }
+
+
+def branch_is_ancestor(older: str, newer: str) -> bool:
+    proc = subprocess.run(
+        [
+            "git", "merge-base", "--is-ancestor",
+            remote_ref(older), remote_ref(newer),
+        ],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    return proc.returncode == 0
+
+
 def relation(source: str, other: str) -> dict:
     left, right = git(
         "rev-list", "--left-right", "--count",
@@ -273,14 +301,18 @@ def main() -> None:
 
     source_sha = branch_sha(SOURCE_BRANCH)
     branch_rows = []
+    changed_paths_by_branch: dict[str, list[str]] = {}
     for name in branches:
         if name.startswith("tmp-") or name == "research/graphify-context-substrate":
             continue
         rel = relation(SOURCE_BRANCH, name)
         changed = changed_paths(SOURCE_BRANCH, name, rel["merge_base"])
+        changed_paths_by_branch[name] = changed
+        head_meta = branch_head_metadata(name)
         branch_rows.append({
             "branch": name,
             "head": branch_sha(name),
+            **head_meta,
             **rel,
             "changed_file_count_vs_source_merge_base": len(changed),
             "knowledge_surface": branch_is_knowledge_surface(name),
@@ -296,6 +328,78 @@ def main() -> None:
             "branches": branch_rows,
         },
     )
+
+    # Track experiment branches that are strictly ahead of the stable build base
+    # without promoting them to canonical truth. Maximal heads are those not
+    # already contained by another ahead-only EIPM experiment branch.
+    experiment_rows = [
+        row for row in branch_rows
+        if row["branch"].startswith("alice-eipm-v1-")
+        and row["branch"] != SOURCE_BRANCH
+        and row["status"] == "ahead"
+        and row["behind"] == 0
+    ]
+    maximal_experiment_rows = []
+    for row in experiment_rows:
+        if any(
+            other["branch"] != row["branch"]
+            and branch_is_ancestor(row["branch"], other["branch"])
+            for other in experiment_rows
+        ):
+            continue
+        maximal_experiment_rows.append(row)
+
+    def experiment_view(row: dict) -> dict:
+        return {
+            "branch": row["branch"],
+            "head": row["head"],
+            "head_committed_at": row.get("head_committed_at"),
+            "head_message": row.get("head_message"),
+            "ahead": row["ahead"],
+            "behind": row["behind"],
+            "merge_base": row["merge_base"],
+            "changed_file_count_vs_source_merge_base":
+                row["changed_file_count_vs_source_merge_base"],
+            "changed_paths_vs_source_merge_base":
+                changed_paths_by_branch.get(row["branch"], [])[:200],
+            "authority": "unmerged-experiment-pointer",
+        }
+
+    experiment_frontier = {
+        "schema": "alice-context-unmerged-experiment-frontier-v1",
+        "stable_build_branch": SOURCE_BRANCH,
+        "stable_build_commit": source_sha,
+        "candidate_count": len(experiment_rows),
+        "maximal_head_count": len(maximal_experiment_rows),
+        "maximal_heads": [
+            experiment_view(row)
+            for row in sorted(
+                maximal_experiment_rows,
+                key=lambda x: (
+                    x.get("head_committed_at") or "",
+                    x["branch"],
+                ),
+                reverse=True,
+            )
+        ],
+        "all_ahead_candidates": [
+            experiment_view(row)
+            for row in sorted(
+                experiment_rows,
+                key=lambda x: (
+                    x.get("head_committed_at") or "",
+                    x["branch"],
+                ),
+                reverse=True,
+            )
+        ],
+        "selection_rule": (
+            "Maximal heads are ahead-only alice-eipm-v1 experiment branches "
+            "whose head is not an ancestor of another ahead-only experiment branch."
+        ),
+        "authority": "routing-only; not canonical promotion",
+    }
+    write_json(OUT / "ACTIVE_EXPERIMENT_FRONTIER.json", experiment_frontier)
 
     source_files = ls_tree(remote_ref(SOURCE_BRANCH))
 
@@ -484,16 +588,58 @@ def main() -> None:
             "authority": "branch-qualified-continuity-overlay",
         }
 
+    context_branch_row = next(
+        (row for row in branch_rows if row["branch"] == "alice-context"),
+        None,
+    )
+    newest_frontier_time = max(
+        (
+            row.get("head_committed_at") or ""
+            for row in maximal_experiment_rows
+        ),
+        default="",
+    )
+    context_head_time = (
+        context_branch_row.get("head_committed_at")
+        if context_branch_row else None
+    )
+    continuity_stale_for_frontier = bool(
+        newest_frontier_time
+        and context_head_time
+        and newest_frontier_time > context_head_time
+    )
+
     active_mission_state = {
-        "schema": "alice-context-active-mission-state-v1",
-        "source_branch": SOURCE_BRANCH,
-        "source_commit": source_sha,
+        "schema": "alice-context-active-mission-state-v2",
+        "stable_build_base": {
+            "branch": SOURCE_BRANCH,
+            "commit": source_sha,
+            "authority": "committed-build-base",
+        },
         "implementation_state": active_n0_state,
         "continuity_overlay": latest_handoff,
+        "continuity_branch_head": (
+            {
+                "branch": context_branch_row["branch"],
+                "head": context_branch_row["head"],
+                "head_committed_at": context_branch_row.get("head_committed_at"),
+                "head_message": context_branch_row.get("head_message"),
+            }
+            if context_branch_row else None
+        ),
+        "unmerged_experiment_frontier": experiment_frontier,
+        "continuity_freshness": {
+            "stale_relative_to_unmerged_experiment_frontier":
+                continuity_stale_for_frontier,
+            "newest_experiment_frontier_time": newest_frontier_time or None,
+            "continuity_branch_head_time": context_head_time,
+        },
         "execution_rule": (
-            "Implementation config governs committed model/build state. "
-            "A newer continuity overlay may supersede its observed runtime status "
-            "and next-action wording. Open the original handoff before execution."
+            "The stable build base and continuity overlay are not sufficient "
+            "when continuity_freshness is stale. Before issuing an execution "
+            "command, inspect every maximal unmerged experiment head and its "
+            "original receipts/docs. Unmerged experiment state remains "
+            "non-canonical until explicitly promoted."
         ),
         "authority": "routing-and-freshness-only",
     }
@@ -514,6 +660,10 @@ def main() -> None:
         "active_n0_state_present": active_n0_state is not None,
         "active_mission_state_present": True,
         "continuity_overlay_present": latest_handoff is not None,
+        "unmerged_experiment_frontier_present": bool(experiment_rows),
+        "unmerged_experiment_maximal_head_count": len(maximal_experiment_rows),
+        "continuity_stale_relative_to_experiment_frontier":
+            continuity_stale_for_frontier,
         "document_pointer_count": len(dedupe(doc_rows)),
         "failure_lesson_pointer_count": len(dedupe(failure_rows)),
         "frontier_research_pointer_count": len(dedupe(research_rows)),
