@@ -143,15 +143,25 @@ def main() -> None:
     ranked=sorted(merged.values(),key=lambda x:(-x["score"],x.get("branch") or "",x.get("path") or ""))[:max(1,min(args.top,50))]
 
     active={}
-    p=ROOT/"ACTIVE_N0_STATE.json"
-    if p.exists():
-        active=json.loads(p.read_text(encoding="utf-8"))
+    mission_path=ROOT/"ACTIVE_MISSION_STATE.json"
+    legacy_path=ROOT/"ACTIVE_N0_STATE.json"
+    if mission_path.exists():
+        active=json.loads(mission_path.read_text(encoding="utf-8"))
+    elif legacy_path.exists():
+        active=json.loads(legacy_path.read_text(encoding="utf-8"))
 
     catalog_status=json.loads((ROOT/"CATALOG_STATUS.json").read_text(encoding="utf-8"))
 
     qlow=q.lower()
     private_terms=("comic","old chat","previous chat","prior chat","conversation","pdf","private","elaina source","handoff export")
-    external_recommended=any(t in qlow for t in private_terms)
+    operational_terms=("magnolia","kaggle","powershell","udocker","slurm","ssh","sbatch","execution route","submit","launcher","remote path")
+    operational_intent=("current","command","route","workflow","submit","run","how","exact","working","dead","failed","failure","lesson")
+    explicit_private=any(t in qlow for t in private_terms)
+    operational_history_risk=(
+        any(t in qlow for t in operational_terms)
+        and any(t in qlow for t in operational_intent)
+    )
+    external_recommended=explicit_private or operational_history_risk
     low_confidence=(not ranked) or ranked[0]["score"]<10
 
     result={
@@ -159,12 +169,18 @@ def main() -> None:
         "question":q,
         "query_tokens":qtok,
         "catalog_status":catalog_status,
-        "active_n0_state":active,
+        "active_mission_state":active,
+        "active_n0_state":(
+            active.get("implementation_state", active)
+            if isinstance(active, dict) else {}
+        ),
         "hits":ranked,
         "private_external_route_recommended": external_recommended or low_confidence,
         "private_external_route_reason": (
             "question references a private/external source class"
-            if external_recommended else
+            if explicit_private else
+            "host-specific operational history may contain newer failure lessons than public receipts"
+            if operational_history_risk else
             "public routing catalogs have low confidence"
             if low_confidence else
             None
