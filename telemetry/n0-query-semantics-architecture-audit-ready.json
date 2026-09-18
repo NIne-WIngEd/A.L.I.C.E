@@ -1,0 +1,33 @@
+{
+  "schema": "alice.telemetry.n0.query-semantics-architecture-audit-ready.v0.1",
+  "date": "2026-09-18",
+  "trigger_job_id": 575800,
+  "trigger_state": "COMPLETED",
+  "trigger_exit_code": "0:0",
+  "trigger_result_sha256": "0f7917446d9f23c5d58e1eb1e1e5641a8df38da1a4730926a90d73ec044305a0",
+  "trigger_status": "FAIL_QUERY_RELATION_ROLE_ROUTER_DEV_STOP_NO_HELDOUT_EXPOSURE",
+  "trigger_heldout_opened": false,
+  "trigger_eligible_candidate_keys": [],
+  "trigger_best_dev_checkpoint": "step-00000260",
+  "trigger_parent_unchanged": true,
+  "trigger_final_role_accuracy": 0.5,
+  "trigger_family_min_role_accuracy": 0,
+  "branch": "alice-eipm-v1-query-semantics-architecture-audit",
+  "head": "c169f98f439705a517191b2d93dc6388bc891a1a",
+  "ahead_of_stable": 79,
+  "behind_stable": 0,
+  "gradient_work_frozen": true,
+  "audit_representations": [
+    "raw_mean_pool_640",
+    "trained_semantic_projection_256",
+    "token_level_late_interaction"
+  ],
+  "audit_gradient_performed": false,
+  "audit_model_mutation": false,
+  "audit_heldout_used": false,
+  "ci_run": 35390844449,
+  "ci_result": "SUCCESS",
+  "scale_authorized": false,
+  "n0_complete": false,
+  "next_action": "run one no-gradient Magnolia query-semantics architecture audit"
+}
