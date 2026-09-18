@@ -10,6 +10,9 @@ on:
 permissions:
   contents: write
 
+env:
+  GRAPHIFY_SOURCE_BRANCH: alice-eipm-v1-build
+
 jobs:
   query:
     runs-on: ubuntu-latest
@@ -19,6 +22,34 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Refuse stale graph
+        shell: bash
+        run: |
+          git fetch origin "$GRAPHIFY_SOURCE_BRANCH"
+          LIVE_SOURCE_COMMIT="$(git rev-parse "origin/$GRAPHIFY_SOURCE_BRANCH")"
+          export LIVE_SOURCE_COMMIT
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          build_path = Path("research/graphify-context/LAST_GRAPH_BUILD.json")
+          if not build_path.exists():
+              raise SystemExit("STALE_GRAPH: no LAST_GRAPH_BUILD.json exists")
+
+          build = json.loads(build_path.read_text(encoding="utf-8"))
+          recorded = build.get("source_work_commit")
+          live = os.environ["LIVE_SOURCE_COMMIT"]
+          if recorded != live:
+              raise SystemExit(
+                  "STALE_GRAPH: graph represents "
+                  + repr(recorded)
+                  + " but alice-eipm-v1-build is "
+                  + live
+                  + ". Sync and rebuild before querying."
+              )
+          PY
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -81,9 +112,7 @@ jobs:
                   + proc.stderr
               )
 
-          graph_build = {}
-          if build_path.exists():
-              graph_build = json.loads(build_path.read_text(encoding="utf-8"))
+          graph_build = json.loads(build_path.read_text(encoding="utf-8"))
 
           result = {
               "request_id": request.get("request_id"),
