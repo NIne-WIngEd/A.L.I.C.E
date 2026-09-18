@@ -16,7 +16,7 @@ OUT_MD=BASE/"CONTEXT_CAPSULE.md"
 def main() -> None:
     data=json.loads(RESULT.read_text(encoding="utf-8"))
     cat=data.get("catalog_result") or {}
-    active=cat.get("active_n0_state") or {}
+    active=cat.get("active_mission_state") or cat.get("active_n0_state") or {}
     hits=(cat.get("hits") or [])[:12]
 
     graph_nodes=[]
@@ -77,11 +77,13 @@ def main() -> None:
         "",
         "## Active mission",
         "",
-        f"- Status: {active.get('status')}",
-        f"- Source: {active.get('source_path')}",
-        f"- N0 complete: {active.get('n0_complete')}",
-        f"- Pass next action: {active.get('pass_next_action')}",
-        f"- Fail next action: {active.get('fail_next_action')}",
+        f"- Mission schema: {active.get('schema')}",
+        f"- Source commit: {active.get('source_commit')}",
+        f"- Implementation status: {(active.get('implementation_state') or active).get('status')}",
+        f"- Implementation source: {(active.get('implementation_state') or active).get('source_path')}",
+        f"- Continuity overlay: {(active.get('continuity_overlay') or {}).get('path')}",
+        f"- Latest observed Magnolia job: {(active.get('continuity_overlay') or {}).get('magnolia_job_observed')}",
+        f"- Execution rule: {active.get('execution_rule')}",
         "",
         "## Source pointers",
         "",
