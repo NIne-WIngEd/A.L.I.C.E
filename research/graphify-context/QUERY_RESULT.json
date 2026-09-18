@@ -1,13 +1,13 @@
 {
-  "request_id": "coverage-g4-operational-failure-002",
-  "question": "What is the current working Magnolia execution route, which routes are dead, and what PowerShell or Kaggle failure lesson must not be repeated before I run the next N0 job?",
-  "budget": 2200,
+  "request_id": "coverage-g7-comic-continuous-memory-001",
+  "question": "What does the A.L.I.C.E. comic require from continuous memory across years, especially remembering why an old decision worked then, why it later stopped working, and what changed?",
+  "budget": 1800,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-18T01:47:19.341570+00:00",
+  "generated_at_utc": "2026-09-18T01:48:09.682233+00:00",
   "authority": "navigation-only",
   "graph_build": {
     "source_work_branch": "alice-eipm-v1-build",
@@ -21,25 +21,25 @@
   },
   "catalog_result": {
     "schema": "alice-context-catalog-query-v1",
-    "question": "What is the current working Magnolia execution route, which routes are dead, and what PowerShell or Kaggle failure lesson must not be repeated before I run the next N0 job?",
+    "question": "What does the A.L.I.C.E. comic require from continuous memory across years, especially remembering why an old decision worked then, why it later stopped working, and what changed?",
     "query_tokens": [
+      "a.l.i.c.e.",
+      "comic",
+      "require",
+      "continuous",
+      "memory",
+      "across",
+      "years",
+      "especially",
+      "remembering",
+      "old",
+      "decision",
+      "worked",
+      "then",
+      "later",
+      "stopped",
       "working",
-      "magnolia",
-      "execution",
-      "route",
-      "routes",
-      "dead",
-      "powershell",
-      "kaggle",
-      "failure",
-      "lesson",
-      "must",
-      "not",
-      "repeated",
-      "before",
-      "run",
-      "next",
-      "job"
+      "changed"
     ],
     "catalog_status": {
       "schema": "alice-context-catalog-status-v1",
@@ -178,471 +178,559 @@
     },
     "hits": [
       {
-        "score": 71,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-09/sol/MC10D_MAGNOLIA_P100X2_ROUTE_QUALIFIED_NEXT_RUNTIME_GATE.md",
-        "blob_sha": "973ec51441d8c119caeebe2304b0f413ed94a351",
-        "category": "working_context",
-        "title": "MC10D Magnolia 2xP100 route qualified — next runtime gate",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "fallback",
-          "hotfix",
-          "kaggle",
-          "magnolia"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 62,
+        "score": 50,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md",
-        "blob_sha": "77ff7dda3d28fef326ceb8e6af7db799879c876b",
-        "category": "runtime_receipt",
-        "title": "Magnolia 2×P100 N0 Runtime Smoke — Job 575527",
+        "path": "docs/MEMORY_ARCHITECTURE_HOLD.md",
+        "blob_sha": "a6164eaee37a23211d7c8270540a06f1f21fa672",
+        "category": "design_document",
+        "title": "A.L.I.C.E. Memory Architecture Hold — Supersession Record",
         "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "magnolia",
-          "runtime-results",
-          "smoke",
-          "udocker"
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 4,
+            "text": "**Superseded by:** `docs/MEMORY_CAPABILITY_EXPANSION_AND_RATIFICATION_PROGRAM.md`"
+          },
+          {
+            "line": 12,
+            "text": "Its broad research and technology restrictions are now retired from the ratified governing text. The accepted authority topology remains valuable. Physical-topology assumptions and general research pauses do not govern Memory Architecture v4.1."
+          }
         ],
-        "supersession_hints": [],
         "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 58,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
-        "blob_sha": "caa8ea529fc219d8d0004bd2c5cb5e2cebebc852",
-        "category": "runtime_receipt",
-        "title": "Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571",
-        "declared": {
-          "status": "completed payload"
-        },
-        "matched_terms": [
-          "error",
-          "failed",
-          "failure",
-          "magnolia",
-          "repair",
-          "runtime-results"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
+          "supersession",
           "document",
           "frontier"
         ]
       },
       {
-        "score": 55,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md",
-        "blob_sha": "be2ffe0bb87a8f835d36698854aa620db7694b99",
-        "category": "runtime_receipt",
-        "title": "Magnolia 2×P100 Real N0 Training — Job 575546",
-        "declared": {
-          "status": " completed successfully; durable weights retained; LR scheduler defect identified before continuation"
-        },
-        "matched_terms": [
-          "failure",
-          "magnolia",
-          "repair",
-          "runtime-results"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 54,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-06/astra/tools/runtime-route-survey/package/ALICE_MAGNOLIA_RUNTIME_ROUTE_v1.0.0/README.md",
-        "blob_sha": "78abc2e17aab443bcd0cc3e914366e38a80a42b2",
-        "category": "working_context",
-        "title": "Magnolia runtime route survey",
-        "declared": {},
-        "matched_terms": [
-          "fallback",
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 53,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_N0_CONTINUATION_JOB_575548.md",
-        "blob_sha": "f8a37086738f1a7ff8256697aa0d78e711e8b6fb",
-        "category": "runtime_receipt",
-        "title": "Magnolia N0 continuation — job 575548",
-        "declared": {
-          "status": " completed successfully"
-        },
-        "matched_terms": [
-          "magnolia",
-          "repair",
-          "runtime-results"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "supersession",
-          "document"
-        ]
-      },
-      {
-        "score": 51,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_DDP_JOB_575537.md",
-        "blob_sha": "101c3de692ac07f418f2134c23f2c6245e1703f5",
-        "category": "runtime_receipt",
-        "title": "Magnolia 2×P100 N0 DDP Mechanics — Job 575537",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "magnolia",
-          "runtime-results",
-          "smoke",
-          "udocker"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 51,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md",
-        "blob_sha": "435efa0bf1c2e58ecd5929e4fd25c03cc6f9cd5b",
-        "category": "runtime_receipt",
-        "title": "Magnolia single-P100 N0 teacher diagnostic — job 575565",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "magnolia",
-          "repair",
-          "runtime-results"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 50,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-06/astra/MAGNOLIA_RUNTIME_ROUTE_RELEASE.json",
-        "blob_sha": "088be1ac1d87d5e33821bada9b12daf63f148208",
-        "category": "working_context",
-        "title": "MAGNOLIA_RUNTIME_ROUTE_RELEASE.json",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 50,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-07/sol/RUNTIME_ROUTE_RESULT_SUMMARY.md",
-        "blob_sha": "39b4a217cd107e75b2234ad809d831a7408e0bb8",
-        "category": "working_context",
-        "title": "Magnolia Runtime Route — Observed Result Summary",
-        "declared": {},
-        "matched_terms": [
-          "magnolia"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 47,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/MAGNOLIA_P100X2_RUNTIME_SMOKE_2026-09-13.md",
-        "blob_sha": "83ab8ec25221b2a6903a2502b2019f9a8a901ec3",
-        "category": "design_document",
-        "title": "Magnolia 2×P100 N0 Runtime Smoke — 2026-09-13",
-        "declared": {
-          "status": " ready for owner execution"
-        },
-        "matched_terms": [
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "smoke"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 45,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-09/sol/MC10D_MAGNOLIA_CLOSED_KAGGLE_DURABLE_SUCCESSOR.md",
-        "blob_sha": "2effe4f25010dc93510e5014372690426fc172ec",
-        "category": "working_context",
-        "title": "MC10D Magnolia closed — Kaggle durable simulation/falsification successor",
-        "declared": {},
-        "matched_terms": [
-          "failure",
-          "hotfix",
-          "kaggle",
-          "magnolia"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "supersession",
-          "document"
-        ]
-      },
-      {
-        "score": 44,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/KAGGLE_CPU_PUBLIC_LINEAGE_V102_20260914.md",
-        "blob_sha": "1590c8e4b29564ed969ba136202c9b7ef3b0be09",
-        "category": "runtime_receipt",
-        "title": "Kaggle CPU Public N0 Lineage v1.0.2 — 2026-09-14",
-        "declared": {},
-        "matched_terms": [
-          "dns",
-          "failed",
-          "failure",
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "network",
-          "powershell",
-          "runtime-results"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "supersession",
-          "document"
-        ]
-      },
-      {
-        "score": 43,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md",
-        "blob_sha": "a8be2d6d77884b715635b5a97d3b3e7abbb93e67",
-        "category": "working_context",
-        "title": "MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "kaggle",
-          "magnolia"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 43,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-14/sol/N0_MAGNOLIA_DNS_BOUNDARY_AND_KAGGLE_CPU_FALLBACK.md",
-        "blob_sha": "19cfd6ac34d7aa3464b2d8fe43a3c0931f166d96",
-        "category": "working_context",
-        "title": "N0 Magnolia DNS boundary and Kaggle CPU fallback — 2026-09-14",
-        "declared": {},
-        "matched_terms": [
-          "dns",
-          "error",
-          "failed",
-          "failure",
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "network"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
         "score": 41,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-13/sol/N0_KAGGLE_CPU_LINEAGE_SUCCESS_AND_MAGNOLIA_IMPORT.md",
-        "blob_sha": "514d3f5faffda3e184f18dd4d7fe7a08262413a2",
-        "category": "working_context",
-        "title": "N0 Kaggle CPU Lineage Success and Magnolia Import — 2026-09-14",
-        "declared": {},
-        "matched_terms": [
-          "dns",
-          "egress",
-          "failed",
-          "kaggle",
-          "magnolia",
-          "network",
-          "powershell"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "supersession",
-          "document"
-        ]
-      },
-      {
-        "score": 41,
-        "branch": "fable-builder-model",
-        "branch_scope": "branch_specific",
-        "path": "docs/fable-builder/traces/FBM_TRACE_20260914_MAGNOLIA_RUNTIME_BOUNDARY_AND_PRIVATE_NAMESPACE.jsonl",
-        "blob_sha": "4b28f483487150d94ef6cf6249c99fad3522fd2f",
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/MEMORY_M1_DECISION_REGISTER.md",
+        "blob_sha": "76196d3a8503b8462aaeff4e3abf5b443f38e2ca",
         "category": "design_document",
-        "title": "FBM_TRACE_20260914_MAGNOLIA_RUNTIME_BOUNDARY_AND_PRIVATE_NAMESPACE.jsonl",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "magnolia",
-          "recovery",
-          "runtime-results",
-          "smoke",
-          "udocker"
+        "title": "Memory M1 Decision Register",
+        "declared": {
+          "status": " M1-DX0 through M1-D9 owner-ratified on 2026-08-05"
+        },
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 120,
+            "text": "Authority is explicit and profile-bound. Automated adjudication may accept, revise, supersede, dispute, quarantine, merge, split, or reject candidates according to authority class, evidence, confidence, consequence, and evaluation."
+          }
         ],
-        "supersession_hints": [],
         "catalogs": [
+          "supersession",
+          "document",
           "failure",
-          "document"
+          "frontier"
         ]
       },
       {
-        "score": 39,
+        "score": 37,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md",
+        "blob_sha": "4fefefacb52147e59b50110c10bbdb1f15f90349",
+        "category": "design_document",
+        "title": "A.L.I.C.E. Memory Identity, Formation, Host Learning, and Repository Lifecycle",
+        "declared": {
+          "status": " Owner-ratified architecture decision"
+        },
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 412,
+            "text": "Once Friday is well established and A.L.I.C.E. no longer benefits from being publicly developed, the A.L.I.C.E. repository is intended to become private."
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure",
+          "frontier"
+        ]
+      },
+      {
+        "score": 35,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-06/astra/START_HERE_BEFORE_QWEN_V102_TRACE.md",
-        "blob_sha": "19450239b4506e355c80b474c868574b28cd65bb",
+        "path": "docs/chat-context/2026-08-31/src/S02-memory-handoff.md",
+        "blob_sha": "ed39916872576a12f9c4e26fc7ff2170c60b63a6",
         "category": "working_context",
-        "title": "Current continuation — a1 runtime failure verified; v102 infrastructure successor ready",
+        "title": "A.L.I.C.E. Stage G / G+ Memory Architecture Handoff",
         "declared": {},
-        "matched_terms": [
-          "egress",
-          "failed",
-          "failure",
-          "fallback",
-          "forensic",
-          "kaggle",
-          "magnolia",
-          "repair"
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 741,
+            "text": "Do not use:"
+          },
+          {
+            "line": 745,
+            "text": "→ Phase 2 retired"
+          }
         ],
-        "supersession_hints": [],
         "catalogs": [
+          "supersession",
+          "document",
           "failure",
-          "document"
+          "frontier"
         ]
       },
       {
-        "score": 38,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_PUBLIC_LINEAGE_IMPORT_20260914.md",
-        "blob_sha": "45e7f5ed2da02f98e3c52c0a1bef999aedf65d83",
-        "category": "runtime_receipt",
-        "title": "Magnolia Public N0 Lineage Import — 2026-09-14",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "network",
-          "runtime-results",
-          "smoke",
-          "udocker"
+        "score": 35,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-13/sol/N0_FRONTIER_RESEARCH_DECISION.md",
+        "blob_sha": "2cba72977eee06c1ca1a7ce20a89b646557324c9",
+        "category": "working_context",
+        "title": "A.L.I.C.E. N0 Frontier Research Decision — 2026-09-13",
+        "declared": {
+          "status": " continuity handoff. No permanent EIPM weights created."
+        },
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 25,
+            "text": "The previous `~100M–400M` / `~400M` language was a working research hypothesis for one specialist architecture. It is superseded as a sizing constraint. A.L.I.C.E. may use a much smaller or much larger EIPM if measured competency and owner-evaluated identity fidelity justify it."
+          }
         ],
-        "supersession_hints": [],
         "catalogs": [
+          "supersession",
+          "document",
           "failure",
-          "document"
+          "frontier"
         ]
       },
       {
-        "score": 38,
+        "score": 35,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/N0_V021_MAGNOLIA_NETWORK_FAILOVER_20260914.md",
-        "blob_sha": "bbd962c2b822a11a6ec446bf6bf9fc123a71e280",
-        "category": "runtime_receipt",
-        "title": "N0 v0.2.1 tokenizer corpus: Magnolia network failover",
+        "path": "docs/MEMORY_POLICY.md",
+        "blob_sha": "f6cc3cc8acdfd4c10755de6174c11cdc94d11dda",
+        "category": "design_document",
+        "title": "A.L.I.C.E. Memory and Knowledge Policy",
         "declared": {},
-        "matched_terms": [
-          "dns",
-          "error",
-          "failure",
-          "kaggle",
-          "magnolia",
-          "network",
-          "runtime-results"
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 51,
+            "text": "Forgetting may be deliberate when information is obsolete, harmful to accuracy, revoked, superseded, no longer useful, or disproportionately costly relative to its expected future value."
+          }
         ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure"
+        ]
+      },
+      {
+        "score": 35,
+        "branch": "docs/memory-identity-host-learning-ratification-v2",
+        "branch_scope": "branch_specific",
+        "path": "docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md",
+        "blob_sha": "0c7aa2e059b305e9988bd5708ae2c8dd6220ae64",
+        "category": "design_document",
+        "title": "A.L.I.C.E. Memory Identity, Formation, Host Learning, and Repository Lifecycle",
+        "declared": {
+          "status": " Owner-ratified architecture decision"
+        },
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 395,
+            "text": "Once Friday is well established and A.L.I.C.E. no longer benefits from being publicly developed, the A.L.I.C.E. repository is intended to become private."
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure",
+          "frontier"
+        ]
+      },
+      {
+        "score": 30,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/MEMORY_EXTERNAL_SYSTEMS_REVIEW.md",
+        "blob_sha": "09202f40f5b6460231e96dde58733f9cdaf9d98e",
+        "category": "design_document",
+        "title": "External Memory Systems Code and Architecture Review",
+        "declared": {},
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 276,
+            "text": "- cancel or supersede duplicate in-flight jobs;"
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure",
+          "frontier"
+        ]
+      },
+      {
+        "score": 30,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/MEMORY_RECORD_AND_PROVENANCE_STANDARD.md",
+        "blob_sha": "3f3a2d14753cee9b3f36aba0d880ff226bd65016",
+        "category": "design_document",
+        "title": "Memory Record and Provenance Standard — Polyglot Cognitive Fabric",
+        "declared": {
+          "status": " Owner-ratified under Memory M1 on 2026-08-05"
+        },
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 44,
+            "text": "supersedes[]"
+          },
+          {
+            "line": 87,
+            "text": "Records the authority, rule, evidence considered, alternatives, confidence, outcome, and rollback path for add, revise, supersede, dispute, quarantine, merge, split, or reject decisions."
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure"
+        ]
+      },
+      {
+        "score": 30,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/PHASE_2_MEMORY_CORE_ARCHITECTURE.md",
+        "blob_sha": "e9da5ee5c2c2ebcfadbdb7693ef52c9363b2cafd",
+        "category": "design_document",
+        "title": "Phase 2 — Memory Core Architecture",
+        "declared": {
+          "status": " P2.0–P2.9 implemented; Phase 2 complete"
+        },
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 151,
+            "text": "- superseded."
+          },
+          {
+            "line": 267,
+            "text": "Later information may supersede current-state interpretation without deleting history."
+          },
+          {
+            "line": 281,
+            "text": "- supersedes;"
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure",
+          "frontier"
+        ]
+      },
+      {
+        "score": 28,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-08-31/src/S03-alice-memory.txt",
+        "blob_sha": "939cbd8c91c95d3b82dd9d3ce34145faee92d97c",
+        "category": "working_context",
+        "title": "S03-alice-memory.txt",
+        "declared": {},
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 399,
+            "text": "doctrine became clearer would destroy provenance. Gate v7 instead supersedes their interpretation."
+          },
+          {
+            "line": 1383,
+            "text": "I’m treating the historical validator inconsistencies as expected rather than current failures. The current authority supersedes the older"
+          },
+          {
+            "line": 1432,
+            "text": "superseded by v7; the provenance blocker and Stage G remain open, while MC4D is now permitted."
+          },
+          {
+            "line": 2321,
+            "text": "I’m checking whether the later Gate-v7/MC4A-B contract intentionally superseded that older P1 requirement. If it did, MC4 is"
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure",
+          "frontier"
+        ]
+      },
+      {
+        "score": 28,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-13/sol/MAINSTREAMED_EIPM_AND_FABLE_BUILDER_DECISION.md",
+        "blob_sha": "442dcd15c74fc8832dd3ed723368f19480101800",
+        "category": "working_context",
+        "title": "Mainstreamed EIPM + Fable Builder Decision",
+        "declared": {},
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 15,
+            "text": "The earlier staged N0 R1/R2/R3/R4/R5/R6/R7 sequence is no longer the required execution path. The streamlined sequence is N0A native foundation, N0B preprocessing/curriculum, N0C first native checkpoint, N0D direct evaluation/repair, then N1 private identity learning when authorized."
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure"
+        ]
+      },
+      {
+        "score": 28,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/MEMORY_ARCHITECTURE_V4.md",
+        "blob_sha": "ee85d4454168d4d355e5540be2523a1e6f06df52",
+        "category": "design_document",
+        "title": "Memory Architecture v4.1 — Capability-First Polyglot Cognitive Fabric",
+        "declared": {
+          "status": " Owner-ratified Memory M1 architecture"
+        },
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 5,
+            "text": "**Supersedes:** Memory Architecture v4 physical-topology assumptions while preserving its evidence-first and claim-centered authority model"
+          },
+          {
+            "line": 25,
+            "text": "2. **Truthful material state.** Implemented, research-active, prototype, shadow, canary, production, degraded, superseded, and retired states remain distinct."
+          },
+          {
+            "line": 227,
+            "text": "superseded"
+          },
+          {
+            "line": 228,
+            "text": "retired"
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure",
+          "frontier"
+        ]
+      },
+      {
+        "score": 28,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/MEMORY_CAPABILITY_EXPANSION_AND_RATIFICATION_PROGRAM.md",
+        "blob_sha": "177e43986f84d1822cb3a704c76573be9bdd64b5",
+        "category": "design_document",
+        "title": "Memory Capability Expansion and Ratification Program",
+        "declared": {
+          "status": " Owner-ratified M1 governing program"
+        },
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 68,
+            "text": "superseded"
+          },
+          {
+            "line": 69,
+            "text": "retired"
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure",
+          "frontier"
+        ]
+      },
+      {
+        "score": 28,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/MEMORY_M1_OWNER_RATIFICATION_2026-08-05.md",
+        "blob_sha": "42ff70846e605d0c514c788b7c55aec0a8ef2c65",
+        "category": "design_document",
+        "title": "Memory M1 Owner Ratification",
+        "declared": {
+          "status": " Owner-ratified"
+        },
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 48,
+            "text": "High-impact private, identity, or source-person influence may not remain production-active merely because complete deletion is technically difficult. Where acceptable residual influence cannot be demonstrated, the affected artifact must be contained, withdrawn, replaced, or retired."
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure",
+          "frontier"
+        ]
+      },
+      {
+        "score": 28,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/MEMORY_PUBLIC_CLAIM_RELEASE_STANDARD.md",
+        "blob_sha": "aa119a1bfcee494c26445fe1d9a2ae0a369a60ad",
+        "category": "design_document",
+        "title": "Memory Public Claim Release Standard",
+        "declared": {
+          "status": " Owner-ratified under Memory M1 on 2026-08-05"
+        },
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 20,
+            "text": "superseded"
+          },
+          {
+            "line": 21,
+            "text": "retired"
+          },
+          {
+            "line": 36,
+            "text": "- `superseded` names a replaced design or implementation."
+          },
+          {
+            "line": 37,
+            "text": "- `retired` names an inactive capability or artifact with retention and deletion disposition."
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure",
+          "frontier"
+        ]
+      },
+      {
+        "score": 28,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/EIPM_CAPABILITY_LIMIT_AUDIT_2026-09-16.md",
+        "blob_sha": "782ef880b7c319a7f1d372fb9cadb63428b456be",
+        "category": "design_document",
+        "title": "A.L.I.C.E. EIPM Capability-Limit Audit — 2026-09-16",
+        "declared": {
+          "status": " owner-directed architecture audit / current interpretation authority"
+        },
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 98,
+            "text": "The ratified 136,594,435 semantic parameters describe the current checkpoint. The frontier plan already supersedes older parameter envelopes and states that there is no ratified permanent parameter ceiling."
+          },
+          {
+            "line": 128,
+            "text": "The historical `max_fields=64` value is retained for checkpoint/config lineage but is no longer enforced as a runtime rejection ceiling. The encoder accepts larger field sets subject only to actual compute/memory availability."
+          },
+          {
+            "line": 156,
+            "text": "The earlier concatenate-and-encode fusion draft was superseded before any fusion gradient. The active family is full-scale gated multi-stream self-refinement plus bidirectional cross-attention."
+          },
+          {
+            "line": 170,
+            "text": "The routing objective now rejects training targets that assign positive mass to unavailable views. It no longer silently masks invalid supervision and renormalizes it."
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure",
+          "frontier"
+        ]
+      },
+      {
+        "score": 28,
+        "branch": "planning/memory-v4-m1-ratification",
+        "branch_scope": "branch_specific",
+        "path": "docs/MEMORY_EXTERNAL_SYSTEMS_REVIEW.md",
+        "blob_sha": "f0db2cb4b0272bfd8f2bf9bf915ad2b6bc3d6bc8",
+        "category": "design_document",
+        "title": "External Memory Systems Code and Architecture Review",
+        "declared": {},
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 276,
+            "text": "- cancel or supersede duplicate in-flight jobs;"
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure",
+          "frontier"
+        ]
+      },
+      {
+        "score": 27,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/MEMORY_CLAIM_COVERAGE_MATRIX.md",
+        "blob_sha": "f882cf419769e423c236819f2d2052f4c6318c60",
+        "category": "design_document",
+        "title": "A.L.I.C.E. Memory Claim Coverage Matrix",
+        "declared": {},
+        "matched_terms": [],
         "supersession_hints": [],
         "catalogs": [
+          "document",
           "failure",
-          "document"
+          "frontier"
+        ]
+      },
+      {
+        "score": 26,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/MEMORY_CLAIM_IDENTITY_AND_VERSION_PROPOSAL.md",
+        "blob_sha": "23651ef8299569e0637dead3246834212dbca9c6",
+        "category": "design_document",
+        "title": "Memory Claim Identity and Version — Ratified M1-D1 Standard",
+        "declared": {
+          "status": " Owner-ratified under Memory M1 on 2026-08-05"
+        },
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 85,
+            "text": "supersedes[]"
+          },
+          {
+            "line": 178,
+            "text": "Network partitions and late replicas do not use last-writer-wins by default. The registered authority policy selects expected-version rejection, causal merge, domain adjudication, or quarantine."
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure"
         ]
       }
     ],
     "private_external_route_recommended": true,
-    "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
+    "private_external_route_reason": "question references a private/external source class",
     "authority": "routing-only"
   },
-  "graphify_result_text": "Graph: graphify-out/graph.json (10832 nodes) | Traversal: BFS depth=2 | Start: ['Regression for Magnolia job 575673 mixed-autocast evaluation failure.', 'magnolia_cpu_n0_v02_preflight.sh', 'magnolia_cpu_n0_v02_tokenizer.sh', 'test_candidates_never_enter_derived_indexes_before_promotion()', 'CurrentClaimProjection', 'DeterministicInformationResearchModeAdapter', '_execution_id()', '_failure()', 'kaggle_cpu_real_lineage.sh', 'n0/__init__.py', '_next_start()', 'test_repeated_request_is_idempotent()', 'test_reliability_prior_can_route_between_equivalent_views()', '.test_auto_review_routes_sensitive_and_contradictory_to_manual()', 'run()'] | Context: call, import (explicit) | 283 nodes found\n\n[!] TRUNCATED: showing 71 of 283 nodes (~2200-token budget). The answer may be among the 212 cut nodes — raise the token budget (CLI: --budget) or narrow the query (e.g. context_filter=['call'], or get_node for a specific symbol).\n\nNODE Regression for Magnolia job 575673 mixed-autocast evaluation failure. [src=tests/eipm/test_n0_adaptive_multi_view_latent_pool_objectives_v0_2.py loc=L65 community=28]\nNODE magnolia_cpu_n0_v02_preflight.sh [src=scripts/eipm/n0/magnolia_cpu_n0_v02_preflight.sh loc=L1 community=299]\nNODE magnolia_cpu_n0_v02_tokenizer.sh [src=scripts/eipm/n0/magnolia_cpu_n0_v02_tokenizer.sh loc=L1 community=244]\nNODE test_candidates_never_enter_derived_indexes_before_promotion() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L312 community=108]\nNODE CurrentClaimProjection [src=src/cognitive_kernel/claim_contracts.py loc=L755 community=41]\nNODE DeterministicInformationResearchModeAdapter [src=src/alice_information/research_mode.py loc=L482 community=38]\nNODE _execution_id() [src=src/alice_information/research_execution.py loc=L277 community=96]\nNODE _failure() [src=src/alice_information/brave_search_live.py loc=L72 community=186]\nNODE kaggle_cpu_real_lineage.sh [src=scripts/eipm/n0/kaggle_cpu_real_lineage.sh loc=L1 community=249]\nNODE n0/__init__.py [src=src/alice_personality/n0/__init__.py loc=L1 community=120]\nNODE _next_start() [src=src/alice_vault/chunking.py loc=L129 community=83]\nNODE test_repeated_request_is_idempotent() [src=tests/phase2/test_memory_deletion.py loc=L291 community=11]\nNODE test_reliability_prior_can_route_between_equivalent_views() [src=tests/eipm/test_n0_cross_context_fusion.py loc=L79 community=55]\nNODE .test_auto_review_routes_sensitive_and_contradictory_to_manual() [src=tests/phase1/test_auto_review.py loc=L44 community=8]\nNODE run() [src=tests/phase4/test_information_final_evaluation_runtime.py loc=L47 community=62]\nNODE cognitive_kernel/__init__.py [src=src/cognitive_kernel/__init__.py loc=L1 community=13]\nNODE open_memory_store() [src=src/alice_memory/store.py loc=L107 community=36]\nNODE load_semantic_policy() [src=src/alice_vault/semantic_retrieval.py loc=L116 community=63]\nNODE load_n0_config() [src=src/alice_personality/n0/config.py loc=L112 community=120]\nNODE search_memories() [src=src/alice_memory/retrieval.py loc=L237 community=16]\nNODE claim_authority_prototype.py [src=src/cognitive_kernel/claim_authority_prototype.py loc=L1 community=41]\nNODE request_memory_deletion() [src=src/alice_memory/deletion.py loc=L437 community=11]\nNODE auto_review_pilot() [src=src/alice_vault/auto_review.py loc=L558 community=8]\nNODE _open() [src=tests/phase2/test_memory_deletion.py loc=L46 community=11]\nNODE _create() [src=tests/phase2/test_memory_deletion.py loc=L82 community=11]\nNODE hybrid_search_memories() [src=src/alice_memory/hybrid_retrieval.py loc=L211 community=16]\nNODE relation_type_id() [src=src/alice_personality/n0/evidence_graph.py loc=L46 community=53]\nNODE search_memories_semantic() [src=src/alice_memory/hybrid_retrieval.py loc=L126 community=16]\nNODE _setup() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L87 community=108]\nNODE _request_deletion() [src=tests/phase2/test_memory_deletion.py loc=L170 community=11]\nNODE _candidate_request() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L143 community=108]\nNODE _propose() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L193 community=108]\nNODE chunk_text() [src=src/alice_vault/chunking.py loc=L139 community=83]\nNODE _assess() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L212 community=108]\nNODE .validate() [src=src/alice_information/research_execution.py loc=L340 community=96]\nNODE _create_memory() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L108 community=108]\nNODE ._read_response() [src=src/alice_information/brave_search_live.py loc=L228 community=186]\nNODE _cancel() [src=src/alice_information/brave_search_live.py loc=L89 community=186]\nNODE _remaining() [src=src/alice_information/brave_search_live.py loc=L82 community=186]\nNODE .perform() [src=src/alice_information/brave_search_live.py loc=L128 community=186]\nNODE build_masked_lm() [src=src/alice_personality/n0/model.py loc=L15 community=120]\nNODE ._read_chunked() [src=src/alice_information/brave_search_live.py loc=L329 community=186]\nNODE inputs() [src=tests/eipm/test_n0_cross_context_fusion.py loc=L12 community=55]\nNODE _request_auth() [src=tests/phase2/test_memory_deletion.py loc=L103 community=11]\nNODE ensure() [src=src/alice_information/brave_search_live.py loc=L333 community=186]\nNODE ._read_to_eof() [src=src/alice_information/brave_search_live.py loc=L316 community=186]\nNODE InformationLiveProviderExecutionError [src=src/alice_information/live_provider_contracts.py loc=L36 community=4]\nNODE .create() [src=src/alice_information/live_provider_contracts.py loc=L134 community=4]\nNODE count_parameters() [src=src/alice_personality/n0/model.py loc=L54 community=120]\nNODE _build_indexes() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L271 community=108]\nNODE .validate() [src=src/alice_information/brave_search_live.py loc=L33 community=186]\nNODE .create() [src=src/alice_information/research_execution.py loc=L324 community=96]\nNODE _receipt_payload() [src=src/alice_information/research_execution.py loc=L238 community=96]\nNODE N0BuildConfig [src=src/alice_personality/n0/config.py loc=L10 community=120]\nNODE EvidenceGraphConfig [src=src/alice_personality/n0/evidence_graph.py loc=L57 community=53]\nNODE _canonical_json() [src=src/alice_information/research_execution.py loc=L102 community=96]\nNODE EvidenceGraphEncoder [src=src/alice_personality/n0/evidence_graph.py loc=L175 community=53]\nNODE EvidenceRelationType [src=src/alice_personality/n0/evidence_graph.py loc=L12 community=53]\nNODE StructuredStateConfig [src=src/alice_personality/n0/structured_state.py loc=L12 community=71]\nNODE FakeEncoder [src=tests/phase2/test_memory_candidate_security_gates.py loc=L65 community=108]\nNODE _read_authorization() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L262 community=108]\nNODE StructuredStateEncoder [src=src/alice_personality/n0/structured_state.py loc=L52 community=71]\nNODE pathlib [src= loc= community=2]\nNODE json [src= loc= community=2]\nNODE CognitiveKernelContractError [src=src/cognitive_kernel/canonical.py loc=L18 community=0]\nNODE canonical_sha256() [src=src/cognitive_kernel/canonical.py loc=L39 community=17]\nNODE require_identifier() [src=src/cognitive_kernel/canonical.py loc=L60 community=0]\nNODE dataclasses [src= loc= community=4]\nNODE typing [src= loc= community=5]\nNODE require_sha256() [src=src/cognitive_kernel/canonical.py loc=L83 community=0]\nNODE normalize_timestamp() [src=src/cognitive_kernel/canonical.py loc=L92 community=0]\n... (truncated — 212 more nodes cut by ~2200-token budget. Narrow with context_filter=['call'] or use get_node for a specific symbol)\n",
+  "graphify_result_text": "Graph: graphify-out/graph.json (10832 nodes) | Traversal: BFS depth=2 | Start: ['decision', 'decision()', 'require()', 'test_response_wrapper_rejects_split_verified_source_set_across_sentences()', '_changed_lines()', 'test_same_key_memory_requires_later_transition_aware_promotion()', 'MemoryUnitEnvelope', 'hhem_holdout.py', 'InterruptThenRespondModel'] | Context: call, import (explicit) | 382 nodes found\n\n[!] TRUNCATED: showing 57 of 382 nodes (~1800-token budget). The answer may be among the 325 cut nodes — raise the token budget (CLI: --budget) or narrow the query (e.g. context_filter=['call'], or get_node for a specific symbol).\n\nNODE decision [src=policies/friday_release_attestation_schema.json loc=L145 community=172]\nNODE decision() [src=tests/phase5/attention_workspace_helpers.py loc=L74 community=130]\nNODE require() [src=scripts/eipm/n0/preflight_n0_v02_teacher_dev_challenge.py loc=L36 community=30]\nNODE test_response_wrapper_rejects_split_verified_source_set_across_sentences() [src=tests/phase4/test_information_conversation_bridge.py loc=L628 community=54]\nNODE _changed_lines() [src=scripts/audit_capability_barriers.py loc=L488 community=131]\nNODE test_same_key_memory_requires_later_transition_aware_promotion() [src=tests/phase2/test_memory_candidate_promotion.py loc=L322 community=116]\nNODE MemoryUnitEnvelope [src=src/cognitive_kernel/memory_contracts.py loc=L377 community=1]\nNODE hhem_holdout.py [src=src/alice_vault/hhem_holdout.py loc=L1 community=45]\nNODE InterruptThenRespondModel [src=tests/phase3/test_conversation_orchestration_resume.py loc=L24 community=34]\nNODE pathlib [src= loc= community=2]\nNODE json [src= loc= community=2]\nNODE cognitive_kernel/__init__.py [src=src/cognitive_kernel/__init__.py loc=L1 community=13]\nNODE dataclasses [src= loc= community=4]\nNODE typing [src= loc= community=5]\nNODE collections [src= loc= community=51]\nNODE m2_closeout_evaluation.py [src=src/cognitive_kernel/m2_closeout_evaluation.py loc=L1 community=1]\nNODE uuid [src= loc= community=20]\nNODE datetime [src= loc= community=45]\nNODE bounded_serving_prototype.py [src=src/cognitive_kernel/bounded_serving_prototype.py loc=L1 community=25]\nNODE claim_authority_prototype.py [src=src/cognitive_kernel/claim_authority_prototype.py loc=L1 community=41]\nNODE judge_calibration.py [src=src/alice_vault/judge_calibration.py loc=L1 community=33]\nNODE shadow_adjudication_prototype.py [src=src/cognitive_kernel/shadow_adjudication_prototype.py loc=L1 community=29]\nNODE claim_contracts.py [src=src/cognitive_kernel/claim_contracts.py loc=L1 community=0]\nNODE adjudication_contracts.py [src=src/cognitive_kernel/adjudication_contracts.py loc=L1 community=1]\nNODE durable_workflow_prototype.py [src=src/cognitive_kernel/durable_workflow_prototype.py loc=L1 community=17]\nNODE scope() [src=tests/phase5/attention_workspace_helpers.py loc=L12 community=130]\nNODE deletion_prototype.py [src=src/cognitive_kernel/deletion_prototype.py loc=L1 community=19]\nNODE load_information_conversation_bridge_policy() [src=src/alice_information/conversation_bridge_policy.py loc=L443 community=54]\nNODE load_memory_candidate() [src=src/alice_memory/formation.py loc=L391 community=116]\nNODE _project() [src=tests/phase4/test_information_conversation_bridge.py loc=L257 community=54]\nNODE projection_contracts.py [src=src/cognitive_kernel/projection_contracts.py loc=L1 community=1]\nNODE _candidate_request() [src=tests/phase2/test_memory_candidate_promotion.py loc=L62 community=116]\nNODE _open() [src=tests/phase2/test_memory_candidate_promotion.py loc=L41 community=116]\nNODE _promote() [src=tests/phase2/test_memory_candidate_promotion.py loc=L144 community=116]\nNODE _propose() [src=tests/phase2/test_memory_candidate_promotion.py loc=L100 community=116]\nNODE curation_contracts.py [src=src/cognitive_kernel/curation_contracts.py loc=L1 community=17]\nNODE serving_contracts.py [src=src/cognitive_kernel/serving_contracts.py loc=L1 community=25]\nNODE _assess() [src=tests/phase2/test_memory_candidate_promotion.py loc=L113 community=116]\nNODE validate_information_conversation_response() [src=src/alice_information/conversation_bridge.py loc=L710 community=54]\nNODE hhem_calibration.py [src=src/alice_vault/hhem_calibration.py loc=L1 community=45]\nNODE deletion_contracts.py [src=src/cognitive_kernel/deletion_contracts.py loc=L1 community=19]\nNODE m2_closeout.py [src=src/cognitive_kernel/m2_closeout.py loc=L1 community=1]\nNODE audit() [src=scripts/audit_capability_barriers.py loc=L521 community=131]\nNODE _score_candidates() [src=src/alice_vault/judge_calibration.py loc=L273 community=33]\nNODE .create() [src=src/cognitive_kernel/attention.py loc=L430 community=0]\nNODE _grounding_policy() [src=tests/phase4/test_information_conversation_bridge.py loc=L38 community=54]\nNODE load_judge_calibration_policy() [src=src/alice_vault/judge_calibration.py loc=L55 community=33]\nNODE _promotion_authorization() [src=tests/phase2/test_memory_candidate_promotion.py loc=L126 community=116]\nNODE _response_policy() [src=tests/phase4/test_information_conversation_bridge.py loc=L82 community=54]\nNODE test_attention_decision.py [src=tests/phase5/test_attention_decision.py loc=L1 community=130]\nNODE test_workspace_projection.py [src=tests/phase5/test_workspace_projection.py loc=L1 community=130]\nNODE test_attention_workspace_isolation.py [src=tests/phase5/test_attention_workspace_isolation.py loc=L1 community=130]\nNODE provenance() [src=tests/phase5/attention_workspace_helpers.py loc=L21 community=130]\nNODE test_projection_binds_selected_attention_entries_and_layout() [src=tests/phase5/test_workspace_projection.py loc=L9 community=130]\nNODE load_local_hhem_model() [src=src/alice_vault/hhem_calibration.py loc=L293 community=45]\nNODE _envelope_from_record() [src=src/cognitive_kernel/durable_workflow_prototype.py loc=L245 community=17]\nNODE test_explicit_resume_creates_new_contiguous_attempt_and_one_assistant() [src=tests/phase3/test_conversation_orchestration_resume.py loc=L79 community=34]\n... (truncated — 325 more nodes cut by ~1800-token budget. Narrow with context_filter=['call'] or use get_node for a specific symbol)\n",
   "graphify_stderr": ""
 }

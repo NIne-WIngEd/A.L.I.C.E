@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: coverage-g4-operational-failure-002
-- Question: What is the current working Magnolia execution route, which routes are dead, and what PowerShell or Kaggle failure lesson must not be repeated before I run the next N0 job?
+- Request: coverage-g7-comic-continuous-memory-001
+- Question: What does the A.L.I.C.E. comic require from continuous memory across years, especially remembering why an old decision worked then, why it later stopped working, and what changed?
 - Source: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 
@@ -17,46 +17,48 @@
 
 ## Source pointers
 
-- [71] alice-context:docs/chat-context/2026-09-09/sol/MC10D_MAGNOLIA_P100X2_ROUTE_QUALIFIED_NEXT_RUNTIME_GATE.md — MC10D Magnolia 2xP100 route qualified — next runtime gate
-- [62] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md — Magnolia 2×P100 N0 Runtime Smoke — Job 575527
-- [58] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md — Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571
-  - status: completed payload
-- [55] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md — Magnolia 2×P100 Real N0 Training — Job 575546
-  - status:  completed successfully; durable weights retained; LR scheduler defect identified before continuation
-- [54] alice-context:docs/chat-context/2026-09-06/astra/tools/runtime-route-survey/package/ALICE_MAGNOLIA_RUNTIME_ROUTE_v1.0.0/README.md — Magnolia runtime route survey
-- [53] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_N0_CONTINUATION_JOB_575548.md — Magnolia N0 continuation — job 575548
-  - status:  completed successfully
-- [51] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_DDP_JOB_575537.md — Magnolia 2×P100 N0 DDP Mechanics — Job 575537
-- [51] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md — Magnolia single-P100 N0 teacher diagnostic — job 575565
-- [50] alice-context:docs/chat-context/2026-09-06/astra/MAGNOLIA_RUNTIME_ROUTE_RELEASE.json — MAGNOLIA_RUNTIME_ROUTE_RELEASE.json
-- [50] alice-context:docs/chat-context/2026-09-07/sol/RUNTIME_ROUTE_RESULT_SUMMARY.md — Magnolia Runtime Route — Observed Result Summary
-- [47] alice-eipm-v1-build:docs/eipm/n0/MAGNOLIA_P100X2_RUNTIME_SMOKE_2026-09-13.md — Magnolia 2×P100 N0 Runtime Smoke — 2026-09-13
-  - status:  ready for owner execution
-- [45] alice-context:docs/chat-context/2026-09-09/sol/MC10D_MAGNOLIA_CLOSED_KAGGLE_DURABLE_SUCCESSOR.md — MC10D Magnolia closed — Kaggle durable simulation/falsification successor
+- [50] alice-eipm-v1-build:docs/MEMORY_ARCHITECTURE_HOLD.md — A.L.I.C.E. Memory Architecture Hold — Supersession Record
+- [41] alice-eipm-v1-build:docs/MEMORY_M1_DECISION_REGISTER.md — Memory M1 Decision Register
+  - status:  M1-DX0 through M1-D9 owner-ratified on 2026-08-05
+- [37] alice-eipm-v1-build:docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md — A.L.I.C.E. Memory Identity, Formation, Host Learning, and Repository Lifecycle
+  - status:  Owner-ratified architecture decision
+- [35] alice-context:docs/chat-context/2026-08-31/src/S02-memory-handoff.md — A.L.I.C.E. Stage G / G+ Memory Architecture Handoff
+- [35] alice-context:docs/chat-context/2026-09-13/sol/N0_FRONTIER_RESEARCH_DECISION.md — A.L.I.C.E. N0 Frontier Research Decision — 2026-09-13
+  - status:  continuity handoff. No permanent EIPM weights created.
+- [35] alice-eipm-v1-build:docs/MEMORY_POLICY.md — A.L.I.C.E. Memory and Knowledge Policy
+- [35] docs/memory-identity-host-learning-ratification-v2:docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md — A.L.I.C.E. Memory Identity, Formation, Host Learning, and Repository Lifecycle
+  - status:  Owner-ratified architecture decision
+- [30] alice-eipm-v1-build:docs/MEMORY_EXTERNAL_SYSTEMS_REVIEW.md — External Memory Systems Code and Architecture Review
+- [30] alice-eipm-v1-build:docs/MEMORY_RECORD_AND_PROVENANCE_STANDARD.md — Memory Record and Provenance Standard — Polyglot Cognitive Fabric
+  - status:  Owner-ratified under Memory M1 on 2026-08-05
+- [30] alice-eipm-v1-build:docs/PHASE_2_MEMORY_CORE_ARCHITECTURE.md — Phase 2 — Memory Core Architecture
+  - status:  P2.0–P2.9 implemented; Phase 2 complete
+- [28] alice-context:docs/chat-context/2026-08-31/src/S03-alice-memory.txt — S03-alice-memory.txt
+- [28] alice-context:docs/chat-context/2026-09-13/sol/MAINSTREAMED_EIPM_AND_FABLE_BUILDER_DECISION.md — Mainstreamed EIPM + Fable Builder Decision
 
 ## Graphify navigation hints
 
-- Regression for Magnolia job 575673 mixed-autocast evaluation failure. -> tests/eipm/test_n0_adaptive_multi_view_latent_pool_objectives_v0_2.py:L65
-- magnolia_cpu_n0_v02_preflight.sh -> scripts/eipm/n0/magnolia_cpu_n0_v02_preflight.sh:L1
-- magnolia_cpu_n0_v02_tokenizer.sh -> scripts/eipm/n0/magnolia_cpu_n0_v02_tokenizer.sh:L1
-- test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
-- CurrentClaimProjection -> src/cognitive_kernel/claim_contracts.py:L755
-- DeterministicInformationResearchModeAdapter -> src/alice_information/research_mode.py:L482
-- _execution_id() -> src/alice_information/research_execution.py:L277
-- _failure() -> src/alice_information/brave_search_live.py:L72
-- kaggle_cpu_real_lineage.sh -> scripts/eipm/n0/kaggle_cpu_real_lineage.sh:L1
-- n0/__init__.py -> src/alice_personality/n0/__init__.py:L1
-- _next_start() -> src/alice_vault/chunking.py:L129
-- test_repeated_request_is_idempotent() -> tests/phase2/test_memory_deletion.py:L291
-- test_reliability_prior_can_route_between_equivalent_views() -> tests/eipm/test_n0_cross_context_fusion.py:L79
-- .test_auto_review_routes_sensitive_and_contradictory_to_manual() -> tests/phase1/test_auto_review.py:L44
-- run() -> tests/phase4/test_information_final_evaluation_runtime.py:L47
+- decision -> policies/friday_release_attestation_schema.json:L145
+- decision() -> tests/phase5/attention_workspace_helpers.py:L74
+- require() -> scripts/eipm/n0/preflight_n0_v02_teacher_dev_challenge.py:L36
+- test_response_wrapper_rejects_split_verified_source_set_across_sentences() -> tests/phase4/test_information_conversation_bridge.py:L628
+- _changed_lines() -> scripts/audit_capability_barriers.py:L488
+- test_same_key_memory_requires_later_transition_aware_promotion() -> tests/phase2/test_memory_candidate_promotion.py:L322
+- MemoryUnitEnvelope -> src/cognitive_kernel/memory_contracts.py:L377
+- hhem_holdout.py -> src/alice_vault/hhem_holdout.py:L1
+- InterruptThenRespondModel -> tests/phase3/test_conversation_orchestration_resume.py:L24
+- pathlib -> :
+- json -> :
 - cognitive_kernel/__init__.py -> src/cognitive_kernel/__init__.py:L1
+- dataclasses -> :
+- typing -> :
+- collections -> :
+- m2_closeout_evaluation.py -> src/cognitive_kernel/m2_closeout_evaluation.py:L1
 
 ## External/private routing
 
 - Recommended: True
-- Reason: host-specific operational history may contain newer failure lessons than public receipts
+- Reason: question references a private/external source class
 
 ## Trust contract
 
