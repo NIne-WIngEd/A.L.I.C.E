@@ -1,13 +1,13 @@
 {
-  "request_id": "n0-query-relation-role-router-ready-20260918-001",
-  "question": "Resolve the current N0 state after job 575798 failed at dev without heldout exposure. Identify the active handoff, maximal experiment frontier, external research checkpoint, raw-query relation-role router architecture, anti-loop rule requiring architecture audit after another failure, and the single authorized next action.",
-  "budget": 1400,
+  "request_id": "n0-qrr-infra-retry-575799-20260918-001",
+  "question": "Resolve current N0 QRR state after Magnolia job 575799 failed in preflight before training. Confirm it is infrastructure-only due to stale 575798 receipt key, identify corrected QRR head and CI result, preserve the partial original output, and identify the single authorized retry directory/action. Confirm architecture unchanged and no model evidence from 575799.",
+  "budget": 1100,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-18T19:44:04.704872+00:00",
+  "generated_at_utc": "2026-09-18T20:03:33.345353+00:00",
   "authority": "navigation-only",
   "routing_decision": {
     "graphify_mode": "auto",
@@ -17,7 +17,7 @@
     "graph_source_commit": null,
     "graph_source_reason": null,
     "graph_rebuild_required": false,
-    "private_external_route_recommended": false
+    "private_external_route_recommended": true
   },
   "graphify_used": false,
   "graph_build": {
@@ -33,43 +33,46 @@
   },
   "catalog_result": {
     "schema": "alice-context-catalog-query-v1",
-    "question": "Resolve the current N0 state after job 575798 failed at dev without heldout exposure. Identify the active handoff, maximal experiment frontier, external research checkpoint, raw-query relation-role router architecture, anti-loop rule requiring architecture audit after another failure, and the single authorized next action.",
+    "question": "Resolve current N0 QRR state after Magnolia job 575799 failed in preflight before training. Confirm it is infrastructure-only due to stale 575798 receipt key, identify corrected QRR head and CI result, preserve the partial original output, and identify the single authorized retry directory/action. Confirm architecture unchanged and no model evidence from 575799.",
     "query_tokens": [
       "resolve",
+      "qrr",
       "state",
       "after",
+      "magnolia",
       "job",
-      "575798",
+      "575799",
       "failed",
-      "dev",
-      "without",
-      "heldout",
-      "exposure",
+      "preflight",
+      "before",
+      "training",
+      "confirm",
+      "infrastructure-only",
+      "due",
+      "stale",
+      "575798",
+      "receipt",
+      "key",
       "identify",
-      "active",
-      "handoff",
-      "maximal",
-      "experiment",
-      "frontier",
-      "external",
-      "research",
-      "checkpoint",
-      "raw-query",
-      "relation-role",
-      "router",
-      "architecture",
-      "anti-loop",
-      "rule",
-      "requiring",
-      "architecture",
-      "audit",
-      "after",
-      "another",
-      "failure",
+      "corrected",
+      "qrr",
+      "head",
+      "result",
+      "preserve",
+      "partial",
+      "original",
+      "output",
+      "identify",
       "single",
       "authorized",
-      "next",
-      "action"
+      "retry",
+      "directory/action",
+      "confirm",
+      "architecture",
+      "unchanged",
+      "model",
+      "evidence",
+      "575799"
     ],
     "catalog_status": {
       "schema": "alice-context-catalog-status-v1",
@@ -84,8 +87,8 @@
       "unmerged_experiment_frontier_present": true,
       "unmerged_experiment_maximal_head_count": 1,
       "continuity_stale_relative_to_experiment_frontier": false,
-      "document_pointer_count": 2201,
-      "failure_lesson_pointer_count": 949,
+      "document_pointer_count": 2202,
+      "failure_lesson_pointer_count": 950,
       "frontier_research_pointer_count": 431,
       "supersession_pointer_count": 233,
       "authority": "routing-only",
@@ -153,10 +156,10 @@
       "continuity_overlay": {
         "branch": "alice-context",
         "path": "docs/chat-context/2026-09-18/sol/N0_QUERY_RELATION_ROLE_ROUTER_HANDOFF.md",
-        "blob_sha": "a0bebc1f51d6024e6cc96d243b97a4430f23c351",
+        "blob_sha": "4ce08c6b72f4c8e97decb4f9e7799c03d7be4aa8",
         "title": "N0 Query–Relation Role Router Handoff",
         "date": "2026-09-18",
-        "last_changed_at": "2026-09-18T14:43:34-05:00",
+        "last_changed_at": "2026-09-18T15:02:49-05:00",
         "current_build_head_declared": null,
         "magnolia_job_observed": null,
         "authoritative_build_state_excerpt": null,
@@ -166,9 +169,9 @@
       },
       "continuity_branch_head": {
         "branch": "alice-context",
-        "head": "2186f3908288cb7f5ea0886cf65e6b677ff6b6d8",
-        "head_committed_at": "2026-09-18T14:43:34-05:00",
-        "head_message": "context: hand off research-grounded query-role router"
+        "head": "88f5e4a189056cd4871e072cda83773ba06e5b86",
+        "head_committed_at": "2026-09-18T15:02:49-05:00",
+        "head_message": "context: record 575799 QRR preflight infrastructure failure"
       },
       "unmerged_experiment_frontier": {
         "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -179,10 +182,10 @@
         "maximal_heads": [
           {
             "branch": "alice-eipm-v1-query-relation-role-router",
-            "head": "2790c1e3cd4183377edae8805752f9cc0b7a1915",
-            "head_committed_at": "2026-09-18T14:42:40-05:00",
-            "head_message": "ci(n0): guard research-grounded query-role router",
-            "ahead": 70,
+            "head": "a4ba0e7b8629718947d7126f8aa86021aa1cb87c",
+            "head_committed_at": "2026-09-18T15:02:15-05:00",
+            "head_message": "ci(n0): guard exact 575798 immutability receipt key",
+            "ahead": 72,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
             "changed_file_count_vs_source_merge_base": 62,
@@ -256,10 +259,10 @@
         "all_ahead_candidates": [
           {
             "branch": "alice-eipm-v1-query-relation-role-router",
-            "head": "2790c1e3cd4183377edae8805752f9cc0b7a1915",
-            "head_committed_at": "2026-09-18T14:42:40-05:00",
-            "head_message": "ci(n0): guard research-grounded query-role router",
-            "ahead": 70,
+            "head": "a4ba0e7b8629718947d7126f8aa86021aa1cb87c",
+            "head_committed_at": "2026-09-18T15:02:15-05:00",
+            "head_message": "ci(n0): guard exact 575798 immutability receipt key",
+            "ahead": 72,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
             "changed_file_count_vs_source_merge_base": 62,
@@ -605,9 +608,9 @@
       },
       "continuity_freshness": {
         "stale_relative_to_unmerged_experiment_frontier": false,
-        "newest_experiment_frontier_time": "2026-09-18T14:42:40-05:00",
-        "active_handoff_last_changed_at": "2026-09-18T14:43:34-05:00",
-        "context_branch_head_time": "2026-09-18T14:43:34-05:00"
+        "newest_experiment_frontier_time": "2026-09-18T15:02:15-05:00",
+        "active_handoff_last_changed_at": "2026-09-18T15:02:49-05:00",
+        "context_branch_head_time": "2026-09-18T15:02:49-05:00"
       },
       "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
       "authority": "routing-and-freshness-only"
@@ -661,7 +664,292 @@
     },
     "hits": [
       {
-        "score": 129,
+        "score": 92,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md",
+        "blob_sha": "435efa0bf1c2e58ecd5929e4fd25c03cc6f9cd5b",
+        "category": "runtime_receipt",
+        "title": "Magnolia single-P100 N0 teacher diagnostic — job 575565",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "magnolia",
+          "repair",
+          "runtime-results"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 14,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 91,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_N0_CONTINUATION_JOB_575548.md",
+        "blob_sha": "f8a37086738f1a7ff8256697aa0d78e711e8b6fb",
+        "category": "runtime_receipt",
+        "title": "Magnolia N0 continuation — job 575548",
+        "declared": {
+          "status": " completed successfully"
+        },
+        "matched_terms": [
+          "magnolia",
+          "repair",
+          "runtime-results"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 10,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 90,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md",
+        "blob_sha": "be2ffe0bb87a8f835d36698854aa620db7694b99",
+        "category": "runtime_receipt",
+        "title": "Magnolia 2×P100 Real N0 Training — Job 575546",
+        "declared": {
+          "status": " completed successfully; durable weights retained; LR scheduler defect identified before continuation"
+        },
+        "matched_terms": [
+          "failure",
+          "magnolia",
+          "repair",
+          "runtime-results"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 11,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 90,
+        "branch": "alice-telemetry",
+        "branch_scope": "branch_specific",
+        "path": "telemetry/n0-qrr-preflight-infra-failure-575799.json",
+        "blob_sha": "2057a00bf4d8a82fdf123ddaa88a2801c5154c52",
+        "category": "repository_file",
+        "title": "n0-qrr-preflight-infra-failure-575799.json",
+        "declared": {},
+        "matched_terms": [
+          "error",
+          "failed",
+          "failure",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 3
+      },
+      {
+        "score": 88,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/HOSTED_MODEL_OUTPUT_TRAINING_BOUNDARY_2026-09-13.md",
+        "blob_sha": "b8029e9dd73adc62c80d956605c82835c9b699df",
+        "category": "design_document",
+        "title": "Hosted-Model Output Training Boundary — Owner Authorization Correction — 2026-09-13",
+        "declared": {
+          "status": " active owner-directed lineage rule; supersedes the earlier advisory-only restriction in this file"
+        },
+        "matched_terms": [
+          "egress",
+          "failure",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 7,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 85,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md",
+        "blob_sha": "77ff7dda3d28fef326ceb8e6af7db799879c876b",
+        "category": "runtime_receipt",
+        "title": "Magnolia 2×P100 N0 Runtime Smoke — Job 575527",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "magnolia",
+          "runtime-results",
+          "smoke",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 14,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 83,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_DDP_JOB_575537.md",
+        "blob_sha": "101c3de692ac07f418f2134c23f2c6245e1703f5",
+        "category": "runtime_receipt",
+        "title": "Magnolia 2×P100 N0 DDP Mechanics — Job 575537",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "magnolia",
+          "runtime-results",
+          "smoke",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 10,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 81,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
+        "blob_sha": "caa8ea529fc219d8d0004bd2c5cb5e2cebebc852",
+        "category": "runtime_receipt",
+        "title": "Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571",
+        "declared": {
+          "status": "completed payload"
+        },
+        "matched_terms": [
+          "error",
+          "failed",
+          "failure",
+          "magnolia",
+          "repair",
+          "runtime-results"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 8,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 79,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-18/sol/N0_QUERY_RELATION_ROLE_ROUTER_HANDOFF.md",
+        "blob_sha": "4ce08c6b72f4c8e97decb4f9e7799c03d7be4aa8",
+        "category": "working_context",
+        "title": "N0 Query–Relation Role Router Handoff",
+        "declared": {
+          "status": " role-residual v0.2 failed at dev without heldout exposure; external architecture research completed; query–relation role router v0.3 is CI-ready for one P100 run"
+        },
+        "matched_terms": [
+          "error",
+          "failed",
+          "failure",
+          "magnolia",
+          "network",
+          "repair",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 25,
+        "currentness_adjustment": 30
+      },
+      {
+        "score": 75,
+        "branch": "alice-eipm-v1-query-relation-role-router",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+        "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
+        "category": "design_document",
+        "title": "N0 downstream causal arbitration — Magnolia execution contract",
+        "declared": {},
+        "matched_terms": [
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 6,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 73,
+        "branch": "alice-eipm-v1-query-relation-role-router",
+        "branch_scope": "branch_specific",
+        "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.12.json",
+        "blob_sha": "96daded7d21d5a2b06d034e4c4d2bf91b3da85b2",
+        "category": "configuration_state",
+        "title": "alice_n0_latent_pool_stage_state_v0.12.json",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 5,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 71,
         "branch": "alice-eipm-v1-query-relation-role-router",
         "branch_scope": "branch_specific",
         "path": "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
@@ -683,48 +971,19 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 17,
+        "lexical_body_hits": 11,
         "currentness_adjustment": 25
       },
       {
-        "score": 123,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-18/sol/N0_QUERY_RELATION_ROLE_ROUTER_HANDOFF.md",
-        "blob_sha": "a0bebc1f51d6024e6cc96d243b97a4430f23c351",
-        "category": "working_context",
-        "title": "N0 Query–Relation Role Router Handoff",
-        "declared": {
-          "status": " role-residual v0.2 failed at dev without heldout exposure; external architecture research completed; query–relation role router v0.3 is CI-ready for one P100 run"
-        },
-        "matched_terms": [
-          "failed",
-          "failure",
-          "magnolia",
-          "network",
-          "repair",
-          "udocker"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 26,
-        "currentness_adjustment": 30
-      },
-      {
-        "score": 94,
+        "score": 68,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md",
-        "blob_sha": "7fa503d6e7b78a80d4a632471e0f03f080dc615c",
+        "path": "docs/eipm/n0/runtime-results/N0_V02_CPU_PREFLIGHT_20260914.md",
+        "blob_sha": "52a6fcc83a12bfac12055495b8fcc27f06f2f62d",
         "category": "runtime_receipt",
-        "title": "N0 Frontier Research Audit — 2026-09-14",
+        "title": "N0 v0.2 CPU Preflight — 2026-09-14",
         "declared": {
-          "status": "hold the step-1000 -> step-2500 GPU job pending N0 v0.2 redesign**."
+          "status": "PASS"
         },
         "matched_terms": [
           "magnolia",
@@ -733,30 +992,28 @@
         "supersession_hints": [],
         "catalogs": [
           "failure",
-          "frontier",
           "document",
-          "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 10,
+        "lexical_body_hits": 15,
         "currentness_adjustment": 4
       },
       {
-        "score": 86,
-        "branch": "alice-eipm-v1-query-relation-role-router",
+        "score": 67,
+        "branch": "fable-builder-model",
         "branch_scope": "branch_specific",
-        "path": ".github/workflows/n0-query-relation-role-router-contract-check.yml",
-        "blob_sha": "73d0774e55a4f3b587edbcf9f59cc774f183ec52",
-        "category": "repository_file",
-        "title": "n0-query-relation-role-router-contract-check.yml",
-        "declared": {},
+        "path": "docs/fable-builder/FORMATION_MODEL_ARCHITECTURE_v0.1.md",
+        "blob_sha": "85812badf6e0b07fb70538f844d59d48f425bc0b",
+        "category": "design_document",
+        "title": "Fable Builder Model Architecture v0.1",
+        "declared": {
+          "status": " working architecture; not yet owner-finalized"
+        },
         "matched_terms": [
+          "error",
+          "failed",
           "failure",
-          "hotfix",
-          "magnolia",
-          "network",
-          "repair",
-          "udocker"
+          "repair"
         ],
         "supersession_hints": [],
         "catalogs": [
@@ -765,11 +1022,118 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 8,
+        "lexical_body_hits": 11
+      },
+      {
+        "score": 66,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_PUBLIC_LINEAGE_IMPORT_20260914.md",
+        "blob_sha": "45e7f5ed2da02f98e3c52c0a1bef999aedf65d83",
+        "category": "runtime_receipt",
+        "title": "Magnolia Public N0 Lineage Import — 2026-09-14",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "fallback",
+          "kaggle",
+          "magnolia",
+          "network",
+          "runtime-results",
+          "smoke",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 9,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 66,
+        "branch": "alice-eipm-v1-query-relation-role-router",
+        "branch_scope": "branch_specific",
+        "path": "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+        "blob_sha": "4096787a38c8e99018bc1ab1ae219d96ebfa79f5",
+        "category": "design_document",
+        "title": "N0 v0.2 Production Build Plan",
+        "declared": {
+          "status": " implementation active; GPU training held until CPU/data gates pass"
+        },
+        "matched_terms": [
+          "failure",
+          "fallback",
+          "magnolia"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 14,
         "currentness_adjustment": 25
       },
       {
-        "score": 81,
+        "score": 65,
+        "branch": "alice-eipm-v1-query-relation-role-router",
+        "branch_scope": "branch_specific",
+        "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json",
+        "blob_sha": "e125a65217895681b4add72aebf39a4a9a540a6e",
+        "category": "configuration_state",
+        "title": "alice_n0_latent_pool_stage_state_v0.11.json",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 3,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 65,
+        "branch": "alice-eipm-v1-query-relation-role-router",
+        "branch_scope": "branch_specific",
+        "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.13.json",
+        "blob_sha": "477fc6c3dbfa1c51bfe083161a3a2613f24ba9be",
+        "category": "configuration_state",
+        "title": "alice_n0_latent_pool_stage_state_v0.13.json",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "network"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "supersession",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 3,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 64,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/PHASE_3_CONVERSATIONAL_ARCHITECTURE.md",
@@ -790,406 +1154,36 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 8,
+        "lexical_body_hits": 11,
         "currentness_adjustment": 4
       },
       {
-        "score": 81,
+        "score": 64,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
-        "blob_sha": "83b65bc91215216f5637f99090f28c56940553b7",
-        "category": "design_document",
-        "title": "A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13",
+        "path": "docs/eipm/EIPM_CURATED_FRONTIER_V1_RECEIPT.md",
+        "blob_sha": "0283f40a199fff586adf384f1b5c591a7e41b235",
+        "category": "runtime_receipt",
+        "title": "EIPM Curated Frontier v1 Receipt",
         "declared": {
-          "status": " research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.",
-          "supersession": " this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it."
+          "status": " curation complete enough for targeted gap filling; not training-authorized."
         },
         "matched_terms": [
-          "fallback",
-          "network"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "supersession",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 17,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 78,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-10/sol/EIPM_NATIVE_FRONTIER_ARCHITECTURE_RESEARCH.md",
-        "blob_sha": "786ef85d01add48f1bb605d1d2810ead3be42c02",
-        "category": "working_context",
-        "title": "A.L.I.C.E.-Native EIPM Frontier Architecture Research — 2026-09-10",
-        "declared": {
-          "owner_constraint": " third-party models may be disposable research, generation, or engineering tools. Third-party model weights must not be required by the permanent A.L.I.C.E. Elaina Identity / Personality Model (EIPM). The permanent EIPM weights must be A.L.I.C.E.-native and trained from A.L.I.C.E.-controlled initialization/training lineage.",
-          "status": " working frontier recommendation on `alice-context`; not canonical `main`; no A.L.I.C.E. weights created.",
-          "supersession": " this note supersedes the earlier working recommendation that treated `Qwen3.8-27B + A.L.I.C.E. LoRA` as the permanent EIPM. Qwen may remain an optional disposable teacher/mechanics tool where licensing permits. Its weights are not part of the EIPM."
-        },
-        "matched_terms": [
-          "architecture research",
-          "benchmark",
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 16,
-        "currentness_adjustment": -15
-      },
-      {
-        "score": 77,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/PHASE_4_WEB_INFORMATION_ARCHITECTURE.md",
-        "blob_sha": "4e04134bf627081d318ce4f94f7df144901f2f7c",
-        "category": "design_document",
-        "title": "Phase 4 — Web and Information Tools Architecture",
-        "declared": {
-          "status": " P4.0–P4.9 fixture-governed compatibility release approved; P4.10 operational live-public-information closure required before Phase 5"
-        },
-        "matched_terms": [
-          "dns",
-          "egress",
-          "error",
-          "failed",
-          "failure",
-          "fallback",
-          "network"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "document",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 13,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 75,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/MEGA_ARCHITECTURE_MIGRATION.md",
-        "blob_sha": "f9262e6bf5ba4efdbb49aab8b618d2e42afbe337",
-        "category": "design_document",
-        "title": "Mega Architecture Migration",
-        "declared": {},
-        "matched_terms": [
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "supersession",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 6,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 74,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/MEMORY_EXTERNAL_SYSTEMS_REVIEW.md",
-        "blob_sha": "09202f40f5b6460231e96dde58733f9cdaf9d98e",
-        "category": "design_document",
-        "title": "External Memory Systems Code and Architecture Review",
-        "declared": {},
-        "matched_terms": [
-          "error",
-          "failure",
-          "fallback",
-          "network",
-          "recovery",
           "repair"
         ],
         "supersession_hints": [],
         "catalogs": [
           "failure",
           "frontier",
-          "supersession",
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 11,
+        "lexical_body_hits": 6,
         "currentness_adjustment": 4
-      },
-      {
-        "score": 73,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/ARCHITECTURE.md",
-        "blob_sha": "c0724119c605acc49929341a4d53216df9438f34",
-        "category": "design_document",
-        "title": "A.L.I.C.E. and Friday Permanent Cognitive Architecture",
-        "declared": {},
-        "matched_terms": [
-          "benchmark",
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 13,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 73,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/FRIDAY_ARCHITECTURE.md",
-        "blob_sha": "6a8a396fa4b0093c7f73f4f73d1d50a15bd5f045",
-        "category": "design_document",
-        "title": "Friday Technical Architecture",
-        "declared": {},
-        "matched_terms": [
-          "benchmark",
-          "frontier"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "failure",
-          "supersession",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 9,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 73,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/MEMORY_ARCHITECTURE_V4.md",
-        "blob_sha": "ee85d4454168d4d355e5540be2523a1e6f06df52",
-        "category": "design_document",
-        "title": "Memory Architecture v4.1 — Capability-First Polyglot Cognitive Fabric",
-        "declared": {
-          "status": " Owner-ratified Memory M1 architecture"
-        },
-        "matched_terms": [
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "failure",
-          "supersession",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 11,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 73,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/PHASE_2_MEMORY_CORE_ARCHITECTURE.md",
-        "blob_sha": "e9da5ee5c2c2ebcfadbdb7693ef52c9363b2cafd",
-        "category": "design_document",
-        "title": "Phase 2 — Memory Core Architecture",
-        "declared": {
-          "status": " P2.0–P2.9 implemented; Phase 2 complete"
-        },
-        "matched_terms": [
-          "egress",
-          "failed"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "supersession",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 9,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 73,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/RESEARCH_FRONTIERS.md",
-        "blob_sha": "0b3f95c5156903824cbf94324734afff2499ed31",
-        "category": "design_document",
-        "title": "A.L.I.C.E. Research Frontiers Register",
-        "declared": {},
-        "matched_terms": [
-          "egress",
-          "error",
-          "failure",
-          "network",
-          "recovery"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 14,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 71,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md",
-        "blob_sha": "5bf63241b821ece2c6b74fc0512c575bd7db9c6e",
-        "category": "design_document",
-        "title": "N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 7,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 70,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
-        "blob_sha": "19f407ba4d11922a5095d3570cb6a0474d54e6be",
-        "category": "working_context",
-        "title": "N0 Final Frozen Challenge Ready Handoff",
-        "declared": {
-          "status": " one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized"
-        },
-        "matched_terms": [
-          "failed",
-          "failure",
-          "hotfix",
-          "magnolia",
-          "repair",
-          "udocker"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 17
-      },
-      {
-        "score": 69,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-10/sol/PERSONALITY_WEIGHT_ARCHITECTURE_RESEARCH.md",
-        "blob_sha": "a3811ee614fd48437dc6d74a6f90d616fbfeb3d1",
-        "category": "working_context",
-        "title": "A.L.I.C.E. Personality-Weight Architecture Research — 2026-09-10",
-        "declared": {
-          "status": " working research recommendation; not canonical `main`; not final Astra-reviewed training authority."
-        },
-        "matched_terms": [
-          "kaggle",
-          "magnolia"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "supersession",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 12,
-        "currentness_adjustment": -15
-      },
-      {
-        "score": 69,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/decisions/ADR-003-roadmap-2-cognitive-architecture.md",
-        "blob_sha": "accef57c71446efaac50361048ef72c4679b0122",
-        "category": "decision_record",
-        "title": "ADR-003 — Adopt Roadmap 2.0 Cognitive Architecture",
-        "declared": {
-          "status": " Superseded"
-        },
-        "matched_terms": [
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 5,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 68,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-18/sol/N0_MISSING_EVIDENCE_LOCALIZATION_HANDOFF.md",
-        "blob_sha": "a39c72468a654060fba433b47324990f32134b63",
-        "category": "working_context",
-        "title": "N0 Missing-Evidence Localization Handoff",
-        "declared": {
-          "status": " final frozen challenge is an immutable valid FAIL; one fresh non-challenge causal-path localization run is ready; no rerun, threshold change, training, promotion, scaling, or N0 completion authorized"
-        },
-        "matched_terms": [
-          "failed",
-          "failure",
-          "hotfix",
-          "magnolia",
-          "repair",
-          "udocker"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 13
       }
     ],
-    "private_external_route_recommended": false,
-    "private_external_route_reason": null,
+    "private_external_route_recommended": true,
+    "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
     "authority": "routing-only"
   },
   "graphify_result_text": "",

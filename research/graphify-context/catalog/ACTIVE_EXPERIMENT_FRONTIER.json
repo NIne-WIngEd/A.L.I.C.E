@@ -7,10 +7,10 @@
   "maximal_heads": [
     {
       "branch": "alice-eipm-v1-query-relation-role-router",
-      "head": "2790c1e3cd4183377edae8805752f9cc0b7a1915",
-      "head_committed_at": "2026-09-18T14:42:40-05:00",
-      "head_message": "ci(n0): guard research-grounded query-role router",
-      "ahead": 70,
+      "head": "a4ba0e7b8629718947d7126f8aa86021aa1cb87c",
+      "head_committed_at": "2026-09-18T15:02:15-05:00",
+      "head_message": "ci(n0): guard exact 575798 immutability receipt key",
+      "ahead": 72,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 62,
@@ -84,10 +84,10 @@
   "all_ahead_candidates": [
     {
       "branch": "alice-eipm-v1-query-relation-role-router",
-      "head": "2790c1e3cd4183377edae8805752f9cc0b7a1915",
-      "head_committed_at": "2026-09-18T14:42:40-05:00",
-      "head_message": "ci(n0): guard research-grounded query-role router",
-      "ahead": 70,
+      "head": "a4ba0e7b8629718947d7126f8aa86021aa1cb87c",
+      "head_committed_at": "2026-09-18T15:02:15-05:00",
+      "head_message": "ci(n0): guard exact 575798 immutability receipt key",
+      "ahead": 72,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 62,
