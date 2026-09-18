@@ -227,3 +227,67 @@ If it fails dev or heldout:
 - stop gradient work;
 - perform a broader architecture-level audit;
 - no automatic repair chain.
+
+
+## Infrastructure failure 575799 and exact repair
+
+Magnolia job `575799` did **not** execute QRR training.
+
+Observed Slurm state:
+
+- job: `575799`
+- state: `FAILED`
+- exit: `1:0`
+- node: `gpu001`
+- elapsed: `00:00:20`
+
+The failure occurred in the runtime provenance preflight before the trainer started.
+
+Error:
+
+`575798 parent immutability drift`
+
+Root cause:
+
+The QRR runner checked the nonexistent/old field:
+
+`parent_graph_parameters_exactly_unchanged`
+
+but the preserved 575798 result schema correctly records:
+
+`parent_endpoint_graph_parameters_exactly_unchanged`
+
+The preserved 575798 receipt itself is valid; its parent graph was unchanged. The preflight key spelling was wrong.
+
+This is infrastructure/provenance-contract failure, **not model evidence**.
+
+No QRR gradient ran.
+
+No QRR checkpoint exists from 575799.
+
+No heldout data was opened.
+
+The architecture remains unchanged.
+
+Single causal repair commits on the QRR frontier:
+
+- `bbdfcf9b61e6f0b19b51eb115d14273f519bb120` — bind preflight to the actual 575798 immutability field.
+- `a4ba0e7b8629718947d7126f8aa86021aa1cb87c` — make CI reject the stale field name in future.
+
+CI run:
+
+`35389242107`
+
+Result:
+
+`SUCCESS`
+
+Current QRR head for retry:
+
+`a4ba0e7b8629718947d7126f8aa86021aa1cb87c`
+
+The partial original output directory from 575799 must be preserved. Retry in a fresh directory:
+
+`$HOME/rayan-compute/rayan-n0/n0-v02/query-relation-role-router-v0.3-retry-575799`
+
+This retry is the same research-grounded QRR experiment. It is **not** a new repair, does not change the architecture, and does not consume the anti-loop model-failure budget.
