@@ -163,6 +163,10 @@ jobs:
           )
           PY
 
+      - name: Compile compact Sol context capsule
+        run: |
+          python scripts/context/compile_context_capsule.py
+
       - name: Publish result on latest research head
         shell: bash
         run: |
@@ -172,6 +176,8 @@ jobs:
 
           TMP_DIR="$(mktemp -d)"
           cp research/graphify-context/QUERY_RESULT.json "$TMP_DIR/QUERY_RESULT.json"
+          cp research/graphify-context/CONTEXT_CAPSULE.json "$TMP_DIR/CONTEXT_CAPSULE.json"
+          cp research/graphify-context/CONTEXT_CAPSULE.md "$TMP_DIR/CONTEXT_CAPSULE.md"
 
           git fetch origin             "+refs/heads/$GITHUB_REF_NAME:refs/remotes/origin/$GITHUB_REF_NAME"             "+refs/heads/$GRAPHIFY_SOURCE_BRANCH:refs/remotes/origin/$GRAPHIFY_SOURCE_BRANCH"
 
@@ -206,7 +212,9 @@ jobs:
           PY
 
           cp "$TMP_DIR/QUERY_RESULT.json" research/graphify-context/QUERY_RESULT.json
-          git add research/graphify-context/QUERY_RESULT.json
+          cp "$TMP_DIR/CONTEXT_CAPSULE.json" research/graphify-context/CONTEXT_CAPSULE.json
+          cp "$TMP_DIR/CONTEXT_CAPSULE.md" research/graphify-context/CONTEXT_CAPSULE.md
+          git add             research/graphify-context/QUERY_RESULT.json             research/graphify-context/CONTEXT_CAPSULE.json             research/graphify-context/CONTEXT_CAPSULE.md
 
           if git diff --cached --quiet; then
             echo "No query-result changes."
