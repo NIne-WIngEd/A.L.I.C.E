@@ -1,7 +1,7 @@
 {
-  "request_id": "coverage-router-code-topology-001",
-  "question": "Where in code is the query-conditioned relation endpoint-role read implemented, and which functions or modules connect that implementation to the downstream latent frontier path?",
-  "budget": 2200,
+  "request_id": "coverage-frontier-capsule-v2-001",
+  "question": "What is the current N0 scientific state now, including the stable build base, the latest continuity handoff, and any newer unmerged experiment frontier that must be inspected before the next execution?",
+  "budget": 1800,
   "traversal": "bfs",
   "contexts": [
     "call",
