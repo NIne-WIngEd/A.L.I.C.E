@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v1",
-  "request_id": "coverage-g2-doc-route-no-graph-001",
+  "request_id": "coverage-router-doc-only-002",
   "question": "Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?",
-  "generated_at_utc": "2026-09-18T01:55:21.369569+00:00",
+  "generated_at_utc": "2026-09-18T02:05:18.419621+00:00",
   "source_freshness": {
     "source_branch": "alice-eipm-v1-build",
     "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -388,152 +388,7 @@
       "lexical_body_hits": 4
     }
   ],
-  "graphify_navigation_hints": [
-    {
-      "label": "import_external_public_lineage.py",
-      "source": "scripts/eipm/n0/import_external_public_lineage.py",
-      "location": "L1",
-      "community": "143"
-    },
-    {
-      "label": "command()",
-      "source": "tests/phase3/test_conversation_orchestration_failures.py",
-      "location": "L33",
-      "community": "34"
-    },
-    {
-      "label": "binary_metrics()",
-      "source": "src/alice_vault/query_claim_relevance_holdout.py",
-      "location": "L151",
-      "community": "20"
-    },
-    {
-      "label": "binding()",
-      "source": "tests/phase5/test_memory_m2_foundation_contracts.py",
-      "location": "L99",
-      "community": "193"
-    },
-    {
-      "label": "binary_rationale_compatibility_loss()",
-      "source": "src/alice_personality/n0/structured_state_objectives.py",
-      "location": "L60",
-      "community": "102"
-    },
-    {
-      "label": ".boundary()",
-      "source": "src/alice_conversation/cli_policy.py",
-      "location": "L67",
-      "community": "162"
-    },
-    {
-      "label": "test_duplicate_resolution_cannot_be_rebound_to_second_target()",
-      "source": "tests/phase2/test_memory_candidate_security_gates.py",
-      "location": "L499",
-      "community": "108"
-    },
-    {
-      "label": "correction_current()",
-      "source": "scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py",
-      "location": "L166",
-      "community": "174"
-    },
-    {
-      "label": ".execute()",
-      "source": "src/cognitive_kernel/tier_transition_store.py",
-      "location": "L696",
-      "community": "3"
-    },
-    {
-      "label": "_failure()",
-      "source": "src/alice_information/brave_search_live.py",
-      "location": "L72",
-      "community": "186"
-    },
-    {
-      "label": "file_sha256()",
-      "source": "src/alice_vault/inventory.py",
-      "location": "L131",
-      "community": "185"
-    },
-    {
-      "label": "FixedRows",
-      "source": "scripts/eipm/n0/evaluate_n0_v02_fixed.py",
-      "location": "L26",
-      "community": "23"
-    },
-    {
-      "label": "rayan_n0_kaggle_cpu_lineage_controller_v102.py",
-      "source": "scripts/eipm/n0/rayan_n0_kaggle_cpu_lineage_controller_v102.py",
-      "location": "L1",
-      "community": "132"
-    },
-    {
-      "label": "local_plan()",
-      "source": "tests/phase4/test_information_research_execution.py",
-      "location": "L276",
-      "community": "65"
-    },
-    {
-      "label": "magnolia_cpu_n0_v02_tokenizer.sh",
-      "source": "scripts/eipm/n0/magnolia_cpu_n0_v02_tokenizer.sh",
-      "location": "L1",
-      "community": "244"
-    },
-    {
-      "label": "P4.10c private live acceptance and exact-commit closure. The record produced by…",
-      "source": "src/alice_information/live_acceptance.py",
-      "location": "L1",
-      "community": "40"
-    },
-    {
-      "label": "PYTHONPATH",
-      "source": "scripts/eipm/n0/continue_mlm_p100x2_segment.sh",
-      "location": "L27",
-      "community": "187"
-    },
-    {
-      "label": "pathlib",
-      "source": "",
-      "location": "",
-      "community": "2"
-    },
-    {
-      "label": "json",
-      "source": "",
-      "location": "",
-      "community": "2"
-    },
-    {
-      "label": "require_identifier()",
-      "source": "src/cognitive_kernel/canonical.py",
-      "location": "L60",
-      "community": "0"
-    },
-    {
-      "label": "typing",
-      "source": "",
-      "location": "",
-      "community": "5"
-    },
-    {
-      "label": "normalize_timestamp()",
-      "source": "src/cognitive_kernel/canonical.py",
-      "location": "L92",
-      "community": "0"
-    },
-    {
-      "label": "argparse",
-      "source": "",
-      "location": "",
-      "community": "2"
-    },
-    {
-      "label": "hashlib",
-      "source": "",
-      "location": "",
-      "community": "4"
-    }
-  ],
+  "graphify_navigation_hints": [],
   "private_external_route_recommended": true,
   "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
   "trust_contract": [

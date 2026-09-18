@@ -1,6 +1,6 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: coverage-g2-doc-route-no-graph-001
+- Request: coverage-router-doc-only-002
 - Question: Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?
 - Source: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
@@ -32,22 +32,6 @@
 
 ## Graphify navigation hints
 
-- import_external_public_lineage.py -> scripts/eipm/n0/import_external_public_lineage.py:L1
-- command() -> tests/phase3/test_conversation_orchestration_failures.py:L33
-- binary_metrics() -> src/alice_vault/query_claim_relevance_holdout.py:L151
-- binding() -> tests/phase5/test_memory_m2_foundation_contracts.py:L99
-- binary_rationale_compatibility_loss() -> src/alice_personality/n0/structured_state_objectives.py:L60
-- .boundary() -> src/alice_conversation/cli_policy.py:L67
-- test_duplicate_resolution_cannot_be_rebound_to_second_target() -> tests/phase2/test_memory_candidate_security_gates.py:L499
-- correction_current() -> scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py:L166
-- .execute() -> src/cognitive_kernel/tier_transition_store.py:L696
-- _failure() -> src/alice_information/brave_search_live.py:L72
-- file_sha256() -> src/alice_vault/inventory.py:L131
-- FixedRows -> scripts/eipm/n0/evaluate_n0_v02_fixed.py:L26
-- rayan_n0_kaggle_cpu_lineage_controller_v102.py -> scripts/eipm/n0/rayan_n0_kaggle_cpu_lineage_controller_v102.py:L1
-- local_plan() -> tests/phase4/test_information_research_execution.py:L276
-- magnolia_cpu_n0_v02_tokenizer.sh -> scripts/eipm/n0/magnolia_cpu_n0_v02_tokenizer.sh:L1
-- P4.10c private live acceptance and exact-commit closure. The record produced by… -> src/alice_information/live_acceptance.py:L1
 
 ## External/private routing
 

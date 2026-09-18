@@ -1,21 +1,21 @@
 {
-  "request_id": "coverage-g2-doc-route-no-graph-001",
+  "request_id": "coverage-router-doc-only-002",
   "question": "Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?",
-  "budget": 1500,
+  "budget": 1400,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-18T01:55:21.369569+00:00",
+  "generated_at_utc": "2026-09-18T02:05:18.419621+00:00",
   "authority": "navigation-only",
   "routing_decision": {
     "graphify_mode": "auto",
-    "graphify_used": true,
-    "reason": "question requires code topology",
+    "graphify_used": false,
+    "reason": "document/branch/private routing is sufficient",
     "private_external_route_recommended": true
   },
-  "graphify_used": true,
+  "graphify_used": false,
   "graph_build": {
     "source_work_branch": "alice-eipm-v1-build",
     "source_work_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -708,6 +708,6 @@
     "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
     "authority": "routing-only"
   },
-  "graphify_result_text": "Graph: graphify-out/graph.json (10832 nodes) | Traversal: BFS depth=2 | Start: ['import_external_public_lineage.py', 'command()', 'binary_metrics()', 'binding()', 'binary_rationale_compatibility_loss()', '.boundary()', 'test_duplicate_resolution_cannot_be_rebound_to_second_target()', 'correction_current()', '.execute()', '_failure()', 'file_sha256()', 'FixedRows', 'rayan_n0_kaggle_cpu_lineage_controller_v102.py', 'local_plan()', 'magnolia_cpu_n0_v02_tokenizer.sh', 'P4.10c private live acceptance and exact-commit closure. The record produced by…', 'PYTHONPATH'] | Context: call, import (explicit) | 342 nodes found\n\n[!] TRUNCATED: showing 52 of 342 nodes (~1500-token budget). The answer may be among the 290 cut nodes — raise the token budget (CLI: --budget) or narrow the query (e.g. context_filter=['call'], or get_node for a specific symbol).\n\nNODE import_external_public_lineage.py [src=scripts/eipm/n0/import_external_public_lineage.py loc=L1 community=143]\nNODE command() [src=tests/phase3/test_conversation_orchestration_failures.py loc=L33 community=34]\nNODE binary_metrics() [src=src/alice_vault/query_claim_relevance_holdout.py loc=L151 community=20]\nNODE binding() [src=tests/phase5/test_memory_m2_foundation_contracts.py loc=L99 community=193]\nNODE binary_rationale_compatibility_loss() [src=src/alice_personality/n0/structured_state_objectives.py loc=L60 community=102]\nNODE .boundary() [src=src/alice_conversation/cli_policy.py loc=L67 community=162]\nNODE test_duplicate_resolution_cannot_be_rebound_to_second_target() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L499 community=108]\nNODE correction_current() [src=scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py loc=L166 community=174]\nNODE .execute() [src=src/cognitive_kernel/tier_transition_store.py loc=L696 community=3]\nNODE _failure() [src=src/alice_information/brave_search_live.py loc=L72 community=186]\nNODE file_sha256() [src=src/alice_vault/inventory.py loc=L131 community=185]\nNODE FixedRows [src=scripts/eipm/n0/evaluate_n0_v02_fixed.py loc=L26 community=23]\nNODE rayan_n0_kaggle_cpu_lineage_controller_v102.py [src=scripts/eipm/n0/rayan_n0_kaggle_cpu_lineage_controller_v102.py loc=L1 community=132]\nNODE local_plan() [src=tests/phase4/test_information_research_execution.py loc=L276 community=65]\nNODE magnolia_cpu_n0_v02_tokenizer.sh [src=scripts/eipm/n0/magnolia_cpu_n0_v02_tokenizer.sh loc=L1 community=244]\nNODE P4.10c private live acceptance and exact-commit closure. The record produced by… [src=src/alice_information/live_acceptance.py loc=L1 community=40]\nNODE PYTHONPATH [src=scripts/eipm/n0/continue_mlm_p100x2_segment.sh loc=L27 community=187]\nNODE pathlib [src= loc= community=2]\nNODE json [src= loc= community=2]\nNODE require_identifier() [src=src/cognitive_kernel/canonical.py loc=L60 community=0]\nNODE typing [src= loc= community=5]\nNODE normalize_timestamp() [src=src/cognitive_kernel/canonical.py loc=L92 community=0]\nNODE argparse [src= loc= community=2]\nNODE hashlib [src= loc= community=4]\nNODE open_memory_store() [src=src/alice_memory/store.py loc=L107 community=36]\nNODE sys [src= loc= community=2]\nNODE datetime [src= loc= community=45]\nNODE tempfile [src= loc= community=2]\nNODE os [src= loc= community=132]\nNODE subprocess [src= loc= community=30]\nNODE promote_memory_candidate_with_transition() [src=src/alice_memory/transition_promotion.py loc=L955 community=10]\nNODE time [src= loc= community=4]\nNODE _setup() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L87 community=108]\nNODE load_candidate_transition_promotion() [src=src/alice_memory/transition_promotion.py loc=L286 community=10]\nNODE shutil [src= loc= community=143]\nNODE _candidate_request() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L143 community=108]\nNODE _propose() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L193 community=108]\nNODE edge() [src=scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py loc=L81 community=174]\nNODE base_parts() [src=scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py loc=L91 community=174]\nNODE field() [src=scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py loc=L68 community=174]\nNODE make_row() [src=scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py loc=L97 community=174]\nNODE ._insert_publication() [src=src/cognitive_kernel/tier_transition_store.py loc=L612 community=3]\nNODE .create() [src=src/cognitive_kernel/tier_transition.py loc=L336 community=0]\nNODE _assess() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L212 community=108]\nNODE inventory() [src=src/alice_vault/inventory.py loc=L136 community=185]\nNODE ._source_payload() [src=src/cognitive_kernel/tier_transition_store.py loc=L483 community=3]\nNODE _create_memory() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L108 community=108]\nNODE ._read_response() [src=src/alice_information/brave_search_live.py loc=L228 community=186]\nNODE ._load_receipt() [src=src/cognitive_kernel/tier_transition_store.py loc=L368 community=3]\nNODE main() [src=scripts/eipm/n0/evaluate_n0_v02_fixed.py loc=L46 community=23]\nNODE _cancel() [src=src/alice_information/brave_search_live.py loc=L89 community=186]\nNODE _remaining() [src=src/alice_information/brave_search_live.py loc=L82 community=186]\n... (truncated — 290 more nodes cut by ~1500-token budget. Narrow with context_filter=['call'] or use get_node for a specific symbol)\n",
+  "graphify_result_text": "",
   "graphify_stderr": ""
 }
