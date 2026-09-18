@@ -1,0 +1,107 @@
+name: Graphify Context Query
+
+on:
+  push:
+    branches:
+      - research/graphify-context-substrate
+    paths:
+      - "research/graphify-context/QUERY_REQUEST.json"
+
+permissions:
+  contents: write
+
+jobs:
+  query:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout context branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Graphify
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install graphifyy
+
+      - name: Query persistent graph
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import subprocess
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          req_path = Path("research/graphify-context/QUERY_REQUEST.json")
+          graph_path = Path("graphify-out/graph.json")
+          build_path = Path("research/graphify-context/LAST_GRAPH_BUILD.json")
+
+          request = json.loads(req_path.read_text(encoding="utf-8"))
+          question = str(request.get("question", "")).strip()
+          if not question:
+              raise SystemExit("QUERY_REQUEST.json has no non-empty question")
+
+          top = int(request.get("top", 12))
+          top = max(1, min(top, 50))
+
+          cmd = [
+              "graphify", "query", question,
+              "--graph", str(graph_path),
+              "--top", str(top),
+              "--json",
+          ]
+          proc = subprocess.run(cmd, text=True, capture_output=True)
+          if proc.returncode != 0:
+              raise SystemExit(
+                  "graphify query failed\nSTDOUT:\n"
+                  + proc.stdout
+                  + "\nSTDERR:\n"
+                  + proc.stderr
+              )
+
+          try:
+              graphify_result = json.loads(proc.stdout)
+          except json.JSONDecodeError:
+              graphify_result = {"raw_stdout": proc.stdout}
+
+          graph_build = {}
+          if build_path.exists():
+              graph_build = json.loads(build_path.read_text(encoding="utf-8"))
+
+          result = {
+              "request_id": request.get("request_id"),
+              "question": question,
+              "top": top,
+              "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+              "authority": "navigation-only",
+              "graph_build": graph_build,
+              "graphify_result": graphify_result,
+          }
+
+          Path("research/graphify-context/QUERY_RESULT.json").write_text(
+              json.dumps(result, indent=2, ensure_ascii=False) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Commit scoped query result
+        shell: bash
+        run: |
+          git config user.name "alice-context-query-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add research/graphify-context/QUERY_RESULT.json
+
+          if git diff --cached --quiet; then
+            echo "No query-result changes."
+            exit 0
+          fi
+
+          git commit -m "research: update Graphify scoped query result"
+          git push

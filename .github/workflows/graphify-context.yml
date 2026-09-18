@@ -6,6 +6,8 @@ on:
       - research/graphify-context-substrate
     paths-ignore:
       - "graphify-out/**"
+      - "research/graphify-context/QUERY_REQUEST.json"
+      - "research/graphify-context/QUERY_RESULT.json"
   workflow_dispatch:
 
 permissions:

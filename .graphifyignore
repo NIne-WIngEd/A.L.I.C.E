@@ -1,0 +1,6 @@
+# Prevent the context scaffold from indexing itself.
+graphify-out/
+research/graphify-context/
+.github/workflows/graphify-context.yml
+.github/workflows/graphify-query.yml
+scripts/context/Start-ALICEGraphifyContext.ps1
