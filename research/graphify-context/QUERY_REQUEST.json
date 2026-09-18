@@ -1,7 +1,7 @@
 {
-  "request_id": "coverage-frontier-codegraph-001",
-  "question": "Where in code is the full-stack downstream causal arbitration source binding enforced, and which functions connect canonical-only calibration to frozen arbitration execution, finalization, and the post-arbitration decision gate?",
-  "budget": 2600,
+  "request_id": "coverage-frontier-codegraph-reuse-001",
+  "question": "Which functions in code enforce the frozen source revision and artifact hashes before the downstream causal arbitration finalizer can invoke the post-arbitration decision gate?",
+  "budget": 1800,
   "traversal": "bfs",
   "contexts": [
     "call",
