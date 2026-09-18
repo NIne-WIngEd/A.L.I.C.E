@@ -41,7 +41,9 @@ jobs:
       - name: Build deterministic context catalogs
         run: |
           python scripts/context/build_context_catalog.py
+          python scripts/context/build_context_lexical_index.py
           python -m json.tool research/graphify-context/catalog/CATALOG_STATUS.json >/dev/null
+          python -m json.tool research/graphify-context/catalog/lexical/LEXICAL_STATUS.json >/dev/null
           python -m json.tool research/graphify-context/catalog/BRANCH_CATALOG.json >/dev/null
 
       - name: Publish catalogs on latest research head
