@@ -67,9 +67,9 @@
   },
   "continuity_branch_head": {
     "branch": "alice-context",
-    "head": "0a2afa48cddb46e6dd17112d90d06ffcfa8727cc",
-    "head_committed_at": "2026-09-17T01:14:12-05:00",
-    "head_message": "context: catch up N0 endpoint repair and next arbitration"
+    "head": "2e954c4545dc62e03a44768df61cdf48f4f80dc4",
+    "head_committed_at": "2026-09-17T21:24:19-05:00",
+    "head_message": "context: make causal arbitration calibration the active N0 handoff"
   },
   "unmerged_experiment_frontier": {
     "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -80,14 +80,15 @@
     "maximal_heads": [
       {
         "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "head": "8dab1e5debf48e09ebdbab49815e0938fda25a30",
-        "head_committed_at": "2026-09-17T19:40:51-05:00",
-        "head_message": "docs: make N0 architecture capability-first without hard ceilings",
-        "ahead": 17,
+        "head": "d49d6e7f45c15905ca8ec5a33d1ac14c3aef3d59",
+        "head_committed_at": "2026-09-17T21:22:32-05:00",
+        "head_message": "ci(n0): verify arbitration env crosses udocker boundary",
+        "ahead": 23,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 27,
+        "changed_file_count_vs_source_merge_base": 32,
         "changed_paths_vs_source_merge_base": [
+          ".github/workflows/n0-arbitration-contract-check.yml",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
@@ -97,6 +98,7 @@
           "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
           "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
           "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+          "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
           "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
           "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
           "scripts/eipm/n0/downstream_causal_arbitration_v0_2.py",
@@ -104,9 +106,12 @@
           "scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py",
           "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
           "scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch",
+          "scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch",
+          "scripts/eipm/n0/magnolia_udocker_exec.sh",
           "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
           "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
           "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
+          "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
           "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
           "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
           "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
@@ -122,14 +127,15 @@
     "all_ahead_candidates": [
       {
         "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "head": "8dab1e5debf48e09ebdbab49815e0938fda25a30",
-        "head_committed_at": "2026-09-17T19:40:51-05:00",
-        "head_message": "docs: make N0 architecture capability-first without hard ceilings",
-        "ahead": 17,
+        "head": "d49d6e7f45c15905ca8ec5a33d1ac14c3aef3d59",
+        "head_committed_at": "2026-09-17T21:22:32-05:00",
+        "head_message": "ci(n0): verify arbitration env crosses udocker boundary",
+        "ahead": 23,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 27,
+        "changed_file_count_vs_source_merge_base": 32,
         "changed_paths_vs_source_merge_base": [
+          ".github/workflows/n0-arbitration-contract-check.yml",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
@@ -139,6 +145,7 @@
           "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
           "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
           "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+          "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
           "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
           "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
           "scripts/eipm/n0/downstream_causal_arbitration_v0_2.py",
@@ -146,9 +153,12 @@
           "scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py",
           "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
           "scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch",
+          "scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch",
+          "scripts/eipm/n0/magnolia_udocker_exec.sh",
           "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
           "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
           "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
+          "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
           "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
           "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
           "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
@@ -206,9 +216,9 @@
     "authority": "routing-only; not canonical promotion"
   },
   "continuity_freshness": {
-    "stale_relative_to_unmerged_experiment_frontier": true,
-    "newest_experiment_frontier_time": "2026-09-17T19:40:51-05:00",
-    "continuity_branch_head_time": "2026-09-17T01:14:12-05:00"
+    "stale_relative_to_unmerged_experiment_frontier": false,
+    "newest_experiment_frontier_time": "2026-09-17T21:22:32-05:00",
+    "continuity_branch_head_time": "2026-09-17T21:24:19-05:00"
   },
   "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
   "authority": "routing-and-freshness-only"

@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "0a2afa48cddb46e6dd17112d90d06ffcfa8727cc",
-      "head_committed_at": "2026-09-17T01:14:12-05:00",
-      "head_message": "context: catch up N0 endpoint repair and next arbitration",
+      "head": "2e954c4545dc62e03a44768df61cdf48f4f80dc4",
+      "head_committed_at": "2026-09-17T21:24:19-05:00",
+      "head_message": "context: make causal arbitration calibration the active N0 handoff",
       "status": "diverged",
-      "ahead": 183,
+      "ahead": 185,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 535,
+      "changed_file_count_vs_source_merge_base": 537,
       "knowledge_surface": true
     },
     {
@@ -29,14 +29,14 @@
     },
     {
       "branch": "alice-eipm-v1-causal-arbitration-binding",
-      "head": "8dab1e5debf48e09ebdbab49815e0938fda25a30",
-      "head_committed_at": "2026-09-17T19:40:51-05:00",
-      "head_message": "docs: make N0 architecture capability-first without hard ceilings",
+      "head": "d49d6e7f45c15905ca8ec5a33d1ac14c3aef3d59",
+      "head_committed_at": "2026-09-17T21:22:32-05:00",
+      "head_message": "ci(n0): verify arbitration env crosses udocker boundary",
       "status": "ahead",
-      "ahead": 17,
+      "ahead": 23,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 27,
+      "changed_file_count_vs_source_merge_base": 32,
       "knowledge_surface": true
     },
     {
@@ -89,14 +89,14 @@
     },
     {
       "branch": "alice-telemetry",
-      "head": "a02ff234774c7791dd495ec7f884e52ce3b7fcf7",
-      "head_committed_at": "2026-09-17T01:14:24-05:00",
-      "head_message": "telemetry: catch up endpoint repair runtime and next arbitration",
+      "head": "9d21873189615891a10772c04f29cf8ce501ed50",
+      "head_committed_at": "2026-09-17T21:23:58-05:00",
+      "head_message": "telemetry: advance N0 to calibrated causal arbitration frontier",
       "status": "unrelated",
-      "ahead": 22,
+      "ahead": 23,
       "behind": 675,
       "merge_base": null,
-      "changed_file_count_vs_source_merge_base": 1251,
+      "changed_file_count_vs_source_merge_base": 1252,
       "knowledge_surface": false
     },
     {
@@ -137,14 +137,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "fdce28586e42d01b19c35d897311e4dcc3e3d78b",
-      "head_committed_at": "2026-09-17T01:13:39-05:00",
-      "head_message": "fbm: backfill N0 selector and endpoint repair lineage",
+      "head": "c3c79900d627bd3224e03360e5a81e6f9887e020",
+      "head_committed_at": "2026-09-17T21:23:46-05:00",
+      "head_message": "fbm: capture calibrated causal arbitration frontier lessons",
       "status": "diverged",
-      "ahead": 74,
+      "ahead": 75,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 74,
+      "changed_file_count_vs_source_merge_base": 75,
       "knowledge_surface": true
     },
     {
