@@ -1,2 +1,1 @@
-catalog-schema=3
-reason=fix-continuity-overlay-matching
+catalog-schema=4\nreason=build-full-document-lexical-index\n
