@@ -128,6 +128,18 @@ def branch_is_ancestor(older: str, newer: str) -> bool:
     return proc.returncode == 0
 
 
+def path_last_commit_at(branch: str, path: str) -> str | None:
+    raw = git(
+        "log", "-1",
+        "--format=%cI",
+        remote_ref(branch),
+        "--",
+        path,
+        check=False,
+    ).strip()
+    return raw or None
+
+
 def relation(source: str, other: str) -> dict:
     left, right = git(
         "rev-list", "--left-right", "--count",
@@ -544,11 +556,19 @@ def main() -> None:
         m = handoff_re.match(str(row.get("path", "")))
         if not m:
             continue
-        handoff_candidates.append((m.group(1), row))
+        handoff_candidates.append(
+            (
+                path_last_commit_at("alice-context", row["path"]) or m.group(1),
+                row,
+            )
+        )
 
     latest_handoff = None
     if handoff_candidates:
-        _date, row = max(handoff_candidates, key=lambda item: (item[0], item[1]["path"]))
+        _handoff_commit_at, row = max(
+            handoff_candidates,
+            key=lambda item: (item[0], item[1]["path"]),
+        )
         handoff_text = safe_text(
             remote_ref("alice-context"), row["path"], row.get("size")
         ) or ""
@@ -575,7 +595,8 @@ def main() -> None:
             "path": row["path"],
             "blob_sha": row["blob_sha"],
             "title": row["title"],
-            "date": _date,
+            "date": row["path"].split("/")[2],
+            "last_changed_at": _handoff_commit_at,
             "current_build_head_declared": (
                 build_head_match.group(1) if build_head_match else None
             ),
