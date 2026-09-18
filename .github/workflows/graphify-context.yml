@@ -6,8 +6,10 @@ on:
       - research/graphify-context-substrate
     paths-ignore:
       - "graphify-out/**"
-      - "research/graphify-context/QUERY_REQUEST.json"
-      - "research/graphify-context/QUERY_RESULT.json"
+      - "research/graphify-context/**"
+      - ".github/workflows/graphify-context.yml"
+      - ".github/workflows/graphify-query.yml"
+      - "scripts/context/**"
   workflow_dispatch:
 
 permissions:
