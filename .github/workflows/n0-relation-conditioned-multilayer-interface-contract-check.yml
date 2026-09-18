@@ -1,0 +1,133 @@
+name: N0 Relation Conditioned MultiLayer Interface Contract Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-relation-conditioned-multilayer-interface
+    paths:
+      - "src/alice_personality/n0/relation_conditioned_multilayer_query.py"
+      - "scripts/eipm/n0/compile_n0_v02_relation_conditioned_layer_map_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh"
+      - "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.17.json"
+      - ".github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile             scripts/eipm/n0/compile_n0_v02_relation_conditioned_layer_map_v0_1.py             src/alice_personality/n0/relation_conditioned_multilayer_query.py
+          bash -n scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh
+
+      - name: Layer map compiler governance
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("scripts/eipm/n0/compile_n0_v02_relation_conditioned_layer_map_v0_1.py").read_text()
+          required=[
+            "alice.eipm.n0.relation-conditioned-layer-map.v0.1",
+            "COMPILED_FROM_FROZEN_LAYERWISE_AUDIT",
+            "exact_best_layers",
+            "near_best_layers_within_one_accuracy_quantum",
+            "candidate_layers",
+            "audit_scores_are_priors_not_hard_routing_truth",
+            "no_single_universal_layer",
+            '"training_authorized": False',
+            '"scale_authorized": False',
+            '"hard_parameter_ceiling"',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("layer-map compiler contract missing "+repr(missing))
+          forbidden=["torch.optim","backward(","optimizer.step"]
+          present=[x for x in forbidden if x in t]
+          if present: raise SystemExit("training leaked into layer-map compiler "+repr(present))
+          print("layer_map_compiler_governance=PASS")
+          PY
+
+      - name: Multi-layer interface architecture
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("src/alice_personality/n0/relation_conditioned_multilayer_query.py").read_text()
+          required=[
+            "RelationConditionedMultiLayerQueryInterface",
+            "relation_layer_candidate_mask",
+            "relation_layer_audit_prior",
+            "relation-conditioned token",
+            "token_scores = torch.einsum",
+            "layer_weights",
+            "edge_relation_query_state",
+            "candidate_layer_mask_is_permanent_architecture_limit",
+            "single_universal_layer",
+            '"hard_parameter_ceiling": None',
+            "EvidenceRelationType.CONFLICTS_WITH",
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("interface architecture contract missing "+repr(missing))
+          forbidden=[
+            "layer_index = 12",
+            "final_hidden_state",
+            "query_projection(query_semantic)",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present: raise SystemExit("universal/final-layer shortcut leaked "+repr(present))
+          print("multilayer_interface_architecture=PASS")
+          PY
+
+      - name: Exact 575804 binding
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          r=Path("scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh").read_text()
+          required=[
+            "ee88e80513fb000e2ecde8ca9e4f7e714cb06e43a144bd28c8930d26c38965ab",
+            "COMPLETE_NO_GRADIENT_LAYERWISE_RELATION_SEMANTICS_AUDIT",
+            "gradient_performed",
+            "model_parameters_mutated",
+            "scale_authorized",
+            "training_authorized",
+          ]
+          missing=[x for x in required if x not in r]
+          if missing: raise SystemExit("575804 binding missing "+repr(missing))
+          forbidden=["sbatch","git pull","git checkout","git switch"]
+          present=[x for x in forbidden if x in r]
+          if present: raise SystemExit("runtime mutation/GPU submission leaked "+repr(present))
+          print("audit_575804_binding=PASS")
+          PY
+
+      - name: State forbids training
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.17.json").read_text())
+          e=s["execution_policy"]
+          if e["training_authorized"] is not False:
+              raise SystemExit("training authorized prematurely")
+          if e["optimizer_authorized"] is not False:
+              raise SystemExit("optimizer authorized prematurely")
+          if e["gradient_authorized"] is not False:
+              raise SystemExit("gradient authorized prematurely")
+          if e["new_gpu_run_authorized"] is not False:
+              raise SystemExit("GPU run authorized prematurely")
+          if s["architecture_v0_1"]["one_universal_layer"] is not False:
+              raise SystemExit("universal layer hardcoded")
+          if s["architecture_v0_1"]["hard_parameter_ceiling"] is not None:
+              raise SystemExit("hard ceiling reintroduced")
+          if s["n0_complete"] is not False:
+              raise SystemExit("N0 completion drift")
+          print("state_training_freeze=PASS")
+          PY
