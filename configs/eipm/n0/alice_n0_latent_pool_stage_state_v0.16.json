@@ -1,0 +1,125 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.16",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.15.json",
+  "status": "LAYERWISE_QUERY_SEMANTICS_AUDIT_575804_COMPLETE;DIRECTIONAL_RELATION_SIGNAL_IS_LAYER_LOCAL;GRADIENT_WORK_REMAINS_FROZEN_PENDING_INTERFACE_DESIGN_FROM_EXISTING_AUDIT",
+  "n0_complete": false,
+  "stable_build_base": {
+    "branch": "alice-eipm-v1-build",
+    "commit": "021c5021a98104b35f9c8e94b19e48d21f25f132"
+  },
+  "current_experiment_branch": "alice-eipm-v1-query-semantics-architecture-audit",
+  "preserved_evidence": {
+    "job_id": 575804,
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "result_sha256": "ee88e80513fb000e2ecde8ca9e4f7e714cb06e43a144bd28c8930d26c38965ab",
+    "gradient_performed": false,
+    "model_parameters_mutated": false,
+    "heldout_rows_used": false,
+    "scale_authorized": false,
+    "best_token_late_interaction": {
+      "accuracy": 0.6875,
+      "layer_index": 12
+    },
+    "best_mean_pool": {
+      "accuracy": 0.6666666666666666,
+      "layer_index": 4
+    },
+    "final_layer_token_late_interaction_accuracy": 0.6875,
+    "final_layer_mean_pool_accuracy": 0.5625,
+    "causes_token_by_layer": {
+      "0": 0.5,
+      "1": 0.5,
+      "2": 0.5,
+      "3": 0.5,
+      "4": 0.5,
+      "5": 0.625,
+      "6": 0.625,
+      "7": 0.625,
+      "8": 0.625,
+      "9": 0.625,
+      "10": 0.625,
+      "11": 0.625,
+      "12": 0.625,
+      "13": 0.625,
+      "14": 0.625,
+      "15": 0.5,
+      "16": 0.5
+    },
+    "supports_token_by_layer": {
+      "0": 0.5,
+      "1": 0.5,
+      "2": 0.5,
+      "3": 0.5,
+      "4": 0.5,
+      "5": 0.5,
+      "6": 0.5,
+      "7": 0.5,
+      "8": 0.5,
+      "9": 0.5,
+      "10": 0.5,
+      "11": 0.375,
+      "12": 0.625,
+      "13": 0.625,
+      "14": 0.5,
+      "15": 0.5,
+      "16": 0.5
+    }
+  },
+  "architecture_interpretation": {
+    "directional_relation_semantics_absent_from_backbone": false,
+    "final_layer_only_interface_is_sufficient": false,
+    "semantic_projection_swap_is_supported": false,
+    "single_fixed_final_token_layer_is_proven_sufficient": false,
+    "findings": [
+      "causal direction appears from layers 5 through 14 and disappears again at layers 15-16",
+      "support direction appears above chance only in the narrow layer-12/13 window",
+      "layer 12 is the first observed layer where both causes and supports are simultaneously above chance",
+      "final layer preserves aggregate token accuracy but loses causes/supports directionality",
+      "therefore relation-semantic capability is distributed and reshaped across depth rather than simply absent"
+    ],
+    "implication": "future query-to-graph architecture should preserve access to intermediate token states and support relation-conditioned layer selection or mixing before field selection"
+  },
+  "next_design_boundary": {
+    "model_training_authorized": false,
+    "new_gpu_audit_authorized": false,
+    "use_existing_575804_result_first": true,
+    "next_step": "derive per-relation best-layer map and design a frozen-backbone relation-conditioned multi-layer token interface from existing audit evidence before any new gradient run",
+    "avoid": [
+      "hardcode layer 12 as permanent universal layer",
+      "swap final pooled query for final token states and train immediately",
+      "resume QRR repairs",
+      "increase model size without capacity evidence"
+    ]
+  },
+  "fbm_capture": {
+    "required": true,
+    "trace_file": "docs/fable-builder/traces/FBM_TRACE_20260918_N0_QUERY_SEMANTICS_ARCHITECTURE_AUDITS.jsonl",
+    "lessons_captured": [
+      "repair-loop stop and architecture-audit routing",
+      "representation-interface bottleneck diagnosis",
+      "layer-local relational semantic capability"
+    ],
+    "parallel_capture_contract_updated": true
+  },
+  "anti_loop_policy": {
+    "gradient_work_frozen": true,
+    "no_qrr_v0_4": true,
+    "no_token_graph_training_yet": true,
+    "no_semantic_retraining_yet": true,
+    "no_scale_now": true,
+    "no_heldout_opening": true,
+    "no_frozen_challenge_rerun": true,
+    "no_threshold_change": true
+  },
+  "scale_decision": {
+    "scale_now": false,
+    "reason": "575804 demonstrates recoverable directional signal in existing intermediate representations, so missing capacity is not yet localized",
+    "hard_parameter_ceiling": null,
+    "current_shapes_are_operating_points_not_product_limits": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
