@@ -1,0 +1,31 @@
+{
+  "schema": "alice.telemetry.n0.qrr-preflight-infra-failure.v0.1",
+  "date": "2026-09-18",
+  "job_id": 575799,
+  "slurm_state": "FAILED",
+  "exit_code": "1:0",
+  "node": "gpu001",
+  "elapsed": "00:00:20",
+  "architecture_executed": false,
+  "gradient_performed": false,
+  "heldout_opened": false,
+  "model_evidence": false,
+  "failure_class": "runtime_provenance_preflight_field_name_mismatch",
+  "error": "575798 parent immutability drift",
+  "incorrect_field_checked": "parent_graph_parameters_exactly_unchanged",
+  "correct_field": "parent_endpoint_graph_parameters_exactly_unchanged",
+  "trigger_receipt": "relation-semantic-role-residual-v0.2/training/result.json",
+  "trigger_receipt_sha256": "d9abbd6d3da3030361201a8a32f84aa8bf458fb5bebcc07db241a217b3557d8e",
+  "architecture_unchanged": true,
+  "repair_commits": [
+    "bbdfcf9b61e6f0b19b51eb115d14273f519bb120",
+    "a4ba0e7b8629718947d7126f8aa86021aa1cb87c"
+  ],
+  "ci_run": 35389242107,
+  "ci_result": "SUCCESS",
+  "retry_authorized": true,
+  "retry_output_dir": "query-relation-role-router-v0.3-retry-575799",
+  "original_partial_output_preserved": true,
+  "scale_authorized": false,
+  "n0_complete": false
+}
