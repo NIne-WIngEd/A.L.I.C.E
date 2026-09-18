@@ -107,7 +107,16 @@ def relation(source: str, other: str) -> dict:
     ).strip().split()
     behind = int(left)
     ahead = int(right)
-    if ahead and behind:
+    try:
+        merge_base = git(
+            "merge-base", remote_ref(source), remote_ref(other)
+        ).strip()
+    except subprocess.CalledProcessError:
+        merge_base = None
+
+    if merge_base is None:
+        status = "unrelated"
+    elif ahead and behind:
         status = "diverged"
     elif ahead:
         status = "ahead"
@@ -115,9 +124,6 @@ def relation(source: str, other: str) -> dict:
         status = "behind"
     else:
         status = "identical"
-    merge_base = git(
-        "merge-base", remote_ref(source), remote_ref(other)
-    ).strip()
     return {
         "status": status,
         "ahead": ahead,
@@ -126,14 +132,21 @@ def relation(source: str, other: str) -> dict:
     }
 
 
-def changed_paths(source: str, other: str) -> list[str]:
+def changed_paths(source: str, other: str, merge_base: str | None) -> list[str]:
     if source == other:
         return []
-    raw = git(
-        "diff", "--name-only",
-        f"{remote_ref(source)}...{remote_ref(other)}",
-        check=False,
-    )
+    if merge_base:
+        raw = git(
+            "diff", "--name-only",
+            f"{remote_ref(source)}...{remote_ref(other)}",
+        )
+    else:
+        # Histories with no merge-base are kept explicitly separate. Compare
+        # endpoint trees only for inventory; do not imply shared lineage.
+        raw = git(
+            "diff", "--name-only",
+            remote_ref(source), remote_ref(other),
+        )
     return [x for x in raw.splitlines() if x.strip()]
 
 
@@ -264,7 +277,7 @@ def main() -> None:
         if name.startswith("tmp-") or name == "research/graphify-context-substrate":
             continue
         rel = relation(SOURCE_BRANCH, name)
-        changed = changed_paths(SOURCE_BRANCH, name)
+        changed = changed_paths(SOURCE_BRANCH, name, rel["merge_base"])
         branch_rows.append({
             "branch": name,
             "head": branch_sha(name),
