@@ -1,0 +1,100 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.10",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json",
+  "status": "FINAL_FROZEN_CHALLENGE_VALID_FAIL_MISSING_EVIDENCE_PATH_LOCALIZATION_IMPLEMENTED_PENDING_FRESH_DIAGNOSTIC",
+  "latent_candidate": {
+    "step": 360,
+    "sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4",
+    "weights_changed": false,
+    "ratified": false
+  },
+  "repaired_graph_candidate": {
+    "checkpoint": "relation-endpoint-repair-v0.2/training/step-00000200/evidence_graph_dual_endpoint.safetensors",
+    "sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+    "downstream_arbitration_classification": "IMPROVEMENT",
+    "promoted": false,
+    "ratified": false
+  },
+  "final_frozen_challenge": {
+    "magnolia_job_id": 575794,
+    "execution_revision": "ae1be5f811ceea772d138b35191278b8a304d023",
+    "job_state": "COMPLETED",
+    "exit_code": "0:0",
+    "result_sha256": "a2b8d62a28daf546d337eb36cef711eb29821caa3a292b2439c8a0c2cdfaf09d",
+    "execution_receipt_sha256": "31a20c0f8281f15d060e85df9f457bbaadc1cff12ea6b995dca6d319a0529c0e",
+    "status": "FAIL_PRESELECTED_CANDIDATE_NOT_ELIGIBLE_FOR_LATENT_POOL_RATIFICATION",
+    "gate_pass": false,
+    "only_failed_gate": "counterfactual_family_min_drop",
+    "failure_family": "missing_structured_evidence",
+    "observed_family_mean_target_drop": -0.009834006428718567,
+    "frozen_required_minimum": 0.005,
+    "all_other_frozen_gate_checks_passed": true,
+    "gradient_performed": false,
+    "challenge_rows_used_for_training": false,
+    "graph_promoted": false,
+    "scale_authorized": false,
+    "n0_complete": false,
+    "immutable_historical_result": true,
+    "rerun_authorized": false,
+    "frozen_threshold_change_authorized": false
+  },
+  "failure_semantics": {
+    "family_name": "missing_structured_evidence",
+    "structured_view_is_already_unavailable": true,
+    "semantic_channel_is_deliberately_non_answering": true,
+    "uniquely_necessary_view": "evidence_relation",
+    "relation": "corrects",
+    "counterfactual_view": 2,
+    "counterfactual_intervention_point": "before_parent_cache_and_before_cross_context_fusion",
+    "interpretation": "failure must be localized along evidence graph -> fusion -> latent path; family name must not be misread as a structured-encoder defect"
+  },
+  "localization_v0_1": {
+    "branch": "alice-eipm-v1-missing-evidence-localization",
+    "builder": "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
+    "diagnostic": "scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py",
+    "runner": "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
+    "magnolia_job": "scripts/eipm/n0/magnolia_n0_v02_missing_evidence_path_localization_v0_1.sbatch",
+    "rows": 32,
+    "relation_flip_pairs": 16,
+    "same_text_query_fields_within_pair": true,
+    "only_relation_direction_flips_within_pair": true,
+    "frozen_challenge_rows_reused": false,
+    "prior_diagnostic_rows_reused": false,
+    "training_authorized": false,
+    "gradient_performed": false,
+    "stages_traced": [
+      "raw_semantic_negative_control",
+      "evidence_graph_field_selection",
+      "evidence_graph_pooled_value_probe",
+      "fusion_evidence_context_value_probe",
+      "fusion_semantic_context_value_probe",
+      "latent_best_slot_value_probe",
+      "pre_fusion_evidence_ablation"
+    ],
+    "purpose": "determine whether relation-derived answer identity is lost at graph selection, graph pooled representation, fusion contextualization, latent consumption, or only by the frozen absolute-cosine measurement"
+  },
+  "scale_decision": {
+    "scale_now": false,
+    "reason": "the valid failure is narrow and causal-path localization is incomplete; no current evidence establishes latent or fusion capacity insufficiency",
+    "hard_parameter_ceiling": null,
+    "hard_parameter_floor": null,
+    "current_parameter_counts_are_not_capability_ceilings": true,
+    "authorize_scale_only_if": "fresh path trace proves the correct relation-derived signal reaches the relevant module input and that module cannot preserve or use it under a valid value-sensitive measurement"
+  },
+  "anti_loop_policy": {
+    "one_causal_change_per_failed_model_gate": true,
+    "automatic_hotfix_chain": false,
+    "rerun_final_frozen_challenge": false,
+    "change_frozen_thresholds": false,
+    "train_on_frozen_challenge_rows": false,
+    "train_on_fresh_diagnostic_rows": false,
+    "infrastructure_failure_is_not_model_evidence": true,
+    "preserve_failed_receipts": true,
+    "validation_must_change_a_real_decision_or_stop": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
