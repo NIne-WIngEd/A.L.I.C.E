@@ -67,7 +67,7 @@ class QueryRelationRoleRouterEvidenceGraphEncoder(DualEndpointEvidenceGraphEncod
             nn.Linear(router, 3),
         )
 
-        # Start strongly in DEFER so the frozen parent remains behaviorally
+        # Start near-exactly in DEFER so the frozen parent remains behaviorally
         # dominant before the side expert has evidence. This is not a hard
         # gate: the router is fully trainable and the bias can move immediately.
         final = self.semantic_role_router[-1]
@@ -75,7 +75,7 @@ class QueryRelationRoleRouterEvidenceGraphEncoder(DualEndpointEvidenceGraphEncod
         nn.init.zeros_(final.weight)
         nn.init.zeros_(final.bias)
         with torch.no_grad():
-            final.bias[self.DEFER] = 8.0
+            final.bias[self.DEFER] = 12.0
 
     def _semantic_role_router_logits(
         self,
