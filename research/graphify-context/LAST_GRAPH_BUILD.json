@@ -1,7 +1,7 @@
 {
   "source_branch": "research/graphify-context-substrate",
-  "source_commit": "7fab3b840a1d38466ba73e0695315aad86dec63c",
-  "workflow_run_id": "35293186656",
+  "source_commit": "3a74334be187880f82b064854ad9199eb455da1e",
+  "workflow_run_id": "35293346473",
   "graph_mode": "code-only",
   "authority": "navigation-only"
 }
