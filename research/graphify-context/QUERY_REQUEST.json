@@ -1,9 +1,10 @@
 {
-  "request_id": "bootstrap-n0-code-topology-003",
-  "question": "CrossContextFusion in the N0 personality-model path",
-  "budget": 2500,
+  "request_id": "coverage-g5-g6-eipm-supersession-001",
+  "question": "Why is the permanent EIPM A.L.I.C.E.-native rather than Qwen + LoRA, and what research superseded the older recommendation?",
+  "budget": 2200,
   "traversal": "bfs",
   "contexts": [
-    "call"
+    "call",
+    "import"
   ]
 }
