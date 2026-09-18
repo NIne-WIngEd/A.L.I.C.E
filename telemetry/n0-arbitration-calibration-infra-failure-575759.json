@@ -1,0 +1,29 @@
+{
+  "schema": "alice.telemetry.n0.arbitration-calibration-infra-failure.v0.1",
+  "date": "2026-09-17",
+  "magnolia_job_id": 575759,
+  "node": "gpu001",
+  "gpu": "Tesla P100-PCIE-12GB",
+  "failed_frontier_commit": "d49d6e7f45c15905ca8ec5a33d1ac14c3aef3d59",
+  "status": "INFRASTRUCTURE_FAILURE_BEFORE_CANONICAL_ARM_RESULT",
+  "error": "ModuleNotFoundError: No module named 'alice_personality'",
+  "model_evidence": false,
+  "candidate_graph_supplied": false,
+  "candidate_arm_observed": false,
+  "canonical_arm_completed": false,
+  "gradient_performed": false,
+  "failed_output_preserved": true,
+  "fixed_frontier_commit": "6c930788da42ad9964c4b5bf6067be3b7d6bfd06",
+  "fixed_import_roots": [
+    "$ALICE_REPO_ROOT/src",
+    "$ALICE_REPO_ROOT/scripts/eipm/n0"
+  ],
+  "validation": {
+    "workflow": "N0 Arbitration Contract Check",
+    "run_id": 35300971759,
+    "result": "PASS",
+    "includes_import_root_smoke": true
+  },
+  "retry_output_dir": "$HOME/rayan-compute/rayan-n0/n0-v02/downstream-causal-arbitration-metric-calibration-v0.1-retry-575759",
+  "next_action": "retry canonical-only calibration from fixed frontier; do not run candidate arbitration first"
+}
