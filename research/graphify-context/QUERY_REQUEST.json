@@ -1,5 +1,10 @@
 {
-  "request_id": "bootstrap-n0-code-topology-001",
-  "question": "Which code files, classes, functions, scripts, and tests are most structurally connected to the EIPM personality-model N0 build, and what source paths should be read first?",
-  "top": 20
+  "request_id": "bootstrap-n0-code-topology-002",
+  "question": "For scripts/eipm/n0/run_n0_v02_first_tranche.sh and scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py, which directly connected code nodes and source files implement or test their N0 execution path? Focus on N0 and EIPM only.",
+  "budget": 3500,
+  "traversal": "bfs",
+  "contexts": [
+    "call",
+    "import"
+  ]
 }
