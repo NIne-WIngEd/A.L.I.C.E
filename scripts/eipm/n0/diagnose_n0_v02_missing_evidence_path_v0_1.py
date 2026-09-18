@@ -156,6 +156,59 @@ def run_latent(
     return {key: torch.cat(parts, dim=0) for key, parts in outputs.items()}
 
 
+def pair_vector_distance(
+    vectors: torch.Tensor,
+    pair_ids: Sequence[str],
+) -> dict[str, Any]:
+    by_pair: dict[str, list[int]] = defaultdict(list)
+    for index, pair_id in enumerate(pair_ids):
+        by_pair[str(pair_id)].append(index)
+    distances: list[float] = []
+    for pair_id, indices in sorted(by_pair.items()):
+        if len(indices) != 2:
+            raise RuntimeError(f"pair {pair_id} must have exactly two rows")
+        a, b = vectors[indices[0]].float(), vectors[indices[1]].float()
+        distances.append(float(1.0 - cosine(a, b)))
+    return {
+        "pairs": len(distances),
+        "mean_cosine_distance": sum(distances) / max(len(distances), 1),
+        "min_cosine_distance": min(distances) if distances else None,
+        "max_cosine_distance": max(distances) if distances else None,
+    }
+
+
+def pair_slot_set_distance(
+    slots: torch.Tensor,
+    pair_ids: Sequence[str],
+) -> dict[str, Any]:
+    by_pair: dict[str, list[int]] = defaultdict(list)
+    for index, pair_id in enumerate(pair_ids):
+        by_pair[str(pair_id)].append(index)
+    distances: list[float] = []
+    for pair_id, indices in sorted(by_pair.items()):
+        if len(indices) != 2:
+            raise RuntimeError(f"pair {pair_id} must have exactly two rows")
+        a = F.normalize(slots[indices[0]].float(), dim=-1)
+        b = F.normalize(slots[indices[1]].float(), dim=-1)
+        similarity = a @ b.transpose(0, 1)
+        forward = similarity.max(dim=1).values.mean()
+        backward = similarity.max(dim=0).values.mean()
+        chamfer_similarity = 0.5 * (forward + backward)
+        distances.append(float(1.0 - chamfer_similarity))
+    return {
+        "pairs": len(distances),
+        "mean_permutation_invariant_cosine_distance": (
+            sum(distances) / max(len(distances), 1)
+        ),
+        "min_permutation_invariant_cosine_distance": (
+            min(distances) if distances else None
+        ),
+        "max_permutation_invariant_cosine_distance": (
+            max(distances) if distances else None
+        ),
+    }
+
+
 def stage_summary(
     margins: torch.Tensor,
     pair_ids: Sequence[str],
@@ -656,6 +709,55 @@ def main() -> None:
     latent_cf_stage = stage_summary(counterfactual_latent_probe_margin, pair_ids)
     latent_pooled_stage = stage_summary(normal_pooled_probe_margin, pair_ids)
 
+    relation_signal = {
+        "raw_semantic_pair_distance": pair_vector_distance(
+            normal_parent["source_view_summaries"][:, 0], pair_ids
+        ),
+        "graph_pooled_pair_distance": pair_vector_distance(
+            graph_pooled, pair_ids
+        ),
+        "fusion_evidence_context_pair_distance": pair_vector_distance(
+            normal_evidence_context, pair_ids
+        ),
+        "fusion_semantic_context_pair_distance": pair_vector_distance(
+            normal_semantic_context, pair_ids
+        ),
+        "counterfactual_fusion_semantic_context_pair_distance": pair_vector_distance(
+            counterfactual_semantic_context, pair_ids
+        ),
+        "latent_pooled_pair_distance": pair_vector_distance(
+            normal_latent["pooled_state"], pair_ids
+        ),
+        "counterfactual_latent_pooled_pair_distance": pair_vector_distance(
+            counterfactual_latent["pooled_state"], pair_ids
+        ),
+        "latent_slot_set_pair_distance": pair_slot_set_distance(
+            normal_latent["latent_slots"], pair_ids
+        ),
+        "counterfactual_latent_slot_set_pair_distance": pair_slot_set_distance(
+            counterfactual_latent["latent_slots"], pair_ids
+        ),
+    }
+    numerical_floor = 1e-6
+    graph_relation_changes_pooled_state = (
+        relation_signal["graph_pooled_pair_distance"]["mean_cosine_distance"]
+        > numerical_floor
+    )
+    fusion_preserves_relation_difference = (
+        relation_signal["fusion_evidence_context_pair_distance"]["mean_cosine_distance"]
+        > numerical_floor
+    )
+    latent_relation_distance = relation_signal[
+        "latent_slot_set_pair_distance"
+    ]["mean_permutation_invariant_cosine_distance"]
+    latent_cf_relation_distance = relation_signal[
+        "counterfactual_latent_slot_set_pair_distance"
+    ]["mean_permutation_invariant_cosine_distance"]
+    evidence_causally_increases_latent_relation_separation = (
+        latent_relation_distance - latent_cf_relation_distance
+        > numerical_floor
+    )
+
     graph_exact = (
         graph_field_stage["relation_flip_pair_accuracy"] == 1.0
         and float(graph_argmax_target.float().mean()) == 1.0
@@ -680,20 +782,25 @@ def main() -> None:
 
     if not graph_exact:
         localization = "EVIDENCE_GRAPH_RELATION_SELECTION_REMAINS_DEFECTIVE"
-    elif not raw_target_value_geometry_exact:
-        localization = "RELATION_SELECTION_IS_CORRECT_BUT_SEMANTIC_VALUE_PROBE_CANNOT_RELIABLY_READ_RAW_TARGET_FIELDS"
-    elif not graph_target_value_geometry_exact:
-        localization = "RAW_TARGET_VALUE_IS_READABLE_BUT_GRAPH_FIELD_TRANSFORM_LOSES_VALUE_DISCRIMINATION"
-    elif not graph_pooled_preserves:
-        localization = "GRAPH_FIELD_SELECTION_AND_VALUE_STATE_ARE_CORRECT_BUT_GRAPH_POOLING_LOSES_QUERY_CONDITIONED_VALUE_IDENTITY"
-    elif not fusion_preserves:
-        localization = "GRAPH_POOLED_RELATION_SIGNAL_IS_VALID_BUT_FUSION_EVIDENCE_CONTEXT_DOES_NOT_PRESERVE_IT"
-    elif not latent_preserves:
-        localization = "RELATION_SIGNAL_IS_VALID_THROUGH_FUSION_BUT_LATENT_VALUE_READOUT_DOES_NOT_PRESERVE_IT"
-    elif ablation_breaks_relation_signal:
-        localization = "FRESH_RELATION_SIGNAL_SURVIVES_GRAPH_FUSION_LATENT_AND_IS_CAUSALLY_USED;_FROZEN_ABSOLUTE_COSINE_GATE_REQUIRES_METRIC_INTERPRETATION"
+    elif not graph_relation_changes_pooled_state:
+        localization = "GRAPH_FIELD_SELECTION_FLIPS_CORRECTLY_BUT_RELATION_DIRECTION_DOES_NOT_MATERIALLY_CHANGE_GRAPH_POOLED_STATE"
+    elif not fusion_preserves_relation_difference:
+        localization = "GRAPH_RELATION_SIGNAL_EXISTS_BUT_FUSION_EVIDENCE_CONTEXT_DOES_NOT_PRESERVE_RELATION_DIRECTION"
+    elif not evidence_causally_increases_latent_relation_separation:
+        localization = "RELATION_DIRECTION_REACHES_FUSION_BUT_EVIDENCE_DOES_NOT_CAUSALLY_INCREASE_LATENT_RELATION_SEPARATION"
+    elif (
+        raw_target_value_geometry_exact
+        and graph_target_value_geometry_exact
+        and graph_pooled_preserves
+        and fusion_preserves
+        and latent_preserves
+        and ablation_breaks_relation_signal
+    ):
+        localization = "FRESH_RELATION_VALUE_SIGNAL_SURVIVES_GRAPH_FUSION_LATENT_AND_IS_CAUSALLY_USED;_FROZEN_ABSOLUTE_COSINE_GATE_IS_NOT_A_VALID_SOLE_CAPABILITY_SIGNAL"
+    elif evidence_causally_increases_latent_relation_separation:
+        localization = "RELATION_SIGNAL_CAUSALLY_REACHES_LATENT_BUT_VALUE_PROBE_IS_NOT_EXACT_AT_EVERY_STAGE;_LOCALIZE_READOUT_GEOMETRY_BEFORE_MODEL_REPAIR_OR_SCALE"
     else:
-        localization = "RELATION_SIGNAL_SURVIVES_BUT_PRE_FUSION_ABLATION_DID_NOT_REMOVE_PAIR_DISCRIMINATION;CHECK_LEAKAGE_OR_ALTERNATE_PATH"
+        localization = "UNRESOLVED_PATH_SIGNAL_REQUIRES_INSPECTION_WITHOUT_AUTOMATIC_HOTFIX"
 
     result = {
         "schema": "alice.eipm.n0.missing-evidence-path-localization-result.v0.1",
@@ -744,6 +851,8 @@ def main() -> None:
             "latent_best_slot_value_probe_without_evidence": latent_cf_stage,
             "latent_pooled_value_probe": latent_pooled_stage,
         },
+        "relation_signal_pair_distances": relation_signal,
+        "relation_signal_numerical_floor": numerical_floor,
         "aggregate_causal_metrics": {
             "graph_argmax_target_rate": float(graph_argmax_target.float().mean()),
             "mean_relation_bias_target_minus_foil": float(
@@ -773,11 +882,22 @@ def main() -> None:
             "mean_counterfactual_latent_evidence_view_attention": float(
                 counterfactual_evidence_attention.mean()
             ),
+            "graph_relation_changes_pooled_state": graph_relation_changes_pooled_state,
+            "fusion_preserves_relation_difference": fusion_preserves_relation_difference,
+            "evidence_causally_increases_latent_relation_separation": (
+                evidence_causally_increases_latent_relation_separation
+            ),
+            "latent_relation_pair_distance": latent_relation_distance,
+            "counterfactual_latent_relation_pair_distance": (
+                latent_cf_relation_distance
+            ),
         },
         "localization": localization,
         "interpretation_contract": {
             "graph_field_pair_flip_is_relation_direction_ground_truth": True,
             "full_sentence_cosine_is_not_used_as_the_only_localization_signal": True,
+            "relation_flip_pair_distance_is_probe_independent": True,
+            "latent_slot_pair_distance_is_permutation_invariant": True,
             "pair_text_query_fields_identical_except_relation_direction": True,
             "frozen_challenge_reclassified": False,
             "training_authorized": False,
