@@ -1,10 +1,10 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-doctrine-and-current-frontier-20260917-001
-- Question: For continuing the A.L.I.C.E. N0 personality-model build, retrieve the current scientific frontier and the durable doctrine that constrains the model: its role inside the A.L.I.C.E. entity; what N0 is and is not responsible for; full-production/no-hard-ceiling capability rules; efficiency and speed tradeoffs; lessons from MC10 over-validation/hotfix loops and external validators; internal validation strategy; authority/provenance and E0 E-INF A-SYN boundaries; private identity-gradient boundaries; provider/model independence; anti-loop and supersession rules; architecture decisions already made; known failures or rejected approaches that must not be reintroduced; and the next scientifically justified build action from the current frontier.
+- Request: n0-live-code-path-and-next-stage-20260917-001
+- Question: On the current maximal N0 experiment frontier, where in code is the production N0 path from semantic representation through structured state, evidence graph, source-anchored cross-context fusion, adaptive multi-view latent workspace, canonical repeatability calibration, frozen downstream causal arbitration, finalization, and post-arbitration gate? Identify the exact current next executable stage, the functions/scripts that enforce provenance/frozen-arm safety, and any hard-coded capacity or validation behavior in this path that would contradict the current no-hard-ceiling capability doctrine.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
-- Graphify used: False
+- Graphify used: True
 
 ## Active mission
 
@@ -22,38 +22,44 @@
 
 ## Source pointers
 
-- [126] fable-builder-model:docs/fable-builder/CAPABILITY_NOT_LABEL_DOCTRINE_v0.1.md — Fable Builder Model — Capability-Not-Label Doctrine v0.1
-  - status:  owner-directed active working doctrine
-- [111] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md — N0 Causal Arbitration Frontier Calibration Handoff
-- [103] fable-builder-model:docs/fable-builder/FORMATION_MODEL_ARCHITECTURE_v0.1.md — Fable Builder Model Architecture v0.1
-  - status:  working architecture; not yet owner-finalized
-- [98] alice-eipm-v1-causal-arbitration-binding:docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md — N0 v0.2 Production Build Plan
+- [139] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md — N0 Causal Arbitration Frontier Calibration Handoff
+- [120] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
+- [112] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md — N0 downstream causal arbitration: full-stack graph binding v0.1
+- [109] alice-eipm-v1-causal-arbitration-binding:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
+- [109] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
+- [107] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md — N0 causal-arbitration frontier ready for Magnolia calibration
+- [87] fable-builder-model:docs/fable-builder/traces/2026-09-17_n0_downstream_causal_arbitration_frontier.jsonl — 2026-09-17_n0_downstream_causal_arbitration_frontier.jsonl
+- [84] alice-eipm-v1-downstream-arbitration:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
+- [84] alice-eipm-v1-post-arbitration-gate:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
+- [82] alice-eipm-v1-build:docs/eipm/EIPM_FUSION_ROUTING_VALIDATION_DOCTRINE_2026-09-16.md — EIPM Fusion Routing Validation Doctrine — 2026-09-16
+  - status:  current N0 interpretation authority
+- [81] alice-eipm-v1-causal-arbitration-binding:docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md — N0 v0.2 Production Build Plan
   - status:  implementation active; GPU training held until CPU/data gates pass
-- [92] alice-eipm-v1-build:docs/eipm/EIPM_MAINSTREAMED_BUILD_AND_TEACHING_DOCTRINE_2026-09-13.md — EIPM Mainstreamed Build and Teaching Doctrine
-  - status:  owner-directed active working doctrine
-- [89] alice-eipm-v1-build:docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md — A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13
-  - status:  research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.
-  - supersession:  this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it.
-- [82] alice-eipm-v1-build:docs/eipm/EIPM_CAPABILITY_LIMIT_AUDIT_2026-09-16.md — A.L.I.C.E. EIPM Capability-Limit Audit — 2026-09-16
-  - status:  owner-directed architecture audit / current interpretation authority
-- [82] fable-builder-model:docs/fable-builder/README.md — Fable Personality Builder Model Workstream
-  - status:  active architecture and process-capture workstream
-- [80] alice-context:docs/chat-context/2026-09-10/sol/OWNER_OVERRIDE_PERSONALITY_MODEL_MAINSTREAMING.md — Owner override: mainstream the A.L.I.C.E. personality-model build
-- [77] alice-context:docs/chat-context/2026-09-10/sol/EIPM_NATIVE_FRONTIER_ARCHITECTURE_RESEARCH.md — A.L.I.C.E.-Native EIPM Frontier Architecture Research — 2026-09-10
-  - status:  working frontier recommendation on `alice-context`; not canonical `main`; no A.L.I.C.E. weights created.
-  - supersession:  this note supersedes the earlier working recommendation that treated `Qwen3.8-27B + A.L.I.C.E. LoRA` as the permanent EIPM. Qwen may remain an optional disposable teacher/mechanics tool where licensing permits. Its weights are not part of the EIPM.
-- [77] alice-eipm-v1-build:docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md — N0 v0.2 Production Build Plan
-  - status:  implementation active; GPU training held until CPU/data gates pass
-- [77] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260914_FRONTIER_AUDIT_REDIRECT.jsonl — FBM_TRACE_20260914_FRONTIER_AUDIT_REDIRECT.jsonl
+- [80] alice-eipm-v1-build:configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json — alice_n0_latent_pool_stage_state_v0.9.json
 
 ## Graphify navigation hints
 
-- skipped: document/branch/private routing was sufficient
+- Fail-closed N0 downstream causal arbitration over one frozen frontier. This… -> scripts/eipm/n0/downstream_causal_arbitration_v0_2.py:L2
+- run_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.sh -> scripts/eipm/n0/run_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.sh:L1
+- run_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.sh -> scripts/eipm/n0/run_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.sh:L1
+- AdaptiveMultiViewLatentPoolV02 -> src/alice_personality/n0/adaptive_multi_view_latent_pool_v0_2.py:L191
+- SourceAnchoredCrossContextFusion -> src/alice_personality/n0/cross_context_fusion_anchored.py:L13
+- ArbitrationV02Tests -> tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py:L12
+- arm_output() -> scripts/eipm/n0/downstream_causal_arbitration_v0_2.py:L207
+- test_disabled_repair_preserves_original_rejection_behavior() -> tests/phase3/test_conversation_response_repair_orchestration.py:L48
+- CalibrationError -> scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py:L44
+- _canonical() -> src/alice_vault/grounded_context.py:L24
+- CapabilityRuntime -> src/alice_evolution/capability_runtime.py:L77
+- test_parameter_report_is_descriptive_not_capacity_gate() -> tests/eipm/test_n0_adaptive_multi_view_latent_pool.py:L150
+- causal_chain() -> scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py:L235
+- test_memory_capability_ceiling.py -> tests/governance/test_memory_capability_ceiling.py:L1
+- codes() -> tests/phase3/test_conversation_response_validation_adversarial.py:L18
+- unicodedata -> :
 
 ## External/private routing
 
-- Recommended: True
-- Reason: question references a private/external source class
+- Recommended: False
+- Reason: None
 
 ## Trust contract
 
