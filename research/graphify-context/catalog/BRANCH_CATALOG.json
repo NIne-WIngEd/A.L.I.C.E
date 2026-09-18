@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "88f5e4a189056cd4871e072cda83773ba06e5b86",
-      "head_committed_at": "2026-09-18T15:02:49-05:00",
-      "head_message": "context: record 575799 QRR preflight infrastructure failure",
+      "head": "41dbe749f6176c95a0c9c79adcf123a764cde5d0",
+      "head_committed_at": "2026-09-18T15:20:32-05:00",
+      "head_message": "context: hand off no-gradient query semantics architecture audit",
       "status": "diverged",
-      "ahead": 197,
+      "ahead": 198,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 544,
+      "changed_file_count_vs_source_merge_base": 545,
       "knowledge_surface": true
     },
     {
@@ -88,6 +88,18 @@
       "knowledge_surface": true
     },
     {
+      "branch": "alice-eipm-v1-query-semantics-architecture-audit",
+      "head": "c169f98f439705a517191b2d93dc6388bc891a1a",
+      "head_committed_at": "2026-09-18T15:19:45-05:00",
+      "head_message": "ci(n0): guard no-gradient query semantics architecture audit",
+      "status": "ahead",
+      "ahead": 79,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 68,
+      "knowledge_surface": true
+    },
+    {
       "branch": "alice-eipm-v1-relation-semantic-grounding",
       "head": "09fdd7c1c8cadda4ac61b65f1ff9c32e35ced53d",
       "head_committed_at": "2026-09-18T13:58:22-05:00",
@@ -137,14 +149,14 @@
     },
     {
       "branch": "alice-telemetry",
-      "head": "a7aa7560f8fe97f44048a8037645b3a2a3770e35",
-      "head_committed_at": "2026-09-18T15:03:00-05:00",
-      "head_message": "telemetry: record QRR preflight infrastructure failure 575799",
+      "head": "2d5f86f408de8fb2ed889ee098957adb24f4c4c3",
+      "head_committed_at": "2026-09-18T15:20:34-05:00",
+      "head_message": "telemetry: record query-semantics architecture audit readiness",
       "status": "unrelated",
-      "ahead": 32,
+      "ahead": 33,
       "behind": 675,
       "merge_base": null,
-      "changed_file_count_vs_source_merge_base": 1261,
+      "changed_file_count_vs_source_merge_base": 1262,
       "knowledge_surface": true
     },
     {
