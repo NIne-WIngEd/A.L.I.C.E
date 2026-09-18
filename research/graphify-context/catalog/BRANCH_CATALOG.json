@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "f96ac546fd9f572428555a10db4fceb8be1cde7d",
-      "head_committed_at": "2026-09-17T21:52:12-05:00",
-      "head_message": "context: record calibration import failure and fixed retry frontier",
+      "head": "5392903a853e691ee6dfda08dbc1a7ff99514ef6",
+      "head_committed_at": "2026-09-17T22:02:35-05:00",
+      "head_message": "context: document Graphify substrate cross-chat workflow",
       "status": "diverged",
-      "ahead": 186,
+      "ahead": 187,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 537,
+      "changed_file_count_vs_source_merge_base": 538,
       "knowledge_surface": true
     },
     {
