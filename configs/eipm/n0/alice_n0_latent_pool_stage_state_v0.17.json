@@ -1,0 +1,91 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.17",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.16.json",
+  "status": "RELATION_CONDITIONED_MULTILAYER_QUERY_INTERFACE_DESIGNED;EXACT_RELATION_LAYER_MAP_PENDING_COMPILE_FROM_575804;TRAINING_NOT_AUTHORIZED",
+  "n0_complete": false,
+  "stable_build_base": {
+    "branch": "alice-eipm-v1-build",
+    "commit": "021c5021a98104b35f9c8e94b19e48d21f25f132"
+  },
+  "current_experiment_branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+  "evidence_basis": {
+    "layerwise_audit_job": 575804,
+    "layerwise_audit_result_sha256": "ee88e80513fb000e2ecde8ca9e4f7e714cb06e43a144bd28c8930d26c38965ab",
+    "layerwise_audit_status": "COMPLETE_NO_GRADIENT_LAYERWISE_RELATION_SEMANTICS_AUDIT",
+    "best_token_late_interaction": {
+      "accuracy": 0.6875,
+      "layer_index": 12
+    },
+    "best_mean_pool": {
+      "accuracy": 0.6666666666666666,
+      "layer_index": 4
+    },
+    "causes_signal_layer_window_observed": "5-14 with loss at 15-16",
+    "supports_signal_layer_window_observed": "12-13 only above chance",
+    "final_layer_only_interface_rejected": true,
+    "universal_layer_12_rejected_as_unproven": true
+  },
+  "architecture_v0_1": {
+    "design_doc": "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
+    "layer_map_compiler": "scripts/eipm/n0/compile_n0_v02_relation_conditioned_layer_map_v0_1.py",
+    "layer_map_runner": "scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh",
+    "interface_source": "src/alice_personality/n0/relation_conditioned_multilayer_query.py",
+    "interface_class": "RelationConditionedMultiLayerQueryInterface",
+    "semantic_backbone_trainable": false,
+    "graph_parent_trainable": false,
+    "consumes_token_level_hidden_states": true,
+    "relation_conditions_token_attention": true,
+    "relation_conditions_layer_mixing": true,
+    "audit_scores_are_priors_not_hard_truth": true,
+    "one_universal_layer": false,
+    "symmetric_conflict_relation_has_directional_interface": false,
+    "unmapped_relations_fail_closed": true,
+    "candidate_layer_set_is_permanent_architecture_limit": false,
+    "hard_parameter_ceiling": null
+  },
+  "layer_map_policy": {
+    "source": "575804 frozen layerwise audit JSON",
+    "compiled_not_hand_written": true,
+    "per_relation_exact_best_layers_preserved": true,
+    "near_best_layers_preserved": true,
+    "compact_candidate_set_operating_budget": 4,
+    "compact_candidate_set_is_permanent_architecture_limit": false,
+    "accuracy_quantum": 0.125,
+    "audit_scores_used_as_initialization_priors": true,
+    "compile_requires_exact_source_hash": true
+  },
+  "execution_policy": {
+    "next_action": "compile and inspect exact relation-layer map from 575804; no GPU required",
+    "training_authorized": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "new_gpu_run_authorized": false,
+    "static_contract_validation_authorized": true,
+    "architecture_integration_training_decision_deferred": true
+  },
+  "anti_loop_policy": {
+    "no_qrr_v0_4": true,
+    "no_router_patch": true,
+    "no_final_layer_token_training": true,
+    "no_hardcoded_layer_12_training": true,
+    "no_semantic_retraining_yet": true,
+    "no_graph_retraining_yet": true,
+    "no_scale_now": true,
+    "no_heldout_opening": true,
+    "no_frozen_challenge_rerun": true,
+    "no_threshold_change": true
+  },
+  "fbm_capture": {
+    "required": true,
+    "capture_topics": [
+      "layer-local relation capability",
+      "audit-derived soft architecture priors",
+      "relation-conditioned multi-layer interface design",
+      "avoid universal-layer hardcoding from a small diagnostic"
+    ]
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
