@@ -1,7 +1,7 @@
 {
-  "request_id": "n0-localize-missing-structured-evidence-20260918-001",
-  "question": "After final frozen challenge job 575794 failed only counterfactual_family_min_drop for family missing_structured_evidence with negative target drop, localize the code and prior evidence needed to determine whether the harmful structured contribution enters at structured parent encoding, reliability/target-view semantics, cross-context fusion, or adaptive latent consumption. Identify any existing diagnostics for parent-value path, view ablation, source reliability, missing structured evidence, pre-fusion counterfactuals, and any prior rejected causes. Do not use or propose rerunning frozen challenge rows. Point to the exact current files/functions on the maximal experiment frontier and the safest fresh diagnostic design outside frozen challenge rows.",
-  "budget": 2600,
+  "request_id": "n0-missing-evidence-localization-ready-20260918-001",
+  "question": "What is the exact current N0 state after final frozen challenge job 575794 and what single fresh non-challenge localization run is now authorized? Identify the maximal experiment frontier, active handoff, failing gate/family, anti-loop constraints, and the ready Magnolia localization runner.",
+  "budget": 1500,
   "traversal": "bfs",
   "contexts": [
     "call",
