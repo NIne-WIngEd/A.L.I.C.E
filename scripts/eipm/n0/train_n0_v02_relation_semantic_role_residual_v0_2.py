@@ -302,6 +302,8 @@ def main() -> None:
     p.add_argument("--parent-graph", required=True)
     p.add_argument("--ordinary-replay-cache", required=True)
     p.add_argument("--endpoint-replay-cache", required=True)
+    p.add_argument("--builder", required=True)
+    p.add_argument("--semantic-role-source", required=True)
     p.add_argument("--output-dir", required=True)
     p.add_argument("--max-length", type=int, default=128)
     p.add_argument("--encode-batch-size", type=int, default=64)
@@ -388,6 +390,8 @@ def main() -> None:
         "parent_graph": Path(args.parent_graph).resolve(),
         "ordinary_replay_cache": Path(args.ordinary_replay_cache).resolve(),
         "endpoint_replay_cache": Path(args.endpoint_replay_cache).resolve(),
+        "builder": Path(args.builder).resolve(),
+        "semantic_role_source": Path(args.semantic_role_source).resolve(),
         "trainer": Path(__file__).resolve(),
     }
     for key, path in check_paths.items():
