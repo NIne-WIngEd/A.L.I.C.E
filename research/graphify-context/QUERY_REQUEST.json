@@ -1,7 +1,7 @@
 {
-  "request_id": "coverage-router-doc-only-002",
-  "question": "Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?",
-  "budget": 1400,
+  "request_id": "coverage-router-code-topology-001",
+  "question": "Where in code is the query-conditioned relation endpoint-role read implemented, and which functions or modules connect that implementation to the downstream latent frontier path?",
+  "budget": 2200,
   "traversal": "bfs",
   "contexts": [
     "call",
