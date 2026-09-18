@@ -8,6 +8,7 @@ so the agent can open original authority with minimal broad reading.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 from pathlib import Path
