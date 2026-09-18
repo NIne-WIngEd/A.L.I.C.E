@@ -9,11 +9,15 @@ on:
       - "research/graphify-context/**"
       - ".github/workflows/graphify-context.yml"
       - ".github/workflows/graphify-query.yml"
+      - ".github/workflows/graphify-sync.yml"
       - "scripts/context/**"
   workflow_dispatch:
 
 permissions:
   contents: write
+
+env:
+  GRAPHIFY_SOURCE_BRANCH: alice-eipm-v1-build
 
 jobs:
   build-code-graph:
@@ -24,6 +28,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Verify source branch freshness
+        shell: bash
+        run: |
+          git fetch origin "$GRAPHIFY_SOURCE_BRANCH"
+          SOURCE_COMMIT="$(git rev-parse "origin/$GRAPHIFY_SOURCE_BRANCH")"
+          if ! git merge-base --is-ancestor "$SOURCE_COMMIT" HEAD; then
+            echo "STALE_RESEARCH_BRANCH: $GRAPHIFY_SOURCE_BRANCH at $SOURCE_COMMIT is not contained in $GITHUB_SHA"
+            echo "Run the Graphify source-sync workflow before rebuilding."
+            exit 2
+          fi
+          echo "GRAPHIFY_SOURCE_COMMIT=$SOURCE_COMMIT" >> "$GITHUB_ENV"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -45,8 +61,10 @@ jobs:
           mkdir -p research/graphify-context
           {
             echo "{"
-            echo "  \"source_branch\": \"$GITHUB_REF_NAME\","
-            echo "  \"source_commit\": \"$GITHUB_SHA\","
+            echo "  \"source_work_branch\": \"$GRAPHIFY_SOURCE_BRANCH\","
+            echo "  \"source_work_commit\": \"$GRAPHIFY_SOURCE_COMMIT\","
+            echo "  \"research_branch\": \"$GITHUB_REF_NAME\","
+            echo "  \"research_commit\": \"$GITHUB_SHA\","
             echo "  \"workflow_run_id\": \"$GITHUB_RUN_ID\","
             echo "  \"graph_mode\": \"code-only\","
             echo "  \"authority\": \"navigation-only\""
