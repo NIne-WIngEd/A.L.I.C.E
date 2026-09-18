@@ -1,2 +1,2 @@
-catalog-schema=6
-reason=select-active-handoff-by-git-freshness
+catalog-schema=7
+reason=index-all-non-temporary-branches
