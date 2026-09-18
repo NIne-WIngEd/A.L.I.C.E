@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "coverage-frontier-codegraph-001",
-  "question": "Where in code is the full-stack downstream causal arbitration source binding enforced, and which functions connect canonical-only calibration to frozen arbitration execution, finalization, and the post-arbitration decision gate?",
-  "generated_at_utc": "2026-09-18T02:16:40.064882+00:00",
+  "request_id": "coverage-frontier-codegraph-reuse-001",
+  "question": "Which functions in code enforce the frozen source revision and artifact hashes before the downstream causal arbitration finalizer can invoke the post-arbitration decision gate?",
+  "generated_at_utc": "2026-09-18T02:17:33.929533+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -34,7 +34,7 @@
     "graph_source_branch": "alice-eipm-v1-causal-arbitration-binding",
     "graph_source_commit": "8dab1e5debf48e09ebdbab49815e0938fda25a30",
     "graph_source_reason": "single maximal unmerged experiment frontier",
-    "graph_rebuild_required": true,
+    "graph_rebuild_required": false,
     "private_external_route_recommended": false
   },
   "active_mission": {
@@ -254,13 +254,13 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 117,
+      "score": 72,
       "branch": "alice-eipm-v1-causal-arbitration-binding",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
-      "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
+      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
       "category": "design_document",
-      "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
+      "title": "N0 downstream causal arbitration v0.1",
       "declared": {},
       "matched_terms": [],
       "supersession_hints": [],
@@ -270,10 +270,10 @@
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 13
+      "lexical_body_hits": 10
     },
     {
-      "score": 102,
+      "score": 72,
       "branch": "alice-eipm-v1-causal-arbitration-binding",
       "branch_scope": "branch_specific",
       "path": "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
@@ -292,26 +292,7 @@
       "lexical_body_hits": 10
     },
     {
-      "score": 87,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
-      "branch_scope": "branch_specific",
-      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
-      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration v0.1",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 7
-    },
-    {
-      "score": 87,
+      "score": 72,
       "branch": "alice-eipm-v1-downstream-arbitration",
       "branch_scope": "branch_specific",
       "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
@@ -327,10 +308,10 @@
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 7
+      "lexical_body_hits": 10
     },
     {
-      "score": 87,
+      "score": 72,
       "branch": "alice-eipm-v1-post-arbitration-gate",
       "branch_scope": "branch_specific",
       "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
@@ -346,10 +327,29 @@
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 7
+      "lexical_body_hits": 10
     },
     {
-      "score": 72,
+      "score": 66,
+      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+      "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
+      "category": "design_document",
+      "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [],
+      "catalogs": [
+        "document",
+        "failure",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 12
+    },
+    {
+      "score": 57,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
@@ -370,108 +370,129 @@
       "lexical_body_hits": 6
     },
     {
-      "score": 53,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "score": 45,
+      "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
-      "blob_sha": "d79db85b734e70bbf1705b8ef81e9371a93a5fba",
-      "category": "configuration_state",
-      "title": "n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document"
-      ]
-    },
-    {
-      "score": 53,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
-      "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
-      "blob_sha": "e05ebf2c3e4307d953287f252a9447a627d9f28a",
-      "category": "configuration_state",
-      "title": "n0_v02_downstream_causal_arbitration_v0_1.example.json",
+      "path": "docs/chat-context/2026-09-16/sol/FULL_SCALE_FUSION_JOB575619_AND_FROZEN_CHALLENGE.md",
+      "blob_sha": "7139049e6292458813e3da7ef739007e823d9feb",
+      "category": "working_context",
+      "title": "Full-Scale Fusion Job 575619 + Frozen Challenge Gate — 2026-09-16",
       "declared": {},
       "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
         "document",
-        "failure"
-      ]
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 5
     },
     {
-      "score": 53,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "score": 43,
+      "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
-      "blob_sha": "924bfc9021ba91cbf723fb6fd47534b05d28c555",
-      "category": "configuration_state",
-      "title": "n0_v02_downstream_causal_arbitration_v0_2.example.json",
+      "path": "docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md",
+      "blob_sha": "0fd59429e3c85c66ad4674cf2cfd94a84016410c",
+      "category": "working_context",
+      "title": "Fusion frozen challenge failure + source-anchored repair — 2026-09-16",
+      "declared": {
+        "status": "`FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`."
+      },
+      "matched_terms": [],
+      "supersession_hints": [],
+      "catalogs": [
+        "document",
+        "failure",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 3
+    },
+    {
+      "score": 43,
+      "branch": "fable-builder-model",
+      "branch_scope": "branch_specific",
+      "path": "docs/fable-builder/traces/FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl",
+      "blob_sha": "c7472bb1d6a8cbb6614b9fba665e6b3c80efbe92",
+      "category": "design_document",
+      "title": "FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl",
       "declared": {},
       "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
         "document",
-        "failure"
-      ]
+        "failure",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 4
     },
     {
-      "score": 53,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "score": 42,
+      "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
-      "blob_sha": "9f618c22233c021780f5a0580c51293315cdc286",
-      "category": "configuration_state",
-      "title": "n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+      "path": "docs/chat-context/2026-09-15/sol/N0_V02_CONTINUATION_RECOVERY_AND_DEV_GATE.md",
+      "blob_sha": "b9e00d47fdff7c6671d6f0e981b34e852dbf2df0",
+      "category": "working_context",
+      "title": "N0 v0.2 Continuation Recovery and Teacher-Dev Gate",
       "declared": {},
       "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
         "document",
-        "failure"
-      ]
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 6
     },
     {
-      "score": 53,
-      "branch": "alice-eipm-v1-downstream-arbitration",
-      "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
-      "blob_sha": "e05ebf2c3e4307d953287f252a9447a627d9f28a",
-      "category": "configuration_state",
-      "title": "n0_v02_downstream_causal_arbitration_v0_1.example.json",
-      "declared": {},
+      "score": 42,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/N0A_NATIVE_FOUNDATION_DECISION_v0.1.md",
+      "blob_sha": "ba08d260cfe5f3962edea3526218aff3ca9b3498",
+      "category": "design_document",
+      "title": "N0A Native Foundation Decision v0.1",
+      "declared": {
+        "status": " active build decision; implementation starts here"
+      },
       "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
         "document",
-        "failure"
-      ]
+        "failure",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 6
     },
     {
-      "score": 53,
-      "branch": "alice-eipm-v1-post-arbitration-gate",
-      "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
-      "blob_sha": "e05ebf2c3e4307d953287f252a9447a627d9f28a",
-      "category": "configuration_state",
-      "title": "n0_v02_downstream_causal_arbitration_v0_1.example.json",
+      "score": 42,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/public_source_manifest_v0.1.json",
+      "blob_sha": "2ae30886f4778ff13e7af3e2f63a958d77d3b66f",
+      "category": "design_document",
+      "title": "public_source_manifest_v0.1.json",
       "declared": {},
       "matched_terms": [],
-      "supersession_hints": [],
+      "supersession_hints": [
+        {
+          "line": 159,
+          "text": "\"Do not use as a release gate if that use would fall outside the noncommercial license.\","
+        }
+      ],
       "catalogs": [
+        "supersession",
         "document",
-        "failure"
-      ]
+        "failure",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 8
     }
   ],
   "graphify_navigation_hints": [
-    {
-      "label": "Full-stack N0 graph evaluator for frozen downstream causal arbitration. This…",
-      "source": "scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py",
-      "location": "L2",
-      "community": "121"
-    },
     {
       "label": "PostArbitrationDecisionGateV01Tests",
       "source": "tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py",
@@ -485,28 +506,28 @@
       "community": "179"
     },
     {
+      "label": "Finalize one frozen N0 downstream causal arbitration into the decision gate.…",
+      "source": "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
+      "location": "L2",
+      "community": "172"
+    },
+    {
       "label": "ArbitrationV02Tests",
       "source": "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
       "location": "L12",
       "community": "169"
     },
     {
-      "label": "binding()",
-      "source": "tests/phase5/test_memory_m2_foundation_contracts.py",
-      "location": "L99",
-      "community": "188"
+      "label": "artifact_manifest_digest()",
+      "source": "src/cognitive_kernel/release.py",
+      "location": "L118",
+      "community": "0"
     },
     {
-      "label": "CalibrationError",
-      "source": "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
-      "location": "L44",
-      "community": "178"
-    },
-    {
-      "label": "_canonical()",
-      "source": "src/alice_vault/grounded_context.py",
-      "location": "L24",
-      "community": "139"
+      "label": "test_candidates_never_enter_derived_indexes_before_promotion()",
+      "source": "tests/phase2/test_memory_candidate_security_gates.py",
+      "location": "L312",
+      "community": "106"
     },
     {
       "label": "causal_chain()",
@@ -519,12 +540,6 @@
       "source": "tests/phase3/test_conversation_response_validation_adversarial.py",
       "location": "L18",
       "community": "40"
-    },
-    {
-      "label": "connect()",
-      "source": "tests/phase4/test_information_live_http.py",
-      "location": "L227",
-      "community": "241"
     },
     {
       "label": "decision()",
@@ -545,28 +560,10 @@
       "community": "134"
     },
     {
-      "label": "ExecutionFreezeError",
-      "source": "scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py",
-      "location": "L15",
-      "community": "195"
-    },
-    {
-      "label": "FinalizationError",
-      "source": "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
-      "location": "L28",
-      "community": "172"
-    },
-    {
       "label": "eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
       "source": "scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
       "location": "L1",
       "community": "6"
-    },
-    {
-      "label": "FullStackGraphEvaluatorBindingTests",
-      "source": "tests/eipm/n0/test_downstream_full_stack_graph_evaluator_v0_1.py",
-      "location": "L16",
-      "community": "201"
     },
     {
       "label": "gate()",
@@ -575,22 +572,22 @@
       "community": "6"
     },
     {
-      "label": "Only source wrapper eligible for future model-facing web grounding.",
-      "source": "src/alice_information/injection_firewall.py",
-      "location": "L146",
-      "community": "4"
+      "label": "artifact_hashes",
+      "source": "policies/friday_release_attestation_schema.json",
+      "location": "L54",
+      "community": "203"
+    },
+    {
+      "label": "git_revision()",
+      "source": "scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py",
+      "location": "L51",
+      "community": "6"
     },
     {
       "label": "_source()",
       "source": "tests/phase4/test_information_freshness.py",
       "location": "L43",
       "community": "55"
-    },
-    {
-      "label": "downstream_full_stack_graph_evaluator_v0_1.py",
-      "source": "scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py",
-      "location": "L1",
-      "community": "121"
     },
     {
       "label": "pathlib",
@@ -605,10 +602,40 @@
       "community": "2"
     },
     {
+      "label": "canonical_sha256()",
+      "source": "src/cognitive_kernel/canonical.py",
+      "location": "L39",
+      "community": "0"
+    },
+    {
+      "label": "cognitive_kernel/__init__.py",
+      "source": "src/cognitive_kernel/__init__.py",
+      "location": "L1",
+      "community": "41"
+    },
+    {
       "label": "typing",
       "source": "",
       "location": "",
       "community": "6"
+    },
+    {
+      "label": "argparse",
+      "source": "",
+      "location": "",
+      "community": "2"
+    },
+    {
+      "label": "hashlib",
+      "source": "",
+      "location": "",
+      "community": "2"
+    },
+    {
+      "label": "sys",
+      "source": "",
+      "location": "",
+      "community": "2"
     }
   ],
   "private_external_route_recommended": false,

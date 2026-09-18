@@ -1,13 +1,13 @@
 {
-  "request_id": "coverage-frontier-codegraph-001",
-  "question": "Where in code is the full-stack downstream causal arbitration source binding enforced, and which functions connect canonical-only calibration to frozen arbitration execution, finalization, and the post-arbitration decision gate?",
-  "budget": 2600,
+  "request_id": "coverage-frontier-codegraph-reuse-001",
+  "question": "Which functions in code enforce the frozen source revision and artifact hashes before the downstream causal arbitration finalizer can invoke the post-arbitration decision gate?",
+  "budget": 1800,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-18T02:16:40.064882+00:00",
+  "generated_at_utc": "2026-09-18T02:17:33.929533+00:00",
   "authority": "navigation-only",
   "routing_decision": {
     "graphify_mode": "auto",
@@ -16,7 +16,7 @@
     "graph_source_branch": "alice-eipm-v1-causal-arbitration-binding",
     "graph_source_commit": "8dab1e5debf48e09ebdbab49815e0938fda25a30",
     "graph_source_reason": "single maximal unmerged experiment frontier",
-    "graph_rebuild_required": true,
+    "graph_rebuild_required": false,
     "private_external_route_recommended": false
   },
   "graphify_used": true,
@@ -33,24 +33,22 @@
   },
   "catalog_result": {
     "schema": "alice-context-catalog-query-v1",
-    "question": "Where in code is the full-stack downstream causal arbitration source binding enforced, and which functions connect canonical-only calibration to frozen arbitration execution, finalization, and the post-arbitration decision gate?",
+    "question": "Which functions in code enforce the frozen source revision and artifact hashes before the downstream causal arbitration finalizer can invoke the post-arbitration decision gate?",
     "query_tokens": [
+      "functions",
       "code",
-      "full-stack",
+      "enforce",
+      "frozen",
+      "source",
+      "revision",
+      "artifact",
+      "hashes",
+      "before",
       "downstream",
       "causal",
       "arbitration",
-      "source",
-      "binding",
-      "enforced",
-      "functions",
-      "connect",
-      "canonical-only",
-      "calibration",
-      "frozen",
-      "arbitration",
-      "execution",
-      "finalization",
+      "finalizer",
+      "invoke",
       "post-arbitration",
       "decision",
       "gate"
@@ -343,13 +341,13 @@
     },
     "hits": [
       {
-        "score": 117,
+        "score": 72,
         "branch": "alice-eipm-v1-causal-arbitration-binding",
         "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
-        "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
+        "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+        "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
         "category": "design_document",
-        "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
+        "title": "N0 downstream causal arbitration v0.1",
         "declared": {},
         "matched_terms": [],
         "supersession_hints": [],
@@ -359,10 +357,10 @@
           "frontier",
           "lexical"
         ],
-        "lexical_body_hits": 13
+        "lexical_body_hits": 10
       },
       {
-        "score": 102,
+        "score": 72,
         "branch": "alice-eipm-v1-causal-arbitration-binding",
         "branch_scope": "branch_specific",
         "path": "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
@@ -381,26 +379,7 @@
         "lexical_body_hits": 10
       },
       {
-        "score": 87,
-        "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "branch_scope": "branch_specific",
-        "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
-        "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
-        "category": "design_document",
-        "title": "N0 downstream causal arbitration v0.1",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [],
-        "catalogs": [
-          "document",
-          "failure",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 7
-      },
-      {
-        "score": 87,
+        "score": 72,
         "branch": "alice-eipm-v1-downstream-arbitration",
         "branch_scope": "branch_specific",
         "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
@@ -416,10 +395,10 @@
           "frontier",
           "lexical"
         ],
-        "lexical_body_hits": 7
+        "lexical_body_hits": 10
       },
       {
-        "score": 87,
+        "score": 72,
         "branch": "alice-eipm-v1-post-arbitration-gate",
         "branch_scope": "branch_specific",
         "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
@@ -435,10 +414,29 @@
           "frontier",
           "lexical"
         ],
-        "lexical_body_hits": 7
+        "lexical_body_hits": 10
       },
       {
-        "score": 72,
+        "score": 66,
+        "branch": "alice-eipm-v1-causal-arbitration-binding",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+        "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
+        "category": "design_document",
+        "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
+        "declared": {},
+        "matched_terms": [],
+        "supersession_hints": [],
+        "catalogs": [
+          "document",
+          "failure",
+          "frontier",
+          "lexical"
+        ],
+        "lexical_body_hits": 12
+      },
+      {
+        "score": 57,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
@@ -459,118 +457,7 @@
         "lexical_body_hits": 6
       },
       {
-        "score": 53,
-        "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "branch_scope": "branch_specific",
-        "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
-        "blob_sha": "d79db85b734e70bbf1705b8ef81e9371a93a5fba",
-        "category": "configuration_state",
-        "title": "n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [],
-        "catalogs": [
-          "document"
-        ]
-      },
-      {
-        "score": 53,
-        "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "branch_scope": "branch_specific",
-        "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
-        "blob_sha": "e05ebf2c3e4307d953287f252a9447a627d9f28a",
-        "category": "configuration_state",
-        "title": "n0_v02_downstream_causal_arbitration_v0_1.example.json",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [],
-        "catalogs": [
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 53,
-        "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "branch_scope": "branch_specific",
-        "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
-        "blob_sha": "924bfc9021ba91cbf723fb6fd47534b05d28c555",
-        "category": "configuration_state",
-        "title": "n0_v02_downstream_causal_arbitration_v0_2.example.json",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [],
-        "catalogs": [
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 53,
-        "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "branch_scope": "branch_specific",
-        "path": "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
-        "blob_sha": "9f618c22233c021780f5a0580c51293315cdc286",
-        "category": "configuration_state",
-        "title": "n0_v02_post_arbitration_decision_gate_v0_1.example.json",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [],
-        "catalogs": [
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 53,
-        "branch": "alice-eipm-v1-downstream-arbitration",
-        "branch_scope": "branch_specific",
-        "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
-        "blob_sha": "e05ebf2c3e4307d953287f252a9447a627d9f28a",
-        "category": "configuration_state",
-        "title": "n0_v02_downstream_causal_arbitration_v0_1.example.json",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [],
-        "catalogs": [
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 53,
-        "branch": "alice-eipm-v1-post-arbitration-gate",
-        "branch_scope": "branch_specific",
-        "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
-        "blob_sha": "e05ebf2c3e4307d953287f252a9447a627d9f28a",
-        "category": "configuration_state",
-        "title": "n0_v02_downstream_causal_arbitration_v0_1.example.json",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [],
-        "catalogs": [
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 53,
-        "branch": "alice-eipm-v1-post-arbitration-gate",
-        "branch_scope": "branch_specific",
-        "path": "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
-        "blob_sha": "9f618c22233c021780f5a0580c51293315cdc286",
-        "category": "configuration_state",
-        "title": "n0_v02_post_arbitration_decision_gate_v0_1.example.json",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [],
-        "catalogs": [
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 43,
+        "score": 45,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-16/sol/FULL_SCALE_FUSION_JOB575619_AND_FROZEN_CHALLENGE.md",
@@ -585,47 +472,111 @@
           "failure",
           "lexical"
         ],
+        "lexical_body_hits": 5
+      },
+      {
+        "score": 43,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md",
+        "blob_sha": "0fd59429e3c85c66ad4674cf2cfd94a84016410c",
+        "category": "working_context",
+        "title": "Fusion frozen challenge failure + source-anchored repair — 2026-09-16",
+        "declared": {
+          "status": "`FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`."
+        },
+        "matched_terms": [],
+        "supersession_hints": [],
+        "catalogs": [
+          "document",
+          "failure",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 3
+      },
+      {
+        "score": 43,
+        "branch": "fable-builder-model",
+        "branch_scope": "branch_specific",
+        "path": "docs/fable-builder/traces/FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl",
+        "blob_sha": "c7472bb1d6a8cbb6614b9fba665e6b3c80efbe92",
+        "category": "design_document",
+        "title": "FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl",
+        "declared": {},
+        "matched_terms": [],
+        "supersession_hints": [],
+        "catalogs": [
+          "document",
+          "failure",
+          "supersession",
+          "lexical"
+        ],
         "lexical_body_hits": 4
       },
       {
-        "score": 40,
+        "score": 42,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-08-31/src/S05-stageg-0829.txt",
-        "blob_sha": "97c35b9ccb7f70f90289439435b3c7ee14146b0f",
+        "path": "docs/chat-context/2026-09-15/sol/N0_V02_CONTINUATION_RECOVERY_AND_DEV_GATE.md",
+        "blob_sha": "b9e00d47fdff7c6671d6f0e981b34e852dbf2df0",
         "category": "working_context",
-        "title": "Example Python pseudocode to run models locally and score them:",
+        "title": "N0 v0.2 Continuation Recovery and Teacher-Dev Gate",
         "declared": {},
         "matched_terms": [],
         "supersession_hints": [],
         "catalogs": [
           "document",
           "failure",
-          "frontier",
-          "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 10
+        "lexical_body_hits": 6
       },
       {
-        "score": 40,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-08-31/src/S06-stageg-0831.txt",
-        "blob_sha": "c8f855c8d69f3ed555257366d4c8bbb380fa66b6",
-        "category": "working_context",
-        "title": "Example Python pseudocode to run models locally and score them:",
-        "declared": {},
+        "score": 42,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/N0A_NATIVE_FOUNDATION_DECISION_v0.1.md",
+        "blob_sha": "ba08d260cfe5f3962edea3526218aff3ca9b3498",
+        "category": "design_document",
+        "title": "N0A Native Foundation Decision v0.1",
+        "declared": {
+          "status": " active build decision; implementation starts here"
+        },
         "matched_terms": [],
         "supersession_hints": [],
         "catalogs": [
           "document",
           "failure",
           "frontier",
-          "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 10
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 42,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/public_source_manifest_v0.1.json",
+        "blob_sha": "2ae30886f4778ff13e7af3e2f63a958d77d3b66f",
+        "category": "design_document",
+        "title": "public_source_manifest_v0.1.json",
+        "declared": {},
+        "matched_terms": [],
+        "supersession_hints": [
+          {
+            "line": 159,
+            "text": "\"Do not use as a release gate if that use would fall outside the noncommercial license.\","
+          }
+        ],
+        "catalogs": [
+          "supersession",
+          "document",
+          "failure",
+          "frontier",
+          "lexical"
+        ],
+        "lexical_body_hits": 8
       },
       {
         "score": 40,
@@ -647,68 +598,125 @@
         "lexical_body_hits": 6
       },
       {
-        "score": 39,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md",
-        "blob_sha": "0fd59429e3c85c66ad4674cf2cfd94a84016410c",
-        "category": "working_context",
-        "title": "Fusion frozen challenge failure + source-anchored repair — 2026-09-16",
+        "score": 40,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/N0_V02_SOURCE_PROBE_20260914.md",
+        "blob_sha": "1ad7d9a3803ed49a4b3c36812682bdd18fd41e4e",
+        "category": "runtime_receipt",
+        "title": "N0 v0.2 Source Probe — 2026-09-14",
         "declared": {
-          "status": "`FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`."
+          "status": "PASS — source activation completed for bounded public N0 v0.2 corpus construction."
         },
         "matched_terms": [],
         "supersession_hints": [],
         "catalogs": [
           "document",
           "failure",
-          "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 2
+        "lexical_body_hits": 5
       },
       {
-        "score": 39,
-        "branch": "fable-builder-model",
+        "score": 40,
+        "branch": "alice-eipm-v1-causal-arbitration-binding",
         "branch_scope": "branch_specific",
-        "path": "docs/fable-builder/traces/FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl",
-        "blob_sha": "c7472bb1d6a8cbb6614b9fba665e6b3c80efbe92",
-        "category": "design_document",
-        "title": "FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl",
+        "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
+        "blob_sha": "d79db85b734e70bbf1705b8ef81e9371a93a5fba",
+        "category": "configuration_state",
+        "title": "n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
+        "declared": {},
+        "matched_terms": [],
+        "supersession_hints": [],
+        "catalogs": [
+          "document"
+        ]
+      },
+      {
+        "score": 40,
+        "branch": "alice-eipm-v1-causal-arbitration-binding",
+        "branch_scope": "branch_specific",
+        "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+        "blob_sha": "e05ebf2c3e4307d953287f252a9447a627d9f28a",
+        "category": "configuration_state",
+        "title": "n0_v02_downstream_causal_arbitration_v0_1.example.json",
         "declared": {},
         "matched_terms": [],
         "supersession_hints": [],
         "catalogs": [
           "document",
-          "failure",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 3
+          "failure"
+        ]
       },
       {
-        "score": 36,
-        "branch": "alice-context",
+        "score": 40,
+        "branch": "alice-eipm-v1-causal-arbitration-binding",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-06/astra/QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md",
-        "blob_sha": "eae538185e1c0f2266362b7f41e59dab136a43f4",
-        "category": "working_context",
-        "title": "V102: evidence-origin failure and the decision it blocks",
+        "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
+        "blob_sha": "924bfc9021ba91cbf723fb6fd47534b05d28c555",
+        "category": "configuration_state",
+        "title": "n0_v02_downstream_causal_arbitration_v0_2.example.json",
         "declared": {},
         "matched_terms": [],
         "supersession_hints": [],
         "catalogs": [
           "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 8
+          "failure"
+        ]
+      },
+      {
+        "score": 40,
+        "branch": "alice-eipm-v1-causal-arbitration-binding",
+        "branch_scope": "branch_specific",
+        "path": "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+        "blob_sha": "9f618c22233c021780f5a0580c51293315cdc286",
+        "category": "configuration_state",
+        "title": "n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+        "declared": {},
+        "matched_terms": [],
+        "supersession_hints": [],
+        "catalogs": [
+          "document",
+          "failure"
+        ]
+      },
+      {
+        "score": 40,
+        "branch": "alice-eipm-v1-downstream-arbitration",
+        "branch_scope": "branch_specific",
+        "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+        "blob_sha": "e05ebf2c3e4307d953287f252a9447a627d9f28a",
+        "category": "configuration_state",
+        "title": "n0_v02_downstream_causal_arbitration_v0_1.example.json",
+        "declared": {},
+        "matched_terms": [],
+        "supersession_hints": [],
+        "catalogs": [
+          "document",
+          "failure"
+        ]
+      },
+      {
+        "score": 40,
+        "branch": "alice-eipm-v1-post-arbitration-gate",
+        "branch_scope": "branch_specific",
+        "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+        "blob_sha": "e05ebf2c3e4307d953287f252a9447a627d9f28a",
+        "category": "configuration_state",
+        "title": "n0_v02_downstream_causal_arbitration_v0_1.example.json",
+        "declared": {},
+        "matched_terms": [],
+        "supersession_hints": [],
+        "catalogs": [
+          "document",
+          "failure"
+        ]
       }
     ],
     "private_external_route_recommended": false,
     "private_external_route_reason": null,
     "authority": "routing-only"
   },
-  "graphify_result_text": "Graph: graphify-out/graph.json (11108 nodes) | Traversal: BFS depth=2 | Start: ['Full-stack N0 graph evaluator for frozen downstream causal arbitration. This…', 'PostArbitrationDecisionGateV01Tests', 'post_arbitration_decision_gate_v0_1.py', 'ArbitrationV02Tests', 'binding()', 'CalibrationError', '_canonical()', 'causal_chain()', 'codes()', 'connect()', 'decision()', 'downstream_causal_arbitration_v0_1.py', 'test_expected_current_generation_is_enforced()', 'ExecutionFreezeError', 'FinalizationError', 'eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py', 'FullStackGraphEvaluatorBindingTests', 'gate()', 'Only source wrapper eligible for future model-facing web grounding.', '_source()', 'downstream_full_stack_graph_evaluator_v0_1.py'] | Context: call, import (explicit) | 482 nodes found\n\n[!] TRUNCATED: showing 74 of 482 nodes (~2600-token budget). The answer may be among the 408 cut nodes — raise the token budget (CLI: --budget) or narrow the query (e.g. context_filter=['call'], or get_node for a specific symbol).\n\nNODE Full-stack N0 graph evaluator for frozen downstream causal arbitration. This… [src=scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py loc=L2 community=121]\nNODE PostArbitrationDecisionGateV01Tests [src=tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py loc=L12 community=191]\nNODE post_arbitration_decision_gate_v0_1.py [src=scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py loc=L1 community=179]\nNODE ArbitrationV02Tests [src=tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py loc=L12 community=169]\nNODE binding() [src=tests/phase5/test_memory_m2_foundation_contracts.py loc=L99 community=188]\nNODE CalibrationError [src=scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py loc=L44 community=178]\nNODE _canonical() [src=src/alice_vault/grounded_context.py loc=L24 community=139]\nNODE causal_chain() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py loc=L235 community=135]\nNODE codes() [src=tests/phase3/test_conversation_response_validation_adversarial.py loc=L18 community=40]\nNODE connect() [src=tests/phase4/test_information_live_http.py loc=L227 community=241]\nNODE decision() [src=tests/phase5/attention_workspace_helpers.py loc=L74 community=126]\nNODE downstream_causal_arbitration_v0_1.py [src=scripts/eipm/n0/downstream_causal_arbitration_v0_1.py loc=L1 community=116]\nNODE test_expected_current_generation_is_enforced() [src=tests/phase5/test_projection_prototype.py loc=L389 community=134]\nNODE ExecutionFreezeError [src=scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py loc=L15 community=195]\nNODE FinalizationError [src=scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py loc=L28 community=172]\nNODE eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L1 community=6]\nNODE FullStackGraphEvaluatorBindingTests [src=tests/eipm/n0/test_downstream_full_stack_graph_evaluator_v0_1.py loc=L16 community=201]\nNODE gate() [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L155 community=6]\nNODE Only source wrapper eligible for future model-facing web grounding. [src=src/alice_information/injection_firewall.py loc=L146 community=4]\nNODE _source() [src=tests/phase4/test_information_freshness.py loc=L43 community=55]\nNODE downstream_full_stack_graph_evaluator_v0_1.py [src=scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py loc=L1 community=121]\nNODE pathlib [src= loc= community=2]\nNODE json [src= loc= community=2]\nNODE typing [src= loc= community=6]\nNODE argparse [src= loc= community=2]\nNODE hashlib [src= loc= community=2]\nNODE sys [src= loc= community=2]\nNODE torch [src= loc= community=6]\nNODE collections [src= loc= community=53]\nNODE re [src= loc= community=4]\nNODE tempfile [src= loc= community=2]\nNODE validate_conversation_response() [src=src/alice_conversation/response_validation.py loc=L223 community=40]\nNODE os [src= loc= community=129]\nNODE subprocess [src= loc= community=14]\nNODE math [src= loc= community=6]\nNODE train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L1 community=6]\nNODE config.py [src=src/alice_personality/n0/config.py loc=L1 community=6]\nNODE train_n0_v02_cross_context_fusion_full_scale.py [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L1 community=6]\nNODE sha256_file() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L43 community=6]\nNODE curriculum_data.py [src=src/alice_personality/n0/curriculum_data.py loc=L1 community=6]\nNODE response() [src=tests/phase3/_response_validation_helpers.py loc=L12 community=40]\nNODE eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py loc=L1 community=6]\nNODE torch_nn_functional [src= loc= community=6]\nNODE torch_utils_data [src= loc= community=6]\nNODE diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py loc=L1 community=6]\nNODE build_parent_cache() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L188 community=6]\nNODE v02_model.py [src=src/alice_personality/n0/v02_model.py loc=L1 community=6]\nNODE diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py loc=L1 community=6]\nNODE train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py loc=L1 community=6]\nNODE to_device() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L393 community=6]\nNODE git_revision() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L51 community=6]\nNODE read_jsonl() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L67 community=6]\nNODE .create() [src=src/alice_information/contracts.py loc=L414 community=82]\nNODE scope() [src=tests/phase5/attention_workspace_helpers.py loc=L12 community=126]\nNODE structured_state.py [src=src/alice_personality/n0/structured_state.py loc=L1 community=6]\nNODE train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py loc=L1 community=6]\nNODE evidence_graph_dual_endpoint.py [src=src/alice_personality/n0/evidence_graph_dual_endpoint.py loc=L1 community=6]\nNODE evidence_view_adapter.py [src=src/alice_personality/n0/evidence_view_adapter.py loc=L1 community=6]\nNODE field() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py loc=L39 community=135]\nNODE make_row() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py loc=L78 community=135]\nNODE parts() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py loc=L72 community=135]\nNODE diagnose_n0_v02_parent_value_path_v0_1.py [src=scripts/eipm/n0/diagnose_n0_v02_parent_value_path_v0_1.py loc=L1 community=171]\nNODE edge() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py loc=L62 community=135]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py loc=L127 community=6]\nNODE precompute_fusion_cache() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L87 community=6]\nNODE open_store() [src=tests/phase5/test_projection_prototype.py loc=L236 community=134]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L174 community=6]\nNODE LatentPoolDataset [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L142 community=6]\nNODE load_ratified_fusion() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L66 community=6]\nNODE corrected_evaluate() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py loc=L74 community=121]\nNODE expanded_adapter_config() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L103 community=6]\nNODE expanded_graph_config() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L116 community=6]\nNODE load_structured_config() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L75 community=6]\nNODE adaptive_multi_view_latent_pool_v0_2.py [src=src/alice_personality/n0/adaptive_multi_view_latent_pool_v0_2.py loc=L1 community=6]\n... (truncated — 408 more nodes cut by ~2600-token budget. Narrow with context_filter=['call'] or use get_node for a specific symbol)\n",
+  "graphify_result_text": "Graph: graphify-out/graph.json (11108 nodes) | Traversal: BFS depth=2 | Start: ['PostArbitrationDecisionGateV01Tests', 'post_arbitration_decision_gate_v0_1.py', 'Finalize one frozen N0 downstream causal arbitration into the decision gate.…', 'ArbitrationV02Tests', 'artifact_manifest_digest()', 'test_candidates_never_enter_derived_indexes_before_promotion()', 'causal_chain()', 'codes()', 'decision()', 'downstream_causal_arbitration_v0_1.py', 'test_expected_current_generation_is_enforced()', 'eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py', 'gate()', 'artifact_hashes', 'git_revision()', '_source()'] | Context: call, import (explicit) | 516 nodes found\n\n[!] TRUNCATED: showing 54 of 516 nodes (~1800-token budget). The answer may be among the 462 cut nodes — raise the token budget (CLI: --budget) or narrow the query (e.g. context_filter=['call'], or get_node for a specific symbol).\n\nNODE PostArbitrationDecisionGateV01Tests [src=tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py loc=L12 community=191]\nNODE post_arbitration_decision_gate_v0_1.py [src=scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py loc=L1 community=179]\nNODE Finalize one frozen N0 downstream causal arbitration into the decision gate.… [src=scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py loc=L2 community=172]\nNODE ArbitrationV02Tests [src=tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py loc=L12 community=169]\nNODE artifact_manifest_digest() [src=src/cognitive_kernel/release.py loc=L118 community=0]\nNODE test_candidates_never_enter_derived_indexes_before_promotion() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L312 community=106]\nNODE causal_chain() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py loc=L235 community=135]\nNODE codes() [src=tests/phase3/test_conversation_response_validation_adversarial.py loc=L18 community=40]\nNODE decision() [src=tests/phase5/attention_workspace_helpers.py loc=L74 community=126]\nNODE downstream_causal_arbitration_v0_1.py [src=scripts/eipm/n0/downstream_causal_arbitration_v0_1.py loc=L1 community=116]\nNODE test_expected_current_generation_is_enforced() [src=tests/phase5/test_projection_prototype.py loc=L389 community=134]\nNODE eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L1 community=6]\nNODE gate() [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L155 community=6]\nNODE artifact_hashes [src=policies/friday_release_attestation_schema.json loc=L54 community=203]\nNODE git_revision() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L51 community=6]\nNODE _source() [src=tests/phase4/test_information_freshness.py loc=L43 community=55]\nNODE pathlib [src= loc= community=2]\nNODE json [src= loc= community=2]\nNODE canonical_sha256() [src=src/cognitive_kernel/canonical.py loc=L39 community=0]\nNODE cognitive_kernel/__init__.py [src=src/cognitive_kernel/__init__.py loc=L1 community=41]\nNODE typing [src= loc= community=6]\nNODE argparse [src= loc= community=2]\nNODE hashlib [src= loc= community=2]\nNODE sys [src= loc= community=2]\nNODE open_memory_store() [src=src/alice_memory/store.py loc=L107 community=37]\nNODE torch [src= loc= community=6]\nNODE collections [src= loc= community=53]\nNODE re [src= loc= community=4]\nNODE tempfile [src= loc= community=2]\nNODE load_semantic_policy() [src=src/alice_vault/semantic_retrieval.py loc=L116 community=12]\nNODE validate_conversation_response() [src=src/alice_conversation/response_validation.py loc=L223 community=40]\nNODE os [src= loc= community=129]\nNODE subprocess [src= loc= community=14]\nNODE math [src= loc= community=6]\nNODE train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L1 community=6]\nNODE config.py [src=src/alice_personality/n0/config.py loc=L1 community=6]\nNODE train_n0_v02_cross_context_fusion_full_scale.py [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L1 community=6]\nNODE sha256_file() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L43 community=6]\nNODE train_n0_v02_cross_context_fusion_repair_full_scale.py [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_repair_full_scale.py loc=L1 community=6]\nNODE curriculum_data.py [src=src/alice_personality/n0/curriculum_data.py loc=L1 community=6]\nNODE eval_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py [src=scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py loc=L1 community=6]\nNODE response() [src=tests/phase3/_response_validation_helpers.py loc=L12 community=40]\nNODE eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py loc=L1 community=6]\nNODE search_memories() [src=src/alice_memory/retrieval.py loc=L237 community=15]\nNODE torch_nn_functional [src= loc= community=6]\nNODE torch_utils_data [src= loc= community=6]\nNODE diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py loc=L1 community=6]\nNODE eval_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py [src=scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py loc=L1 community=6]\nNODE build_parent_cache() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L188 community=6]\nNODE v02_model.py [src=src/alice_personality/n0/v02_model.py loc=L1 community=6]\nNODE diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py loc=L1 community=6]\nNODE eval_n0_v02_cross_context_fusion_frozen_challenge.py [src=scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge.py loc=L1 community=6]\nNODE train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py loc=L1 community=6]\nNODE to_device() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L393 community=6]\n... (truncated — 462 more nodes cut by ~1800-token budget. Narrow with context_filter=['call'] or use get_node for a specific symbol)\n",
   "graphify_stderr": ""
 }
