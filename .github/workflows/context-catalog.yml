@@ -1,0 +1,75 @@
+name: A.L.I.C.E. Context Catalog
+
+on:
+  push:
+    branches:
+      - research/graphify-context-substrate
+    paths-ignore:
+      - "graphify-out/**"
+      - "research/graphify-context/catalog/**"
+      - "research/graphify-context/QUERY_RESULT.json"
+      - "research/graphify-context/SOURCE_SYNC_RESULT.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  CONTEXT_SOURCE_BRANCH: alice-eipm-v1-build
+
+jobs:
+  build-context-catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout research branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch all branch heads
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin "+refs/heads/*:refs/remotes/origin/*"
+          SOURCE_COMMIT="$(git rev-parse "origin/$CONTEXT_SOURCE_BRANCH")"
+          echo "CONTEXT_SOURCE_COMMIT=$SOURCE_COMMIT" >> "$GITHUB_ENV"
+
+      - name: Build deterministic context catalogs
+        run: |
+          python scripts/context/build_context_catalog.py
+          python -m json.tool research/graphify-context/catalog/CATALOG_STATUS.json >/dev/null
+          python -m json.tool research/graphify-context/catalog/BRANCH_CATALOG.json >/dev/null
+
+      - name: Publish catalogs on latest research head
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "alice-context-catalog-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          TMP_DIR="$(mktemp -d)"
+          cp -R research/graphify-context/catalog "$TMP_DIR/catalog"
+
+          git fetch origin \
+            "+refs/heads/$GITHUB_REF_NAME:refs/remotes/origin/$GITHUB_REF_NAME" \
+            "+refs/heads/$CONTEXT_SOURCE_BRANCH:refs/remotes/origin/$CONTEXT_SOURCE_BRANCH"
+
+          LIVE_SOURCE_COMMIT="$(git rev-parse "origin/$CONTEXT_SOURCE_BRANCH")"
+          if [ "$LIVE_SOURCE_COMMIT" != "$CONTEXT_SOURCE_COMMIT" ]; then
+            echo "SOURCE_MOVED_DURING_CATALOG_BUILD: built $CONTEXT_SOURCE_COMMIT but live source is $LIVE_SOURCE_COMMIT"
+            exit 3
+          fi
+
+          git reset --hard "origin/$GITHUB_REF_NAME"
+          rm -rf research/graphify-context/catalog
+          mkdir -p research/graphify-context
+          cp -R "$TMP_DIR/catalog" research/graphify-context/catalog
+
+          git add research/graphify-context/catalog
+          if git diff --cached --quiet; then
+            echo "No catalog changes."
+            exit 0
+          fi
+
+          git commit -m "research: refresh branch-aware context catalog"
+          git push origin "HEAD:$GITHUB_REF_NAME"
