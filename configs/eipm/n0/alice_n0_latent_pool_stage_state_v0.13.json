@@ -1,0 +1,103 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.13",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.12.json",
+  "status": "ROLE_RESIDUAL_V0_2_VALID_DEV_FAIL;EXTERNAL_ARCHITECTURE_RESEARCH_COMPLETED;RAW_QUERY_RELATION_ROLE_ROUTER_IMPLEMENTED_PENDING_PRE_GPU_CI_AND_ONE_P100_RUN",
+  "n0_complete": false,
+  "stable_build_base": {
+    "branch": "alice-eipm-v1-build",
+    "commit": "021c5021a98104b35f9c8e94b19e48d21f25f132"
+  },
+  "current_experiment_branch": "alice-eipm-v1-query-relation-role-router",
+  "evidence": {
+    "job_575798": {
+      "status": "FAIL_RELATION_SEMANTIC_ROLE_RESIDUAL_DEV_STOP_NO_HELDOUT_EXPOSURE",
+      "result_sha256": "d9abbd6d3da3030361201a8a32f84aa8bf458fb5bebcc07db241a217b3557d8e",
+      "preservation_candidate_keys": [
+        "step-00000040"
+      ],
+      "eligible_candidate_keys": [],
+      "heldout_opened": false,
+      "parent_graph_exactly_unchanged": true,
+      "scale_authorized": false
+    },
+    "endpoint_parent_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+    "endpoint_parent_downstream_classification": "IMPROVEMENT"
+  },
+  "external_research": {
+    "completed": true,
+    "note": "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
+    "inspirations": [
+      "Progressive Neural Networks",
+      "Side-Tuning",
+      "Ladder Side-Tuning",
+      "AdapterFusion",
+      "Neural Bellman-Ford Networks",
+      "Heterogeneous Graph Transformer",
+      "Hypernetwork Knowledge Graph Embeddings",
+      "PCGrad/orthogonal continual-learning methods"
+    ],
+    "architectural_conclusions": [
+      "freeze proven endpoint expert instead of rewriting it",
+      "side path must tap raw frozen semantic query rather than only endpoint-specialized projected query",
+      "query and relation type should jointly condition routing",
+      "compose experts explicitly instead of additive logit fighting",
+      "supervise semantic role abstraction directly",
+      "if this architecture fails dev, require architecture-level audit before any more gradient runs"
+    ]
+  },
+  "router_v0_3": {
+    "architecture": "frozen_parent_plus_raw_query_relation_conditioned_source_target_defer_router",
+    "source": "src/alice_personality/n0/evidence_graph_query_relation_role_router.py",
+    "builder": "scripts/eipm/n0/build_n0_v02_query_relation_role_router_curriculum_v0_3.py",
+    "trainer": "scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py",
+    "runner": "scripts/eipm/n0/run_n0_v02_query_relation_role_router_v0_3.sh",
+    "magnolia_job": "scripts/eipm/n0/magnolia_n0_v02_query_relation_role_router_v0_3.sbatch",
+    "parent_graph_parameters_trainable": false,
+    "raw_query_semantic_is_router_input": true,
+    "parent_query_projection_is_router_input": false,
+    "relation_type_conditioned": true,
+    "router_classes": [
+      "source",
+      "target",
+      "defer_to_parent"
+    ],
+    "composition": "probability_level_gated_expert_mixture",
+    "direct_role_supervision": true,
+    "preservation_replay_routes_to_defer": true,
+    "fresh_data": {
+      "pairs_per_family": 46,
+      "train": 30,
+      "dev": 8,
+      "test": 8,
+      "families": 12,
+      "train_dev_test_templates_lexically_disjoint": true,
+      "subject_pools_split_disjoint": true,
+      "attribute_value_pools_split_disjoint": true,
+      "v0_1_rows_reused": false,
+      "v0_2_rows_reused": false,
+      "frozen_rows_reused": false,
+      "localization_rows_reused": false,
+      "endpoint_heldout_reused": false
+    },
+    "heldout_policy": "open_once_only_after_parent_preservation_and_semantic_dev_readiness",
+    "failure_policy": "architecture_level_audit_required_before_any_further_gradient_run",
+    "hard_parameter_ceiling": null,
+    "scale_authorized": false
+  },
+  "anti_loop_policy": {
+    "rerun_575794": false,
+    "rerun_575795_without_state_change": false,
+    "rerun_575797_without_state_change": false,
+    "rerun_575798_without_state_change": false,
+    "threshold_change": false,
+    "automatic_hotfix_chain": false,
+    "train_on_frozen_rows": false,
+    "train_on_localization_rows": false,
+    "reuse_failed_semantic_rows": false,
+    "reuse_failed_residual_rows": false,
+    "open_heldout_before_dev_readiness": false
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
