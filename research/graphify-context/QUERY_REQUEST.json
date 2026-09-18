@@ -1,6 +1,6 @@
 {
-  "request_id": "current-n0-calibration-frontier-001",
-  "question": "What is the exact current N0 scientific state and next execution now, including the tested causal-arbitration frontier, active handoff, pre-GPU validation, and whether calibration must happen before candidate arbitration?",
+  "request_id": "current-n0-calibration-retry-575759-001",
+  "question": "What is the exact current N0 state after Magnolia calibration job 575759 failed before model execution, what was the root cause, which frontier commit fixes it, and what is the next safe execution?",
   "budget": 1800,
   "traversal": "bfs",
   "contexts": [
