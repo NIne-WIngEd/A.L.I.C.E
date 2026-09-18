@@ -1,0 +1,218 @@
+name: N0 Relation Semantic Role Residual Contract Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-relation-semantic-role-residual
+    paths:
+      - "src/alice_personality/n0/evidence_graph_semantic_role_residual.py"
+      - "scripts/eipm/n0/build_n0_v02_relation_semantic_role_residual_curriculum_v0_2.py"
+      - "scripts/eipm/n0/train_n0_v02_relation_semantic_role_residual_v0_2.py"
+      - "scripts/eipm/n0/run_n0_v02_relation_semantic_role_residual_v0_2.sh"
+      - "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_role_residual_v0_2.sbatch"
+      - "scripts/eipm/n0/magnolia_udocker_exec.sh"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.12.json"
+      - ".github/workflows/n0-relation-semantic-role-residual-contract-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile             src/alice_personality/n0/evidence_graph_semantic_role_residual.py             scripts/eipm/n0/build_n0_v02_relation_semantic_role_residual_curriculum_v0_2.py             scripts/eipm/n0/train_n0_v02_relation_semantic_role_residual_v0_2.py
+          bash -n scripts/eipm/n0/run_n0_v02_relation_semantic_role_residual_v0_2.sh
+          bash -n scripts/eipm/n0/magnolia_n0_v02_relation_semantic_role_residual_v0_2.sbatch
+          bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
+
+      - name: Residual architecture contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("src/alice_personality/n0/evidence_graph_semantic_role_residual.py")
+          text=p.read_text(encoding="utf-8")
+          required=[
+              "class SemanticRoleResidualEvidenceGraphEncoder",
+              "semantic_role_query_adapter",
+              "semantic_role_delta_mlp",
+              "nn.init.zeros_(final.weight)",
+              "nn.init.zeros_(final.bias)",
+              "parent_bias + semantic_bias",
+              "flat_bias.index_add_(0, source_flat, delta.reshape(-1))",
+              "flat_bias.index_add_(0, target_flat, -delta.reshape(-1))",
+              "EvidenceRelationType.CONFLICTS_WITH",
+              '"hard_parameter_ceiling"] = None',
+          ]
+          missing=[item for item in required if item not in text]
+          if missing:
+              raise SystemExit("residual architecture contract missing: "+repr(missing))
+          forbidden=[
+              "self.source_relation_pool_mlp =",
+              "self.directed_relation_pool_mlp =",
+          ]
+          present=[item for item in forbidden if item in text]
+          if present:
+              raise SystemExit("residual redefined parent endpoint heads: "+repr(present))
+          print("residual_architecture_contract=PASS")
+          PY
+
+      - name: Fresh v0.2 curriculum isolation
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("scripts/eipm/n0/build_n0_v02_relation_semantic_role_residual_curriculum_v0_2.py")
+          text=p.read_text(encoding="utf-8")
+          required=[
+              "PAIRS_PER_FAMILY = 36",
+              "TRAIN_PAIRS_PER_FAMILY = 24",
+              "DEV_PAIRS_PER_FAMILY = 6",
+              "TEST_PAIRS_PER_FAMILY = 6",
+              '"relation_semantic_v0_1_rows_reused": False',
+              '"missing_evidence_localization_rows_used_for_training": False',
+              '"frozen_latent_challenge_rows_used_for_training": False',
+              '"endpoint_repair_v0_2_heldout_rows_reused": False',
+              '"query_names_endpoint_role_explicitly": False',
+              '"equal_non_relation_metadata_within_and_across_pair": True',
+              '"hard_parameter_ceiling": None',
+          ]
+          missing=[item for item in required if item not in text]
+          if missing:
+              raise SystemExit("v0.2 curriculum contract missing: "+repr(missing))
+          forbidden=[
+              "N0V02-MSEFRESH-",
+              "N0V02-RELGROUND-",
+              "Grounding Acorn",
+              "After resolving the correction, what {attribute} should now be used for {subject}?" + "UNUSED_SENTINEL",
+          ]
+          # The last sentinel deliberately cannot match; the first three protect row/id reuse.
+          present=[item for item in forbidden[:3] if item in text]
+          if present:
+              raise SystemExit("old diagnostic/semantic rows leaked into v0.2 builder: "+repr(present))
+          print("fresh_v0_2_curriculum_contract=PASS")
+          PY
+
+      - name: Trainer isolation and heldout discipline
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("scripts/eipm/n0/train_n0_v02_relation_semantic_role_residual_v0_2.py")
+          text=p.read_text(encoding="utf-8")
+          required=[
+              "configure_residual_only_trainable",
+              "assert_parent_parameters_unchanged",
+              "parent_endpoint_graph_parameters_exactly_unchanged",
+              "zero-init residual failed exact endpoint metric parity",
+              "zero-init residual failed exact ordinary replay metric parity",
+              "preservation_candidates",
+              "eligible =",
+              "semantic_heldout_test_evaluated",
+              "semantic_heldout_rows_opened_after_training",
+              "FAIL_RELATION_SEMANTIC_ROLE_RESIDUAL_DEV_STOP_NO_HELDOUT_EXPOSURE",
+              "PASS_RELATION_SEMANTIC_ROLE_RESIDUAL_HELDOUT_READY_FOR_ONE_FRESH_DOWNSTREAM_CAUSAL_CHECK",
+              '"relation_semantic_v0_1_rows_reused": False',
+              '"frozen_latent_challenge_rows_used_for_training": False',
+              '"missing_evidence_localization_rows_used_for_training": False',
+              '"endpoint_repair_v0_2_heldout_test_reused": False',
+              '"scale_authorized": False',
+          ]
+          missing=[item for item in required if item not in text]
+          if missing:
+              raise SystemExit("residual trainer contract missing: "+repr(missing))
+          forbidden=[
+              "set_endpoint_read_trainable(graph)",
+              "source_relation_pool_mlp.requires_grad",
+              "directed_relation_pool_mlp.requires_grad",
+              "scale_authorized\": True",
+          ]
+          present=[item for item in forbidden if item in text]
+          if present:
+              raise SystemExit("parent relation-read mutation or scale drift: "+repr(present))
+          print("trainer_isolation_and_heldout_contract=PASS")
+          PY
+
+      - name: Runner evidence binding and safety
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          runner=Path("scripts/eipm/n0/run_n0_v02_relation_semantic_role_residual_v0_2.sh").read_text(encoding="utf-8")
+          required=[
+              "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+              "1733bf1a5fdc4f979beab6d5198bfb6a77a0e17b4fc96adc134dafd03dd5ebbe",
+              "cfd2a6aee3ba2e441363700cf0d57917cf7cf16c3c81b2a789b5c1ecf3614980",
+              "FAIL_RELATION_SEMANTIC_GROUNDING_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX",
+              "new_zero_initialized_relation_semantic_role_residual_only",
+              "parent_endpoint_graph_trainable=false",
+              "relation_semantic_v0_1_rows_reused=false",
+              "v0_2_heldout_requires_dev_readiness=true",
+              "scale_authorized=false",
+              "automatic_rerun=false",
+          ]
+          missing=[item for item in required if item not in runner]
+          if missing:
+              raise SystemExit("runner evidence/safety contract missing: "+repr(missing))
+          forbidden=[
+              "git pull",
+              "git checkout",
+              "git switch",
+              "sbatch",
+              "adaptive-multi-view-latent-pool-frozen-challenge-v0.2/challenge.jsonl",
+              "fresh_relation_flip_rows.jsonl",
+          ]
+          present=[item for item in forbidden if item in runner]
+          if present:
+              raise SystemExit("runtime runner contains forbidden mutation/reuse: "+repr(present))
+          wrapper=Path("scripts/eipm/n0/magnolia_udocker_exec.sh").read_text(encoding="utf-8")
+          if "ALICE_N0_RELATION_SEMANTIC_ROLE_RESIDUAL_DIR" not in wrapper:
+              raise SystemExit("udocker wrapper missing role-residual output forwarding")
+          print("runner_evidence_and_safety_contract=PASS")
+          PY
+
+      - name: State anti-loop and anti-ceiling contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          state=json.loads(Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.12.json").read_text(encoding="utf-8"))
+          if state.get("n0_complete") is not False:
+              raise SystemExit("N0 completion drift")
+          if state.get("scale_decision",{}).get("scale_now") is not False:
+              raise SystemExit("premature scale authorization")
+          if state.get("scale_decision",{}).get("hard_parameter_ceiling") is not None:
+              raise SystemExit("hard parameter ceiling reintroduced")
+          repair=state.get("repair_v0_2",{})
+          if repair.get("parent_graph_parameters_trainable") is not False:
+              raise SystemExit("parent endpoint graph became trainable")
+          if repair.get("parent_endpoint_graph_parameters_must_remain_exact") is not True:
+              raise SystemExit("parent exact-preservation contract missing")
+          policy=state.get("anti_loop_policy",{})
+          for key in (
+              "rerun_job_575797_without_state_change",
+              "train_on_frozen_challenge_rows",
+              "train_on_localization_rows",
+              "reuse_relation_semantic_v0_1_rows",
+              "reuse_endpoint_v0_2_heldout_test",
+              "open_new_heldout_before_dev_readiness",
+          ):
+              if policy.get(key) is not False:
+                  raise SystemExit(f"anti-loop drift: {key}")
+          print("state_anti_loop_anti_ceiling_contract=PASS")
+          PY
