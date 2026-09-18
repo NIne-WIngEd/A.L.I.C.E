@@ -6,6 +6,8 @@
     {
       "branch": "alice-context",
       "head": "0a2afa48cddb46e6dd17112d90d06ffcfa8727cc",
+      "head_committed_at": "2026-09-17T01:14:12-05:00",
+      "head_message": "context: catch up N0 endpoint repair and next arbitration",
       "status": "diverged",
       "ahead": 183,
       "behind": 459,
@@ -16,6 +18,8 @@
     {
       "branch": "alice-eipm-v1-build",
       "head": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "head_committed_at": "2026-09-16T22:16:39-05:00",
+      "head_message": "repair(n0): stage endpoint-role read repair v0.2",
       "status": "identical",
       "ahead": 0,
       "behind": 0,
@@ -26,6 +30,8 @@
     {
       "branch": "alice-eipm-v1-causal-arbitration-binding",
       "head": "8dab1e5debf48e09ebdbab49815e0938fda25a30",
+      "head_committed_at": "2026-09-17T19:40:51-05:00",
+      "head_message": "docs: make N0 architecture capability-first without hard ceilings",
       "status": "ahead",
       "ahead": 17,
       "behind": 0,
@@ -36,6 +42,8 @@
     {
       "branch": "alice-eipm-v1-downstream-arbitration",
       "head": "7fd22358cd6b6384ac914d100c87f93e2236da18",
+      "head_committed_at": "2026-09-17T13:41:06-05:00",
+      "head_message": "test: cover arbitration v0.2 fail-closed provenance",
       "status": "ahead",
       "ahead": 6,
       "behind": 0,
@@ -46,6 +54,8 @@
     {
       "branch": "alice-eipm-v1-post-arbitration-gate",
       "head": "00a95d2690641605964f91a79aa1358e05f3edbf",
+      "head_committed_at": "2026-09-17T14:45:12-05:00",
+      "head_message": "feat: add fail-closed post-arbitration decision gate",
       "status": "ahead",
       "ahead": 7,
       "behind": 0,
@@ -56,6 +66,8 @@
     {
       "branch": "alice-mc10b-live",
       "head": "86ae99ca11d5c9a5c72f4d8dd22c7ec90eb882ea",
+      "head_committed_at": "2026-09-01T00:55:21-05:00",
+      "head_message": "mc10b-full close mc10b-full-20260901T025546Z-d1c67106",
       "status": "diverged",
       "ahead": 3097,
       "behind": 459,
@@ -66,6 +78,8 @@
     {
       "branch": "alice-mc10c-live",
       "head": "53d2fb4060c681fea2097d5d15e9ce4f354e61f5",
+      "head_committed_at": "2026-09-01T17:20:17-05:00",
+      "head_message": "mc10c MC10C_RAW_ASYN_GENERATION_COMPLETE",
       "status": "diverged",
       "ahead": 471,
       "behind": 459,
@@ -76,6 +90,8 @@
     {
       "branch": "alice-telemetry",
       "head": "a02ff234774c7791dd495ec7f884e52ce3b7fcf7",
+      "head_committed_at": "2026-09-17T01:14:24-05:00",
+      "head_message": "telemetry: catch up endpoint repair runtime and next arbitration",
       "status": "unrelated",
       "ahead": 22,
       "behind": 675,
@@ -86,6 +102,8 @@
     {
       "branch": "docs/memory-identity-host-learning-ratification-v2",
       "head": "c7e4e29079890674b420b16d5207157a798feb81",
+      "head_committed_at": "2026-08-09T00:18:22-05:00",
+      "head_message": "docs(memory): ratify identity host learning and lifecycle",
       "status": "behind",
       "ahead": 0,
       "behind": 462,
@@ -96,6 +114,8 @@
     {
       "branch": "docs/public-alice-readme",
       "head": "d5a46ed524704c212128b050a1eefe7e925fb957",
+      "head_committed_at": "2026-08-03T21:50:10-05:00",
+      "head_message": "docs: restore phase-boundary README marker",
       "status": "behind",
       "ahead": 0,
       "behind": 501,
@@ -106,6 +126,8 @@
     {
       "branch": "docs/stage-g-candidate-qualification-matrix-v2",
       "head": "6dd023c7baf380bb3d63fb75053b4aa99da4dc98",
+      "head_committed_at": "2026-08-09T01:21:12-05:00",
+      "head_message": "docs(memory): require full Stage G candidate qualification",
       "status": "behind",
       "ahead": 0,
       "behind": 460,
@@ -116,6 +138,8 @@
     {
       "branch": "fable-builder-model",
       "head": "fdce28586e42d01b19c35d897311e4dcc3e3d78b",
+      "head_committed_at": "2026-09-17T01:13:39-05:00",
+      "head_message": "fbm: backfill N0 selector and endpoint repair lineage",
       "status": "diverged",
       "ahead": 74,
       "behind": 446,
@@ -126,6 +150,8 @@
     {
       "branch": "feat/memory-m2-1-claim-authority-prototype",
       "head": "4e7bf81508d37ece5b54eb9ab2ff8c2facf46f3d",
+      "head_committed_at": "2026-08-06T15:49:49-05:00",
+      "head_message": "feat(memory): add M2.1 claim contracts and authority prototype",
       "status": "behind",
       "ahead": 0,
       "behind": 486,
@@ -136,6 +162,8 @@
     {
       "branch": "feat/memory-m2-2-shadow-adjudication",
       "head": "eeae325e7365d1cff1a1947fd9f390b33056b533",
+      "head_committed_at": "2026-08-06T16:40:06-05:00",
+      "head_message": "feat(memory): add M2.2 shadow adjudication",
       "status": "behind",
       "ahead": 0,
       "behind": 484,
@@ -146,6 +174,8 @@
     {
       "branch": "feat/memory-m2-3-projection-prototype",
       "head": "acccd8dedf7f2089db61d5c2da7e8ba83969c054",
+      "head_committed_at": "2026-08-06T17:08:17-05:00",
+      "head_message": "feat(memory): add M2.3 projection fabric",
       "status": "behind",
       "ahead": 0,
       "behind": 482,
@@ -156,6 +186,8 @@
     {
       "branch": "feat/memory-m2-4-bounded-serving",
       "head": "d6c2412d5bf2496d79723acf3a27c41a6bb20fd3",
+      "head_committed_at": "2026-08-06T17:25:35-05:00",
+      "head_message": "feat(memory): add M2.4 bounded serving",
       "status": "behind",
       "ahead": 0,
       "behind": 480,
@@ -166,6 +198,8 @@
     {
       "branch": "feat/memory-m2-5-durable-curation-workflows",
       "head": "38528dfb22ff58abd5a73c86c54eed4250e13c43",
+      "head_committed_at": "2026-08-06T17:40:38-05:00",
+      "head_message": "feat(memory): add M2.5 durable curation workflows",
       "status": "behind",
       "ahead": 0,
       "behind": 478,
@@ -176,6 +210,8 @@
     {
       "branch": "feat/memory-m2-6-deletion-propagation",
       "head": "fbb92dfb4267fdc38140dbf26fd941ed68d4bcfa",
+      "head_committed_at": "2026-08-06T17:58:46-05:00",
+      "head_message": "feat(memory): add M2.6 deletion propagation",
       "status": "behind",
       "ahead": 0,
       "behind": 476,
@@ -186,6 +222,8 @@
     {
       "branch": "feat/memory-m2-closeout-shadow-admission",
       "head": "b69d3b688680a0fb36a1a21030f077a6bfd1c8b9",
+      "head_committed_at": "2026-08-06T21:09:59-05:00",
+      "head_message": "feat(memory): close M2 and admit shadow migration preparation",
       "status": "behind",
       "ahead": 0,
       "behind": 474,
@@ -196,6 +234,8 @@
     {
       "branch": "feat/memory-m2-kernel-contracts",
       "head": "4b23f4417fca1c22cf431b652094ff212538be5e",
+      "head_committed_at": "2026-08-06T00:02:06-05:00",
+      "head_message": "feat(kernel): add memory M2 foundation contracts",
       "status": "behind",
       "ahead": 0,
       "behind": 490,
@@ -206,6 +246,8 @@
     {
       "branch": "feat/memory-shadow-migration-stage-a-b",
       "head": "771357f2c89b5653b64f2f37faccadebc7eefcef",
+      "head_committed_at": "2026-08-06T23:02:02-05:00",
+      "head_message": "feat(memory): start Phase 2 shadow migration Stage A+B",
       "status": "behind",
       "ahead": 0,
       "behind": 472,
@@ -216,6 +258,8 @@
     {
       "branch": "feat/memory-shadow-migration-stage-c-e",
       "head": "4eadb952c2d8f32d95a80e738ddaf82078b1b6d1",
+      "head_committed_at": "2026-08-07T00:59:34-05:00",
+      "head_message": "feat(memory): add shadow migration Stage C+E evaluation",
       "status": "behind",
       "ahead": 0,
       "behind": 470,
@@ -226,6 +270,8 @@
     {
       "branch": "feat/memory-shadow-migration-stage-d",
       "head": "35d404f4d8140efac0ef2c3ff68dca8ba74c5193",
+      "head_committed_at": "2026-08-07T09:07:31-05:00",
+      "head_message": "feat(memory): add deterministic shadow migration Stage D backfill",
       "status": "behind",
       "ahead": 0,
       "behind": 468,
@@ -236,6 +282,8 @@
     {
       "branch": "feat/memory-shadow-migration-stage-f-g",
       "head": "69b6ae84155fe7a68d8151000e9f2f465b22a4be",
+      "head_committed_at": "2026-08-07T09:56:47-05:00",
+      "head_message": "feat(memory): add nonproduction shadow migration Stage F+G",
       "status": "behind",
       "ahead": 0,
       "behind": 466,
@@ -246,6 +294,8 @@
     {
       "branch": "feat/memory-shadow-migration-stage-f-g-persistent",
       "head": "b7a9199735bdddcc0f48bbef8090d4e8aafa7f9c",
+      "head_committed_at": "2026-08-07T20:30:14-05:00",
+      "head_message": "feat(memory): add persistent Stage F+G integration foundation",
       "status": "behind",
       "ahead": 0,
       "behind": 464,
@@ -256,6 +306,8 @@
     {
       "branch": "feat/phase5-storage-capacity-safety",
       "head": "2c24a3117276853dae382bfef66a4d00608d66d4",
+      "head_committed_at": "2026-08-03T18:44:42-05:00",
+      "head_message": "Merge pull request #68 from NIne-WIngEd/feat/phase5-governed-tier-transition-executor",
       "status": "behind",
       "ahead": 0,
       "behind": 503,
@@ -266,6 +318,8 @@
     {
       "branch": "fix/governance-capability-audit-baseline",
       "head": "8e1b8a3c0f355b816304e6d64770a705fdf052a9",
+      "head_committed_at": "2026-08-05T23:26:51-05:00",
+      "head_message": "fix(governance): close capability audit baseline",
       "status": "behind",
       "ahead": 0,
       "behind": 492,
@@ -276,6 +330,8 @@
     {
       "branch": "fix/governance-memory-m2-capability-ceiling",
       "head": "6047e283839787e4026c2f9d47fd5aed456272a8",
+      "head_committed_at": "2026-08-06T03:14:21-05:00",
+      "head_message": "fix(governance): prevent metadata-only memory ceiling",
       "status": "behind",
       "ahead": 0,
       "behind": 488,
@@ -286,6 +342,8 @@
     {
       "branch": "main",
       "head": "0abaed85873c3f8de04765847eb7700b0e20433f",
+      "head_committed_at": "2026-08-09T01:22:08-05:00",
+      "head_message": "Merge pull request #89 from NIne-WIngEd/docs/stage-g-candidate-qualification-matrix-v2",
       "status": "behind",
       "ahead": 0,
       "behind": 459,
@@ -296,6 +354,8 @@
     {
       "branch": "planning/memory-v4-m1-ratification",
       "head": "534c6b87caed58816983b1c03abb9f6019b0ac17",
+      "head_committed_at": "2026-08-05T22:56:55-05:00",
+      "head_message": "ci(governance): scope capability audit to changed surface",
       "status": "behind",
       "ahead": 0,
       "behind": 494,
