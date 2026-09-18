@@ -131,9 +131,9 @@ jobs:
           import json
           from pathlib import Path
           r=Path("scripts/eipm/n0/run_n0_v02_query_relation_role_router_v0_3.sh").read_text()
-          for x in ["d9abbd6d3da3030361201a8a32f84aa8bf458fb5bebcc07db241a217b3557d8e","external_architecture_research_completed","failure_requires_architecture_level_audit_before_further_gradient_run","parent_query_projection_is_router_input\":False","raw_query_semantic_is_router_input\":True"]:
+          for x in ["d9abbd6d3da3030361201a8a32f84aa8bf458fb5bebcc07db241a217b3557d8e","external_architecture_research_completed","failure_requires_architecture_level_audit_before_further_gradient_run","parent_query_projection_is_router_input\":False","raw_query_semantic_is_router_input\":True","parent_endpoint_graph_parameters_exactly_unchanged"]:
             if x not in r: raise SystemExit("runner evidence missing "+x)
-          for x in ["git pull","git checkout","git switch","fresh_relation_flip_rows.jsonl"]:
+          for x in ["git pull","git checkout","git switch","fresh_relation_flip_rows.jsonl","v02j.get(\"parent_graph_parameters_exactly_unchanged\")"]:
             if x in r: raise SystemExit("forbidden runtime behavior "+x)
           s=json.loads(Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.13.json").read_text())
           if s["n0_complete"] is not False or s["router_v0_3"]["failure_policy"]!="architecture_level_audit_required_before_any_further_gradient_run":
