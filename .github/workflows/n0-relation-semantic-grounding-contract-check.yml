@@ -1,0 +1,174 @@
+name: N0 Relation Semantic Grounding Contract Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-relation-semantic-grounding
+    paths:
+      - "scripts/eipm/n0/build_n0_v02_relation_semantic_grounding_curriculum_v0_1.py"
+      - "scripts/eipm/n0/train_n0_v02_relation_semantic_grounding_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_relation_semantic_grounding_v0_1.sh"
+      - "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_grounding_v0_1.sbatch"
+      - "scripts/eipm/n0/magnolia_udocker_exec.sh"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json"
+      - ".github/workflows/n0-relation-semantic-grounding-contract-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/eipm/n0/build_n0_v02_relation_semantic_grounding_curriculum_v0_1.py \
+            scripts/eipm/n0/train_n0_v02_relation_semantic_grounding_v0_1.py
+          bash -n scripts/eipm/n0/run_n0_v02_relation_semantic_grounding_v0_1.sh
+          bash -n scripts/eipm/n0/magnolia_n0_v02_relation_semantic_grounding_v0_1.sbatch
+          bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
+
+      - name: Fresh semantic curriculum contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("scripts/eipm/n0/build_n0_v02_relation_semantic_grounding_curriculum_v0_1.py")
+          text=p.read_text(encoding="utf-8")
+          required=[
+              "corrects_current",
+              "corrects_previous",
+              "supersedes_current",
+              "supersedes_previous",
+              "temporal_current",
+              "temporal_previous",
+              "causes_cause",
+              "causes_effect",
+              "supports_supported",
+              "supports_supporter",
+              "derived_item",
+              "derived_basis",
+              '"query_names_endpoint_role_explicitly": False',
+              '"frozen_latent_challenge_rows_used_for_training": False',
+              '"missing_evidence_localization_rows_used_for_training": False',
+              '"endpoint_repair_v0_2_heldout_rows_reused": False',
+              '"hard_parameter_ceiling": None',
+          ]
+          missing=[item for item in required if item not in text]
+          if missing:
+              raise SystemExit("semantic curriculum contract missing: "+repr(missing))
+          forbidden=[
+              "N0V02-MSEFRESH-",
+              "Beacon Aster",
+              "Matrix Alder",
+              "From the correction link alone, which record is the correcting source",
+              "object being corrected",
+          ]
+          present=[item for item in forbidden if item in text]
+          if present:
+              raise SystemExit("observed diagnostic/heldout wording leaked into curriculum: "+repr(present))
+          print("fresh_semantic_curriculum_contract=PASS")
+          PY
+
+      - name: Trainer causal and preservation contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("scripts/eipm/n0/train_n0_v02_relation_semantic_grounding_v0_1.py")
+          text=p.read_text(encoding="utf-8")
+          required=[
+              "set_endpoint_read_trainable",
+              "ordinary_replay_weight",
+              "endpoint_replay_weight",
+              "endpoint_role_preservation_dev_metrics",
+              "endpoint_repair_v0_2_heldout_test_reused",
+              '"frozen_latent_challenge_rows_used_for_training": False',
+              '"missing_evidence_localization_rows_used_for_training": False',
+              '"scale_authorized": False',
+              '"automatic_rerun_or_hotfix_authorized": False',
+              "PASS_RELATION_SEMANTIC_GROUNDING_HELDOUT_READY_FOR_ONE_DOWNSTREAM_CAUSAL_CHECK",
+          ]
+          missing=[item for item in required if item not in text]
+          if missing:
+              raise SystemExit("semantic trainer contract missing: "+repr(missing))
+          forbidden=[
+              "frozen-challenge-v0.2/challenge.jsonl",
+              "missing-evidence-path-localization-v0.1/fresh_relation_flip_rows.jsonl",
+              "message_passing_mutated\": True",
+              "scale_authorized\": True",
+          ]
+          present=[item for item in forbidden if item in text]
+          if present:
+              raise SystemExit("forbidden semantic trainer behavior: "+repr(present))
+          print("semantic_trainer_contract=PASS")
+          PY
+
+      - name: Runner provenance and safety contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          runner=Path("scripts/eipm/n0/run_n0_v02_relation_semantic_grounding_v0_1.sh").read_text(encoding="utf-8")
+          required=[
+              "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+              "1733bf1a5fdc4f979beab6d5198bfb6a77a0e17b4fc96adc134dafd03dd5ebbe",
+              "430e1b5c51f6157c0d40d95728f278b5400df13fb6d30e822bb197ab9fe110a5",
+              "EVIDENCE_GRAPH_RELATION_SELECTION_REMAINS_DEFECTIVE",
+              "endpoint_repair_semantic_cache.pt",
+              "frozen_challenge_rows_used_for_training=false",
+              "localization_rows_used_for_training=false",
+              "endpoint_heldout_test_reused=false",
+              "scale_authorized=false",
+              "automatic_rerun=false",
+          ]
+          missing=[item for item in required if item not in runner]
+          if missing:
+              raise SystemExit("semantic runner contract missing: "+repr(missing))
+          forbidden=[
+              "git pull",
+              "git checkout",
+              "git switch",
+              "575794",
+              "adaptive-multi-view-latent-pool-frozen-challenge-v0.2/challenge.jsonl",
+          ]
+          present=[item for item in forbidden if item in runner]
+          if present:
+              raise SystemExit("forbidden semantic runner behavior: "+repr(present))
+          wrapper=Path("scripts/eipm/n0/magnolia_udocker_exec.sh").read_text(encoding="utf-8")
+          if "ALICE_N0_RELATION_SEMANTIC_DIR" not in wrapper:
+              raise SystemExit("udocker wrapper missing semantic repair output forwarding")
+          print("semantic_runner_contract=PASS")
+          PY
+
+      - name: State anti-ceiling contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json")
+          state=json.loads(p.read_text(encoding="utf-8"))
+          if state.get("n0_complete") is not False:
+              raise SystemExit("N0 completion drift")
+          if state.get("scale_decision",{}).get("scale_now") is not False:
+              raise SystemExit("premature scale authorization")
+          if state.get("scale_decision",{}).get("hard_parameter_ceiling") is not None:
+              raise SystemExit("hard parameter ceiling reintroduced")
+          if state.get("repair_v0_1",{}).get("trainable_scope_is_permanent_architecture_limit") is not False:
+              raise SystemExit("causal trainable scope became architecture ceiling")
+          if state.get("anti_loop_policy",{}).get("train_on_localization_rows") is not False:
+              raise SystemExit("localization data leakage policy drift")
+          print("state_anti_ceiling_contract=PASS")
+          PY
