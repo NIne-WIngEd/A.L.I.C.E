@@ -7,6 +7,11 @@ OUTDIR="${ALICE_N0_ARB_CAL_DIR:-$WORKDIR/downstream-causal-arbitration-metric-ca
 
 cd "$ROOT"
 
+# The full-stack evaluator is launched as a subprocess from the calibrator.
+# Bind both import roots inside the container so alice_personality and sibling
+# N0 evaluation/training helpers resolve exactly as they do in validated N0 jobs.
+export PYTHONPATH="$ROOT/src:$ROOT/scripts/eipm/n0${PYTHONPATH:+:$PYTHONPATH}"
+
 CANON="$WORKDIR/relation-repair-v0.1/step-00000080/evidence_graph_dual_endpoint.safetensors"
 LATENT="$WORKDIR/adaptive-multi-view-latent-pool-training-v0.2.1/step-00000360/adaptive_multi_view_latent_pool_v0_2.safetensors"
 EVAL="$WORKDIR/adaptive-multi-view-latent-pool-frozen-challenge-v0.2/challenge.jsonl"
