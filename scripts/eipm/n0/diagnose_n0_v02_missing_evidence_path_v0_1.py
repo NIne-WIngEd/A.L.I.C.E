@@ -225,12 +225,57 @@ def verify_result_trigger(path: Path) -> Mapping[str, Any]:
         raise SystemExit("failed challenge unexpectedly authorized scaling")
     if receipt.get("n0_complete") is not False:
         raise SystemExit("failed challenge unexpectedly marked N0 complete")
+
     graph = require_mapping(
         receipt.get("selected_repaired_graph"), "selected_repaired_graph"
     )
     if graph.get("sha256") != EXPECTED_REPAIRED_GRAPH_SHA256:
         raise SystemExit("failed challenge did not use the selected repaired graph")
-    return receipt
+
+    result_record = require_mapping(receipt.get("result"), "execution receipt result")
+    result_path = Path(str(result_record.get("path", ""))).expanduser().resolve()
+    if not result_path.is_file():
+        raise SystemExit(f"final challenge result missing: {result_path}")
+    if sha256_file(result_path) != str(result_record.get("sha256", "")).lower():
+        raise SystemExit("final challenge result hash drift")
+    result = require_mapping(load_json(result_path), "final challenge result")
+    if result.get("status") != (
+        "FAIL_PRESELECTED_CANDIDATE_NOT_ELIGIBLE_FOR_LATENT_POOL_RATIFICATION"
+    ):
+        raise SystemExit("trigger result status drift")
+    checks = require_mapping(result.get("gate_checks"), "trigger result gate_checks")
+    failed = sorted(key for key, value in checks.items() if value is not True)
+    if failed != ["counterfactual_family_min_drop"]:
+        raise SystemExit(
+            "fresh localization is only valid for the single expected failed gate; "
+            f"observed={failed}"
+        )
+    cf = require_mapping(
+        result.get("counterfactual_metrics"), "trigger counterfactual_metrics"
+    )
+    families = require_mapping(
+        cf.get("counterfactual_family_mean_target_drop"),
+        "trigger counterfactual family drops",
+    )
+    if "missing_structured_evidence" not in families:
+        raise SystemExit("trigger result missing missing_structured_evidence family")
+    minimum_family = min(families, key=lambda key: float(families[key]))
+    if minimum_family != "missing_structured_evidence":
+        raise SystemExit(
+            "fresh localization trigger family drift: "
+            f"minimum_family={minimum_family}"
+        )
+    if float(families[minimum_family]) >= 0.005:
+        raise SystemExit("trigger family no longer fails the frozen minimum")
+
+    return {
+        **dict(receipt),
+        "trigger_result_path": str(result_path),
+        "trigger_result_sha256": sha256_file(result_path),
+        "trigger_failed_gate": failed[0],
+        "trigger_failure_family": minimum_family,
+        "trigger_failure_value": float(families[minimum_family]),
+    }
 
 
 def main() -> None:
