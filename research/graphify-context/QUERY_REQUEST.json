@@ -1,7 +1,7 @@
 {
-  "request_id": "current-n0-calibration-retry-575759-001",
-  "question": "What is the exact current N0 state after Magnolia calibration job 575759 failed before model execution, what was the root cause, which frontier commit fixes it, and what is the next safe execution?",
-  "budget": 1800,
+  "request_id": "graphify-readiness-current-frontier-001",
+  "question": "Where in code is the current N0 arbitration PYTHONPATH import-root contract defined for calibration and frozen arbitration, and which udocker wrapper forwards the related runtime controls?",
+  "budget": 1600,
   "traversal": "bfs",
   "contexts": [
     "call",
