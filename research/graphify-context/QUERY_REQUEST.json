@@ -1,0 +1,5 @@
+{
+  "request_id": "bootstrap-n0-code-topology-001",
+  "question": "Which code files, classes, functions, scripts, and tests are most structurally connected to the EIPM personality-model N0 build, and what source paths should be read first?",
+  "top": 20
+}
