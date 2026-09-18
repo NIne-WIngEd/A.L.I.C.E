@@ -179,3 +179,54 @@ No result from this diagnostic itself authorizes training, promotion, scaling, o
 - no scale increase until the path trace identifies an actual capacity/expressivity bottleneck;
 - current model sizes remain operating points, not ceilings;
 - private identity gradient remains closed.
+
+
+## Fresh localization implementation ready
+
+Current localization frontier:
+
+`alice-eipm-v1-missing-evidence-localization @ 6183ed9be59a75fc7c5118312099a0875b8bab6d`
+
+Latest implementation commit:
+
+`fix(n0): separate graph selection from value geometry in localization`
+
+Pre-GPU workflow:
+
+`N0 Missing Evidence Localization Contract Check`
+
+Run:
+
+`35378064702`
+
+Result:
+
+`SUCCESS`
+
+Checks passed:
+
+- Python syntax;
+- Bash syntax;
+- fresh diagnostic data contract;
+- exact final-failure trigger binding;
+- graph/fusion/latent causal instrumentation contract;
+- runner safety contract;
+- no frozen challenge row path in the runner;
+- no training flags;
+- no Git mutation;
+- udocker diagnostic output forwarding.
+
+The refined trace separates:
+
+- direct graph field selection;
+- raw target-field value geometry;
+- transformed graph target-field value geometry;
+- graph pooled value geometry;
+- fusion evidence contextualization;
+- fusion semantic transfer;
+- latent best-slot value readout;
+- pre-fusion evidence ablation.
+
+This prevents a weak semantic probe at one stage from being misreported as a downstream module defect.
+
+Run exactly one fresh localization job from this frontier. Do not rerun job 575794.
