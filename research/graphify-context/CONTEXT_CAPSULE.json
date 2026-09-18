@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v1",
-  "request_id": "coverage-g4-operational-failure-001",
-  "question": "What Magnolia execution routes are known dead or current, and what PowerShell or Kaggle failure lesson must not be repeated?",
-  "generated_at_utc": "2026-09-18T01:42:07.732979+00:00",
+  "request_id": "coverage-g4-operational-failure-002",
+  "question": "What is the current working Magnolia execution route, which routes are dead, and what PowerShell or Kaggle failure lesson must not be repeated before I run the next N0 job?",
+  "generated_at_utc": "2026-09-18T01:47:19.341570+00:00",
   "source_freshness": {
     "source_branch": "alice-eipm-v1-build",
     "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -10,64 +10,85 @@
     "catalog_source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132"
   },
   "active_mission": {
-    "schema": "alice-context-active-n0-state-v1",
+    "schema": "alice-context-active-mission-state-v1",
     "source_branch": "alice-eipm-v1-build",
     "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-    "source_path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json",
-    "source_blob_sha": "ef3aec6bfe73ad93ae158f03c9b8554472a9cf99",
-    "status": "SELECTOR_PRIOR_HEAD_REPAIR_FAILED_ENDPOINT_ROLE_DEFECT_LOCALIZED_ENDPOINT_READ_REPAIR_IMPLEMENTED_PENDING_PREP_AND_GPU",
-    "n0_complete": false,
-    "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.8.json",
-    "pass_next_action": "run_existing_latent_frontier_challenge_once_with_original_adapter_and_selected_repaired_graph",
-    "fail_next_action": "inspect_the_single_heldout_endpoint_role_failure_and_choose_one_causal_next_change",
-    "scale_decision": {
-      "scale_now": false,
-      "reason": "the current failure is localized to an upstream relation endpoint read and therefore does not establish latent capacity insufficiency",
-      "hard_parameter_ceiling": null,
-      "hard_parameter_floor": null,
-      "current_width_depth_slots_relation_vocabulary_field_counts_training_steps_and_curriculum_sizes_are_not_final_capability_limits": true,
-      "do_not_hold_capacity_constant_if_future_evidence_localizes_an_expressivity_bottleneck": true,
-      "do_not_increase_capacity_without_localized_evidence": true,
-      "endpoint_read_scope_escalation": {
-        "eligible_if": "fresh heldout endpoint-role repair fails and the failure localizes to endpoint-read expressivity rather than objective/data/authority semantics",
-        "allowed_changes": "broaden graph relation-read trainable scope, alter relevant read architecture, or increase relevant capacity as required by evidence",
-        "current_relation_read_only_scope_is_not_a_ceiling": true
+    "implementation_state": {
+      "schema": "alice-context-active-n0-state-v1",
+      "source_branch": "alice-eipm-v1-build",
+      "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "source_path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json",
+      "source_blob_sha": "ef3aec6bfe73ad93ae158f03c9b8554472a9cf99",
+      "status": "SELECTOR_PRIOR_HEAD_REPAIR_FAILED_ENDPOINT_ROLE_DEFECT_LOCALIZED_ENDPOINT_READ_REPAIR_IMPLEMENTED_PENDING_PREP_AND_GPU",
+      "n0_complete": false,
+      "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.8.json",
+      "pass_next_action": "run_existing_latent_frontier_challenge_once_with_original_adapter_and_selected_repaired_graph",
+      "fail_next_action": "inspect_the_single_heldout_endpoint_role_failure_and_choose_one_causal_next_change",
+      "scale_decision": {
+        "scale_now": false,
+        "reason": "the current failure is localized to an upstream relation endpoint read and therefore does not establish latent capacity insufficiency",
+        "hard_parameter_ceiling": null,
+        "hard_parameter_floor": null,
+        "current_width_depth_slots_relation_vocabulary_field_counts_training_steps_and_curriculum_sizes_are_not_final_capability_limits": true,
+        "do_not_hold_capacity_constant_if_future_evidence_localizes_an_expressivity_bottleneck": true,
+        "do_not_increase_capacity_without_localized_evidence": true,
+        "endpoint_read_scope_escalation": {
+          "eligible_if": "fresh heldout endpoint-role repair fails and the failure localizes to endpoint-read expressivity rather than objective/data/authority semantics",
+          "allowed_changes": "broaden graph relation-read trainable scope, alter relevant read architecture, or increase relevant capacity as required by evidence",
+          "current_relation_read_only_scope_is_not_a_ceiling": true
+        },
+        "latent_scale_escalation": {
+          "eligible_if": "a repaired parent trace verifies the correct target signal at the latent input and the latent pool still loses or cannot represent it",
+          "method": "bounded capacity study around the current operating point using fidelity, counterfactual behavior, latency, memory, and compute evidence",
+          "preset_target_parameter_count": null,
+          "preset_maximum_parameter_count": null,
+          "preset_minimum_parameter_count": null,
+          "avoid_under_scaling": "increase relevant latent width, depth, slot count, or other capacity when a localized capacity bottleneck persists",
+          "avoid_over_scaling": "stop capacity growth when additional capacity no longer improves the relevant fidelity frontier or creates unacceptable latency/resource cost"
+        }
       },
-      "latent_scale_escalation": {
-        "eligible_if": "a repaired parent trace verifies the correct target signal at the latent input and the latent pool still loses or cannot represent it",
-        "method": "bounded capacity study around the current operating point using fidelity, counterfactual behavior, latency, memory, and compute evidence",
-        "preset_target_parameter_count": null,
-        "preset_maximum_parameter_count": null,
-        "preset_minimum_parameter_count": null,
-        "avoid_under_scaling": "increase relevant latent width, depth, slot count, or other capacity when a localized capacity bottleneck persists",
-        "avoid_over_scaling": "stop capacity growth when additional capacity no longer improves the relevant fidelity frontier or creates unacceptable latency/resource cost"
-      }
+      "anti_loop_policy": {
+        "one_causal_change_per_failed_model_gate": true,
+        "automatic_hotfix_chain": false,
+        "rerun_identical_failed_model_experiment_without_state_change": false,
+        "infrastructure_failure_is_not_model_evidence": true,
+        "already_valid_preparation_is_idempotently_reused": true,
+        "preserve_stale_or_prior_evidence_instead_of_deleting_it_to_pass": true,
+        "validation_must_change_a_real_decision_or_stop": true,
+        "failed_selector_checkpoint_must_not_be_promoted_by_convenience": true
+      },
+      "selection_rule": "highest version among source-branch state files explicitly marked authoritative_for_current_latent_stage=true",
+      "authority": "pointer_to_original_source"
     },
-    "anti_loop_policy": {
-      "one_causal_change_per_failed_model_gate": true,
-      "automatic_hotfix_chain": false,
-      "rerun_identical_failed_model_experiment_without_state_change": false,
-      "infrastructure_failure_is_not_model_evidence": true,
-      "already_valid_preparation_is_idempotently_reused": true,
-      "preserve_stale_or_prior_evidence_instead_of_deleting_it_to_pass": true,
-      "validation_must_change_a_real_decision_or_stop": true,
-      "failed_selector_checkpoint_must_not_be_promoted_by_convenience": true
+    "continuity_overlay": {
+      "branch": "alice-context",
+      "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
+      "blob_sha": "c44ed89c28153b7496910f099851ddf576176574",
+      "title": "N0 Endpoint Repair and Downstream Arbitration Handoff",
+      "date": "2026-09-17",
+      "current_build_head_declared": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "magnolia_job_observed": "575718",
+      "authoritative_build_state_excerpt": "Primary personality-model build branch: `alice-eipm-v1-build`.\n\nCurrent build head: `021c5021a98104b35f9c8e94b19e48d21f25f132` (`repair(n0): stage endpoint-role read repair v0.2`).\n\nThe six build commits after the last continuity-branch update were:\n\n1. `21e82e1a819d5081de6a987c1bbae14fff01fb7e` — fresh selector-repair curriculum.\n2. `2d3791732b9f90cfadb1fde56ed8dcb286e98b22` — bounded selector-repair trainer.\n3. `8578285dfbc7bfd39c503904c187b0fe4799218b` — idempotent prepare/train flow.\n4. `153ae658b17258550b1522ac8722d374c3dc5a85` — Magnolia P100 selector-repair job contract.\n5. `dc029a63eb6e6a5773eb6c7b650107ff3e4f1c5f` — selector failure localization and scaling policy.\n6. `021c5021a98104b35f9c8e94b19e48d21f25f132` — endpoint-role read repair v0.2 implementation/state.\n\n`configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json` is the latest committed stage-state file at this head, but its status predates the later Magnolia endpoint-repair execution. Do not interpret `PENDING_PREP_AND_GPU` as the latest observed runtime state.",
+      "runtime_result_excerpt": "Magnolia job: `575718` on `gpu001`.\nElapsed: `00:01:14`.\nSelected checkpoint: `step-00000200`.\nSelected graph SHA-256: `3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f`.\n\nFresh heldout endpoint behavior:\n- pair accuracy = `1.0`\n- row accuracy = `1.0`\n- all 8 endpoint-role families = `1.0`\n- mean graph target margin ≈ `+0.8701`\n\nReplay behavior remained top-1 correct (`1.0`). Macro target-support mass moved only slightly from the preserved baseline `0.9831965565681458` to approximately `0.9810`. A stricter replay-preservation floor still caused the stored formal status `FAIL_ENDPOINT_ROLE_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`. A later recovered conversation note reported an additional support-mass gate around `0.89568` versus `>0.90`; because the exact raw field name is not yet repo-bound, preserve that value as conversation-recovered rather than silently converting it into an exact receipt field. Another reported weak replay confidence was `temporal_previous ≈ 0.8612` while top-1 remained correct.\n\nInterpretation: endpoint directionality was repaired. Do not tune the graph merely to cross a soft replay-confidence threshold when ranking is already correct. The next causal question is whether the repaired graph materially improves the already-frozen downstream latent frontier.",
+      "next_experiment_excerpt": "Run exactly one paired downstream arbitration:\n\n- baseline arm: original graph parent;\n- candidate arm: selected repaired graph `step-00000200` / SHA-256 `3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f`;\n- same original/frozen evidence adapter in both arms;\n- same frozen latent candidate step `360`, SHA-256 `503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4`;\n- all downstream weights frozen;\n- no retraining;\n- no graph-threshold chasing;\n- no challenge leakage;\n- no automatic rerun or hotfix chain.\n\nIf the repaired graph improves the frozen latent frontier, it has downstream causal value. If downstream behavior remains materially unchanged despite perfect fresh endpoint discrimination, move the bottleneck downstream into fusion, parent pooling, latent conditioning, or readout. Do not scale latent capacity until the repaired parent signal is proven to reach the latent input and a capacity/expressivity bottleneck is actually localized.",
+      "authority": "branch-qualified-continuity-overlay"
     },
-    "selection_rule": "highest version among source-branch state files explicitly marked authoritative_for_current_latent_stage=true",
-    "authority": "pointer_to_original_source"
+    "execution_rule": "Implementation config governs committed model/build state. A newer continuity overlay may supersede its observed runtime status and next-action wording. Open the original handoff before execution.",
+    "authority": "routing-and-freshness-only"
   },
   "authoritative_source_pointers": [
     {
-      "score": 41,
+      "score": 71,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-09/sol/MC10D_MAGNOLIA_CLOSED_KAGGLE_DURABLE_SUCCESSOR.md",
-      "blob_sha": "2effe4f25010dc93510e5014372690426fc172ec",
+      "path": "docs/chat-context/2026-09-09/sol/MC10D_MAGNOLIA_P100X2_ROUTE_QUALIFIED_NEXT_RUNTIME_GATE.md",
+      "blob_sha": "973ec51441d8c119caeebe2304b0f413ed94a351",
       "category": "working_context",
-      "title": "MC10D Magnolia closed — Kaggle durable simulation/falsification successor",
+      "title": "MC10D Magnolia 2xP100 route qualified — next runtime gate",
       "declared": {},
       "matched_terms": [
-        "failure",
+        "failed",
+        "fallback",
         "hotfix",
         "kaggle",
         "magnolia"
@@ -75,74 +96,25 @@
       "supersession_hints": [],
       "catalogs": [
         "failure",
-        "supersession",
         "document"
       ]
     },
     {
-      "score": 41,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md",
-      "blob_sha": "a8be2d6d77884b715635b5a97d3b3e7abbb93e67",
-      "category": "working_context",
-      "title": "MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready",
+      "score": 62,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md",
+      "blob_sha": "77ff7dda3d28fef326ceb8e6af7db799879c876b",
+      "category": "runtime_receipt",
+      "title": "Magnolia 2×P100 N0 Runtime Smoke — Job 575527",
       "declared": {},
       "matched_terms": [
         "failed",
         "failure",
-        "kaggle",
-        "magnolia"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document"
-      ]
-    },
-    {
-      "score": 41,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-13/sol/N0_KAGGLE_CPU_LINEAGE_SUCCESS_AND_MAGNOLIA_IMPORT.md",
-      "blob_sha": "514d3f5faffda3e184f18dd4d7fe7a08262413a2",
-      "category": "working_context",
-      "title": "N0 Kaggle CPU Lineage Success and Magnolia Import — 2026-09-14",
-      "declared": {},
-      "matched_terms": [
-        "dns",
-        "egress",
-        "failed",
-        "kaggle",
         "magnolia",
-        "network",
-        "powershell"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "supersession",
-        "document"
-      ]
-    },
-    {
-      "score": 41,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-14/sol/N0_MAGNOLIA_DNS_BOUNDARY_AND_KAGGLE_CPU_FALLBACK.md",
-      "blob_sha": "19cfd6ac34d7aa3464b2d8fe43a3c0931f166d96",
-      "category": "working_context",
-      "title": "N0 Magnolia DNS boundary and Kaggle CPU fallback — 2026-09-14",
-      "declared": {},
-      "matched_terms": [
-        "dns",
-        "error",
-        "failed",
-        "failure",
-        "fallback",
-        "kaggle",
-        "magnolia",
-        "network"
+        "runtime-results",
+        "smoke",
+        "udocker"
       ],
       "supersession_hints": [],
       "catalogs": [
@@ -151,7 +123,7 @@
       ]
     },
     {
-      "score": 35,
+      "score": 58,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
       "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
@@ -177,91 +149,39 @@
       ]
     },
     {
-      "score": 34,
+      "score": 55,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
-      "path": "docs/eipm/n0/runtime-results/KAGGLE_CPU_PUBLIC_LINEAGE_V102_20260914.md",
-      "blob_sha": "1590c8e4b29564ed969ba136202c9b7ef3b0be09",
+      "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md",
+      "blob_sha": "be2ffe0bb87a8f835d36698854aa620db7694b99",
       "category": "runtime_receipt",
-      "title": "Kaggle CPU Public N0 Lineage v1.0.2 — 2026-09-14",
-      "declared": {},
+      "title": "Magnolia 2×P100 Real N0 Training — Job 575546",
+      "declared": {
+        "status": " completed successfully; durable weights retained; LR scheduler defect identified before continuation"
+      },
       "matched_terms": [
-        "dns",
-        "failed",
         "failure",
-        "fallback",
-        "kaggle",
         "magnolia",
-        "network",
-        "powershell",
+        "repair",
         "runtime-results"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
-        "supersession",
         "document"
       ]
     },
     {
-      "score": 33,
+      "score": 54,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-14/sol/N0_V021_MAGNOLIA_NETWORK_FAILOVER_TO_OFFLINE_DERIVATION.md",
-      "blob_sha": "c9e0acae619f0d46aa676c8d34486847e3716361",
+      "path": "docs/chat-context/2026-09-06/astra/tools/runtime-route-survey/package/ALICE_MAGNOLIA_RUNTIME_ROUTE_v1.0.0/README.md",
+      "blob_sha": "78abc2e17aab443bcd0cc3e914366e38a80a42b2",
       "category": "working_context",
-      "title": "N0 v0.2.1 Magnolia network failure -> offline tokenizer corpus derivation",
+      "title": "Magnolia runtime route survey",
       "declared": {},
       "matched_terms": [
-        "error",
-        "failed",
-        "failure",
-        "magnolia",
-        "network"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document"
-      ]
-    },
-    {
-      "score": 32,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-08-31/src/S01-kaggle-handoff.md",
-      "blob_sha": "1e427cc61b70efb047f91d577c821a89539a3abb",
-      "category": "working_context",
-      "title": "A.L.I.C.E. Kaggle Remote Compute — Operational Handoff",
-      "declared": {
-        "status": " VALIDATED / ACTIVE"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "kaggle",
-        "powershell",
-        "smoke"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "supersession"
-      ]
-    },
-    {
-      "score": 32,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/N0_ADAPTIVE_LATENT_POOL_V01_FAILURE_AND_V02_REPAIR_2026-09-16.md",
-      "blob_sha": "f52cd22657c2545c5af7dd3e7aa2f0923a6ee144",
-      "category": "design_document",
-      "title": "N0 Adaptive Multi-View Latent Pool v0.1 Failure and v0.2 Repair — 2026-09-16",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
+        "fallback",
         "magnolia",
         "repair"
       ],
@@ -272,17 +192,39 @@
       ]
     },
     {
-      "score": 32,
+      "score": 53,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
-      "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md",
-      "blob_sha": "77ff7dda3d28fef326ceb8e6af7db799879c876b",
+      "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_N0_CONTINUATION_JOB_575548.md",
+      "blob_sha": "f8a37086738f1a7ff8256697aa0d78e711e8b6fb",
       "category": "runtime_receipt",
-      "title": "Magnolia 2×P100 N0 Runtime Smoke — Job 575527",
+      "title": "Magnolia N0 continuation — job 575548",
+      "declared": {
+        "status": " completed successfully"
+      },
+      "matched_terms": [
+        "magnolia",
+        "repair",
+        "runtime-results"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document"
+      ]
+    },
+    {
+      "score": 51,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_DDP_JOB_575537.md",
+      "blob_sha": "101c3de692ac07f418f2134c23f2c6245e1703f5",
+      "category": "runtime_receipt",
+      "title": "Magnolia 2×P100 N0 DDP Mechanics — Job 575537",
       "declared": {},
       "matched_terms": [
         "failed",
-        "failure",
         "magnolia",
         "runtime-results",
         "smoke",
@@ -295,19 +237,38 @@
       ]
     },
     {
-      "score": 30,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-07/sol/KAGGLE_PROVIDER_SWITCH.md",
-      "blob_sha": "7cb4fa47b62e3e1123cbfd441318a88f1d426049",
-      "category": "working_context",
-      "title": "Kaggle Provider Switch — 2026-09-07",
+      "score": 51,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md",
+      "blob_sha": "435efa0bf1c2e58ecd5929e4fd25c03cc6f9cd5b",
+      "category": "runtime_receipt",
+      "title": "Magnolia single-P100 N0 teacher diagnostic — job 575565",
       "declared": {},
       "matched_terms": [
         "failed",
         "failure",
-        "hotfix",
-        "kaggle",
+        "magnolia",
+        "repair",
+        "runtime-results"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document"
+      ]
+    },
+    {
+      "score": 50,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-06/astra/MAGNOLIA_RUNTIME_ROUTE_RELEASE.json",
+      "blob_sha": "088be1ac1d87d5e33821bada9b12daf63f148208",
+      "category": "working_context",
+      "title": "MAGNOLIA_RUNTIME_ROUTE_RELEASE.json",
+      "declared": {},
+      "matched_terms": [
+        "failed",
         "magnolia",
         "repair"
       ],
@@ -318,36 +279,70 @@
       ]
     },
     {
-      "score": 30,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/PHASE_4_LIVE_RESEARCH_EXECUTION.md",
-      "blob_sha": "7ffb4fda1c9ab533de54f8a5118b19bb5df97e65",
-      "category": "design_document",
-      "title": "Phase 4 P4.10b — Live Governed Research Execution",
-      "declared": {
-        "status": "additive implementation profile. P4.6a, P4.7a, and P4.7b remain frozen fixture compatibility profiles."
-      },
+      "score": 50,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-07/sol/RUNTIME_ROUTE_RESULT_SUMMARY.md",
+      "blob_sha": "39b4a217cd107e75b2234ad809d831a7408e0bb8",
+      "category": "working_context",
+      "title": "Magnolia Runtime Route — Observed Result Summary",
+      "declared": {},
       "matched_terms": [
-        "failure",
-        "fallback",
-        "powershell"
+        "magnolia"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
-        "document",
-        "frontier"
+        "document"
+      ]
+    },
+    {
+      "score": 47,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/MAGNOLIA_P100X2_RUNTIME_SMOKE_2026-09-13.md",
+      "blob_sha": "83ab8ec25221b2a6903a2502b2019f9a8a901ec3",
+      "category": "design_document",
+      "title": "Magnolia 2×P100 N0 Runtime Smoke — 2026-09-13",
+      "declared": {
+        "status": " ready for owner execution"
+      },
+      "matched_terms": [
+        "fallback",
+        "kaggle",
+        "magnolia",
+        "smoke"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document"
+      ]
+    },
+    {
+      "score": 45,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-09/sol/MC10D_MAGNOLIA_CLOSED_KAGGLE_DURABLE_SUCCESSOR.md",
+      "blob_sha": "2effe4f25010dc93510e5014372690426fc172ec",
+      "category": "working_context",
+      "title": "MC10D Magnolia closed — Kaggle durable simulation/falsification successor",
+      "declared": {},
+      "matched_terms": [
+        "failure",
+        "hotfix",
+        "kaggle",
+        "magnolia"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document"
       ]
     }
   ],
   "graphify_navigation_hints": [
-    {
-      "label": "test_known_model_failures_are_recorded_once()",
-      "source": "tests/phase3/test_conversation_orchestration_failures.py",
-      "location": "L70",
-      "community": "34"
-    },
     {
       "label": "Regression for Magnolia job 575673 mixed-autocast evaluation failure.",
       "source": "tests/eipm/test_n0_adaptive_multi_view_latent_pool_objectives_v0_2.py",
@@ -355,10 +350,22 @@
       "community": "28"
     },
     {
-      "label": "find_kaggle()",
-      "source": "scripts/eipm/n0/rayan_n0_kaggle_cpu_lineage_controller_v102.py",
-      "location": "L261",
-      "community": "132"
+      "label": "magnolia_cpu_n0_v02_preflight.sh",
+      "source": "scripts/eipm/n0/magnolia_cpu_n0_v02_preflight.sh",
+      "location": "L1",
+      "community": "299"
+    },
+    {
+      "label": "magnolia_cpu_n0_v02_tokenizer.sh",
+      "source": "scripts/eipm/n0/magnolia_cpu_n0_v02_tokenizer.sh",
+      "location": "L1",
+      "community": "244"
+    },
+    {
+      "label": "test_candidates_never_enter_derived_indexes_before_promotion()",
+      "source": "tests/phase2/test_memory_candidate_security_gates.py",
+      "location": "L312",
+      "community": "108"
     },
     {
       "label": "CurrentClaimProjection",
@@ -391,10 +398,16 @@
       "community": "249"
     },
     {
-      "label": "magnolia_cpu_n0_v02_tokenizer.sh",
-      "source": "scripts/eipm/n0/magnolia_cpu_n0_v02_tokenizer.sh",
+      "label": "n0/__init__.py",
+      "source": "src/alice_personality/n0/__init__.py",
       "location": "L1",
-      "community": "244"
+      "community": "120"
+    },
+    {
+      "label": "_next_start()",
+      "source": "src/alice_vault/chunking.py",
+      "location": "L129",
+      "community": "83"
     },
     {
       "label": "test_repeated_request_is_idempotent()",
@@ -403,10 +416,22 @@
       "community": "11"
     },
     {
+      "label": "test_reliability_prior_can_route_between_equivalent_views()",
+      "source": "tests/eipm/test_n0_cross_context_fusion.py",
+      "location": "L79",
+      "community": "55"
+    },
+    {
       "label": ".test_auto_review_routes_sensitive_and_contradictory_to_manual()",
       "source": "tests/phase1/test_auto_review.py",
       "location": "L44",
       "community": "8"
+    },
+    {
+      "label": "run()",
+      "source": "tests/phase4/test_information_final_evaluation_runtime.py",
+      "location": "L47",
+      "community": "62"
     },
     {
       "label": "cognitive_kernel/__init__.py",
@@ -415,16 +440,28 @@
       "community": "13"
     },
     {
-      "label": "inspect_conversation_session()",
-      "source": "src/alice_conversation/state_inspection.py",
-      "location": "L91",
-      "community": "34"
+      "label": "open_memory_store()",
+      "source": "src/alice_memory/store.py",
+      "location": "L107",
+      "community": "36"
     },
     {
-      "label": "make_orchestrator()",
-      "source": "tests/phase3/_orchestration_helpers.py",
-      "location": "L75",
-      "community": "34"
+      "label": "load_semantic_policy()",
+      "source": "src/alice_vault/semantic_retrieval.py",
+      "location": "L116",
+      "community": "63"
+    },
+    {
+      "label": "load_n0_config()",
+      "source": "src/alice_personality/n0/config.py",
+      "location": "L112",
+      "community": "120"
+    },
+    {
+      "label": "search_memories()",
+      "source": "src/alice_memory/retrieval.py",
+      "location": "L237",
+      "community": "16"
     },
     {
       "label": "claim_authority_prototype.py",
@@ -449,46 +486,10 @@
       "source": "tests/phase2/test_memory_deletion.py",
       "location": "L46",
       "community": "11"
-    },
-    {
-      "label": "_create()",
-      "source": "tests/phase2/test_memory_deletion.py",
-      "location": "L82",
-      "community": "11"
-    },
-    {
-      "label": "verify_conversation_session_integrity()",
-      "source": "src/alice_conversation/state_inspection.py",
-      "location": "L227",
-      "community": "34"
-    },
-    {
-      "label": "_request_deletion()",
-      "source": "tests/phase2/test_memory_deletion.py",
-      "location": "L170",
-      "community": "11"
-    },
-    {
-      "label": "main()",
-      "source": "scripts/eipm/n0/rayan_n0_kaggle_cpu_lineage_controller_v102.py",
-      "location": "L388",
-      "community": "132"
-    },
-    {
-      "label": ".validate()",
-      "source": "src/alice_information/research_execution.py",
-      "location": "L340",
-      "community": "96"
-    },
-    {
-      "label": "._read_response()",
-      "source": "src/alice_information/brave_search_live.py",
-      "location": "L228",
-      "community": "186"
     }
   ],
-  "private_external_route_recommended": false,
-  "private_external_route_reason": null,
+  "private_external_route_recommended": true,
+  "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
   "trust_contract": [
     "This capsule routes retrieval; it is not canonical A.L.I.C.E. truth.",
     "Open consequential claims in the original branch/path source before acting.",
