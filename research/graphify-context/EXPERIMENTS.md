@@ -67,6 +67,64 @@ Relation scoping produces a large improvement without simply spending more token
 - mission-local neighborhoods;
 - a precision pass after broad discovery.
 
+## Experiment 003 — Exact-looking symbol query still broadens lexically
+
+- Date: 2026-09-17/18
+- Request: `CrossContextFusion in the N0 personality-model path`
+- Traversal: BFS depth 2
+- Explicit context: `call`
+- Token budget: 2,500
+- Result neighborhood: 77 nodes
+- Returned before token truncation: 71 nodes
+- Correct primary hit:
+  - `CrossContextFusion` at `src/alice_personality/n0/cross_context_fusion.py:L214`
+- Incorrect or low-value seed broadening included:
+  - `Path`
+  - `_model()`
+  - `n0/model.py`
+  - unrelated Phase 2 memory-deletion tests and semantic-retrieval nodes
+
+### Lesson
+
+A natural-language query that contains an exact symbol name is still not equivalent to exact-node lookup. Lexical/semantic seed expansion can admit generic symbols before graph traversal begins.
+
+For continuation work:
+- `graphify query` is a discovery operator;
+- exact-node explain/get-node/path/affected operators should be used for precision follow-up;
+- generic symbol names should be down-weighted or excluded in an A.L.I.C.E.-native context compiler;
+- source path and mission scope should be first-class retrieval constraints, not merely words in the query.
+
+## Experiment 004 — Concurrent research update during graph publication
+
+- Date: 2026-09-17/18
+- Extraction itself succeeded:
+  - 10,832 nodes
+  - 37,624 edges
+  - 322 communities
+- Failure:
+  - while the Action was extracting, a research-protocol commit advanced the branch;
+  - the generated graph commit was rejected as a non-fast-forward push.
+- Safety impact:
+  - no corrupted graph was published;
+  - however, a naive bot publication step is vulnerable to harmless research edits racing a long extraction.
+
+### Fix
+
+The graph publisher now:
+1. stages generated artifacts outside the working tree;
+2. fetches the newest research head and live A.L.I.C.E. source head;
+3. aborts if the real source branch moved during extraction;
+4. resets to the newest research head;
+5. verifies that the current source SHA is still contained;
+6. reapplies generated artifacts;
+7. commits and pushes on top of the newest research state.
+
+The query-result publisher uses the same pattern and also refuses to publish if a newer query request replaced the request it actually executed.
+
+### Lesson
+
+Long-lived context compilation must be transaction-like. Retrieval/index generation cannot assume the surrounding project state remains frozen while compilation is running.
+
 ## Operational lesson — Graphify v8 query CLI
 
 Verified supported controls for `graphify query`:
