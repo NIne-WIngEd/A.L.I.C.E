@@ -1,0 +1,35 @@
+{
+  "schema": "alice.telemetry.n0.query-semantics-layerwise-audit-ready.v0.1",
+  "date": "2026-09-18",
+  "trigger_job_id": 575801,
+  "trigger_state": "COMPLETED",
+  "trigger_exit_code": "0:0",
+  "trigger_result_sha256": "8bb4aa0f249b763342d78f5bf0f2f960a0bd73fafa67d18f8e0e7342f62f24b6",
+  "gradient_performed": false,
+  "model_parameters_mutated": false,
+  "heldout_rows_used": false,
+  "role_accuracy": {
+    "raw_mean_pool": 0.5625,
+    "trained_semantic_projection": 0.5625,
+    "token_late_interaction": 0.6875
+  },
+  "token_relation_accuracy": {
+    "corrects": 0.875,
+    "supersedes": 0.75,
+    "temporal_successor": 0.75,
+    "derived_from": 0.75,
+    "causes": 0.5,
+    "supports": 0.5
+  },
+  "branch": "alice-eipm-v1-query-semantics-architecture-audit",
+  "head": "900db6f09b38a5ae6328d897b520e59335201728",
+  "layerwise_audit_ready": true,
+  "layerwise_gradient_performed": false,
+  "layerwise_model_mutation": false,
+  "ci_run": 35391604417,
+  "ci_result": "SUCCESS",
+  "gradient_work_frozen": true,
+  "scale_authorized": false,
+  "n0_complete": false,
+  "next_action": "run one no-gradient layerwise semantic audit"
+}
