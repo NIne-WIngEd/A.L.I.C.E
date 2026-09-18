@@ -170,3 +170,52 @@ Retry canonical-only calibration from the fixed frontier head. Preserve the fail
 `$HOME/rayan-compute/rayan-n0/n0-v02/downstream-causal-arbitration-metric-calibration-v0.1-retry-575759`
 
 Do not submit candidate arbitration until this retry produces a valid calibration receipt and frozen metric policy.
+
+
+## Canonical calibration retry 575760 — successful
+
+Magnolia job `575760` completed successfully on `gpu001` in 00:02:22 with exit code `0:0`.
+
+Source revision:
+
+`6c930788da42ad9964c4b5bf6067be3b7d6bfd06`
+
+Calibration output root:
+
+`$HOME/rayan-compute/rayan-n0/n0-v02/downstream-causal-arbitration-metric-calibration-v0.1-retry-575759`
+
+The calibration used the canonical graph only. The candidate graph was not supplied and no candidate result was observed.
+
+Canonical graph SHA-256:
+
+`ec9942bd71a39c8552804322f1a36b7a6c5f009446e56423c80e59479ad8fa79`
+
+Both full-stack canonical repeats were byte-identical:
+
+`e4d38f3fc70013435ee2c015d543b89dacd727d18906ff5d7534390889f54a62`
+
+This yielded zero observed repeatability drift. The frozen metric policy therefore materialized with `rtol=0.0` and `atol=1e-6` across the complete downstream metric surface.
+
+Key output hashes:
+
+- full-stack manifest: `f324b29f7e6078210a9db29f88745d658f49e0d9dc3cca0e28051180c0fdb6fa`
+- frozen metric policy: `035eb35fbecad38adc94148743899de831876e2584cb18975aeb7a59db863b63`
+- calibration receipt: `ca389ad1a210fe64ffe1460ada63362a3a6c05a2703c19e1e9d5ff487cd7537c`
+
+Status:
+
+`CALIBRATION_COMPLETE`
+
+The run was diagnostic only. No gradient, repair ratification, promotion, scaling, or N0 completion occurred.
+
+### Next scientific action
+
+Run exactly one frozen canonical-vs-selected-step-200 full-stack downstream causal arbitration using:
+
+- canonical graph: relation-repair v0.1 step 80;
+- candidate graph: relation-endpoint-repair v0.2 step 200;
+- candidate graph SHA-256: `3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f`;
+- calibration directory from job 575760 above;
+- source revision `6c930788da42ad9964c4b5bf6067be3b7d6bfd06`.
+
+Do not add another external-validation phase before this arbitration. The calibration question has been answered.
