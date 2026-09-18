@@ -1,0 +1,79 @@
+name: N0 Arbitration Contract Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-causal-arbitration-binding
+    paths:
+      - "scripts/eipm/n0/*downstream*arbitration*.py"
+      - "scripts/eipm/n0/*downstream*arbitration*.sh"
+      - "scripts/eipm/n0/*downstream*arbitration*.sbatch"
+      - "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py"
+      - "tests/eipm/n0/test_*downstream*arbitration*.py"
+      - "tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py"
+      - ".github/workflows/n0-arbitration-contract-check.yml"
+  workflow_dispatch:
+
+jobs:
+  syntax-and-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Bash syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash -n scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh
+          bash -n scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh
+          bash -n scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch
+          bash -n scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch
+
+      - name: Python syntax
+        run: |
+          python -m py_compile             scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py             scripts/eipm/n0/downstream_causal_arbitration_v0_1.py             scripts/eipm/n0/downstream_causal_arbitration_v0_2.py             scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py             scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py             scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py             scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py             scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py
+
+      - name: Runner safety contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          path=Path("scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh")
+          text=path.read_text(encoding="utf-8")
+
+          required=[
+              'EXPECTED_CANDIDATE_SHA256="3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f"',
+              'candidate_graph_supplied',
+              'candidate_arm_result_observed',
+              'selected_before_arm_results',
+              'results_observed',
+              'git status --porcelain --untracked-files=no',
+              'prepare_downstream_causal_arbitration_v0_1.py',
+              'execute_frozen_downstream_causal_arbitration_v0_1.py',
+              'finalize_downstream_causal_arbitration_v0_1.py',
+              'automatic_final_challenge=false',
+          ]
+          missing=[item for item in required if item not in text]
+          if missing:
+              raise SystemExit("missing runner safety bindings: " + repr(missing))
+
+          forbidden=[
+              "train_n0_",
+              "--learning-rate",
+              "--max-steps",
+              "git pull",
+              "git checkout",
+              "git switch",
+          ]
+          present=[item for item in forbidden if item in text]
+          if present:
+              raise SystemExit("forbidden arbitration runner behavior: " + repr(present))
+
+          print("runner_safety_contract=PASS")
+          PY
