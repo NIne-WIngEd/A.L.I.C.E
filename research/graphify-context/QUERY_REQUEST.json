@@ -1,5 +1,5 @@
 {
-  "request_id": "coverage-g2-buried-doc-fact-001",
+  "request_id": "coverage-g2-buried-doc-fact-002",
   "question": "Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?",
   "budget": 1500,
   "traversal": "bfs",
