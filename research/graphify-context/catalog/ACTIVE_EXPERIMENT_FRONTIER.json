@@ -7,10 +7,10 @@
   "maximal_heads": [
     {
       "branch": "alice-eipm-v1-causal-arbitration-binding",
-      "head": "d49d6e7f45c15905ca8ec5a33d1ac14c3aef3d59",
-      "head_committed_at": "2026-09-17T21:22:32-05:00",
-      "head_message": "ci(n0): verify arbitration env crosses udocker boundary",
-      "ahead": 23,
+      "head": "6c930788da42ad9964c4b5bf6067be3b7d6bfd06",
+      "head_committed_at": "2026-09-17T21:51:11-05:00",
+      "head_message": "ci(n0): smoke arbitration import roots without GPU",
+      "ahead": 27,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 32,
@@ -54,10 +54,10 @@
   "all_ahead_candidates": [
     {
       "branch": "alice-eipm-v1-causal-arbitration-binding",
-      "head": "d49d6e7f45c15905ca8ec5a33d1ac14c3aef3d59",
-      "head_committed_at": "2026-09-17T21:22:32-05:00",
-      "head_message": "ci(n0): verify arbitration env crosses udocker boundary",
-      "ahead": 23,
+      "head": "6c930788da42ad9964c4b5bf6067be3b7d6bfd06",
+      "head_committed_at": "2026-09-17T21:51:11-05:00",
+      "head_message": "ci(n0): smoke arbitration import roots without GPU",
+      "ahead": 27,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 32,

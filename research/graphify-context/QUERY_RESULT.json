@@ -1,13 +1,13 @@
 {
-  "request_id": "current-n0-calibration-frontier-001",
-  "question": "What is the exact current N0 scientific state and next execution now, including the tested causal-arbitration frontier, active handoff, pre-GPU validation, and whether calibration must happen before candidate arbitration?",
+  "request_id": "current-n0-calibration-retry-575759-001",
+  "question": "What is the exact current N0 state after Magnolia calibration job 575759 failed before model execution, what was the root cause, which frontier commit fixes it, and what is the next safe execution?",
   "budget": 1800,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-18T02:25:25.051197+00:00",
+  "generated_at_utc": "2026-09-18T02:53:05.977268+00:00",
   "authority": "navigation-only",
   "routing_decision": {
     "graphify_mode": "auto",
@@ -17,7 +17,7 @@
     "graph_source_commit": null,
     "graph_source_reason": null,
     "graph_rebuild_required": false,
-    "private_external_route_recommended": false
+    "private_external_route_recommended": true
   },
   "graphify_used": false,
   "graph_build": {
@@ -33,28 +33,27 @@
   },
   "catalog_result": {
     "schema": "alice-context-catalog-query-v1",
-    "question": "What is the exact current N0 scientific state and next execution now, including the tested causal-arbitration frontier, active handoff, pre-GPU validation, and whether calibration must happen before candidate arbitration?",
+    "question": "What is the exact current N0 state after Magnolia calibration job 575759 failed before model execution, what was the root cause, which frontier commit fixes it, and what is the next safe execution?",
     "query_tokens": [
       "exact",
-      "scientific",
       "state",
-      "next",
-      "execution",
-      "including",
-      "tested",
-      "causal-arbitration",
-      "frontier",
-      "active",
-      "handoff",
-      "pre-gpu",
-      "validation",
-      "whether",
+      "after",
+      "magnolia",
       "calibration",
-      "must",
-      "happen",
+      "job",
+      "575759",
+      "failed",
       "before",
-      "candidate",
-      "arbitration"
+      "model",
+      "execution",
+      "root",
+      "cause",
+      "frontier",
+      "commit",
+      "fixes",
+      "next",
+      "safe",
+      "execution"
     ],
     "catalog_status": {
       "schema": "alice-context-catalog-status-v1",
@@ -69,9 +68,9 @@
       "unmerged_experiment_frontier_present": true,
       "unmerged_experiment_maximal_head_count": 1,
       "continuity_stale_relative_to_experiment_frontier": false,
-      "document_pointer_count": 2079,
-      "failure_lesson_pointer_count": 845,
-      "frontier_research_pointer_count": 382,
+      "document_pointer_count": 2080,
+      "failure_lesson_pointer_count": 846,
+      "frontier_research_pointer_count": 383,
       "supersession_pointer_count": 218,
       "authority": "routing-only",
       "notes": [
@@ -136,22 +135,23 @@
       },
       "continuity_overlay": {
         "branch": "alice-context",
-        "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
-        "blob_sha": "c44ed89c28153b7496910f099851ddf576176574",
-        "title": "N0 Endpoint Repair and Downstream Arbitration Handoff",
+        "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md",
+        "blob_sha": "7597ce40d8a5071a6aceceb4c42dfff03c441465",
+        "title": "N0 Causal Arbitration Frontier Calibration Handoff",
         "date": "2026-09-17",
-        "current_build_head_declared": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "magnolia_job_observed": "575718",
-        "authoritative_build_state_excerpt": "Primary personality-model build branch: `alice-eipm-v1-build`.\n\nCurrent build head: `021c5021a98104b35f9c8e94b19e48d21f25f132` (`repair(n0): stage endpoint-role read repair v0.2`).\n\nThe six build commits after the last continuity-branch update were:\n\n1. `21e82e1a819d5081de6a987c1bbae14fff01fb7e` — fresh selector-repair curriculum.\n2. `2d3791732b9f90cfadb1fde56ed8dcb286e98b22` — bounded selector-repair trainer.\n3. `8578285dfbc7bfd39c503904c187b0fe4799218b` — idempotent prepare/train flow.\n4. `153ae658b17258550b1522ac8722d374c3dc5a85` — Magnolia P100 selector-repair job contract.\n5. `dc029a63eb6e6a5773eb6c7b650107ff3e4f1c5f` — selector failure localization and scaling policy.\n6. `021c5021a98104b35f9c8e94b19e48d21f25f132` — endpoint-role read repair v0.2 implementation/state.\n\n`configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json` is the latest committed stage-state file at this head, but its status predates the later Magnolia endpoint-repair execution. Do not interpret `PENDING_PREP_AND_GPU` as the latest observed runtime state.",
-        "runtime_result_excerpt": "Magnolia job: `575718` on `gpu001`.\nElapsed: `00:01:14`.\nSelected checkpoint: `step-00000200`.\nSelected graph SHA-256: `3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f`.\n\nFresh heldout endpoint behavior:\n- pair accuracy = `1.0`\n- row accuracy = `1.0`\n- all 8 endpoint-role families = `1.0`\n- mean graph target margin ≈ `+0.8701`\n\nReplay behavior remained top-1 correct (`1.0`). Macro target-support mass moved only slightly from the preserved baseline `0.9831965565681458` to approximately `0.9810`. A stricter replay-preservation floor still caused the stored formal status `FAIL_ENDPOINT_ROLE_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`. A later recovered conversation note reported an additional support-mass gate around `0.89568` versus `>0.90`; because the exact raw field name is not yet repo-bound, preserve that value as conversation-recovered rather than silently converting it into an exact receipt field. Another reported weak replay confidence was `temporal_previous ≈ 0.8612` while top-1 remained correct.\n\nInterpretation: endpoint directionality was repaired. Do not tune the graph merely to cross a soft replay-confidence threshold when ranking is already correct. The next causal question is whether the repaired graph materially improves the already-frozen downstream latent frontier.",
-        "next_experiment_excerpt": "Run exactly one paired downstream arbitration:\n\n- baseline arm: original graph parent;\n- candidate arm: selected repaired graph `step-00000200` / SHA-256 `3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f`;\n- same original/frozen evidence adapter in both arms;\n- same frozen latent candidate step `360`, SHA-256 `503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4`;\n- all downstream weights frozen;\n- no retraining;\n- no graph-threshold chasing;\n- no challenge leakage;\n- no automatic rerun or hotfix chain.\n\nIf the repaired graph improves the frozen latent frontier, it has downstream causal value. If downstream behavior remains materially unchanged despite perfect fresh endpoint discrimination, move the bottleneck downstream into fusion, parent pooling, latent conditioning, or readout. Do not scale latent capacity until the repaired parent signal is proven to reach the latent input and a capacity/expressivity bottleneck is actually localized.",
+        "last_changed_at": "2026-09-17T21:52:12-05:00",
+        "current_build_head_declared": null,
+        "magnolia_job_observed": null,
+        "authoritative_build_state_excerpt": null,
+        "runtime_result_excerpt": null,
+        "next_experiment_excerpt": null,
         "authority": "branch-qualified-continuity-overlay"
       },
       "continuity_branch_head": {
         "branch": "alice-context",
-        "head": "2e954c4545dc62e03a44768df61cdf48f4f80dc4",
-        "head_committed_at": "2026-09-17T21:24:19-05:00",
-        "head_message": "context: make causal arbitration calibration the active N0 handoff"
+        "head": "f96ac546fd9f572428555a10db4fceb8be1cde7d",
+        "head_committed_at": "2026-09-17T21:52:12-05:00",
+        "head_message": "context: record calibration import failure and fixed retry frontier"
       },
       "unmerged_experiment_frontier": {
         "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -162,10 +162,10 @@
         "maximal_heads": [
           {
             "branch": "alice-eipm-v1-causal-arbitration-binding",
-            "head": "d49d6e7f45c15905ca8ec5a33d1ac14c3aef3d59",
-            "head_committed_at": "2026-09-17T21:22:32-05:00",
-            "head_message": "ci(n0): verify arbitration env crosses udocker boundary",
-            "ahead": 23,
+            "head": "6c930788da42ad9964c4b5bf6067be3b7d6bfd06",
+            "head_committed_at": "2026-09-17T21:51:11-05:00",
+            "head_message": "ci(n0): smoke arbitration import roots without GPU",
+            "ahead": 27,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
             "changed_file_count_vs_source_merge_base": 32,
@@ -209,10 +209,10 @@
         "all_ahead_candidates": [
           {
             "branch": "alice-eipm-v1-causal-arbitration-binding",
-            "head": "d49d6e7f45c15905ca8ec5a33d1ac14c3aef3d59",
-            "head_committed_at": "2026-09-17T21:22:32-05:00",
-            "head_message": "ci(n0): verify arbitration env crosses udocker boundary",
-            "ahead": 23,
+            "head": "6c930788da42ad9964c4b5bf6067be3b7d6bfd06",
+            "head_committed_at": "2026-09-17T21:51:11-05:00",
+            "head_message": "ci(n0): smoke arbitration import roots without GPU",
+            "ahead": 27,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
             "changed_file_count_vs_source_merge_base": 32,
@@ -299,8 +299,8 @@
       },
       "continuity_freshness": {
         "stale_relative_to_unmerged_experiment_frontier": false,
-        "newest_experiment_frontier_time": "2026-09-17T21:22:32-05:00",
-        "continuity_branch_head_time": "2026-09-17T21:24:19-05:00"
+        "newest_experiment_frontier_time": "2026-09-17T21:51:11-05:00",
+        "continuity_branch_head_time": "2026-09-17T21:52:12-05:00"
       },
       "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
       "authority": "routing-and-freshness-only"
@@ -354,75 +354,36 @@
     },
     "hits": [
       {
-        "score": 105,
+        "score": 113,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md",
-        "blob_sha": "478b6c4cc50ac07847a0546c49e69de487cd0273",
+        "blob_sha": "7597ce40d8a5071a6aceceb4c42dfff03c441465",
         "category": "working_context",
         "title": "N0 Causal Arbitration Frontier Calibration Handoff",
         "declared": {},
         "matched_terms": [
-          "frontier"
+          "egress",
+          "error",
+          "failed",
+          "failure",
+          "magnolia",
+          "repair",
+          "smoke",
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "lexical"
         ],
-        "lexical_body_hits": 16
-      },
-      {
-        "score": 99,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md",
-        "blob_sha": "079f972af73945d7babb8cfe5185977ed9d43e8a",
-        "category": "working_context",
-        "title": "N0 causal-arbitration frontier ready for Magnolia calibration",
-        "declared": {},
-        "matched_terms": [
-          "frontier"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 13
-      },
-      {
-        "score": 99,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
-        "blob_sha": "c44ed89c28153b7496910f099851ddf576176574",
-        "category": "working_context",
-        "title": "N0 Endpoint Repair and Downstream Arbitration Handoff",
-        "declared": {
-          "status": "`FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`."
-        },
-        "matched_terms": [
-          "architecture research",
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 11,
+        "lexical_body_hits": 15,
         "currentness_adjustment": 30
       },
       {
-        "score": 96,
+        "score": 101,
         "branch": "alice-eipm-v1-causal-arbitration-binding",
         "branch_scope": "branch_specific",
         "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
@@ -431,137 +392,96 @@
         "title": "N0 downstream causal arbitration — Magnolia execution contract",
         "declared": {},
         "matched_terms": [
-          "research"
+          "magnolia",
+          "repair"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "lexical"
         ],
-        "lexical_body_hits": 6,
+        "lexical_body_hits": 5,
         "currentness_adjustment": 25
       },
       {
-        "score": 83,
-        "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
-        "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
-        "category": "design_document",
-        "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
-        "declared": {},
-        "matched_terms": [
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 7,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 79,
-        "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
-        "blob_sha": "eee60bbaeba09923431699702aa18d3d559dd85a",
-        "category": "design_document",
-        "title": "N0 downstream causal arbitration finalization v0.1",
-        "declared": {},
-        "matched_terms": [
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 6,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 75,
-        "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "branch_scope": "branch_specific",
-        "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
-        "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
-        "category": "design_document",
-        "title": "N0 downstream causal arbitration v0.1",
-        "declared": {},
-        "matched_terms": [
-          "frontier"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 7,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 64,
-        "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "branch_scope": "branch_specific",
-        "path": "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
-        "blob_sha": "4096787a38c8e99018bc1ab1ae219d96ebfa79f5",
-        "category": "design_document",
-        "title": "N0 v0.2 Production Build Plan",
-        "declared": {
-          "status": " implementation active; GPU training held until CPU/data gates pass"
-        },
-        "matched_terms": [
-          "benchmark",
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 7,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 58,
+        "score": 80,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-13/sol/CURRENT_STATE_AND_HANDOFF.md",
-        "blob_sha": "7eb589676edac6b8dc6352597a921f9de8503e5c",
+        "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md",
+        "blob_sha": "079f972af73945d7babb8cfe5185977ed9d43e8a",
         "category": "working_context",
-        "title": "A.L.I.C.E. Current State and Continuation Handoff — 2026-09-13",
+        "title": "N0 causal-arbitration frontier ready for Magnolia calibration",
         "declared": {},
         "matched_terms": [
-          "competitor",
-          "frontier",
-          "research"
+          "magnolia",
+          "repair",
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 12
+      },
+      {
+        "score": 77,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_N0_CONTINUATION_JOB_575548.md",
+        "blob_sha": "f8a37086738f1a7ff8256697aa0d78e711e8b6fb",
+        "category": "runtime_receipt",
+        "title": "Magnolia N0 continuation — job 575548",
+        "declared": {
+          "status": " completed successfully"
+        },
+        "matched_terms": [
+          "magnolia",
+          "repair",
+          "runtime-results"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
           "failure",
+          "document",
           "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 11,
-        "currentness_adjustment": -15
+        "lexical_body_hits": 8,
+        "currentness_adjustment": 4
       },
       {
-        "score": 58,
+        "score": 77,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md",
+        "blob_sha": "be2ffe0bb87a8f835d36698854aa620db7694b99",
+        "category": "runtime_receipt",
+        "title": "Magnolia 2×P100 Real N0 Training — Job 575546",
+        "declared": {
+          "status": " completed successfully; durable weights retained; LR scheduler defect identified before continuation"
+        },
+        "matched_terms": [
+          "failure",
+          "magnolia",
+          "repair",
+          "runtime-results"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 10,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 73,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/MEMORY_M2_EXECUTION_PLAN.md",
@@ -572,173 +492,126 @@
           "status": " Owner-directed active execution clarification"
         },
         "matched_terms": [
-          "research"
+          "fallback",
+          "repair"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "lexical"
         ],
         "lexical_body_hits": 6,
         "currentness_adjustment": 4
       },
       {
-        "score": 58,
+        "score": 73,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
-        "blob_sha": "83b65bc91215216f5637f99090f28c56940553b7",
-        "category": "design_document",
-        "title": "A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13",
-        "declared": {
-          "status": " research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.",
-          "supersession": " this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it."
-        },
-        "matched_terms": [
-          "benchmark",
-          "frontier",
-          "literature",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "supersession",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 12,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 56,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/PHASE_4_LIVE_RESEARCH_EXECUTION.md",
-        "blob_sha": "7ffb4fda1c9ab533de54f8a5118b19bb5df97e65",
-        "category": "design_document",
-        "title": "Phase 4 P4.10b — Live Governed Research Execution",
-        "declared": {
-          "status": "additive implementation profile. P4.6a, P4.7a, and P4.7b remain frozen fixture compatibility profiles."
-        },
-        "matched_terms": [
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 5,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 56,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/RESEARCH_FRONTIERS.md",
-        "blob_sha": "0b3f95c5156903824cbf94324734afff2499ed31",
-        "category": "design_document",
-        "title": "A.L.I.C.E. Research Frontiers Register",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_DDP_JOB_575537.md",
+        "blob_sha": "101c3de692ac07f418f2134c23f2c6245e1703f5",
+        "category": "runtime_receipt",
+        "title": "Magnolia 2×P100 N0 DDP Mechanics — Job 575537",
         "declared": {},
         "matched_terms": [
-          "benchmark",
-          "frontier",
-          "literature",
-          "research"
+          "failed",
+          "magnolia",
+          "runtime-results",
+          "smoke",
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "frontier",
-          "document",
           "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 9,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 73,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md",
+        "blob_sha": "77ff7dda3d28fef326ceb8e6af7db799879c876b",
+        "category": "runtime_receipt",
+        "title": "Magnolia 2×P100 N0 Runtime Smoke — Job 575527",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "magnolia",
+          "runtime-results",
+          "smoke",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 10,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 71,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md",
+        "blob_sha": "435efa0bf1c2e58ecd5929e4fd25c03cc6f9cd5b",
+        "category": "runtime_receipt",
+        "title": "Magnolia single-P100 N0 teacher diagnostic — job 575565",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "magnolia",
+          "repair",
+          "runtime-results"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
           "lexical"
         ],
         "lexical_body_hits": 8,
         "currentness_adjustment": 4
       },
       {
-        "score": 54,
+        "score": 67,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/STAGE_G_MEMORY_FABRIC_CANDIDATE_QUALIFICATION_MATRIX.md",
-        "blob_sha": "b396e4389f87e78e32e5805d620f7e5699d1579e",
-        "category": "design_document",
-        "title": "Stage G Memory Fabric Candidate Qualification Matrix",
-        "declared": {
-          "status": " Owner-ratified Stage G acceptance requirement"
-        },
-        "matched_terms": [
-          "benchmark",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 6,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 52,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md",
-        "blob_sha": "7fa503d6e7b78a80d4a632471e0f03f080dc615c",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
+        "blob_sha": "caa8ea529fc219d8d0004bd2c5cb5e2cebebc852",
         "category": "runtime_receipt",
-        "title": "N0 Frontier Research Audit — 2026-09-14",
+        "title": "Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571",
         "declared": {
-          "status": "hold the step-1000 -> step-2500 GPU job pending N0 v0.2 redesign**."
+          "status": "completed payload"
         },
         "matched_terms": [
-          "benchmark",
-          "frontier",
-          "research"
+          "error",
+          "failed",
+          "failure",
+          "magnolia",
+          "repair",
+          "runtime-results"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
-          "supersession",
           "lexical"
         ],
         "lexical_body_hits": 5,
         "currentness_adjustment": 4
       },
       {
-        "score": 52,
-        "branch": "feat/memory-m2-3-projection-prototype",
-        "branch_scope": "branch_specific",
-        "path": "docs/MEMORY_M2_EXECUTION_PLAN.md",
-        "blob_sha": "c7b02ff523e4a23236bf5a08466c82dc5556af14",
-        "category": "design_document",
-        "title": "Memory M2 Execution Plan — Contract and Full-Memory Parallelism",
-        "declared": {
-          "status": " Owner-directed active execution clarification"
-        },
-        "matched_terms": [
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 6
-      },
-      {
-        "score": 52,
+        "score": 67,
         "branch": "feat/memory-m2-closeout-shadow-admission",
         "branch_scope": "branch_specific",
         "path": "docs/MEMORY_M2_EXECUTION_PLAN.md",
@@ -749,19 +622,20 @@
           "status": " Owner-directed active execution clarification"
         },
         "matched_terms": [
-          "research"
+          "fallback",
+          "repair"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "lexical"
         ],
         "lexical_body_hits": 6
       },
       {
-        "score": 52,
+        "score": 67,
         "branch": "feat/memory-shadow-migration-stage-d",
         "branch_scope": "branch_specific",
         "path": "docs/MEMORY_M2_EXECUTION_PLAN.md",
@@ -772,19 +646,20 @@
           "status": " Owner-directed active execution clarification"
         },
         "matched_terms": [
-          "research"
+          "fallback",
+          "repair"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "lexical"
         ],
         "lexical_body_hits": 6
       },
       {
-        "score": 52,
+        "score": 67,
         "branch": "feat/memory-shadow-migration-stage-f-g",
         "branch_scope": "branch_specific",
         "path": "docs/MEMORY_M2_EXECUTION_PLAN.md",
@@ -795,44 +670,191 @@
           "status": " Owner-directed active execution clarification"
         },
         "matched_terms": [
-          "research"
+          "fallback",
+          "repair"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "lexical"
         ],
         "lexical_body_hits": 6
       },
       {
-        "score": 50,
+        "score": 64,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/eipm/EIPM_EXPANSION_GENERATOR_HANDOFF_SPEC_v0.1.md",
-        "blob_sha": "f8950257455fa52972fc9dd9840165495c9ee115",
-        "category": "design_document",
-        "title": "EIPM Expansion Generator Handoff Spec v0.1",
+        "path": "docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md",
+        "blob_sha": "7fa503d6e7b78a80d4a632471e0f03f080dc615c",
+        "category": "runtime_receipt",
+        "title": "N0 Frontier Research Audit — 2026-09-14",
         "declared": {
-          "status": " implementation handoff; subordinate to owner-ratified EIPM hard rules"
+          "status": "hold the step-1000 -> step-2500 GPU job pending N0 v0.2 redesign**."
         },
         "matched_terms": [
-          "competitor"
+          "magnolia",
+          "runtime-results"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
+          "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 5,
+        "lexical_body_hits": 7,
         "currentness_adjustment": 4
+      },
+      {
+        "score": 64,
+        "branch": "alice-eipm-v1-causal-arbitration-binding",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+        "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
+        "category": "design_document",
+        "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
+        "declared": {},
+        "matched_terms": [
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 6,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 63,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/PHASE_4_LIVE_RESEARCH_EXECUTION.md",
+        "blob_sha": "7ffb4fda1c9ab533de54f8a5118b19bb5df97e65",
+        "category": "design_document",
+        "title": "Phase 4 P4.10b — Live Governed Research Execution",
+        "declared": {
+          "status": "additive implementation profile. P4.6a, P4.7a, and P4.7b remain frozen fixture compatibility profiles."
+        },
+        "matched_terms": [
+          "failure",
+          "fallback",
+          "powershell"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 4,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 63,
+        "branch": "feat/memory-m2-1-claim-authority-prototype",
+        "branch_scope": "branch_specific",
+        "path": "docs/MEMORY_M2_EXECUTION_PLAN.md",
+        "blob_sha": "bc73fc0393f065f2d01f1c19ce0fe61095a75af2",
+        "category": "design_document",
+        "title": "Memory M2 Execution Plan — Contract and Full-Memory Parallelism",
+        "declared": {
+          "status": " Owner-directed active execution clarification"
+        },
+        "matched_terms": [
+          "fallback",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 5
+      },
+      {
+        "score": 63,
+        "branch": "feat/memory-m2-2-shadow-adjudication",
+        "branch_scope": "branch_specific",
+        "path": "docs/MEMORY_M2_EXECUTION_PLAN.md",
+        "blob_sha": "d4995c4cefac47b9a5d1325801bc882ce1a39bdf",
+        "category": "design_document",
+        "title": "Memory M2 Execution Plan — Contract and Full-Memory Parallelism",
+        "declared": {
+          "status": " Owner-directed active execution clarification"
+        },
+        "matched_terms": [
+          "fallback",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 5
+      },
+      {
+        "score": 63,
+        "branch": "feat/memory-m2-3-projection-prototype",
+        "branch_scope": "branch_specific",
+        "path": "docs/MEMORY_M2_EXECUTION_PLAN.md",
+        "blob_sha": "c7b02ff523e4a23236bf5a08466c82dc5556af14",
+        "category": "design_document",
+        "title": "Memory M2 Execution Plan — Contract and Full-Memory Parallelism",
+        "declared": {
+          "status": " Owner-directed active execution clarification"
+        },
+        "matched_terms": [
+          "fallback",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 5
+      },
+      {
+        "score": 63,
+        "branch": "feat/memory-m2-4-bounded-serving",
+        "branch_scope": "branch_specific",
+        "path": "docs/MEMORY_M2_EXECUTION_PLAN.md",
+        "blob_sha": "9a54a010db746a3553f3991c75db0a8411ccdf33",
+        "category": "design_document",
+        "title": "Memory M2 Execution Plan — Contract and Full-Memory Parallelism",
+        "declared": {
+          "status": " Owner-directed active execution clarification"
+        },
+        "matched_terms": [
+          "fallback",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 5
       }
     ],
-    "private_external_route_recommended": false,
-    "private_external_route_reason": null,
+    "private_external_route_recommended": true,
+    "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
     "authority": "routing-only"
   },
   "graphify_result_text": "",
