@@ -1,7 +1,7 @@
 {
-  "request_id": "graphify-readiness-current-frontier-001",
-  "question": "Where in code is the current N0 arbitration PYTHONPATH import-root contract defined for calibration and frozen arbitration, and which udocker wrapper forwards the related runtime controls?",
-  "budget": 1600,
+  "request_id": "n0-doctrine-and-current-frontier-20260917-001",
+  "question": "For continuing the A.L.I.C.E. N0 personality-model build, retrieve the current scientific frontier and the durable doctrine that constrains the model: its role inside the A.L.I.C.E. entity; what N0 is and is not responsible for; full-production/no-hard-ceiling capability rules; efficiency and speed tradeoffs; lessons from MC10 over-validation/hotfix loops and external validators; internal validation strategy; authority/provenance and E0 E-INF A-SYN boundaries; private identity-gradient boundaries; provider/model independence; anti-loop and supersession rules; architecture decisions already made; known failures or rejected approaches that must not be reintroduced; and the next scientifically justified build action from the current frontier.",
+  "budget": 2400,
   "traversal": "bfs",
   "contexts": [
     "call",
