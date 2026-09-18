@@ -5,25 +5,12 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import subprocess
 from pathlib import Path
 
 SOURCE_BRANCH = "alice-eipm-v1-build"
 RESEARCH_BRANCH = "research/graphify-context-substrate"
 CATALOG_DIR = Path("research/graphify-context/catalog")
-
-KNOWLEDGE_BRANCH_PATTERNS = (
-    r"^main$",
-    r"^alice-context$",
-    r"^fable-builder-model$",
-    r"^alice-mc10[bc]-live$",
-    r"^alice-eipm-v1-",
-    r"^docs/",
-    r"^planning/",
-    r"^feat/memory",
-    r"^fix/governance",
-)
 
 
 def git(*args: str) -> str:
@@ -40,9 +27,11 @@ def git(*args: str) -> str:
 
 
 def relevant(name: str) -> bool:
-    if name == RESEARCH_BRANCH or name.startswith("tmp-"):
-        return False
-    return any(re.search(pattern,name) for pattern in KNOWLEDGE_BRANCH_PATTERNS)
+    # Fail open on branch coverage, fail closed on authority. Every pushed
+    # non-temporary ALICE branch can carry lessons, receipts, telemetry, or
+    # superseded decisions. The research substrate and tmp-* branches are the
+    # only deliberate exclusions.
+    return name != RESEARCH_BRANCH and not name.startswith("tmp-")
 
 
 def actual_heads() -> dict[str,str]:
