@@ -1,0 +1,136 @@
+name: N0 Missing Evidence Localization Contract Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-missing-evidence-localization
+    paths:
+      - "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py"
+      - "scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh"
+      - "scripts/eipm/n0/magnolia_n0_v02_missing_evidence_path_localization_v0_1.sbatch"
+      - "scripts/eipm/n0/magnolia_udocker_exec.sh"
+      - ".github/workflows/n0-missing-evidence-localization-contract-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py \
+            scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py
+          bash -n scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh
+          bash -n scripts/eipm/n0/magnolia_n0_v02_missing_evidence_path_localization_v0_1.sbatch
+          bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
+
+      - name: Fresh data contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          p=Path("scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py")
+          text=p.read_text(encoding="utf-8")
+          required=[
+              "PAIRS = 16",
+              "missing_structured_evidence_fresh_relation_flip",
+              "only_relation_direction_changes_within_pair",
+              '"frozen_challenge_rows_reused": False',
+              '"prior_diagnostic_rows_reused": False',
+              '"training_authorized": False',
+              '"structured_view_available": False',
+              '"evidence_view_uniquely_answer_authoritative": True',
+              '"counterfactual_view": 2',
+          ]
+          missing=[item for item in required if item not in text]
+          if missing:
+              raise SystemExit("fresh localization builder contract missing: "+repr(missing))
+          forbidden=["LATCHAL2-","Matrix Alder","Matrix Briar"]
+          present=[item for item in forbidden if item in text]
+          if present:
+              raise SystemExit("frozen challenge identity leaked into fresh builder: "+repr(present))
+          print("fresh_data_contract=PASS")
+          PY
+
+      - name: Diagnostic causal contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          p=Path("scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py")
+          text=p.read_text(encoding="utf-8")
+          required=[
+              "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+              "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4",
+              'failed != ["counterfactual_family_min_drop"]',
+              'minimum_family != "missing_structured_evidence"',
+              "build_prefusion_counterfactual_rows",
+              "graph_field_weights",
+              "precompute_fusion_cache",
+              "latent_forward",
+              "relation_flip_pair_accuracy",
+              '"frozen_challenge_reclassified": False',
+              '"training_authorized": False',
+              '"gradient_performed": False',
+              '"scale_authorized": False',
+          ]
+          missing=[item for item in required if item not in text]
+          if missing:
+              raise SystemExit("diagnostic causal contract missing: "+repr(missing))
+          print("diagnostic_causal_contract=PASS")
+          PY
+
+      - name: Runner safety contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          runner=Path("scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh").read_text(encoding="utf-8")
+          required=[
+              'export PYTHONPATH="$ROOT/src:$ROOT/scripts/eipm/n0${PYTHONPATH:+:$PYTHONPATH}"',
+              "build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
+              "diagnose_n0_v02_missing_evidence_path_v0_1.py",
+              "adaptive-multi-view-latent-pool-final-frozen-challenge-v0.1-after-575792",
+              "relation-endpoint-repair-v0.2/training/step-00000200",
+              "automatic_rerun=false",
+              "training_enabled=false",
+              "scale_authorized=false",
+          ]
+          missing=[item for item in required if item not in runner]
+          if missing:
+              raise SystemExit("localization runner contract missing: "+repr(missing))
+
+          forbidden=[
+              "train_n0_",
+              "--learning-rate",
+              "--max-steps",
+              "git pull",
+              "git checkout",
+              "git switch",
+              "adaptive-multi-view-latent-pool-frozen-challenge-v0.2/challenge.jsonl",
+          ]
+          present=[item for item in forbidden if item in runner]
+          if present:
+              raise SystemExit("forbidden localization runner behavior: "+repr(present))
+
+          wrapper=Path("scripts/eipm/n0/magnolia_udocker_exec.sh").read_text(encoding="utf-8")
+          if "ALICE_N0_MISSING_EVIDENCE_DIAG_DIR" not in wrapper:
+              raise SystemExit("udocker wrapper missing localization env forwarding")
+          print("localization_runner_safety=PASS")
+          PY
