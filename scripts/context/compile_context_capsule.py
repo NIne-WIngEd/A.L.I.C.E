@@ -121,7 +121,7 @@ def main() -> None:
         "",
         "## Source pointers",
         "",
-    ]
+    ])
     for h in hits:
         lines.append(
             f"- [{h.get('score')}] {h.get('branch')}:{h.get('path')} — {h.get('title')}"
