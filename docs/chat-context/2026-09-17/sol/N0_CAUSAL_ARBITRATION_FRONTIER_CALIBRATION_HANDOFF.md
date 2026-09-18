@@ -14,9 +14,9 @@ Stable build base remains:
 
 The current maximal unmerged N0 experiment frontier is:
 
-`alice-eipm-v1-causal-arbitration-binding @ d49d6e7f45c15905ca8ec5a33d1ac14c3aef3d59`
+`alice-eipm-v1-causal-arbitration-binding @ 6c930788da42ad9964c4b5bf6067be3b7d6bfd06`
 
-It is 23 commits ahead of the stable build base and 0 behind. This branch is still an experiment frontier. It has not been promoted into the stable build base or canonical main.
+It is 27 commits ahead of the stable build base and 0 behind. This branch is still an experiment frontier. It has not been promoted into the stable build base or canonical main.
 
 The last completed model runtime remains Magnolia job `575718`, which produced the selected endpoint-role repair graph at step 200:
 
@@ -125,3 +125,48 @@ No private identity gradient is authorized by this frontier. N0 is not complete.
 Treat the stable build branch as the build base, not as the complete current scientific state. The tested unmerged causal-arbitration frontier above is the active experiment head for the next execution.
 
 Before any Magnolia command, preserve the validated whole-stage udocker route and the private operational lessons already recorded. The next execution is canonical-only calibration. Do not skip directly to candidate arbitration.
+
+
+## Calibration attempt 575759 — infrastructure failure, not model evidence
+
+Magnolia job `575759` ran on `gpu001` with one Tesla P100. The validated udocker GPU route started correctly.
+
+Calibration stopped during canonical repeat 1 before the N0 model stack executed:
+
+`ModuleNotFoundError: No module named 'alice_personality'`
+
+The failure occurred when `downstream_full_stack_graph_evaluator_v0_1.py` was launched as a subprocess from the calibrator. The new calibration runner had not established the repository import roots inside the container.
+
+This is an infrastructure/import-contract failure.
+
+- candidate graph supplied: false
+- candidate arm observed: false
+- model gradient: false
+- canonical arm result completed: false
+- scientific arbitration evidence produced: false
+- endpoint-repair result invalidated: false
+
+The failed output directory is preserved. Do not delete it to make a rerun pass.
+
+### Root-cause repair
+
+The proven N0 import contract is now explicit in both the calibration runner and frozen arbitration runner:
+
+`PYTHONPATH=$ROOT/src:$ROOT/scripts/eipm/n0`
+
+Relevant frontier commits:
+
+- `0fbac89280c34e47098d1e7734f845ff7d16bdaf` — bind calibration import roots
+- `e56d464aa4da17b07ac592d1a0a5a56a0591a1a5` — bind frozen arbitration import roots
+- `15a9e6f8f379f111dd450f17a09f3230b3c0f692` — prevent PYTHONPATH regression in contract CI
+- `6c930788da42ad9964c4b5bf6067be3b7d6bfd06` — add no-GPU import-root smoke
+
+GitHub Actions run `35300971759` passed on `6c930788da42ad9964c4b5bf6067be3b7d6bfd06`.
+
+### Retry rule
+
+Retry canonical-only calibration from the fixed frontier head. Preserve the failed default output directory and use a new calibration output root:
+
+`$HOME/rayan-compute/rayan-n0/n0-v02/downstream-causal-arbitration-metric-calibration-v0.1-retry-575759`
+
+Do not submit candidate arbitration until this retry produces a valid calibration receipt and frozen metric policy.
