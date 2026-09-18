@@ -1,16 +1,16 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "coverage-frontier-capsule-v2-003",
-  "question": "What is the current N0 scientific state now, including the stable build base, the latest continuity handoff, and any newer unmerged experiment frontier that must be inspected before the next execution?",
-  "generated_at_utc": "2026-09-18T02:14:21.224179+00:00",
+  "request_id": "coverage-frontier-codegraph-001",
+  "question": "Where in code is the full-stack downstream causal arbitration source binding enforced, and which functions connect canonical-only calibration to frozen arbitration execution, finalization, and the post-arbitration decision gate?",
+  "generated_at_utc": "2026-09-18T02:16:40.064882+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "catalog_source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-    "graphify_used": false,
-    "graph_source_branch": null,
-    "graph_source_commit": null,
-    "graph_extraction_tree": null,
+    "graphify_used": true,
+    "graph_source_branch": "alice-eipm-v1-causal-arbitration-binding",
+    "graph_source_commit": "8dab1e5debf48e09ebdbab49815e0938fda25a30",
+    "graph_extraction_tree": "exact-source-worktree",
     "continuity_branch_head": {
       "branch": "alice-context",
       "head": "0a2afa48cddb46e6dd17112d90d06ffcfa8727cc",
@@ -29,12 +29,12 @@
   },
   "routing_decision": {
     "graphify_mode": "auto",
-    "graphify_used": false,
-    "reason": "document/branch/private routing is sufficient",
-    "graph_source_branch": null,
-    "graph_source_commit": null,
-    "graph_source_reason": null,
-    "graph_rebuild_required": false,
+    "graphify_used": true,
+    "reason": "question requires code topology",
+    "graph_source_branch": "alice-eipm-v1-causal-arbitration-binding",
+    "graph_source_commit": "8dab1e5debf48e09ebdbab49815e0938fda25a30",
+    "graph_source_reason": "single maximal unmerged experiment frontier",
+    "graph_rebuild_required": true,
     "private_external_route_recommended": false
   },
   "active_mission": {
@@ -254,7 +254,102 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 90,
+      "score": 117,
+      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+      "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
+      "category": "design_document",
+      "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [],
+      "catalogs": [
+        "document",
+        "failure",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 13
+    },
+    {
+      "score": 102,
+      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+      "blob_sha": "eee60bbaeba09923431699702aa18d3d559dd85a",
+      "category": "design_document",
+      "title": "N0 downstream causal arbitration finalization v0.1",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [],
+      "catalogs": [
+        "document",
+        "failure",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 10
+    },
+    {
+      "score": 87,
+      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "branch_scope": "branch_specific",
+      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
+      "category": "design_document",
+      "title": "N0 downstream causal arbitration v0.1",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [],
+      "catalogs": [
+        "document",
+        "failure",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 7
+    },
+    {
+      "score": 87,
+      "branch": "alice-eipm-v1-downstream-arbitration",
+      "branch_scope": "branch_specific",
+      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
+      "category": "design_document",
+      "title": "N0 downstream causal arbitration v0.1",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [],
+      "catalogs": [
+        "document",
+        "failure",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 7
+    },
+    {
+      "score": 87,
+      "branch": "alice-eipm-v1-post-arbitration-gate",
+      "branch_scope": "branch_specific",
+      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
+      "category": "design_document",
+      "title": "N0 downstream causal arbitration v0.1",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [],
+      "catalogs": [
+        "document",
+        "failure",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 7
+    },
+    {
+      "score": 72,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
@@ -264,297 +359,258 @@
       "declared": {
         "status": "`FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`."
       },
-      "matched_terms": [
-        "architecture research",
-        "frontier",
-        "research"
-      ],
+      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "frontier",
         "document",
         "failure",
+        "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 11,
-      "currentness_adjustment": 30
+      "lexical_body_hits": 6
     },
     {
-      "score": 75,
+      "score": 53,
       "branch": "alice-eipm-v1-causal-arbitration-binding",
       "branch_scope": "branch_specific",
-      "path": "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
-      "blob_sha": "4096787a38c8e99018bc1ab1ae219d96ebfa79f5",
-      "category": "design_document",
-      "title": "N0 v0.2 Production Build Plan",
-      "declared": {
-        "status": " implementation active; GPU training held until CPU/data gates pass"
-      },
-      "matched_terms": [
-        "benchmark",
-        "frontier",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 8,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 64,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
-      "blob_sha": "83b65bc91215216f5637f99090f28c56940553b7",
-      "category": "design_document",
-      "title": "A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13",
-      "declared": {
-        "status": " research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.",
-        "supersession": " this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it."
-      },
-      "matched_terms": [
-        "benchmark",
-        "frontier",
-        "literature",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 7,
-      "currentness_adjustment": 4
-    },
-    {
-      "score": 58,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-13/sol/CURRENT_STATE_AND_HANDOFF.md",
-      "blob_sha": "7eb589676edac6b8dc6352597a921f9de8503e5c",
-      "category": "working_context",
-      "title": "A.L.I.C.E. Current State and Continuation Handoff — 2026-09-13",
+      "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
+      "blob_sha": "d79db85b734e70bbf1705b8ef81e9371a93a5fba",
+      "category": "configuration_state",
+      "title": "n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
       "declared": {},
-      "matched_terms": [
-        "competitor",
-        "frontier",
-        "research"
-      ],
+      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "frontier",
-        "supersession",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 7,
-      "currentness_adjustment": -15
+        "document"
+      ]
     },
     {
-      "score": 58,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/RESEARCH_FRONTIERS.md",
-      "blob_sha": "0b3f95c5156903824cbf94324734afff2499ed31",
-      "category": "design_document",
-      "title": "A.L.I.C.E. Research Frontiers Register",
-      "declared": {},
-      "matched_terms": [
-        "benchmark",
-        "frontier",
-        "literature",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 9,
-      "currentness_adjustment": 4
-    },
-    {
-      "score": 56,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
-      "blob_sha": "2878661756bf3c0610740adffde46528594e117c",
-      "category": "design_document",
-      "title": "N0 v0.2 Production Build Plan",
-      "declared": {
-        "status": " implementation active; GPU training held until CPU/data gates pass"
-      },
-      "matched_terms": [
-        "benchmark",
-        "frontier",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 7,
-      "currentness_adjustment": 4
-    },
-    {
-      "score": 56,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md",
-      "blob_sha": "7fa503d6e7b78a80d4a632471e0f03f080dc615c",
-      "category": "runtime_receipt",
-      "title": "N0 Frontier Research Audit — 2026-09-14",
-      "declared": {
-        "status": "hold the step-1000 -> step-2500 GPU job pending N0 v0.2 redesign**."
-      },
-      "matched_terms": [
-        "benchmark",
-        "frontier",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 6,
-      "currentness_adjustment": 4
-    },
-    {
-      "score": 56,
+      "score": 53,
       "branch": "alice-eipm-v1-causal-arbitration-binding",
       "branch_scope": "branch_specific",
-      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
-      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration v0.1",
+      "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+      "blob_sha": "e05ebf2c3e4307d953287f252a9447a627d9f28a",
+      "category": "configuration_state",
+      "title": "n0_v02_downstream_causal_arbitration_v0_1.example.json",
       "declared": {},
-      "matched_terms": [
-        "frontier"
-      ],
+      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "frontier",
         "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 5,
-      "currentness_adjustment": 25
+        "failure"
+      ]
     },
     {
-      "score": 50,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/EIPM_EXPANSION_GENERATOR_HANDOFF_SPEC_v0.1.md",
-      "blob_sha": "f8950257455fa52972fc9dd9840165495c9ee115",
-      "category": "design_document",
-      "title": "EIPM Expansion Generator Handoff Spec v0.1",
-      "declared": {
-        "status": " implementation handoff; subordinate to owner-ratified EIPM hard rules"
-      },
-      "matched_terms": [
-        "competitor"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 5,
-      "currentness_adjustment": 4
-    },
-    {
-      "score": 48,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/EIPM_CURATED_FRONTIER_V1_RECEIPT.md",
-      "blob_sha": "0283f40a199fff586adf384f1b5c591a7e41b235",
-      "category": "runtime_receipt",
-      "title": "EIPM Curated Frontier v1 Receipt",
-      "declared": {
-        "status": " curation complete enough for targeted gap filling; not training-authorized."
-      },
-      "matched_terms": [
-        "competitor",
-        "frontier"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 4,
-      "currentness_adjustment": 4
-    },
-    {
-      "score": 48,
+      "score": 53,
       "branch": "alice-eipm-v1-causal-arbitration-binding",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
-      "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
+      "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
+      "blob_sha": "924bfc9021ba91cbf723fb6fd47534b05d28c555",
+      "category": "configuration_state",
+      "title": "n0_v02_downstream_causal_arbitration_v0_2.example.json",
       "declared": {},
-      "matched_terms": [
-        "research"
-      ],
+      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "frontier",
         "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 3,
-      "currentness_adjustment": 25
+        "failure"
+      ]
     },
     {
-      "score": 47,
-      "branch": "alice-context",
+      "score": 53,
+      "branch": "alice-eipm-v1-causal-arbitration-binding",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-07/sol/SOL_CONTINUATION_HANDOFF.md",
-      "blob_sha": "ecd645e3c5b898f95175276bbf2670dc66e4e999",
-      "category": "working_context",
-      "title": "A.L.I.C.E. — Sol Continuation Handoff (2026-09-07)",
+      "path": "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+      "blob_sha": "9f618c22233c021780f5a0580c51293315cdc286",
+      "category": "configuration_state",
+      "title": "n0_v02_post_arbitration_decision_gate_v0_1.example.json",
       "declared": {},
-      "matched_terms": [
-        "competitor",
-        "frontier"
-      ],
+      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "frontier",
         "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 12,
-      "currentness_adjustment": -15
+        "failure"
+      ]
+    },
+    {
+      "score": 53,
+      "branch": "alice-eipm-v1-downstream-arbitration",
+      "branch_scope": "branch_specific",
+      "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+      "blob_sha": "e05ebf2c3e4307d953287f252a9447a627d9f28a",
+      "category": "configuration_state",
+      "title": "n0_v02_downstream_causal_arbitration_v0_1.example.json",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [],
+      "catalogs": [
+        "document",
+        "failure"
+      ]
+    },
+    {
+      "score": 53,
+      "branch": "alice-eipm-v1-post-arbitration-gate",
+      "branch_scope": "branch_specific",
+      "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+      "blob_sha": "e05ebf2c3e4307d953287f252a9447a627d9f28a",
+      "category": "configuration_state",
+      "title": "n0_v02_downstream_causal_arbitration_v0_1.example.json",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [],
+      "catalogs": [
+        "document",
+        "failure"
+      ]
     }
   ],
-  "graphify_navigation_hints": [],
+  "graphify_navigation_hints": [
+    {
+      "label": "Full-stack N0 graph evaluator for frozen downstream causal arbitration. This…",
+      "source": "scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py",
+      "location": "L2",
+      "community": "121"
+    },
+    {
+      "label": "PostArbitrationDecisionGateV01Tests",
+      "source": "tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py",
+      "location": "L12",
+      "community": "191"
+    },
+    {
+      "label": "post_arbitration_decision_gate_v0_1.py",
+      "source": "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
+      "location": "L1",
+      "community": "179"
+    },
+    {
+      "label": "ArbitrationV02Tests",
+      "source": "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
+      "location": "L12",
+      "community": "169"
+    },
+    {
+      "label": "binding()",
+      "source": "tests/phase5/test_memory_m2_foundation_contracts.py",
+      "location": "L99",
+      "community": "188"
+    },
+    {
+      "label": "CalibrationError",
+      "source": "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+      "location": "L44",
+      "community": "178"
+    },
+    {
+      "label": "_canonical()",
+      "source": "src/alice_vault/grounded_context.py",
+      "location": "L24",
+      "community": "139"
+    },
+    {
+      "label": "causal_chain()",
+      "source": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py",
+      "location": "L235",
+      "community": "135"
+    },
+    {
+      "label": "codes()",
+      "source": "tests/phase3/test_conversation_response_validation_adversarial.py",
+      "location": "L18",
+      "community": "40"
+    },
+    {
+      "label": "connect()",
+      "source": "tests/phase4/test_information_live_http.py",
+      "location": "L227",
+      "community": "241"
+    },
+    {
+      "label": "decision()",
+      "source": "tests/phase5/attention_workspace_helpers.py",
+      "location": "L74",
+      "community": "126"
+    },
+    {
+      "label": "downstream_causal_arbitration_v0_1.py",
+      "source": "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
+      "location": "L1",
+      "community": "116"
+    },
+    {
+      "label": "test_expected_current_generation_is_enforced()",
+      "source": "tests/phase5/test_projection_prototype.py",
+      "location": "L389",
+      "community": "134"
+    },
+    {
+      "label": "ExecutionFreezeError",
+      "source": "scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py",
+      "location": "L15",
+      "community": "195"
+    },
+    {
+      "label": "FinalizationError",
+      "source": "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
+      "location": "L28",
+      "community": "172"
+    },
+    {
+      "label": "eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
+      "source": "scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
+      "location": "L1",
+      "community": "6"
+    },
+    {
+      "label": "FullStackGraphEvaluatorBindingTests",
+      "source": "tests/eipm/n0/test_downstream_full_stack_graph_evaluator_v0_1.py",
+      "location": "L16",
+      "community": "201"
+    },
+    {
+      "label": "gate()",
+      "source": "scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
+      "location": "L155",
+      "community": "6"
+    },
+    {
+      "label": "Only source wrapper eligible for future model-facing web grounding.",
+      "source": "src/alice_information/injection_firewall.py",
+      "location": "L146",
+      "community": "4"
+    },
+    {
+      "label": "_source()",
+      "source": "tests/phase4/test_information_freshness.py",
+      "location": "L43",
+      "community": "55"
+    },
+    {
+      "label": "downstream_full_stack_graph_evaluator_v0_1.py",
+      "source": "scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py",
+      "location": "L1",
+      "community": "121"
+    },
+    {
+      "label": "pathlib",
+      "source": "",
+      "location": "",
+      "community": "2"
+    },
+    {
+      "label": "json",
+      "source": "",
+      "location": "",
+      "community": "2"
+    },
+    {
+      "label": "typing",
+      "source": "",
+      "location": "",
+      "community": "6"
+    }
+  ],
   "private_external_route_recommended": false,
   "private_external_route_reason": null,
   "trust_contract": [

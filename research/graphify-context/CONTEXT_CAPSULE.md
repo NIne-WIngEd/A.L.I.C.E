@@ -1,10 +1,10 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: coverage-frontier-capsule-v2-003
-- Question: What is the current N0 scientific state now, including the stable build base, the latest continuity handoff, and any newer unmerged experiment frontier that must be inspected before the next execution?
+- Request: coverage-frontier-codegraph-001
+- Question: Where in code is the full-stack downstream causal arbitration source binding enforced, and which functions connect canonical-only calibration to frozen arbitration execution, finalization, and the post-arbitration decision gate?
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
-- Graphify used: False
+- Graphify used: True
 
 ## Active mission
 
@@ -22,30 +22,38 @@
 
 ## Source pointers
 
-- [90] alice-context:docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md — N0 Endpoint Repair and Downstream Arbitration Handoff
+- [117] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md — N0 downstream causal arbitration: full-stack graph binding v0.1
+- [102] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
+- [87] alice-eipm-v1-causal-arbitration-binding:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
+- [87] alice-eipm-v1-downstream-arbitration:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
+- [87] alice-eipm-v1-post-arbitration-gate:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
+- [72] alice-context:docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md — N0 Endpoint Repair and Downstream Arbitration Handoff
   - status: `FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`.
-- [75] alice-eipm-v1-causal-arbitration-binding:docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md — N0 v0.2 Production Build Plan
-  - status:  implementation active; GPU training held until CPU/data gates pass
-- [64] alice-eipm-v1-build:docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md — A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13
-  - status:  research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.
-  - supersession:  this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it.
-- [58] alice-context:docs/chat-context/2026-09-13/sol/CURRENT_STATE_AND_HANDOFF.md — A.L.I.C.E. Current State and Continuation Handoff — 2026-09-13
-- [58] alice-eipm-v1-build:docs/RESEARCH_FRONTIERS.md — A.L.I.C.E. Research Frontiers Register
-- [56] alice-eipm-v1-build:docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md — N0 v0.2 Production Build Plan
-  - status:  implementation active; GPU training held until CPU/data gates pass
-- [56] alice-eipm-v1-build:docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md — N0 Frontier Research Audit — 2026-09-14
-  - status: hold the step-1000 -> step-2500 GPU job pending N0 v0.2 redesign**.
-- [56] alice-eipm-v1-causal-arbitration-binding:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
-- [50] alice-eipm-v1-build:docs/eipm/EIPM_EXPANSION_GENERATOR_HANDOFF_SPEC_v0.1.md — EIPM Expansion Generator Handoff Spec v0.1
-  - status:  implementation handoff; subordinate to owner-ratified EIPM hard rules
-- [48] alice-eipm-v1-build:docs/eipm/EIPM_CURATED_FRONTIER_V1_RECEIPT.md — EIPM Curated Frontier v1 Receipt
-  - status:  curation complete enough for targeted gap filling; not training-authorized.
-- [48] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md — N0 downstream causal arbitration: full-stack graph binding v0.1
-- [47] alice-context:docs/chat-context/2026-09-07/sol/SOL_CONTINUATION_HANDOFF.md — A.L.I.C.E. — Sol Continuation Handoff (2026-09-07)
+- [53] alice-eipm-v1-causal-arbitration-binding:configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json — n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json
+- [53] alice-eipm-v1-causal-arbitration-binding:configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json — n0_v02_downstream_causal_arbitration_v0_1.example.json
+- [53] alice-eipm-v1-causal-arbitration-binding:configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json — n0_v02_downstream_causal_arbitration_v0_2.example.json
+- [53] alice-eipm-v1-causal-arbitration-binding:configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json — n0_v02_post_arbitration_decision_gate_v0_1.example.json
+- [53] alice-eipm-v1-downstream-arbitration:configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json — n0_v02_downstream_causal_arbitration_v0_1.example.json
+- [53] alice-eipm-v1-post-arbitration-gate:configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json — n0_v02_downstream_causal_arbitration_v0_1.example.json
 
 ## Graphify navigation hints
 
-- skipped: document/branch/private routing was sufficient
+- Full-stack N0 graph evaluator for frozen downstream causal arbitration. This… -> scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py:L2
+- PostArbitrationDecisionGateV01Tests -> tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py:L12
+- post_arbitration_decision_gate_v0_1.py -> scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py:L1
+- ArbitrationV02Tests -> tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py:L12
+- binding() -> tests/phase5/test_memory_m2_foundation_contracts.py:L99
+- CalibrationError -> scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py:L44
+- _canonical() -> src/alice_vault/grounded_context.py:L24
+- causal_chain() -> scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py:L235
+- codes() -> tests/phase3/test_conversation_response_validation_adversarial.py:L18
+- connect() -> tests/phase4/test_information_live_http.py:L227
+- decision() -> tests/phase5/attention_workspace_helpers.py:L74
+- downstream_causal_arbitration_v0_1.py -> scripts/eipm/n0/downstream_causal_arbitration_v0_1.py:L1
+- test_expected_current_generation_is_enforced() -> tests/phase5/test_projection_prototype.py:L389
+- ExecutionFreezeError -> scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py:L15
+- FinalizationError -> scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py:L28
+- eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py -> scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py:L1
 
 ## External/private routing
 
