@@ -1,7 +1,7 @@
 {
-  "request_id": "n0-relation-semantic-role-residual-ready-20260918-001",
-  "question": "Resolve the exact current N0 state after failed relation-semantic grounding job 575797. Identify the active handoff, unique maximal experiment frontier, the shared relation-read entanglement localization, immutable endpoint parent graph, fresh v0.2 semantic-role residual repair, heldout discipline, and the single authorized next action. Confirm no frozen-challenge rerun, no threshold change, no reuse of v0.1 semantic/localization/frozen rows, no endpoint-heldout reuse, no scaling, and no N0 completion.",
-  "budget": 1500,
+  "request_id": "n0-query-relation-role-router-ready-20260918-001",
+  "question": "Resolve the current N0 state after job 575798 failed at dev without heldout exposure. Identify the active handoff, maximal experiment frontier, external research checkpoint, raw-query relation-role router architecture, anti-loop rule requiring architecture audit after another failure, and the single authorized next action.",
+  "budget": 1400,
   "traversal": "bfs",
   "contexts": [
     "call",
