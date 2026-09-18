@@ -48,15 +48,30 @@ jobs:
           if not question:
               raise SystemExit("QUERY_REQUEST.json has no non-empty question")
 
-          top = int(request.get("top", 12))
-          top = max(1, min(top, 50))
+          budget = int(request.get("budget", 2500))
+          budget = max(500, min(budget, 12000))
+
+          traversal = str(request.get("traversal", "bfs")).strip().lower()
+          if traversal not in {"bfs", "dfs"}:
+              raise SystemExit("traversal must be 'bfs' or 'dfs'")
+
+          contexts = request.get("contexts", [])
+          if contexts is None:
+              contexts = []
+          if not isinstance(contexts, list):
+              raise SystemExit("contexts must be a JSON array")
+          contexts = [str(x).strip() for x in contexts if str(x).strip()][:8]
 
           cmd = [
               "graphify", "query", question,
               "--graph", str(graph_path),
-              "--top", str(top),
-              "--json",
+              "--budget", str(budget),
           ]
+          if traversal == "dfs":
+              cmd.append("--dfs")
+          for context in contexts:
+              cmd.extend(["--context", context])
+
           proc = subprocess.run(cmd, text=True, capture_output=True)
           if proc.returncode != 0:
               raise SystemExit(
@@ -66,11 +81,6 @@ jobs:
                   + proc.stderr
               )
 
-          try:
-              graphify_result = json.loads(proc.stdout)
-          except json.JSONDecodeError:
-              graphify_result = {"raw_stdout": proc.stdout}
-
           graph_build = {}
           if build_path.exists():
               graph_build = json.loads(build_path.read_text(encoding="utf-8"))
@@ -78,11 +88,14 @@ jobs:
           result = {
               "request_id": request.get("request_id"),
               "question": question,
-              "top": top,
+              "budget": budget,
+              "traversal": traversal,
+              "contexts": contexts,
               "generated_at_utc": datetime.now(timezone.utc).isoformat(),
               "authority": "navigation-only",
               "graph_build": graph_build,
-              "graphify_result": graphify_result,
+              "graphify_result_text": proc.stdout,
+              "graphify_stderr": proc.stderr,
           }
 
           Path("research/graphify-context/QUERY_RESULT.json").write_text(
