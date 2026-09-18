@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 env:
-  GRAPHIFY_SOURCE_BRANCH: alice-eipm-v1-build
+  STABLE_BUILD_BRANCH: alice-eipm-v1-build
   GRAPHIFY_VERSION: "0.9.63"
 
 jobs:
@@ -28,43 +28,44 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: "research/graphify-context/requirements-graphify.txt"
 
-      - name: Verify catalog freshness
+      - name: Fetch all context branches and detect catalog drift
         shell: bash
         run: |
           set -euo pipefail
-          git fetch origin "+refs/heads/$GRAPHIFY_SOURCE_BRANCH:refs/remotes/origin/$GRAPHIFY_SOURCE_BRANCH"
-          LIVE_SOURCE_COMMIT="$(git rev-parse "origin/$GRAPHIFY_SOURCE_BRANCH")"
-          echo "LIVE_SOURCE_COMMIT=$LIVE_SOURCE_COMMIT" >> "$GITHUB_ENV"
-          export LIVE_SOURCE_COMMIT
-          python - <<'PY'
-          import json
-          import os
-          from pathlib import Path
+          git fetch origin "+refs/heads/*:refs/remotes/origin/*"
+          python scripts/context/check_context_catalog_freshness.py \
+            --github-env "$GITHUB_ENV"
 
-          catalog_path = Path("research/graphify-context/catalog/CATALOG_STATUS.json")
-          if not catalog_path.exists():
-              raise SystemExit("STALE_CATALOG: no CATALOG_STATUS.json exists")
-          catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
-          live = os.environ["LIVE_SOURCE_COMMIT"]
-          recorded = catalog.get("source_commit")
-          if recorded != live:
-              raise SystemExit(
-                  "STALE_CATALOG: catalog represents "
-                  + repr(recorded)
-                  + " but alice-eipm-v1-build is "
-                  + live
-                  + ". Refresh the context catalog before querying."
-              )
-          PY
+      - name: Refresh branch, document, and lexical catalogs when stale
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$REFRESH_CONTEXT_CATALOG" != "true" ]; then
+            echo "Context catalog is fresh."
+            exit 0
+          fi
+          python scripts/context/build_context_catalog.py
+          python scripts/context/build_context_lexical_index.py
+          python -m json.tool research/graphify-context/catalog/CATALOG_STATUS.json >/dev/null
+          python -m json.tool research/graphify-context/catalog/ACTIVE_MISSION_STATE.json >/dev/null
+          python -m json.tool research/graphify-context/catalog/lexical/LEXICAL_STATUS.json >/dev/null
+          python scripts/context/check_context_catalog_freshness.py --fail-on-drift
 
       - name: Query branch and document catalogs
         shell: bash
         run: |
+          set -euo pipefail
           QUESTION="$(python - <<'PY'
           import json
           from pathlib import Path
-          req=json.loads(Path("research/graphify-context/QUERY_REQUEST.json").read_text(encoding="utf-8"))
+          req=json.loads(
+              Path("research/graphify-context/QUERY_REQUEST.json").read_text(
+                  encoding="utf-8"
+              )
+          )
           print(str(req.get("question","")).strip())
           PY
           )"
@@ -73,17 +74,24 @@ jobs:
       - name: Decide whether code graph is required
         shell: bash
         run: |
+          set -euo pipefail
           python - <<'PY'
           import json
           import os
+          import subprocess
           from pathlib import Path
 
           request=json.loads(
-              Path("research/graphify-context/QUERY_REQUEST.json").read_text(encoding="utf-8")
+              Path("research/graphify-context/QUERY_REQUEST.json").read_text(
+                  encoding="utf-8"
+              )
           )
           catalog=json.loads(
-              Path("research/graphify-context/CATALOG_QUERY_RESULT.json").read_text(encoding="utf-8")
+              Path("research/graphify-context/CATALOG_QUERY_RESULT.json").read_text(
+                  encoding="utf-8"
+              )
           )
+          mission=catalog.get("active_mission_state") or {}
           mode=str(request.get("graphify_mode","auto")).strip().lower()
           if mode not in {"auto","always","never"}:
               raise SystemExit("graphify_mode must be auto, always, or never")
@@ -97,6 +105,22 @@ jobs:
               "test failure","config field","crosscontextfusion","model.py","__init__",
               "src/","scripts/",".py","()",
           )
+          stable=(
+              (mission.get("stable_build_base") or {}).get("branch")
+              or os.environ["STABLE_BUILD_BRANCH"]
+          )
+          frontier=mission.get("unmerged_experiment_frontier") or {}
+          maximal=frontier.get("maximal_heads") or []
+          explicit_stable=any(
+              term in question
+              for term in (
+                  "stable build",
+                  "build base",
+                  "alice-eipm-v1-build",
+                  "canonical build branch",
+              )
+          )
+
           if mode == "always":
               use=True
               reason="request forced Graphify"
@@ -111,37 +135,116 @@ jobs:
                   "document/branch/private routing is sufficient"
               )
 
+          selected_branch=None
+          selected_commit=None
+          rebuild=False
+          source_reason=None
+
           if use:
-              build_path=Path("research/graphify-context/LAST_GRAPH_BUILD.json")
-              if not build_path.exists():
-                  raise SystemExit("STALE_GRAPH: no LAST_GRAPH_BUILD.json exists")
-              build=json.loads(build_path.read_text(encoding="utf-8"))
-              live=os.environ["LIVE_SOURCE_COMMIT"]
-              if build.get("source_work_commit") != live:
+              requested_branch=str(
+                  request.get("graph_source_branch","")
+              ).strip()
+              if requested_branch:
+                  selected_branch=requested_branch
+                  source_reason="request explicitly selected graph source branch"
+              elif explicit_stable:
+                  selected_branch=stable
+                  source_reason="question explicitly targets stable build"
+              elif len(maximal) == 1:
+                  selected_branch=str(maximal[0].get("branch"))
+                  source_reason="single maximal unmerged experiment frontier"
+              elif len(maximal) > 1:
+                  names=", ".join(
+                      str(row.get("branch")) for row in maximal
+                  )
                   raise SystemExit(
-                      "STALE_GRAPH: graph represents "
-                      + repr(build.get("source_work_commit"))
-                      + " but live source is "
-                      + live
+                      "AMBIGUOUS_CODE_FRONTIER: multiple maximal experiment heads: "
+                      + names
+                      + ". Set graph_source_branch explicitly."
+                  )
+              else:
+                  selected_branch=stable
+                  source_reason="no unmerged experiment frontier exists"
+
+              ref=f"refs/remotes/origin/{selected_branch}"
+              proc=subprocess.run(
+                  ["git","rev-parse",ref],
+                  text=True,
+                  capture_output=True,
+              )
+              if proc.returncode != 0:
+                  raise SystemExit(
+                      "GRAPH_SOURCE_BRANCH_NOT_FOUND: "
+                      + selected_branch
+                      + "\n"
+                      + proc.stderr
+                  )
+              selected_commit=proc.stdout.strip()
+
+              graph_path=Path("graphify-out/graph.json")
+              build_path=Path(
+                  "research/graphify-context/LAST_GRAPH_BUILD.json"
+              )
+              build={}
+              if build_path.exists():
+                  try:
+                      build=json.loads(
+                          build_path.read_text(encoding="utf-8")
+                      )
+                  except json.JSONDecodeError:
+                      build={}
+              rebuild=(
+                  not graph_path.exists()
+                  or build.get("source_work_branch") != selected_branch
+                  or build.get("source_work_commit") != selected_commit
+                  or build.get("graphify_version") not in {None, os.environ["GRAPHIFY_VERSION"]}
+              )
+
+          with open(os.environ["GITHUB_ENV"],"a",encoding="utf-8") as handle:
+              handle.write(
+                  "USE_GRAPHIFY="
+                  + ("true" if use else "false")
+                  + "\n"
+              )
+              handle.write(
+                  "REBUILD_GRAPHIFY="
+                  + ("true" if rebuild else "false")
+                  + "\n"
+              )
+              if selected_branch:
+                  handle.write(
+                      "SELECTED_GRAPH_BRANCH="
+                      + selected_branch
+                      + "\n"
+                  )
+              if selected_commit:
+                  handle.write(
+                      "SELECTED_GRAPH_COMMIT="
+                      + selected_commit
+                      + "\n"
                   )
 
-          with open(os.environ["GITHUB_ENV"],"a",encoding="utf-8") as f:
-              f.write("USE_GRAPHIFY=" + ("true" if use else "false") + "\n")
-
-          Path("research/graphify-context/ROUTING_DECISION.json").write_text(
-              json.dumps(
-                  {
-                      "graphify_mode":mode,
-                      "graphify_used":use,
-                      "reason":reason,
-                      "private_external_route_recommended":
-                          catalog.get("private_external_route_recommended",False),
-                  },
-                  indent=2,
-              ) + "\n",
+          decision={
+              "graphify_mode":mode,
+              "graphify_used":use,
+              "reason":reason,
+              "graph_source_branch":selected_branch,
+              "graph_source_commit":selected_commit,
+              "graph_source_reason":source_reason,
+              "graph_rebuild_required":rebuild,
+              "private_external_route_recommended":
+                  catalog.get(
+                      "private_external_route_recommended",
+                      False,
+                  ),
+          }
+          Path(
+              "research/graphify-context/ROUTING_DECISION.json"
+          ).write_text(
+              json.dumps(decision,indent=2,ensure_ascii=False)+"\n",
               encoding="utf-8",
           )
-          print(f"graphify_used={use} reason={reason}")
+          print(json.dumps(decision,ensure_ascii=False))
           PY
 
       - name: Install Graphify when required
@@ -152,45 +255,125 @@ jobs:
             echo "Graphify skipped for this query."
             exit 0
           fi
-          python -m pip install --upgrade pip
-          python -m pip install "graphifyy==$GRAPHIFY_VERSION"
+          python -m pip install \
+            -r research/graphify-context/requirements-graphify.txt
+
+      - name: Rebuild exact-branch code graph when required
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$USE_GRAPHIFY" != "true" ]; then
+            echo "No code graph required."
+            exit 0
+          fi
+          if [ "$REBUILD_GRAPHIFY" != "true" ]; then
+            echo "Reusing graph for $SELECTED_GRAPH_BRANCH @ $SELECTED_GRAPH_COMMIT"
+            exit 0
+          fi
+
+          SOURCE_DIR="$RUNNER_TEMP/alice-query-graph-source"
+          rm -rf "$SOURCE_DIR"
+          git worktree add --detach \
+            "$SOURCE_DIR" \
+            "refs/remotes/origin/$SELECTED_GRAPH_BRANCH"
+
+          (
+            cd "$SOURCE_DIR"
+            graphify extract . --code-only
+          )
+
+          mkdir -p graphify-out research/graphify-context
+          cp "$SOURCE_DIR/graphify-out/graph.json" graphify-out/graph.json
+          if [ -f "$SOURCE_DIR/graphify-out/GRAPH_REPORT.md" ]; then
+            cp "$SOURCE_DIR/graphify-out/GRAPH_REPORT.md" graphify-out/GRAPH_REPORT.md
+          else
+            rm -f graphify-out/GRAPH_REPORT.md
+          fi
+
+          export SELECTED_GRAPH_BRANCH SELECTED_GRAPH_COMMIT GRAPHIFY_VERSION
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          receipt={
+              "source_work_branch":os.environ["SELECTED_GRAPH_BRANCH"],
+              "source_work_commit":os.environ["SELECTED_GRAPH_COMMIT"],
+              "research_branch":os.environ["GITHUB_REF_NAME"],
+              "research_commit":os.environ["GITHUB_SHA"],
+              "workflow_run_id":os.environ["GITHUB_RUN_ID"],
+              "graph_mode":"code-only",
+              "extraction_tree":"exact-source-worktree",
+              "graphify_version":os.environ["GRAPHIFY_VERSION"],
+              "authority":"navigation-only",
+          }
+          Path(
+              "research/graphify-context/LAST_GRAPH_BUILD.json"
+          ).write_text(
+              json.dumps(receipt,indent=2)+"\n",
+              encoding="utf-8",
+          )
+          PY
 
       - name: Assemble scoped query result
         shell: bash
         run: |
+          set -euo pipefail
           python - <<'PY'
           import json
-          import os
           import subprocess
           from datetime import datetime, timezone
           from pathlib import Path
 
-          req_path=Path("research/graphify-context/QUERY_REQUEST.json")
+          req_path=Path(
+              "research/graphify-context/QUERY_REQUEST.json"
+          )
           graph_path=Path("graphify-out/graph.json")
-          build_path=Path("research/graphify-context/LAST_GRAPH_BUILD.json")
+          build_path=Path(
+              "research/graphify-context/LAST_GRAPH_BUILD.json"
+          )
           request=json.loads(req_path.read_text(encoding="utf-8"))
           catalog_result=json.loads(
-              Path("research/graphify-context/CATALOG_QUERY_RESULT.json").read_text(encoding="utf-8")
+              Path(
+                  "research/graphify-context/CATALOG_QUERY_RESULT.json"
+              ).read_text(encoding="utf-8")
           )
           routing=json.loads(
-              Path("research/graphify-context/ROUTING_DECISION.json").read_text(encoding="utf-8")
+              Path(
+                  "research/graphify-context/ROUTING_DECISION.json"
+              ).read_text(encoding="utf-8")
           )
 
           question=str(request.get("question","")).strip()
           if not question:
-              raise SystemExit("QUERY_REQUEST.json has no non-empty question")
+              raise SystemExit(
+                  "QUERY_REQUEST.json has no non-empty question"
+              )
 
-          budget=max(500,min(int(request.get("budget",2500)),12000))
-          traversal=str(request.get("traversal","bfs")).strip().lower()
+          budget=max(
+              500,
+              min(int(request.get("budget",2500)),12000),
+          )
+          traversal=str(
+              request.get("traversal","bfs")
+          ).strip().lower()
           if traversal not in {"bfs","dfs"}:
-              raise SystemExit("traversal must be 'bfs' or 'dfs'")
+              raise SystemExit(
+                  "traversal must be 'bfs' or 'dfs'"
+              )
 
           contexts=request.get("contexts",[])
           if contexts is None:
               contexts=[]
           if not isinstance(contexts,list):
-              raise SystemExit("contexts must be a JSON array")
-          contexts=[str(x).strip() for x in contexts if str(x).strip()][:8]
+              raise SystemExit(
+                  "contexts must be a JSON array"
+              )
+          contexts=[
+              str(x).strip()
+              for x in contexts
+              if str(x).strip()
+          ][:8]
 
           graphify_used=bool(routing.get("graphify_used"))
           stdout=""
@@ -205,7 +388,11 @@ jobs:
                   cmd.append("--dfs")
               for context in contexts:
                   cmd.extend(["--context",context])
-              proc=subprocess.run(cmd,text=True,capture_output=True)
+              proc=subprocess.run(
+                  cmd,
+                  text=True,
+                  capture_output=True,
+              )
               if proc.returncode != 0:
                   raise SystemExit(
                       "graphify query failed\nSTDOUT:\n"
@@ -218,7 +405,9 @@ jobs:
 
           graph_build={}
           if build_path.exists():
-              graph_build=json.loads(build_path.read_text(encoding="utf-8"))
+              graph_build=json.loads(
+                  build_path.read_text(encoding="utf-8")
+              )
 
           result={
               "request_id":request.get("request_id"),
@@ -226,7 +415,8 @@ jobs:
               "budget":budget,
               "traversal":traversal,
               "contexts":contexts,
-              "generated_at_utc":datetime.now(timezone.utc).isoformat(),
+              "generated_at_utc":
+                  datetime.now(timezone.utc).isoformat(),
               "authority":"navigation-only",
               "routing_decision":routing,
               "graphify_used":graphify_used,
@@ -235,8 +425,14 @@ jobs:
               "graphify_result_text":stdout,
               "graphify_stderr":stderr,
           }
-          Path("research/graphify-context/QUERY_RESULT.json").write_text(
-              json.dumps(result,indent=2,ensure_ascii=False)+"\n",
+          Path(
+              "research/graphify-context/QUERY_RESULT.json"
+          ).write_text(
+              json.dumps(
+                  result,
+                  indent=2,
+                  ensure_ascii=False,
+              )+"\n",
               encoding="utf-8",
           )
           PY
@@ -245,7 +441,7 @@ jobs:
         run: |
           python scripts/context/compile_context_capsule.py
 
-      - name: Publish result on latest research head
+      - name: Publish query, refreshed catalogs, and graph cache
         shell: bash
         run: |
           set -euo pipefail
@@ -253,61 +449,163 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
 
           TMP_DIR="$(mktemp -d)"
-          cp research/graphify-context/QUERY_RESULT.json "$TMP_DIR/QUERY_RESULT.json"
-          cp research/graphify-context/CONTEXT_CAPSULE.json "$TMP_DIR/CONTEXT_CAPSULE.json"
-          cp research/graphify-context/CONTEXT_CAPSULE.md "$TMP_DIR/CONTEXT_CAPSULE.md"
+          export TMP_DIR
+          cp \
+            research/graphify-context/QUERY_RESULT.json \
+            "$TMP_DIR/QUERY_RESULT.json"
+          cp \
+            research/graphify-context/CONTEXT_CAPSULE.json \
+            "$TMP_DIR/CONTEXT_CAPSULE.json"
+          cp \
+            research/graphify-context/CONTEXT_CAPSULE.md \
+            "$TMP_DIR/CONTEXT_CAPSULE.md"
 
-          git fetch origin \
-            "+refs/heads/$GITHUB_REF_NAME:refs/remotes/origin/$GITHUB_REF_NAME" \
-            "+refs/heads/$GRAPHIFY_SOURCE_BRANCH:refs/remotes/origin/$GRAPHIFY_SOURCE_BRANCH"
+          if [ "$REFRESH_CONTEXT_CATALOG" = "true" ]; then
+            cp -R \
+              research/graphify-context/catalog \
+              "$TMP_DIR/catalog"
+          fi
 
-          LIVE_SOURCE_COMMIT="$(git rev-parse "origin/$GRAPHIFY_SOURCE_BRANCH")"
-          export LIVE_SOURCE_COMMIT TMP_DIR
+          if [ "$REBUILD_GRAPHIFY" = "true" ]; then
+            mkdir -p "$TMP_DIR/graphify-out"
+            cp graphify-out/graph.json "$TMP_DIR/graphify-out/graph.json"
+            if [ -f graphify-out/GRAPH_REPORT.md ]; then
+              cp \
+                graphify-out/GRAPH_REPORT.md \
+                "$TMP_DIR/graphify-out/GRAPH_REPORT.md"
+            fi
+            cp \
+              research/graphify-context/LAST_GRAPH_BUILD.json \
+              "$TMP_DIR/LAST_GRAPH_BUILD.json"
+          fi
 
+          git fetch origin "+refs/heads/*:refs/remotes/origin/*"
           git reset --hard "origin/$GITHUB_REF_NAME"
+
+          if [ "$REFRESH_CONTEXT_CATALOG" = "true" ]; then
+            rm -rf research/graphify-context/catalog
+            mkdir -p research/graphify-context
+            cp -R "$TMP_DIR/catalog" research/graphify-context/catalog
+          fi
+
+          python scripts/context/check_context_catalog_freshness.py \
+            --fail-on-drift
+
+          export LIVE_SOURCE_COMMIT="$(
+            git rev-parse "refs/remotes/origin/$STABLE_BUILD_BRANCH"
+          )"
 
           python - <<'PY'
           import json
           import os
+          import subprocess
           from pathlib import Path
 
           current_request=json.loads(
-              Path("research/graphify-context/QUERY_REQUEST.json").read_text(encoding="utf-8")
+              Path(
+                  "research/graphify-context/QUERY_REQUEST.json"
+              ).read_text(encoding="utf-8")
           )
           result=json.loads(
-              (Path(os.environ["TMP_DIR"])/"QUERY_RESULT.json").read_text(encoding="utf-8")
+              (
+                  Path(os.environ["TMP_DIR"])
+                  / "QUERY_RESULT.json"
+              ).read_text(encoding="utf-8")
           )
-          if current_request.get("request_id") != result.get("request_id"):
+          if (
+              current_request.get("request_id")
+              != result.get("request_id")
+          ):
               raise SystemExit(
                   "STALE_QUERY_RESULT: request changed while query was running"
               )
 
-          live=os.environ["LIVE_SOURCE_COMMIT"]
+          live_source=os.environ["LIVE_SOURCE_COMMIT"]
           catalog_source=(
               result.get("catalog_result",{})
               .get("catalog_status",{})
               .get("source_commit")
           )
-          if catalog_source != live:
+          if catalog_source != live_source:
               raise SystemExit(
-                  f"STALE_QUERY_RESULT: catalog source {catalog_source!r} != live {live}"
+                  "STALE_QUERY_RESULT: catalog source "
+                  + repr(catalog_source)
+                  + " != live stable build "
+                  + live_source
               )
 
           if result.get("graphify_used"):
-              graph_source=result.get("graph_build",{}).get("source_work_commit")
-              if graph_source != live:
+              graph_build=result.get("graph_build",{})
+              branch=graph_build.get("source_work_branch")
+              recorded=graph_build.get("source_work_commit")
+              if not branch or not recorded:
                   raise SystemExit(
-                      f"STALE_QUERY_RESULT: graph source {graph_source!r} != live {live}"
+                      "STALE_QUERY_RESULT: graph source metadata missing"
+                  )
+              live=subprocess.run(
+                  [
+                      "git","rev-parse",
+                      f"refs/remotes/origin/{branch}",
+                  ],
+                  check=True,
+                  text=True,
+                  capture_output=True,
+              ).stdout.strip()
+              if recorded != live:
+                  raise SystemExit(
+                      "STALE_QUERY_RESULT: graph source "
+                      + repr(recorded)
+                      + " != live "
+                      + branch
+                      + " "
+                      + live
                   )
           PY
 
-          cp "$TMP_DIR/QUERY_RESULT.json" research/graphify-context/QUERY_RESULT.json
-          cp "$TMP_DIR/CONTEXT_CAPSULE.json" research/graphify-context/CONTEXT_CAPSULE.json
-          cp "$TMP_DIR/CONTEXT_CAPSULE.md" research/graphify-context/CONTEXT_CAPSULE.md
+          cp \
+            "$TMP_DIR/QUERY_RESULT.json" \
+            research/graphify-context/QUERY_RESULT.json
+          cp \
+            "$TMP_DIR/CONTEXT_CAPSULE.json" \
+            research/graphify-context/CONTEXT_CAPSULE.json
+          cp \
+            "$TMP_DIR/CONTEXT_CAPSULE.md" \
+            research/graphify-context/CONTEXT_CAPSULE.md
+
+          if [ "$REBUILD_GRAPHIFY" = "true" ]; then
+            mkdir -p graphify-out research/graphify-context
+            cp \
+              "$TMP_DIR/graphify-out/graph.json" \
+              graphify-out/graph.json
+            if [ -f "$TMP_DIR/graphify-out/GRAPH_REPORT.md" ]; then
+              cp \
+                "$TMP_DIR/graphify-out/GRAPH_REPORT.md" \
+                graphify-out/GRAPH_REPORT.md
+            else
+              rm -f graphify-out/GRAPH_REPORT.md
+            fi
+            cp \
+              "$TMP_DIR/LAST_GRAPH_BUILD.json" \
+              research/graphify-context/LAST_GRAPH_BUILD.json
+          fi
+
           git add \
             research/graphify-context/QUERY_RESULT.json \
             research/graphify-context/CONTEXT_CAPSULE.json \
             research/graphify-context/CONTEXT_CAPSULE.md
+
+          if [ "$REFRESH_CONTEXT_CATALOG" = "true" ]; then
+            git add research/graphify-context/catalog
+          fi
+
+          if [ "$REBUILD_GRAPHIFY" = "true" ]; then
+            git add \
+              graphify-out/graph.json \
+              research/graphify-context/LAST_GRAPH_BUILD.json
+            if [ -f graphify-out/GRAPH_REPORT.md ]; then
+              git add graphify-out/GRAPH_REPORT.md
+            fi
+          fi
 
           if git diff --cached --quiet; then
             echo "No query-result changes."
