@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-localization-active-handoff-20260918-001",
-  "question": "Resolve the current N0 active handoff and maximal experiment frontier after final frozen challenge 575794. Confirm the single authorized next action is the fresh missing-evidence graph-to-fusion-to-latent localization run, with no final challenge rerun, threshold change, training, promotion, scale, or N0 completion.",
-  "generated_at_utc": "2026-09-18T18:09:32.590725+00:00",
+  "request_id": "n0-relation-semantic-grounding-ready-20260918-001",
+  "question": "Resolve the exact current N0 state after fresh localization job 575795. Identify the active handoff, unique maximal experiment frontier, localized defect, selected parent graph, anti-loop constraints, and the single authorized next action. Confirm no frozen challenge rerun, no threshold change, no training on challenge/localization rows, no endpoint heldout-test reuse, no scaling, and no N0 completion.",
+  "generated_at_utc": "2026-09-18T18:59:52.316045+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -13,17 +13,17 @@
     "graph_extraction_tree": null,
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "f0d6f20855ee11463b2efd49558bb21a763afdfb",
-      "head_committed_at": "2026-09-18T13:09:04-05:00",
-      "head_message": "context: publish current N0 localization handoff"
+      "head": "5c7016d1b90008614356f29c90b00c4a779e5900",
+      "head_committed_at": "2026-09-18T13:59:18-05:00",
+      "head_message": "context: hand off N0 relation-semantic grounding repair"
     },
     "continuity_stale_relative_to_experiment_frontier": false,
     "maximal_unmerged_experiment_heads": [
       {
-        "branch": "alice-eipm-v1-missing-evidence-localization",
-        "head": "da6fbe80a00f6463d28d3ce29300e1c2943003ef",
-        "head_committed_at": "2026-09-18T13:06:56-05:00",
-        "head_message": "chore(n0): print probe-independent localization signals"
+        "branch": "alice-eipm-v1-relation-semantic-grounding",
+        "head": "09fdd7c1c8cadda4ac61b65f1ff9c32e35ced53d",
+        "head_committed_at": "2026-09-18T13:58:22-05:00",
+        "head_message": "ci(n0): guard relation-semantic grounding repair contract"
       }
     ]
   },
@@ -93,11 +93,11 @@
     },
     "continuity_overlay": {
       "branch": "alice-context",
-      "path": "docs/chat-context/2026-09-18/sol/N0_MISSING_EVIDENCE_LOCALIZATION_HANDOFF.md",
-      "blob_sha": "a39c72468a654060fba433b47324990f32134b63",
-      "title": "N0 Missing-Evidence Localization Handoff",
+      "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md",
+      "blob_sha": "9635954cb93dc3bf3e9c63de012dcca5d718ea9f",
+      "title": "N0 Relation-Semantic Grounding Repair Handoff",
       "date": "2026-09-18",
-      "last_changed_at": "2026-09-18T13:09:04-05:00",
+      "last_changed_at": "2026-09-18T13:59:18-05:00",
       "current_build_head_declared": null,
       "magnolia_job_observed": null,
       "authoritative_build_state_excerpt": null,
@@ -107,30 +107,32 @@
     },
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "f0d6f20855ee11463b2efd49558bb21a763afdfb",
-      "head_committed_at": "2026-09-18T13:09:04-05:00",
-      "head_message": "context: publish current N0 localization handoff"
+      "head": "5c7016d1b90008614356f29c90b00c4a779e5900",
+      "head_committed_at": "2026-09-18T13:59:18-05:00",
+      "head_message": "context: hand off N0 relation-semantic grounding repair"
     },
     "unmerged_experiment_frontier": {
       "schema": "alice-context-unmerged-experiment-frontier-v1",
       "stable_build_branch": "alice-eipm-v1-build",
       "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "candidate_count": 4,
+      "candidate_count": 5,
       "maximal_head_count": 1,
       "maximal_heads": [
         {
-          "branch": "alice-eipm-v1-missing-evidence-localization",
-          "head": "da6fbe80a00f6463d28d3ce29300e1c2943003ef",
-          "head_committed_at": "2026-09-18T13:06:56-05:00",
-          "head_message": "chore(n0): print probe-independent localization signals",
-          "ahead": 44,
+          "branch": "alice-eipm-v1-relation-semantic-grounding",
+          "head": "09fdd7c1c8cadda4ac61b65f1ff9c32e35ced53d",
+          "head_committed_at": "2026-09-18T13:58:22-05:00",
+          "head_message": "ci(n0): guard relation-semantic grounding repair contract",
+          "ahead": 51,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-          "changed_file_count_vs_source_merge_base": 41,
+          "changed_file_count_vs_source_merge_base": 47,
           "changed_paths_vs_source_merge_base": [
             ".github/workflows/n0-arbitration-contract-check.yml",
             ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
+            ".github/workflows/n0-relation-semantic-grounding-contract-check.yml",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
@@ -142,6 +144,7 @@
             "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
             "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
             "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
+            "scripts/eipm/n0/build_n0_v02_relation_semantic_grounding_curriculum_v0_1.py",
             "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
             "scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py",
             "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
@@ -153,6 +156,7 @@
             "scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch",
             "scripts/eipm/n0/magnolia_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sbatch",
             "scripts/eipm/n0/magnolia_n0_v02_missing_evidence_path_localization_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_grounding_v0_1.sbatch",
             "scripts/eipm/n0/magnolia_udocker_exec.sh",
             "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
             "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
@@ -161,6 +165,8 @@
             "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_relation_semantic_grounding_v0_1.sh",
+            "scripts/eipm/n0/train_n0_v02_relation_semantic_grounding_v0_1.py",
             "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
             "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
             "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
@@ -174,6 +180,66 @@
         }
       ],
       "all_ahead_candidates": [
+        {
+          "branch": "alice-eipm-v1-relation-semantic-grounding",
+          "head": "09fdd7c1c8cadda4ac61b65f1ff9c32e35ced53d",
+          "head_committed_at": "2026-09-18T13:58:22-05:00",
+          "head_message": "ci(n0): guard relation-semantic grounding repair contract",
+          "ahead": 51,
+          "behind": 0,
+          "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+          "changed_file_count_vs_source_merge_base": 47,
+          "changed_paths_vs_source_merge_base": [
+            ".github/workflows/n0-arbitration-contract-check.yml",
+            ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
+            ".github/workflows/n0-relation-semantic-grounding-contract-check.yml",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
+            "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+            "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+            "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+            "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+            "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+            "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+            "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
+            "scripts/eipm/n0/build_n0_v02_relation_semantic_grounding_curriculum_v0_1.py",
+            "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+            "scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py",
+            "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/downstream_causal_arbitration_v0_2.py",
+            "scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py",
+            "scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_n0_v02_missing_evidence_path_localization_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_grounding_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_udocker_exec.sh",
+            "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
+            "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
+            "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_relation_semantic_grounding_v0_1.sh",
+            "scripts/eipm/n0/train_n0_v02_relation_semantic_grounding_v0_1.py",
+            "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+            "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
+            "tests/eipm/n0/test_downstream_full_stack_graph_evaluator_v0_1.py",
+            "tests/eipm/n0/test_execute_frozen_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_finalize_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py",
+            "tests/eipm/n0/test_prepare_downstream_causal_arbitration_v0_1.py"
+          ],
+          "authority": "unmerged-experiment-pointer"
+        },
         {
           "branch": "alice-eipm-v1-missing-evidence-localization",
           "head": "da6fbe80a00f6463d28d3ce29300e1c2943003ef",
@@ -323,16 +389,41 @@
     },
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": false,
-      "newest_experiment_frontier_time": "2026-09-18T13:06:56-05:00",
-      "active_handoff_last_changed_at": "2026-09-18T13:09:04-05:00",
-      "context_branch_head_time": "2026-09-18T13:09:04-05:00"
+      "newest_experiment_frontier_time": "2026-09-18T13:58:22-05:00",
+      "active_handoff_last_changed_at": "2026-09-18T13:59:18-05:00",
+      "context_branch_head_time": "2026-09-18T13:59:18-05:00"
     },
     "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
     "authority": "routing-and-freshness-only"
   },
   "authoritative_source_pointers": [
     {
-      "score": 145,
+      "score": 112,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md",
+      "blob_sha": "9635954cb93dc3bf3e9c63de012dcca5d718ea9f",
+      "category": "working_context",
+      "title": "N0 Relation-Semantic Grounding Repair Handoff",
+      "declared": {
+        "status": " missing-evidence failure localized to relation-semantic endpoint grounding; one bounded repair is CI-ready; no frozen-challenge rerun, threshold change, promotion, scaling, or N0 completion authorized"
+      },
+      "matched_terms": [
+        "frontier"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 29,
+      "currentness_adjustment": 30
+    },
+    {
+      "score": 98,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
@@ -352,33 +443,10 @@
         "failure",
         "lexical"
       ],
-      "lexical_body_hits": 17
+      "lexical_body_hits": 19
     },
     {
-      "score": 141,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
-      "blob_sha": "00e639bed1b0f0ca42f128a266345be54f9541ee",
-      "category": "working_context",
-      "title": "N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization",
-      "declared": {
-        "status": " final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged"
-      },
-      "matched_terms": [
-        "frontier"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 18
-    },
-    {
-      "score": 140,
+      "score": 97,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-18/sol/N0_MISSING_EVIDENCE_LOCALIZATION_HANDOFF.md",
@@ -398,80 +466,20 @@
         "failure",
         "lexical"
       ],
-      "lexical_body_hits": 23,
-      "currentness_adjustment": 30
+      "lexical_body_hits": 27
     },
     {
-      "score": 95,
-      "branch": "alice-telemetry",
+      "score": 93,
+      "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "telemetry/n0-final-frozen-challenge-valid-fail-575794.json",
-      "blob_sha": "b2002f4ea83cadc8dce424f2edc3aa2d9586fd6d",
-      "category": "repository_file",
-      "title": "n0-final-frozen-challenge-valid-fail-575794.json",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 4
-    },
-    {
-      "score": 88,
-      "branch": "alice-eipm-v1-missing-evidence-localization",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
-      "blob_sha": "eee60bbaeba09923431699702aa18d3d559dd85a",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration finalization v0.1",
-      "declared": {},
+      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
+      "blob_sha": "00e639bed1b0f0ca42f128a266345be54f9541ee",
+      "category": "working_context",
+      "title": "N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization",
+      "declared": {
+        "status": " final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged"
+      },
       "matched_terms": [
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 7,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 85,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md",
-      "blob_sha": "5bf63241b821ece2c6b74fc0512c575bd7db9c6e",
-      "category": "design_document",
-      "title": "N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 8,
-      "currentness_adjustment": 4
-    },
-    {
-      "score": 79,
-      "branch": "fable-builder-model",
-      "branch_scope": "branch_specific",
-      "path": "docs/fable-builder/traces/2026-09-18_n0_arbitration_improvement_final_challenge_binding.jsonl",
-      "blob_sha": "40d1a4fce80f122d6647e418c6c258ec41b892f7",
-      "category": "design_document",
-      "title": "2026-09-18_n0_arbitration_improvement_final_challenge_binding.jsonl",
-      "declared": {},
-      "matched_terms": [
-        "benchmark",
         "frontier"
       ],
       "supersession_hints": [],
@@ -481,77 +489,18 @@
         "failure",
         "lexical"
       ],
-      "lexical_body_hits": 4
+      "lexical_body_hits": 23
     },
     {
-      "score": 77,
-      "branch": "fable-builder-model",
+      "score": 67,
+      "branch": "alice-eipm-v1-relation-semantic-grounding",
       "branch_scope": "branch_specific",
-      "path": "docs/fable-builder/traces/2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl",
-      "blob_sha": "dd9b39a6333344be9a3690220608496213fdbc47",
+      "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+      "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
       "category": "design_document",
-      "title": "2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl",
+      "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
       "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 8
-    },
-    {
-      "score": 74,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-16/sol/FULL_SCALE_FUSION_JOB575619_AND_FROZEN_CHALLENGE.md",
-      "blob_sha": "7139049e6292458813e3da7ef739007e823d9feb",
-      "category": "working_context",
-      "title": "Full-Scale Fusion Job 575619 + Frozen Challenge Gate — 2026-09-16",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 7,
-      "currentness_adjustment": -15
-    },
-    {
-      "score": 72,
-      "branch": "alice-eipm-v1-missing-evidence-localization",
-      "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
-      "blob_sha": "74aa2f5a2fb22f50c95da567cacec8ad26130d15",
-      "category": "repository_file",
-      "title": "n0-missing-evidence-localization-contract-check.yml",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 5,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 69,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/PHASE_4_FINAL_RELEASE_REPORT.md",
-      "blob_sha": "2152175a93b438c2f6455b1459252e5dc0198244",
-      "category": "design_document",
-      "title": "Phase 4 — Final Information Release Report",
-      "declared": {
-        "status": " Approved fixture-governed compatibility release; P4.10 operational live acceptance remains required"
-      },
       "matched_terms": [
-        "benchmark",
         "research"
       ],
       "supersession_hints": [],
@@ -561,22 +510,74 @@
         "failure",
         "lexical"
       ],
-      "lexical_body_hits": 6,
+      "lexical_body_hits": 10,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 65,
+      "branch": "alice-eipm-v1-relation-semantic-grounding",
+      "branch_scope": "branch_specific",
+      "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
+      "blob_sha": "59cc72e3de333c59776e78a2ed3a8e2a1e56c529",
+      "category": "configuration_state",
+      "title": "alice_n0_latent_pool_stage_state_v0.10.json",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 4,
+          "text": "\"supersedes\": \"configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json\","
+        }
+      ],
+      "catalogs": [
+        "supersession",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 7,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 64,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
+      "blob_sha": "83b65bc91215216f5637f99090f28c56940553b7",
+      "category": "design_document",
+      "title": "A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13",
+      "declared": {
+        "status": " research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.",
+        "supersession": " this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it."
+      },
+      "matched_terms": [
+        "benchmark",
+        "frontier",
+        "literature",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 18,
       "currentness_adjustment": 4
     },
     {
-      "score": 67,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/PHASE_2_FINAL_RELEASE_REPORT.md",
-      "blob_sha": "c440be2d319c7f6dd96229d46f376487d0ade4ca",
+      "score": 64,
+      "branch": "alice-eipm-v1-relation-semantic-grounding",
+      "branch_scope": "branch_specific",
+      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
       "category": "design_document",
-      "title": "Phase 2 — Final Memory Core Release Report",
-      "declared": {
-        "status": " Approved after final private release audit"
-      },
+      "title": "N0 downstream causal arbitration v0.1",
+      "declared": {},
       "matched_terms": [
-        "benchmark"
+        "frontier"
       ],
       "supersession_hints": [],
       "catalogs": [
@@ -585,8 +586,103 @@
         "failure",
         "lexical"
       ],
+      "lexical_body_hits": 11,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 64,
+      "branch": "alice-eipm-v1-relation-semantic-grounding",
+      "branch_scope": "branch_specific",
+      "path": "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+      "blob_sha": "4096787a38c8e99018bc1ab1ae219d96ebfa79f5",
+      "category": "design_document",
+      "title": "N0 v0.2 Production Build Plan",
+      "declared": {
+        "status": " implementation active; GPU training held until CPU/data gates pass"
+      },
+      "matched_terms": [
+        "benchmark",
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 15,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 62,
+      "branch": "alice-eipm-v1-relation-semantic-grounding",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+      "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
+      "category": "design_document",
+      "title": "N0 downstream causal arbitration — Magnolia execution contract",
+      "declared": {},
+      "matched_terms": [
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 8,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 61,
+      "branch": "alice-eipm-v1-relation-semantic-grounding",
+      "branch_scope": "branch_specific",
+      "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json",
+      "blob_sha": "e125a65217895681b4add72aebf39a4a9a540a6e",
+      "category": "configuration_state",
+      "title": "alice_n0_latent_pool_stage_state_v0.11.json",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 4,
+          "text": "\"supersedes\": \"configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json\","
+        }
+      ],
+      "catalogs": [
+        "supersession",
+        "document",
+        "failure",
+        "lexical"
+      ],
       "lexical_body_hits": 5,
-      "currentness_adjustment": 4
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 60,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md",
+      "blob_sha": "eff85666b994e668f3686bee2892bf47c6f7c9cd",
+      "category": "working_context",
+      "title": "N0 Causal Arbitration Frontier Calibration Handoff",
+      "declared": {},
+      "matched_terms": [
+        "frontier"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 20,
+      "currentness_adjustment": -15
     }
   ],
   "graphify_navigation_hints": [],

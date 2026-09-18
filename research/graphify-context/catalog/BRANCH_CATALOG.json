@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "f0d6f20855ee11463b2efd49558bb21a763afdfb",
-      "head_committed_at": "2026-09-18T13:09:04-05:00",
-      "head_message": "context: publish current N0 localization handoff",
+      "head": "5c7016d1b90008614356f29c90b00c4a779e5900",
+      "head_committed_at": "2026-09-18T13:59:18-05:00",
+      "head_message": "context: hand off N0 relation-semantic grounding repair",
       "status": "diverged",
-      "ahead": 193,
+      "ahead": 194,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 541,
+      "changed_file_count_vs_source_merge_base": 542,
       "knowledge_surface": true
     },
     {
@@ -76,6 +76,18 @@
       "knowledge_surface": true
     },
     {
+      "branch": "alice-eipm-v1-relation-semantic-grounding",
+      "head": "09fdd7c1c8cadda4ac61b65f1ff9c32e35ced53d",
+      "head_committed_at": "2026-09-18T13:58:22-05:00",
+      "head_message": "ci(n0): guard relation-semantic grounding repair contract",
+      "status": "ahead",
+      "ahead": 51,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 47,
+      "knowledge_surface": true
+    },
+    {
       "branch": "alice-mc10b-live",
       "head": "86ae99ca11d5c9a5c72f4d8dd22c7ec90eb882ea",
       "head_committed_at": "2026-09-01T00:55:21-05:00",
@@ -101,14 +113,14 @@
     },
     {
       "branch": "alice-telemetry",
-      "head": "0030960d6a0cc1ab144295176871a5b3b5be0ea7",
-      "head_committed_at": "2026-09-18T13:03:50-05:00",
-      "head_message": "telemetry: record final frozen challenge valid fail 575794",
+      "head": "b4cc798a01caf314293d2f98edfb0b88544aef4e",
+      "head_committed_at": "2026-09-18T13:59:20-05:00",
+      "head_message": "telemetry: record relation-semantic grounding repair readiness",
       "status": "unrelated",
-      "ahead": 27,
+      "ahead": 29,
       "behind": 675,
       "merge_base": null,
-      "changed_file_count_vs_source_merge_base": 1256,
+      "changed_file_count_vs_source_merge_base": 1258,
       "knowledge_surface": true
     },
     {
@@ -149,14 +161,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "028a0a18d24b08d4da5f17f51dcb0d5d793346f2",
-      "head_committed_at": "2026-09-18T13:03:53-05:00",
-      "head_message": "fbm: record final frozen fail localization lesson",
+      "head": "2e6cff76fc61978db1bd2d9f7b84b71d007fe9ab",
+      "head_committed_at": "2026-09-18T13:59:23-05:00",
+      "head_message": "fbm: record relation-semantic grounding localization and repair",
       "status": "diverged",
-      "ahead": 79,
+      "ahead": 81,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 79,
+      "changed_file_count_vs_source_merge_base": 81,
       "knowledge_surface": true
     },
     {
