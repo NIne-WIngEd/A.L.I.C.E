@@ -198,6 +198,7 @@ def main() -> None:
         "model_parameters_mutated": False,
         "training_authorized": False,
         "scale_authorized": False,
+        "hard_parameter_ceiling": None,
         "n0_complete": False,
     }
 
