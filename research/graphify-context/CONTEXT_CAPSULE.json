@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "coverage-frontier-capsule-v2-002",
+  "request_id": "coverage-frontier-capsule-v2-003",
   "question": "What is the current N0 scientific state now, including the stable build base, the latest continuity handoff, and any newer unmerged experiment frontier that must be inspected before the next execution?",
-  "generated_at_utc": "2026-09-18T02:12:50.502366+00:00",
+  "generated_at_utc": "2026-09-18T02:14:21.224179+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -254,80 +254,7 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 73,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-13/sol/CURRENT_STATE_AND_HANDOFF.md",
-      "blob_sha": "7eb589676edac6b8dc6352597a921f9de8503e5c",
-      "category": "working_context",
-      "title": "A.L.I.C.E. Current State and Continuation Handoff — 2026-09-13",
-      "declared": {},
-      "matched_terms": [
-        "competitor",
-        "frontier",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "supersession",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 7
-    },
-    {
-      "score": 62,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-07/sol/SOL_CONTINUATION_HANDOFF.md",
-      "blob_sha": "ecd645e3c5b898f95175276bbf2670dc66e4e999",
-      "category": "working_context",
-      "title": "A.L.I.C.E. — Sol Continuation Handoff (2026-09-07)",
-      "declared": {},
-      "matched_terms": [
-        "competitor",
-        "frontier"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 12
-    },
-    {
-      "score": 60,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-06/astra/ASTRA_MASTER_CONTINUATION_HANDOFF.md",
-      "blob_sha": "a3bf8dfab4e9e5dcf81fa20907c76af16603c4c2",
-      "category": "working_context",
-      "title": "A.L.I.C.E. — Astra Master Continuation Handoff",
-      "declared": {
-        "status": " active continuity contract for Astra-primary / Sol-fallback development"
-      },
-      "matched_terms": [
-        "benchmark",
-        "competitor",
-        "frontier",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 13
-    },
-    {
-      "score": 60,
+      "score": 90,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
@@ -349,10 +276,37 @@
         "failure",
         "lexical"
       ],
-      "lexical_body_hits": 11
+      "lexical_body_hits": 11,
+      "currentness_adjustment": 30
     },
     {
-      "score": 60,
+      "score": 75,
+      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "branch_scope": "branch_specific",
+      "path": "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+      "blob_sha": "4096787a38c8e99018bc1ab1ae219d96ebfa79f5",
+      "category": "design_document",
+      "title": "N0 v0.2 Production Build Plan",
+      "declared": {
+        "status": " implementation active; GPU training held until CPU/data gates pass"
+      },
+      "matched_terms": [
+        "benchmark",
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 8,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 64,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
       "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
@@ -377,81 +331,36 @@
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 7
+      "lexical_body_hits": 7,
+      "currentness_adjustment": 4
     },
     {
-      "score": 56,
+      "score": 58,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-08-31/src/S02-memory-handoff.md",
-      "blob_sha": "ed39916872576a12f9c4e26fc7ff2170c60b63a6",
+      "path": "docs/chat-context/2026-09-13/sol/CURRENT_STATE_AND_HANDOFF.md",
+      "blob_sha": "7eb589676edac6b8dc6352597a921f9de8503e5c",
       "category": "working_context",
-      "title": "A.L.I.C.E. Stage G / G+ Memory Architecture Handoff",
+      "title": "A.L.I.C.E. Current State and Continuation Handoff — 2026-09-13",
       "declared": {},
       "matched_terms": [
+        "competitor",
         "frontier",
         "research"
       ],
       "supersession_hints": [],
       "catalogs": [
         "frontier",
+        "supersession",
         "document",
         "failure",
-        "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 10
+      "lexical_body_hits": 7,
+      "currentness_adjustment": -15
     },
     {
-      "score": 56,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-13/sol/N0_FRONTIER_RESEARCH_DECISION.md",
-      "blob_sha": "2cba72977eee06c1ca1a7ce20a89b646557324c9",
-      "category": "working_context",
-      "title": "A.L.I.C.E. N0 Frontier Research Decision — 2026-09-13",
-      "declared": {
-        "status": " continuity handoff. No permanent EIPM weights created."
-      },
-      "matched_terms": [
-        "frontier",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 8
-    },
-    {
-      "score": 54,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-10/sol/OWNER_OVERRIDE_PERSONALITY_MODEL_MAINSTREAMING.md",
-      "blob_sha": "3eafab67cfaa3d2f2155ba7423dcfb59084e1ffd",
-      "category": "working_context",
-      "title": "Owner override: mainstream the A.L.I.C.E. personality-model build",
-      "declared": {},
-      "matched_terms": [
-        "frontier",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 7
-    },
-    {
-      "score": 54,
+      "score": 58,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
       "path": "docs/RESEARCH_FRONTIERS.md",
@@ -472,16 +381,70 @@
         "failure",
         "lexical"
       ],
-      "lexical_body_hits": 9
+      "lexical_body_hits": 9,
+      "currentness_adjustment": 4
     },
     {
-      "score": 52,
-      "branch": "alice-context",
+      "score": 56,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+      "blob_sha": "2878661756bf3c0610740adffde46528594e117c",
+      "category": "design_document",
+      "title": "N0 v0.2 Production Build Plan",
+      "declared": {
+        "status": " implementation active; GPU training held until CPU/data gates pass"
+      },
+      "matched_terms": [
+        "benchmark",
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 7,
+      "currentness_adjustment": 4
+    },
+    {
+      "score": 56,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md",
+      "blob_sha": "7fa503d6e7b78a80d4a632471e0f03f080dc615c",
+      "category": "runtime_receipt",
+      "title": "N0 Frontier Research Audit — 2026-09-14",
+      "declared": {
+        "status": "hold the step-1000 -> step-2500 GPU job pending N0 v0.2 redesign**."
+      },
+      "matched_terms": [
+        "benchmark",
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 6,
+      "currentness_adjustment": 4
+    },
+    {
+      "score": 56,
+      "branch": "alice-eipm-v1-causal-arbitration-binding",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-08-31/CURRENT_STATE.md",
-      "blob_sha": "68c6e3791d940d13304ebc7039be6145dffcfdbb",
-      "category": "working_context",
-      "title": "A.L.I.C.E. Current Working State — 2026-08-31",
+      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
+      "category": "design_document",
+      "title": "N0 downstream causal arbitration v0.1",
       "declared": {},
       "matched_terms": [
         "frontier"
@@ -493,16 +456,88 @@
         "failure",
         "lexical"
       ],
-      "lexical_body_hits": 9
+      "lexical_body_hits": 5,
+      "currentness_adjustment": 25
     },
     {
-      "score": 52,
+      "score": 50,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/EIPM_EXPANSION_GENERATOR_HANDOFF_SPEC_v0.1.md",
+      "blob_sha": "f8950257455fa52972fc9dd9840165495c9ee115",
+      "category": "design_document",
+      "title": "EIPM Expansion Generator Handoff Spec v0.1",
+      "declared": {
+        "status": " implementation handoff; subordinate to owner-ratified EIPM hard rules"
+      },
+      "matched_terms": [
+        "competitor"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 5,
+      "currentness_adjustment": 4
+    },
+    {
+      "score": 48,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/EIPM_CURATED_FRONTIER_V1_RECEIPT.md",
+      "blob_sha": "0283f40a199fff586adf384f1b5c591a7e41b235",
+      "category": "runtime_receipt",
+      "title": "EIPM Curated Frontier v1 Receipt",
+      "declared": {
+        "status": " curation complete enough for targeted gap filling; not training-authorized."
+      },
+      "matched_terms": [
+        "competitor",
+        "frontier"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 4,
+      "currentness_adjustment": 4
+    },
+    {
+      "score": 48,
+      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+      "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
+      "category": "design_document",
+      "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
+      "declared": {},
+      "matched_terms": [
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 3,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 47,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-04/ALICE_MC10D_CONTINUATION_HANDOFF_20260904.md",
-      "blob_sha": "7d68c37a512044358f26da914ddaa924fa94ba67",
+      "path": "docs/chat-context/2026-09-07/sol/SOL_CONTINUATION_HANDOFF.md",
+      "blob_sha": "ecd645e3c5b898f95175276bbf2670dc66e4e999",
       "category": "working_context",
-      "title": "A.L.I.C.E. MC10D Continuation Handoff — 2026-09-04",
+      "title": "A.L.I.C.E. — Sol Continuation Handoff (2026-09-07)",
       "declared": {},
       "matched_terms": [
         "competitor",
@@ -513,31 +548,10 @@
         "frontier",
         "document",
         "failure",
-        "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 11
-    },
-    {
-      "score": 52,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-05/MC10D_PUBLIC_JUDGE_QUALIFICATION_REBASE_V181.md",
-      "blob_sha": "a8efc9cd68a95ee018dd12f23ce2e5f27ca9f79d",
-      "category": "working_context",
-      "title": "MC10D Public Judge Qualification Rebase v1.8.1 — 2026-09-05",
-      "declared": {},
-      "matched_terms": [
-        "frontier"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 5
+      "lexical_body_hits": 12,
+      "currentness_adjustment": -15
     }
   ],
   "graphify_navigation_hints": [],
