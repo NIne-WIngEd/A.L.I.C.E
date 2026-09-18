@@ -1,6 +1,6 @@
 {
-  "request_id": "coverage-g4-operational-failure-001",
-  "question": "What Magnolia execution routes are known dead or current, and what PowerShell or Kaggle failure lesson must not be repeated?",
+  "request_id": "coverage-g4-operational-failure-002",
+  "question": "What is the current working Magnolia execution route, which routes are dead, and what PowerShell or Kaggle failure lesson must not be repeated before I run the next N0 job?",
   "budget": 2200,
   "traversal": "bfs",
   "contexts": [
