@@ -1,10 +1,10 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: graphify-readiness-current-frontier-001
-- Question: Where in code is the current N0 arbitration PYTHONPATH import-root contract defined for calibration and frozen arbitration, and which udocker wrapper forwards the related runtime controls?
+- Request: n0-doctrine-and-current-frontier-20260917-001
+- Question: For continuing the A.L.I.C.E. N0 personality-model build, retrieve the current scientific frontier and the durable doctrine that constrains the model: its role inside the A.L.I.C.E. entity; what N0 is and is not responsible for; full-production/no-hard-ceiling capability rules; efficiency and speed tradeoffs; lessons from MC10 over-validation/hotfix loops and external validators; internal validation strategy; authority/provenance and E0 E-INF A-SYN boundaries; private identity-gradient boundaries; provider/model independence; anti-loop and supersession rules; architecture decisions already made; known failures or rejected approaches that must not be reintroduced; and the next scientifically justified build action from the current frontier.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
-- Graphify used: True
+- Graphify used: False
 
 ## Active mission
 
@@ -22,43 +22,38 @@
 
 ## Source pointers
 
-- [112] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md — N0 Causal Arbitration Frontier Calibration Handoff
-- [99] alice-eipm-v1-causal-arbitration-binding:.github/workflows/n0-arbitration-contract-check.yml — n0-arbitration-contract-check.yml
-- [93] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
-- [86] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md — N0 downstream causal arbitration: full-stack graph binding v0.1
-- [82] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md — N0 causal-arbitration frontier ready for Magnolia calibration
-- [78] alice-eipm-v1-causal-arbitration-binding:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
-- [72] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
-- [70] fable-builder-model:docs/fable-builder/traces/2026-09-17_n0_arbitration_calibration_import_failure.jsonl — 2026-09-17_n0_arbitration_calibration_import_failure.jsonl
-- [60] alice-eipm-v1-causal-arbitration-binding:configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json — n0_v02_downstream_causal_arbitration_v0_1.example.json
-- [60] alice-eipm-v1-causal-arbitration-binding:configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json — n0_v02_downstream_causal_arbitration_v0_2.example.json
-- [60] alice-eipm-v1-causal-arbitration-binding:configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json — n0_v02_post_arbitration_decision_gate_v0_1.example.json
-- [59] alice-context:docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md — N0 Endpoint Repair and Downstream Arbitration Handoff
-  - status: `FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`.
+- [126] fable-builder-model:docs/fable-builder/CAPABILITY_NOT_LABEL_DOCTRINE_v0.1.md — Fable Builder Model — Capability-Not-Label Doctrine v0.1
+  - status:  owner-directed active working doctrine
+- [111] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md — N0 Causal Arbitration Frontier Calibration Handoff
+- [103] fable-builder-model:docs/fable-builder/FORMATION_MODEL_ARCHITECTURE_v0.1.md — Fable Builder Model Architecture v0.1
+  - status:  working architecture; not yet owner-finalized
+- [98] alice-eipm-v1-causal-arbitration-binding:docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md — N0 v0.2 Production Build Plan
+  - status:  implementation active; GPU training held until CPU/data gates pass
+- [92] alice-eipm-v1-build:docs/eipm/EIPM_MAINSTREAMED_BUILD_AND_TEACHING_DOCTRINE_2026-09-13.md — EIPM Mainstreamed Build and Teaching Doctrine
+  - status:  owner-directed active working doctrine
+- [89] alice-eipm-v1-build:docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md — A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13
+  - status:  research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.
+  - supersession:  this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it.
+- [82] alice-eipm-v1-build:docs/eipm/EIPM_CAPABILITY_LIMIT_AUDIT_2026-09-16.md — A.L.I.C.E. EIPM Capability-Limit Audit — 2026-09-16
+  - status:  owner-directed architecture audit / current interpretation authority
+- [82] fable-builder-model:docs/fable-builder/README.md — Fable Personality Builder Model Workstream
+  - status:  active architecture and process-capture workstream
+- [80] alice-context:docs/chat-context/2026-09-10/sol/OWNER_OVERRIDE_PERSONALITY_MODEL_MAINSTREAMING.md — Owner override: mainstream the A.L.I.C.E. personality-model build
+- [77] alice-context:docs/chat-context/2026-09-10/sol/EIPM_NATIVE_FRONTIER_ARCHITECTURE_RESEARCH.md — A.L.I.C.E.-Native EIPM Frontier Architecture Research — 2026-09-10
+  - status:  working frontier recommendation on `alice-context`; not canonical `main`; no A.L.I.C.E. weights created.
+  - supersession:  this note supersedes the earlier working recommendation that treated `Qwen3.8-27B + A.L.I.C.E. LoRA` as the permanent EIPM. Qwen may remain an optional disposable teacher/mechanics tool where licensing permits. Its weights are not part of the EIPM.
+- [77] alice-eipm-v1-build:docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md — N0 v0.2 Production Build Plan
+  - status:  implementation active; GPU training held until CPU/data gates pass
+- [77] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260914_FRONTIER_AUDIT_REDIRECT.jsonl — FBM_TRACE_20260914_FRONTIER_AUDIT_REDIRECT.jsonl
 
 ## Graphify navigation hints
 
-- PYTHONPATH -> scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh:L13
-- N0_RUNTIME_SMOKE_ROOT -> scripts/eipm/n0/runtime_smoke.sh:L129
-- run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh -> scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh:L1
-- ArbitrationV02Tests -> tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py:L12
-- CalibrationError -> scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py:L44
-- codes() -> tests/phase3/test_conversation_response_validation_adversarial.py:L18
-- contract() -> tests/phase3/_repair_helpers.py:L75
-- test_required_controls_fail_closed() -> tests/phase4/test_information_research_execution_policy.py:L81
-- CurrentClaimProjection -> src/cognitive_kernel/claim_contracts.py:L755
-- eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py -> scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py:L1
-- n0/__init__.py -> src/alice_personality/n0/__init__.py:L1
-- .test_unrelated_context_contradiction_does_not_force_failure() -> tests/phase1/test_grounded_response_citation_contract.py:L95
-- _root() -> tests/governance/test_final_architecture_cleanup.py:L8
-- runtime() -> tests/phase3/test_conversation_context_cli.py:L46
-- UDOCKER_DIR -> scripts/eipm/n0/magnolia_udocker_exec.sh:L15
-- test_delete_wrapper_removes_lexical_and_all_semantic_generations() -> tests/phase2/test_memory_deletion_indexes.py:L238
+- skipped: document/branch/private routing was sufficient
 
 ## External/private routing
 
 - Recommended: True
-- Reason: host-specific operational history may contain newer failure lessons than public receipts
+- Reason: question references a private/external source class
 
 ## Trust contract
 

@@ -1,21 +1,21 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "graphify-readiness-current-frontier-001",
-  "question": "Where in code is the current N0 arbitration PYTHONPATH import-root contract defined for calibration and frozen arbitration, and which udocker wrapper forwards the related runtime controls?",
-  "generated_at_utc": "2026-09-18T02:59:04.024711+00:00",
+  "request_id": "n0-doctrine-and-current-frontier-20260917-001",
+  "question": "For continuing the A.L.I.C.E. N0 personality-model build, retrieve the current scientific frontier and the durable doctrine that constrains the model: its role inside the A.L.I.C.E. entity; what N0 is and is not responsible for; full-production/no-hard-ceiling capability rules; efficiency and speed tradeoffs; lessons from MC10 over-validation/hotfix loops and external validators; internal validation strategy; authority/provenance and E0 E-INF A-SYN boundaries; private identity-gradient boundaries; provider/model independence; anti-loop and supersession rules; architecture decisions already made; known failures or rejected approaches that must not be reintroduced; and the next scientifically justified build action from the current frontier.",
+  "generated_at_utc": "2026-09-18T03:18:58.575077+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "catalog_source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-    "graphify_used": true,
-    "graph_source_branch": "alice-eipm-v1-causal-arbitration-binding",
-    "graph_source_commit": "6c930788da42ad9964c4b5bf6067be3b7d6bfd06",
-    "graph_extraction_tree": "exact-source-worktree",
+    "graphify_used": false,
+    "graph_source_branch": null,
+    "graph_source_commit": null,
+    "graph_extraction_tree": null,
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "f96ac546fd9f572428555a10db4fceb8be1cde7d",
-      "head_committed_at": "2026-09-17T21:52:12-05:00",
-      "head_message": "context: record calibration import failure and fixed retry frontier"
+      "head": "5392903a853e691ee6dfda08dbc1a7ff99514ef6",
+      "head_committed_at": "2026-09-17T22:02:35-05:00",
+      "head_message": "context: document Graphify substrate cross-chat workflow"
     },
     "continuity_stale_relative_to_experiment_frontier": false,
     "maximal_unmerged_experiment_heads": [
@@ -29,12 +29,12 @@
   },
   "routing_decision": {
     "graphify_mode": "auto",
-    "graphify_used": true,
-    "reason": "question requires code topology",
-    "graph_source_branch": "alice-eipm-v1-causal-arbitration-binding",
-    "graph_source_commit": "6c930788da42ad9964c4b5bf6067be3b7d6bfd06",
-    "graph_source_reason": "single maximal unmerged experiment frontier",
-    "graph_rebuild_required": true,
+    "graphify_used": false,
+    "reason": "document/branch/private routing is sufficient",
+    "graph_source_branch": null,
+    "graph_source_commit": null,
+    "graph_source_reason": null,
+    "graph_rebuild_required": false,
     "private_external_route_recommended": true
   },
   "active_mission": {
@@ -107,9 +107,9 @@
     },
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "f96ac546fd9f572428555a10db4fceb8be1cde7d",
-      "head_committed_at": "2026-09-17T21:52:12-05:00",
-      "head_message": "context: record calibration import failure and fixed retry frontier"
+      "head": "5392903a853e691ee6dfda08dbc1a7ff99514ef6",
+      "head_committed_at": "2026-09-17T22:02:35-05:00",
+      "head_message": "context: document Graphify substrate cross-chat workflow"
     },
     "unmerged_experiment_frontier": {
       "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -258,14 +258,35 @@
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": false,
       "newest_experiment_frontier_time": "2026-09-17T21:51:11-05:00",
-      "continuity_branch_head_time": "2026-09-17T21:52:12-05:00"
+      "active_handoff_last_changed_at": "2026-09-17T21:52:12-05:00",
+      "context_branch_head_time": "2026-09-17T22:02:35-05:00"
     },
     "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
     "authority": "routing-and-freshness-only"
   },
   "authoritative_source_pointers": [
     {
-      "score": 112,
+      "score": 126,
+      "branch": "fable-builder-model",
+      "branch_scope": "branch_specific",
+      "path": "docs/fable-builder/CAPABILITY_NOT_LABEL_DOCTRINE_v0.1.md",
+      "blob_sha": "82f29b7430bf51c8c10b31971299322a1acc7ae0",
+      "category": "design_document",
+      "title": "Fable Builder Model — Capability-Not-Label Doctrine v0.1",
+      "declared": {
+        "status": " owner-directed active working doctrine"
+      },
+      "matched_terms": [],
+      "supersession_hints": [],
+      "catalogs": [
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 8
+    },
+    {
+      "score": 111,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md",
@@ -274,419 +295,288 @@
       "title": "N0 Causal Arbitration Frontier Calibration Handoff",
       "declared": {},
       "matched_terms": [
-        "egress",
-        "error",
-        "failed",
-        "failure",
-        "magnolia",
-        "repair",
-        "smoke",
-        "udocker"
+        "frontier"
       ],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
-        "document",
         "frontier",
+        "document",
+        "failure",
         "lexical"
       ],
-      "lexical_body_hits": 9,
+      "lexical_body_hits": 16,
       "currentness_adjustment": 30
     },
     {
-      "score": 99,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "score": 103,
+      "branch": "fable-builder-model",
       "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-arbitration-contract-check.yml",
-      "blob_sha": "47e60fadd2131b7927cc683501e224bd21ca5b8e",
-      "category": "repository_file",
-      "title": "n0-arbitration-contract-check.yml",
-      "declared": {},
+      "path": "docs/fable-builder/FORMATION_MODEL_ARCHITECTURE_v0.1.md",
+      "blob_sha": "85812badf6e0b07fb70538f844d59d48f425bc0b",
+      "category": "design_document",
+      "title": "Fable Builder Model Architecture v0.1",
+      "declared": {
+        "status": " working architecture; not yet owner-finalized"
+      },
       "matched_terms": [
-        "magnolia",
-        "smoke",
-        "udocker"
+        "research"
       ],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
+        "frontier",
         "document",
+        "failure",
         "lexical"
       ],
-      "lexical_body_hits": 7,
+      "lexical_body_hits": 21
+    },
+    {
+      "score": 98,
+      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "branch_scope": "branch_specific",
+      "path": "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+      "blob_sha": "4096787a38c8e99018bc1ab1ae219d96ebfa79f5",
+      "category": "design_document",
+      "title": "N0 v0.2 Production Build Plan",
+      "declared": {
+        "status": " implementation active; GPU training held until CPU/data gates pass"
+      },
+      "matched_terms": [
+        "benchmark",
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 13,
       "currentness_adjustment": 25
     },
     {
-      "score": 93,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-      "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
+      "score": 92,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/EIPM_MAINSTREAMED_BUILD_AND_TEACHING_DOCTRINE_2026-09-13.md",
+      "blob_sha": "87ccfe0f5b7933bcf4430419bf3a3244d3e8d759",
       "category": "design_document",
-      "title": "N0 downstream causal arbitration — Magnolia execution contract",
-      "declared": {},
+      "title": "EIPM Mainstreamed Build and Teaching Doctrine",
+      "declared": {
+        "status": " owner-directed active working doctrine"
+      },
       "matched_terms": [
-        "magnolia",
-        "repair"
+        "research"
       ],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
-        "document",
         "frontier",
+        "supersession",
+        "document",
+        "failure",
         "lexical"
       ],
-      "lexical_body_hits": 4,
-      "currentness_adjustment": 25
+      "lexical_body_hits": 15,
+      "currentness_adjustment": 4
     },
     {
-      "score": 86,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
-      "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
+      "score": 89,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
+      "blob_sha": "83b65bc91215216f5637f99090f28c56940553b7",
       "category": "design_document",
-      "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
-      "declared": {},
+      "title": "A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13",
+      "declared": {
+        "status": " research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.",
+        "supersession": " this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it."
+      },
       "matched_terms": [
-        "repair"
+        "benchmark",
+        "frontier",
+        "literature",
+        "research"
       ],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
-        "document",
         "frontier",
+        "supersession",
+        "document",
+        "failure",
         "lexical"
       ],
-      "lexical_body_hits": 5,
-      "currentness_adjustment": 25
+      "lexical_body_hits": 26,
+      "currentness_adjustment": 4
     },
     {
       "score": 82,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md",
-      "blob_sha": "079f972af73945d7babb8cfe5185977ed9d43e8a",
-      "category": "working_context",
-      "title": "N0 causal-arbitration frontier ready for Magnolia calibration",
-      "declared": {},
-      "matched_terms": [
-        "magnolia",
-        "repair",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 7
-    },
-    {
-      "score": 78,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
-      "branch_scope": "branch_specific",
-      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
-      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/EIPM_CAPABILITY_LIMIT_AUDIT_2026-09-16.md",
+      "blob_sha": "782ef880b7c319a7f1d372fb9cadb63428b456be",
       "category": "design_document",
-      "title": "N0 downstream causal arbitration v0.1",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "repair"
+      "title": "A.L.I.C.E. EIPM Capability-Limit Audit — 2026-09-16",
+      "declared": {
+        "status": " owner-directed architecture audit / current interpretation authority"
+      },
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 98,
+          "text": "The ratified 136,594,435 semantic parameters describe the current checkpoint. The frontier plan already supersedes older parameter envelopes and states that there is no ratified permanent parameter ceiling."
+        },
+        {
+          "line": 128,
+          "text": "The historical `max_fields=64` value is retained for checkpoint/config lineage but is no longer enforced as a runtime rejection ceiling. The encoder accepts larger field sets subject only to actual compute/memory availability."
+        },
+        {
+          "line": 156,
+          "text": "The earlier concatenate-and-encode fusion draft was superseded before any fusion gradient. The active family is full-scale gated multi-stream self-refinement plus bidirectional cross-attention."
+        },
+        {
+          "line": 170,
+          "text": "The routing objective now rejects training targets that assign positive mass to unavailable views. It no longer silently masks invalid supervision and renormalizes it."
+        }
       ],
-      "supersession_hints": [],
       "catalogs": [
-        "failure",
-        "document",
+        "supersession",
         "frontier",
+        "document",
+        "failure",
         "lexical"
       ],
-      "lexical_body_hits": 3,
-      "currentness_adjustment": 25
+      "lexical_body_hits": 23,
+      "currentness_adjustment": 4
     },
     {
-      "score": 72,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
-      "blob_sha": "eee60bbaeba09923431699702aa18d3d559dd85a",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration finalization v0.1",
-      "declared": {},
-      "matched_terms": [
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 2,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 70,
+      "score": 82,
       "branch": "fable-builder-model",
       "branch_scope": "branch_specific",
-      "path": "docs/fable-builder/traces/2026-09-17_n0_arbitration_calibration_import_failure.jsonl",
-      "blob_sha": "bd73f8d52dc436af6a07ed68c5b2da79ebc67579",
+      "path": "docs/fable-builder/README.md",
+      "blob_sha": "83780b6ee0df1b3930559b862c801dd7bb01c56a",
       "category": "design_document",
-      "title": "2026-09-17_n0_arbitration_calibration_import_failure.jsonl",
-      "declared": {},
-      "matched_terms": [
-        "error",
-        "failed",
-        "failure",
-        "magnolia",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 5
-    },
-    {
-      "score": 60,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
-      "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
-      "blob_sha": "e05ebf2c3e4307d953287f252a9447a627d9f28a",
-      "category": "configuration_state",
-      "title": "n0_v02_downstream_causal_arbitration_v0_1.example.json",
-      "declared": {},
-      "matched_terms": [
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document"
-      ],
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 60,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
-      "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
-      "blob_sha": "924bfc9021ba91cbf723fb6fd47534b05d28c555",
-      "category": "configuration_state",
-      "title": "n0_v02_downstream_causal_arbitration_v0_2.example.json",
-      "declared": {},
-      "matched_terms": [
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document"
-      ],
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 60,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
-      "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
-      "blob_sha": "9f618c22233c021780f5a0580c51293315cdc286",
-      "category": "configuration_state",
-      "title": "n0_v02_post_arbitration_decision_gate_v0_1.example.json",
-      "declared": {},
-      "matched_terms": [
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document"
-      ],
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 59,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
-      "blob_sha": "c44ed89c28153b7496910f099851ddf576176574",
-      "category": "working_context",
-      "title": "N0 Endpoint Repair and Downstream Arbitration Handoff",
+      "title": "Fable Personality Builder Model Workstream",
       "declared": {
-        "status": "`FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`."
+        "status": " active architecture and process-capture workstream"
       },
       "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
-        "repair"
+        "frontier"
       ],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
-        "document",
         "frontier",
+        "document",
+        "failure",
         "lexical"
       ],
-      "lexical_body_hits": 4
+      "lexical_body_hits": 17
+    },
+    {
+      "score": 80,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-10/sol/OWNER_OVERRIDE_PERSONALITY_MODEL_MAINSTREAMING.md",
+      "blob_sha": "3eafab67cfaa3d2f2155ba7423dcfb59084e1ffd",
+      "category": "working_context",
+      "title": "Owner override: mainstream the A.L.I.C.E. personality-model build",
+      "declared": {},
+      "matched_terms": [
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "supersession",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 15,
+      "currentness_adjustment": -15
+    },
+    {
+      "score": 77,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-10/sol/EIPM_NATIVE_FRONTIER_ARCHITECTURE_RESEARCH.md",
+      "blob_sha": "786ef85d01add48f1bb605d1d2810ead3be42c02",
+      "category": "working_context",
+      "title": "A.L.I.C.E.-Native EIPM Frontier Architecture Research — 2026-09-10",
+      "declared": {
+        "owner_constraint": " third-party models may be disposable research, generation, or engineering tools. Third-party model weights must not be required by the permanent A.L.I.C.E. Elaina Identity / Personality Model (EIPM). The permanent EIPM weights must be A.L.I.C.E.-native and trained from A.L.I.C.E.-controlled initialization/training lineage.",
+        "status": " working frontier recommendation on `alice-context`; not canonical `main`; no A.L.I.C.E. weights created.",
+        "supersession": " this note supersedes the earlier working recommendation that treated `Qwen3.8-27B + A.L.I.C.E. LoRA` as the permanent EIPM. Qwen may remain an optional disposable teacher/mechanics tool where licensing permits. Its weights are not part of the EIPM."
+      },
+      "matched_terms": [
+        "architecture research",
+        "benchmark",
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 21,
+      "currentness_adjustment": -15
+    },
+    {
+      "score": 77,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+      "blob_sha": "2878661756bf3c0610740adffde46528594e117c",
+      "category": "design_document",
+      "title": "N0 v0.2 Production Build Plan",
+      "declared": {
+        "status": " implementation active; GPU training held until CPU/data gates pass"
+      },
+      "matched_terms": [
+        "benchmark",
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 11,
+      "currentness_adjustment": 4
+    },
+    {
+      "score": 77,
+      "branch": "fable-builder-model",
+      "branch_scope": "branch_specific",
+      "path": "docs/fable-builder/traces/FBM_TRACE_20260914_FRONTIER_AUDIT_REDIRECT.jsonl",
+      "blob_sha": "64d4d15d40aad411abd6772459beadc3a09f3aa6",
+      "category": "design_document",
+      "title": "FBM_TRACE_20260914_FRONTIER_AUDIT_REDIRECT.jsonl",
+      "declared": {},
+      "matched_terms": [
+        "benchmark",
+        "frontier"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 6
     }
   ],
-  "graphify_navigation_hints": [
-    {
-      "label": "PYTHONPATH",
-      "source": "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
-      "location": "L13",
-      "community": "330"
-    },
-    {
-      "label": "N0_RUNTIME_SMOKE_ROOT",
-      "source": "scripts/eipm/n0/runtime_smoke.sh",
-      "location": "L129",
-      "community": "211"
-    },
-    {
-      "label": "run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
-      "source": "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
-      "location": "L1",
-      "community": "330"
-    },
-    {
-      "label": "ArbitrationV02Tests",
-      "source": "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
-      "location": "L12",
-      "community": "177"
-    },
-    {
-      "label": "CalibrationError",
-      "source": "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
-      "location": "L44",
-      "community": "186"
-    },
-    {
-      "label": "codes()",
-      "source": "tests/phase3/test_conversation_response_validation_adversarial.py",
-      "location": "L18",
-      "community": "52"
-    },
-    {
-      "label": "contract()",
-      "source": "tests/phase3/_repair_helpers.py",
-      "location": "L75",
-      "community": "83"
-    },
-    {
-      "label": "test_required_controls_fail_closed()",
-      "source": "tests/phase4/test_information_research_execution_policy.py",
-      "location": "L81",
-      "community": "90"
-    },
-    {
-      "label": "CurrentClaimProjection",
-      "source": "src/cognitive_kernel/claim_contracts.py",
-      "location": "L755",
-      "community": "2"
-    },
-    {
-      "label": "eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
-      "source": "scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
-      "location": "L1",
-      "community": "4"
-    },
-    {
-      "label": "n0/__init__.py",
-      "source": "src/alice_personality/n0/__init__.py",
-      "location": "L1",
-      "community": "67"
-    },
-    {
-      "label": ".test_unrelated_context_contradiction_does_not_force_failure()",
-      "source": "tests/phase1/test_grounded_response_citation_contract.py",
-      "location": "L95",
-      "community": "18"
-    },
-    {
-      "label": "_root()",
-      "source": "tests/governance/test_final_architecture_cleanup.py",
-      "location": "L8",
-      "community": "215"
-    },
-    {
-      "label": "runtime()",
-      "source": "tests/phase3/test_conversation_context_cli.py",
-      "location": "L46",
-      "community": "16"
-    },
-    {
-      "label": "UDOCKER_DIR",
-      "source": "scripts/eipm/n0/magnolia_udocker_exec.sh",
-      "location": "L15",
-      "community": "319"
-    },
-    {
-      "label": "test_delete_wrapper_removes_lexical_and_all_semantic_generations()",
-      "source": "tests/phase2/test_memory_deletion_indexes.py",
-      "location": "L238",
-      "community": "3"
-    },
-    {
-      "label": "pathlib",
-      "source": "",
-      "location": "",
-      "community": "1"
-    },
-    {
-      "label": "json",
-      "source": "",
-      "location": "",
-      "community": "1"
-    },
-    {
-      "label": "cognitive_kernel/__init__.py",
-      "source": "src/cognitive_kernel/__init__.py",
-      "location": "L1",
-      "community": "30"
-    },
-    {
-      "label": "typing",
-      "source": "",
-      "location": "",
-      "community": "4"
-    },
-    {
-      "label": "argparse",
-      "source": "",
-      "location": "",
-      "community": "1"
-    },
-    {
-      "label": "open_memory_store()",
-      "source": "src/alice_memory/store.py",
-      "location": "L107",
-      "community": "32"
-    },
-    {
-      "label": "torch",
-      "source": "",
-      "location": "",
-      "community": "114"
-    },
-    {
-      "label": "collections",
-      "source": "",
-      "location": "",
-      "community": "4"
-    }
-  ],
+  "graphify_navigation_hints": [],
   "private_external_route_recommended": true,
-  "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
+  "private_external_route_reason": "question references a private/external source class",
   "trust_contract": [
     "This capsule routes retrieval; it is not canonical A.L.I.C.E. truth.",
     "Open consequential claims in the original branch/path source before acting.",
