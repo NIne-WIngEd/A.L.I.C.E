@@ -230,3 +230,37 @@ The refined trace separates:
 This prevents a weak semantic probe at one stage from being misreported as a downstream module defect.
 
 Run exactly one fresh localization job from this frontier. Do not rerun job 575794.
+
+
+## Final localization code head
+
+The localization implementation was refined after the first readiness note to add probe-independent relation-signal tracing.
+
+Final ready frontier:
+
+`alice-eipm-v1-missing-evidence-localization @ da6fbe80a00f6463d28d3ce29300e1c2943003ef`
+
+Relative to stable build:
+
+- ahead: 44
+- behind: 0
+
+Final pre-GPU CI run:
+
+`35378274405`
+
+Result:
+
+`SUCCESS`
+
+In addition to value-aware target/foil probes, the diagnostic now measures relation-flip pair separation directly at:
+
+- raw semantic negative control;
+- graph pooled state;
+- fusion evidence contextual state;
+- fusion semantic contextual state;
+- latent pooled state;
+- permutation-invariant latent slot set;
+- counterfactual latent pooled/slot-set state after evidence is removed pre-fusion.
+
+This allows localization even if small-value semantic cosine geometry is weak. The numerical floor for deciding whether a relation flip materially changes an internal state is `1e-6`, used only as a deterministic numerical floor, not a capability threshold.
