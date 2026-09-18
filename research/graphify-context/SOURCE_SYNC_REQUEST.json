@@ -1,0 +1,5 @@
+{
+  "request_id": "bootstrap-source-sync-001",
+  "source_branch": "alice-eipm-v1-build",
+  "reason": "Validate external Graphify source-sync bridge without modifying A.L.I.C.E. working branch."
+}
