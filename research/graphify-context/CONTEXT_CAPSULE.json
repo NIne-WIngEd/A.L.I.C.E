@@ -1,18 +1,49 @@
 {
-  "schema": "alice-sol-context-capsule-v1",
-  "request_id": "coverage-router-code-topology-001",
-  "question": "Where in code is the query-conditioned relation endpoint-role read implemented, and which functions or modules connect that implementation to the downstream latent frontier path?",
-  "generated_at_utc": "2026-09-18T02:05:53.548406+00:00",
+  "schema": "alice-sol-context-capsule-v2",
+  "request_id": "coverage-frontier-capsule-v2-002",
+  "question": "What is the current N0 scientific state now, including the stable build base, the latest continuity handoff, and any newer unmerged experiment frontier that must be inspected before the next execution?",
+  "generated_at_utc": "2026-09-18T02:12:50.502366+00:00",
   "source_freshness": {
-    "source_branch": "alice-eipm-v1-build",
-    "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-    "graph_extraction_tree": "exact-source-worktree",
-    "catalog_source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132"
+    "stable_build_branch": "alice-eipm-v1-build",
+    "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+    "catalog_source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+    "graphify_used": false,
+    "graph_source_branch": null,
+    "graph_source_commit": null,
+    "graph_extraction_tree": null,
+    "continuity_branch_head": {
+      "branch": "alice-context",
+      "head": "0a2afa48cddb46e6dd17112d90d06ffcfa8727cc",
+      "head_committed_at": "2026-09-17T01:14:12-05:00",
+      "head_message": "context: catch up N0 endpoint repair and next arbitration"
+    },
+    "continuity_stale_relative_to_experiment_frontier": true,
+    "maximal_unmerged_experiment_heads": [
+      {
+        "branch": "alice-eipm-v1-causal-arbitration-binding",
+        "head": "8dab1e5debf48e09ebdbab49815e0938fda25a30",
+        "head_committed_at": "2026-09-17T19:40:51-05:00",
+        "head_message": "docs: make N0 architecture capability-first without hard ceilings"
+      }
+    ]
+  },
+  "routing_decision": {
+    "graphify_mode": "auto",
+    "graphify_used": false,
+    "reason": "document/branch/private routing is sufficient",
+    "graph_source_branch": null,
+    "graph_source_commit": null,
+    "graph_source_reason": null,
+    "graph_rebuild_required": false,
+    "private_external_route_recommended": false
   },
   "active_mission": {
-    "schema": "alice-context-active-mission-state-v1",
-    "source_branch": "alice-eipm-v1-build",
-    "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+    "schema": "alice-context-active-mission-state-v2",
+    "stable_build_base": {
+      "branch": "alice-eipm-v1-build",
+      "commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "authority": "committed-build-base"
+    },
     "implementation_state": {
       "schema": "alice-context-active-n0-state-v1",
       "source_branch": "alice-eipm-v1-build",
@@ -73,12 +104,255 @@
       "next_experiment_excerpt": "Run exactly one paired downstream arbitration:\n\n- baseline arm: original graph parent;\n- candidate arm: selected repaired graph `step-00000200` / SHA-256 `3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f`;\n- same original/frozen evidence adapter in both arms;\n- same frozen latent candidate step `360`, SHA-256 `503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4`;\n- all downstream weights frozen;\n- no retraining;\n- no graph-threshold chasing;\n- no challenge leakage;\n- no automatic rerun or hotfix chain.\n\nIf the repaired graph improves the frozen latent frontier, it has downstream causal value. If downstream behavior remains materially unchanged despite perfect fresh endpoint discrimination, move the bottleneck downstream into fusion, parent pooling, latent conditioning, or readout. Do not scale latent capacity until the repaired parent signal is proven to reach the latent input and a capacity/expressivity bottleneck is actually localized.",
       "authority": "branch-qualified-continuity-overlay"
     },
-    "execution_rule": "Implementation config governs committed model/build state. A newer continuity overlay may supersede its observed runtime status and next-action wording. Open the original handoff before execution.",
+    "continuity_branch_head": {
+      "branch": "alice-context",
+      "head": "0a2afa48cddb46e6dd17112d90d06ffcfa8727cc",
+      "head_committed_at": "2026-09-17T01:14:12-05:00",
+      "head_message": "context: catch up N0 endpoint repair and next arbitration"
+    },
+    "unmerged_experiment_frontier": {
+      "schema": "alice-context-unmerged-experiment-frontier-v1",
+      "stable_build_branch": "alice-eipm-v1-build",
+      "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "candidate_count": 3,
+      "maximal_head_count": 1,
+      "maximal_heads": [
+        {
+          "branch": "alice-eipm-v1-causal-arbitration-binding",
+          "head": "8dab1e5debf48e09ebdbab49815e0938fda25a30",
+          "head_committed_at": "2026-09-17T19:40:51-05:00",
+          "head_message": "docs: make N0 architecture capability-first without hard ceilings",
+          "ahead": 17,
+          "behind": 0,
+          "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+          "changed_file_count_vs_source_merge_base": 27,
+          "changed_paths_vs_source_merge_base": [
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
+            "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+            "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+            "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+            "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+            "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+            "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+            "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/downstream_causal_arbitration_v0_2.py",
+            "scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py",
+            "scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch",
+            "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
+            "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
+            "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+            "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
+            "tests/eipm/n0/test_downstream_full_stack_graph_evaluator_v0_1.py",
+            "tests/eipm/n0/test_execute_frozen_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_finalize_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py",
+            "tests/eipm/n0/test_prepare_downstream_causal_arbitration_v0_1.py"
+          ],
+          "authority": "unmerged-experiment-pointer"
+        }
+      ],
+      "all_ahead_candidates": [
+        {
+          "branch": "alice-eipm-v1-causal-arbitration-binding",
+          "head": "8dab1e5debf48e09ebdbab49815e0938fda25a30",
+          "head_committed_at": "2026-09-17T19:40:51-05:00",
+          "head_message": "docs: make N0 architecture capability-first without hard ceilings",
+          "ahead": 17,
+          "behind": 0,
+          "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+          "changed_file_count_vs_source_merge_base": 27,
+          "changed_paths_vs_source_merge_base": [
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
+            "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+            "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+            "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+            "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+            "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+            "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+            "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/downstream_causal_arbitration_v0_2.py",
+            "scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py",
+            "scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch",
+            "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
+            "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
+            "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+            "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
+            "tests/eipm/n0/test_downstream_full_stack_graph_evaluator_v0_1.py",
+            "tests/eipm/n0/test_execute_frozen_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_finalize_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py",
+            "tests/eipm/n0/test_prepare_downstream_causal_arbitration_v0_1.py"
+          ],
+          "authority": "unmerged-experiment-pointer"
+        },
+        {
+          "branch": "alice-eipm-v1-post-arbitration-gate",
+          "head": "00a95d2690641605964f91a79aa1358e05f3edbf",
+          "head_committed_at": "2026-09-17T14:45:12-05:00",
+          "head_message": "feat: add fail-closed post-arbitration decision gate",
+          "ahead": 7,
+          "behind": 0,
+          "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+          "changed_file_count_vs_source_merge_base": 9,
+          "changed_paths_vs_source_merge_base": [
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+            "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+            "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/downstream_causal_arbitration_v0_2.py",
+            "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
+            "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
+            "tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py"
+          ],
+          "authority": "unmerged-experiment-pointer"
+        },
+        {
+          "branch": "alice-eipm-v1-downstream-arbitration",
+          "head": "7fd22358cd6b6384ac914d100c87f93e2236da18",
+          "head_committed_at": "2026-09-17T13:41:06-05:00",
+          "head_message": "test: cover arbitration v0.2 fail-closed provenance",
+          "ahead": 6,
+          "behind": 0,
+          "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+          "changed_file_count_vs_source_merge_base": 6,
+          "changed_paths_vs_source_merge_base": [
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+            "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+            "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/downstream_causal_arbitration_v0_2.py",
+            "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py"
+          ],
+          "authority": "unmerged-experiment-pointer"
+        }
+      ],
+      "selection_rule": "Maximal heads are ahead-only alice-eipm-v1 experiment branches whose head is not an ancestor of another ahead-only experiment branch.",
+      "authority": "routing-only; not canonical promotion"
+    },
+    "continuity_freshness": {
+      "stale_relative_to_unmerged_experiment_frontier": true,
+      "newest_experiment_frontier_time": "2026-09-17T19:40:51-05:00",
+      "continuity_branch_head_time": "2026-09-17T01:14:12-05:00"
+    },
+    "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
     "authority": "routing-and-freshness-only"
   },
   "authoritative_source_pointers": [
     {
-      "score": 56,
+      "score": 73,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-13/sol/CURRENT_STATE_AND_HANDOFF.md",
+      "blob_sha": "7eb589676edac6b8dc6352597a921f9de8503e5c",
+      "category": "working_context",
+      "title": "A.L.I.C.E. Current State and Continuation Handoff — 2026-09-13",
+      "declared": {},
+      "matched_terms": [
+        "competitor",
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "supersession",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 7
+    },
+    {
+      "score": 62,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-07/sol/SOL_CONTINUATION_HANDOFF.md",
+      "blob_sha": "ecd645e3c5b898f95175276bbf2670dc66e4e999",
+      "category": "working_context",
+      "title": "A.L.I.C.E. — Sol Continuation Handoff (2026-09-07)",
+      "declared": {},
+      "matched_terms": [
+        "competitor",
+        "frontier"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 12
+    },
+    {
+      "score": 60,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-06/astra/ASTRA_MASTER_CONTINUATION_HANDOFF.md",
+      "blob_sha": "a3bf8dfab4e9e5dcf81fa20907c76af16603c4c2",
+      "category": "working_context",
+      "title": "A.L.I.C.E. — Astra Master Continuation Handoff",
+      "declared": {
+        "status": " active continuity contract for Astra-primary / Sol-fallback development"
+      },
+      "matched_terms": [
+        "benchmark",
+        "competitor",
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 13
+    },
+    {
+      "score": 60,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
+      "blob_sha": "c44ed89c28153b7496910f099851ddf576176574",
+      "category": "working_context",
+      "title": "N0 Endpoint Repair and Downstream Arbitration Handoff",
+      "declared": {
+        "status": "`FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`."
+      },
+      "matched_terms": [
+        "architecture research",
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 11
+    },
+    {
+      "score": 60,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
       "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
@@ -103,84 +377,43 @@
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 6
+      "lexical_body_hits": 7
     },
     {
-      "score": 50,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
-      "branch_scope": "branch_specific",
-      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
-      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration v0.1",
-      "declared": {},
-      "matched_terms": [
-        "frontier"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 6
-    },
-    {
-      "score": 50,
-      "branch": "alice-eipm-v1-downstream-arbitration",
-      "branch_scope": "branch_specific",
-      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
-      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration v0.1",
-      "declared": {},
-      "matched_terms": [
-        "frontier"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 6
-    },
-    {
-      "score": 50,
-      "branch": "alice-eipm-v1-post-arbitration-gate",
-      "branch_scope": "branch_specific",
-      "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
-      "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration v0.1",
-      "declared": {},
-      "matched_terms": [
-        "frontier"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 6
-    },
-    {
-      "score": 48,
+      "score": 56,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
-      "blob_sha": "c44ed89c28153b7496910f099851ddf576176574",
+      "path": "docs/chat-context/2026-08-31/src/S02-memory-handoff.md",
+      "blob_sha": "ed39916872576a12f9c4e26fc7ff2170c60b63a6",
       "category": "working_context",
-      "title": "N0 Endpoint Repair and Downstream Arbitration Handoff",
+      "title": "A.L.I.C.E. Stage G / G+ Memory Architecture Handoff",
+      "declared": {},
+      "matched_terms": [
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 10
+    },
+    {
+      "score": 56,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-13/sol/N0_FRONTIER_RESEARCH_DECISION.md",
+      "blob_sha": "2cba72977eee06c1ca1a7ce20a89b646557324c9",
+      "category": "working_context",
+      "title": "A.L.I.C.E. N0 Frontier Research Decision — 2026-09-13",
       "declared": {
-        "status": "`FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`."
+        "status": " continuity handoff. No permanent EIPM weights created."
       },
       "matched_terms": [
-        "architecture research",
         "frontier",
         "research"
       ],
@@ -189,71 +422,21 @@
         "frontier",
         "document",
         "failure",
+        "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 5
+      "lexical_body_hits": 8
     },
     {
-      "score": 46,
+      "score": 54,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-10/sol/EIPM_NATIVE_FRONTIER_ARCHITECTURE_RESEARCH.md",
-      "blob_sha": "786ef85d01add48f1bb605d1d2810ead3be42c02",
+      "path": "docs/chat-context/2026-09-10/sol/OWNER_OVERRIDE_PERSONALITY_MODEL_MAINSTREAMING.md",
+      "blob_sha": "3eafab67cfaa3d2f2155ba7423dcfb59084e1ffd",
       "category": "working_context",
-      "title": "A.L.I.C.E.-Native EIPM Frontier Architecture Research — 2026-09-10",
-      "declared": {
-        "owner_constraint": " third-party models may be disposable research, generation, or engineering tools. Third-party model weights must not be required by the permanent A.L.I.C.E. Elaina Identity / Personality Model (EIPM). The permanent EIPM weights must be A.L.I.C.E.-native and trained from A.L.I.C.E.-controlled initialization/training lineage.",
-        "status": " working frontier recommendation on `alice-context`; not canonical `main`; no A.L.I.C.E. weights created.",
-        "supersession": " this note supersedes the earlier working recommendation that treated `Qwen3.8-27B + A.L.I.C.E. LoRA` as the permanent EIPM. Qwen may remain an optional disposable teacher/mechanics tool where licensing permits. Its weights are not part of the EIPM."
-      },
-      "matched_terms": [
-        "architecture research",
-        "benchmark",
-        "frontier",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 5
-    },
-    {
-      "score": 46,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json",
-      "blob_sha": "ef3aec6bfe73ad93ae158f03c9b8554472a9cf99",
-      "category": "configuration_state",
-      "title": "alice_n0_latent_pool_stage_state_v0.9.json",
+      "title": "Owner override: mainstream the A.L.I.C.E. personality-model build",
       "declared": {},
       "matched_terms": [
-        "frontier"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "supersession",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 5
-    },
-    {
-      "score": 45,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "README.md",
-      "blob_sha": "1cc2548da0d66945189668dcd9256f65ce4176f9",
-      "category": "project_readme",
-      "title": "A.L.I.C.E.",
-      "declared": {},
-      "matched_terms": [
-        "benchmark",
         "frontier",
         "research"
       ],
@@ -265,19 +448,20 @@
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 6
+      "lexical_body_hits": 7
     },
     {
-      "score": 44,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-08-31/src/S05-stageg-0829.txt",
-      "blob_sha": "97c35b9ccb7f70f90289439435b3c7ee14146b0f",
-      "category": "working_context",
-      "title": "Example Python pseudocode to run models locally and score them:",
+      "score": 54,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/RESEARCH_FRONTIERS.md",
+      "blob_sha": "0b3f95c5156903824cbf94324734afff2499ed31",
+      "category": "design_document",
+      "title": "A.L.I.C.E. Research Frontiers Register",
       "declared": {},
       "matched_terms": [
         "benchmark",
+        "frontier",
         "literature",
         "research"
       ],
@@ -286,48 +470,43 @@
         "frontier",
         "document",
         "failure",
-        "supersession",
         "lexical"
       ],
       "lexical_body_hits": 9
     },
     {
-      "score": 44,
+      "score": 52,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-08-31/src/S06-stageg-0831.txt",
-      "blob_sha": "c8f855c8d69f3ed555257366d4c8bbb380fa66b6",
+      "path": "docs/chat-context/2026-08-31/CURRENT_STATE.md",
+      "blob_sha": "68c6e3791d940d13304ebc7039be6145dffcfdbb",
       "category": "working_context",
-      "title": "Example Python pseudocode to run models locally and score them:",
+      "title": "A.L.I.C.E. Current Working State — 2026-08-31",
       "declared": {},
       "matched_terms": [
-        "benchmark",
-        "literature",
-        "research"
+        "frontier"
       ],
       "supersession_hints": [],
       "catalogs": [
         "frontier",
         "document",
         "failure",
-        "supersession",
         "lexical"
       ],
       "lexical_body_hits": 9
     },
     {
-      "score": 43,
-      "branch": "docs/public-alice-readme",
+      "score": 52,
+      "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "README.md",
-      "blob_sha": "ae43acf85a75bf51bb7c3cd6a572de635877a9ec",
-      "category": "project_readme",
-      "title": "A.L.I.C.E.",
+      "path": "docs/chat-context/2026-09-04/ALICE_MC10D_CONTINUATION_HANDOFF_20260904.md",
+      "blob_sha": "7d68c37a512044358f26da914ddaa924fa94ba67",
+      "category": "working_context",
+      "title": "A.L.I.C.E. MC10D Continuation Handoff — 2026-09-04",
       "declared": {},
       "matched_terms": [
-        "benchmark",
-        "frontier",
-        "research"
+        "competitor",
+        "frontier"
       ],
       "supersession_hints": [],
       "catalogs": [
@@ -337,179 +516,31 @@
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 6
+      "lexical_body_hits": 11
     },
     {
-      "score": 43,
-      "branch": "feat/memory-m2-1-claim-authority-prototype",
+      "score": 52,
+      "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "README.md",
-      "blob_sha": "153cfe02fffb1f085d299dd4292acb11cd8a9539",
-      "category": "project_readme",
-      "title": "A.L.I.C.E.",
+      "path": "docs/chat-context/2026-09-05/MC10D_PUBLIC_JUDGE_QUALIFICATION_REBASE_V181.md",
+      "blob_sha": "a8efc9cd68a95ee018dd12f23ce2e5f27ca9f79d",
+      "category": "working_context",
+      "title": "MC10D Public Judge Qualification Rebase v1.8.1 — 2026-09-05",
       "declared": {},
       "matched_terms": [
-        "benchmark",
-        "frontier",
-        "research"
+        "frontier"
       ],
       "supersession_hints": [],
       "catalogs": [
         "frontier",
         "document",
         "failure",
-        "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 6
+      "lexical_body_hits": 5
     }
   ],
-  "graphify_navigation_hints": [
-    {
-      "label": "._query_conditioned_relation_bias()",
-      "source": "src/alice_personality/n0/evidence_graph_dual_endpoint.py",
-      "location": "L42",
-      "community": "26"
-    },
-    {
-      "label": "relation()",
-      "source": "tests/eipm/test_n0_evidence_graph_data.py",
-      "location": "L10",
-      "community": "53"
-    },
-    {
-      "label": "Evidence graph read that gives directed relations distinct source/target roles.…",
-      "source": "src/alice_personality/n0/evidence_graph_dual_endpoint.py",
-      "location": "L16",
-      "community": "26"
-    },
-    {
-      "label": "codes()",
-      "source": "tests/phase3/test_conversation_response_validation_adversarial.py",
-      "location": "L18",
-      "community": "43"
-    },
-    {
-      "label": "test_supersession_pooling_bias_is_query_conditioned_not_fixed_negative()",
-      "source": "tests/eipm/test_n0_evidence_graph.py",
-      "location": "L143",
-      "community": "53"
-    },
-    {
-      "label": "connect()",
-      "source": "tests/phase4/test_information_live_http.py",
-      "location": "L227",
-      "community": "248"
-    },
-    {
-      "label": "DualEndpointEvidenceGraphEncoder",
-      "source": "src/alice_personality/n0/evidence_graph_dual_endpoint.py",
-      "location": "L15",
-      "community": "26"
-    },
-    {
-      "label": "Frontier multi-stream fusion for heterogeneous personality context. N0…",
-      "source": "src/alice_personality/n0/cross_context_fusion.py",
-      "location": "L215",
-      "community": "55"
-    },
-    {
-      "label": "test_component_false_implementation_states_are_registered_without_contract_mutation()",
-      "source": "tests/governance/test_memory_capability_ceiling.py",
-      "location": "L235",
-      "community": "92"
-    },
-    {
-      "label": "LatentPoolDataset",
-      "source": "scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py",
-      "location": "L142",
-      "community": "5"
-    },
-    {
-      "label": "test_private_runtime_loader_supports_dataclass_modules()",
-      "source": "tests/phase4/test_information_live_research_script.py",
-      "location": "L37",
-      "community": "92"
-    },
-    {
-      "label": "Path",
-      "source": "",
-      "location": "",
-      "community": "148"
-    },
-    {
-      "label": "query()",
-      "source": "tests/phase4/_information_live_research_helpers.py",
-      "location": "L21",
-      "community": "80"
-    },
-    {
-      "label": ".read()",
-      "source": "tests/phase1/test_grounded_response_resilience.py",
-      "location": "L31",
-      "community": "12"
-    },
-    {
-      "label": "role_summary()",
-      "source": "scripts/eipm/n0/train_n0_v02_relation_endpoint_repair_v0_2.py",
-      "location": "L104",
-      "community": "26"
-    },
-    {
-      "label": "validate_conversation_response()",
-      "source": "src/alice_conversation/response_validation.py",
-      "location": "L223",
-      "community": "43"
-    },
-    {
-      "label": "eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
-      "source": "scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
-      "location": "L1",
-      "community": "5"
-    },
-    {
-      "label": "response()",
-      "source": "tests/phase3/_response_validation_helpers.py",
-      "location": "L12",
-      "community": "43"
-    },
-    {
-      "label": "eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py",
-      "source": "scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py",
-      "location": "L1",
-      "community": "5"
-    },
-    {
-      "label": "diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py",
-      "source": "scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py",
-      "location": "L1",
-      "community": "5"
-    },
-    {
-      "label": "main()",
-      "source": "scripts/eipm/n0/train_n0_v02_relation_endpoint_repair_v0_2.py",
-      "location": "L167",
-      "community": "26"
-    },
-    {
-      "label": "diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py",
-      "source": "scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py",
-      "location": "L1",
-      "community": "5"
-    },
-    {
-      "label": "train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py",
-      "source": "scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py",
-      "location": "L1",
-      "community": "5"
-    },
-    {
-      "label": "main()",
-      "source": "scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py",
-      "location": "L416",
-      "community": "5"
-    }
-  ],
+  "graphify_navigation_hints": [],
   "private_external_route_recommended": false,
   "private_external_route_reason": null,
   "trust_contract": [
@@ -517,6 +548,7 @@
     "Open consequential claims in the original branch/path source before acting.",
     "Keep branch-specific, experimental, superseded and canonical states distinct.",
     "Graphify nodes are navigation hints only.",
+    "If continuity is stale relative to unmerged experiment heads, inspect those heads before execution.",
     "If private external routing is recommended, search the private Library manifest/source corpus before declaring context complete."
   ]
 }
