@@ -1,6 +1,6 @@
 {
-  "request_id": "n0-query-semantics-layerwise-audit-ready-20260918-001",
-  "question": "Resolve current N0 state after no-gradient job 575801. Confirm token-level semantics outperform pooled views overall but causes/supports remain at chance, gradient work is still frozen, identify the layerwise semantic audit frontier and single authorized next action, and confirm no token-graph training or semantic retraining is yet authorized.",
+  "request_id": "n0-relation-conditioned-multilayer-interface-ready-20260918-001",
+  "question": "Resolve current N0 state after layerwise audit job 575804. Identify the relation-conditioned multi-layer token interface frontier, the compiled-map requirement, the no-universal-layer rule, FBM capture, and the single authorized next action. Confirm training, gradient, GPU execution, scale, heldout opening, and frozen-challenge rerun are not authorized.",
   "budget": 1200,
   "traversal": "bfs",
   "contexts": [
