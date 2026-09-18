@@ -1,7 +1,7 @@
 {
-  "request_id": "n0-relation-semantic-grounding-ready-20260918-001",
-  "question": "Resolve the exact current N0 state after fresh localization job 575795. Identify the active handoff, unique maximal experiment frontier, localized defect, selected parent graph, anti-loop constraints, and the single authorized next action. Confirm no frozen challenge rerun, no threshold change, no training on challenge/localization rows, no endpoint heldout-test reuse, no scaling, and no N0 completion.",
-  "budget": 1400,
+  "request_id": "n0-relation-semantic-role-residual-ready-20260918-001",
+  "question": "Resolve the exact current N0 state after failed relation-semantic grounding job 575797. Identify the active handoff, unique maximal experiment frontier, the shared relation-read entanglement localization, immutable endpoint parent graph, fresh v0.2 semantic-role residual repair, heldout discipline, and the single authorized next action. Confirm no frozen-challenge rerun, no threshold change, no reuse of v0.1 semantic/localization/frozen rows, no endpoint-heldout reuse, no scaling, and no N0 completion.",
+  "budget": 1500,
   "traversal": "bfs",
   "contexts": [
     "call",
