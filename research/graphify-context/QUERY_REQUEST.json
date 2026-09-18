@@ -1,6 +1,6 @@
 {
-  "request_id": "n0-query-semantics-audit-ready-20260918-001",
-  "question": "Resolve current N0 state after valid QRR job 575800 dev failure. Confirm heldout stayed unopened, gradient work is frozen, identify the active no-gradient query-semantics architecture audit frontier, the raw-mean-pool vs trained-semantic-projection vs token-level comparison, and the rule that no new gradient run is authorized until the audit result is interpreted.",
+  "request_id": "n0-query-semantics-layerwise-audit-ready-20260918-001",
+  "question": "Resolve current N0 state after no-gradient job 575801. Confirm token-level semantics outperform pooled views overall but causes/supports remain at chance, gradient work is still frozen, identify the layerwise semantic audit frontier and single authorized next action, and confirm no token-graph training or semantic retraining is yet authorized.",
   "budget": 1200,
   "traversal": "bfs",
   "contexts": [
