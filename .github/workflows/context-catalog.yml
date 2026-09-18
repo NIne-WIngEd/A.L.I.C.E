@@ -7,8 +7,11 @@ on:
     paths-ignore:
       - "graphify-out/**"
       - "research/graphify-context/catalog/**"
+      - "research/graphify-context/QUERY_REQUEST.json"
       - "research/graphify-context/QUERY_RESULT.json"
+      - "research/graphify-context/CATALOG_QUERY_RESULT.json"
       - "research/graphify-context/SOURCE_SYNC_RESULT.json"
+      - ".github/workflows/context-catalog.yml"
   workflow_dispatch:
 
 permissions:
