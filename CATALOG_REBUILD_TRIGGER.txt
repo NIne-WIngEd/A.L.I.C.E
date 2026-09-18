@@ -1,1 +1,2 @@
-catalog-schema=4\nreason=build-full-document-lexical-index\n
+catalog-schema=5
+reason=track-unmerged-eipm-experiment-frontier
