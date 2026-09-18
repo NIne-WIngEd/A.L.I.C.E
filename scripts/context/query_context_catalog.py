@@ -40,6 +40,32 @@ def load_jsonl(path: Path) -> list[dict]:
     return rows
 
 
+def doc_key(row: dict) -> str:
+    raw="\\0".join([
+        str(row.get("branch","")),
+        str(row.get("path","")),
+        str(row.get("blob_sha","")),
+    ]).encode("utf-8")
+    return hashlib.sha256(raw).hexdigest()[:24]
+
+
+def lexical_matches(qtokens: list[str]) -> dict[str,int]:
+    counts: dict[str,int]={}
+    loaded={}
+    for token in set(qtokens):
+        shard=hashlib.sha256(token.encode("utf-8")).hexdigest()[0]
+        if shard not in loaded:
+            p=ROOT/"lexical"/f"POSTINGS_{shard}.json"
+            if not p.exists():
+                loaded[shard]={}
+            else:
+                payload=json.loads(p.read_text(encoding="utf-8"))
+                loaded[shard]=payload.get("postings",{})
+        for key in loaded[shard].get(token,[]):
+            counts[key]=counts.get(key,0)+1
+    return counts
+
+
 def haystack(row: dict) -> tuple[str,str,str]:
     title=str(row.get("title",""))
     path=str(row.get("path",""))
@@ -139,6 +165,39 @@ def main() -> None:
             if name not in merged[key]["catalogs"]:
                 merged[key]["catalogs"].append(name)
             merged[key]["score"]=max(merged[key]["score"],hit["score"])
+
+    # Add deterministic full-document body matches. This allows uncommon facts
+    # buried outside titles/headings to surface without an external embedding model.
+    lexical=lexical_matches(qtok)
+    document_rows=catalogs["document"]
+    row_by_key={doc_key(row):row for row in document_rows}
+    tuple_to_hit={
+        (hit.get("branch"),hit.get("path"),hit.get("blob_sha")):hit
+        for hit in merged.values()
+    }
+    for key,count in lexical.items():
+        row=row_by_key.get(key)
+        if row is None:
+            continue
+        tkey=(row.get("branch"),row.get("path"),row.get("blob_sha"))
+        bonus=min(24,4*count)
+        if tkey in tuple_to_hit:
+            tuple_to_hit[tkey]["score"]+=bonus
+            tuple_to_hit[tkey]["lexical_body_hits"]=count
+            if "lexical" not in tuple_to_hit[tkey]["catalogs"]:
+                tuple_to_hit[tkey]["catalogs"].append("lexical")
+        else:
+            base=bonus
+            if row.get("branch")=="alice-eipm-v1-build":
+                base+=3
+            if row.get("branch_scope")=="branch_specific":
+                base+=1
+            hit=compact(row,"lexical",base)
+            hit["catalogs"]=["lexical"]
+            hit.pop("catalog",None)
+            hit["lexical_body_hits"]=count
+            merged[tkey]=hit
+            tuple_to_hit[tkey]=hit
 
     ranked=sorted(merged.values(),key=lambda x:(-x["score"],x.get("branch") or "",x.get("path") or ""))[:max(1,min(args.top,50))]
 
