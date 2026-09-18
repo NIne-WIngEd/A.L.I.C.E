@@ -23,8 +23,13 @@ STOP = {
 
 
 def tokens(text: str) -> list[str]:
-    raw = re.findall(r"[a-z0-9][a-z0-9_.+-]{2,}", text.lower())
-    return [x for x in raw if x not in STOP]
+    raw = re.findall(r"[a-z0-9][a-z0-9_.+:/-]{2,}", text.lower())
+    out=[]
+    for value in raw:
+        token=value.strip("._:+/-")
+        if token and token not in STOP:
+            out.append(token)
+    return out
 
 
 def load_jsonl(path: Path) -> list[dict]:
@@ -42,7 +47,7 @@ def load_jsonl(path: Path) -> list[dict]:
 
 
 def doc_key(row: dict) -> str:
-    raw="\\0".join([
+    raw=chr(0).join([
         str(row.get("branch","")),
         str(row.get("path","")),
         str(row.get("blob_sha","")),
