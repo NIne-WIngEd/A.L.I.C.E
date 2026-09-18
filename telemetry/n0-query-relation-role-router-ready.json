@@ -1,0 +1,31 @@
+{
+  "schema": "alice.telemetry.n0.query-relation-role-router-ready.v0.3",
+  "date": "2026-09-18",
+  "trigger_job_id": 575798,
+  "trigger_result_sha256": "d9abbd6d3da3030361201a8a32f84aa8bf458fb5bebcc07db241a217b3557d8e",
+  "trigger_status": "FAIL_RELATION_SEMANTIC_ROLE_RESIDUAL_DEV_STOP_NO_HELDOUT_EXPOSURE",
+  "trigger_heldout_opened": false,
+  "trigger_preservation_candidate_keys": [
+    "step-00000040"
+  ],
+  "trigger_eligible_candidate_keys": [],
+  "external_research_completed": true,
+  "branch": "alice-eipm-v1-query-relation-role-router",
+  "head": "2790c1e3cd4183377edae8805752f9cc0b7a1915",
+  "ahead_of_stable": 70,
+  "behind_stable": 0,
+  "architecture": "frozen_parent_raw_query_relation_conditioned_source_target_defer_router",
+  "raw_query_semantic_used_directly": true,
+  "parent_query_projection_used_by_router": false,
+  "composition": "probability_level_gated_expert_mixture",
+  "direct_role_supervision": true,
+  "fresh_split_lexically_disjoint": true,
+  "old_failed_rows_reused": false,
+  "parent_graph_trainable": false,
+  "ci_run": 35387454354,
+  "ci_result": "SUCCESS",
+  "failure_policy": "architecture_level_audit_required_before_any_further_gradient_run",
+  "scale_authorized": false,
+  "private_identity_gradient": false,
+  "n0_complete": false
+}
