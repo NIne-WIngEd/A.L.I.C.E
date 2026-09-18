@@ -32,7 +32,8 @@ jobs:
       - name: Verify source branch freshness
         shell: bash
         run: |
-          git fetch origin "$GRAPHIFY_SOURCE_BRANCH"
+          set -euo pipefail
+          git fetch origin "+refs/heads/$GRAPHIFY_SOURCE_BRANCH:refs/remotes/origin/$GRAPHIFY_SOURCE_BRANCH"
           SOURCE_COMMIT="$(git rev-parse "origin/$GRAPHIFY_SOURCE_BRANCH")"
           if ! git merge-base --is-ancestor "$SOURCE_COMMIT" HEAD; then
             echo "STALE_RESEARCH_BRANCH: $GRAPHIFY_SOURCE_BRANCH at $SOURCE_COMMIT is not contained in $GITHUB_SHA"
@@ -71,17 +72,46 @@ jobs:
             echo "}"
           } > research/graphify-context/LAST_GRAPH_BUILD.json
 
-      - name: Commit persistent context artifacts
+      - name: Publish graph on latest research head
         shell: bash
         run: |
+          set -euo pipefail
           git config user.name "alice-context-graph-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          git add graphify-out/graph.json
+          TMP_DIR="$(mktemp -d)"
+          cp graphify-out/graph.json "$TMP_DIR/graph.json"
+          cp research/graphify-context/LAST_GRAPH_BUILD.json "$TMP_DIR/LAST_GRAPH_BUILD.json"
+          if [ -f graphify-out/GRAPH_REPORT.md ]; then
+            cp graphify-out/GRAPH_REPORT.md "$TMP_DIR/GRAPH_REPORT.md"
+          fi
+
+          git fetch origin             "+refs/heads/$GITHUB_REF_NAME:refs/remotes/origin/$GITHUB_REF_NAME"             "+refs/heads/$GRAPHIFY_SOURCE_BRANCH:refs/remotes/origin/$GRAPHIFY_SOURCE_BRANCH"
+
+          LIVE_SOURCE_COMMIT="$(git rev-parse "origin/$GRAPHIFY_SOURCE_BRANCH")"
+          if [ "$LIVE_SOURCE_COMMIT" != "$GRAPHIFY_SOURCE_COMMIT" ]; then
+            echo "SOURCE_MOVED_DURING_BUILD: built $GRAPHIFY_SOURCE_COMMIT but live source is $LIVE_SOURCE_COMMIT"
+            exit 3
+          fi
+
+          git reset --hard "origin/$GITHUB_REF_NAME"
+
+          if ! git merge-base --is-ancestor "$LIVE_SOURCE_COMMIT" HEAD; then
+            echo "RESEARCH_HEAD_STALE_AFTER_REFRESH: live source is not contained in latest research head"
+            exit 4
+          fi
+
+          mkdir -p graphify-out research/graphify-context
+          cp "$TMP_DIR/graph.json" graphify-out/graph.json
+          cp "$TMP_DIR/LAST_GRAPH_BUILD.json" research/graphify-context/LAST_GRAPH_BUILD.json
+          if [ -f "$TMP_DIR/GRAPH_REPORT.md" ]; then
+            cp "$TMP_DIR/GRAPH_REPORT.md" graphify-out/GRAPH_REPORT.md
+          fi
+
+          git add graphify-out/graph.json research/graphify-context/LAST_GRAPH_BUILD.json
           if [ -f graphify-out/GRAPH_REPORT.md ]; then
             git add graphify-out/GRAPH_REPORT.md
           fi
-          git add research/graphify-context/LAST_GRAPH_BUILD.json
 
           if git diff --cached --quiet; then
             echo "No graph changes."
@@ -89,4 +119,4 @@ jobs:
           fi
 
           git commit -m "research: refresh Graphify context graph"
-          git push
+          git push origin "HEAD:$GITHUB_REF_NAME"
