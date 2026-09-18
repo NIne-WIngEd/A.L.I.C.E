@@ -10,6 +10,7 @@ on:
       - ".github/workflows/graphify-context.yml"
       - ".github/workflows/graphify-query.yml"
       - ".github/workflows/graphify-sync.yml"
+      - ".github/workflows/context-catalog.yml"
       - "scripts/context/**"
   workflow_dispatch:
 
@@ -41,6 +42,10 @@ jobs:
             exit 2
           fi
           echo "GRAPHIFY_SOURCE_COMMIT=$SOURCE_COMMIT" >> "$GITHUB_ENV"
+          SOURCE_DIR="$RUNNER_TEMP/alice-graph-source"
+          rm -rf "$SOURCE_DIR"
+          git worktree add --detach "$SOURCE_DIR" "origin/$GRAPHIFY_SOURCE_BRANCH"
+          echo "GRAPHIFY_SOURCE_DIR=$SOURCE_DIR" >> "$GITHUB_ENV"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -52,8 +57,11 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install graphifyy
 
-      - name: Build deterministic code graph
+      - name: Build deterministic code graph from exact source worktree
+        shell: bash
         run: |
+          set -euo pipefail
+          cd "$GRAPHIFY_SOURCE_DIR"
           graphify extract . --code-only
 
       - name: Record source state
@@ -68,6 +76,7 @@ jobs:
             echo "  \"research_commit\": \"$GITHUB_SHA\","
             echo "  \"workflow_run_id\": \"$GITHUB_RUN_ID\","
             echo "  \"graph_mode\": \"code-only\","
+            echo "  \"extraction_tree\": \"exact-source-worktree\","
             echo "  \"authority\": \"navigation-only\""
             echo "}"
           } > research/graphify-context/LAST_GRAPH_BUILD.json
@@ -80,10 +89,10 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
 
           TMP_DIR="$(mktemp -d)"
-          cp graphify-out/graph.json "$TMP_DIR/graph.json"
+          cp "$GRAPHIFY_SOURCE_DIR/graphify-out/graph.json" "$TMP_DIR/graph.json"
           cp research/graphify-context/LAST_GRAPH_BUILD.json "$TMP_DIR/LAST_GRAPH_BUILD.json"
-          if [ -f graphify-out/GRAPH_REPORT.md ]; then
-            cp graphify-out/GRAPH_REPORT.md "$TMP_DIR/GRAPH_REPORT.md"
+          if [ -f "$GRAPHIFY_SOURCE_DIR/graphify-out/GRAPH_REPORT.md" ]; then
+            cp "$GRAPHIFY_SOURCE_DIR/graphify-out/GRAPH_REPORT.md" "$TMP_DIR/GRAPH_REPORT.md"
           fi
 
           git fetch origin             "+refs/heads/$GITHUB_REF_NAME:refs/remotes/origin/$GITHUB_REF_NAME"             "+refs/heads/$GRAPHIFY_SOURCE_BRANCH:refs/remotes/origin/$GRAPHIFY_SOURCE_BRANCH"
