@@ -1,10 +1,10 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: current-n0-calibration-retry-575759-001
-- Question: What is the exact current N0 state after Magnolia calibration job 575759 failed before model execution, what was the root cause, which frontier commit fixes it, and what is the next safe execution?
+- Request: graphify-readiness-current-frontier-001
+- Question: Where in code is the current N0 arbitration PYTHONPATH import-root contract defined for calibration and frozen arbitration, and which udocker wrapper forwards the related runtime controls?
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
-- Graphify used: False
+- Graphify used: True
 
 ## Active mission
 
@@ -22,28 +22,38 @@
 
 ## Source pointers
 
-- [113] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md — N0 Causal Arbitration Frontier Calibration Handoff
-- [101] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
-- [80] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md — N0 causal-arbitration frontier ready for Magnolia calibration
-- [77] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_N0_CONTINUATION_JOB_575548.md — Magnolia N0 continuation — job 575548
-  - status:  completed successfully
-- [77] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md — Magnolia 2×P100 Real N0 Training — Job 575546
-  - status:  completed successfully; durable weights retained; LR scheduler defect identified before continuation
-- [73] alice-eipm-v1-build:docs/MEMORY_M2_EXECUTION_PLAN.md — Memory M2 Execution Plan — Contract and Full-Memory Parallelism
-  - status:  Owner-directed active execution clarification
-- [73] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_DDP_JOB_575537.md — Magnolia 2×P100 N0 DDP Mechanics — Job 575537
-- [73] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md — Magnolia 2×P100 N0 Runtime Smoke — Job 575527
-- [71] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md — Magnolia single-P100 N0 teacher diagnostic — job 575565
-- [67] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md — Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571
-  - status: completed payload
-- [67] feat/memory-m2-closeout-shadow-admission:docs/MEMORY_M2_EXECUTION_PLAN.md — Memory M2 Execution Plan — Contract and Full-Memory Parallelism
-  - status:  Owner-directed active execution clarification
-- [67] feat/memory-shadow-migration-stage-d:docs/MEMORY_M2_EXECUTION_PLAN.md — Memory M2 Execution Plan — Contract and Full-Memory Parallelism
-  - status:  Owner-directed active execution clarification
+- [112] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md — N0 Causal Arbitration Frontier Calibration Handoff
+- [99] alice-eipm-v1-causal-arbitration-binding:.github/workflows/n0-arbitration-contract-check.yml — n0-arbitration-contract-check.yml
+- [93] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
+- [86] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md — N0 downstream causal arbitration: full-stack graph binding v0.1
+- [82] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md — N0 causal-arbitration frontier ready for Magnolia calibration
+- [78] alice-eipm-v1-causal-arbitration-binding:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
+- [72] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
+- [70] fable-builder-model:docs/fable-builder/traces/2026-09-17_n0_arbitration_calibration_import_failure.jsonl — 2026-09-17_n0_arbitration_calibration_import_failure.jsonl
+- [60] alice-eipm-v1-causal-arbitration-binding:configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json — n0_v02_downstream_causal_arbitration_v0_1.example.json
+- [60] alice-eipm-v1-causal-arbitration-binding:configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json — n0_v02_downstream_causal_arbitration_v0_2.example.json
+- [60] alice-eipm-v1-causal-arbitration-binding:configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json — n0_v02_post_arbitration_decision_gate_v0_1.example.json
+- [59] alice-context:docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md — N0 Endpoint Repair and Downstream Arbitration Handoff
+  - status: `FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`.
 
 ## Graphify navigation hints
 
-- skipped: document/branch/private routing was sufficient
+- PYTHONPATH -> scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh:L13
+- N0_RUNTIME_SMOKE_ROOT -> scripts/eipm/n0/runtime_smoke.sh:L129
+- run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh -> scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh:L1
+- ArbitrationV02Tests -> tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py:L12
+- CalibrationError -> scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py:L44
+- codes() -> tests/phase3/test_conversation_response_validation_adversarial.py:L18
+- contract() -> tests/phase3/_repair_helpers.py:L75
+- test_required_controls_fail_closed() -> tests/phase4/test_information_research_execution_policy.py:L81
+- CurrentClaimProjection -> src/cognitive_kernel/claim_contracts.py:L755
+- eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py -> scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py:L1
+- n0/__init__.py -> src/alice_personality/n0/__init__.py:L1
+- .test_unrelated_context_contradiction_does_not_force_failure() -> tests/phase1/test_grounded_response_citation_contract.py:L95
+- _root() -> tests/governance/test_final_architecture_cleanup.py:L8
+- runtime() -> tests/phase3/test_conversation_context_cli.py:L46
+- UDOCKER_DIR -> scripts/eipm/n0/magnolia_udocker_exec.sh:L15
+- test_delete_wrapper_removes_lexical_and_all_semantic_generations() -> tests/phase2/test_memory_deletion_indexes.py:L238
 
 ## External/private routing
 
