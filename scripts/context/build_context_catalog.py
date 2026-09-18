@@ -431,7 +431,7 @@ def main() -> None:
     # continuity handoff may contain later observed runtime evidence.
     handoff_candidates = []
     handoff_re = re.compile(
-        r"^docs/chat-context/(\\d{4}-\\d{2}-\\d{2})/sol/.*N0.*HANDOFF.*\\.md$",
+        r"^docs/chat-context/(\d{4}-\d{2}-\d{2})/sol/.*N0.*HANDOFF.*\.md$",
         re.I,
     )
     for row in doc_rows:
@@ -450,15 +450,15 @@ def main() -> None:
         ) or ""
 
         build_head_match = re.search(
-            r"Current build head:\\s*`([0-9a-f]{40})`", handoff_text, re.I
+            r"Current build head:\s*`([0-9a-f]{40})`", handoff_text, re.I
         )
         magnolia_job_match = re.search(
-            r"Magnolia job:\\s*`?(\\d+)`?", handoff_text, re.I
+            r"Magnolia job:\s*`?(\d+)`?", handoff_text, re.I
         )
 
         def section_excerpt(name: str, limit: int = 2600) -> str | None:
             pattern = re.compile(
-                rf"^##\\s+{re.escape(name)}\\s*$([\\s\\S]*?)(?=^##\\s+|\\Z)",
+                rf"^##\s+{re.escape(name)}\s*$([\s\S]*?)(?=^##\s+|\Z)",
                 re.I | re.M,
             )
             match = pattern.search(handoff_text)
