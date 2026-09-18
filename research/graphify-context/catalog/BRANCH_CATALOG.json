@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "277fc11a77b5559479615db43d0f6b12da5bf805",
-      "head_committed_at": "2026-09-18T14:24:23-05:00",
-      "head_message": "context: hand off isolated relation-semantic role residual repair",
+      "head": "2186f3908288cb7f5ea0886cf65e6b677ff6b6d8",
+      "head_committed_at": "2026-09-18T14:43:34-05:00",
+      "head_message": "context: hand off research-grounded query-role router",
       "status": "diverged",
-      "ahead": 195,
+      "ahead": 196,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 543,
+      "changed_file_count_vs_source_merge_base": 544,
       "knowledge_surface": true
     },
     {
@@ -76,6 +76,18 @@
       "knowledge_surface": true
     },
     {
+      "branch": "alice-eipm-v1-query-relation-role-router",
+      "head": "2790c1e3cd4183377edae8805752f9cc0b7a1915",
+      "head_committed_at": "2026-09-18T14:42:40-05:00",
+      "head_message": "ci(n0): guard research-grounded query-role router",
+      "status": "ahead",
+      "ahead": 70,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 62,
+      "knowledge_surface": true
+    },
+    {
       "branch": "alice-eipm-v1-relation-semantic-grounding",
       "head": "09fdd7c1c8cadda4ac61b65f1ff9c32e35ced53d",
       "head_committed_at": "2026-09-18T13:58:22-05:00",
@@ -125,14 +137,14 @@
     },
     {
       "branch": "alice-telemetry",
-      "head": "cf673482c0029a08b3d26fd48f1a65d5c3597486",
-      "head_committed_at": "2026-09-18T14:24:26-05:00",
-      "head_message": "telemetry: record semantic-role residual readiness",
+      "head": "44832a1f342f82bddf705ae2fdc41b77cff177ab",
+      "head_committed_at": "2026-09-18T14:43:36-05:00",
+      "head_message": "telemetry: record query-role router readiness",
       "status": "unrelated",
-      "ahead": 30,
+      "ahead": 31,
       "behind": 675,
       "merge_base": null,
-      "changed_file_count_vs_source_merge_base": 1259,
+      "changed_file_count_vs_source_merge_base": 1260,
       "knowledge_surface": true
     },
     {
@@ -173,14 +185,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "5cc690c9a8be1a0d66bbe29460142d63a0447bea",
-      "head_committed_at": "2026-09-18T14:24:29-05:00",
-      "head_message": "fbm: record shared-read entanglement and isolated residual",
+      "head": "4d1cee48fba22f10809641d19615e63b148328bf",
+      "head_committed_at": "2026-09-18T14:43:39-05:00",
+      "head_message": "fbm: record external-research architecture redirect",
       "status": "diverged",
-      "ahead": 82,
+      "ahead": 83,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 82,
+      "changed_file_count_vs_source_merge_base": 83,
       "knowledge_surface": true
     },
     {

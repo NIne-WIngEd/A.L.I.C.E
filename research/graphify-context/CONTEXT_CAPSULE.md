@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-relation-semantic-role-residual-ready-20260918-001
-- Question: Resolve the exact current N0 state after failed relation-semantic grounding job 575797. Identify the active handoff, unique maximal experiment frontier, the shared relation-read entanglement localization, immutable endpoint parent graph, fresh v0.2 semantic-role residual repair, heldout discipline, and the single authorized next action. Confirm no frozen-challenge rerun, no threshold change, no reuse of v0.1 semantic/localization/frozen rows, no endpoint-heldout reuse, no scaling, and no N0 completion.
+- Request: n0-query-relation-role-router-ready-20260918-001
+- Question: Resolve the current N0 state after job 575798 failed at dev without heldout exposure. Identify the active handoff, maximal experiment frontier, external research checkpoint, raw-query relation-role router architecture, anti-loop rule requiring architecture audit after another failure, and the single authorized next action.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: False
@@ -11,33 +11,37 @@
 - Mission schema: alice-context-active-mission-state-v2
 - Implementation status: SELECTOR_PRIOR_HEAD_REPAIR_FAILED_ENDPOINT_ROLE_DEFECT_LOCALIZED_ENDPOINT_READ_REPAIR_IMPLEMENTED_PENDING_PREP_AND_GPU
 - Implementation source: configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json
-- Continuity overlay: docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md
+- Continuity overlay: docs/chat-context/2026-09-18/sol/N0_QUERY_RELATION_ROLE_ROUTER_HANDOFF.md
 - Latest observed Magnolia job: None
 - Continuity stale vs experiment frontier: False
 - Execution rule: The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-relation-semantic-role-residual @ 23a84b808a0f16c63678d0875b9a7b2d388f07e7 — ci(n0): guard semantic-role residual repair contract
+- alice-eipm-v1-query-relation-role-router @ 2790c1e3cd4183377edae8805752f9cc0b7a1915 — ci(n0): guard research-grounded query-role router
 
 ## Source pointers
 
-- [155] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md — N0 Relation-Semantic Role Residual Repair Handoff
-  - status:  relation-semantic grounding v0.1 failed validly; failure localized to shared read-path entanglement; isolated zero-init semantic-role residual is CI-ready for one P100 run
-- [119] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md — N0 Relation-Semantic Grounding Repair Handoff
-  - status:  missing-evidence failure localized to relation-semantic endpoint grounding; one bounded repair is CI-ready; no frozen-challenge rerun, threshold change, promotion, scaling, or N0 completion authorized
-- [99] alice-context:docs/chat-context/2026-09-18/sol/N0_MISSING_EVIDENCE_LOCALIZATION_HANDOFF.md — N0 Missing-Evidence Localization Handoff
-  - status:  final frozen challenge is an immutable valid FAIL; one fresh non-challenge causal-path localization run is ready; no rerun, threshold change, training, promotion, scaling, or N0 completion authorized
-- [98] alice-eipm-v1-relation-semantic-role-residual:.github/workflows/n0-relation-semantic-role-residual-contract-check.yml — The last sentinel deliberately cannot match; the first three protect row/id reuse.
-- [88] alice-eipm-v1-relation-semantic-role-residual:configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json — alice_n0_latent_pool_stage_state_v0.11.json
-- [88] alice-eipm-v1-relation-semantic-role-residual:configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.12.json — alice_n0_latent_pool_stage_state_v0.12.json
-- [86] alice-eipm-v1-relation-semantic-role-residual:.github/workflows/n0-relation-semantic-grounding-contract-check.yml — n0-relation-semantic-grounding-contract-check.yml
-- [84] alice-eipm-v1-relation-semantic-role-residual:docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md — N0 downstream causal arbitration: full-stack graph binding v0.1
-- [80] alice-eipm-v1-relation-semantic-role-residual:configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json — alice_n0_latent_pool_stage_state_v0.10.json
-- [75] alice-context:docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md — N0 Endpoint Repair and Downstream Arbitration Handoff
-  - status: `FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`.
-- [75] alice-eipm-v1-relation-semantic-role-residual:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
-- [74] alice-eipm-v1-build:docs/eipm/N0_ADAPTIVE_LATENT_POOL_V01_FAILURE_AND_V02_REPAIR_2026-09-16.md — N0 Adaptive Multi-View Latent Pool v0.1 Failure and v0.2 Repair — 2026-09-16
+- [129] alice-eipm-v1-query-relation-role-router:docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md — N0 Query–Relation Role Router — External Architecture Research v0.1
+- [123] alice-context:docs/chat-context/2026-09-18/sol/N0_QUERY_RELATION_ROLE_ROUTER_HANDOFF.md — N0 Query–Relation Role Router Handoff
+  - status:  role-residual v0.2 failed at dev without heldout exposure; external architecture research completed; query–relation role router v0.3 is CI-ready for one P100 run
+- [94] alice-eipm-v1-build:docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md — N0 Frontier Research Audit — 2026-09-14
+  - status: hold the step-1000 -> step-2500 GPU job pending N0 v0.2 redesign**.
+- [86] alice-eipm-v1-query-relation-role-router:.github/workflows/n0-query-relation-role-router-contract-check.yml — n0-query-relation-role-router-contract-check.yml
+- [81] alice-eipm-v1-build:docs/PHASE_3_CONVERSATIONAL_ARCHITECTURE.md — Phase 3 — Conversational A.L.I.C.E. Architecture
+  - status:  Complete and frozen after P3.11 release audit
+- [81] alice-eipm-v1-build:docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md — A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13
+  - status:  research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.
+  - supersession:  this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it.
+- [78] alice-context:docs/chat-context/2026-09-10/sol/EIPM_NATIVE_FRONTIER_ARCHITECTURE_RESEARCH.md — A.L.I.C.E.-Native EIPM Frontier Architecture Research — 2026-09-10
+  - status:  working frontier recommendation on `alice-context`; not canonical `main`; no A.L.I.C.E. weights created.
+  - supersession:  this note supersedes the earlier working recommendation that treated `Qwen3.8-27B + A.L.I.C.E. LoRA` as the permanent EIPM. Qwen may remain an optional disposable teacher/mechanics tool where licensing permits. Its weights are not part of the EIPM.
+- [77] alice-eipm-v1-build:docs/PHASE_4_WEB_INFORMATION_ARCHITECTURE.md — Phase 4 — Web and Information Tools Architecture
+  - status:  P4.0–P4.9 fixture-governed compatibility release approved; P4.10 operational live-public-information closure required before Phase 5
+- [75] alice-eipm-v1-build:docs/MEGA_ARCHITECTURE_MIGRATION.md — Mega Architecture Migration
+- [74] alice-eipm-v1-build:docs/MEMORY_EXTERNAL_SYSTEMS_REVIEW.md — External Memory Systems Code and Architecture Review
+- [73] alice-eipm-v1-build:docs/ARCHITECTURE.md — A.L.I.C.E. and Friday Permanent Cognitive Architecture
+- [73] alice-eipm-v1-build:docs/FRIDAY_ARCHITECTURE.md — Friday Technical Architecture
 
 ## Graphify navigation hints
 
