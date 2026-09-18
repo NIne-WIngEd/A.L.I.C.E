@@ -3,7 +3,7 @@
   "source_branch": "alice-eipm-v1-build",
   "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
   "branch_count": 30,
-  "knowledge_branch_count": 28,
+  "knowledge_branch_count": 30,
   "source_file_count": 1238,
   "active_n0_state_present": true,
   "active_mission_state_present": true,
@@ -11,14 +11,15 @@
   "unmerged_experiment_frontier_present": true,
   "unmerged_experiment_maximal_head_count": 1,
   "continuity_stale_relative_to_experiment_frontier": false,
-  "document_pointer_count": 2080,
-  "failure_lesson_pointer_count": 846,
-  "frontier_research_pointer_count": 383,
-  "supersession_pointer_count": 218,
+  "document_pointer_count": 2115,
+  "failure_lesson_pointer_count": 867,
+  "frontier_research_pointer_count": 397,
+  "supersession_pointer_count": 221,
   "authority": "routing-only",
   "notes": [
     "Catalog entries are source pointers, not truth promotions.",
     "Branch-specific records stay branch-qualified.",
-    "Private external sources are intentionally excluded from public Git."
+    "Private external sources are intentionally excluded from public Git.",
+    "Every non-temporary Git branch is a branch-qualified knowledge surface."
   ]
 }

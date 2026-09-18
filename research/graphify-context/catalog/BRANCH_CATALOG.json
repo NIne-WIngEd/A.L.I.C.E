@@ -97,7 +97,7 @@
       "behind": 675,
       "merge_base": null,
       "changed_file_count_vs_source_merge_base": 1253,
-      "knowledge_surface": false
+      "knowledge_surface": true
     },
     {
       "branch": "docs/memory-identity-host-learning-ratification-v2",
@@ -313,7 +313,7 @@
       "behind": 503,
       "merge_base": "2c24a3117276853dae382bfef66a4d00608d66d4",
       "changed_file_count_vs_source_merge_base": 0,
-      "knowledge_surface": false
+      "knowledge_surface": true
     },
     {
       "branch": "fix/governance-capability-audit-baseline",
