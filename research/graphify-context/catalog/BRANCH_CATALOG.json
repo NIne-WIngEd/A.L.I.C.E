@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "dcb4b4b87f554268b4c8b95cd50f66076d9e86e9",
-      "head_committed_at": "2026-09-18T13:07:30-05:00",
-      "head_message": "context: bind final localization code head and CI",
+      "head": "f0d6f20855ee11463b2efd49558bb21a763afdfb",
+      "head_committed_at": "2026-09-18T13:09:04-05:00",
+      "head_message": "context: publish current N0 localization handoff",
       "status": "diverged",
-      "ahead": 192,
+      "ahead": 193,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 540,
+      "changed_file_count_vs_source_merge_base": 541,
       "knowledge_surface": true
     },
     {

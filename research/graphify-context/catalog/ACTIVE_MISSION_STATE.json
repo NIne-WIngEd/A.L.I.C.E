@@ -54,11 +54,11 @@
   },
   "continuity_overlay": {
     "branch": "alice-context",
-    "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
-    "blob_sha": "19f407ba4d11922a5095d3570cb6a0474d54e6be",
-    "title": "N0 Final Frozen Challenge Ready Handoff",
+    "path": "docs/chat-context/2026-09-18/sol/N0_MISSING_EVIDENCE_LOCALIZATION_HANDOFF.md",
+    "blob_sha": "a39c72468a654060fba433b47324990f32134b63",
+    "title": "N0 Missing-Evidence Localization Handoff",
     "date": "2026-09-18",
-    "last_changed_at": "2026-09-18T12:41:23-05:00",
+    "last_changed_at": "2026-09-18T13:09:04-05:00",
     "current_build_head_declared": null,
     "magnolia_job_observed": null,
     "authoritative_build_state_excerpt": null,
@@ -68,9 +68,9 @@
   },
   "continuity_branch_head": {
     "branch": "alice-context",
-    "head": "dcb4b4b87f554268b4c8b95cd50f66076d9e86e9",
-    "head_committed_at": "2026-09-18T13:07:30-05:00",
-    "head_message": "context: bind final localization code head and CI"
+    "head": "f0d6f20855ee11463b2efd49558bb21a763afdfb",
+    "head_committed_at": "2026-09-18T13:09:04-05:00",
+    "head_message": "context: publish current N0 localization handoff"
   },
   "unmerged_experiment_frontier": {
     "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -283,10 +283,10 @@
     "authority": "routing-only; not canonical promotion"
   },
   "continuity_freshness": {
-    "stale_relative_to_unmerged_experiment_frontier": true,
+    "stale_relative_to_unmerged_experiment_frontier": false,
     "newest_experiment_frontier_time": "2026-09-18T13:06:56-05:00",
-    "active_handoff_last_changed_at": "2026-09-18T12:41:23-05:00",
-    "context_branch_head_time": "2026-09-18T13:07:30-05:00"
+    "active_handoff_last_changed_at": "2026-09-18T13:09:04-05:00",
+    "context_branch_head_time": "2026-09-18T13:09:04-05:00"
   },
   "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
   "authority": "routing-and-freshness-only"
