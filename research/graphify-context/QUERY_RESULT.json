@@ -1,13 +1,13 @@
 {
-  "request_id": "n0-missing-evidence-localization-ready-20260918-001",
-  "question": "What is the exact current N0 state after final frozen challenge job 575794 and what single fresh non-challenge localization run is now authorized? Identify the maximal experiment frontier, active handoff, failing gate/family, anti-loop constraints, and the ready Magnolia localization runner.",
-  "budget": 1500,
+  "request_id": "n0-missing-evidence-localization-final-ready-20260918-001",
+  "question": "What is the exact current N0 state after job 575794 and which one fresh non-challenge localization job is now ready? Resolve the active handoff and maximal experiment frontier, and identify the no-rerun/no-threshold-change/no-training constraints plus the final Magnolia runner.",
+  "budget": 1300,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-18T18:05:50.352918+00:00",
+  "generated_at_utc": "2026-09-18T18:08:03.995707+00:00",
   "authority": "navigation-only",
   "routing_decision": {
     "graphify_mode": "auto",
@@ -33,35 +33,31 @@
   },
   "catalog_result": {
     "schema": "alice-context-catalog-query-v1",
-    "question": "What is the exact current N0 state after final frozen challenge job 575794 and what single fresh non-challenge localization run is now authorized? Identify the maximal experiment frontier, active handoff, failing gate/family, anti-loop constraints, and the ready Magnolia localization runner.",
+    "question": "What is the exact current N0 state after job 575794 and which one fresh non-challenge localization job is now ready? Resolve the active handoff and maximal experiment frontier, and identify the no-rerun/no-threshold-change/no-training constraints plus the final Magnolia runner.",
     "query_tokens": [
       "exact",
       "state",
       "after",
-      "final",
-      "frozen",
-      "challenge",
       "job",
       "575794",
-      "single",
+      "one",
       "fresh",
       "non-challenge",
       "localization",
-      "run",
-      "authorized",
-      "identify",
+      "job",
+      "ready",
+      "resolve",
+      "active",
+      "handoff",
       "maximal",
       "experiment",
       "frontier",
-      "active",
-      "handoff",
-      "failing",
-      "gate/family",
-      "anti-loop",
+      "identify",
+      "no-rerun/no-threshold-change/no-training",
       "constraints",
-      "ready",
+      "plus",
+      "final",
       "magnolia",
-      "localization",
       "runner"
     ],
     "catalog_status": {
@@ -159,9 +155,9 @@
       },
       "continuity_branch_head": {
         "branch": "alice-context",
-        "head": "69a91c84fc14e07ad9657b8cdf71f673ad6665f7",
-        "head_committed_at": "2026-09-18T13:05:20-05:00",
-        "head_message": "context: mark fresh missing-evidence localization ready"
+        "head": "dcb4b4b87f554268b4c8b95cd50f66076d9e86e9",
+        "head_committed_at": "2026-09-18T13:07:30-05:00",
+        "head_message": "context: bind final localization code head and CI"
       },
       "unmerged_experiment_frontier": {
         "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -172,10 +168,10 @@
         "maximal_heads": [
           {
             "branch": "alice-eipm-v1-missing-evidence-localization",
-            "head": "6183ed9be59a75fc7c5118312099a0875b8bab6d",
-            "head_committed_at": "2026-09-18T13:04:44-05:00",
-            "head_message": "fix(n0): separate graph selection from value geometry in localization",
-            "ahead": 42,
+            "head": "da6fbe80a00f6463d28d3ce29300e1c2943003ef",
+            "head_committed_at": "2026-09-18T13:06:56-05:00",
+            "head_message": "chore(n0): print probe-independent localization signals",
+            "ahead": 44,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
             "changed_file_count_vs_source_merge_base": 41,
@@ -228,10 +224,10 @@
         "all_ahead_candidates": [
           {
             "branch": "alice-eipm-v1-missing-evidence-localization",
-            "head": "6183ed9be59a75fc7c5118312099a0875b8bab6d",
-            "head_committed_at": "2026-09-18T13:04:44-05:00",
-            "head_message": "fix(n0): separate graph selection from value geometry in localization",
-            "ahead": 42,
+            "head": "da6fbe80a00f6463d28d3ce29300e1c2943003ef",
+            "head_committed_at": "2026-09-18T13:06:56-05:00",
+            "head_message": "chore(n0): print probe-independent localization signals",
+            "ahead": 44,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
             "changed_file_count_vs_source_merge_base": 41,
@@ -375,9 +371,9 @@
       },
       "continuity_freshness": {
         "stale_relative_to_unmerged_experiment_frontier": true,
-        "newest_experiment_frontier_time": "2026-09-18T13:04:44-05:00",
+        "newest_experiment_frontier_time": "2026-09-18T13:06:56-05:00",
         "active_handoff_last_changed_at": "2026-09-18T12:41:23-05:00",
-        "context_branch_head_time": "2026-09-18T13:05:20-05:00"
+        "context_branch_head_time": "2026-09-18T13:07:30-05:00"
       },
       "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
       "authority": "routing-and-freshness-only"
@@ -431,7 +427,7 @@
     },
     "hits": [
       {
-        "score": 152,
+        "score": 120,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
@@ -456,61 +452,8 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 17,
+        "lexical_body_hits": 12,
         "currentness_adjustment": 30
-      },
-      {
-        "score": 125,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
-        "blob_sha": "5055fd6d52f800315695dae8ad0d3564514274dd",
-        "category": "working_context",
-        "title": "N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization",
-        "declared": {
-          "status": " final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged"
-        },
-        "matched_terms": [
-          "failed",
-          "failure",
-          "hotfix",
-          "magnolia",
-          "repair",
-          "udocker"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 19
-      },
-      {
-        "score": 88,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md",
-        "blob_sha": "435efa0bf1c2e58ecd5929e4fd25c03cc6f9cd5b",
-        "category": "runtime_receipt",
-        "title": "Magnolia single-P100 N0 teacher diagnostic — job 575565",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "magnolia",
-          "repair",
-          "runtime-results"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 8,
-        "currentness_adjustment": 4
       },
       {
         "score": 86,
@@ -535,23 +478,24 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 7,
+        "lexical_body_hits": 6,
         "currentness_adjustment": 4
       },
       {
         "score": 86,
-        "branch": "alice-eipm-v1-missing-evidence-localization",
-        "branch_scope": "branch_specific",
-        "path": ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
-        "blob_sha": "74aa2f5a2fb22f50c95da567cacec8ad26130d15",
-        "category": "repository_file",
-        "title": "n0-missing-evidence-localization-contract-check.yml",
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md",
+        "blob_sha": "435efa0bf1c2e58ecd5929e4fd25c03cc6f9cd5b",
+        "category": "runtime_receipt",
+        "title": "Magnolia single-P100 N0 teacher diagnostic — job 575565",
         "declared": {},
         "matched_terms": [
           "failed",
+          "failure",
           "magnolia",
           "repair",
-          "udocker"
+          "runtime-results"
         ],
         "supersession_hints": [],
         "catalogs": [
@@ -560,56 +504,10 @@
           "lexical"
         ],
         "lexical_body_hits": 6,
-        "currentness_adjustment": 25
+        "currentness_adjustment": 4
       },
       {
-        "score": 85,
-        "branch": "fable-builder-model",
-        "branch_scope": "branch_specific",
-        "path": "docs/fable-builder/traces/2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl",
-        "blob_sha": "dd9b39a6333344be9a3690220608496213fdbc47",
-        "category": "design_document",
-        "title": "2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "hotfix",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 6
-      },
-      {
-        "score": 83,
-        "branch": "alice-telemetry",
-        "branch_scope": "branch_specific",
-        "path": "telemetry/n0-final-frozen-challenge-valid-fail-575794.json",
-        "blob_sha": "b2002f4ea83cadc8dce424f2edc3aa2d9586fd6d",
-        "category": "repository_file",
-        "title": "n0-final-frozen-challenge-valid-fail-575794.json",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 5
-      },
-      {
-        "score": 77,
+        "score": 84,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_DDP_JOB_575537.md",
@@ -634,7 +532,35 @@
         "currentness_adjustment": 4
       },
       {
-        "score": 77,
+        "score": 80,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
+        "blob_sha": "00e639bed1b0f0ca42f128a266345be54f9541ee",
+        "category": "working_context",
+        "title": "N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization",
+        "declared": {
+          "status": " final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 14
+      },
+      {
+        "score": 80,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_N0_CONTINUATION_JOB_575548.md",
@@ -656,11 +582,11 @@
           "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 5,
+        "lexical_body_hits": 4,
         "currentness_adjustment": 4
       },
       {
-        "score": 77,
+        "score": 80,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md",
@@ -682,11 +608,11 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 7,
+        "lexical_body_hits": 5,
         "currentness_adjustment": 4
       },
       {
-        "score": 77,
+        "score": 76,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
@@ -711,21 +637,22 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 6,
+        "lexical_body_hits": 4,
         "currentness_adjustment": 4
       },
       {
-        "score": 75,
-        "branch": "alice-eipm-v1-missing-evidence-localization",
+        "score": 65,
+        "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-        "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
-        "category": "design_document",
-        "title": "N0 downstream causal arbitration — Magnolia execution contract",
+        "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md",
+        "blob_sha": "079f972af73945d7babb8cfe5185977ed9d43e8a",
+        "category": "working_context",
+        "title": "N0 causal-arbitration frontier ready for Magnolia calibration",
         "declared": {},
         "matched_terms": [
           "magnolia",
-          "repair"
+          "repair",
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
@@ -734,59 +661,11 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 7,
-        "currentness_adjustment": 25
+        "lexical_body_hits": 11,
+        "currentness_adjustment": -15
       },
       {
-        "score": 73,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/MAGNOLIA_P100X2_RUNTIME_SMOKE_2026-09-13.md",
-        "blob_sha": "83ab8ec25221b2a6903a2502b2019f9a8a901ec3",
-        "category": "design_document",
-        "title": "Magnolia 2×P100 N0 Runtime Smoke — 2026-09-13",
-        "declared": {
-          "status": " ready for owner execution"
-        },
-        "matched_terms": [
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "smoke"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 7,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 73,
-        "branch": "alice-eipm-v1-missing-evidence-localization",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
-        "blob_sha": "eee60bbaeba09923431699702aa18d3d559dd85a",
-        "category": "design_document",
-        "title": "N0 downstream causal arbitration finalization v0.1",
-        "declared": {},
-        "matched_terms": [
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 6,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 69,
+        "score": 65,
         "branch": "alice-eipm-v1-missing-evidence-localization",
         "branch_scope": "branch_specific",
         "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
@@ -808,11 +687,34 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 5,
+        "lexical_body_hits": 4,
         "currentness_adjustment": 25
       },
       {
-        "score": 68,
+        "score": 65,
+        "branch": "alice-eipm-v1-missing-evidence-localization",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+        "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
+        "category": "design_document",
+        "title": "N0 downstream causal arbitration — Magnolia execution contract",
+        "declared": {},
+        "matched_terms": [
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 4,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 62,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md",
@@ -830,49 +732,28 @@
         "catalogs": [
           "failure",
           "frontier",
-          "document",
           "supersession",
+          "document",
           "lexical"
         ],
-        "lexical_body_hits": 6,
+        "lexical_body_hits": 7,
         "currentness_adjustment": 4
       },
       {
-        "score": 67,
-        "branch": "alice-context",
+        "score": 62,
+        "branch": "alice-eipm-v1-missing-evidence-localization",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-16/sol/FULL_SCALE_FUSION_JOB575619_AND_FROZEN_CHALLENGE.md",
-        "blob_sha": "7139049e6292458813e3da7ef739007e823d9feb",
-        "category": "working_context",
-        "title": "Full-Scale Fusion Job 575619 + Frozen Challenge Gate — 2026-09-16",
-        "declared": {},
+        "path": "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+        "blob_sha": "4096787a38c8e99018bc1ab1ae219d96ebfa79f5",
+        "category": "design_document",
+        "title": "N0 v0.2 Production Build Plan",
+        "declared": {
+          "status": " implementation active; GPU training held until CPU/data gates pass"
+        },
         "matched_terms": [
           "failure",
-          "magnolia",
-          "udocker"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 8,
-        "currentness_adjustment": -15
-      },
-      {
-        "score": 67,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md",
-        "blob_sha": "079f972af73945d7babb8cfe5185977ed9d43e8a",
-        "category": "working_context",
-        "title": "N0 causal-arbitration frontier ready for Magnolia calibration",
-        "declared": {},
-        "matched_terms": [
-          "magnolia",
-          "repair",
-          "udocker"
+          "fallback",
+          "magnolia"
         ],
         "supersession_hints": [],
         "catalogs": [
@@ -881,11 +762,57 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 15,
-        "currentness_adjustment": -15
+        "lexical_body_hits": 9,
+        "currentness_adjustment": 25
       },
       {
-        "score": 62,
+        "score": 61,
+        "branch": "alice-eipm-v1-missing-evidence-localization",
+        "branch_scope": "branch_specific",
+        "path": ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
+        "blob_sha": "74aa2f5a2fb22f50c95da567cacec8ad26130d15",
+        "category": "repository_file",
+        "title": "n0-missing-evidence-localization-contract-check.yml",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "magnolia",
+          "repair",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 3,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 61,
+        "branch": "alice-eipm-v1-missing-evidence-localization",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+        "blob_sha": "eee60bbaeba09923431699702aa18d3d559dd85a",
+        "category": "design_document",
+        "title": "N0 downstream causal arbitration finalization v0.1",
+        "declared": {},
+        "matched_terms": [
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 3,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 60,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
@@ -908,11 +835,91 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 11,
+        "lexical_body_hits": 7,
         "currentness_adjustment": 4
       },
       {
-        "score": 62,
+        "score": 58,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md",
+        "blob_sha": "eff85666b994e668f3686bee2892bf47c6f7c9cd",
+        "category": "working_context",
+        "title": "N0 Causal Arbitration Frontier Calibration Handoff",
+        "declared": {},
+        "matched_terms": [
+          "egress",
+          "error",
+          "failed",
+          "failure",
+          "magnolia",
+          "repair",
+          "smoke",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 13,
+        "currentness_adjustment": -15
+      },
+      {
+        "score": 58,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/MAGNOLIA_P100X2_RUNTIME_SMOKE_2026-09-13.md",
+        "blob_sha": "83ab8ec25221b2a6903a2502b2019f9a8a901ec3",
+        "category": "design_document",
+        "title": "Magnolia 2×P100 N0 Runtime Smoke — 2026-09-13",
+        "declared": {
+          "status": " ready for owner execution"
+        },
+        "matched_terms": [
+          "fallback",
+          "kaggle",
+          "magnolia",
+          "smoke"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 6,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 56,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/PHASE_3_CONVERSATION_STATE.md",
+        "blob_sha": "5007b56dc1ad386ee49e663efebee953d8e8f310",
+        "category": "design_document",
+        "title": "Phase 3.2 — Private Conversation State",
+        "declared": {
+          "status": " P3.2 implementation milestone"
+        },
+        "matched_terms": [
+          "egress",
+          "failed",
+          "failure"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 6,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 56,
         "branch": "alice-eipm-v1-missing-evidence-localization",
         "branch_scope": "branch_specific",
         "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
@@ -930,7 +937,7 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 6,
+        "lexical_body_hits": 5,
         "currentness_adjustment": 25
       }
     ],

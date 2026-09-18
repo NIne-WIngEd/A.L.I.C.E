@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-missing-evidence-localization-ready-20260918-001",
-  "question": "What is the exact current N0 state after final frozen challenge job 575794 and what single fresh non-challenge localization run is now authorized? Identify the maximal experiment frontier, active handoff, failing gate/family, anti-loop constraints, and the ready Magnolia localization runner.",
-  "generated_at_utc": "2026-09-18T18:05:50.352918+00:00",
+  "request_id": "n0-missing-evidence-localization-final-ready-20260918-001",
+  "question": "What is the exact current N0 state after job 575794 and which one fresh non-challenge localization job is now ready? Resolve the active handoff and maximal experiment frontier, and identify the no-rerun/no-threshold-change/no-training constraints plus the final Magnolia runner.",
+  "generated_at_utc": "2026-09-18T18:08:03.995707+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -13,17 +13,17 @@
     "graph_extraction_tree": null,
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "69a91c84fc14e07ad9657b8cdf71f673ad6665f7",
-      "head_committed_at": "2026-09-18T13:05:20-05:00",
-      "head_message": "context: mark fresh missing-evidence localization ready"
+      "head": "dcb4b4b87f554268b4c8b95cd50f66076d9e86e9",
+      "head_committed_at": "2026-09-18T13:07:30-05:00",
+      "head_message": "context: bind final localization code head and CI"
     },
     "continuity_stale_relative_to_experiment_frontier": true,
     "maximal_unmerged_experiment_heads": [
       {
         "branch": "alice-eipm-v1-missing-evidence-localization",
-        "head": "6183ed9be59a75fc7c5118312099a0875b8bab6d",
-        "head_committed_at": "2026-09-18T13:04:44-05:00",
-        "head_message": "fix(n0): separate graph selection from value geometry in localization"
+        "head": "da6fbe80a00f6463d28d3ce29300e1c2943003ef",
+        "head_committed_at": "2026-09-18T13:06:56-05:00",
+        "head_message": "chore(n0): print probe-independent localization signals"
       }
     ]
   },
@@ -107,9 +107,9 @@
     },
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "69a91c84fc14e07ad9657b8cdf71f673ad6665f7",
-      "head_committed_at": "2026-09-18T13:05:20-05:00",
-      "head_message": "context: mark fresh missing-evidence localization ready"
+      "head": "dcb4b4b87f554268b4c8b95cd50f66076d9e86e9",
+      "head_committed_at": "2026-09-18T13:07:30-05:00",
+      "head_message": "context: bind final localization code head and CI"
     },
     "unmerged_experiment_frontier": {
       "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -120,10 +120,10 @@
       "maximal_heads": [
         {
           "branch": "alice-eipm-v1-missing-evidence-localization",
-          "head": "6183ed9be59a75fc7c5118312099a0875b8bab6d",
-          "head_committed_at": "2026-09-18T13:04:44-05:00",
-          "head_message": "fix(n0): separate graph selection from value geometry in localization",
-          "ahead": 42,
+          "head": "da6fbe80a00f6463d28d3ce29300e1c2943003ef",
+          "head_committed_at": "2026-09-18T13:06:56-05:00",
+          "head_message": "chore(n0): print probe-independent localization signals",
+          "ahead": 44,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
           "changed_file_count_vs_source_merge_base": 41,
@@ -176,10 +176,10 @@
       "all_ahead_candidates": [
         {
           "branch": "alice-eipm-v1-missing-evidence-localization",
-          "head": "6183ed9be59a75fc7c5118312099a0875b8bab6d",
-          "head_committed_at": "2026-09-18T13:04:44-05:00",
-          "head_message": "fix(n0): separate graph selection from value geometry in localization",
-          "ahead": 42,
+          "head": "da6fbe80a00f6463d28d3ce29300e1c2943003ef",
+          "head_committed_at": "2026-09-18T13:06:56-05:00",
+          "head_message": "chore(n0): print probe-independent localization signals",
+          "ahead": 44,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
           "changed_file_count_vs_source_merge_base": 41,
@@ -323,16 +323,16 @@
     },
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": true,
-      "newest_experiment_frontier_time": "2026-09-18T13:04:44-05:00",
+      "newest_experiment_frontier_time": "2026-09-18T13:06:56-05:00",
       "active_handoff_last_changed_at": "2026-09-18T12:41:23-05:00",
-      "context_branch_head_time": "2026-09-18T13:05:20-05:00"
+      "context_branch_head_time": "2026-09-18T13:07:30-05:00"
     },
     "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
     "authority": "routing-and-freshness-only"
   },
   "authoritative_source_pointers": [
     {
-      "score": 152,
+      "score": 120,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
@@ -357,61 +357,8 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 17,
+      "lexical_body_hits": 12,
       "currentness_adjustment": 30
-    },
-    {
-      "score": 125,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
-      "blob_sha": "5055fd6d52f800315695dae8ad0d3564514274dd",
-      "category": "working_context",
-      "title": "N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization",
-      "declared": {
-        "status": " final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
-        "repair",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 19
-    },
-    {
-      "score": 88,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md",
-      "blob_sha": "435efa0bf1c2e58ecd5929e4fd25c03cc6f9cd5b",
-      "category": "runtime_receipt",
-      "title": "Magnolia single-P100 N0 teacher diagnostic — job 575565",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
-        "magnolia",
-        "repair",
-        "runtime-results"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 8,
-      "currentness_adjustment": 4
     },
     {
       "score": 86,
@@ -436,23 +383,24 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 7,
+      "lexical_body_hits": 6,
       "currentness_adjustment": 4
     },
     {
       "score": 86,
-      "branch": "alice-eipm-v1-missing-evidence-localization",
-      "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
-      "blob_sha": "74aa2f5a2fb22f50c95da567cacec8ad26130d15",
-      "category": "repository_file",
-      "title": "n0-missing-evidence-localization-contract-check.yml",
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md",
+      "blob_sha": "435efa0bf1c2e58ecd5929e4fd25c03cc6f9cd5b",
+      "category": "runtime_receipt",
+      "title": "Magnolia single-P100 N0 teacher diagnostic — job 575565",
       "declared": {},
       "matched_terms": [
         "failed",
+        "failure",
         "magnolia",
         "repair",
-        "udocker"
+        "runtime-results"
       ],
       "supersession_hints": [],
       "catalogs": [
@@ -461,56 +409,10 @@
         "lexical"
       ],
       "lexical_body_hits": 6,
-      "currentness_adjustment": 25
+      "currentness_adjustment": 4
     },
     {
-      "score": 85,
-      "branch": "fable-builder-model",
-      "branch_scope": "branch_specific",
-      "path": "docs/fable-builder/traces/2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl",
-      "blob_sha": "dd9b39a6333344be9a3690220608496213fdbc47",
-      "category": "design_document",
-      "title": "2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 6
-    },
-    {
-      "score": 83,
-      "branch": "alice-telemetry",
-      "branch_scope": "branch_specific",
-      "path": "telemetry/n0-final-frozen-challenge-valid-fail-575794.json",
-      "blob_sha": "b2002f4ea83cadc8dce424f2edc3aa2d9586fd6d",
-      "category": "repository_file",
-      "title": "n0-final-frozen-challenge-valid-fail-575794.json",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 5
-    },
-    {
-      "score": 77,
+      "score": 84,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
       "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_DDP_JOB_575537.md",
@@ -535,7 +437,35 @@
       "currentness_adjustment": 4
     },
     {
-      "score": 77,
+      "score": 80,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
+      "blob_sha": "00e639bed1b0f0ca42f128a266345be54f9541ee",
+      "category": "working_context",
+      "title": "N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization",
+      "declared": {
+        "status": " final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
+        "hotfix",
+        "magnolia",
+        "repair",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 14
+    },
+    {
+      "score": 80,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
       "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_N0_CONTINUATION_JOB_575548.md",
@@ -557,11 +487,11 @@
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 5,
+      "lexical_body_hits": 4,
       "currentness_adjustment": 4
     },
     {
-      "score": 77,
+      "score": 80,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
       "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md",
@@ -583,11 +513,11 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 7,
+      "lexical_body_hits": 5,
       "currentness_adjustment": 4
     },
     {
-      "score": 77,
+      "score": 76,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
       "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
@@ -612,11 +542,61 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 6,
+      "lexical_body_hits": 4,
       "currentness_adjustment": 4
     },
     {
-      "score": 75,
+      "score": 65,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md",
+      "blob_sha": "079f972af73945d7babb8cfe5185977ed9d43e8a",
+      "category": "working_context",
+      "title": "N0 causal-arbitration frontier ready for Magnolia calibration",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 11,
+      "currentness_adjustment": -15
+    },
+    {
+      "score": 65,
+      "branch": "alice-eipm-v1-missing-evidence-localization",
+      "branch_scope": "branch_specific",
+      "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
+      "blob_sha": "59cc72e3de333c59776e78a2ed3a8e2a1e56c529",
+      "category": "configuration_state",
+      "title": "alice_n0_latent_pool_stage_state_v0.10.json",
+      "declared": {},
+      "matched_terms": [
+        "failed",
+        "failure",
+        "hotfix",
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 4,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 65,
       "branch": "alice-eipm-v1-missing-evidence-localization",
       "branch_scope": "branch_specific",
       "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
@@ -635,8 +615,34 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 7,
+      "lexical_body_hits": 4,
       "currentness_adjustment": 25
+    },
+    {
+      "score": 62,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md",
+      "blob_sha": "7fa503d6e7b78a80d4a632471e0f03f080dc615c",
+      "category": "runtime_receipt",
+      "title": "N0 Frontier Research Audit — 2026-09-14",
+      "declared": {
+        "status": "hold the step-1000 -> step-2500 GPU job pending N0 v0.2 redesign**."
+      },
+      "matched_terms": [
+        "magnolia",
+        "runtime-results"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 7,
+      "currentness_adjustment": 4
     }
   ],
   "graphify_navigation_hints": [],
