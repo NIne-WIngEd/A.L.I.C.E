@@ -1,38 +1,40 @@
 {
-  "request_id": "coverage-g5-g6-eipm-supersession-001",
-  "question": "Why is the permanent EIPM A.L.I.C.E.-native rather than Qwen + LoRA, and what research superseded the older recommendation?",
+  "request_id": "coverage-g4-operational-failure-001",
+  "question": "What Magnolia execution routes are known dead or current, and what PowerShell or Kaggle failure lesson must not be repeated?",
   "budget": 2200,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-18T01:39:07.842818+00:00",
+  "generated_at_utc": "2026-09-18T01:42:07.732979+00:00",
   "authority": "navigation-only",
   "graph_build": {
     "source_work_branch": "alice-eipm-v1-build",
     "source_work_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "research_branch": "research/graphify-context-substrate",
-    "research_commit": "e776315e494a0049e8861969c7ad12770b67791e",
-    "workflow_run_id": "35295890826",
+    "research_commit": "d774a3ae231e6d49c35554e284238c10deea3b99",
+    "workflow_run_id": "35296246491",
     "graph_mode": "code-only",
+    "extraction_tree": "exact-source-worktree",
     "authority": "navigation-only"
   },
   "catalog_result": {
     "schema": "alice-context-catalog-query-v1",
-    "question": "Why is the permanent EIPM A.L.I.C.E.-native rather than Qwen + LoRA, and what research superseded the older recommendation?",
+    "question": "What Magnolia execution routes are known dead or current, and what PowerShell or Kaggle failure lesson must not be repeated?",
     "query_tokens": [
-      "permanent",
-      "eipm",
-      "a.l.i.c.e.-native",
-      "rather",
-      "than",
-      "qwen",
-      "lora",
-      "research",
-      "superseded",
-      "older",
-      "recommendation"
+      "magnolia",
+      "execution",
+      "routes",
+      "known",
+      "dead",
+      "powershell",
+      "kaggle",
+      "failure",
+      "lesson",
+      "must",
+      "not",
+      "repeated"
     ],
     "catalog_status": {
       "schema": "alice-context-catalog-status-v1",
@@ -102,413 +104,267 @@
     },
     "hits": [
       {
-        "score": 68,
+        "score": 41,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-10/sol/EIPM_NATIVE_FRONTIER_ARCHITECTURE_RESEARCH.md",
-        "blob_sha": "786ef85d01add48f1bb605d1d2810ead3be42c02",
+        "path": "docs/chat-context/2026-09-09/sol/MC10D_MAGNOLIA_CLOSED_KAGGLE_DURABLE_SUCCESSOR.md",
+        "blob_sha": "2effe4f25010dc93510e5014372690426fc172ec",
         "category": "working_context",
-        "title": "A.L.I.C.E.-Native EIPM Frontier Architecture Research — 2026-09-10",
-        "declared": {
-          "owner_constraint": " third-party models may be disposable research, generation, or engineering tools. Third-party model weights must not be required by the permanent A.L.I.C.E. Elaina Identity / Personality Model (EIPM). The permanent EIPM weights must be A.L.I.C.E.-native and trained from A.L.I.C.E.-controlled initialization/training lineage.",
-          "status": " working frontier recommendation on `alice-context`; not canonical `main`; no A.L.I.C.E. weights created.",
-          "supersession": " this note supersedes the earlier working recommendation that treated `Qwen3.8-27B + A.L.I.C.E. LoRA` as the permanent EIPM. Qwen may remain an optional disposable teacher/mechanics tool where licensing permits. Its weights are not part of the EIPM."
-        },
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 7,
-            "text": "**Supersession:** this note supersedes the earlier working recommendation that treated `Qwen3.8-27B + A.L.I.C.E. LoRA` as the permanent EIPM. Qwen may remain an optional disposable teacher/mechanics tool where licensing permits. Its weights are not part of the EIPM."
-          },
-          {
-            "line": 189,
-            "text": "Because EIPM v1 is a discriminative/identity-policy model rather than a full generator, the earlier `SFT -> DPO` recipe is no longer the best primary objective."
-          }
+        "title": "MC10D Magnolia closed — Kaggle durable simulation/falsification successor",
+        "declared": {},
+        "matched_terms": [
+          "failure",
+          "hotfix",
+          "kaggle",
+          "magnolia"
         ],
+        "supersession_hints": [],
         "catalogs": [
+          "failure",
           "supersession",
-          "frontier",
           "document"
         ]
       },
       {
-        "score": 55,
+        "score": 41,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md",
+        "blob_sha": "a8be2d6d77884b715635b5a97d3b3e7abbb93e67",
+        "category": "working_context",
+        "title": "MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "kaggle",
+          "magnolia"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document"
+        ]
+      },
+      {
+        "score": 41,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-13/sol/N0_KAGGLE_CPU_LINEAGE_SUCCESS_AND_MAGNOLIA_IMPORT.md",
+        "blob_sha": "514d3f5faffda3e184f18dd4d7fe7a08262413a2",
+        "category": "working_context",
+        "title": "N0 Kaggle CPU Lineage Success and Magnolia Import — 2026-09-14",
+        "declared": {},
+        "matched_terms": [
+          "dns",
+          "egress",
+          "failed",
+          "kaggle",
+          "magnolia",
+          "network",
+          "powershell"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document"
+        ]
+      },
+      {
+        "score": 41,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-14/sol/N0_MAGNOLIA_DNS_BOUNDARY_AND_KAGGLE_CPU_FALLBACK.md",
+        "blob_sha": "19cfd6ac34d7aa3464b2d8fe43a3c0931f166d96",
+        "category": "working_context",
+        "title": "N0 Magnolia DNS boundary and Kaggle CPU fallback — 2026-09-14",
+        "declared": {},
+        "matched_terms": [
+          "dns",
+          "error",
+          "failed",
+          "failure",
+          "fallback",
+          "kaggle",
+          "magnolia",
+          "network"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document"
+        ]
+      },
+      {
+        "score": 35,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
-        "blob_sha": "83b65bc91215216f5637f99090f28c56940553b7",
-        "category": "design_document",
-        "title": "A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
+        "blob_sha": "caa8ea529fc219d8d0004bd2c5cb5e2cebebc852",
+        "category": "runtime_receipt",
+        "title": "Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571",
         "declared": {
-          "status": " research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.",
-          "supersession": " this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it."
+          "status": "completed payload"
         },
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 5,
-            "text": "**Supersession:** this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it."
-          },
-          {
-            "line": 545,
-            "text": "7. continue upward until the marginal improvement no longer justifies cost **or** the N0 competency gates are met;"
-          },
-          {
-            "line": 625,
-            "text": "Carry forward the useful MC10 lessons even though the judge tournament is retired."
-          },
-          {
-            "line": 654,
-            "text": "2. **A fixed 400M target.** Superseded."
-          }
+        "matched_terms": [
+          "error",
+          "failed",
+          "failure",
+          "magnolia",
+          "repair",
+          "runtime-results"
         ],
+        "supersession_hints": [],
         "catalogs": [
-          "supersession",
-          "frontier",
+          "failure",
           "document",
-          "failure"
+          "frontier"
         ]
       },
       {
         "score": 34,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-10/sol/ROADMAP_ALIGNMENT_AND_EIPM_PROJECTION_AMENDMENT.md",
-        "blob_sha": "a7933757df090bc90bfc0ffcc99d238e2aad1b52",
-        "category": "working_context",
-        "title": "Roadmap alignment and EIPM projection amendment — 2026-09-10",
-        "declared": {
-          "status": " active continuation guidance on `alice-context`; not canonical `main`; not a model-weight artifact."
-        },
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 5,
-            "text": "**Supersedes only one shorthand in:** `PERSONALITY_WEIGHT_ARCHITECTURE_RESEARCH.md` — the phrase that could be read as making one base-specific adapter itself the permanent identity anchor."
-          },
-          {
-            "line": 115,
-            "text": "The already-generated 720 E-INF proposals and 288 raw A-SYN candidates do not need to be regenerated merely because MC10D was superseded."
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "frontier",
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 32,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/eipm/EIPM_CAPABILITY_LIMIT_AUDIT_2026-09-16.md",
-        "blob_sha": "782ef880b7c319a7f1d372fb9cadb63428b456be",
-        "category": "design_document",
-        "title": "A.L.I.C.E. EIPM Capability-Limit Audit — 2026-09-16",
-        "declared": {
-          "status": " owner-directed architecture audit / current interpretation authority"
-        },
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 98,
-            "text": "The ratified 136,594,435 semantic parameters describe the current checkpoint. The frontier plan already supersedes older parameter envelopes and states that there is no ratified permanent parameter ceiling."
-          },
-          {
-            "line": 128,
-            "text": "The historical `max_fields=64` value is retained for checkpoint/config lineage but is no longer enforced as a runtime rejection ceiling. The encoder accepts larger field sets subject only to actual compute/memory availability."
-          },
-          {
-            "line": 156,
-            "text": "The earlier concatenate-and-encode fusion draft was superseded before any fusion gradient. The active family is full-scale gated multi-stream self-refinement plus bidirectional cross-attention."
-          },
-          {
-            "line": 170,
-            "text": "The routing objective now rejects training targets that assign positive mass to unavailable views. It no longer silently masks invalid supervision and renormalizes it."
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "frontier",
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 32,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md",
-        "blob_sha": "7fa503d6e7b78a80d4a632471e0f03f080dc615c",
+        "path": "docs/eipm/n0/runtime-results/KAGGLE_CPU_PUBLIC_LINEAGE_V102_20260914.md",
+        "blob_sha": "1590c8e4b29564ed969ba136202c9b7ef3b0be09",
         "category": "runtime_receipt",
-        "title": "N0 Frontier Research Audit — 2026-09-14",
-        "declared": {
-          "status": "hold the step-1000 -> step-2500 GPU job pending N0 v0.2 redesign**."
-        },
+        "title": "Kaggle CPU Public N0 Lineage v1.0.2 — 2026-09-14",
+        "declared": {},
         "matched_terms": [
-          "benchmark",
-          "frontier",
-          "research"
+          "dns",
+          "failed",
+          "failure",
+          "fallback",
+          "kaggle",
+          "magnolia",
+          "network",
+          "powershell",
+          "runtime-results"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "frontier",
+          "failure",
           "supersession",
+          "document"
+        ]
+      },
+      {
+        "score": 33,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-14/sol/N0_V021_MAGNOLIA_NETWORK_FAILOVER_TO_OFFLINE_DERIVATION.md",
+        "blob_sha": "c9e0acae619f0d46aa676c8d34486847e3716361",
+        "category": "working_context",
+        "title": "N0 v0.2.1 Magnolia network failure -> offline tokenizer corpus derivation",
+        "declared": {},
+        "matched_terms": [
+          "error",
+          "failed",
+          "failure",
+          "magnolia",
+          "network"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document"
+        ]
+      },
+      {
+        "score": 32,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-08-31/src/S01-kaggle-handoff.md",
+        "blob_sha": "1e427cc61b70efb047f91d577c821a89539a3abb",
+        "category": "working_context",
+        "title": "A.L.I.C.E. Kaggle Remote Compute — Operational Handoff",
+        "declared": {
+          "status": " VALIDATED / ACTIVE"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "kaggle",
+          "powershell",
+          "smoke"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
           "document",
-          "failure"
+          "supersession"
+        ]
+      },
+      {
+        "score": 32,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/N0_ADAPTIVE_LATENT_POOL_V01_FAILURE_AND_V02_REPAIR_2026-09-16.md",
+        "blob_sha": "f52cd22657c2545c5af7dd3e7aa2f0923a6ee144",
+        "category": "design_document",
+        "title": "N0 Adaptive Multi-View Latent Pool v0.1 Failure and v0.2 Repair — 2026-09-16",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document"
+        ]
+      },
+      {
+        "score": 32,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md",
+        "blob_sha": "77ff7dda3d28fef326ceb8e6af7db799879c876b",
+        "category": "runtime_receipt",
+        "title": "Magnolia 2×P100 N0 Runtime Smoke — Job 575527",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "magnolia",
+          "runtime-results",
+          "smoke",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document"
         ]
       },
       {
         "score": 30,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-13/sol/N0_FRONTIER_RESEARCH_DECISION.md",
-        "blob_sha": "2cba72977eee06c1ca1a7ce20a89b646557324c9",
+        "path": "docs/chat-context/2026-09-07/sol/KAGGLE_PROVIDER_SWITCH.md",
+        "blob_sha": "7cb4fa47b62e3e1123cbfd441318a88f1d426049",
         "category": "working_context",
-        "title": "A.L.I.C.E. N0 Frontier Research Decision — 2026-09-13",
-        "declared": {
-          "status": " continuity handoff. No permanent EIPM weights created."
-        },
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 25,
-            "text": "The previous `~100M–400M` / `~400M` language was a working research hypothesis for one specialist architecture. It is superseded as a sizing constraint. A.L.I.C.E. may use a much smaller or much larger EIPM if measured competency and owner-evaluated identity fidelity justify it."
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "frontier",
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 28,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-10/sol/PERSONALITY_WEIGHT_ARCHITECTURE_RESEARCH.md",
-        "blob_sha": "a3811ee614fd48437dc6d74a6f90d616fbfeb3d1",
-        "category": "working_context",
-        "title": "A.L.I.C.E. Personality-Weight Architecture Research — 2026-09-10",
-        "declared": {
-          "status": " working research recommendation; not canonical `main`; not final Astra-reviewed training authority."
-        },
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 9,
-            "text": "This note records the technical continuation after the owner superseded the validation-heavy MC10D path. It does not authorize a new semantic-validation tournament. It does not create A.L.I.C.E. model weights."
-          },
-          {
-            "line": 34,
-            "text": "Under the 2026-09-10 owner override these are no longer waiting for a multi-judge tournament. They remain provenance-marked raw material for the training-data compiler. E-INF does not become E0. A-SYN does not become historical or lived Elaina/A.L.I.C.E. memory."
-          },
-          {
-            "line": 157,
-            "text": "Do not use verifiable-reward RL as the main personality objective. Personality fidelity is not an objectively verifiable math/code reward."
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "frontier",
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 28,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-16/sol/EIPM_CAPABILITY_LIMIT_AUDIT_AND_FULL_SCALE_FUSION_GATE.md",
-        "blob_sha": "aed7d69a0346329c177aef156577c65b23f8ce66",
-        "category": "working_context",
-        "title": "EIPM Capability-Limit Audit + Full-Scale Fusion Gate — 2026-09-16",
+        "title": "Kaggle Provider Switch — 2026-09-07",
         "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 36,
-            "text": "9. Older “plausible rejected branches as hard negatives” wording superseded: not selected != false; plausible/co-valid branches remain alternatives unless actually contradicted/incompatible."
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "frontier",
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 28,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/EIPM_MAINSTREAMED_BUILD_AND_TEACHING_DOCTRINE_2026-09-13.md",
-        "blob_sha": "87ccfe0f5b7933bcf4430419bf3a3244d3e8d759",
-        "category": "design_document",
-        "title": "EIPM Mainstreamed Build and Teaching Doctrine",
-        "declared": {
-          "status": " owner-directed active working doctrine"
-        },
         "matched_terms": [
-          "research"
+          "failed",
+          "failure",
+          "hotfix",
+          "kaggle",
+          "magnolia",
+          "repair"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "frontier",
-          "supersession",
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 28,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/EIPM_PERSONALITY_COVERAGE_HARD_RULE.md",
-        "blob_sha": "bdd1b0d66e9a6cadbbbcc4abc59ac90549196469",
-        "category": "design_document",
-        "title": "EIPM Personality Coverage Hard Rule",
-        "declared": {
-          "status": " OWNER-RATIFIED HARD RULE"
-        },
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 56,
-            "text": "**A plausible alternative is not a negative merely because another branch was selected.** Plausible alternatives must remain available as competing or co-valid hypotheses where the evidence permits plurality. A branch may be used as a hard negative only when evidence/provenance establishes that it is contradicted, incompatible, or otherwise genuinely wrong for the supervised judgment. This clarification supersedes the earlier shorthand that \"plausible rejected branches\" could generally be treate"
-          }
-        ],
-        "catalogs": [
-          "supersession",
+          "failure",
           "document"
         ]
       },
       {
-        "score": 28,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/EIPM_UNKNOWN_BEHAVIOR_COMPLETION_AND_CONTINUITY_RULE.md",
-        "blob_sha": "418bcb6b806f8886995f36e01f005634f25b1e46",
-        "category": "design_document",
-        "title": "EIPM Unknown-Behavior Completion and Continuity Rule",
-        "declared": {
-          "status": " Owner-ratified hard rule"
-        },
-        "matched_terms": [
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document"
-        ]
-      },
-      {
-        "score": 27,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-13/sol/CURRENT_STATE_AND_HANDOFF.md",
-        "blob_sha": "7eb589676edac6b8dc6352597a921f9de8503e5c",
-        "category": "working_context",
-        "title": "A.L.I.C.E. Current State and Continuation Handoff — 2026-09-13",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 62,
-            "text": "This supersedes the older working idea that the permanent personality model would simply be `Qwen + LoRA`."
-          },
-          {
-            "line": 139,
-            "text": "The prior `~100M–400M` working envelope and shorthand `~400M` references were research guesses based on the then-proposed specialist/discriminative architecture. They are superseded as sizing constraints."
-          },
-          {
-            "line": 183,
-            "text": "Do not discard lessons merely because MC10D is no longer the active path:"
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "frontier",
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 26,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-06/astra/tools/qwen-provider-v104/package/ALICE_MC10D_QWEN_PROVIDER_REVISION_v1.0.4/README.md",
-        "blob_sha": "902cc8c98549544191889b1060c4df69896376df",
-        "category": "working_context",
-        "title": "Qwen v104: observed Magnolia scheduler repair",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 27,
-            "text": "explicitly records the superseded uncommitted v103 intent and provider trace."
-          },
-          {
-            "line": 50,
-            "text": "Do not use earlier Qwen launchers. Return RESULT_ZIP and the terminal output."
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 26,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-07/sol/MC10D_QWEN_V102_VERIFIED_AND_SYNTHESIS_FIDELITY_GUARDRAILS.md",
-        "blob_sha": "ac936c7f0e5eaac3716f176eb68421986b9510d0",
-        "category": "working_context",
-        "title": "MC10D Qwen v1.0.2 verified result and synthesis-fidelity guardrails",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 75,
-            "text": "4. corrected/superseded without erasing history;"
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "frontier",
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 26,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/MEMORY_M1_RESEARCH_BASIS.md",
-        "blob_sha": "f36be75f55a476720646ebfdd4774c362adf0614",
-        "category": "design_document",
-        "title": "Memory M1 Research Basis — Capability-First Polyglot Cognitive Fabric",
-        "declared": {
-          "status": " Owner-ratified M1 research basis; not runtime implementation evidence"
-        },
-        "matched_terms": [
-          "literature",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 26,
+        "score": 30,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/PHASE_4_LIVE_RESEARCH_EXECUTION.md",
@@ -519,97 +375,205 @@
           "status": "additive implementation profile. P4.6a, P4.7a, and P4.7b remain frozen fixture compatibility profiles."
         },
         "matched_terms": [
-          "research"
+          "failure",
+          "fallback",
+          "powershell"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "frontier",
+          "failure",
           "document",
-          "failure"
+          "frontier"
         ]
       },
       {
-        "score": 26,
+        "score": 30,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/RESEARCH_BASIS.md",
-        "blob_sha": "ad0bcb493b6e154e486986677b1b8f0cd302cb92",
+        "path": "docs/eipm/n0/KAGGLE_CPU_REAL_LINEAGE_FALLBACK_2026-09-14.md",
+        "blob_sha": "5bd3fe18ae072031acf90a4f063f1787559d2197",
         "category": "design_document",
-        "title": "Research Basis for A.L.I.C.E. Governance 1.0",
+        "title": "Kaggle CPU fallback for the real N0 public lineage — 2026-09-14",
         "declared": {},
         "matched_terms": [
-          "research"
+          "dns",
+          "error",
+          "failed",
+          "failure",
+          "fallback",
+          "kaggle",
+          "magnolia",
+          "network",
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "frontier",
+          "failure",
           "document"
         ]
       },
       {
-        "score": 26,
+        "score": 30,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/RESEARCH_FRONTIERS.md",
-        "blob_sha": "0b3f95c5156903824cbf94324734afff2499ed31",
+        "path": "docs/eipm/n0/MAGNOLIA_P100X2_RUNTIME_SMOKE_2026-09-13.md",
+        "blob_sha": "83ab8ec25221b2a6903a2502b2019f9a8a901ec3",
         "category": "design_document",
-        "title": "A.L.I.C.E. Research Frontiers Register",
+        "title": "Magnolia 2×P100 N0 Runtime Smoke — 2026-09-13",
+        "declared": {
+          "status": " ready for owner execution"
+        },
+        "matched_terms": [
+          "fallback",
+          "kaggle",
+          "magnolia",
+          "smoke"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document"
+        ]
+      },
+      {
+        "score": 30,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_PUBLIC_LINEAGE_IMPORT_20260914.md",
+        "blob_sha": "45e7f5ed2da02f98e3c52c0a1bef999aedf65d83",
+        "category": "runtime_receipt",
+        "title": "Magnolia Public N0 Lineage Import — 2026-09-14",
         "declared": {},
         "matched_terms": [
-          "benchmark",
-          "frontier",
-          "literature",
-          "research"
+          "failed",
+          "failure",
+          "fallback",
+          "kaggle",
+          "magnolia",
+          "network",
+          "runtime-results",
+          "smoke",
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "frontier",
-          "document",
-          "failure"
+          "failure",
+          "document"
         ]
       },
       {
-        "score": 26,
+        "score": 30,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/eipm/EIPM_CURATED_FRONTIER_V1_POLICY.md",
-        "blob_sha": "bc41d502ce64070dc5e1e291a5d4a9df6129d384",
-        "category": "design_document",
-        "title": "EIPM Curated Frontier v1 Policy",
-        "declared": {
-          "status": " owner-directed working rule"
-        },
-        "matched_terms": [
-          "competitor",
-          "frontier"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure"
-        ]
-      },
-      {
-        "score": 26,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/EIPM_CURATED_FRONTIER_V1_RECEIPT.md",
-        "blob_sha": "0283f40a199fff586adf384f1b5c591a7e41b235",
+        "path": "docs/eipm/n0/runtime-results/N0_V021_MAGNOLIA_NETWORK_FAILOVER_20260914.md",
+        "blob_sha": "bbd962c2b822a11a6ec446bf6bf9fc123a71e280",
         "category": "runtime_receipt",
-        "title": "EIPM Curated Frontier v1 Receipt",
-        "declared": {
-          "status": " curation complete enough for targeted gap filling; not training-authorized."
-        },
+        "title": "N0 v0.2.1 tokenizer corpus: Magnolia network failover",
+        "declared": {},
         "matched_terms": [
-          "competitor",
-          "frontier"
+          "dns",
+          "error",
+          "failure",
+          "kaggle",
+          "magnolia",
+          "network",
+          "runtime-results"
         ],
         "supersession_hints": [],
         "catalogs": [
-          "frontier",
+          "failure",
+          "document"
+        ]
+      },
+      {
+        "score": 30,
+        "branch": "fable-builder-model",
+        "branch_scope": "branch_specific",
+        "path": "docs/fable-builder/traces/FBM_TRACE_20260914_KAGGLE_CPU_LINEAGE_AND_TRANSPORT_RECOVERY.jsonl",
+        "blob_sha": "0510c8b98ee5a1dff46c506ba3ba51e294fe4dbc",
+        "category": "design_document",
+        "title": "FBM_TRACE_20260914_KAGGLE_CPU_LINEAGE_AND_TRANSPORT_RECOVERY.jsonl",
+        "declared": {},
+        "matched_terms": [
+          "dns",
+          "failed",
+          "failure",
+          "hotfix",
+          "kaggle",
+          "magnolia",
+          "network",
+          "powershell",
+          "recovery"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document"
+        ]
+      },
+      {
+        "score": 28,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-07/sol/KAGGLE_QWEN_V102_DISPATCH_BOUNDARY.md",
+        "blob_sha": "4c8d4a4cc3afb706725f398cd5311bff1d56f33d",
+        "category": "working_context",
+        "title": "Kaggle Qwen public calibration v1.0.2 dispatch boundary",
+        "declared": {},
+        "matched_terms": [
+          "failure",
+          "kaggle",
+          "powershell",
+          "recovery"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document"
+        ]
+      },
+      {
+        "score": 28,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-07/sol/MC10D_QWEN_SUCCESSOR_V190_PREEXECUTION_BOUNDARY.md",
+        "blob_sha": "ea28da709cb0bc51e4816a5189e3ed81efc93810",
+        "category": "working_context",
+        "title": "MC10D Qwen successor v1.9.0 pre-execution boundary",
+        "declared": {},
+        "matched_terms": [
+          "error",
+          "failed",
+          "kaggle",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document"
+        ]
+      },
+      {
+        "score": 28,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-07/sol/MC10D_V194_SUCCESS_AND_V200_EXECUTION.md",
+        "blob_sha": "1b7088161444626a3f7746df2637927ad0b9d75c",
+        "category": "working_context",
+        "title": "MC10D v1.9.4 success and v2.0.0 execution boundary",
+        "declared": {},
+        "matched_terms": [
+          "failure",
+          "kaggle",
+          "recovery"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
           "document",
-          "failure"
+          "frontier"
         ]
       }
     ],
@@ -617,6 +581,6 @@
     "private_external_route_reason": null,
     "authority": "routing-only"
   },
-  "graphify_result_text": "Graph: graphify-out/graph.json (10853 nodes) | Traversal: BFS depth=2 | Start: ['Fingerprint the semantic item rather than a generic instruction stem. Prompts…', 'test_n0_native_foundation.py', 'test_latest_source_older_than_seven_days_is_stale()', 'train_n0_v02_cross_context_fusion_full_scale.py', 'Native N0 v0.2 semantic representation model. One random-initialized…', 'test_oversized_newest_pair_blocks_older_pair_selection()', 'test_unscoped_permanent_barrier_is_reported()', '_qwen_supported()', 'risk_and_recommendation()', 'research_evidence.py', 'test_past_temporal_search_returns_historical_superseded_memory()'] | Context: call, import (explicit) | 548 nodes found\n\n[!] TRUNCATED: showing 67 of 548 nodes (~2200-token budget). The answer may be among the 481 cut nodes — raise the token budget (CLI: --budget) or narrow the query (e.g. context_filter=['call'], or get_node for a specific symbol).\n\nNODE Fingerprint the semantic item rather than a generic instruction stem. Prompts… [src=scripts/eipm/n0/audit_n0_v02_teacher_bank.py loc=L47 community=31]\nNODE test_n0_native_foundation.py [src=tests/eipm/test_n0_native_foundation.py loc=L1 community=7]\nNODE test_latest_source_older_than_seven_days_is_stale() [src=tests/phase4/test_information_freshness.py loc=L117 community=44]\nNODE train_n0_v02_cross_context_fusion_full_scale.py [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L1 community=4]\nNODE Native N0 v0.2 semantic representation model. One random-initialized… [src=src/alice_personality/n0/v02_model.py loc=L14 community=57]\nNODE test_oversized_newest_pair_blocks_older_pair_selection() [src=tests/phase3/test_conversation_context_assembly.py loc=L66 community=33]\nNODE test_unscoped_permanent_barrier_is_reported() [src=tests/governance/test_capability_barrier_audit.py loc=L53 community=145]\nNODE _qwen_supported() [src=src/alice_vault/verifier_ensemble_analysis.py loc=L54 community=184]\nNODE risk_and_recommendation() [src=src/alice_vault/analysis.py loc=L287 community=29]\nNODE research_evidence.py [src=src/alice_information/research_evidence.py loc=L1 community=46]\nNODE test_past_temporal_search_returns_historical_superseded_memory() [src=tests/phase2/test_memory_retrieval.py loc=L281 community=17]\nNODE pathlib [src= loc= community=1]\nNODE json [src= loc= community=1]\nNODE dataclasses [src= loc= community=5]\nNODE typing [src= loc= community=4]\nNODE pytest [src= loc= community=156]\nNODE argparse [src= loc= community=1]\nNODE hashlib [src= loc= community=1]\nNODE open_memory_store() [src=src/alice_memory/store.py loc=L107 community=30]\nNODE create_memory() [src=src/alice_memory/service.py loc=L541 community=53]\nNODE torch [src= loc= community=4]\nNODE collections [src= loc= community=4]\nNODE re [src= loc= community=39]\nNODE datetime [src= loc= community=5]\nNODE sha256_text() [src=src/alice_information/contracts.py loc=L87 community=34]\nNODE alice_information/contracts.py [src=src/alice_information/contracts.py loc=L1 community=34]\nNODE alice_information/policy.py [src=src/alice_information/policy.py loc=L1 community=32]\nNODE eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L1 community=4]\nNODE train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L1 community=4]\nNODE config.py [src=src/alice_personality/n0/config.py loc=L1 community=7]\nNODE math [src= loc= community=4]\nNODE subprocess [src= loc= community=76]\nNODE make_orchestrator() [src=tests/phase3/_context_helpers.py loc=L258 community=33]\nNODE train_n0_v02_cross_context_fusion_repair_full_scale.py [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_repair_full_scale.py loc=L1 community=4]\nNODE curriculum_data.py [src=src/alice_personality/n0/curriculum_data.py loc=L1 community=4]\nNODE eval_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py [src=scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py loc=L1 community=4]\nNODE eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py loc=L1 community=4]\nNODE grounding.py [src=src/alice_information/grounding.py loc=L1 community=34]\nNODE research_mode.py [src=src/alice_information/research_mode.py loc=L1 community=37]\nNODE freshness_policy.py [src=src/alice_information/freshness_policy.py loc=L1 community=149]\nNODE research_orchestration.py [src=src/alice_information/research_orchestration.py loc=L1 community=13]\nNODE search_memories() [src=src/alice_memory/retrieval.py loc=L237 community=17]\nNODE torch_nn_functional [src= loc= community=4]\nNODE evidence_graph.py [src=src/alice_personality/n0/evidence_graph.py loc=L1 community=4]\nNODE _intent() [src=tests/phase4/test_information_freshness.py loc=L82 community=44]\nNODE torch_utils_data [src= loc= community=4]\nNODE diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py loc=L1 community=4]\nNODE eval_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py [src=scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py loc=L1 community=4]\nNODE alice_information/grounding_policy.py [src=src/alice_information/grounding_policy.py loc=L1 community=32]\nNODE injection_policy.py [src=src/alice_information/injection_policy.py loc=L1 community=32]\nNODE v02_model.py [src=src/alice_personality/n0/v02_model.py loc=L1 community=4]\nNODE _source() [src=tests/phase4/test_information_freshness.py loc=L43 community=44]\nNODE diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py loc=L1 community=4]\nNODE eval_n0_v02_cross_context_fusion_frozen_challenge.py [src=scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge.py loc=L1 community=4]\nNODE train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py loc=L1 community=4]\nNODE _assess() [src=tests/phase4/test_information_freshness.py loc=L96 community=44]\nNODE freshness.py [src=src/alice_information/freshness.py loc=L1 community=64]\nNODE supersede_memory() [src=src/alice_memory/temporal.py loc=L400 community=15]\nNODE command() [src=tests/phase3/_context_helpers.py loc=L310 community=33]\nNODE research_evidence_policy.py [src=src/alice_information/research_evidence_policy.py loc=L1 community=143]\nNODE injection_firewall.py [src=src/alice_information/injection_firewall.py loc=L1 community=34]\nNODE structured_state.py [src=src/alice_personality/n0/structured_state.py loc=L1 community=4]\nNODE test_information_research_mode.py [src=tests/phase4/test_information_research_mode.py loc=L1 community=37]\nNODE train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py loc=L1 community=4]\nNODE InformationPolicy [src=src/alice_information/policy.py loc=L22 community=18]\nNODE evidence_graph_dual_endpoint.py [src=src/alice_personality/n0/evidence_graph_dual_endpoint.py loc=L1 community=4]\nNODE evidence_view_adapter.py [src=src/alice_personality/n0/evidence_view_adapter.py loc=L1 community=4]\n... (truncated — 481 more nodes cut by ~2200-token budget. Narrow with context_filter=['call'] or use get_node for a specific symbol)\n",
+  "graphify_result_text": "Graph: graphify-out/graph.json (10832 nodes) | Traversal: BFS depth=2 | Start: ['test_known_model_failures_are_recorded_once()', 'Regression for Magnolia job 575673 mixed-autocast evaluation failure.', 'find_kaggle()', 'CurrentClaimProjection', 'DeterministicInformationResearchModeAdapter', '_execution_id()', '_failure()', 'kaggle_cpu_real_lineage.sh', 'magnolia_cpu_n0_v02_tokenizer.sh', 'test_repeated_request_is_idempotent()', '.test_auto_review_routes_sensitive_and_contradictory_to_manual()'] | Context: call, import (explicit) | 205 nodes found\n\n[!] TRUNCATED: showing 72 of 205 nodes (~2200-token budget). The answer may be among the 133 cut nodes — raise the token budget (CLI: --budget) or narrow the query (e.g. context_filter=['call'], or get_node for a specific symbol).\n\nNODE test_known_model_failures_are_recorded_once() [src=tests/phase3/test_conversation_orchestration_failures.py loc=L70 community=34]\nNODE Regression for Magnolia job 575673 mixed-autocast evaluation failure. [src=tests/eipm/test_n0_adaptive_multi_view_latent_pool_objectives_v0_2.py loc=L65 community=28]\nNODE find_kaggle() [src=scripts/eipm/n0/rayan_n0_kaggle_cpu_lineage_controller_v102.py loc=L261 community=132]\nNODE CurrentClaimProjection [src=src/cognitive_kernel/claim_contracts.py loc=L755 community=41]\nNODE DeterministicInformationResearchModeAdapter [src=src/alice_information/research_mode.py loc=L482 community=38]\nNODE _execution_id() [src=src/alice_information/research_execution.py loc=L277 community=96]\nNODE _failure() [src=src/alice_information/brave_search_live.py loc=L72 community=186]\nNODE kaggle_cpu_real_lineage.sh [src=scripts/eipm/n0/kaggle_cpu_real_lineage.sh loc=L1 community=249]\nNODE magnolia_cpu_n0_v02_tokenizer.sh [src=scripts/eipm/n0/magnolia_cpu_n0_v02_tokenizer.sh loc=L1 community=244]\nNODE test_repeated_request_is_idempotent() [src=tests/phase2/test_memory_deletion.py loc=L291 community=11]\nNODE .test_auto_review_routes_sensitive_and_contradictory_to_manual() [src=tests/phase1/test_auto_review.py loc=L44 community=8]\nNODE cognitive_kernel/__init__.py [src=src/cognitive_kernel/__init__.py loc=L1 community=13]\nNODE inspect_conversation_session() [src=src/alice_conversation/state_inspection.py loc=L91 community=34]\nNODE make_orchestrator() [src=tests/phase3/_orchestration_helpers.py loc=L75 community=34]\nNODE claim_authority_prototype.py [src=src/cognitive_kernel/claim_authority_prototype.py loc=L1 community=41]\nNODE request_memory_deletion() [src=src/alice_memory/deletion.py loc=L437 community=11]\nNODE auto_review_pilot() [src=src/alice_vault/auto_review.py loc=L558 community=8]\nNODE _open() [src=tests/phase2/test_memory_deletion.py loc=L46 community=11]\nNODE _create() [src=tests/phase2/test_memory_deletion.py loc=L82 community=11]\nNODE verify_conversation_session_integrity() [src=src/alice_conversation/state_inspection.py loc=L227 community=34]\nNODE _request_deletion() [src=tests/phase2/test_memory_deletion.py loc=L170 community=11]\nNODE main() [src=scripts/eipm/n0/rayan_n0_kaggle_cpu_lineage_controller_v102.py loc=L388 community=132]\nNODE .validate() [src=src/alice_information/research_execution.py loc=L340 community=96]\nNODE ._read_response() [src=src/alice_information/brave_search_live.py loc=L228 community=186]\nNODE command() [src=tests/phase3/test_conversation_orchestration_failures.py loc=L33 community=34]\nNODE _cancel() [src=src/alice_information/brave_search_live.py loc=L89 community=186]\nNODE _remaining() [src=src/alice_information/brave_search_live.py loc=L82 community=186]\nNODE .perform() [src=src/alice_information/brave_search_live.py loc=L128 community=186]\nNODE ._read_chunked() [src=src/alice_information/brave_search_live.py loc=L329 community=186]\nNODE _request_auth() [src=tests/phase2/test_memory_deletion.py loc=L103 community=11]\nNODE ensure() [src=src/alice_information/brave_search_live.py loc=L333 community=186]\nNODE RaisingModel [src=tests/phase3/test_conversation_orchestration_failures.py loc=L48 community=34]\nNODE ._read_to_eof() [src=src/alice_information/brave_search_live.py loc=L316 community=186]\nNODE InformationLiveProviderExecutionError [src=src/alice_information/live_provider_contracts.py loc=L36 community=4]\nNODE .create() [src=src/alice_information/live_provider_contracts.py loc=L134 community=4]\nNODE .validate() [src=src/alice_information/brave_search_live.py loc=L33 community=186]\nNODE .create() [src=src/alice_information/research_execution.py loc=L324 community=96]\nNODE _receipt_payload() [src=src/alice_information/research_execution.py loc=L238 community=96]\nNODE _canonical_json() [src=src/alice_information/research_execution.py loc=L102 community=96]\nNODE pathlib [src= loc= community=2]\nNODE json [src= loc= community=2]\nNODE CognitiveKernelContractError [src=src/cognitive_kernel/canonical.py loc=L18 community=0]\nNODE canonical_sha256() [src=src/cognitive_kernel/canonical.py loc=L39 community=17]\nNODE require_identifier() [src=src/cognitive_kernel/canonical.py loc=L60 community=0]\nNODE dataclasses [src= loc= community=4]\nNODE typing [src= loc= community=5]\nNODE require_sha256() [src=src/cognitive_kernel/canonical.py loc=L83 community=0]\nNODE normalize_timestamp() [src=src/cognitive_kernel/canonical.py loc=L92 community=0]\nNODE open_memory_store() [src=src/alice_memory/store.py loc=L107 community=36]\nNODE create_memory() [src=src/alice_memory/service.py loc=L541 community=22]\nNODE sqlite3 [src= loc= community=2]\nNODE canonical.py [src=src/cognitive_kernel/canonical.py loc=L1 community=0]\nNODE cognitive_kernel/contracts.py [src=src/cognitive_kernel/contracts.py loc=L1 community=0]\nNODE load_memory() [src=src/alice_memory/service.py loc=L366 community=11]\nNODE m2_closeout_evaluation.py [src=src/cognitive_kernel/m2_closeout_evaluation.py loc=L1 community=1]\nNODE evaluation_fixtures.py [src=src/alice_memory/evaluation_fixtures.py loc=L1 community=46]\nNODE ProductHostScope [src=src/cognitive_kernel/contracts.py loc=L83 community=7]\nNODE build_memory_evaluation_fixture() [src=src/alice_memory/evaluation_fixtures.py loc=L403 community=46]\nNODE canonical_json_bytes() [src=src/cognitive_kernel/canonical.py loc=L22 community=19]\nNODE memory_contracts.py [src=src/cognitive_kernel/memory_contracts.py loc=L1 community=1]\nNODE transaction() [src=src/alice_memory/store.py loc=L142 community=105]\nNODE sha256_text() [src=src/alice_conversation/contracts.py loc=L60 community=48]\nNODE brave_search.py [src=src/alice_information/brave_search.py loc=L1 community=4]\nNODE brave_search_live.py [src=src/alice_information/brave_search_live.py loc=L1 community=4]\nNODE claim_contracts.py [src=src/cognitive_kernel/claim_contracts.py loc=L1 community=0]\nNODE context_assembly.py [src=src/alice_conversation/context_assembly.py loc=L1 community=24]\nNODE _normalize_timestamp() [src=src/alice_memory/service.py loc=L165 community=11]\nNODE compile_constitutional_system_contract() [src=src/alice_conversation/constitutional_prompt.py loc=L365 community=87]\nNODE contextlib [src= loc= community=32]\nNODE validate_global_address() [src=src/alice_information/http_transport.py loc=L95 community=27]\nNODE MemoryUnitEnvelope [src=src/cognitive_kernel/memory_contracts.py loc=L377 community=1]\nNODE load_conversation_state_policy() [src=src/alice_conversation/state_policy.py loc=L250 community=39]\n... (truncated — 133 more nodes cut by ~2200-token budget. Narrow with context_filter=['call'] or use get_node for a specific symbol)\n",
   "graphify_stderr": ""
 }
