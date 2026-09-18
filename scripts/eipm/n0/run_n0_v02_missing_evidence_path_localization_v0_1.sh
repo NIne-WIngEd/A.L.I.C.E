@@ -110,6 +110,12 @@ for name,stage in r.get("stage_summaries",{}).items():
         f"target_preference_rate={stage.get('target_preference_rate')} "
         f"mean_margin={stage.get('mean_margin')}"
     )
+signal=r.get("relation_signal_pair_distances",{})
+for name,item in signal.items():
+    distance=item.get("mean_cosine_distance")
+    if distance is None:
+        distance=item.get("mean_permutation_invariant_cosine_distance")
+    print(f"{name}: mean_pair_distance={distance}")
 agg=r.get("aggregate_causal_metrics",{})
 for key in (
     "graph_argmax_target_rate",
@@ -121,6 +127,11 @@ for key in (
     "mean_absolute_target_cosine_drop",
     "mean_latent_evidence_view_attention",
     "mean_counterfactual_latent_evidence_view_attention",
+    "graph_relation_changes_pooled_state",
+    "fusion_preserves_relation_difference",
+    "evidence_causally_increases_latent_relation_separation",
+    "latent_relation_pair_distance",
+    "counterfactual_latent_relation_pair_distance",
 ):
     print(f"{key}={agg.get(key)}")
 print("training_authorized=false")
