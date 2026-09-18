@@ -6,6 +6,8 @@
   "knowledge_branch_count": 28,
   "source_file_count": 1238,
   "active_n0_state_present": true,
+  "active_mission_state_present": true,
+  "continuity_overlay_present": false,
   "document_pointer_count": 2074,
   "failure_lesson_pointer_count": 840,
   "frontier_research_pointer_count": 378,

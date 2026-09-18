@@ -1,0 +1,55 @@
+{
+  "schema": "alice-context-active-mission-state-v1",
+  "source_branch": "alice-eipm-v1-build",
+  "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+  "implementation_state": {
+    "schema": "alice-context-active-n0-state-v1",
+    "source_branch": "alice-eipm-v1-build",
+    "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+    "source_path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json",
+    "source_blob_sha": "ef3aec6bfe73ad93ae158f03c9b8554472a9cf99",
+    "status": "SELECTOR_PRIOR_HEAD_REPAIR_FAILED_ENDPOINT_ROLE_DEFECT_LOCALIZED_ENDPOINT_READ_REPAIR_IMPLEMENTED_PENDING_PREP_AND_GPU",
+    "n0_complete": false,
+    "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.8.json",
+    "pass_next_action": "run_existing_latent_frontier_challenge_once_with_original_adapter_and_selected_repaired_graph",
+    "fail_next_action": "inspect_the_single_heldout_endpoint_role_failure_and_choose_one_causal_next_change",
+    "scale_decision": {
+      "scale_now": false,
+      "reason": "the current failure is localized to an upstream relation endpoint read and therefore does not establish latent capacity insufficiency",
+      "hard_parameter_ceiling": null,
+      "hard_parameter_floor": null,
+      "current_width_depth_slots_relation_vocabulary_field_counts_training_steps_and_curriculum_sizes_are_not_final_capability_limits": true,
+      "do_not_hold_capacity_constant_if_future_evidence_localizes_an_expressivity_bottleneck": true,
+      "do_not_increase_capacity_without_localized_evidence": true,
+      "endpoint_read_scope_escalation": {
+        "eligible_if": "fresh heldout endpoint-role repair fails and the failure localizes to endpoint-read expressivity rather than objective/data/authority semantics",
+        "allowed_changes": "broaden graph relation-read trainable scope, alter relevant read architecture, or increase relevant capacity as required by evidence",
+        "current_relation_read_only_scope_is_not_a_ceiling": true
+      },
+      "latent_scale_escalation": {
+        "eligible_if": "a repaired parent trace verifies the correct target signal at the latent input and the latent pool still loses or cannot represent it",
+        "method": "bounded capacity study around the current operating point using fidelity, counterfactual behavior, latency, memory, and compute evidence",
+        "preset_target_parameter_count": null,
+        "preset_maximum_parameter_count": null,
+        "preset_minimum_parameter_count": null,
+        "avoid_under_scaling": "increase relevant latent width, depth, slot count, or other capacity when a localized capacity bottleneck persists",
+        "avoid_over_scaling": "stop capacity growth when additional capacity no longer improves the relevant fidelity frontier or creates unacceptable latency/resource cost"
+      }
+    },
+    "anti_loop_policy": {
+      "one_causal_change_per_failed_model_gate": true,
+      "automatic_hotfix_chain": false,
+      "rerun_identical_failed_model_experiment_without_state_change": false,
+      "infrastructure_failure_is_not_model_evidence": true,
+      "already_valid_preparation_is_idempotently_reused": true,
+      "preserve_stale_or_prior_evidence_instead_of_deleting_it_to_pass": true,
+      "validation_must_change_a_real_decision_or_stop": true,
+      "failed_selector_checkpoint_must_not_be_promoted_by_convenience": true
+    },
+    "selection_rule": "highest version among source-branch state files explicitly marked authoritative_for_current_latent_stage=true",
+    "authority": "pointer_to_original_source"
+  },
+  "continuity_overlay": null,
+  "execution_rule": "Implementation config governs committed model/build state. A newer continuity overlay may supersede its observed runtime status and next-action wording. Open the original handoff before execution.",
+  "authority": "routing-and-freshness-only"
+}
