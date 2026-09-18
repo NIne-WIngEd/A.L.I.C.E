@@ -1,0 +1,69 @@
+name: Graphify Source Sync
+
+on:
+  push:
+    branches:
+      - research/graphify-context-substrate
+    paths:
+      - "research/graphify-context/SOURCE_SYNC_REQUEST.json"
+
+permissions:
+  contents: write
+
+env:
+  GRAPHIFY_SOURCE_BRANCH: alice-eipm-v1-build
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout research branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Merge current A.L.I.C.E. working branch
+        shell: bash
+        run: |
+          git config user.name "alice-context-sync-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git fetch origin "$GRAPHIFY_SOURCE_BRANCH"
+
+          BEFORE="$(git rev-parse HEAD)"
+          SOURCE_COMMIT="$(git rev-parse "origin/$GRAPHIFY_SOURCE_BRANCH")"
+
+          if git merge-base --is-ancestor "$SOURCE_COMMIT" HEAD; then
+            SYNC_STATUS="already_current"
+          else
+            git merge --no-edit "origin/$GRAPHIFY_SOURCE_BRANCH"
+            SYNC_STATUS="merged"
+          fi
+
+          AFTER="$(git rev-parse HEAD)"
+          export BEFORE SOURCE_COMMIT SYNC_STATUS AFTER
+          python - <<'PY'
+          import json
+          import os
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          result = {
+              "source_work_branch": "alice-eipm-v1-build",
+              "source_work_commit": os.environ["SOURCE_COMMIT"],
+              "research_commit_before": os.environ["BEFORE"],
+              "research_commit_after_merge": os.environ["AFTER"],
+              "status": os.environ["SYNC_STATUS"],
+              "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+          }
+          Path("research/graphify-context/SOURCE_SYNC_RESULT.json").write_text(
+              json.dumps(result, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+          git add research/graphify-context/SOURCE_SYNC_RESULT.json
+          if ! git diff --cached --quiet; then
+            git commit -m "research: record Graphify source sync"
+          fi
+          git push
