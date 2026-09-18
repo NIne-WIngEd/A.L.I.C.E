@@ -26,6 +26,14 @@ The common stack manifest cannot contain a graph/evidence-graph artifact. That p
 
 The evaluator emits the existing latent-pool `corrected_evaluate` metrics plus the existing counterfactual target-drop metrics. The outer arbitration manifest declares comparison direction and tolerances. Tolerances are intentionally not selected by this implementation. They must be frozen before preflight from the already-authorized comparison policy/evidence.
 
+## Canonical-only metric calibration
+
+If no materialized comparison policy exists, `calibrate_downstream_causal_arbitration_metric_policy_v0_1.py` derives it before the candidate arm is ever evaluated. The calibration runs the canonical graph through the same full production N0 stack in two separate evaluator processes. It binds the same semantic model, structured state, evidence adapter, fusion model, latent pool, tokenizer, evaluation set, configs, and Git revision used by arbitration.
+
+The candidate graph is not accepted as an input to calibration. The tolerance rule is fixed in source before the repeat results exist: per metric, `atol = max(1e-6, 2 * max_pairwise_abs_repeat_delta)` and `rtol = 0`. This gives one compact numerical-repeatability gate without turning N0 into another validation project.
+
+The calibration is not a pilot model. It executes the complete production N0 path with the ratified canonical graph. It only measures numerical repeatability needed to interpret the later canonical-vs-candidate causal comparison.
+
 ## Governance
 
 This evaluator is diagnostic only. It has no optimizer, training, promotion, repair-ratification, or scaling path. A downstream `IMPROVEMENT` classification still does not ratify the endpoint repair; it only feeds the separate post-arbitration decision gate, which can authorize at most one final frozen challenge.
