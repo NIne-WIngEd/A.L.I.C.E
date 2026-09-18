@@ -1,2 +1,2 @@
-catalog-schema=7
-reason=index-all-non-temporary-branches
+catalog-schema=8
+reason=compare-frontier-to-active-handoff-timestamp
