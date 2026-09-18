@@ -215,9 +215,72 @@ def main() -> None:
     elif legacy_path.exists():
         active=json.loads(legacy_path.read_text(encoding="utf-8"))
 
+    # Current-state questions need freshness-aware routing. Lexical overlap alone
+    # can otherwise rank an old "current state" handoff above the active
+    # continuity pointer or a newer unmerged experiment frontier.
+    qlow=q.lower()
+    current_intent=any(
+        term in qlow
+        for term in (
+            "current","latest","now","next","where are we",
+            "scientific state","continue","continuation","resume",
+        )
+    )
+    if current_intent and isinstance(active,dict):
+        overlay=active.get("continuity_overlay") or {}
+        overlay_path=overlay.get("path")
+        overlay_date=overlay.get("date")
+        frontier=active.get("unmerged_experiment_frontier") or {}
+        maximal_branches={
+            str(row.get("branch"))
+            for row in (frontier.get("maximal_heads") or [])
+            if row.get("branch")
+        }
+        stable_branch=(
+            (active.get("stable_build_base") or {}).get("branch")
+        )
+
+        for hit in merged.values():
+            adjustment=0
+            branch=hit.get("branch")
+            path=str(hit.get("path") or "")
+
+            if overlay_path and branch=="alice-context" and path==overlay_path:
+                adjustment+=30
+
+            if branch in maximal_branches:
+                adjustment+=25
+
+            if stable_branch and branch==stable_branch:
+                adjustment+=4
+
+            if (
+                overlay_date
+                and branch=="alice-context"
+                and path.startswith("docs/chat-context/")
+            ):
+                match=re.match(
+                    r"^docs/chat-context/(\d{4}-\d{2}-\d{2})/",
+                    path,
+                )
+                if match and match.group(1) < str(overlay_date):
+                    adjustment-=15
+
+            if adjustment:
+                hit["score"]+=adjustment
+                hit["currentness_adjustment"]=adjustment
+
+        ranked=sorted(
+            merged.values(),
+            key=lambda x:(
+                -x["score"],
+                x.get("branch") or "",
+                x.get("path") or "",
+            ),
+        )[:max(1,min(args.top,50))]
+
     catalog_status=json.loads((ROOT/"CATALOG_STATUS.json").read_text(encoding="utf-8"))
 
-    qlow=q.lower()
     private_terms=("comic","old chat","previous chat","prior chat","conversation","pdf","private","elaina source","handoff export")
     operational_terms=("magnolia","kaggle","powershell","udocker","slurm","ssh","sbatch","execution route","submit","launcher","remote path")
     operational_intent=("current","command","route","workflow","submit","run","how","exact","working","dead","failed","failure","lesson")
