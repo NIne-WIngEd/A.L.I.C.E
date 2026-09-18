@@ -3,4 +3,5 @@ graphify-out/
 research/graphify-context/
 .github/workflows/graphify-context.yml
 .github/workflows/graphify-query.yml
+.github/workflows/graphify-sync.yml
 scripts/context/Start-ALICEGraphifyContext.ps1
