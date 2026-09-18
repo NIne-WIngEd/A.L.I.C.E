@@ -54,11 +54,11 @@
   },
   "continuity_overlay": {
     "branch": "alice-context",
-    "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md",
-    "blob_sha": "7597ce40d8a5071a6aceceb4c42dfff03c441465",
-    "title": "N0 Causal Arbitration Frontier Calibration Handoff",
-    "date": "2026-09-17",
-    "last_changed_at": "2026-09-17T21:52:12-05:00",
+    "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
+    "blob_sha": "19f407ba4d11922a5095d3570cb6a0474d54e6be",
+    "title": "N0 Final Frozen Challenge Ready Handoff",
+    "date": "2026-09-18",
+    "last_changed_at": "2026-09-18T12:41:23-05:00",
     "current_build_head_declared": null,
     "magnolia_job_observed": null,
     "authoritative_build_state_excerpt": null,
@@ -68,9 +68,9 @@
   },
   "continuity_branch_head": {
     "branch": "alice-context",
-    "head": "5392903a853e691ee6dfda08dbc1a7ff99514ef6",
-    "head_committed_at": "2026-09-17T22:02:35-05:00",
-    "head_message": "context: document Graphify substrate cross-chat workflow"
+    "head": "2d6bfbffafb7a7fffe8060c972ee60cb4f96a1bb",
+    "head_committed_at": "2026-09-18T12:41:23-05:00",
+    "head_message": "context: hand off N0 final frozen challenge frontier"
   },
   "unmerged_experiment_frontier": {
     "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -81,13 +81,13 @@
     "maximal_heads": [
       {
         "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "head": "6c930788da42ad9964c4b5bf6067be3b7d6bfd06",
-        "head_committed_at": "2026-09-17T21:51:11-05:00",
-        "head_message": "ci(n0): smoke arbitration import roots without GPU",
-        "ahead": 27,
+        "head": "e535a2a63c2c2bdfe13843171b391096c4c5019e",
+        "head_committed_at": "2026-09-18T12:40:17-05:00",
+        "head_message": "ci(n0): guard final frozen challenge execution contract",
+        "ahead": 32,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 32,
+        "changed_file_count_vs_source_merge_base": 35,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
@@ -108,11 +108,14 @@
           "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
           "scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch",
           "scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch",
+          "scripts/eipm/n0/magnolia_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sbatch",
           "scripts/eipm/n0/magnolia_udocker_exec.sh",
           "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
           "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
+          "scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
           "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
           "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
+          "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
           "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
           "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
           "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
@@ -128,13 +131,13 @@
     "all_ahead_candidates": [
       {
         "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "head": "6c930788da42ad9964c4b5bf6067be3b7d6bfd06",
-        "head_committed_at": "2026-09-17T21:51:11-05:00",
-        "head_message": "ci(n0): smoke arbitration import roots without GPU",
-        "ahead": 27,
+        "head": "e535a2a63c2c2bdfe13843171b391096c4c5019e",
+        "head_committed_at": "2026-09-18T12:40:17-05:00",
+        "head_message": "ci(n0): guard final frozen challenge execution contract",
+        "ahead": 32,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 32,
+        "changed_file_count_vs_source_merge_base": 35,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
@@ -155,11 +158,14 @@
           "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
           "scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch",
           "scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch",
+          "scripts/eipm/n0/magnolia_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sbatch",
           "scripts/eipm/n0/magnolia_udocker_exec.sh",
           "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
           "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
+          "scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
           "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
           "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
+          "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
           "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
           "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
           "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
@@ -218,9 +224,9 @@
   },
   "continuity_freshness": {
     "stale_relative_to_unmerged_experiment_frontier": false,
-    "newest_experiment_frontier_time": "2026-09-17T21:51:11-05:00",
-    "active_handoff_last_changed_at": "2026-09-17T21:52:12-05:00",
-    "context_branch_head_time": "2026-09-17T22:02:35-05:00"
+    "newest_experiment_frontier_time": "2026-09-18T12:40:17-05:00",
+    "active_handoff_last_changed_at": "2026-09-18T12:41:23-05:00",
+    "context_branch_head_time": "2026-09-18T12:41:23-05:00"
   },
   "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
   "authority": "routing-and-freshness-only"
