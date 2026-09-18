@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "ecb98dae6eb3a9f879a502156d2d2e98d06f79a5",
-      "head_committed_at": "2026-09-18T15:28:35-05:00",
-      "head_message": "context: hand off layerwise query-semantics audit",
+      "head": "cf1318ad201be12ff20947d44e64c72d9676bcd2",
+      "head_committed_at": "2026-09-18T15:43:05-05:00",
+      "head_message": "context: hand off relation-conditioned multi-layer interface design",
       "status": "diverged",
-      "ahead": 199,
+      "ahead": 200,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 546,
+      "changed_file_count_vs_source_merge_base": 547,
       "knowledge_surface": true
     },
     {
@@ -89,14 +89,26 @@
     },
     {
       "branch": "alice-eipm-v1-query-semantics-architecture-audit",
-      "head": "900db6f09b38a5ae6328d897b520e59335201728",
-      "head_committed_at": "2026-09-18T15:28:01-05:00",
-      "head_message": "ci(n0): guard no-gradient layerwise semantic audit",
+      "head": "cc1e7068856f6c053642a4463891d7ce0348fd06",
+      "head_committed_at": "2026-09-18T15:34:41-05:00",
+      "head_message": "state(n0): record layer-local relation semantics and freeze training",
       "status": "ahead",
-      "ahead": 86,
+      "ahead": 87,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 74,
+      "changed_file_count_vs_source_merge_base": 75,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+      "head": "5c6801577695b315b4a7443c28f5c7d42c1c3446",
+      "head_committed_at": "2026-09-18T15:41:44-05:00",
+      "head_message": "ci(n0): make multi-layer interface assertion structural",
+      "status": "ahead",
+      "ahead": 95,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 81,
       "knowledge_surface": true
     },
     {
@@ -149,14 +161,14 @@
     },
     {
       "branch": "alice-telemetry",
-      "head": "2a8a9837cd6ac10293a92e4ca20ebce6460e6590",
-      "head_committed_at": "2026-09-18T15:28:37-05:00",
-      "head_message": "telemetry: record layerwise semantic audit readiness",
+      "head": "fbb308577864481ea51ed9295aca7a5fc4e3aa7f",
+      "head_committed_at": "2026-09-18T15:43:07-05:00",
+      "head_message": "telemetry: record multi-layer query interface design readiness",
       "status": "unrelated",
-      "ahead": 34,
+      "ahead": 35,
       "behind": 675,
       "merge_base": null,
-      "changed_file_count_vs_source_merge_base": 1263,
+      "changed_file_count_vs_source_merge_base": 1264,
       "knowledge_surface": true
     },
     {
@@ -197,14 +209,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "4d1cee48fba22f10809641d19615e63b148328bf",
-      "head_committed_at": "2026-09-18T14:43:39-05:00",
-      "head_message": "fbm: record external-research architecture redirect",
+      "head": "53a3fc15adee8e182c9ade771b9bb729f54b78f3",
+      "head_committed_at": "2026-09-18T15:40:34-05:00",
+      "head_message": "fbm: capture audit-derived multi-layer interface design seed",
       "status": "diverged",
-      "ahead": 83,
+      "ahead": 86,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 83,
+      "changed_file_count_vs_source_merge_base": 85,
       "knowledge_surface": true
     },
     {

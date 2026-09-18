@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-query-semantics-layerwise-audit-ready-20260918-001",
-  "question": "Resolve current N0 state after no-gradient job 575801. Confirm token-level semantics outperform pooled views overall but causes/supports remain at chance, gradient work is still frozen, identify the layerwise semantic audit frontier and single authorized next action, and confirm no token-graph training or semantic retraining is yet authorized.",
-  "generated_at_utc": "2026-09-18T20:29:10.246313+00:00",
+  "request_id": "n0-relation-conditioned-multilayer-interface-ready-20260918-001",
+  "question": "Resolve current N0 state after layerwise audit job 575804. Identify the relation-conditioned multi-layer token interface frontier, the compiled-map requirement, the no-universal-layer rule, FBM capture, and the single authorized next action. Confirm training, gradient, GPU execution, scale, heldout opening, and frozen-challenge rerun are not authorized.",
+  "generated_at_utc": "2026-09-18T20:43:35.683977+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -13,17 +13,17 @@
     "graph_extraction_tree": null,
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "ecb98dae6eb3a9f879a502156d2d2e98d06f79a5",
-      "head_committed_at": "2026-09-18T15:28:35-05:00",
-      "head_message": "context: hand off layerwise query-semantics audit"
+      "head": "cf1318ad201be12ff20947d44e64c72d9676bcd2",
+      "head_committed_at": "2026-09-18T15:43:05-05:00",
+      "head_message": "context: hand off relation-conditioned multi-layer interface design"
     },
     "continuity_stale_relative_to_experiment_frontier": false,
     "maximal_unmerged_experiment_heads": [
       {
-        "branch": "alice-eipm-v1-query-semantics-architecture-audit",
-        "head": "900db6f09b38a5ae6328d897b520e59335201728",
-        "head_committed_at": "2026-09-18T15:28:01-05:00",
-        "head_message": "ci(n0): guard no-gradient layerwise semantic audit"
+        "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+        "head": "5c6801577695b315b4a7443c28f5c7d42c1c3446",
+        "head_committed_at": "2026-09-18T15:41:44-05:00",
+        "head_message": "ci(n0): make multi-layer interface assertion structural"
       }
     ]
   },
@@ -93,11 +93,11 @@
     },
     "continuity_overlay": {
       "branch": "alice-context",
-      "path": "docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_LAYERWISE_AUDIT_HANDOFF.md",
-      "blob_sha": "ef36a23c17bf569a0697dcda6e936ede68fdeffc",
-      "title": "N0 Query-Semantics Layerwise Audit Handoff",
+      "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md",
+      "blob_sha": "c20f2a28057015a3c7566da0d20895a6fa45a044",
+      "title": "N0 Relation-Conditioned Multi-Layer Query Interface Handoff",
       "date": "2026-09-18",
-      "last_changed_at": "2026-09-18T15:28:35-05:00",
+      "last_changed_at": "2026-09-18T15:43:05-05:00",
       "current_build_head_declared": null,
       "magnolia_job_observed": null,
       "authoritative_build_state_excerpt": null,
@@ -107,32 +107,33 @@
     },
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "ecb98dae6eb3a9f879a502156d2d2e98d06f79a5",
-      "head_committed_at": "2026-09-18T15:28:35-05:00",
-      "head_message": "context: hand off layerwise query-semantics audit"
+      "head": "cf1318ad201be12ff20947d44e64c72d9676bcd2",
+      "head_committed_at": "2026-09-18T15:43:05-05:00",
+      "head_message": "context: hand off relation-conditioned multi-layer interface design"
     },
     "unmerged_experiment_frontier": {
       "schema": "alice-context-unmerged-experiment-frontier-v1",
       "stable_build_branch": "alice-eipm-v1-build",
       "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "candidate_count": 8,
+      "candidate_count": 9,
       "maximal_head_count": 1,
       "maximal_heads": [
         {
-          "branch": "alice-eipm-v1-query-semantics-architecture-audit",
-          "head": "900db6f09b38a5ae6328d897b520e59335201728",
-          "head_committed_at": "2026-09-18T15:28:01-05:00",
-          "head_message": "ci(n0): guard no-gradient layerwise semantic audit",
-          "ahead": 86,
+          "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+          "head": "5c6801577695b315b4a7443c28f5c7d42c1c3446",
+          "head_committed_at": "2026-09-18T15:41:44-05:00",
+          "head_message": "ci(n0): make multi-layer interface assertion structural",
+          "ahead": 95,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-          "changed_file_count_vs_source_merge_base": 74,
+          "changed_file_count_vs_source_merge_base": 81,
           "changed_paths_vs_source_merge_base": [
             ".github/workflows/n0-arbitration-contract-check.yml",
             ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
             ".github/workflows/n0-query-relation-role-router-contract-check.yml",
             ".github/workflows/n0-query-semantics-architecture-audit-contract-check.yml",
             ".github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml",
+            ".github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml",
             ".github/workflows/n0-relation-semantic-grounding-contract-check.yml",
             ".github/workflows/n0-relation-semantic-role-residual-contract-check.yml",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
@@ -141,6 +142,8 @@
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.13.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.14.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.15.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.16.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.17.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
@@ -154,6 +157,7 @@
             "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
             "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
             "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
+            "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
             "scripts/eipm/n0/audit_n0_v02_query_semantic_layers_v0_1.py",
             "scripts/eipm/n0/audit_n0_v02_query_semantic_representations_v0_1.py",
             "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
@@ -161,6 +165,7 @@
             "scripts/eipm/n0/build_n0_v02_relation_semantic_grounding_curriculum_v0_1.py",
             "scripts/eipm/n0/build_n0_v02_relation_semantic_role_residual_curriculum_v0_2.py",
             "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+            "scripts/eipm/n0/compile_n0_v02_relation_conditioned_layer_map_v0_1.py",
             "scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py",
             "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
             "scripts/eipm/n0/downstream_causal_arbitration_v0_2.py",
@@ -180,6 +185,7 @@
             "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
             "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
             "scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
+            "scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
@@ -194,6 +200,7 @@
             "scripts/eipm/n0/train_n0_v02_relation_semantic_role_residual_v0_2.py",
             "src/alice_personality/n0/evidence_graph_query_relation_role_router.py",
             "src/alice_personality/n0/evidence_graph_semantic_role_residual.py",
+            "src/alice_personality/n0/relation_conditioned_multilayer_query.py",
             "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
             "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
             "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
@@ -208,14 +215,108 @@
       ],
       "all_ahead_candidates": [
         {
-          "branch": "alice-eipm-v1-query-semantics-architecture-audit",
-          "head": "900db6f09b38a5ae6328d897b520e59335201728",
-          "head_committed_at": "2026-09-18T15:28:01-05:00",
-          "head_message": "ci(n0): guard no-gradient layerwise semantic audit",
-          "ahead": 86,
+          "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+          "head": "5c6801577695b315b4a7443c28f5c7d42c1c3446",
+          "head_committed_at": "2026-09-18T15:41:44-05:00",
+          "head_message": "ci(n0): make multi-layer interface assertion structural",
+          "ahead": 95,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-          "changed_file_count_vs_source_merge_base": 74,
+          "changed_file_count_vs_source_merge_base": 81,
+          "changed_paths_vs_source_merge_base": [
+            ".github/workflows/n0-arbitration-contract-check.yml",
+            ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
+            ".github/workflows/n0-query-relation-role-router-contract-check.yml",
+            ".github/workflows/n0-query-semantics-architecture-audit-contract-check.yml",
+            ".github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml",
+            ".github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml",
+            ".github/workflows/n0-relation-semantic-grounding-contract-check.yml",
+            ".github/workflows/n0-relation-semantic-role-residual-contract-check.yml",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.12.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.13.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.14.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.15.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.16.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.17.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
+            "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+            "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+            "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+            "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+            "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+            "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+            "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
+            "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+            "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
+            "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
+            "scripts/eipm/n0/audit_n0_v02_query_semantic_layers_v0_1.py",
+            "scripts/eipm/n0/audit_n0_v02_query_semantic_representations_v0_1.py",
+            "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
+            "scripts/eipm/n0/build_n0_v02_query_relation_role_router_curriculum_v0_3.py",
+            "scripts/eipm/n0/build_n0_v02_relation_semantic_grounding_curriculum_v0_1.py",
+            "scripts/eipm/n0/build_n0_v02_relation_semantic_role_residual_curriculum_v0_2.py",
+            "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+            "scripts/eipm/n0/compile_n0_v02_relation_conditioned_layer_map_v0_1.py",
+            "scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py",
+            "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/downstream_causal_arbitration_v0_2.py",
+            "scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py",
+            "scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_n0_v02_missing_evidence_path_localization_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_n0_v02_query_relation_role_router_v0_3.sbatch",
+            "scripts/eipm/n0/magnolia_n0_v02_query_semantics_architecture_audit_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_n0_v02_query_semantics_layerwise_audit_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_grounding_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_role_residual_v0_2.sbatch",
+            "scripts/eipm/n0/magnolia_udocker_exec.sh",
+            "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
+            "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
+            "scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
+            "scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_query_relation_role_router_v0_3.sh",
+            "scripts/eipm/n0/run_n0_v02_query_semantics_architecture_audit_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_query_semantics_layerwise_audit_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_relation_semantic_grounding_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_relation_semantic_role_residual_v0_2.sh",
+            "scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py",
+            "scripts/eipm/n0/train_n0_v02_relation_semantic_grounding_v0_1.py",
+            "scripts/eipm/n0/train_n0_v02_relation_semantic_role_residual_v0_2.py",
+            "src/alice_personality/n0/evidence_graph_query_relation_role_router.py",
+            "src/alice_personality/n0/evidence_graph_semantic_role_residual.py",
+            "src/alice_personality/n0/relation_conditioned_multilayer_query.py",
+            "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+            "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
+            "tests/eipm/n0/test_downstream_full_stack_graph_evaluator_v0_1.py",
+            "tests/eipm/n0/test_execute_frozen_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_finalize_downstream_causal_arbitration_v0_1.py",
+            "tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py",
+            "tests/eipm/n0/test_prepare_downstream_causal_arbitration_v0_1.py"
+          ],
+          "authority": "unmerged-experiment-pointer"
+        },
+        {
+          "branch": "alice-eipm-v1-query-semantics-architecture-audit",
+          "head": "cc1e7068856f6c053642a4463891d7ce0348fd06",
+          "head_committed_at": "2026-09-18T15:34:41-05:00",
+          "head_message": "state(n0): record layer-local relation semantics and freeze training",
+          "ahead": 87,
+          "behind": 0,
+          "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+          "changed_file_count_vs_source_merge_base": 75,
           "changed_paths_vs_source_merge_base": [
             ".github/workflows/n0-arbitration-contract-check.yml",
             ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
@@ -230,6 +331,7 @@
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.13.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.14.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.15.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.16.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
@@ -645,16 +747,155 @@
     },
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": false,
-      "newest_experiment_frontier_time": "2026-09-18T15:28:01-05:00",
-      "active_handoff_last_changed_at": "2026-09-18T15:28:35-05:00",
-      "context_branch_head_time": "2026-09-18T15:28:35-05:00"
+      "newest_experiment_frontier_time": "2026-09-18T15:41:44-05:00",
+      "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
+      "context_branch_head_time": "2026-09-18T15:43:05-05:00"
     },
     "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
     "authority": "routing-and-freshness-only"
   },
   "authoritative_source_pointers": [
     {
-      "score": 168,
+      "score": 116,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md",
+      "blob_sha": "c20f2a28057015a3c7566da0d20895a6fa45a044",
+      "category": "working_context",
+      "title": "N0 Relation-Conditioned Multi-Layer Query Interface Handoff",
+      "declared": {
+        "status": " architecture designed and CI-qualified from 575804 evidence; exact relation-layer map still must be compiled from the saved audit JSON; training remains unauthorized"
+      },
+      "matched_terms": [
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 17,
+      "currentness_adjustment": 30
+    },
+    {
+      "score": 111,
+      "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
+      "blob_sha": "b31b09cfbb87865c26ce9b700a2174a8a1954666",
+      "category": "design_document",
+      "title": "N0 Relation-Conditioned Multi-Layer Query Interface v0.1",
+      "declared": {
+        "status": " architecture designed from jobs 575801 and 575804; training remains unauthorized"
+      },
+      "matched_terms": [
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 13,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 90,
+      "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
+      "blob_sha": "a9251a8a3389495257aa2b37bf92513fd96e09f8",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Layerwise Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "literature",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 10,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 84,
+      "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml",
+      "blob_sha": "c180e7635508320e46198003478f34cbdb1b7fc0",
+      "category": "repository_file",
+      "title": "n0-query-semantics-layerwise-audit-contract-check.yml",
+      "declared": {},
+      "matched_terms": [
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 8,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 84,
+      "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml",
+      "blob_sha": "0c1b216afe2b0886ffafe842df55100e2482925a",
+      "category": "repository_file",
+      "title": "n0-relation-conditioned-multilayer-interface-contract-check.yml",
+      "declared": {},
+      "matched_terms": [
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 8,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 83,
+      "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "failure",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 11,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 77,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_LAYERWISE_AUDIT_HANDOFF.md",
@@ -677,193 +918,10 @@
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 25,
-      "currentness_adjustment": 30
-    },
-    {
-      "score": 137,
-      "branch": "alice-eipm-v1-query-semantics-architecture-audit",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
-      "blob_sha": "a9251a8a3389495257aa2b37bf92513fd96e09f8",
-      "category": "design_document",
-      "title": "N0 Query-Semantics Layerwise Audit v0.1",
-      "declared": {},
-      "matched_terms": [
-        "literature",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 20,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 129,
-      "branch": "alice-eipm-v1-query-semantics-architecture-audit",
-      "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml",
-      "blob_sha": "c180e7635508320e46198003478f34cbdb1b7fc0",
-      "category": "repository_file",
-      "title": "n0-query-semantics-layerwise-audit-contract-check.yml",
-      "declared": {},
-      "matched_terms": [
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 12,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 128,
-      "branch": "alice-eipm-v1-query-semantics-architecture-audit",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
-      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
-      "category": "design_document",
-      "title": "N0 Query-Semantics Architecture Audit v0.1",
-      "declared": {},
-      "matched_terms": [
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 14,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 116,
-      "branch": "alice-eipm-v1-query-semantics-architecture-audit",
-      "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-query-semantics-architecture-audit-contract-check.yml",
-      "blob_sha": "9b1f85a38e87a5339f65957072d670235d0a06f1",
-      "category": "repository_file",
-      "title": "n0-query-semantics-architecture-audit-contract-check.yml",
-      "declared": {},
-      "matched_terms": [
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 6,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 107,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_ARCHITECTURE_AUDIT_HANDOFF.md",
-      "blob_sha": "0b70134a42e598a15e01387d0f6339fbdbb97655",
-      "category": "working_context",
-      "title": "N0 Query-Semantics Architecture Audit Handoff",
-      "declared": {
-        "status": " QRR v0.3 failed validly at dev; heldout remained unopened; all gradient work is frozen pending one no-gradient semantic-representation audit"
-      },
-      "matched_terms": [
-        "frontier",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "supersession",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 16
-    },
-    {
-      "score": 86,
-      "branch": "alice-telemetry",
-      "branch_scope": "branch_specific",
-      "path": "telemetry/n0-query-semantics-layerwise-audit-ready.json",
-      "blob_sha": "de43cea0abd124d2b54de84be865e3e3a1ee762e",
-      "category": "repository_file",
-      "title": "n0-query-semantics-layerwise-audit-ready.json",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 5
-    },
-    {
-      "score": 79,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md",
-      "blob_sha": "9635954cb93dc3bf3e9c63de012dcca5d718ea9f",
-      "category": "working_context",
-      "title": "N0 Relation-Semantic Grounding Repair Handoff",
-      "declared": {
-        "status": " missing-evidence failure localized to relation-semantic endpoint grounding; one bounded repair is CI-ready; no frozen-challenge rerun, threshold change, promotion, scaling, or N0 completion authorized"
-      },
-      "matched_terms": [
-        "frontier"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 15
+      "lexical_body_hits": 18
     },
     {
       "score": 77,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md",
-      "blob_sha": "c8753de75f50b757ebc209a7625f12be3c7b7f5b",
-      "category": "working_context",
-      "title": "N0 Relation-Semantic Role Residual Repair Handoff",
-      "declared": {
-        "status": " relation-semantic grounding v0.1 failed validly; failure localized to shared read-path entanglement; isolated zero-init semantic-role residual is CI-ready for one P100 run"
-      },
-      "matched_terms": [
-        "frontier"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 14
-    },
-    {
-      "score": 75,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
       "path": "docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md",
@@ -881,22 +939,47 @@
       "supersession_hints": [],
       "catalogs": [
         "frontier",
+        "supersession",
         "document",
         "failure",
-        "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 12,
+      "lexical_body_hits": 11,
+      "currentness_adjustment": 4
+    },
+    {
+      "score": 75,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/eipm/n0/runtime-results/N0_V02_VOICE_FIRST_REQUIREMENT_AND_AUDIT_IMPORT_FIX_20260914.md",
+      "blob_sha": "706c7fc1bc16277972d4794f0a978733b08965b6",
+      "category": "runtime_receipt",
+      "title": "N0 v0.2 Voice-First Requirement and Teacher-Audit Import Fix",
+      "declared": {
+        "status": " active; rerun one upgraded teacher-bank audit"
+      },
+      "matched_terms": [
+        "benchmark"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "supersession",
+        "document",
+        "failure",
+        "lexical"
+      ],
+      "lexical_body_hits": 8,
       "currentness_adjustment": 4
     },
     {
       "score": 71,
-      "branch": "alice-eipm-v1-query-semantics-architecture-audit",
+      "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.15.json",
-      "blob_sha": "3fd392ed0df5177fb67a67b4be6fdd9a23ee0ce5",
+      "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.17.json",
+      "blob_sha": "c9e4a99ddb9ecd259c906e21ce2ea2c502109cf0",
       "category": "configuration_state",
-      "title": "alice_n0_latent_pool_stage_state_v0.15.json",
+      "title": "alice_n0_latent_pool_stage_state_v0.17.json",
       "declared": {},
       "matched_terms": [
         "research"
@@ -906,40 +989,57 @@
         "frontier",
         "supersession",
         "document",
-        "failure",
         "lexical"
       ],
-      "lexical_body_hits": 11,
+      "lexical_body_hits": 7,
       "currentness_adjustment": 25
     },
     {
       "score": 70,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
-      "blob_sha": "83b65bc91215216f5637f99090f28c56940553b7",
+      "branch": "fable-builder-model",
+      "branch_scope": "branch_specific",
+      "path": "docs/fable-builder/traces/FBM_TRACE_20260914_FRONTIER_AUDIT_REDIRECT.jsonl",
+      "blob_sha": "64d4d15d40aad411abd6772459beadc3a09f3aa6",
       "category": "design_document",
-      "title": "A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13",
+      "title": "FBM_TRACE_20260914_FRONTIER_AUDIT_REDIRECT.jsonl",
+      "declared": {},
+      "matched_terms": [
+        "benchmark",
+        "frontier"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 5
+    },
+    {
+      "score": 66,
+      "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+      "branch_scope": "branch_specific",
+      "path": "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+      "blob_sha": "4096787a38c8e99018bc1ab1ae219d96ebfa79f5",
+      "category": "design_document",
+      "title": "N0 v0.2 Production Build Plan",
       "declared": {
-        "status": " research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.",
-        "supersession": " this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it."
+        "status": " implementation active; GPU training held until CPU/data gates pass"
       },
       "matched_terms": [
         "benchmark",
         "frontier",
-        "literature",
         "research"
       ],
       "supersession_hints": [],
       "catalogs": [
         "frontier",
-        "failure",
-        "supersession",
         "document",
+        "failure",
         "lexical"
       ],
-      "lexical_body_hits": 20,
-      "currentness_adjustment": 4
+      "lexical_body_hits": 11,
+      "currentness_adjustment": 25
     }
   ],
   "graphify_navigation_hints": [],
