@@ -1,5 +1,5 @@
 {
-  "request_id": "coverage-frontier-capsule-v2-001",
+  "request_id": "coverage-frontier-capsule-v2-002",
   "question": "What is the current N0 scientific state now, including the stable build base, the latest continuity handoff, and any newer unmerged experiment frontier that must be inspected before the next execution?",
   "budget": 1800,
   "traversal": "bfs",
