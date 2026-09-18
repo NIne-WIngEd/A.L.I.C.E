@@ -1,13 +1,13 @@
 {
-  "request_id": "n0-relation-semantic-grounding-ready-20260918-001",
-  "question": "Resolve the exact current N0 state after fresh localization job 575795. Identify the active handoff, unique maximal experiment frontier, localized defect, selected parent graph, anti-loop constraints, and the single authorized next action. Confirm no frozen challenge rerun, no threshold change, no training on challenge/localization rows, no endpoint heldout-test reuse, no scaling, and no N0 completion.",
-  "budget": 1400,
+  "request_id": "n0-relation-semantic-role-residual-ready-20260918-001",
+  "question": "Resolve the exact current N0 state after failed relation-semantic grounding job 575797. Identify the active handoff, unique maximal experiment frontier, the shared relation-read entanglement localization, immutable endpoint parent graph, fresh v0.2 semantic-role residual repair, heldout discipline, and the single authorized next action. Confirm no frozen-challenge rerun, no threshold change, no reuse of v0.1 semantic/localization/frozen rows, no endpoint-heldout reuse, no scaling, and no N0 completion.",
+  "budget": 1500,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-18T18:59:52.316045+00:00",
+  "generated_at_utc": "2026-09-18T19:25:01.495864+00:00",
   "authority": "navigation-only",
   "routing_decision": {
     "graphify_mode": "auto",
@@ -33,16 +33,17 @@
   },
   "catalog_result": {
     "schema": "alice-context-catalog-query-v1",
-    "question": "Resolve the exact current N0 state after fresh localization job 575795. Identify the active handoff, unique maximal experiment frontier, localized defect, selected parent graph, anti-loop constraints, and the single authorized next action. Confirm no frozen challenge rerun, no threshold change, no training on challenge/localization rows, no endpoint heldout-test reuse, no scaling, and no N0 completion.",
+    "question": "Resolve the exact current N0 state after failed relation-semantic grounding job 575797. Identify the active handoff, unique maximal experiment frontier, the shared relation-read entanglement localization, immutable endpoint parent graph, fresh v0.2 semantic-role residual repair, heldout discipline, and the single authorized next action. Confirm no frozen-challenge rerun, no threshold change, no reuse of v0.1 semantic/localization/frozen rows, no endpoint-heldout reuse, no scaling, and no N0 completion.",
     "query_tokens": [
       "resolve",
       "exact",
       "state",
       "after",
-      "fresh",
-      "localization",
+      "failed",
+      "relation-semantic",
+      "grounding",
       "job",
-      "575795",
+      "575797",
       "identify",
       "active",
       "handoff",
@@ -50,28 +51,35 @@
       "maximal",
       "experiment",
       "frontier",
-      "localized",
-      "defect",
-      "selected",
+      "shared",
+      "relation-read",
+      "entanglement",
+      "localization",
+      "immutable",
+      "endpoint",
       "parent",
       "graph",
-      "anti-loop",
-      "constraints",
+      "fresh",
+      "v0.2",
+      "semantic-role",
+      "residual",
+      "repair",
+      "heldout",
+      "discipline",
       "single",
       "authorized",
       "next",
       "action",
       "confirm",
-      "frozen",
-      "challenge",
+      "frozen-challenge",
       "rerun",
       "threshold",
       "change",
-      "training",
-      "challenge/localization",
+      "reuse",
+      "v0.1",
+      "semantic/localization/frozen",
       "rows",
-      "endpoint",
-      "heldout-test",
+      "endpoint-heldout",
       "reuse",
       "scaling",
       "completion"
@@ -80,8 +88,8 @@
       "schema": "alice-context-catalog-status-v1",
       "source_branch": "alice-eipm-v1-build",
       "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "branch_count": 32,
-      "knowledge_branch_count": 32,
+      "branch_count": 33,
+      "knowledge_branch_count": 33,
       "source_file_count": 1238,
       "active_n0_state_present": true,
       "active_mission_state_present": true,
@@ -89,10 +97,10 @@
       "unmerged_experiment_frontier_present": true,
       "unmerged_experiment_maximal_head_count": 1,
       "continuity_stale_relative_to_experiment_frontier": false,
-      "document_pointer_count": 2158,
-      "failure_lesson_pointer_count": 908,
-      "frontier_research_pointer_count": 414,
-      "supersession_pointer_count": 226,
+      "document_pointer_count": 2178,
+      "failure_lesson_pointer_count": 927,
+      "frontier_research_pointer_count": 420,
+      "supersession_pointer_count": 229,
       "authority": "routing-only",
       "notes": [
         "Catalog entries are source pointers, not truth promotions.",
@@ -157,11 +165,11 @@
       },
       "continuity_overlay": {
         "branch": "alice-context",
-        "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md",
-        "blob_sha": "9635954cb93dc3bf3e9c63de012dcca5d718ea9f",
-        "title": "N0 Relation-Semantic Grounding Repair Handoff",
+        "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md",
+        "blob_sha": "c8753de75f50b757ebc209a7625f12be3c7b7f5b",
+        "title": "N0 Relation-Semantic Role Residual Repair Handoff",
         "date": "2026-09-18",
-        "last_changed_at": "2026-09-18T13:59:18-05:00",
+        "last_changed_at": "2026-09-18T14:24:23-05:00",
         "current_build_head_declared": null,
         "magnolia_job_observed": null,
         "authoritative_build_state_excerpt": null,
@@ -171,32 +179,34 @@
       },
       "continuity_branch_head": {
         "branch": "alice-context",
-        "head": "5c7016d1b90008614356f29c90b00c4a779e5900",
-        "head_committed_at": "2026-09-18T13:59:18-05:00",
-        "head_message": "context: hand off N0 relation-semantic grounding repair"
+        "head": "277fc11a77b5559479615db43d0f6b12da5bf805",
+        "head_committed_at": "2026-09-18T14:24:23-05:00",
+        "head_message": "context: hand off isolated relation-semantic role residual repair"
       },
       "unmerged_experiment_frontier": {
         "schema": "alice-context-unmerged-experiment-frontier-v1",
         "stable_build_branch": "alice-eipm-v1-build",
         "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "candidate_count": 5,
+        "candidate_count": 6,
         "maximal_head_count": 1,
         "maximal_heads": [
           {
-            "branch": "alice-eipm-v1-relation-semantic-grounding",
-            "head": "09fdd7c1c8cadda4ac61b65f1ff9c32e35ced53d",
-            "head_committed_at": "2026-09-18T13:58:22-05:00",
-            "head_message": "ci(n0): guard relation-semantic grounding repair contract",
-            "ahead": 51,
+            "branch": "alice-eipm-v1-relation-semantic-role-residual",
+            "head": "23a84b808a0f16c63678d0875b9a7b2d388f07e7",
+            "head_committed_at": "2026-09-18T14:23:14-05:00",
+            "head_message": "ci(n0): guard semantic-role residual repair contract",
+            "ahead": 60,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-            "changed_file_count_vs_source_merge_base": 47,
+            "changed_file_count_vs_source_merge_base": 54,
             "changed_paths_vs_source_merge_base": [
               ".github/workflows/n0-arbitration-contract-check.yml",
               ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
               ".github/workflows/n0-relation-semantic-grounding-contract-check.yml",
+              ".github/workflows/n0-relation-semantic-role-residual-contract-check.yml",
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json",
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.12.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
@@ -209,6 +219,7 @@
               "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
               "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
               "scripts/eipm/n0/build_n0_v02_relation_semantic_grounding_curriculum_v0_1.py",
+              "scripts/eipm/n0/build_n0_v02_relation_semantic_role_residual_curriculum_v0_2.py",
               "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
               "scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py",
               "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
@@ -221,6 +232,7 @@
               "scripts/eipm/n0/magnolia_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sbatch",
               "scripts/eipm/n0/magnolia_n0_v02_missing_evidence_path_localization_v0_1.sbatch",
               "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_grounding_v0_1.sbatch",
+              "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_role_residual_v0_2.sbatch",
               "scripts/eipm/n0/magnolia_udocker_exec.sh",
               "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
               "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
@@ -230,7 +242,10 @@
               "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_relation_semantic_grounding_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_relation_semantic_role_residual_v0_2.sh",
               "scripts/eipm/n0/train_n0_v02_relation_semantic_grounding_v0_1.py",
+              "scripts/eipm/n0/train_n0_v02_relation_semantic_role_residual_v0_2.py",
+              "src/alice_personality/n0/evidence_graph_semantic_role_residual.py",
               "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
               "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
               "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
@@ -244,6 +259,73 @@
           }
         ],
         "all_ahead_candidates": [
+          {
+            "branch": "alice-eipm-v1-relation-semantic-role-residual",
+            "head": "23a84b808a0f16c63678d0875b9a7b2d388f07e7",
+            "head_committed_at": "2026-09-18T14:23:14-05:00",
+            "head_message": "ci(n0): guard semantic-role residual repair contract",
+            "ahead": 60,
+            "behind": 0,
+            "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+            "changed_file_count_vs_source_merge_base": 54,
+            "changed_paths_vs_source_merge_base": [
+              ".github/workflows/n0-arbitration-contract-check.yml",
+              ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
+              ".github/workflows/n0-relation-semantic-grounding-contract-check.yml",
+              ".github/workflows/n0-relation-semantic-role-residual-contract-check.yml",
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json",
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.12.json",
+              "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
+              "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+              "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
+              "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
+              "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+              "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+              "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+              "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+              "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+              "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+              "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
+              "scripts/eipm/n0/build_n0_v02_relation_semantic_grounding_curriculum_v0_1.py",
+              "scripts/eipm/n0/build_n0_v02_relation_semantic_role_residual_curriculum_v0_2.py",
+              "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+              "scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py",
+              "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
+              "scripts/eipm/n0/downstream_causal_arbitration_v0_2.py",
+              "scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py",
+              "scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py",
+              "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
+              "scripts/eipm/n0/magnolia_downstream_causal_arbitration_metric_calibration_v0_1.sbatch",
+              "scripts/eipm/n0/magnolia_downstream_causal_arbitration_v0_1.sbatch",
+              "scripts/eipm/n0/magnolia_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sbatch",
+              "scripts/eipm/n0/magnolia_n0_v02_missing_evidence_path_localization_v0_1.sbatch",
+              "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_grounding_v0_1.sbatch",
+              "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_role_residual_v0_2.sbatch",
+              "scripts/eipm/n0/magnolia_udocker_exec.sh",
+              "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
+              "scripts/eipm/n0/prepare_downstream_causal_arbitration_v0_1.py",
+              "scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
+              "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_relation_semantic_grounding_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_relation_semantic_role_residual_v0_2.sh",
+              "scripts/eipm/n0/train_n0_v02_relation_semantic_grounding_v0_1.py",
+              "scripts/eipm/n0/train_n0_v02_relation_semantic_role_residual_v0_2.py",
+              "src/alice_personality/n0/evidence_graph_semantic_role_residual.py",
+              "tests/eipm/n0/test_calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+              "tests/eipm/n0/test_downstream_causal_arbitration_v0_1.py",
+              "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
+              "tests/eipm/n0/test_downstream_full_stack_graph_evaluator_v0_1.py",
+              "tests/eipm/n0/test_execute_frozen_downstream_causal_arbitration_v0_1.py",
+              "tests/eipm/n0/test_finalize_downstream_causal_arbitration_v0_1.py",
+              "tests/eipm/n0/test_post_arbitration_decision_gate_v0_1.py",
+              "tests/eipm/n0/test_prepare_downstream_causal_arbitration_v0_1.py"
+            ],
+            "authority": "unmerged-experiment-pointer"
+          },
           {
             "branch": "alice-eipm-v1-relation-semantic-grounding",
             "head": "09fdd7c1c8cadda4ac61b65f1ff9c32e35ced53d",
@@ -453,9 +535,9 @@
       },
       "continuity_freshness": {
         "stale_relative_to_unmerged_experiment_frontier": false,
-        "newest_experiment_frontier_time": "2026-09-18T13:58:22-05:00",
-        "active_handoff_last_changed_at": "2026-09-18T13:59:18-05:00",
-        "context_branch_head_time": "2026-09-18T13:59:18-05:00"
+        "newest_experiment_frontier_time": "2026-09-18T14:23:14-05:00",
+        "active_handoff_last_changed_at": "2026-09-18T14:24:23-05:00",
+        "context_branch_head_time": "2026-09-18T14:24:23-05:00"
       },
       "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
       "authority": "routing-and-freshness-only"
@@ -509,7 +591,36 @@
     },
     "hits": [
       {
-        "score": 112,
+        "score": 155,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md",
+        "blob_sha": "c8753de75f50b757ebc209a7625f12be3c7b7f5b",
+        "category": "working_context",
+        "title": "N0 Relation-Semantic Role Residual Repair Handoff",
+        "declared": {
+          "status": " relation-semantic grounding v0.1 failed validly; failure localized to shared read-path entanglement; isolated zero-init semantic-role residual is CI-ready for one P100 run"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 35,
+        "currentness_adjustment": 30
+      },
+      {
+        "score": 119,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md",
@@ -520,44 +631,25 @@
           "status": " missing-evidence failure localized to relation-semantic endpoint grounding; one bounded repair is CI-ready; no frozen-challenge rerun, threshold change, promotion, scaling, or N0 completion authorized"
         },
         "matched_terms": [
-          "frontier"
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair",
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 29,
-        "currentness_adjustment": 30
+        "lexical_body_hits": 30
       },
       {
-        "score": 98,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
-        "blob_sha": "19f407ba4d11922a5095d3570cb6a0474d54e6be",
-        "category": "working_context",
-        "title": "N0 Final Frozen Challenge Ready Handoff",
-        "declared": {
-          "status": " one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized"
-        },
-        "matched_terms": [
-          "frontier"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 19
-      },
-      {
-        "score": 97,
+        "score": 99,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-18/sol/N0_MISSING_EVIDENCE_LOCALIZATION_HANDOFF.md",
@@ -568,19 +660,293 @@
           "status": " final frozen challenge is an immutable valid FAIL; one fresh non-challenge causal-path localization run is ready; no rerun, threshold change, training, promotion, scaling, or N0 completion authorized"
         },
         "matched_terms": [
-          "frontier"
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair",
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "lexical"
         ],
-        "lexical_body_hits": 27
+        "lexical_body_hits": 26
       },
       {
-        "score": 93,
+        "score": 98,
+        "branch": "alice-eipm-v1-relation-semantic-role-residual",
+        "branch_scope": "branch_specific",
+        "path": ".github/workflows/n0-relation-semantic-role-residual-contract-check.yml",
+        "blob_sha": "c52018f50683e7166fb6e194a4ecc8a47a48bc59",
+        "category": "repository_file",
+        "title": "The last sentinel deliberately cannot match; the first three protect row/id reuse.",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "hotfix",
+          "magnolia",
+          "repair",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 18,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 88,
+        "branch": "alice-eipm-v1-relation-semantic-role-residual",
+        "branch_scope": "branch_specific",
+        "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json",
+        "blob_sha": "e125a65217895681b4add72aebf39a4a9a540a6e",
+        "category": "configuration_state",
+        "title": "alice_n0_latent_pool_stage_state_v0.11.json",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 7,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 88,
+        "branch": "alice-eipm-v1-relation-semantic-role-residual",
+        "branch_scope": "branch_specific",
+        "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.12.json",
+        "blob_sha": "96daded7d21d5a2b06d034e4c4d2bf91b3da85b2",
+        "category": "configuration_state",
+        "title": "alice_n0_latent_pool_stage_state_v0.12.json",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 9,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 86,
+        "branch": "alice-eipm-v1-relation-semantic-role-residual",
+        "branch_scope": "branch_specific",
+        "path": ".github/workflows/n0-relation-semantic-grounding-contract-check.yml",
+        "blob_sha": "6769183ae3f91c494a25a5264d3179caf8816d30",
+        "category": "repository_file",
+        "title": "n0-relation-semantic-grounding-contract-check.yml",
+        "declared": {},
+        "matched_terms": [
+          "hotfix",
+          "magnolia",
+          "repair",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 6,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 84,
+        "branch": "alice-eipm-v1-relation-semantic-role-residual",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+        "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
+        "category": "design_document",
+        "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
+        "declared": {},
+        "matched_terms": [
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 10,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 80,
+        "branch": "alice-eipm-v1-relation-semantic-role-residual",
+        "branch_scope": "branch_specific",
+        "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
+        "blob_sha": "59cc72e3de333c59776e78a2ed3a8e2a1e56c529",
+        "category": "configuration_state",
+        "title": "alice_n0_latent_pool_stage_state_v0.10.json",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 4,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 75,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
+        "blob_sha": "c44ed89c28153b7496910f099851ddf576176574",
+        "category": "working_context",
+        "title": "N0 Endpoint Repair and Downstream Arbitration Handoff",
+        "declared": {
+          "status": "`FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`."
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 23,
+        "currentness_adjustment": -15
+      },
+      {
+        "score": 75,
+        "branch": "alice-eipm-v1-relation-semantic-role-residual",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+        "blob_sha": "eee60bbaeba09923431699702aa18d3d559dd85a",
+        "category": "design_document",
+        "title": "N0 downstream causal arbitration finalization v0.1",
+        "declared": {},
+        "matched_terms": [
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 9,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 74,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/N0_ADAPTIVE_LATENT_POOL_V01_FAILURE_AND_V02_REPAIR_2026-09-16.md",
+        "blob_sha": "f52cd22657c2545c5af7dd3e7aa2f0923a6ee144",
+        "category": "design_document",
+        "title": "N0 Adaptive Multi-View Latent Pool v0.1 Failure and v0.2 Repair — 2026-09-16",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 9,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 73,
+        "branch": "alice-eipm-v1-relation-semantic-role-residual",
+        "branch_scope": "branch_specific",
+        "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+        "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
+        "category": "design_document",
+        "title": "N0 downstream causal arbitration v0.1",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 11,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 72,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-15/sol/N0_V02_STRUCTURED_TO_EVIDENCE_GRAPH_HANDOFF.md",
+        "blob_sha": "db60e6e30e9c553db9e8a5065402201824bcc51a",
+        "category": "working_context",
+        "title": "N0 v0.2 Structured-State -> Evidence Graph Handoff",
+        "declared": {},
+        "matched_terms": [
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 10,
+        "currentness_adjustment": -15
+      },
+      {
+        "score": 71,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
@@ -591,118 +957,54 @@
           "status": " final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged"
         },
         "matched_terms": [
-          "frontier"
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair",
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "lexical"
         ],
-        "lexical_body_hits": 23
+        "lexical_body_hits": 21
       },
       {
-        "score": 67,
-        "branch": "alice-eipm-v1-relation-semantic-grounding",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
-        "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
-        "category": "design_document",
-        "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
-        "declared": {},
+        "score": 71,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
+        "blob_sha": "caa8ea529fc219d8d0004bd2c5cb5e2cebebc852",
+        "category": "runtime_receipt",
+        "title": "Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571",
+        "declared": {
+          "status": "completed payload"
+        },
         "matched_terms": [
-          "research"
+          "error",
+          "failed",
+          "failure",
+          "magnolia",
+          "repair",
+          "runtime-results"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "lexical"
         ],
         "lexical_body_hits": 10,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 65,
-        "branch": "alice-eipm-v1-relation-semantic-grounding",
-        "branch_scope": "branch_specific",
-        "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
-        "blob_sha": "59cc72e3de333c59776e78a2ed3a8e2a1e56c529",
-        "category": "configuration_state",
-        "title": "alice_n0_latent_pool_stage_state_v0.10.json",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 4,
-            "text": "\"supersedes\": \"configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json\","
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 7,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 64,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
-        "blob_sha": "83b65bc91215216f5637f99090f28c56940553b7",
-        "category": "design_document",
-        "title": "A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13",
-        "declared": {
-          "status": " research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.",
-          "supersession": " this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it."
-        },
-        "matched_terms": [
-          "benchmark",
-          "frontier",
-          "literature",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 18,
         "currentness_adjustment": 4
       },
       {
-        "score": 64,
-        "branch": "alice-eipm-v1-relation-semantic-grounding",
-        "branch_scope": "branch_specific",
-        "path": "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
-        "blob_sha": "47f2ee03652f5920070bde22aa9569fd1f471178",
-        "category": "design_document",
-        "title": "N0 downstream causal arbitration v0.1",
-        "declared": {},
-        "matched_terms": [
-          "frontier"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 11,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 64,
-        "branch": "alice-eipm-v1-relation-semantic-grounding",
+        "score": 71,
+        "branch": "alice-eipm-v1-relation-semantic-role-residual",
         "branch_scope": "branch_specific",
         "path": "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
         "blob_sha": "4096787a38c8e99018bc1ab1ae219d96ebfa79f5",
@@ -719,279 +1021,86 @@
         "supersession_hints": [],
         "catalogs": [
           "frontier",
-          "document",
           "failure",
+          "document",
           "lexical"
         ],
         "lexical_body_hits": 15,
         "currentness_adjustment": 25
       },
       {
-        "score": 62,
-        "branch": "alice-eipm-v1-relation-semantic-grounding",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-        "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
-        "category": "design_document",
-        "title": "N0 downstream causal arbitration — Magnolia execution contract",
-        "declared": {},
-        "matched_terms": [
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 8,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 61,
-        "branch": "alice-eipm-v1-relation-semantic-grounding",
-        "branch_scope": "branch_specific",
-        "path": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json",
-        "blob_sha": "e125a65217895681b4add72aebf39a4a9a540a6e",
-        "category": "configuration_state",
-        "title": "alice_n0_latent_pool_stage_state_v0.11.json",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 4,
-            "text": "\"supersedes\": \"configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json\","
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 5,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 60,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md",
-        "blob_sha": "eff85666b994e668f3686bee2892bf47c6f7c9cd",
-        "category": "working_context",
-        "title": "N0 Causal Arbitration Frontier Calibration Handoff",
-        "declared": {},
-        "matched_terms": [
-          "frontier"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 20,
-        "currentness_adjustment": -15
-      },
-      {
-        "score": 60,
+        "score": 69,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "docs/eipm/EIPM_CURATED_FRONTIER_V1_RECEIPT.md",
-        "blob_sha": "0283f40a199fff586adf384f1b5c591a7e41b235",
-        "category": "runtime_receipt",
-        "title": "EIPM Curated Frontier v1 Receipt",
+        "path": "docs/eipm/EIPM_EXPANSION_GENERATOR_HANDOFF_SPEC_v0.1.md",
+        "blob_sha": "f8950257455fa52972fc9dd9840165495c9ee115",
+        "category": "design_document",
+        "title": "EIPM Expansion Generator Handoff Spec v0.1",
         "declared": {
-          "status": " curation complete enough for targeted gap filling; not training-authorized."
+          "status": " implementation handoff; subordinate to owner-ratified EIPM hard rules"
         },
         "matched_terms": [
-          "competitor",
-          "frontier"
+          "failure"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "lexical"
         ],
-        "lexical_body_hits": 7,
+        "lexical_body_hits": 9,
         "currentness_adjustment": 4
       },
       {
-        "score": 59,
+        "score": 68,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
+        "blob_sha": "19f407ba4d11922a5095d3570cb6a0474d54e6be",
+        "category": "working_context",
+        "title": "N0 Final Frozen Challenge Ready Handoff",
+        "declared": {
+          "status": " one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 19
+      },
+      {
+        "score": 67,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
-        "path": "configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.3.json",
-        "blob_sha": "c57a1750bc13fed8d4a5c1d479c75d1b2a73078b",
+        "path": "configs/eipm/n0/n0_v02_evidence_graph_v0.1.json",
+        "blob_sha": "4423877e2a82ab75d5b6e33b28a38c263701c174",
         "category": "configuration_state",
-        "title": "n0_v02_cross_context_fusion_frozen_challenge_v0.3.json",
+        "title": "n0_v02_evidence_graph_v0.1.json",
         "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 41,
-            "text": "\"historical superseded-state retrieval\","
-          }
+        "matched_terms": [
+          "repair"
         ],
+        "supersession_hints": [],
         "catalogs": [
-          "supersession",
-          "document",
           "failure",
+          "document",
+          "supersession",
           "lexical"
         ],
         "lexical_body_hits": 6,
         "currentness_adjustment": 4
-      },
-      {
-        "score": 59,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md",
-        "blob_sha": "be2ffe0bb87a8f835d36698854aa620db7694b99",
-        "category": "runtime_receipt",
-        "title": "Magnolia 2×P100 Real N0 Training — Job 575546",
-        "declared": {
-          "status": " completed successfully; durable weights retained; LR scheduler defect identified before continuation"
-        },
-        "matched_terms": [],
-        "supersession_hints": [],
-        "catalogs": [
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 10,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 58,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-13/sol/CURRENT_STATE_AND_HANDOFF.md",
-        "blob_sha": "7eb589676edac6b8dc6352597a921f9de8503e5c",
-        "category": "working_context",
-        "title": "A.L.I.C.E. Current State and Continuation Handoff — 2026-09-13",
-        "declared": {},
-        "matched_terms": [
-          "competitor",
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "supersession",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 18,
-        "currentness_adjustment": -15
-      },
-      {
-        "score": 58,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
-        "blob_sha": "c44ed89c28153b7496910f099851ddf576176574",
-        "category": "working_context",
-        "title": "N0 Endpoint Repair and Downstream Arbitration Handoff",
-        "declared": {
-          "status": "`FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`."
-        },
-        "matched_terms": [
-          "architecture research",
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 26,
-        "currentness_adjustment": -15
-      },
-      {
-        "score": 58,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_N0_CONTINUATION_JOB_575548.md",
-        "blob_sha": "f8a37086738f1a7ff8256697aa0d78e711e8b6fb",
-        "category": "runtime_receipt",
-        "title": "Magnolia N0 continuation — job 575548",
-        "declared": {
-          "status": " completed successfully"
-        },
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 34,
-            "text": "The learning rate no longer repeated the defective 200-step cosine cycle. It remained near the intended early-training region and decayed slowly from approximately `2.9973e-4` at step 210 to `2.9292e-4` at step 1000."
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 8,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 58,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md",
-        "blob_sha": "7fa503d6e7b78a80d4a632471e0f03f080dc615c",
-        "category": "runtime_receipt",
-        "title": "N0 Frontier Research Audit — 2026-09-14",
-        "declared": {
-          "status": "hold the step-1000 -> step-2500 GPU job pending N0 v0.2 redesign**."
-        },
-        "matched_terms": [
-          "benchmark",
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 7,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 58,
-        "branch": "alice-eipm-v1-relation-semantic-grounding",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
-        "blob_sha": "eee60bbaeba09923431699702aa18d3d559dd85a",
-        "category": "design_document",
-        "title": "N0 downstream causal arbitration finalization v0.1",
-        "declared": {},
-        "matched_terms": [
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 8,
-        "currentness_adjustment": 25
       }
     ],
     "private_external_route_recommended": false,

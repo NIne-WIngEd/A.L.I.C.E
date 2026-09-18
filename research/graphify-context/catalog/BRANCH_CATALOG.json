@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "5c7016d1b90008614356f29c90b00c4a779e5900",
-      "head_committed_at": "2026-09-18T13:59:18-05:00",
-      "head_message": "context: hand off N0 relation-semantic grounding repair",
+      "head": "277fc11a77b5559479615db43d0f6b12da5bf805",
+      "head_committed_at": "2026-09-18T14:24:23-05:00",
+      "head_message": "context: hand off isolated relation-semantic role residual repair",
       "status": "diverged",
-      "ahead": 194,
+      "ahead": 195,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 542,
+      "changed_file_count_vs_source_merge_base": 543,
       "knowledge_surface": true
     },
     {
@@ -88,6 +88,18 @@
       "knowledge_surface": true
     },
     {
+      "branch": "alice-eipm-v1-relation-semantic-role-residual",
+      "head": "23a84b808a0f16c63678d0875b9a7b2d388f07e7",
+      "head_committed_at": "2026-09-18T14:23:14-05:00",
+      "head_message": "ci(n0): guard semantic-role residual repair contract",
+      "status": "ahead",
+      "ahead": 60,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 54,
+      "knowledge_surface": true
+    },
+    {
       "branch": "alice-mc10b-live",
       "head": "86ae99ca11d5c9a5c72f4d8dd22c7ec90eb882ea",
       "head_committed_at": "2026-09-01T00:55:21-05:00",
@@ -113,14 +125,14 @@
     },
     {
       "branch": "alice-telemetry",
-      "head": "b4cc798a01caf314293d2f98edfb0b88544aef4e",
-      "head_committed_at": "2026-09-18T13:59:20-05:00",
-      "head_message": "telemetry: record relation-semantic grounding repair readiness",
+      "head": "cf673482c0029a08b3d26fd48f1a65d5c3597486",
+      "head_committed_at": "2026-09-18T14:24:26-05:00",
+      "head_message": "telemetry: record semantic-role residual readiness",
       "status": "unrelated",
-      "ahead": 29,
+      "ahead": 30,
       "behind": 675,
       "merge_base": null,
-      "changed_file_count_vs_source_merge_base": 1258,
+      "changed_file_count_vs_source_merge_base": 1259,
       "knowledge_surface": true
     },
     {
@@ -161,14 +173,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "2e6cff76fc61978db1bd2d9f7b84b71d007fe9ab",
-      "head_committed_at": "2026-09-18T13:59:23-05:00",
-      "head_message": "fbm: record relation-semantic grounding localization and repair",
+      "head": "5cc690c9a8be1a0d66bbe29460142d63a0447bea",
+      "head_committed_at": "2026-09-18T14:24:29-05:00",
+      "head_message": "fbm: record shared-read entanglement and isolated residual",
       "status": "diverged",
-      "ahead": 81,
+      "ahead": 82,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 81,
+      "changed_file_count_vs_source_merge_base": 82,
       "knowledge_surface": true
     },
     {
