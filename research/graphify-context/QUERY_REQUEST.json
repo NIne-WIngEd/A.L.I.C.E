@@ -1,7 +1,7 @@
 {
-  "request_id": "n0-qrr-infra-retry-575799-20260918-001",
-  "question": "Resolve current N0 QRR state after Magnolia job 575799 failed in preflight before training. Confirm it is infrastructure-only due to stale 575798 receipt key, identify corrected QRR head and CI result, preserve the partial original output, and identify the single authorized retry directory/action. Confirm architecture unchanged and no model evidence from 575799.",
-  "budget": 1100,
+  "request_id": "n0-query-semantics-audit-ready-20260918-001",
+  "question": "Resolve current N0 state after valid QRR job 575800 dev failure. Confirm heldout stayed unopened, gradient work is frozen, identify the active no-gradient query-semantics architecture audit frontier, the raw-mean-pool vs trained-semantic-projection vs token-level comparison, and the rule that no new gradient run is authorized until the audit result is interpreted.",
+  "budget": 1200,
   "traversal": "bfs",
   "contexts": [
     "call",
