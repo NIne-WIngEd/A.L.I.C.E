@@ -1,1 +1,2 @@
-catalog-schema=2\nreason=dual-layer-active-mission-and-operational-escalation\n
+catalog-schema=3
+reason=fix-continuity-overlay-matching
