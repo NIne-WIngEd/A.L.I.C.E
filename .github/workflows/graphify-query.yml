@@ -36,11 +36,16 @@ jobs:
           from pathlib import Path
 
           build_path = Path("research/graphify-context/LAST_GRAPH_BUILD.json")
+          catalog_path = Path("research/graphify-context/catalog/CATALOG_STATUS.json")
           if not build_path.exists():
               raise SystemExit("STALE_GRAPH: no LAST_GRAPH_BUILD.json exists")
+          if not catalog_path.exists():
+              raise SystemExit("STALE_CATALOG: no CATALOG_STATUS.json exists")
 
           build = json.loads(build_path.read_text(encoding="utf-8"))
+          catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
           recorded = build.get("source_work_commit")
+          catalog_recorded = catalog.get("source_commit")
           live = os.environ["LIVE_SOURCE_COMMIT"]
           if recorded != live:
               raise SystemExit(
@@ -49,6 +54,14 @@ jobs:
                   + " but alice-eipm-v1-build is "
                   + live
                   + ". Sync and rebuild before querying."
+              )
+          if catalog_recorded != live:
+              raise SystemExit(
+                  "STALE_CATALOG: catalog represents "
+                  + repr(catalog_recorded)
+                  + " but alice-eipm-v1-build is "
+                  + live
+                  + ". Refresh the context catalog before querying."
               )
           PY
 
@@ -61,6 +74,18 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install graphifyy
+
+      - name: Query branch and document catalogs
+        shell: bash
+        run: |
+          QUESTION="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          req=json.loads(Path("research/graphify-context/QUERY_REQUEST.json").read_text(encoding="utf-8"))
+          print(str(req.get("question","")).strip())
+          PY
+          )"
+          python scripts/context/query_context_catalog.py "$QUESTION" --top 20
 
       - name: Query persistent graph
         shell: bash
@@ -114,6 +139,9 @@ jobs:
               )
 
           graph_build = json.loads(build_path.read_text(encoding="utf-8"))
+          catalog_result = json.loads(
+              Path("research/graphify-context/CATALOG_QUERY_RESULT.json").read_text(encoding="utf-8")
+          )
 
           result = {
               "request_id": request.get("request_id"),
@@ -124,6 +152,7 @@ jobs:
               "generated_at_utc": datetime.now(timezone.utc).isoformat(),
               "authority": "navigation-only",
               "graph_build": graph_build,
+              "catalog_result": catalog_result,
               "graphify_result_text": proc.stdout,
               "graphify_stderr": proc.stderr,
           }
