@@ -8,6 +8,10 @@ OUTDIR="${ALICE_N0_ARB_DIR:-$WORKDIR/downstream-causal-arbitration-v0.1}"
 
 cd "$ROOT"
 
+# Preparation and frozen execution spawn evaluator/helper processes. Keep the
+# repository package root and N0 script root explicit inside the container.
+export PYTHONPATH="$ROOT/src:$ROOT/scripts/eipm/n0${PYTHONPATH:+:$PYTHONPATH}"
+
 CANON="$WORKDIR/relation-repair-v0.1/step-00000080/evidence_graph_dual_endpoint.safetensors"
 CANDIDATE="$WORKDIR/relation-endpoint-repair-v0.2/training/step-00000200/evidence_graph_dual_endpoint.safetensors"
 EXPECTED_CANDIDATE_SHA256="3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f"
