@@ -1,10 +1,9 @@
 {
-  "request_id": "bootstrap-n0-code-topology-002",
-  "question": "For scripts/eipm/n0/run_n0_v02_first_tranche.sh and scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py, which directly connected code nodes and source files implement or test their N0 execution path? Focus on N0 and EIPM only.",
-  "budget": 3500,
+  "request_id": "bootstrap-n0-code-topology-003",
+  "question": "CrossContextFusion in the N0 personality-model path",
+  "budget": 2500,
   "traversal": "bfs",
   "contexts": [
-    "call",
-    "import"
+    "call"
   ]
 }
