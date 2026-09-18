@@ -6,12 +6,13 @@ on:
       - research/graphify-context-substrate
     paths-ignore:
       - "graphify-out/**"
-      - "research/graphify-context/catalog/**"
-      - "research/graphify-context/QUERY_REQUEST.json"
-      - "research/graphify-context/QUERY_RESULT.json"
-      - "research/graphify-context/CATALOG_QUERY_RESULT.json"
-      - "research/graphify-context/SOURCE_SYNC_RESULT.json"
+      - "research/graphify-context/**"
+      - "scripts/context/**"
+      - ".github/workflows/graphify-context.yml"
+      - ".github/workflows/graphify-query.yml"
+      - ".github/workflows/graphify-sync.yml"
       - ".github/workflows/context-catalog.yml"
+      - ".graphifyignore"
   workflow_dispatch:
 
 permissions:
