@@ -1,7 +1,7 @@
 {
-  "request_id": "n0-localization-active-handoff-20260918-001",
-  "question": "Resolve the current N0 active handoff and maximal experiment frontier after final frozen challenge 575794. Confirm the single authorized next action is the fresh missing-evidence graph-to-fusion-to-latent localization run, with no final challenge rerun, threshold change, training, promotion, scale, or N0 completion.",
-  "budget": 1200,
+  "request_id": "n0-relation-semantic-grounding-ready-20260918-001",
+  "question": "Resolve the exact current N0 state after fresh localization job 575795. Identify the active handoff, unique maximal experiment frontier, localized defect, selected parent graph, anti-loop constraints, and the single authorized next action. Confirm no frozen challenge rerun, no threshold change, no training on challenge/localization rows, no endpoint heldout-test reuse, no scaling, and no N0 completion.",
+  "budget": 1400,
   "traversal": "bfs",
   "contexts": [
     "call",
