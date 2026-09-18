@@ -298,6 +298,49 @@ def main() -> None:
     )
 
     source_files = ls_tree(remote_ref(SOURCE_BRANCH))
+
+    # Resolve the newest authoritative N0 latent-stage state. Older state files
+    # remain indexed as history, but this pointer gives agents a bounded current
+    # mission entry point without treating filename recency as truth elsewhere.
+    state_candidates = []
+    state_re = re.compile(r"^configs/eipm/n0/alice_n0_latent_pool_stage_state_v(\\d+)\\.(\\d+)\\.json$")
+    for item in source_files:
+        match = state_re.match(item["path"])
+        if not match:
+            continue
+        text = safe_text(remote_ref(SOURCE_BRANCH), item["path"], item.get("size"))
+        if text is None:
+            continue
+        try:
+            payload = json.loads(text)
+        except json.JSONDecodeError:
+            continue
+        if payload.get("authoritative_for_current_latent_stage") is not True:
+            continue
+        state_candidates.append(((int(match.group(1)), int(match.group(2))), item, payload))
+
+    active_n0_state = None
+    if state_candidates:
+        _version, item, payload = max(state_candidates, key=lambda row: row[0])
+        repair = payload.get("relation_endpoint_repair_v0_2") or payload.get("evidence_selector_repair_v0_1") or {}
+        active_n0_state = {
+            "schema": "alice-context-active-n0-state-v1",
+            "source_branch": SOURCE_BRANCH,
+            "source_commit": source_sha,
+            "source_path": item["path"],
+            "source_blob_sha": item["sha"],
+            "status": payload.get("status"),
+            "n0_complete": payload.get("n0_complete"),
+            "supersedes": payload.get("supersedes"),
+            "pass_next_action": repair.get("pass_next_action"),
+            "fail_next_action": repair.get("fail_next_action"),
+            "scale_decision": payload.get("scale_decision"),
+            "anti_loop_policy": payload.get("anti_loop_policy"),
+            "selection_rule": "highest version among source-branch state files explicitly marked authoritative_for_current_latent_stage=true",
+            "authority": "pointer_to_original_source",
+        }
+        write_json(OUT / "ACTIVE_N0_STATE.json", active_n0_state)
+
     source_rows = []
     for item in source_files:
         source_rows.append({
@@ -395,6 +438,7 @@ def main() -> None:
         "branch_count": len(branch_rows),
         "knowledge_branch_count": sum(1 for x in branch_rows if x["knowledge_surface"]),
         "source_file_count": len(source_rows),
+        "active_n0_state_present": active_n0_state is not None,
         "document_pointer_count": len(dedupe(doc_rows)),
         "failure_lesson_pointer_count": len(dedupe(failure_rows)),
         "frontier_research_pointer_count": len(dedupe(research_rows)),
