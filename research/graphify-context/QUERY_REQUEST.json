@@ -1,6 +1,6 @@
 {
-  "request_id": "coverage-frontier-codegraph-reuse-001",
-  "question": "Which functions in code enforce the frozen source revision and artifact hashes before the downstream causal arbitration finalizer can invoke the post-arbitration decision gate?",
+  "request_id": "current-n0-calibration-frontier-001",
+  "question": "What is the exact current N0 scientific state and next execution now, including the tested causal-arbitration frontier, active handoff, pre-GPU validation, and whether calibration must happen before candidate arbitration?",
   "budget": 1800,
   "traversal": "bfs",
   "contexts": [
