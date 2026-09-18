@@ -1,6 +1,6 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: coverage-g2-buried-doc-fact-002
+- Request: coverage-g2-buried-doc-fact-003
 - Question: Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?
 - Source: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
@@ -17,20 +17,18 @@
 
 ## Source pointers
 
-- [58] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_PUBLIC_LINEAGE_IMPORT_20260914.md — Magnolia Public N0 Lineage Import — 2026-09-14
-- [54] alice-context:docs/chat-context/2026-09-13/sol/N0_KAGGLE_CPU_LINEAGE_SUCCESS_AND_MAGNOLIA_IMPORT.md — N0 Kaggle CPU Lineage Success and Magnolia Import — 2026-09-14
-- [39] alice-context:docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md — MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready
-- [37] alice-eipm-v1-build:docs/eipm/n0/runtime-results/N0_V02_TOKENIZER_CORPUS_V01_FILL_FAILURE_20260914.md — N0 v0.2 tokenizer-corpus v0.1 fill failure and correction
-- [35] alice-context:docs/chat-context/2026-09-08/sol/MC10D_V206_STOP_V2061_AND_MAGNOLIA_A100_REVIEW.md — MC10D v2.0.6 local extraction stop, v2.0.6.1 repair, and Magnolia A100 route review
-- [35] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md — Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571
-  - status: completed payload
-- [33] alice-context:docs/chat-context/2026-09-14/sol/N0_V021_MAGNOLIA_NETWORK_FAILOVER_TO_OFFLINE_DERIVATION.md — N0 v0.2.1 Magnolia network failure -> offline tokenizer corpus derivation
-- [32] alice-eipm-v1-build:docs/eipm/n0/KAGGLE_CPU_REAL_LINEAGE_FALLBACK_2026-09-14.md — Kaggle CPU fallback for the real N0 public lineage — 2026-09-14
-- [32] alice-eipm-v1-build:docs/eipm/n0/runtime-results/KAGGLE_CPU_PUBLIC_LINEAGE_V102_20260914.md — Kaggle CPU Public N0 Lineage v1.0.2 — 2026-09-14
-- [30] alice-eipm-v1-build:docs/PHASE_3_LOCAL_CONVERSATIONAL_RUNTIME.md — Phase 3.7 — Local Conversational Runtime and CLI
-  - status:  Implementation milestone
-- [30] alice-eipm-v1-build:docs/eipm/N0_ADAPTIVE_LATENT_POOL_V01_FAILURE_AND_V02_REPAIR_2026-09-16.md — N0 Adaptive Multi-View Latent Pool v0.1 Failure and v0.2 Repair — 2026-09-16
-- [30] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md — Magnolia 2×P100 N0 Runtime Smoke — Job 575527
+- [82] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_PUBLIC_LINEAGE_IMPORT_20260914.md — Magnolia Public N0 Lineage Import — 2026-09-14
+- [66] alice-context:docs/chat-context/2026-09-13/sol/N0_KAGGLE_CPU_LINEAGE_SUCCESS_AND_MAGNOLIA_IMPORT.md — N0 Kaggle CPU Lineage Success and Magnolia Import — 2026-09-14
+- [53] alice-eipm-v1-build:docs/eipm/n0/runtime-results/N0_V02_TOKENIZER_CORPUS_V01_FILL_FAILURE_20260914.md — N0 v0.2 tokenizer-corpus v0.1 fill failure and correction
+- [52] alice-eipm-v1-build:docs/eipm/n0/runtime-results/KAGGLE_CPU_PUBLIC_LINEAGE_V102_20260914.md — Kaggle CPU Public N0 Lineage v1.0.2 — 2026-09-14
+- [51] alice-context:docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md — MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready
+- [48] alice-eipm-v1-build:docs/eipm/n0/KAGGLE_CPU_REAL_LINEAGE_FALLBACK_2026-09-14.md — Kaggle CPU fallback for the real N0 public lineage — 2026-09-14
+- [46] alice-context:docs/chat-context/2026-09-06/astra/QWEN_V100_WINDOWS_TRANSFER_FINDINGS.md — Qwen v100 Windows transfer failure and v101 repair
+- [46] alice-eipm-v1-build:docs/eipm/N0_ADAPTIVE_LATENT_POOL_V01_FAILURE_AND_V02_REPAIR_2026-09-16.md — N0 Adaptive Multi-View Latent Pool v0.1 Failure and v0.2 Repair — 2026-09-16
+- [46] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260913_COMPUTE_ROUTE_CORRECTION.jsonl — FBM_TRACE_20260913_COMPUTE_ROUTE_CORRECTION.jsonl
+- [45] alice-context:docs/chat-context/2026-09-14/sol/N0_V021_MAGNOLIA_NETWORK_FAILOVER_TO_OFFLINE_DERIVATION.md — N0 v0.2.1 Magnolia network failure -> offline tokenizer corpus derivation
+- [44] alice-context:docs/chat-context/2026-09-06/astra/QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md — V102: evidence-origin failure and the decision it blocks
+- [44] alice-context:docs/chat-context/2026-09-13/sol/N0_IMPORT_PASS_AND_MODEL_BUILD_CONTINUATION.md — N0 Import PASS and Model-Build Continuation — 2026-09-14
 
 ## Graphify navigation hints
 

@@ -1,5 +1,5 @@
 {
-  "request_id": "coverage-g2-buried-doc-fact-002",
+  "request_id": "coverage-g2-buried-doc-fact-003",
   "question": "Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?",
   "budget": 1500,
   "traversal": "bfs",
@@ -7,7 +7,7 @@
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-18T01:52:19.168207+00:00",
+  "generated_at_utc": "2026-09-18T01:53:23.872478+00:00",
   "authority": "navigation-only",
   "graph_build": {
     "source_work_branch": "alice-eipm-v1-build",
@@ -28,10 +28,7 @@
       "import",
       "failure",
       "produced",
-      "usr",
-      "local",
-      "bin",
-      "python",
+      "usr/local/bin/python",
       "cannot",
       "execute",
       "binary",
@@ -177,7 +174,7 @@
     },
     "hits": [
       {
-        "score": 58,
+        "score": 82,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/n0/runtime-results/MAGNOLIA_PUBLIC_LINEAGE_IMPORT_20260914.md",
@@ -199,11 +196,13 @@
         "supersession_hints": [],
         "catalogs": [
           "failure",
-          "document"
-        ]
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 8
       },
       {
-        "score": 54,
+        "score": 66,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-13/sol/N0_KAGGLE_CPU_LINEAGE_SUCCESS_AND_MAGNOLIA_IMPORT.md",
@@ -224,32 +223,13 @@
         "catalogs": [
           "failure",
           "document",
-          "supersession"
-        ]
-      },
-      {
-        "score": 39,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md",
-        "blob_sha": "a8be2d6d77884b715635b5a97d3b3e7abbb93e67",
-        "category": "working_context",
-        "title": "MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "kaggle",
-          "magnolia"
+          "supersession",
+          "lexical"
         ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
+        "lexical_body_hits": 3
       },
       {
-        "score": 37,
+        "score": 53,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/n0/runtime-results/N0_V02_TOKENIZER_CORPUS_V01_FILL_FAILURE_20260914.md",
@@ -265,108 +245,13 @@
         "supersession_hints": [],
         "catalogs": [
           "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 35,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-08/sol/MC10D_V206_STOP_V2061_AND_MAGNOLIA_A100_REVIEW.md",
-        "blob_sha": "393ff028b5aaf6f5d6ff568d47d80a2fbccaff3f",
-        "category": "working_context",
-        "title": "MC10D v2.0.6 local extraction stop, v2.0.6.1 repair, and Magnolia A100 route review",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "network",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 35,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
-        "blob_sha": "caa8ea529fc219d8d0004bd2c5cb5e2cebebc852",
-        "category": "runtime_receipt",
-        "title": "Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571",
-        "declared": {
-          "status": "completed payload"
-        },
-        "matched_terms": [
-          "error",
-          "failed",
-          "failure",
-          "magnolia",
-          "repair",
-          "runtime-results"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
           "document",
-          "frontier"
-        ]
-      },
-      {
-        "score": 33,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-14/sol/N0_V021_MAGNOLIA_NETWORK_FAILOVER_TO_OFFLINE_DERIVATION.md",
-        "blob_sha": "c9e0acae619f0d46aa676c8d34486847e3716361",
-        "category": "working_context",
-        "title": "N0 v0.2.1 Magnolia network failure -> offline tokenizer corpus derivation",
-        "declared": {},
-        "matched_terms": [
-          "error",
-          "failed",
-          "failure",
-          "magnolia",
-          "network"
+          "lexical"
         ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
+        "lexical_body_hits": 4
       },
       {
-        "score": 32,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/KAGGLE_CPU_REAL_LINEAGE_FALLBACK_2026-09-14.md",
-        "blob_sha": "5bd3fe18ae072031acf90a4f063f1787559d2197",
-        "category": "design_document",
-        "title": "Kaggle CPU fallback for the real N0 public lineage — 2026-09-14",
-        "declared": {},
-        "matched_terms": [
-          "dns",
-          "error",
-          "failed",
-          "failure",
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "network",
-          "udocker"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 32,
+        "score": 52,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/n0/runtime-results/KAGGLE_CPU_PUBLIC_LINEAGE_V102_20260914.md",
@@ -389,35 +274,90 @@
         "catalogs": [
           "failure",
           "supersession",
-          "document"
-        ]
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 5
       },
       {
-        "score": 30,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/PHASE_3_LOCAL_CONVERSATIONAL_RUNTIME.md",
-        "blob_sha": "411d39428d46c5610e8c5efea38c08721833e49f",
-        "category": "design_document",
-        "title": "Phase 3.7 — Local Conversational Runtime and CLI",
-        "declared": {
-          "status": " Implementation milestone"
-        },
+        "score": 51,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md",
+        "blob_sha": "a8be2d6d77884b715635b5a97d3b3e7abbb93e67",
+        "category": "working_context",
+        "title": "MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready",
+        "declared": {},
         "matched_terms": [
+          "failed",
           "failure",
-          "fallback",
-          "powershell",
-          "repair",
-          "smoke"
+          "kaggle",
+          "magnolia"
         ],
         "supersession_hints": [],
         "catalogs": [
           "failure",
-          "document"
-        ]
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 3
       },
       {
-        "score": 30,
+        "score": 48,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/KAGGLE_CPU_REAL_LINEAGE_FALLBACK_2026-09-14.md",
+        "blob_sha": "5bd3fe18ae072031acf90a4f063f1787559d2197",
+        "category": "design_document",
+        "title": "Kaggle CPU fallback for the real N0 public lineage — 2026-09-14",
+        "declared": {},
+        "matched_terms": [
+          "dns",
+          "error",
+          "failed",
+          "failure",
+          "fallback",
+          "kaggle",
+          "magnolia",
+          "network",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 4
+      },
+      {
+        "score": 46,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-06/astra/QWEN_V100_WINDOWS_TRANSFER_FINDINGS.md",
+        "blob_sha": "b459c383f5505113ab0ab948c89b1f8b0765a69c",
+        "category": "working_context",
+        "title": "Qwen v100 Windows transfer failure and v101 repair",
+        "declared": {},
+        "matched_terms": [
+          "egress",
+          "failed",
+          "failure",
+          "forensic",
+          "magnolia",
+          "powershell",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 46,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/N0_ADAPTIVE_LATENT_POOL_V01_FAILURE_AND_V02_REPAIR_2026-09-16.md",
@@ -434,11 +374,144 @@
         "supersession_hints": [],
         "catalogs": [
           "failure",
-          "document"
-        ]
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 4
       },
       {
-        "score": 30,
+        "score": 46,
+        "branch": "fable-builder-model",
+        "branch_scope": "branch_specific",
+        "path": "docs/fable-builder/traces/FBM_TRACE_20260913_COMPUTE_ROUTE_CORRECTION.jsonl",
+        "blob_sha": "4e035f1b5317964c974a8c6a98de727b1fb60f1e",
+        "category": "design_document",
+        "title": "FBM_TRACE_20260913_COMPUTE_ROUTE_CORRECTION.jsonl",
+        "declared": {},
+        "matched_terms": [
+          "failure",
+          "fallback",
+          "kaggle",
+          "magnolia",
+          "repair",
+          "smoke"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 5
+      },
+      {
+        "score": 45,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-14/sol/N0_V021_MAGNOLIA_NETWORK_FAILOVER_TO_OFFLINE_DERIVATION.md",
+        "blob_sha": "c9e0acae619f0d46aa676c8d34486847e3716361",
+        "category": "working_context",
+        "title": "N0 v0.2.1 Magnolia network failure -> offline tokenizer corpus derivation",
+        "declared": {},
+        "matched_terms": [
+          "error",
+          "failed",
+          "failure",
+          "magnolia",
+          "network"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 3
+      },
+      {
+        "score": 44,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-06/astra/QWEN_V102_ROOT_CAUSE_AND_DIRECTION.md",
+        "blob_sha": "eae538185e1c0f2266362b7f41e59dab136a43f4",
+        "category": "working_context",
+        "title": "V102: evidence-origin failure and the decision it blocks",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "fallback",
+          "incident",
+          "magnolia",
+          "powershell",
+          "recovery",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 6
+      },
+      {
+        "score": 44,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-13/sol/N0_IMPORT_PASS_AND_MODEL_BUILD_CONTINUATION.md",
+        "blob_sha": "556fb49acce73632a30d4826123920c37bad82c1",
+        "category": "working_context",
+        "title": "N0 Import PASS and Model-Build Continuation — 2026-09-14",
+        "declared": {},
+        "matched_terms": [
+          "dns",
+          "failed",
+          "failure",
+          "fallback",
+          "kaggle",
+          "magnolia",
+          "network",
+          "smoke",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 4
+      },
+      {
+        "score": 44,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-14/sol/N0_MAGNOLIA_DNS_BOUNDARY_AND_KAGGLE_CPU_FALLBACK.md",
+        "blob_sha": "19cfd6ac34d7aa3464b2d8fe43a3c0931f166d96",
+        "category": "working_context",
+        "title": "N0 Magnolia DNS boundary and Kaggle CPU fallback — 2026-09-14",
+        "declared": {},
+        "matched_terms": [
+          "dns",
+          "error",
+          "failed",
+          "failure",
+          "fallback",
+          "kaggle",
+          "magnolia",
+          "network"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 4
+      },
+      {
+        "score": 44,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md",
@@ -457,11 +530,118 @@
         "supersession_hints": [],
         "catalogs": [
           "failure",
-          "document"
-        ]
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 4
       },
       {
-        "score": 30,
+        "score": 44,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/N0_V021_MAGNOLIA_NETWORK_FAILOVER_20260914.md",
+        "blob_sha": "bbd962c2b822a11a6ec446bf6bf9fc123a71e280",
+        "category": "runtime_receipt",
+        "title": "N0 v0.2.1 tokenizer corpus: Magnolia network failover",
+        "declared": {},
+        "matched_terms": [
+          "dns",
+          "error",
+          "failure",
+          "kaggle",
+          "magnolia",
+          "network",
+          "runtime-results"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 4
+      },
+      {
+        "score": 43,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
+        "blob_sha": "caa8ea529fc219d8d0004bd2c5cb5e2cebebc852",
+        "category": "runtime_receipt",
+        "title": "Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571",
+        "declared": {
+          "status": "completed payload"
+        },
+        "matched_terms": [
+          "error",
+          "failed",
+          "failure",
+          "magnolia",
+          "repair",
+          "runtime-results"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "frontier",
+          "lexical"
+        ],
+        "lexical_body_hits": 2
+      },
+      {
+        "score": 42,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-06/astra/tools/magnolia-provider-trace/package/ALICE_MAGNOLIA_PROVIDER_TRACE_v1.0.0/README.md",
+        "blob_sha": "fb3c6704573c0c5cdf8624123a6df2a5fdca7975",
+        "category": "working_context",
+        "title": "Read-only Magnolia provider and a2 revision observation",
+        "declared": {},
+        "matched_terms": [
+          "error",
+          "failed",
+          "failure",
+          "magnolia"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 4
+      },
+      {
+        "score": 42,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md",
+        "blob_sha": "0fd59429e3c85c66ad4674cf2cfd94a84016410c",
+        "category": "working_context",
+        "title": "Fusion frozen challenge failure + source-anchored repair — 2026-09-16",
+        "declared": {
+          "status": "`FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`."
+        },
+        "matched_terms": [
+          "error",
+          "failed",
+          "failure",
+          "fallback",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 4
+      },
+      {
+        "score": 42,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/n0/runtime-results/N0_V02_VOICE_FIRST_REQUIREMENT_AND_AUDIT_IMPORT_FIX_20260914.md",
@@ -486,147 +666,13 @@
           "failure",
           "document",
           "frontier",
-          "supersession"
-        ]
-      },
-      {
-        "score": 29,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-08-31/src/S05-stageg-0829.txt",
-        "blob_sha": "97c35b9ccb7f70f90289439435b3c7ee14146b0f",
-        "category": "working_context",
-        "title": "Example Python pseudocode to run models locally and score them:",
-        "declared": {},
-        "matched_terms": [
-          "error",
-          "failed",
-          "failure",
-          "fallback",
-          "forensic",
-          "hotfix",
-          "kaggle",
-          "network",
-          "powershell",
-          "recovery",
-          "repair",
-          "smoke"
+          "supersession",
+          "lexical"
         ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "frontier",
-          "supersession"
-        ]
+        "lexical_body_hits": 3
       },
       {
-        "score": 29,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-08-31/src/S06-stageg-0831.txt",
-        "blob_sha": "c8f855c8d69f3ed555257366d4c8bbb380fa66b6",
-        "category": "working_context",
-        "title": "Example Python pseudocode to run models locally and score them:",
-        "declared": {},
-        "matched_terms": [
-          "error",
-          "failed",
-          "failure",
-          "fallback",
-          "forensic",
-          "hotfix",
-          "kaggle",
-          "network",
-          "powershell",
-          "recovery",
-          "repair",
-          "smoke"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "frontier",
-          "supersession"
-        ]
-      },
-      {
-        "score": 28,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-13/sol/N0_IMPORT_PASS_AND_MODEL_BUILD_CONTINUATION.md",
-        "blob_sha": "556fb49acce73632a30d4826123920c37bad82c1",
-        "category": "working_context",
-        "title": "N0 Import PASS and Model-Build Continuation — 2026-09-14",
-        "declared": {},
-        "matched_terms": [
-          "dns",
-          "failed",
-          "failure",
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "network",
-          "smoke",
-          "udocker"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 28,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-14/sol/N0_MAGNOLIA_DNS_BOUNDARY_AND_KAGGLE_CPU_FALLBACK.md",
-        "blob_sha": "19cfd6ac34d7aa3464b2d8fe43a3c0931f166d96",
-        "category": "working_context",
-        "title": "N0 Magnolia DNS boundary and Kaggle CPU fallback — 2026-09-14",
-        "declared": {},
-        "matched_terms": [
-          "dns",
-          "error",
-          "failed",
-          "failure",
-          "fallback",
-          "kaggle",
-          "magnolia",
-          "network"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 28,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/N0B_FAILURE_DRIVEN_TRAINING_LOOP_v0.1.md",
-        "blob_sha": "1e722a7690913de816554205fcbae52a5d13ffda",
-        "category": "design_document",
-        "title": "N0B Failure-Driven Training Loop v0.1",
-        "declared": {
-          "status": " active implementation"
-        },
-        "matched_terms": [
-          "egress",
-          "failure",
-          "repair",
-          "smoke"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 28,
+        "score": 40,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md",
@@ -645,30 +691,10 @@
         "supersession_hints": [],
         "catalogs": [
           "failure",
-          "document"
-        ]
-      },
-      {
-        "score": 28,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md",
-        "blob_sha": "435efa0bf1c2e58ecd5929e4fd25c03cc6f9cd5b",
-        "category": "runtime_receipt",
-        "title": "Magnolia single-P100 N0 teacher diagnostic — job 575565",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "magnolia",
-          "repair",
-          "runtime-results"
+          "document",
+          "lexical"
         ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document"
-        ]
+        "lexical_body_hits": 3
       }
     ],
     "private_external_route_recommended": true,
