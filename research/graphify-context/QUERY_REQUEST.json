@@ -1,6 +1,6 @@
 {
-  "request_id": "coverage-g5-g6-eipm-supersession-001",
-  "question": "Why is the permanent EIPM A.L.I.C.E.-native rather than Qwen + LoRA, and what research superseded the older recommendation?",
+  "request_id": "coverage-g4-operational-failure-001",
+  "question": "What Magnolia execution routes are known dead or current, and what PowerShell or Kaggle failure lesson must not be repeated?",
   "budget": 2200,
   "traversal": "bfs",
   "contexts": [
