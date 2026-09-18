@@ -351,6 +351,19 @@ def main() -> None:
         max_length=96,
     ).float().cpu()
 
+    flat_field_semantic = encode_pooled(
+        semantic_model,
+        tokenizer,
+        [
+            str(field["text"])
+            for row in rows
+            for field in row["fields"]
+        ],
+        device=device,
+        batch_size=32,
+        max_length=96,
+    ).float().cpu().reshape(len(rows), 2, -1)
+
     graph_captures: list[dict[str, torch.Tensor]] = []
     handle = graph.register_forward_hook(capture_hook(graph_captures))
     try:
@@ -384,6 +397,7 @@ def main() -> None:
     )
 
     graph_pooled = concat_capture(graph_captures, "pooled_state")
+    graph_field_states = concat_capture(graph_captures, "field_states")
     graph_field_weights = concat_capture(graph_captures, "field_weights")
     relation_bias = concat_capture(graph_captures, "relation_status_bias")
 
@@ -414,6 +428,15 @@ def main() -> None:
     graph_field_margin = target_field_weight - foil_field_weight
     graph_argmax = graph_field_weights.argmax(dim=-1)
     graph_argmax_target = graph_argmax.eq(target_indices)
+
+    raw_target_field = flat_field_semantic[row_index, target_indices]
+    graph_target_field = graph_field_states[row_index, target_indices]
+    raw_target_field_margin = vector_margin(
+        raw_target_field, target_probe, foil_probe
+    )
+    graph_target_field_margin = vector_margin(
+        graph_target_field, target_probe, foil_probe
+    )
 
     relation_target = relation_bias[row_index, target_indices]
     relation_foil = relation_bias[row_index, foil_indices]
@@ -564,6 +587,8 @@ def main() -> None:
                 "graph_foil_field_weight": float(foil_field_weight[index]),
                 "graph_target_minus_foil_weight": float(graph_field_margin[index]),
                 "graph_argmax_is_target_field": bool(graph_argmax_target[index]),
+                "raw_target_field_probe_margin": float(raw_target_field_margin[index]),
+                "graph_target_field_probe_margin": float(graph_target_field_margin[index]),
                 "relation_bias_target_minus_foil": float(relation_bias_margin[index]),
                 "raw_semantic_probe_margin": float(raw_semantic_margin[index]),
                 "graph_pooled_probe_margin": float(graph_pooled_margin[index]),
@@ -622,6 +647,8 @@ def main() -> None:
 
     graph_field_stage = stage_summary(graph_field_margin, pair_ids)
     raw_stage = stage_summary(raw_semantic_margin, pair_ids)
+    raw_target_field_stage = stage_summary(raw_target_field_margin, pair_ids)
+    graph_target_field_stage = stage_summary(graph_target_field_margin, pair_ids)
     graph_pooled_stage = stage_summary(graph_pooled_margin, pair_ids)
     fusion_evidence_stage = stage_summary(fusion_evidence_margin, pair_ids)
     fusion_semantic_stage = stage_summary(fusion_semantic_margin, pair_ids)
@@ -632,6 +659,15 @@ def main() -> None:
     graph_exact = (
         graph_field_stage["relation_flip_pair_accuracy"] == 1.0
         and float(graph_argmax_target.float().mean()) == 1.0
+    )
+    raw_target_value_geometry_exact = (
+        raw_target_field_stage["relation_flip_pair_accuracy"] == 1.0
+    )
+    graph_target_value_geometry_exact = (
+        graph_target_field_stage["relation_flip_pair_accuracy"] == 1.0
+    )
+    graph_pooled_preserves = (
+        graph_pooled_stage["relation_flip_pair_accuracy"] == 1.0
     )
     fusion_preserves = (
         fusion_evidence_stage["relation_flip_pair_accuracy"] == 1.0
@@ -644,10 +680,16 @@ def main() -> None:
 
     if not graph_exact:
         localization = "EVIDENCE_GRAPH_RELATION_SELECTION_REMAINS_DEFECTIVE"
+    elif not raw_target_value_geometry_exact:
+        localization = "RELATION_SELECTION_IS_CORRECT_BUT_SEMANTIC_VALUE_PROBE_CANNOT_RELIABLY_READ_RAW_TARGET_FIELDS"
+    elif not graph_target_value_geometry_exact:
+        localization = "RAW_TARGET_VALUE_IS_READABLE_BUT_GRAPH_FIELD_TRANSFORM_LOSES_VALUE_DISCRIMINATION"
+    elif not graph_pooled_preserves:
+        localization = "GRAPH_FIELD_SELECTION_AND_VALUE_STATE_ARE_CORRECT_BUT_GRAPH_POOLING_LOSES_QUERY_CONDITIONED_VALUE_IDENTITY"
     elif not fusion_preserves:
-        localization = "RELATION_SIGNAL_PRESENT_AT_GRAPH_SELECTION_BUT_NOT_PRESERVED_BY_FUSION_VALUE_READOUT"
+        localization = "GRAPH_POOLED_RELATION_SIGNAL_IS_VALID_BUT_FUSION_EVIDENCE_CONTEXT_DOES_NOT_PRESERVE_IT"
     elif not latent_preserves:
-        localization = "RELATION_SIGNAL_PRESERVED_THROUGH_FUSION_BUT_NOT_BY_LATENT_VALUE_READOUT"
+        localization = "RELATION_SIGNAL_IS_VALID_THROUGH_FUSION_BUT_LATENT_VALUE_READOUT_DOES_NOT_PRESERVE_IT"
     elif ablation_breaks_relation_signal:
         localization = "FRESH_RELATION_SIGNAL_SURVIVES_GRAPH_FUSION_LATENT_AND_IS_CAUSALLY_USED;_FROZEN_ABSOLUTE_COSINE_GATE_REQUIRES_METRIC_INTERPRETATION"
     else:
@@ -692,7 +734,9 @@ def main() -> None:
         },
         "stage_summaries": {
             "raw_semantic_negative_control": raw_stage,
+            "raw_target_field_value_probe": raw_target_field_stage,
             "graph_field_selection": graph_field_stage,
+            "graph_target_field_value_probe": graph_target_field_stage,
             "graph_pooled_value_probe": graph_pooled_stage,
             "fusion_evidence_context_value_probe": fusion_evidence_stage,
             "fusion_semantic_context_value_probe": fusion_semantic_stage,
