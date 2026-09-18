@@ -77,6 +77,23 @@ jobs:
           if present:
               raise SystemExit("forbidden arbitration runner behavior: " + repr(present))
 
+          calibration=Path("scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh").read_text(encoding="utf-8")
+          arbitration=Path("scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh").read_text(encoding="utf-8")
+          required_pythonpath='export PYTHONPATH="$ROOT/src:$ROOT/scripts/eipm/n0${PYTHONPATH:+:$PYTHONPATH}"'
+          missing_pythonpath=[
+              name
+              for name,body in (
+                  ("calibration",calibration),
+                  ("arbitration",arbitration),
+              )
+              if required_pythonpath not in body
+          ]
+          if missing_pythonpath:
+              raise SystemExit(
+                  "missing in-container N0 import contract: "
+                  + repr(missing_pythonpath)
+              )
+
           wrapper=Path("scripts/eipm/n0/magnolia_udocker_exec.sh").read_text(encoding="utf-8")
           forwarded=[
               "ALICE_REPO_ROOT",
