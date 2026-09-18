@@ -1,7 +1,7 @@
 {
-  "request_id": "n0-missing-evidence-localization-ready-20260918-001",
-  "question": "What is the exact current N0 state after final frozen challenge job 575794 and what single fresh non-challenge localization run is now authorized? Identify the maximal experiment frontier, active handoff, failing gate/family, anti-loop constraints, and the ready Magnolia localization runner.",
-  "budget": 1500,
+  "request_id": "n0-missing-evidence-localization-final-ready-20260918-001",
+  "question": "What is the exact current N0 state after job 575794 and which one fresh non-challenge localization job is now ready? Resolve the active handoff and maximal experiment frontier, and identify the no-rerun/no-threshold-change/no-training constraints plus the final Magnolia runner.",
+  "budget": 1300,
   "traversal": "bfs",
   "contexts": [
     "call",
