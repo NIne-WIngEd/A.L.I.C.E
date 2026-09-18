@@ -1,7 +1,7 @@
 {
-  "request_id": "coverage-g7-comic-continuous-memory-001",
-  "question": "What does the A.L.I.C.E. comic require from continuous memory across years, especially remembering why an old decision worked then, why it later stopped working, and what changed?",
-  "budget": 1800,
+  "request_id": "coverage-g2-buried-doc-fact-001",
+  "question": "Which Magnolia lineage import failure produced /usr/local/bin/python cannot execute binary file, and what command-boundary correction fixed it?",
+  "budget": 1500,
   "traversal": "bfs",
   "contexts": [
     "call",
