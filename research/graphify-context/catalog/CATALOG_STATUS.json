@@ -10,7 +10,7 @@
   "continuity_overlay_present": true,
   "unmerged_experiment_frontier_present": true,
   "unmerged_experiment_maximal_head_count": 1,
-  "continuity_stale_relative_to_experiment_frontier": false,
+  "continuity_stale_relative_to_experiment_frontier": true,
   "document_pointer_count": 2121,
   "failure_lesson_pointer_count": 873,
   "frontier_research_pointer_count": 401,

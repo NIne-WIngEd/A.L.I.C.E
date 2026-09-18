@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-post-arbitration-final-challenge-ready-20260918-001
-- Question: What is the exact current N0 state after Magnolia job 575792, which experiment frontier is current, what did downstream causal arbitration conclude, and what is the single authorized next model execution?
+- Request: n0-localize-missing-structured-evidence-20260918-001
+- Question: After final frozen challenge job 575794 failed only counterfactual_family_min_drop for family missing_structured_evidence with negative target drop, localize the code and prior evidence needed to determine whether the harmful structured contribution enters at structured parent encoding, reliability/target-view semantics, cross-context fusion, or adaptive latent consumption. Identify any existing diagnostics for parent-value path, view ablation, source reliability, missing structured evidence, pre-fusion counterfactuals, and any prior rejected causes. Do not use or propose rerunning frozen challenge rows. Point to the exact current files/functions on the maximal experiment frontier and the safest fresh diagnostic design outside frozen challenge rows.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: False
@@ -13,29 +13,29 @@
 - Implementation source: configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.9.json
 - Continuity overlay: docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md
 - Latest observed Magnolia job: None
-- Continuity stale vs experiment frontier: False
+- Continuity stale vs experiment frontier: True
 - Execution rule: The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-causal-arbitration-binding @ e535a2a63c2c2bdfe13843171b391096c4c5019e — ci(n0): guard final frozen challenge execution contract
+- alice-eipm-v1-causal-arbitration-binding @ ae1be5f811ceea772d138b35191278b8a304d023 — fix(n0): align final challenge with frozen stack manifest schema
 
 ## Source pointers
 
-- [133] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
-- [105] alice-eipm-v1-causal-arbitration-binding:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
-- [103] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
-- [99] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md — N0 downstream causal arbitration: full-stack graph binding v0.1
-- [83] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
+- [184] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
   - status:  one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized
-- [80] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md — N0 causal-arbitration frontier ready for Magnolia calibration
-- [80] alice-eipm-v1-downstream-arbitration:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
-- [80] alice-eipm-v1-post-arbitration-gate:docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md — N0 downstream causal arbitration v0.1
-- [78] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md — Magnolia single-P100 N0 teacher diagnostic — job 575565
-- [75] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md — N0 Causal Arbitration Frontier Calibration Handoff
-- [75] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_N0_CONTINUATION_JOB_575548.md — Magnolia N0 continuation — job 575548
-  - status:  completed successfully
-- [75] alice-telemetry:telemetry/n0-downstream-causal-arbitration-frontier-20260917.json — n0-downstream-causal-arbitration-frontier-20260917.json
+- [156] alice-eipm-v1-build:configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0.1.json — n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0.1.json
+- [148] alice-eipm-v1-build:configs/eipm/n0/n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0.2.json — n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0.2.json
+- [144] alice-context:docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md — Fusion frozen challenge failure + source-anchored repair — 2026-09-16
+  - status: `FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`.
+- [138] alice-context:docs/chat-context/2026-09-16/sol/FULL_SCALE_FUSION_JOB575619_AND_FROZEN_CHALLENGE.md — Full-Scale Fusion Job 575619 + Frozen Challenge Gate — 2026-09-16
+- [134] alice-eipm-v1-build:docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md — N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16
+- [132] alice-eipm-v1-build:configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.3.json — n0_v02_cross_context_fusion_frozen_challenge_v0.3.json
+- [130] alice-eipm-v1-build:configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.1.json — n0_v02_cross_context_fusion_frozen_challenge_v0.1.json
+- [130] alice-eipm-v1-build:configs/eipm/n0/n0_v02_cross_context_fusion_frozen_challenge_v0.2.json — n0_v02_cross_context_fusion_frozen_challenge_v0.2.json
+- [124] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260916_FUSION_FROZEN_CHALLENGE.jsonl — FBM_TRACE_20260916_FUSION_FROZEN_CHALLENGE.jsonl
+- [122] alice-context:docs/chat-context/2026-09-16/sol/N0_LATENT_V02_FROZEN_FAIL_VALUE_CONTRAST_DIAGNOSTIC.md — N0 latent pool v0.2 frozen challenge: valid fail, value-contrast diagnostic required
+- [95] alice-context:docs/chat-context/2026-09-15/sol/N0_V02_STRUCTURED_TO_EVIDENCE_GRAPH_HANDOFF.md — N0 v0.2 Structured-State -> Evidence Graph Handoff
 
 ## Graphify navigation hints
 
@@ -43,8 +43,8 @@
 
 ## External/private routing
 
-- Recommended: True
-- Reason: host-specific operational history may contain newer failure lessons than public receipts
+- Recommended: False
+- Reason: None
 
 ## Trust contract
 

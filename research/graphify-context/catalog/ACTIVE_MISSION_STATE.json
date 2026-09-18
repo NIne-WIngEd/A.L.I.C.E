@@ -81,10 +81,10 @@
     "maximal_heads": [
       {
         "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "head": "e535a2a63c2c2bdfe13843171b391096c4c5019e",
-        "head_committed_at": "2026-09-18T12:40:17-05:00",
-        "head_message": "ci(n0): guard final frozen challenge execution contract",
-        "ahead": 32,
+        "head": "ae1be5f811ceea772d138b35191278b8a304d023",
+        "head_committed_at": "2026-09-18T12:47:22-05:00",
+        "head_message": "fix(n0): align final challenge with frozen stack manifest schema",
+        "ahead": 33,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
         "changed_file_count_vs_source_merge_base": 35,
@@ -131,10 +131,10 @@
     "all_ahead_candidates": [
       {
         "branch": "alice-eipm-v1-causal-arbitration-binding",
-        "head": "e535a2a63c2c2bdfe13843171b391096c4c5019e",
-        "head_committed_at": "2026-09-18T12:40:17-05:00",
-        "head_message": "ci(n0): guard final frozen challenge execution contract",
-        "ahead": 32,
+        "head": "ae1be5f811ceea772d138b35191278b8a304d023",
+        "head_committed_at": "2026-09-18T12:47:22-05:00",
+        "head_message": "fix(n0): align final challenge with frozen stack manifest schema",
+        "ahead": 33,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
         "changed_file_count_vs_source_merge_base": 35,
@@ -223,8 +223,8 @@
     "authority": "routing-only; not canonical promotion"
   },
   "continuity_freshness": {
-    "stale_relative_to_unmerged_experiment_frontier": false,
-    "newest_experiment_frontier_time": "2026-09-18T12:40:17-05:00",
+    "stale_relative_to_unmerged_experiment_frontier": true,
+    "newest_experiment_frontier_time": "2026-09-18T12:47:22-05:00",
     "active_handoff_last_changed_at": "2026-09-18T12:41:23-05:00",
     "context_branch_head_time": "2026-09-18T12:41:23-05:00"
   },
