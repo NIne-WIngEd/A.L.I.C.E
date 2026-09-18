@@ -303,7 +303,7 @@ def main() -> None:
     # remain indexed as history, but this pointer gives agents a bounded current
     # mission entry point without treating filename recency as truth elsewhere.
     state_candidates = []
-    state_re = re.compile(r"^configs/eipm/n0/alice_n0_latent_pool_stage_state_v(\\d+)\\.(\\d+)\\.json$")
+    state_re = re.compile(r"^configs/eipm/n0/alice_n0_latent_pool_stage_state_v(\d+)\.(\d+)\.json$")
     for item in source_files:
         match = state_re.match(item["path"])
         if not match:
