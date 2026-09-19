@@ -11,6 +11,7 @@ TRAIN_ROOT="$STUDY_ROOT/training-v0.1"
 
 PREP="$PREP_ROOT/preparation_receipt.json"
 CAL="$CAL_ROOT/calibration_receipt.json"
+POLICY="$CAL_ROOT/preservation_policy.json"
 MAP="$INTERFACE_ROOT/design/relation_conditioned_layer_map.json"
 CURRICULUM="$PREP_ROOT/relation_conditioned_multilayer_interface_curriculum.jsonl"
 MANIFEST="$PREP_ROOT/relation_conditioned_multilayer_interface_curriculum_manifest.json"
@@ -36,6 +37,9 @@ EXPECTED_PREP_SHA256="54dc915f10ee58d994e387ca59ab1180f96bd0e3523780f3e75fb14d6a
 EXPECTED_MAP_SHA256="ac0e5e28749cbb1e8dda62262c4c2761db887b965cbc3a74493ff6c9b5355304"
 EXPECTED_CURRICULUM_SHA256="706fb2944ae3f95f0bf93c93763c57d54a76be5068f665d9a9be1f2425dadaab"
 EXPECTED_MANIFEST_SHA256="6ca37c884b9a75d3fed9ef0e1b8a19704c03d246bb2d32f33cc538546072ba72"
+EXPECTED_CALIBRATION_RECEIPT_SHA256="d485fce0e4304d9cbd8af1658ed7cfedfd1bd4d44b0f40cf56a2618d5ad2390b"
+EXPECTED_PRESERVATION_POLICY_SHA256="fb88b9580e38a648101277815f82c3ba60c19f3bfd16dbe3029ded40b04aea56"
+EXPECTED_CALIBRATION_SOURCE_REVISION="4a223b0b35920ded5c81b05f53243024de919357"
 
 cd "$ROOT"
 export PYTHONPATH="$ROOT/src:$ROOT/scripts/eipm/n0${PYTHONPATH:+:$PYTHONPATH}"
@@ -49,7 +53,7 @@ if [[ -e "$TRAIN_ROOT" ]]; then
 fi
 
 for required in \
-  "$PREP" "$CAL" "$MAP" "$CURRICULUM" "$MANIFEST" \
+  "$PREP" "$CAL" "$POLICY" "$MAP" "$CURRICULUM" "$MANIFEST" \
   "$ORDINARY_SOURCE" "$ENDPOINT_SOURCE" \
   "$SEMANTIC_CONFIG" "$SEMANTIC_CHECKPOINT/alice_n0_v02.safetensors" \
   "$TOKENIZER_DIR/tokenizer.json" \
@@ -83,10 +87,15 @@ check_sha "$PREP" "$EXPECTED_PREP_SHA256" "preparation_receipt_sha256"
 check_sha "$MAP" "$EXPECTED_MAP_SHA256" "layer_map_sha256"
 check_sha "$CURRICULUM" "$EXPECTED_CURRICULUM_SHA256" "curriculum_sha256"
 check_sha "$MANIFEST" "$EXPECTED_MANIFEST_SHA256" "curriculum_manifest_sha256"
+check_sha "$CAL" "$EXPECTED_CALIBRATION_RECEIPT_SHA256" "calibration_receipt_sha256"
+check_sha "$POLICY" "$EXPECTED_PRESERVATION_POLICY_SHA256" "preservation_policy_sha256"
 
-python - "$CAL" <<'PY'
+python - "$CAL" "$EXPECTED_CALIBRATION_SOURCE_REVISION" <<'PY'
 import json,sys
 r=json.load(open(sys.argv[1]))
+expected_source_revision=sys.argv[2]
+if r.get("git_revision")!=expected_source_revision:
+    raise SystemExit("preservation calibration source revision drift")
 if r.get("schema")!="alice.eipm.n0.v02-multilayer-preservation-calibration.v0.1":
     raise SystemExit("preservation calibration schema drift")
 if r.get("status")!="PASS_PARENT_ONLY_PRESERVATION_CALIBRATION":
@@ -113,6 +122,10 @@ for key in (
         raise SystemExit(f"calibration governance drift: {key}")
 print("preservation_calibration_training_gate=PASS")
 PY
+
+# Claim the one authorized training run before any GPU work begins. A failed
+# run deliberately leaves this directory behind so rerun requires diagnosis.
+mkdir "$TRAIN_ROOT"
 
 python -m py_compile "$TRAINER" "$INTEGRATION" "$INTERFACE"
 
