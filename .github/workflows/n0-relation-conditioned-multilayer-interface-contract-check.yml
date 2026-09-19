@@ -102,7 +102,7 @@ jobs:
             "edge_relation_query_state",
             "candidate_layer_mask_is_permanent_architecture_limit",
             "single_universal_layer",
-            '"hard_parameter_ceiling": None',
+            'report["hard_parameter_ceiling"] = None',
             "EvidenceRelationType.CONFLICTS_WITH",
           ]
           missing=[x for x in required if x not in t]
@@ -395,9 +395,9 @@ jobs:
             "parent_relation_status_bias",
             "interface_relation_status_bias",
             "freeze_parent_for_interface_training",
-            '"generic_endpoint_router": False',
-            '"raw_mean_pool_router": False',
-            '"hardcoded_single_layer": False',
+            'report["generic_endpoint_router"] = False',
+            'report["raw_mean_pool_router"] = False',
+            'report["hardcoded_single_layer"] = False',
             '"hard_parameter_ceiling": None',
           ]
           missing=[x for x in required if x not in t]
