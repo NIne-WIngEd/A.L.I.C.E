@@ -542,7 +542,7 @@ jobs:
               raise SystemExit("training runner does not require calibration gate")
           if "--max-steps 160" not in runner:
               raise SystemExit("bounded training step contract drift")
-          if "heldout_opening_authorized=false" not in runner:
-              raise SystemExit("runner heldout governance missing")
+          if "test_split_opening_authorized=false" not in runner:
+              raise SystemExit("runner test-opening governance missing")
           print("bounded_trainer_governance=PASS")
           PY
