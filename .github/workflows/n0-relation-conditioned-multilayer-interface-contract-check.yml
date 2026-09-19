@@ -20,6 +20,15 @@ on:
       - "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md"
       - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.17.json"
       - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.18.json"
+      - "src/alice_personality/n0/evidence_graph_multilayer_interface.py"
+      - "scripts/eipm/n0/calibrate_n0_v02_multilayer_preservation_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_calibrate_multilayer_preservation_v0_1.sh"
+      - "scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_relation_conditioned_multilayer_interface_v0_1.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_relation_conditioned_multilayer_interface_v0_1.sbatch"
+      - "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_training_decision_v0_1.json"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.20.json"
+      - "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md"
       - ".github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml"
   workflow_dispatch:
 
@@ -39,10 +48,16 @@ jobs:
             scripts/eipm/n0/compile_n0_v02_relation_conditioned_layer_map_v0_1.py \
             scripts/eipm/n0/qualify_n0_v02_relation_conditioned_multilayer_interface_v0_1.py \
             scripts/eipm/n0/build_n0_v02_relation_conditioned_multilayer_interface_curriculum_v0_1.py \
-            src/alice_personality/n0/relation_conditioned_multilayer_query.py
+            scripts/eipm/n0/calibrate_n0_v02_multilayer_preservation_v0_1.py \
+            scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py \
+            src/alice_personality/n0/relation_conditioned_multilayer_query.py \
+            src/alice_personality/n0/evidence_graph_multilayer_interface.py
           bash -n scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh
           bash -n scripts/eipm/n0/run_n0_v02_qualify_relation_conditioned_multilayer_interface_v0_1.sh
           bash -n scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh
+          bash -n scripts/eipm/n0/run_n0_v02_calibrate_multilayer_preservation_v0_1.sh
+          bash -n scripts/eipm/n0/run_n0_v02_relation_conditioned_multilayer_interface_v0_1.sh
+          bash -n scripts/eipm/n0/magnolia_p100_n0_v02_relation_conditioned_multilayer_interface_v0_1.sbatch
           bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
 
       - name: Layer map compiler governance
@@ -363,4 +378,171 @@ jobs:
               if required not in w:
                   raise SystemExit("Magnolia udocker causal-study binding missing "+required)
           print("causal_study_state_training_freeze=PASS")
+          PY
+
+
+      - name: Frozen-parent multilayer integration
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("src/alice_personality/n0/evidence_graph_multilayer_interface.py").read_text()
+          required=[
+            "RelationConditionedMultiLayerEvidenceGraphEncoder",
+            "edge_relation_query_state",
+            "interface_endpoint_read",
+            "nn.init.zeros_",
+            "parent_relation_status_bias",
+            "interface_relation_status_bias",
+            "freeze_parent_for_interface_training",
+            '"generic_endpoint_router": False',
+            '"raw_mean_pool_router": False',
+            '"hardcoded_single_layer": False',
+            '"hard_parameter_ceiling": None',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("multilayer integration contract missing "+repr(missing))
+          forbidden=[
+            "semantic_role_delta_mlp",
+            "semantic_role_query_adapter",
+            "semantic_router_role_logits",
+            "layer_index = 12",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present: raise SystemExit("old router/residual shortcut leaked "+repr(present))
+          print("frozen_parent_multilayer_integration=PASS")
+          PY
+
+      - name: Parent-only preservation calibration gate
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("scripts/eipm/n0/calibrate_n0_v02_multilayer_preservation_v0_1.py").read_text()
+          required=[
+            "canonical_parent_repeatability_only",
+            "candidate_result_observed",
+            "PASS_PARENT_ONLY_PRESERVATION_CALIBRATION",
+            "interface_training_gate_satisfied",
+            "ABSOLUTE_FLOOR = 1e-6",
+            "REPEATABILITY_MULTIPLIER = 2.0",
+            "torch.device(\"cpu\")",
+            '"gpu_required": False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("parent-only calibration contract missing "+repr(missing))
+          forbidden=[
+            "torch.optim",
+            ".backward(",
+            "optimizer.step",
+            'torch.device("cuda")',
+            "candidate_path",
+            "candidate_checkpoint",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present: raise SystemExit("candidate/training leaked into calibration "+repr(present))
+          r=Path("scripts/eipm/n0/run_n0_v02_calibrate_multilayer_preservation_v0_1.sh").read_text()
+          for required_hash in (
+              "54dc915f10ee58d994e387ca59ab1180f96bd0e3523780f3e75fb14d6ac30690",
+              "65b3fa76487fef346ef227dc77ed57da504e2dcf891e32416ce60ef5a6df99dd",
+              "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+          ):
+              if required_hash not in r:
+                  raise SystemExit("calibration runner missing frozen hash "+required_hash)
+          if "sbatch" in r:
+              raise SystemExit("CPU calibration runner may not submit GPU work")
+          print("parent_only_preservation_calibration_gate=PASS")
+          PY
+
+      - name: One bounded training decision
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path(
+              "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_training_decision_v0_1.json"
+          ).read_text())
+          if d["decision"]!="AUTHORIZE_ONE_BOUNDED_INTERFACE_EXPERIMENT_AFTER_PARENT_ONLY_CALIBRATION":
+              raise SystemExit("training decision drift")
+          if d["execution_scope"]["maximum_bounded_training_runs_authorized"]!=1:
+              raise SystemExit("training run count drift")
+          for key in (
+              "automatic_rerun_authorized",
+              "automatic_hotfix_authorized",
+              "automatic_test_opening_authorized",
+              "automatic_frozen_challenge_rerun_authorized",
+              "automatic_scale_authorized",
+              "semantic_retraining_authorized",
+              "graph_parent_retraining_authorized",
+              "production_promotion_authorized",
+              "n0_complete",
+          ):
+              if d["execution_scope"][key] is not False:
+                  raise SystemExit(f"decision governance drift: {key}")
+          if d["gradient_data_policy"]["fresh_causal_train_rows_only"] is not True:
+              raise SystemExit("gradient data scope drift")
+          for key in (
+              "ordinary_preservation_rows_used_for_gradient",
+              "endpoint_preservation_rows_used_for_gradient",
+              "causal_test_rows_used_for_gradient",
+              "frozen_challenge_rows_used_for_gradient",
+              "private_identity_data_used_for_gradient",
+          ):
+              if d["gradient_data_policy"][key] is not False:
+                  raise SystemExit(f"forbidden gradient data leaked: {key}")
+          if d["trainable_scope"]["hard_parameter_ceiling"] is not None:
+              raise SystemExit("hard parameter ceiling reintroduced")
+          print("one_bounded_training_decision=PASS")
+          PY
+
+      - name: Bounded trainer governance
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py"
+          ).read_text()
+          required=[
+            "RelationConditionedMultiLayerEvidenceGraphEncoder",
+            "RelationConditionedMultiLayerQueryInterface.from_layer_map_file",
+            "freeze_parent_for_interface_training",
+            "PASS_PARENT_ONLY_PRESERVATION_CALIBRATION",
+            "candidate_result_observed",
+            "preservation_rows_used_for_gradient",
+            "TARGET_RELATIONS = (\"causes\", \"supports\")",
+            "test_split_evaluated",
+            "test_split_opened_after_training",
+            "automatic_rerun_or_hotfix_authorized",
+            "parent_graph_parameters_exactly_unchanged",
+            "eligible_for_heldout_decision",
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("bounded trainer contract missing "+repr(missing))
+          forbidden=[
+            "QRR",
+            "query_relation_role_router",
+            "semantic_role_delta_mlp",
+            "semantic_role_query_adapter",
+            "semantic_heldout_test_metrics",
+            "frozen_challenge",
+          ]
+          # frozen_challenge is allowed only in explicit false governance strings.
+          present=[x for x in forbidden[:-1] if x in t]
+          if present: raise SystemExit("old repair architecture leaked into trainer "+repr(present))
+          if 'frozen_challenge_evaluated": False' not in t:
+              raise SystemExit("frozen challenge false governance missing")
+          if 'test_split_evaluated": False' not in t:
+              raise SystemExit("test split false governance missing")
+          runner=Path(
+              "scripts/eipm/n0/run_n0_v02_relation_conditioned_multilayer_interface_v0_1.sh"
+          ).read_text()
+          if "preservation_calibration_training_gate=PASS" not in runner:
+              raise SystemExit("training runner does not require calibration gate")
+          if "--max-steps 160" not in runner:
+              raise SystemExit("bounded training step contract drift")
+          if "heldout_opening_authorized=false" not in runner:
+              raise SystemExit("runner heldout governance missing")
+          print("bounded_trainer_governance=PASS")
           PY
