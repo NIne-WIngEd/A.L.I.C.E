@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "2e168eb7178776ab3d0f9cf4b2446a292556f04c",
-      "head_committed_at": "2026-09-18T23:19:39-05:00",
-      "head_message": "context: hand off one calibrated P100 interface run",
+      "head": "00dbf368b94c136636111507a46c170d40897956",
+      "head_committed_at": "2026-09-19T13:58:42-05:00",
+      "head_message": "context: record valid multilayer failure and query-edge boundary",
       "status": "diverged",
-      "ahead": 204,
+      "ahead": 205,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 551,
+      "changed_file_count_vs_source_merge_base": 552,
       "knowledge_surface": true
     },
     {
@@ -76,6 +76,18 @@
       "knowledge_surface": true
     },
     {
+      "branch": "alice-eipm-v1-query-edge-cross-attention-bridge",
+      "head": "54a5fbacaa373ef7fcf365bedd57081998547972",
+      "head_committed_at": "2026-09-19T13:58:25-05:00",
+      "head_message": "state(n0): close failed multilayer experiment and reopen query-edge boundary",
+      "status": "ahead",
+      "ahead": 129,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 102,
+      "knowledge_surface": true
+    },
+    {
       "branch": "alice-eipm-v1-query-relation-role-router",
       "head": "a4ba0e7b8629718947d7126f8aa86021aa1cb87c",
       "head_committed_at": "2026-09-18T15:02:15-05:00",
@@ -101,14 +113,14 @@
     },
     {
       "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
-      "head": "8a8531884bd9d59dfff5023579b0789dc7146ea7",
-      "head_committed_at": "2026-09-18T23:19:02-05:00",
-      "head_message": "ci(n0): fix calibration binding assertion formatting",
+      "head": "54a5fbacaa373ef7fcf365bedd57081998547972",
+      "head_committed_at": "2026-09-19T13:58:25-05:00",
+      "head_message": "state(n0): close failed multilayer experiment and reopen query-edge boundary",
       "status": "ahead",
-      "ahead": 127,
+      "ahead": 129,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 100,
+      "changed_file_count_vs_source_merge_base": 102,
       "knowledge_surface": true
     },
     {
@@ -209,14 +221,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "6149b78794d4f58c71123729821f95cd722cf5f5",
-      "head_committed_at": "2026-09-18T23:19:50-05:00",
-      "head_message": "trace(fbm): capture exact calibration one-run gate",
+      "head": "2a7b08fe634d6eb184054ab87ed07789b6428cb5",
+      "head_committed_at": "2026-09-19T13:58:53-05:00",
+      "head_message": "trace(fbm): capture query-edge boundary failure lesson",
       "status": "diverged",
-      "ahead": 89,
+      "ahead": 90,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 88,
+      "changed_file_count_vs_source_merge_base": 89,
       "knowledge_surface": true
     },
     {

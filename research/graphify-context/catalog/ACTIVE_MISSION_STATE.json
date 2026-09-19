@@ -68,26 +68,27 @@
   },
   "continuity_branch_head": {
     "branch": "alice-context",
-    "head": "2e168eb7178776ab3d0f9cf4b2446a292556f04c",
-    "head_committed_at": "2026-09-18T23:19:39-05:00",
-    "head_message": "context: hand off one calibrated P100 interface run"
+    "head": "00dbf368b94c136636111507a46c170d40897956",
+    "head_committed_at": "2026-09-19T13:58:42-05:00",
+    "head_message": "context: record valid multilayer failure and query-edge boundary"
   },
   "unmerged_experiment_frontier": {
     "schema": "alice-context-unmerged-experiment-frontier-v1",
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-    "candidate_count": 9,
-    "maximal_head_count": 1,
-    "maximal_heads": [
+    "candidate_count": 10,
+    "maximal_head_count": 0,
+    "maximal_heads": [],
+    "all_ahead_candidates": [
       {
         "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
-        "head": "8a8531884bd9d59dfff5023579b0789dc7146ea7",
-        "head_committed_at": "2026-09-18T23:19:02-05:00",
-        "head_message": "ci(n0): fix calibration binding assertion formatting",
-        "ahead": 127,
+        "head": "54a5fbacaa373ef7fcf365bedd57081998547972",
+        "head_committed_at": "2026-09-19T13:58:25-05:00",
+        "head_message": "state(n0): close failed multilayer experiment and reopen query-edge boundary",
+        "ahead": 129,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 100,
+        "changed_file_count_vs_source_merge_base": 102,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
@@ -109,6 +110,7 @@
           "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.19.json",
           "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.20.json",
           "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.21.json",
+          "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.22.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
@@ -121,6 +123,7 @@
           "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
           "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
           "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+          "docs/research/eipm-n0-multilayer-interface-failure-localization-v0.1.md",
           "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
           "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
           "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
@@ -191,18 +194,16 @@
           "tests/eipm/n0/test_prepare_downstream_causal_arbitration_v0_1.py"
         ],
         "authority": "unmerged-experiment-pointer"
-      }
-    ],
-    "all_ahead_candidates": [
+      },
       {
-        "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
-        "head": "8a8531884bd9d59dfff5023579b0789dc7146ea7",
-        "head_committed_at": "2026-09-18T23:19:02-05:00",
-        "head_message": "ci(n0): fix calibration binding assertion formatting",
-        "ahead": 127,
+        "branch": "alice-eipm-v1-query-edge-cross-attention-bridge",
+        "head": "54a5fbacaa373ef7fcf365bedd57081998547972",
+        "head_committed_at": "2026-09-19T13:58:25-05:00",
+        "head_message": "state(n0): close failed multilayer experiment and reopen query-edge boundary",
+        "ahead": 129,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 100,
+        "changed_file_count_vs_source_merge_base": 102,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
@@ -224,6 +225,7 @@
           "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.19.json",
           "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.20.json",
           "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.21.json",
+          "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.22.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
@@ -236,6 +238,7 @@
           "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
           "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
           "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+          "docs/research/eipm-n0-multilayer-interface-failure-localization-v0.1.md",
           "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
           "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
           "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
@@ -745,10 +748,10 @@
     "authority": "routing-only; not canonical promotion"
   },
   "continuity_freshness": {
-    "stale_relative_to_unmerged_experiment_frontier": true,
-    "newest_experiment_frontier_time": "2026-09-18T23:19:02-05:00",
+    "stale_relative_to_unmerged_experiment_frontier": false,
+    "newest_experiment_frontier_time": null,
     "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
-    "context_branch_head_time": "2026-09-18T23:19:39-05:00"
+    "context_branch_head_time": "2026-09-19T13:58:42-05:00"
   },
   "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
   "authority": "routing-and-freshness-only"
