@@ -102,7 +102,7 @@ jobs:
             "edge_relation_query_state",
             "candidate_layer_mask_is_permanent_architecture_limit",
             "single_universal_layer",
-            'report["hard_parameter_ceiling"] = None',
+            '"hard_parameter_ceiling": None',
             "EvidenceRelationType.CONFLICTS_WITH",
           ]
           missing=[x for x in required if x not in t]
