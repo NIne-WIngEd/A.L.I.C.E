@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-runtime-qualification-ready-20260918-001",
-  "question": "Refresh A.L.I.C.E. EIPM N0 continuity after the exact 575804-derived relation layer map was compiled and the CPU-only exact-map runtime qualification stage was implemented. Resolve the live maximal experiment head and newest alice-context handoff. Confirm the single next authorized action is one no-gradient CPU runtime qualification of RelationConditionedMultiLayerQueryInterface against map sha256 ac0e5e28749cbb1e8dda62262c4c2761db887b965cbc3a74493ff6c9b5355304 through whole-stage Magnolia udocker. Confirm training, optimizer, gradient, GPU, scale, heldout opening, frozen challenge rerun, threshold changes, semantic retraining, graph retraining, private identity gradient, and N0 completion remain unauthorized. Preserve full-production-not-pilot, no-hard-ceiling, efficiency-without-capability-loss, no-MC10D-validator-maze, infrastructure-failure-is-not-model-evidence doctrine. Return code navigation and original source pointers only; Graphify is navigation-only.",
-  "generated_at_utc": "2026-09-19T03:08:41.876463+00:00",
+  "request_id": "n0-causal-study-preparation-ready-20260918-001",
+  "question": "Refresh A.L.I.C.E. EIPM N0 continuity after the exact-map relation-conditioned multi-layer runtime qualification passed and the fresh factorial causal curriculum plus candidate-independent preservation contract were defined. Resolve the live maximal experiment head and newest alice-context handoff. Confirm the single next authorized action is one CPU-only causal-study preparation through whole-stage Magnolia udocker, materializing the 720-row/180-quad curriculum and hash-binding the semantic, structured, adapter, selected parent graph, ordinary replay, endpoint replay, exact layer map, and runtime qualification receipt. Confirm interface training, optimizer, gradient, GPU execution, scale, heldout/test opening, frozen challenge rerun, threshold changes, semantic retraining, graph parent retraining, private identity gradient, promotion, and N0 completion remain unauthorized. Preserve the full-production-not-pilot, no-hard-ceiling, efficiency-without-capability-loss, candidate-independent preservation, no-MC10D-validator-maze, and infrastructure-failure-is-not-model-evidence doctrines. Return original source pointers and code navigation only; Graphify is navigation-only.",
+  "generated_at_utc": "2026-09-19T03:20:17.846845+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -13,17 +13,17 @@
     "graph_extraction_tree": null,
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "2f3c361c1f336e379d916b4399801243e68c95f3",
-      "head_committed_at": "2026-09-18T22:08:05-05:00",
-      "head_message": "context: hand off exact-map runtime qualification stage"
+      "head": "7093204c278ce802f79e1f3642b7296f9ae44269",
+      "head_committed_at": "2026-09-18T22:19:46-05:00",
+      "head_message": "context: hand off multilayer causal study preparation"
     },
     "continuity_stale_relative_to_experiment_frontier": true,
     "maximal_unmerged_experiment_heads": [
       {
         "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
-        "head": "99411e2d638d9a98a09b5fb1ff1709d0da89a760",
-        "head_committed_at": "2026-09-18T22:07:10-05:00",
-        "head_message": "ci(n0): qualify exact-map multilayer interface without gradient"
+        "head": "02a05bf19545b5b281c3cfe7dc2f674b35534793",
+        "head_committed_at": "2026-09-18T22:19:02-05:00",
+        "head_message": "ci(n0): guard causal curriculum and preservation preparation"
       }
     ]
   },
@@ -107,9 +107,9 @@
     },
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "2f3c361c1f336e379d916b4399801243e68c95f3",
-      "head_committed_at": "2026-09-18T22:08:05-05:00",
-      "head_message": "context: hand off exact-map runtime qualification stage"
+      "head": "7093204c278ce802f79e1f3642b7296f9ae44269",
+      "head_committed_at": "2026-09-18T22:19:46-05:00",
+      "head_message": "context: hand off multilayer causal study preparation"
     },
     "unmerged_experiment_frontier": {
       "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -120,13 +120,13 @@
       "maximal_heads": [
         {
           "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
-          "head": "99411e2d638d9a98a09b5fb1ff1709d0da89a760",
-          "head_committed_at": "2026-09-18T22:07:10-05:00",
-          "head_message": "ci(n0): qualify exact-map multilayer interface without gradient",
-          "ahead": 102,
+          "head": "02a05bf19545b5b281c3cfe7dc2f674b35534793",
+          "head_committed_at": "2026-09-18T22:19:02-05:00",
+          "head_message": "ci(n0): guard causal curriculum and preservation preparation",
+          "ahead": 109,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-          "changed_file_count_vs_source_merge_base": 85,
+          "changed_file_count_vs_source_merge_base": 90,
           "changed_paths_vs_source_merge_base": [
             ".github/workflows/n0-arbitration-contract-check.yml",
             ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
@@ -145,11 +145,13 @@
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.16.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.17.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.18.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.19.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
             "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
             "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json",
             "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
             "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
             "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
@@ -158,12 +160,14 @@
             "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
             "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
             "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
+            "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
             "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
             "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
             "scripts/eipm/n0/audit_n0_v02_query_semantic_layers_v0_1.py",
             "scripts/eipm/n0/audit_n0_v02_query_semantic_representations_v0_1.py",
             "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
             "scripts/eipm/n0/build_n0_v02_query_relation_role_router_curriculum_v0_3.py",
+            "scripts/eipm/n0/build_n0_v02_relation_conditioned_multilayer_interface_curriculum_v0_1.py",
             "scripts/eipm/n0/build_n0_v02_relation_semantic_grounding_curriculum_v0_1.py",
             "scripts/eipm/n0/build_n0_v02_relation_semantic_role_residual_curriculum_v0_2.py",
             "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
@@ -193,6 +197,7 @@
             "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_qualify_relation_conditioned_multilayer_interface_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_query_relation_role_router_v0_3.sh",
             "scripts/eipm/n0/run_n0_v02_query_semantics_architecture_audit_v0_1.sh",
@@ -220,13 +225,13 @@
       "all_ahead_candidates": [
         {
           "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
-          "head": "99411e2d638d9a98a09b5fb1ff1709d0da89a760",
-          "head_committed_at": "2026-09-18T22:07:10-05:00",
-          "head_message": "ci(n0): qualify exact-map multilayer interface without gradient",
-          "ahead": 102,
+          "head": "02a05bf19545b5b281c3cfe7dc2f674b35534793",
+          "head_committed_at": "2026-09-18T22:19:02-05:00",
+          "head_message": "ci(n0): guard causal curriculum and preservation preparation",
+          "ahead": 109,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-          "changed_file_count_vs_source_merge_base": 85,
+          "changed_file_count_vs_source_merge_base": 90,
           "changed_paths_vs_source_merge_base": [
             ".github/workflows/n0-arbitration-contract-check.yml",
             ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
@@ -245,11 +250,13 @@
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.16.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.17.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.18.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.19.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
             "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
             "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json",
             "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
             "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
             "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
@@ -258,12 +265,14 @@
             "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
             "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
             "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
+            "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
             "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
             "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
             "scripts/eipm/n0/audit_n0_v02_query_semantic_layers_v0_1.py",
             "scripts/eipm/n0/audit_n0_v02_query_semantic_representations_v0_1.py",
             "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
             "scripts/eipm/n0/build_n0_v02_query_relation_role_router_curriculum_v0_3.py",
+            "scripts/eipm/n0/build_n0_v02_relation_conditioned_multilayer_interface_curriculum_v0_1.py",
             "scripts/eipm/n0/build_n0_v02_relation_semantic_grounding_curriculum_v0_1.py",
             "scripts/eipm/n0/build_n0_v02_relation_semantic_role_residual_curriculum_v0_2.py",
             "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
@@ -293,6 +302,7 @@
             "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
+            "scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_qualify_relation_conditioned_multilayer_interface_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_query_relation_role_router_v0_3.sh",
             "scripts/eipm/n0/run_n0_v02_query_semantics_architecture_audit_v0_1.sh",
@@ -755,16 +765,16 @@
     },
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": true,
-      "newest_experiment_frontier_time": "2026-09-18T22:07:10-05:00",
+      "newest_experiment_frontier_time": "2026-09-18T22:19:02-05:00",
       "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
-      "context_branch_head_time": "2026-09-18T22:08:05-05:00"
+      "context_branch_head_time": "2026-09-18T22:19:46-05:00"
     },
     "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
     "authority": "routing-and-freshness-only"
   },
   "authoritative_source_pointers": [
     {
-      "score": 211,
+      "score": 227,
       "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
       "branch_scope": "branch_specific",
       "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
@@ -788,11 +798,40 @@
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 41,
+      "lexical_body_hits": 43,
       "currentness_adjustment": 25
     },
     {
-      "score": 152,
+      "score": 182,
+      "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
+      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
+      "category": "design_document",
+      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
+      "declared": {
+        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
+        "hotfix",
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 48,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 174,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-18/sol/N0_MULTILAYER_INTERFACE_RUNTIME_QUALIFICATION_READY.md",
@@ -817,10 +856,10 @@
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 42
+      "lexical_body_hits": 47
     },
     {
-      "score": 147,
+      "score": 161,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md",
@@ -841,11 +880,11 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 22,
+      "lexical_body_hits": 25,
       "currentness_adjustment": 30
     },
     {
-      "score": 123,
+      "score": 145,
       "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
       "branch_scope": "branch_specific",
       "path": "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
@@ -865,11 +904,35 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 23,
+      "lexical_body_hits": 28,
       "currentness_adjustment": 25
     },
     {
-      "score": 114,
+      "score": 131,
+      "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+      "branch_scope": "branch_specific",
+      "path": "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json",
+      "blob_sha": "90cbb3510a4e3207cdfc2494d99123824248ff7d",
+      "category": "configuration_state",
+      "title": "n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json",
+      "declared": {},
+      "matched_terms": [
+        "failed",
+        "failure",
+        "hotfix",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 15,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 130,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md",
@@ -895,10 +958,83 @@
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 31
+      "lexical_body_hits": 41
     },
     {
-      "score": 112,
+      "score": 129,
+      "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml",
+      "blob_sha": "7d21ffbaa640f23ee2425ccb351e7975daf8a175",
+      "category": "repository_file",
+      "title": "n0-relation-conditioned-multilayer-interface-contract-check.yml",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 24,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 128,
+      "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+      "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
+      "category": "design_document",
+      "title": "N0 downstream causal arbitration — Magnolia execution contract",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 18,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 127,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-18/sol/N0_MULTILAYER_CAUSAL_STUDY_PREPARATION_READY.md",
+      "blob_sha": "83fa89c6e78674a54eeb3546b15cda75814e352d",
+      "category": "working_context",
+      "title": "N0 Multi-Layer Causal Study — CPU Preparation Ready",
+      "declared": {},
+      "matched_terms": [
+        "failed",
+        "failure",
+        "hotfix",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 52
+    },
+    {
+      "score": 126,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md",
@@ -923,44 +1059,16 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 26
+      "lexical_body_hits": 36
     },
     {
-      "score": 106,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
-      "blob_sha": "19f407ba4d11922a5095d3570cb6a0474d54e6be",
-      "category": "working_context",
-      "title": "N0 Final Frozen Challenge Ready Handoff",
-      "declared": {
-        "status": " one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
-        "repair",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 27
-    },
-    {
-      "score": 103,
+      "score": 116,
       "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
       "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml",
-      "blob_sha": "77ae52ca35f62c5c8748c493597bae5404a05f59",
+      "path": ".github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml",
+      "blob_sha": "c180e7635508320e46198003478f34cbdb1b7fc0",
       "category": "repository_file",
-      "title": "n0-relation-conditioned-multilayer-interface-contract-check.yml",
+      "title": "n0-query-semantics-layerwise-audit-contract-check.yml",
       "declared": {},
       "matched_terms": [
         "magnolia",
@@ -973,110 +1081,8 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 16,
+      "lexical_body_hits": 13,
       "currentness_adjustment": 25
-    },
-    {
-      "score": 102,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md",
-      "blob_sha": "77ff7dda3d28fef326ceb8e6af7db799879c876b",
-      "category": "runtime_receipt",
-      "title": "Magnolia 2×P100 N0 Runtime Smoke — Job 575527",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
-        "magnolia",
-        "runtime-results",
-        "smoke",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 19,
-      "currentness_adjustment": 4
-    },
-    {
-      "score": 98,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_LAYERWISE_AUDIT_HANDOFF.md",
-      "blob_sha": "ef36a23c17bf569a0697dcda6e936ede68fdeffc",
-      "category": "working_context",
-      "title": "N0 Query-Semantics Layerwise Audit Handoff",
-      "declared": {
-        "status": " 575801 completed the first architecture audit; final token states are stronger than pooled views but causes/supports remain at chance; gradient work remains frozen pending one no-gradient layerwise audit"
-      },
-      "matched_terms": [
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "document",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 20
-    },
-    {
-      "score": 98,
-      "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
-      "blob_sha": "a9251a8a3389495257aa2b37bf92513fd96e09f8",
-      "category": "design_document",
-      "title": "N0 Query-Semantics Layerwise Audit v0.1",
-      "declared": {},
-      "matched_terms": [
-        "magnolia",
-        "recovery",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "document",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 15,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 95,
-      "branch": "fable-builder-model",
-      "branch_scope": "branch_specific",
-      "path": "docs/fable-builder/traces/FBM_TRACE_20260914_MAGNOLIA_RUNTIME_BOUNDARY_AND_PRIVATE_NAMESPACE.jsonl",
-      "blob_sha": "4b28f483487150d94ef6cf6249c99fad3522fd2f",
-      "category": "design_document",
-      "title": "FBM_TRACE_20260914_MAGNOLIA_RUNTIME_BOUNDARY_AND_PRIVATE_NAMESPACE.jsonl",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
-        "magnolia",
-        "recovery",
-        "runtime-results",
-        "smoke",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 11
     }
   ],
   "graphify_navigation_hints": [],
