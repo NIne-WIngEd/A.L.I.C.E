@@ -8,9 +8,13 @@ on:
       - "src/alice_personality/n0/relation_conditioned_multilayer_query.py"
       - "scripts/eipm/n0/compile_n0_v02_relation_conditioned_layer_map_v0_1.py"
       - "scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh"
+      - "scripts/eipm/n0/qualify_n0_v02_relation_conditioned_multilayer_interface_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_qualify_relation_conditioned_multilayer_interface_v0_1.sh"
       - "scripts/eipm/n0/magnolia_udocker_exec.sh"
       - "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md"
+      - "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md"
       - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.17.json"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.18.json"
       - ".github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml"
   workflow_dispatch:
 
@@ -26,8 +30,13 @@ jobs:
       - name: Syntax
         run: |
           set -euo pipefail
-          python -m py_compile             scripts/eipm/n0/compile_n0_v02_relation_conditioned_layer_map_v0_1.py             src/alice_personality/n0/relation_conditioned_multilayer_query.py
+          python -m py_compile \
+            scripts/eipm/n0/compile_n0_v02_relation_conditioned_layer_map_v0_1.py \
+            scripts/eipm/n0/qualify_n0_v02_relation_conditioned_multilayer_interface_v0_1.py \
+            src/alice_personality/n0/relation_conditioned_multilayer_query.py
           bash -n scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh
+          bash -n scripts/eipm/n0/run_n0_v02_qualify_relation_conditioned_multilayer_interface_v0_1.sh
+          bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
 
       - name: Layer map compiler governance
         run: |
@@ -86,13 +95,18 @@ jobs:
           print("multilayer_interface_architecture=PASS")
           PY
 
-      - name: Exact 575804 binding
+      - name: Exact 575804 map binding
         run: |
           set -euo pipefail
           python - <<'PY'
           from pathlib import Path
-          r=Path("scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh").read_text()
-          required=[
+          compile_runner=Path(
+              "scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh"
+          ).read_text()
+          qualify_runner=Path(
+              "scripts/eipm/n0/run_n0_v02_qualify_relation_conditioned_multilayer_interface_v0_1.sh"
+          ).read_text()
+          required_compile=[
             "ee88e80513fb000e2ecde8ca9e4f7e714cb06e43a144bd28c8930d26c38965ab",
             "COMPLETE_NO_GRADIENT_LAYERWISE_RELATION_SEMANTICS_AUDIT",
             "gradient_performed",
@@ -100,36 +114,104 @@ jobs:
             "scale_authorized",
             "training_authorized",
           ]
-          missing=[x for x in required if x not in r]
-          if missing: raise SystemExit("575804 binding missing "+repr(missing))
+          missing=[x for x in required_compile if x not in compile_runner]
+          if missing: raise SystemExit("575804 compile binding missing "+repr(missing))
+          required_qualify=[
+            "ac0e5e28749cbb1e8dda62262c4c2761db887b965cbc3a74493ff6c9b5355304",
+            "ee88e80513fb000e2ecde8ca9e4f7e714cb06e43a144bd28c8930d26c38965ab",
+            "RUNTIME QUALIFICATION",
+            "gradient_performed=false",
+            "optimizer_created=false",
+            "gpu_required=false",
+            "training_authorized=false",
+            "scale_authorized=false",
+          ]
+          missing=[x for x in required_qualify if x not in qualify_runner]
+          if missing: raise SystemExit("exact-map qualification binding missing "+repr(missing))
           forbidden=["sbatch","git pull","git checkout","git switch"]
-          present=[x for x in forbidden if x in r]
-          if present: raise SystemExit("runtime mutation/GPU submission leaked "+repr(present))
-          print("audit_575804_binding=PASS")
+          for name,text in (("compile",compile_runner),("qualify",qualify_runner)):
+              present=[x for x in forbidden if x in text]
+              if present:
+                  raise SystemExit(f"{name} runner leaked scheduler/branch mutation "+repr(present))
+          print("exact_map_binding=PASS")
           PY
 
-      - name: State forbids training
+      - name: Runtime qualification governance
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/qualify_n0_v02_relation_conditioned_multilayer_interface_v0_1.py"
+          ).read_text()
+          required=[
+            "PASS_EXACT_MAP_NO_GRADIENT_RUNTIME_CONTRACT",
+            "RelationConditionedMultiLayerQueryInterface.from_layer_map_file",
+            "tensor_state_sha256",
+            "parameter_state_exactly_unchanged",
+            "symmetric_conflicts_with_fails_closed",
+            "pad_fails_closed",
+            "heldout_rows_used",
+            "frozen_challenge_rows_used",
+            "private_identity_data_used",
+            '"training_authorized": False',
+            '"scale_authorized": False',
+            '"heldout_opening_authorized": False',
+            '"frozen_challenge_rerun_authorized": False',
+            '"n0_complete": False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("runtime qualification contract missing "+repr(missing))
+          forbidden=[
+            "torch.optim",
+            ".backward(",
+            "optimizer.step",
+            "cuda()",
+            'torch.device("cuda")',
+            "subprocess.run([\"sbatch",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present: raise SystemExit("training/GPU leaked into runtime qualification "+repr(present))
+          print("runtime_qualification_governance=PASS")
+          PY
+
+      - name: Current state forbids training
         run: |
           set -euo pipefail
           python - <<'PY'
           import json
           from pathlib import Path
-          s=json.loads(Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.17.json").read_text())
+          s=json.loads(
+              Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.18.json").read_text()
+          )
           e=s["execution_policy"]
-          if e["training_authorized"] is not False:
-              raise SystemExit("training authorized prematurely")
-          if e["optimizer_authorized"] is not False:
-              raise SystemExit("optimizer authorized prematurely")
-          if e["gradient_authorized"] is not False:
-              raise SystemExit("gradient authorized prematurely")
-          if e["new_gpu_run_authorized"] is not False:
-              raise SystemExit("GPU run authorized prematurely")
-          if s["architecture_v0_1"]["one_universal_layer"] is not False:
+          if e["runtime_qualification_authorized"] is not True:
+              raise SystemExit("runtime qualification not authorized")
+          if e["runtime_qualification_gpu_required"] is not False:
+              raise SystemExit("CPU-only qualification drift")
+          for key in (
+              "training_authorized",
+              "optimizer_authorized",
+              "gradient_authorized",
+              "new_gpu_run_authorized",
+              "scale_authorized",
+              "heldout_opening_authorized",
+              "frozen_challenge_rerun_authorized",
+          ):
+              if e[key] is not False:
+                  raise SystemExit(f"{key} authorized prematurely")
+          if s["map_inspection"]["single_universal_layer"] is not False:
               raise SystemExit("universal layer hardcoded")
           if s["architecture_v0_1"]["hard_parameter_ceiling"] is not None:
               raise SystemExit("hard ceiling reintroduced")
+          if s["capability_policy"]["hard_parameter_ceiling"] is not None:
+              raise SystemExit("capability ceiling reintroduced")
           if s["n0_complete"] is not False:
               raise SystemExit("N0 completion drift")
+          if s["preserved_evidence"]["compiled_layer_map_sha256"] != (
+              "ac0e5e28749cbb1e8dda62262c4c2761db887b965cbc3a74493ff6c9b5355304"
+          ):
+              raise SystemExit("compiled map receipt drift")
           w=Path("scripts/eipm/n0/magnolia_udocker_exec.sh").read_text()
           required_wrapper=[
               '--env="ALICE_REPO_ROOT=$ROOT"',
