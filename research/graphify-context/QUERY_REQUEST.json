@@ -1,11 +1,8 @@
 {
-  "request_id": "n0-relation-conditioned-multilayer-interface-ready-20260918-001",
-  "question": "Resolve current N0 state after layerwise audit job 575804. Identify the relation-conditioned multi-layer token interface frontier, the compiled-map requirement, the no-universal-layer rule, FBM capture, and the single authorized next action. Confirm training, gradient, GPU execution, scale, heldout opening, and frozen-challenge rerun are not authorized.",
-  "budget": 1200,
+  "request_id": "n0-post-layer-map-20260918-2200",
+  "question": "Continue A.L.I.C.E. EIPM N0 from the live relation-conditioned multi-layer interface frontier after Magnolia successfully compiled relation_conditioned_layer_map.json from job 575804 evidence. Refresh all branch/frontier state first. Identify the exact live experiment head, active N0 handoff/state, the code path implementing the relation-conditioned multi-layer query interface, where and how the compiled per-relation candidate-layer map is meant to bind into that interface, what scientific evidence from 575800/575801/575804 caused this architecture, and the single next authorized action. Preserve constraints: N0 is full-production foundation not a pilot; no hard capability/parameter ceiling; efficiency without capability reduction; no MC10-style hotfix chain; infrastructure failures are not model evidence; no training/gradient/GPU/scale/heldout/frozen-challenge rerun unless newly authorized by current sources. Also surface Magnolia operational lessons relevant to executing the next stage, including whole-stage udocker, explicit repo/workdir binding, host-Python avoidance, and stale branch/capsule avoidance. Return source pointers and Graphify code navigation hints, but do not treat Graphify as authority.",
+  "budget": 1800,
   "traversal": "bfs",
-  "contexts": [
-    "call",
-    "import"
-  ],
+  "contexts": ["call", "import"],
   "graphify_mode": "auto"
 }
