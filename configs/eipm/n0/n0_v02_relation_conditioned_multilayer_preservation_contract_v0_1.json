@@ -1,0 +1,87 @@
+{
+  "schema": "alice.eipm.n0.v02-relation-conditioned-multilayer-preservation-contract.v0.1",
+  "status": "DEFINED_BEFORE_ANY_INTERFACE_TRAINING_DECISION",
+  "purpose": "Prevent a future relation-conditioned multi-layer interface experiment from gaining causal curriculum accuracy by damaging already-valid semantic or evidence-graph behavior.",
+  "lineage": {
+    "runtime_qualification_receipt_sha256": "779b19459fa8ab67bb1c3ed56b3e9cdb1b89b8382f145e1b3d7c4d98312b2b57",
+    "compiled_layer_map_sha256": "ac0e5e28749cbb1e8dda62262c4c2761db887b965cbc3a74493ff6c9b5355304",
+    "source_layerwise_audit_sha256": "ee88e80513fb000e2ecde8ca9e4f7e714cb06e43a144bd28c8930d26c38965ab",
+    "selected_parent_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+    "selected_parent_graph_role": "proven_relation_endpoint_parent"
+  },
+  "freeze_contract": {
+    "semantic_backbone_parameters_trainable": false,
+    "structured_state_parameters_trainable": false,
+    "evidence_view_adapter_parameters_trainable": false,
+    "selected_parent_graph_parameters_trainable": false,
+    "selected_parent_graph_parameters_must_remain_exactly_unchanged": true,
+    "compiled_layer_map_mutable_during_candidate_run": false,
+    "candidate_layer_mask_is_permanent_architecture_limit": false,
+    "hard_parameter_ceiling": null
+  },
+  "preservation_lanes": {
+    "ordinary_graph_replay": {
+      "source": "$ALICE_N0_WORKDIR/evidence-graph-pilot-v0.1/graph_semantic_cache.pt",
+      "role": "preserve ordinary evidence selection behavior",
+      "candidate_may_train_on_lane": false,
+      "baseline_must_be_measured_before_candidate": true
+    },
+    "endpoint_role_replay": {
+      "source": "$ALICE_N0_WORKDIR/relation-endpoint-repair-v0.2/training/endpoint_repair_semantic_cache.pt",
+      "role": "preserve the already-selected source/target endpoint capability",
+      "candidate_may_train_on_lane": false,
+      "baseline_must_be_measured_before_candidate": true
+    },
+    "symmetric_conflict_behavior": {
+      "relation": "conflicts_with",
+      "expected_directional_interface_active": false,
+      "candidate_must_fail_closed": true,
+      "candidate_must_not_create_directional_preference": true
+    },
+    "pad_or_unmapped_behavior": {
+      "expected_directional_interface_active": false,
+      "candidate_must_fail_closed": true,
+      "candidate_must_not_create_field_bias": true
+    }
+  },
+  "numerical_tolerance_policy": {
+    "candidate_result_may_not_define_tolerances": true,
+    "tolerances_must_be_frozen_before_candidate_training": true,
+    "tolerance_source": "canonical_parent_repeatability_only",
+    "calibration_rule": "measure the frozen canonical parent repeatedly on each preservation lane before candidate training and derive the smallest practical absolute tolerance from observed numerical repeatability; candidate outputs are forbidden inputs to calibration",
+    "hardcoded_tolerances_in_this_design": false,
+    "reason": "no new candidate has been observed and no unsupported threshold should be invented"
+  },
+  "candidate_eligibility": {
+    "causal_dev_improvement_required": true,
+    "all_preservation_lanes_must_pass": true,
+    "parent_parameter_hash_must_match_exactly": true,
+    "semantic_backbone_hash_must_match_exactly": true,
+    "test_split_may_open_automatically": false,
+    "heldout_opening_requires_separate_explicit_decision": true,
+    "frozen_challenge_rerun_authorized": false,
+    "promotion_authorized": false,
+    "scale_authorized": false,
+    "n0_complete": false
+  },
+  "anti_loop_policy": {
+    "one_causal_experiment_after_authorization": true,
+    "automatic_hotfix_chain": false,
+    "same_failed_candidate_may_not_be_rerun_without_state_change": true,
+    "infrastructure_failure_is_model_evidence": false,
+    "failure_after_preservation_pass_reopens_language_graph_boundary": true,
+    "do_not_create_qrr_v0_4": true,
+    "do_not_reuse_failed_router_or_role_residual_training_rows": true
+  },
+  "data_governance": {
+    "private_identity_data": false,
+    "private_identity_gradient": false,
+    "frozen_challenge_rows_used_for_training": false,
+    "prior_failure_diagnostic_rows_used_for_training": false,
+    "prior_failed_semantic_repair_rows_used_for_training": false
+  },
+  "training_authorized": false,
+  "optimizer_authorized": false,
+  "gradient_authorized": false,
+  "new_gpu_run_authorized": false
+}
