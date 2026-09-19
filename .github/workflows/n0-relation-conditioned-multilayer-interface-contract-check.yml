@@ -8,6 +8,7 @@ on:
       - "src/alice_personality/n0/relation_conditioned_multilayer_query.py"
       - "scripts/eipm/n0/compile_n0_v02_relation_conditioned_layer_map_v0_1.py"
       - "scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh"
+      - "scripts/eipm/n0/magnolia_udocker_exec.sh"
       - "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md"
       - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.17.json"
       - ".github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml"
@@ -129,5 +130,13 @@ jobs:
               raise SystemExit("hard ceiling reintroduced")
           if s["n0_complete"] is not False:
               raise SystemExit("N0 completion drift")
+          w=Path("scripts/eipm/n0/magnolia_udocker_exec.sh").read_text()
+          required_wrapper=[
+              '--env="ALICE_REPO_ROOT=$ROOT"',
+              'ALICE_N0_MULTILAYER_INTERFACE_DIR',
+          ]
+          missing=[x for x in required_wrapper if x not in w]
+          if missing:
+              raise SystemExit("Magnolia udocker root/output binding missing "+repr(missing))
           print("state_training_freeze=PASS")
           PY
