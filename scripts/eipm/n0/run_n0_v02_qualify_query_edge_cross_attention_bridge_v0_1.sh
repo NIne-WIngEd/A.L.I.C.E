@@ -27,7 +27,7 @@ BUILD_ANCHORS="$ROOT/scripts/eipm/n0/build_n0_v02_query_edge_preservation_train_
 QUALIFIER="$ROOT/scripts/eipm/n0/qualify_n0_v02_query_edge_cross_attention_bridge_v0_1.py"
 BRIDGE="$ROOT/src/alice_personality/n0/query_edge_cross_attention_bridge.py"
 INTEGRATION="$ROOT/src/alice_personality/n0/evidence_graph_query_edge_bridge.py"
-STATE="$ROOT/configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.22.json"
+STATE="$ROOT/configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.23.json"
 
 EXPECTED_FAILED_RESULT_SHA256="6f2f3fe6ddab764d947a7c63fe94ef24d5cd77e3cc68821c8678fdb8f2ea36bd"
 EXPECTED_PARENT_GRAPH_SHA256="3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f"
@@ -75,10 +75,12 @@ check_sha "$LAYER_MAP" "$EXPECTED_LAYER_MAP_SHA256" "layer_map_sha256"
 python - "$STATE" <<'PY'
 import json,sys
 s=json.load(open(sys.argv[1]))
-if s.get("schema")!="alice.eipm.n0.latent-pool-stage-state.v0.22":
-    raise SystemExit("v0.22 state schema drift")
-if "QUERY_ONLY_ANTISYMMETRIC_RESIDUAL_REJECTED" not in s.get("status",""):
-    raise SystemExit("failed architecture family is not closed")
+if s.get("schema")!="alice.eipm.n0.latent-pool-stage-state.v0.23":
+    raise SystemExit("v0.23 state schema drift")
+if "CPU_NO_GRADIENT_RUNTIME_QUALIFICATION_AUTHORIZED" not in s.get("status",""):
+    raise SystemExit("query-edge runtime qualification is not current")
+if s["source_failure"]["rerun_authorized"] is not False:
+    raise SystemExit("failed multilayer experiment was reopened")
 e=s["execution_policy"]
 for key in (
     "optimizer_authorized",
@@ -92,9 +94,9 @@ for key in (
 ):
     if e[key] is not False:
         raise SystemExit(f"execution authorization drift: {key}")
-if e["cpu_no_gradient_exact_parent_qualification_authorized"] is not True:
+if e["cpu_no_gradient_runtime_qualification_authorized"] is not True:
     raise SystemExit("CPU no-gradient qualification is not authorized")
-print("v0_22_query_edge_qualification_gate=PASS")
+print("v0_23_query_edge_qualification_gate=PASS")
 PY
 
 python -m py_compile   "$BUILD_CURRICULUM" "$BUILD_ANCHORS" "$QUALIFIER" "$BRIDGE" "$INTEGRATION"
