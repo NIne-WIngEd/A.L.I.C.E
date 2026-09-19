@@ -1,0 +1,172 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.22",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.21.json",
+  "status": "ONE_SHOT_MULTILAYER_EXPERIMENT_FAILED_VALIDLY;QUERY_ONLY_ANTISYMMETRIC_RESIDUAL_REJECTED;LANGUAGE_GRAPH_BOUNDARY_REOPENED;QUERY_EDGE_BRIDGE_DESIGN_AUTHORIZED_NO_GRADIENT",
+  "n0_complete": false,
+  "stable_build_base": {
+    "branch": "alice-eipm-v1-build",
+    "commit": "021c5021a98104b35f9c8e94b19e48d21f25f132"
+  },
+  "failed_experiment": {
+    "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+    "source_revision": "8a8531884bd9d59dfff5023579b0789dc7146ea7",
+    "magnolia_job_id": 575825,
+    "scheduler_state": "COMPLETED",
+    "exit_code": "0:0",
+    "result_sha256": "6f2f3fe6ddab764d947a7c63fe94ef24d5cd77e3cc68821c8678fdb8f2ea36bd",
+    "result_status": "FAIL_CAUSAL_DEV_OR_PRESERVATION_STOP_NO_HELDOUT_NO_AUTOMATIC_HOTFIX",
+    "eligible_checkpoint_keys": [],
+    "selected_checkpoint": null,
+    "selected_candidate_sha256": null,
+    "single_authorized_gpu_run_consumed": true,
+    "infrastructure_failure": false,
+    "valid_model_evidence": true
+  },
+  "experiment_integrity": {
+    "calibration_receipt_sha256": "d485fce0e4304d9cbd8af1658ed7cfedfd1bd4d44b0f40cf56a2618d5ad2390b",
+    "preservation_policy_sha256": "fb88b9580e38a648101277815f82c3ba60c19f3bfd16dbe3029ded40b04aea56",
+    "preparation_receipt_sha256": "54dc915f10ee58d994e387ca59ab1180f96bd0e3523780f3e75fb14d6ac30690",
+    "parent_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+    "parent_adapter_sha256": "50eeeea3dfff5b6bddaa8da667b6b6c2f917dc668b1acd0410923822ae5ad2df",
+    "parent_graph_parameters_exactly_unchanged": true,
+    "semantic_parent_mutated": false,
+    "structured_parent_mutated": false,
+    "adapter_mutated": false,
+    "preservation_rows_used_for_gradient": false,
+    "test_split_evaluated": false,
+    "test_split_opened_after_training": false,
+    "frozen_challenge_evaluated": false
+  },
+  "evidence": {
+    "baseline_causal_dev": {
+      "row_accuracy": 0.5555555555555556,
+      "quad_accuracy": 0.08333333333333333,
+      "mean_target_margin": 0.08108323460651769,
+      "causes_row_accuracy": 0.5,
+      "supports_row_accuracy": 0.5
+    },
+    "step_40": {
+      "causal_row_accuracy": 0.5486111111111112,
+      "causal_quad_accuracy": 0.2222222222222222,
+      "causal_mean_target_margin": 0.08724810348616706,
+      "causes_row_accuracy": 0.5416666666666666,
+      "supports_row_accuracy": 0.5833333333333334,
+      "endpoint_pair_accuracy": 0.6041666666666666,
+      "endpoint_family_min_pair_accuracy": 0.0,
+      "endpoint_row_accuracy": 0.7083333333333334,
+      "endpoint_mean_graph_target_margin": 0.24894556403160095,
+      "ordinary_preservation_pass": true,
+      "endpoint_preservation_pass": false
+    },
+    "initial_parent_endpoint": {
+      "pair_accuracy": 0.9583333333333334,
+      "family_min_pair_accuracy": 0.6666666666666666,
+      "row_accuracy": 0.96875,
+      "mean_graph_target_margin": 0.8209420529504617
+    },
+    "interpretation": "targeted query-role signal was learned, but the query-only antisymmetric specialist destructively reweighted real endpoint decisions despite exact parent parameter preservation"
+  },
+  "localized_failure_boundary": {
+    "boundary": "language_to_graph_query_edge_binding",
+    "rejected_family": "query_only_relation_conditioned_scalar_applied_plus_source_minus_target",
+    "why_rejected": [
+      "same query and relation type produce the same specialist state for every same-type edge",
+      "specialist cannot condition on source or target graph content",
+      "forced antisymmetry cannot represent independent source and target corrections",
+      "one-edge two-field causal curriculum can reward relation-global endpoint polarity without requiring edge-content binding"
+    ],
+    "not_evidence_for": [
+      "insufficient_graph_width",
+      "insufficient_graph_depth",
+      "insufficient_training_steps",
+      "learning_rate_tuning",
+      "threshold_relaxation",
+      "semantic_backbone_capacity_ceiling",
+      "parent_graph_failure"
+    ]
+  },
+  "next_architecture_hypothesis": {
+    "name": "Query-Edge Cross-Attention Bridge",
+    "purpose": "bind semantic query intent to specific structured graph evidence without replacing the proven parent endpoint expert",
+    "required_inputs": [
+      "relation_conditioned_intermediate_query_tokens",
+      "source_graph_state",
+      "target_graph_state",
+      "relation_embedding",
+      "edge_validity"
+    ],
+    "required_properties": [
+      "edge_specific_query_token_attention",
+      "independent_source_and_target_residuals",
+      "learned_edge_specific_specialist_gate",
+      "exact_zero_parent_delta_at_initialization",
+      "frozen_parent_graph",
+      "conflicts_with_directional_specialist_off",
+      "pad_or_unmapped_fail_closed",
+      "no_generic_source_target_classifier",
+      "no_raw_mean_pool_router",
+      "no_hardcoded_single_semantic_layer",
+      "no_hard_parameter_ceiling"
+    ]
+  },
+  "next_data_contract": {
+    "fresh_multi_edge_causal_curriculum_required": true,
+    "must_include_multiple_fields": true,
+    "must_include_multiple_edges": true,
+    "must_include_multiple_same_relation_type_edges": true,
+    "must_include_distractor_relations": true,
+    "must_include_content_matched_and_mismatched_endpoints": true,
+    "must_include_source_and_target_role_queries": true,
+    "must_include_edge_reversals": true,
+    "train_dev_test_lexical_and_entity_isolation_required": true,
+    "relation_global_endpoint_polarity_shortcut_must_be_near_chance": true
+  },
+  "preservation_learning_policy": {
+    "ordinary_and_endpoint_dev_remain_evaluation_only": true,
+    "causal_test_remains_closed": true,
+    "frozen_challenge_remains_closed": true,
+    "preservation_train_anchors_may_be_compiled_from_existing_training_splits": true,
+    "candidate_may_not_train_on_preservation_dev": true,
+    "training_objective_not_yet_authorized": true,
+    "distillation_or_gradient_constraint_not_yet_selected": true
+  },
+  "execution_policy": {
+    "next_action": "implement and statically qualify query-edge cross-attention bridge plus fresh multi-edge causal curriculum; no optimizer or GPU training decision yet",
+    "architecture_implementation_authorized": true,
+    "fresh_curriculum_implementation_authorized": true,
+    "preservation_anchor_compiler_authorized": true,
+    "static_contract_validation_authorized": true,
+    "cpu_no_gradient_exact_parent_qualification_authorized": true,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "failure_policy": {
+    "local_hotfix_loop_forbidden": true,
+    "failed_training_directory_must_be_preserved": true,
+    "first_model_failure_stops_experiment": true,
+    "zoom_out_to_model_purpose_and_component_role": true,
+    "frontier_research_review_required_before_architectural_fix": true,
+    "one_causal_architectural_change_per_new_model_gate": true
+  },
+  "capability_policy": {
+    "full_production_foundation_not_disposable_pilot": true,
+    "hard_parameter_ceiling": null,
+    "current_shapes_are_operating_points_not_product_limits": true,
+    "efficiency_may_reduce_required_capability": false,
+    "scale_only_from_localized_capacity_or_expressivity_evidence": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
