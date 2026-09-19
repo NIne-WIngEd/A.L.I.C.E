@@ -28,6 +28,7 @@ on:
       - "scripts/eipm/n0/magnolia_p100_n0_v02_relation_conditioned_multilayer_interface_v0_1.sbatch"
       - "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_training_decision_v0_1.json"
       - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.20.json"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.21.json"
       - "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md"
       - ".github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml"
   workflow_dispatch:
@@ -496,6 +497,62 @@ jobs:
           print("one_bounded_training_decision=PASS")
           PY
 
+      - name: Calibration result binding and one-run authorization
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.21.json"
+          ).read_text())
+          cal=s["parent_only_preservation_calibration"]
+          if cal["status"]!="PASS_PARENT_ONLY_PRESERVATION_CALIBRATION":
+              raise SystemExit("calibration pass not frozen")
+          if cal["source_revision"]!="4a223b0b35920ded5c81b05f53243024de919357":
+              raise SystemExit("calibration source revision drift")
+          if cal["receipt_sha256"]!="d485fce0e4304d9cbd8af1658ed7cfedfd1bd4d44b0f40cf56a2618d5ad2390b":
+              raise SystemExit("calibration receipt drift")
+          if cal["policy_sha256"]!="fb88b9580e38a648101277815f82c3ba60c19f3bfd16dbe3029ded40b04aea56":
+              raise SystemExit("preservation policy drift")
+          if cal["candidate_result_observed"] is not False:
+              raise SystemExit("candidate-dependent calibration leaked")
+          e=s["execution_policy"]
+          if e["gpu_execution_authorized_now"] is not True or e["gradient_execution_authorized_now"] is not True:
+              raise SystemExit("calibrated one-run execution not authorized")
+          if e["gpu_training_runs_remaining"]!=1:
+              raise SystemExit("GPU run-count authorization drift")
+          for key in (
+              "automatic_rerun_authorized",
+              "automatic_hotfix_authorized",
+              "scale_authorized",
+              "heldout_opening_authorized",
+              "frozen_challenge_rerun_authorized",
+              "semantic_retraining_authorized",
+              "graph_parent_retraining_authorized",
+              "private_identity_gradient_authorized",
+              "production_promotion_authorized",
+          ):
+              if e[key] is not False:
+                  raise SystemExit(f"governance drift: {key}")
+          f=s["failure_policy"]
+          for key in (
+              "first_model_failure_stops_experiment",
+              "local_hotfix_loop_forbidden",
+              "zoom_out_to_model_purpose_and_component_role",
+              "localize_failure_boundary_before_next_change",
+              "frontier_research_review_required_before_architectural_fix",
+              "one_causal_architectural_change_per_new_model_gate",
+          ):
+              if f[key] is not True:
+                  raise SystemExit(f"failure-policy drift: {key}")
+          if s["capability_policy"]["hard_parameter_ceiling"] is not None:
+              raise SystemExit("hard capability ceiling reintroduced")
+          if s["n0_complete"] is not False:
+              raise SystemExit("N0 completion drift")
+          print("calibration_result_binding_and_one_run_authorization=PASS")
+          PY
+
       - name: Bounded trainer governance
         run: |
           set -euo pipefail
@@ -542,7 +599,5 @@ jobs:
               raise SystemExit("training runner does not require calibration gate")
           if "--max-steps 160" not in runner:
               raise SystemExit("bounded training step contract drift")
-          if "test_split_opening_authorized=false" not in runner:
-              raise SystemExit("runner test-opening governance missing")
-          print("bounded_trainer_governance=PASS")
+          for required in (\n              "EXPECTED_CALIBRATION_RECEIPT_SHA256=\"d485fce0e4304d9cbd8af1658ed7cfedfd1bd4d44b0f40cf56a2618d5ad2390b\"",\n              "EXPECTED_PRESERVATION_POLICY_SHA256=\"fb88b9580e38a648101277815f82c3ba60c19f3bfd16dbe3029ded40b04aea56\"",\n              "EXPECTED_CALIBRATION_SOURCE_REVISION=\"4a223b0b35920ded5c81b05f53243024de919357\"",\n              "mkdir \"$TRAIN_ROOT\"",\n          ):\n              if required not in runner:\n                  raise SystemExit("exact calibration/one-run claim missing "+required)\n          if "test_split_opening_authorized=false" not in runner:\n              raise SystemExit("runner test-opening governance missing")\n          print("bounded_trainer_governance=PASS")
           PY
