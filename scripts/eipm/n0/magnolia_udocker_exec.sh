@@ -49,13 +49,14 @@ ARGS=(
   --volume="$BASE:$BASE"
   --workdir="$ROOT"
   --env="PYTHON=python"
+  --env="ALICE_REPO_ROOT=$ROOT"
 )
 
 # Forward only the stage controls that are intentionally part of the N0
 # runtime contract. In particular, v0.2 workdir/checkpoint overrides must cross
 # the udocker boundary rather than silently falling back to container-local
-# defaults. The normal v0.2 default remains derived from the mounted repo root,
-# never container $HOME (/root).
+# defaults. The mounted host repo root is injected unconditionally as
+# ALICE_REPO_ROOT, so stage runners never fall back to container $HOME (/root).
 for name in \
   CUDA_VISIBLE_DEVICES \
   PYTHONPATH \
@@ -70,6 +71,7 @@ for name in \
   ALICE_N0_QUERY_RELATION_ROLE_ROUTER_DIR \
   ALICE_N0_QUERY_SEMANTICS_AUDIT_DIR \
   ALICE_N0_QUERY_SEMANTICS_LAYER_AUDIT_DIR \
+  ALICE_N0_MULTILAYER_INTERFACE_DIR \
   ALICE_N0_V02_WORKDIR \
   N0_SMOKE_WORKDIR \
   N0_SMOKE_REQUIRE_CUDA \
