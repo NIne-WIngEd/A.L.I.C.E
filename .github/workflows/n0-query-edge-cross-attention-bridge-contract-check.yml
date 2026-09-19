@@ -1,0 +1,302 @@
+name: N0 Query Edge Cross Attention Bridge Contract Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-query-edge-cross-attention-bridge
+    paths:
+      - "src/alice_personality/n0/query_edge_cross_attention_bridge.py"
+      - "src/alice_personality/n0/evidence_graph_query_edge_bridge.py"
+      - "scripts/eipm/n0/build_n0_v02_query_edge_binding_curriculum_v0_1.py"
+      - "scripts/eipm/n0/build_n0_v02_query_edge_preservation_train_anchors_v0_1.py"
+      - "scripts/eipm/n0/qualify_n0_v02_query_edge_cross_attention_bridge_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_qualify_query_edge_cross_attention_bridge_v0_1.sh"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.22.json"
+      - ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile             src/alice_personality/n0/query_edge_cross_attention_bridge.py             src/alice_personality/n0/evidence_graph_query_edge_bridge.py             scripts/eipm/n0/build_n0_v02_query_edge_binding_curriculum_v0_1.py             scripts/eipm/n0/build_n0_v02_query_edge_preservation_train_anchors_v0_1.py             scripts/eipm/n0/qualify_n0_v02_query_edge_cross_attention_bridge_v0_1.py
+          bash -n scripts/eipm/n0/run_n0_v02_qualify_query_edge_cross_attention_bridge_v0_1.sh
+
+      - name: Failed family is closed
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.22.json"
+          ).read_text())
+          if s["failed_experiment"]["magnolia_job_id"] != 575825:
+              raise SystemExit("failed job lineage drift")
+          if s["failed_experiment"]["result_sha256"] != (
+              "6f2f3fe6ddab764d947a7c63fe94ef24d5cd77e3cc68821c8678fdb8f2ea36bd"
+          ):
+              raise SystemExit("failed result lineage drift")
+          if s["failed_experiment"]["single_authorized_gpu_run_consumed"] is not True:
+              raise SystemExit("failed one-shot experiment not closed")
+          if s["localized_failure_boundary"]["rejected_family"] != (
+              "query_only_relation_conditioned_scalar_applied_plus_source_minus_target"
+          ):
+              raise SystemExit("failed architecture family reopened")
+          e=s["execution_policy"]
+          if e["cpu_no_gradient_exact_parent_qualification_authorized"] is not True:
+              raise SystemExit("CPU qualification not authorized")
+          for key in (
+              "optimizer_authorized",
+              "gradient_authorized",
+              "gpu_training_authorized",
+              "automatic_rerun_authorized",
+              "automatic_hotfix_authorized",
+              "heldout_opening_authorized",
+              "frozen_challenge_rerun_authorized",
+              "scale_authorized",
+              "semantic_retraining_authorized",
+              "graph_parent_retraining_authorized",
+              "private_identity_gradient_authorized",
+              "production_promotion_authorized",
+          ):
+              if e[key] is not False:
+                  raise SystemExit(f"premature authorization: {key}")
+          if s["n0_complete"] is not False:
+              raise SystemExit("N0 completion drift")
+          print("failed_family_closed=PASS")
+          PY
+
+      - name: Edge-specific bridge architecture
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "src/alice_personality/n0/query_edge_cross_attention_bridge.py"
+          ).read_text()
+          required=[
+              "QueryEdgeCrossAttentionBridge",
+              "graph_states",
+              "source_state = graph_states",
+              "target_state = graph_states",
+              "edge_query_input",
+              "edge_query = self.edge_query",
+              "relation_token_attention",
+              "source_residual_read",
+              "target_residual_read",
+              "edge_specialist_gate",
+              "nn.init.zeros_(gate_final.weight)",
+              "nn.init.zeros_(gate_final.bias)",
+              '"forced_antisymmetry": False',
+              '"edge_specific_query_conditioning": True',
+              '"source_graph_state_conditioning": True',
+              '"target_graph_state_conditioning": True',
+              '"generic_endpoint_classifier": False',
+              '"raw_mean_pool_router": False',
+              '"hardcoded_single_layer": False',
+              '"hard_parameter_ceiling": None',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("edge-specific bridge contract missing "+repr(missing))
+          forbidden=[
+              "interface_endpoint_read",
+              "semantic_role_delta_mlp",
+              "semantic_router_role_logits",
+              "layer_index = 12",
+              "source_delta = -target_delta",
+              "target_delta = -source_delta",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("rejected endpoint-polarity pattern leaked "+repr(present))
+          # Only the gate is deliberately zero-initialized.  Do not create a
+          # doubly-zero source/target proposal path.
+          if "nn.init.zeros_(self.source_residual_read" in t:
+              raise SystemExit("source residual head unexpectedly zero-initialized")
+          if "nn.init.zeros_(self.target_residual_read" in t:
+              raise SystemExit("target residual head unexpectedly zero-initialized")
+          print("edge_specific_bridge_architecture=PASS")
+          PY
+
+      - name: Frozen parent integration
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "src/alice_personality/n0/evidence_graph_query_edge_bridge.py"
+          ).read_text()
+          required=[
+              "QueryEdgeBridgeEvidenceGraphEncoder",
+              "DualEndpointEvidenceGraphEncoder",
+              "super()._query_conditioned_relation_bias",
+              "source_delta = bridge[\"source_residual\"]",
+              "target_delta = bridge[\"target_residual\"]",
+              "flat.index_add_(0, source_flat, source_delta.reshape(-1))",
+              "flat.index_add_(0, target_flat, target_delta.reshape(-1))",
+              "parent_relation_bias + bridge_bias",
+              "freeze_parent_for_bridge_training",
+              'name.startswith("query_edge_bridge.")',
+              '"forced_antisymmetry"] = False',
+              '"edge_specific_query_binding"] = True',
+              '"hard_parameter_ceiling"] = None',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("frozen-parent integration missing "+repr(missing))
+          forbidden=[
+              "target_flat, -",
+              "source_flat, -",
+              "interface_endpoint_read",
+              "query_relation_role_router",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("anti-symmetric/global router pattern leaked "+repr(present))
+          print("frozen_parent_query_edge_integration=PASS")
+          PY
+
+      - name: Fresh multi-edge causal curriculum
+        run: |
+          set -euo pipefail
+          TMP="$(mktemp -d)"
+          python scripts/eipm/n0/build_n0_v02_query_edge_binding_curriculum_v0_1.py             --output "$TMP/curriculum.jsonl"             --manifest "$TMP/manifest.json"
+          python - "$TMP/curriculum.jsonl" "$TMP/manifest.json" <<'PY'
+          import json,sys
+          from collections import defaultdict
+          from pathlib import Path
+          rows=[
+              json.loads(x) for x in Path(sys.argv[1]).read_text().splitlines()
+              if x.strip()
+          ]
+          m=json.loads(Path(sys.argv[2]).read_text())
+          if len(rows)!=720 or m["quad_count"]!=180:
+              raise SystemExit("multi-edge curriculum size drift")
+          if m["fields_per_row"]!=8 or m["edges_per_row"]!=4:
+              raise SystemExit("multi-edge operating shape drift")
+          if m["same_relation_edges_per_row"]!=3:
+              raise SystemExit("same-relation distractors missing")
+          if m["query_to_specific_edge_binding_required"] is not True:
+              raise SystemExit("binding objective missing")
+          if m["relation_global_endpoint_polarity_sufficient"] is not False:
+              raise SystemExit("global polarity shortcut reopened")
+          if abs(m["no_content_binding_uniform_edge_guess_upper_bound"]-(1/3))>1e-12:
+              raise SystemExit("shortcut-control bound drift")
+          for key in (
+              "training_authorized","optimizer_authorized","gradient_authorized",
+              "test_split_opening_authorized",
+          ):
+              if m[key] is not False:
+                  raise SystemExit(f"premature curriculum authorization: {key}")
+          relevant=defaultdict(set)
+          for row in rows:
+              if len(row["fields"])!=8 or len(row["relations"])!=4:
+                  raise SystemExit("row shape drift")
+              same=[
+                  e for e in row["relations"]
+                  if e["relation"]==row["relation"]
+              ]
+              if len(same)!=3:
+                  raise SystemExit("row lacks three same-type edges")
+              relevant[(row["relation"],row["split"])].add(row["relevant_edge_index"])
+              if row["private_identity_content"] is not False:
+                  raise SystemExit("private identity leaked")
+          if any(v!={0,1,2} for v in relevant.values()):
+              raise SystemExit("relevant edge position does not rotate across all slots")
+          print("fresh_multi_edge_causal_curriculum=PASS")
+          PY
+
+      - name: Train-only preservation anchor compiler
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/build_n0_v02_query_edge_preservation_train_anchors_v0_1.py"
+          ).read_text()
+          required=[
+              "train_anchor_ids",
+              "dev_ids_explicitly_excluded",
+              "other_nontrain_ids_explicitly_excluded",
+              '"dev_rows_may_be_used_for_gradient": False',
+              '"heldout_or_test_rows_may_be_used_for_gradient": False',
+              '"gradient_authorized": False',
+              '"gpu_training_authorized": False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("preservation-anchor contract missing "+repr(missing))
+          forbidden=["torch.optim",".backward(","optimizer.step","sbatch"]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("training leaked into anchor compiler "+repr(present))
+          print("train_only_preservation_anchor_compiler=PASS")
+          PY
+
+      - name: No-gradient runtime qualifier contract
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          q=Path(
+              "scripts/eipm/n0/qualify_n0_v02_query_edge_cross_attention_bridge_v0_1.py"
+          ).read_text()
+          required=[
+              "PASS_QUERY_EDGE_BRIDGE_NO_GRADIENT_RUNTIME_CONTRACT",
+              "6f2f3fe6ddab764d947a7c63fe94ef24d5cd77e3cc68821c8678fdb8f2ea36bd",
+              "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+              "torch.device(\"cpu\")",
+              "torch.inference_mode()",
+              "exact_parent_field_weights",
+              "exact_parent_pooled_state",
+              "same_relation_edges_produce_distinct_edge_queries",
+              "edge_content_conditions_query_token_attention",
+              '"optimizer_created": False',
+              '"gradient_performed": False',
+              '"gpu_required": False',
+              '"training_authorized": False',
+              '"gpu_training_authorized": False',
+              '"forced_antisymmetry": False',
+          ]
+          missing=[x for x in required if x not in q]
+          if missing:
+              raise SystemExit("runtime qualifier contract missing "+repr(missing))
+          forbidden=[
+              "torch.optim",
+              ".backward(",
+              "optimizer.step",
+              'torch.device("cuda")',
+              ".cuda()",
+              "subprocess.run([\"sbatch",
+          ]
+          present=[x for x in forbidden if x in q]
+          if present:
+              raise SystemExit("gradient/GPU leaked into qualifier "+repr(present))
+
+          r=Path(
+              "scripts/eipm/n0/run_n0_v02_qualify_query_edge_cross_attention_bridge_v0_1.sh"
+          ).read_text()
+          for required in (
+              "6f2f3fe6ddab764d947a7c63fe94ef24d5cd77e3cc68821c8678fdb8f2ea36bd",
+              "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+              "ac0e5e28749cbb1e8dda62262c4c2761db887b965cbc3a74493ff6c9b5355304",
+              "v0_22_query_edge_qualification_gate=PASS",
+          ):
+              if required not in r:
+                  raise SystemExit("qualification runner missing binding "+required)
+          for forbidden in ("sbatch","torch.optim",".backward(","optimizer.step"):
+              if forbidden in r:
+                  raise SystemExit("training leaked into qualification runner "+forbidden)
+          print("no_gradient_runtime_qualifier_contract=PASS")
+          PY
