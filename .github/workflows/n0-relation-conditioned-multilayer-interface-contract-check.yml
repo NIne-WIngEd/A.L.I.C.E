@@ -10,6 +10,11 @@ on:
       - "scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh"
       - "scripts/eipm/n0/qualify_n0_v02_relation_conditioned_multilayer_interface_v0_1.py"
       - "scripts/eipm/n0/run_n0_v02_qualify_relation_conditioned_multilayer_interface_v0_1.sh"
+      - "scripts/eipm/n0/build_n0_v02_relation_conditioned_multilayer_interface_curriculum_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh"
+      - "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json"
+      - "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.19.json"
       - "scripts/eipm/n0/magnolia_udocker_exec.sh"
       - "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md"
       - "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md"
@@ -33,9 +38,11 @@ jobs:
           python -m py_compile \
             scripts/eipm/n0/compile_n0_v02_relation_conditioned_layer_map_v0_1.py \
             scripts/eipm/n0/qualify_n0_v02_relation_conditioned_multilayer_interface_v0_1.py \
+            scripts/eipm/n0/build_n0_v02_relation_conditioned_multilayer_interface_curriculum_v0_1.py \
             src/alice_personality/n0/relation_conditioned_multilayer_query.py
           bash -n scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh
           bash -n scripts/eipm/n0/run_n0_v02_qualify_relation_conditioned_multilayer_interface_v0_1.sh
+          bash -n scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh
           bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
 
       - name: Layer map compiler governance
@@ -221,4 +228,139 @@ jobs:
           if missing:
               raise SystemExit("Magnolia udocker root/output binding missing "+repr(missing))
           print("state_training_freeze=PASS")
+          PY
+
+      - name: Causal curriculum and preservation design
+        run: |
+          set -euo pipefail
+          TMP="$(mktemp -d)"
+          python scripts/eipm/n0/build_n0_v02_relation_conditioned_multilayer_interface_curriculum_v0_1.py \
+            --output "$TMP/curriculum.jsonl" \
+            --manifest "$TMP/manifest.json"
+          python - "$TMP/manifest.json" "$TMP/curriculum.jsonl" <<'PY'
+          import hashlib,json,sys
+          from pathlib import Path
+          manifest=Path(sys.argv[1]); curriculum=Path(sys.argv[2])
+          m=json.loads(manifest.read_text())
+          if m["schema"]!="alice.eipm.n0.v02-relation-conditioned-multilayer-interface-curriculum.v0.1":
+              raise SystemExit("causal curriculum schema drift")
+          if m["rows"]!=720 or m["quad_count"]!=180:
+              raise SystemExit("causal curriculum size drift")
+          if m["relations"]!=["corrects","supersedes","derived_from","causes","supports","temporal_successor"]:
+              raise SystemExit("causal relation coverage drift")
+          if m["factorial_design"]["target_must_flip_with_query_role"] is not True:
+              raise SystemExit("query-role causal control missing")
+          if m["factorial_design"]["target_must_flip_with_edge_direction"] is not True:
+              raise SystemExit("edge-direction causal control missing")
+          for key in (
+              "interface_training_authorized",
+              "optimizer_authorized",
+              "gradient_authorized",
+              "dev_split_training_authorized",
+              "test_split_training_authorized",
+              "test_split_opening_authorized",
+          ):
+              if m[key] is not False:
+                  raise SystemExit(f"{key} authorized prematurely")
+          actual=hashlib.sha256(curriculum.read_bytes()).hexdigest()
+          if m["compiled_sha256"]!=actual:
+              raise SystemExit("compiled curriculum hash drift")
+          print("causal_curriculum_contract=PASS")
+          PY
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path(
+              "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json"
+          ).read_text())
+          if p["lineage"]["runtime_qualification_receipt_sha256"] != (
+              "779b19459fa8ab67bb1c3ed56b3e9cdb1b89b8382f145e1b3d7c4d98312b2b57"
+          ):
+              raise SystemExit("runtime qualification lineage drift")
+          if p["lineage"]["selected_parent_graph_sha256"] != (
+              "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f"
+          ):
+              raise SystemExit("parent graph lineage drift")
+          if p["numerical_tolerance_policy"]["candidate_result_may_not_define_tolerances"] is not True:
+              raise SystemExit("candidate-dependent tolerances leaked")
+          if p["numerical_tolerance_policy"]["tolerances_must_be_frozen_before_candidate_training"] is not True:
+              raise SystemExit("pre-candidate tolerance freeze missing")
+          for key in ("training_authorized","optimizer_authorized","gradient_authorized","new_gpu_run_authorized"):
+              if p[key] is not False:
+                  raise SystemExit(f"{key} authorized prematurely")
+          print("preservation_contract=PASS")
+          PY
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh"
+          ).read_text()
+          required=[
+              "779b19459fa8ab67bb1c3ed56b3e9cdb1b89b8382f145e1b3d7c4d98312b2b57",
+              "ac0e5e28749cbb1e8dda62262c4c2761db887b965cbc3a74493ff6c9b5355304",
+              "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+              "PASS_CAUSAL_STUDY_INPUTS_FROZEN_TRAINING_DECISION_STILL_REQUIRED",
+              '"interface_training_authorized": False',
+              '"optimizer_authorized": False',
+              '"gradient_authorized": False',
+              '"new_gpu_run_authorized": False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("causal preparation contract missing "+repr(missing))
+          forbidden=["sbatch","torch.optim",".backward(","optimizer.step","git pull","git checkout","git switch"]
+          present=[x for x in forbidden if x in t]
+          if present: raise SystemExit("training/scheduler mutation leaked into CPU preparation "+repr(present))
+          print("causal_preparation_governance=PASS")
+          PY
+
+      - name: Current causal-study state forbids training
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(
+              Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.19.json").read_text()
+          )
+          if s["runtime_qualification"]["status"] != "PASS_EXACT_MAP_NO_GRADIENT_RUNTIME_CONTRACT":
+              raise SystemExit("runtime qualification state drift")
+          if s["runtime_qualification"]["receipt_sha256"] != (
+              "779b19459fa8ab67bb1c3ed56b3e9cdb1b89b8382f145e1b3d7c4d98312b2b57"
+          ):
+              raise SystemExit("runtime qualification receipt drift")
+          if s["causal_curriculum_v0_1"]["rows"] != 720 or s["causal_curriculum_v0_1"]["quads"] != 180:
+              raise SystemExit("causal curriculum state drift")
+          if s["causal_study_preparation"]["preparation_authorized"] is not True:
+              raise SystemExit("CPU preparation not authorized")
+          e=s["execution_policy"]
+          if e["cpu_preparation_authorized"] is not True:
+              raise SystemExit("CPU preparation execution drift")
+          for key in (
+              "training_authorized",
+              "optimizer_authorized",
+              "gradient_authorized",
+              "new_gpu_run_authorized",
+              "scale_authorized",
+              "heldout_opening_authorized",
+              "frozen_challenge_rerun_authorized",
+              "semantic_retraining_authorized",
+              "graph_parent_retraining_authorized",
+              "private_identity_gradient_authorized",
+              "production_promotion_authorized",
+          ):
+              if e[key] is not False:
+                  raise SystemExit(f"{key} authorized prematurely")
+          if s["capability_policy"]["hard_parameter_ceiling"] is not None:
+              raise SystemExit("hard capability ceiling reintroduced")
+          if s["n0_complete"] is not False:
+              raise SystemExit("N0 completion drift")
+          w=Path("scripts/eipm/n0/magnolia_udocker_exec.sh").read_text()
+          for required in (
+              '--env="ALICE_REPO_ROOT=$ROOT"',
+              'ALICE_N0_MULTILAYER_INTERFACE_DIR',
+              'ALICE_N0_MULTILAYER_CAUSAL_STUDY_DIR',
+          ):
+              if required not in w:
+                  raise SystemExit("Magnolia udocker causal-study binding missing "+required)
+          print("causal_study_state_training_freeze=PASS")
           PY
