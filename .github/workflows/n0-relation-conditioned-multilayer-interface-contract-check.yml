@@ -599,5 +599,15 @@ jobs:
               raise SystemExit("training runner does not require calibration gate")
           if "--max-steps 160" not in runner:
               raise SystemExit("bounded training step contract drift")
-          for required in (\n              "EXPECTED_CALIBRATION_RECEIPT_SHA256=\"d485fce0e4304d9cbd8af1658ed7cfedfd1bd4d44b0f40cf56a2618d5ad2390b\"",\n              "EXPECTED_PRESERVATION_POLICY_SHA256=\"fb88b9580e38a648101277815f82c3ba60c19f3bfd16dbe3029ded40b04aea56\"",\n              "EXPECTED_CALIBRATION_SOURCE_REVISION=\"4a223b0b35920ded5c81b05f53243024de919357\"",\n              "mkdir \"$TRAIN_ROOT\"",\n          ):\n              if required not in runner:\n                  raise SystemExit("exact calibration/one-run claim missing "+required)\n          if "test_split_opening_authorized=false" not in runner:\n              raise SystemExit("runner test-opening governance missing")\n          print("bounded_trainer_governance=PASS")
+          for required in (
+              "EXPECTED_CALIBRATION_RECEIPT_SHA256=\"d485fce0e4304d9cbd8af1658ed7cfedfd1bd4d44b0f40cf56a2618d5ad2390b\"",
+              "EXPECTED_PRESERVATION_POLICY_SHA256=\"fb88b9580e38a648101277815f82c3ba60c19f3bfd16dbe3029ded40b04aea56\"",
+              "EXPECTED_CALIBRATION_SOURCE_REVISION=\"4a223b0b35920ded5c81b05f53243024de919357\"",
+              "mkdir \"$TRAIN_ROOT\"",
+          ):
+              if required not in runner:
+                  raise SystemExit("exact calibration/one-run claim missing "+required)
+          if "test_split_opening_authorized=false" not in runner:
+              raise SystemExit("runner test-opening governance missing")
+          print("bounded_trainer_governance=PASS")
           PY
