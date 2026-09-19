@@ -1,0 +1,169 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.19",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.18.json",
+  "status": "EXACT_MAP_RUNTIME_QUALIFICATION_PASS;FRESH_CAUSAL_CURRICULUM_AND_PRESERVATION_CONTRACT_DEFINED;CPU_PREPARATION_AUTHORIZED;TRAINING_DECISION_PENDING",
+  "n0_complete": false,
+  "stable_build_base": {
+    "branch": "alice-eipm-v1-build",
+    "commit": "021c5021a98104b35f9c8e94b19e48d21f25f132"
+  },
+  "current_experiment_branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+  "runtime_qualification": {
+    "source_revision": "99411e2d638d9a98a09b5fb1ff1709d0da89a760",
+    "receipt_path": "$ALICE_N0_MULTILAYER_INTERFACE_DIR/qualification/runtime_contract_qualification.json",
+    "receipt_sha256": "779b19459fa8ab67bb1c3ed56b3e9cdb1b89b8382f145e1b3d7c4d98312b2b57",
+    "status": "PASS_EXACT_MAP_NO_GRADIENT_RUNTIME_CONTRACT",
+    "compiled_layer_map_sha256": "ac0e5e28749cbb1e8dda62262c4c2761db887b965cbc3a74493ff6c9b5355304",
+    "source_layerwise_audit_sha256": "ee88e80513fb000e2ecde8ca9e4f7e714cb06e43a144bd28c8930d26c38965ab",
+    "parameter_state_exactly_unchanged": true,
+    "gradient_performed": false,
+    "optimizer_created": false,
+    "gpu_required": false,
+    "heldout_rows_used": false,
+    "frozen_challenge_rows_used": false,
+    "training_authorized": false,
+    "scale_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false
+  },
+  "causal_curriculum_v0_1": {
+    "builder": "scripts/eipm/n0/build_n0_v02_relation_conditioned_multilayer_interface_curriculum_v0_1.py",
+    "design": "factorial_query_role_x_edge_direction_under_fixed_fields_and_relation",
+    "relations": [
+      "corrects",
+      "supersedes",
+      "derived_from",
+      "causes",
+      "supports",
+      "temporal_successor"
+    ],
+    "rows": 720,
+    "quads": 180,
+    "rows_per_quad": 4,
+    "train_quads_per_relation": 18,
+    "dev_quads_per_relation": 6,
+    "test_quads_per_relation": 6,
+    "query_role_factor": [
+      "source",
+      "target"
+    ],
+    "edge_direction_factor": [
+      "A",
+      "B"
+    ],
+    "field_text_fixed_within_quad": true,
+    "target_must_flip_with_query_role": true,
+    "target_must_flip_with_edge_direction": true,
+    "train_dev_test_query_templates_lexically_disjoint": true,
+    "train_dev_test_subject_pools_disjoint": true,
+    "train_dev_test_attribute_pools_disjoint": true,
+    "prior_failed_training_rows_reused": false,
+    "frozen_or_heldout_rows_reused": false,
+    "training_authorized": false,
+    "curriculum_size_is_permanent_capability_limit": false
+  },
+  "preservation_contract_v0_1": {
+    "path": "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json",
+    "selected_parent_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+    "semantic_backbone_trainable": false,
+    "structured_state_trainable": false,
+    "evidence_view_adapter_trainable": false,
+    "selected_parent_graph_trainable": false,
+    "selected_parent_graph_must_remain_exactly_unchanged": true,
+    "preservation_lanes": [
+      "ordinary_graph_replay",
+      "endpoint_role_replay",
+      "symmetric_conflict_behavior",
+      "pad_or_unmapped_behavior"
+    ],
+    "candidate_result_may_define_tolerances": false,
+    "tolerances_must_be_frozen_before_candidate_training": true,
+    "tolerance_source": "canonical_parent_repeatability_only",
+    "heldout_opening_automatic": false,
+    "scale_authorized": false
+  },
+  "causal_study_preparation": {
+    "runner": "scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh",
+    "output_root": "$ALICE_N0_MULTILAYER_INTERFACE_DIR/causal-interface-study-v0.1",
+    "cpu_only": true,
+    "whole_stage_udocker_required": true,
+    "preparation_authorized": true,
+    "preparation_may_materialize_curriculum": true,
+    "preparation_may_hash_and_bind_parent_artifacts": true,
+    "preparation_may_create_optimizer": false,
+    "preparation_may_create_gradient": false,
+    "preparation_may_submit_gpu": false,
+    "preparation_may_open_test": false
+  },
+  "training_decision_policy": {
+    "decision_pending": true,
+    "interface_training_authorized": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "new_gpu_run_authorized": false,
+    "required_before_training_decision": [
+      "successful_runtime_qualification",
+      "fresh_factorial_causal_curriculum",
+      "parent_frozen_preservation_contract",
+      "candidate_independent_preservation_tolerance_policy",
+      "cpu_preparation_receipt_binding_all_runtime_artifacts"
+    ],
+    "if_authorized_trainable_hypothesis": "real_relation_conditioned_multilayer_query_interface_using_edge_relation_query_state",
+    "forbidden_substitutes": [
+      "raw_mean_pool_router",
+      "final_layer_only_router",
+      "hardcoded_layer_12",
+      "qrr_v0_4",
+      "previous_relation_semantic_role_residual",
+      "generic_endpoint_classifier"
+    ]
+  },
+  "anti_loop_policy": {
+    "one_causal_change_per_failed_model_gate": true,
+    "automatic_hotfix_chain": false,
+    "same_failed_candidate_rerun_without_state_change": false,
+    "infrastructure_failure_is_not_model_evidence": true,
+    "candidate_dependent_threshold_selection": false,
+    "no_heldout_before_separate_decision": true,
+    "no_frozen_challenge_rerun": true,
+    "no_threshold_change": true,
+    "validation_must_change_a_real_decision_or_stop": true
+  },
+  "magnolia_execution_policy": {
+    "whole_stage_udocker_required": true,
+    "host_python_for_n0_stage_forbidden": true,
+    "explicit_repo_root_binding_required": true,
+    "persistent_compute_root": "$HOME/rayan-compute",
+    "cpu_only_preparation_sets_rayan_udocker_nvidia_zero": true,
+    "container_home_must_not_define_repo_path": true
+  },
+  "capability_policy": {
+    "full_production_foundation_not_disposable_pilot": true,
+    "hard_parameter_ceiling": null,
+    "current_layer_candidate_budget_is_permanent_ceiling": false,
+    "current_curriculum_size_is_permanent_ceiling": false,
+    "current_width_depth_graph_or_context_shapes_are_permanent_ceiling": false,
+    "efficiency_may_reduce_redundant_compute": true,
+    "efficiency_may_reduce_required_capability": false,
+    "scale_only_from_localized_capability_or_expressivity_evidence": true
+  },
+  "execution_policy": {
+    "next_action": "run one CPU-only causal-study preparation through whole-stage udocker; stop after preparation receipt and make explicit training decision",
+    "cpu_preparation_authorized": true,
+    "training_authorized": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "new_gpu_run_authorized": false,
+    "scale_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
