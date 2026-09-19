@@ -1,0 +1,97 @@
+{
+  "schema": "alice.eipm.n0.v02-relation-conditioned-multilayer-training-decision.v0.1",
+  "decision": "AUTHORIZE_ONE_BOUNDED_INTERFACE_EXPERIMENT_AFTER_PARENT_ONLY_CALIBRATION",
+  "decision_basis": {
+    "runtime_interface_qualification_passed": true,
+    "runtime_qualification_receipt_sha256": "779b19459fa8ab67bb1c3ed56b3e9cdb1b89b8382f145e1b3d7c4d98312b2b57",
+    "causal_study_preparation_passed": true,
+    "causal_study_preparation_receipt_sha256": "54dc915f10ee58d994e387ca59ab1180f96bd0e3523780f3e75fb14d6ac30690",
+    "fresh_factorial_curriculum_frozen": true,
+    "curriculum_sha256": "706fb2944ae3f95f0bf93c93763c57d54a76be5068f665d9a9be1f2425dadaab",
+    "curriculum_manifest_sha256": "6ca37c884b9a75d3fed9ef0e1b8a19704c03d246bb2d32f33cc538546072ba72",
+    "preservation_contract_frozen_before_candidate": true,
+    "preservation_contract_sha256": "65b3fa76487fef346ef227dc77ed57da504e2dcf891e32416ce60ef5a6df99dd",
+    "layerwise_semantic_evidence_localizes_directional_signal_to_intermediate_layers": true,
+    "prior_qrr_failure_localizes_global_endpoint_preference_shortcut": true
+  },
+  "scientific_hypothesis": "A relation-conditioned token-level interface over evidence-derived intermediate semantic layers can recover query-role-dependent directed evidence selection that pooled and final-layer query interfaces failed to preserve.",
+  "candidate_architecture": {
+    "source": "src/alice_personality/n0/evidence_graph_multilayer_interface.py",
+    "interface": "RelationConditionedMultiLayerQueryInterface",
+    "integration": "RelationConditionedMultiLayerEvidenceGraphEncoder",
+    "candidate_signal": "edge_relation_query_state",
+    "composition": "zero_initialized_signed_source_target_residual_on_frozen_parent_pool_logits",
+    "generic_endpoint_router": false,
+    "raw_mean_pool_router": false,
+    "final_layer_only_router": false,
+    "hardcoded_layer_12": false,
+    "qrr_v0_4": false,
+    "previous_semantic_role_residual_reused": false,
+    "parent_graph_rewritten": false
+  },
+  "trainable_scope": {
+    "relation_conditioned_multilayer_query_interface": true,
+    "zero_initialized_signed_endpoint_read": true,
+    "semantic_backbone": false,
+    "structured_state_encoder": false,
+    "evidence_view_adapter": false,
+    "selected_parent_graph": false,
+    "parent_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+    "hard_parameter_ceiling": null
+  },
+  "gradient_data_policy": {
+    "fresh_causal_train_rows_only": true,
+    "causal_dev_rows_used_for_gradient": false,
+    "causal_test_rows_used_for_gradient": false,
+    "ordinary_preservation_rows_used_for_gradient": false,
+    "endpoint_preservation_rows_used_for_gradient": false,
+    "prior_failed_repair_rows_used_for_gradient": false,
+    "frozen_challenge_rows_used_for_gradient": false,
+    "private_identity_data_used_for_gradient": false
+  },
+  "pre_gradient_gate": {
+    "parent_only_preservation_calibration_required": true,
+    "candidate_may_define_tolerances": false,
+    "calibration_must_pass": "PASS_PARENT_ONLY_PRESERVATION_CALIBRATION",
+    "calibration_candidate_result_observed_must_be": false,
+    "calibration_interface_training_gate_satisfied_must_be": true,
+    "gpu_execution_before_calibration_pass": false
+  },
+  "dev_readiness_policy": {
+    "all_preservation_metrics_must_pass_frozen_parent_only_policy": true,
+    "no_relation_family_row_accuracy_regression_vs_parent": true,
+    "causes_and_supports_each_must_strictly_improve_vs_parent": true,
+    "overall_quad_accuracy_must_strictly_improve_vs_parent": true,
+    "worst_family_quad_accuracy_may_not_regress_vs_parent": true,
+    "mean_target_margin_must_strictly_improve_vs_parent": true,
+    "candidate_selection_uses_test": false,
+    "candidate_selection_uses_frozen_challenge": false
+  },
+  "execution_scope": {
+    "maximum_bounded_training_runs_authorized": 1,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "automatic_test_opening_authorized": false,
+    "automatic_frozen_challenge_rerun_authorized": false,
+    "automatic_scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "production_promotion_authorized": false,
+    "n0_complete": false
+  },
+  "failure_interpretation": {
+    "causal_dev_fail_preservation_pass": "reopen_language_graph_boundary; do_not_patch_or_widen_automatically",
+    "causal_dev_pass_preservation_fail": "reject_candidate; do_not_open_test",
+    "both_pass": "make_one_separate_explicit_heldout_opening_decision_without_changing_candidate"
+  },
+  "capability_policy": {
+    "full_production_foundation_not_disposable_pilot": true,
+    "bounded_experiment_is_diagnostic_not_product_ceiling": true,
+    "candidate_layer_sets_are_permanent_ceiling": false,
+    "training_step_count_is_permanent_ceiling": false,
+    "current_interface_width_is_permanent_ceiling": false,
+    "efficiency_may_reduce_redundant_compute": true,
+    "efficiency_may_reduce_required_capability": false,
+    "scale_only_from_localized_capability_or_expressivity_evidence": true
+  }
+}
