@@ -81,10 +81,10 @@
     "maximal_heads": [
       {
         "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
-        "head": "5c6801577695b315b4a7443c28f5c7d42c1c3446",
-        "head_committed_at": "2026-09-18T15:41:44-05:00",
-        "head_message": "ci(n0): make multi-layer interface assertion structural",
-        "ahead": 95,
+        "head": "e73b869dda94fc5e3310cb7f807cbd28dc6c9e06",
+        "head_committed_at": "2026-09-18T21:47:58-05:00",
+        "head_message": "ci(n0): guard Magnolia repo-root binding for multilayer stage",
+        "ahead": 97,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
         "changed_file_count_vs_source_merge_base": 81,
@@ -177,10 +177,10 @@
     "all_ahead_candidates": [
       {
         "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
-        "head": "5c6801577695b315b4a7443c28f5c7d42c1c3446",
-        "head_committed_at": "2026-09-18T15:41:44-05:00",
-        "head_message": "ci(n0): make multi-layer interface assertion structural",
-        "ahead": 95,
+        "head": "e73b869dda94fc5e3310cb7f807cbd28dc6c9e06",
+        "head_committed_at": "2026-09-18T21:47:58-05:00",
+        "head_message": "ci(n0): guard Magnolia repo-root binding for multilayer stage",
+        "ahead": 97,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
         "changed_file_count_vs_source_merge_base": 81,
@@ -707,8 +707,8 @@
     "authority": "routing-only; not canonical promotion"
   },
   "continuity_freshness": {
-    "stale_relative_to_unmerged_experiment_frontier": false,
-    "newest_experiment_frontier_time": "2026-09-18T15:41:44-05:00",
+    "stale_relative_to_unmerged_experiment_frontier": true,
+    "newest_experiment_frontier_time": "2026-09-18T21:47:58-05:00",
     "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
     "context_branch_head_time": "2026-09-18T15:43:05-05:00"
   },

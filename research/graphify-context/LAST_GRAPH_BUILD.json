@@ -1,9 +1,9 @@
 {
-  "source_work_branch": "alice-eipm-v1-causal-arbitration-binding",
-  "source_work_commit": "6c930788da42ad9964c4b5bf6067be3b7d6bfd06",
+  "source_work_branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+  "source_work_commit": "e73b869dda94fc5e3310cb7f807cbd28dc6c9e06",
   "research_branch": "research/graphify-context-substrate",
-  "research_commit": "49df437291fa8ad6a81e89074157c2761910815f",
-  "workflow_run_id": "35301406251",
+  "research_commit": "dc7c8a1c2fdbdfe0a23470e79312b6500a1555c4",
+  "workflow_run_id": "35417373759",
   "graph_mode": "code-only",
   "extraction_tree": "exact-source-worktree",
   "graphify_version": "0.9.63",
