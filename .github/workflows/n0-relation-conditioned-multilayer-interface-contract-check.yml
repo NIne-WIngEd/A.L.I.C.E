@@ -398,7 +398,7 @@ jobs:
             'report["generic_endpoint_router"] = False',
             'report["raw_mean_pool_router"] = False',
             'report["hardcoded_single_layer"] = False',
-            '"hard_parameter_ceiling": None',
+            'report["hard_parameter_ceiling"] = None',
           ]
           missing=[x for x in required if x not in t]
           if missing: raise SystemExit("multilayer integration contract missing "+repr(missing))
