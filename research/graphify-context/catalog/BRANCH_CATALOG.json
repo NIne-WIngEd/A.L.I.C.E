@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "7093204c278ce802f79e1f3642b7296f9ae44269",
-      "head_committed_at": "2026-09-18T22:19:46-05:00",
-      "head_message": "context: hand off multilayer causal study preparation",
+      "head": "2efc8d926fbbd4b4b86fbc7a2c6675161c764f71",
+      "head_committed_at": "2026-09-18T22:43:01-05:00",
+      "head_message": "context: hand off calibrated multilayer experiment gate",
       "status": "diverged",
-      "ahead": 202,
+      "ahead": 203,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 549,
+      "changed_file_count_vs_source_merge_base": 550,
       "knowledge_surface": true
     },
     {
@@ -101,14 +101,14 @@
     },
     {
       "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
-      "head": "02a05bf19545b5b281c3cfe7dc2f674b35534793",
-      "head_committed_at": "2026-09-18T22:19:02-05:00",
-      "head_message": "ci(n0): guard causal curriculum and preservation preparation",
+      "head": "4a223b0b35920ded5c81b05f53243024de919357",
+      "head_committed_at": "2026-09-18T22:42:13-05:00",
+      "head_message": "ci(n0): align bounded runner test-opening assertion",
       "status": "ahead",
-      "ahead": 109,
+      "ahead": 123,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 90,
+      "changed_file_count_vs_source_merge_base": 99,
       "knowledge_surface": true
     },
     {
@@ -209,14 +209,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "ba82731ec5afde50ca98d0296435d059cf641c45",
-      "head_committed_at": "2026-09-18T22:19:26-05:00",
-      "head_message": "trace(fbm): capture multilayer qualification and causal study design",
+      "head": "50896d2b156bc76fca2dfe5dfdddf4a4d916111e",
+      "head_committed_at": "2026-09-18T22:43:14-05:00",
+      "head_message": "trace(fbm): capture parent-only preservation training gate",
       "status": "diverged",
-      "ahead": 87,
+      "ahead": 88,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 86,
+      "changed_file_count_vs_source_merge_base": 87,
       "knowledge_surface": true
     },
     {

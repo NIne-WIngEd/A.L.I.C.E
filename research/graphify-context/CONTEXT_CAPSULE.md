@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-causal-study-preparation-ready-20260918-001
-- Question: Refresh A.L.I.C.E. EIPM N0 continuity after the exact-map relation-conditioned multi-layer runtime qualification passed and the fresh factorial causal curriculum plus candidate-independent preservation contract were defined. Resolve the live maximal experiment head and newest alice-context handoff. Confirm the single next authorized action is one CPU-only causal-study preparation through whole-stage Magnolia udocker, materializing the 720-row/180-quad curriculum and hash-binding the semantic, structured, adapter, selected parent graph, ordinary replay, endpoint replay, exact layer map, and runtime qualification receipt. Confirm interface training, optimizer, gradient, GPU execution, scale, heldout/test opening, frozen challenge rerun, threshold changes, semantic retraining, graph parent retraining, private identity gradient, promotion, and N0 completion remain unauthorized. Preserve the full-production-not-pilot, no-hard-ceiling, efficiency-without-capability-loss, candidate-independent preservation, no-MC10D-validator-maze, and infrastructure-failure-is-not-model-evidence doctrines. Return original source pointers and code navigation only; Graphify is navigation-only.
+- Request: n0-parent-only-calibration-ready-20260918-001
+- Question: Refresh A.L.I.C.E. EIPM N0 continuity after the relation-conditioned multi-layer causal-study preparation passed and one bounded interface-only experiment was designed behind a candidate-independent parent-only preservation calibration gate. Resolve the live maximal experiment head and newest alice-context handoff. Confirm experiment head 4a223b0b35920ded5c81b05f53243024de919357 has successful contract CI and that the single next authorized action is CPU-only parent preservation calibration through whole-stage Magnolia udocker. Confirm gradient/GPU execution is not authorized until PASS_PARENT_ONLY_PRESERVATION_CALIBRATION exists. Preserve the exact frozen artifact hashes from the causal-study preparation, the zero-initialized edge_relation_query_state integration on the immutable dual-endpoint parent graph, fresh-causal-train-only gradient policy, preservation lanes evaluation-only, no test/frozen challenge opening, one-run maximum after calibration, no automatic hotfix/rerun, no scale/private gradient/promotion/N0 completion, full-production-not-pilot and no-hard-ceiling doctrine. Graphify is navigation only; return original source pointers for consequential claims.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: False
@@ -18,28 +18,27 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-relation-conditioned-multilayer-interface @ 02a05bf19545b5b281c3cfe7dc2f674b35534793 — ci(n0): guard causal curriculum and preservation preparation
+- alice-eipm-v1-relation-conditioned-multilayer-interface @ 4a223b0b35920ded5c81b05f53243024de919357 — ci(n0): align bounded runner test-opening assertion
 
 ## Source pointers
 
-- [227] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [181] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_PARENT_ONLY_CALIBRATION_READY.md — N0 Multi-Layer Interface — Parent-Only Calibration Ready
+- [143] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md — N0 relation-conditioned multi-layer training decision v0.1
+- [141] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [182] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+- [133] alice-eipm-v1-relation-conditioned-multilayer-interface:configs/eipm/n0/n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json — n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json
+- [133] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
   - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
-- [174] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_INTERFACE_RUNTIME_QUALIFICATION_READY.md — N0 Relation-Conditioned Multi-Layer Interface — Runtime Qualification Ready
-- [161] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md — N0 Relation-Conditioned Multi-Layer Query Interface Handoff
+- [129] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md — N0 Relation-Conditioned Multi-Layer Query Interface Handoff
   - status:  architecture designed and CI-qualified from 575804 evidence; exact relation-layer map still must be compiled from the saved audit JSON; training remains unauthorized
-- [145] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md — N0 Relation-Conditioned Multi-Layer Query Interface v0.1
+- [119] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
+- [116] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
+  - status:  one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized
+- [113] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md — N0 Relation-Conditioned Multi-Layer Query Interface v0.1
   - status:  architecture designed from jobs 575801 and 575804; training remains unauthorized
-- [131] alice-eipm-v1-relation-conditioned-multilayer-interface:configs/eipm/n0/n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json — n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json
-- [130] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md — N0 Relation-Semantic Grounding Repair Handoff
-  - status:  missing-evidence failure localized to relation-semantic endpoint grounding; one bounded repair is CI-ready; no frozen-challenge rerun, threshold change, promotion, scaling, or N0 completion authorized
-- [129] alice-eipm-v1-relation-conditioned-multilayer-interface:.github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml — n0-relation-conditioned-multilayer-interface-contract-check.yml
-- [128] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
-- [127] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_CAUSAL_STUDY_PREPARATION_READY.md — N0 Multi-Layer Causal Study — CPU Preparation Ready
-- [126] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md — N0 Relation-Semantic Role Residual Repair Handoff
-  - status:  relation-semantic grounding v0.1 failed validly; failure localized to shared read-path entanglement; isolated zero-init semantic-role residual is CI-ready for one P100 run
-- [116] alice-eipm-v1-relation-conditioned-multilayer-interface:.github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml — n0-query-semantics-layerwise-audit-contract-check.yml
+- [111] alice-eipm-v1-relation-conditioned-multilayer-interface:.github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml — frozen_challenge is allowed only in explicit false governance strings.
+- [108] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_CAUSAL_STUDY_PREPARATION_READY.md — N0 Multi-Layer Causal Study — CPU Preparation Ready
+- [104] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md — N0 Causal Arbitration Frontier Calibration Handoff
 
 ## Graphify navigation hints
 
