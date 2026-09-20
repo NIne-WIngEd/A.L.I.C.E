@@ -1,0 +1,269 @@
+name: N0 Competitive Edge Router Training Contract Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-query-edge-competitive-router
+    paths:
+      - "scripts/eipm/n0/train_n0_v02_query_edge_competitive_router_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_query_edge_competitive_router_training_v0_1.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_competitive_router_training_v0_1.sbatch"
+      - "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.28.json"
+      - ".github/workflows/n0-competitive-edge-router-training-contract-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile             scripts/eipm/n0/train_n0_v02_query_edge_competitive_router_v0_1.py
+          bash -n             scripts/eipm/n0/run_n0_v02_query_edge_competitive_router_training_v0_1.sh
+          bash -n             scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_competitive_router_training_v0_1.sbatch
+
+      - name: Exact qualification and one-run authorization
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          d=json.loads(Path(
+              "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json"
+          ).read_text())
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.28.json"
+          ).read_text())
+
+          if d["qualification"]["receipt_sha256"]!="ba2dcf640ffd2572ba0a1177c571861aff1838784ab19c0f8166728f0dc59f37":
+              raise SystemExit("competitive qualification receipt drift")
+          if d["qualification"]["source_revision"]!="93901b4ea0e3a9773e59047181414e507d3ed904":
+              raise SystemExit("competitive qualification source drift")
+          if d["decision"]!="AUTHORIZE_ONE_BOUNDED_COMPETITIVE_EDGE_ROUTER_EXPERIMENT_AFTER_RUNTIME_QUALIFICATION":
+              raise SystemExit("training decision drift")
+          if d["operating_budget"]["max_training_runs"]!=1:
+              raise SystemExit("one-run boundary drift")
+
+          q=d["qualification"]
+          for key in (
+              "parent_parameters_exactly_unchanged",
+              "exact_parent_field_weights",
+              "exact_parent_pooled_state",
+              "route_probabilities_sum_to_one",
+              "explicit_parent_noop_route",
+              "all_active_directed_edges_compete",
+              "route_probability_is_actual_source_contribution_control",
+              "route_probability_is_actual_target_contribution_control",
+          ):
+              if q[key] is not True:
+                  raise SystemExit(f"qualification invariant drift: {key}")
+          if q["proxy_dot_product_router"] is not False:
+              raise SystemExit("proxy router returned")
+          if q["independent_per_edge_tanh_gate"] is not False:
+              raise SystemExit("independent edge gate returned")
+
+          obj=d["training_objective"]
+          for key in (
+              "proxy_routing_loss",
+              "irrelevant_edge_gate_penalty",
+              "load_balancing_loss",
+              "gradient_surgery",
+              "route_probability_detachment",
+          ):
+              if obj[key] is not False:
+                  raise SystemExit(f"unreviewed mechanism entered objective: {key}")
+
+          if s["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.28":
+              raise SystemExit("v0.28 schema drift")
+          e=s["execution_policy"]
+          if e["gpu_training_runs_remaining"]!=1:
+              raise SystemExit("GPU run-count drift")
+          if e["gradient_execution_authorized_now"] is not True:
+              raise SystemExit("gradient not authorized")
+          if e["gpu_execution_authorized_now"] is not True:
+              raise SystemExit("GPU not authorized")
+          for key in (
+              "automatic_rerun_authorized",
+              "automatic_hotfix_authorized",
+              "automatic_heldout_opening_authorized",
+              "heldout_opening_authorized",
+              "frozen_challenge_rerun_authorized",
+              "scale_authorized",
+              "semantic_retraining_authorized",
+              "graph_parent_retraining_authorized",
+              "private_identity_gradient_authorized",
+              "production_promotion_authorized",
+          ):
+              if e[key] is not False:
+                  raise SystemExit(f"premature authorization: {key}")
+          if s["n0_complete"] is not False:
+              raise SystemExit("N0 completion drift")
+          print("exact_qualification_and_one_run_authorization=PASS")
+          PY
+
+      - name: Causal route supervision is exact runtime route
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/train_n0_v02_query_edge_competitive_router_v0_1.py"
+          ).read_text()
+
+          required=[
+              "CompetitiveQueryEdgeEvidenceGraphEncoder",
+              "CompetitiveQueryEdgeBridge",
+              'return batch["relevant_edge_index"].long() + 1',
+              'F.cross_entropy(out["route_logits_with_noop"], route_targets(batch))',
+              'route_prob = out["route_probabilities_with_noop"]',
+              'route_pred = route_prob.argmax(dim=-1)',
+              '"causal_actual_route_ce_weight"',
+              '"proxy_routing_loss": False',
+              '"irrelevant_edge_gate_penalty": False',
+              '"load_balancing_loss": False',
+              '"route_probability_detachment": False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("actual runtime route supervision missing "+repr(missing))
+
+          forbidden=[
+              "routing_scores(",
+              "edge_query_language_state\"]",
+              "edge_binding_query\"]",
+              "irrelevant_gate_loss(",
+              "edge_specialist_gate",
+              "PCGrad",
+              "project_conflicting",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("rejected routing mechanism leaked "+repr(present))
+          print("causal_actual_runtime_route_supervision=PASS")
+          PY
+
+      - name: Preservation directly teaches parent no-op
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/train_n0_v02_query_edge_competitive_router_v0_1.py"
+          ).read_text()
+
+          required=[
+              "def noop_route_loss",
+              "targets = torch.zeros(",
+              'F.cross_entropy(out["route_logits_with_noop"], targets)',
+              'anchors["ordinary"]["train_anchor_ids"]',
+              'anchors["endpoint"]["train_anchor_ids"]',
+              "teacher = old.parent_forward(baseline_graph, adapter, preserve)",
+              'old.distill_kl(',
+              '0.5 * args.preservation_weight * kl',
+              '0.5 * args.noop_route_weight * noop_ce',
+              '"preservation_dev_rows_used_for_gradient": False',
+              '"causal_test_split_evaluated": False',
+              '"frozen_challenge_evaluated": False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("parent/no-op preservation contract missing "+repr(missing))
+
+          if '"dev_rows_may_be_used_for_gradient"] is not False' not in t:
+              raise SystemExit("preservation DEV exclusion guard missing")
+          if '"heldout_or_test_rows_may_be_used_for_gradient"] is not False' not in t:
+              raise SystemExit("heldout gradient exclusion guard missing")
+          print("parent_noop_preservation_supervision=PASS")
+          PY
+
+      - name: Frozen parent scope and readiness policy
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/train_n0_v02_query_edge_competitive_router_v0_1.py"
+          ).read_text()
+          required=[
+              "freeze_parent_for_bridge_training",
+              'exclude_prefixes=("competitive_query_edge_bridge.",)',
+              'float(current["routing_accuracy"]) > 0.5',
+              'float(current["family_min_routing_accuracy"]) > 0.2 + 1e-12',
+              'float(current["mean_target_route_probability"])',
+              '"parent_graph_parameters_exactly_unchanged"',
+              '"automatic_rerun_or_hotfix_authorized": False',
+              '"heldout_opening_authorized": False',
+              '"scale_authorized": False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("frozen parent/readiness contract missing "+repr(missing))
+          print("frozen_parent_and_readiness_policy=PASS")
+          PY
+
+      - name: Runner binds exact lineage and claims one run
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          r=Path(
+              "scripts/eipm/n0/run_n0_v02_query_edge_competitive_router_training_v0_1.sh"
+          ).read_text()
+          required=[
+              "ba2dcf640ffd2572ba0a1177c571861aff1838784ab19c0f8166728f0dc59f37",
+              "99fc21394bdfbb8e3500bf0efa7c3ce836a2e071b8b11a1c733f73aa99b6fea2",
+              "c3618a6022519af2a6a140f8b571281c68735fd1412c3ffa904979e9bbea2dcb",
+              "0d05f1dcd7d11cc1defdd0a4112c10e3b1d7febfaabf97fe611a854d6905b99a",
+              "f5b3f438f776216f6dbd557a8c785aac70af38d256e3f7cf94f0f71a43f53e94",
+              "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+              "50eeeea3dfff5b6bddaa8da667b6b6c2f917dc668b1acd0410923822ae5ad2df",
+              "competitive_router_one_p100_training_gate=PASS",
+              'mkdir "$TRAIN_ROOT"',
+              "--causal-route-weight 1.0",
+              "--preservation-weight 1.0",
+              "--noop-route-weight 1.0",
+          ]
+          missing=[x for x in required if x not in r]
+          if missing:
+              raise SystemExit("runner binding missing "+repr(missing))
+          for forbidden in (
+              "--irrelevant-gate-weight",
+              "--routing-weight 0.50",
+              "automatic_rerun=true",
+          ):
+              if forbidden in r:
+                  raise SystemExit("rejected runner setting leaked: "+forbidden)
+          print("runner_exact_lineage_and_one_run_claim=PASS")
+          PY
+
+      - name: P100 wrapper is bounded
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          s=Path(
+              "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_competitive_router_training_v0_1.sbatch"
+          ).read_text()
+          required=[
+              "#SBATCH --gres=gpu:p100:1",
+              "#SBATCH --nodes=1",
+              "#SBATCH --ntasks=1",
+              "#SBATCH --time=01:30:00",
+              "RAYAN_UDOCKER_NVIDIA=1",
+              "Expected P100",
+              "run_n0_v02_query_edge_competitive_router_training_v0_1.sh",
+          ]
+          missing=[x for x in required if x not in s]
+          if missing:
+              raise SystemExit("P100 wrapper drift "+repr(missing))
+          print("bounded_competitive_router_p100_wrapper=PASS")
+          PY
