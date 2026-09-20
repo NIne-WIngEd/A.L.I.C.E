@@ -33,6 +33,17 @@ jobs:
               docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md|\
               docs/research/eipm-n0-qsre-preimplementation-contract-result-v0.1.md|\
               docs/research/eipm-n0-qsre-architecture-blueprint-v0.1.md|\
+              docs/research/eipm-full-eipm-workload-envelope-v0.1.md|\
+              docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md|\
+              docs/research/eipm-n0-qsre-mechanics-result-v0.1.md|\
+              configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json|\
+              configs/eipm/n0/n0_v02_qsre_static_mechanics_contract_v0_1.json|\
+              configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.42.json|\
+              configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.43.json|\
+              evaluation/eipm/n0/n0_v02_qsre_mechanics_v0_1.jsonl|\
+              scripts/eipm/n0/evaluate_n0_v02_qsre_mechanics_v0_1.py|\
+              scripts/eipm/n0/run_n0_v02_qsre_mechanics_v0_1.sh|\
+              .github/workflows/n0-qsre-mechanics-contract.yml|\
               configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.39.json|\
               configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.41.json|\
               configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.40.json|\
