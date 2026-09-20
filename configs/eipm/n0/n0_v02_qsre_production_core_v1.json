@@ -1,0 +1,104 @@
+{
+  "schema": "alice.eipm.n0.qsre-production-core.v1",
+  "status": "ARCHITECTURE_CLOSED_FOR_IMPLEMENTATION_DESIGN_NO_GRADIENT",
+  "authority_doc": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
+  "workload_envelope": "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json",
+  "proof_obligations": "configs/eipm/n0/n0_v02_relational_execution_proof_obligations_v0_1.json",
+  "current_semantic_parent_sha256": "6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43",
+  "core": {
+    "dynamic_relation_schema": {
+      "runtime_variable_cardinality": true,
+      "learned_relation_class_embedding_table": false,
+      "token_or_multifacet_schema_state": true,
+      "typed_domain_range_constraints": true,
+      "unknown_state_separate_from_stop": true
+    },
+    "operator_inducer": {
+      "shared_iterative_relation_step_cell": true,
+      "learned_hop_specific_slots": false,
+      "runtime_stop": true,
+      "sparse_plural_relation_hypotheses": true,
+      "continuous_residual_state": true,
+      "role_distribution": true,
+      "traversal_mode": [
+        "LOCAL_SELECT",
+        "PATH",
+        "AGGREGATE"
+      ],
+      "arbitration_modifiers": [
+        "RELIABILITY",
+        "RECENCY",
+        "TEMPORAL_CONSTRAINT",
+        "PROVENANCE_CONSTRAINT"
+      ],
+      "modifiers_composable": true,
+      "fixed_applicability_centers": false
+    },
+    "binder": {
+      "token_level_late_interaction": true,
+      "schema_type_compatibility": true,
+      "adaptive_exact_zero_support": true,
+      "fixed_top_k": false,
+      "zero_one_many_ambiguous_support": true,
+      "supervised_score_is_runtime_score": true
+    },
+    "executor": {
+      "learned_relation_id_embedding_is_semantic_authority": false,
+      "consumes_dynamic_relation_semantic_state": true,
+      "consumes_continuous_operator_state": true,
+      "shared_iterative_node_edge_cell": true,
+      "explicit_source_target_positions": true,
+      "composable_traversal_and_arbitration": true,
+      "plural_execution_supported": true,
+      "support_local_readout": true
+    },
+    "fallback": {
+      "separate_from_support_selection": true,
+      "exact_nonrelational_pass_through": true,
+      "no_parent_global_softmax_override": true
+    }
+  },
+  "static_proof_obligations": [
+    "dynamic_schema_cardinality",
+    "dynamic_relation_step_count",
+    "schema_permutation_equivariance",
+    "semantic_schema_intervention",
+    "type_domain_range_contradiction",
+    "unknown_vs_stop",
+    "plural_relation_hypothesis",
+    "composable_operations",
+    "continuous_state_causality",
+    "variable_support",
+    "multi_hop_order",
+    "field_edge_permutation",
+    "exact_nonrelational_pass_through",
+    "totality_fuzz",
+    "w1_w15_interface_mapping"
+  ],
+  "training_sequence": [
+    "P1_schema_conditioned_executor_oracle_operator_oracle_support",
+    "P2_operator_induction_frozen_proven_executor_oracle_support",
+    "P3_adaptive_binder_frozen_proven_operator_executor",
+    "P4_end_to_end_qsre",
+    "P5_n0_fusion_consumption"
+  ],
+  "data_requirements": {
+    "open_schema_relation_generalization_lane": true,
+    "relation_order_composition_holdout": true,
+    "operation_composition_holdout": true,
+    "cue_collision_hard_negatives": true,
+    "paraphrase_pair_consistency": true,
+    "ambiguity_plurality_lane": true,
+    "private_identity_data": false
+  },
+  "authorization": {
+    "architecture_implementation_design": true,
+    "cpu_static_mechanics_after_interface_spec": true,
+    "optimizer": false,
+    "gradient": false,
+    "gpu": false,
+    "test_opening": false,
+    "private_identity_gradient": false,
+    "production_promotion": false
+  }
+}
