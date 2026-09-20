@@ -1,0 +1,123 @@
+name: N0 Dual View Requalification Recovery Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-dual-view-late-interaction-binding
+    paths:
+      - "scripts/eipm/n0/qualify_n0_v02_dual_view_late_interaction_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_2.sh"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.34.json"
+      - ".github/workflows/n0-dual-view-requalification-recovery-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile             scripts/eipm/n0/qualify_n0_v02_dual_view_late_interaction_v0_1.py
+          bash -n             scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_2.sh
+
+      - name: Unique direction-pair bookkeeping
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/qualify_n0_v02_dual_view_late_interaction_v0_1.py"
+          ).read_text()
+          required=[
+              "direction_pair_keys = {",
+              'str(payload["quad_ids"][index])',
+              'str(payload["query_roles"][index])',
+              "if len(direction_pair_keys) != 72:",
+              "for qid, role in sorted(direction_pair_keys):",
+              'saved.get((qid, role, "A"))',
+              'saved.get((qid, role, "B"))',
+              "if quad_role_pairs != 72:",
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("unique pair correction missing "+repr(missing))
+          forbidden=[
+              "for index in dev_indices:\n        qid = str(payload[\"quad_ids\"][index])\n        role = str(payload[\"query_roles\"][index])\n        a = saved.get((qid, role, \"A\"))",
+              "if quad_role_pairs != 144:",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("duplicate-count hotfix leaked "+repr(present))
+          print("unique_direction_pair_bookkeeping=PASS")
+          PY
+
+      - name: Recovery state preserves scientific criteria
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.34.json"
+          ).read_text())
+          if s["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.34":
+              raise SystemExit("v0.34 schema drift")
+          a=s["attempt_1"]
+          if a["model_evidence"] is not False:
+              raise SystemExit("attempt 1 promoted to model evidence")
+          c=s["correction"]
+          if c["expected_unique_pairs"]!=72:
+              raise SystemExit("expected unique-pair count drift")
+          if c["expected_dev_rows"]!=144:
+              raise SystemExit("DEV row-count drift")
+          for key in (
+              "science_criterion_unchanged",
+              "architecture_unchanged",
+              "binding_thresholds_unchanged",
+              "parent_exactness_thresholds_unchanged",
+              "permutation_threshold_unchanged",
+              "direction_invariance_threshold_unchanged",
+          ):
+              if c[key] is not True:
+                  raise SystemExit(f"scientific recovery drift: {key}")
+          print("scientific_criteria_preserved=PASS")
+          PY
+
+      - name: Recovery runner preserves attempt one and stays CPU-only
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          r=Path(
+              "scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_2.sh"
+          ).read_text()
+          required=[
+              'FAILED_QUAL_DIR="$DUAL_ROOT/qualification"',
+              'QUAL_DIR="$DUAL_ROOT/qualification-v0.2"',
+              "expected_unique_direction_pairs=72",
+              "architecture_changed=false",
+              "thresholds_changed=false",
+              "optimizer=false",
+              "gradient=false",
+              "gpu=false",
+              "training_authorized=false",
+          ]
+          missing=[x for x in required if x not in r]
+          if missing:
+              raise SystemExit("recovery runner contract missing "+repr(missing))
+          forbidden=[
+              "rm -rf",
+              "sbatch",
+              "RAYAN_UDOCKER_NVIDIA=1",
+          ]
+          present=[x for x in forbidden if x in r]
+          if present:
+              raise SystemExit("destructive/GPU recovery leaked "+repr(present))
+          print("cpu_requalification_only=PASS")
+          PY
