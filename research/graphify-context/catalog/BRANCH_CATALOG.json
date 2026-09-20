@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "611660ae8bd2cbf4a13c5c9dda8bd958f4d77352",
-      "head_committed_at": "2026-09-20T15:19:55-05:00",
-      "head_message": "context: hand off N0 CPU-GPU reality audit",
+      "head": "12b40cdd8f45f8ed8eddae6dbb1586b09a5a1393",
+      "head_committed_at": "2026-09-20T15:38:17-05:00",
+      "head_message": "context: record implemented N0 QSRE reality audit",
       "status": "diverged",
-      "ahead": 224,
+      "ahead": 225,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 571,
+      "changed_file_count_vs_source_merge_base": 572,
       "knowledge_surface": true
     },
     {
@@ -125,14 +125,14 @@
     },
     {
       "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-      "head": "767ac28183b57d34b1f819566151914f5ca3acd5",
-      "head_committed_at": "2026-09-20T15:19:25-05:00",
-      "head_message": "guard(n0): revoke QSRE T2 recovery sbatch",
+      "head": "679decb9ce4869eb6c0969c00110046af6017a66",
+      "head_committed_at": "2026-09-20T15:37:49-05:00",
+      "head_message": "state(n0): authorize one coherent CPU QSRE reality audit",
       "status": "ahead",
-      "ahead": 300,
+      "ahead": 312,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 270,
+      "changed_file_count_vs_source_merge_base": 281,
       "knowledge_surface": true
     },
     {

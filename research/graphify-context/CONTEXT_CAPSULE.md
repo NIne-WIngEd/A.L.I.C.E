@@ -1,10 +1,10 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-qsre-t2-cpu-gpu-reality-audit-20260920-001
-- Question: Refresh A.L.I.C.E. N0 continuity to the CPU/GPU reality-gap and data-validity audit frontier. Job 575934 failed before container entry because the recovery Slurm script contained malformed doubled-dollar parameter expansion; Bash expanded the doubled dollar to the process id. Direct source inspection also found the same malformed expansion in the recovery runner. Critically, the recovery CI encoded the malformed spelling as the expected string, so implementation and validator shared the same defect. This is SHELL_EXPANSION_AND_VALIDATOR_CORRELATION_FAILURE_NOT_MODEL_EVIDENCE. Authoritative state is now v0.55 and all T2 GPU/gradient authorization is revoked. Old recovery runner and sbatch are fail-closed. Preserve job 575933 as evaluator-totality failure with UNDETERMINED model gate and job 575934 as runtime/validator-correlation failure. Historical taxonomy: v0.7 import harness no model evidence; v0.22/job575825 genuine learned failure; v0.34 qualifier bookkeeping no model evidence; v0.36/job575912 genuine learned failure; v0.47 T1 shortcut/path correction before GPU; v0.51 udocker PYTHONPATH infrastructure; job575914 genuine QSRE T1 P100 PASS. Direct data read: T1 fields are intentionally opaque neutral evidence record hashes and only test structural executor causality. T2 v0.1 uses small generated phrase banks whose operation/control labels have highly available lexical cues; TRAIN/DEV wording differs but grammar is shared. T2 is therefore a unit test of generated operator-language learnability, not yet a representative public N0 operator benchmark. Real public N0 semantic data is much richer: pragmatics, evidence conflicts, counterfactual provenance, uncertainty, causal paraphrases, social/relationship context, domain senses. Early Phase 1 RAG lesson recovered: MS MARCO passage reranker reduced grounded support 0.421053 to 0.083333 and was disabled; direct downstream evidence overrode apparent sophistication. QSRE is not rejected: T1 passed a real P100 gate and explicit operator/support-local execution remains supported. T2 has no valid model PASS/FAIL. Next work must be one coherent no-gradient audit batch, not micro gates: runtime behavioral parity, representative public-only relation/evidence set, shortcut baselines, frozen-semantic layer sufficiency probes, evaluator totality over provisional/invalid outputs, then one architecture decision. Durable alice-context commit 611660ae8bd2cbf4a13c5c9dda8bd958f4d77352. Audit doc docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md. Graphify remains navigation-only.
+- Request: n0-qsre-reality-audit-implemented-v056-20260920-002
+- Question: Refresh A.L.I.C.E. N0 continuity to authoritative state v0.56. The CPU/GPU reality-gap and data-validity audit is now fully implemented as one coherent CPU/no-gradient workflow on branch alice-eipm-v1-qsre-t2-operator-learning. Static qualification workflow n0-qsre-reality-audit-static-contract run 35536054506 succeeded at source core 31d758b7d1734911f332375f0c264f35cf193abc. Initial run 35535990783 failed only because the GitHub runner imported QSRE modules before CPU torch installation; no scientific source changed and no model evidence was produced. The implemented batch includes: a 56-row curated public natural-language operator-reality corpus; shallow shortcut attacks comparing T2 TRAIN->T2 DEV and T2 TRAIN->reality; frozen 17-layer semantic nearest-centroid probes with no gradient; actual Bash/uDocker behavioral parity; 480-case batched T2-to-frozen-T1 totality fuzz; and one precommitted combined architecture decision. State v0.56 authorizes exactly one Magnolia CPU node job using scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_reality_audit_v0_1.sbatch. GPU, optimizer, gradient, T1 rerun, T3/learned support, TEST/challenge, private identity gradient, and promotion remain closed. The prior v0.54 T2 recovery remains revoked and recovery scripts remain fail-closed. Durable alice-context commit 12b40cdd8f45f8ed8eddae6dbb1586b09a5a1393. Graphify is routing/navigation only; verify consequential claims in original branch files.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
-- Graphify used: False
+- Graphify used: True
 
 ## Active mission
 
@@ -18,38 +18,55 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-qsre-t2-operator-learning @ 767ac28183b57d34b1f819566151914f5ca3acd5 — guard(n0): revoke QSRE T2 recovery sbatch
+- alice-eipm-v1-qsre-t2-operator-learning @ 679decb9ce4869eb6c0969c00110046af6017a66 — state(n0): authorize one coherent CPU QSRE reality audit
 
 ## Source pointers
 
-- [350] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md — N0 CPU/GPU Reality Gap and Data Validity Audit v0.1
+- [192] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md — N0 CPU/GPU Reality Gap and Data Validity Audit v0.1
   - status:  architecture/data audit authority; all new gradient/GPU work frozen
-- [249] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T2_CPU_GPU_REALITY_AUDIT_ACTIVE.md — N0 QSRE T2 CPU/GPU Reality-Gap Audit Active
+- [169] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T2_CPU_GPU_REALITY_AUDIT_ACTIVE.md — N0 QSRE T2 CPU/GPU Reality-Gap Audit Active
   - status:  all T2 GPU/gradient work frozen pending one coherent reality/data audit
-- [237] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T2_EVALUATOR_TOTALITY_RECOVERY_AUTHORIZED.md — N0 QSRE T2 Evaluator-Totality Recovery Authorized
-  - status:  job 575933 classified as evaluator-harness failure, not a model-gate result; one fresh classified replacement run authorized after static qualification
-- [212] alice-eipm-v1-build:docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md — N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16
-- [204] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-t1-one-shot-p100-authorization-v0.1.md — QSRE T1 One-Shot P100 Authorization v0.1
-- [201] alice-eipm-v1-build:docs/PHASE_1_RESPONSE_EVIDENCE_EXPANSION_TEST_BOUNDARY_FIX.md — P1.11 Evidence Expansion Test-Boundary Fix
-- [199] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md — N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization
-  - status:  final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged
-- [198] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-multilayer-interface-failure-localization-v0.1.md — N0 Multi-Layer Interface Failure Localization v0.1
-- [196] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md — N0 Clean-Sheet Relational Execution Architecture Audit v0.1
-  - status:  architecture-review authority; implementation and gradient work frozen
-- [192] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md — QSRE T1 PASS → T2 Learned-Operator Decision v0.1
-  - status:  T1 causal question passed on DEV; T2 static design/CPU mechanics justified; T2 gradient remains closed
-- [191] alice-eipm-v1-build:docs/PHASE_1_RESPONSE_EVIDENCE_EXPANSION.md — P1.11 Evidence Passage Expansion
-- [191] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-t1-executor-decision-v0.1.md — QSRE T1 Executor Decision v0.1
-  - status:  authorizes trainable source definition and CPU/no-gradient forward qualification only
+- [168] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [164] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md — N0 relation-conditioned multi-layer training decision v0.1
+- [158] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_REALITY_AUDIT_IMPLEMENTED_V056.md — N0 QSRE reality audit implemented and CPU run authorized
+- [143] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [143] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [143] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [143] alice-eipm-v1-qsre-t1-executor-training:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [143] alice-eipm-v1-qsre-t2-operator-learning:.github/workflows/n0-qsre-reality-audit-static-contract.yml — n0-qsre-reality-audit-static-contract.yml
+- [143] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md — QSRE Static Tensor Interface and Mechanics Decision v0.1
+  - status:  authorizes CPU/no-gradient reference mechanics only
+- [143] alice-eipm-v1-query-edge-binding-identifiability-audit:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
 
 ## Graphify navigation hints
 
-- skipped: document/branch/private routing was sufficient
+- audit_n0_v02_qsre_t2_t1_boundary_fuzz_v0_1.py -> scripts/eipm/n0/audit_n0_v02_qsre_t2_t1_boundary_fuzz_v0_1.py:L1
+- build_n0_v02_qsre_operator_reality_corpus_v0_1.py -> scripts/eipm/n0/build_n0_v02_qsre_operator_reality_corpus_v0_1.py:L1
+- run_n0_v02_qsre_t2_operator_training_v0_1.sh -> scripts/eipm/n0/run_n0_v02_qsre_t2_operator_training_v0_1.sh:L1
+- train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py -> scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py:L1
+- canonical_sha256() -> src/cognitive_kernel/canonical.py:L39
+- diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py -> scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py:L1
+- AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
+- test_memory_identity_host_learning_architecture.py -> tests/governance/test_memory_identity_host_learning_architecture.py:L1
+- audit() -> scripts/audit_capability_barriers.py:L521
+- authoritative_retrieval_digest() -> src/alice_memory/lexical_index.py:L118
+- .authorizes() -> src/cognitive_kernel/guest.py:L286
+- run_bash() -> scripts/eipm/n0/audit_n0_v02_qsre_runtime_parity_v0_1.py:L10
+- BatchFakeClient -> tests/phase1/test_auto_review_fast.py:L19
+- _batched() -> src/alice_vault/auto_review.py:L429
+- test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
+- branch_forward() -> scripts/eipm/n0/train_n0_v02_structured_state_pilot.py:L287
 
 ## External/private routing
 
 - Recommended: True
-- Reason: host-specific operational history may contain newer failure lessons than public receipts
+- Reason: question references a private/external source class
 
 ## Trust contract
 
