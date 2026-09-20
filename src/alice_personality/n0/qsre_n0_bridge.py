@@ -29,11 +29,18 @@ class QSREN0EvidenceBridge(nn.Module):
     evidence tokens are byte-for-byte unchanged.
     """
 
-    def __init__(self, semantic_dim: int = 640) -> None:
+    def __init__(
+        self,
+        semantic_dim: int = 640,
+        activation_threshold: float = 0.5,
+    ) -> None:
         super().__init__()
         if semantic_dim <= 0:
             raise ValueError("semantic_dim must be positive")
+        if not 0.0 < activation_threshold < 1.0:
+            raise ValueError("activation_threshold must be in (0,1)")
         self.semantic_dim = int(semantic_dim)
+        self.activation_threshold = float(activation_threshold)
 
     def forward(
         self,
@@ -91,7 +98,11 @@ class QSREN0EvidenceBridge(nn.Module):
             normalized,
             field_semantic_state,
         )
-        token_valid = execution_confidence > 0
+        # A weak specialist may never contaminate the ratified base evidence
+        # path. Confidence remains exposed continuously, while participation in
+        # fusion is a conservative runtime policy that can be migrated without
+        # changing model capacity.
+        token_valid = execution_confidence >= self.activation_threshold
 
         augmented_tokens = torch.cat(
             [base_evidence_tokens, token.unsqueeze(1)],
@@ -122,4 +133,6 @@ class QSREN0EvidenceBridge(nn.Module):
             "field_count_ceiling": None,
             "support_count_ceiling": None,
             "candidate_count_ceiling": None,
+            "activation_threshold": self.activation_threshold,
+            "activation_threshold_role": "migratable_fail_closed_runtime_policy_not_model_capacity_ceiling",
         }
