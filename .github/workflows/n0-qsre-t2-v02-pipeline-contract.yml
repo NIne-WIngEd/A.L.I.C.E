@@ -1,0 +1,120 @@
+name: n0-qsre-t2-v02-pipeline-contract
+
+on:
+  push:
+    paths:
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.57.json"
+      - "configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_2.json"
+      - "scripts/eipm/n0/train_n0_v02_qsre_t2_operator_v0_1.py"
+      - "scripts/eipm/n0/eval_n0_v02_qsre_t2_operator_challenge_v0_2.py"
+      - "scripts/eipm/n0/run_n0_v02_prepare_qsre_t2_realistic_v0_2.sh"
+      - "scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_t2_realistic_prepare_v0_2.sbatch"
+      - "scripts/eipm/n0/run_n0_v02_qsre_t2_realistic_train_v0_2.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t2_realistic_train_v0_2.sbatch"
+      - "scripts/eipm/n0/launch_n0_v02_qsre_t2_realistic_pipeline_v0_2.sh"
+      - ".github/workflows/n0-qsre-t2-v02-pipeline-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Syntax
+        run: |
+          python -m py_compile             scripts/eipm/n0/train_n0_v02_qsre_t2_operator_v0_1.py             scripts/eipm/n0/eval_n0_v02_qsre_t2_operator_challenge_v0_2.py
+          bash -n scripts/eipm/n0/run_n0_v02_prepare_qsre_t2_realistic_v0_2.sh
+          bash -n scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_t2_realistic_prepare_v0_2.sbatch
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_t2_realistic_train_v0_2.sh
+          bash -n scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t2_realistic_train_v0_2.sbatch
+          bash -n scripts/eipm/n0/launch_n0_v02_qsre_t2_realistic_pipeline_v0_2.sh
+
+      - name: Prove scientific hyperparameters are unchanged from T2 v0.1
+        run: |
+          python - <<'PY'
+          import json
+          old=json.load(open("configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_1.json"))
+          new=json.load(open("configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_2.json"))
+          for key in (
+              "operator_model",
+              "t1_executor_model",
+              "optimizer",
+              "loss_weights",
+              "continuous_operator_objective",
+              "training",
+              "eligibility",
+              "selection",
+              "max_gpu_runs",
+              "automatic_rerun",
+              "automatic_hotfix",
+              "causal_test_open",
+              "frozen_challenge_open",
+              "semantic_backbone_gradient",
+              "t1_executor_gradient",
+              "learned_operator",
+              "learned_support",
+              "private_identity_gradient",
+              "gpu_training_authorized",
+          ):
+              assert old[key]==new[key], (key,old[key],new[key])
+          assert new["curriculum_sha256"]=="5aa8f0aa3210466964f38b14081c71c1d3c58f4405247067c76a7cdfe115963c"
+          assert new["expected_prepared_cache_sha256"]=="BOUND_BY_PREPARATION_AUTHORITY"
+          print("PASS_T2_V02_SCIENTIFIC_CORE_UNCHANGED")
+          PY
+
+      - name: Rebuild and hash the locked operator challenge
+        run: |
+          python scripts/eipm/n0/build_n0_v02_qsre_t2_operator_challenge_v0_2.py             --output /tmp/t2v02-challenge.jsonl
+          test "$(sha256sum /tmp/t2v02-challenge.jsonl | awk '{print $1}')" =             "197cebe5ed4c59455839db5b2822582a03021c92a94670e1aede568278c1f205"
+          test "$(wc -l < /tmp/t2v02-challenge.jsonl)" -eq 60
+
+      - name: Trainer bridge and gradient self-test
+        run: |
+          python -m pip install -q torch
+          PYTHONPATH=src:scripts/eipm/n0             python scripts/eipm/n0/train_n0_v02_qsre_t2_operator_v0_1.py --self-test
+
+      - name: Behavioral launch dependency test
+        run: |
+          mkdir -p /tmp/fake-bin
+          cat > /tmp/fake-bin/sbatch <<'SH'
+          #!/usr/bin/env bash
+          echo "$*" >> /tmp/sbatch-calls.txt
+          if [[ ! -f /tmp/sbatch-first ]]; then
+            touch /tmp/sbatch-first
+            printf '111\n'
+          else
+            printf '222\n'
+          fi
+          SH
+          chmod +x /tmp/fake-bin/sbatch
+          PATH="/tmp/fake-bin:$PATH"             ALICE_N0_WORKDIR="/tmp/alice-n0-v02"             bash scripts/eipm/n0/launch_n0_v02_qsre_t2_realistic_pipeline_v0_2.sh             > /tmp/launch.txt
+          cat /tmp/launch.txt
+          cat /tmp/sbatch-calls.txt
+          grep -F "prep_job_id=111" /tmp/launch.txt
+          grep -F "train_job_id=222" /tmp/launch.txt
+          grep -F "dependency=afterok:111" /tmp/launch.txt
+          grep -F -- "--dependency=afterok:111" /tmp/sbatch-calls.txt
+
+      - name: State and challenge-opening governance
+        run: |
+          python - <<'PY'
+          import json
+          state=json.load(open("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.57.json"))
+          contract=json.load(open("configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_2.json"))
+          p=state["execution_policy"]
+          assert p["max_t2_v02_gpu_runs"]==1
+          assert p["automatic_rerun_authorized"] is False
+          assert p["automatic_hotfix_chain_authorized"] is False
+          assert p["learning_rate_search_authorized"] is False
+          assert p["step_search_authorized"] is False
+          assert p["model_size_search_authorized"] is False
+          assert p["semantic_backbone_gradient_authorized"] is False
+          assert p["t1_executor_gradient_authorized"] is False
+          assert p["learned_support_training_authorized"] is False
+          assert p["causal_test_opening_authorized"] is False
+          assert p["private_identity_gradient_authorized"] is False
+          assert contract["locked_operator_challenge"]["opening_rule"]=="only_after_PASS_QSRE_T2_OPERATOR_DEV_CONTRACT"
+          assert contract["locked_operator_challenge"]["training_allowed"] is False
+          print("PASS_T2_V02_PIPELINE_GOVERNANCE")
+          PY
