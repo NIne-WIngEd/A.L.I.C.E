@@ -13,6 +13,9 @@
 
 set -euo pipefail
 
+echo "STOP: superseded by N0 state v0.55 CPU/GPU reality-gap and data-validity audit. No T2 GPU recovery is currently authorized." >&2
+exit 90
+
 ROOT="$${SLURM_SUBMIT_DIR:?submit from the A.L.I.C.E repo root}"
 cd "$ROOT"
 
