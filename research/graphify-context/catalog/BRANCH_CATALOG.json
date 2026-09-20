@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "d36fafe2bd876ffd5cfa26cac0d3694dd773c14b",
-      "head_committed_at": "2026-09-20T14:33:34-05:00",
-      "head_message": "context: hand off QSRE T2 one-shot authorization",
+      "head": "9e0f6332336bd9fcdaaf38b608dda3bda5d1e7cc",
+      "head_committed_at": "2026-09-20T14:58:17-05:00",
+      "head_message": "context: hand off QSRE T2 evaluator recovery",
       "status": "diverged",
-      "ahead": 222,
+      "ahead": 223,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 569,
+      "changed_file_count_vs_source_merge_base": 570,
       "knowledge_surface": true
     },
     {
@@ -125,14 +125,14 @@
     },
     {
       "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-      "head": "6f20c807d0281fb00d6cd6def05a8ee8eef01518",
-      "head_committed_at": "2026-09-20T14:31:31-05:00",
-      "head_message": "ci(n0): qualify QSRE T2 one-shot training",
+      "head": "10eb099a0201257922e5fc245a9b6772af174649",
+      "head_committed_at": "2026-09-20T14:56:12-05:00",
+      "head_message": "ci(n0): qualify classified QSRE T2 recovery run",
       "status": "ahead",
-      "ahead": 283,
+      "ahead": 296,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 261,
+      "changed_file_count_vs_source_merge_base": 268,
       "knowledge_surface": true
     },
     {
