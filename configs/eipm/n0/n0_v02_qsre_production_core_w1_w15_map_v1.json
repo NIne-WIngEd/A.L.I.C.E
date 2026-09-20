@@ -20,7 +20,7 @@
       "name": "relational_causal_reasoning",
       "qsre_role": "primary responsibility: dynamic schema grounding, argument roles, adaptive support, multi-hop execution, structural readout",
       "outside_qsre": "none for core relational execution",
-      "closure_requirement": "dynamic relation schema and variable-step execution without ID ontology ceiling"
+      "closure_requirement": "dynamic relation schema, learned structural focus, explicit role+direction, and variable-step forward/reverse/bidirectional execution without ID ontology ceiling"
     },
     "W4": {
       "name": "temporal_state_change",
@@ -62,7 +62,7 @@
       "name": "uncertainty_plurality",
       "qsre_role": "preserve sparse plural operator hypotheses, plural support, uncertain readout and UNKNOWN/defer",
       "outside_qsre": "global calibration also belongs to later N0/N3",
-      "closure_requirement": "no mandatory early argmax or singleton relation commitment"
+      "closure_requirement": "no mandatory early argmax or singleton relation commitment; STOP, UNKNOWN, calibrated applicability and control remain distinct through execution"
     },
     "W11": {
       "name": "generic_assistant_sycophancy_drift",
@@ -80,7 +80,7 @@
       "name": "heterogeneous_context_fusion",
       "qsre_role": "produce relational view tokens, summary, uncertainty and structural state for fusion",
       "outside_qsre": "CrossContextFusion remains broader fusion authority",
-      "closure_requirement": "QSRE does not become a monolithic replacement for semantic structured or latent views"
+      "closure_requirement": "QSRE adds grounded semantic and native relational-summary evidence to the ratified fusion path without replacing parent views or adding a second router"
     },
     "W14": {
       "name": "long_context_sparse_relevance",
@@ -92,7 +92,7 @@
       "name": "fast_deliberate_paths",
       "qsre_role": "shared iterative decoder/executor with runtime compute budget and sparse support allows fast or expanded execution with same weights",
       "outside_qsre": "system-level scheduler chooses runtime budget",
-      "closure_requirement": "latency defaults cannot become hop/support capability ceilings"
+      "closure_requirement": "latency defaults cannot become hop/support capability ceilings; runtime path direction and step budget use shared weights"
     }
   },
   "acceptance": {
