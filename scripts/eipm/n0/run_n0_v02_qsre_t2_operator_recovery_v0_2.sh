@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+echo "STOP: superseded by N0 state v0.55 CPU/GPU reality-gap and data-validity audit. No T2 GPU recovery is currently authorized." >&2
+exit 90
+
 ROOT="$${ALICE_N0_REPO_ROOT:-$${ALICE_REPO_ROOT:-$PWD}}"
 WORKDIR="$${ALICE_N0_WORKDIR:-$HOME/rayan-compute/rayan-n0/n0-v02}"
 
