@@ -1,0 +1,242 @@
+name: N0 Dual View Specialist Training Contract Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-dual-view-late-interaction-binding
+    paths:
+      - "scripts/eipm/n0/train_n0_v02_dual_view_specialist_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_dual_view_specialist_training_v0_1.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_training_v0_1.sbatch"
+      - "configs/eipm/n0/n0_v02_dual_view_training_decision_v0_1.json"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.35.json"
+      - ".github/workflows/n0-dual-view-specialist-training-contract-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/eipm/n0/train_n0_v02_dual_view_specialist_v0_1.py
+          bash -n \
+            scripts/eipm/n0/run_n0_v02_dual_view_specialist_training_v0_1.sh
+          bash -n \
+            scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_training_v0_1.sbatch
+
+      - name: Exact qualification and one-run state
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          d=json.loads(Path(
+              "configs/eipm/n0/n0_v02_dual_view_training_decision_v0_1.json"
+          ).read_text())
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.35.json"
+          ).read_text())
+
+          q=d["qualification"]
+          if q["receipt_sha256"]!="714f06d4939abad2b816a7e3ffb5c5fa10112129ef0b520fd838f2d182286278":
+              raise SystemExit("qualification hash drift")
+          if q["source_revision"]!="edcee7dd7a53bac158793b805a29cfaa0c1b11b0":
+              raise SystemExit("qualification source drift")
+          for key in (
+              "exact_parent_field_weights",
+              "exact_parent_pooled_state",
+              "parent_parameters_exactly_unchanged",
+          ):
+              if q[key] is not True:
+                  raise SystemExit(f"qualification invariant drift: {key}")
+          if q["dev_conditional_edge_all_four_top1_accuracy"]!=1.0:
+              raise SystemExit("all-edge identity drift")
+          if q["dev_conditional_edge_same_relation_top1_accuracy"]!=1.0:
+              raise SystemExit("same-relation identity drift")
+
+          if d["decision"]!="AUTHORIZE_ONE_BOUNDED_DUAL_VIEW_SPECIALIST_EXPERIMENT_AFTER_RUNTIME_QUALIFICATION":
+              raise SystemExit("training decision drift")
+          if d["operating_budget"]["max_training_runs"]!=1:
+              raise SystemExit("one-run boundary drift")
+          if d["trainable_scope"]["binding_logit_scale"] is not False:
+              raise SystemExit("binding scale unexpectedly trainable")
+
+          if s["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.35":
+              raise SystemExit("v0.35 state drift")
+          e=s["execution_policy"]
+          if e["gradient_authorized"] is not True:
+              raise SystemExit("gradient not authorized")
+          if e["gpu_training_authorized"] is not True:
+              raise SystemExit("GPU not authorized")
+          if e["gpu_runs_remaining"]!=1:
+              raise SystemExit("GPU run-count drift")
+          for key in (
+              "automatic_rerun_authorized",
+              "automatic_hotfix_authorized",
+              "heldout_opening_authorized",
+              "frozen_challenge_rerun_authorized",
+              "scale_authorized",
+              "semantic_retraining_authorized",
+              "graph_parent_retraining_authorized",
+              "private_identity_gradient_authorized",
+              "production_promotion_authorized",
+          ):
+              if e[key] is not False:
+                  raise SystemExit(f"premature authorization: {key}")
+          if s["n0_complete"] is not False:
+              raise SystemExit("N0 completion drift")
+          print("exact_qualification_and_one_run_state=PASS")
+          PY
+
+      - name: Edge identity is frozen
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/train_n0_v02_dual_view_specialist_v0_1.py"
+          ).read_text()
+          required=[
+              "graph.dual_view_query_edge_bridge.binding_logit_scale.requires_grad = False",
+              '"binding_logit_scale_frozen": True',
+              '"edge_identity_training_loss": False',
+              '"conditional_edge_binding_loss": False',
+              'baseline_dev["conditional_edge_all_four_top1_accuracy"] != 1.0',
+              'baseline_dev["conditional_edge_same_relation_top1_accuracy"] != 1.0',
+              '"conditional_all_edge_binding_still_perfect"',
+              '"conditional_same_relation_binding_still_perfect"',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("frozen edge-identity contract missing "+repr(missing))
+          forbidden=[
+              "conditional_edge_ce",
+              "edge_binding_loss",
+              "binding_route_ce",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("edge-binding optimization leaked "+repr(present))
+          print("edge_identity_frozen=PASS")
+          PY
+
+      - name: Specialist activation uses actual runtime logit
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/train_n0_v02_dual_view_specialist_v0_1.py"
+          ).read_text()
+          required=[
+              'out["specialist_logit"]',
+              "binary_cross_entropy_with_logits",
+              "activation_bce = specialist_bce(out, 1.0)",
+              "noop_bce = specialist_bce(student, 0.0)",
+              'out["specialist_probability"]',
+              'out["noop_route_probability"]',
+              '"causal_specialist_activation_bce_weight"',
+              '"preservation_noop_activation_bce_weight"',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("actual specialist activation supervision missing "+repr(missing))
+          forbidden=[
+              "route_logits_with_noop",
+              "causal_route_loss",
+              "noop_route_loss",
+              "routing_scores(",
+              "PCGrad",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("old routing objective leaked "+repr(present))
+          print("actual_specialist_activation_supervision=PASS")
+          PY
+
+      - name: Preservation and heldout boundaries
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/train_n0_v02_dual_view_specialist_v0_1.py"
+          ).read_text()
+          required=[
+              'anchors["ordinary"]["train_anchor_ids"]',
+              'anchors["endpoint"]["train_anchor_ids"]',
+              "teacher = ml.parent_forward(baseline_graph, adapter, preserve)",
+              "old.distill_kl",
+              '"preservation_dev_rows_used_for_gradient": False',
+              '"causal_test_split_evaluated": False',
+              '"causal_test_split_opened_after_training": False',
+              '"frozen_challenge_evaluated": False',
+              '"automatic_rerun_or_hotfix_authorized": False',
+              '"heldout_opening_authorized": False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("preservation/heldout contract missing "+repr(missing))
+          print("preservation_and_heldout_boundaries=PASS")
+          PY
+
+      - name: Runner binds exact artifacts and claims output first
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          r=Path(
+              "scripts/eipm/n0/run_n0_v02_dual_view_specialist_training_v0_1.sh"
+          ).read_text()
+          required=[
+              "714f06d4939abad2b816a7e3ffb5c5fa10112129ef0b520fd838f2d182286278",
+              "edcee7dd7a53bac158793b805a29cfaa0c1b11b0",
+              "5bcc4ecf0fb2b776f738e4cca881e6b03a68c81a96923a5b08821930d0ebe823",
+              "c3618a6022519af2a6a140f8b571281c68735fd1412c3ffa904979e9bbea2dcb",
+              "f5b3f438f776216f6dbd557a8c785aac70af38d256e3f7cf94f0f71a43f53e94",
+              "dual_view_one_p100_training_gate=PASS",
+              'mkdir "$TRAIN_ROOT"',
+              "edge_identity_frozen=true",
+              "binding_logit_scale_trainable=false",
+              "--activation-weight 1.0",
+              "--preservation-weight 1.0",
+              "--noop-weight 1.0",
+          ]
+          missing=[x for x in required if x not in r]
+          if missing:
+              raise SystemExit("runner binding missing "+repr(missing))
+          print("runner_exact_lineage_and_output_claim=PASS")
+          PY
+
+      - name: P100 wrapper is bounded
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          s=Path(
+              "scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_training_v0_1.sbatch"
+          ).read_text()
+          required=[
+              "#SBATCH --gres=gpu:p100:1",
+              "#SBATCH --nodes=1",
+              "#SBATCH --ntasks=1",
+              "#SBATCH --time=01:30:00",
+              "RAYAN_UDOCKER_NVIDIA=1",
+              "Expected P100",
+              "run_n0_v02_dual_view_specialist_training_v0_1.sh",
+          ]
+          missing=[x for x in required if x not in s]
+          if missing:
+              raise SystemExit("P100 wrapper drift "+repr(missing))
+          print("bounded_p100_wrapper=PASS")
+          PY
