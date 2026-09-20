@@ -23,7 +23,7 @@ QUAL="$QUAL_ROOT/runtime_contract_qualification.json"
 BRIDGE="$ROOT/src/alice_personality/n0/query_edge_competitive_router_bridge.py"
 INTEGRATION="$ROOT/src/alice_personality/n0/evidence_graph_query_edge_competitive_router.py"
 QUALIFIER="$ROOT/scripts/eipm/n0/qualify_n0_v02_query_edge_competitive_router_v0_1.py"
-STATE="$ROOT/configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.26.json"
+STATE="$ROOT/configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.27.json"
 
 EXPECTED_FAILED_RESULT_SHA256="99fc21394bdfbb8e3500bf0efa7c3ce836a2e071b8b11a1c733f73aa99b6fea2"
 EXPECTED_PARENT_GRAPH_SHA256="3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f"
@@ -78,10 +78,10 @@ check_sha "$MAP" "$EXPECTED_LAYER_MAP_SHA256" "layer_map_sha256"
 python - "$STATE" <<'PY'
 import json,sys
 s=json.load(open(sys.argv[1]))
-if s.get("schema")!="alice.eipm.n0.latent-pool-stage-state.v0.26":
-    raise SystemExit("v0.26 state drift")
-if "COMPETITIVE_EDGE_ROUTER_IMPLEMENTED" not in s.get("status",""):
-    raise SystemExit("competitive-router implementation is not current")
+if s.get("schema")!="alice.eipm.n0.latent-pool-stage-state.v0.27":
+    raise SystemExit("v0.27 state drift")
+if "CPU_NO_GRADIENT_ROUTE_CONTROL_QUALIFICATION_AUTHORIZED" not in s.get("status",""):
+    raise SystemExit("competitive-router qualification is not current")
 e=s["execution_policy"]
 if e["cpu_no_gradient_runtime_qualification_authorized"] is not True:
     raise SystemExit("CPU competitive-router qualification not authorized")
@@ -103,7 +103,7 @@ for key in (
         raise SystemExit(f"premature authorization: {key}")
 if s.get("n0_complete") is not False:
     raise SystemExit("N0 completion drift")
-print("v0_26_competitive_router_cpu_qualification_gate=PASS")
+print("v0_27_competitive_router_cpu_qualification_gate=PASS")
 PY
 
 python -m py_compile "$BRIDGE" "$INTEGRATION" "$QUALIFIER"
