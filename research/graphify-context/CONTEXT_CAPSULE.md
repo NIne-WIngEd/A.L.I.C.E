@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-binding-identifiability-before-more-routing-20260920-001
-- Question: Refresh A.L.I.C.E. N0 continuity to the binding-identifiability frontier. Resolve diagnostic branch alice-eipm-v1-query-edge-binding-identifiability-audit at 0610c10ebb74b1518f160ffba90f9acd57e27672, CI run 35490048679 success, authoritative state v0.32, and newest alice-context handoff N0_BINDING_IDENTIFIABILITY_BEFORE_MORE_ROUTING.md. Preserve competitive-router failure result SHA 08bef659779c2e6fcfb0d60ef209d9f6c7f03b0198bcf370e097e278f5436328: parent/no-op and frozen preservation were learned, but correct causal edge selection remained near chance. Preserve setwise qualification receipt 4b1591e1eec5c450a872264a1bdf1130def5a29e443c8c35e974ae05f2861666 as wiring/context evidence only; setwise GPU job 575908 failed before optimizer because of a stale qualification guard and is not model evidence. The current hypothesis is field-side information loss: query uses full token-level hidden states while every evidence field is collapsed to one mean-pooled final-layer vector before structured state, adapter, graph and routing. No replacement GPU or new router is authorized. Reuse the existing 827461729-byte setwise preflight cache and run only the no-gradient query-edge binding identifiability audit comparing raw lexical overlap, pooled field semantics, structured parent state, adapter/graph evidence weights, and token-level query-to-field late interaction on DEV. TEST, challenge, scale, semantic retraining, parent retraining, private identity gradient and promotion remain closed. Graphify remains navigation-only.
+- Request: n0-dual-view-late-interaction-qualification-20260920-001
+- Question: Refresh A.L.I.C.E. N0 continuity to the dual-view late-interaction qualification frontier. Resolve branch alice-eipm-v1-dual-view-late-interaction-binding at static-contract head b736f55363254eb887664f33c35ac1a144a0b08e, CI 35490590850 success, authoritative state v0.33, and newest alice-context handoff N0_DUAL_VIEW_LATE_INTERACTION_QUALIFICATION_READY.md. Preserve identifiability audit SHA 6d166af91240cb67cae270c95bb963cafca0597d65da77de3b0ada53bb33b721: lexical and token-level query-field binding reach 1.0 DEV edge accuracy, final pooled semantics retain 0.8056 all-edge / 0.8889 same-relation, while structured parent state collapses to 0.2083 / 0.2361 and parent graph weighting to 0.1111 / 0.3542. The next architecture is dual-view: final semantic token late interaction determines edge identity, while the existing frozen structured/graph parent and multi-layer relation specialist perform directional reasoning. Routing is hierarchical: P(no-op)=1-P(specialist), P(edge)=P(specialist)*P(edge|specialist). No setwise transformer, no flat parent-plus-edge router, no hard-coded DEV-best layer. Only CPU no-gradient runtime qualification is authorized. GPU, gradient, TEST, challenge, scale, semantic retraining, graph-parent retraining, private identity gradient and promotion remain closed. Graphify remains navigation-only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: False
@@ -18,26 +18,24 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-query-edge-binding-identifiability-audit @ 0610c10ebb74b1518f160ffba90f9acd57e27672 — ci(n0): align lexical identifiability stage name
+- alice-eipm-v1-dual-view-late-interaction-binding @ b736f55363254eb887664f33c35ac1a144a0b08e — ci(n0): guard dual-view qualification boundary
 
 ## Source pointers
 
-- [175] alice-context:docs/chat-context/2026-09-15/sol/N0_V02_STRUCTURED_TO_EVIDENCE_GRAPH_HANDOFF.md — N0 v0.2 Structured-State -> Evidence Graph Handoff
-- [158] alice-eipm-v1-query-edge-binding-identifiability-audit:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [157] alice-eipm-v1-query-edge-binding-identifiability-audit:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [180] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
+- [161] alice-context:docs/chat-context/2026-09-20/sol/N0_COMPETITIVE_EDGE_ROUTER_CPU_QUALIFICATION_READY.md — N0 Competitive Edge Router — CPU Qualification Ready
+- [160] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [153] alice-eipm-v1-query-edge-binding-identifiability-audit:.github/workflows/n0-setwise-query-edge-router-contract-check.yml — n0-setwise-query-edge-router-contract-check.yml
-- [151] alice-context:docs/chat-context/2026-09-20/sol/N0_BINDING_IDENTIFIABILITY_BEFORE_MORE_ROUTING.md — N0 Query–Edge Binding Identifiability Audit — Router Repair Loop Halted
-- [149] alice-eipm-v1-query-edge-binding-identifiability-audit:.github/workflows/n0-query-edge-binding-identifiability-audit-check.yml — n0-query-edge-binding-identifiability-audit-check.yml
-- [148] alice-context:docs/chat-context/2026-09-18/sol/N0_MISSING_EVIDENCE_LOCALIZATION_HANDOFF.md — N0 Missing-Evidence Localization Handoff
-  - status:  final frozen challenge is an immutable valid FAIL; one fresh non-challenge causal-path localization run is ready; no rerun, threshold change, training, promotion, scaling, or N0 completion authorized
-- [142] alice-context:docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_LAYERWISE_AUDIT_HANDOFF.md — N0 Query-Semantics Layerwise Audit Handoff
+- [157] alice-context:docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_LAYERWISE_AUDIT_HANDOFF.md — N0 Query-Semantics Layerwise Audit Handoff
   - status:  575801 completed the first architecture audit; final token states are stronger than pooled views but causes/supports remain at chance; gradient work remains frozen pending one no-gradient layerwise audit
-- [141] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md — N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization
-  - status:  final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged
-- [141] alice-eipm-v1-build:docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md — N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16
-- [140] alice-eipm-v1-query-edge-binding-identifiability-audit:configs/eipm/n0/n0_v02_query_edge_setwise_router_design_decision_v0_1.json — n0_v02_query_edge_setwise_router_design_decision_v0_1.json
-- [140] alice-eipm-v1-query-edge-binding-identifiability-audit:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [155] alice-eipm-v1-query-edge-binding-identifiability-audit:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
+- [155] alice-eipm-v1-query-edge-competitive-router:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
+- [155] alice-eipm-v1-query-edge-cross-attention-bridge:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
+- [155] alice-eipm-v1-query-edge-setwise-router:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
+- [143] alice-eipm-v1-dual-view-late-interaction-binding:.github/workflows/n0-dual-view-late-interaction-qualification-check.yml — n0-dual-view-late-interaction-qualification-check.yml
+- [143] alice-eipm-v1-dual-view-late-interaction-binding:.github/workflows/n0-query-edge-binding-identifiability-audit-check.yml — n0-query-edge-binding-identifiability-audit-check.yml
+- [143] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [141] alice-context:docs/chat-context/2026-09-20/sol/N0_BINDING_IDENTIFIABILITY_BEFORE_MORE_ROUTING.md — N0 Query–Edge Binding Identifiability Audit — Router Repair Loop Halted
 
 ## Graphify navigation hints
 

@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "4a32dba90aa2f88a96fae58288aa4c364766b8bf",
-      "head_committed_at": "2026-09-19T23:48:53-05:00",
-      "head_message": "context: halt router loop and hand off binding audit",
+      "head": "c97e103b0337028c56c47e15f6a58380c19a75ac",
+      "head_committed_at": "2026-09-20T00:01:34-05:00",
+      "head_message": "context: hand off dual-view binding qualification",
       "status": "diverged",
-      "ahead": 210,
+      "ahead": 211,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 557,
+      "changed_file_count_vs_source_merge_base": 558,
       "knowledge_surface": true
     },
     {
@@ -49,6 +49,18 @@
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 6,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
+      "head": "b736f55363254eb887664f33c35ac1a144a0b08e",
+      "head_committed_at": "2026-09-20T00:01:01-05:00",
+      "head_message": "ci(n0): guard dual-view qualification boundary",
+      "status": "ahead",
+      "ahead": 196,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 158,
       "knowledge_surface": true
     },
     {
@@ -257,14 +269,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "0673209f64c3c1f8e1c7984c822474b320c3295b",
-      "head_committed_at": "2026-09-19T23:48:55-05:00",
-      "head_message": "trace(fbm): capture binding identifiability localization",
+      "head": "7b9b37f29ac3fe5e3567c71a565cf7eb455bbe5a",
+      "head_committed_at": "2026-09-20T00:01:36-05:00",
+      "head_message": "trace(fbm): capture dual-view binding architecture decision",
       "status": "diverged",
-      "ahead": 94,
+      "ahead": 95,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 93,
+      "changed_file_count_vs_source_merge_base": 94,
       "knowledge_surface": true
     },
     {
