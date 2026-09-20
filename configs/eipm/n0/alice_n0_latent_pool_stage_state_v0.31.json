@@ -1,0 +1,90 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.31",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.30.json",
+  "status": "SETWISE_GPU_ATTEMPT_575908_CLASSIFIED_PRE_GRADIENT_BOUNDARY_FAILURE;EXACT_CPU_TRAINER_PREFLIGHT_AUTHORIZED;NO_GPU_REPLACEMENT_AUTHORIZED_YET",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-query-edge-setwise-router",
+  "qualified_architecture": {
+    "qualification_status": "PASS_SETWISE_QUERY_EDGE_ROUTER_NO_GRADIENT_RUNTIME_CONTRACT",
+    "qualification_revision": "7a8bc6b63a9f32095ba3fe4ed27db5f62cf5e061",
+    "qualification_receipt_sha256": "4b1591e1eec5c450a872264a1bdf1130def5a29e443c8c35e974ae05f2861666",
+    "setwise_contextual_routing": true,
+    "edge_set_permutation_equivariance": true,
+    "nonlocal_competitor_context": true,
+    "nonlocal_competitor_route_logit_delta": 0.05161154270172119,
+    "parent_parameters_exactly_unchanged": true
+  },
+  "failed_gpu_boundary_execution": {
+    "job_id": 575908,
+    "source_revision": "0614475f17c235ae08fcf0a22536ce56a6fd28d5",
+    "state": "FAILED",
+    "exit_code": "1:0",
+    "elapsed": "00:00:22",
+    "classification_config": "configs/eipm/n0/n0_v02_setwise_training_boundary_recovery_v0_1.json",
+    "model_failure": false,
+    "optimizer_created": false,
+    "gradient_performed": false,
+    "training_steps_executed": 0,
+    "root_cause": "stale competitive qualification status guard inside setwise trainer",
+    "failed_output_directory": "query-edge-setwise-router-v0.1/training-v0.1",
+    "failed_output_directory_preserved": true
+  },
+  "boundary_gap_diagnosis": {
+    "cpu_runtime_qualification_proved_architecture_wiring": true,
+    "cpu_runtime_qualification_proved_learnability": false,
+    "prior_static_training_ci_executed_real_trainer": false,
+    "prior_static_training_ci_caught_exact_qualification_status_guard": false,
+    "exact_training_preoptimizer_path_was_previously_unexercised": true,
+    "corrective_action": "execute the real trainer on CPU with --preflight-only through every pre-optimizer check before GPU authorization"
+  },
+  "exact_cpu_preflight": {
+    "trainer": "scripts/eipm/n0/train_n0_v02_query_edge_setwise_router_v0_1.py",
+    "runner": "scripts/eipm/n0/run_n0_v02_query_edge_setwise_router_training_preflight_v0_2.sh",
+    "output": "query-edge-setwise-router-v0.1/training-preflight-v0.2",
+    "device": "cpu",
+    "uses_exact_training_executable": true,
+    "must_reach_model_construction": true,
+    "must_compile_exact_causal_train_dev_payload": true,
+    "must_attach_exact_preservation_hidden_states": true,
+    "must_load_exact_parent_adapter_and_graph": true,
+    "must_evaluate_baseline_causal_dev": true,
+    "must_evaluate_preservation_dev": true,
+    "must_prove_exact_parent_zero_init": true,
+    "optimizer_created": false,
+    "gradient_performed": false,
+    "training_steps_executed": 0
+  },
+  "execution_policy": {
+    "next_action": "run exact CPU trainer preflight and inspect its immutable receipt",
+    "cpu_exact_training_preflight_authorized": true,
+    "gradient_execution_authorized_now": false,
+    "gpu_execution_authorized_now": false,
+    "replacement_gpu_run_authorized": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "future_gpu_recovery_policy": {
+    "failed_training_v0_1_must_not_be_deleted": true,
+    "replacement_training_directory_if_later_authorized": "query-edge-setwise-router-v0.1/training-v0.2",
+    "replacement_run_requires_exact_preflight_pass": true,
+    "replacement_run_requires_separate_post_preflight_decision": true,
+    "replacement_run_is_not_automatic": true
+  },
+  "capability_interpretation": {
+    "query_edge_bridge_gpu_failure_was_model_learning_evidence": true,
+    "competitive_router_gpu_failure_was_model_learning_evidence": true,
+    "setwise_job_575908_is_model_learning_evidence": false,
+    "cpu_contract_pass_does_not_imply_gpu_learning_success": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
