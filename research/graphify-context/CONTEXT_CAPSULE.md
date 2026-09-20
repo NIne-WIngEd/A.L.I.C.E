@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-p100-inference-localization-placement-20260920-001
-- Question: Refresh A.L.I.C.E. N0 continuity to the P100 inference-only dual-view specialist failure-localization frontier. Resolve branch alice-eipm-v1-dual-view-specialist-failure-localization at exact head d5d2a4f265d5d10a0e9cb6c12c60c864d257c495, CI 35494643335 success, authoritative state v0.38, and newest alice-context handoff N0_DUAL_VIEW_FAILURE_LOCALIZATION_P100_INFERENCE_READY.md. Preserve failure-localization-v0.1 and v0.2 as interrupted diagnostics with no result/model evidence. v0.1 was slow because it recomputed preservation semantic hidden states; v0.2 removed that but still spent >25 minutes in checkpoint-40 bridge counterfactual inference on Magnolia login-node CPU. Scientific question and counterfactual modes are unchanged. v0.3 moves the exact causal counterfactual audit to one P100 inference-only job: no optimizer, backward, gradient, training, semantic backbone execution, TEST or challenge. It reuses causal hidden states, field-token cache, and preservation metrics from source checkpoint receipts. One GPU job only; training remains closed until the localization result is interpreted. Graphify remains navigation-only.
+- Request: n0-clean-sheet-qsre-frontier-20260920-001
+- Question: Refresh A.L.I.C.E. N0 continuity to the clean-sheet QSRE architecture-review frontier. Resolve branch alice-eipm-v1-n0-clean-sheet-relational-execution-review at head 5687469a5a3913b8abce889a1ef397ae95125bb2 and state v0.41. Treat jobs 575797, 575798, 575800, 575825, 575888, 575907 and 575912 as valid learned-model failures in one longer query/relation/endpoint execution family; 575908 is pre-gradient boundary failure, not model evidence. Counterfactual job 575913 localized that activation is not the main blocker, hard support helps substantially but does not close the task, and role execution remains nonsystematic. The clean-sheet audit rejects the repeated global-parent-field-softmax plus residual/mixture pattern. Selected research family is QSRE: multi-layer continuous query operator with explicit migratable relation/argument-role anchors; token-level adaptive sparse structural support; query-conditioned node/edge relational execution with explicit source/target positions; structural readout limited to claimed support; separate applicability/general-parent fallback; output compatible with existing N0 fusion/latent fabric. CI 35496944177 passed a 17-fixture deterministic D1-D5 oracle contract covering role reversal, zero/one/many support, ambiguity, ordered two-hop composition, fallback/defer and isolation from a stronger parent-global distractor. This proves interface expressivity, not learnability. Current exact blueprint is docs/research/eipm-n0-qsre-architecture-blueprint-v0.1.md. No QSRE trainable implementation, optimizer, gradient, GPU, TEST/challenge, retraining, scale or private identity gradient is authorized. Next work is one static tensor-interface/mechanics decision only. Graphify is navigation-only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: False
@@ -18,30 +18,31 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-dual-view-specialist-failure-localization @ d5d2a4f265d5d10a0e9cb6c12c60c864d257c495 — ci(n0): guard P100 inference-only failure localization
+- alice-eipm-v1-n0-clean-sheet-relational-execution-review @ 5687469a5a3913b8abce889a1ef397ae95125bb2 — state(n0): ratify QSRE blueprint as clean-sheet review frontier
 
 ## Source pointers
 
-- [149] alice-context:docs/chat-context/2026-09-20/sol/N0_DUAL_VIEW_SPECIALIST_ONE_P100_READY.md — N0 Dual-View Specialist — One P100 Training Ready
-- [143] alice-context:docs/chat-context/2026-09-20/sol/N0_COMPETITIVE_EDGE_ROUTER_ONE_P100_TRAINING_READY.md — N0 Competitive Edge Router — One P100 Training Ready
-- [142] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md — Magnolia 2×P100 Real N0 Training — Job 575546
-  - status:  completed successfully; durable weights retained; LR scheduler defect identified before continuation
-- [132] alice-context:docs/chat-context/2026-09-20/sol/N0_QUERY_EDGE_ONE_P100_TRAINING_READY.md — N0 Query–Edge Routed Specialist — One P100 Run Ready
-- [132] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md — Magnolia single-P100 N0 teacher diagnostic — job 575565
-- [130] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+- [219] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md — N0 Clean-Sheet Relational Execution Architecture Audit v0.1
+  - status:  architecture-review authority; implementation and gradient work frozen
+- [184] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md — N0 Relational Execution Architecture Family Comparison v0.1
+  - status:  research decision; no implementation or gradient authorized
+- [166] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-qsre-preimplementation-contract-result-v0.1.md — QSRE Deterministic Preimplementation Contract Result v0.1
+- [164] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-qsre-architecture-blueprint-v0.1.md — QSRE Architecture Blueprint v0.1
+  - status:  concrete architecture blueprint; no trainable implementation authorized
+- [161] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md — N0 Relation-Conditioned Multi-Layer Query Interface v0.1
+  - status:  architecture designed from jobs 575801 and 575804; training remains unauthorized
+- [152] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [148] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md — N0 Relation-Conditioned Multi-Layer Query Interface Handoff
+  - status:  architecture designed and CI-qualified from 575804 evidence; exact relation-layer map still must be compiled from the saved audit JSON; training remains unauthorized
+- [146] alice-eipm-v1-n0-clean-sheet-relational-execution-review:.github/workflows/n0-qsre-clean-sheet-review-contract.yml — n0-qsre-clean-sheet-review-contract.yml
+- [138] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
   - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
-- [130] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
-  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
-- [130] alice-eipm-v1-query-edge-binding-identifiability-audit:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
-  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
-- [130] alice-eipm-v1-query-edge-competitive-router:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
-  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
-- [130] alice-eipm-v1-query-edge-cross-attention-bridge:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
-  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
-- [130] alice-eipm-v1-query-edge-setwise-router:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
-  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
-- [130] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
-  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [137] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-multilayer-interface-failure-localization-v0.1.md — N0 Multi-Layer Interface Failure Localization v0.1
+- [136] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md — N0 Relation-Conditioned Multi-Layer Query Interface v0.1
+  - status:  architecture designed from jobs 575801 and 575804; training remains unauthorized
+- [136] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md — N0 Relation-Conditioned Multi-Layer Query Interface v0.1
+  - status:  architecture designed from jobs 575801 and 575804; training remains unauthorized
 
 ## Graphify navigation hints
 
@@ -50,7 +51,7 @@
 ## External/private routing
 
 - Recommended: True
-- Reason: host-specific operational history may contain newer failure lessons than public receipts
+- Reason: question references a private/external source class
 
 ## Trust contract
 

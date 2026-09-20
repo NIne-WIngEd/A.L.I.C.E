@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "98ceba271a95ad9977af699fc474cfb6e948d100",
-      "head_committed_at": "2026-09-20T01:36:29-05:00",
-      "head_message": "context: hand off P100 inference localization placement",
+      "head": "97b7cea52e520d97225b043bedce3671412ff2d1",
+      "head_committed_at": "2026-09-20T02:32:57-05:00",
+      "head_message": "context: hand off clean-sheet QSRE architecture frontier",
       "status": "diverged",
-      "ahead": 216,
+      "ahead": 217,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 563,
+      "changed_file_count_vs_source_merge_base": 564,
       "knowledge_surface": true
     },
     {
@@ -85,6 +85,18 @@
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 41,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-eipm-v1-n0-clean-sheet-relational-execution-review",
+      "head": "5687469a5a3913b8abce889a1ef397ae95125bb2",
+      "head_committed_at": "2026-09-20T02:32:16-05:00",
+      "head_message": "state(n0): ratify QSRE blueprint as clean-sheet review frontier",
+      "status": "ahead",
+      "ahead": 234,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 193,
       "knowledge_surface": true
     },
     {
@@ -281,14 +293,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "a57a6b23d429557e699ac8b8feba934f7797f571",
-      "head_committed_at": "2026-09-20T01:36:32-05:00",
-      "head_message": "trace(fbm): capture inference compute-placement correction",
+      "head": "8d9143e2af1a2bfe708e094ca5a5c88e7ae16283",
+      "head_committed_at": "2026-09-20T02:32:59-05:00",
+      "head_message": "trace(fbm): capture clean-sheet QSRE architecture decision",
       "status": "diverged",
-      "ahead": 100,
+      "ahead": 101,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 99,
+      "changed_file_count_vs_source_merge_base": 100,
       "knowledge_surface": true
     },
     {
