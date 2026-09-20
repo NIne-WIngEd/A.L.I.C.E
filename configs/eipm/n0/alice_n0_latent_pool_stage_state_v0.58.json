@@ -1,0 +1,90 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.58",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.57.json",
+  "status": "T2_V02_VALID_MODEL_FAILURE_LOCALIZED_TO_RELATION_EXTRACTION;SCHEMA_GROUNDED_ORDERED_T2_V03_BUILD_AUTHORIZED;NO_T2_V02_RERUN",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-qsre-t2-operator-learning",
+  "evidence": {
+    "preparation_job": {
+      "job_id": 575953,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "curriculum_sha256": "5aa8f0aa3210466964f38b14081c71c1d3c58f4405247067c76a7cdfe115963c",
+      "prepared_cache_sha256": "f7d93a1ad0559ae2ad29d909062a88fbf2d1eea4a05246a5fb5a95e01d6b69ac",
+      "preparation_authority_sha256": "7212ba7ad6c0c431b03465acdd07bdd4092af5aa5cbc50f8d67c1c5456815071"
+    },
+    "t2_v02_training_job": {
+      "job_id": 575954,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "result_status": "FAIL_QSRE_T2_OPERATOR_DEV_CONTRACT",
+      "result_sha256": "6e4fa39775a985b3265e4e1a84851ebc344310d7dd699e1649e807ab9f8f6025",
+      "final_summary_sha256": "03f9a639b47de06f4b1faa00465dffb20489c6e328b12eedae225f491df97dfb",
+      "best_observed_step": 1175,
+      "best_observed_checkpoint_sha256": "5ff543b8c87543681286d55a3f982ecf31af93588d65b979056992a4ff041574",
+      "selected_checkpoint_step": null,
+      "locked_operator_challenge_opened": false,
+      "automatic_rerun_authorized": false,
+      "automatic_hotfix_authorized": false
+    }
+  },
+  "localization": {
+    "valid_model_failure": true,
+    "infrastructure_failure": false,
+    "operation_learnable": true,
+    "control_learnable": true,
+    "role_learnable": true,
+    "relation_identity_order_is_primary_bottleneck": true,
+    "frozen_semantic_global_insufficiency_proven": false,
+    "max_observed": {
+      "relation_sequence_exact_accuracy": 0.5381944179534912,
+      "role_accuracy_relational": 0.96484375,
+      "operation_accuracy_relational": 1,
+      "control_accuracy": 1,
+      "full_operator_exact_accuracy": 0.4618055522441864,
+      "query_view_pair_consistency": 0.5416666666666666,
+      "downstream_row_success": 0.6284722089767456,
+      "downstream_single_target_top1": 0.6041666865348816,
+      "downstream_causal_pair_completion": 0.4305555555555556
+    }
+  },
+  "t2_v03": {
+    "causal_change": "SCHEMA_GROUNDED_ORDERED_RELATION_DECODER",
+    "relation_schema": "configs/eipm/n0/n0_v02_qsre_t2_relation_schema_v0_1.json",
+    "relation_schema_sha256": "bae45945fcb1a7f33b1177bc65da02c90335d443a0718aa7c796e744ace2e2c9",
+    "operator_source": "src/alice_personality/n0/qsre_t2_schema_ordered_operator.py",
+    "semantic_backbone_frozen": true,
+    "t1_executor_frozen": true,
+    "support_oracle": true,
+    "prepared_cache_reused_exactly": true,
+    "role_head_causal_change": false,
+    "operation_head_causal_change": false,
+    "control_head_causal_change": false,
+    "optimizer_search": false,
+    "step_search": false,
+    "width_search": false
+  },
+  "execution_policy": {
+    "t2_v02_rerun_authorized": false,
+    "t2_v03_static_qualification_authorized": true,
+    "t2_v03_cpu_real_artifact_runtime_qualification_authorized": true,
+    "t2_v03_gpu_training_authorized_after_static_and_cpu_runtime_pass": true,
+    "max_t2_v03_gpu_runs": 1,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_chain_authorized": false,
+    "learning_rate_search_authorized": false,
+    "step_search_authorized": false,
+    "model_size_search_authorized": false,
+    "semantic_backbone_gradient_authorized": false,
+    "t1_executor_gradient_authorized": false,
+    "learned_support_training_authorized": false,
+    "causal_test_opening_authorized": false,
+    "operator_only_locked_challenge_authorized_only_after_perfect_dev_pass": true,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "next_action": "Complete T2 v0.3 static qualification, then launch one owner-side Slurm pipeline chaining real-artifact CPU runtime qualification to exactly one dependent P100 run. If DEV passes, open the prelocked operator-only challenge in the same GPU job; otherwise stop.",
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
