@@ -1090,6 +1090,7 @@ def main() -> None:
     allowed_contract_schemas = {
         "alice.eipm.n0.qsre-t2-training-contract.v0.1",
         "alice.eipm.n0.qsre-t2-training-recovery-contract.v0.2",
+        "alice.eipm.n0.qsre-t2-training-contract.v0.2",
     }
     if contract.get("schema") not in allowed_contract_schemas:
         raise SystemExit(
