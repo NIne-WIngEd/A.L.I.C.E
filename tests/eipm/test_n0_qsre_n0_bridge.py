@@ -127,3 +127,32 @@ def test_bridge_preserves_low_but_nonzero_calibrated_relation_without_second_rou
     )
     report = bridge.parameter_report()
     assert report["hard_relational_confidence_gate"] is False
+
+
+def test_bridge_carries_native_relational_summary_without_adapter() -> None:
+    bridge = QSREN0EvidenceBridge(semantic_dim=4)
+    base = torch.zeros(1, 2, 4)
+    fields = torch.eye(4).unsqueeze(0)
+    probability = torch.tensor([[0.0, 0.6, 0.0, 0.0]])
+    summary = torch.tensor([[2.0, -1.0, 0.5, 3.0]])
+    out = bridge(
+        base_evidence_tokens=base,
+        base_evidence_mask=torch.ones(1, 2, dtype=torch.bool),
+        field_semantic_state=fields,
+        field_valid_mask=torch.ones(1, 4, dtype=torch.bool),
+        relational_probability=probability,
+        relational_summary=summary,
+    )
+    assert out.evidence_tokens.shape == (1, 4, 4)
+    assert out.evidence_mask.shape == (1, 4)
+    assert torch.allclose(
+        out.relational_summary_token,
+        summary * 0.6,
+    )
+    assert torch.allclose(
+        out.evidence_tokens[:, -1],
+        out.relational_summary_token,
+    )
+    report = bridge.parameter_report()
+    assert report["native_relational_summary_channel_supported"] is True
+    assert report["total_parameters"] == 0
