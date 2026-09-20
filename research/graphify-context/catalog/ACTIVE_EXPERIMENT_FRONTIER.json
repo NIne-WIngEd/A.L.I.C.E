@@ -7,13 +7,13 @@
   "maximal_heads": [
     {
       "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-      "head": "10eb099a0201257922e5fc245a9b6772af174649",
-      "head_committed_at": "2026-09-20T14:56:12-05:00",
-      "head_message": "ci(n0): qualify classified QSRE T2 recovery run",
-      "ahead": 296,
+      "head": "767ac28183b57d34b1f819566151914f5ca3acd5",
+      "head_committed_at": "2026-09-20T15:19:25-05:00",
+      "head_message": "guard(n0): revoke QSRE T2 recovery sbatch",
+      "ahead": 300,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 268,
+      "changed_file_count_vs_source_merge_base": 270,
       "changed_paths_vs_source_merge_base": [
         ".github/workflows/n0-arbitration-contract-check.yml",
         ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -94,6 +94,7 @@
         "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.52.json",
         "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.53.json",
         "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.54.json",
+        "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.55.json",
         "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
         "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
         "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
@@ -126,6 +127,7 @@
         "docs/research/eipm-full-eipm-workload-envelope-v0.1.md",
         "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
         "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+        "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
         "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
         "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
         "docs/research/eipm-n0-multilayer-interface-failure-localization-v0.1.md",
@@ -212,9 +214,7 @@
         "scripts/eipm/n0/run_n0_v02_calibrate_multilayer_preservation_v0_1.sh",
         "scripts/eipm/n0/run_n0_v02_capture_qsre_t1_postrun_evidence_v0_1.sh",
         "scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh",
-        "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
-        "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
-        "scripts/eipm/n0/run_n0_v02_dual_view_specialist_failure_localization_v0_1.sh"
+        "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh"
       ],
       "authority": "unmerged-experiment-pointer"
     }
@@ -222,13 +222,13 @@
   "all_ahead_candidates": [
     {
       "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-      "head": "10eb099a0201257922e5fc245a9b6772af174649",
-      "head_committed_at": "2026-09-20T14:56:12-05:00",
-      "head_message": "ci(n0): qualify classified QSRE T2 recovery run",
-      "ahead": 296,
+      "head": "767ac28183b57d34b1f819566151914f5ca3acd5",
+      "head_committed_at": "2026-09-20T15:19:25-05:00",
+      "head_message": "guard(n0): revoke QSRE T2 recovery sbatch",
+      "ahead": 300,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 268,
+      "changed_file_count_vs_source_merge_base": 270,
       "changed_paths_vs_source_merge_base": [
         ".github/workflows/n0-arbitration-contract-check.yml",
         ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -309,6 +309,7 @@
         "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.52.json",
         "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.53.json",
         "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.54.json",
+        "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.55.json",
         "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
         "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
         "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
@@ -341,6 +342,7 @@
         "docs/research/eipm-full-eipm-workload-envelope-v0.1.md",
         "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
         "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+        "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
         "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
         "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
         "docs/research/eipm-n0-multilayer-interface-failure-localization-v0.1.md",
@@ -427,9 +429,7 @@
         "scripts/eipm/n0/run_n0_v02_calibrate_multilayer_preservation_v0_1.sh",
         "scripts/eipm/n0/run_n0_v02_capture_qsre_t1_postrun_evidence_v0_1.sh",
         "scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh",
-        "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
-        "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
-        "scripts/eipm/n0/run_n0_v02_dual_view_specialist_failure_localization_v0_1.sh"
+        "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh"
       ],
       "authority": "unmerged-experiment-pointer"
     },

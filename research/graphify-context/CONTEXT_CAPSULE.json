@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-qsre-t2-evaluator-recovery-authorized-20260920-001",
-  "question": "Refresh A.L.I.C.E. N0 continuity to the classified QSRE T2 evaluator-recovery frontier. Governed T2 job 575933 ran from source c43df19e79dc63ed00f15a313d71f7873fa5b71f and stopped after step25 diagnostics with ValueError PATH_FOLLOW requires a non-empty oracle focus frontier. No result.json was produced and the model-gate conclusion is UNDETERMINED. Root cause is evaluator totality: the frozen T1 validator correctly rejects PATH_FOLLOW without focus, but an immature T2 operation head can temporarily predict PATH_FOLLOW on rows with empty oracle focus; the evaluator passed provisional predictions directly into T1 and raised instead of scoring the wrong prediction as failure. Do not change T1. Do not infer model/capacity failure. Bounded evaluator correction revision bff3b2e7c31255e8ca9354add5dafa1bde177b18 canonicalizes impossible path predictions only for safe T1 execution; RELATIONAL rows requiring canonicalization remain explicit downstream failures with zeroed downstream probability, while non-relational operation is semantically inactive. New diagnostics expose invalid_relational_path_without_focus_count/rate. No architecture, optimizer, LR, loss, data, semantic checkpoint, T1 checkpoint, eligibility threshold, or TEST boundary changed. Evaluator-totality qualification revision feee4f2b8cc36dbcf1c3805f401f4347315be945, workflow 35533710899, SUCCESS. Authoritative state v0.54. Recovery scientific core 157153b124d665880de237299d8dd8c81403d45c. Classified recovery authorization workflow 35533910879 SUCCESS and proves exact scientific equivalence to original T2 contract. Preserve failed root training-v0.1, its hidden cache, best-observed checkpoint, stdout/stderr; do not promote step25. One fresh replacement run is authorized at training-v0.2-evaluator-totality-recovery, restarting from original seed with no partial optimizer reuse. Automatic rerun/hotfix chains remain forbidden. T1 rerun, semantic/T1 gradients, T3 support learning, TEST, frozen challenge, private identity gradient, and production promotion remain closed. Durable alice-context handoff commit 9e0f6332336bd9fcdaaf38b608dda3bda5d1e7cc. Full EIPM workload/no-permanent-ceiling doctrine remains active. Graphify is navigation-only.",
-  "generated_at_utc": "2026-09-20T19:59:01.152665+00:00",
+  "request_id": "n0-qsre-t2-cpu-gpu-reality-audit-20260920-001",
+  "question": "Refresh A.L.I.C.E. N0 continuity to the CPU/GPU reality-gap and data-validity audit frontier. Job 575934 failed before container entry because the recovery Slurm script contained malformed doubled-dollar parameter expansion; Bash expanded the doubled dollar to the process id. Direct source inspection also found the same malformed expansion in the recovery runner. Critically, the recovery CI encoded the malformed spelling as the expected string, so implementation and validator shared the same defect. This is SHELL_EXPANSION_AND_VALIDATOR_CORRELATION_FAILURE_NOT_MODEL_EVIDENCE. Authoritative state is now v0.55 and all T2 GPU/gradient authorization is revoked. Old recovery runner and sbatch are fail-closed. Preserve job 575933 as evaluator-totality failure with UNDETERMINED model gate and job 575934 as runtime/validator-correlation failure. Historical taxonomy: v0.7 import harness no model evidence; v0.22/job575825 genuine learned failure; v0.34 qualifier bookkeeping no model evidence; v0.36/job575912 genuine learned failure; v0.47 T1 shortcut/path correction before GPU; v0.51 udocker PYTHONPATH infrastructure; job575914 genuine QSRE T1 P100 PASS. Direct data read: T1 fields are intentionally opaque neutral evidence record hashes and only test structural executor causality. T2 v0.1 uses small generated phrase banks whose operation/control labels have highly available lexical cues; TRAIN/DEV wording differs but grammar is shared. T2 is therefore a unit test of generated operator-language learnability, not yet a representative public N0 operator benchmark. Real public N0 semantic data is much richer: pragmatics, evidence conflicts, counterfactual provenance, uncertainty, causal paraphrases, social/relationship context, domain senses. Early Phase 1 RAG lesson recovered: MS MARCO passage reranker reduced grounded support 0.421053 to 0.083333 and was disabled; direct downstream evidence overrode apparent sophistication. QSRE is not rejected: T1 passed a real P100 gate and explicit operator/support-local execution remains supported. T2 has no valid model PASS/FAIL. Next work must be one coherent no-gradient audit batch, not micro gates: runtime behavioral parity, representative public-only relation/evidence set, shortcut baselines, frozen-semantic layer sufficiency probes, evaluator totality over provisional/invalid outputs, then one architecture decision. Durable alice-context commit 611660ae8bd2cbf4a13c5c9dda8bd958f4d77352. Audit doc docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md. Graphify remains navigation-only.",
+  "generated_at_utc": "2026-09-20T20:20:46.694222+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -13,17 +13,17 @@
     "graph_extraction_tree": null,
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "9e0f6332336bd9fcdaaf38b608dda3bda5d1e7cc",
-      "head_committed_at": "2026-09-20T14:58:17-05:00",
-      "head_message": "context: hand off QSRE T2 evaluator recovery"
+      "head": "611660ae8bd2cbf4a13c5c9dda8bd958f4d77352",
+      "head_committed_at": "2026-09-20T15:19:55-05:00",
+      "head_message": "context: hand off N0 CPU-GPU reality audit"
     },
     "continuity_stale_relative_to_experiment_frontier": true,
     "maximal_unmerged_experiment_heads": [
       {
         "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-        "head": "10eb099a0201257922e5fc245a9b6772af174649",
-        "head_committed_at": "2026-09-20T14:56:12-05:00",
-        "head_message": "ci(n0): qualify classified QSRE T2 recovery run"
+        "head": "767ac28183b57d34b1f819566151914f5ca3acd5",
+        "head_committed_at": "2026-09-20T15:19:25-05:00",
+        "head_message": "guard(n0): revoke QSRE T2 recovery sbatch"
       }
     ]
   },
@@ -107,9 +107,9 @@
     },
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "9e0f6332336bd9fcdaaf38b608dda3bda5d1e7cc",
-      "head_committed_at": "2026-09-20T14:58:17-05:00",
-      "head_message": "context: hand off QSRE T2 evaluator recovery"
+      "head": "611660ae8bd2cbf4a13c5c9dda8bd958f4d77352",
+      "head_committed_at": "2026-09-20T15:19:55-05:00",
+      "head_message": "context: hand off N0 CPU-GPU reality audit"
     },
     "unmerged_experiment_frontier": {
       "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -120,13 +120,13 @@
       "maximal_heads": [
         {
           "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-          "head": "10eb099a0201257922e5fc245a9b6772af174649",
-          "head_committed_at": "2026-09-20T14:56:12-05:00",
-          "head_message": "ci(n0): qualify classified QSRE T2 recovery run",
-          "ahead": 296,
+          "head": "767ac28183b57d34b1f819566151914f5ca3acd5",
+          "head_committed_at": "2026-09-20T15:19:25-05:00",
+          "head_message": "guard(n0): revoke QSRE T2 recovery sbatch",
+          "ahead": 300,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-          "changed_file_count_vs_source_merge_base": 268,
+          "changed_file_count_vs_source_merge_base": 270,
           "changed_paths_vs_source_merge_base": [
             ".github/workflows/n0-arbitration-contract-check.yml",
             ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -207,6 +207,7 @@
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.52.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.53.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.54.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.55.json",
             "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
@@ -239,6 +240,7 @@
             "docs/research/eipm-full-eipm-workload-envelope-v0.1.md",
             "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
             "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+            "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
             "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
             "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
             "docs/research/eipm-n0-multilayer-interface-failure-localization-v0.1.md",
@@ -325,9 +327,7 @@
             "scripts/eipm/n0/run_n0_v02_calibrate_multilayer_preservation_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_capture_qsre_t1_postrun_evidence_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_dual_view_specialist_failure_localization_v0_1.sh"
+            "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh"
           ],
           "authority": "unmerged-experiment-pointer"
         }
@@ -335,13 +335,13 @@
       "all_ahead_candidates": [
         {
           "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-          "head": "10eb099a0201257922e5fc245a9b6772af174649",
-          "head_committed_at": "2026-09-20T14:56:12-05:00",
-          "head_message": "ci(n0): qualify classified QSRE T2 recovery run",
-          "ahead": 296,
+          "head": "767ac28183b57d34b1f819566151914f5ca3acd5",
+          "head_committed_at": "2026-09-20T15:19:25-05:00",
+          "head_message": "guard(n0): revoke QSRE T2 recovery sbatch",
+          "ahead": 300,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-          "changed_file_count_vs_source_merge_base": 268,
+          "changed_file_count_vs_source_merge_base": 270,
           "changed_paths_vs_source_merge_base": [
             ".github/workflows/n0-arbitration-contract-check.yml",
             ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -422,6 +422,7 @@
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.52.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.53.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.54.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.55.json",
             "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
@@ -454,6 +455,7 @@
             "docs/research/eipm-full-eipm-workload-envelope-v0.1.md",
             "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
             "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+            "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
             "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
             "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
             "docs/research/eipm-n0-multilayer-interface-failure-localization-v0.1.md",
@@ -540,9 +542,7 @@
             "scripts/eipm/n0/run_n0_v02_calibrate_multilayer_preservation_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_capture_qsre_t1_postrun_evidence_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_compile_relation_conditioned_layer_map_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_dual_view_specialist_failure_localization_v0_1.sh"
+            "scripts/eipm/n0/run_n0_v02_downstream_causal_arbitration_metric_calibration_v0_1.sh"
           ],
           "authority": "unmerged-experiment-pointer"
         },
@@ -2500,16 +2500,72 @@
     },
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": true,
-      "newest_experiment_frontier_time": "2026-09-20T14:56:12-05:00",
+      "newest_experiment_frontier_time": "2026-09-20T15:19:25-05:00",
       "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
-      "context_branch_head_time": "2026-09-20T14:58:17-05:00"
+      "context_branch_head_time": "2026-09-20T15:19:55-05:00"
     },
     "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
     "authority": "routing-and-freshness-only"
   },
   "authoritative_source_pointers": [
     {
-      "score": 216,
+      "score": 350,
+      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+      "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
+      "category": "design_document",
+      "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
+      "declared": {
+        "status": " architecture/data audit authority; all new gradient/GPU work frozen"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
+        "fallback",
+        "recovery",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 133,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 249,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-20/sol/N0_QSRE_T2_CPU_GPU_REALITY_AUDIT_ACTIVE.md",
+      "blob_sha": "ba7dcb62ee209f14c48a5739fd7958b27346b05e",
+      "category": "working_context",
+      "title": "N0 QSRE T2 CPU/GPU Reality-Gap Audit Active",
+      "declared": {
+        "status": " all T2 GPU/gradient work frozen pending one coherent reality/data audit"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
+        "fallback",
+        "recovery",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 134
+    },
+    {
+      "score": 237,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-20/sol/N0_QSRE_T2_EVALUATOR_TOTALITY_RECOVERY_AUTHORIZED.md",
@@ -2520,187 +2576,60 @@
         "status": " job 575933 classified as evaluator-harness failure, not a model-gate result; one fresh classified replacement run authorized after static qualification"
       },
       "matched_terms": [
-        "frontier"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 109
-    },
-    {
-      "score": 144,
-      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-      "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-qsre-t2-evaluator-totality-qualification.yml",
-      "blob_sha": "a4207dce50f105c4516c75e3b08b8ce59d7fad7c",
-      "category": "repository_file",
-      "title": "n0-qsre-t2-evaluator-totality-qualification.yml",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 21
-    },
-    {
-      "score": 141,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md",
-      "blob_sha": "0fd59429e3c85c66ad4674cf2cfd94a84016410c",
-      "category": "working_context",
-      "title": "Fusion frozen challenge failure + source-anchored repair — 2026-09-16",
-      "declared": {
-        "status": "`FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`."
-      },
-      "matched_terms": [
         "error",
         "failed",
         "failure",
         "fallback",
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "supersession",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 24
-    },
-    {
-      "score": 135,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
-      "blob_sha": "19f407ba4d11922a5095d3570cb6a0474d54e6be",
-      "category": "working_context",
-      "title": "N0 Final Frozen Challenge Ready Handoff",
-      "declared": {
-        "status": " one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
         "hotfix",
-        "magnolia",
-        "repair",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 45
-    },
-    {
-      "score": 135,
-      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-      "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-qsre-t2-classified-recovery-authorization.yml",
-      "blob_sha": "7b3d90846790569eb17aa44efd3aa0c8cdc5eda7",
-      "category": "repository_file",
-      "title": "n0-qsre-t2-classified-recovery-authorization.yml",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
         "recovery"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
+        "frontier",
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 20
+      "lexical_body_hits": 43
     },
     {
-      "score": 130,
+      "score": 212,
       "branch": "alice-eipm-v1-build",
       "branch_scope": "current_source",
-      "path": "docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md",
-      "blob_sha": "83b65bc91215216f5637f99090f28c56940553b7",
+      "path": "docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md",
+      "blob_sha": "5bf63241b821ece2c6b74fc0512c575bd7db9c6e",
       "category": "design_document",
-      "title": "A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13",
-      "declared": {
-        "status": " research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.",
-        "supersession": " this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it."
-      },
-      "matched_terms": [
-        "fallback",
-        "network"
+      "title": "N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 52,
+          "text": "The v0.1 challenge rows are retired from future latent-pool ratification because their observed result informed this validator correction. A new untouched v0.2 challenge is required."
+        }
       ],
-      "supersession_hints": [],
       "catalogs": [
+        "supersession",
         "failure",
-        "frontier",
-        "document",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 61
-    },
-    {
-      "score": 127,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-10/sol/EIPM_NATIVE_FRONTIER_ARCHITECTURE_RESEARCH.md",
-      "blob_sha": "786ef85d01add48f1bb605d1d2810ead3be42c02",
-      "category": "working_context",
-      "title": "A.L.I.C.E.-Native EIPM Frontier Architecture Research — 2026-09-10",
-      "declared": {
-        "owner_constraint": " third-party models may be disposable research, generation, or engineering tools. Third-party model weights must not be required by the permanent A.L.I.C.E. Elaina Identity / Personality Model (EIPM). The permanent EIPM weights must be A.L.I.C.E.-native and trained from A.L.I.C.E.-controlled initialization/training lineage.",
-        "status": " working frontier recommendation on `alice-context`; not canonical `main`; no A.L.I.C.E. weights created.",
-        "supersession": " this note supersedes the earlier working recommendation that treated `Qwen3.8-27B + A.L.I.C.E. LoRA` as the permanent EIPM. Qwen may remain an optional disposable teacher/mechanics tool where licensing permits. Its weights are not part of the EIPM."
-      },
-      "matched_terms": [
-        "architecture research",
-        "benchmark",
-        "frontier",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "supersession",
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 45
+      "lexical_body_hits": 34,
+      "currentness_adjustment": 4
     },
     {
-      "score": 125,
-      "branch": "alice-context",
+      "score": 204,
+      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-20/sol/N0_QSRE_T1_ONE_SHOT_P100_AUTHORIZED.md",
-      "blob_sha": "4705bebeb3ef4638440f9e290ba06cc896b926a4",
-      "category": "working_context",
-      "title": "N0 QSRE T1 One-Shot P100 Authorized Frontier",
+      "path": "docs/research/eipm-n0-qsre-t1-one-shot-p100-authorization-v0.1.md",
+      "blob_sha": "61a6a9263febaee4191a69018355d5ab4e655008",
+      "category": "design_document",
+      "title": "QSRE T1 One-Shot P100 Authorization v0.1",
       "declared": {},
       "matched_terms": [
         "failure",
         "hotfix",
-        "magnolia",
-        "repair"
+        "magnolia"
       ],
       "supersession_hints": [],
       "catalogs": [
@@ -2709,10 +2638,32 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 28
+      "lexical_body_hits": 20,
+      "currentness_adjustment": 25
     },
     {
-      "score": 123,
+      "score": 201,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/PHASE_1_RESPONSE_EVIDENCE_EXPANSION_TEST_BOUNDARY_FIX.md",
+      "blob_sha": "8f90b33e5bed3282c937724156e84031ac10525e",
+      "category": "design_document",
+      "title": "P1.11 Evidence Expansion Test-Boundary Fix",
+      "declared": {},
+      "matched_terms": [
+        "error"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 9,
+      "currentness_adjustment": 4
+    },
+    {
+      "score": 199,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
@@ -2737,26 +2688,22 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 43
+      "lexical_body_hits": 41
     },
     {
-      "score": 122,
-      "branch": "alice-context",
+      "score": 198,
+      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md",
-      "blob_sha": "eff85666b994e668f3686bee2892bf47c6f7c9cd",
-      "category": "working_context",
-      "title": "N0 Causal Arbitration Frontier Calibration Handoff",
+      "path": "docs/research/eipm-n0-multilayer-interface-failure-localization-v0.1.md",
+      "blob_sha": "3df49fbb38961396cef9ab24837687abc3b87afb",
+      "category": "design_document",
+      "title": "N0 Multi-Layer Interface Failure Localization v0.1",
       "declared": {},
       "matched_terms": [
-        "egress",
-        "error",
         "failed",
         "failure",
-        "magnolia",
-        "repair",
-        "smoke",
-        "udocker"
+        "hotfix",
+        "magnolia"
       ],
       "supersession_hints": [],
       "catalogs": [
@@ -2765,58 +2712,115 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 44
+      "lexical_body_hits": 44,
+      "currentness_adjustment": 25
     },
     {
-      "score": 120,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md",
-      "blob_sha": "5bf63241b821ece2c6b74fc0512c575bd7db9c6e",
-      "category": "design_document",
-      "title": "N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 52,
-          "text": "The v0.1 challenge rows are retired from future latent-pool ratification because their observed result informed this validator correction. A new untouched v0.2 challenge is required."
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 36
-    },
-    {
-      "score": 118,
-      "branch": "alice-context",
+      "score": 196,
+      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-16/sol/FULL_SCALE_FUSION_JOB575619_AND_FROZEN_CHALLENGE.md",
-      "blob_sha": "7139049e6292458813e3da7ef739007e823d9feb",
-      "category": "working_context",
-      "title": "Full-Scale Fusion Job 575619 + Frozen Challenge Gate — 2026-09-16",
-      "declared": {},
+      "path": "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+      "blob_sha": "b768036497da7db21464b6959b46d86706353832",
+      "category": "design_document",
+      "title": "N0 Clean-Sheet Relational Execution Architecture Audit v0.1",
+      "declared": {
+        "status": " architecture-review authority; implementation and gradient work frozen"
+      },
       "matched_terms": [
+        "failed",
         "failure",
-        "magnolia",
-        "udocker"
+        "fallback",
+        "network",
+        "repair"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
+        "frontier",
+        "supersession",
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 27
+      "lexical_body_hits": 69,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 192,
+      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md",
+      "blob_sha": "8b5017e74d5fa74a66668af3171763745cfc3804",
+      "category": "design_document",
+      "title": "QSRE T1 PASS → T2 Learned-Operator Decision v0.1",
+      "declared": {
+        "status": " T1 causal question passed on DEV; T2 static design/CPU mechanics justified; T2 gradient remains closed"
+      },
+      "matched_terms": [
+        "failure",
+        "hotfix",
+        "magnolia"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 47,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 191,
+      "branch": "alice-eipm-v1-build",
+      "branch_scope": "current_source",
+      "path": "docs/PHASE_1_RESPONSE_EVIDENCE_EXPANSION.md",
+      "blob_sha": "b0dd09242587f06b14f06b395ca077ca3b9b0623",
+      "category": "design_document",
+      "title": "P1.11 Evidence Passage Expansion",
+      "declared": {},
+      "matched_terms": [
+        "benchmark"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 11,
+      "currentness_adjustment": 4
+    },
+    {
+      "score": 191,
+      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-qsre-t1-executor-decision-v0.1.md",
+      "blob_sha": "66bcc5f00f583c8bc5a263c1e6bc147c75596ec4",
+      "category": "design_document",
+      "title": "QSRE T1 Executor Decision v0.1",
+      "declared": {
+        "status": " authorizes trainable source definition and CPU/no-gradient forward qualification only"
+      },
+      "matched_terms": [
+        "failure",
+        "fallback",
+        "incident"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 36,
+      "currentness_adjustment": 25
     }
   ],
   "graphify_navigation_hints": [],
   "private_external_route_recommended": true,
-  "private_external_route_reason": "question references a private/external source class",
+  "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
   "trust_contract": [
     "This capsule routes retrieval; it is not canonical A.L.I.C.E. truth.",
     "Open consequential claims in the original branch/path source before acting.",
