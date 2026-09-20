@@ -3,7 +3,7 @@
   "status": "PRECOMMITTED_CAUSAL_PIPELINE_NO_POSTHOC_TUNING",
   "architecture": "configs/eipm/n0/n0_v02_qsre_production_core_v1.json",
   "curriculum_contract": "configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json",
-  "curriculum_sha256": null,
+  "curriculum_sha256": "9383baa09f591bbf906c26f6b5d06955069e8211f2c7689308b3f542e33c736c",
   "relation_schema": "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
   "model": {
     "semantic_dim": 640,
