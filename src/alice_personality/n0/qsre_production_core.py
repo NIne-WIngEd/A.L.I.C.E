@@ -19,6 +19,10 @@ TRAVERSAL_LOCAL = 0
 TRAVERSAL_PATH = 1
 TRAVERSAL_AGGREGATE = 2
 
+DIRECTION_FORWARD = 0
+DIRECTION_REVERSE = 1
+DIRECTION_BIDIRECTIONAL = 2
+
 MOD_RELIABILITY = 0
 MOD_RECENCY = 1
 MOD_TEMPORAL_CONSTRAINT = 2
@@ -40,6 +44,7 @@ class QSREProductionConfig:
     field_metadata_dim: int = 3
     role_count: int = 4
     traversal_count: int = 3
+    direction_count: int = 3
     modifier_count: int = 4
     control_count: int = 3
     dropout: float = 0.05
@@ -55,6 +60,7 @@ class QSREProductionConfig:
             "field_metadata_dim": self.field_metadata_dim,
             "role_count": self.role_count,
             "traversal_count": self.traversal_count,
+            "direction_count": self.direction_count,
             "modifier_count": self.modifier_count,
             "control_count": self.control_count,
         }
@@ -67,6 +73,8 @@ class QSREProductionConfig:
             raise ValueError("production structural role bank requires at least 4 seed roles")
         if self.traversal_count < 3:
             raise ValueError("production traversal bank requires at least 3 seed factors")
+        if self.direction_count < 3:
+            raise ValueError("production direction bank requires at least 3 seed factors")
         if self.modifier_count < 4:
             raise ValueError("production modifier bank requires at least 4 seed factors")
         if self.control_count < 3:
@@ -140,6 +148,7 @@ class QSREProductionOperatorState:
     unknown_probability: Tensor
     role_distribution: Tensor
     traversal_distribution: Tensor
+    direction_distribution: Tensor
     modifier_weight: Tensor
     applicability: Tensor
     control_distribution: Tensor
@@ -162,6 +171,8 @@ class QSREProductionOperatorState:
             raise ValueError("role_distribution must be [B,R_role] with at least 4 seed roles")
         if self.traversal_distribution.ndim != 2 or self.traversal_distribution.size(0) != batch or self.traversal_distribution.size(1) < 3:
             raise ValueError("traversal_distribution must be [B,R_traversal] with at least 3 seed factors")
+        if self.direction_distribution.ndim != 2 or self.direction_distribution.size(0) != batch or self.direction_distribution.size(1) < 3:
+            raise ValueError("direction_distribution must be [B,R_direction] with at least 3 seed factors")
         if self.modifier_weight.ndim != 2 or self.modifier_weight.size(0) != batch:
             raise ValueError("modifier_weight must be [B,M]")
         if self.applicability.shape != (batch,):
@@ -179,6 +190,7 @@ class QSREProductionOperatorState:
             ("unknown_probability", self.unknown_probability),
             ("role_distribution", self.role_distribution),
             ("traversal_distribution", self.traversal_distribution),
+            ("direction_distribution", self.direction_distribution),
             ("modifier_weight", self.modifier_weight),
             ("applicability", self.applicability),
             ("control_distribution", self.control_distribution),
@@ -346,6 +358,7 @@ class QSREProductionOperatorInducer(nn.Module):
 
         self.role_head = nn.Linear(d, config.role_count)
         self.traversal_head = nn.Linear(d, config.traversal_count)
+        self.direction_head = nn.Linear(d, config.direction_count)
         self.modifier_head = nn.Linear(d, config.modifier_count)
         self.applicability_head = nn.Linear(d, 1)
         self.control_head = nn.Linear(d, config.control_count)
@@ -363,6 +376,7 @@ class QSREProductionOperatorInducer(nn.Module):
             self.unknown_head,
             self.role_head,
             self.traversal_head,
+            self.direction_head,
             self.modifier_head,
             self.applicability_head,
             self.control_head,
@@ -599,6 +613,7 @@ class QSREProductionOperatorInducer(nn.Module):
 
         role_distribution = torch.softmax(self.role_head(state), dim=-1)
         traversal_distribution = torch.softmax(self.traversal_head(state), dim=-1)
+        direction_distribution = torch.softmax(self.direction_head(state), dim=-1)
         modifier_weight = torch.sigmoid(self.modifier_head(state))
         applicability = torch.sigmoid(self.applicability_head(state)).squeeze(-1)
         control_distribution = torch.softmax(self.control_head(state), dim=-1)
@@ -629,6 +644,13 @@ class QSREProductionOperatorInducer(nn.Module):
             float(torch.log(torch.tensor(float(self.config.traversal_count))).item()),
             1.0e-6,
         )
+        direction_entropy = -(
+            direction_distribution.clamp_min(1.0e-12)
+            * direction_distribution.clamp_min(1.0e-12).log()
+        ).sum(dim=-1) / max(
+            float(torch.log(torch.tensor(float(self.config.direction_count))).item()),
+            1.0e-6,
+        )
         unknown_event_mass = unknown_probability.sum(dim=1).clamp(
             min=0.0,
             max=1.0,
@@ -641,6 +663,7 @@ class QSREProductionOperatorInducer(nn.Module):
                 relation_entropy.clamp(0.0, 1.0),
                 role_entropy.clamp(0.0, 1.0),
                 traversal_entropy.clamp(0.0, 1.0),
+                direction_entropy.clamp(0.0, 1.0),
                 unknown_event_mass,
             ],
             dim=-1,
@@ -657,6 +680,7 @@ class QSREProductionOperatorInducer(nn.Module):
             unknown_probability=unknown_probability,
             role_distribution=role_distribution,
             traversal_distribution=traversal_distribution,
+            direction_distribution=direction_distribution,
             modifier_weight=modifier_weight,
             applicability=applicability,
             control_distribution=control_distribution,
@@ -689,6 +713,7 @@ class QSREProductionOperatorInducer(nn.Module):
             "continuous_operator_state": True,
             "role_count_ceiling": None,
             "traversal_count_ceiling": None,
+            "direction_count_ceiling": None,
             "control_count_ceiling": None,
             "seed_factor_counts_are_checkpoint_topology_not_product_limits": True,
         }
