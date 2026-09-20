@@ -50,6 +50,7 @@ ARGS=(
   --workdir="$ROOT"
   --env="PYTHON=python"
   --env="ALICE_REPO_ROOT=$ROOT"
+  --env="ALICE_N0_REPO_ROOT=$ROOT"
 )
 
 # Forward only the stage controls that are intentionally part of the N0
@@ -61,6 +62,7 @@ for name in \
   CUDA_VISIBLE_DEVICES \
   PYTHONPATH \
   ALICE_REPO_ROOT \
+  ALICE_N0_REPO_ROOT \
   ALICE_N0_WORKDIR \
   ALICE_N0_ARB_CAL_DIR \
   ALICE_N0_ARB_DIR \
