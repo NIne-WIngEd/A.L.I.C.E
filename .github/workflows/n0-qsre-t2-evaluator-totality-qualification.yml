@@ -1,0 +1,87 @@
+name: n0-qsre-t2-evaluator-totality-qualification
+
+on:
+  push:
+    paths:
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.53.json"
+      - "scripts/eipm/n0/train_n0_v02_qsre_t2_operator_v0_1.py"
+      - ".github/workflows/n0-qsre-t2-evaluator-totality-qualification.yml"
+  workflow_dispatch:
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Syntax
+        run: |
+          python -m py_compile scripts/eipm/n0/train_n0_v02_qsre_t2_operator_v0_1.py
+
+      - name: Failure classification governance
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          state=json.loads(Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.53.json").read_text())
+          assert state["failed_job"]["job_id"] == 575933
+          assert state["failed_job"]["classification"] == "EVALUATION_HARNESS_TOTALITY_FAILURE_NOT_MODEL_GATE_FAILURE"
+          assert state["failed_job"]["last_completed_dev_step"] == 25
+          assert state["failed_job"]["result_json_produced"] is False
+          assert state["failed_job"]["model_gate_conclusion"] == "UNDETERMINED"
+          assert state["bounded_correction"]["scientific_core_revision"] == "bff3b2e7c31255e8ca9354add5dafa1bde177b18"
+          assert state["bounded_correction"]["model_architecture_changed"] is False
+          assert state["bounded_correction"]["optimizer_changed"] is False
+          assert state["bounded_correction"]["loss_changed"] is False
+          assert state["bounded_correction"]["eligibility_thresholds_changed"] is False
+          assert state["replacement_policy"]["replacement_run_requires_static_qualification"] is True
+          assert state["execution_policy"]["gpu_training_authorized_for_replacement"] is False
+          assert state["execution_policy"]["automatic_rerun_authorized"] is False
+          assert state["execution_policy"]["automatic_hotfix_chain_authorized"] is False
+          assert state["execution_policy"]["causal_test_opening_authorized"] is False
+          assert state["private_identity_gradient"] is False
+          print("PASS_QSRE_T2_EVALUATOR_FAILURE_CLASSIFICATION")
+          PY
+
+      - name: Frozen scientific boundary
+        run: |
+          BASE=c43df19e79dc63ed00f15a313d71f7873fa5b71f
+          git fetch --no-tags --depth=1 origin "$BASE"
+          for path in             src/alice_personality/n0/qsre_t1_executor.py             src/alice_personality/n0/qsre_t2_operator.py             configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_1.json             configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_1.json             scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_1.py             scripts/eipm/n0/prepare_n0_v02_qsre_t2_tokenized_v0_1.py
+          do
+            git diff --quiet "$BASE" HEAD -- "$path" || {
+              echo "Frozen scientific boundary drift: $path"
+              exit 1
+            }
+          done
+          echo "PASS_QSRE_T2_FROZEN_SCIENTIFIC_BOUNDARY"
+
+      - name: Evaluator totality mechanics
+        run: |
+          python -m pip install -q torch
+          PYTHONPATH=src python scripts/eipm/n0/train_n0_v02_qsre_t2_operator_v0_1.py --self-test
+
+      - name: Correction scope audit
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          text=Path("scripts/eipm/n0/train_n0_v02_qsre_t2_operator_v0_1.py").read_text()
+          required=[
+              "_safe_operator_for_frozen_t1_eval",
+              "invalid_relational_path_without_focus_count",
+              "invalid_relational_path_without_focus_rate",
+              "row_success[invalid_relational_bridge] = False",
+              "probability[invalid_relational_bridge] = 0",
+          ]
+          missing=[x for x in required if x not in text]
+          if missing:
+              raise SystemExit("evaluator totality correction incomplete: "+repr(missing))
+          if "QSRE_T1_OPERATION_PATH_FOLLOW" not in text:
+              raise SystemExit("PATH_FOLLOW contract not explicit")
+          if "QSRE_T1_OPERATION_ROLE_SELECT" not in text:
+              raise SystemExit("safe execution canonicalization not explicit")
+          print("PASS_QSRE_T2_EVALUATOR_TOTALITY_SCOPE")
+          PY
