@@ -75,6 +75,6 @@
   "gradient_authorized": false,
   "gpu_authorized": false,
   "private_identity_gradient": false,
-  "expected_sha256": null,
+  "expected_sha256": "7907602681fde3595ad14a9209547c7272e2dab6690be24f9baf590f46b562ff",
   "query_views_per_row": 2
 }
