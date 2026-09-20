@@ -9,6 +9,7 @@ from alice_personality.n0.qsre_production_core import (
 )
 from qsre_production_training_utils import (
     downstream_success,
+    focus_metrics,
     operator_metrics,
     relation_program_exact,
     support_metrics,
@@ -32,6 +33,8 @@ def make_operator(
     role[:, 1] = 1.0
     traversal = torch.zeros(batch, 3)
     traversal[:, 0] = 1.0
+    direction = torch.zeros(batch, 3)
+    direction[:, 0] = 1.0
     modifiers = torch.zeros(batch, 4)
     control = torch.zeros(batch, 3)
     control[:, CONTROL_RELATIONAL] = 1.0
@@ -42,6 +45,7 @@ def make_operator(
         unknown_probability=unknown,
         role_distribution=role,
         traversal_distribution=traversal,
+        direction_distribution=direction,
         modifier_weight=modifiers,
         applicability=torch.ones(batch),
         control_distribution=control,
@@ -72,6 +76,7 @@ def test_operator_metrics_distinguish_stop_and_unknown() -> None:
         "relation_target_mask": torch.tensor([[True, False], [False, False]]),
         "role_target": torch.tensor([1, 3]),
         "traversal_target": torch.tensor([0, 0]),
+        "direction_target": torch.tensor([0, 2]),
         "modifier_target": torch.zeros(2, 4),
         "control_target": torch.tensor([CONTROL_RELATIONAL, CONTROL_DEFER]),
         "termination_target": torch.tensor([0, 1]),
@@ -113,3 +118,20 @@ def test_support_metrics_require_exact_type_compatible_support() -> None:
     assert metrics["edge_f1"] == 1.0
     assert metrics["exact_set_accuracy"] == 1.0
     assert metrics["type_violation_rate"] > 0.0
+
+
+def test_focus_metrics_score_only_path_rows() -> None:
+    predicted = torch.tensor(
+        [[0.0, 1.0, 0.0], [0.7, 0.3, 0.0], [0.0, 0.0, 1.0]]
+    )
+    oracle = torch.tensor(
+        [[0.0, 1.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+    )
+    traversal = torch.tensor([1, 0, 1])
+    metrics = focus_metrics(
+        predicted=predicted,
+        oracle=oracle,
+        traversal_target=traversal,
+    )
+    assert metrics["path_focus_top1_accuracy"] == 1.0
+    assert metrics["path_focus_exact_set_accuracy"] == 1.0
