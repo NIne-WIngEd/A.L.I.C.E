@@ -653,7 +653,11 @@ class QSREProductionOperatorInducer(nn.Module):
 
 
 class QSREProductionBinder(nn.Module):
-    """Token-level, type-aware adaptive structural support."""
+    """Token-level, type-aware adaptive structural support.
+
+    The runtime support score is the supervised score. Endpoint relevance uses
+    late token interaction instead of relying only on pooled field states.
+    """
 
     def __init__(self, config: QSREProductionConfig) -> None:
         super().__init__()
@@ -661,15 +665,24 @@ class QSREProductionBinder(nn.Module):
         self.config = config
         d = config.model_dim
 
+        self.query_norm = nn.LayerNorm(config.semantic_dim)
+        self.field_norm = nn.LayerNorm(config.semantic_dim)
         self.query_projection = nn.Linear(config.semantic_dim, d, bias=False)
         self.field_projection = nn.Linear(config.semantic_dim, d, bias=False)
+        self.operator_projection = nn.Linear(d, d, bias=False)
         self.edge_score = nn.Sequential(
-            nn.Linear(4 * d + 4, 2 * d),
+            nn.Linear(5 * d + 7, 2 * d),
             nn.GELU(),
             nn.Linear(2 * d, 1),
         )
+        nn.init.orthogonal_(self.query_projection.weight)
+        nn.init.orthogonal_(self.field_projection.weight)
+        final = self.edge_score[-1]
+        assert isinstance(final, nn.Linear)
+        nn.init.zeros_(final.weight)
+        nn.init.zeros_(final.bias)
 
-    def _field_summary(
+    def _project_field_tokens(
         self,
         field_token_states: Tensor,
         field_token_mask: Tensor,
@@ -681,21 +694,70 @@ class QSREProductionBinder(nn.Module):
             raise ValueError("field token width drift")
         if field_token_mask.shape != (batch, fields, tokens):
             raise ValueError("field_token_mask shape drift")
-        projected = self.field_projection(field_token_states)
-        mask = field_token_mask.unsqueeze(-1).to(projected.dtype)
-        return (projected * mask).sum(dim=2) / mask.sum(dim=2).clamp_min(1.0)
+        if field_token_mask.dtype != torch.bool:
+            raise ValueError("field_token_mask must be bool")
+        projected = self.field_projection(self.field_norm(field_token_states))
+        return projected
 
-    def _query_summary(
+    def _project_query_tokens(
         self,
         query_hidden_states: Tensor,
         query_token_mask: Tensor,
     ) -> Tensor:
         if query_hidden_states.ndim != 4:
             raise ValueError("query_hidden_states must be [B,L,T,D]")
+        batch, _, tokens, width = query_hidden_states.shape
+        if width != self.config.semantic_dim:
+            raise ValueError("query semantic width drift")
+        if query_token_mask.shape != (batch, tokens):
+            raise ValueError("query_token_mask shape drift")
+        if query_token_mask.dtype != torch.bool:
+            raise ValueError("query_token_mask must be bool")
+        # Binding is entity/evidence relevance rather than relation decoding.
+        # Use token states directly, not a pooled query. The final frozen
+        # semantic layer is the field-token-aligned semantic surface; relation
+        # depth variation remains the operator inducer's responsibility.
         final = query_hidden_states[:, -1]
-        projected = self.query_projection(final)
-        mask = query_token_mask.unsqueeze(-1).to(projected.dtype)
-        return (projected * mask).sum(dim=1) / mask.sum(dim=1).clamp_min(1.0)
+        return self.query_projection(self.query_norm(final))
+
+    @staticmethod
+    def _masked_token_mean(
+        token_state: Tensor,
+        token_mask: Tensor,
+        *,
+        dim: int,
+    ) -> Tensor:
+        weight = token_mask.to(token_state.dtype).unsqueeze(-1)
+        return (token_state * weight).sum(dim=dim) / weight.sum(dim=dim).clamp_min(1.0)
+
+    def _late_endpoint_score(
+        self,
+        *,
+        query_token: Tensor,
+        query_mask: Tensor,
+        endpoint_token: Tensor,
+        endpoint_mask: Tensor,
+    ) -> Tensor:
+        # query_token [B,Tq,D], endpoint_token [B,E,Tf,D]
+        q = F.normalize(query_token, dim=-1)
+        e = F.normalize(endpoint_token, dim=-1)
+        similarity = torch.einsum("bqd,besd->beqs", q, e)
+        valid = (
+            query_mask[:, None, :, None]
+            & endpoint_mask[:, :, None, :]
+        )
+        similarity = similarity.masked_fill(~valid, -1.0e4)
+        token_match = similarity.max(dim=-1).values
+        q_weight = query_mask[:, None, :].to(token_match.dtype)
+        score = (token_match * q_weight).sum(dim=-1) / q_weight.sum(
+            dim=-1
+        ).clamp_min(1.0)
+        endpoint_available = endpoint_mask.any(dim=-1)
+        return torch.where(
+            endpoint_available,
+            score,
+            torch.full_like(score, -1.0),
+        )
 
     def _type_compatibility(
         self,
@@ -773,17 +835,52 @@ class QSREProductionBinder(nn.Module):
         if edge_recency.shape != (batch, edges):
             raise ValueError("edge_recency shape drift")
 
-        query_summary = self._query_summary(query_hidden_states, query_token_mask)
-        field_summary = self._field_summary(field_token_states, field_token_mask)
-        fields = field_summary.size(1)
+        query_token = self._project_query_tokens(
+            query_hidden_states,
+            query_token_mask,
+        )
+        field_token = self._project_field_tokens(
+            field_token_states,
+            field_token_mask,
+        )
+        fields = field_token.size(1)
         if field_type_id.shape != (batch, fields):
             raise ValueError("field_type_id shape drift")
+
+        query_summary = self._masked_token_mean(
+            query_token,
+            query_token_mask,
+            dim=1,
+        )
+        field_summary = self._masked_token_mean(
+            field_token,
+            field_token_mask,
+            dim=2,
+        )
 
         source_index = edge_index[..., 0].clamp(min=0, max=max(fields - 1, 0))
         target_index = edge_index[..., 1].clamp(min=0, max=max(fields - 1, 0))
         batch_index = torch.arange(batch, device=edge_index.device)[:, None].expand(batch, edges)
         source_state = field_summary[batch_index, source_index]
         target_state = field_summary[batch_index, target_index]
+        source_token = field_token[batch_index, source_index]
+        target_token = field_token[batch_index, target_index]
+        source_token_mask = field_token_mask[batch_index, source_index]
+        target_token_mask = field_token_mask[batch_index, target_index]
+
+        source_late = self._late_endpoint_score(
+            query_token=query_token,
+            query_mask=query_token_mask,
+            endpoint_token=source_token,
+            endpoint_mask=source_token_mask,
+        )
+        target_late = self._late_endpoint_score(
+            query_token=query_token,
+            query_mask=query_token_mask,
+            endpoint_token=target_token,
+            endpoint_mask=target_token_mask,
+        )
+        endpoint_late = torch.maximum(source_late, target_late)
 
         rel_index = edge_relation_index.clamp(min=0, max=relation_count - 1)
         relation_state = schema_relation_state[rel_index]
@@ -799,16 +896,28 @@ class QSREProductionBinder(nn.Module):
         edge_relation_mass = relation_mass.gather(1, rel_index)
 
         q = query_summary[:, None, :].expand(batch, edges, -1)
+        operator_state = self.operator_projection(operator.continuous_state)
+        op = operator_state[:, None, :].expand(batch, edges, -1)
+        scalar = torch.stack(
+            [
+                edge_relation_mass,
+                edge_reliability,
+                edge_recency,
+                operator.applicability[:, None].expand(batch, edges),
+                source_late,
+                target_late,
+                endpoint_late,
+            ],
+            dim=-1,
+        )
         feature = torch.cat(
             [
                 q,
                 source_state,
                 target_state,
                 relation_state,
-                edge_relation_mass.unsqueeze(-1),
-                edge_reliability.unsqueeze(-1),
-                edge_recency.unsqueeze(-1),
-                operator.applicability[:, None, None].expand(batch, edges, 1),
+                op,
+                scalar,
             ],
             dim=-1,
         )
@@ -822,6 +931,7 @@ class QSREProductionBinder(nn.Module):
         support_logits = (
             learned_score
             + semantic_bonus
+            + 1.5 * endpoint_late
             + torch.log(edge_relation_mass.clamp_min(1.0e-6))
         )
 
@@ -835,16 +945,11 @@ class QSREProductionBinder(nn.Module):
         valid = edge_valid_mask & type_compatible
         sparse = masked_sparsemax(support_logits, valid, dim=-1)
 
-        # Exact-zero relational activation below the fallback/defer boundary.
         activation = torch.clamp(
             (operator.applicability - 0.25) / 0.50,
             min=0.0,
             max=1.0,
         )
-        # Applicability and control are distinct signals. A DEFER row may have
-        # middling applicability while still explicitly declining relational
-        # execution; support must therefore also be gated by the continuous
-        # RELATIONAL control probability.
         activation = (
             activation
             * operator.control_distribution[:, CONTROL_RELATIONAL]
@@ -861,10 +966,8 @@ class QSREProductionBinder(nn.Module):
             dtype=edge_support_weight.dtype,
             device=edge_support_weight.device,
         )
-        source_scatter = source_index
-        target_scatter = target_index
-        field_support_weight.scatter_add_(1, source_scatter, edge_support_weight)
-        field_support_weight.scatter_add_(1, target_scatter, edge_support_weight)
+        field_support_weight.scatter_add_(1, source_index, edge_support_weight)
+        field_support_weight.scatter_add_(1, target_index, edge_support_weight)
         field_support_weight = field_support_weight.clamp(max=1.0)
 
         return {
@@ -873,9 +976,12 @@ class QSREProductionBinder(nn.Module):
             "field_support_weight": field_support_weight,
             "type_compatible": type_compatible,
             "relation_mass": relation_mass,
+            "source_late_interaction": source_late,
+            "target_late_interaction": target_late,
+            "endpoint_late_interaction": endpoint_late,
         }
 
-    def parameter_report(self) -> dict[str, int | bool]:
+    def parameter_report(self) -> dict[str, int | bool | None]:
         return {
             "total_parameters": sum(p.numel() for p in self.parameters()),
             "relation_count_dependent_parameters": 0,
@@ -883,6 +989,11 @@ class QSREProductionBinder(nn.Module):
             "exact_zero_sparse_support": True,
             "schema_type_compatibility": True,
             "runtime_support_score_is_supervised_score": True,
+            "token_level_late_interaction": True,
+            "pooled_only_binding": False,
+            "field_count_ceiling": None,
+            "edge_count_ceiling": None,
+            "support_count_ceiling": None,
         }
 
 
