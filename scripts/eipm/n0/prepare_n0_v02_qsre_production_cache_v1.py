@@ -110,6 +110,7 @@ def build_split(
     relation_target_mask = torch.zeros(count, max_steps, dtype=torch.bool)
     role_target = torch.zeros(count, dtype=torch.long)
     traversal_target = torch.zeros(count, dtype=torch.long)
+    direction_target = torch.zeros(count, dtype=torch.long)
     modifier_target = torch.zeros(count, 4)
     applicability_target = torch.zeros(count)
     control_target = torch.zeros(count, dtype=torch.long)
@@ -180,6 +181,7 @@ def build_split(
             relation_target_mask[row_i, step] = True
         role_target[row_i] = int(target["role_id"])
         traversal_target[row_i] = int(target["traversal_id"])
+        direction_target[row_i] = int(target.get("direction_id", 0))
         modifier_target[row_i] = torch.tensor(
             [
                 float(target["modifier_target"]["RELIABILITY"]),
@@ -225,6 +227,7 @@ def build_split(
         "relation_target_mask": relation_target_mask,
         "role_target": role_target,
         "traversal_target": traversal_target,
+        "direction_target": direction_target,
         "modifier_target": modifier_target,
         "applicability_target": applicability_target,
         "control_target": control_target,
