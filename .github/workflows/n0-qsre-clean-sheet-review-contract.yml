@@ -44,6 +44,11 @@ jobs:
               scripts/eipm/n0/evaluate_n0_v02_qsre_mechanics_v0_1.py|\
               scripts/eipm/n0/run_n0_v02_qsre_mechanics_v0_1.sh|\
               .github/workflows/n0-qsre-mechanics-contract.yml|\
+              src/alice_personality/n0/qsre_mechanics.py|\
+              tests/eipm/test_n0_qsre_tensor_mechanics.py|\
+              .github/workflows/n0-qsre-tensor-mechanics-contract.yml|\
+              docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md|\
+              configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.44.json|\
               configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.39.json|\
               configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.41.json|\
               configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.40.json|\
