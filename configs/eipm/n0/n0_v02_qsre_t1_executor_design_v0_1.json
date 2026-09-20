@@ -1,0 +1,84 @@
+{
+  "schema": "alice.eipm.n0.qsre-t1-executor-design.v0.1",
+  "status": "SOURCE_AND_NO_GRADIENT_FORWARD_ONLY",
+  "workload_envelope": "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json",
+  "mechanics_contract": "configs/eipm/n0/n0_v02_qsre_static_mechanics_contract_v0_1.json",
+  "causal_stage": "T1",
+  "causal_question": "Can QSRE execute relational/temporal/provenance operations when operator and structural support are oracle-correct?",
+  "oracle_inputs": {
+    "relation_sequence": true,
+    "argument_role": true,
+    "operation": true,
+    "focus_field": true,
+    "structural_support": true
+  },
+  "learned_in_t1": {
+    "node_projection": true,
+    "field_metadata_projection": true,
+    "relation_embedding": true,
+    "role_embedding": true,
+    "operation_embedding": true,
+    "operator_context_projection": true,
+    "edge_metadata_projection": true,
+    "edge_update": true,
+    "source_message": true,
+    "target_message": true,
+    "node_update": true,
+    "structural_readout": true
+  },
+  "explicitly_not_learned": {
+    "natural_language_operator_extraction": true,
+    "support_selection": true,
+    "semantic_backbone": true,
+    "structured_state": true,
+    "evidence_parent": true,
+    "fallback_parent": true
+  },
+  "seed_operations": [
+    "ROLE_SELECT",
+    "PATH_FOLLOW",
+    "AGGREGATE",
+    "PREFER_RELIABILITY",
+    "PREFER_LATEST"
+  ],
+  "seed_roles": [
+    "SOURCE",
+    "TARGET",
+    "SYMMETRIC",
+    "NONE"
+  ],
+  "seed_vocabularies_are_permanent_ceiling": false,
+  "parent_global_logits_input": false,
+  "readout_domain": "support_local_only",
+  "fixed_top_k": false,
+  "relation_sequence_variable_length": true,
+  "current_path_length_is_permanent_ceiling": false,
+  "current_field_edge_counts_are_permanent_ceiling": false,
+  "forward_qualification": [
+    "outside_support_zero_probability",
+    "relational_rows_normalize",
+    "fallback_defer_no_relational_assertion",
+    "edge_permutation_invariance",
+    "field_permutation_equivariance",
+    "relation_sequence_order_affects_state",
+    "dynamic_shapes",
+    "parameter_scope_t1_only"
+  ],
+  "curriculum_families": [
+    "endpoint_role",
+    "relation_filter",
+    "multi_support_aggregate",
+    "ordered_path",
+    "reliability_arbitration",
+    "temporal_arbitration",
+    "ambiguity_plurality",
+    "fallback_defer",
+    "outside_support_distractor"
+  ],
+  "optimizer_authorized": false,
+  "gradient_authorized": false,
+  "gpu_training_authorized": false,
+  "causal_test_opening_authorized": false,
+  "frozen_challenge_opening_authorized": false,
+  "private_identity_gradient": false
+}
