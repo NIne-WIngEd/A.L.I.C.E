@@ -323,6 +323,7 @@ def make_row(
     applicability: float = 0.9,
     control: str = "RELATIONAL",
     open_schema: bool = False,
+    termination: str = "STOP",
 ) -> dict:
     return {
         "schema": SCHEMA,
@@ -343,6 +344,7 @@ def make_row(
             "focus_field_id": focus_field_id,
             "applicability": float(applicability),
             "control_id": CONTROL[control],
+            "termination": termination,
         },
         "support_edge_ids": support_edge_ids,
         "target_distribution": target_distribution,
@@ -623,6 +625,134 @@ def pair_rows(
             ),
         ]
 
+    
+    if family == "temporal_constraint":
+        fields = make_fields(split, family, group, [src_type, tgt_type, src_type, tgt_type, "GENERIC", "GENERIC"])
+        ids = [row["id"] for row in fields]
+        left = [
+            edge("e0", ids[0], ids[1], r1, temporal_match=1.0),
+            edge("e1", ids[2], ids[3], r1, temporal_match=0.0),
+        ]
+        right = [
+            edge("e0", ids[0], ids[1], r1, temporal_match=0.0),
+            edge("e1", ids[2], ids[3], r1, temporal_match=1.0),
+        ]
+        q = "Two relation-matching records exist, but only one is valid for the time window named by the request. Use the temporally applicable record."
+        return [
+            make_row(
+                split=split, family=family, group=group, variant="LEFT_VALID",
+                fields=fields, edges=left, query=q,
+                relation_sequence=[r1], role="TARGET", traversal="AGGREGATE",
+                modifier_target=modifiers(temporal_constraint=True), focus_field_id=None,
+                support_edge_ids=["e0", "e1"], target_distribution={ids[1]: 1.0},
+            ),
+            make_row(
+                split=split, family=family, group=group, variant="RIGHT_VALID",
+                fields=fields, edges=right, query=q,
+                relation_sequence=[r1], role="TARGET", traversal="AGGREGATE",
+                modifier_target=modifiers(temporal_constraint=True), focus_field_id=None,
+                support_edge_ids=["e0", "e1"], target_distribution={ids[3]: 1.0},
+            ),
+        ]
+
+    if family == "provenance_constraint":
+        fields = make_fields(split, family, group, [src_type, tgt_type, src_type, tgt_type, "GENERIC", "GENERIC"])
+        ids = [row["id"] for row in fields]
+        left = [
+            edge("e0", ids[0], ids[1], r1, provenance_match=1.0),
+            edge("e1", ids[2], ids[3], r1, provenance_match=0.0),
+        ]
+        right = [
+            edge("e0", ids[0], ids[1], r1, provenance_match=0.0),
+            edge("e1", ids[2], ids[3], r1, provenance_match=1.0),
+        ]
+        q = "Two relation-matching records exist. Only one comes from the provenance class authorized by the request. Use the provenance-compatible record."
+        return [
+            make_row(
+                split=split, family=family, group=group, variant="LEFT_VALID",
+                fields=fields, edges=left, query=q,
+                relation_sequence=[r1], role="TARGET", traversal="AGGREGATE",
+                modifier_target=modifiers(provenance_constraint=True), focus_field_id=None,
+                support_edge_ids=["e0", "e1"], target_distribution={ids[1]: 1.0},
+            ),
+            make_row(
+                split=split, family=family, group=group, variant="RIGHT_VALID",
+                fields=fields, edges=right, query=q,
+                relation_sequence=[r1], role="TARGET", traversal="AGGREGATE",
+                modifier_target=modifiers(provenance_constraint=True), focus_field_id=None,
+                support_edge_ids=["e0", "e1"], target_distribution={ids[3]: 1.0},
+            ),
+        ]
+
+    if family == "constraint_composition":
+        fields = make_fields(split, family, group, [src_type, tgt_type, src_type, tgt_type, src_type, tgt_type])
+        ids = [row["id"] for row in fields]
+        left = [
+            edge("e0", ids[0], ids[1], r1, temporal_match=1.0, provenance_match=1.0),
+            edge("e1", ids[2], ids[3], r1, temporal_match=1.0, provenance_match=0.0),
+            edge("e2", ids[4], ids[5], r1, temporal_match=0.0, provenance_match=1.0),
+        ]
+        right = [
+            edge("e0", ids[0], ids[1], r1, temporal_match=1.0, provenance_match=0.0),
+            edge("e1", ids[2], ids[3], r1, temporal_match=0.0, provenance_match=1.0),
+            edge("e2", ids[4], ids[5], r1, temporal_match=1.0, provenance_match=1.0),
+        ]
+        q = "Use only a relation-matching record that satisfies both the requested time scope and the required provenance. A record satisfying only one condition is not enough."
+        return [
+            make_row(
+                split=split, family=family, group=group, variant="FIRST_BOTH",
+                fields=fields, edges=left, query=q,
+                relation_sequence=[r1], role="TARGET", traversal="AGGREGATE",
+                modifier_target=modifiers(temporal_constraint=True, provenance_constraint=True),
+                focus_field_id=None, support_edge_ids=["e0", "e1", "e2"],
+                target_distribution={ids[1]: 1.0},
+            ),
+            make_row(
+                split=split, family=family, group=group, variant="THIRD_BOTH",
+                fields=fields, edges=right, query=q,
+                relation_sequence=[r1], role="TARGET", traversal="AGGREGATE",
+                modifier_target=modifiers(temporal_constraint=True, provenance_constraint=True),
+                focus_field_id=None, support_edge_ids=["e0", "e1", "e2"],
+                target_distribution={ids[5]: 1.0},
+            ),
+        ]
+
+    if family == "unknown_relation":
+        fields = make_fields(split, family, group, ["GENERIC"] * 6)
+        ids = [row["id"] for row in fields]
+        edges = [
+            edge("e0", ids[0], ids[1], r1),
+            edge("e1", ids[2], ids[3], r2),
+        ]
+        if split == "train":
+            queries = [
+                "Find the record that is cryptographically signed by the same hardware key as the starting record. That relation is not defined in the supplied relation schema.",
+                "Trace the contractual-beneficiary relationship from the starting record. Do not substitute a merely similar known relation when that relation is absent from the schema.",
+            ]
+        else:
+            queries = [
+                "Identify the endpoint linked by shared legal ownership. If the active schema has no ownership relation, do not coerce the request into another relation.",
+                "Follow the relation meaning 'authorized by the same physical custodian'. If that meaning is outside the active schema, preserve the unresolved state.",
+            ]
+        return [
+            make_row(
+                split=split, family=family, group=group, variant="UNKNOWN_A",
+                fields=fields, edges=edges, query=queries[0],
+                relation_sequence=[], role="NONE", traversal="LOCAL_SELECT",
+                modifier_target=modifiers(), focus_field_id=ids[0],
+                support_edge_ids=[], target_distribution={}, applicability=0.6,
+                control="DEFER", termination="UNKNOWN",
+            ),
+            make_row(
+                split=split, family=family, group=group, variant="UNKNOWN_B",
+                fields=fields, edges=edges, query=queries[1],
+                relation_sequence=[], role="NONE", traversal="LOCAL_SELECT",
+                modifier_target=modifiers(), focus_field_id=ids[0],
+                support_edge_ids=[], target_distribution={}, applicability=0.6,
+                control="DEFER", termination="UNKNOWN",
+            ),
+        ]
+
     if family == "ambiguity":
         fields = make_fields(split, family, group, [src_type, tgt_type, src_type, tgt_type, "GENERIC", "GENERIC"])
         ids = [row["id"] for row in fields]
@@ -711,6 +841,10 @@ FAMILIES = (
     "reliability",
     "temporal",
     "path_latest",
+    "temporal_constraint",
+    "provenance_constraint",
+    "constraint_composition",
+    "unknown_relation",
     "ambiguity",
     "outside_support",
     "fallback_defer",
