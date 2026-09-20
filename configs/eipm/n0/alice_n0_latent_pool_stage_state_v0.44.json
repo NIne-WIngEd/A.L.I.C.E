@@ -1,0 +1,64 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.44",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.43.json",
+  "status": "QSRE_TENSORIZED_MECHANICS_PASS;T1_EXECUTOR_SOURCE_DESIGN_ELIGIBLE;GRADIENT_STILL_CLOSED",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-n0-clean-sheet-relational-execution-review",
+  "workload_envelope": "docs/research/eipm-full-eipm-workload-envelope-v0.1.md",
+  "architecture_blueprint": "docs/research/eipm-n0-qsre-architecture-blueprint-v0.1.md",
+  "tensor_mechanics_source": "src/alice_personality/n0/qsre_mechanics.py",
+  "tensor_mechanics_tests": "tests/eipm/test_n0_qsre_tensor_mechanics.py",
+  "tensor_mechanics_ci": {
+    "run_id": 35497962294,
+    "conclusion": "success",
+    "dynamic_shape": {
+      "fields": 257,
+      "edges": 513
+    },
+    "no_learned_parameters": true,
+    "adaptive_sparse_support": true,
+    "source_target_incidence": true,
+    "support_local_readout": true,
+    "fallback_defer": true,
+    "permutation_stability": true
+  },
+  "next_causal_stage": {
+    "id": "T1",
+    "name": "executor_and_structural_readout_with_oracle_operator_and_oracle_support",
+    "purpose": "test whether the new execution abstraction can learn relational/temporal/provenance operations when semantic parsing and support selection are perfect",
+    "upstream_operator": "oracle",
+    "upstream_support": "oracle",
+    "semantic_backbone": "frozen",
+    "existing_evidence_parent": "frozen_representation_source_only",
+    "learned_support_selector": false,
+    "learned_natural_language_operator": false
+  },
+  "next_engineering_batch": {
+    "authorized": true,
+    "gradient_authorized": false,
+    "tasks": [
+      "define T1 full-envelope public curriculum contract",
+      "pin T1 executor/readout tensor equations and parameter scope",
+      "implement trainable QSRE executor source",
+      "implement T1 curriculum builder and evaluator infrastructure",
+      "run static and CPU no-gradient forward/causal mechanics CI",
+      "do not create optimizer or GPU training authorization unless all no-gradient gates pass"
+    ]
+  },
+  "execution_policy": {
+    "trainable_source_module_implementation_authorized": true,
+    "no_gradient_forward_qualification_authorized": true,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
