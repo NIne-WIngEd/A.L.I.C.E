@@ -1,0 +1,149 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.39",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.38.json",
+  "status": "REPEATED_RELATIONAL_EXECUTION_FAILURE_FAMILY_HALTED;CLEAN_SHEET_ARCHITECTURE_REVIEW_ACTIVE;NO_NEW_MODEL_IMPLEMENTATION_OR_GRADIENT_AUTHORIZED",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-n0-clean-sheet-relational-execution-review",
+  "architecture_audit": "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+  "starting_revision": "d5d2a4f265d5d10a0e9cb6c12c60c864d257c495",
+  "audit_commit": "070fbdf8d2d3810392621744f79c2b2b6900318b",
+  "preserved_evidence": {
+    "valid_model_failures": [
+      {
+        "job": 575797,
+        "family": "relation_semantic_grounding",
+        "classification": "valid_model_evidence"
+      },
+      {
+        "job": 575798,
+        "family": "semantic_role_residual",
+        "classification": "valid_model_evidence"
+      },
+      {
+        "job": 575800,
+        "family": "query_relation_role_router",
+        "classification": "valid_model_evidence"
+      },
+      {
+        "job": 575825,
+        "family": "relation_conditioned_multilayer_interface",
+        "classification": "valid_model_evidence"
+      },
+      {
+        "job": 575888,
+        "family": "query_edge_cross_attention_bridge",
+        "classification": "valid_model_evidence"
+      },
+      {
+        "job": 575907,
+        "family": "competitive_edge_router",
+        "classification": "valid_model_evidence"
+      },
+      {
+        "job": 575912,
+        "family": "dual_view_late_interaction_specialist",
+        "classification": "valid_model_evidence"
+      }
+    ],
+    "non_model_failures": [
+      {
+        "job": 575908,
+        "family": "setwise_router_gpu_attempt",
+        "classification": "pre_gradient_boundary_failure_not_model_evidence"
+      }
+    ],
+    "localization_audit": {
+      "job": 575913,
+      "classification": "completed_inference_only_counterfactual_localization",
+      "optimizer": false,
+      "gradient": false,
+      "training": false,
+      "causal_test_open": false,
+      "frozen_challenge_open": false,
+      "step_200": {
+        "actual_soft_row_accuracy": 0.16666666666666666,
+        "forced_specialist_soft_row_accuracy": 0.1875,
+        "actual_hard_top1_row_accuracy": 0.3680555555555556,
+        "forced_specialist_hard_top1_row_accuracy": 0.3819444444444444,
+        "relevant_edge_residual_role_accuracy": 0.7152777777777778
+      },
+      "interpretation": [
+        "specialist_activation_is_not_primary_failure",
+        "diffuse_multi_edge_execution_materially_hurts",
+        "hard_support_does_not_close_task",
+        "role_argument_execution_remains_nonsystematic",
+        "another_router_or_gate_repair_is_not_authorized"
+      ]
+    }
+  },
+  "components_not_rejected_by_current_failure": {
+    "semantic_backbone": true,
+    "token_level_semantic_api": true,
+    "structured_state": true,
+    "evidence_view_adapter": true,
+    "dual_endpoint_parent_representation": true,
+    "ratified_cross_context_fusion": true,
+    "adaptive_latent_lineage_reopened_by_current_failure": false
+  },
+  "rejected_architecture_patterns": [
+    "query_only_relation_scalar_added_to_parent_global_field_logits",
+    "forced_antisymmetric_source_target_residual",
+    "raw_query_source_target_defer_side_router_mixed_into_same_parent_field_distribution",
+    "edge_router_whose_selected_specialist_only_adds_scalar_endpoint_residuals_to_same_global_field_scorer",
+    "another_edge_router_for_edge_identity_when_token_binding_is_already_identifiable",
+    "another_parent_specialist_gate_redesign_before_execution_contract_is_repaired",
+    "hard_top1_as_permanent_capability_rule",
+    "training_length_learning_rate_loss_weight_or_width_patch_as_substitute_for_execution_redesign"
+  ],
+  "clean_sheet_contract": {
+    "query_operator_state_required": true,
+    "adaptive_structural_support_required": true,
+    "zero_one_many_support_required": true,
+    "explicit_relation_argument_roles_required": true,
+    "query_conditioned_relational_execution_required": true,
+    "query_must_enter_message_attention_or_update_not_only_final_logits": true,
+    "structural_readout_required": true,
+    "unrelated_global_field_softmax_may_not_override_valid_claimed_relational_support": true,
+    "parent_fallback_separate_from_edge_identity_and_role_reasoning": true,
+    "output_must_remain_composable_with_n0_fusion_and_latent_fabric": true,
+    "hard_parameter_ceiling": null
+  },
+  "proof_obligations_config": "configs/eipm/n0/n0_v02_relational_execution_proof_obligations_v0_1.json",
+  "candidate_families_to_compare": [
+    "query_conditioned_sparse_relational_gnn",
+    "schema_anchored_continuous_relational_executor",
+    "relational_set_graph_transformer",
+    "evidence_justified_hybrid_only"
+  ],
+  "execution_policy": {
+    "next_action": "complete architecture-family comparison and oracle/no-gradient executor-contract diagnostics before any implementation decision",
+    "architecture_research_authorized": true,
+    "oracle_no_gradient_diagnostics_authorized": true,
+    "data_contract_design_authorized": true,
+    "static_interface_design_authorized": true,
+    "new_relational_model_implementation_authorized": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "implementation_decision_gate": {
+    "required_before_code": true,
+    "must_compare_multiple_architecture_families": true,
+    "must_address_all_proof_obligations": true,
+    "must_explain_reuse_or_retirement_of_proven_components": true,
+    "must_not_recreate_global_softmax_residual_pattern": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
