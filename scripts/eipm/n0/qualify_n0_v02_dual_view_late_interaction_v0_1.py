@@ -559,14 +559,28 @@ def main() -> None:
             permutation_checked = True
 
     direction_max_delta = 0.0
+    direction_pair_keys = {
+        (
+            str(payload["quad_ids"][index]),
+            str(payload["query_roles"][index]),
+        )
+        for index in dev_indices
+    }
+    if len(direction_pair_keys) != 72:
+        raise SystemExit(
+            "direction-invariance unique pair coverage drift: "
+            f"{len(direction_pair_keys)}"
+        )
+
     quad_role_pairs = 0
-    for index in dev_indices:
-        qid = str(payload["quad_ids"][index])
-        role = str(payload["query_roles"][index])
+    for qid, role in sorted(direction_pair_keys):
         a = saved.get((qid, role, "A"))
         b = saved.get((qid, role, "B"))
         if a is None or b is None:
-            continue
+            raise SystemExit(
+                "direction-invariance missing A/B member for "
+                f"{qid}:{role}"
+            )
         direction_max_delta = max(
             direction_max_delta,
             float((a - b).abs().max().item()),
