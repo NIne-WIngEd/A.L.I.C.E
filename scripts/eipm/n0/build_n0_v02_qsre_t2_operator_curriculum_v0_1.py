@@ -235,7 +235,12 @@ def query_text(row: dict, *, query_view: int) -> str:
         )
         return choose(bank, key)
 
-    phrase = relation_role_phrase(seq[0], role, split, key)
+    phrase_key = (
+        f"{split}|{family}|{row['causal_group']}|{query_view}"
+        if family == "outside_support_distractor"
+        else key
+    )
+    phrase = relation_role_phrase(seq[0], role, split, phrase_key)
 
     if family in ("multi_support_aggregate", "ambiguity_plurality"):
         bank = (
