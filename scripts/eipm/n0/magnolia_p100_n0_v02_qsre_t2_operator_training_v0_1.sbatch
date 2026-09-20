@@ -13,11 +13,11 @@
 
 set -euo pipefail
 
-ROOT="$${SLURM_SUBMIT_DIR:?submit from the A.L.I.C.E repo root}"
+ROOT="${SLURM_SUBMIT_DIR:?submit from the A.L.I.C.E repo root}"
 cd "$ROOT"
 
 export ALICE_N0_REPO_ROOT="$ROOT"
-export ALICE_N0_WORKDIR="$${ALICE_N0_WORKDIR:-$HOME/rayan-compute/rayan-n0/n0-v02}"
+export ALICE_N0_WORKDIR="${ALICE_N0_WORKDIR:-$HOME/rayan-compute/rayan-n0/n0-v02}"
 export RAYAN_UDOCKER_NVIDIA=1
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
