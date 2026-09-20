@@ -1,0 +1,300 @@
+{
+  "schema": "alice.eipm.n0.qsre-production-relation-schema.v1",
+  "status": "PUBLIC_DYNAMIC_SCHEMA_FOR_PRODUCTION_QSRE_CAUSAL_STAGES",
+  "type_vocabulary": [
+    "GENERIC",
+    "EVIDENCE",
+    "CLAIM",
+    "CORRECTION",
+    "POLICY",
+    "ARTIFACT",
+    "SOURCE",
+    "EVENT",
+    "VERSION",
+    "PRINCIPLE",
+    "EXAMPLE",
+    "CONDITION",
+    "ACTION",
+    "COMPONENT",
+    "WHOLE",
+    "RECORD"
+  ],
+  "core_train_relation_keys": [
+    "SUPPORTS",
+    "CORRECTS",
+    "SUPERSEDES",
+    "DERIVED_FROM",
+    "CAUSES",
+    "TEMPORAL_SUCCESSOR"
+  ],
+  "open_schema_dev_relation_keys": [
+    "CONFLICTS_WITH",
+    "EXEMPLIFIES",
+    "PREREQUISITE_FOR",
+    "PART_OF"
+  ],
+  "relations": [
+    {
+      "key": "SUPPORTS",
+      "symmetric": false,
+      "descriptions": [
+        "The source provides evidence that increases confidence in the target claim or conclusion.",
+        "Use this relation when one record backs, corroborates, or strengthens another claim without changing it."
+      ],
+      "source_argument": "evidence, observation, record, or claim doing the supporting",
+      "target_argument": "claim, conclusion, interpretation, or record being supported",
+      "domain_types": [
+        "EVIDENCE",
+        "CLAIM",
+        "ARTIFACT",
+        "RECORD",
+        "GENERIC"
+      ],
+      "range_types": [
+        "CLAIM",
+        "RECORD",
+        "GENERIC"
+      ],
+      "inverse_key": null,
+      "tags": [
+        "evidence"
+      ]
+    },
+    {
+      "key": "CORRECTS",
+      "symmetric": false,
+      "descriptions": [
+        "The source fixes an error, inaccurate detail, or mistaken statement in the target.",
+        "Use this relation for explicit repair of content, not merely for a newer replacement."
+      ],
+      "source_argument": "correction, amendment, erratum, or repaired record",
+      "target_argument": "record or claim containing the error",
+      "domain_types": [
+        "CORRECTION",
+        "RECORD",
+        "CLAIM",
+        "GENERIC"
+      ],
+      "range_types": [
+        "RECORD",
+        "CLAIM",
+        "GENERIC"
+      ],
+      "inverse_key": null,
+      "tags": [
+        "correction"
+      ]
+    },
+    {
+      "key": "SUPERSEDES",
+      "symmetric": false,
+      "descriptions": [
+        "The source replaces the target as the version or authority that should now govern.",
+        "Supersession encodes precedence or replacement, not simply later chronology."
+      ],
+      "source_argument": "replacement, current version, or newer governing authority",
+      "target_argument": "displaced older version or authority",
+      "domain_types": [
+        "POLICY",
+        "VERSION",
+        "RECORD",
+        "GENERIC"
+      ],
+      "range_types": [
+        "POLICY",
+        "VERSION",
+        "RECORD",
+        "GENERIC"
+      ],
+      "inverse_key": null,
+      "tags": [
+        "precedence",
+        "versioning"
+      ]
+    },
+    {
+      "key": "DERIVED_FROM",
+      "symmetric": false,
+      "descriptions": [
+        "The source was produced, computed, summarized, or otherwise created using the target as source material.",
+        "This is a provenance relation from a derived artifact to its underlying source."
+      ],
+      "source_argument": "derived artifact, summary, processed record, or result",
+      "target_argument": "underlying source material or provenance base",
+      "domain_types": [
+        "ARTIFACT",
+        "RECORD",
+        "CLAIM",
+        "GENERIC"
+      ],
+      "range_types": [
+        "SOURCE",
+        "ARTIFACT",
+        "RECORD",
+        "GENERIC"
+      ],
+      "inverse_key": null,
+      "tags": [
+        "provenance"
+      ]
+    },
+    {
+      "key": "CAUSES",
+      "symmetric": false,
+      "descriptions": [
+        "The source condition or event brings about the target event or outcome.",
+        "Causation is stronger than evidence support and stronger than temporal succession alone."
+      ],
+      "source_argument": "cause, initiating condition, or antecedent event",
+      "target_argument": "effect, consequence, or resulting event",
+      "domain_types": [
+        "EVENT",
+        "CONDITION",
+        "ACTION",
+        "GENERIC"
+      ],
+      "range_types": [
+        "EVENT",
+        "ACTION",
+        "GENERIC"
+      ],
+      "inverse_key": null,
+      "tags": [
+        "causal"
+      ]
+    },
+    {
+      "key": "TEMPORAL_SUCCESSOR",
+      "symmetric": false,
+      "descriptions": [
+        "The source comes after the target in the relevant chronology.",
+        "This relation expresses temporal order without implying replacement, correction, or causation."
+      ],
+      "source_argument": "later event, version, or record",
+      "target_argument": "earlier predecessor",
+      "domain_types": [
+        "EVENT",
+        "VERSION",
+        "RECORD",
+        "GENERIC"
+      ],
+      "range_types": [
+        "EVENT",
+        "VERSION",
+        "RECORD",
+        "GENERIC"
+      ],
+      "inverse_key": null,
+      "tags": [
+        "temporal"
+      ]
+    },
+    {
+      "key": "CONFLICTS_WITH",
+      "symmetric": true,
+      "descriptions": [
+        "The two records make claims that cannot both hold under the same interpretation or state.",
+        "Conflict is symmetric: neither endpoint is inherently the source or target authority."
+      ],
+      "source_argument": "one conflicting claim or record",
+      "target_argument": "the other conflicting claim or record",
+      "domain_types": [
+        "CLAIM",
+        "RECORD",
+        "GENERIC"
+      ],
+      "range_types": [
+        "CLAIM",
+        "RECORD",
+        "GENERIC"
+      ],
+      "inverse_key": "CONFLICTS_WITH",
+      "tags": [
+        "conflict",
+        "epistemic"
+      ]
+    },
+    {
+      "key": "EXEMPLIFIES",
+      "symmetric": false,
+      "descriptions": [
+        "The source is a concrete instance or example that illustrates the target principle or general pattern.",
+        "Use this when a specific case instantiates a broader rule or concept."
+      ],
+      "source_argument": "example, instance, or concrete case",
+      "target_argument": "principle, rule, or general pattern being illustrated",
+      "domain_types": [
+        "EXAMPLE",
+        "EVENT",
+        "RECORD",
+        "GENERIC"
+      ],
+      "range_types": [
+        "PRINCIPLE",
+        "CLAIM",
+        "GENERIC"
+      ],
+      "inverse_key": null,
+      "tags": [
+        "abstraction"
+      ]
+    },
+    {
+      "key": "PREREQUISITE_FOR",
+      "symmetric": false,
+      "descriptions": [
+        "The source condition or action must hold or occur before the target action or outcome can validly proceed.",
+        "This expresses a dependency requirement rather than simple temporal order."
+      ],
+      "source_argument": "required condition, preparation, or prerequisite action",
+      "target_argument": "dependent action, task, or outcome",
+      "domain_types": [
+        "CONDITION",
+        "ACTION",
+        "GENERIC"
+      ],
+      "range_types": [
+        "ACTION",
+        "EVENT",
+        "GENERIC"
+      ],
+      "inverse_key": null,
+      "tags": [
+        "dependency"
+      ]
+    },
+    {
+      "key": "PART_OF",
+      "symmetric": false,
+      "descriptions": [
+        "The source is a component, member, or constituent of the target whole.",
+        "This is a compositional containment relation from part to whole."
+      ],
+      "source_argument": "component, member, or constituent",
+      "target_argument": "whole, assembly, group, or containing structure",
+      "domain_types": [
+        "COMPONENT",
+        "ARTIFACT",
+        "RECORD",
+        "GENERIC"
+      ],
+      "range_types": [
+        "WHOLE",
+        "ARTIFACT",
+        "GENERIC"
+      ],
+      "inverse_key": null,
+      "tags": [
+        "composition"
+      ]
+    }
+  ],
+  "governance": {
+    "public_only": true,
+    "private_identity_data": false,
+    "relation_count_is_runtime_data": true,
+    "schema_entries_are_not_weight_ontology": true,
+    "open_schema_relations_are_dev_only_for_operator_supervision": true,
+    "production_migration_requires_versioned_schema": true
+  }
+}
