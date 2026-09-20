@@ -375,11 +375,12 @@ def main() -> None:
     p.add_argument("--preservation-weight", type=float, default=1.0)
     p.add_argument("--noop-route-weight", type=float, default=1.0)
     p.add_argument("--seed", type=int, default=20260920)
+    p.add_argument("--preflight-only", action="store_true")
     args = p.parse_args()
 
-    if not torch.cuda.is_available():
+    if not args.preflight_only and not torch.cuda.is_available():
         raise SystemExit("setwise edge-router training requires one CUDA device")
-    device = torch.device("cuda")
+    device = torch.device("cpu" if args.preflight_only else "cuda")
     old.seed_all(args.seed)
 
     root = Path(args.repo_root).resolve()
@@ -429,13 +430,13 @@ def main() -> None:
     }
     for path, expected in exact_hashes.items():
         if old.sha(path) != expected:
-            raise SystemExit(f"exact competitive training lineage drift: {path.name}")
+            raise SystemExit(f"exact setwise training lineage drift: {path.name}")
 
     qual = json.loads(qual_path.read_text(encoding="utf-8"))
     if qual.get("schema") != QUAL_SCHEMA:
         raise SystemExit("setwise qualification schema drift")
-    if qual.get("status") != "PASS_COMPETITIVE_EDGE_ROUTER_NO_GRADIENT_RUNTIME_CONTRACT":
-        raise SystemExit("competitive runtime qualification did not pass")
+    if qual.get("status") != "PASS_SETWISE_QUERY_EDGE_ROUTER_NO_GRADIENT_RUNTIME_CONTRACT":
+        raise SystemExit("setwise runtime qualification did not pass")
     for key in (
         "parent_parameters_exactly_unchanged",
         "exact_parent_field_weights",
@@ -693,6 +694,67 @@ def main() -> None:
         flush=True,
     )
 
+    if args.preflight_only:
+        preflight = {
+            "schema": "alice.eipm.n0.setwise-edge-router-training-exact-preflight.v0.1",
+            "status": "PASS_SETWISE_TRAINING_EXACT_PREFLIGHT_NO_GRADIENT",
+            "git_revision": old.git_revision(root),
+            "qualification_receipt_sha256": old.sha(qual_path),
+            "source_failed_result_sha256": old.sha(failed_path),
+            "curriculum_sha256": old.sha(curriculum_path),
+            "curriculum_manifest_sha256": old.sha(manifest_path),
+            "preservation_anchors_sha256": old.sha(anchors_path),
+            "calibration_receipt_sha256": old.sha(cal_path),
+            "parent_graph_sha256": old.sha(graph_path),
+            "parent_adapter_sha256": old.sha(adapter_path),
+            "device": str(device),
+            "trainable_scope": "setwise_query_edge_bridge_only",
+            "trainable_parameters": sum(p.numel() for p in trainable),
+            "parent_parameters_exactly_unchanged": (
+                old.tensor_state_sha256(
+                    graph,
+                    exclude_prefixes=("setwise_query_edge_bridge.",),
+                )
+                == parent_hash_before
+            ),
+            "exact_parent_field_weights": True,
+            "exact_parent_pooled_state": True,
+            "baseline_setwise_dev": baseline_dev,
+            "initial_parent_preservation": {
+                "ordinary": initial_ordinary,
+                "endpoint": initial_endpoint,
+                "ordinary_noop": initial_ordinary_noop,
+                "endpoint_noop": initial_endpoint_noop,
+                "checks": initial_checks,
+            },
+            "optimizer_created": False,
+            "gradient_performed": False,
+            "training_steps_executed": 0,
+            "causal_test_split_evaluated": False,
+            "frozen_challenge_evaluated": False,
+            "private_identity_data": False,
+            "private_identity_gradient": False,
+            "scale_authorized": False,
+            "production_promotion_authorized": False,
+            "n0_complete": False,
+            "next_action": (
+                "review exact trainer preflight before any replacement GPU authorization"
+            ),
+        }
+        if preflight["parent_parameters_exactly_unchanged"] is not True:
+            raise SystemExit("parent changed during exact setwise training preflight")
+        preflight_path = output / "preflight_receipt.json"
+        preflight_path.write_text(
+            json.dumps(preflight, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        print(
+            "setwise_training_exact_preflight="
+            + json.dumps(preflight, sort_keys=True),
+            flush=True,
+        )
+        return
+
     optimizer = torch.optim.AdamW(
         trainable,
         lr=args.learning_rate,
@@ -909,7 +971,7 @@ def main() -> None:
                 "n0_complete": False,
             }
             if receipt["parent_parameters_exactly_unchanged"] is not True:
-                raise SystemExit("frozen parent changed during competitive training")
+                raise SystemExit("frozen parent changed during setwise training")
 
             (cp / "receipt.json").write_text(
                 json.dumps(receipt, indent=2, sort_keys=True) + "\n",
