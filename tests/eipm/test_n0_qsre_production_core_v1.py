@@ -582,3 +582,79 @@ def test_production_core_parameter_report_has_no_relation_or_hop_parameter_axis(
     assert report["executor"]["relation_count_dependent_parameters"] == 0
     assert report["executor"]["hop_count_dependent_parameters"] == 0
     assert report["private_identity_parameters"] == 0
+
+
+def test_checkpoint_factor_counts_are_not_hard_runtime_ceilings() -> None:
+    expanded = QSREProductionConfig(
+        semantic_dim=24,
+        model_dim=32,
+        num_hidden_states=3,
+        num_attention_heads=4,
+        operator_refinement_layers=1,
+        field_state_dim=24,
+        field_metadata_dim=3,
+        role_count=6,
+        traversal_count=5,
+        modifier_count=7,
+        control_count=4,
+        dropout=0.0,
+    )
+    expanded.validate()
+    operator = QSREProductionOperatorInducer(expanded)
+    report = operator.parameter_report()
+    assert report["role_count_ceiling"] is None
+    assert report["traversal_count_ceiling"] is None
+    assert report["control_count_ceiling"] is None
+
+
+def test_schema_encoder_starts_semantic_preserving_not_random_role_ontology() -> None:
+    encoder = QSREProductionSchemaEncoder(cfg())
+    assert torch.equal(
+        encoder.layer_embedding.weight,
+        torch.zeros_like(encoder.layer_embedding.weight),
+    )
+    assert torch.equal(
+        encoder.pool_query,
+        torch.zeros_like(encoder.pool_query),
+    )
+
+
+def test_executor_confidence_mass_survives_support_normalization() -> None:
+    torch.manual_seed(21)
+    executor = QSREProductionExecutor(cfg()).eval()
+    g = graph_inputs()
+    schema_state = torch.randn(2, 32)
+    op = one_hot_operator(
+        batch=1,
+        relation_count=2,
+        relation_sequence=[0],
+        applicability=1.0,
+    )
+    control = op.control_distribution.clone()
+    control.zero_()
+    control[:, 0] = 0.98
+    control[:, 1] = 0.02
+    cautious = QSREProductionOperatorState(
+        **{**op.__dict__, "control_distribution": control}
+    )
+    out = executor(
+        **g,
+        schema_relation_state=schema_state,
+        operator=cautious,
+        focus_field_weight=torch.tensor([[1.0, 0.0, 0.0, 0.0]]),
+    )
+    assert float(out["relational_probability"].sum()) <= 0.020001
+
+    unknown = QSREProductionOperatorState(
+        **{
+            **op.__dict__,
+            "unknown_probability": torch.full_like(op.unknown_probability, 0.99),
+        }
+    )
+    out_unknown = executor(
+        **g,
+        schema_relation_state=schema_state,
+        operator=unknown,
+        focus_field_weight=torch.tensor([[1.0, 0.0, 0.0, 0.0]]),
+    )
+    assert float(out_unknown["relational_probability"].sum()) <= 0.010001
