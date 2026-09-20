@@ -222,6 +222,8 @@ class QSREProductionSchemaEncoder(nn.Module):
         config.validate()
         self.config = config
         d = config.model_dim
+        self.schema_norm = nn.LayerNorm(config.semantic_dim)
+        self.schema_projection = nn.Linear(config.semantic_dim, d, bias=False)
         self.layer_embedding = nn.Embedding(config.num_hidden_states, d)
         self.pool_query = nn.Parameter(torch.empty(d))
         nn.init.normal_(self.pool_query, mean=0.0, std=0.02)
@@ -292,8 +294,6 @@ class QSREProductionOperatorInducer(nn.Module):
 
         self.query_norm = nn.LayerNorm(config.semantic_dim)
         self.query_projection = nn.Linear(config.semantic_dim, d, bias=False)
-        self.schema_norm = nn.LayerNorm(config.semantic_dim)
-        self.schema_projection = nn.Linear(config.semantic_dim, d, bias=False)
         self.layer_embedding = nn.Embedding(config.num_hidden_states, d)
 
         self.start_state = nn.Parameter(torch.empty(d))
