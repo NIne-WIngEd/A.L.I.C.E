@@ -1,0 +1,119 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.41",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.40.json",
+  "status": "CLEAN_SHEET_AUDIT_COMPLETE;QSRE_BLUEPRINT_SELECTED;DETERMINISTIC_D1_D5_CONTRACT_PASS;NEXT_ELIGIBLE_WORK_STATIC_CPU_NO_GRADIENT_MECHANICS_DECISION_ONLY",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-n0-clean-sheet-relational-execution-review",
+  "architecture_audit": "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+  "family_comparison": "docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md",
+  "proof_obligations": "configs/eipm/n0/n0_v02_relational_execution_proof_obligations_v0_1.json",
+  "preimplementation_diagnostics": "configs/eipm/n0/n0_v02_qsre_preimplementation_diagnostics_v0_1.json",
+  "deterministic_contract_result": "docs/research/eipm-n0-qsre-preimplementation-contract-result-v0.1.md",
+  "architecture_blueprint": "docs/research/eipm-n0-qsre-architecture-blueprint-v0.1.md",
+  "deterministic_ci": {
+    "run_id": 35496944177,
+    "conclusion": "success",
+    "receipt_status": "PASS_QSRE_DETERMINISTIC_PREIMPLEMENTATION_CONTRACT",
+    "fixture_count": 17,
+    "diagnostics": [
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5"
+    ],
+    "ambiguity_observed": true,
+    "ordered_path_observed": true,
+    "explicit_defer_observed": true,
+    "parent_fallback_observed": true,
+    "parent_conflict_isolation_observed": true,
+    "trainable_qsre_implementation_authorized": false
+  },
+  "selected_architecture": {
+    "family": "QSRE_QUERY_CONDITIONED_SPARSE_RELATIONAL_EXECUTOR",
+    "role": "relational_execution_capability_inside_broader_N0_fabric",
+    "modules": [
+      "multi_layer_query_operator_encoder",
+      "token_level_adaptive_structural_binder",
+      "query_conditioned_node_edge_relational_executor",
+      "structural_relational_readout",
+      "separate_applicability_and_general_parent_fallback"
+    ],
+    "required_invariants": [
+      "relation_and_argument_role_are_first_class_operator_state",
+      "support_cardinality_zero_one_or_many",
+      "query_conditioning_occurs_inside_relational_execution",
+      "unrelated_fields_outside_claimed_support_do_not_participate_in_relational_readout",
+      "parent_global_field_softmax_is_not_universal_relational_authority",
+      "general_parent_fallback_is_separate_from_edge_identity_and_role_reasoning",
+      "output_remains_compatible_with_existing_N0_fusion_and_latent_fabric",
+      "current_vocabularies_and_shapes_are_migratable_not_capability_ceilings"
+    ]
+  },
+  "component_reuse": {
+    "AliceN0V02Model": "keep_frozen_initially; use token and multi-layer hidden states",
+    "StructuredStateEncoder": "keep; typed metadata/context input; pooled state not sole executor input",
+    "EvidenceViewAdapter": "keep_frozen_initially unless later probe establishes information loss",
+    "DualEndpointEvidenceGraphEncoder": "reuse representations/relation knowledge/general fallback; retire universal field_weights authority for relational answers",
+    "CrossContextFusion": "keep ratified broader multi-view fusion",
+    "adaptive_latent_pool": "no change from this audit; remains governed by separate lineage"
+  },
+  "closed_patterns": [
+    "query_only_relation_scalar_added_to_parent_global_field_logits",
+    "forced_antisymmetric_source_target_delta",
+    "SOURCE_TARGET_DEFER_side_distribution_mixed_into_same_parent_field_distribution_as_primary_solution",
+    "edge_router_plus_scalar_endpoint_residuals_into_same_global_field_scorer",
+    "another_setwise_or_competitive_router_for_already_identifiable_edge_binding",
+    "another_parent_specialist_gate_before_executor competence",
+    "permanent_hard_top1",
+    "generic_scale_or_lr_or_loss_weight_patch"
+  ],
+  "next_design_boundary": {
+    "name": "QSRE_STATIC_TENSOR_INTERFACE_AND_MECHANICS_DECISION",
+    "purpose": "define exact tensor interfaces and update equations before any trainable source module is committed",
+    "must_specify": [
+      "query_operator_hidden_state_stack_interface",
+      "relation_and_role_anchor_seed_and_migration_policy",
+      "adaptive_sparse_support_transform_and_fail_closed_behavior",
+      "node_edge_executor_update_equations",
+      "structural_readout_domain",
+      "exact_non_relational_pass_through",
+      "reuse_of_parent_representation_state",
+      "permutation_mechanics_tests",
+      "D1_D5_mechanics_tests",
+      "parameter_report",
+      "no_permanent_field_edge_support_hop_ceiling"
+    ]
+  },
+  "future_causal_training_order_if_later_authorized": [
+    "T1_executor_plus_structural_readout_with_oracle_operator_and_oracle_support",
+    "T2_learned_query_operator_with_oracle_support_and_proven_executor",
+    "T3_learned_adaptive_support_with_proven_operator_and_executor",
+    "T4_end_to_end_QSRE_integration",
+    "T5_existing_N0_fusion_integration_only_after_standalone_QSRE_capability"
+  ],
+  "execution_policy": {
+    "next_action": "write one static tensor-interface/mechanics decision; only after that may CPU/no-gradient QSRE mechanics implementation be considered",
+    "architecture_research_authorized": true,
+    "static_interface_design_authorized": true,
+    "deterministic_oracle_diagnostics_authorized": true,
+    "cpu_no_gradient_mechanics_implementation_authorized": false,
+    "trainable_qsre_implementation_authorized": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
