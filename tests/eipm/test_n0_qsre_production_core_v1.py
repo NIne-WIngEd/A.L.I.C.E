@@ -720,9 +720,10 @@ def test_binder_predicts_focus_without_oracle_focus_input() -> None:
     torch.manual_seed(32)
     binder = QSREProductionBinder(cfg()).eval()
     q, qmask = query(batch=1)
-    fields = torch.randn(1, 4, 5, 24)
-    # Make field 2 lexically identical to a query span so late interaction
-    # has a deterministic best focus before any learned residual.
+    fields = torch.zeros(1, 4, 5, 24)
+    # Make field 2 lexically identical to the query while every distractor is
+    # semantic zero, so the geometry-only focus initialization has one exact
+    # deterministic optimum before the learned residual receives gradient.
     fields[0, 2, :5] = q[0, -1, :5]
     field_mask = torch.ones(1, 4, 5, dtype=torch.bool)
     s = schema(2)
