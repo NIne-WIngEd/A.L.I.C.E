@@ -225,7 +225,7 @@ jobs:
           missing=[x for x in required if x not in r]
           if missing:
               raise SystemExit("runner binding missing "+repr(missing))
-          if r.count('EXPECTED_PARENT_ADAPTER_SHA256=')!=1:
+          if r.count('EXPECTED_PARENT_ADAPTER_SHA256="')!=1:
               raise SystemExit("parent adapter hash binding must be unique")
           print("runner_exact_bindings_and_one_run_claim=PASS")
           PY
