@@ -1,0 +1,67 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.55",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.54.json",
+  "status": "QSRE_T2_GPU_RECOVERY_AUTHORIZATION_REVOKED;CPU_GPU_REALITY_GAP_AND_DATA_VALIDITY_AUDIT_ACTIVE;NO_FURTHER_GRADIENT_OR_GPU_WORK_AUTHORIZED",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-qsre-t2-operator-learning",
+  "trigger": {
+    "job_id": 575934,
+    "scheduler_state": "FAILED",
+    "exit_code": "1:0",
+    "elapsed": "00:00:01",
+    "classification": "SHELL_EXPANSION_AND_VALIDATOR_CORRELATION_FAILURE_NOT_MODEL_EVIDENCE",
+    "model_gate_conclusion": "UNDETERMINED"
+  },
+  "critical_findings": [
+    "The current recovery sbatch and runner contain malformed doubled-dollar shell parameter expansions. Bash expands the doubled dollar to the process id before the brace text.",
+    "The recovery CI did not independently detect this bug. Its shell-boundary assertion encoded the malformed spelling as the expected string, so implementation and validator shared the same defect.",
+    "This is direct evidence that current CPU/static qualification can be self-referential: the same authoring path can reproduce the same mistaken assumption in both implementation and test.",
+    "The current T2 curriculum is a synthetic operator-unit-test grammar, not a realistic public N0 relation/evidence distribution. T1 field text is deliberately opaque neutral evidence record hashes; T2 query text is generated from small operation/relation/role phrase banks.",
+    "The T2 DEV split uses disjoint phrase banks but the same family-specific grammar. Operation/control labels are often recoverable from highly available lexical cues.",
+    "CPU deterministic/oracle passes and GPU learned-model runs are not the same experiment. Many historical CPU passes prove interface representability or plumbing, while GPU is the first point where learned predictions, the exact container/runtime, and the full evaluator interact.",
+    "The history contains both genuine GPU model failures and non-model harness/runtime failures. They must not be collapsed into one category.",
+    "QSRE itself is not rejected by this audit. T1 produced a genuine P100 DEV-contract pass. T2 has not yet produced a valid PASS or FAIL model result."
+  ],
+  "architecture_interpretation": {
+    "qsre_factorization_rejected": false,
+    "t1_executor_rejected": false,
+    "t2_operator_rejected": false,
+    "semantic_backbone_rejected": false,
+    "current_diagnosis": "EXPERIMENTAL_SUBSTRATE_AND_DATA_REALISM_ARE_NOT_STRONG_ENOUGH_TO_JUSTIFY_ANOTHER_GPU_RESULT"
+  },
+  "audit_program": {
+    "name": "N0_CPU_GPU_REALITY_AND_DATA_AUDIT",
+    "must_be_one_coherent_batch": true,
+    "no_micro_gate_chain": true,
+    "required_outputs": [
+      "historical CPU/GPU failure taxonomy with model-vs-harness separation",
+      "direct inspection of current T1/T2 generated data and actual public N0 curriculum examples",
+      "shortcut/cue audit for T2 relation role operation and control labels",
+      "representative public-only relation/evidence challenge set using natural entity-rich language rather than opaque/template-only fixtures",
+      "frozen-semantic representation-sufficiency probes on that representative set",
+      "evaluator totality audit over deliberately invalid/provisional operator combinations",
+      "runtime-parity audit that executes shell/container semantics rather than matching expected source strings",
+      "single architecture decision after all evidence is combined"
+    ]
+  },
+  "execution_policy": {
+    "t2_replacement_training_authorized": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_chain_authorized": false,
+    "t1_rerun_authorized": false,
+    "semantic_backbone_gradient_authorized": false,
+    "t1_executor_gradient_authorized": false,
+    "learned_support_training_authorized": false,
+    "causal_test_opening_authorized": false,
+    "frozen_challenge_opening_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "next_action": "Complete the single coherent CPU/GPU reality-gap and data-validity audit before proposing any next training workflow.",
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
