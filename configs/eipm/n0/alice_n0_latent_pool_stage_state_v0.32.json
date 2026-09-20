@@ -1,0 +1,113 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.32",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.31.json",
+  "status": "ROUTER_REPAIR_LOOP_HALTED;COMPETITIVE_FAILURE_LOCALIZED_BEYOND_NOOP;SETWISE_GPU_REPLACEMENT_CLOSED;FIELD_SIDE_BINDING_IDENTIFIABILITY_AUDIT_AUTHORIZED_NO_GRADIENT",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-query-edge-binding-identifiability-audit",
+  "source_model_evidence": {
+    "competitive_router_result_sha256": "08bef659779c2e6fcfb0d60ef209d9f6c7f03b0198bcf370e097e278f5436328",
+    "competitive_router_result_status": "FAIL_COMPETITIVE_EDGE_ROUTER_CAUSAL_DEV_OR_PRESERVATION_STOP_NO_HELDOUT_NO_AUTOMATIC_HOTFIX",
+    "competitive_router_parent_preservation_at_step_200": true,
+    "competitive_router_step_200_route_accuracy": 0.2361111111111111,
+    "competitive_router_step_200_family_min_route_accuracy": 0.08333333333333333,
+    "competitive_router_step_200_mean_target_route_probability": 0.23681208727991057,
+    "competitive_router_step_200_mean_noop_probability_on_causal_rows": 0.12458696854769692,
+    "ordinary_noop_top1_accuracy_step_200": 1.0,
+    "endpoint_noop_top1_accuracy_step_200": 1.0,
+    "interpretation": "the model learned old-task parent/no-op behavior but remained near chance at selecting the correct causal edge"
+  },
+  "setwise_status": {
+    "qualified_architecture_revision": "7a8bc6b63a9f32095ba3fe4ed27db5f62cf5e061",
+    "qualification_receipt_sha256": "4b1591e1eec5c450a872264a1bdf1130def5a29e443c8c35e974ae05f2861666",
+    "qualification_status": "PASS_SETWISE_QUERY_EDGE_ROUTER_NO_GRADIENT_RUNTIME_CONTRACT",
+    "qualification_proves_joint_edge_context": true,
+    "qualification_proves_permutation_equivariance": true,
+    "qualification_proves_nonlocal_competitor_effect": true,
+    "qualification_proves_target_edge_identifiability": false,
+    "qualification_proves_learnability": false,
+    "gpu_attempt_575908_is_model_evidence": false,
+    "gpu_attempt_575908_root_cause": "stale qualification-status guard before optimizer construction",
+    "replacement_gpu_run_authorized": false
+  },
+  "new_localization_hypothesis": {
+    "boundary": "field_side_semantic_binding_and_query_to_field_interaction",
+    "why": [
+      "query side preserves 17-layer token-level hidden states",
+      "field side is collapsed to one final-layer mean-pooled 640-dimensional vector before structured state, adapter, graph, and routing",
+      "the causal curriculum identifies the relevant edge only through subject-plus-attribute content because structured metadata IDs are constant across fields",
+      "train/dev subject, attribute, and framing vocabularies are deliberately disjoint",
+      "prior N0 audits already showed token-level late interaction retains directional signal that mean pooling loses"
+    ],
+    "semantic_model_contract_relevant_fact": "AliceN0V02Model documents pooled encode as a compatibility readout and token-level representations as first-class; the causal field path currently turns that compatibility readout into a fusion bottleneck",
+    "tokenizer_collapse_hypothesis": false,
+    "tokenizer_reason": "v0.2.1 is byte-complete BPE with zero unknown-token audit failures; novel synthetic names remain representable",
+    "setwise_router_not_yet_disproven": true,
+    "setwise_router_not_yet_justified_for_training": true
+  },
+  "audit": {
+    "name": "Query-Edge Binding Identifiability Audit",
+    "purpose": "determine whether the correct edge is recoverable from the frozen representation stages before training another router",
+    "existing_cache_reuse_required": true,
+    "preferred_cache": "query-edge-setwise-router-v0.1/training-preflight-v0.2/setwise_query_edge_train_dev_hidden_cache.pt",
+    "causal_test_open": false,
+    "dev_is_architecture_development_data": true,
+    "stages": [
+      "raw_token_id_discriminative_overlap",
+      "final_mean_pooled_field_semantic",
+      "structured_parent_field_state",
+      "query_conditioned_adapter_field_weight",
+      "frozen_parent_graph_field_weight",
+      "token_level_query_to_field_late_interaction_by_layer_on_dev"
+    ],
+    "must_report": [
+      "all_four_edge_top1_accuracy",
+      "same_relation_three_edge_top1_accuracy",
+      "relevant_edge_margin",
+      "relation_family_breakdown",
+      "chance_reference_0_25_all_edges",
+      "chance_reference_0_333_same_relation",
+      "best_token_layer_without_training",
+      "pooled_vs_token_late_interaction_gap"
+    ],
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_authorized": false,
+    "model_parameter_update_authorized": false,
+    "test_opening_authorized": false
+  },
+  "decision_logic_after_audit": {
+    "raw_text_identifiable_but_pooled_field_signal_weak_and_token_late_interaction_strong": "replace pooled field-side fusion bottleneck with symmetric token-level or late-interaction field binding before any router training",
+    "pooled_field_signal_already_strong_but_trained_router_near_chance": "reopen router/optimization hypothesis; setwise training may then be justified",
+    "token_level_field_signal_also_weak": "reopen semantic objective or causal-curriculum semantics; do not add router complexity",
+    "raw_text_binding_itself_ambiguous": "repair curriculum semantics, not model architecture"
+  },
+  "execution_policy": {
+    "next_action": "stop treating exact-trainer preflight as the model decision; preserve its cache and run the no-gradient binding-identifiability audit",
+    "exact_cpu_trainer_preflight_required_before_audit": false,
+    "setwise_replacement_gpu_authorized": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "anti_mc10_rule": {
+    "router_variant_iteration_closed_until_information_localization": true,
+    "loss_weight_tuning_closed": true,
+    "learning_rate_tuning_closed": true,
+    "step_count_tuning_closed": true,
+    "validation_recovery_may_not_replace_model_data_capability_work": true,
+    "one_causal_change_after_localization_only": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
