@@ -1,0 +1,55 @@
+{
+  "schema": "alice.eipm.n0.qsre-reality-audit-contract.v0.1",
+  "status": "ACTIVE_NO_GRADIENT_ARCHITECTURE_DECISION_CONTRACT",
+  "source_state": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.55.json",
+  "purpose": "Close the CPU/GPU reality gap by combining runtime behavior, benchmark-shortcut diagnostics, frozen-semantic sufficiency, and total T2-to-T1 evaluator-domain fuzzing before any further T2 training decision.",
+  "required_inputs": {
+    "t2_curriculum": "qsre_t2_operator_curriculum_v0.1.jsonl",
+    "t2_prepared_cache": "qsre_t2_tokenized_preparation_v0.1.pt",
+    "semantic_checkpoint_sha256": "6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43",
+    "t1_checkpoint_sha256": "483bd59499e9bea890072af9c01c12961f41504d48f988ae3b3ee9a3ae8154fb"
+  },
+  "tracks": [
+    "runtime_behavioral_parity",
+    "realistic_public_operator_corpus",
+    "shallow_shortcut_attacks",
+    "frozen_semantic_layer_sufficiency",
+    "t2_to_t1_totality_fuzz",
+    "single_combined_architecture_decision"
+  ],
+  "decision_rules": {
+    "semantic_reopen": {
+      "mean_best_layer_normalized_lift_below": 0.20,
+      "or_critical_heads_below_lift": {
+        "threshold": 0.10,
+        "count": 2
+      },
+      "decision": "REOPEN_FROZEN_SEMANTIC_REPRESENTATION_BEFORE_T2"
+    },
+    "benchmark_rebuild": {
+      "t2_dev_unigram_signature_at_least": 0.70,
+      "t2_dev_minus_reality_unigram_signature_at_least": 0.20,
+      "semantic_mean_lift_at_least": 0.20,
+      "decision": "KEEP_QSRE_T2_OPERATOR_FAMILY_REBUILD_T2_CURRICULUM_FROM_REALISTIC_PUBLIC_LANGUAGE"
+    },
+    "keep_current_family": {
+      "semantic_mean_lift_at_least": 0.35,
+      "semantic_min_lift_at_least": 0.15,
+      "t2_dev_minus_reality_unigram_signature_below": 0.20,
+      "decision": "KEEP_CURRENT_T2_OPERATOR_FAMILY_PREPARE_ONE_REALISTIC_T2_EXPERIMENT"
+    },
+    "otherwise": "T2_OPERATOR_INTERFACE_FIRST_PRINCIPLES_REVIEW"
+  },
+  "governance": {
+    "optimizer": false,
+    "gradient": false,
+    "gpu": false,
+    "learned_support": false,
+    "test_open": false,
+    "challenge_open": false,
+    "private_identity_data": false,
+    "private_identity_gradient": false,
+    "automatic_training_authorization_from_result": false,
+    "production_promotion": false
+  }
+}
