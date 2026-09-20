@@ -94,13 +94,14 @@ def main() -> None:
         edge_provenance_match=split["edge_provenance_match"][idx].float(),
         schema_relation_state=encoded["schema_relation_state"],
         operator=operator,
-        focus_field_weight=split["focus_field_weight"][idx].float(),
+        focus_field_weight=binder["focus_field_weight"].float(),
     )
 
     for name,tensor in (
         ("relation_distribution",operator.relation_distribution),
         ("continuous_state",operator.continuous_state),
         ("edge_support_weight",binder["edge_support_weight"]),
+        ("focus_field_weight",binder["focus_field_weight"]),
         ("relational_probability",execution["relational_probability"]),
         ("relational_summary",execution["relational_summary"]),
     ):
