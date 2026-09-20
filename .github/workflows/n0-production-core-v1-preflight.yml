@@ -15,9 +15,17 @@ on:
       - "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v1.py"
       - "scripts/eipm/n0/train_n0_v02_qsre_production_p3_v1.py"
       - "scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v1.py"
+      - "scripts/eipm/n0/build_n0_v02_final_self_validation_v1.py"
+      - "scripts/eipm/n0/prepare_n0_v02_final_self_validation_cache_v1.py"
+      - "scripts/eipm/n0/freeze_n0_v02_final_self_validation_v1.py"
+      - "scripts/eipm/n0/eval_n0_v02_final_self_validation_v1.py"
+      - "configs/eipm/n0/n0_v02_qsre_production_core_v1.json"
+      - "configs/eipm/n0/n0_v02_qsre_production_core_w1_w15_map_v1.json"
       - "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json"
+      - "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json"
       - "configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json"
       - "configs/eipm/n0/n0_v02_qsre_production_training_plan_v1.json"
+      - "configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json"
       - "tests/eipm/test_n0_qsre_production_core_v1.py"
       - "tests/eipm/test_n0_qsre_n0_bridge.py"
       - "tests/eipm/test_n0_qsre_production_training_utils.py"
@@ -27,48 +35,170 @@ on:
 jobs:
   preflight:
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src:scripts/eipm/n0
     steps:
       - uses: actions/checkout@v4
 
       - name: Install CPU test dependencies
-        run: python -m pip install -q torch pytest
+        run: python -m pip install -q torch pytest safetensors
 
-      - name: Compile complete production pipeline
+      - name: Compile complete production and native-validation pipeline
         run: |
-          python -m py_compile             src/alice_personality/n0/qsre_production_core.py             src/alice_personality/n0/qsre_n0_bridge.py             scripts/eipm/n0/qsre_production_runtime.py             scripts/eipm/n0/qsre_production_training_utils.py             scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py             scripts/eipm/n0/prepare_n0_v02_qsre_production_schema_v1.py             scripts/eipm/n0/prepare_n0_v02_qsre_production_cache_v1.py             scripts/eipm/n0/audit_n0_v02_qsre_production_p0_v1.py             scripts/eipm/n0/train_n0_v02_qsre_production_p1_v1.py             scripts/eipm/n0/train_n0_v02_qsre_production_p2_v1.py             scripts/eipm/n0/train_n0_v02_qsre_production_p3_v1.py             scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v1.py
+          python -m py_compile \
+            src/alice_personality/n0/qsre_production_core.py \
+            src/alice_personality/n0/qsre_n0_bridge.py \
+            scripts/eipm/n0/qsre_production_runtime.py \
+            scripts/eipm/n0/qsre_production_training_utils.py \
+            scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py \
+            scripts/eipm/n0/prepare_n0_v02_qsre_production_schema_v1.py \
+            scripts/eipm/n0/prepare_n0_v02_qsre_production_cache_v1.py \
+            scripts/eipm/n0/audit_n0_v02_qsre_production_p0_v1.py \
+            scripts/eipm/n0/train_n0_v02_qsre_production_p1_v1.py \
+            scripts/eipm/n0/train_n0_v02_qsre_production_p2_v1.py \
+            scripts/eipm/n0/train_n0_v02_qsre_production_p3_v1.py \
+            scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v1.py \
+            scripts/eipm/n0/build_n0_v02_final_self_validation_v1.py \
+            scripts/eipm/n0/prepare_n0_v02_final_self_validation_cache_v1.py \
+            scripts/eipm/n0/freeze_n0_v02_final_self_validation_v1.py \
+            scripts/eipm/n0/eval_n0_v02_final_self_validation_v1.py
 
       - name: Run production mechanics and metric tests
-        env:
-          PYTHONPATH: src:scripts/eipm/n0
         run: |
-          pytest -q             tests/eipm/test_n0_qsre_production_core_v1.py             tests/eipm/test_n0_qsre_n0_bridge.py             tests/eipm/test_n0_qsre_production_training_utils.py
+          pytest -q \
+            tests/eipm/test_n0_qsre_production_core_v1.py \
+            tests/eipm/test_n0_qsre_n0_bridge.py \
+            tests/eipm/test_n0_qsre_production_training_utils.py
 
-      - name: Rebuild and bind exact curriculum
+      - name: Rebuild and bind exact production curriculum
         run: |
-          python scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py             --output /tmp/qsre-production-v1.jsonl             --train-groups-per-family 20             --dev-groups-per-family 8             --open-schema-groups 32
+          python scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py \
+            --output /tmp/qsre-production-v1.jsonl \
+            --train-groups-per-family 20 \
+            --dev-groups-per-family 8 \
+            --open-schema-groups 32
+          cp /tmp/qsre-production-v1.jsonl /tmp/qsre-production-first.jsonl
+          python scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py \
+            --output /tmp/qsre-production-v1.jsonl \
+            --train-groups-per-family 20 \
+            --dev-groups-per-family 8 \
+            --open-schema-groups 32 >/tmp/rebuild.txt
+          cmp /tmp/qsre-production-first.jsonl /tmp/qsre-production-v1.jsonl
           python - <<'PY'
           import hashlib, json
+          from collections import Counter
           from pathlib import Path
 
           plan=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v1.json"))
           contract=json.load(open("configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json"))
-          payload=Path("/tmp/qsre-production-v1.jsonl").read_bytes()
-          digest=hashlib.sha256(payload).hexdigest()
+          rows=[json.loads(x) for x in Path("/tmp/qsre-production-v1.jsonl").read_text().splitlines() if x.strip()]
+          digest=hashlib.sha256(Path("/tmp/qsre-production-v1.jsonl").read_bytes()).hexdigest()
           assert digest==contract["expected_sha256"], (digest, contract["expected_sha256"])
           assert digest==plan["curriculum_sha256"], (digest, plan["curriculum_sha256"])
-          assert contract["expected_rows"]=={"train":680,"dev":336,"total":1016}
-          assert plan["architecture_closure"]["unknown_out_of_schema_is_distinct_from_stop"] is True
-          assert plan["architecture_closure"]["combined_scope_constraints_are_supervised"] is True
-          assert plan["architecture_closure"]["all_seed_roles_supervised"] is True
-          assert plan["architecture_closure"]["path_source_target_role_reversal_supervised"] is True
-          assert plan["architecture_closure"]["symmetric_pair_role_supervised"] is True
+          assert Counter(r["split"] for r in rows)==Counter({"train":680,"dev":336})
+          assert len(rows)==1016
+          directions=Counter(r["operator_target"]["direction_id"] for r in rows)
+          assert directions[0]>0 and directions[1]>0 and directions[2]>0, directions
+          reverse=[r for r in rows if r["operator_target"]["direction_id"]==1]
+          assert reverse and all(r["operator_target"]["traversal_id"]==1 for r in reverse)
+          assert all(r["operator_target"]["focus_field_id"] is not None for r in reverse)
+          assert any(r["family"]=="path_role" and r["operator_target"]["role_id"]==0 and r["operator_target"]["direction_id"]==1 for r in rows)
+          assert any(r["operator_target"]["termination"]=="UNKNOWN" for r in rows)
+          assert any(r["operator_target"]["role_id"]==2 for r in rows)
+          assert all(len(r["query_views"])==2 for r in rows)
+          assert plan["architecture_closure"]["learned_path_focus_no_oracle_at_p4"] is True
+          assert plan["architecture_closure"]["forward_reverse_bidirectional_path_execution"] is True
+          assert plan["architecture_closure"]["full_640_semantic_width_preserved_through_qsre"] is True
+          assert plan["model"]["model_dim"]==640
+          assert plan["model"]["semantic_dim"]==640
           print("PASS_QSRE_PRODUCTION_PRECOMMITTED_DATA_BINDING")
           print("curriculum_sha256="+digest)
+          print("direction_counts="+json.dumps(dict(directions),sort_keys=True))
+          PY
+
+      - name: Freeze-build final native validation before results
+        run: |
+          mkdir -p /tmp/n0-final
+          python scripts/eipm/n0/build_n0_v02_final_self_validation_v1.py \
+            --general-output /tmp/n0-final/general.jsonl \
+            --relational-output /tmp/n0-final/relational.jsonl \
+            --manifest /tmp/n0-final/manifest.json
+          cp /tmp/n0-final/general.jsonl /tmp/n0-final/general.first
+          cp /tmp/n0-final/relational.jsonl /tmp/n0-final/relational.first
+          python scripts/eipm/n0/build_n0_v02_final_self_validation_v1.py \
+            --general-output /tmp/n0-final/general.jsonl \
+            --relational-output /tmp/n0-final/relational.jsonl \
+            --manifest /tmp/n0-final/manifest.json >/tmp/n0-final/rebuild.txt
+          cmp /tmp/n0-final/general.first /tmp/n0-final/general.jsonl
+          cmp /tmp/n0-final/relational.first /tmp/n0-final/relational.jsonl
+          python - <<'PY'
+          import json
+          from collections import Counter
+
+          general=[json.loads(x) for x in open("/tmp/n0-final/general.jsonl") if x.strip()]
+          relational=[json.loads(x) for x in open("/tmp/n0-final/relational.jsonl") if x.strip()]
+          manifest=json.load(open("/tmp/n0-final/manifest.json"))
+          contract=json.load(open("configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json"))
+          production_schema=json.load(open("configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json"))
+          final_schema=json.load(open("configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json"))
+
+          assert len(general)==160 and len(relational)==160
+          assert manifest["total_rows"]==320
+          assert manifest["final_only_relation_rows"]==16
+          assert manifest["training_authorized"] is False
+          assert contract["threshold_changes_after_results_forbidden"] is True
+          final_only=set(contract["corpus"]["final_only_relation_keys"])
+          prod_keys={r["key"] for r in production_schema["relations"]}
+          final_keys={r["key"] for r in final_schema["relations"]}
+          assert final_only.isdisjoint(prod_keys)
+          assert final_only <= final_keys
+          assert final_schema["governance"]["final_validation_relations_excluded_from_p1_p2_p3"] is True
+
+          # A final relational answer must not simply be copied from a target
+          # entity named in the query. At least one positive answer entity is
+          # absent from every answer-bearing query.
+          for row in relational:
+              targets=[
+                  f["entity"]
+                  for f in row["fields"]
+                  if row["target_distribution"].get(f["id"],0)>0
+              ]
+              if targets:
+                  assert any(name not in row["query"] for name in targets), row["id"]
+              assert row["training_authorized"] is False
+              assert row["private_identity_data"] is False
+              assert len(row["query_views"])==2
+
+          required=Counter(
+              r["family"] for r in relational
+              if r["relational_required_for_integrated_answer"]
+          )
+          for family in (
+              "path_source","path_target","path_order","three_hop",
+              "recency_arbitration","temporal_constraint",
+              "provenance_constraint","combined_constraints",
+              "final_unseen_enables","final_unseen_prevents",
+          ):
+              assert required[family]==8, (family,required[family])
+          assert sum(required.values())==80
+          print("PASS_N0_FINAL_SELF_VALIDATION_STATIC_FREEZE_CONTRACT")
+          print("required_causal_use_rows="+str(sum(required.values())))
+          PY
+
+      - name: Prove P4 has no oracle focus path
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          source=Path("scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v1.py").read_text()
+          assert 'focus=bound["focus_field_weight"]' in source
+          assert 'focus=split["focus_field_weight"]' not in source
+          source3=Path("scripts/eipm/n0/train_n0_v02_qsre_production_p3_v1.py").read_text()
+          assert 'focus_bce' in source3
+          assert 'bound["focus_logits"]' in source3
+          print("PASS_QSRE_NO_ORACLE_FOCUS_END_TO_END")
           PY
 
       - name: Audit no accidental model-capability ceilings
-        env:
-          PYTHONPATH: src:scripts/eipm/n0
         run: |
           python - <<'PY'
           import json
@@ -86,17 +216,21 @@ jobs:
           assert report["operator"]["hop_count_dependent_parameters"]==0
           assert report["operator"]["role_count_ceiling"] is None
           assert report["operator"]["traversal_count_ceiling"] is None
+          assert report["operator"]["direction_count_ceiling"] is None
           assert report["operator"]["control_count_ceiling"] is None
           assert report["executor"]["relation_count_dependent_parameters"]==0
           assert report["executor"]["hop_count_dependent_parameters"]==0
           assert report["executor"]["role_count_ceiling"] is None
           assert report["executor"]["traversal_count_ceiling"] is None
+          assert report["executor"]["direction_count_ceiling"] is None
           bridge=QSREN0EvidenceBridge()
           bridge_report=bridge.parameter_report()
           assert bridge_report["total_parameters"]==0
           assert bridge_report["field_count_ceiling"] is None
           assert bridge_report["support_count_ceiling"] is None
           assert bridge_report["candidate_count_ceiling"] is None
+          assert bridge_report["hard_relational_confidence_gate"] is False
+          assert bridge_report["native_relational_summary_channel_supported"] is True
           assert plan["governance"]["private_identity_gradient"] is False
           assert plan["governance"]["automatic_hotfix"] is False
           assert plan["governance"]["learning_rate_search"] is False
