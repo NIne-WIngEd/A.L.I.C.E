@@ -113,6 +113,7 @@ def build_split(
     modifier_target = torch.zeros(count, 4)
     applicability_target = torch.zeros(count)
     control_target = torch.zeros(count, dtype=torch.long)
+    termination_target = torch.zeros(count, dtype=torch.long)
     focus_field_weight = torch.zeros(count, max_fields)
     target_distribution = torch.zeros(count, max_fields)
 
@@ -189,6 +190,10 @@ def build_split(
         )
         applicability_target[row_i] = float(target["applicability"])
         control_target[row_i] = int(target["control_id"])
+        termination = str(target.get("termination", "STOP"))
+        if termination not in {"STOP", "UNKNOWN"}:
+            raise RuntimeError(f"unknown termination target: {termination}")
+        termination_target[row_i] = 1 if termination == "UNKNOWN" else 0
 
         focus = target["focus_field_id"]
         if focus is not None:
@@ -223,6 +228,7 @@ def build_split(
         "modifier_target": modifier_target,
         "applicability_target": applicability_target,
         "control_target": control_target,
+        "termination_target": termination_target,
         "focus_field_weight": focus_field_weight,
         "target_distribution": target_distribution,
         "open_schema": open_schema,
@@ -372,6 +378,10 @@ def main() -> None:
         },
         "query_views_per_row": 2,
         "open_schema_dev_rows": int(dev["open_schema"].sum().item()),
+        "unknown_termination_rows": {
+            "train": int(train["termination_target"].sum().item()),
+            "dev": int(dev["termination_target"].sum().item()),
+        },
         "max_relation_steps": max(
             int(train["relation_target"].size(1)),
             int(dev["relation_target"].size(1)),
