@@ -1,0 +1,95 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.53",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.52.json",
+  "status": "QSRE_T2_JOB_575933_STOPPED_ON_EVALUATOR_TOTALITY_BOUNDARY;NO_MODEL_GATE_RESULT;ONE_CLASSIFIED_REPLACEMENT_RUN_MAY_BE_QUALIFIED;T3_TEST_PRIVATE_IDENTITY_CLOSED",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-qsre-t2-operator-learning",
+  "source_state": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.52.json",
+  "failed_job": {
+    "job_id": 575933,
+    "source_revision": "c43df19e79dc63ed00f15a313d71f7873fa5b71f",
+    "scheduler_state": "FAILED",
+    "exit_code": "1:0",
+    "elapsed": "00:01:10",
+    "classification": "EVALUATION_HARNESS_TOTALITY_FAILURE_NOT_MODEL_GATE_FAILURE",
+    "traceback": "ValueError: PATH_FOLLOW requires a non-empty oracle focus frontier",
+    "last_completed_dev_step": 25,
+    "result_json_produced": false,
+    "automatic_rerun_authorized": false,
+    "model_gate_conclusion": "UNDETERMINED"
+  },
+  "failure_localization": {
+    "frozen_t1_contract": "PATH_FOLLOW is valid only with a non-empty focus frontier",
+    "t2_learning_behavior": "during early training the operation head may predict PATH_FOLLOW on rows whose oracle focus is empty",
+    "evaluator_defect": "the evaluator passed every provisional T2 prediction directly into the strict frozen T1 validator, so an expected wrong intermediate prediction raised instead of being scored wrong",
+    "why_not_model_failure": "the run stopped inside evaluation before a T2 DEV contract result could be produced; step0 and step25 are partial diagnostic observations only",
+    "why_t1_must_not_change": "the frozen T1 validator correctly enforces the executor input contract and remains untouched",
+    "why_operator_architecture_must_not_change": "the observed exception does not localize an architecture or capacity defect; it localizes evaluator domain incompleteness"
+  },
+  "bounded_correction": {
+    "scientific_core_revision": "bff3b2e7c31255e8ca9354add5dafa1bde177b18",
+    "file_changed": "scripts/eipm/n0/train_n0_v02_qsre_t2_operator_v0_1.py",
+    "model_architecture_changed": false,
+    "optimizer_changed": false,
+    "loss_changed": false,
+    "training_rows_changed": false,
+    "semantic_backbone_changed": false,
+    "t1_executor_changed": false,
+    "eligibility_thresholds_changed": false,
+    "test_or_challenge_opened": false,
+    "behavior": "evaluator canonicalizes impossible PATH_FOLLOW only for safe frozen-T1 execution; relational rows requiring canonicalization remain explicit failures and receive zero downstream probability; non-relational operation values are canonicalized because operation is inactive under non-relational control",
+    "diagnostic_metric_added": "invalid_relational_path_without_focus_count/rate"
+  },
+  "partial_evidence_policy": {
+    "preserve_failed_training_root": true,
+    "preserve_hidden_cache": true,
+    "preserve_best_observed_checkpoint": true,
+    "preserve_stdout_stderr": true,
+    "do_not_promote_step25": true,
+    "do_not_call_step25_failure_or_pass": true
+  },
+  "replacement_policy": {
+    "replacement_run_requires_static_qualification": true,
+    "replacement_run_count_authorized_after_qualification": 1,
+    "replacement_is_not_automatic_rerun": true,
+    "reason": "the original governed run did not reach a total evaluator or produce a model-gate result",
+    "must_use_fresh_output_root": true,
+    "must_preserve_failed_root": true,
+    "must_keep_same_model_optimizer_loss_data_and_thresholds": true,
+    "must_restart_from_seed": true,
+    "resume_from_partial_optimizer_state": false
+  },
+  "execution_policy": {
+    "optimizer_authorized_for_replacement": false,
+    "gradient_authorized_for_replacement": false,
+    "gpu_training_authorized_for_replacement": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_chain_authorized": false,
+    "t1_rerun_authorized": false,
+    "semantic_backbone_gradient_authorized": false,
+    "t1_executor_gradient_authorized": false,
+    "learned_support_training_authorized": false,
+    "causal_test_opening_authorized": false,
+    "frozen_challenge_opening_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "anti_loop_policy": {
+    "one_causal_change_per_failed_boundary": true,
+    "no_lr_or_step_tuning_from_this_exception": true,
+    "no_architecture_change_from_this_exception": true,
+    "infrastructure_or_harness_failure_is_not_model_evidence": true,
+    "static_totality_test_required_before_replacement_authorization": true
+  },
+  "capability_policy": {
+    "full_eipm_workload_remains_target": true,
+    "current_relation_slots_are_product_ceiling": false,
+    "current_relation_vocabulary_is_product_ceiling": false,
+    "current_role_or_operation_vocabulary_is_product_ceiling": false,
+    "current_model_width_depth_parameter_count_are_product_ceiling": false,
+    "current_training_rows_or_steps_are_product_ceiling": false
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
