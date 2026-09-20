@@ -68,13 +68,16 @@
     "stop_unknown_semantics_distinct": true,
     "path_source_target_role_reversal": true,
     "symmetric_endpoint_pair_preservation": true,
-    "all_seed_roles_supervised": true
+    "all_seed_roles_supervised": true,
+    "forward_reverse_bidirectional_path_direction": true,
+    "learned_path_focus_supervision": true,
+    "reverse_path_source_from_target_focus": true
   },
   "purpose": "One fixed public dataset contract serves the production QSRE causal stages so later failures cannot silently redefine the architecture or data semantics.",
   "optimizer_authorized": false,
   "gradient_authorized": false,
   "gpu_authorized": false,
   "private_identity_gradient": false,
-  "expected_sha256": "7907602681fde3595ad14a9209547c7272e2dab6690be24f9baf590f46b562ff",
+  "expected_sha256": "PENDING_REBIND_AFTER_DIRECTION_AND_FOCUS_CLOSURE",
   "query_views_per_row": 2
 }
