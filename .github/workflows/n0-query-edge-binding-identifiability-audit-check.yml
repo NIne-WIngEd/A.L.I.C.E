@@ -1,0 +1,173 @@
+name: N0 Query Edge Binding Identifiability Audit Contract
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-query-edge-binding-identifiability-audit
+    paths:
+      - "scripts/eipm/n0/audit_n0_v02_query_edge_binding_identifiability_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_query_edge_binding_identifiability_audit_v0_1.sh"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.32.json"
+      - ".github/workflows/n0-query-edge-binding-identifiability-audit-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile             scripts/eipm/n0/audit_n0_v02_query_edge_binding_identifiability_v0_1.py
+          bash -n             scripts/eipm/n0/run_n0_v02_query_edge_binding_identifiability_audit_v0_1.sh
+
+      - name: Router repair loop is closed
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.32.json"
+          ).read_text())
+          if s["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.32":
+              raise SystemExit("v0.32 schema drift")
+          if "ROUTER_REPAIR_LOOP_HALTED" not in s["status"]:
+              raise SystemExit("router repair loop reopened")
+          if s["setwise_status"]["replacement_gpu_run_authorized"] is not False:
+              raise SystemExit("setwise replacement GPU reopened")
+          e=s["execution_policy"]
+          if e["exact_cpu_trainer_preflight_required_before_audit"] is not False:
+              raise SystemExit("audit incorrectly depends on exact trainer preflight")
+          for key in (
+              "setwise_replacement_gpu_authorized",
+              "optimizer_authorized",
+              "gradient_authorized",
+              "gpu_training_authorized",
+              "automatic_rerun_authorized",
+              "automatic_hotfix_authorized",
+              "heldout_opening_authorized",
+              "frozen_challenge_rerun_authorized",
+              "scale_authorized",
+              "semantic_retraining_authorized",
+              "graph_parent_retraining_authorized",
+              "private_identity_gradient_authorized",
+              "production_promotion_authorized",
+          ):
+              if e[key] is not False:
+                  raise SystemExit(f"premature authorization: {key}")
+          if s["n0_complete"] is not False:
+              raise SystemExit("N0 completion drift")
+          print("router_repair_loop_closed=PASS")
+          PY
+
+      - name: Audit localizes information rather than training a router
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/audit_n0_v02_query_edge_binding_identifiability_v0_1.py"
+          ).read_text()
+          required=[
+              "lexical_token_id_overlap",
+              "final_mean_pooled_field_semantic",
+              "structured_parent_field_state",
+              "adapter_field_weight",
+              "parent_graph_field_weight",
+              "evaluate_token_late_interaction",
+              "best_same_relation_layer",
+              "same_relation_three_edge_top1_accuracy",
+              "chance_reference_all_four",
+              "chance_reference_same_relation_three",
+              "FIELD_POOLING_BOTTLENECK_SUPPORTED_TOKEN_LATE_INTERACTION_RECOVERS_BINDING",
+              "RAW_TEXT_IDENTIFIABLE_BUT_FROZEN_SEMANTIC_TOKEN_BINDING_WEAK",
+              '"causal_test_evaluated": False',
+              '"optimizer_created": False',
+              '"gradient_performed": False',
+              '"gpu_required": False',
+              '"setwise_training_authorized": False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("identifiability audit contract missing "+repr(missing))
+
+          forbidden=[
+              "torch.optim",
+              ".backward(",
+              "optimizer.step",
+              'torch.device("cuda")',
+              ".cuda()",
+              "SetwiseQueryEdgeBridge(",
+              "CompetitiveQueryEdgeBridge(",
+              "trainable =",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("training/router iteration leaked into audit "+repr(present))
+          print("information_localization_only=PASS")
+          PY
+
+      - name: Field-side token interaction is explicitly compared to pooling
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/audit_n0_v02_query_edge_binding_identifiability_v0_1.py"
+          ).read_text()
+          required=[
+              "field_semantic",
+              "query_hidden_states",
+              "output_hidden_states=True",
+              "maxsim(",
+              "similarity.max(dim=1).values.mean()",
+              "dev_pooled_to_best_token_accuracy_delta",
+              "raw_token_id_discriminative_overlap",
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("pooled/token comparison missing "+repr(missing))
+          print("field_side_pooling_vs_token_interaction=PASS")
+          PY
+
+      - name: Runner reuses expensive cache and does not rebuild trainer path
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          r=Path(
+              "scripts/eipm/n0/run_n0_v02_query_edge_binding_identifiability_audit_v0_1.sh"
+          ).read_text()
+          required=[
+              "training-preflight-v0.2/setwise_query_edge_train_dev_hidden_cache.pt",
+              "EXPECTED_CACHE_BYTES=827461729",
+              "v0_32_binding_identifiability_audit_gate=PASS",
+              "reuses_existing_hidden_cache=true",
+              "optimizer=false",
+              "gradient=false",
+              "gpu=false",
+              "causal_test_open=false",
+              "setwise_training_authorized=false",
+          ]
+          missing=[x for x in required if x not in r]
+          if missing:
+              raise SystemExit("cache-reuse runner contract missing "+repr(missing))
+          forbidden=[
+              "sbatch",
+              "--preflight-only",
+              "compile_query_edge_payload",
+              "train_n0_v02_query_edge_setwise_router_v0_1.py",
+              "RAYAN_UDOCKER_NVIDIA=1",
+          ]
+          present=[x for x in forbidden if x in r]
+          if present:
+              raise SystemExit("trainer/GPU recovery leaked into audit runner "+repr(present))
+          print("reuse_cache_no_training_rebuild=PASS")
+          PY
