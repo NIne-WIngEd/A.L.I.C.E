@@ -1,0 +1,169 @@
+name: N0 Fast Dual View Failure Localization Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-dual-view-specialist-failure-localization
+    paths:
+      - "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py"
+      - "scripts/eipm/n0/run_n0_v02_dual_view_specialist_failure_localization_v0_2.sh"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.37.json"
+      - ".github/workflows/n0-fast-dual-view-failure-localization-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py
+          bash -n \
+            scripts/eipm/n0/run_n0_v02_dual_view_specialist_failure_localization_v0_2.sh
+
+      - name: Fast audit removes semantic reencoding
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py"
+          ).read_text()
+          required=[
+              'causal = torch.load(causal_cache_path, map_location="cpu")',
+              'field_cache = torch.load(field_cache_path, map_location="cpu")',
+              'causal_fields = field_cache["causal_field_tokens"]',
+              "build_query_content_lookup",
+              "evaluate_counterfactual_modes",
+              "causal_specialist_probabilities",
+              "preservation_receipt_summary",
+              '"semantic_backbone_executed": False',
+              '"preservation_semantic_reencoding_performed": False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("cache-only audit contract missing "+repr(missing))
+          forbidden=[
+              "AliceN0V02Model(",
+              "attach_query_hidden_states(",
+              "encode_unique_final_field_tokens(",
+              "ordinary_replay_cache",
+              "endpoint_replay_cache",
+              "--semantic-checkpoint",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("slow semantic/presevation path leaked "+repr(present))
+          print("cache_only_localization=PASS")
+          PY
+
+      - name: Four counterfactuals unchanged
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py"
+          ).read_text()
+          for key in (
+              "actual_activation_soft_binding",
+              "forced_specialist_soft_binding",
+              "actual_activation_hard_top1_binding",
+              "forced_specialist_hard_top1_binding",
+              "relevant_edge_residual_proposal_role_accuracy",
+          ):
+              if key not in t:
+                  raise SystemExit(f"counterfactual contract missing: {key}")
+          print("counterfactual_question_unchanged=PASS")
+          PY
+
+      - name: State preserves interrupted v0.1 and closes training
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.37.json"
+          ).read_text())
+          if s["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.37":
+              raise SystemExit("v0.37 schema drift")
+          v=s["v0_36_attempt"]
+          if v["result_file_produced"] is not False:
+              raise SystemExit("interrupted v0.1 became model evidence")
+          if v["directory_must_be_preserved"] is not True:
+              raise SystemExit("interrupted v0.1 preservation drift")
+          o=s["optimization"]
+          if o["scientific_question_changed"] is not False:
+              raise SystemExit("science question changed during optimization")
+          if o["counterfactual_modes_changed"] is not False:
+              raise SystemExit("counterfactual modes changed")
+          a=s["fast_localization"]
+          for key in (
+              "optimizer_authorized",
+              "gradient_authorized",
+              "gpu_required",
+              "training_authorized",
+              "test_opening_authorized",
+              "challenge_opening_authorized",
+          ):
+              if a[key] is not False:
+                  raise SystemExit(f"fast audit boundary drift: {key}")
+          print("v0_1_preserved_training_closed=PASS")
+          PY
+
+      - name: Runner writes v0.2 and never deletes v0.1
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          r=Path(
+              "scripts/eipm/n0/run_n0_v02_dual_view_specialist_failure_localization_v0_2.sh"
+          ).read_text()
+          required=[
+              'INTERRUPTED_ROOT="$DUAL_ROOT/failure-localization-v0.1"',
+              'AUDIT_ROOT="$DUAL_ROOT/failure-localization-v0.2"',
+              "interrupted_v0_1_preserved=true",
+              "semantic_backbone_executed=false",
+              "preservation_semantic_reencoding=false",
+              "causal_hidden_states_reused_from_cache=true",
+              "gpu=false",
+              "training=false",
+          ]
+          missing=[x for x in required if x not in r]
+          if missing:
+              raise SystemExit("fast runner contract missing "+repr(missing))
+          forbidden=["rm -rf","sbatch","RAYAN_UDOCKER_NVIDIA=1","magnolia_p100"]
+          present=[x for x in forbidden if x in r]
+          if present:
+              raise SystemExit("destructive/GPU path leaked "+repr(present))
+          print("fast_runner_preserves_evidence=PASS")
+          PY
+
+      - name: No optimizer gradient or CUDA
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py"
+          ).read_text()
+          forbidden=[
+              "torch.optim",
+              ".backward(",
+              "optimizer.step",
+              'torch.device("cuda")',
+              ".cuda()",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("training/GPU leaked into fast audit "+repr(present))
+          print("cpu_no_gradient_only=PASS")
+          PY
