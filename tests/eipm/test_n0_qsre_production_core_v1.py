@@ -18,6 +18,7 @@ from alice_personality.n0.qsre_production_core import (
     QSREProductionCore,
     QSREProductionExecutor,
     QSREProductionOperatorInducer,
+    QSREProductionSchemaEncoder,
     QSREProductionOperatorState,
 )
 
@@ -50,6 +51,27 @@ def schema(relations: int, *, seed: int = 1) -> QSREDynamicRelationSchema:
         symmetric=symmetric,
     )
 
+
+
+
+def run_operator(
+    model: QSREProductionOperatorInducer,
+    encoder: QSREProductionSchemaEncoder,
+    *,
+    q: torch.Tensor,
+    qmask: torch.Tensor,
+    s: QSREDynamicRelationSchema,
+    steps: int,
+):
+    encoded = encoder(s)
+    return model(
+        query_hidden_states=q,
+        query_token_mask=qmask,
+        schema=s,
+        schema_token_state=encoded["schema_token_state"],
+        schema_relation_state=encoded["schema_relation_state"],
+        max_steps=steps,
+    )
 
 def query(batch: int = 2, tokens: int = 7, *, seed: int = 2):
     g = torch.Generator().manual_seed(seed)
@@ -126,20 +148,23 @@ def graph_inputs(batch: int = 1):
 def test_dynamic_relation_cardinality_has_no_parameter_axis() -> None:
     torch.manual_seed(4)
     model = QSREProductionOperatorInducer(cfg()).eval()
-    before = sum(p.numel() for p in model.parameters())
+    encoder = QSREProductionSchemaEncoder(cfg()).eval()
+    before = sum(p.numel() for p in model.parameters()) + sum(p.numel() for p in encoder.parameters())
     q, qmask = query(batch=2)
 
     for relations in (3, 6, 11):
-        out = model(
-            query_hidden_states=q,
-            query_token_mask=qmask,
-            schema=schema(relations, seed=relations),
-            max_steps=2,
+        out = run_operator(
+            model,
+            encoder,
+            q=q,
+            qmask=qmask,
+            s=schema(relations, seed=relations),
+            steps=2,
         )
         operator = out["operator"]
         assert operator.relation_distribution.shape == (2, 2, relations)
         assert out["schema_relation_state"].shape == (relations, 32)
-        assert sum(p.numel() for p in model.parameters()) == before
+        assert sum(p.numel() for p in model.parameters()) + sum(p.numel() for p in encoder.parameters()) == before
 
     report = model.parameter_report()
     assert report["relation_count_dependent_parameters"] == 0
@@ -149,16 +174,19 @@ def test_dynamic_relation_cardinality_has_no_parameter_axis() -> None:
 def test_dynamic_step_count_uses_shared_parameters() -> None:
     torch.manual_seed(5)
     model = QSREProductionOperatorInducer(cfg()).eval()
+    encoder = QSREProductionSchemaEncoder(cfg()).eval()
     q, qmask = query(batch=1)
     s = schema(6)
     before = {name: id(parameter) for name, parameter in model.named_parameters()}
 
     for steps in (1, 2, 3, 5):
-        out = model(
-            query_hidden_states=q,
-            query_token_mask=qmask,
-            schema=s,
-            max_steps=steps,
+        out = run_operator(
+            model,
+            encoder,
+            q=q,
+            qmask=qmask,
+            s=s,
+            steps=steps,
         )
         assert out["operator"].relation_distribution.shape == (1, steps, 6)
         assert {name: id(parameter) for name, parameter in model.named_parameters()} == before
@@ -169,13 +197,16 @@ def test_dynamic_step_count_uses_shared_parameters() -> None:
 def test_schema_permutation_equivariance() -> None:
     torch.manual_seed(6)
     model = QSREProductionOperatorInducer(cfg()).eval()
+    encoder = QSREProductionSchemaEncoder(cfg()).eval()
     q, qmask = query(batch=2, seed=7)
     base_schema = schema(6, seed=8)
-    base = model(
-        query_hidden_states=q,
-        query_token_mask=qmask,
-        schema=base_schema,
-        max_steps=3,
+    base = run_operator(
+        model,
+        encoder,
+        q=q,
+        qmask=qmask,
+        s=base_schema,
+        steps=3,
     )["operator"].relation_distribution.detach()
 
     perm = torch.tensor([2, 5, 0, 4, 1, 3])
@@ -187,11 +218,13 @@ def test_schema_permutation_equivariance() -> None:
         range_type_mask=base_schema.range_type_mask[perm],
         symmetric=base_schema.symmetric[perm],
     )
-    moved = model(
-        query_hidden_states=q,
-        query_token_mask=qmask,
-        schema=permuted_schema,
-        max_steps=3,
+    moved = run_operator(
+        model,
+        encoder,
+        q=q,
+        qmask=qmask,
+        s=permuted_schema,
+        steps=3,
     )["operator"].relation_distribution.detach()
 
     assert torch.allclose(base, moved[..., inverse], atol=1e-5, rtol=1e-5)
@@ -200,6 +233,7 @@ def test_schema_permutation_equivariance() -> None:
 def test_semantic_schema_intervention_changes_relation_state_and_logits() -> None:
     torch.manual_seed(9)
     model = QSREProductionOperatorInducer(cfg()).eval()
+    encoder = QSREProductionSchemaEncoder(cfg()).eval()
     q, qmask = query(batch=1, seed=10)
     s1 = schema(4, seed=11)
     s2 = QSREDynamicRelationSchema(
@@ -211,18 +245,8 @@ def test_semantic_schema_intervention_changes_relation_state_and_logits() -> Non
     )
     s2.token_states[0].mul_(-3.0)
 
-    a = model(
-        query_hidden_states=q,
-        query_token_mask=qmask,
-        schema=s1,
-        max_steps=1,
-    )
-    b = model(
-        query_hidden_states=q,
-        query_token_mask=qmask,
-        schema=s2,
-        max_steps=1,
-    )
+    a = run_operator(model, encoder, q=q, qmask=qmask, s=s1, steps=1)
+    b = run_operator(model, encoder, q=q, qmask=qmask, s=s2, steps=1)
 
     assert not torch.allclose(
         a["schema_relation_state"][0],
@@ -237,6 +261,7 @@ def test_semantic_schema_intervention_changes_relation_state_and_logits() -> Non
 def test_unknown_and_stop_are_distinct_structural_outputs() -> None:
     torch.manual_seed(12)
     model = QSREProductionOperatorInducer(cfg()).eval()
+    encoder = QSREProductionSchemaEncoder(cfg()).eval()
     q, qmask = query(batch=1)
     s = schema(3)
 
@@ -245,21 +270,15 @@ def test_unknown_and_stop_are_distinct_structural_outputs() -> None:
         model.unknown_head.weight.zero_()
         model.stop_head.bias.fill_(20.0)
         model.unknown_head.bias.fill_(-20.0)
-    stopped = model(
-        query_hidden_states=q,
-        query_token_mask=qmask,
-        schema=s,
-        max_steps=1,
+    stopped = run_operator(
+        model, encoder, q=q, qmask=qmask, s=s, steps=1
     )["operator"]
 
     with torch.no_grad():
         model.stop_head.bias.fill_(-20.0)
         model.unknown_head.bias.fill_(20.0)
-    unknown = model(
-        query_hidden_states=q,
-        query_token_mask=qmask,
-        schema=s,
-        max_steps=1,
+    unknown = run_operator(
+        model, encoder, q=q, qmask=qmask, s=s, steps=1
     )["operator"]
 
     assert float(stopped.stop_probability[0, 0]) > 0.99
@@ -557,6 +576,7 @@ def test_totality_fuzz_over_operator_space() -> None:
 def test_production_core_parameter_report_has_no_relation_or_hop_parameter_axis() -> None:
     core = QSREProductionCore(cfg())
     report = core.parameter_report()
+    assert report["schema_encoder"]["relation_count_dependent_parameters"] == 0
     assert report["operator"]["relation_count_dependent_parameters"] == 0
     assert report["operator"]["hop_count_dependent_parameters"] == 0
     assert report["executor"]["relation_count_dependent_parameters"] == 0
