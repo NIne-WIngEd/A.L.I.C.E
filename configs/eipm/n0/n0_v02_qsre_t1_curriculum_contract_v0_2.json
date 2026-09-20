@@ -1,0 +1,71 @@
+{
+  "schema": "alice.eipm.n0.qsre-t1-curriculum-contract.v0.2",
+  "status": "PUBLIC_T1_PAIRED_CAUSAL_ORACLE_OPERATOR_ORACLE_SUPPORT_CURRICULUM",
+  "seed": 20260920,
+  "train_rows_per_family": 40,
+  "dev_rows_per_family": 16,
+  "row_counts_are_product_ceiling": false,
+  "relation_seed_count": 6,
+  "relation_seed_count_is_permanent_ceiling": false,
+  "roles": {
+    "SOURCE": 0,
+    "TARGET": 1,
+    "SYMMETRIC": 2,
+    "NONE": 3
+  },
+  "operations": {
+    "ROLE_SELECT": 0,
+    "PATH_FOLLOW": 1,
+    "AGGREGATE": 2,
+    "PREFER_RELIABILITY": 3,
+    "PREFER_LATEST": 4
+  },
+  "operation_seed_count_is_permanent_ceiling": false,
+  "families": [
+    "endpoint_role",
+    "relation_filter",
+    "multi_support_aggregate",
+    "ordered_path",
+    "reliability_arbitration",
+    "temporal_arbitration",
+    "ambiguity_plurality",
+    "fallback_defer",
+    "outside_support_distractor"
+  ],
+  "causal_pairing_required": true,
+  "field_order_permuted_by_group": true,
+  "edge_order_permuted_by_group": true,
+  "structural_requirements": {
+    "support_cardinality_variation": true,
+    "relation_sequence_length_variation": true,
+    "multi_hop": true,
+    "plural_targets": true,
+    "outside_support_distractors": true,
+    "reliability_metadata": true,
+    "temporal_metadata": true,
+    "fallback": true,
+    "defer": true
+  },
+  "leakage_controls": {
+    "split_specific_field_ids": true,
+    "split_specific_field_text_tokens": true,
+    "target_not_encoded_in_text": true,
+    "same_graph_counterfactual_pairs": true,
+    "field_position_not_target_constant": true,
+    "no_private_identity_data": true,
+    "no_test_split": true
+  },
+  "field_state_source_when_training": "frozen Alice N0 semantic field embeddings from qualified causal cache; split-isolated deterministic assignment",
+  "field_metadata_channels": [
+    "reliability",
+    "normalized_time",
+    "is_focus_hint_reserved_zero"
+  ],
+  "edge_metadata_channels": [
+    "reliability",
+    "normalized_time"
+  ],
+  "gradient_authorized": false,
+  "gpu_training_authorized": false,
+  "private_identity_gradient": false
+}

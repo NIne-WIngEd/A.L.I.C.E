@@ -1,0 +1,246 @@
+name: N0 QSRE T1 Corrected Pretraining Contract
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-qsre-t1-executor-training
+  workflow_dispatch:
+
+jobs:
+  corrected-pretraining:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install CPU tensor runtime
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install "torch>=2.7" --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            src/alice_personality/n0/qsre_t1_executor.py \
+            tests/eipm/test_n0_qsre_t1_executor.py \
+            tests/eipm/test_n0_qsre_t1_executor_v0_2.py \
+            scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_2.py \
+            scripts/eipm/n0/evaluate_n0_v02_qsre_t1_curriculum_v0_2.py \
+            scripts/eipm/n0/prepare_n0_v02_qsre_t1_real_cache_v0_1.py \
+            scripts/eipm/n0/train_n0_v02_qsre_t1_executor_v0_1.py
+          bash -n scripts/eipm/n0/run_n0_v02_prepare_qsre_t1_real_cache_v0_1.sh
+
+      - name: v0.47 retracts premature GPU eligibility
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          state=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.47.json"
+          ).read_text())
+          contract=json.loads(Path(
+              "configs/eipm/n0/n0_v02_qsre_t1_training_contract_v0_1.json"
+          ).read_text())
+
+          if state["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.47":
+              raise SystemExit("v0.47 state drift")
+          if state["correction_classification"]!="pretraining validity correction; not learned-model failure":
+              raise SystemExit("correction classification drift")
+
+          policy=state["execution_policy"]
+          if policy["real_cache_preparation_authorized"] is not True:
+              raise SystemExit("real-cache prep unexpectedly closed")
+          if policy["trainer_source_authorized"] is not True:
+              raise SystemExit("trainer source unexpectedly closed")
+          for key in (
+              "t1_training_authorized",
+              "optimizer_authorized",
+              "gradient_authorized",
+              "gpu_training_authorized",
+          ):
+              if policy[key] is not False:
+                  raise SystemExit(f"premature training authorization: {key}")
+
+          if contract["gpu_training_authorized"] is not False:
+              raise SystemExit("training contract self-authorized GPU")
+          if contract["max_gpu_runs"]!=1:
+              raise SystemExit("one-shot contract drift")
+          if contract["automatic_rerun"] is not False:
+              raise SystemExit("automatic rerun opened")
+          if contract["causal_test_open"] is not False:
+              raise SystemExit("TEST opened")
+          if contract["frozen_challenge_open"] is not False:
+              raise SystemExit("challenge opened")
+
+          print("v0_47_governance=PASS")
+          PY
+
+      - name: Corrected T1 causal mechanics
+        env:
+          PYTHONPATH: ${{ github.workspace }}/src
+        run: |
+          set -euo pipefail
+          python tests/eipm/test_n0_qsre_t1_executor.py
+          python tests/eipm/test_n0_qsre_t1_executor_v0_2.py
+
+      - name: Static executor and trainer isolation
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          executor=Path(
+              "src/alice_personality/n0/qsre_t1_executor.py"
+          ).read_text()
+          trainer=Path(
+              "scripts/eipm/n0/train_n0_v02_qsre_t1_executor_v0_1.py"
+          ).read_text()
+
+          required=[
+              "source_on_frontier",
+              "path_readout",
+              "active_node",
+              "T1 forbids direct field support",
+              "exact membership 0/1",
+          ]
+          missing=[x for x in required if x not in executor]
+          if missing:
+              raise SystemExit("corrected executor mechanics missing "+repr(missing))
+
+          for forbidden in (
+              "parent_global",
+              "parent_logit",
+              "query_hidden_states",
+              "field_token_states",
+          ):
+              if forbidden in executor:
+                  raise SystemExit("executor causal isolation violated: "+forbidden)
+
+          trainer_required=[
+              "gpu_training_authorized",
+              "automatic_rerun",
+              "causal_pair_completion",
+              "outside_support_invariance_max_delta",
+          ]
+          missing=[x for x in trainer_required if x not in trainer]
+          if missing:
+              raise SystemExit("trainer governance/metric contract missing "+repr(missing))
+
+          print("t1_static_causal_isolation=PASS")
+          PY
+
+      - name: Build and evaluate paired causal curriculum
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp
+          python scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_2.py \
+            --contract configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_2.json \
+            --output .tmp/qsre_t1_v0_2.jsonl
+
+          python scripts/eipm/n0/evaluate_n0_v02_qsre_t1_curriculum_v0_2.py \
+            --contract configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_2.json \
+            --curriculum .tmp/qsre_t1_v0_2.jsonl \
+            --output .tmp/qsre_t1_v0_2.receipt.json
+
+          test "$(sha256sum .tmp/qsre_t1_v0_2.jsonl | awk '{print $1}')" = \
+            "155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063"
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path(".tmp/qsre_t1_v0_2.receipt.json").read_text())
+          if r["status"]!="PASS_QSRE_T1_PAIRED_CAUSAL_CURRICULUM_CONTRACT":
+              raise SystemExit("paired curriculum did not pass")
+          if r["rows"]!=504:
+              raise SystemExit("curriculum row count drift")
+          if any(v!=28 for v in r["causal_pair_counts"].values()):
+              raise SystemExit("causal pair coverage drift")
+          if r["test_split_present"] is not False:
+              raise SystemExit("TEST entered curriculum")
+          print("paired_causal_curriculum=PASS")
+          PY
+
+      - name: Fake-cache preparation smoke
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import torch
+          cache={
+              "field_semantic": torch.randn(576,8,640),
+              "valid_mask": torch.ones(576,8,dtype=torch.bool),
+              "splits": ["train"]*432 + ["dev"]*144,
+          }
+          torch.save(cache,".tmp/fake_source.pt")
+          PY
+
+          python scripts/eipm/n0/prepare_n0_v02_qsre_t1_real_cache_v0_1.py \
+            --curriculum .tmp/qsre_t1_v0_2.jsonl \
+            --source-cache .tmp/fake_source.pt \
+            --output .tmp/prepared.pt \
+            --receipt .tmp/prepared.receipt.json \
+            --expected-source-cache-sha256 ""
+
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path(".tmp/prepared.receipt.json").read_text())
+          if r["status"]!="PASS_QSRE_T1_REAL_CACHE_PREPARATION":
+              raise SystemExit("cache preparation smoke failed")
+          if r["rows"]!={"train":360,"dev":144}:
+              raise SystemExit("prepared row count drift")
+          if r["paired_representation_identity"] is not True:
+              raise SystemExit("causal pair representation drift")
+          if r["train_dev_representation_pool_isolated"] is not True:
+              raise SystemExit("representation split leak")
+          if r["field_support_all_zero"] is not True:
+              raise SystemExit("direct field support leak")
+          print("fake_cache_preparation=PASS")
+          PY
+
+      - name: Trainer import and CPU backward smoke
+        env:
+          PYTHONPATH: ${{ github.workspace }}/src:${{ github.workspace }}/scripts/eipm/n0
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import torch
+          from alice_personality.n0.qsre_t1_executor import QSRET1Config, QSRET1Executor
+          import train_n0_v02_qsre_t1_executor_v0_1 as tr
+
+          prepared=torch.load(".tmp/prepared.pt",map_location="cpu")
+          model=QSRET1Executor(QSRET1Config(
+              field_state_dim=640,
+              field_metadata_dim=3,
+              edge_metadata_dim=2,
+              operator_context_dim=4,
+              model_dim=32,
+              num_relations=6,
+              num_roles=4,
+              num_operations=5,
+              dropout=0.0,
+          ))
+          optimizer=torch.optim.AdamW(model.parameters(),lr=3e-4)
+          split=prepared["train"]
+          idx=torch.arange(32)
+          batch,operator,target,expected=tr.to_device_batch(
+              split,idx,torch.device("cpu")
+          )
+          out=model(**batch,operator=operator)
+          relational=expected.eq(1)
+          prob=out["relational_probability"].clamp_min(1e-12)
+          loss=(-(target[relational]*prob[relational].log()).sum(-1)).mean()
+          optimizer.zero_grad()
+          loss.backward()
+          optimizer.step()
+          if not torch.isfinite(loss):
+              raise SystemExit("CPU backward smoke non-finite")
+          print("cpu_backward_smoke=PASS")
+          PY

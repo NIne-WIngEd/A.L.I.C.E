@@ -1,0 +1,83 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.47",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.46.json",
+  "status": "V0_46_GPU_ELIGIBILITY_RETRACTED_BEFORE_EXECUTION;T1_PATH_FRONTIER_AND_PAIRED_CAUSAL_CURRICULUM_CORRECTION_ACTIVE;STATIC_CI_AND_REAL_CACHE_PREP_REQUIRED;GPU_CLOSED",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-qsre-t1-executor-training",
+  "correction_classification": "pretraining validity correction; not learned-model failure",
+  "source_frontier": "6855997bb46986194b4bdbbcbaa1fff3bee1134e",
+  "findings": [
+    "v0.1 curriculum allowed operation/family-specific answer-position shortcuts",
+    "existing relation-order forward test could pass from global q_step injection without proving ordered structural path traversal",
+    "T1 oracle support must remain exact edge membership rather than normalized support strength",
+    "direct field-only support is outside the T1 relational-executor causal question"
+  ],
+  "corrected_executor": {
+    "path_follow_uses_explicit_focus_frontier": true,
+    "each_relation_step_requires_source_on_current_frontier": true,
+    "inactive_nonincident_nodes_remain_unchanged": true,
+    "path_readout_is_final_reached_frontier": true,
+    "dead_path_fails_closed": true,
+    "direct_field_support_allowed": false,
+    "oracle_edge_support_values": [
+      0,
+      1
+    ],
+    "parent_global_logits_input": false
+  },
+  "corrected_curriculum": {
+    "contract": "configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_2.json",
+    "paired_causal_interventions": true,
+    "deterministic_field_and_edge_permutation": true,
+    "expected_rows": 504,
+    "expected_sha256": "155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063",
+    "test_split_present": false,
+    "private_identity_data": false
+  },
+  "real_cache_preparation": {
+    "source_cache": "query-edge-setwise-router-v0.1/training-preflight-v0.2/setwise_query_edge_train_dev_hidden_cache.pt",
+    "source_cache_sha256": "5bcc4ecf0fb2b776f738e4cca881e6b03a68c81a96923a5b08821930d0ebe823",
+    "representation_key": "field_semantic",
+    "split_isolated_assignment": true,
+    "causal_pair_representation_identity_required": true,
+    "optimizer": false,
+    "gradient": false,
+    "gpu": false
+  },
+  "trainer_plumbing": {
+    "source": "scripts/eipm/n0/train_n0_v02_qsre_t1_executor_v0_1.py",
+    "contract": "configs/eipm/n0/n0_v02_qsre_t1_training_contract_v0_1.json",
+    "implementation_authorized": true,
+    "execution_authorized": false,
+    "one_shot_only": true
+  },
+  "required_gates_before_gpu": [
+    "GitHub static/pretraining CI passes exact corrected executor and v0.2 curriculum",
+    "Magnolia CPU real-cache preparation receipt passes exact source-cache and curriculum lineage",
+    "new state must explicitly authorize one P100 T1 run"
+  ],
+  "execution_policy": {
+    "corrected_t1_source_authorized": true,
+    "corrected_curriculum_authorized": true,
+    "real_cache_preparation_authorized": true,
+    "trainer_source_authorized": true,
+    "t1_training_authorized": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "max_gpu_training_runs": 0,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "learned_operator_training_authorized": false,
+    "learned_support_training_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
