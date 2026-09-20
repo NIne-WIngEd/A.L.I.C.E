@@ -426,6 +426,71 @@ def pair_rows(
             ),
         ]
 
+
+    if family == "path_role":
+        fields = make_fields(split, family, group, ["GENERIC"] * 6)
+        ids = [row["id"] for row in fields]
+        names = [row["entity"] for row in fields]
+        edges = [
+            edge("e0", ids[0], ids[1], r1),
+            edge("e1", ids[1], ids[2], r2),
+            edge("e2", ids[3], ids[4], r1),
+        ]
+        shared_query = (
+            f"Start at {names[0]}. First use the relationship where one record {p1} another, "
+            f"then use the relationship where one record {p2} another."
+        )
+        return [
+            make_row(
+                split=split, family=family, group=group, variant="PATH_SOURCE",
+                fields=fields, edges=edges,
+                query=shared_query + " Which record is the source/origin of this ordered route?",
+                relation_sequence=[r1, r2], role="SOURCE", traversal="PATH",
+                modifier_target=modifiers(), focus_field_id=ids[0],
+                support_edge_ids=["e0", "e1"], target_distribution={ids[0]: 1.0},
+            ),
+            make_row(
+                split=split, family=family, group=group, variant="PATH_TARGET",
+                fields=fields, edges=edges,
+                query=shared_query + " Which record is the final target/endpoint of this ordered route?",
+                relation_sequence=[r1, r2], role="TARGET", traversal="PATH",
+                modifier_target=modifiers(), focus_field_id=ids[0],
+                support_edge_ids=["e0", "e1"], target_distribution={ids[2]: 1.0},
+            ),
+        ]
+
+    if family == "pair_endpoints":
+        fields = make_fields(split, family, group, [src_type, tgt_type, "GENERIC", "GENERIC", "GENERIC", "GENERIC"])
+        ids = [row["id"] for row in fields]
+        names = [row["entity"] for row in fields]
+        edges = [edge("e0", ids[0], ids[1], r1)]
+        query = (
+            f"{names[0]} {p1} {names[1]}. Return both participants in that relation "
+            "without treating either endpoint as the requested winner."
+        )
+        return [
+            make_row(
+                split=split, family=family, group=group, variant="PAIR_A",
+                fields=fields, edges=edges, query=query,
+                relation_sequence=[r1], role="SYMMETRIC", traversal="AGGREGATE",
+                modifier_target=modifiers(), focus_field_id=None,
+                support_edge_ids=["e0"],
+                target_distribution={ids[0]: 0.5, ids[1]: 0.5},
+            ),
+            make_row(
+                split=split, family=family, group=group, variant="PAIR_PARAPHRASE",
+                fields=fields, edges=edges,
+                query=(
+                    f"For the relation where {names[0]} {p1} {names[1]}, keep the two endpoints "
+                    "as a co-valid pair instead of selecting a source-side or target-side answer."
+                ),
+                relation_sequence=[r1], role="SYMMETRIC", traversal="AGGREGATE",
+                modifier_target=modifiers(), focus_field_id=None,
+                support_edge_ids=["e0"],
+                target_distribution={ids[0]: 0.5, ids[1]: 0.5},
+            ),
+        ]
+
     if family == "ordered_path":
         # Ensure both orderings exist as different structural paths.
         fields = make_fields(split, family, group, ["GENERIC"] * 6)
@@ -848,6 +913,8 @@ def pair_rows(
 FAMILIES = (
     "endpoint_role",
     "relation_filter",
+    "path_role",
+    "pair_endpoints",
     "ordered_path",
     "three_hop",
     "aggregate",
