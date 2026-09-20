@@ -1,0 +1,60 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.51",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.50.json",
+  "status": "QSRE_T2_CURRICULUM_PASS;TOKENIZED_PREPARATION_STOPPED_ON_CONTAINER_PYTHONPATH_BOUNDARY;CPU_RESUME_ONLY_AUTHORIZED;T2_GRADIENT_CLOSED",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-qsre-t2-operator-learning",
+  "source_state": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.50.json",
+  "t2_curriculum_evidence": {
+    "status": "PASS_QSRE_T2_PUBLIC_OPERATOR_CURRICULUM_CONTRACT",
+    "rows": 1008,
+    "train_rows": 720,
+    "dev_rows": 288,
+    "curriculum_sha256": "40e2d608eaa59ad13e2f9b37a2f3da5d6c20101a28ab76434c11be3d36cb5590",
+    "test_split_present": false,
+    "private_identity_data": false
+  },
+  "failed_preparation_attempt": {
+    "classification": "INFRASTRUCTURE_IMPORT_BOUNDARY_FAILURE_NOT_MODEL_EVIDENCE",
+    "error": "ModuleNotFoundError: No module named 'alice_personality'",
+    "cause": "udocker runtime did not inject repository src/scripts paths into PYTHONPATH and the T2 runner did not set them locally",
+    "curriculum_build_completed": true,
+    "curriculum_evaluation_completed": true,
+    "tokenized_preparation_completed": false,
+    "optimizer_created": false,
+    "gradient_performed": false,
+    "gpu_training_performed": false
+  },
+  "recovery": {
+    "preserve_existing_t2_root": true,
+    "preserve_existing_curriculum": true,
+    "preserve_existing_curriculum_receipt": true,
+    "delete_or_rebuild_existing_curriculum": false,
+    "resume_only_missing_tokenization_step": true,
+    "runner": "scripts/eipm/n0/run_n0_v02_resume_qsre_t2_tokenized_v0_1.sh",
+    "expected_curriculum_sha256": "40e2d608eaa59ad13e2f9b37a2f3da5d6c20101a28ab76434c11be3d36cb5590"
+  },
+  "execution_policy": {
+    "cpu_tokenized_preparation_resume_authorized": true,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_chain_authorized": false,
+    "t1_rerun_authorized": false,
+    "causal_test_opening_authorized": false,
+    "frozen_challenge_opening_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "anti_loop_policy": {
+    "reuse_partial_valid_evidence": true,
+    "do_not_delete_partial_root": true,
+    "do_not_rebuild_deterministic_curriculum": true,
+    "infrastructure_failure_is_not_model_evidence": true,
+    "next_failure_requires_classification_before_change": true
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
