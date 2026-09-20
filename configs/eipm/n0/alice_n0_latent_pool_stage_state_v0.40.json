@@ -1,0 +1,87 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.40",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.39.json",
+  "status": "CLEAN_SHEET_FAMILY_COMPARISON_COMPLETE;QSRE_ADVANCED_TO_DETERMINISTIC_PREIMPLEMENTATION_CONTRACT_ONLY;NO_TRAINABLE_MODEL_AUTHORIZED",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-n0-clean-sheet-relational-execution-review",
+  "clean_sheet_audit": "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+  "family_comparison": "docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md",
+  "proof_obligations": "configs/eipm/n0/n0_v02_relational_execution_proof_obligations_v0_1.json",
+  "preimplementation_diagnostics": "configs/eipm/n0/n0_v02_qsre_preimplementation_diagnostics_v0_1.json",
+  "selected_family": {
+    "id": "F4",
+    "name": "QSRE_QUERY_CONDITIONED_SPARSE_RELATIONAL_EXECUTOR",
+    "selection_role": "architecture_family_for_interface_and_oracle_contract_only",
+    "implementation_authorized": false,
+    "reasons": [
+      "preserves proven token-level semantic binding rather than relearning edge identity",
+      "makes relation and requested argument role first-class continuous anchored state",
+      "allows adaptive zero-one-many structural support",
+      "moves query conditioning into relational execution rather than only final field logits",
+      "reads relational result from executor state rather than residual correction to parent global softmax",
+      "keeps general parent fallback separate from edge identity and role reasoning",
+      "remains composable with broader N0 fusion and latent fabric"
+    ]
+  },
+  "rejected_first_implementation_families": [
+    "pure_schema_latent_without_graph_execution",
+    "generic_relational_transformer_monolith_without_structural_proof",
+    "another_router_or_gate_repair",
+    "another_scalar_endpoint_residual",
+    "permanent_hard_top1"
+  ],
+  "deterministic_diagnostics": {
+    "authorized": true,
+    "required": [
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5"
+    ],
+    "learned_new_parameters": false,
+    "optimizer": false,
+    "gradient": false,
+    "gpu_required": false,
+    "existing_weights_mutated": false,
+    "test_open": false,
+    "challenge_open": false,
+    "next_artifacts": [
+      "evaluation/eipm/n0/n0_v02_qsre_oracle_contract_v0_1.jsonl",
+      "scripts/eipm/n0/evaluate_n0_v02_qsre_oracle_contract_v0_1.py",
+      "scripts/eipm/n0/run_n0_v02_qsre_oracle_contract_v0_1.sh"
+    ]
+  },
+  "implementation_gate": {
+    "trainable_qsre_implementation_authorized": false,
+    "requires_deterministic_D1_D5_pass": true,
+    "requires_post_diagnostic_architecture_decision": true,
+    "requires_explicit_reuse_plan_for_semantic_structured_evidence_fusion_components": true,
+    "requires_no_global_softmax_residual_reintroduction": true,
+    "requires_explicit_role_binding_not_implicit_scalar_preference": true,
+    "requires_adaptive_support_not_permanent_fixed_k": true
+  },
+  "execution_policy": {
+    "next_action": "materialize and run deterministic QSRE oracle contract D1-D5 in CI only; then interpret before any trainable implementation",
+    "architecture_research_authorized": true,
+    "deterministic_oracle_evaluator_authorized": true,
+    "static_ci_authorized": true,
+    "new_relational_model_implementation_authorized": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
