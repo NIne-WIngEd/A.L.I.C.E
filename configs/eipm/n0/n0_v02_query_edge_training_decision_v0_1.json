@@ -1,0 +1,104 @@
+{
+  "schema": "alice.eipm.n0.query-edge-training-decision.v0.1",
+  "decision": "AUTHORIZE_ONE_BOUNDED_QUERY_EDGE_BRIDGE_EXPERIMENT_AFTER_RUNTIME_QUALIFICATION",
+  "date": "2026-09-20",
+  "qualification_receipt_sha256": "b1e073fc6226ac3f3aa88ed10d4ed31059b6e27b0338aa7738c686239f33624f",
+  "qualification_status": "PASS_QUERY_EDGE_BRIDGE_NO_GRADIENT_RUNTIME_CONTRACT",
+  "qualified_source_revision": "c6170597e2b55cc378c5d8cf1560ca87802ea085",
+  "curriculum_sha256": "c3618a6022519af2a6a140f8b571281c68735fd1412c3ffa904979e9bbea2dcb",
+  "curriculum_manifest_sha256": "0d05f1dcd7d11cc1defdd0a4112c10e3b1d7febfaabf97fe611a854d6905b99a",
+  "preservation_train_anchors_sha256": "f5b3f438f776216f6dbd557a8c785aac70af38d256e3f7cf94f0f71a43f53e94",
+  "parent_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+  "parent_adapter_sha256": "50eeeea3dfff5b6bddaa8da667b6b6c2f917dc668b1acd0410923822ae5ad2df",
+  "frozen_preservation_calibration_receipt_sha256": "d485fce0e4304d9cbd8af1658ed7cfedfd1bd4d44b0f40cf56a2618d5ad2390b",
+  "frozen_preservation_policy_sha256": "fb88b9580e38a648101277815f82c3ba60c19f3bfd16dbe3029ded40b04aea56",
+  "scientific_basis": {
+    "qualified_edge_specific_query_binding": true,
+    "qualified_parent_exactness": true,
+    "old_query_only_antisymmetric_family_rejected": true,
+    "fresh_multi_edge_shortcut_resistant_curriculum": true,
+    "relevant_edge_supervision_available": true,
+    "train_only_preservation_anchors_available": true,
+    "frontier_design_principles": [
+      "explicitly supervise routing because routing quality is not guaranteed by downstream loss alone",
+      "keep proven graph reasoner frozen while a specialist learns the new interaction",
+      "distill frozen-parent outputs on old-task TRAIN anchors to reduce specialist interference",
+      "encourage irrelevant edges toward no-op instead of requiring specialist activity everywhere"
+    ]
+  },
+  "training_objective": {
+    "primary": "causal evidence-field selection cross entropy",
+    "causal_margin_weight": 0.25,
+    "same_relation_relevant_edge_routing_weight": 0.5,
+    "parent_distillation_weight": 1.0,
+    "ordinary_and_endpoint_parent_distillation_equal_share": true,
+    "irrelevant_edge_gate_noop_weight": 0.05,
+    "gradient_surgery": false,
+    "reason_gradient_surgery_not_selected": "avoid adding another mechanism before the simpler routed-specialist plus teacher-preservation objective is tested",
+    "routing_signal": "scaled dot product between edge_binding_query and edge_query_language_state over same-relation candidate edges",
+    "routing_target": "relevant_edge_index",
+    "preservation_teacher": "frozen DualEndpointEvidenceGraphEncoder parent",
+    "preservation_student": "qualified QueryEdgeBridgeEvidenceGraphEncoder",
+    "preservation_loss": "KL(parent field-weight distribution || candidate field-weight distribution)",
+    "preservation_gradient_data": "TRAIN-only ordinary and endpoint anchors",
+    "preservation_dev_gradient": false,
+    "causal_test_gradient": false
+  },
+  "operating_budget": {
+    "max_training_runs": 1,
+    "max_steps": 200,
+    "checkpoint_every_steps": 40,
+    "learning_rate": 0.00015,
+    "weight_decay": 0.02,
+    "warmup_steps": 12,
+    "quad_batch_size": 4,
+    "preservation_batch_size": 16,
+    "operating_budget_is_product_ceiling": false,
+    "hard_parameter_ceiling": null
+  },
+  "trainable_scope": {
+    "query_edge_bridge_only": true,
+    "semantic_backbone": false,
+    "structured_state": false,
+    "parent_adapter": false,
+    "parent_graph": false
+  },
+  "checkpoint_eligibility": {
+    "frozen_preservation_policy_pass": true,
+    "no_relation_family_row_accuracy_regression_vs_initial_parent": true,
+    "overall_row_accuracy_strictly_improves": true,
+    "overall_quad_accuracy_strictly_improves": true,
+    "worst_family_quad_accuracy_may_not_regress": true,
+    "mean_target_margin_strictly_improves": true,
+    "routing_accuracy_must_exceed": 0.5,
+    "worst_family_routing_accuracy_must_be_at_least_uniform_chance": 0.3333333333333333,
+    "routing_accuracy_must_strictly_improve_vs_initial": true
+  },
+  "selection_order": [
+    "preservation_pass",
+    "family_min_routing_accuracy",
+    "family_min_quad_accuracy",
+    "routing_accuracy",
+    "quad_accuracy",
+    "row_accuracy",
+    "mean_target_margin",
+    "earlier_checkpoint"
+  ],
+  "heldout_policy": {
+    "causal_test_open_during_training": false,
+    "frozen_challenge_open_during_training": false,
+    "eligible_checkpoint_only_enables_separate_decision": true,
+    "automatic_heldout_opening": false
+  },
+  "failure_policy": {
+    "first_genuine_model_failure_stops": true,
+    "automatic_rerun": false,
+    "automatic_hotfix": false,
+    "failure_requires_big_picture_reassessment": true,
+    "frontier_research_review_before_next_architecture_change": true
+  },
+  "scale_authorized": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
