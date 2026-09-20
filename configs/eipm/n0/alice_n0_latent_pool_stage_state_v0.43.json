@@ -1,0 +1,77 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.43",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.42.json",
+  "status": "FULL_ENVELOPE_QSRE_REFERENCE_MECHANICS_PASS;TENSORIZED_CPU_NO_GRADIENT_MECHANICS_SKELETON_AUTHORIZED;TRAINABLE_QSRE_STILL_CLOSED",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-n0-clean-sheet-relational-execution-review",
+  "workload_envelope": "docs/research/eipm-full-eipm-workload-envelope-v0.1.md",
+  "static_mechanics_decision": "docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md",
+  "reference_mechanics_result": "docs/research/eipm-n0-qsre-mechanics-result-v0.1.md",
+  "reference_mechanics_ci": {
+    "run_id": 35497790357,
+    "conclusion": "success",
+    "status": "PASS_QSRE_CPU_NO_GRADIENT_REFERENCE_MECHANICS",
+    "fixture_count": 18,
+    "support_cardinalities_observed": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "dynamic_shape": {
+      "field_count": 257,
+      "edge_count": 513
+    },
+    "ordered_path_contrast_pass": true,
+    "permutation_path_pass": true,
+    "source_target_incidence_distinct": true,
+    "support_local_readout_pass": true,
+    "parent_global_distractor_exclusion_mechanic_pass": true,
+    "fallback_defer_states_pass": true
+  },
+  "tensor_mechanics_scope": {
+    "authorized": true,
+    "purpose": "materialize exact PyTorch-shaped interface/support/readout mechanics before any learned QSRE component",
+    "allowed": [
+      "tensor dataclasses and shape validation",
+      "masked sparsemax reference tensor operation",
+      "explicit source_target incidence tensors",
+      "support-local field mask",
+      "support-local normalization",
+      "RELATIONAL_FALLBACK_DEFER control state",
+      "permutation and dynamic-shape tests"
+    ],
+    "forbidden": [
+      "nn.Parameter",
+      "learned projection",
+      "trainable Query Operator Encoder",
+      "trainable binder",
+      "trainable node-edge executor",
+      "trainable structural readout",
+      "optimizer",
+      "backward",
+      "GPU training",
+      "TEST",
+      "frozen challenge"
+    ]
+  },
+  "batch_workflow_rule": "batch engineering steps while preserving sequential scientific causality",
+  "trainable_qsre_implementation_authorized": false,
+  "execution_policy": {
+    "tensorized_cpu_no_gradient_mechanics_authorized": true,
+    "trainable_qsre_implementation_authorized": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
