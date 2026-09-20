@@ -113,8 +113,8 @@ jobs:
           forbidden=[
               "self.route_head =",
               "edge_position_embedding",
-              "independent_per_edge_tanh_gate": True",
-              "proxy_dot_product_router": True",
+              '"independent_per_edge_tanh_gate": True',
+              '"proxy_dot_product_router": True',
           ]
           present=[x for x in forbidden if x in b]
           if present:
