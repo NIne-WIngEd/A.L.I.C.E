@@ -1,0 +1,88 @@
+{
+  "schema": "alice.eipm.n0.query-edge-setwise-router-design-decision.v0.1",
+  "decision": "AUTHORIZE_SETWISE_CONTEXTUAL_ROUTER_IMPLEMENTATION_AND_CPU_NO_GRADIENT_QUALIFICATION_ONLY",
+  "date": "2026-09-20",
+  "source_failure": {
+    "magnolia_job_id": 575907,
+    "source_revision": "a6b263be31d822f8781cefadf450b63dcae00acd",
+    "result_sha256": "08bef659779c2e6fcfb0d60ef209d9f6c7f03b0198bcf370e097e278f5436328",
+    "status": "FAIL_COMPETITIVE_EDGE_ROUTER_CAUSAL_DEV_OR_PRESERVATION_STOP_NO_HELDOUT_NO_AUTOMATIC_HOTFIX",
+    "selected_checkpoint": null,
+    "eligible_checkpoint_keys": []
+  },
+  "observed_failure_pattern": {
+    "baseline_route_accuracy": 0.0,
+    "step_40_route_accuracy": 0.0625,
+    "step_80_route_accuracy": 0.1597222222222222,
+    "step_120_route_accuracy": 0.2361111111111111,
+    "step_160_route_accuracy": 0.2152777777777778,
+    "step_200_route_accuracy": 0.2361111111111111,
+    "step_200_family_min_route_accuracy": 0.08333333333333333,
+    "step_200_mean_noop_probability_on_causal_rows": 0.12458696854769692,
+    "step_200_preservation_pass": true,
+    "interpretation": "the router learned specialist-versus-parent separation and preserved the parent, but it did not reliably identify the correct competing edge"
+  },
+  "first_principles_diagnosis": {
+    "failed_control_plane": "independent_edge_scalar_scoring_followed_only_by_softmax_normalization",
+    "independent_edge_score_has_competitor_context": false,
+    "softmax_normalization_is_not_joint_reasoning": true,
+    "same_relation_and_locally_plausible_edges_require_comparative_context": true,
+    "capacity_or_scale_claimed_from_this_failure": false,
+    "loss_weight_hotfix_authorized": false,
+    "automatic_rerun_authorized": false
+  },
+  "single_causal_architecture_change": {
+    "name": "permutation_equivariant_setwise_edge_arbitration",
+    "preserve_edge_specific_cross_attention_representation": true,
+    "preserve_relation_conditioned_layer_selection": true,
+    "preserve_independent_source_target_residual_proposals": true,
+    "preserve_frozen_parent_graph": true,
+    "preserve_runtime_route_probability_as_actual_residual_control": true,
+    "replace_independent_edge_route_scoring": true,
+    "jointly_contextualize_all_active_directed_edges": true,
+    "explicit_query_conditioned_parent_noop_token": true,
+    "edge_positional_embedding": false,
+    "edge_set_permutation_equivariance_required": true,
+    "nonlocal_competitor_influence_required": true,
+    "hard_parameter_ceiling": null
+  },
+  "qualification_requirements": {
+    "cpu_only": true,
+    "gradient_performed": false,
+    "optimizer_created": false,
+    "exact_parent_field_weights": true,
+    "exact_parent_pooled_state": true,
+    "parent_parameters_exactly_unchanged": true,
+    "zero_initialized_source_target_residual_readouts": true,
+    "route_probabilities_sum_to_one": true,
+    "explicit_parent_noop_route": true,
+    "conflict_and_padding_have_zero_edge_route_probability": true,
+    "same_relation_edge_queries_remain_distinct": true,
+    "edge_content_changes_query_token_attention": true,
+    "edge_permutation_equivariance": true,
+    "nonlocal_competitor_context_changes_other_edge_route_logits": true,
+    "route_probability_is_actual_source_contribution_control": true,
+    "route_probability_is_actual_target_contribution_control": true
+  },
+  "execution_policy": {
+    "cpu_no_gradient_qualification_authorized": true,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "future_training_policy": {
+    "training_objective_not_yet_authorized": true,
+    "if_qualification_passes": "review receipt and separately decide whether to reuse the exact prior direct runtime-route objective with only the router architecture changed",
+    "one_causal_change_per_model_gate": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "n0_complete": false
+}
