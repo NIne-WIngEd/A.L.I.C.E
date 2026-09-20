@@ -1,0 +1,29 @@
+{
+  "schema": "alice.eipm.n0.qsre-t2-curriculum-contract.v0.1",
+  "status": "PUBLIC_T2_NATURAL_LANGUAGE_OPERATOR_ORACLE_SUPPORT_CURRICULUM",
+  "t1_curriculum_sha256": "155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063",
+  "query_views_per_train_row": 2,
+  "query_views_per_dev_row": 2,
+  "relation_seed_map": {
+    "0": "SUPPORTS",
+    "1": "CORRECTS",
+    "2": "SUPERSEDES",
+    "3": "DERIVED_FROM",
+    "4": "CAUSES",
+    "5": "TEMPORAL_SUCCESSOR"
+  },
+  "none_relation_id": 6,
+  "roles": {"SOURCE": 0, "TARGET": 1, "SYMMETRIC": 2, "NONE": 3},
+  "operations": {"ROLE_SELECT": 0, "PATH_FOLLOW": 1, "AGGREGATE": 2, "PREFER_RELIABILITY": 3, "PREFER_LATEST": 4},
+  "controls": {"FALLBACK": 0, "RELATIONAL": 1, "DEFER": 2},
+  "current_relation_slots": 2,
+  "current_relation_slots_are_product_ceiling": false,
+  "train_dev_template_banks_must_be_disjoint": true,
+  "field_ids_or_target_positions_in_query_forbidden": true,
+  "literal_relation_name_required_for_success": false,
+  "same_query_required_for_outside_support_counterfactual_pair": true,
+  "no_private_identity_data": true,
+  "no_test_split": true,
+  "gradient_authorized": false,
+  "gpu_training_authorized": false
+}

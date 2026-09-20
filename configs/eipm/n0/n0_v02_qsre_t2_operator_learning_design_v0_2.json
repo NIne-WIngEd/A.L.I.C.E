@@ -1,0 +1,100 @@
+{
+  "schema": "alice.eipm.n0.qsre-t2-operator-learning-design.v0.2",
+  "status": "SELECTED_T1_CHECKPOINT_BOUND;STATIC_MECHANICS_AND_CPU_PREPARATION_ONLY",
+  "supersedes": "configs/eipm/n0/n0_v02_qsre_t2_operator_learning_design_v0_1.json",
+  "selected_t1": {
+    "result_sha256": "ba6b82c10fcb13f403569ad24dbd77cf0b3657dfc3eaf9cb9d10b6690b2d32be",
+    "checkpoint_step": 50,
+    "checkpoint_sha256": "483bd59499e9bea890072af9c01c12961f41504d48f988ae3b3ee9a3ae8154fb",
+    "postrun_receipt_sha256": "fe07035348e2f5e2d523ec94ae786dbe535a2a45e6fddd727254f3765b927b8f"
+  },
+  "relation_seed_map": {
+    "0": "SUPPORTS",
+    "1": "CORRECTS",
+    "2": "SUPERSEDES",
+    "3": "DERIVED_FROM",
+    "4": "CAUSES",
+    "5": "TEMPORAL_SUCCESSOR"
+  },
+  "relation_seed_map_is_permanent_ontology": false,
+  "input_contract": {
+    "query_hidden_states": "[B,L,T,640] from frozen ratified N0 semantic backbone",
+    "query_token_mask": "[B,T] bool",
+    "oracle_support_or_graph_input_to_encoder": false,
+    "oracle_relation_or_role_input_to_encoder": false
+  },
+  "operator_encoder": {
+    "family": "multi_layer_token_latent_cross_attention_with_schema_anchor_readout",
+    "model_dim": 512,
+    "attention_heads": 8,
+    "latent_refinement_layers": 2,
+    "current_relation_slots": 2,
+    "current_relation_slots_are_permanent_ceiling": false,
+    "all_semantic_hidden_states_available": true,
+    "hard_relation_specific_layer_masks": false,
+    "learned_layer_embeddings": true,
+    "learned_latent_queries": [
+      "ordered relation slots",
+      "argument role",
+      "operation",
+      "control/applicability",
+      "continuous residual state"
+    ],
+    "anchor_banks": [
+      "relation plus NONE",
+      "role",
+      "operation",
+      "control"
+    ],
+    "continuous_residual_retained": true
+  },
+  "t2_v0_1_executor_bridge": {
+    "structural_support": "oracle",
+    "focus_field": "oracle",
+    "relation_sequence": "predicted by T2",
+    "role": "predicted by T2",
+    "operation": "predicted by T2",
+    "applicability": "decoded from predicted control class to frozen T1-safe centers",
+    "operator_context": "zero vector",
+    "reason_operator_context_zero": "Frozen T1 executor was trained with zero context. Nonzero learned context would create a new executor input distribution and confound T2."
+  },
+  "public_curriculum": {
+    "source_structure": "exact deterministic T1 v0.2 TRAIN/DEV rows",
+    "query_views_per_train_row": 2,
+    "query_views_per_dev_row": 2,
+    "train_dev_template_banks_disjoint": true,
+    "relation_language_includes_literal_and_relation_name_free_paraphrases": true,
+    "families": [
+      "endpoint_role",
+      "relation_filter",
+      "multi_support_aggregate",
+      "ordered_path",
+      "reliability_arbitration",
+      "temporal_arbitration",
+      "ambiguity_plurality",
+      "fallback_defer",
+      "outside_support_distractor"
+    ],
+    "fallback_defer_relation_target": "NONE",
+    "private_identity_data": false,
+    "test_split": false
+  },
+  "frontier_research_constraints": {
+    "SALR": "schema anchors guide a continuous latent state rather than replacing it with a brittle early discrete program",
+    "intermediate_hidden_state_probing": "T2 reads the hidden-state stack because operator-relevant signals are known to be layer-local",
+    "query_conditioned_graph_work": "T2 produces the operator consumed by query-conditioned execution; it does not restore post-hoc global residual scoring"
+  },
+  "authorization": {
+    "source_definition": true,
+    "cpu_no_gradient_mechanics": true,
+    "curriculum_build": true,
+    "cpu_tokenized_preparation": true,
+    "optimizer": false,
+    "gradient": false,
+    "gpu_training": false,
+    "test_opening": false,
+    "challenge_opening": false,
+    "support_learning": false,
+    "private_identity_gradient": false
+  }
+}

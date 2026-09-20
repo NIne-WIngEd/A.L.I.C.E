@@ -1,0 +1,83 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.50",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.49.json",
+  "status": "QSRE_T1_SELECTED_CHECKPOINT_HASH_BOUND;T2_OPERATOR_STATIC_MECHANICS_AND_PUBLIC_CURRICULUM_AUTHORIZED;CPU_TOKENIZED_PREPARATION_AUTHORIZED;T2_GRADIENT_CLOSED",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-qsre-t2-operator-learning",
+  "t1_evidence": {
+    "source_revision": "f4a9edb1915e39d893224f4503746bfd61fc6424",
+    "magnolia_job_id": 575914,
+    "result_sha256": "ba6b82c10fcb13f403569ad24dbd77cf0b3657dfc3eaf9cb9d10b6690b2d32be",
+    "selected_checkpoint_step": 50,
+    "selected_checkpoint_sha256": "483bd59499e9bea890072af9c01c12961f41504d48f988ae3b3ee9a3ae8154fb",
+    "postrun_receipt_sha256": "fe07035348e2f5e2d523ec94ae786dbe535a2a45e6fddd727254f3765b927b8f",
+    "prepared_cache_sha256": "03a45033dc41a51896f8b514c44e784ecabaa5837488a272306914979ab6b564",
+    "curriculum_sha256": "155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063",
+    "status": "PASS_QSRE_T1_POSTRUN_CHECKPOINT_BOUND",
+    "test_opened": false,
+    "challenge_opened": false
+  },
+  "t2_stage": {
+    "name": "LEARNED_OPERATOR_ORACLE_SUPPORT_FROZEN_T1_EXECUTOR",
+    "causal_question": "Can frozen natural-language semantic hidden states recover the ordered relation, requested role, operation, and applicability/control operator required by the proven frozen T1 executor while structural support and focus binding remain oracle?",
+    "frozen_t1_executor_sha256": "483bd59499e9bea890072af9c01c12961f41504d48f988ae3b3ee9a3ae8154fb",
+    "semantic_backbone_gradient": false,
+    "graph_parent_gradient": false,
+    "support_selector_gradient": false,
+    "oracle_structural_support": true,
+    "oracle_focus_binding": true,
+    "private_identity_gradient": false
+  },
+  "authorized_now": {
+    "t2_operator_source": true,
+    "t2_cpu_no_gradient_mechanics": true,
+    "t2_public_curriculum_build": true,
+    "t2_static_ci": true,
+    "t2_cpu_tokenized_preparation": true
+  },
+  "closed_now": {
+    "t1_rerun": true,
+    "t1_hotfix": true,
+    "t2_optimizer": true,
+    "t2_gradient": true,
+    "t2_gpu_training": true,
+    "t2_semantic_backbone_training": true,
+    "t3_support_learning": true,
+    "causal_test": true,
+    "frozen_challenge": true,
+    "private_identity_gradient": true,
+    "production_promotion": true,
+    "n0_completion": true
+  },
+  "architecture_rules": {
+    "full_hidden_state_stack_available": true,
+    "hard_single_layer_selection_forbidden": true,
+    "oracle_relation_input_to_t2_encoder_forbidden": true,
+    "graph_support_input_to_t2_encoder_forbidden": true,
+    "relation_role_operation_control_are_first_class": true,
+    "continuous_operator_state_retained": true,
+    "t2_v0_1_continuous_state_injected_into_frozen_t1_context": false,
+    "why_continuous_not_injected_yet": "T1 was trained with zero operator-context vectors. Injecting a newly learned varying context into the frozen executor would confound the T2 operator-extraction causal question. The continuous latent remains available for later integrated QSRE stages.",
+    "current_max_relation_steps_is_product_ceiling": false,
+    "current_relation_role_operation_vocabularies_are_product_ceiling": false,
+    "current_model_width_is_product_ceiling": false
+  },
+  "research_alignment": {
+    "SALR_2609_20398": "retain continuous latent reasoning while aligning to explicit migratable schema/operator anchors; avoid premature hard textual commitment",
+    "LatentRefusal_2026": "intermediate frozen hidden states can expose sparse decision signals that pooled/final representations miss",
+    "Q_GNN_2606_05639": "query conditioning belongs inside the learned computation rather than as a post-hoc global correction",
+    "rule": "These are architectural precedents only. A.L.I.C.E. design remains driven by its own causal evidence and full EIPM workload envelope."
+  },
+  "next_action": "Run the static T2 CI. If green, run one CPU/no-gradient tokenized T2 preparation against the exact T1 prepared cache and current N0 tokenizer. Inspect that receipt before authorizing any T2 optimizer or P100 training.",
+  "anti_loop_policy": {
+    "automatic_hotfix_chain": false,
+    "automatic_rerun": false,
+    "one_unresolved_causal_boundary_at_a_time": true,
+    "parallelize_engineering_preserve_sequential_scientific_causality": true,
+    "infrastructure_failure_is_not_model_evidence": true,
+    "validation_must_change_a_real_decision_or_stop": true
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}

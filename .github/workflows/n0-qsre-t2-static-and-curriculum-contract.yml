@@ -1,0 +1,66 @@
+name: n0-qsre-t2-static-and-curriculum-contract
+
+on:
+  push:
+    paths:
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.50.json"
+      - "configs/eipm/n0/n0_v02_qsre_t2_operator_learning_design_v0_2.json"
+      - "configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_1.json"
+      - "src/alice_personality/n0/qsre_t2_operator.py"
+      - "tests/eipm/test_n0_qsre_t2_operator.py"
+      - "scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_1.py"
+      - "scripts/eipm/n0/evaluate_n0_v02_qsre_t2_operator_curriculum_v0_1.py"
+      - "scripts/eipm/n0/prepare_n0_v02_qsre_t2_tokenized_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_prepare_qsre_t2_tokenized_v0_1.sh"
+      - ".github/workflows/n0-qsre-t2-static-and-curriculum-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Syntax
+        run: |
+          python -m py_compile             src/alice_personality/n0/qsre_t2_operator.py             scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_1.py             scripts/eipm/n0/evaluate_n0_v02_qsre_t2_operator_curriculum_v0_1.py             scripts/eipm/n0/prepare_n0_v02_qsre_t2_tokenized_v0_1.py
+          bash -n scripts/eipm/n0/run_n0_v02_prepare_qsre_t2_tokenized_v0_1.sh
+
+      - name: Governance
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          state = json.loads(Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.50.json").read_text())
+          design = json.loads(Path("configs/eipm/n0/n0_v02_qsre_t2_operator_learning_design_v0_2.json").read_text())
+          assert state["t1_evidence"]["selected_checkpoint_sha256"] == "483bd59499e9bea890072af9c01c12961f41504d48f988ae3b3ee9a3ae8154fb"
+          assert state["t1_evidence"]["postrun_receipt_sha256"] == "fe07035348e2f5e2d523ec94ae786dbe535a2a45e6fddd727254f3765b927b8f"
+          assert state["closed_now"]["t2_gradient"] is True
+          assert state["closed_now"]["t2_gpu_training"] is True
+          assert state["closed_now"]["causal_test"] is True
+          assert state["private_identity_gradient"] is False
+          assert design["authorization"]["cpu_tokenized_preparation"] is True
+          assert design["authorization"]["gradient"] is False
+          assert design["authorization"]["gpu_training"] is False
+          assert design["input_contract"]["oracle_support_or_graph_input_to_encoder"] is False
+          assert design["input_contract"]["oracle_relation_or_role_input_to_encoder"] is False
+          print("PASS_T2_STATIC_GOVERNANCE")
+          PY
+
+      - name: Operator mechanics
+        run: |
+          python -m pip install -q torch pytest
+          PYTHONPATH=src pytest -q tests/eipm/test_n0_qsre_t2_operator.py
+
+      - name: Build deterministic T1 and T2 curricula
+        run: |
+          mkdir -p /tmp/qsre-t2
+          python scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_2.py             --contract configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_2.json             --output /tmp/qsre-t2/t1.jsonl
+          test "$(sha256sum /tmp/qsre-t2/t1.jsonl | awk '{print $1}')" =             "155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063"
+          python scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_1.py             --contract configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_1.json             --t1-curriculum /tmp/qsre-t2/t1.jsonl             --output /tmp/qsre-t2/t2.jsonl
+          python scripts/eipm/n0/evaluate_n0_v02_qsre_t2_operator_curriculum_v0_1.py             --curriculum /tmp/qsre-t2/t2.jsonl             --output /tmp/qsre-t2/t2.receipt.json
+          grep -q PASS_QSRE_T2_PUBLIC_OPERATOR_CURRICULUM_CONTRACT             /tmp/qsre-t2/t2.receipt.json
+
+      - name: Preparation import only
+        run: |
+          PYTHONPATH=src python scripts/eipm/n0/prepare_n0_v02_qsre_t2_tokenized_v0_1.py --help >/dev/null
