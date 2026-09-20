@@ -18,7 +18,7 @@ from alice_personality.n0.qsre_production_core import (
 )
 
 
-PATH_FAMILIES = {"ordered_path", "three_hop", "path_latest"}
+PATH_FAMILIES = {"path_role", "ordered_path", "three_hop", "path_latest"}
 
 
 def load_plan(path: Path) -> dict:
@@ -83,6 +83,12 @@ def oracle_operator_from_targets(
         num_classes=config.traversal_count,
     ).float()
 
+    direction_target = split["direction_target"][indices].to(device)
+    direction_distribution = F.one_hot(
+        direction_target,
+        num_classes=config.direction_count,
+    ).float()
+
     modifier_weight = split["modifier_target"][indices].to(device).float()
     applicability = split["applicability_target"][indices].to(device).float()
     control_target = split["control_target"][indices].to(device)
@@ -121,6 +127,7 @@ def oracle_operator_from_targets(
         unknown_probability=torch.zeros_like(relation_step_mass),
         role_distribution=role_distribution,
         traversal_distribution=traversal_distribution,
+        direction_distribution=direction_distribution,
         modifier_weight=modifier_weight,
         applicability=applicability,
         control_distribution=control_distribution,
@@ -347,6 +354,7 @@ def operator_metrics(
     relation_mask = split["relation_target_mask"][indices].to(device)
     role_target = split["role_target"][indices].to(device)
     traversal_target = split["traversal_target"][indices].to(device)
+    direction_target = split["direction_target"][indices].to(device)
     modifier_target = split["modifier_target"][indices].to(device)
     control_target = split["control_target"][indices].to(device)
     termination_target = split["termination_target"][indices].to(device)
@@ -361,6 +369,9 @@ def operator_metrics(
     role_correct = operator.role_distribution.argmax(dim=-1).eq(role_target)
     traversal_correct = operator.traversal_distribution.argmax(dim=-1).eq(
         traversal_target
+    )
+    direction_correct = operator.direction_distribution.argmax(dim=-1).eq(
+        direction_target
     )
     modifier_correct = modifier_exact(operator.modifier_weight, modifier_target)
     control_correct = operator.control_distribution.argmax(dim=-1).eq(
@@ -394,6 +405,11 @@ def operator_metrics(
             if bool(relational.any())
             else 1.0
         ),
+        "direction_accuracy_relational": (
+            float(direction_correct[relational].float().mean().item())
+            if bool(relational.any())
+            else 1.0
+        ),
         "modifier_exact_accuracy_relational": (
             float(modifier_correct[relational].float().mean().item())
             if bool(relational.any())
@@ -409,6 +425,7 @@ def operator_metrics(
         "relation_exact_tensor": relation_exact,
         "role_correct_tensor": role_correct,
         "traversal_correct_tensor": traversal_correct,
+        "direction_correct_tensor": direction_correct,
         "modifier_correct_tensor": modifier_correct,
         "control_correct_tensor": control_correct,
         "termination_correct_tensor": termination_correct,
@@ -432,6 +449,9 @@ def paired_view_consistency(
     traversal_same = first.traversal_distribution.argmax(dim=-1).eq(
         second.traversal_distribution.argmax(dim=-1)
     )
+    direction_same = first.direction_distribution.argmax(dim=-1).eq(
+        second.direction_distribution.argmax(dim=-1)
+    )
     modifiers_same = first.modifier_weight.ge(0.5).eq(
         second.modifier_weight.ge(0.5)
     ).all(dim=-1)
@@ -443,6 +463,7 @@ def paired_view_consistency(
         & active_same
         & role_same
         & traversal_same
+        & direction_same
         & modifiers_same
         & control_same
     )
@@ -471,4 +492,31 @@ def support_metrics(
         "edge_f1": float(f1),
         "exact_set_accuracy": float(exact),
         "type_violation_rate": float(violation),
+    }
+
+
+
+def focus_metrics(
+    *,
+    predicted: torch.Tensor,
+    oracle: torch.Tensor,
+    traversal_target: torch.Tensor,
+) -> dict[str, float]:
+    if predicted.shape != oracle.shape:
+        raise ValueError("focus prediction/oracle shape drift")
+    path = traversal_target.eq(1)
+    if not bool(path.any()):
+        return {
+            "path_focus_top1_accuracy": 1.0,
+            "path_focus_exact_set_accuracy": 1.0,
+        }
+    pred_mask = predicted[path].gt(1.0e-8)
+    gold_mask = oracle[path].gt(0)
+    top1 = predicted[path].argmax(dim=-1).eq(
+        oracle[path].argmax(dim=-1)
+    ).float().mean().item()
+    exact = pred_mask.eq(gold_mask).all(dim=-1).float().mean().item()
+    return {
+        "path_focus_top1_accuracy": float(top1),
+        "path_focus_exact_set_accuracy": float(exact),
     }
