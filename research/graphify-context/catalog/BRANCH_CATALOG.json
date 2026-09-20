@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "723f6d3d85a56c712c337c2752dd9aa439dc4df8",
-      "head_committed_at": "2026-09-20T16:20:34-05:00",
-      "head_message": "context: record qualified realistic QSRE T2 v0.2 pipeline",
+      "head": "7e4b6e26aa6a0af1a7cea6964036eebf244f15ab",
+      "head_committed_at": "2026-09-20T16:49:24-05:00",
+      "head_message": "context: record qualified schema-ordered T2 v0.3 pipeline",
       "status": "diverged",
-      "ahead": 226,
+      "ahead": 227,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 573,
+      "changed_file_count_vs_source_merge_base": 574,
       "knowledge_surface": true
     },
     {
@@ -125,14 +125,14 @@
     },
     {
       "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-      "head": "9676c4cfd13d18dc185d06b893c9a151c0ca5cff",
-      "head_committed_at": "2026-09-20T16:17:46-05:00",
-      "head_message": "train(n0): preserve exact T2 continuous objective contract",
+      "head": "e9b602457404ed6adeb301a9cf37dcbdf994ab57",
+      "head_committed_at": "2026-09-20T16:47:00-05:00",
+      "head_message": "ci(n0): qualify schema-grounded ordered T2 v0.3 workflow",
       "status": "ahead",
-      "ahead": 330,
+      "ahead": 345,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 295,
+      "changed_file_count_vs_source_merge_base": 310,
       "knowledge_surface": true
     },
     {

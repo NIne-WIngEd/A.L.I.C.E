@@ -1,9 +1,9 @@
 {
   "source_work_branch": "alice-eipm-v1-qsre-t2-operator-learning",
-  "source_work_commit": "9676c4cfd13d18dc185d06b893c9a151c0ca5cff",
+  "source_work_commit": "e9b602457404ed6adeb301a9cf37dcbdf994ab57",
   "research_branch": "research/graphify-context-substrate",
-  "research_commit": "31a80bb56558598f73f5854a20b7f2fc3ff69869",
-  "workflow_run_id": "35538413502",
+  "research_commit": "1ed719afa98d5dd2b29caedb871cb2411ba8a1eb",
+  "workflow_run_id": "35539853533",
   "graph_mode": "code-only",
   "extraction_tree": "exact-source-worktree",
   "graphify_version": "0.9.63",
