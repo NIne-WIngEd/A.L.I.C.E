@@ -1,10 +1,10 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-qsre-t2-v03-schema-ordered-qualified-20260920-004
-- Question: Refresh A.L.I.C.E. N0 continuity to the qualified T2 v0.3 schema-grounded ordered relation frontier. Magnolia prep job 575953 completed 0:0. P100 job 575954 completed 0:0 and is a valid model failure: FAIL_QSRE_T2_OPERATOR_DEV_CONTRACT, result SHA 6e4fa39775a985b3265e4e1a84851ebc344310d7dd699e1649e807ab9f8f6025, final summary SHA 03f9a639b47de06f4b1faa00465dffb20489c6e328b12eedae225f491df97dfb, best observed step 1175 checkpoint 5ff543b8c87543681286d55a3f982ecf31af93588d65b979056992a4ff041574; challenge remained closed. Failure localization: operation reached 1.0, control reached 1.0, relational role reached 0.96484375, but relation-sequence exact maxed at 0.5381944179534912, full operator exact 0.4618055522441864, pair consistency 0.5416666666666666, ordered-path success stayed weak. Actual v0.2 source used opaque randomly initialized learned relation anchors and relation slots without explicit semantic sequential conditioning. State v0.58 forbids v0.2 rerun/tuning and authorizes one first-principles relation-only architectural change: schema-grounded ordered relation decoding. Relation schema configs/eipm/n0/n0_v02_qsre_t2_relation_schema_v0_1.json SHA bae45945fcb1a7f33b1177bc65da02c90335d443a0718aa7c796e744ace2e2c9 defines six public directional relation meanings; NONE is structural STOP. New operator src/alice_personality/n0/qsre_t2_schema_ordered_operator.py keeps the frozen 17-layer token stack, role/operation/control/continuous heads and replaces only relation extraction with frozen semantic schema states, token/layer late interaction, soft previous-relation conditioning for the next slot, and structural STOP. Same realistic prepared cache f7d93a1ad0559ae2ad29d909062a88fbf2d1eea4a05246a5fb5a95e01d6b69ac, same frozen semantic checkpoint 6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43, same frozen T1 executor 483bd59499e9bea890072af9c01c12961f41504d48f988ae3b3ee9a3ae8154fb, same optimizer/LR/seed/steps/eval/eligibility. Static workflow n0-qsre-t2-v03-schema-ordered-contract run 35539728367 SUCCESS at exact experiment HEAD e9b602457404ed6adeb301a9cf37dcbdf994ab57. It passed operator mechanics, trainer self-test, proof of one causal architecture change, exact schema/challenge hashes, behavioral Slurm afterok dependency, and governance. One launcher scripts/eipm/n0/launch_n0_v02_qsre_t2_schema_ordered_pipeline_v0_3.sh chains a real-artifact CPU runtime qualification to exactly one dependent P100 run; if CPU fails GPU never starts; if DEV fails challenge stays closed; if DEV perfectly passes the already-locked 60-row operator challenge opens once in the same GPU job. T3, causal TEST, frozen challenge, semantic/T1 gradients, private identity gradient, rerun/hotfix/LR-step-width searches, and promotion remain closed. Durable alice-context commit 7e4b6e26aa6a0af1a7cea6964036eebf244f15ab. Graphify is navigation-only; verify consequential claims in original experiment branch files.
+- Request: n0-qsre-production-architecture-closure-20260920-005
+- Question: Refresh A.L.I.C.E. N0 continuity to the production-QSRE architecture-closure frontier. Owner correctly identified risk of a T2 v0.3 -> v0.4 repair chain before N0 completion. T2 v0.3 was frozen before any GPU execution and remains only an unrun static diagnostic prototype. Authoritative state is configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.59.json. Obsolete v0.3 launcher, train runner, and P100 sbatch now fail closed with exit 90. Deep source review found known production gaps independent of the v0.2 benchmark: fixed relation cardinality, learned fixed hop slots, early argmax destroying plurality, mutually-exclusive operation class despite composable traversal/arbitration, fixed applicability centers, continuous operator state discarded before T1, fixed semantic relation-ID embedding authority inside T1, missing domain/range/type grounding, prematurely averaged schema gloss states, and binder interface not closed before operator redesign. Therefore no additional T2-only GPU run is authorized. Production architecture authority is docs/research/eipm-n0-qsre-production-architecture-closure-v1.md; machine contract configs/eipm/n0/n0_v02_qsre_production_core_v1.json; explicit W1-W15 responsibility map configs/eipm/n0/n0_v02_qsre_production_core_w1_w15_map_v1.json. Production Core v1 requires runtime-variable typed relation schema with no learned relation-class table, schema token/multifacet semantics plus domain/range constraints, UNKNOWN distinct from STOP, one shared iterative relation decoder with runtime stopping and no hop-specific slots, sparse plural operator hypotheses, composable traversal/arbitration factors, continuous applicability/uncertainty, continuous operator state reaching executor, adaptive zero/one/many support, schema-conditioned executor with no relation-ID semantic authority, shared iterative node/edge execution, support-local readout, and exact non-relational pass-through. Build sequence is predesigned once: P0 static/CPU closure -> P1 executor with oracle operator/support -> P2 operator with proven executor/oracle support -> P3 binder with proven operator/executor -> P4 end-to-end QSRE -> P5 N0 fusion. Eventual Magnolia stages may be chained with afterok under one owner launch; failure stops the chain. No LR/step/width tuning chain or permission micro-gates. Architecture contract workflow 35540416348 SUCCESS. Durable alice-context commit 3be86965482e33bef45c472374b7cac021a395ed. Graphify is navigation only; verify consequential claims in original experiment branch files.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
-- Graphify used: True
+- Graphify used: False
 
 ## Active mission
 
@@ -18,58 +18,41 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-qsre-t2-operator-learning @ e9b602457404ed6adeb301a9cf37dcbdf994ab57 — ci(n0): qualify schema-grounded ordered T2 v0.3 workflow
+- alice-eipm-v1-qsre-t2-operator-learning @ b99e28c8408dd863c6fa6e960d99c17995b4e705 — ci(n0): enforce production QSRE architecture closure
 
 ## Source pointers
 
-- [317] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [364] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
+  - status:  production-architecture authority; implementation/training remains closed
+- [205] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T2_ONE_SHOT_OPERATOR_TRAINING_AUTHORIZED.md — N0 QSRE T2 One-Shot Operator Training Authorized
+  - status:  tokenized preparation passed; one governed T2 P100 run is statically qualified and authorized
+- [204] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [295] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md — N0 Relation-Semantic Role Residual Repair Handoff
-  - status:  relation-semantic grounding v0.1 failed validly; failure localized to shared read-path entanglement; isolated zero-init semantic-role residual is CI-ready for one P100 run
-- [292] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [199] alice-eipm-v1-qsre-t2-operator-learning:.github/workflows/n0-qsre-production-core-v1-architecture-contract.yml — n0-qsre-production-core-v1-architecture-contract.yml
+- [195] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md — N0 Clean-Sheet Relational Execution Architecture Audit v0.1
+  - status:  architecture-review authority; implementation and gradient work frozen
+- [191] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-t2-v02-failure-localization-v03-decision.md — N0 QSRE T2 v0.2 failure localization and T2 v0.3 architecture decision
+- [184] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md — QSRE T1 PASS → T2 Learned-Operator Decision v0.1
+  - status:  T1 causal question passed on DEV; T2 static design/CPU mechanics justified; T2 gradient remains closed
+- [183] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md — N0 Relational Execution Architecture Family Comparison v0.1
+  - status:  research decision; no implementation or gradient authorized
+- [181] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md — N0 Relation-Conditioned Multi-Layer Query Interface Handoff
+  - status:  architecture designed and CI-qualified from 575804 evidence; exact relation-layer map still must be compiled from the saved audit JSON; training remains unauthorized
+- [179] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [292] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [179] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [292] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [179] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [292] alice-eipm-v1-qsre-t1-executor-training:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [292] alice-eipm-v1-query-edge-binding-identifiability-audit:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [292] alice-eipm-v1-query-edge-competitive-router:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [292] alice-eipm-v1-query-edge-cross-attention-bridge:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [292] alice-eipm-v1-query-edge-setwise-router:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [292] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [285] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
-  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
 
 ## Graphify navigation hints
 
-- launch_n0_v02_qsre_t2_schema_ordered_pipeline_v0_3.sh -> scripts/eipm/n0/launch_n0_v02_qsre_t2_schema_ordered_pipeline_v0_3.sh:L1
-- launch_n0_v02_qsre_t2_schema_ordered_pipeline_v0_3.sh script -> scripts/eipm/n0/launch_n0_v02_qsre_t2_schema_ordered_pipeline_v0_3.sh:L1
-- launch_n0_v02_qsre_t2_realistic_pipeline_v0_2.sh -> scripts/eipm/n0/launch_n0_v02_qsre_t2_realistic_pipeline_v0_2.sh:L1
-- AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
-- train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py -> scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py:L1
-- train_n0_v02_query_relation_role_router_v0_3.py -> scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py:L1
-- Return a UTC ISO-8601 timestamp without fractional seconds. -> src/alice_information/contracts.py:L94
-- diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py -> scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py:L1
-- MemoryAlreadyExistsError -> src/alice_memory/service.py:L58
-- build_n0_v02_query_edge_preservation_train_anchors_v0_1.py -> scripts/eipm/n0/build_n0_v02_query_edge_preservation_train_anchors_v0_1.py:L1
-- test_memory_identity_host_learning_architecture.py -> tests/governance/test_memory_identity_host_learning_architecture.py:L1
-- artifact_manifest_digest() -> src/cognitive_kernel/release.py:L118
-- .authorizes() -> src/cognitive_kernel/guest.py:L286
-- best_slot_semantic_alignment_loss() -> src/alice_personality/n0/adaptive_multi_view_latent_pool_objectives_v0_2.py:L39
-- branch_forward() -> scripts/eipm/n0/train_n0_v02_structured_state_pilot.py:L287
-- CachedStructuredDataset -> scripts/eipm/n0/train_n0_v02_structured_state_pilot.py:L259
+- skipped: document/branch/private routing was sufficient
 
 ## External/private routing
 
 - Recommended: True
-- Reason: question references a private/external source class
+- Reason: host-specific operational history may contain newer failure lessons than public receipts
 
 ## Trust contract
 

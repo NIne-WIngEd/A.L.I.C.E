@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "7e4b6e26aa6a0af1a7cea6964036eebf244f15ab",
-      "head_committed_at": "2026-09-20T16:49:24-05:00",
-      "head_message": "context: record qualified schema-ordered T2 v0.3 pipeline",
+      "head": "3be86965482e33bef45c472374b7cac021a395ed",
+      "head_committed_at": "2026-09-20T17:02:51-05:00",
+      "head_message": "context: record QSRE production architecture closure",
       "status": "diverged",
-      "ahead": 227,
+      "ahead": 228,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 574,
+      "changed_file_count_vs_source_merge_base": 575,
       "knowledge_surface": true
     },
     {
@@ -125,14 +125,14 @@
     },
     {
       "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-      "head": "e9b602457404ed6adeb301a9cf37dcbdf994ab57",
-      "head_committed_at": "2026-09-20T16:47:00-05:00",
-      "head_message": "ci(n0): qualify schema-grounded ordered T2 v0.3 workflow",
+      "head": "b99e28c8408dd863c6fa6e960d99c17995b4e705",
+      "head_committed_at": "2026-09-20T17:02:04-05:00",
+      "head_message": "ci(n0): enforce production QSRE architecture closure",
       "status": "ahead",
-      "ahead": 345,
+      "ahead": 355,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 310,
+      "changed_file_count_vs_source_merge_base": 315,
       "knowledge_surface": true
     },
     {
