@@ -634,6 +634,44 @@ def main() -> None:
         bridged.evidence_tokens, bridged.evidence_mask
     )
 
+    # Keep the ablation tensor geometry identical to the integrated path.
+    # Otherwise merely adding two masked token positions can change fp16
+    # attention kernels and contaminate the causal QSRE delta with a sequence-
+    # shape effect. The ablation removes QSRE content and validity, not tensor
+    # shape, routing topology, batch order, or the ratified parent evidence.
+    ablated_parent = copy.deepcopy(relational_parent)
+    zero_extra = torch.zeros(
+        relational_parent["evidence_tokens"].size(0),
+        2,
+        relational_parent["evidence_tokens"].size(-1),
+        dtype=relational_parent["evidence_tokens"].dtype,
+    )
+    false_extra = torch.zeros(
+        relational_parent["evidence_valid_mask"].size(0),
+        2,
+        dtype=torch.bool,
+    )
+    ablated_parent["evidence_tokens"] = torch.cat(
+        [relational_parent["evidence_tokens"], zero_extra],
+        dim=1,
+    )
+    ablated_parent["evidence_valid_mask"] = torch.cat(
+        [relational_parent["evidence_valid_mask"], false_extra],
+        dim=1,
+    )
+    ablated_parent["source_view_summaries"] = (
+        relational_parent["source_view_summaries"].clone()
+    )
+    ablated_parent["source_view_summaries"][:, 2] = masked_mean(
+        ablated_parent["evidence_tokens"],
+        ablated_parent["evidence_valid_mask"],
+    )
+
+    if ablated_parent["evidence_tokens"].shape != augmented_parent["evidence_tokens"].shape:
+        raise RuntimeError("QSRE ablation evidence-token geometry drift")
+    if ablated_parent["evidence_valid_mask"].shape != augmented_parent["evidence_valid_mask"].shape:
+        raise RuntimeError("QSRE ablation evidence-mask geometry drift")
+
     augmented_fusion = precompute_fusion_cache(
         fusion=fusion,
         parent_cache=augmented_parent,
@@ -642,7 +680,7 @@ def main() -> None:
     )
     ablated_fusion = precompute_fusion_cache(
         fusion=fusion,
-        parent_cache=relational_parent,
+        parent_cache=ablated_parent,
         device=device,
         batch_size=16,
     )
@@ -652,7 +690,7 @@ def main() -> None:
         list(range(len(relational_parent_rows))),
     )
     ablated_dataset = LatentPoolDataset(
-        relational_parent,
+        ablated_parent,
         ablated_fusion,
         list(range(len(relational_parent_rows))),
     )
