@@ -1,0 +1,119 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.36",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.35.json",
+  "status": "DUAL_VIEW_SPECIALIST_ONE_P100_RUN_GENUINE_FAILURE;EDGE_BINDING_SOLVED;PRESERVATION_SOLVED;COUNTERFACTUAL_ACTIVATION_MIXTURE_RESIDUAL_LOCALIZATION_AUTHORIZED_NO_GRADIENT",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-dual-view-specialist-failure-localization",
+  "failed_experiment": {
+    "source_revision": "57b085fd815cc784ae4090b8db7b619adec57040",
+    "job_id": 575912,
+    "result_sha256": "1a38c37a41de68bea0bb9bc897b86d62cbc457b8b93189c2d16731110c1694ec",
+    "status": "FAIL_DUAL_VIEW_SPECIALIST_DEV_OR_PRESERVATION_STOP_NO_HELDOUT_NO_AUTOMATIC_HOTFIX",
+    "eligible_checkpoint_keys": [],
+    "selected_checkpoint": null,
+    "selected_candidate_sha256": null,
+    "causal_test_opened": false,
+    "frozen_challenge_opened": false,
+    "parent_graph_parameters_exactly_unchanged": true,
+    "binding_logit_scale_frozen": true,
+    "edge_identity_training_loss": false
+  },
+  "evidence_summary": {
+    "edge_identity": {
+      "all_four_top1_every_checkpoint": 1.0,
+      "same_relation_top1_every_checkpoint": 1.0,
+      "mean_target_conditional_probability_constant": 0.4847296124531163,
+      "interpretation": "pair binding remained solved and frozen throughout training"
+    },
+    "preservation": {
+      "step_80_pass": true,
+      "step_120_pass": true,
+      "step_160_pass": true,
+      "step_200_pass": true,
+      "step_200_ordinary_noop_top1": 1.0,
+      "step_200_endpoint_noop_top1": 1.0,
+      "interpretation": "old-task no-op behavior and parent preservation are not the dominant failure"
+    },
+    "specialist_activation": {
+      "initial_dev_top1": 0.0,
+      "step_40_dev_top1": 0.5347222222222222,
+      "step_80_dev_top1": 0.8888888888888888,
+      "step_120_dev_top1": 0.7777777777777778,
+      "step_160_dev_top1": 0.5277777777777778,
+      "step_200_dev_top1": 0.5555555555555556,
+      "step_80_mean_probability": 0.8954954100772738,
+      "step_200_mean_probability": 0.5579472795822716,
+      "interpretation": "activation generalization is unstable and non-monotonic despite near-zero TRAIN activation BCE"
+    },
+    "causal_field_selection": {
+      "initial_row_accuracy": 0.0625,
+      "step_80_row_accuracy": 0.08333333333333333,
+      "step_120_row_accuracy": 0.13194444444444445,
+      "step_160_row_accuracy": 0.1388888888888889,
+      "step_200_row_accuracy": 0.16666666666666666,
+      "initial_quad_accuracy": 0.0,
+      "step_200_quad_accuracy": 0.027777777777777776,
+      "initial_mean_margin": -0.6462391827048527,
+      "step_200_mean_margin": -0.4664086088952091,
+      "interpretation": "directional residual path improves margins but remains far from solving endpoint selection"
+    },
+    "key_disambiguating_observation": "at step 80 specialist activation reached 0.8889 DEV top1 while row accuracy was only 0.0833 and quad accuracy 0.0, so activation failure alone cannot explain the field-selection failure"
+  },
+  "localization_audit": {
+    "authorized": true,
+    "gpu_required": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "training_authorized": false,
+    "test_opening_authorized": false,
+    "challenge_opening_authorized": false,
+    "checkpoints": [40, 80, 120, 160, 200],
+    "questions": [
+      "do causal and preservation specialist probabilities remain rank-separable even when threshold 0.5 accuracy is poor",
+      "does forcing specialist activation to one repair causal DEV field selection",
+      "does replacing the soft conditional edge mixture with the already-perfect hard top1 binding repair causal DEV field selection",
+      "does the relevant-edge residual proposal correctly prefer the requested source or target endpoint"
+    ],
+    "counterfactual_modes": [
+      "actual_activation_soft_binding",
+      "forced_specialist_soft_binding",
+      "actual_activation_hard_top1_binding",
+      "forced_specialist_hard_top1_binding"
+    ],
+    "hard_top1_is_label_free_on_dev": true,
+    "reason": "the qualified conditional edge top1 is 1.0 on every DEV row; hard-top1 uses the model prediction, not target labels"
+  },
+  "architecture_hypotheses_not_yet_authorized": {
+    "utility_or_advantage_conditioned_specialist_activation": true,
+    "factorized_pair_binding_plus_endpoint_role_selection": true,
+    "hard_or_sparse_top1_edge_execution": true,
+    "another_flat_router": false,
+    "binding_scale_tuning": false,
+    "learning_rate_tuning": false,
+    "more_steps": false
+  },
+  "execution_policy": {
+    "next_action": "run one CPU no-gradient counterfactual localization audit over existing trained checkpoints",
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "gpu_training_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "anti_mc10_rule": {
+    "do_not_train_again_before_counterfactual_localization": true,
+    "do_not_tune_activation_threshold_from_dev": true,
+    "do_not_tune_binding_scale_from_dev": true,
+    "do_not_add_router_capacity": true,
+    "do_not_change_learning_rate_or_steps": true,
+    "if_audit_localizes_multiple_failures": "redesign the factorization from first principles rather than patching each symptom independently"
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
