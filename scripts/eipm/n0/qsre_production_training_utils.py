@@ -349,6 +349,7 @@ def operator_metrics(
     traversal_target = split["traversal_target"][indices].to(device)
     modifier_target = split["modifier_target"][indices].to(device)
     control_target = split["control_target"][indices].to(device)
+    termination_target = split["termination_target"][indices].to(device)
     open_schema = split["open_schema"][indices].to(device)
 
     relation_exact = relation_program_exact(
@@ -365,6 +366,14 @@ def operator_metrics(
     control_correct = operator.control_distribution.argmax(dim=-1).eq(
         control_target
     )
+    lengths = relation_mask.long().sum(dim=-1)
+    terminal_index = lengths.clamp(max=operator.stop_probability.size(1) - 1)
+    row_index = torch.arange(lengths.size(0), device=device)
+    terminal_unknown = operator.unknown_probability[row_index, terminal_index]
+    terminal_stop = operator.stop_probability[row_index, terminal_index]
+    termination_pred = terminal_unknown.gt(terminal_stop).long()
+    termination_correct = termination_pred.eq(termination_target)
+    unknown_rows = termination_target.eq(1)
 
     return {
         "relation_sequence_exact_accuracy": float(
@@ -391,11 +400,18 @@ def operator_metrics(
             else 1.0
         ),
         "control_accuracy": float(control_correct.float().mean().item()),
+        "termination_accuracy": float(termination_correct.float().mean().item()),
+        "unknown_termination_accuracy": (
+            float(termination_correct[unknown_rows].float().mean().item())
+            if bool(unknown_rows.any())
+            else 1.0
+        ),
         "relation_exact_tensor": relation_exact,
         "role_correct_tensor": role_correct,
         "traversal_correct_tensor": traversal_correct,
         "modifier_correct_tensor": modifier_correct,
         "control_correct_tensor": control_correct,
+        "termination_correct_tensor": termination_correct,
     }
 
 
