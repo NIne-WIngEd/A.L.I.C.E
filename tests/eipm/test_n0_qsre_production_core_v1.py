@@ -658,3 +658,22 @@ def test_executor_confidence_mass_survives_support_normalization() -> None:
         focus_field_weight=torch.tensor([[1.0, 0.0, 0.0, 0.0]]),
     )
     assert float(out_unknown["relational_probability"].sum()) <= 0.010001
+
+
+def test_termination_events_cannot_reactivate_after_stop() -> None:
+    torch.manual_seed(31)
+    model = QSREProductionOperatorInducer(cfg()).eval()
+    encoder = QSREProductionSchemaEncoder(cfg()).eval()
+    q, qmask = query(batch=1, seed=32)
+    s = schema(3, seed=33)
+    with torch.no_grad():
+        model.stop_head.weight.zero_()
+        model.unknown_head.weight.zero_()
+        model.stop_head.bias.fill_(30.0)
+        model.unknown_head.bias.fill_(-30.0)
+    out = run_operator(model, encoder, q=q, qmask=qmask, s=s, steps=5)["operator"]
+    assert float(out.stop_probability[0, 0]) > 0.999
+    assert float(out.stop_probability[0, 1:].abs().max()) < 1.0e-6
+    assert float(out.unknown_probability.abs().max()) < 1.0e-6
+    assert float(out.relation_step_mass.abs().max()) < 1.0e-6
+    assert float(out.stop_probability.sum()) <= 1.000001
