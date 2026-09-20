@@ -68,9 +68,9 @@
   },
   "continuity_branch_head": {
     "branch": "alice-context",
-    "head": "8bef9d1adc48e307b8e7526e327ed92c6e123702",
-    "head_committed_at": "2026-09-20T04:14:45-05:00",
-    "head_message": "context: hand off corrected QSRE T1 pretraining frontier"
+    "head": "8b222d3768901478e2a4c9139b579776ac6bf3f8",
+    "head_committed_at": "2026-09-20T04:31:19-05:00",
+    "head_message": "context: hand off QSRE T1 one-shot P100 authorization"
   },
   "unmerged_experiment_frontier": {
     "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -81,13 +81,13 @@
     "maximal_heads": [
       {
         "branch": "alice-eipm-v1-qsre-t1-executor-training",
-        "head": "d62e8935811a2fcce41ddc425a7fb9788f7f0aed",
-        "head_committed_at": "2026-09-20T04:13:18-05:00",
-        "head_message": "fix(n0): correct QSRE T1 path causality and paired curriculum before training",
-        "ahead": 266,
+        "head": "f4a9edb1915e39d893224f4503746bfd61fc6424",
+        "head_committed_at": "2026-09-20T04:29:49-05:00",
+        "head_message": "state(n0): authorize one-shot QSRE T1 P100 run",
+        "ahead": 269,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 231,
+        "changed_file_count_vs_source_merge_base": 237,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -103,6 +103,7 @@
           ".github/workflows/n0-qsre-t1-corrected-pretraining-contract.yml",
           ".github/workflows/n0-qsre-t1-curriculum-contract.yml",
           ".github/workflows/n0-qsre-t1-forward-contract.yml",
+          ".github/workflows/n0-qsre-t1-one-shot-authorization.yml",
           ".github/workflows/n0-qsre-tensor-mechanics-contract.yml",
           ".github/workflows/n0-query-edge-binding-identifiability-audit-check.yml",
           ".github/workflows/n0-query-edge-competitive-router-contract-check.yml",
@@ -155,6 +156,7 @@
           "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.45.json",
           "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.46.json",
           "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.47.json",
+          "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.48.json",
           "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
@@ -168,6 +170,7 @@
           "configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_2.json",
           "configs/eipm/n0/n0_v02_qsre_t1_executor_design_v0_1.json",
           "configs/eipm/n0/n0_v02_qsre_t1_training_contract_v0_1.json",
+          "configs/eipm/n0/n0_v02_qsre_t1_training_contract_v0_2.json",
           "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json",
           "configs/eipm/n0/n0_v02_query_edge_setwise_router_design_decision_v0_1.json",
           "configs/eipm/n0/n0_v02_query_edge_training_decision_v0_1.json",
@@ -189,6 +192,7 @@
           "docs/research/eipm-n0-qsre-preimplementation-contract-result-v0.1.md",
           "docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md",
           "docs/research/eipm-n0-qsre-t1-executor-decision-v0.1.md",
+          "docs/research/eipm-n0-qsre-t1-one-shot-p100-authorization-v0.1.md",
           "docs/research/eipm-n0-qsre-t1-pretraining-validity-correction-v0.1.md",
           "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md",
           "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
@@ -241,6 +245,7 @@
           "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_role_residual_v0_2.sbatch",
           "scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_failure_localization_v0_3.sbatch",
           "scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_training_v0_1.sbatch",
+          "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t1_executor_training_v0_1.sbatch",
           "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_competitive_router_training_v0_1.sbatch",
           "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_cross_attention_bridge_training_v0_1.sbatch",
           "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_setwise_router_training_v0_1.sbatch",
@@ -269,6 +274,7 @@
           "scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh",
           "scripts/eipm/n0/run_n0_v02_qsre_mechanics_v0_1.sh",
           "scripts/eipm/n0/run_n0_v02_qsre_oracle_contract_v0_1.sh",
+          "scripts/eipm/n0/run_n0_v02_qsre_t1_executor_training_v0_1.sh",
           "scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_1.sh",
           "scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_2.sh",
           "scripts/eipm/n0/run_n0_v02_qualify_query_edge_competitive_router_v0_1.sh",
@@ -282,13 +288,7 @@
           "scripts/eipm/n0/run_n0_v02_query_edge_setwise_router_training_v0_1.sh",
           "scripts/eipm/n0/run_n0_v02_query_relation_role_router_v0_3.sh",
           "scripts/eipm/n0/run_n0_v02_query_semantics_architecture_audit_v0_1.sh",
-          "scripts/eipm/n0/run_n0_v02_query_semantics_layerwise_audit_v0_1.sh",
-          "scripts/eipm/n0/run_n0_v02_relation_conditioned_multilayer_interface_v0_1.sh",
-          "scripts/eipm/n0/run_n0_v02_relation_semantic_grounding_v0_1.sh",
-          "scripts/eipm/n0/run_n0_v02_relation_semantic_role_residual_v0_2.sh",
-          "scripts/eipm/n0/train_n0_v02_dual_view_specialist_v0_1.py",
-          "scripts/eipm/n0/train_n0_v02_qsre_t1_executor_v0_1.py",
-          "scripts/eipm/n0/train_n0_v02_query_edge_competitive_router_v0_1.py"
+          "scripts/eipm/n0/run_n0_v02_query_semantics_layerwise_audit_v0_1.sh"
         ],
         "authority": "unmerged-experiment-pointer"
       }
@@ -296,13 +296,13 @@
     "all_ahead_candidates": [
       {
         "branch": "alice-eipm-v1-qsre-t1-executor-training",
-        "head": "d62e8935811a2fcce41ddc425a7fb9788f7f0aed",
-        "head_committed_at": "2026-09-20T04:13:18-05:00",
-        "head_message": "fix(n0): correct QSRE T1 path causality and paired curriculum before training",
-        "ahead": 266,
+        "head": "f4a9edb1915e39d893224f4503746bfd61fc6424",
+        "head_committed_at": "2026-09-20T04:29:49-05:00",
+        "head_message": "state(n0): authorize one-shot QSRE T1 P100 run",
+        "ahead": 269,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 231,
+        "changed_file_count_vs_source_merge_base": 237,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -318,6 +318,7 @@
           ".github/workflows/n0-qsre-t1-corrected-pretraining-contract.yml",
           ".github/workflows/n0-qsre-t1-curriculum-contract.yml",
           ".github/workflows/n0-qsre-t1-forward-contract.yml",
+          ".github/workflows/n0-qsre-t1-one-shot-authorization.yml",
           ".github/workflows/n0-qsre-tensor-mechanics-contract.yml",
           ".github/workflows/n0-query-edge-binding-identifiability-audit-check.yml",
           ".github/workflows/n0-query-edge-competitive-router-contract-check.yml",
@@ -370,6 +371,7 @@
           "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.45.json",
           "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.46.json",
           "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.47.json",
+          "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.48.json",
           "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
@@ -383,6 +385,7 @@
           "configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_2.json",
           "configs/eipm/n0/n0_v02_qsre_t1_executor_design_v0_1.json",
           "configs/eipm/n0/n0_v02_qsre_t1_training_contract_v0_1.json",
+          "configs/eipm/n0/n0_v02_qsre_t1_training_contract_v0_2.json",
           "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json",
           "configs/eipm/n0/n0_v02_query_edge_setwise_router_design_decision_v0_1.json",
           "configs/eipm/n0/n0_v02_query_edge_training_decision_v0_1.json",
@@ -404,6 +407,7 @@
           "docs/research/eipm-n0-qsre-preimplementation-contract-result-v0.1.md",
           "docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md",
           "docs/research/eipm-n0-qsre-t1-executor-decision-v0.1.md",
+          "docs/research/eipm-n0-qsre-t1-one-shot-p100-authorization-v0.1.md",
           "docs/research/eipm-n0-qsre-t1-pretraining-validity-correction-v0.1.md",
           "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md",
           "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
@@ -456,6 +460,7 @@
           "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_role_residual_v0_2.sbatch",
           "scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_failure_localization_v0_3.sbatch",
           "scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_training_v0_1.sbatch",
+          "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t1_executor_training_v0_1.sbatch",
           "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_competitive_router_training_v0_1.sbatch",
           "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_cross_attention_bridge_training_v0_1.sbatch",
           "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_setwise_router_training_v0_1.sbatch",
@@ -484,6 +489,7 @@
           "scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh",
           "scripts/eipm/n0/run_n0_v02_qsre_mechanics_v0_1.sh",
           "scripts/eipm/n0/run_n0_v02_qsre_oracle_contract_v0_1.sh",
+          "scripts/eipm/n0/run_n0_v02_qsre_t1_executor_training_v0_1.sh",
           "scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_1.sh",
           "scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_2.sh",
           "scripts/eipm/n0/run_n0_v02_qualify_query_edge_competitive_router_v0_1.sh",
@@ -497,13 +503,7 @@
           "scripts/eipm/n0/run_n0_v02_query_edge_setwise_router_training_v0_1.sh",
           "scripts/eipm/n0/run_n0_v02_query_relation_role_router_v0_3.sh",
           "scripts/eipm/n0/run_n0_v02_query_semantics_architecture_audit_v0_1.sh",
-          "scripts/eipm/n0/run_n0_v02_query_semantics_layerwise_audit_v0_1.sh",
-          "scripts/eipm/n0/run_n0_v02_relation_conditioned_multilayer_interface_v0_1.sh",
-          "scripts/eipm/n0/run_n0_v02_relation_semantic_grounding_v0_1.sh",
-          "scripts/eipm/n0/run_n0_v02_relation_semantic_role_residual_v0_2.sh",
-          "scripts/eipm/n0/train_n0_v02_dual_view_specialist_v0_1.py",
-          "scripts/eipm/n0/train_n0_v02_qsre_t1_executor_v0_1.py",
-          "scripts/eipm/n0/train_n0_v02_query_edge_competitive_router_v0_1.py"
+          "scripts/eipm/n0/run_n0_v02_query_semantics_layerwise_audit_v0_1.sh"
         ],
         "authority": "unmerged-experiment-pointer"
       },
@@ -2248,9 +2248,9 @@
   },
   "continuity_freshness": {
     "stale_relative_to_unmerged_experiment_frontier": true,
-    "newest_experiment_frontier_time": "2026-09-20T04:13:18-05:00",
+    "newest_experiment_frontier_time": "2026-09-20T04:29:49-05:00",
     "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
-    "context_branch_head_time": "2026-09-20T04:14:45-05:00"
+    "context_branch_head_time": "2026-09-20T04:31:19-05:00"
   },
   "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
   "authority": "routing-and-freshness-only"

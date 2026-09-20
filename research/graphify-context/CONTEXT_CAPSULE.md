@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-qsre-t1-corrected-pretraining-20260920-001
-- Question: Refresh A.L.I.C.E. N0 continuity to corrected QSRE T1 pretraining frontier. Branch alice-eipm-v1-qsre-t1-executor-training is at d62e8935811a2fcce41ddc425a7fb9788f7f0aed with authoritative state v0.47. v0.46 GPU eligibility was retracted before any gradient run because the v0.1 curriculum allowed positional shortcuts and the old relation-order test did not prove graph-path traversal. Corrected PATH_FOLLOW uses explicit oracle focus frontier, relation-matched supported edges whose SOURCE is on the current frontier, updates only incident active nodes, advances frontier to reached TARGETs, and restricts final path readout to the reached frontier. T1 rejects direct field-only support and fractional oracle support; edge support is 0/1 membership. Curriculum v0.2 is deterministic SHA 155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063, 504 public TRAIN/DEV rows, 9 families, paired same-graph causal interventions, permuted field/edge order, no TEST/private identity. Real-cache preparation reuses only field_semantic from qualified cache SHA 5bcc4ecf0fb2b776f738e4cca881e6b03a68c81a96923a5b08821930d0ebe823 with split-isolated assignment and bit-identical causal-pair representations. Corrected pretraining CI 35501709024 passed syntax, governance, mechanics, causal curriculum, fake-cache prep, trainer import and CPU backward smoke. GPU training remains closed. Next action is exactly one Magnolia CPU/no-gradient real-cache preparation receipt; only after that may a new state authorize one P100 T1 run. Graphify remains navigation-only.
+- Request: n0-qsre-t1-one-shot-authorized-20260920-001
+- Question: Refresh A.L.I.C.E. N0 continuity to the exact one-shot QSRE T1 authorization frontier. Branch alice-eipm-v1-qsre-t1-executor-training is at f4a9edb1915e39d893224f4503746bfd61fc6424 with authoritative state v0.48 and training contract v0.2. Corrected-pretraining CI 35502469015 and one-shot authorization CI 35502469056 both succeeded on this commit. Magnolia real-cache preparation passed. Exact hashes: source cache 5bcc4ecf0fb2b776f738e4cca881e6b03a68c81a96923a5b08821930d0ebe823; curriculum 155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063; curriculum receipt 55f7bc40a5d5f1ff5c134e1f4ad00c1788748f317d7c0b118114c111e794b60d; prepared cache 03a45033dc41a51896f8b514c44e784ecabaa5837488a272306914979ab6b564; preparation receipt b92ddc17749f03230f3feff1d70942ec2fa5d893638574d8c81ee2957608e9db. Prepared rows 360 TRAIN / 144 DEV, field width 640, paired causal representation identity true, TRAIN/DEV representation pools isolated, direct field support zero, edge support membership-only, no TEST/private identity. Exactly one P100 T1 executor run is authorized. T1 uses oracle operator + oracle structural support + frozen production-real semantic field states. It does not learn operator/support or semantic/parent parameters. Runner refuses wrong prepared bytes, prior output, or governance drift and stops at first eligible DEV checkpoint. No automatic rerun/hotfix. If fail, localize from family/causal-pair metrics before any architecture change. If pass, interpret before T2. Graphify remains navigation-only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: False
@@ -18,28 +18,25 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-qsre-t1-executor-training @ d62e8935811a2fcce41ddc425a7fb9788f7f0aed — fix(n0): correct QSRE T1 path causality and paired curriculum before training
+- alice-eipm-v1-qsre-t1-executor-training @ f4a9edb1915e39d893224f4503746bfd61fc6424 — state(n0): authorize one-shot QSRE T1 P100 run
 
 ## Source pointers
 
-- [255] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T1_CORRECTED_PRETRAINING_FRONTIER.md — N0 QSRE T1 Corrected Pretraining Frontier
-- [165] alice-eipm-v1-qsre-t1-executor-training:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
-  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
-- [163] alice-eipm-v1-qsre-t1-executor-training:docs/research/eipm-n0-qsre-t1-pretraining-validity-correction-v0.1.md — QSRE T1 Pretraining Validity Correction v0.1
-- [159] alice-eipm-v1-qsre-t1-executor-training:.github/workflows/n0-qsre-t1-corrected-pretraining-contract.yml — n0-qsre-t1-corrected-pretraining-contract.yml
-- [155] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_CAUSAL_STUDY_PREPARATION_READY.md — N0 Multi-Layer Causal Study — CPU Preparation Ready
-- [155] alice-eipm-v1-qsre-t1-executor-training:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [154] alice-eipm-v1-build:docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md — A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13
-  - status:  research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.
-  - supersession:  this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it.
-- [152] alice-eipm-v1-build:docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md — N0 Frontier Research Audit — 2026-09-14
-  - status: hold the step-1000 -> step-2500 GPU job pending N0 v0.2 redesign**.
-- [151] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_ONE_P100_RUN_AUTHORIZED.md — N0 Multi-Layer Interface — One P100 Run Authorized
-- [148] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md — N0 causal-arbitration frontier ready for Magnolia calibration
-- [145] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md — N0 Causal Arbitration Frontier Calibration Handoff
-- [140] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
-  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [144] alice-eipm-v1-qsre-t1-executor-training:docs/research/eipm-n0-qsre-t1-one-shot-p100-authorization-v0.1.md — QSRE T1 One-Shot P100 Authorization v0.1
+- [138] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T1_ONE_SHOT_P100_AUTHORIZED.md — N0 QSRE T1 One-Shot P100 Authorized Frontier
+- [117] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T1_CORRECTED_PRETRAINING_FRONTIER.md — N0 QSRE T1 Corrected Pretraining Frontier
+- [116] alice-context:docs/chat-context/2026-09-20/sol/N0_COMPETITIVE_EDGE_ROUTER_ONE_P100_TRAINING_READY.md — N0 Competitive Edge Router — One P100 Training Ready
+- [113] alice-eipm-v1-qsre-t1-executor-training:.github/workflows/n0-qsre-t1-one-shot-authorization.yml — n0-qsre-t1-one-shot-authorization.yml
+- [112] alice-eipm-v1-build:docs/eipm/EIPM_VOICE_IDENTITY_OVERLAY_V02_RECEIPT.md — EIPM Voice Identity Overlay v0.2 Receipt
+  - status:  private candidate overlay; owner review required; no training authority
+- [111] alice-context:docs/chat-context/2026-09-20/sol/N0_QUERY_EDGE_ONE_P100_TRAINING_READY.md — N0 Query–Edge Routed Specialist — One P100 Run Ready
+- [108] alice-context:docs/chat-context/2026-09-14/sol/N0_V02_FIRST_TRANCHE_PASS_AND_DEV_CHALLENGE.md — N0 v0.2 First Tranche PASS → Held-Out Dev Challenge
+- [104] alice-eipm-v1-build:docs/eipm/n0/HOSTED_MODEL_OUTPUT_TRAINING_BOUNDARY_2026-09-13.md — Hosted-Model Output Training Boundary — Owner Authorization Correction — 2026-09-13
+  - status:  active owner-directed lineage rule; supersedes the earlier advisory-only restriction in this file
+- [103] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_ONE_P100_RUN_AUTHORIZED.md — N0 Multi-Layer Interface — One P100 Run Authorized
+- [103] alice-eipm-v1-build:training/eipm/n0/N0_V02_TEACHER_CURRICULUM_SPEC.md — N0 v0.2 Public Teacher Curriculum Contract
+  - status:  active authoring contract
+- [102] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_CAUSAL_STUDY_PREPARATION_READY.md — N0 Multi-Layer Causal Study — CPU Preparation Ready
 
 ## Graphify navigation hints
 
