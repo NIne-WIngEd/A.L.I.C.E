@@ -89,3 +89,33 @@ jobs:
         run: |
           python -m pip install -q torch
           PYTHONPATH=src python scripts/eipm/n0/train_n0_v02_qsre_t2_operator_v0_1.py --self-test
+
+      - name: Shell expansion boundary
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          paths = [
+              Path("scripts/eipm/n0/run_n0_v02_qsre_t2_operator_training_v0_1.sh"),
+              Path("scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t2_operator_training_v0_1.sbatch"),
+          ]
+          for path in paths:
+              text = path.read_text()
+              if "$${" in text:
+                  raise SystemExit(f"double-dollar shell expansion bug remains: {path}")
+          runner = paths[0].read_text()
+          sbatch = paths[1].read_text()
+          expected = [
+              'ROOT="${ALICE_N0_REPO_ROOT:-${ALICE_REPO_ROOT:-$PWD}}"',
+              'WORKDIR="${ALICE_N0_WORKDIR:-$HOME/rayan-compute/rayan-n0/n0-v02}"',
+              'export PYTHONPATH="$ROOT/src:$ROOT/scripts/eipm/n0${PYTHONPATH:+:$PYTHONPATH}"',
+          ]
+          missing = [x for x in expected if x not in runner]
+          if missing:
+              raise SystemExit("runner variable-expansion contract missing " + repr(missing))
+          if 'ROOT="${SLURM_SUBMIT_DIR:?submit from the A.L.I.C.E repo root}"' not in sbatch:
+              raise SystemExit("Slurm submit-root expansion contract missing")
+          if 'export ALICE_N0_WORKDIR="${ALICE_N0_WORKDIR:-$HOME/rayan-compute/rayan-n0/n0-v02}"' not in sbatch:
+              raise SystemExit("Slurm workdir expansion contract missing")
+          print("PASS_QSRE_T2_SHELL_EXPANSION_BOUNDARY")
+          PY
