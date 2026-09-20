@@ -3,7 +3,7 @@
   "status": "PRECOMMITTED_CAUSAL_PIPELINE_NO_POSTHOC_TUNING",
   "architecture": "configs/eipm/n0/n0_v02_qsre_production_core_v1.json",
   "curriculum_contract": "configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json",
-  "curriculum_sha256": "9383baa09f591bbf906c26f6b5d06955069e8211f2c7689308b3f542e33c736c",
+  "curriculum_sha256": null,
   "relation_schema": "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
   "model": {
     "semantic_dim": 640,
@@ -103,7 +103,8 @@
         "control": 0.5,
         "continuous_alignment": 0.15,
         "downstream": 0.5,
-        "pair_consistency": 0.2
+        "pair_consistency": 0.2,
+        "projection_anchor": 0.02
       },
       "training": {
         "seed": 20260921,
@@ -216,6 +217,8 @@
     "combined_scope_constraints_are_supervised": true,
     "calibrated_executor_mass_preserves_control_unknown_and_program_presence": true,
     "schema_encoder_starts_geometry_preserving": true,
-    "seed_role_traversal_control_counts_are_checkpoint_topology_not_product_ceilings": true
+    "seed_role_traversal_control_counts_are_checkpoint_topology_not_product_ceilings": true,
+    "p2_query_projection_initialized_from_proven_schema_space": true,
+    "p2_query_projection_softly_anchored_to_schema_space": true
   }
 }
