@@ -31,7 +31,10 @@ jobs:
             case "$path" in
               docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md|\
               docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md|\
+              docs/research/eipm-n0-qsre-preimplementation-contract-result-v0.1.md|\
+              docs/research/eipm-n0-qsre-architecture-blueprint-v0.1.md|\
               configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.39.json|\
+              configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.41.json|\
               configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.40.json|\
               configs/eipm/n0/n0_v02_relational_execution_proof_obligations_v0_1.json|\
               configs/eipm/n0/n0_v02_qsre_preimplementation_diagnostics_v0_1.json|\
