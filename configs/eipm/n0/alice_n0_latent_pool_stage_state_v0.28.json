@@ -1,0 +1,130 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.28",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.27.json",
+  "status": "COMPETITIVE_EDGE_ROUTER_RUNTIME_QUALIFICATION_PASS;DIRECT_RUNTIME_ROUTE_AND_PARENT_NOOP_OBJECTIVE_FROZEN;ONE_P100_TRAINING_RUN_AUTHORIZED",
+  "n0_complete": false,
+  "source_failure": {
+    "magnolia_job_id": 575888,
+    "source_revision": "cf15e2b13a5ca4d22a7070e54c95460959206c33",
+    "result_sha256": "99fc21394bdfbb8e3500bf0efa7c3ce836a2e071b8b11a1c733f73aa99b6fea2",
+    "result_status": "FAIL_QUERY_EDGE_CAUSAL_DEV_OR_PRESERVATION_STOP_NO_HELDOUT_NO_AUTOMATIC_HOTFIX",
+    "rerun_authorized": false
+  },
+  "current_branch": "alice-eipm-v1-query-edge-competitive-router",
+  "runtime_qualification": {
+    "status": "PASS_COMPETITIVE_EDGE_ROUTER_NO_GRADIENT_RUNTIME_CONTRACT",
+    "source_revision": "93901b4ea0e3a9773e59047181414e507d3ed904",
+    "receipt_sha256": "ba2dcf640ffd2572ba0a1177c571861aff1838784ab19c0f8166728f0dc59f37",
+    "future_trainable_scope": "competitive_query_edge_bridge_only",
+    "future_trainable_parameter_count": 8832773,
+    "parent_parameters_exactly_unchanged": true,
+    "exact_parent_field_weights": true,
+    "exact_parent_pooled_state": true,
+    "zero_initialized_source_residual_readout": true,
+    "zero_initialized_target_residual_readout": true,
+    "route_probabilities_sum_to_one": true,
+    "explicit_parent_noop_route": true,
+    "all_active_directed_edges_compete": true,
+    "same_relation_edges_produce_distinct_edge_queries": true,
+    "edge_content_conditions_query_token_attention": true,
+    "route_probability_is_actual_source_contribution_control": true,
+    "route_probability_is_actual_target_contribution_control": true,
+    "proxy_dot_product_router": false,
+    "independent_per_edge_tanh_gate": false
+  },
+  "training_decision": {
+    "config": "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
+    "decision": "AUTHORIZE_ONE_BOUNDED_COMPETITIVE_EDGE_ROUTER_EXPERIMENT_AFTER_RUNTIME_QUALIFICATION",
+    "objective": {
+      "causal_field_selection_cross_entropy": true,
+      "causal_target_margin_weight": 0.25,
+      "causal_actual_route_cross_entropy_weight": 1.0,
+      "preservation_parent_distillation_weight": 1.0,
+      "preservation_parent_noop_route_cross_entropy_weight": 1.0,
+      "ordinary_and_endpoint_equal_share": true,
+      "proxy_routing_loss": false,
+      "irrelevant_edge_gate_penalty": false,
+      "load_balancing_loss": false,
+      "gradient_surgery": false,
+      "route_probability_detachment": false
+    }
+  },
+  "training_scope": {
+    "trainable": ["competitive_query_edge_bridge.*"],
+    "semantic_backbone_trainable": false,
+    "structured_state_trainable": false,
+    "parent_adapter_trainable": false,
+    "parent_graph_trainable": false,
+    "private_identity_gradient": false
+  },
+  "gradient_data": {
+    "query_edge_causal_train": true,
+    "ordinary_preservation_train_anchors": true,
+    "endpoint_preservation_train_anchors": true,
+    "query_edge_causal_dev": false,
+    "query_edge_causal_test": false,
+    "ordinary_preservation_dev": false,
+    "endpoint_preservation_dev": false,
+    "frozen_challenge": false,
+    "private_identity_data": false
+  },
+  "operating_budget": {
+    "authorized_gpu_runs": 1,
+    "max_steps": 200,
+    "checkpoint_every_steps": 40,
+    "learning_rate": 0.00015,
+    "weight_decay": 0.02,
+    "warmup_steps": 12,
+    "causal_quad_batch_size": 4,
+    "preservation_batch_size": 16,
+    "hard_parameter_ceiling": null,
+    "operating_budget_is_product_ceiling": false
+  },
+  "eligibility_policy": {
+    "frozen_parent_preservation_policy_must_pass": true,
+    "no_relation_family_row_accuracy_regression_vs_initial_parent": true,
+    "overall_row_accuracy_strictly_improves": true,
+    "overall_quad_accuracy_strictly_improves": true,
+    "worst_family_quad_accuracy_may_not_regress": true,
+    "mean_target_margin_strictly_improves": true,
+    "actual_route_accuracy_must_exceed_half": true,
+    "worst_family_actual_route_accuracy_strictly_above_uniform_five_route_chance": true,
+    "actual_route_accuracy_must_strictly_improve_vs_initial": true,
+    "target_route_probability_must_strictly_improve_vs_initial": true
+  },
+  "execution_policy": {
+    "next_action": "run static CI then submit exactly one Magnolia P100 competitive-router training job",
+    "gradient_execution_authorized_now": true,
+    "gpu_execution_authorized_now": true,
+    "gpu_training_runs_remaining": 1,
+    "training_output_claim_before_gpu_work_required": true,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "automatic_heldout_opening_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "failure_policy": {
+    "first_genuine_model_failure_stops_experiment": true,
+    "local_hotfix_loop_forbidden": true,
+    "no_loss_weight_tuning_after_failure_without_reassessment": true,
+    "one_causal_change_per_new_model_gate": true,
+    "failed_training_artifacts_must_be_preserved": true
+  },
+  "capability_policy": {
+    "full_production_foundation_not_disposable_pilot": true,
+    "hard_parameter_ceiling": null,
+    "current_training_budget_is_not_product_ceiling": true,
+    "efficiency_may_reduce_required_capability": false,
+    "scale_only_from_localized_capacity_or_expressivity_evidence": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
