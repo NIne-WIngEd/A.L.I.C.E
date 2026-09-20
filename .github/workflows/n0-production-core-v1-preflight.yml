@@ -1,0 +1,103 @@
+name: n0-production-core-v1-preflight
+
+on:
+  push:
+    paths:
+      - "src/alice_personality/n0/qsre_production_core.py"
+      - "src/alice_personality/n0/qsre_n0_bridge.py"
+      - "scripts/eipm/n0/qsre_production_runtime.py"
+      - "scripts/eipm/n0/qsre_production_training_utils.py"
+      - "scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py"
+      - "scripts/eipm/n0/prepare_n0_v02_qsre_production_schema_v1.py"
+      - "scripts/eipm/n0/prepare_n0_v02_qsre_production_cache_v1.py"
+      - "scripts/eipm/n0/audit_n0_v02_qsre_production_p0_v1.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p1_v1.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v1.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p3_v1.py"
+      - "scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v1.py"
+      - "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json"
+      - "configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json"
+      - "configs/eipm/n0/n0_v02_qsre_production_training_plan_v1.json"
+      - "tests/eipm/test_n0_qsre_production_core_v1.py"
+      - "tests/eipm/test_n0_qsre_n0_bridge.py"
+      - "tests/eipm/test_n0_qsre_production_training_utils.py"
+      - ".github/workflows/n0-production-core-v1-preflight.yml"
+  workflow_dispatch:
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CPU test dependencies
+        run: python -m pip install -q torch pytest
+
+      - name: Compile complete production pipeline
+        run: |
+          python -m py_compile             src/alice_personality/n0/qsre_production_core.py             src/alice_personality/n0/qsre_n0_bridge.py             scripts/eipm/n0/qsre_production_runtime.py             scripts/eipm/n0/qsre_production_training_utils.py             scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py             scripts/eipm/n0/prepare_n0_v02_qsre_production_schema_v1.py             scripts/eipm/n0/prepare_n0_v02_qsre_production_cache_v1.py             scripts/eipm/n0/audit_n0_v02_qsre_production_p0_v1.py             scripts/eipm/n0/train_n0_v02_qsre_production_p1_v1.py             scripts/eipm/n0/train_n0_v02_qsre_production_p2_v1.py             scripts/eipm/n0/train_n0_v02_qsre_production_p3_v1.py             scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v1.py
+
+      - name: Run production mechanics and metric tests
+        env:
+          PYTHONPATH: src:scripts/eipm/n0
+        run: |
+          pytest -q             tests/eipm/test_n0_qsre_production_core_v1.py             tests/eipm/test_n0_qsre_n0_bridge.py             tests/eipm/test_n0_qsre_production_training_utils.py
+
+      - name: Rebuild and bind exact curriculum
+        run: |
+          python scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py             --output /tmp/qsre-production-v1.jsonl             --train-groups-per-family 20             --dev-groups-per-family 8             --open-schema-groups 32
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+
+          plan=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v1.json"))
+          contract=json.load(open("configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json"))
+          payload=Path("/tmp/qsre-production-v1.jsonl").read_bytes()
+          digest=hashlib.sha256(payload).hexdigest()
+          assert digest==contract["expected_sha256"], (digest, contract["expected_sha256"])
+          assert digest==plan["curriculum_sha256"], (digest, plan["curriculum_sha256"])
+          assert contract["expected_rows"]=={"train":600,"dev":304,"total":904}
+          assert plan["architecture_closure"]["unknown_out_of_schema_is_distinct_from_stop"] is True
+          assert plan["architecture_closure"]["combined_scope_constraints_are_supervised"] is True
+          print("PASS_QSRE_PRODUCTION_PRECOMMITTED_DATA_BINDING")
+          print("curriculum_sha256="+digest)
+          PY
+
+      - name: Audit no accidental model-capability ceilings
+        env:
+          PYTHONPATH: src:scripts/eipm/n0
+        run: |
+          python - <<'PY'
+          import json
+          from alice_personality.n0.qsre_production_core import (
+              QSREProductionConfig,
+              QSREProductionCore,
+          )
+          from alice_personality.n0.qsre_n0_bridge import QSREN0EvidenceBridge
+
+          plan=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v1.json"))
+          core=QSREProductionCore(QSREProductionConfig(**plan["model"]))
+          report=core.parameter_report()
+          assert report["schema_encoder"]["relation_count_dependent_parameters"]==0
+          assert report["operator"]["relation_count_dependent_parameters"]==0
+          assert report["operator"]["hop_count_dependent_parameters"]==0
+          assert report["operator"]["role_count_ceiling"] is None
+          assert report["operator"]["traversal_count_ceiling"] is None
+          assert report["operator"]["control_count_ceiling"] is None
+          assert report["executor"]["relation_count_dependent_parameters"]==0
+          assert report["executor"]["hop_count_dependent_parameters"]==0
+          assert report["executor"]["role_count_ceiling"] is None
+          assert report["executor"]["traversal_count_ceiling"] is None
+          bridge=QSREN0EvidenceBridge()
+          bridge_report=bridge.parameter_report()
+          assert bridge_report["total_parameters"]==0
+          assert bridge_report["field_count_ceiling"] is None
+          assert bridge_report["support_count_ceiling"] is None
+          assert bridge_report["candidate_count_ceiling"] is None
+          assert plan["governance"]["private_identity_gradient"] is False
+          assert plan["governance"]["automatic_hotfix"] is False
+          assert plan["governance"]["learning_rate_search"] is False
+          assert plan["governance"]["step_search"] is False
+          assert plan["governance"]["width_search"] is False
+          print("PASS_N0_PRODUCTION_NO_ACCIDENTAL_CAPABILITY_CEILINGS")
+          PY
