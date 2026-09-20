@@ -32,13 +32,13 @@ class QSREN0EvidenceBridge(nn.Module):
     def __init__(
         self,
         semantic_dim: int = 640,
-        activation_threshold: float = 0.5,
+        activation_threshold: float = 1.0e-6,
     ) -> None:
         super().__init__()
         if semantic_dim <= 0:
             raise ValueError("semantic_dim must be positive")
-        if not 0.0 < activation_threshold < 1.0:
-            raise ValueError("activation_threshold must be in (0,1)")
+        if not 0.0 <= activation_threshold < 1.0:
+            raise ValueError("activation_threshold must be in [0,1)")
         self.semantic_dim = int(semantic_dim)
         self.activation_threshold = float(activation_threshold)
 
@@ -93,16 +93,17 @@ class QSREN0EvidenceBridge(nn.Module):
             / execution_confidence[:, None].clamp_min(1.0e-12),
             torch.zeros_like(valid_probability),
         )
-        token = torch.einsum(
+        semantic_token = torch.einsum(
             "bf,bfd->bd",
             normalized,
             field_semantic_state,
         )
-        # A weak specialist may never contaminate the ratified base evidence
-        # path. Confidence remains exposed continuously, while participation in
-        # fusion is a conservative runtime policy that can be migrated without
-        # changing model capacity.
-        token_valid = execution_confidence >= self.activation_threshold
+        # The QSRE executor has already calibrated relation applicability,
+        # control, UNKNOWN and program-presence mass. Do not introduce another
+        # arbitrary 0.5 router at the N0 boundary. Preserve that confidence in
+        # the token itself and mask only exact/nearly-exact zero execution.
+        token = semantic_token * execution_confidence.unsqueeze(-1)
+        token_valid = execution_confidence > self.activation_threshold
 
         augmented_tokens = torch.cat(
             [base_evidence_tokens, token.unsqueeze(1)],
@@ -134,5 +135,7 @@ class QSREN0EvidenceBridge(nn.Module):
             "support_count_ceiling": None,
             "candidate_count_ceiling": None,
             "activation_threshold": self.activation_threshold,
-            "activation_threshold_role": "migratable_fail_closed_runtime_policy_not_model_capacity_ceiling",
+            "activation_threshold_role": "numeric_zero_tolerance_only_not_a_second_router_or_model_capacity_ceiling",
+            "relational_token_scales_with_calibrated_execution_confidence": True,
+            "hard_relational_confidence_gate": False,
         }
