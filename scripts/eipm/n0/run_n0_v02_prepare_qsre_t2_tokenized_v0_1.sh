@@ -4,6 +4,8 @@ set -euo pipefail
 : "${ALICE_N0_REPO_ROOT:?ALICE_N0_REPO_ROOT must be set}"
 : "${ALICE_N0_WORKDIR:?ALICE_N0_WORKDIR must be set}"
 
+export PYTHONPATH="$ALICE_N0_REPO_ROOT/src:$ALICE_N0_REPO_ROOT/scripts/eipm/n0${PYTHONPATH:+:$PYTHONPATH}"
+
 T1_ROOT="$ALICE_N0_WORKDIR/qsre-t1-executor-v0.1"
 T1_CURRICULUM="$T1_ROOT/pretraining-v0.2/qsre_t1_curriculum_v0.2.jsonl"
 T1_PREPARED="$T1_ROOT/pretraining-v0.2/qsre_t1_real_cache_v0.1.pt"
