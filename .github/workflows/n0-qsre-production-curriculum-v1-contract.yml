@@ -50,6 +50,12 @@ jobs:
           fallback=False
           defer=False
           ambiguity=False
+          temporal_constraint=False
+          provenance_constraint=False
+          composed_constraints=False
+          unknown_rows=0
+          stop_rows=0
+          paired_views=True
           outside_groups=defaultdict(list)
 
           for row in rows:
@@ -73,6 +79,23 @@ jobs:
                   defer=True
               if len(row["target_distribution"])>1:
                   ambiguity=True
+              paired_views = paired_views and len(row.get("query_views", []))==2
+              termination=row["operator_target"].get("termination","STOP")
+              assert termination in {"STOP","UNKNOWN"}
+              if termination=="UNKNOWN":
+                  unknown_rows += 1
+                  assert row["operator_target"]["control_id"]==2
+                  assert not seq
+                  assert not row["support_edge_ids"]
+                  assert not row["target_distribution"]
+              else:
+                  stop_rows += 1
+              if mods["TEMPORAL_CONSTRAINT"]==1.0:
+                  temporal_constraint=True
+              if mods["PROVENANCE_CONSTRAINT"]==1.0:
+                  provenance_constraint=True
+              if mods["TEMPORAL_CONSTRAINT"]==1.0 and mods["PROVENANCE_CONSTRAINT"]==1.0:
+                  composed_constraints=True
               if row["family"]=="outside_support":
                   outside_groups[row["causal_group"]].append(row)
 
@@ -97,11 +120,17 @@ jobs:
           assert aggregate_reliability
           assert three_hop
           assert fallback and defer and ambiguity
+          assert temporal_constraint and provenance_constraint and composed_constraints
+          assert unknown_rows > 0 and stop_rows > 0
+          assert paired_views
           assert all(len(v)==2 for v in outside_groups.values())
           assert set(contract["families"])==set(families)
 
           relation_keys={r["key"] for r in schema["relations"]}
           assert train_rel | dev_open <= relation_keys
+          import hashlib
+          compiled_sha=hashlib.sha256(open("/tmp/qsre-production-v1.jsonl","rb").read()).hexdigest()
+          assert compiled_sha==contract["expected_sha256"], (compiled_sha, contract["expected_sha256"])
           assert schema["governance"]["relation_count_is_runtime_data"] is True
 
           print("PASS_QSRE_PRODUCTION_CURRICULUM_V1_CONTRACT")
