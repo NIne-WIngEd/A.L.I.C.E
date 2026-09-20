@@ -144,6 +144,8 @@ def main()->None:
         "operator_pair_consistency":paired_view_consistency(first=ops[0],second=ops[1]),
         "support_edge_f1":min(v["support"]["edge_f1"] for v in view_results),
         "relation_sequence_exact_accuracy":min(v["operator"]["relation_sequence_exact_accuracy"] for v in view_results),
+        "termination_accuracy":min(v["operator"]["termination_accuracy"] for v in view_results),
+        "unknown_fail_closed_accuracy":min(v["operator"]["unknown_termination_accuracy"] for v in view_results),
     }
     threshold=stage["eligibility"]
     passed=(
@@ -152,6 +154,7 @@ def main()->None:
         and aggregate["open_schema_row_success_accuracy"]>=threshold["open_schema_row_success_accuracy"]
         and aggregate["outside_support_invariance_max_delta"]<=threshold["outside_support_invariance_max_delta"]
         and aggregate["nonrelational_false_assertion_rate"]<=threshold["nonrelational_false_assertion_rate_max"]
+        and aggregate["unknown_fail_closed_accuracy"]>=threshold["unknown_fail_closed_accuracy"]
     )
     result={
         "schema":"alice.eipm.n0.qsre-production-p4-result.v1",
