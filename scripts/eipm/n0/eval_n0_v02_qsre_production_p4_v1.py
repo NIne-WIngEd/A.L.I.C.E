@@ -10,6 +10,7 @@ from alice_personality.n0.qsre_production_core import QSREProductionBinder
 from qsre_production_runtime import load_dynamic_schema_cache, sha256
 from qsre_production_training_utils import (
     config_from_plan,
+    focus_metrics,
     load_plan,
     operator_metrics,
     paired_view_consistency,
@@ -67,7 +68,7 @@ def main()->None:
     max_steps=int(stage["operator_runtime_max_steps"])
     batch_size=8
 
-    all_ops=[[],[]]; all_support=[[],[]]; all_compat=[[],[]]; all_probability=[[],[]]
+    all_ops=[[],[]]; all_support=[[],[]]; all_focus=[[],[]]; all_compat=[[],[]]; all_probability=[[],[]]
     for start in range(0,len(split["ids"]),batch_size):
         idx=torch.arange(start,min(start+batch_size,len(split["ids"])))
         for view in (0,1):
@@ -81,10 +82,12 @@ def main()->None:
             )
             out=execute(
                 split=split,indices=idx,encoded=encoded,executor=executor,
-                operator_state=op,support=bound["edge_support_weight"],device=device,
+                operator_state=op,support=bound["edge_support_weight"],
+                focus=bound["focus_field_weight"],device=device,
             )
             all_ops[view].append(op)
             all_support[view].append(bound["edge_support_weight"].cpu())
+            all_focus[view].append(bound["focus_field_weight"].cpu())
             all_compat[view].append(bound["type_compatible"].cpu())
             all_probability[view].append(out["relational_probability"].cpu())
 
@@ -97,6 +100,7 @@ def main()->None:
     ops=[concat_ops(all_ops[0]),concat_ops(all_ops[1])]
     probabilities=[torch.cat(all_probability[0]),torch.cat(all_probability[1])]
     supports=[torch.cat(all_support[0]),torch.cat(all_support[1])]
+    focuses=[torch.cat(all_focus[0]),torch.cat(all_focus[1])]
     compatible=[torch.cat(all_compat[0]),torch.cat(all_compat[1])]
     indices=torch.arange(len(split["ids"]))
 
@@ -108,6 +112,11 @@ def main()->None:
             predicted=supports[view],
             oracle=split["oracle_edge_support"].float(),
             type_compatible=compatible[view],
+        )
+        fm=focus_metrics(
+            predicted=focuses[view],
+            oracle=split["focus_field_weight"].float(),
+            traversal_target=split["traversal_target"].long(),
         )
         dm=summarize_downstream(
             probability=probabilities[view],
@@ -124,7 +133,7 @@ def main()->None:
             if bool(nonrel.any()) else 0.0
         )
         dm["nonrelational_false_assertion_rate"]=float(false_assertion)
-        view_results.append({"operator":om,"support":sm,"downstream":dm})
+        view_results.append({"operator":om,"support":sm,"focus":fm,"downstream":dm})
 
     family_keys=set(view_results[0]["downstream"]["family_success"])|set(view_results[1]["downstream"]["family_success"])
     family_worst={
@@ -143,6 +152,9 @@ def main()->None:
         "nonrelational_false_assertion_rate":max(v["downstream"]["nonrelational_false_assertion_rate"] for v in view_results),
         "operator_pair_consistency":paired_view_consistency(first=ops[0],second=ops[1]),
         "support_edge_f1":min(v["support"]["edge_f1"] for v in view_results),
+        "path_focus_top1_accuracy":min(v["focus"]["path_focus_top1_accuracy"] for v in view_results),
+        "path_focus_exact_set_accuracy":min(v["focus"]["path_focus_exact_set_accuracy"] for v in view_results),
+        "direction_accuracy_relational":min(v["operator"]["direction_accuracy_relational"] for v in view_results),
         "relation_sequence_exact_accuracy":min(v["operator"]["relation_sequence_exact_accuracy"] for v in view_results),
         "termination_accuracy":min(v["operator"]["termination_accuracy"] for v in view_results),
         "unknown_fail_closed_accuracy":min(v["operator"]["unknown_termination_accuracy"] for v in view_results),
@@ -155,6 +167,8 @@ def main()->None:
         and aggregate["outside_support_invariance_max_delta"]<=threshold["outside_support_invariance_max_delta"]
         and aggregate["nonrelational_false_assertion_rate"]<=threshold["nonrelational_false_assertion_rate_max"]
         and aggregate["unknown_fail_closed_accuracy"]>=threshold["unknown_fail_closed_accuracy"]
+        and aggregate["path_focus_top1_accuracy"]>=threshold["path_focus_top1_accuracy"]
+        and aggregate["direction_accuracy_relational"]>=threshold["direction_accuracy_relational"]
     )
     result={
         "schema":"alice.eipm.n0.qsre-production-p4-result.v1",
