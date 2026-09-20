@@ -1,0 +1,159 @@
+name: N0 Setwise Training Boundary Recovery Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-query-edge-setwise-router
+    paths:
+      - "scripts/eipm/n0/train_n0_v02_query_edge_setwise_router_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_query_edge_setwise_router_training_preflight_v0_2.sh"
+      - "configs/eipm/n0/n0_v02_setwise_training_boundary_recovery_v0_1.json"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.31.json"
+      - ".github/workflows/n0-setwise-training-boundary-recovery-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/eipm/n0/train_n0_v02_query_edge_setwise_router_v0_1.py
+          bash -n scripts/eipm/n0/run_n0_v02_query_edge_setwise_router_training_preflight_v0_2.sh
+
+      - name: Exact stale guard is removed
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          t=Path(
+              "scripts/eipm/n0/train_n0_v02_query_edge_setwise_router_v0_1.py"
+          ).read_text()
+
+          correct='"PASS_SETWISE_QUERY_EDGE_ROUTER_NO_GRADIENT_RUNTIME_CONTRACT"'
+          stale="PASS_COMPETITIVE_EDGE_ROUTER_NO_GRADIENT_RUNTIME_CONTRACT"
+          if correct not in t:
+              raise SystemExit("exact setwise qualification status guard missing")
+          if stale in t:
+              raise SystemExit("stale competitive qualification PASS guard remains")
+          if 'raise SystemExit("setwise runtime qualification did not pass")' not in t:
+              raise SystemExit("setwise qualification rejection message missing")
+          print("exact_setwise_qualification_guard=PASS")
+          PY
+
+      - name: Trainer-native preflight reaches the real pre-optimizer boundary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          t=Path(
+              "scripts/eipm/n0/train_n0_v02_query_edge_setwise_router_v0_1.py"
+          ).read_text()
+          required=[
+              'p.add_argument("--preflight-only", action="store_true")',
+              'device = torch.device("cpu" if args.preflight_only else "cuda")',
+              'if args.preflight_only:',
+              '"PASS_SETWISE_TRAINING_EXACT_PREFLIGHT_NO_GRADIENT"',
+              '"optimizer_created": False',
+              '"gradient_performed": False',
+              '"training_steps_executed": 0',
+              'preflight_path = output / "preflight_receipt.json"',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("exact preflight implementation missing "+repr(missing))
+
+          preflight=t.index("if args.preflight_only:")
+          optimizer=t.index("optimizer = torch.optim.AdamW(")
+          if preflight >= optimizer:
+              raise SystemExit("preflight exits after optimizer creation")
+          print("trainer_native_preoptimizer_boundary=PASS")
+          PY
+
+      - name: 575908 is classified without rewriting model evidence
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          r=json.loads(Path(
+              "configs/eipm/n0/n0_v02_setwise_training_boundary_recovery_v0_1.json"
+          ).read_text())
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.31.json"
+          ).read_text())
+
+          if r["failed_execution"]["magnolia_job_id"]!=575908:
+              raise SystemExit("failed execution binding drift")
+          c=r["classification"]
+          if c["model_failure"] is not False:
+              raise SystemExit("575908 incorrectly treated as model evidence")
+          if c["optimizer_created"] is not False:
+              raise SystemExit("575908 incorrectly records optimizer creation")
+          if c["gradient_performed"] is not False:
+              raise SystemExit("575908 incorrectly records gradient")
+          if c["training_steps_executed"]!=0:
+              raise SystemExit("575908 incorrectly records training steps")
+          if c["root_cause"]!="setwise trainer inherited a stale competitive-router qualification status guard even though schema, hashes, and setwise qualification receipt were correct":
+              raise SystemExit("root-cause classification drift")
+
+          if s["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.31":
+              raise SystemExit("v0.31 schema drift")
+          e=s["execution_policy"]
+          if e["cpu_exact_training_preflight_authorized"] is not True:
+              raise SystemExit("CPU exact preflight not authorized")
+          for key in (
+              "gradient_execution_authorized_now",
+              "gpu_execution_authorized_now",
+              "replacement_gpu_run_authorized",
+              "automatic_rerun_authorized",
+              "automatic_hotfix_authorized",
+              "heldout_opening_authorized",
+              "frozen_challenge_rerun_authorized",
+              "scale_authorized",
+              "private_identity_gradient_authorized",
+              "production_promotion_authorized",
+          ):
+              if e[key] is not False:
+                  raise SystemExit(f"premature authorization: {key}")
+          print("575908_pregradient_classification=PASS")
+          PY
+
+      - name: Failed GPU evidence is preserved and preflight is separate
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          r=Path(
+              "scripts/eipm/n0/run_n0_v02_query_edge_setwise_router_training_preflight_v0_2.sh"
+          ).read_text()
+          required=[
+              'FAILED_GPU_DIR="$SETWISE_ROOT/training-v0.1"',
+              'PREFLIGHT_ROOT="${ALICE_N0_SETWISE_PREFLIGHT_DIR:-$SETWISE_ROOT/training-preflight-v0.2}"',
+              '[[ -d "$FAILED_GPU_DIR" ]]',
+              'if [[ -e "$PREFLIGHT_ROOT" ]]',
+              "--preflight-only",
+              "replacement_gpu_run_authorized=false",
+              "optimizer_authorized=false",
+              "gradient_authorized=false",
+              "gpu_authorized=false",
+              "PASS_SETWISE_TRAINING_EXACT_PREFLIGHT_NO_GRADIENT",
+          ]
+          missing=[x for x in required if x not in r]
+          if missing:
+              raise SystemExit("preflight runner evidence boundary missing "+repr(missing))
+          if 'rm -rf "$FAILED_GPU_DIR"' in r or 'rm -rf "$PREFLIGHT_ROOT"' in r:
+              raise SystemExit("preflight runner deletes evidence")
+          print("preserve_failed_gpu_evidence_and_separate_preflight=PASS")
+          PY
