@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="$${ALICE_N0_REPO_ROOT:-$${ALICE_REPO_ROOT:-$PWD}}"
-WORKDIR="$${ALICE_N0_WORKDIR:-$HOME/rayan-compute/rayan-n0/n0-v02}"
+ROOT="${ALICE_N0_REPO_ROOT:-${ALICE_REPO_ROOT:-$PWD}}"
+WORKDIR="${ALICE_N0_WORKDIR:-$HOME/rayan-compute/rayan-n0/n0-v02}"
 
 STATE="$ROOT/configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.52.json"
 CONTRACT="$ROOT/configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_1.json"
@@ -30,7 +30,7 @@ EXPECTED_T1_SHA="483bd59499e9bea890072af9c01c12961f41504d48f988ae3b3ee9a3ae8154f
 AUTHORIZED_CORE="9924227e7e7d7f3b26c2e294b5a3dde455b4cb12"
 
 cd "$ROOT"
-export PYTHONPATH="$ROOT/src:$ROOT/scripts/eipm/n0$${PYTHONPATH:+:$PYTHONPATH}"
+export PYTHONPATH="$ROOT/src:$ROOT/scripts/eipm/n0${PYTHONPATH:+:$PYTHONPATH}"
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=true
