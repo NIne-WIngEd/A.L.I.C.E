@@ -226,12 +226,15 @@ class QSREProductionSchemaEncoder(nn.Module):
         self.schema_projection = nn.Linear(config.semantic_dim, d, bias=False)
         self.layer_embedding = nn.Embedding(config.num_hidden_states, d)
         self.pool_query = nn.Parameter(torch.empty(d))
+        self.layer_pool_query = nn.Parameter(torch.empty(d))
         # Start as a geometry-preserving semantic adapter instead of a random
         # schema ontology. P1 may learn deviations, but open-schema semantics
-        # begin from the ratified backbone geometry.
+        # begin from the ratified backbone geometry. Token and layer pooling
+        # both begin uniform, then may learn content-dependent emphasis.
         nn.init.orthogonal_(self.schema_projection.weight)
         nn.init.zeros_(self.layer_embedding.weight)
         nn.init.zeros_(self.pool_query)
+        nn.init.zeros_(self.layer_pool_query)
 
     def forward(
         self,
@@ -265,13 +268,20 @@ class QSREProductionSchemaEncoder(nn.Module):
         )
         weight = _masked_softmax(score, valid, dim=-1)
         facet = torch.einsum("rls,rlsd->rld", weight, token)
-        summary = facet.mean(dim=1)
+        layer_score = torch.einsum(
+            "rld,d->rl",
+            torch.tanh(facet),
+            self.layer_pool_query,
+        )
+        layer_weight = torch.softmax(layer_score, dim=-1)
+        summary = torch.einsum("rl,rld->rd", layer_weight, facet)
 
         return {
             "schema_token_state": token,
             "schema_facet_state": facet,
             "schema_relation_state": summary,
             "schema_token_attention": weight,
+            "schema_layer_attention": layer_weight,
         }
 
     def parameter_report(self) -> dict[str, int | bool]:
@@ -280,6 +290,8 @@ class QSREProductionSchemaEncoder(nn.Module):
             "relation_count_dependent_parameters": 0,
             "runtime_dynamic_relation_schema": True,
             "token_level_schema_state_retained": True,
+            "content_dependent_layer_pooling": True,
+            "uniform_layer_pooling_at_initialization": True,
             "shared_across_operator_binder_executor": True,
             "schema_geometry_preserving_initialization": True,
             "current_relation_count_is_not_parameter_topology": True,
@@ -1474,6 +1486,7 @@ class QSREProductionCore(nn.Module):
         )
         output["schema_facet_state"] = encoded["schema_facet_state"]
         output["schema_token_attention"] = encoded["schema_token_attention"]
+        output["schema_layer_attention"] = encoded["schema_layer_attention"]
         return output
 
     def parameter_report(self) -> dict[str, object]:
