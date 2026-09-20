@@ -56,9 +56,12 @@ jobs:
           digest=hashlib.sha256(payload).hexdigest()
           assert digest==contract["expected_sha256"], (digest, contract["expected_sha256"])
           assert digest==plan["curriculum_sha256"], (digest, plan["curriculum_sha256"])
-          assert contract["expected_rows"]=={"train":600,"dev":304,"total":904}
+          assert contract["expected_rows"]=={"train":680,"dev":336,"total":1016}
           assert plan["architecture_closure"]["unknown_out_of_schema_is_distinct_from_stop"] is True
           assert plan["architecture_closure"]["combined_scope_constraints_are_supervised"] is True
+          assert plan["architecture_closure"]["all_seed_roles_supervised"] is True
+          assert plan["architecture_closure"]["path_source_target_role_reversal_supervised"] is True
+          assert plan["architecture_closure"]["symmetric_pair_role_supervised"] is True
           print("PASS_QSRE_PRODUCTION_PRECOMMITTED_DATA_BINDING")
           print("curriculum_sha256="+digest)
           PY
