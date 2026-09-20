@@ -73,7 +73,7 @@
     "field_edge_permutation",
     "exact_nonrelational_pass_through",
     "totality_fuzz",
-    "w1_w15_interface_mapping"
+    "w1_w15_interface_mapping_bound_to_explicit_map"
   ],
   "training_sequence": [
     "P1_schema_conditioned_executor_oracle_operator_oracle_support",
@@ -100,5 +100,6 @@
     "test_opening": false,
     "private_identity_gradient": false,
     "production_promotion": false
-  }
+  },
+  "workload_responsibility_map": "configs/eipm/n0/n0_v02_qsre_production_core_w1_w15_map_v1.json"
 }
