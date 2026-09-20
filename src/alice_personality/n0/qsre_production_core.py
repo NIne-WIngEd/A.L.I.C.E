@@ -210,6 +210,73 @@ def _masked_softmax(logits: Tensor, mask: Tensor, dim: int = -1) -> Tensor:
     )
 
 
+class QSREProductionSchemaEncoder(nn.Module):
+    """Shared dynamic-schema encoder used by operator, binder, and executor.
+
+    This module has no relation-cardinality-dependent parameters. It is trained
+    with the first executor stage, then frozen for operator/binder causal stages.
+    """
+
+    def __init__(self, config: QSREProductionConfig) -> None:
+        super().__init__()
+        config.validate()
+        self.config = config
+        d = config.model_dim
+        self.layer_embedding = nn.Embedding(config.num_hidden_states, d)
+        self.pool_query = nn.Parameter(torch.empty(d))
+        nn.init.normal_(self.pool_query, mean=0.0, std=0.02)
+
+    def forward(
+        self,
+        schema: QSREDynamicRelationSchema,
+    ) -> dict[str, Tensor]:
+        schema.validate(
+            num_hidden_states=self.config.num_hidden_states,
+            semantic_dim=self.config.semantic_dim,
+        )
+        token = self.schema_projection(self.schema_norm(schema.token_states))
+        layer_ids = torch.arange(
+            self.config.num_hidden_states,
+            device=token.device,
+        )
+        token = token + self.layer_embedding(layer_ids).view(
+            1,
+            self.config.num_hidden_states,
+            1,
+            self.config.model_dim,
+        )
+
+        score = torch.einsum(
+            "rlsd,d->rls",
+            torch.tanh(token),
+            self.pool_query,
+        )
+        valid = schema.token_mask[:, None, :].expand(
+            token.size(0),
+            token.size(1),
+            token.size(2),
+        )
+        weight = _masked_softmax(score, valid, dim=-1)
+        facet = torch.einsum("rls,rlsd->rld", weight, token)
+        summary = facet.mean(dim=1)
+
+        return {
+            "schema_token_state": token,
+            "schema_facet_state": facet,
+            "schema_relation_state": summary,
+            "schema_token_attention": weight,
+        }
+
+    def parameter_report(self) -> dict[str, int | bool]:
+        return {
+            "total_parameters": sum(p.numel() for p in self.parameters()),
+            "relation_count_dependent_parameters": 0,
+            "runtime_dynamic_relation_schema": True,
+            "token_level_schema_state_retained": True,
+            "shared_across_operator_binder_executor": True,
+        }
+
+
 class QSREProductionOperatorInducer(nn.Module):
     """Runtime-dynamic, schema-grounded operator inducer.
 
@@ -284,30 +351,6 @@ class QSREProductionOperatorInducer(nn.Module):
                 nn.init.xavier_uniform_(head.weight)
             if getattr(head, "bias", None) is not None:
                 nn.init.zeros_(head.bias)
-
-    def project_schema(
-        self,
-        schema: QSREDynamicRelationSchema,
-    ) -> tuple[Tensor, Tensor]:
-        schema.validate(
-            num_hidden_states=self.config.num_hidden_states,
-            semantic_dim=self.config.semantic_dim,
-        )
-        token = self.schema_projection(self.schema_norm(schema.token_states))
-        layer_ids = torch.arange(
-            self.config.num_hidden_states,
-            device=token.device,
-        )
-        token = token + self.layer_embedding(layer_ids).view(
-            1,
-            self.config.num_hidden_states,
-            1,
-            self.config.model_dim,
-        )
-        mask = schema.token_mask[:, None, :, None].to(token.dtype)
-        per_layer = (token * mask).sum(dim=2) / mask.sum(dim=2).clamp_min(1.0)
-        summary = per_layer.mean(dim=1)
-        return token, summary
 
     def project_query(self, query_hidden_states: Tensor) -> Tensor:
         if query_hidden_states.ndim != 4:
@@ -393,6 +436,8 @@ class QSREProductionOperatorInducer(nn.Module):
         query_hidden_states: Tensor,
         query_token_mask: Tensor,
         schema: QSREDynamicRelationSchema,
+        schema_token_state: Tensor,
+        schema_relation_state: Tensor,
         max_steps: int,
     ) -> dict[str, Tensor | QSREProductionOperatorState]:
         if max_steps <= 0:
@@ -407,8 +452,29 @@ class QSREProductionOperatorInducer(nn.Module):
         if bool((query_token_mask.sum(dim=-1) == 0).any()):
             raise ValueError("every query requires at least one valid token")
 
-        schema_projected, schema_summary = self.project_schema(schema)
-        relations = schema_projected.size(0)
+        schema_info = schema.validate(
+            num_hidden_states=self.config.num_hidden_states,
+            semantic_dim=self.config.semantic_dim,
+        )
+        relations = schema_info["relations"]
+        expected_token_shape = (
+            relations,
+            self.config.num_hidden_states,
+            schema_info["schema_tokens"],
+            self.config.model_dim,
+        )
+        if tuple(schema_token_state.shape) != expected_token_shape:
+            raise ValueError(
+                "encoded schema token-state shape drift: "
+                f"{tuple(schema_token_state.shape)} != {expected_token_shape}"
+            )
+        if schema_relation_state.shape != (
+            relations,
+            self.config.model_dim,
+        ):
+            raise ValueError("encoded schema relation-state shape drift")
+        schema_projected = schema_token_state
+        schema_summary = schema_relation_state
 
         memory = query_projected.reshape(batch, layers * tokens, -1)
         flat_valid = (
@@ -1125,12 +1191,41 @@ class QSREProductionCore(nn.Module):
     def __init__(self, config: QSREProductionConfig) -> None:
         super().__init__()
         self.config = config
+        self.schema_encoder = QSREProductionSchemaEncoder(config)
         self.operator = QSREProductionOperatorInducer(config)
         self.binder = QSREProductionBinder(config)
         self.executor = QSREProductionExecutor(config)
 
+    def encode_schema(
+        self,
+        schema: QSREDynamicRelationSchema,
+    ) -> dict[str, Tensor]:
+        return self.schema_encoder(schema)
+
+    def induce_operator(
+        self,
+        *,
+        query_hidden_states: Tensor,
+        query_token_mask: Tensor,
+        schema: QSREDynamicRelationSchema,
+        max_steps: int,
+    ) -> dict[str, Tensor | QSREProductionOperatorState]:
+        encoded = self.schema_encoder(schema)
+        output = self.operator(
+            query_hidden_states=query_hidden_states,
+            query_token_mask=query_token_mask,
+            schema=schema,
+            schema_token_state=encoded["schema_token_state"],
+            schema_relation_state=encoded["schema_relation_state"],
+            max_steps=max_steps,
+        )
+        output["schema_facet_state"] = encoded["schema_facet_state"]
+        output["schema_token_attention"] = encoded["schema_token_attention"]
+        return output
+
     def parameter_report(self) -> dict[str, object]:
         return {
+            "schema_encoder": self.schema_encoder.parameter_report(),
             "operator": self.operator.parameter_report(),
             "binder": self.binder.parameter_report(),
             "executor": self.executor.parameter_report(),
