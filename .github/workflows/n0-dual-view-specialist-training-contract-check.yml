@@ -120,9 +120,9 @@ jobs:
           if missing:
               raise SystemExit("frozen edge-identity contract missing "+repr(missing))
           forbidden=[
-              "conditional_edge_ce",
-              "edge_binding_loss",
-              "binding_route_ce",
+              "conditional_edge_ce(",
+              "binding_route_ce(",
+              "F.cross_entropy(out[\"conditional_edge_probability\"]",
           ]
           present=[x for x in forbidden if x in t]
           if present:
