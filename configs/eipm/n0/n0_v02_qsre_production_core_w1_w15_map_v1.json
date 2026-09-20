@@ -1,0 +1,104 @@
+{
+  "schema": "alice.eipm.n0.qsre-production-core-w1-w15-map.v1",
+  "status": "ARCHITECTURE_RESPONSIBILITY_MAP_NO_GRADIENT",
+  "source_workload": "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json",
+  "production_core": "configs/eipm/n0/n0_v02_qsre_production_core_v1.json",
+  "families": {
+    "W1": {
+      "name": "language_implication_pragmatics",
+      "qsre_role": "consume multi-layer token semantics and preserve fine-grained query language needed for relational/operator interpretation",
+      "outside_qsre": "general pragmatic understanding remains semantic/N0 capability; QSRE is not the whole language model",
+      "closure_requirement": "no pooled-only query bottleneck"
+    },
+    "W2": {
+      "name": "evidence_provenance_epistemic_role",
+      "qsre_role": "binder/executor consume typed provenance reliability confidence and temporal metadata; support is distinct from truth authority",
+      "outside_qsre": "canonical source authority and provenance governance remain in structured/memory systems",
+      "closure_requirement": "provenance must remain explicit through support and readout"
+    },
+    "W3": {
+      "name": "relational_causal_reasoning",
+      "qsre_role": "primary responsibility: dynamic schema grounding, argument roles, adaptive support, multi-hop execution, structural readout",
+      "outside_qsre": "none for core relational execution",
+      "closure_requirement": "dynamic relation schema and variable-step execution without ID ontology ceiling"
+    },
+    "W4": {
+      "name": "temporal_state_change",
+      "qsre_role": "temporal constraints and recency modifiers participate compositionally in operator, binder, executor and readout",
+      "outside_qsre": "long-lived state trajectories remain structured/memory context",
+      "closure_requirement": "temporal behavior is not a mutually exclusive single operation class"
+    },
+    "W5": {
+      "name": "relationship_sensitive_interpretation",
+      "qsre_role": "support arbitrary typed actor/relationship relations and asymmetric endpoint structure",
+      "outside_qsre": "private relationship policy and Elaina-derived relationship judgment belong to N1/N2",
+      "closure_requirement": "schema and context interfaces cannot assume factual-KG-only relations"
+    },
+    "W6": {
+      "name": "values_tradeoffs",
+      "qsre_role": "supply inspectable relational/evidence state relevant to later tradeoff judgment",
+      "outside_qsre": "value weighting and identity tradeoff policy belong to later judgment layers",
+      "closure_requirement": "QSRE must not collapse N0 into one relational reward scalar"
+    },
+    "W7": {
+      "name": "candidate_comparison_action_response_ranking",
+      "qsre_role": "provide evidence/path state for candidate reasoning when relations matter",
+      "outside_qsre": "setwise candidate ranking is broader N0/N2 capability",
+      "closure_requirement": "QSRE outputs remain composable and do not assume one final candidate"
+    },
+    "W8": {
+      "name": "emotional_interpretation_response_posture",
+      "qsre_role": "may connect typed social/emotional evidence and actors when relational structure matters",
+      "outside_qsre": "emotional posture policy belongs to semantic/structured N0 and later identity judgment",
+      "closure_requirement": "relation schema accepts social/context relations without hard factual ontology"
+    },
+    "W9": {
+      "name": "voice_first_expressive_policy",
+      "qsre_role": "consume optional typed observations if relationally relevant; emit no waveform",
+      "outside_qsre": "voice observations and expressive output controls belong to voice/N0/IDP interfaces",
+      "closure_requirement": "absence of voice data cannot break QSRE"
+    },
+    "W10": {
+      "name": "uncertainty_plurality",
+      "qsre_role": "preserve sparse plural operator hypotheses, plural support, uncertain readout and UNKNOWN/defer",
+      "outside_qsre": "global calibration also belongs to later N0/N3",
+      "closure_requirement": "no mandatory early argmax or singleton relation commitment"
+    },
+    "W11": {
+      "name": "generic_assistant_sycophancy_drift",
+      "qsre_role": "provide evidence/precedent pointers when relationally relevant",
+      "outside_qsre": "drift detection is identity/judgment capability, not QSRE",
+      "closure_requirement": "QSRE remains an evidence primitive and never becomes hidden personality policy"
+    },
+    "W12": {
+      "name": "continuity_self_development",
+      "qsre_role": "consume versioned typed A-EXP/A-SELF relations/provenance through dynamic schema and metadata",
+      "outside_qsre": "continuity updating and source-authority semantics remain memory/identity systems",
+      "closure_requirement": "schema migration supports successor relation vocabularies without replacing weights"
+    },
+    "W13": {
+      "name": "heterogeneous_context_fusion",
+      "qsre_role": "produce relational view tokens, summary, uncertainty and structural state for fusion",
+      "outside_qsre": "CrossContextFusion remains broader fusion authority",
+      "closure_requirement": "QSRE does not become a monolithic replacement for semantic structured or latent views"
+    },
+    "W14": {
+      "name": "long_context_sparse_relevance",
+      "qsre_role": "adaptive exact-zero support and runtime-variable field/edge/schema cardinality",
+      "outside_qsre": "upstream retrieval/context expansion can supply broader candidate context",
+      "closure_requirement": "no permanent top-k or fixed field/edge relation count"
+    },
+    "W15": {
+      "name": "fast_deliberate_paths",
+      "qsre_role": "shared iterative decoder/executor with runtime compute budget and sparse support allows fast or expanded execution with same weights",
+      "outside_qsre": "system-level scheduler chooses runtime budget",
+      "closure_requirement": "latency defaults cannot become hop/support capability ceilings"
+    }
+  },
+  "acceptance": {
+    "all_15_mapped": true,
+    "qsre_scope_not_whole_n0": true,
+    "later_identity_boundary_preserved": true,
+    "private_identity_gradient": false
+  }
+}
