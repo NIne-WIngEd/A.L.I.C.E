@@ -1,0 +1,104 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.46",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.45.json",
+  "status": "QSRE_T1_PRETRAINING_GATES_PASS;ONE_BOUNDED_T1_EXECUTOR_TRAINING_EXPERIMENT_ELIGIBLE_ON_SEPARATE_BRANCH",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-n0-clean-sheet-relational-execution-review",
+  "t1_forward_gate": {
+    "ci_run": 35498201254,
+    "conclusion": "success",
+    "tests": 7,
+    "test_config_parameter_count": 9377,
+    "parent_global_logits_absent": true,
+    "learned_operator_absent": true,
+    "learned_support_selector_absent": true,
+    "support_local_readout_pass": true,
+    "edge_permutation_pass": true,
+    "field_permutation_pass": true,
+    "relation_order_changes_state": true,
+    "dynamic_shapes_pass": true
+  },
+  "t1_curriculum_gate": {
+    "ci_run": 35498438887,
+    "conclusion": "success",
+    "status": "PASS_QSRE_T1_PUBLIC_CURRICULUM_CONTRACT",
+    "rows": 504,
+    "sha256": "23940359681eef5f00c9752125d04c97c42a58b6dc80283e93bb5c2aa7fe339b",
+    "families": 9,
+    "train_rows_per_family": 40,
+    "dev_rows_per_family": 16,
+    "support_cardinalities": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "relation_sequence_lengths": [
+      1,
+      2
+    ],
+    "target_cardinalities": [
+      0,
+      1,
+      2
+    ],
+    "control_counts": {
+      "RELATIONAL": 448,
+      "FALLBACK": 28,
+      "DEFER": 28
+    },
+    "relation_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "train_dev_field_text_overlap": false,
+    "task_family_lexical_cue_removed": true,
+    "private_identity_data": false,
+    "test_split_present": false
+  },
+  "t1_training_principle": {
+    "field_representation": "frozen Alice N0 semantic field embeddings; no old graph global scorer",
+    "operator": "oracle",
+    "support": "oracle",
+    "trained_capability": "QSRE executor plus structural readout only",
+    "learned_query_operator": false,
+    "learned_support_selection": false,
+    "parent_global_logits": false
+  },
+  "t1_training_eligibility": {
+    "eligible": true,
+    "max_runs": 1,
+    "requires_new_branch": true,
+    "requires_static_training_contract_ci_before_submission": true,
+    "automatic_rerun": false,
+    "automatic_hotfix": false,
+    "test_open": false,
+    "challenge_open": false
+  },
+  "next_branch": "alice-eipm-v1-qsre-t1-executor-training",
+  "execution_policy": {
+    "t1_training_decision_authorized": true,
+    "t1_trainer_implementation_authorized": true,
+    "optimizer_authorized_on_governed_t1_run_only": true,
+    "gradient_authorized_on_governed_t1_run_only": true,
+    "gpu_training_authorized_after_static_training_contract_ci": true,
+    "max_gpu_training_runs": 1,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "learned_operator_training_authorized": false,
+    "learned_support_training_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
