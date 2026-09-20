@@ -295,14 +295,17 @@ def main() -> None:
 
     for split in ("train", "dev"):
         split_rows = [row for row in rows if row["split"] == split]
-        query_texts = [row["query"] for row in split_rows]
+        query_views = [list(row["query_views"]) for row in split_rows]
+        if any(len(views) != 2 for views in query_views):
+            raise RuntimeError("production query-view count drift")
+        query_texts = [text for views in query_views for text in views]
         flat_field_texts = [
             field["text"]
             for row in split_rows
             for field in row["fields"]
         ]
 
-        query_hidden, query_mask = encode_texts(
+        query_hidden_flat, query_mask_flat = encode_texts(
             texts=query_texts,
             model=model,
             tokenizer=tokenizer,
@@ -310,6 +313,18 @@ def main() -> None:
             max_length=128,
             batch_size=args.batch_size,
             all_hidden_states=True,
+        )
+        query_hidden = query_hidden_flat.reshape(
+            len(split_rows),
+            2,
+            query_hidden_flat.size(1),
+            query_hidden_flat.size(2),
+            query_hidden_flat.size(3),
+        )
+        query_mask = query_mask_flat.reshape(
+            len(split_rows),
+            2,
+            query_mask_flat.size(1),
         )
         field_hidden, field_mask = encode_texts(
             texts=flat_field_texts,
@@ -348,13 +363,14 @@ def main() -> None:
             "dev": len(dev["ids"]),
         },
         "query_width": {
-            "train": int(train["query_hidden_states"].size(2)),
-            "dev": int(dev["query_hidden_states"].size(2)),
+            "train": int(train["query_hidden_states"].size(3)),
+            "dev": int(dev["query_hidden_states"].size(3)),
         },
         "field_token_width": {
             "train": int(train["field_token_states"].size(2)),
             "dev": int(dev["field_token_states"].size(2)),
         },
+        "query_views_per_row": 2,
         "open_schema_dev_rows": int(dev["open_schema"].sum().item()),
         "max_relation_steps": max(
             int(train["relation_target"].size(1)),
