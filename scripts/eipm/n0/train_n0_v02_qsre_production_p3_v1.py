@@ -261,6 +261,20 @@ def main()->None:
         encoded_dev=schema_encoder(full_schema)
 
     binder=QSREProductionBinder(config).to(device)
+    # Begin binder late interaction in the same semantic coordinate system as
+    # the proven dynamic schema. Both sides remain trainable in P3, but the
+    # one governed run does not begin from unrelated random projections.
+    with torch.no_grad():
+        binder.query_projection.weight.copy_(
+            schema_encoder.schema_projection.weight
+        )
+        binder.field_projection.weight.copy_(
+            schema_encoder.schema_projection.weight
+        )
+        binder.query_norm.weight.copy_(schema_encoder.schema_norm.weight)
+        binder.query_norm.bias.copy_(schema_encoder.schema_norm.bias)
+        binder.field_norm.weight.copy_(schema_encoder.schema_norm.weight)
+        binder.field_norm.bias.copy_(schema_encoder.schema_norm.bias)
     optimizer=torch.optim.AdamW(
         binder.parameters(),
         lr=float(stage["optimizer"]["learning_rate"]),
