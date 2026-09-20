@@ -3,7 +3,7 @@
   "status": "PRECOMMITTED_CAUSAL_PIPELINE_NO_POSTHOC_TUNING",
   "architecture": "configs/eipm/n0/n0_v02_qsre_production_core_v1.json",
   "curriculum_contract": "configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json",
-  "curriculum_sha256": "bb2c1966586a43171f15d1b8f13328b89fb945d2e7d8f64fe52709bf95d4b38c",
+  "curriculum_sha256": "a409a79fc206813776cd1b2e7ea22f720d02b75fe77b33b1f8fb8532bd7e0f8c",
   "relation_schema": "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
   "model": {
     "semantic_dim": 640,
@@ -102,7 +102,7 @@
       },
       "training": {
         "seed": 20260921,
-        "batch_size": 16,
+        "batch_size": 8,
         "max_steps": 1600,
         "eval_every": 50,
         "save_every": 50
@@ -145,7 +145,7 @@
       },
       "training": {
         "seed": 20260922,
-        "batch_size": 16,
+        "batch_size": 8,
         "max_steps": 1200,
         "eval_every": 50,
         "save_every": 50
@@ -189,5 +189,12 @@
     "private_identity_gradient": false,
     "test_split_open": false,
     "production_promotion": false
+  },
+  "compute_precommit": {
+    "reason": "P2 cross-layer token/schema late interaction is the dominant P100 memory path; batch 8 is fixed before any GPU execution to avoid a posthoc OOM repair cycle on 12GB P100 hardware.",
+    "p1_batch_size": 32,
+    "p2_batch_size": 8,
+    "p3_batch_size": 8,
+    "batch_size_search_authorized": false
   }
 }
