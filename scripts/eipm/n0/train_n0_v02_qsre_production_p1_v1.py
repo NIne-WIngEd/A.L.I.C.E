@@ -39,6 +39,22 @@ def move(tensor: torch.Tensor, indices: torch.Tensor, device: torch.device, *, d
     return value.to(dtype=dtype) if dtype is not None else value
 
 
+def schema_geometry_loss(
+    *,
+    schema: QSREDynamicRelationSchema,
+    encoded_relation_state: torch.Tensor,
+) -> torch.Tensor:
+    token = schema.token_states.float()
+    mask = schema.token_mask[:, None, :, None].to(token.dtype)
+    per_layer = (token * mask).sum(dim=2) / mask.sum(dim=2).clamp_min(1.0)
+    raw_summary = per_layer.mean(dim=1)
+    raw_norm = torch.nn.functional.normalize(raw_summary, dim=-1)
+    encoded_norm = torch.nn.functional.normalize(encoded_relation_state, dim=-1)
+    raw_geometry = raw_norm @ raw_norm.transpose(0, 1)
+    encoded_geometry = encoded_norm @ encoded_norm.transpose(0, 1)
+    return torch.nn.functional.mse_loss(encoded_geometry, raw_geometry)
+
+
 def execute_batch(
     *,
     split: dict,
@@ -217,6 +233,7 @@ def main() -> None:
         if name not in stage["trainable"]:
             raise SystemExit(f"P1 trainable-scope drift: {name}")
     parameters=list(schema_encoder.parameters())+list(executor.parameters())
+    loss_weights=stage["loss_weights"]
     optimizer=torch.optim.AdamW(
         parameters,
         lr=float(stage["optimizer"]["learning_rate"]),
@@ -268,9 +285,18 @@ def main() -> None:
             config=config,
             device=device,
         )
-        loss=target_distribution_loss(
+        downstream_loss=target_distribution_loss(
             output["relational_probability"],
             target,
+        )
+        encoded_now=schema_encoder(train_schema)
+        geometry_loss=schema_geometry_loss(
+            schema=train_schema,
+            encoded_relation_state=encoded_now["schema_relation_state"],
+        )
+        loss=(
+            float(loss_weights["downstream"]) * downstream_loss
+            + float(loss_weights["schema_geometry"]) * geometry_loss
         )
         if not torch.isfinite(loss):
             raise RuntimeError("P1 nonfinite loss")
@@ -290,7 +316,14 @@ def main() -> None:
                 batch_size=batch_size,
             )
             is_eligible=eligible(metrics,stage["eligibility"])
-            record={"step":step,"train_loss":float(loss.item()),"eligible":is_eligible,"dev":metrics}
+            record={
+                "step":step,
+                "train_loss":float(loss.item()),
+                "train_downstream_loss":float(downstream_loss.detach().item()),
+                "train_schema_geometry_loss":float(geometry_loss.detach().item()),
+                "eligible":is_eligible,
+                "dev":metrics,
+            }
             history.append(record)
             print("P1_EVAL="+json.dumps(record,sort_keys=True),flush=True)
 
