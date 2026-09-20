@@ -6,6 +6,7 @@ on:
       - "configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_2.json"
       - "scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_2.py"
       - "scripts/eipm/n0/build_n0_v02_qsre_operator_reality_corpus_v0_1.py"
+      - "scripts/eipm/n0/build_n0_v02_qsre_t2_operator_challenge_v0_2.py"
       - "scripts/eipm/n0/audit_n0_v02_qsre_t2_shortcuts_v0_1.py"
       - ".github/workflows/n0-qsre-t2-v02-curriculum-contract.yml"
   workflow_dispatch:
