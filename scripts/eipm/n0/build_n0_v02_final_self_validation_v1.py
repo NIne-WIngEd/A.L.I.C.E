@@ -88,6 +88,7 @@ TYPE_PAIR = {
 
 ROLE = {"SOURCE": 0, "TARGET": 1, "SYMMETRIC": 2, "NONE": 3}
 TRAVERSAL = {"LOCAL_SELECT": 0, "PATH": 1, "AGGREGATE": 2}
+DIRECTION = {"FORWARD": 0, "REVERSE": 1, "BIDIRECTIONAL": 2}
 CONTROL = {"FALLBACK": 0, "RELATIONAL": 1, "DEFER": 2}
 
 RELATIONAL_FAMILIES = (
@@ -229,6 +230,7 @@ def make_row(
     role: str,
     traversal: str,
     modifier_target: list[float],
+    direction: str = "FORWARD",
     support_edge_ids: list[str],
     target_distribution: dict[str, float],
     focus_field_id: str | None,
@@ -268,6 +270,7 @@ def make_row(
             "relation_sequence": relation_sequence,
             "role_id": ROLE[role],
             "traversal_id": TRAVERSAL[traversal],
+            "direction_id": DIRECTION[direction],
             "modifier_target": {
                 "RELIABILITY": modifier_target[0],
                 "RECENCY": modifier_target[1],
@@ -351,12 +354,24 @@ def build_relational_row(family: str, index: int) -> dict[str, Any]:
         edges = [edge("e0", ids[0], ids[1], r1)]
         role = "SOURCE" if family == "single_source" else "TARGET"
         target = ids[0] if role == "SOURCE" else ids[1]
+        if role == "SOURCE":
+            query = (
+                f"The relation whose meaning is '{p1}' ends at {fields[1]['entity']}. "
+                "Which record is the source endpoint?"
+            )
+            focus = ids[1]
+        else:
+            query = (
+                f"Starting from {fields[0]['entity']}, use the relation whose meaning is '{p1}'. "
+                "Which record is the receiving endpoint?"
+            )
+            focus = ids[0]
         return make_row(
             family=family, index=index, fields=fields, edges=edges,
-            query=f"{fields[0]['entity']} {p1} {fields[1]['entity']}. Which record is the requested {role.lower()} endpoint?",
+            query=query,
             relation_sequence=[r1], role=role, traversal="LOCAL_SELECT",
             modifier_target=[0,0,0,0], support_edge_ids=["e0"],
-            target_distribution={target:1.0}, focus_field_id=ids[0],
+            target_distribution={target:1.0}, focus_field_id=focus,
         )
 
     if family in {"path_source", "path_target", "path_order"}:
@@ -452,7 +467,7 @@ def build_relational_row(family: str, index: int) -> dict[str, Any]:
             family=family,index=index,fields=fields,edges=edges,
             query=f"Starting from {fields[0]['entity']}, follow the relation 'is certified by the same external legal trustee'. Which record is reached?",
             relation_sequence=[],role="NONE",traversal="LOCAL_SELECT",
-            modifier_target=[0,0,0,0],support_edge_ids=[],target_distribution={},
+            direction="BIDIRECTIONAL", modifier_target=[0,0,0,0],support_edge_ids=[],target_distribution={},
             focus_field_id=ids[0],applicability=0.6,control="DEFER",termination="UNKNOWN",
             relational_required_for_integrated_answer=False,
         )
@@ -465,7 +480,10 @@ def build_relational_row(family: str, index: int) -> dict[str, Any]:
         symmetric=relation=="CONFLICTS_WITH"
         return make_row(
             family=family,index=index,fields=fields,edges=edges,
-            query=f"{fields[0]['entity']} {PHRASES[relation]} {fields[1]['entity']}. Return the relation endpoint semantics requested by that statement.",
+            query=(
+                f"Starting from {fields[0]['entity']}, use the supplied schema relation meaning "
+                f"'{PHRASES[relation]}'. Return the requested endpoint semantics."
+            ),
             relation_sequence=[relation],role="SYMMETRIC" if symmetric else "TARGET",
             traversal="LOCAL_SELECT",modifier_target=[0,0,0,0],support_edge_ids=["e0"],
             target_distribution={ids[0]:0.5,ids[1]:0.5} if symmetric else {ids[1]:1.0},
@@ -479,7 +497,10 @@ def build_relational_row(family: str, index: int) -> dict[str, Any]:
         edges=[edge("e0",ids[0],ids[1],relation)]
         return make_row(
             family=family,index=index,fields=fields,edges=edges,
-            query=f"{fields[0]['entity']} {PHRASES[relation]} {fields[1]['entity']}. Which record is the receiving endpoint?",
+            query=(
+                f"Starting from {fields[0]['entity']}, use the new schema relation meaning "
+                f"'{PHRASES[relation]}'. Which record is the receiving endpoint?"
+            ),
             relation_sequence=[relation],role="TARGET",traversal="LOCAL_SELECT",
             modifier_target=[0,0,0,0],support_edge_ids=["e0"],
             target_distribution={ids[1]:1.0},focus_field_id=ids[0],
@@ -491,8 +512,12 @@ def build_relational_row(family: str, index: int) -> dict[str, Any]:
         edges=[edge("e0",ids[0],ids[1],relation)]
         return make_row(
             family=family,index=index,fields=fields,edges=edges,
-            query=f"{fields[0]['entity']} {PHRASES[relation]} {fields[1]['entity']}. Preserve both conflicting participants.",
+            query=(
+                f"{fields[0]['entity']} participates in a relation whose supplied meaning is "
+                f"'{PHRASES[relation]}'. Preserve both conflicting participants."
+            ),
             relation_sequence=[relation],role="SYMMETRIC",traversal="AGGREGATE",
+            direction="BIDIRECTIONAL",
             modifier_target=[0,0,0,0],support_edge_ids=["e0"],
             target_distribution={ids[0]:0.5,ids[1]:0.5},focus_field_id=None,
         )
@@ -520,7 +545,7 @@ def build_relational_row(family: str, index: int) -> dict[str, Any]:
             family=family,index=index,fields=fields,edges=[],
             query="Interpret the ordinary phrase 'sometime after lunch' without performing graph relation execution.",
             relation_sequence=[],role="NONE",traversal="LOCAL_SELECT",
-            modifier_target=[0,0,0,0],support_edge_ids=[],target_distribution={},
+            direction="BIDIRECTIONAL", modifier_target=[0,0,0,0],support_edge_ids=[],target_distribution={},
             focus_field_id=None,applicability=0.05,control="FALLBACK",termination="STOP",
             relational_required_for_integrated_answer=False,
         )
