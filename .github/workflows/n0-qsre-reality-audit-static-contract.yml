@@ -41,6 +41,9 @@ jobs:
           python scripts/eipm/n0/audit_n0_v02_qsre_t2_shortcuts_v0_1.py             --t2-curriculum /tmp/t2.jsonl             --reality-corpus /tmp/reality.jsonl             --output /tmp/shortcut.json
           cat /tmp/shortcut.json
 
+      - name: Install CPU torch for runtime and fuzz checks
+        run: python -m pip install -q torch
+
       - name: Behavioral shell/runtime parity without source-string oracle
         run: |
           export ALICE_N0_REPO_ROOT="$GITHUB_WORKSPACE"
@@ -52,7 +55,6 @@ jobs:
 
       - name: Boundary totality fuzz self-test
         run: |
-          python -m pip install -q torch
           PYTHONPATH=src:scripts/eipm/n0             python scripts/eipm/n0/audit_n0_v02_qsre_t2_t1_boundary_fuzz_v0_1.py               --self-test
 
       - name: Governance remains no-gradient
