@@ -1,0 +1,172 @@
+name: N0 QSRE T1 One-Shot Authorization
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-qsre-t1-executor-training
+  workflow_dispatch:
+
+jobs:
+  authorization-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/eipm/n0/train_n0_v02_qsre_t1_executor_v0_1.py
+          bash -n \
+            scripts/eipm/n0/run_n0_v02_qsre_t1_executor_training_v0_1.sh \
+            scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t1_executor_training_v0_1.sbatch
+
+      - name: v0.48 authorizes exactly one bounded T1 run
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          state=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.48.json"
+          ).read_text())
+          contract=json.loads(Path(
+              "configs/eipm/n0/n0_v02_qsre_t1_training_contract_v0_2.json"
+          ).read_text())
+
+          if state["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.48":
+              raise SystemExit("v0.48 schema drift")
+          if state["pretraining_ci"]["conclusion"]!="success":
+              raise SystemExit("pretraining CI not ratified")
+          prep=state["preparation_evidence"]
+          if prep["preparation_status"]!="PASS_QSRE_T1_REAL_CACHE_PREPARATION":
+              raise SystemExit("real-cache preparation not ratified")
+          if prep["prepared_cache_sha256"]!="03a45033dc41a51896f8b514c44e784ecabaa5837488a272306914979ab6b564":
+              raise SystemExit("prepared-cache ratification drift")
+
+          policy=state["execution_policy"]
+          for key in (
+              "t1_training_authorized",
+              "optimizer_authorized",
+              "gradient_authorized",
+              "gpu_training_authorized",
+          ):
+              if policy[key] is not True:
+                  raise SystemExit(f"missing v0.48 authorization: {key}")
+          if policy["max_gpu_training_runs"]!=1:
+              raise SystemExit("GPU run-count drift")
+          for key in (
+              "automatic_rerun_authorized",
+              "automatic_hotfix_authorized",
+              "heldout_opening_authorized",
+              "frozen_challenge_rerun_authorized",
+              "semantic_retraining_authorized",
+              "graph_parent_retraining_authorized",
+              "learned_operator_training_authorized",
+              "learned_support_training_authorized",
+              "private_identity_gradient_authorized",
+          ):
+              if policy[key] is not False:
+                  raise SystemExit(f"v0.48 boundary drift: {key}")
+
+          if contract["schema"]!="alice.eipm.n0.qsre-t1-training-contract.v0.2":
+              raise SystemExit("training contract schema drift")
+          if contract["gpu_training_authorized"] is not True:
+              raise SystemExit("training contract GPU authorization missing")
+          if contract["max_gpu_runs"]!=1:
+              raise SystemExit("training contract run-count drift")
+          if contract["automatic_rerun"] is not False:
+              raise SystemExit("automatic rerun opened")
+          if contract["automatic_hotfix"] is not False:
+              raise SystemExit("automatic hotfix opened")
+          if contract["causal_test_open"] is not False:
+              raise SystemExit("TEST opened")
+          if contract["frozen_challenge_open"] is not False:
+              raise SystemExit("challenge opened")
+          if contract["semantic_backbone_gradient"] is not False:
+              raise SystemExit("semantic gradient opened")
+          if contract["graph_parent_gradient"] is not False:
+              raise SystemExit("parent gradient opened")
+          if contract["learned_operator"] is not False:
+              raise SystemExit("operator learning opened")
+          if contract["learned_support"] is not False:
+              raise SystemExit("support learning opened")
+
+          print("v0_48_one_shot_authorization=PASS")
+          PY
+
+      - name: Trainer pins exact prepared bytes
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/train_n0_v02_qsre_t1_executor_v0_1.py"
+          ).read_text()
+          required=[
+              'alice.eipm.n0.qsre-t1-training-contract.v0.2',
+              'expected_prepared_cache_sha256',
+              'actual_prepared_sha = sha256(prepared_path)',
+              'prepared cache file hash drift',
+              'automatic_rerun',
+              'causal_test_open',
+              'frozen_challenge_open',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("trainer authorization contract missing "+repr(missing))
+          print("trainer_exact_prepared_hash_gate=PASS")
+          PY
+
+      - name: Runner pins preparation evidence and one-shot output
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          r=Path(
+              "scripts/eipm/n0/run_n0_v02_qsre_t1_executor_training_v0_1.sh"
+          ).read_text()
+          required=[
+              'EXPECTED_CURRICULUM_SHA="155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063"',
+              'EXPECTED_PREPARED_SHA="03a45033dc41a51896f8b514c44e784ecabaa5837488a272306914979ab6b564"',
+              'EXPECTED_PREP_RECEIPT_SHA="b92ddc17749f03230f3feff1d70942ec2fa5d893638574d8c81ee2957608e9db"',
+              'v0_48_qsre_t1_one_shot_gpu_gate=PASS',
+              'One-shot run means preserve it; do not delete it to rerun.',
+              'automatic_rerun=false',
+              'test_open=false',
+              'challenge_open=false',
+          ]
+          missing=[x for x in required if x not in r]
+          if missing:
+              raise SystemExit("one-shot runner contract missing "+repr(missing))
+          if "rm -rf" in r:
+              raise SystemExit("destructive rerun path leaked")
+          print("runner_one_shot_evidence_gate=PASS")
+          PY
+
+      - name: P100 wrapper is bounded and singular
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          s=Path(
+              "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t1_executor_training_v0_1.sbatch"
+          ).read_text()
+          required=[
+              "#SBATCH --gres=gpu:p100:1",
+              "#SBATCH --nodes=1",
+              "#SBATCH --time=00:30:00",
+              "RAYAN_UDOCKER_NVIDIA=1",
+              "Expected P100",
+              "run_n0_v02_qsre_t1_executor_training_v0_1.sh",
+          ]
+          missing=[x for x in required if x not in s]
+          if missing:
+              raise SystemExit("P100 wrapper contract missing "+repr(missing))
+          print("bounded_single_p100_wrapper=PASS")
+          PY

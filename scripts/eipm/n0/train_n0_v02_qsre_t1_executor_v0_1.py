@@ -498,7 +498,7 @@ def main() -> None:
 
     if (
         contract.get("schema")
-        != "alice.eipm.n0.qsre-t1-training-contract.v0.1"
+        != "alice.eipm.n0.qsre-t1-training-contract.v0.2"
     ):
         raise SystemExit(
             "T1 training contract drift"
@@ -549,6 +549,20 @@ def main() -> None:
     if not torch.cuda.is_available():
         raise SystemExit(
             "T1 governed run requires CUDA"
+        )
+
+    expected_prepared_sha = contract.get(
+        "expected_prepared_cache_sha256"
+    )
+    actual_prepared_sha = sha256(prepared_path)
+    if (
+        not expected_prepared_sha
+        or actual_prepared_sha
+        != expected_prepared_sha
+    ):
+        raise SystemExit(
+            "prepared cache file hash drift: "
+            f"{actual_prepared_sha}"
         )
 
     device = torch.device("cuda")
@@ -895,7 +909,10 @@ def main() -> None:
             sha256(contract_path)
         ),
         "prepared_cache_sha256": (
-            sha256(prepared_path)
+            actual_prepared_sha
+        ),
+        "prepared_cache_sha256_expected": (
+            expected_prepared_sha
         ),
         "source_cache_sha256": (
             prepared[

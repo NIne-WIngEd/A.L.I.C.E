@@ -1,0 +1,75 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.48",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.47.json",
+  "status": "QSRE_T1_CORRECTED_PRETRAINING_CI_PASS_AND_REAL_CACHE_PREPARATION_PASS;EXACTLY_ONE_P100_T1_EXECUTOR_RUN_AUTHORIZED;NO_AUTOMATIC_RERUN",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-qsre-t1-executor-training",
+  "source_frontier": "31b89390a2d6e6677092a0f4107fa0e9aacbcdc4",
+  "pretraining_ci": {
+    "run_id": 35502096941,
+    "conclusion": "success",
+    "head_sha": "31b89390a2d6e6677092a0f4107fa0e9aacbcdc4"
+  },
+  "preparation_evidence": {
+    "source_cache_sha256": "5bcc4ecf0fb2b776f738e4cca881e6b03a68c81a96923a5b08821930d0ebe823",
+    "curriculum_sha256": "155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063",
+    "curriculum_receipt_sha256": "55f7bc40a5d5f1ff5c134e1f4ad00c1788748f317d7c0b118114c111e794b60d",
+    "prepared_cache_sha256": "03a45033dc41a51896f8b514c44e784ecabaa5837488a272306914979ab6b564",
+    "preparation_receipt_sha256": "b92ddc17749f03230f3feff1d70942ec2fa5d893638574d8c81ee2957608e9db",
+    "preparation_status": "PASS_QSRE_T1_REAL_CACHE_PREPARATION",
+    "rows": {
+      "train": 360,
+      "dev": 144
+    },
+    "field_state_dim": 640,
+    "paired_representation_identity": true,
+    "train_dev_representation_pool_isolated": true,
+    "field_support_all_zero": true,
+    "edge_support_membership_only": true,
+    "test_present": false,
+    "optimizer": false,
+    "gradient": false,
+    "gpu": false,
+    "private_identity_data": false
+  },
+  "t1_causal_question": "Can the QSRE relational executor and structural readout learn role, relation, metadata arbitration, plurality, and causal pair behavior when the operator and structural support are oracle-correct and frozen production-real field representations are supplied?",
+  "training_scope": {
+    "trainable_module": "QSRET1Executor only",
+    "semantic_backbone_gradient": false,
+    "graph_parent_gradient": false,
+    "learned_operator": false,
+    "learned_support": false,
+    "parent_global_logits_input": false,
+    "causal_test_open": false,
+    "frozen_challenge_open": false,
+    "private_identity_gradient": false
+  },
+  "authorized_contract": "configs/eipm/n0/n0_v02_qsre_t1_training_contract_v0_2.json",
+  "execution_policy": {
+    "t1_training_authorized": true,
+    "optimizer_authorized": true,
+    "gradient_authorized": true,
+    "gpu_training_authorized": true,
+    "max_gpu_training_runs": 1,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "stop_at_first_eligible_checkpoint": true,
+    "if_no_eligible_checkpoint": "STOP_AND_INTERPRET_AS_T1_EXECUTOR_EVIDENCE_BEFORE_ANY_ARCHITECTURE_CHANGE",
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "learned_operator_training_authorized": false,
+    "learned_support_training_authorized": false,
+    "scale_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "post_run_rule": {
+    "pass": "analyze selected T1 checkpoint and decide whether T2 operator-learning is scientifically justified; do not auto-start T2",
+    "fail": "stop; inspect family and causal-pair metrics from this run; no rerun, LR tuning, extra steps, or architecture repair without first-principles localization"
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}

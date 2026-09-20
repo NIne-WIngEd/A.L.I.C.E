@@ -1,0 +1,56 @@
+{
+  "schema": "alice.eipm.n0.qsre-t1-training-contract.v0.2",
+  "status": "AUTHORIZED_EXACTLY_ONE_QSRE_T1_P100_RUN",
+  "causal_stage": "T1",
+  "source_state": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.48.json",
+  "curriculum_contract": "configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_2.json",
+  "expected_curriculum_sha256": "155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063",
+  "source_cache_sha256": "5bcc4ecf0fb2b776f738e4cca881e6b03a68c81a96923a5b08821930d0ebe823",
+  "prepared_cache_schema": "alice.eipm.n0.qsre-t1-real-cache.v0.1",
+  "expected_prepared_cache_sha256": "03a45033dc41a51896f8b514c44e784ecabaa5837488a272306914979ab6b564",
+  "expected_preparation_receipt_sha256": "b92ddc17749f03230f3feff1d70942ec2fa5d893638574d8c81ee2957608e9db",
+  "model": {
+    "field_state_dim": 640,
+    "field_metadata_dim": 3,
+    "edge_metadata_dim": 2,
+    "operator_context_dim": 4,
+    "model_dim": 512,
+    "num_relations": 6,
+    "num_roles": 4,
+    "num_operations": 5,
+    "dropout": 0.05
+  },
+  "optimizer": {
+    "name": "AdamW",
+    "learning_rate": 0.0003,
+    "weight_decay": 0.01,
+    "gradient_clip_norm": 1
+  },
+  "training": {
+    "seed": 20260920,
+    "batch_size": 32,
+    "max_steps": 1200,
+    "eval_every_steps": 50
+  },
+  "eligibility": {
+    "control_accuracy_min": 1,
+    "single_target_top1_accuracy_min": 1,
+    "causal_pair_completion_min": 1,
+    "family_min_success_min": 1,
+    "plural_l1_max": 0.1,
+    "outside_support_mass_max": 0,
+    "outside_support_invariance_max_delta": 1e-7
+  },
+  "selection": "first_eligible_checkpoint_then_stop",
+  "max_gpu_runs": 1,
+  "automatic_rerun": false,
+  "automatic_hotfix": false,
+  "causal_test_open": false,
+  "frozen_challenge_open": false,
+  "semantic_backbone_gradient": false,
+  "graph_parent_gradient": false,
+  "learned_operator": false,
+  "learned_support": false,
+  "private_identity_gradient": false,
+  "gpu_training_authorized": true
+}
