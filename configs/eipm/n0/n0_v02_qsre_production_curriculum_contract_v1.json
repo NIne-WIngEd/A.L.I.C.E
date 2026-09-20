@@ -1,0 +1,63 @@
+{
+  "schema": "alice.eipm.n0.qsre-production-curriculum-contract.v1",
+  "status": "UNIFIED_PUBLIC_CURRICULUM_FOR_P1_P2_P3_P4_CAUSAL_STAGES",
+  "builder": "scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py",
+  "train_groups_per_family": 20,
+  "dev_groups_per_family": 8,
+  "open_schema_groups": 32,
+  "families": [
+    "endpoint_role",
+    "relation_filter",
+    "ordered_path",
+    "three_hop",
+    "aggregate",
+    "reliability",
+    "temporal",
+    "path_latest",
+    "ambiguity",
+    "outside_support",
+    "fallback_defer",
+    "open_schema"
+  ],
+  "expected_rows": {
+    "train": 440,
+    "dev": 240,
+    "total": 680
+  },
+  "open_schema_dev_rows": 64,
+  "max_relation_steps": 3,
+  "core_train_relations": [
+    "SUPPORTS",
+    "CORRECTS",
+    "SUPERSEDES",
+    "DERIVED_FROM",
+    "CAUSES",
+    "TEMPORAL_SUCCESSOR"
+  ],
+  "open_schema_dev_relations": [
+    "CONFLICTS_WITH",
+    "EXEMPLIFIES",
+    "PREREQUISITE_FOR",
+    "PART_OF"
+  ],
+  "requirements": {
+    "train_dev_entity_pools_disjoint": true,
+    "open_schema_relation_supervision_train_forbidden": true,
+    "relation_order_counterfactuals": true,
+    "three_hop_rows": true,
+    "zero_one_many_support": true,
+    "path_plus_recency_composition": true,
+    "aggregate_plus_reliability_composition": true,
+    "fallback_and_defer": true,
+    "ambiguity_plurality": true,
+    "outside_support_counterfactuals": true,
+    "cue_collision_open_schema": true,
+    "private_identity_data": false,
+    "test_split": false
+  },
+  "purpose": "One fixed public dataset contract serves the production QSRE causal stages so later failures cannot silently redefine the architecture or data semantics.",
+  "optimizer_authorized": false,
+  "gradient_authorized": false,
+  "gpu_authorized": false,
+  "private_identity_gradient": false
+}
