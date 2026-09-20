@@ -1,0 +1,72 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.38",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.37.json",
+  "status": "CPU_LOCALIZATION_V0_2_TOO_SLOW_DUE_TO_BRIDGE_COMPUTE;UNCHANGED_COUNTERFACTUAL_AUDIT_MOVED_TO_ONE_P100_INFERENCE_JOB;NO_TRAINING",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-dual-view-specialist-failure-localization",
+  "source_failed_experiment": {
+    "result_sha256": "1a38c37a41de68bea0bb9bc897b86d62cbc457b8b93189c2d16731110c1694ec",
+    "status": "FAIL_DUAL_VIEW_SPECIALIST_DEV_OR_PRESERVATION_STOP_NO_HELDOUT_NO_AUTOMATIC_HOTFIX"
+  },
+  "prior_localization_attempts": {
+    "v0_1": {
+      "interrupted": true,
+      "result_file_produced": false,
+      "model_evidence": false,
+      "reason": "unnecessary preservation semantic re-encoding on CPU",
+      "directory_must_be_preserved": true
+    },
+    "v0_2": {
+      "interrupted": true,
+      "result_file_produced": false,
+      "model_evidence": false,
+      "reason": "remaining multi-layer bridge counterfactual inference is compute-heavy on Magnolia login-node CPU; checkpoint 40 counterfactual exceeded 25 minutes",
+      "directory_must_be_preserved": true
+    }
+  },
+  "v0_3": {
+    "scientific_question_changed": false,
+    "counterfactual_modes_changed": false,
+    "checkpoint_lineage_changed": false,
+    "causal_data_changed": false,
+    "preservation_evidence_changed": false,
+    "only_change": "execute unchanged causal counterfactual inference on one P100 instead of login-node CPU",
+    "semantic_backbone_executed": false,
+    "preservation_semantic_reencoding": false,
+    "activation_metrics_source": "immutable source training checkpoint receipts",
+    "output_directory": "query-edge-dual-view-late-interaction-v0.1/failure-localization-v0.3",
+    "gpu_inference_authorized": true,
+    "gpu_training_authorized": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "training_authorized": false,
+    "test_opening_authorized": false,
+    "challenge_opening_authorized": false,
+    "max_gpu_jobs": 1,
+    "expected_gpu": "P100",
+    "time_limit_minutes": 15
+  },
+  "execution_policy": {
+    "next_action": "submit exactly one P100 inference-only failure-localization job",
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "gpu_training_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "anti_mc10_rule": {
+    "do_not_delete_v0_1_or_v0_2_attempt_directories": true,
+    "do_not_change_counterfactual_question_for_speed": true,
+    "do_not_retrain_before_localization_result": true,
+    "do_not_tune_threshold_binding_scale_lr_steps_or_loss_weights": true,
+    "do_not_add_router_capacity": true
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
