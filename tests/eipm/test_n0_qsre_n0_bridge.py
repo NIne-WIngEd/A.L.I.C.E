@@ -97,3 +97,33 @@ def test_bridge_has_no_capacity_ceiling_or_adapter_parameters() -> None:
     assert report["field_count_ceiling"] is None
     assert report["support_count_ceiling"] is None
     assert report["candidate_count_ceiling"] is None
+
+
+def test_bridge_preserves_low_but_nonzero_calibrated_relation_without_second_router() -> None:
+    bridge = QSREN0EvidenceBridge(semantic_dim=3)
+    fields = torch.tensor(
+        [[[2.0, 0.0, 0.0], [0.0, 3.0, 0.0]]]
+    )
+    probability = torch.tensor([[0.004, 0.006]])
+    out = bridge(
+        base_evidence_tokens=torch.zeros(1, 1, 3),
+        base_evidence_mask=torch.ones(1, 1, dtype=torch.bool),
+        field_semantic_state=fields,
+        field_valid_mask=torch.ones(1, 2, dtype=torch.bool),
+        relational_probability=probability,
+    )
+    assert out.relational_token_valid.item() is True
+    assert torch.allclose(
+        out.relational_execution_confidence,
+        torch.tensor([0.01]),
+        atol=1e-7,
+    )
+    normalized = torch.tensor([[0.4, 0.6]])
+    expected_semantic = torch.einsum("bf,bfd->bd", normalized, fields)
+    assert torch.allclose(
+        out.relational_semantic_token,
+        expected_semantic * 0.01,
+        atol=1e-7,
+    )
+    report = bridge.parameter_report()
+    assert report["hard_relational_confidence_gate"] is False
