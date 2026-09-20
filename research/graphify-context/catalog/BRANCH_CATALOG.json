@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "97b7cea52e520d97225b043bedce3671412ff2d1",
-      "head_committed_at": "2026-09-20T02:32:57-05:00",
-      "head_message": "context: hand off clean-sheet QSRE architecture frontier",
+      "head": "8bef9d1adc48e307b8e7526e327ed92c6e123702",
+      "head_committed_at": "2026-09-20T04:14:45-05:00",
+      "head_message": "context: hand off corrected QSRE T1 pretraining frontier",
       "status": "diverged",
-      "ahead": 217,
+      "ahead": 218,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 564,
+      "changed_file_count_vs_source_merge_base": 565,
       "knowledge_surface": true
     },
     {
@@ -89,14 +89,14 @@
     },
     {
       "branch": "alice-eipm-v1-n0-clean-sheet-relational-execution-review",
-      "head": "5687469a5a3913b8abce889a1ef397ae95125bb2",
-      "head_committed_at": "2026-09-20T02:32:16-05:00",
-      "head_message": "state(n0): ratify QSRE blueprint as clean-sheet review frontier",
+      "head": "6855997bb46986194b4bdbbcbaa1fff3bee1134e",
+      "head_committed_at": "2026-09-20T03:03:04-05:00",
+      "head_message": "state(n0): hand off QSRE T1 to one-run training branch",
       "status": "ahead",
-      "ahead": 234,
+      "ahead": 265,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 193,
+      "changed_file_count_vs_source_merge_base": 220,
       "knowledge_surface": true
     },
     {
@@ -109,6 +109,18 @@
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 9,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-eipm-v1-qsre-t1-executor-training",
+      "head": "d62e8935811a2fcce41ddc425a7fb9788f7f0aed",
+      "head_committed_at": "2026-09-20T04:13:18-05:00",
+      "head_message": "fix(n0): correct QSRE T1 path causality and paired curriculum before training",
+      "status": "ahead",
+      "ahead": 266,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 231,
       "knowledge_surface": true
     },
     {
@@ -293,14 +305,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "8d9143e2af1a2bfe708e094ca5a5c88e7ae16283",
-      "head_committed_at": "2026-09-20T02:32:59-05:00",
-      "head_message": "trace(fbm): capture clean-sheet QSRE architecture decision",
+      "head": "8d3e8adfe0080c71330e150a652b88fc0c7813a0",
+      "head_committed_at": "2026-09-20T04:14:47-05:00",
+      "head_message": "trace(fbm): capture QSRE T1 pretraining validity correction",
       "status": "diverged",
-      "ahead": 101,
+      "ahead": 102,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 100,
+      "changed_file_count_vs_source_merge_base": 101,
       "knowledge_surface": true
     },
     {

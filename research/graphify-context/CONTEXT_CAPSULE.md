@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-clean-sheet-qsre-frontier-20260920-001
-- Question: Refresh A.L.I.C.E. N0 continuity to the clean-sheet QSRE architecture-review frontier. Resolve branch alice-eipm-v1-n0-clean-sheet-relational-execution-review at head 5687469a5a3913b8abce889a1ef397ae95125bb2 and state v0.41. Treat jobs 575797, 575798, 575800, 575825, 575888, 575907 and 575912 as valid learned-model failures in one longer query/relation/endpoint execution family; 575908 is pre-gradient boundary failure, not model evidence. Counterfactual job 575913 localized that activation is not the main blocker, hard support helps substantially but does not close the task, and role execution remains nonsystematic. The clean-sheet audit rejects the repeated global-parent-field-softmax plus residual/mixture pattern. Selected research family is QSRE: multi-layer continuous query operator with explicit migratable relation/argument-role anchors; token-level adaptive sparse structural support; query-conditioned node/edge relational execution with explicit source/target positions; structural readout limited to claimed support; separate applicability/general-parent fallback; output compatible with existing N0 fusion/latent fabric. CI 35496944177 passed a 17-fixture deterministic D1-D5 oracle contract covering role reversal, zero/one/many support, ambiguity, ordered two-hop composition, fallback/defer and isolation from a stronger parent-global distractor. This proves interface expressivity, not learnability. Current exact blueprint is docs/research/eipm-n0-qsre-architecture-blueprint-v0.1.md. No QSRE trainable implementation, optimizer, gradient, GPU, TEST/challenge, retraining, scale or private identity gradient is authorized. Next work is one static tensor-interface/mechanics decision only. Graphify is navigation-only.
+- Request: n0-qsre-t1-corrected-pretraining-20260920-001
+- Question: Refresh A.L.I.C.E. N0 continuity to corrected QSRE T1 pretraining frontier. Branch alice-eipm-v1-qsre-t1-executor-training is at d62e8935811a2fcce41ddc425a7fb9788f7f0aed with authoritative state v0.47. v0.46 GPU eligibility was retracted before any gradient run because the v0.1 curriculum allowed positional shortcuts and the old relation-order test did not prove graph-path traversal. Corrected PATH_FOLLOW uses explicit oracle focus frontier, relation-matched supported edges whose SOURCE is on the current frontier, updates only incident active nodes, advances frontier to reached TARGETs, and restricts final path readout to the reached frontier. T1 rejects direct field-only support and fractional oracle support; edge support is 0/1 membership. Curriculum v0.2 is deterministic SHA 155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063, 504 public TRAIN/DEV rows, 9 families, paired same-graph causal interventions, permuted field/edge order, no TEST/private identity. Real-cache preparation reuses only field_semantic from qualified cache SHA 5bcc4ecf0fb2b776f738e4cca881e6b03a68c81a96923a5b08821930d0ebe823 with split-isolated assignment and bit-identical causal-pair representations. Corrected pretraining CI 35501709024 passed syntax, governance, mechanics, causal curriculum, fake-cache prep, trainer import and CPU backward smoke. GPU training remains closed. Next action is exactly one Magnolia CPU/no-gradient real-cache preparation receipt; only after that may a new state authorize one P100 T1 run. Graphify remains navigation-only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: False
@@ -18,31 +18,28 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-n0-clean-sheet-relational-execution-review @ 5687469a5a3913b8abce889a1ef397ae95125bb2 — state(n0): ratify QSRE blueprint as clean-sheet review frontier
+- alice-eipm-v1-qsre-t1-executor-training @ d62e8935811a2fcce41ddc425a7fb9788f7f0aed — fix(n0): correct QSRE T1 path causality and paired curriculum before training
 
 ## Source pointers
 
-- [219] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md — N0 Clean-Sheet Relational Execution Architecture Audit v0.1
-  - status:  architecture-review authority; implementation and gradient work frozen
-- [184] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md — N0 Relational Execution Architecture Family Comparison v0.1
-  - status:  research decision; no implementation or gradient authorized
-- [166] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-qsre-preimplementation-contract-result-v0.1.md — QSRE Deterministic Preimplementation Contract Result v0.1
-- [164] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-qsre-architecture-blueprint-v0.1.md — QSRE Architecture Blueprint v0.1
-  - status:  concrete architecture blueprint; no trainable implementation authorized
-- [161] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md — N0 Relation-Conditioned Multi-Layer Query Interface v0.1
-  - status:  architecture designed from jobs 575801 and 575804; training remains unauthorized
-- [152] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [148] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md — N0 Relation-Conditioned Multi-Layer Query Interface Handoff
-  - status:  architecture designed and CI-qualified from 575804 evidence; exact relation-layer map still must be compiled from the saved audit JSON; training remains unauthorized
-- [146] alice-eipm-v1-n0-clean-sheet-relational-execution-review:.github/workflows/n0-qsre-clean-sheet-review-contract.yml — n0-qsre-clean-sheet-review-contract.yml
-- [138] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+- [255] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T1_CORRECTED_PRETRAINING_FRONTIER.md — N0 QSRE T1 Corrected Pretraining Frontier
+- [165] alice-eipm-v1-qsre-t1-executor-training:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
   - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
-- [137] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-multilayer-interface-failure-localization-v0.1.md — N0 Multi-Layer Interface Failure Localization v0.1
-- [136] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md — N0 Relation-Conditioned Multi-Layer Query Interface v0.1
-  - status:  architecture designed from jobs 575801 and 575804; training remains unauthorized
-- [136] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md — N0 Relation-Conditioned Multi-Layer Query Interface v0.1
-  - status:  architecture designed from jobs 575801 and 575804; training remains unauthorized
+- [163] alice-eipm-v1-qsre-t1-executor-training:docs/research/eipm-n0-qsre-t1-pretraining-validity-correction-v0.1.md — QSRE T1 Pretraining Validity Correction v0.1
+- [159] alice-eipm-v1-qsre-t1-executor-training:.github/workflows/n0-qsre-t1-corrected-pretraining-contract.yml — n0-qsre-t1-corrected-pretraining-contract.yml
+- [155] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_CAUSAL_STUDY_PREPARATION_READY.md — N0 Multi-Layer Causal Study — CPU Preparation Ready
+- [155] alice-eipm-v1-qsre-t1-executor-training:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [154] alice-eipm-v1-build:docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md — A.L.I.C.E. EIPM N0 Frontier Research and Bootstrap Plan — 2026-09-13
+  - status:  research decision / implementation gate on `alice-eipm-v1-build`. Not canonical `main`. No permanent A.L.I.C.E. EIPM weights are created or authorized by this document.
+  - supersession:  this document supersedes any earlier use of `~100M–400M` or `~400M` as an EIPM target, envelope, or ceiling. Those numbers were exploratory estimates for one specialist architecture hypothesis. **There is no ratified parameter count.** The permanent EIPM may be much smaller or much larger if measured capability and identity fidelity require it.
+- [152] alice-eipm-v1-build:docs/eipm/n0/runtime-results/N0_FRONTIER_RESEARCH_AUDIT_20260914.md — N0 Frontier Research Audit — 2026-09-14
+  - status: hold the step-1000 -> step-2500 GPU job pending N0 v0.2 redesign**.
+- [151] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_ONE_P100_RUN_AUTHORIZED.md — N0 Multi-Layer Interface — One P100 Run Authorized
+- [148] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_READY_FOR_CALIBRATION.md — N0 causal-arbitration frontier ready for Magnolia calibration
+- [145] alice-context:docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md — N0 Causal Arbitration Frontier Calibration Handoff
+- [140] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
 
 ## Graphify navigation hints
 
