@@ -63,14 +63,14 @@ class QSREProductionConfig:
                 raise ValueError(f"{name} must be positive")
         if self.model_dim % self.num_attention_heads:
             raise ValueError("model_dim must be divisible by num_attention_heads")
-        if self.role_count != 4:
-            raise ValueError("production structural role count must be 4")
-        if self.traversal_count != 3:
-            raise ValueError("production traversal factor count must be 3")
+        if self.role_count < 4:
+            raise ValueError("production structural role bank requires at least 4 seed roles")
+        if self.traversal_count < 3:
+            raise ValueError("production traversal bank requires at least 3 seed factors")
         if self.modifier_count < 4:
-            raise ValueError("production modifier bank requires at least 4 factors")
-        if self.control_count != 3:
-            raise ValueError("production control count must be 3")
+            raise ValueError("production modifier bank requires at least 4 seed factors")
+        if self.control_count < 3:
+            raise ValueError("production control bank requires at least 3 seed states")
         if not 0.0 <= self.dropout < 1.0:
             raise ValueError("dropout must be in [0,1)")
 
@@ -158,16 +158,16 @@ class QSREProductionOperatorState:
             raise ValueError("stop_probability must be [B,S]")
         if self.unknown_probability.shape != (batch, steps):
             raise ValueError("unknown_probability must be [B,S]")
-        if self.role_distribution.shape != (batch, 4):
-            raise ValueError("role_distribution must be [B,4]")
-        if self.traversal_distribution.shape != (batch, 3):
-            raise ValueError("traversal_distribution must be [B,3]")
+        if self.role_distribution.ndim != 2 or self.role_distribution.size(0) != batch or self.role_distribution.size(1) < 4:
+            raise ValueError("role_distribution must be [B,R_role] with at least 4 seed roles")
+        if self.traversal_distribution.ndim != 2 or self.traversal_distribution.size(0) != batch or self.traversal_distribution.size(1) < 3:
+            raise ValueError("traversal_distribution must be [B,R_traversal] with at least 3 seed factors")
         if self.modifier_weight.ndim != 2 or self.modifier_weight.size(0) != batch:
             raise ValueError("modifier_weight must be [B,M]")
         if self.applicability.shape != (batch,):
             raise ValueError("applicability must be [B]")
-        if self.control_distribution.shape != (batch, 3):
-            raise ValueError("control_distribution must be [B,3]")
+        if self.control_distribution.ndim != 2 or self.control_distribution.size(0) != batch or self.control_distribution.size(1) < 3:
+            raise ValueError("control_distribution must be [B,R_control] with at least 3 seed states")
         if self.continuous_state.shape != (batch, model_dim):
             raise ValueError("continuous_state shape drift")
         if self.uncertainty.shape != (batch,):
@@ -226,7 +226,12 @@ class QSREProductionSchemaEncoder(nn.Module):
         self.schema_projection = nn.Linear(config.semantic_dim, d, bias=False)
         self.layer_embedding = nn.Embedding(config.num_hidden_states, d)
         self.pool_query = nn.Parameter(torch.empty(d))
-        nn.init.normal_(self.pool_query, mean=0.0, std=0.02)
+        # Start as a geometry-preserving semantic adapter instead of a random
+        # schema ontology. P1 may learn deviations, but open-schema semantics
+        # begin from the ratified backbone geometry.
+        nn.init.orthogonal_(self.schema_projection.weight)
+        nn.init.zeros_(self.layer_embedding.weight)
+        nn.init.zeros_(self.pool_query)
 
     def forward(
         self,
@@ -276,6 +281,8 @@ class QSREProductionSchemaEncoder(nn.Module):
             "runtime_dynamic_relation_schema": True,
             "token_level_schema_state_retained": True,
             "shared_across_operator_binder_executor": True,
+            "schema_geometry_preserving_initialization": True,
+            "current_relation_count_is_not_parameter_topology": True,
         }
 
 
@@ -335,6 +342,8 @@ class QSREProductionOperatorInducer(nn.Module):
         self.reset_parameters()
 
     def reset_parameters(self) -> None:
+        nn.init.orthogonal_(self.query_projection.weight)
+        nn.init.zeros_(self.layer_embedding.weight)
         nn.init.normal_(self.start_state, mean=0.0, std=0.02)
         nn.init.xavier_uniform_(self.step_query.weight)
         for head in (
@@ -636,6 +645,10 @@ class QSREProductionOperatorInducer(nn.Module):
             "early_relation_argmax": False,
             "unknown_separate_from_stop": True,
             "continuous_operator_state": True,
+            "role_count_ceiling": None,
+            "traversal_count_ceiling": None,
+            "control_count_ceiling": None,
+            "seed_factor_counts_are_checkpoint_topology_not_product_limits": True,
         }
 
 
@@ -1169,8 +1182,24 @@ class QSREProductionExecutor(nn.Module):
             readout_mask,
             dim=-1,
         )
+        # Preserve calibrated fail-closed mass. Normalizing inside the support
+        # set must not erase uncertainty, UNKNOWN, or non-relational control.
+        relational_control = operator.control_distribution[:, CONTROL_RELATIONAL]
+        known_probability = (
+            1.0 - operator.unknown_probability.max(dim=1).values
+        ).clamp(min=0.0, max=1.0)
+        program_presence = operator.relation_step_mass.sum(dim=1).clamp(
+            min=0.0,
+            max=1.0,
+        )
+        execution_confidence = (
+            operator.applicability
+            * relational_control
+            * known_probability
+            * program_presence
+        ).clamp(min=0.0, max=1.0)
         relational_probability = (
-            relational_probability * operator.applicability[:, None]
+            relational_probability * execution_confidence[:, None]
         )
 
         summary_weight = relational_probability / relational_probability.sum(
@@ -1204,6 +1233,10 @@ class QSREProductionExecutor(nn.Module):
             "shared_iterative_execution_cell": True,
             "continuous_operator_state_consumed": True,
             "support_local_readout": True,
+            "calibrated_execution_confidence_preserved": True,
+            "role_count_ceiling": None,
+            "traversal_count_ceiling": None,
+            "modifier_count_ceiling": None,
         }
 
 
