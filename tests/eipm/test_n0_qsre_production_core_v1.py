@@ -11,6 +11,7 @@ from alice_personality.n0.qsre_production_core import (
     DIRECTION_REVERSE,
     MOD_RECENCY,
     MOD_RELIABILITY,
+    ROLE_SOURCE,
     ROLE_TARGET,
     TRAVERSAL_AGGREGATE,
     TRAVERSAL_LOCAL,
