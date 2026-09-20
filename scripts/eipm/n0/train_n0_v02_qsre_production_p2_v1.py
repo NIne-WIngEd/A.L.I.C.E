@@ -371,6 +371,8 @@ def score_tuple(metrics:dict)->tuple[float,...]:
     return (
         op["relation_sequence_exact_accuracy"],
         op["open_schema_relation_exact_accuracy"],
+        op["unknown_termination_accuracy"],
+        op["termination_accuracy"],
         op["pair_consistency"],
         down["row_success_accuracy"],
         down["family_min_success"],
