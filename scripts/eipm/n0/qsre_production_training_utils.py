@@ -312,6 +312,14 @@ def relation_program_exact(
 ) -> torch.Tensor:
     pred_relation = operator.relation_distribution.argmax(dim=-1)
     pred_active = operator.relation_step_mass.ge(active_mass_threshold)
+    pred_steps = pred_relation.size(1)
+    target_steps = target.size(1)
+    if pred_steps < target_steps:
+        raise ValueError("operator emitted fewer relation steps than supervised target")
+    if pred_steps > target_steps:
+        pad = pred_steps - target_steps
+        target = F.pad(target, (0, pad), value=0)
+        target_mask = F.pad(target_mask, (0, pad), value=False)
     mask_exact = pred_active.eq(target_mask)
     relation_exact = torch.where(
         target_mask,
