@@ -25,6 +25,7 @@ OPEN_RELATIONS = (
 
 ROLE = {"SOURCE": 0, "TARGET": 1, "SYMMETRIC": 2, "NONE": 3}
 TRAVERSAL = {"LOCAL_SELECT": 0, "PATH": 1, "AGGREGATE": 2}
+DIRECTION = {"FORWARD": 0, "REVERSE": 1, "BIDIRECTIONAL": 2}
 CONTROL = {"FALLBACK": 0, "RELATIONAL": 1, "DEFER": 2}
 MODIFIERS = (
     "RELIABILITY",
@@ -317,6 +318,7 @@ def make_row(
     role: str,
     traversal: str,
     modifier_target: dict[str, float],
+    direction: str = "FORWARD",
     focus_field_id: str | None,
     support_edge_ids: list[str],
     target_distribution: dict[str, float],
@@ -340,6 +342,7 @@ def make_row(
             "relation_sequence": relation_sequence,
             "role_id": ROLE[role],
             "traversal_id": TRAVERSAL[traversal],
+            "direction_id": DIRECTION[direction],
             "modifier_target": modifier_target,
             "focus_field_id": focus_field_id,
             "applicability": float(applicability),
@@ -436,24 +439,31 @@ def pair_rows(
             edge("e1", ids[1], ids[2], r2),
             edge("e2", ids[3], ids[4], r1),
         ]
-        shared_query = (
-            f"Start at {names[0]}. First use the relationship where one record {p1} another, "
-            f"then use the relationship where one record {p2} another."
-        )
         return [
             make_row(
-                split=split, family=family, group=group, variant="PATH_SOURCE",
+                split=split, family=family, group=group, variant="PATH_SOURCE_REVERSE",
                 fields=fields, edges=edges,
-                query=shared_query + " Which record is the source/origin of this ordered route?",
-                relation_sequence=[r1, r2], role="SOURCE", traversal="PATH",
-                modifier_target=modifiers(), focus_field_id=ids[0],
+                query=(
+                    f"The ordered route ends at {names[2]}. Trace backward through the "
+                    f"relationship where one record {p2} another and then through the "
+                    f"relationship where one record {p1} another. Which record is the "
+                    "original source of that route?"
+                ),
+                relation_sequence=[r2, r1], role="SOURCE", traversal="PATH",
+                direction="REVERSE",
+                modifier_target=modifiers(), focus_field_id=ids[2],
                 support_edge_ids=["e0", "e1"], target_distribution={ids[0]: 1.0},
             ),
             make_row(
-                split=split, family=family, group=group, variant="PATH_TARGET",
+                split=split, family=family, group=group, variant="PATH_TARGET_FORWARD",
                 fields=fields, edges=edges,
-                query=shared_query + " Which record is the final target/endpoint of this ordered route?",
+                query=(
+                    f"Begin at {names[0]}. First use the relationship where one record {p1} "
+                    f"another, then the relationship where one record {p2} another. "
+                    "Which record is the final target?"
+                ),
                 relation_sequence=[r1, r2], role="TARGET", traversal="PATH",
+                direction="FORWARD",
                 modifier_target=modifiers(), focus_field_id=ids[0],
                 support_edge_ids=["e0", "e1"], target_distribution={ids[2]: 1.0},
             ),
@@ -473,7 +483,7 @@ def pair_rows(
                 split=split, family=family, group=group, variant="PAIR_A",
                 fields=fields, edges=edges, query=query,
                 relation_sequence=[r1], role="SYMMETRIC", traversal="AGGREGATE",
-                modifier_target=modifiers(), focus_field_id=None,
+                direction="BIDIRECTIONAL", modifier_target=modifiers(), focus_field_id=None,
                 support_edge_ids=["e0"],
                 target_distribution={ids[0]: 0.5, ids[1]: 0.5},
             ),
@@ -485,7 +495,7 @@ def pair_rows(
                     "as a co-valid pair instead of selecting a source-side or target-side answer."
                 ),
                 relation_sequence=[r1], role="SYMMETRIC", traversal="AGGREGATE",
-                modifier_target=modifiers(), focus_field_id=None,
+                direction="BIDIRECTIONAL", modifier_target=modifiers(), focus_field_id=None,
                 support_edge_ids=["e0"],
                 target_distribution={ids[0]: 0.5, ids[1]: 0.5},
             ),
@@ -886,7 +896,7 @@ def pair_rows(
                 fields=fields, edges=[],
                 query="What does the phrase 'only after lunch' imply about the timing of the request?",
                 relation_sequence=[], role="NONE", traversal="LOCAL_SELECT",
-                modifier_target=modifiers(), focus_field_id=None,
+                direction="BIDIRECTIONAL", modifier_target=modifiers(), focus_field_id=None,
                 support_edge_ids=[], target_distribution={}, applicability=0.1,
                 control="FALLBACK",
             ),
@@ -901,7 +911,7 @@ def pair_rows(
                     "which relationship or direction should govern. Preserve that uncertainty."
                 ),
                 relation_sequence=[], role="NONE", traversal="LOCAL_SELECT",
-                modifier_target=modifiers(), focus_field_id=None,
+                direction="BIDIRECTIONAL", modifier_target=modifiers(), focus_field_id=None,
                 support_edge_ids=[], target_distribution={}, applicability=0.5,
                 control="DEFER",
             ),
@@ -958,6 +968,7 @@ def open_schema_rows(group: int) -> list[dict]:
         split=split, family="open_schema", group=group, variant="ZERO_SHOT_SCHEMA",
         fields=fields, edges=edges, query=query,
         relation_sequence=[relation], role=role, traversal="LOCAL_SELECT",
+        direction="BIDIRECTIONAL" if symmetric else "FORWARD",
         modifier_target=modifiers(), focus_field_id=ids[0],
         support_edge_ids=["e0"], target_distribution=target,
         open_schema=True,
@@ -971,6 +982,7 @@ def open_schema_rows(group: int) -> list[dict]:
             f"{names[2]} and {names[3]} rather than the first pair. The relationship {phrase}."
         ),
         relation_sequence=[relation], role=role, traversal="LOCAL_SELECT",
+        direction="BIDIRECTIONAL" if symmetric else "FORWARD",
         modifier_target=modifiers(), focus_field_id=ids[2],
         support_edge_ids=["e1"],
         target_distribution=(
