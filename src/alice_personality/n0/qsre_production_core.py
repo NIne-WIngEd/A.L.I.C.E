@@ -737,6 +737,11 @@ class QSREProductionBinder(nn.Module):
         self.query_projection = nn.Linear(config.semantic_dim, d, bias=False)
         self.field_projection = nn.Linear(config.semantic_dim, d, bias=False)
         self.operator_projection = nn.Linear(d, d, bias=False)
+        self.focus_score = nn.Sequential(
+            nn.Linear(2 * d + 1, d),
+            nn.GELU(),
+            nn.Linear(d, 1),
+        )
         self.edge_score = nn.Sequential(
             nn.Linear(5 * d + 7, 2 * d),
             nn.GELU(),
@@ -744,10 +749,11 @@ class QSREProductionBinder(nn.Module):
         )
         nn.init.orthogonal_(self.query_projection.weight)
         nn.init.orthogonal_(self.field_projection.weight)
-        final = self.edge_score[-1]
-        assert isinstance(final, nn.Linear)
-        nn.init.zeros_(final.weight)
-        nn.init.zeros_(final.bias)
+        for head in (self.focus_score, self.edge_score):
+            final = head[-1]
+            assert isinstance(final, nn.Linear)
+            nn.init.zeros_(final.weight)
+            nn.init.zeros_(final.bias)
 
     def _project_field_tokens(
         self,
@@ -849,6 +855,31 @@ class QSREProductionBinder(nn.Module):
             valid_types = field_type_id[field_type_id >= 0]
             if valid_types.numel() and int(valid_types.max()) >= type_vocab:
                 raise ValueError("field type outside runtime type vocabulary")
+
+        field_late = self._late_endpoint_score(
+            query_token=query_token,
+            query_mask=query_token_mask,
+            endpoint_token=field_token,
+            endpoint_mask=field_token_mask,
+        )
+        q_field = query_summary[:, None, :].expand(batch, fields, -1)
+        focus_feature = torch.cat(
+            [q_field, field_summary, field_late.unsqueeze(-1)],
+            dim=-1,
+        )
+        focus_logits = field_late + self.focus_score(focus_feature).squeeze(-1)
+        field_valid = field_token_mask.any(dim=-1)
+        focus_field_weight = masked_sparsemax(
+            focus_logits,
+            field_valid,
+            dim=-1,
+        )
+        focus_max = focus_field_weight.max(dim=-1, keepdim=True).values
+        focus_field_weight = torch.where(
+            focus_max > 0,
+            focus_field_weight / focus_max.clamp_min(1.0e-12),
+            torch.zeros_like(focus_field_weight),
+        )
 
         source_index = edge_index[..., 0].clamp(min=0, max=max(fields - 1, 0))
         target_index = edge_index[..., 1].clamp(min=0, max=max(fields - 1, 0))
@@ -1056,6 +1087,9 @@ class QSREProductionBinder(nn.Module):
             "source_late_interaction": source_late,
             "target_late_interaction": target_late,
             "endpoint_late_interaction": endpoint_late,
+            "field_query_relevance": field_late,
+            "focus_logits": focus_logits,
+            "focus_field_weight": focus_field_weight,
         }
 
     def parameter_report(self) -> dict[str, int | bool | None]:
@@ -1072,6 +1106,8 @@ class QSREProductionBinder(nn.Module):
             "field_count_ceiling": None,
             "edge_count_ceiling": None,
             "support_count_ceiling": None,
+            "focus_field_count_ceiling": None,
+            "focus_is_predicted_from_query_field_late_interaction": True,
         }
 
 
@@ -1091,13 +1127,14 @@ class QSREProductionExecutor(nn.Module):
 
         self.role_embedding = nn.Embedding(config.role_count, d)
         self.traversal_embedding = nn.Embedding(config.traversal_count, d)
+        self.direction_embedding = nn.Embedding(config.direction_count, d)
         self.source_position = nn.Parameter(torch.empty(d))
         self.target_position = nn.Parameter(torch.empty(d))
         self.modifier_projection = nn.Linear(config.modifier_count, d, bias=False)
 
         # Shared across every runtime relation step.
         self.edge_update = nn.Sequential(
-            nn.Linear(8 * d + 4, 2 * d),
+            nn.Linear(9 * d + 4, 2 * d),
             nn.GELU(),
             nn.Dropout(config.dropout),
             nn.Linear(2 * d, d),
@@ -1198,6 +1235,10 @@ class QSREProductionExecutor(nn.Module):
             operator.traversal_distribution,
             self.traversal_embedding,
         )
+        direction_state = self._expected_embedding(
+            operator.direction_distribution,
+            self.direction_embedding,
+        )
         modifier_state = self.modifier_projection(operator.modifier_weight)
         operator_state = self.operator_projection(operator.continuous_state)
 
@@ -1228,10 +1269,10 @@ class QSREProductionExecutor(nn.Module):
             edge_relation_mass = relation_distribution.gather(1, rel_index)
 
             source_frontier = frontier.gather(1, source_index)
-            path_gate = (
-                path_probability[:, None] * source_frontier
-                + (1.0 - path_probability[:, None])
-            )
+            target_frontier = frontier.gather(1, target_index)
+            forward_probability = operator.direction_distribution[:, DIRECTION_FORWARD][:, None]
+            reverse_probability = operator.direction_distribution[:, DIRECTION_REVERSE][:, None]
+            bidirectional_probability = operator.direction_distribution[:, DIRECTION_BIDIRECTIONAL][:, None]
 
             reliability_multiplier = (
                 1.0
@@ -1254,16 +1295,33 @@ class QSREProductionExecutor(nn.Module):
                 * (1.0 - edge_provenance_match)
             ).clamp_min(0.0)
 
-            gate = (
+            common_gate = (
                 edge_support_weight
                 * edge_valid_mask.to(edge_support_weight.dtype)
                 * edge_relation_mass
                 * step_mass[:, None]
-                * path_gate
                 * reliability_multiplier
                 * recency_multiplier
                 * temporal_multiplier
                 * provenance_multiplier
+            )
+            forward_gate = common_gate * source_frontier * forward_probability
+            reverse_gate = common_gate * target_frontier * reverse_probability
+            bidirectional_forward_gate = (
+                common_gate * source_frontier * bidirectional_probability
+            )
+            bidirectional_reverse_gate = (
+                common_gate * target_frontier * bidirectional_probability
+            )
+            path_directional_gate = (
+                forward_gate
+                + reverse_gate
+                + bidirectional_forward_gate
+                + bidirectional_reverse_gate
+            ).clamp(max=1.0)
+            gate = (
+                path_probability[:, None] * path_directional_gate
+                + (1.0 - path_probability[:, None]) * common_gate
             )
 
             source_node = node[batch_index, source_index]
@@ -1271,6 +1329,7 @@ class QSREProductionExecutor(nn.Module):
             q_edge = operator_state[:, None, :].expand(batch, edges, -1)
             role_edge = role_state[:, None, :].expand(batch, edges, -1)
             traversal_edge = traversal_state[:, None, :].expand(batch, edges, -1)
+            direction_edge = direction_state[:, None, :].expand(batch, edges, -1)
             modifier_edge = modifier_state[:, None, :].expand(batch, edges, -1)
             source_pos = self.source_position.view(1, 1, -1).expand(batch, edges, -1)
             target_pos = self.target_position.view(1, 1, -1).expand(batch, edges, -1)
@@ -1292,6 +1351,7 @@ class QSREProductionExecutor(nn.Module):
                     q_edge,
                     role_edge,
                     traversal_edge,
+                    direction_edge,
                     modifier_edge,
                     0.5 * (source_pos + target_pos),
                     scalar,
@@ -1321,9 +1381,13 @@ class QSREProductionExecutor(nn.Module):
             active_count.scatter_add_(1, target_index, gate)
             active_node = active_count > 0
 
-            q_node = (operator_state + role_state + traversal_state + modifier_state)[
-                :, None, :
-            ].expand(batch, fields, -1)
+            q_node = (
+                operator_state
+                + role_state
+                + traversal_state
+                + direction_state
+                + modifier_state
+            )[:, None, :].expand(batch, fields, -1)
             updated = self.node_update(
                 torch.cat([aggregate, q_node], dim=-1).reshape(batch * fields, -1),
                 node.reshape(batch * fields, -1),
@@ -1335,7 +1399,16 @@ class QSREProductionExecutor(nn.Module):
             )
 
             next_frontier = torch.zeros_like(frontier)
-            next_frontier.scatter_add_(1, target_index, gate)
+            next_frontier.scatter_add_(
+                1,
+                target_index,
+                forward_gate + bidirectional_forward_gate,
+            )
+            next_frontier.scatter_add_(
+                1,
+                source_index,
+                reverse_gate + bidirectional_reverse_gate,
+            )
             next_frontier = next_frontier.clamp(max=1.0)
             frontier = (
                 path_probability[:, None] * next_frontier
@@ -1384,11 +1457,24 @@ class QSREProductionExecutor(nn.Module):
         ).clamp(min=0.0, max=1.0)
 
         path_origin = focus_field_weight.clamp(min=0.0, max=1.0)
-        path_target = frontier.clamp(min=0.0, max=1.0)
-        path_union = (path_origin + path_target).clamp(max=1.0)
+        path_reached = frontier.clamp(min=0.0, max=1.0)
+        path_union = (path_origin + path_reached).clamp(max=1.0)
+        forward = operator.direction_distribution[:, DIRECTION_FORWARD][:, None]
+        reverse = operator.direction_distribution[:, DIRECTION_REVERSE][:, None]
+        bidirectional = operator.direction_distribution[:, DIRECTION_BIDIRECTIONAL][:, None]
+        semantic_source = (
+            forward * path_origin
+            + reverse * path_reached
+            + bidirectional * path_union
+        ).clamp(max=1.0)
+        semantic_target = (
+            forward * path_reached
+            + reverse * path_origin
+            + bidirectional * path_union
+        ).clamp(max=1.0)
         path_role_weight = (
-            source_role * path_origin
-            + target_role * path_target
+            source_role * semantic_source
+            + target_role * semantic_target
             + symmetric_role * path_union
             + none_role * path_union
         ).clamp(min=0.0, max=1.0)
@@ -1464,9 +1550,11 @@ class QSREProductionExecutor(nn.Module):
             "support_local_readout": True,
             "structural_argument_role_readout": True,
             "path_source_target_role_systematicity": True,
+            "forward_reverse_bidirectional_path_execution": True,
             "calibrated_execution_confidence_preserved": True,
             "role_count_ceiling": None,
             "traversal_count_ceiling": None,
+            "direction_count_ceiling": None,
             "modifier_count_ceiling": None,
         }
 
