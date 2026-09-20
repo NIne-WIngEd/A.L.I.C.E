@@ -1,0 +1,151 @@
+{
+  "schema": "alice.eipm.full-workload-envelope.v0.1",
+  "status": "ACTIVE_ARCHITECTURE_REQUIREMENT",
+  "rule": "Select for full-envelope sufficiency, not minimum current-benchmark repair.",
+  "source_contracts": [
+    "docs/eipm/EIPM_ROLE_AND_OBJECTIVE_CONTRACT_v1.0.md",
+    "docs/eipm/EIPM_PERSONALITY_COVERAGE_HARD_RULE.md",
+    "docs/eipm/EIPM_UNKNOWN_BEHAVIOR_COMPLETION_AND_CONTINUITY_RULE.md",
+    "docs/eipm/EIPM_VOICE_FIRST_INTERACTION_CONTRACT_v1.0.md",
+    "docs/eipm/EIPM_CAPABILITY_LIMIT_AUDIT_2026-09-16.md"
+  ],
+  "workload_families": [
+    "language_pragmatics",
+    "evidence_provenance_epistemic_role",
+    "relational_causal_reasoning",
+    "temporal_state_and_change",
+    "relationship_sensitive_interpretation",
+    "values_tradeoffs",
+    "candidate_comparison",
+    "emotional_interpretation",
+    "voice_expressive_policy",
+    "uncertainty_plurality",
+    "generic_assistant_and_sycophancy_drift",
+    "continuity_and_self_development",
+    "heterogeneous_context_fusion",
+    "long_context_sparse_relevance",
+    "fast_and_deliberate_runtime_paths"
+  ],
+  "stress_axes": {
+    "support_cardinality": [
+      "zero",
+      "one",
+      "many",
+      "ambiguous"
+    ],
+    "hop_depth": [
+      "zero",
+      "one",
+      "multi_hop",
+      "branching"
+    ],
+    "relation_vocabulary": [
+      "known",
+      "migrated_new",
+      "unknown_fail_closed"
+    ],
+    "candidate_count": [
+      "one",
+      "few",
+      "many"
+    ],
+    "actor_count": [
+      "one",
+      "dyadic",
+      "group"
+    ],
+    "relationship_role": [
+      "stranger",
+      "friend",
+      "intimate",
+      "authority",
+      "adversarial",
+      "mixed"
+    ],
+    "stakes": [
+      "trivial",
+      "meaningful",
+      "high"
+    ],
+    "social_setting": [
+      "private",
+      "public",
+      "group"
+    ],
+    "emotional_intensity": [
+      "low",
+      "moderate",
+      "high",
+      "mixed"
+    ],
+    "temporal_structure": [
+      "static",
+      "updated",
+      "superseded",
+      "trajectory"
+    ],
+    "provenance": [
+      "E0",
+      "E_INF",
+      "A_SYN",
+      "A_EXP",
+      "A_SELF",
+      "public_n0"
+    ],
+    "evidence_consistency": [
+      "aligned",
+      "incomplete",
+      "conflicting",
+      "stale"
+    ],
+    "operator_certainty": [
+      "clear",
+      "plural",
+      "unresolved"
+    ],
+    "context_modality": [
+      "semantic_text",
+      "structured",
+      "evidence_graph",
+      "voice_cues",
+      "future_views"
+    ],
+    "context_size": [
+      "compact",
+      "broad",
+      "very_large"
+    ],
+    "runtime_mode": [
+      "fast",
+      "expanded"
+    ]
+  },
+  "n0_required_operations": [
+    "semantic_understanding",
+    "pragmatic_interpretation",
+    "typed_provenance",
+    "relation_argument_execution",
+    "temporal_reasoning",
+    "uncertainty_plurality",
+    "candidate_comparison",
+    "heterogeneous_context_fusion",
+    "evidence_sufficiency",
+    "structured_inspectable_outputs"
+  ],
+  "qsre_role": "Reusable N0 relation/evidence execution primitive; not the whole EIPM.",
+  "permanent_ceiling_forbidden": [
+    "current_relation_count",
+    "current_role_count",
+    "field_count",
+    "edge_count",
+    "support_count",
+    "hop_count",
+    "candidate_count",
+    "actor_count",
+    "view_count",
+    "context_length",
+    "parameter_count",
+    "current_compute_route"
+  ],
+  "private_identity_gradient": false
+}
