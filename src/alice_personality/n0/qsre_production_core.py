@@ -974,6 +974,17 @@ class QSREProductionBinder(nn.Module):
         )
         valid = edge_valid_mask & type_compatible
         sparse = masked_sparsemax(support_logits, valid, dim=-1)
+        # Sparsemax discovers a variable-cardinality support set, but its
+        # simplex normalization would otherwise make each valid support weaker
+        # merely because a query needs more edges. Re-normalize by the strongest
+        # retained support so path length and plural evidence do not create a
+        # hidden execution-capacity penalty.
+        sparse_max = sparse.max(dim=-1, keepdim=True).values
+        sparse = torch.where(
+            sparse_max > 0,
+            sparse / sparse_max.clamp_min(1.0e-12),
+            torch.zeros_like(sparse),
+        )
 
         activation = torch.clamp(
             (operator.applicability - 0.25) / 0.50,
@@ -1016,6 +1027,7 @@ class QSREProductionBinder(nn.Module):
             "relation_count_dependent_parameters": 0,
             "fixed_top_k": False,
             "exact_zero_sparse_support": True,
+            "support_strength_not_simplex_cardinality_limited": True,
             "schema_type_compatibility": True,
             "runtime_support_score_is_supervised_score": True,
             "token_level_late_interaction": True,
