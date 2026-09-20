@@ -1,0 +1,142 @@
+{
+  "schema": "alice.eipm.n0.competitive-edge-router-training-decision.v0.1",
+  "decision": "AUTHORIZE_ONE_BOUNDED_COMPETITIVE_EDGE_ROUTER_EXPERIMENT_AFTER_RUNTIME_QUALIFICATION",
+  "date": "2026-09-20",
+  "qualification": {
+    "status": "PASS_COMPETITIVE_EDGE_ROUTER_NO_GRADIENT_RUNTIME_CONTRACT",
+    "source_revision": "93901b4ea0e3a9773e59047181414e507d3ed904",
+    "receipt_sha256": "ba2dcf640ffd2572ba0a1177c571861aff1838784ab19c0f8166728f0dc59f37",
+    "future_trainable_scope": "competitive_query_edge_bridge_only",
+    "future_trainable_parameter_count": 8832773,
+    "parent_parameters_exactly_unchanged": true,
+    "exact_parent_field_weights": true,
+    "exact_parent_pooled_state": true,
+    "route_probabilities_sum_to_one": true,
+    "explicit_parent_noop_route": true,
+    "all_active_directed_edges_compete": true,
+    "route_probability_is_actual_source_contribution_control": true,
+    "route_probability_is_actual_target_contribution_control": true,
+    "proxy_dot_product_router": false,
+    "independent_per_edge_tanh_gate": false
+  },
+  "frozen_lineage": {
+    "source_failed_result_sha256": "99fc21394bdfbb8e3500bf0efa7c3ce836a2e071b8b11a1c733f73aa99b6fea2",
+    "curriculum_sha256": "c3618a6022519af2a6a140f8b571281c68735fd1412c3ffa904979e9bbea2dcb",
+    "curriculum_manifest_sha256": "0d05f1dcd7d11cc1defdd0a4112c10e3b1d7febfaabf97fe611a854d6905b99a",
+    "preservation_train_anchors_sha256": "f5b3f438f776216f6dbd557a8c785aac70af38d256e3f7cf94f0f71a43f53e94",
+    "parent_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+    "parent_adapter_sha256": "50eeeea3dfff5b6bddaa8da667b6b6c2f917dc668b1acd0410923822ae5ad2df",
+    "preservation_calibration_receipt_sha256": "d485fce0e4304d9cbd8af1658ed7cfedfd1bd4d44b0f40cf56a2618d5ad2390b",
+    "preservation_policy_sha256": "fb88b9580e38a648101277815f82c3ba60c19f3bfd16dbe3029ded40b04aea56"
+  },
+  "scientific_basis": {
+    "actual_runtime_route_is_directly_supervisable": true,
+    "causal_edge_labels_available": true,
+    "parent_noop_label_semantically_defined_for_old_task_anchors": true,
+    "frontier_principles": [
+      "routing should be evaluated and trained as a first-class decision rather than assumed to emerge from downstream task loss",
+      "separating route allocation from expert capacity can expose and correct misrouting without changing the proven parent",
+      "explicit task-grounded route labels are preferable here to generic load-balancing or proxy-router objectives",
+      "shared-parent/no-op behavior should be supervised directly when the parent already solves the preservation task"
+    ]
+  },
+  "training_objective": {
+    "causal_field_selection_cross_entropy": true,
+    "causal_target_margin_weight": 0.25,
+    "causal_route_cross_entropy": {
+      "enabled": true,
+      "target_space": "parent_noop_plus_all_active_directed_edges",
+      "target": "relevant_edge_index_plus_one",
+      "weight": 1.0,
+      "uses_exact_runtime_route_logits": true
+    },
+    "preservation_parent_distillation": {
+      "enabled": true,
+      "loss": "KL frozen parent field weights to candidate field weights",
+      "weight": 1.0,
+      "ordinary_and_endpoint_equal_share": true,
+      "gradient_data": "TRAIN anchors only"
+    },
+    "preservation_noop_route_cross_entropy": {
+      "enabled": true,
+      "target": "route_class_zero_parent_noop",
+      "weight": 1.0,
+      "ordinary_and_endpoint_equal_share": true,
+      "uses_exact_runtime_route_logits": true
+    },
+    "proxy_routing_loss": false,
+    "irrelevant_edge_gate_penalty": false,
+    "load_balancing_loss": false,
+    "gradient_surgery": false,
+    "route_probability_detachment": false,
+    "reason_no_gradient_surgery_or_detachment": "test the corrected runtime control plane directly before adding optimization mechanisms"
+  },
+  "operating_budget": {
+    "max_training_runs": 1,
+    "max_steps": 200,
+    "checkpoint_every_steps": 40,
+    "learning_rate": 0.00015,
+    "weight_decay": 0.02,
+    "warmup_steps": 12,
+    "causal_quad_batch_size": 4,
+    "preservation_batch_size": 16,
+    "hard_parameter_ceiling": null,
+    "operating_budget_is_product_ceiling": false
+  },
+  "trainable_scope": {
+    "competitive_query_edge_bridge_only": true,
+    "semantic_backbone": false,
+    "structured_state": false,
+    "parent_adapter": false,
+    "parent_graph": false
+  },
+  "gradient_data": {
+    "query_edge_causal_train": true,
+    "ordinary_preservation_train_anchors": true,
+    "endpoint_preservation_train_anchors": true,
+    "query_edge_causal_dev": false,
+    "query_edge_causal_test": false,
+    "ordinary_preservation_dev": false,
+    "endpoint_preservation_dev": false,
+    "frozen_challenge": false,
+    "private_identity_data": false
+  },
+  "checkpoint_eligibility": {
+    "frozen_parent_preservation_policy_pass": true,
+    "no_relation_family_row_accuracy_regression_vs_initial_parent": true,
+    "overall_row_accuracy_strictly_improves": true,
+    "overall_quad_accuracy_strictly_improves": true,
+    "worst_family_quad_accuracy_may_not_regress": true,
+    "mean_target_margin_strictly_improves": true,
+    "causal_route_accuracy_must_exceed": 0.5,
+    "worst_family_causal_route_accuracy_must_strictly_exceed_uniform_five_route_chance": 0.2,
+    "causal_route_accuracy_must_strictly_improve_vs_initial": true
+  },
+  "selection_order": [
+    "preservation_pass",
+    "family_min_causal_route_accuracy",
+    "family_min_quad_accuracy",
+    "causal_route_accuracy",
+    "quad_accuracy",
+    "row_accuracy",
+    "mean_target_margin",
+    "earlier_checkpoint"
+  ],
+  "heldout_policy": {
+    "causal_test_open_during_training": false,
+    "frozen_challenge_open_during_training": false,
+    "eligible_checkpoint_only_enables_separate_decision": true,
+    "automatic_heldout_opening": false
+  },
+  "failure_policy": {
+    "first_genuine_model_failure_stops": true,
+    "automatic_rerun": false,
+    "automatic_hotfix": false,
+    "no_loss_weight_tuning_after_failure_without_reassessment": true,
+    "failure_requires_big_picture_reassessment": true
+  },
+  "scale_authorized": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
