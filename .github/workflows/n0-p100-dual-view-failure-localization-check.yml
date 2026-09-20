@@ -1,0 +1,179 @@
+name: N0 P100 Dual View Failure Localization Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-dual-view-specialist-failure-localization
+    paths:
+      - "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_3.py"
+      - "scripts/eipm/n0/run_n0_v02_dual_view_specialist_failure_localization_v0_3.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_failure_localization_v0_3.sbatch"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.38.json"
+      - ".github/workflows/n0-p100-dual-view-failure-localization-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_3.py
+          bash -n \
+            scripts/eipm/n0/run_n0_v02_dual_view_specialist_failure_localization_v0_3.sh
+          bash -n \
+            scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_failure_localization_v0_3.sbatch
+
+      - name: State authorizes inference only
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.38.json"
+          ).read_text())
+          if s["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.38":
+              raise SystemExit("v0.38 schema drift")
+          for key in ("v0_1","v0_2"):
+              p=s["prior_localization_attempts"][key]
+              if p["result_file_produced"] is not False:
+                  raise SystemExit(f"{key} unexpectedly became evidence")
+              if p["directory_must_be_preserved"] is not True:
+                  raise SystemExit(f"{key} preservation drift")
+          v=s["v0_3"]
+          if v["gpu_inference_authorized"] is not True:
+              raise SystemExit("P100 inference not authorized")
+          for key in (
+              "gpu_training_authorized",
+              "optimizer_authorized",
+              "gradient_authorized",
+              "training_authorized",
+              "test_opening_authorized",
+              "challenge_opening_authorized",
+          ):
+              if v[key] is not False:
+                  raise SystemExit(f"inference-only boundary drift: {key}")
+          if v["scientific_question_changed"] is not False:
+              raise SystemExit("scientific question changed")
+          if v["counterfactual_modes_changed"] is not False:
+              raise SystemExit("counterfactual modes changed")
+          if v["max_gpu_jobs"]!=1:
+              raise SystemExit("GPU job-count drift")
+          print("p100_inference_only_state=PASS")
+          PY
+
+      - name: Audit uses CUDA inference without optimizer
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_3.py"
+          ).read_text()
+          required=[
+              'if not torch.cuda.is_available():',
+              'device = torch.device("cuda")',
+              "with torch.inference_mode():",
+              "evaluate_counterfactual_modes",
+              '"gpu_inference_used": True',
+              '"gradient_performed": False',
+              '"training_authorized": False',
+              '"causal_test_split_evaluated": False',
+              '"frozen_challenge_evaluated": False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("P100 inference contract missing "+repr(missing))
+          forbidden=[
+              "torch.optim",
+              ".backward(",
+              "optimizer.step",
+              "optimizer.zero_grad",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("training leaked into P100 inference "+repr(present))
+          print("cuda_inference_no_training=PASS")
+          PY
+
+      - name: Scientific counterfactuals unchanged
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_3.py"
+          ).read_text()
+          required=[
+              "actual_activation_soft_binding",
+              "forced_specialist_soft_binding",
+              "actual_activation_hard_top1_binding",
+              "forced_specialist_hard_top1_binding",
+              "relevant_edge_residual_proposal_role_accuracy",
+              "preservation_receipt_summary",
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("counterfactual contract changed "+repr(missing))
+          print("counterfactual_question_unchanged=PASS")
+          PY
+
+      - name: Runner preserves prior attempts
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          r=Path(
+              "scripts/eipm/n0/run_n0_v02_dual_view_specialist_failure_localization_v0_3.sh"
+          ).read_text()
+          required=[
+              'V01_ROOT="$DUAL_ROOT/failure-localization-v0.1"',
+              'V02_ROOT="$DUAL_ROOT/failure-localization-v0.2"',
+              'AUDIT_ROOT="$DUAL_ROOT/failure-localization-v0.3"',
+              "prior_v0_1_preserved=true",
+              "prior_v0_2_preserved=true",
+              "gpu_inference=true",
+              "optimizer=false",
+              "gradient=false",
+              "training=false",
+          ]
+          missing=[x for x in required if x not in r]
+          if missing:
+              raise SystemExit("runner preservation contract missing "+repr(missing))
+          forbidden=["rm -rf","training=true","test_open=true","challenge_open=true"]
+          present=[x for x in forbidden if x in r]
+          if present:
+              raise SystemExit("destructive/training path leaked "+repr(present))
+          print("prior_attempts_preserved=PASS")
+          PY
+
+      - name: P100 wrapper is inference bounded
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          s=Path(
+              "scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_failure_localization_v0_3.sbatch"
+          ).read_text()
+          required=[
+              "#SBATCH --gres=gpu:p100:1",
+              "#SBATCH --time=00:15:00",
+              "#SBATCH --cpus-per-task=4",
+              "#SBATCH --mem=24G",
+              "RAYAN_UDOCKER_NVIDIA=1",
+              "Expected P100",
+              "run_n0_v02_dual_view_specialist_failure_localization_v0_3.sh",
+          ]
+          missing=[x for x in required if x not in s]
+          if missing:
+              raise SystemExit("P100 inference wrapper drift "+repr(missing))
+          print("bounded_p100_inference_wrapper=PASS")
+          PY
