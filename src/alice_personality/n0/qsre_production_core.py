@@ -546,10 +546,12 @@ class QSREProductionOperatorInducer(nn.Module):
             )
 
             effective_mass = survival * relation_mass
+            effective_stop = survival * stop_probability
+            effective_unknown = survival * unknown_probability
             relation_steps.append(relation_distribution)
             relation_mass_steps.append(effective_mass)
-            stop_steps.append(stop_probability)
-            unknown_steps.append(unknown_probability)
+            stop_steps.append(effective_stop)
+            unknown_steps.append(effective_unknown)
             state_steps.append(step_state)
             attention_steps.append(
                 attention.squeeze(1).reshape(batch, layers, tokens)
@@ -597,17 +599,43 @@ class QSREProductionOperatorInducer(nn.Module):
         relation_entropy = (
             relation_entropy * relation_step_mass
         ).sum(dim=-1) / relation_step_mass.sum(dim=-1).clamp_min(1.0e-6)
+        relation_entropy = relation_entropy / max(
+            float(torch.log(torch.tensor(float(relations))).item()),
+            1.0e-6,
+        )
         role_entropy = -(
             role_distribution.clamp_min(1.0e-12)
             * role_distribution.clamp_min(1.0e-12).log()
-        ).sum(dim=-1)
+        ).sum(dim=-1) / max(
+            float(torch.log(torch.tensor(float(self.config.role_count))).item()),
+            1.0e-6,
+        )
         traversal_entropy = -(
             traversal_distribution.clamp_min(1.0e-12)
             * traversal_distribution.clamp_min(1.0e-12).log()
-        ).sum(dim=-1)
-        uncertainty = torch.sigmoid(
-            relation_entropy + 0.5 * role_entropy + 0.5 * traversal_entropy
-            + unknown_probability.max(dim=1).values
+        ).sum(dim=-1) / max(
+            float(torch.log(torch.tensor(float(self.config.traversal_count))).item()),
+            1.0e-6,
+        )
+        unknown_event_mass = unknown_probability.sum(dim=1).clamp(
+            min=0.0,
+            max=1.0,
+        )
+        # A deterministic known operator now reports uncertainty near zero
+        # instead of the old sigmoid baseline of 0.5. Multiple independent
+        # uncertainty sources compose as a differentiable probabilistic union.
+        uncertainty_components = torch.stack(
+            [
+                relation_entropy.clamp(0.0, 1.0),
+                role_entropy.clamp(0.0, 1.0),
+                traversal_entropy.clamp(0.0, 1.0),
+                unknown_event_mass,
+            ],
+            dim=-1,
+        )
+        uncertainty = 1.0 - torch.prod(
+            1.0 - uncertainty_components,
+            dim=-1,
         )
 
         operator = QSREProductionOperatorState(
@@ -644,6 +672,8 @@ class QSREProductionOperatorInducer(nn.Module):
             "shared_iterative_relation_cell": True,
             "early_relation_argmax": False,
             "unknown_separate_from_stop": True,
+            "termination_events_survival_weighted": True,
+            "uncertainty_zero_based_and_normalized": True,
             "continuous_operator_state": True,
             "role_count_ceiling": None,
             "traversal_count_ceiling": None,
@@ -954,10 +984,9 @@ class QSREProductionBinder(nn.Module):
             activation
             * operator.control_distribution[:, CONTROL_RELATIONAL]
         )
-        known_mass = (1.0 - operator.unknown_probability.max(dim=1).values).clamp(
-            min=0.0,
-            max=1.0,
-        )
+        known_mass = (
+            1.0 - operator.unknown_probability.sum(dim=1).clamp(max=1.0)
+        ).clamp(min=0.0, max=1.0)
         edge_support_weight = sparse * activation[:, None] * known_mass[:, None]
 
         field_support_weight = torch.zeros(
@@ -1334,7 +1363,7 @@ class QSREProductionExecutor(nn.Module):
         # set must not erase uncertainty, UNKNOWN, or non-relational control.
         relational_control = operator.control_distribution[:, CONTROL_RELATIONAL]
         known_probability = (
-            1.0 - operator.unknown_probability.max(dim=1).values
+            1.0 - operator.unknown_probability.sum(dim=1).clamp(max=1.0)
         ).clamp(min=0.0, max=1.0)
         program_presence = operator.relation_step_mass.sum(dim=1).clamp(
             min=0.0,
