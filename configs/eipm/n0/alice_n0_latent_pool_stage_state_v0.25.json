@@ -1,0 +1,128 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.25",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.24.json",
+  "status": "QUERY_EDGE_ONE_P100_FAILED_VALIDLY;CROSS_ATTENTION_REPRESENTATION_RETained;PROXY_ROUTING_CONTROL_PATTERN_REJECTED;COMPETITIVE_EDGE_ROUTER_NOOP_DESIGN_AUTHORIZED_NO_GRADIENT",
+  "n0_complete": false,
+  "stable_build_base": {
+    "branch": "alice-eipm-v1-build",
+    "commit": "021c5021a98104b35f9c8e94b19e48d21f25f132"
+  },
+  "failed_experiment": {
+    "magnolia_job_id": 575888,
+    "source_revision": "cf15e2b13a5ca4d22a7070e54c95460959206c33",
+    "result_sha256": "99fc21394bdfbb8e3500bf0efa7c3ce836a2e071b8b11a1c733f73aa99b6fea2",
+    "result_status": "FAIL_QUERY_EDGE_CAUSAL_DEV_OR_PRESERVATION_STOP_NO_HELDOUT_NO_AUTOMATIC_HOTFIX",
+    "eligible_checkpoint_keys": [],
+    "selected_checkpoint": null,
+    "selected_candidate_sha256": null,
+    "single_authorized_gpu_run_consumed": true,
+    "infrastructure_failure": false,
+    "valid_model_evidence": true,
+    "causal_test_opened": false,
+    "frozen_challenge_opened": false,
+    "parent_graph_parameters_exactly_unchanged": true
+  },
+  "evidence": {
+    "baseline": {
+      "row_accuracy": 0.0625,
+      "quad_accuracy": 0.0,
+      "routing_accuracy": 0.3402777777777778,
+      "mean_target_margin": -0.6462395703420043
+    },
+    "step_160": {
+      "row_accuracy": 0.18055555555555555,
+      "quad_accuracy": 0.05555555555555555,
+      "routing_accuracy": 0.4930555555555556,
+      "family_min_routing_accuracy": 0.16666666666666666,
+      "mean_target_margin": -0.34061604355358416,
+      "endpoint_pair_accuracy": 0.9791666666666666,
+      "endpoint_row_accuracy": 0.9791666666666666,
+      "endpoint_mean_margin": 0.8355223461985588,
+      "preservation_pass": false
+    },
+    "step_200": {
+      "row_accuracy": 0.18055555555555555,
+      "quad_accuracy": 0.05555555555555555,
+      "routing_accuracy": 0.4861111111111111,
+      "family_min_routing_accuracy": 0.16666666666666666,
+      "mean_target_margin": -0.345081679833432,
+      "ordinary_macro_support_mass": 0.9806338856617609,
+      "ordinary_macro_support_mass_required": 0.9810003264417648,
+      "endpoint_pair_accuracy": 0.9583333333333334,
+      "endpoint_row_accuracy": 0.96875,
+      "endpoint_mean_margin": 0.8325983931620916,
+      "preservation_pass": false
+    },
+    "routing_loss_near_three_way_random_baseline": true,
+    "late_irrelevant_gate_loss_large": true
+  },
+  "localized_failure_boundary": {
+    "boundary": "query_edge_specialist_routing_and_contribution_control_plane",
+    "representation_boundary_still_supported": true,
+    "control_mismatch": "routing supervision targeted a proxy dot-product while runtime contribution used an independent tanh gate MLP",
+    "independent_gate_problem": "edge gates were not normalized or competitive and remained highly active on irrelevant edges",
+    "rejected_pattern": "proxy_routing_score_plus_independent_tanh_contribution_gates",
+    "not_evidence_for": [
+      "query_edge_cross_attention_failure",
+      "insufficient_bridge_width",
+      "insufficient_training_steps",
+      "learning_rate_failure",
+      "preservation_threshold_error",
+      "parent_graph_failure",
+      "semantic_backbone_capacity_ceiling"
+    ]
+  },
+  "next_architecture_hypothesis": {
+    "name": "Competitive Edge Router with No-Op Route",
+    "preserve_qualified_cross_attention_representation": true,
+    "replace_only_routing_control_plane": true,
+    "actual_route_distribution_supervised_directly": true,
+    "competition_scope": "all_active_directed_edges_plus_parent_noop",
+    "causal_route_target": "relevant_edge_index",
+    "preservation_route_target": "parent_noop",
+    "route_distribution_scales_actual_source_target_residuals": true,
+    "source_target_residuals_independent": true,
+    "independent_per_edge_tanh_gate": false,
+    "proxy_dot_product_router": false,
+    "irrelevant_gate_penalty": false,
+    "zero_initialized_residual_readouts_for_exact_parent": true,
+    "hard_parameter_ceiling": null
+  },
+  "data_policy": {
+    "reuse_existing_query_edge_train_dev": true,
+    "reason": "DEV is architecture-development data and TEST remains unopened; changing both data and architecture would destroy causal attribution",
+    "query_edge_test_open": false,
+    "frozen_challenge_open": false,
+    "ordinary_endpoint_preservation_train_anchors_available": true,
+    "preservation_dev_gradient": false,
+    "private_identity_data": false
+  },
+  "execution_policy": {
+    "architecture_implementation_authorized": true,
+    "static_contract_validation_authorized": true,
+    "cpu_no_gradient_exact_parent_route_control_qualification_authorized": true,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "failure_policy": {
+    "local_hotfix_loop_forbidden": true,
+    "first_genuine_model_failure_stops_experiment": true,
+    "frontier_research_review_completed_for_current_failure": true,
+    "one_causal_architectural_change_per_new_gate": true,
+    "failed_training_artifacts_must_be_preserved": true
+  },
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
