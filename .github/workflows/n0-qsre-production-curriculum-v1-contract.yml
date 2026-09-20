@@ -56,6 +56,9 @@ jobs:
           unknown_rows=0
           stop_rows=0
           paired_views=True
+          roles=set()
+          path_roles=set()
+          symmetric_rows=0
           outside_groups=defaultdict(list)
 
           for row in rows:
@@ -67,6 +70,12 @@ jobs:
               support_cardinality.add(len(row["support_edge_ids"]))
               mods=row["operator_target"]["modifier_target"]
               traversal=row["operator_target"]["traversal_id"]
+              role=row["operator_target"]["role_id"]
+              roles.add(role)
+              if row["family"]=="path_role":
+                  path_roles.add(role)
+              if role==2:
+                  symmetric_rows += 1
               if traversal==1 and mods["RECENCY"]==1.0:
                   path_recency=True
               if traversal==2 and mods["RELIABILITY"]==1.0:
@@ -122,6 +131,9 @@ jobs:
           assert fallback and defer and ambiguity
           assert temporal_constraint and provenance_constraint and composed_constraints
           assert unknown_rows > 0 and stop_rows > 0
+          assert roles=={0,1,2,3}, roles
+          assert {0,1}.issubset(path_roles), path_roles
+          assert symmetric_rows > 0
           assert paired_views
           assert all(len(v)==2 for v in outside_groups.values())
           assert set(contract["families"])==set(families)
