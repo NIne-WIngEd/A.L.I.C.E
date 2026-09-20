@@ -98,14 +98,17 @@
         "applicability": 0.3,
         "control": 0.5,
         "continuous_alignment": 0.15,
-        "downstream": 0.5
+        "downstream": 0.5,
+        "pair_consistency": 0.2
       },
       "training": {
         "seed": 20260921,
         "batch_size": 8,
         "max_steps": 1600,
         "eval_every": 50,
-        "save_every": 50
+        "save_every": 50,
+        "operator_runtime_max_steps": 4,
+        "operator_step_policy": "max supervised relation length 3 plus one explicit STOP step; shared weights permit larger serving budgets later"
       },
       "eligibility": {
         "relation_sequence_exact_accuracy": 0.95,
@@ -148,7 +151,8 @@
         "batch_size": 8,
         "max_steps": 1200,
         "eval_every": 50,
-        "save_every": 50
+        "save_every": 50,
+        "operator_runtime_max_steps": 4
       },
       "eligibility": {
         "oracle_support_edge_f1": 0.98,
@@ -170,7 +174,8 @@
         "outside_support_invariance_max_delta": 0.000001,
         "nonrelational_false_assertion_rate_max": 0.01
       },
-      "failure_policy": "stop_and_localize_without_automatic_joint_finetune"
+      "failure_policy": "stop_and_localize_without_automatic_joint_finetune",
+      "operator_runtime_max_steps": 4
     },
     "P5": {
       "role": "existing_n0_fusion_consumption_of_qsre_relational_view",
