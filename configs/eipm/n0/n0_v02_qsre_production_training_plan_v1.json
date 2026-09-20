@@ -3,7 +3,7 @@
   "status": "PRECOMMITTED_CAUSAL_PIPELINE_NO_POSTHOC_TUNING",
   "architecture": "configs/eipm/n0/n0_v02_qsre_production_core_v1.json",
   "curriculum_contract": "configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json",
-  "curriculum_sha256": "7907602681fde3595ad14a9209547c7272e2dab6690be24f9baf590f46b562ff",
+  "curriculum_sha256": "PENDING_REBIND_AFTER_DIRECTION_AND_FOCUS_CLOSURE",
   "relation_schema": "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
   "model": {
     "semantic_dim": 640,
@@ -17,7 +17,8 @@
     "traversal_count": 3,
     "modifier_count": 4,
     "control_count": 3,
-    "dropout": 0.05
+    "dropout": 0.05,
+    "direction_count": 3
   },
   "stages": {
     "P0": {
@@ -104,7 +105,8 @@
         "continuous_alignment": 0.15,
         "downstream": 0.5,
         "pair_consistency": 0.2,
-        "projection_anchor": 0.02
+        "projection_anchor": 0.02,
+        "direction": 0.7
       },
       "training": {
         "seed": 20260921,
@@ -126,7 +128,8 @@
         "downstream_row_success_accuracy": 0.95,
         "downstream_family_min_success": 0.85,
         "termination_accuracy": 0.98,
-        "unknown_termination_accuracy": 0.95
+        "unknown_termination_accuracy": 0.95,
+        "direction_accuracy_relational": 0.98
       },
       "max_gpu_runs": 1
     },
@@ -151,7 +154,8 @@
       "loss_weights": {
         "support_bce": 1,
         "downstream": 0.5,
-        "type_violation": 0.5
+        "type_violation": 0.5,
+        "focus_bce": 0.6
       },
       "training": {
         "seed": 20260922,
@@ -167,7 +171,10 @@
         "type_violation_rate_max": 0,
         "oracle_downstream_row_success_accuracy": 0.95,
         "predicted_operator_support_edge_f1": 0.95,
-        "predicted_operator_downstream_row_success_accuracy": 0.9
+        "predicted_operator_downstream_row_success_accuracy": 0.9,
+        "oracle_path_focus_top1_accuracy": 0.98,
+        "oracle_path_focus_exact_set_accuracy": 0.95,
+        "predicted_operator_path_focus_top1_accuracy": 0.95
       },
       "max_gpu_runs": 1
     },
@@ -180,7 +187,9 @@
         "open_schema_row_success_accuracy": 0.8,
         "outside_support_invariance_max_delta": 0.000001,
         "nonrelational_false_assertion_rate_max": 0.01,
-        "unknown_fail_closed_accuracy": 0.95
+        "unknown_fail_closed_accuracy": 0.95,
+        "path_focus_top1_accuracy": 0.95,
+        "direction_accuracy_relational": 0.95
       },
       "failure_policy": "stop_and_localize_without_automatic_joint_finetune",
       "operator_runtime_max_steps": 4
@@ -222,6 +231,11 @@
     "p2_query_projection_softly_anchored_to_schema_space": true,
     "all_seed_roles_supervised": true,
     "path_source_target_role_reversal_supervised": true,
-    "symmetric_pair_role_supervised": true
+    "symmetric_pair_role_supervised": true,
+    "learned_path_focus_no_oracle_at_p4": true,
+    "forward_reverse_bidirectional_path_execution": true,
+    "direction_is_independent_operator_factor": true,
+    "path_source_queries_can_execute_reverse_from_target_focus": true,
+    "oracle_focus_forbidden_in_p4": true
   }
 }
