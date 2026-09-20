@@ -6,6 +6,9 @@ import torch
 
 from alice_personality.n0.qsre_production_core import (
     CONTROL_RELATIONAL,
+    DIRECTION_BIDIRECTIONAL,
+    DIRECTION_FORWARD,
+    DIRECTION_REVERSE,
     MOD_RECENCY,
     MOD_RELIABILITY,
     ROLE_TARGET,
@@ -32,6 +35,7 @@ def cfg() -> QSREProductionConfig:
         operator_refinement_layers=1,
         field_state_dim=24,
         field_metadata_dim=3,
+        direction_count=3,
         dropout=0.0,
     )
 
@@ -86,6 +90,7 @@ def one_hot_operator(
     relation_count: int,
     relation_sequence: list[int],
     traversal: int = TRAVERSAL_LOCAL,
+    direction: int = DIRECTION_FORWARD,
     applicability: float = 1.0,
     role: int = ROLE_TARGET,
     modifiers: tuple[float, float, float, float] = (0.0, 0.0, 0.0, 0.0),
@@ -100,6 +105,8 @@ def one_hot_operator(
     role_distribution[:, role] = 1.0
     traversal_distribution = torch.zeros(batch, 3)
     traversal_distribution[:, traversal] = 1.0
+    direction_distribution = torch.zeros(batch, 3)
+    direction_distribution[:, direction] = 1.0
     modifier_weight = torch.tensor(modifiers).view(1, 4).expand(batch, -1).clone()
     control = torch.zeros(batch, 3)
     control[:, CONTROL_RELATIONAL] = 1.0
@@ -112,6 +119,7 @@ def one_hot_operator(
         unknown_probability=torch.zeros(batch, steps),
         role_distribution=role_distribution,
         traversal_distribution=traversal_distribution,
+        direction_distribution=direction_distribution,
         modifier_weight=modifier_weight,
         applicability=torch.full((batch,), float(applicability)),
         control_distribution=control,
@@ -595,6 +603,7 @@ def test_checkpoint_factor_counts_are_not_hard_runtime_ceilings() -> None:
         field_metadata_dim=3,
         role_count=6,
         traversal_count=5,
+        direction_count=5,
         modifier_count=7,
         control_count=4,
         dropout=0.0,
@@ -604,6 +613,7 @@ def test_checkpoint_factor_counts_are_not_hard_runtime_ceilings() -> None:
     report = operator.parameter_report()
     assert report["role_count_ceiling"] is None
     assert report["traversal_count_ceiling"] is None
+    assert report["direction_count_ceiling"] is None
     assert report["control_count_ceiling"] is None
 
 
@@ -677,3 +687,66 @@ def test_termination_events_cannot_reactivate_after_stop() -> None:
     assert float(out.unknown_probability.abs().max()) < 1.0e-6
     assert float(out.relation_step_mass.abs().max()) < 1.0e-6
     assert float(out.stop_probability.sum()) <= 1.000001
+
+
+def test_reverse_path_execution_reaches_semantic_source() -> None:
+    torch.manual_seed(31)
+    executor = QSREProductionExecutor(cfg()).eval()
+    g = graph_inputs()
+    schema_state = torch.randn(2, 32)
+    reverse = one_hot_operator(
+        batch=1,
+        relation_count=2,
+        relation_sequence=[1, 0],
+        traversal=TRAVERSAL_PATH,
+        direction=DIRECTION_REVERSE,
+        role=ROLE_SOURCE,
+    )
+    out = executor(
+        **g,
+        schema_relation_state=schema_state,
+        operator=reverse,
+        focus_field_weight=torch.tensor([[0.0, 0.0, 1.0, 0.0]]),
+    )
+    assert int(out["path_frontier"].argmax(dim=-1).item()) == 0
+    assert int(out["relational_probability"].argmax(dim=-1).item()) == 0
+
+
+def test_binder_predicts_focus_without_oracle_focus_input() -> None:
+    torch.manual_seed(32)
+    binder = QSREProductionBinder(cfg()).eval()
+    q, qmask = query(batch=1)
+    fields = torch.randn(1, 4, 5, 24)
+    # Make field 2 lexically identical to a query span so late interaction
+    # has a deterministic best focus before any learned residual.
+    fields[0, 2, :5] = q[0, -1, :5]
+    field_mask = torch.ones(1, 4, 5, dtype=torch.bool)
+    s = schema(2)
+    edge_index = torch.tensor([[[2, 1], [0, 3]]])
+    edge_rel = torch.tensor([[0, 1]])
+    valid = torch.ones(1, 2, dtype=torch.bool)
+    op = one_hot_operator(
+        batch=1,
+        relation_count=2,
+        relation_sequence=[0],
+        traversal=TRAVERSAL_PATH,
+        direction=DIRECTION_FORWARD,
+    )
+    out = binder(
+        query_hidden_states=q,
+        query_token_mask=qmask,
+        field_token_states=fields,
+        field_token_mask=field_mask,
+        field_type_id=torch.zeros(1, 4, dtype=torch.long),
+        edge_index=edge_index,
+        edge_relation_index=edge_rel,
+        edge_valid_mask=valid,
+        edge_reliability=torch.ones(1, 2),
+        edge_recency=torch.ones(1, 2),
+        schema=s,
+        schema_relation_state=torch.randn(2, 32),
+        operator=op,
+    )
+    assert out["focus_field_weight"].shape == (1, 4)
+    assert int(out["focus_field_weight"].argmax(dim=-1).item()) == 2
+    assert binder.parameter_report()["focus_is_predicted_from_query_field_late_interaction"] is True
