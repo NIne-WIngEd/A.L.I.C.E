@@ -1,0 +1,91 @@
+{
+  "schema": "alice.eipm.n0.qsre-t2-training-contract.v0.1",
+  "status": "AUTHORIZED_EXACTLY_ONE_QSRE_T2_OPERATOR_P100_RUN",
+  "causal_stage": "T2",
+  "source_state": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.52.json",
+  "curriculum_sha256": "40e2d608eaa59ad13e2f9b37a2f3da5d6c20101a28ab76434c11be3d36cb5590",
+  "expected_curriculum_receipt_sha256": "26719ccff1ad8b08140a495a9cfefa8696270b70e3efd5d0a9b32e46393a2165",
+  "expected_prepared_cache_sha256": "774722d57ccaacc7dba8e53ff3aec66bc4b4b5c6efd20db6907ac5a70654e781",
+  "expected_preparation_receipt_sha256": "52e1e0599ecda2992dd2476305c377a4645a7ad079fc6e7ea660684fa35a5967",
+  "semantic_checkpoint_sha256": "6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43",
+  "t1_checkpoint_sha256": "483bd59499e9bea890072af9c01c12961f41504d48f988ae3b3ee9a3ae8154fb",
+  "operator_model": {
+    "semantic_dim": 640,
+    "model_dim": 512,
+    "num_hidden_states": 17,
+    "num_attention_heads": 8,
+    "refinement_layers": 2,
+    "num_relations": 6,
+    "num_roles": 4,
+    "num_operations": 5,
+    "num_controls": 3,
+    "max_relation_steps": 2,
+    "executor_context_dim": 4,
+    "dropout": 0.05
+  },
+  "t1_executor_model": {
+    "field_state_dim": 640,
+    "field_metadata_dim": 3,
+    "edge_metadata_dim": 2,
+    "operator_context_dim": 4,
+    "model_dim": 512,
+    "num_relations": 6,
+    "num_roles": 4,
+    "num_operations": 5,
+    "dropout": 0.05
+  },
+  "optimizer": {
+    "name": "AdamW",
+    "learning_rate": 0.0002,
+    "weight_decay": 0.01,
+    "gradient_clip_norm": 1.0
+  },
+  "loss_weights": {
+    "relation": 1.0,
+    "role": 1.0,
+    "operation": 1.0,
+    "control": 1.0,
+    "continuous_supcon": 0.1
+  },
+  "continuous_operator_objective": {
+    "name": "supervised_contrastive_operator_signature",
+    "temperature": 0.1,
+    "positive_definition": "same ordered relation sequence, role, control, and relational operation",
+    "role": "train the retained continuous operator state without collapsing it to an unused projection"
+  },
+  "training": {
+    "seed": 20260920,
+    "semantic_cache_batch_size": 64,
+    "batch_size": 32,
+    "max_steps": 1200,
+    "eval_every_steps": 25
+  },
+  "eligibility": {
+    "relation_sequence_exact_accuracy_min": 1.0,
+    "role_accuracy_relational_min": 1.0,
+    "operation_accuracy_relational_min": 1.0,
+    "operator_control_accuracy_min": 1.0,
+    "full_operator_exact_accuracy_min": 1.0,
+    "query_view_pair_consistency_min": 1.0,
+    "operator_family_min_success_min": 1.0,
+    "downstream_control_accuracy_min": 1.0,
+    "downstream_single_target_top1_accuracy_min": 1.0,
+    "downstream_causal_pair_completion_min": 1.0,
+    "downstream_family_min_success_min": 1.0,
+    "downstream_plural_l1_max": 0.1,
+    "downstream_outside_support_mass_max": 0.0,
+    "downstream_outside_support_invariance_max_delta": 1e-7
+  },
+  "selection": "first_eligible_dev_checkpoint_then_stop",
+  "max_gpu_runs": 1,
+  "automatic_rerun": false,
+  "automatic_hotfix": false,
+  "causal_test_open": false,
+  "frozen_challenge_open": false,
+  "semantic_backbone_gradient": false,
+  "t1_executor_gradient": false,
+  "learned_operator": true,
+  "learned_support": false,
+  "private_identity_gradient": false,
+  "gpu_training_authorized": true
+}
