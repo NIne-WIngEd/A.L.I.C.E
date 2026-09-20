@@ -856,31 +856,6 @@ class QSREProductionBinder(nn.Module):
             if valid_types.numel() and int(valid_types.max()) >= type_vocab:
                 raise ValueError("field type outside runtime type vocabulary")
 
-        field_late = self._late_endpoint_score(
-            query_token=query_token,
-            query_mask=query_token_mask,
-            endpoint_token=field_token,
-            endpoint_mask=field_token_mask,
-        )
-        q_field = query_summary[:, None, :].expand(batch, fields, -1)
-        focus_feature = torch.cat(
-            [q_field, field_summary, field_late.unsqueeze(-1)],
-            dim=-1,
-        )
-        focus_logits = field_late + self.focus_score(focus_feature).squeeze(-1)
-        field_valid = field_token_mask.any(dim=-1)
-        focus_field_weight = masked_sparsemax(
-            focus_logits,
-            field_valid,
-            dim=-1,
-        )
-        focus_max = focus_field_weight.max(dim=-1, keepdim=True).values
-        focus_field_weight = torch.where(
-            focus_max > 0,
-            focus_field_weight / focus_max.clamp_min(1.0e-12),
-            torch.zeros_like(focus_field_weight),
-        )
-
         source_index = edge_index[..., 0].clamp(min=0, max=max(fields - 1, 0))
         target_index = edge_index[..., 1].clamp(min=0, max=max(fields - 1, 0))
         batch_index = torch.arange(batch, device=edge_index.device)[:, None].expand(batch, edges)
@@ -954,6 +929,31 @@ class QSREProductionBinder(nn.Module):
             field_token,
             field_token_mask,
             dim=2,
+        )
+
+        field_late = self._late_endpoint_score(
+            query_token=query_token,
+            query_mask=query_token_mask,
+            endpoint_token=field_token,
+            endpoint_mask=field_token_mask,
+        )
+        q_field = query_summary[:, None, :].expand(batch, fields, -1)
+        focus_feature = torch.cat(
+            [q_field, field_summary, field_late.unsqueeze(-1)],
+            dim=-1,
+        )
+        focus_logits = field_late + self.focus_score(focus_feature).squeeze(-1)
+        field_valid = field_token_mask.any(dim=-1)
+        focus_field_weight = masked_sparsemax(
+            focus_logits,
+            field_valid,
+            dim=-1,
+        )
+        focus_max = focus_field_weight.max(dim=-1, keepdim=True).values
+        focus_field_weight = torch.where(
+            focus_max > 0,
+            focus_field_weight / focus_max.clamp_min(1.0e-12),
+            torch.zeros_like(focus_field_weight),
         )
 
         source_index = edge_index[..., 0].clamp(min=0, max=max(fields - 1, 0))
