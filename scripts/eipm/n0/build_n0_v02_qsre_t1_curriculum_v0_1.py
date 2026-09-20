@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import random
 from pathlib import Path
@@ -21,10 +22,12 @@ FAMILIES = (
 
 
 def field(split: str, family: str, row_index: int, slot: int) -> dict:
-    token = f"{split}_{family}_{row_index:04d}_{slot:02d}"
+    identity = f"{split}|{family}|{row_index}|{slot}"
+    opaque = hashlib.sha256(identity.encode("utf-8")).hexdigest()[:12]
+    audit_id = f"{split}_{family}_{row_index:04d}_{slot:02d}"
     return {
-        "id": f"f_{token}",
-        "text": f"neutral evidence record {token}",
+        "id": f"f_{audit_id}",
+        "text": f"neutral evidence record {opaque}",
         "metadata": {
             "reliability": 0.5,
             "normalized_time": 0.5,
