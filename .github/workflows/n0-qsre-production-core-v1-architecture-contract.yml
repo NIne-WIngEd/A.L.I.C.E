@@ -1,0 +1,98 @@
+name: n0-qsre-production-core-v1-architecture-contract
+
+on:
+  push:
+    paths:
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.59.json"
+      - "configs/eipm/n0/n0_v02_qsre_production_core_v1.json"
+      - "configs/eipm/n0/n0_v02_qsre_production_core_w1_w15_map_v1.json"
+      - "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md"
+      - "scripts/eipm/n0/launch_n0_v02_qsre_t2_schema_ordered_pipeline_v0_3.sh"
+      - "scripts/eipm/n0/run_n0_v02_qsre_t2_schema_ordered_train_v0_3.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t2_schema_ordered_v0_3.sbatch"
+      - ".github/workflows/n0-qsre-production-core-v1-architecture-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  architecture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate production core contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          state=json.load(open("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.59.json"))
+          core=json.load(open("configs/eipm/n0/n0_v02_qsre_production_core_v1.json"))
+          mapping=json.load(open("configs/eipm/n0/n0_v02_qsre_production_core_w1_w15_map_v1.json"))
+
+          assert state["required_next_architecture"]=="QSRE_PRODUCTION_CORE_V1"
+          assert state["execution_policy"]["t2_v03_gpu_training_authorized"] is False
+          assert state["execution_policy"]["t2_v03_pipeline_launch_authorized"] is False
+          assert state["execution_policy"]["automatic_hotfix_chain_authorized"] is False
+
+          assert core["schema"]=="alice.eipm.n0.qsre-production-core.v1"
+          assert core["authorization"]["gpu"] is False
+          assert core["authorization"]["gradient"] is False
+          assert core["core"]["dynamic_relation_schema"]["runtime_variable_cardinality"] is True
+          assert core["core"]["dynamic_relation_schema"]["learned_relation_class_embedding_table"] is False
+          assert core["core"]["operator_inducer"]["shared_iterative_relation_step_cell"] is True
+          assert core["core"]["operator_inducer"]["learned_hop_specific_slots"] is False
+          assert core["core"]["operator_inducer"]["sparse_plural_relation_hypotheses"] is True
+          assert core["core"]["operator_inducer"]["modifiers_composable"] is True
+          assert core["core"]["executor"]["learned_relation_id_embedding_is_semantic_authority"] is False
+          assert core["core"]["executor"]["consumes_dynamic_relation_semantic_state"] is True
+          assert core["core"]["executor"]["consumes_continuous_operator_state"] is True
+          assert core["core"]["binder"]["fixed_top_k"] is False
+
+          expected={f"W{i}" for i in range(1,16)}
+          assert set(mapping["families"])==expected
+          assert mapping["acceptance"]["all_15_mapped"] is True
+          assert mapping["acceptance"]["qsre_scope_not_whole_n0"] is True
+          assert mapping["acceptance"]["later_identity_boundary_preserved"] is True
+
+          assert Path(core["authority_doc"]).is_file()
+          assert Path(core["workload_envelope"]).is_file()
+          assert Path(core["proof_obligations"]).is_file()
+          assert Path(core["workload_responsibility_map"]).is_file()
+
+          print("PASS_QSRE_PRODUCTION_CORE_V1_ARCHITECTURE_CONTRACT")
+          PY
+
+      - name: Prove obsolete T2 v0.3 GPU routes fail closed
+        run: |
+          set +e
+          bash scripts/eipm/n0/launch_n0_v02_qsre_t2_schema_ordered_pipeline_v0_3.sh >/tmp/a.out 2>/tmp/a.err
+          A=$?
+          bash scripts/eipm/n0/run_n0_v02_qsre_t2_schema_ordered_train_v0_3.sh >/tmp/b.out 2>/tmp/b.err
+          B=$?
+          bash scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t2_schema_ordered_v0_3.sbatch >/tmp/c.out 2>/tmp/c.err
+          C=$?
+          set -e
+          cat /tmp/a.err /tmp/b.err /tmp/c.err
+          test "$A" -eq 90
+          test "$B" -eq 90
+          test "$C" -eq 90
+          grep -F "production QSRE" /tmp/a.err
+          grep -F "Production QSRE" /tmp/b.err
+          grep -F "production QSRE" /tmp/c.err
+
+      - name: No premature implementation authorization
+        run: |
+          python - <<'PY'
+          import json
+          core=json.load(open("configs/eipm/n0/n0_v02_qsre_production_core_v1.json"))
+          auth=core["authorization"]
+          assert auth["architecture_implementation_design"] is True
+          assert auth["cpu_static_mechanics_after_interface_spec"] is True
+          assert auth["optimizer"] is False
+          assert auth["gradient"] is False
+          assert auth["gpu"] is False
+          assert auth["test_opening"] is False
+          assert auth["private_identity_gradient"] is False
+          assert auth["production_promotion"] is False
+          print("PASS_NO_PREMATURE_QSRE_PRODUCTION_GRADIENT")
+          PY
