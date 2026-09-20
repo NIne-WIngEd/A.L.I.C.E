@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "be85293efade75dac2e92d00b121fed007a47f25",
-      "head_committed_at": "2026-09-19T22:14:05-05:00",
-      "head_message": "context: hand off competitive edge router CPU qualification",
+      "head": "1aac3f8c99cd0942e0c21b809992ba2b1607fa78",
+      "head_committed_at": "2026-09-19T22:29:15-05:00",
+      "head_message": "context: hand off direct competitive-router P100 experiment",
       "status": "diverged",
-      "ahead": 208,
+      "ahead": 209,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 555,
+      "changed_file_count_vs_source_merge_base": 556,
       "knowledge_surface": true
     },
     {
@@ -77,14 +77,14 @@
     },
     {
       "branch": "alice-eipm-v1-query-edge-competitive-router",
-      "head": "93901b4ea0e3a9773e59047181414e507d3ed904",
-      "head_committed_at": "2026-09-19T22:13:31-05:00",
-      "head_message": "ci(n0): bind competitive router contracts to v0.27 state",
+      "head": "a6b263be31d822f8781cefadf450b63dcae00acd",
+      "head_committed_at": "2026-09-19T22:28:37-05:00",
+      "head_message": "ci(n0): guard direct competitive-router training objective",
       "status": "ahead",
-      "ahead": 159,
+      "ahead": 165,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 125,
+      "changed_file_count_vs_source_merge_base": 131,
       "knowledge_surface": true
     },
     {
@@ -233,14 +233,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "bf61864064ca27d3cc202dae1fa4121dc098b276",
-      "head_committed_at": "2026-09-19T22:14:15-05:00",
-      "head_message": "trace(fbm): capture competitive edge router localization",
+      "head": "a928c8c579846ab5e86c4c00c72db13c0d551902",
+      "head_committed_at": "2026-09-19T22:29:16-05:00",
+      "head_message": "trace(fbm): capture direct competitive-router training decision",
       "status": "diverged",
-      "ahead": 92,
+      "ahead": 93,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 91,
+      "changed_file_count_vs_source_merge_base": 92,
       "knowledge_surface": true
     },
     {
