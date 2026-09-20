@@ -1,0 +1,51 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.42",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.41.json",
+  "status": "FULL_EIPM_WORKLOAD_ENVELOPE_BOUND;QSRE_STATIC_TENSOR_AND_UPDATE_CONTRACT_FROZEN;CPU_NO_GRADIENT_REFERENCE_MECHANICS_AUTHORIZED",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-n0-clean-sheet-relational-execution-review",
+  "workload_envelope": "docs/research/eipm-full-eipm-workload-envelope-v0.1.md",
+  "workload_envelope_config": "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json",
+  "mechanics_decision": "docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md",
+  "mechanics_contract": "configs/eipm/n0/n0_v02_qsre_static_mechanics_contract_v0_1.json",
+  "architecture_selection_rule": "full-envelope sufficiency, not minimum current-benchmark repair",
+  "batch_workflow_rule": "batch engineering steps while preserving sequential scientific causality",
+  "mechanics_implementation_scope": {
+    "authorized": true,
+    "reference_only": true,
+    "cpu_only": true,
+    "learned_new_parameters": false,
+    "optimizer": false,
+    "gradient": false,
+    "gpu": false,
+    "test_open": false,
+    "challenge_open": false,
+    "private_identity_data": false
+  },
+  "next_batch": [
+    "materialize numeric mechanics fixtures",
+    "implement pure CPU reference mechanics evaluator",
+    "validate sparse support/source-target incidence/support-local readout/fallback/path/permutation/dynamic shapes",
+    "run CI",
+    "record mechanics result"
+  ],
+  "trainable_qsre_implementation_authorized": false,
+  "execution_policy": {
+    "architecture_research_authorized": true,
+    "cpu_no_gradient_reference_mechanics_authorized": true,
+    "trainable_qsre_implementation_authorized": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
