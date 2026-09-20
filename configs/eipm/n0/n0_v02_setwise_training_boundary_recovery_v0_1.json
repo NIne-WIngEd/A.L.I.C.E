@@ -1,0 +1,42 @@
+{
+  "schema": "alice.eipm.n0.setwise-training-boundary-recovery.v0.1",
+  "date": "2026-09-20",
+  "failed_execution": {
+    "magnolia_job_id": 575908,
+    "source_revision": "0614475f17c235ae08fcf0a22536ce56a6fd28d5",
+    "slurm_state": "FAILED",
+    "exit_code": "1:0",
+    "elapsed": "00:00:22",
+    "stderr": "competitive runtime qualification did not pass"
+  },
+  "classification": {
+    "model_failure": false,
+    "optimizer_created": false,
+    "gradient_performed": false,
+    "training_steps_executed": 0,
+    "gpu_kernel_training_evidence": false,
+    "infrastructure_or_boundary_contract_failure": true,
+    "root_cause": "setwise trainer inherited a stale competitive-router qualification status guard even though schema, hashes, and setwise qualification receipt were correct",
+    "stale_guard_expected": "PASS_COMPETITIVE_EDGE_ROUTER_NO_GRADIENT_RUNTIME_CONTRACT",
+    "correct_guard_expected": "PASS_SETWISE_QUERY_EDGE_ROUTER_NO_GRADIENT_RUNTIME_CONTRACT"
+  },
+  "why_cpu_qualification_did_not_catch_this": {
+    "runtime_qualification_scope": "architecture runtime invariants and no-gradient behavior",
+    "training_ci_scope_before_recovery": "static source-token and governance checks",
+    "missing_boundary_test": "the exact training executable was never run end-to-end through its pre-optimizer validation path on CPU",
+    "corrective_action": "add trainer-native --preflight-only mode and require exact CPU execution through lineage validation, data compilation, model construction, preservation evaluation, and parent-exactness checks before any replacement GPU authorization"
+  },
+  "preservation_policy": {
+    "failed_training_directory_must_be_preserved": true,
+    "failed_training_directory": "query-edge-setwise-router-v0.1/training-v0.1",
+    "delete_or_reuse_failed_directory": false,
+    "replacement_training_version_reserved": "training-v0.2",
+    "automatic_gpu_rerun_authorized": false
+  },
+  "next_action": "run exact CPU trainer preflight only; review receipt before deciding whether a replacement GPU run is valid",
+  "private_identity_data": false,
+  "private_identity_gradient": false,
+  "scale_authorized": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
