@@ -274,6 +274,36 @@ def modifiers(**kwargs: bool) -> dict[str, float]:
     return out
 
 
+
+def alternate_query(text: str) -> str:
+    replacements = [
+        ("Which record", "Identify the record"),
+        ("Which endpoint", "Identify the endpoint"),
+        ("Which receiving record", "Identify the receiving record"),
+        ("Which record or records", "Identify the record or records"),
+        ("Which records", "Identify the records"),
+        ("Where does", "At which record does"),
+        ("Start at", "Begin with"),
+        ("Starting at", "Beginning with"),
+        ("Beginning with", "Starting from"),
+        ("follow", "trace"),
+        ("Follow", "Trace"),
+        ("Return", "Give"),
+        ("Preserve", "Keep"),
+        ("use the relationship", "apply the relationship"),
+        ("Use the relationship", "Apply the relationship"),
+        ("Prefer", "Choose according to"),
+        ("latest applicable state", "most recent applicable state"),
+        ("stronger provenance and verification record", "better verified and better sourced record"),
+    ]
+    out = text
+    for old, new in replacements:
+        if old in out:
+            out = out.replace(old, new, 1)
+    if out == text:
+        out = "Using the same evidence and requested semantics, " + text[0].lower() + text[1:]
+    return out
+
 def make_row(
     *,
     split: str,
@@ -302,6 +332,7 @@ def make_row(
         "causal_group": f"{split}:{family}:{group:04d}",
         "variant": variant,
         "query": query,
+        "query_views": [query, alternate_query(query)],
         "fields": fields,
         "edges": edges,
         "operator_target": {
