@@ -828,6 +828,14 @@ class QSREProductionBinder(nn.Module):
             min=0.0,
             max=1.0,
         )
+        # Applicability and control are distinct signals. A DEFER row may have
+        # middling applicability while still explicitly declining relational
+        # execution; support must therefore also be gated by the continuous
+        # RELATIONAL control probability.
+        activation = (
+            activation
+            * operator.control_distribution[:, CONTROL_RELATIONAL]
+        )
         known_mass = (1.0 - operator.unknown_probability.max(dim=1).values).clamp(
             min=0.0,
             max=1.0,
