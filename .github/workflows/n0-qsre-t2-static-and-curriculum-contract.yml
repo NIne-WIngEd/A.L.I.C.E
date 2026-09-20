@@ -12,6 +12,9 @@ on:
       - "scripts/eipm/n0/evaluate_n0_v02_qsre_t2_operator_curriculum_v0_1.py"
       - "scripts/eipm/n0/prepare_n0_v02_qsre_t2_tokenized_v0_1.py"
       - "scripts/eipm/n0/run_n0_v02_prepare_qsre_t2_tokenized_v0_1.sh"
+      - "scripts/eipm/n0/run_n0_v02_resume_qsre_t2_tokenized_v0_1.sh"
+      - "scripts/eipm/n0/magnolia_udocker_exec.sh"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.51.json"
       - ".github/workflows/n0-qsre-t2-static-and-curriculum-contract.yml"
   workflow_dispatch:
 
@@ -25,6 +28,8 @@ jobs:
         run: |
           python -m py_compile             src/alice_personality/n0/qsre_t2_operator.py             scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_1.py             scripts/eipm/n0/evaluate_n0_v02_qsre_t2_operator_curriculum_v0_1.py             scripts/eipm/n0/prepare_n0_v02_qsre_t2_tokenized_v0_1.py
           bash -n scripts/eipm/n0/run_n0_v02_prepare_qsre_t2_tokenized_v0_1.sh
+          bash -n scripts/eipm/n0/run_n0_v02_resume_qsre_t2_tokenized_v0_1.sh
+          bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
 
       - name: Governance
         run: |
@@ -64,3 +69,47 @@ jobs:
       - name: Preparation import only
         run: |
           PYTHONPATH=src python scripts/eipm/n0/prepare_n0_v02_qsre_t2_tokenized_v0_1.py --help >/dev/null
+
+
+      - name: Magnolia Python import boundary
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          helper = Path("scripts/eipm/n0/magnolia_udocker_exec.sh").read_text()
+          runner = Path("scripts/eipm/n0/run_n0_v02_prepare_qsre_t2_tokenized_v0_1.sh").read_text()
+          resume = Path("scripts/eipm/n0/run_n0_v02_resume_qsre_t2_tokenized_v0_1.sh").read_text()
+
+          required_helper = [
+              'CONTAINER_PYTHONPATH="$ROOT/src:$ROOT/scripts/eipm/n0',
+              '--env="PYTHONPATH=$CONTAINER_PYTHONPATH"',
+          ]
+          missing = [x for x in required_helper if x not in helper]
+          if missing:
+              raise SystemExit("udocker PYTHONPATH boundary missing " + repr(missing))
+
+          expected_export = 'export PYTHONPATH="$ALICE_N0_REPO_ROOT/src:$ALICE_N0_REPO_ROOT/scripts/eipm/n0'
+          if expected_export not in runner:
+              raise SystemExit("T2 prep runner does not bind repo PYTHONPATH")
+          if expected_export not in resume:
+              raise SystemExit("T2 resume runner does not bind repo PYTHONPATH")
+          if "alice_personality_import=PASS" not in resume:
+              raise SystemExit("resume runner lacks exact import preflight")
+          print("PASS_MAGNOLIA_PYTHON_IMPORT_BOUNDARY")
+          PY
+
+      - name: Partial preparation recovery governance
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.51.json").read_text())
+          assert s["failed_preparation_attempt"]["classification"] == "INFRASTRUCTURE_IMPORT_BOUNDARY_FAILURE_NOT_MODEL_EVIDENCE"
+          assert s["recovery"]["preserve_existing_curriculum"] is True
+          assert s["recovery"]["delete_or_rebuild_existing_curriculum"] is False
+          assert s["execution_policy"]["cpu_tokenized_preparation_resume_authorized"] is True
+          assert s["execution_policy"]["gradient_authorized"] is False
+          assert s["execution_policy"]["gpu_training_authorized"] is False
+          assert s["execution_policy"]["causal_test_opening_authorized"] is False
+          assert s["private_identity_gradient"] is False
+          print("PASS_QSRE_T2_PARTIAL_RECOVERY_GOVERNANCE")
+          PY
