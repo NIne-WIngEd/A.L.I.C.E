@@ -1,0 +1,79 @@
+{
+  "schema": "alice.eipm.n0.final-self-validation-contract.v1",
+  "status": "FROZEN_NATIVE_N0_OBJECTIVE_GATE_BEFORE_PRODUCTION_RESULTS",
+  "owner": "alice_native_self_validation_harness",
+  "external_validator": false,
+  "identity_authority": false,
+  "private_identity_data": false,
+  "training_authorized": false,
+  "checkpoint_selection_authorized": false,
+  "threshold_changes_after_results_forbidden": true,
+  "corpus": {
+    "builder": "scripts/eipm/n0/build_n0_v02_final_self_validation_v1.py",
+    "expected_general_rows": 160,
+    "expected_relational_rows": 160,
+    "expected_total_rows": 320,
+    "relational_families": 20,
+    "rows_per_family": 8,
+    "final_only_relation_keys": [
+      "ENABLES",
+      "PREVENTS"
+    ],
+    "final_only_relation_rows": 16,
+    "query_views_per_relational_row": 2,
+    "generated_before_p1_results": true,
+    "visible_to_p1_p2_p3_p4": false
+  },
+  "qsre_gate": {
+    "downstream_row_success_accuracy_min": 0.9,
+    "family_min_success_min": 0.8,
+    "final_only_relation_success_min": 0.8,
+    "open_schema_success_min": 0.8,
+    "relation_sequence_exact_accuracy_min": 0.9,
+    "direction_accuracy_relational_min": 0.9,
+    "role_accuracy_relational_min": 0.95,
+    "traversal_accuracy_relational_min": 0.95,
+    "modifier_exact_accuracy_relational_min": 0.9,
+    "support_edge_f1_min": 0.95,
+    "path_focus_top1_accuracy_min": 0.95,
+    "unknown_fail_closed_accuracy_min": 0.95,
+    "paraphrase_pair_consistency_min": 0.9,
+    "nonrelational_false_assertion_rate_max": 0.01,
+    "outside_support_invariance_max_delta": 0.000001
+  },
+  "general_fabric_gate": {
+    "best_slot_semantic_cosine_min": 0.92,
+    "family_min_best_slot_semantic_cosine_min": 0.86,
+    "pooled_semantic_cosine_min": 0.9,
+    "family_min_pooled_semantic_cosine_min": 0.84,
+    "mean_pairwise_offdiag_slot_cosine_max": 0.75,
+    "mean_centered_slot_effective_rank_min": 0.12,
+    "mean_min_available_view_best_slot_semantic_cosine_min": 0.7,
+    "mean_disagreement_weighted_view_specialization_min": 0.5,
+    "mean_min_available_view_best_slot_attention_min": 0.1,
+    "mean_min_channel_best_slot_attention_min": 0.1,
+    "missing_view_attention_max": 0.000001
+  },
+  "integrated_relational_fabric_gate": {
+    "best_slot_semantic_cosine_min": 0.88,
+    "family_min_best_slot_semantic_cosine_min": 0.78,
+    "pooled_semantic_cosine_min": 0.84,
+    "family_min_pooled_semantic_cosine_min": 0.72,
+    "final_only_best_slot_semantic_cosine_min": 0.82,
+    "relational_required_mean_qsre_ablation_drop_min": 0.02,
+    "relational_required_family_min_qsre_ablation_drop_min": 0.002,
+    "final_only_mean_qsre_ablation_drop_min": 0.01,
+    "nonrelational_base_preservation_max_abs_delta": 0.000001
+  },
+  "objective_requirements": [
+    "general_semantic_structured_evidence_fabric_remains_capable",
+    "dynamic_relation_schema_executes_relations_never_seen_in_p1_p2_p3",
+    "natural_language_operator_induction_preserves_role_direction_order_modifiers_and_unknown",
+    "support_and_path_focus_are_predicted_without_oracle_inputs",
+    "relational_execution_is_consumed_by_existing_fusion_and_latent_fabric",
+    "ablation_of_qsre_before_fusion_causes_measurable_loss_when_relation_evidence_is_required",
+    "nonrelational_path_remains_exactly_preserved",
+    "no_private_identity_gradient_or_identity_authority_enters_n0"
+  ],
+  "pass_semantics": "All gate blocks must pass in the single frozen native evaluation. Passing authorizes transition to N1; failure stops and localizes N0 without posthoc threshold edits or automatic reruns."
+}
