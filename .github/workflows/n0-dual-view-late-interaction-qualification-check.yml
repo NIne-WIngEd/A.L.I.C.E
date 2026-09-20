@@ -1,0 +1,210 @@
+name: N0 Dual View Late Interaction Qualification Contract
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-dual-view-late-interaction-binding
+    paths:
+      - "src/alice_personality/n0/query_edge_dual_view_late_interaction.py"
+      - "src/alice_personality/n0/evidence_graph_query_edge_dual_view.py"
+      - "scripts/eipm/n0/qualify_n0_v02_dual_view_late_interaction_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_1.sh"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.33.json"
+      - ".github/workflows/n0-dual-view-late-interaction-qualification-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            src/alice_personality/n0/query_edge_dual_view_late_interaction.py \
+            src/alice_personality/n0/evidence_graph_query_edge_dual_view.py \
+            scripts/eipm/n0/qualify_n0_v02_dual_view_late_interaction_v0_1.py
+          bash -n \
+            scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_1.sh
+
+      - name: State authorizes qualification only
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.33.json"
+          ).read_text())
+          if s["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.33":
+              raise SystemExit("v0.33 schema drift")
+          if "DUAL_VIEW_LATE_INTERACTION_RUNTIME_QUALIFICATION_AUTHORIZED_NO_GRADIENT" not in s["status"]:
+              raise SystemExit("qualification-only state missing")
+          q=s["qualification"]
+          if q["optimizer_created"] is not False:
+              raise SystemExit("optimizer leaked into qualification state")
+          if q["gradient_performed"] is not False:
+              raise SystemExit("gradient leaked into qualification state")
+          if q["gpu_required"] is not False:
+              raise SystemExit("GPU leaked into qualification state")
+          if q["training_authorized"] is not False:
+              raise SystemExit("qualification self-authorized training")
+          e=s["execution_policy"]
+          for key in (
+              "optimizer_authorized",
+              "gradient_authorized",
+              "gpu_training_authorized",
+              "replacement_setwise_gpu_authorized",
+              "setwise_training_authorized",
+              "automatic_rerun_authorized",
+              "automatic_hotfix_authorized",
+              "heldout_opening_authorized",
+              "frozen_challenge_rerun_authorized",
+              "scale_authorized",
+              "semantic_retraining_authorized",
+              "graph_parent_retraining_authorized",
+              "private_identity_gradient_authorized",
+              "production_promotion_authorized",
+          ):
+              if e[key] is not False:
+                  raise SystemExit(f"premature authorization: {key}")
+          print("qualification_only_state=PASS")
+          PY
+
+      - name: Binding bypasses structured compression
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "src/alice_personality/n0/query_edge_dual_view_late_interaction.py"
+          ).read_text()
+          required=[
+              "_late_interaction_field_scores",
+              'query_final = stack[:, -1]',
+              "field_token_states",
+              "field_content_mask",
+              "field_valid_mask",
+              "edge_binding_scores = 0.5 * (source_binding + target_binding)",
+              "conditional_edge_probability",
+              "specialist_probability",
+              "noop_route_probability = 1.0 - specialist_probability",
+              "specialist_probability[:, None]",
+              "source_residual = edge_route_probability * source_proposal",
+              "target_residual = edge_route_probability * target_proposal",
+              "has_any_route = route_active.any(dim=-1)",
+              "scores.masked_fill(~field_valid_mask, -1.0e4)",
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("dual-view binding contract missing "+repr(missing))
+          forbidden=[
+              "route_set_encoder",
+              "SetwiseQueryEdgeBridge",
+              "CompetitiveQueryEdgeBridge",
+              "edge_route_logits = self.route_head",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("old router family leaked into dual-view bridge "+repr(present))
+          print("dual_view_binding_factorization=PASS")
+          PY
+
+      - name: Final layer is architectural not DEV-best hard coding
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.33.json"
+          ).read_text())
+          d=s["architectural_decision"]
+          if d["binding_layer"] != 16:
+              raise SystemExit("binding layer drift")
+          if d["binding_layer_choice_rationale"].find("DEV-best layer 2 is deliberately not hard-coded") < 0:
+              raise SystemExit("layer choice rationale drift")
+          if s["source_audit"]["token_late_interaction_all_layers_all_edge_accuracy"] != 1.0:
+              raise SystemExit("all-layer identifiability evidence drift")
+          if s["source_audit"]["final_layer_all_edge_accuracy"] != 1.0:
+              raise SystemExit("final-layer identifiability evidence drift")
+          print("final_layer_choice=PASS")
+          PY
+
+      - name: Qualification tests actual runtime invariants
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/qualify_n0_v02_dual_view_late_interaction_v0_1.py"
+          ).read_text()
+          required=[
+              "EXPECTED_AUDIT_SHA256",
+              "EXPECTED_CACHE_SHA256",
+              "dev_conditional_edge_all_four_top1_accuracy",
+              "dev_conditional_edge_same_relation_top1_accuracy",
+              "edge_binding_direction_reversal_max_delta",
+              "edge_permutation_equivariance_max_delta",
+              "route_probability_sum_max_error",
+              "specialist_probability_initialization_max_delta_from_half",
+              "exact_parent_field_weights",
+              "exact_parent_pooled_state",
+              "parent_parameters_exactly_unchanged",
+              "future_trainable_parameter_count",
+              '"training_authorized": False',
+              '"gpu_training_authorized": False',
+              '"causal_test_split_evaluated": False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("runtime qualification contract missing "+repr(missing))
+          forbidden=[
+              "torch.optim",
+              ".backward(",
+              "optimizer.step",
+              'torch.device("cuda")',
+              ".cuda()",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("training leaked into qualification "+repr(present))
+          print("runtime_qualification_only=PASS")
+          PY
+
+      - name: Runner is CPU-only and cannot submit training
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          r=Path(
+              "scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_1.sh"
+          ).read_text()
+          required=[
+              "v0_33_dual_view_cpu_qualification_gate=PASS",
+              "optimizer=false",
+              "gradient=false",
+              "gpu=false",
+              "training_authorized=false",
+              "causal_test_open=false",
+              "setwise_replacement_gpu=false",
+          ]
+          missing=[x for x in required if x not in r]
+          if missing:
+              raise SystemExit("runner contract missing "+repr(missing))
+          forbidden=[
+              "sbatch",
+              "RAYAN_UDOCKER_NVIDIA=1",
+              "magnolia_p100",
+          ]
+          present=[x for x in forbidden if x in r]
+          if present:
+              raise SystemExit("GPU/training submission leaked into runner "+repr(present))
+          print("cpu_runner_only=PASS")
+          PY
