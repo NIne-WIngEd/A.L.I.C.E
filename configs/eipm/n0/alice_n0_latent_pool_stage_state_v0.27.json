@@ -1,0 +1,90 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.27",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.26.json",
+  "status": "COMPETITIVE_EDGE_ROUTER_IMPLEMENTED;STATIC_CONTRACT_PASS;CPU_NO_GRADIENT_ROUTE_CONTROL_QUALIFICATION_AUTHORIZED;NO_TRAINING_AUTHORIZED",
+  "n0_complete": false,
+  "source_failure": {
+    "magnolia_job_id": 575888,
+    "source_revision": "cf15e2b13a5ca4d22a7070e54c95460959206c33",
+    "result_sha256": "99fc21394bdfbb8e3500bf0efa7c3ce836a2e071b8b11a1c733f73aa99b6fea2",
+    "result_status": "FAIL_QUERY_EDGE_CAUSAL_DEV_OR_PRESERVATION_STOP_NO_HELDOUT_NO_AUTOMATIC_HOTFIX",
+    "single_authorized_gpu_run_consumed": true,
+    "rerun_authorized": false
+  },
+  "current_branch": "alice-eipm-v1-query-edge-competitive-router",
+  "static_contract": {
+    "workflow": "N0 Query Edge Competitive Router Contract Check",
+    "workflow_run_id": 35485985155,
+    "workflow_conclusion": "success",
+    "validated_head": "6d0d4841aa98c22390f13a66ea5363553dff6f1f"
+  },
+  "architecture": {
+    "preserve_qualified_query_edge_cross_attention_representation": true,
+    "replace_only_routing_control_plane": true,
+    "competition_scope": "all_active_directed_edges_plus_parent_noop",
+    "explicit_parent_noop_route": true,
+    "route_distribution_directly_controls_runtime_residual_contribution": true,
+    "proxy_dot_product_router": false,
+    "independent_per_edge_tanh_gate": false,
+    "source_target_residuals_independent": true,
+    "zero_initialized_route_head": true,
+    "zero_initialized_source_residual_readout": true,
+    "zero_initialized_target_residual_readout": true,
+    "parent_graph_frozen_by_design": true,
+    "semantic_backbone_frozen_by_design": true,
+    "hard_parameter_ceiling": null
+  },
+  "runtime_qualification": {
+    "qualifier": "scripts/eipm/n0/qualify_n0_v02_query_edge_competitive_router_v0_1.py",
+    "runner": "scripts/eipm/n0/run_n0_v02_qualify_query_edge_competitive_router_v0_1.sh",
+    "cpu_only": true,
+    "whole_stage_udocker_required": true,
+    "source_failed_result_sha256": "99fc21394bdfbb8e3500bf0efa7c3ce836a2e071b8b11a1c733f73aa99b6fea2",
+    "parent_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+    "curriculum_sha256": "c3618a6022519af2a6a140f8b571281c68735fd1412c3ffa904979e9bbea2dcb",
+    "curriculum_manifest_sha256": "0d05f1dcd7d11cc1defdd0a4112c10e3b1d7febfaabf97fe611a854d6905b99a",
+    "preservation_anchors_sha256": "f5b3f438f776216f6dbd557a8c785aac70af38d256e3f7cf94f0f71a43f53e94",
+    "must_prove_exact_parent_field_weights": true,
+    "must_prove_exact_parent_pooled_state": true,
+    "must_prove_parent_tensors_unchanged": true,
+    "must_prove_route_probabilities_sum_to_one": true,
+    "must_prove_explicit_parent_noop_route": true,
+    "must_prove_route_probability_is_actual_runtime_source_control": true,
+    "must_prove_route_probability_is_actual_runtime_target_control": true,
+    "must_prove_cross_attention_edge_specificity_retained": true,
+    "training_authorized_on_pass": false
+  },
+  "execution_policy": {
+    "next_action": "run one CPU/no-gradient competitive-router qualification and review the receipt before any training-objective decision",
+    "cpu_no_gradient_runtime_qualification_authorized": true,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "data_policy": {
+    "existing_query_edge_train_dev_reused_for_causal_attribution": true,
+    "query_edge_test_open": false,
+    "frozen_challenge_open": false,
+    "preservation_dev_gradient": false,
+    "private_identity_data": false
+  },
+  "failure_policy": {
+    "local_hotfix_loop_forbidden": true,
+    "qualification_failure_must_be_classified_before_any_change": true,
+    "first_genuine_model_failure_stops_experiment": true,
+    "one_causal_change_per_new_gate": true,
+    "failed_training_artifacts_must_be_preserved": true
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
