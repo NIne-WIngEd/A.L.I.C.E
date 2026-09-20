@@ -21,6 +21,7 @@ from qsre_production_training_utils import (
     config_from_plan,
     load_plan,
     oracle_operator_from_targets,
+    focus_metrics,
     summarize_downstream,
     support_metrics,
     target_distribution_loss,
@@ -96,7 +97,7 @@ def bind(
     )
 
 
-def execute(*,split,indices,encoded,executor,operator_state,support,device):
+def execute(*,split,indices,encoded,executor,operator_state,support,focus,device):
     return executor(
         field_state=split["field_state"][indices].to(device).float(),
         field_metadata=split["field_metadata"][indices].to(device).float(),
@@ -111,7 +112,7 @@ def execute(*,split,indices,encoded,executor,operator_state,support,device):
         edge_provenance_match=split["edge_provenance_match"][indices].to(device).float(),
         schema_relation_state=encoded["schema_relation_state"],
         operator=operator_state,
-        focus_field_weight=split["focus_field_weight"][indices].to(device).float(),
+        focus_field_weight=focus.float(),
     )
 
 
@@ -121,7 +122,7 @@ def evaluate_mode(
     split,schema,encoded,schema_encoder,executor,operator_model,binder,
     config,max_steps,batch_size,device,predicted_operator:bool,
 ):
-    supports=[]; oracle_supports=[]; compatible=[]; probabilities=[]
+    supports=[]; oracle_supports=[]; compatible=[]; probabilities=[]; focuses=[]; oracle_focuses=[]
     for start in range(0,len(split["ids"]),batch_size):
         idx=torch.arange(start,min(start+batch_size,len(split["ids"])))
         # Strict across both paraphrase views.
@@ -144,8 +145,11 @@ def evaluate_mode(
             )
             out=execute(
                 split=split,indices=idx,encoded=encoded,executor=executor,
-                operator_state=op,support=bound["edge_support_weight"],device=device,
+                operator_state=op,support=bound["edge_support_weight"],
+                focus=bound["focus_field_weight"],device=device,
             )
+            focuses.append(bound["focus_field_weight"].cpu())
+            oracle_focuses.append(split["focus_field_weight"][idx].float())
             view_support.append(bound["edge_support_weight"].cpu())
             view_compat.append(bound["type_compatible"].cpu())
             view_prob.append(out["relational_probability"].cpu())
@@ -162,6 +166,17 @@ def evaluate_mode(
     probability=torch.cat(probabilities,dim=0)
 
     support=support_metrics(predicted=predicted,oracle=oracle,type_compatible=type_ok)
+    focus_predicted=torch.cat(focuses,dim=0)
+    focus_oracle=torch.cat(oracle_focuses,dim=0)
+    traversal=torch.cat(
+        [split["traversal_target"].long(),split["traversal_target"].long()],
+        dim=0,
+    )
+    focus=focus_metrics(
+        predicted=focus_predicted,
+        oracle=focus_oracle,
+        traversal_target=traversal,
+    )
     target=torch.cat([split["target_distribution"].float(),split["target_distribution"].float()],dim=0)
     control=torch.cat([split["control_target"].long(),split["control_target"].long()],dim=0)
     families=list(split["families"])+list(split["families"])
@@ -174,7 +189,7 @@ def evaluate_mode(
         families=families,open_schema=open_schema,causal_groups=groups,
     )
     downstream.pop("row_success_tensor",None)
-    return {"support":support,"downstream":downstream}
+    return {"support":support,"focus":focus,"downstream":downstream}
 
 
 @torch.no_grad()
@@ -190,8 +205,11 @@ def eligible(metrics:dict,thresholds:dict)->bool:
         o["support"]["edge_f1"]>=thresholds["oracle_support_edge_f1"]
         and o["support"]["exact_set_accuracy"]>=thresholds["oracle_support_exact_set_accuracy"]
         and o["support"]["type_violation_rate"]<=thresholds["type_violation_rate_max"]
+        and o["focus"]["path_focus_top1_accuracy"]>=thresholds["oracle_path_focus_top1_accuracy"]
+        and o["focus"]["path_focus_exact_set_accuracy"]>=thresholds["oracle_path_focus_exact_set_accuracy"]
         and o["downstream"]["row_success_accuracy"]>=thresholds["oracle_downstream_row_success_accuracy"]
         and p["support"]["edge_f1"]>=thresholds["predicted_operator_support_edge_f1"]
+        and p["focus"]["path_focus_top1_accuracy"]>=thresholds["predicted_operator_path_focus_top1_accuracy"]
         and p["downstream"]["row_success_accuracy"]>=thresholds["predicted_operator_downstream_row_success_accuracy"]
     )
 
@@ -201,7 +219,9 @@ def score_tuple(metrics:dict)->tuple[float,...]:
     return (
         o["support"]["edge_f1"],
         o["support"]["exact_set_accuracy"],
+        o["focus"]["path_focus_top1_accuracy"],
         p["support"]["edge_f1"],
+        p["focus"]["path_focus_top1_accuracy"],
         p["downstream"]["row_success_accuracy"],
         o["downstream"]["row_success_accuracy"],
     )
@@ -312,6 +332,17 @@ def main()->None:
                 )
             else:
                 support_loss=bound["support_logits"].sum()*0.0
+            path_rows=train["traversal_target"][idx].to(device).eq(1)
+            field_valid=train["field_valid_mask"][idx].to(device).bool()
+            focus_target=train["focus_field_weight"][idx].to(device).float()
+            focus_supervised=path_rows[:,None] & field_valid
+            if bool(focus_supervised.any()):
+                focus_loss=F.binary_cross_entropy_with_logits(
+                    bound["focus_logits"][focus_supervised],
+                    focus_target[focus_supervised],
+                )
+            else:
+                focus_loss=bound["focus_logits"].sum()*0.0
             impossible=valid & ~bound["type_compatible"]
             type_penalty=(
                 torch.sigmoid(bound["support_logits"][impossible]).mean()
@@ -320,7 +351,8 @@ def main()->None:
             )
             downstream=execute(
                 split=train,indices=idx,encoded=encoded_train,executor=executor,
-                operator_state=oracle_op,support=bound["edge_support_weight"],device=device,
+                operator_state=oracle_op,support=bound["edge_support_weight"],
+                focus=bound["focus_field_weight"],device=device,
             )
             down_loss=target_distribution_loss(
                 downstream["relational_probability"],
@@ -328,6 +360,7 @@ def main()->None:
             )
             view_losses.append(
                 float(weights["support_bce"])*support_loss
+                +float(weights["focus_bce"])*focus_loss
                 +float(weights["downstream"])*down_loss
                 +float(weights["type_violation"])*type_penalty
             )
