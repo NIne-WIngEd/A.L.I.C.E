@@ -19,13 +19,25 @@ jobs:
 
       - name: Syntax
         run: |
-          python -m py_compile             scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_2.py             scripts/eipm/n0/audit_n0_v02_qsre_t2_shortcuts_v0_1.py
+          python -m py_compile \
+            scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_2.py \
+            scripts/eipm/n0/build_n0_v02_qsre_t2_operator_challenge_v0_2.py \
+            scripts/eipm/n0/audit_n0_v02_qsre_t2_shortcuts_v0_1.py
 
-      - name: Build exact T1 and realistic T2 v0.2
+      - name: Build exact T1, realistic T2 v0.2, and locked challenge
         run: |
-          python scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_2.py             --contract configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_2.json             --output /tmp/t1.jsonl
-          python scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_2.py             --contract configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_2.json             --t1-curriculum /tmp/t1.jsonl             --output /tmp/t2v02.jsonl
-          python scripts/eipm/n0/build_n0_v02_qsre_operator_reality_corpus_v0_1.py             --output /tmp/reality.jsonl
+          python scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_2.py \
+            --contract configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_2.json \
+            --output /tmp/t1.jsonl
+          python scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_2.py \
+            --contract configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_2.json \
+            --t1-curriculum /tmp/t1.jsonl \
+            --output /tmp/t2v02.jsonl
+          python scripts/eipm/n0/build_n0_v02_qsre_operator_reality_corpus_v0_1.py \
+            --output /tmp/reality.jsonl
+          python scripts/eipm/n0/build_n0_v02_qsre_t2_operator_challenge_v0_2.py \
+            --output /tmp/challenge.jsonl
+          test "$(wc -l < /tmp/challenge.jsonl)" -eq 60
 
       - name: Verify lineage and pair semantics
         run: |
@@ -38,6 +50,7 @@ jobs:
 
           t1=read("/tmp/t1.jsonl")
           t2=read("/tmp/t2v02.jsonl")
+          challenge=read("/tmp/challenge.jsonl")
           by_t1={r["id"]:r for r in t1}
           groups=defaultdict(list)
           for r in t2:
@@ -61,12 +74,18 @@ jobs:
           assert sum(r["split"]=="dev" for r in t2)==288
           assert all(len(rows)==2 for rows in groups.values())
           assert sum(bool(r["cue_collision"]) for r in t2) >= 100
+          assert len(challenge)==60
+          assert all(r["training_allowed"] is False for r in challenge)
+          assert all(r["private_identity_data"] is False for r in challenge)
           print("PASS_QSRE_T2_V02_LINEAGE_AND_PAIR_SEMANTICS")
           PY
 
       - name: Shallow shortcut and reality transfer diagnostics
         run: |
-          python scripts/eipm/n0/audit_n0_v02_qsre_t2_shortcuts_v0_1.py             --t2-curriculum /tmp/t2v02.jsonl             --reality-corpus /tmp/reality.jsonl             --output /tmp/shortcut.json
+          python scripts/eipm/n0/audit_n0_v02_qsre_t2_shortcuts_v0_1.py \
+            --t2-curriculum /tmp/t2v02.jsonl \
+            --reality-corpus /tmp/reality.jsonl \
+            --output /tmp/shortcut.json
           python - <<'PY'
           import json
           r=json.load(open("/tmp/shortcut.json"))
