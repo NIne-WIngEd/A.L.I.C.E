@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-qsre-reality-audit-implemented-v056-20260920-002
-- Question: Refresh A.L.I.C.E. N0 continuity to authoritative state v0.56. The CPU/GPU reality-gap and data-validity audit is now fully implemented as one coherent CPU/no-gradient workflow on branch alice-eipm-v1-qsre-t2-operator-learning. Static qualification workflow n0-qsre-reality-audit-static-contract run 35536054506 succeeded at source core 31d758b7d1734911f332375f0c264f35cf193abc. Initial run 35535990783 failed only because the GitHub runner imported QSRE modules before CPU torch installation; no scientific source changed and no model evidence was produced. The implemented batch includes: a 56-row curated public natural-language operator-reality corpus; shallow shortcut attacks comparing T2 TRAIN->T2 DEV and T2 TRAIN->reality; frozen 17-layer semantic nearest-centroid probes with no gradient; actual Bash/uDocker behavioral parity; 480-case batched T2-to-frozen-T1 totality fuzz; and one precommitted combined architecture decision. State v0.56 authorizes exactly one Magnolia CPU node job using scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_reality_audit_v0_1.sbatch. GPU, optimizer, gradient, T1 rerun, T3/learned support, TEST/challenge, private identity gradient, and promotion remain closed. The prior v0.54 T2 recovery remains revoked and recovery scripts remain fail-closed. Durable alice-context commit 12b40cdd8f45f8ed8eddae6dbb1586b09a5a1393. Graphify is routing/navigation only; verify consequential claims in original branch files.
+- Request: n0-qsre-t2-v02-realistic-pipeline-qualified-20260920-003
+- Question: Refresh A.L.I.C.E. N0 continuity to the qualified realistic QSRE T2 v0.2 frontier. Magnolia reality audit job 575950 completed cleanly: runtime behavioral parity PASS and 480-case T2->T1 totality fuzz PASS. The v0.56 automatic decision to reopen the frozen semantic representation is not ratified as a semantic-backbone failure because its probe mean-pooled each hidden layer and used centroid classification, while T2 consumes token-level states from all 17 hidden outputs with learned cross-attention. Prior exact evidence already showed token/mid-layer relation-role signal beyond pooled readouts: job 575801 token late interaction 0.6875 vs pooled 0.5625; job 575804 restored causes/supports in intermediate layers; interrupted job 575933 showed T2 step25 learned control 0.8854, relational role 0.7773, operation 0.6406 from the frozen token stack before an evaluator crash invalidated the model gate. State v0.57 therefore keeps the semantic checkpoint frozen for one stronger causal T2 experiment. T2 v0.2 curriculum SHA 5aa8f0aa3210466964f38b14081c71c1d3c58f4405247067c76a7cdfe115963c, 720 TRAIN/288 DEV, 168 cue-collision rows, natural entity-rich public language, exact same T1 structural distribution, no private data. Static curriculum run 35537157415 SUCCESS; locked challenge run 35537274555 SUCCESS. Fresh locked operator-only challenge has 60 rows and SHA 197cebe5ed4c59455839db5b2822582a03021c92a94670e1aede568278c1f205 and opens only after a perfect governed DEV pass. T2 v0.2 preserves exact v0.1 architecture, optimizer, LR, loss, seed, steps, cadence, eligibility and selection. Pipeline CI first run 35538203657 failed only on wording metadata mismatch in continuous-objective role text; corrected without scientific change. Pipeline run 35538256393 SUCCESS. Qualified experiment revision is 9676c4cfd13d18dc185d06b893c9a151c0ca5cff. One owner-side launcher scripts/eipm/n0/launch_n0_v02_qsre_t2_realistic_pipeline_v0_2.sh submits CPU preparation then one dependent P100 job with afterok; no intermediate human gate. GPU job binds only the exact prepared-cache SHA, runs exactly once, and if DEV passes opens the prelocked challenge in the same job. If DEV fails, challenge remains closed. T3, causal TEST, frozen challenge, private identity gradient, LR/step/size search, rerun/hotfix chain, and promotion remain closed. Durable alice-context commit 723f6d3d85a56c712c337c2752dd9aa439dc4df8. Graphify is navigation-only; verify consequential claims in original branch files.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -18,50 +18,45 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-qsre-t2-operator-learning @ 679decb9ce4869eb6c0969c00110046af6017a66 — state(n0): authorize one coherent CPU QSRE reality audit
+- alice-eipm-v1-qsre-t2-operator-learning @ 9676c4cfd13d18dc185d06b893c9a151c0ca5cff — train(n0): preserve exact T2 continuous objective contract
 
 ## Source pointers
 
-- [192] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md — N0 CPU/GPU Reality Gap and Data Validity Audit v0.1
-  - status:  architecture/data audit authority; all new gradient/GPU work frozen
-- [169] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T2_CPU_GPU_REALITY_AUDIT_ACTIVE.md — N0 QSRE T2 CPU/GPU Reality-Gap Audit Active
-  - status:  all T2 GPU/gradient work frozen pending one coherent reality/data audit
-- [168] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [324] alice-context:docs/chat-context/2026-09-16/sol/FULL_SCALE_FUSION_JOB575619_AND_FROZEN_CHALLENGE.md — Full-Scale Fusion Job 575619 + Frozen Challenge Gate — 2026-09-16
+- [306] alice-context:docs/chat-context/2026-09-15/sol/N0_V02_HELDOUT_PASS_AND_NOVEL_CHALLENGE_GATE.md — N0 v0.2 held-out teacher-dev pass and novel challenge gate
+- [292] alice-context:docs/chat-context/2026-09-14/sol/N0_V02_FIRST_TRANCHE_PASS_AND_DEV_CHALLENGE.md — N0 v0.2 First Tranche PASS → Held-Out Dev Challenge
+- [280] alice-context:docs/chat-context/2026-09-16/sol/N0_LATENT_V021_DEV_PASS_CONFIRMATORY_CHALLENGE_PENDING.md — N0 Latent Pool v0.2.1 — Dev Pass, Confirmatory Challenge Pending
+- [259] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md — Magnolia 2×P100 N0 Runtime Smoke — Job 575527
+- [259] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md — Magnolia single-P100 N0 teacher diagnostic — job 575565
+- [245] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
+  - status:  one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized
+- [242] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md — Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571
+  - status: completed payload
+- [235] alice-eipm-v1-build:docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md — N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16
+- [229] alice-context:docs/chat-context/2026-09-15/sol/N0_V02_DEV_CHALLENGE_STALE_NAMESPACE_COLLISION.md — N0 v0.2 Teacher-Dev Challenge — Stale Namespace Collision
+- [229] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [164] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md — N0 relation-conditioned multi-layer training decision v0.1
-- [158] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_REALITY_AUDIT_IMPLEMENTED_V056.md — N0 QSRE reality audit implemented and CPU run authorized
-- [143] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [143] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [143] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [143] alice-eipm-v1-qsre-t1-executor-training:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [143] alice-eipm-v1-qsre-t2-operator-learning:.github/workflows/n0-qsre-reality-audit-static-contract.yml — n0-qsre-reality-audit-static-contract.yml
-- [143] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md — QSRE Static Tensor Interface and Mechanics Decision v0.1
-  - status:  authorizes CPU/no-gradient reference mechanics only
-- [143] alice-eipm-v1-query-edge-binding-identifiability-audit:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [229] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
 
 ## Graphify navigation hints
 
 - audit_n0_v02_qsre_t2_t1_boundary_fuzz_v0_1.py -> scripts/eipm/n0/audit_n0_v02_qsre_t2_t1_boundary_fuzz_v0_1.py:L1
-- build_n0_v02_qsre_operator_reality_corpus_v0_1.py -> scripts/eipm/n0/build_n0_v02_qsre_operator_reality_corpus_v0_1.py:L1
-- run_n0_v02_qsre_t2_operator_training_v0_1.sh -> scripts/eipm/n0/run_n0_v02_qsre_t2_operator_training_v0_1.sh:L1
+- launch_n0_v02_qsre_t2_realistic_pipeline_v0_2.sh -> scripts/eipm/n0/launch_n0_v02_qsre_t2_realistic_pipeline_v0_2.sh:L1
+- launch_n0_v02_qsre_t2_realistic_pipeline_v0_2.sh script -> scripts/eipm/n0/launch_n0_v02_qsre_t2_realistic_pipeline_v0_2.sh:L1
+- AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
 - train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py -> scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py:L1
 - canonical_sha256() -> src/cognitive_kernel/canonical.py:L39
-- diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py -> scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py:L1
-- AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
+- Regression for Magnolia job 575673 mixed-autocast evaluation failure. -> tests/eipm/test_n0_adaptive_multi_view_latent_pool_objectives_v0_2.py:L65
+- Return a UTC ISO-8601 timestamp without fractional seconds. -> src/alice_information/contracts.py:L94
+- run_final_frozen_challenge_after_graph_arbitration_v0_1.py -> scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py:L1
+- MemoryAlreadyExistsError -> src/alice_memory/service.py:L58
 - test_memory_identity_host_learning_architecture.py -> tests/governance/test_memory_identity_host_learning_architecture.py:L1
+- attention.py -> src/cognitive_kernel/attention.py:L1
 - audit() -> scripts/audit_capability_barriers.py:L521
-- authoritative_retrieval_digest() -> src/alice_memory/lexical_index.py:L118
-- .authorizes() -> src/cognitive_kernel/guest.py:L286
-- run_bash() -> scripts/eipm/n0/audit_n0_v02_qsre_runtime_parity_v0_1.py:L10
-- BatchFakeClient -> tests/phase1/test_auto_review_fast.py:L19
-- _batched() -> src/alice_vault/auto_review.py:L429
+- test_automatic_retry_is_rejected() -> tests/phase3/test_conversation_orchestration_policy.py:L85
+- .backbone() -> src/alice_personality/n0/v02_model.py:L48
 - test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
-- branch_forward() -> scripts/eipm/n0/train_n0_v02_structured_state_pilot.py:L287
 
 ## External/private routing
 
