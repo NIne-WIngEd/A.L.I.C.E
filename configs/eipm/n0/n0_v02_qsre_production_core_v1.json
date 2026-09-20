@@ -1,6 +1,6 @@
 {
   "schema": "alice.eipm.n0.qsre-production-core.v1",
-  "status": "ARCHITECTURE_CLOSED_FOR_IMPLEMENTATION_DESIGN_NO_GRADIENT",
+  "status": "ARCHITECTURE_CLOSED_PRODUCTION_IMPLEMENTATION_PRECOMMITTED",
   "authority_doc": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
   "workload_envelope": "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json",
   "proof_obligations": "configs/eipm/n0/n0_v02_relational_execution_proof_obligations_v0_1.json",
@@ -32,7 +32,13 @@
         "PROVENANCE_CONSTRAINT"
       ],
       "modifiers_composable": true,
-      "fixed_applicability_centers": false
+      "fixed_applicability_centers": false,
+      "direction_factor": [
+        "FORWARD",
+        "REVERSE",
+        "BIDIRECTIONAL"
+      ],
+      "direction_independent_from_role": true
     },
     "binder": {
       "token_level_late_interaction": true,
@@ -40,7 +46,9 @@
       "adaptive_exact_zero_support": true,
       "fixed_top_k": false,
       "zero_one_many_ambiguous_support": true,
-      "supervised_score_is_runtime_score": true
+      "supervised_score_is_runtime_score": true,
+      "learned_path_focus_from_query_field_late_interaction": true,
+      "oracle_focus_required_at_end_to_end": false
     },
     "executor": {
       "learned_relation_id_embedding_is_semantic_authority": false,
@@ -50,12 +58,31 @@
       "explicit_source_target_positions": true,
       "composable_traversal_and_arbitration": true,
       "plural_execution_supported": true,
-      "support_local_readout": true
+      "support_local_readout": true,
+      "forward_reverse_bidirectional_path_execution": true,
+      "path_role_semantics_direction_aware": true
     },
     "fallback": {
       "separate_from_support_selection": true,
       "exact_nonrelational_pass_through": true,
-      "no_parent_global_softmax_override": true
+      "no_parent_global_softmax_override": true,
+      "calibrated_execution_confidence_preserved": true,
+      "second_confidence_router": false
+    },
+    "semantic_interface": {
+      "semantic_width": 640,
+      "qsre_model_width": 640,
+      "compression_before_relational_execution": false,
+      "full_hidden_stack_for_operator": true,
+      "token_states_for_binding": true
+    },
+    "fusion_bridge": {
+      "zero_parameter": true,
+      "preserves_parent_evidence_tokens": true,
+      "appends_grounded_relational_semantic_token": true,
+      "appends_native_relational_summary_token": true,
+      "relational_summary_width": 640,
+      "arbitrary_hard_confidence_router": false
     }
   },
   "static_proof_obligations": [
@@ -73,7 +100,12 @@
     "field_edge_permutation",
     "exact_nonrelational_pass_through",
     "totality_fuzz",
-    "w1_w15_interface_mapping_bound_to_explicit_map"
+    "w1_w15_interface_mapping_bound_to_explicit_map",
+    "learned_path_focus_no_oracle_at_end_to_end",
+    "reverse_path_source_execution",
+    "direction_factor_independent_from_role",
+    "calibrated_relational_mass_survives_normalization",
+    "native_relational_summary_reaches_n0_fabric"
   ],
   "training_sequence": [
     "P1_schema_conditioned_executor_oracle_operator_oracle_support",
