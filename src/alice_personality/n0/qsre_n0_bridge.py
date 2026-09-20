@@ -11,6 +11,7 @@ class QSREN0BridgeOutput:
     evidence_tokens: Tensor
     evidence_mask: Tensor
     relational_semantic_token: Tensor
+    relational_summary_token: Tensor
     relational_token_valid: Tensor
     relational_execution_confidence: Tensor
     relational_field_distribution: Tensor
@@ -50,6 +51,7 @@ class QSREN0EvidenceBridge(nn.Module):
         field_semantic_state: Tensor,
         field_valid_mask: Tensor,
         relational_probability: Tensor,
+        relational_summary: Tensor | None = None,
     ) -> QSREN0BridgeOutput:
         if base_evidence_tokens.ndim != 3:
             raise ValueError("base_evidence_tokens must be [B,E,D]")
@@ -78,6 +80,14 @@ class QSREN0EvidenceBridge(nn.Module):
             raise ValueError("relational probability contains nonfinite values")
         if bool((relational_probability < -1.0e-8).any()):
             raise ValueError("relational probability must be nonnegative")
+        if relational_summary is not None:
+            if relational_summary.shape != (batch, self.semantic_dim):
+                raise ValueError(
+                    "relational_summary must match N0 semantic width; "
+                    "Production QSRE is configured at the full semantic width"
+                )
+            if not bool(torch.isfinite(relational_summary).all()):
+                raise ValueError("relational_summary contains nonfinite values")
 
         valid_probability = (
             relational_probability
@@ -105,12 +115,28 @@ class QSREN0EvidenceBridge(nn.Module):
         token = semantic_token * execution_confidence.unsqueeze(-1)
         token_valid = execution_confidence > self.activation_threshold
 
+        # Preserve two complementary relational signals when the executor
+        # exposes its native summary: (1) a source-grounded semantic answer
+        # token and (2) the executor's relation/path/operator state. Both carry
+        # the same calibrated execution confidence and neither replaces the
+        # exact parent evidence tokens.
+        if relational_summary is None:
+            summary_token = torch.zeros_like(token)
+            extra_tokens = token.unsqueeze(1)
+            extra_mask = token_valid.unsqueeze(1)
+        else:
+            summary_token = (
+                relational_summary * execution_confidence.unsqueeze(-1)
+            )
+            extra_tokens = torch.stack([token, summary_token], dim=1)
+            extra_mask = torch.stack([token_valid, token_valid], dim=1)
+
         augmented_tokens = torch.cat(
-            [base_evidence_tokens, token.unsqueeze(1)],
+            [base_evidence_tokens, extra_tokens],
             dim=1,
         )
         augmented_mask = torch.cat(
-            [base_evidence_mask, token_valid.unsqueeze(1)],
+            [base_evidence_mask, extra_mask],
             dim=1,
         )
 
@@ -118,6 +144,7 @@ class QSREN0EvidenceBridge(nn.Module):
             evidence_tokens=augmented_tokens,
             evidence_mask=augmented_mask,
             relational_semantic_token=token,
+            relational_summary_token=summary_token,
             relational_token_valid=token_valid,
             relational_execution_confidence=execution_confidence,
             relational_field_distribution=normalized,
@@ -130,6 +157,8 @@ class QSREN0EvidenceBridge(nn.Module):
             "base_evidence_tokens_preserved_exactly": True,
             "nonrelational_pass_through_exact": True,
             "relational_token_is_grounded_in_original_field_semantics": True,
+            "native_relational_summary_channel_supported": True,
+            "native_relational_summary_requires_full_semantic_width": True,
             "learned_adapter_bottleneck": False,
             "field_count_ceiling": None,
             "support_count_ceiling": None,
