@@ -1,13 +1,13 @@
 {
-  "request_id": "n0-query-edge-bridge-cpu-qualification-ready-20260919-001",
-  "question": "Refresh A.L.I.C.E. EIPM N0 continuity to the new query-edge bridge frontier. Resolve maximal experiment branch alice-eipm-v1-query-edge-cross-attention-bridge at c6170597e2b55cc378c5d8cf1560ca87802ea085, CI run 35463216917 success, authoritative state v0.23, and newest alice-context handoff N0_QUERY_EDGE_BRIDGE_CPU_QUALIFICATION_READY.md. Preserve the source failure: Magnolia job 575825, result SHA 6f2f3fe6ddab764d947a7c63fe94ef24d5cd77e3cc68821c8678fdb8f2ea36bd, query-only anti-symmetric endpoint residual rejected. The new Query-Edge Cross-Attention Bridge conditions query-token attention on actual source/target graph states plus relation, emits independent source/target residuals behind a zero-initialized edge gate, and leaves the proven dual-endpoint parent frozen. Fresh causal data has 8 fields, 4 edges, 3 same-relation edges, a different-relation distractor, rotating relevant edge, and explicit routing supervision. Preservation anchors enumerate TRAIN-only ordinary/endpoint rows; DEV stays evaluation-only. Only one CPU/no-gradient runtime qualification is authorized. Optimizer, gradient, GPU training, heldout/test, frozen challenge, scale, parent/semantic retraining, private identity gradient, promotion and N0 completion remain unauthorized. Graphify is navigation-only and must point to original sources.",
+  "request_id": "n0-query-edge-one-p100-training-ready-20260920-001",
+  "question": "Refresh A.L.I.C.E. EIPM N0 continuity to the routed query-edge training frontier. Resolve maximal experiment branch alice-eipm-v1-query-edge-cross-attention-bridge at cf15e2b13a5ca4d22a7070e54c95460959206c33, training-contract CI run 35484969093 success, authoritative state v0.24, training decision n0_v02_query_edge_training_decision_v0_1.json, and newest alice-context handoff N0_QUERY_EDGE_ONE_P100_TRAINING_READY.md. Preserve runtime qualification receipt SHA b1e073fc6226ac3f3aa88ed10d4ed31059b6e27b0338aa7738c686239f33624f and its PASS_QUERY_EDGE_BRIDGE_NO_GRADIENT_RUNTIME_CONTRACT status. The qualified architecture remains unchanged. One P100 run is authorized with query_edge_bridge only trainable. Objective: causal field-selection CE + margin, explicit same-relation relevant-edge routing supervision, frozen-parent KL distillation on ordinary and endpoint TRAIN-only anchors, and irrelevant-edge gate no-op penalty. Gradient surgery is deliberately absent. Preservation DEV, causal DEV, causal TEST, frozen challenge and private identity data remain non-gradient. Heldout/test, frozen challenge, scale, parent/semantic retraining, private identity gradient, production promotion and N0 completion remain unauthorized. Any genuine failure stops the run and reopens the larger objective/boundary question rather than triggering a hotfix. Graphify remains navigation-only and must point to original branch-qualified sources.",
   "budget": 1800,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-19T19:05:52.172709+00:00",
+  "generated_at_utc": "2026-09-20T02:50:32.200939+00:00",
   "authority": "navigation-only",
   "routing_decision": {
     "graphify_mode": "auto",
@@ -33,105 +33,91 @@
   },
   "catalog_result": {
     "schema": "alice-context-catalog-query-v1",
-    "question": "Refresh A.L.I.C.E. EIPM N0 continuity to the new query-edge bridge frontier. Resolve maximal experiment branch alice-eipm-v1-query-edge-cross-attention-bridge at c6170597e2b55cc378c5d8cf1560ca87802ea085, CI run 35463216917 success, authoritative state v0.23, and newest alice-context handoff N0_QUERY_EDGE_BRIDGE_CPU_QUALIFICATION_READY.md. Preserve the source failure: Magnolia job 575825, result SHA 6f2f3fe6ddab764d947a7c63fe94ef24d5cd77e3cc68821c8678fdb8f2ea36bd, query-only anti-symmetric endpoint residual rejected. The new Query-Edge Cross-Attention Bridge conditions query-token attention on actual source/target graph states plus relation, emits independent source/target residuals behind a zero-initialized edge gate, and leaves the proven dual-endpoint parent frozen. Fresh causal data has 8 fields, 4 edges, 3 same-relation edges, a different-relation distractor, rotating relevant edge, and explicit routing supervision. Preservation anchors enumerate TRAIN-only ordinary/endpoint rows; DEV stays evaluation-only. Only one CPU/no-gradient runtime qualification is authorized. Optimizer, gradient, GPU training, heldout/test, frozen challenge, scale, parent/semantic retraining, private identity gradient, promotion and N0 completion remain unauthorized. Graphify is navigation-only and must point to original sources.",
+    "question": "Refresh A.L.I.C.E. EIPM N0 continuity to the routed query-edge training frontier. Resolve maximal experiment branch alice-eipm-v1-query-edge-cross-attention-bridge at cf15e2b13a5ca4d22a7070e54c95460959206c33, training-contract CI run 35484969093 success, authoritative state v0.24, training decision n0_v02_query_edge_training_decision_v0_1.json, and newest alice-context handoff N0_QUERY_EDGE_ONE_P100_TRAINING_READY.md. Preserve runtime qualification receipt SHA b1e073fc6226ac3f3aa88ed10d4ed31059b6e27b0338aa7738c686239f33624f and its PASS_QUERY_EDGE_BRIDGE_NO_GRADIENT_RUNTIME_CONTRACT status. The qualified architecture remains unchanged. One P100 run is authorized with query_edge_bridge only trainable. Objective: causal field-selection CE + margin, explicit same-relation relevant-edge routing supervision, frozen-parent KL distillation on ordinary and endpoint TRAIN-only anchors, and irrelevant-edge gate no-op penalty. Gradient surgery is deliberately absent. Preservation DEV, causal DEV, causal TEST, frozen challenge and private identity data remain non-gradient. Heldout/test, frozen challenge, scale, parent/semantic retraining, private identity gradient, production promotion and N0 completion remain unauthorized. Any genuine failure stops the run and reopens the larger objective/boundary question rather than triggering a hotfix. Graphify remains navigation-only and must point to original branch-qualified sources.",
     "query_tokens": [
       "refresh",
       "eipm",
       "continuity",
-      "new",
+      "routed",
       "query-edge",
-      "bridge",
+      "training",
       "frontier",
       "resolve",
       "maximal",
       "experiment",
       "branch",
       "alice-eipm-v1-query-edge-cross-attention-bridge",
-      "c6170597e2b55cc378c5d8cf1560ca87802ea085",
+      "cf15e2b13a5ca4d22a7070e54c95460959206c33",
+      "training-contract",
       "run",
-      "35463216917",
+      "35484969093",
       "success",
       "authoritative",
       "state",
-      "v0.23",
+      "v0.24",
+      "training",
+      "decision",
+      "n0_v02_query_edge_training_decision_v0_1.json",
       "newest",
       "alice-context",
       "handoff",
-      "n0_query_edge_bridge_cpu_qualification_ready.md",
+      "n0_query_edge_one_p100_training_ready.md",
       "preserve",
-      "source",
-      "failure",
-      "magnolia",
-      "job",
-      "575825",
-      "result",
-      "sha",
-      "6f2f3fe6ddab764d947a7c63fe94ef24d5cd77e3cc68821c8678fdb8f2ea36bd",
-      "query-only",
-      "anti-symmetric",
-      "endpoint",
-      "residual",
-      "rejected",
-      "new",
-      "query-edge",
-      "cross-attention",
-      "bridge",
-      "conditions",
-      "query-token",
-      "attention",
-      "actual",
-      "source/target",
-      "graph",
-      "states",
-      "plus",
-      "relation",
-      "emits",
-      "independent",
-      "source/target",
-      "residuals",
-      "behind",
-      "zero-initialized",
-      "edge",
-      "gate",
-      "leaves",
-      "proven",
-      "dual-endpoint",
-      "parent",
-      "frozen",
-      "fresh",
-      "causal",
-      "data",
-      "fields",
-      "edges",
-      "same-relation",
-      "edges",
-      "different-relation",
-      "distractor",
-      "rotating",
-      "relevant",
-      "edge",
-      "explicit",
-      "routing",
-      "supervision",
-      "preservation",
-      "anchors",
-      "enumerate",
-      "train-only",
-      "ordinary/endpoint",
-      "rows",
-      "dev",
-      "stays",
-      "evaluation-only",
-      "only",
-      "one",
-      "cpu/no-gradient",
       "runtime",
       "qualification",
+      "receipt",
+      "sha",
+      "b1e073fc6226ac3f3aa88ed10d4ed31059b6e27b0338aa7738c686239f33624f",
+      "its",
+      "pass_query_edge_bridge_no_gradient_runtime_contract",
+      "status",
+      "qualified",
+      "architecture",
+      "remains",
+      "unchanged",
+      "one",
+      "p100",
+      "run",
       "authorized",
-      "optimizer",
+      "query_edge_bridge",
+      "only",
+      "trainable",
+      "objective",
+      "causal",
+      "field-selection",
+      "margin",
+      "explicit",
+      "same-relation",
+      "relevant-edge",
+      "routing",
+      "supervision",
+      "frozen-parent",
+      "distillation",
+      "ordinary",
+      "endpoint",
+      "train-only",
+      "anchors",
+      "irrelevant-edge",
+      "gate",
+      "no-op",
+      "penalty",
       "gradient",
-      "gpu",
-      "training",
+      "surgery",
+      "deliberately",
+      "absent",
+      "preservation",
+      "dev",
+      "causal",
+      "dev",
+      "causal",
+      "test",
+      "frozen",
+      "challenge",
+      "private",
+      "identity",
+      "data",
+      "remain",
+      "non-gradient",
       "heldout/test",
       "frozen",
       "challenge",
@@ -141,15 +127,31 @@
       "private",
       "identity",
       "gradient",
+      "production",
       "promotion",
       "completion",
       "remain",
       "unauthorized",
+      "any",
+      "genuine",
+      "failure",
+      "stops",
+      "run",
+      "reopens",
+      "larger",
+      "objective/boundary",
+      "question",
+      "rather",
+      "than",
+      "triggering",
+      "hotfix",
       "graphify",
+      "remains",
       "navigation-only",
       "must",
       "point",
       "original",
+      "branch-qualified",
       "sources"
     ],
     "catalog_status": {
@@ -165,10 +167,10 @@
       "unmerged_experiment_frontier_present": true,
       "unmerged_experiment_maximal_head_count": 1,
       "continuity_stale_relative_to_experiment_frontier": true,
-      "document_pointer_count": 2331,
-      "failure_lesson_pointer_count": 1073,
-      "frontier_research_pointer_count": 504,
-      "supersession_pointer_count": 290,
+      "document_pointer_count": 2336,
+      "failure_lesson_pointer_count": 1078,
+      "frontier_research_pointer_count": 508,
+      "supersession_pointer_count": 291,
       "authority": "routing-only",
       "notes": [
         "Catalog entries are source pointers, not truth promotions.",
@@ -247,9 +249,9 @@
       },
       "continuity_branch_head": {
         "branch": "alice-context",
-        "head": "d843d928ad9cb553c729149a71268e644a5a922b",
-        "head_committed_at": "2026-09-19T14:05:20-05:00",
-        "head_message": "context: hand off query-edge bridge CPU qualification frontier"
+        "head": "2053fc70faf1775db0069e58168601635bcc49d6",
+        "head_committed_at": "2026-09-19T21:49:49-05:00",
+        "head_message": "context: hand off one routed query-edge P100 experiment"
       },
       "unmerged_experiment_frontier": {
         "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -260,17 +262,18 @@
         "maximal_heads": [
           {
             "branch": "alice-eipm-v1-query-edge-cross-attention-bridge",
-            "head": "c6170597e2b55cc378c5d8cf1560ca87802ea085",
-            "head_committed_at": "2026-09-19T14:04:51-05:00",
-            "head_message": "ci(n0): bind query-edge qualifier to v0.23 CPU-only state",
-            "ahead": 139,
+            "head": "cf15e2b13a5ca4d22a7070e54c95460959206c33",
+            "head_committed_at": "2026-09-19T21:49:05-05:00",
+            "head_message": "ops(n0): remove stale parent adapter hash assignment",
+            "ahead": 148,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-            "changed_file_count_vs_source_merge_base": 110,
+            "changed_file_count_vs_source_merge_base": 116,
             "changed_paths_vs_source_merge_base": [
               ".github/workflows/n0-arbitration-contract-check.yml",
               ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
               ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
+              ".github/workflows/n0-query-edge-training-contract-check.yml",
               ".github/workflows/n0-query-relation-role-router-contract-check.yml",
               ".github/workflows/n0-query-semantics-architecture-audit-contract-check.yml",
               ".github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml",
@@ -291,11 +294,13 @@
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.21.json",
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.22.json",
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.23.json",
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.24.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
               "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
               "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+              "configs/eipm/n0/n0_v02_query_edge_training_decision_v0_1.json",
               "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json",
               "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_training_decision_v0_1.json",
               "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
@@ -338,6 +343,7 @@
               "scripts/eipm/n0/magnolia_n0_v02_query_semantics_layerwise_audit_v0_1.sbatch",
               "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_grounding_v0_1.sbatch",
               "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_role_residual_v0_2.sbatch",
+              "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_cross_attention_bridge_training_v0_1.sbatch",
               "scripts/eipm/n0/magnolia_p100_n0_v02_relation_conditioned_multilayer_interface_v0_1.sbatch",
               "scripts/eipm/n0/magnolia_udocker_exec.sh",
               "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
@@ -354,12 +360,14 @@
               "scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_qualify_query_edge_cross_attention_bridge_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_qualify_relation_conditioned_multilayer_interface_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_query_edge_cross_attention_bridge_training_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_query_relation_role_router_v0_3.sh",
               "scripts/eipm/n0/run_n0_v02_query_semantics_architecture_audit_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_query_semantics_layerwise_audit_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_relation_conditioned_multilayer_interface_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_relation_semantic_grounding_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_relation_semantic_role_residual_v0_2.sh",
+              "scripts/eipm/n0/train_n0_v02_query_edge_cross_attention_bridge_v0_1.py",
               "scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py",
               "scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py",
               "scripts/eipm/n0/train_n0_v02_relation_semantic_grounding_v0_1.py",
@@ -385,17 +393,18 @@
         "all_ahead_candidates": [
           {
             "branch": "alice-eipm-v1-query-edge-cross-attention-bridge",
-            "head": "c6170597e2b55cc378c5d8cf1560ca87802ea085",
-            "head_committed_at": "2026-09-19T14:04:51-05:00",
-            "head_message": "ci(n0): bind query-edge qualifier to v0.23 CPU-only state",
-            "ahead": 139,
+            "head": "cf15e2b13a5ca4d22a7070e54c95460959206c33",
+            "head_committed_at": "2026-09-19T21:49:05-05:00",
+            "head_message": "ops(n0): remove stale parent adapter hash assignment",
+            "ahead": 148,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-            "changed_file_count_vs_source_merge_base": 110,
+            "changed_file_count_vs_source_merge_base": 116,
             "changed_paths_vs_source_merge_base": [
               ".github/workflows/n0-arbitration-contract-check.yml",
               ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
               ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
+              ".github/workflows/n0-query-edge-training-contract-check.yml",
               ".github/workflows/n0-query-relation-role-router-contract-check.yml",
               ".github/workflows/n0-query-semantics-architecture-audit-contract-check.yml",
               ".github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml",
@@ -416,11 +425,13 @@
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.21.json",
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.22.json",
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.23.json",
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.24.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
               "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
               "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+              "configs/eipm/n0/n0_v02_query_edge_training_decision_v0_1.json",
               "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json",
               "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_training_decision_v0_1.json",
               "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
@@ -463,6 +474,7 @@
               "scripts/eipm/n0/magnolia_n0_v02_query_semantics_layerwise_audit_v0_1.sbatch",
               "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_grounding_v0_1.sbatch",
               "scripts/eipm/n0/magnolia_n0_v02_relation_semantic_role_residual_v0_2.sbatch",
+              "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_cross_attention_bridge_training_v0_1.sbatch",
               "scripts/eipm/n0/magnolia_p100_n0_v02_relation_conditioned_multilayer_interface_v0_1.sbatch",
               "scripts/eipm/n0/magnolia_udocker_exec.sh",
               "scripts/eipm/n0/post_arbitration_decision_gate_v0_1.py",
@@ -479,12 +491,14 @@
               "scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_qualify_query_edge_cross_attention_bridge_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_qualify_relation_conditioned_multilayer_interface_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_query_edge_cross_attention_bridge_training_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_query_relation_role_router_v0_3.sh",
               "scripts/eipm/n0/run_n0_v02_query_semantics_architecture_audit_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_query_semantics_layerwise_audit_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_relation_conditioned_multilayer_interface_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_relation_semantic_grounding_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_relation_semantic_role_residual_v0_2.sh",
+              "scripts/eipm/n0/train_n0_v02_query_edge_cross_attention_bridge_v0_1.py",
               "scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py",
               "scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py",
               "scripts/eipm/n0/train_n0_v02_relation_semantic_grounding_v0_1.py",
@@ -1060,9 +1074,9 @@
       },
       "continuity_freshness": {
         "stale_relative_to_unmerged_experiment_frontier": true,
-        "newest_experiment_frontier_time": "2026-09-19T14:04:51-05:00",
+        "newest_experiment_frontier_time": "2026-09-19T21:49:05-05:00",
         "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
-        "context_branch_head_time": "2026-09-19T14:05:20-05:00"
+        "context_branch_head_time": "2026-09-19T21:49:49-05:00"
       },
       "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
       "authority": "routing-and-freshness-only"
@@ -1116,32 +1130,7 @@
     },
     "hits": [
       {
-        "score": 154,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-19/sol/N0_QUERY_EDGE_BRIDGE_CPU_QUALIFICATION_READY.md",
-        "blob_sha": "a997c2726c300b0d204d3920c578c2b323d4d758",
-        "category": "working_context",
-        "title": "N0 Query–Edge Cross-Attention Bridge — CPU Qualification Ready",
-        "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "hotfix",
-          "magnolia",
-          "udocker"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 65
-      },
-      {
-        "score": 130,
+        "score": 149,
         "branch": "alice-eipm-v1-query-edge-cross-attention-bridge",
         "branch_scope": "branch_specific",
         "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
@@ -1168,7 +1157,7 @@
         "lexical_body_hits": 28
       },
       {
-        "score": 130,
+        "score": 149,
         "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
         "branch_scope": "branch_specific",
         "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
@@ -1195,29 +1184,7 @@
         "lexical_body_hits": 28
       },
       {
-        "score": 123,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-16/sol/FULL_SCALE_FUSION_JOB575619_AND_FROZEN_CHALLENGE.md",
-        "blob_sha": "7139049e6292458813e3da7ef739007e823d9feb",
-        "category": "working_context",
-        "title": "Full-Scale Fusion Job 575619 + Frozen Challenge Gate — 2026-09-16",
-        "declared": {},
-        "matched_terms": [
-          "failure",
-          "magnolia",
-          "udocker"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 23
-      },
-      {
-        "score": 121,
+        "score": 148,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
@@ -1242,50 +1209,23 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 37
+        "lexical_body_hits": 41
       },
       {
-        "score": 118,
-        "branch": "alice-eipm-v1-query-edge-cross-attention-bridge",
+        "score": 143,
+        "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
-        "blob_sha": "1510c11266ca1272da38dfbd7a0987b516c55de3",
-        "category": "repository_file",
-        "title": "Only the gate is deliberately zero-initialized.  Do not create a",
+        "path": "docs/chat-context/2026-09-18/sol/N0_MULTILAYER_ONE_P100_RUN_AUTHORIZED.md",
+        "blob_sha": "7aa6ef12691629473aac6e55df1602291db38c46",
+        "category": "working_context",
+        "title": "N0 Multi-Layer Interface — One P100 Run Authorized",
         "declared": {},
         "matched_terms": [
           "failed",
           "failure",
           "hotfix",
-          "magnolia"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "supersession",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 36
-      },
-      {
-        "score": 116,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md",
-        "blob_sha": "c8753de75f50b757ebc209a7625f12be3c7b7f5b",
-        "category": "working_context",
-        "title": "N0 Relation-Semantic Role Residual Repair Handoff",
-        "declared": {
-          "status": " relation-semantic grounding v0.1 failed validly; failure localized to shared read-path entanglement; isolated zero-init semantic-role residual is CI-ready for one P100 run"
-        },
-        "matched_terms": [
-          "failed",
-          "failure",
-          "hotfix",
           "magnolia",
-          "repair",
-          "udocker"
+          "repair"
         ],
         "supersession_hints": [],
         "catalogs": [
@@ -1294,24 +1234,23 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 40
+        "lexical_body_hits": 37
       },
       {
-        "score": 115,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md",
-        "blob_sha": "77ff7dda3d28fef326ceb8e6af7db799879c876b",
-        "category": "runtime_receipt",
-        "title": "Magnolia 2×P100 N0 Runtime Smoke — Job 575527",
+        "score": 142,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-09/sol/MC10D_MAGNOLIA_P100X2_ROUTE_QUALIFIED_NEXT_RUNTIME_GATE.md",
+        "blob_sha": "973ec51441d8c119caeebe2304b0f413ed94a351",
+        "category": "working_context",
+        "title": "MC10D Magnolia 2xP100 route qualified — next runtime gate",
         "declared": {},
         "matched_terms": [
           "failed",
-          "failure",
-          "magnolia",
-          "runtime-results",
-          "smoke",
-          "udocker"
+          "fallback",
+          "hotfix",
+          "kaggle",
+          "magnolia"
         ],
         "supersession_hints": [],
         "catalogs": [
@@ -1319,38 +1258,91 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 20
+        "lexical_body_hits": 16
       },
       {
-        "score": 112,
+        "score": 135,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md",
-        "blob_sha": "0fd59429e3c85c66ad4674cf2cfd94a84016410c",
+        "path": "docs/chat-context/2026-09-20/sol/N0_QUERY_EDGE_ONE_P100_TRAINING_READY.md",
+        "blob_sha": "8293ff92906d441f49a7a812d3c661463f984682",
         "category": "working_context",
-        "title": "Fusion frozen challenge failure + source-anchored repair — 2026-09-16",
-        "declared": {
-          "status": "`FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`."
-        },
+        "title": "N0 Query–Edge Routed Specialist — One P100 Run Ready",
+        "declared": {},
         "matched_terms": [
-          "error",
+          "egress",
           "failed",
           "failure",
-          "fallback",
           "magnolia",
           "repair"
         ],
         "supersession_hints": [],
         "catalogs": [
           "failure",
-          "supersession",
+          "frontier",
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 24
+        "lexical_body_hits": 63
       },
       {
-        "score": 112,
+        "score": 135,
+        "branch": "alice-eipm-v1-query-edge-cross-attention-bridge",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
+        "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
+        "category": "design_document",
+        "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
+        "declared": {
+          "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 33
+      },
+      {
+        "score": 135,
+        "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
+        "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
+        "category": "design_document",
+        "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
+        "declared": {
+          "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 33
+      },
+      {
+        "score": 133,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-18/sol/N0_MULTILAYER_INTERFACE_RUNTIME_QUALIFICATION_READY.md",
@@ -1378,32 +1370,7 @@
         "lexical_body_hits": 34
       },
       {
-        "score": 110,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md",
-        "blob_sha": "be2ffe0bb87a8f835d36698854aa620db7694b99",
-        "category": "runtime_receipt",
-        "title": "Magnolia 2×P100 Real N0 Training — Job 575546",
-        "declared": {
-          "status": " completed successfully; durable weights retained; LR scheduler defect identified before continuation"
-        },
-        "matched_terms": [
-          "failure",
-          "magnolia",
-          "repair",
-          "runtime-results"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 17
-      },
-      {
-        "score": 108,
+        "score": 129,
         "branch": "alice-eipm-v1-build",
         "branch_scope": "current_source",
         "path": "docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md",
@@ -1418,113 +1385,147 @@
         "supersession_hints": [],
         "catalogs": [
           "failure",
+          "document",
           "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 21
+      },
+      {
+        "score": 126,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md",
+        "blob_sha": "77ff7dda3d28fef326ceb8e6af7db799879c876b",
+        "category": "runtime_receipt",
+        "title": "Magnolia 2×P100 N0 Runtime Smoke — Job 575527",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "magnolia",
+          "runtime-results",
+          "smoke",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
           "document",
           "lexical"
         ],
         "lexical_body_hits": 18
       },
       {
-        "score": 104,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_REPAIR_PROBE_JOB_575571.md",
-        "blob_sha": "caa8ea529fc219d8d0004bd2c5cb5e2cebebc852",
-        "category": "runtime_receipt",
-        "title": "Magnolia P100 N0 Failure-Driven Repair Probe — Job 575571",
-        "declared": {
-          "status": "completed payload"
-        },
+        "score": 126,
+        "branch": "fable-builder-model",
+        "branch_scope": "branch_specific",
+        "path": "docs/fable-builder/traces/FBM_TRACE_20260918_N0_MULTILAYER_RUNTIME_AND_CAUSAL_STUDY.jsonl",
+        "blob_sha": "794e41371c903c8df6a1dd3759708be6a8472ee1",
+        "category": "design_document",
+        "title": "FBM_TRACE_20260918_N0_MULTILAYER_RUNTIME_AND_CAUSAL_STUDY.jsonl",
+        "declared": {},
         "matched_terms": [
+          "failed",
+          "failure",
+          "magnolia",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 26
+      },
+      {
+        "score": 125,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-16/sol/FULL_SCALE_FUSION_JOB575619_AND_FROZEN_CHALLENGE.md",
+        "blob_sha": "7139049e6292458813e3da7ef739007e823d9feb",
+        "category": "working_context",
+        "title": "Full-Scale Fusion Job 575619 + Frozen Challenge Gate — 2026-09-16",
+        "declared": {},
+        "matched_terms": [
+          "failure",
+          "magnolia",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 23
+      },
+      {
+        "score": 125,
+        "branch": "alice-eipm-v1-query-edge-cross-attention-bridge",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md",
+        "blob_sha": "4c10911f3f711232d68373e8ccacde7431574629",
+        "category": "design_document",
+        "title": "N0 relation-conditioned multi-layer training decision v0.1",
+        "declared": {},
+        "matched_terms": [
+          "egress",
+          "failed",
+          "failure",
+          "magnolia"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 26
+      },
+      {
+        "score": 125,
+        "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md",
+        "blob_sha": "4c10911f3f711232d68373e8ccacde7431574629",
+        "category": "design_document",
+        "title": "N0 relation-conditioned multi-layer training decision v0.1",
+        "declared": {},
+        "matched_terms": [
+          "egress",
+          "failed",
+          "failure",
+          "magnolia"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 26
+      },
+      {
+        "score": 122,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-17/sol/N0_CAUSAL_ARBITRATION_FRONTIER_CALIBRATION_HANDOFF.md",
+        "blob_sha": "eff85666b994e668f3686bee2892bf47c6f7c9cd",
+        "category": "working_context",
+        "title": "N0 Causal Arbitration Frontier Calibration Handoff",
+        "declared": {},
+        "matched_terms": [
+          "egress",
           "error",
           "failed",
           "failure",
           "magnolia",
           "repair",
-          "runtime-results"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 15
-      },
-      {
-        "score": 104,
-        "branch": "alice-eipm-v1-query-edge-cross-attention-bridge",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-        "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
-        "category": "design_document",
-        "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
-        "declared": {
-          "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
-        },
-        "matched_terms": [
-          "failed",
-          "failure",
-          "hotfix",
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "document",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 34
-      },
-      {
-        "score": 104,
-        "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-        "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
-        "category": "design_document",
-        "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
-        "declared": {
-          "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
-        },
-        "matched_terms": [
-          "failed",
-          "failure",
-          "hotfix",
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "document",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 34
-      },
-      {
-        "score": 103,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md",
-        "blob_sha": "9635954cb93dc3bf3e9c63de012dcca5d718ea9f",
-        "category": "working_context",
-        "title": "N0 Relation-Semantic Grounding Repair Handoff",
-        "declared": {
-          "status": " missing-evidence failure localized to relation-semantic endpoint grounding; one bounded repair is CI-ready; no frozen-challenge rerun, threshold change, promotion, scaling, or N0 completion authorized"
-        },
-        "matched_terms": [
-          "failed",
-          "failure",
-          "hotfix",
-          "magnolia",
-          "repair",
+          "smoke",
           "udocker"
         ],
         "supersession_hints": [],
@@ -1532,26 +1533,27 @@
           "failure",
           "frontier",
           "document",
-          "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 40
+        "lexical_body_hits": 33
       },
       {
-        "score": 103,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md",
-        "blob_sha": "435efa0bf1c2e58ecd5929e4fd25c03cc6f9cd5b",
-        "category": "runtime_receipt",
-        "title": "Magnolia single-P100 N0 teacher diagnostic — job 575565",
+        "score": 121,
+        "branch": "fable-builder-model",
+        "branch_scope": "branch_specific",
+        "path": "docs/fable-builder/traces/FBM_TRACE_20260914_MAGNOLIA_RUNTIME_BOUNDARY_AND_PRIVATE_NAMESPACE.jsonl",
+        "blob_sha": "4b28f483487150d94ef6cf6249c99fad3522fd2f",
+        "category": "design_document",
+        "title": "FBM_TRACE_20260914_MAGNOLIA_RUNTIME_BOUNDARY_AND_PRIVATE_NAMESPACE.jsonl",
         "declared": {},
         "matched_terms": [
           "failed",
           "failure",
           "magnolia",
-          "repair",
-          "runtime-results"
+          "recovery",
+          "runtime-results",
+          "smoke",
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
@@ -1559,19 +1561,67 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 16
+        "lexical_body_hits": 11
       },
       {
-        "score": 102,
+        "score": 120,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/MAGNOLIA_P100X2_RUNTIME_SMOKE_2026-09-13.md",
+        "blob_sha": "83ab8ec25221b2a6903a2502b2019f9a8a901ec3",
+        "category": "design_document",
+        "title": "Magnolia 2×P100 N0 Runtime Smoke — 2026-09-13",
+        "declared": {
+          "status": " ready for owner execution"
+        },
+        "matched_terms": [
+          "fallback",
+          "kaggle",
+          "magnolia",
+          "smoke"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 9
+      },
+      {
+        "score": 116,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
-        "blob_sha": "c44ed89c28153b7496910f099851ddf576176574",
+        "path": "docs/chat-context/2026-09-04/MC10D_V1_7_6_RUNTIME_TLS_CA_SUCCESSOR.md",
+        "blob_sha": "688c966e0dd539150d4639fe190de8cc47c40d71",
         "category": "working_context",
-        "title": "N0 Endpoint Repair and Downstream Arbitration Handoff",
-        "declared": {
-          "status": "`FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`."
-        },
+        "title": "MC10D v1.7.6 Runtime TLS CA Successor — 2026-09-04",
+        "declared": {},
+        "matched_terms": [
+          "error",
+          "failed",
+          "failure",
+          "kaggle",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 13
+      },
+      {
+        "score": 115,
+        "branch": "alice-telemetry",
+        "branch_scope": "branch_specific",
+        "path": "telemetry/n0-endpoint-repair-runtime-20260917.json",
+        "blob_sha": "96a9393e0dfe4bf57fa9ee8bbc8e126a7cabf59e",
+        "category": "repository_file",
+        "title": "n0-endpoint-repair-runtime-20260917.json",
+        "declared": {},
         "matched_terms": [
           "failed",
           "failure",
@@ -1586,55 +1636,7 @@
           "document",
           "lexical"
         ],
-        "lexical_body_hits": 37
-      },
-      {
-        "score": 102,
-        "branch": "alice-eipm-v1-query-edge-cross-attention-bridge",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md",
-        "blob_sha": "4c10911f3f711232d68373e8ccacde7431574629",
-        "category": "design_document",
-        "title": "N0 relation-conditioned multi-layer training decision v0.1",
-        "declared": {},
-        "matched_terms": [
-          "egress",
-          "failed",
-          "failure",
-          "magnolia"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 30
-      },
-      {
-        "score": 102,
-        "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md",
-        "blob_sha": "4c10911f3f711232d68373e8ccacde7431574629",
-        "category": "design_document",
-        "title": "N0 relation-conditioned multi-layer training decision v0.1",
-        "declared": {},
-        "matched_terms": [
-          "egress",
-          "failed",
-          "failure",
-          "magnolia"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "frontier",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 30
+        "lexical_body_hits": 6
       }
     ],
     "private_external_route_recommended": true,

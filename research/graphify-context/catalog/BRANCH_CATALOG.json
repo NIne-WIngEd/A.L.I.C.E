@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "d843d928ad9cb553c729149a71268e644a5a922b",
-      "head_committed_at": "2026-09-19T14:05:20-05:00",
-      "head_message": "context: hand off query-edge bridge CPU qualification frontier",
+      "head": "2053fc70faf1775db0069e58168601635bcc49d6",
+      "head_committed_at": "2026-09-19T21:49:49-05:00",
+      "head_message": "context: hand off one routed query-edge P100 experiment",
       "status": "diverged",
-      "ahead": 206,
+      "ahead": 207,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 553,
+      "changed_file_count_vs_source_merge_base": 554,
       "knowledge_surface": true
     },
     {
@@ -77,14 +77,14 @@
     },
     {
       "branch": "alice-eipm-v1-query-edge-cross-attention-bridge",
-      "head": "c6170597e2b55cc378c5d8cf1560ca87802ea085",
-      "head_committed_at": "2026-09-19T14:04:51-05:00",
-      "head_message": "ci(n0): bind query-edge qualifier to v0.23 CPU-only state",
+      "head": "cf15e2b13a5ca4d22a7070e54c95460959206c33",
+      "head_committed_at": "2026-09-19T21:49:05-05:00",
+      "head_message": "ops(n0): remove stale parent adapter hash assignment",
       "status": "ahead",
-      "ahead": 139,
+      "ahead": 148,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 110,
+      "changed_file_count_vs_source_merge_base": 116,
       "knowledge_surface": true
     },
     {
@@ -221,14 +221,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "2a7b08fe634d6eb184054ab87ed07789b6428cb5",
-      "head_committed_at": "2026-09-19T13:58:53-05:00",
-      "head_message": "trace(fbm): capture query-edge boundary failure lesson",
+      "head": "de20962428ce611032c290e1a1ef123070c01830",
+      "head_committed_at": "2026-09-19T21:49:59-05:00",
+      "head_message": "trace(fbm): capture routed query-edge training decision",
       "status": "diverged",
-      "ahead": 90,
+      "ahead": 91,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 89,
+      "changed_file_count_vs_source_merge_base": 90,
       "knowledge_surface": true
     },
     {

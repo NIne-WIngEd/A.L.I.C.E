@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-query-edge-bridge-cpu-qualification-ready-20260919-001
-- Question: Refresh A.L.I.C.E. EIPM N0 continuity to the new query-edge bridge frontier. Resolve maximal experiment branch alice-eipm-v1-query-edge-cross-attention-bridge at c6170597e2b55cc378c5d8cf1560ca87802ea085, CI run 35463216917 success, authoritative state v0.23, and newest alice-context handoff N0_QUERY_EDGE_BRIDGE_CPU_QUALIFICATION_READY.md. Preserve the source failure: Magnolia job 575825, result SHA 6f2f3fe6ddab764d947a7c63fe94ef24d5cd77e3cc68821c8678fdb8f2ea36bd, query-only anti-symmetric endpoint residual rejected. The new Query-Edge Cross-Attention Bridge conditions query-token attention on actual source/target graph states plus relation, emits independent source/target residuals behind a zero-initialized edge gate, and leaves the proven dual-endpoint parent frozen. Fresh causal data has 8 fields, 4 edges, 3 same-relation edges, a different-relation distractor, rotating relevant edge, and explicit routing supervision. Preservation anchors enumerate TRAIN-only ordinary/endpoint rows; DEV stays evaluation-only. Only one CPU/no-gradient runtime qualification is authorized. Optimizer, gradient, GPU training, heldout/test, frozen challenge, scale, parent/semantic retraining, private identity gradient, promotion and N0 completion remain unauthorized. Graphify is navigation-only and must point to original sources.
+- Request: n0-query-edge-one-p100-training-ready-20260920-001
+- Question: Refresh A.L.I.C.E. EIPM N0 continuity to the routed query-edge training frontier. Resolve maximal experiment branch alice-eipm-v1-query-edge-cross-attention-bridge at cf15e2b13a5ca4d22a7070e54c95460959206c33, training-contract CI run 35484969093 success, authoritative state v0.24, training decision n0_v02_query_edge_training_decision_v0_1.json, and newest alice-context handoff N0_QUERY_EDGE_ONE_P100_TRAINING_READY.md. Preserve runtime qualification receipt SHA b1e073fc6226ac3f3aa88ed10d4ed31059b6e27b0338aa7738c686239f33624f and its PASS_QUERY_EDGE_BRIDGE_NO_GRADIENT_RUNTIME_CONTRACT status. The qualified architecture remains unchanged. One P100 run is authorized with query_edge_bridge only trainable. Objective: causal field-selection CE + margin, explicit same-relation relevant-edge routing supervision, frozen-parent KL distillation on ordinary and endpoint TRAIN-only anchors, and irrelevant-edge gate no-op penalty. Gradient surgery is deliberately absent. Preservation DEV, causal DEV, causal TEST, frozen challenge and private identity data remain non-gradient. Heldout/test, frozen challenge, scale, parent/semantic retraining, private identity gradient, production promotion and N0 completion remain unauthorized. Any genuine failure stops the run and reopens the larger objective/boundary question rather than triggering a hotfix. Graphify remains navigation-only and must point to original branch-qualified sources.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: False
@@ -18,28 +18,27 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-query-edge-cross-attention-bridge @ c6170597e2b55cc378c5d8cf1560ca87802ea085 — ci(n0): bind query-edge qualifier to v0.23 CPU-only state
+- alice-eipm-v1-query-edge-cross-attention-bridge @ cf15e2b13a5ca4d22a7070e54c95460959206c33 — ops(n0): remove stale parent adapter hash assignment
 
 ## Source pointers
 
-- [154] alice-context:docs/chat-context/2026-09-19/sol/N0_QUERY_EDGE_BRIDGE_CPU_QUALIFICATION_READY.md — N0 Query–Edge Cross-Attention Bridge — CPU Qualification Ready
-- [130] alice-eipm-v1-query-edge-cross-attention-bridge:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [149] alice-eipm-v1-query-edge-cross-attention-bridge:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [130] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [149] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [123] alice-context:docs/chat-context/2026-09-16/sol/FULL_SCALE_FUSION_JOB575619_AND_FROZEN_CHALLENGE.md — Full-Scale Fusion Job 575619 + Frozen Challenge Gate — 2026-09-16
-- [121] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
+- [148] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
   - status:  one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized
-- [118] alice-eipm-v1-query-edge-cross-attention-bridge:.github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml — Only the gate is deliberately zero-initialized.  Do not create a
-- [116] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md — N0 Relation-Semantic Role Residual Repair Handoff
-  - status:  relation-semantic grounding v0.1 failed validly; failure localized to shared read-path entanglement; isolated zero-init semantic-role residual is CI-ready for one P100 run
-- [115] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md — Magnolia 2×P100 N0 Runtime Smoke — Job 575527
-- [112] alice-context:docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md — Fusion frozen challenge failure + source-anchored repair — 2026-09-16
-  - status: `FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`.
-- [112] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_INTERFACE_RUNTIME_QUALIFICATION_READY.md — N0 Relation-Conditioned Multi-Layer Interface — Runtime Qualification Ready
-- [110] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md — Magnolia 2×P100 Real N0 Training — Job 575546
-  - status:  completed successfully; durable weights retained; LR scheduler defect identified before continuation
-- [108] alice-eipm-v1-build:docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md — N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16
+- [143] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_ONE_P100_RUN_AUTHORIZED.md — N0 Multi-Layer Interface — One P100 Run Authorized
+- [142] alice-context:docs/chat-context/2026-09-09/sol/MC10D_MAGNOLIA_P100X2_ROUTE_QUALIFIED_NEXT_RUNTIME_GATE.md — MC10D Magnolia 2xP100 route qualified — next runtime gate
+- [135] alice-context:docs/chat-context/2026-09-20/sol/N0_QUERY_EDGE_ONE_P100_TRAINING_READY.md — N0 Query–Edge Routed Specialist — One P100 Run Ready
+- [135] alice-eipm-v1-query-edge-cross-attention-bridge:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [135] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [133] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_INTERFACE_RUNTIME_QUALIFICATION_READY.md — N0 Relation-Conditioned Multi-Layer Interface — Runtime Qualification Ready
+- [129] alice-eipm-v1-build:docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md — N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16
+- [126] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_SMOKE_JOB_575527.md — Magnolia 2×P100 N0 Runtime Smoke — Job 575527
+- [126] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260918_N0_MULTILAYER_RUNTIME_AND_CAUSAL_STUDY.jsonl — FBM_TRACE_20260918_N0_MULTILAYER_RUNTIME_AND_CAUSAL_STUDY.jsonl
 
 ## Graphify navigation hints
 
