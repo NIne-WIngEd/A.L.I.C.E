@@ -6,14 +6,18 @@ import hashlib
 import json
 import random
 from collections import defaultdict
+from dataclasses import replace
 from pathlib import Path
 
 import torch
 import torch.nn.functional as F
 
 from alice_personality.n0.qsre_t1_executor import (
+    QSRE_T1_OPERATION_PATH_FOLLOW,
+    QSRE_T1_OPERATION_ROLE_SELECT,
     QSRET1Config,
     QSRET1Executor,
+    QSRET1OracleOperator,
 )
 from alice_personality.n0.qsre_t2_operator import (
     QSRET2OperatorConfig,
@@ -324,6 +328,53 @@ def operator_loss(
     }
 
 
+def _safe_operator_for_frozen_t1_eval(
+    operator: QSRET1OracleOperator,
+    *,
+    predicted_control: torch.Tensor,
+) -> tuple[QSRET1OracleOperator, torch.Tensor]:
+    """Make evaluator execution total without forgiving invalid operators.
+
+    PATH_FOLLOW requires a non-empty focus frontier in the frozen T1
+    executor. During learning, T2 may temporarily predict PATH_FOLLOW on
+    rows where the oracle focus is empty. That is a model error when the
+    predicted control is RELATIONAL, but it must be scored as a failure
+    rather than crashing the evaluator.
+
+    For execution only, impossible PATH_FOLLOW values are canonicalized to
+    ROLE_SELECT. Relational rows that required this canonicalization are
+    returned in invalid_relational and are later forced to downstream
+    failure. For non-relational control, operation is semantically inactive,
+    so canonicalization only satisfies the frozen executor input contract.
+    """
+    if predicted_control.shape != operator.operation_id.shape:
+        raise ValueError("predicted_control shape drift")
+
+    empty_focus = operator.focus_field_weight.sum(dim=-1).le(0)
+    path_without_focus = (
+        operator.operation_id.eq(QSRE_T1_OPERATION_PATH_FOLLOW)
+        & empty_focus
+    )
+    invalid_relational = (
+        path_without_focus
+        & predicted_control.eq(CONTROL_RELATIONAL)
+    )
+
+    if not bool(path_without_focus.any()):
+        return operator, invalid_relational
+
+    safe_operation = operator.operation_id.clone()
+    safe_operation[path_without_focus] = QSRE_T1_OPERATION_ROLE_SELECT
+
+    return (
+        replace(
+            operator,
+            operation_id=safe_operation,
+        ),
+        invalid_relational,
+    )
+
+
 def _operator_tuple(
     relation: torch.Tensor,
     role: torch.Tensor,
@@ -362,6 +413,7 @@ def evaluate(
     downstream_probability: list[torch.Tensor] = []
     downstream_control: list[torch.Tensor] = []
     downstream_masks: list[torch.Tensor] = []
+    downstream_invalid_relational: list[torch.Tensor] = []
 
     for start in range(0, row_count, batch_size):
         stop = min(start + batch_size, row_count)
@@ -398,6 +450,12 @@ def evaluate(
                 "focus_field_weight"
             ][indices].to(device),
         )
+        decoded, invalid_relational = _safe_operator_for_frozen_t1_eval(
+            decoded,
+            predicted_control=output[
+                "control_logits"
+            ].argmax(dim=-1),
+        )
 
         structural = {
             key: prepared_split[key][indices].to(device)
@@ -416,6 +474,9 @@ def evaluate(
         )
         downstream_masks.append(
             downstream["readout_field_mask"].cpu()
+        )
+        downstream_invalid_relational.append(
+            invalid_relational.cpu()
         )
 
     relation = torch.cat(predicted_relation, dim=0)
@@ -487,6 +548,14 @@ def evaluate(
         downstream_masks,
         dim=0,
     )
+    invalid_relational_bridge = torch.cat(
+        downstream_invalid_relational,
+        dim=0,
+    )
+
+    if bool(invalid_relational_bridge.any()):
+        probability = probability.clone()
+        probability[invalid_relational_bridge] = 0
 
     target = prepared_split["target_distribution"].float()
     expected = prepared_split["expected_control"].long()
@@ -527,6 +596,9 @@ def evaluate(
             .sum(dim=-1)
             .eq(0)
         )
+
+    if bool(invalid_relational_bridge.any()):
+        row_success[invalid_relational_bridge] = False
 
     if bool((~readout_mask).any()):
         outside_mass = float(
@@ -676,6 +748,12 @@ def evaluate(
             ),
             "mean_uncertainty": float(
                 uncertainty.mean().item()
+            ),
+            "invalid_relational_path_without_focus_count": int(
+                invalid_relational_bridge.sum().item()
+            ),
+            "invalid_relational_path_without_focus_rate": float(
+                invalid_relational_bridge.float().mean().item()
             ),
         },
         "downstream": {
@@ -904,6 +982,38 @@ def self_test() -> None:
     ):
         raise RuntimeError(
             "continuous residual projection received no gradient"
+        )
+
+    bridge_operator = QSRET1OracleOperator(
+        relation_sequence_id=torch.zeros(2, 2, dtype=torch.long),
+        relation_sequence_mask=torch.ones(2, 2, dtype=torch.bool),
+        role_id=torch.zeros(2, dtype=torch.long),
+        operation_id=torch.full(
+            (2,),
+            QSRE_T1_OPERATION_PATH_FOLLOW,
+            dtype=torch.long,
+        ),
+        focus_field_weight=torch.zeros(2, 4),
+        context=torch.zeros(2, 4),
+        applicability=torch.tensor([0.9, 0.1]),
+    )
+    safe_operator, invalid = _safe_operator_for_frozen_t1_eval(
+        bridge_operator,
+        predicted_control=torch.tensor(
+            [CONTROL_RELATIONAL, 0],
+            dtype=torch.long,
+        ),
+    )
+    if safe_operator.operation_id.tolist() != [
+        QSRE_T1_OPERATION_ROLE_SELECT,
+        QSRE_T1_OPERATION_ROLE_SELECT,
+    ]:
+        raise RuntimeError(
+            "evaluator bridge did not canonicalize impossible path operations"
+        )
+    if invalid.tolist() != [True, False]:
+        raise RuntimeError(
+            "evaluator bridge invalid-relational classification drift"
         )
 
     print(
