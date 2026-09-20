@@ -1,0 +1,49 @@
+name: n0-qsre-production-core-v1-mechanics
+
+on:
+  push:
+    paths:
+      - "src/alice_personality/n0/qsre_production_core.py"
+      - "tests/eipm/test_n0_qsre_production_core_v1.py"
+      - "configs/eipm/n0/n0_v02_qsre_production_core_v1.json"
+      - "configs/eipm/n0/n0_v02_qsre_production_core_w1_w15_map_v1.json"
+      - ".github/workflows/n0-qsre-production-core-v1-mechanics.yml"
+  workflow_dispatch:
+
+jobs:
+  mechanics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CPU dependencies
+        run: python -m pip install -q torch pytest
+
+      - name: Syntax
+        run: |
+          python -m py_compile src/alice_personality/n0/qsre_production_core.py
+          python -m py_compile tests/eipm/test_n0_qsre_production_core_v1.py
+
+      - name: Production QSRE mechanics
+        run: |
+          PYTHONPATH=src pytest -q tests/eipm/test_n0_qsre_production_core_v1.py
+
+      - name: Contract/source consistency
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          core=json.load(open("configs/eipm/n0/n0_v02_qsre_production_core_v1.json"))
+          mapping=json.load(open("configs/eipm/n0/n0_v02_qsre_production_core_w1_w15_map_v1.json"))
+
+          assert core["schema"]=="alice.eipm.n0.qsre-production-core.v1"
+          assert core["authorization"]["gpu"] is False
+          assert core["authorization"]["gradient"] is False
+          assert len(core["static_proof_obligations"])==15
+          assert set(mapping["families"])=={f"W{i}" for i in range(1,16)}
+          assert Path("src/alice_personality/n0/qsre_production_core.py").is_file()
+          assert Path("tests/eipm/test_n0_qsre_production_core_v1.py").is_file()
+
+          print("PASS_QSRE_PRODUCTION_CORE_V1_SOURCE_CONTRACT")
+          PY
