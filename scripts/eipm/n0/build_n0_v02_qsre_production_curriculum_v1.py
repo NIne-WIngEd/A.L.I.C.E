@@ -395,6 +395,12 @@ def pair_rows(
         ]
 
     if family == "relation_filter":
+        # One source participates in two different relation families. Keep the
+        # causal fixture structurally valid for both dynamic schemas rather than
+        # leaking a type contradiction into the gold support target.
+        fields = make_fields(split, family, group, ["GENERIC"] * 6)
+        ids = [row["id"] for row in fields]
+        names = [row["entity"] for row in fields]
         edges = [
             edge("e0", ids[0], ids[1], r1),
             edge("e1", ids[0], ids[3], r2),
