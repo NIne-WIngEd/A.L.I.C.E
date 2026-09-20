@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "c97e103b0337028c56c47e15f6a58380c19a75ac",
-      "head_committed_at": "2026-09-20T00:01:34-05:00",
-      "head_message": "context: hand off dual-view binding qualification",
+      "head": "aed0053a39f38e498c7a337d7b67f220b8c8843c",
+      "head_committed_at": "2026-09-20T00:21:23-05:00",
+      "head_message": "context: hand off dual-view qualification bookkeeping recovery",
       "status": "diverged",
-      "ahead": 211,
+      "ahead": 212,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 558,
+      "changed_file_count_vs_source_merge_base": 559,
       "knowledge_surface": true
     },
     {
@@ -53,14 +53,14 @@
     },
     {
       "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
-      "head": "b736f55363254eb887664f33c35ac1a144a0b08e",
-      "head_committed_at": "2026-09-20T00:01:01-05:00",
-      "head_message": "ci(n0): guard dual-view qualification boundary",
+      "head": "edcee7dd7a53bac158793b805a29cfaa0c1b11b0",
+      "head_committed_at": "2026-09-20T00:20:52-05:00",
+      "head_message": "ci(n0): guard dual-view bookkeeping recovery",
       "status": "ahead",
-      "ahead": 196,
+      "ahead": 200,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 158,
+      "changed_file_count_vs_source_merge_base": 161,
       "knowledge_surface": true
     },
     {
@@ -269,14 +269,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "7b9b37f29ac3fe5e3567c71a565cf7eb455bbe5a",
-      "head_committed_at": "2026-09-20T00:01:36-05:00",
-      "head_message": "trace(fbm): capture dual-view binding architecture decision",
+      "head": "8cce18de4d4f5dee6a4521ac744414b7b5fe1ad2",
+      "head_committed_at": "2026-09-20T00:21:25-05:00",
+      "head_message": "trace(fbm): capture dual-view qualification harness recovery",
       "status": "diverged",
-      "ahead": 95,
+      "ahead": 96,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 94,
+      "changed_file_count_vs_source_merge_base": 95,
       "knowledge_surface": true
     },
     {
@@ -493,6 +493,18 @@
       "behind": 494,
       "merge_base": "534c6b87caed58816983b1c03abb9f6019b0ac17",
       "changed_file_count_vs_source_merge_base": 0,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "research/frontier-watch",
+      "head": "a5848313a5ce655c879be6d8d2c4da96393e6e47",
+      "head_committed_at": "2026-09-20T00:05:29-05:00",
+      "head_message": "research: record first frontier watch and ALICE deltas",
+      "status": "ahead",
+      "ahead": 1,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 1,
       "knowledge_surface": true
     }
   ]

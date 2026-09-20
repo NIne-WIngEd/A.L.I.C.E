@@ -1,13 +1,13 @@
 {
-  "request_id": "n0-dual-view-late-interaction-qualification-20260920-001",
-  "question": "Refresh A.L.I.C.E. N0 continuity to the dual-view late-interaction qualification frontier. Resolve branch alice-eipm-v1-dual-view-late-interaction-binding at static-contract head b736f55363254eb887664f33c35ac1a144a0b08e, CI 35490590850 success, authoritative state v0.33, and newest alice-context handoff N0_DUAL_VIEW_LATE_INTERACTION_QUALIFICATION_READY.md. Preserve identifiability audit SHA 6d166af91240cb67cae270c95bb963cafca0597d65da77de3b0ada53bb33b721: lexical and token-level query-field binding reach 1.0 DEV edge accuracy, final pooled semantics retain 0.8056 all-edge / 0.8889 same-relation, while structured parent state collapses to 0.2083 / 0.2361 and parent graph weighting to 0.1111 / 0.3542. The next architecture is dual-view: final semantic token late interaction determines edge identity, while the existing frozen structured/graph parent and multi-layer relation specialist perform directional reasoning. Routing is hierarchical: P(no-op)=1-P(specialist), P(edge)=P(specialist)*P(edge|specialist). No setwise transformer, no flat parent-plus-edge router, no hard-coded DEV-best layer. Only CPU no-gradient runtime qualification is authorized. GPU, gradient, TEST, challenge, scale, semantic retraining, graph-parent retraining, private identity gradient and promotion remain closed. Graphify remains navigation-only.",
+  "request_id": "n0-dual-view-qualification-bookkeeping-recovery-20260920-001",
+  "question": "Refresh A.L.I.C.E. N0 continuity to the dual-view qualification bookkeeping-recovery frontier. Resolve branch alice-eipm-v1-dual-view-late-interaction-binding at exact head edcee7dd7a53bac158793b805a29cfaa0c1b11b0, recovery CI run 35491442003 success, authoritative state v0.34, and newest alice-context handoff N0_DUAL_VIEW_QUALIFICATION_BOOKKEEPING_RECOVERY.md. Preserve attempt-1 CPU qualification source b736f55363254eb887664f33c35ac1a144a0b08e and terminal error 'direction-invariance pair coverage drift: 144' as validation-harness bookkeeping failure, not model evidence. The correct scientific expectation remains 72 unique reversal pairs = 6 relations x 6 DEV quads x 2 query roles. The qualifier now deduplicates by unique (quad_id, query_role) and compares A versus B once per key. Architecture, data, thresholds, audit lineage and no-gradient boundary are unchanged. Attempt-1 qualification directory must remain preserved. Corrected evidence writes to qualification-v0.2. Only one corrected CPU/no-gradient requalification is authorized. GPU, optimizer, gradient, TEST, challenge, scale, semantic retraining, graph-parent retraining, private identity gradient and promotion remain closed. Graphify remains navigation-only.",
   "budget": 1800,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-20T05:02:04.520537+00:00",
+  "generated_at_utc": "2026-09-20T05:22:02.045268+00:00",
   "authority": "navigation-only",
   "routing_decision": {
     "graphify_mode": "auto",
@@ -33,109 +33,98 @@
   },
   "catalog_result": {
     "schema": "alice-context-catalog-query-v1",
-    "question": "Refresh A.L.I.C.E. N0 continuity to the dual-view late-interaction qualification frontier. Resolve branch alice-eipm-v1-dual-view-late-interaction-binding at static-contract head b736f55363254eb887664f33c35ac1a144a0b08e, CI 35490590850 success, authoritative state v0.33, and newest alice-context handoff N0_DUAL_VIEW_LATE_INTERACTION_QUALIFICATION_READY.md. Preserve identifiability audit SHA 6d166af91240cb67cae270c95bb963cafca0597d65da77de3b0ada53bb33b721: lexical and token-level query-field binding reach 1.0 DEV edge accuracy, final pooled semantics retain 0.8056 all-edge / 0.8889 same-relation, while structured parent state collapses to 0.2083 / 0.2361 and parent graph weighting to 0.1111 / 0.3542. The next architecture is dual-view: final semantic token late interaction determines edge identity, while the existing frozen structured/graph parent and multi-layer relation specialist perform directional reasoning. Routing is hierarchical: P(no-op)=1-P(specialist), P(edge)=P(specialist)*P(edge|specialist). No setwise transformer, no flat parent-plus-edge router, no hard-coded DEV-best layer. Only CPU no-gradient runtime qualification is authorized. GPU, gradient, TEST, challenge, scale, semantic retraining, graph-parent retraining, private identity gradient and promotion remain closed. Graphify remains navigation-only.",
+    "question": "Refresh A.L.I.C.E. N0 continuity to the dual-view qualification bookkeeping-recovery frontier. Resolve branch alice-eipm-v1-dual-view-late-interaction-binding at exact head edcee7dd7a53bac158793b805a29cfaa0c1b11b0, recovery CI run 35491442003 success, authoritative state v0.34, and newest alice-context handoff N0_DUAL_VIEW_QUALIFICATION_BOOKKEEPING_RECOVERY.md. Preserve attempt-1 CPU qualification source b736f55363254eb887664f33c35ac1a144a0b08e and terminal error 'direction-invariance pair coverage drift: 144' as validation-harness bookkeeping failure, not model evidence. The correct scientific expectation remains 72 unique reversal pairs = 6 relations x 6 DEV quads x 2 query roles. The qualifier now deduplicates by unique (quad_id, query_role) and compares A versus B once per key. Architecture, data, thresholds, audit lineage and no-gradient boundary are unchanged. Attempt-1 qualification directory must remain preserved. Corrected evidence writes to qualification-v0.2. Only one corrected CPU/no-gradient requalification is authorized. GPU, optimizer, gradient, TEST, challenge, scale, semantic retraining, graph-parent retraining, private identity gradient and promotion remain closed. Graphify remains navigation-only.",
     "query_tokens": [
       "refresh",
       "continuity",
       "dual-view",
-      "late-interaction",
       "qualification",
+      "bookkeeping-recovery",
       "frontier",
       "resolve",
       "branch",
       "alice-eipm-v1-dual-view-late-interaction-binding",
-      "static-contract",
+      "exact",
       "head",
-      "b736f55363254eb887664f33c35ac1a144a0b08e",
-      "35490590850",
+      "edcee7dd7a53bac158793b805a29cfaa0c1b11b0",
+      "recovery",
+      "run",
+      "35491442003",
       "success",
       "authoritative",
       "state",
-      "v0.33",
+      "v0.34",
       "newest",
       "alice-context",
       "handoff",
-      "n0_dual_view_late_interaction_qualification_ready.md",
+      "n0_dual_view_qualification_bookkeeping_recovery.md",
       "preserve",
-      "identifiability",
-      "audit",
-      "sha",
-      "6d166af91240cb67cae270c95bb963cafca0597d65da77de3b0ada53bb33b721",
-      "lexical",
-      "token-level",
-      "query-field",
-      "binding",
-      "reach",
-      "1.0",
-      "dev",
-      "edge",
-      "accuracy",
-      "final",
-      "pooled",
-      "semantics",
-      "retain",
-      "0.8056",
-      "all-edge",
-      "0.8889",
-      "same-relation",
-      "while",
-      "structured",
-      "parent",
-      "state",
-      "collapses",
-      "0.2083",
-      "0.2361",
-      "parent",
-      "graph",
-      "weighting",
-      "0.1111",
-      "0.3542",
-      "next",
-      "architecture",
-      "dual-view",
-      "final",
-      "semantic",
-      "token",
-      "late",
-      "interaction",
-      "determines",
-      "edge",
-      "identity",
-      "while",
-      "existing",
-      "frozen",
-      "structured/graph",
-      "parent",
-      "multi-layer",
-      "relation",
-      "specialist",
-      "perform",
-      "directional",
-      "reasoning",
-      "routing",
-      "hierarchical",
-      "no-op",
-      "1-p",
-      "specialist",
-      "edge",
-      "specialist",
-      "edge",
-      "specialist",
-      "setwise",
-      "transformer",
-      "flat",
-      "parent-plus-edge",
-      "router",
-      "hard-coded",
-      "dev-best",
-      "layer",
-      "only",
+      "attempt-1",
       "cpu",
-      "no-gradient",
-      "runtime",
       "qualification",
+      "source",
+      "b736f55363254eb887664f33c35ac1a144a0b08e",
+      "terminal",
+      "error",
+      "direction-invariance",
+      "pair",
+      "coverage",
+      "drift",
+      "144",
+      "validation-harness",
+      "bookkeeping",
+      "failure",
+      "not",
+      "model",
+      "evidence",
+      "correct",
+      "scientific",
+      "expectation",
+      "remains",
+      "unique",
+      "reversal",
+      "pairs",
+      "relations",
+      "dev",
+      "quads",
+      "query",
+      "roles",
+      "qualifier",
+      "deduplicates",
+      "unique",
+      "quad_id",
+      "query_role",
+      "compares",
+      "versus",
+      "once",
+      "per",
+      "key",
+      "architecture",
+      "data",
+      "thresholds",
+      "audit",
+      "lineage",
+      "no-gradient",
+      "boundary",
+      "unchanged",
+      "attempt-1",
+      "qualification",
+      "directory",
+      "must",
+      "remain",
+      "preserved",
+      "corrected",
+      "evidence",
+      "writes",
+      "qualification-v0.2",
+      "only",
+      "one",
+      "corrected",
+      "cpu/no-gradient",
+      "requalification",
       "authorized",
       "gpu",
+      "optimizer",
       "gradient",
       "test",
       "challenge",
@@ -158,8 +147,8 @@
       "schema": "alice-context-catalog-status-v1",
       "source_branch": "alice-eipm-v1-build",
       "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "branch_count": 41,
-      "knowledge_branch_count": 41,
+      "branch_count": 42,
+      "knowledge_branch_count": 42,
       "source_file_count": 1238,
       "active_n0_state_present": true,
       "active_mission_state_present": true,
@@ -167,10 +156,10 @@
       "unmerged_experiment_frontier_present": true,
       "unmerged_experiment_maximal_head_count": 1,
       "continuity_stale_relative_to_experiment_frontier": true,
-      "document_pointer_count": 2595,
-      "failure_lesson_pointer_count": 1327,
-      "frontier_research_pointer_count": 656,
-      "supersession_pointer_count": 413,
+      "document_pointer_count": 2600,
+      "failure_lesson_pointer_count": 1332,
+      "frontier_research_pointer_count": 658,
+      "supersession_pointer_count": 414,
       "authority": "routing-only",
       "notes": [
         "Catalog entries are source pointers, not truth promotions.",
@@ -249,9 +238,9 @@
       },
       "continuity_branch_head": {
         "branch": "alice-context",
-        "head": "c97e103b0337028c56c47e15f6a58380c19a75ac",
-        "head_committed_at": "2026-09-20T00:01:34-05:00",
-        "head_message": "context: hand off dual-view binding qualification"
+        "head": "aed0053a39f38e498c7a337d7b67f220b8c8843c",
+        "head_committed_at": "2026-09-20T00:21:23-05:00",
+        "head_message": "context: hand off dual-view qualification bookkeeping recovery"
       },
       "unmerged_experiment_frontier": {
         "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -262,17 +251,18 @@
         "maximal_heads": [
           {
             "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
-            "head": "b736f55363254eb887664f33c35ac1a144a0b08e",
-            "head_committed_at": "2026-09-20T00:01:01-05:00",
-            "head_message": "ci(n0): guard dual-view qualification boundary",
-            "ahead": 196,
+            "head": "edcee7dd7a53bac158793b805a29cfaa0c1b11b0",
+            "head_committed_at": "2026-09-20T00:20:52-05:00",
+            "head_message": "ci(n0): guard dual-view bookkeeping recovery",
+            "ahead": 200,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-            "changed_file_count_vs_source_merge_base": 158,
+            "changed_file_count_vs_source_merge_base": 161,
             "changed_paths_vs_source_merge_base": [
               ".github/workflows/n0-arbitration-contract-check.yml",
               ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
               ".github/workflows/n0-dual-view-late-interaction-qualification-check.yml",
+              ".github/workflows/n0-dual-view-requalification-recovery-check.yml",
               ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
               ".github/workflows/n0-query-edge-binding-identifiability-audit-check.yml",
               ".github/workflows/n0-query-edge-competitive-router-contract-check.yml",
@@ -311,6 +301,7 @@
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.31.json",
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.32.json",
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.33.json",
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.34.json",
               "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
@@ -386,6 +377,7 @@
               "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_2.sh",
               "scripts/eipm/n0/run_n0_v02_qualify_query_edge_competitive_router_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_qualify_query_edge_cross_attention_bridge_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_qualify_query_edge_setwise_router_v0_1.sh",
@@ -435,17 +427,18 @@
         "all_ahead_candidates": [
           {
             "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
-            "head": "b736f55363254eb887664f33c35ac1a144a0b08e",
-            "head_committed_at": "2026-09-20T00:01:01-05:00",
-            "head_message": "ci(n0): guard dual-view qualification boundary",
-            "ahead": 196,
+            "head": "edcee7dd7a53bac158793b805a29cfaa0c1b11b0",
+            "head_committed_at": "2026-09-20T00:20:52-05:00",
+            "head_message": "ci(n0): guard dual-view bookkeeping recovery",
+            "ahead": 200,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-            "changed_file_count_vs_source_merge_base": 158,
+            "changed_file_count_vs_source_merge_base": 161,
             "changed_paths_vs_source_merge_base": [
               ".github/workflows/n0-arbitration-contract-check.yml",
               ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
               ".github/workflows/n0-dual-view-late-interaction-qualification-check.yml",
+              ".github/workflows/n0-dual-view-requalification-recovery-check.yml",
               ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
               ".github/workflows/n0-query-edge-binding-identifiability-audit-check.yml",
               ".github/workflows/n0-query-edge-competitive-router-contract-check.yml",
@@ -484,6 +477,7 @@
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.31.json",
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.32.json",
               "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.33.json",
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.34.json",
               "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
               "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
@@ -559,6 +553,7 @@
               "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_1.sh",
+              "scripts/eipm/n0/run_n0_v02_qualify_dual_view_late_interaction_v0_2.sh",
               "scripts/eipm/n0/run_n0_v02_qualify_query_edge_competitive_router_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_qualify_query_edge_cross_attention_bridge_v0_1.sh",
               "scripts/eipm/n0/run_n0_v02_qualify_query_edge_setwise_router_v0_1.sh",
@@ -1759,9 +1754,9 @@
       },
       "continuity_freshness": {
         "stale_relative_to_unmerged_experiment_frontier": true,
-        "newest_experiment_frontier_time": "2026-09-20T00:01:01-05:00",
+        "newest_experiment_frontier_time": "2026-09-20T00:20:52-05:00",
         "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
-        "context_branch_head_time": "2026-09-20T00:01:34-05:00"
+        "context_branch_head_time": "2026-09-20T00:21:23-05:00"
       },
       "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
       "authority": "routing-and-freshness-only"
@@ -1815,49 +1810,7 @@
     },
     "hits": [
       {
-        "score": 180,
-        "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
-        "blob_sha": "5f198cd9c1fe0075ab762bb9015d88c86a274dde",
-        "category": "design_document",
-        "title": "N0 Query-Edge Routed Specialist Failure Localization v0.1",
-        "declared": {},
-        "matched_terms": [
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "supersession",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 37,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 161,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-20/sol/N0_COMPETITIVE_EDGE_ROUTER_CPU_QUALIFICATION_READY.md",
-        "blob_sha": "c1d6cbbf542f2a165ea98f8eb24bfcdbc01600ab",
-        "category": "working_context",
-        "title": "N0 Competitive Edge Router — CPU Qualification Ready",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [],
-        "catalogs": [
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 41
-      },
-      {
-        "score": 160,
+        "score": 163,
         "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
         "branch_scope": "branch_specific",
         "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
@@ -1868,288 +1821,206 @@
           "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
         },
         "matched_terms": [
-          "research"
+          "failure",
+          "hotfix",
+          "magnolia",
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 28,
+        "lexical_body_hits": 30,
         "currentness_adjustment": 25
       },
       {
-        "score": 157,
+        "score": 151,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_LAYERWISE_AUDIT_HANDOFF.md",
-        "blob_sha": "ef36a23c17bf569a0697dcda6e936ede68fdeffc",
+        "path": "docs/chat-context/2026-09-20/sol/N0_DUAL_VIEW_QUALIFICATION_BOOKKEEPING_RECOVERY.md",
+        "blob_sha": "caf49c3baff11649f063f26a0ac4cfa24b9d8a19",
         "category": "working_context",
-        "title": "N0 Query-Semantics Layerwise Audit Handoff",
-        "declared": {
-          "status": " 575801 completed the first architecture audit; final token states are stronger than pooled views but causes/supports remain at chance; gradient work remains frozen pending one no-gradient layerwise audit"
-        },
+        "title": "N0 Dual-View Qualification Harness Recovery — One CPU Requalification Ready",
+        "declared": {},
         "matched_terms": [
-          "frontier",
-          "literature",
-          "research"
+          "failed",
+          "failure",
+          "recovery"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
-          "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 29
+        "lexical_body_hits": 61
       },
       {
-        "score": 155,
+        "score": 142,
+        "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
+        "branch_scope": "branch_specific",
+        "path": ".github/workflows/n0-dual-view-requalification-recovery-check.yml",
+        "blob_sha": "88b4748a8c84370b757ee006c56e0458a3914e69",
+        "category": "repository_file",
+        "title": "n0-dual-view-requalification-recovery-check.yml",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "hotfix",
+          "recovery",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 18,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 138,
         "branch": "alice-eipm-v1-query-edge-binding-identifiability-audit",
         "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
-        "blob_sha": "5f198cd9c1fe0075ab762bb9015d88c86a274dde",
+        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+        "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
         "category": "design_document",
-        "title": "N0 Query-Edge Routed Specialist Failure Localization v0.1",
-        "declared": {},
-        "matched_terms": [
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "supersession",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 37
-      },
-      {
-        "score": 155,
-        "branch": "alice-eipm-v1-query-edge-competitive-router",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
-        "blob_sha": "5f198cd9c1fe0075ab762bb9015d88c86a274dde",
-        "category": "design_document",
-        "title": "N0 Query-Edge Routed Specialist Failure Localization v0.1",
-        "declared": {},
-        "matched_terms": [
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "supersession",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 37
-      },
-      {
-        "score": 155,
-        "branch": "alice-eipm-v1-query-edge-cross-attention-bridge",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
-        "blob_sha": "5f198cd9c1fe0075ab762bb9015d88c86a274dde",
-        "category": "design_document",
-        "title": "N0 Query-Edge Routed Specialist Failure Localization v0.1",
-        "declared": {},
-        "matched_terms": [
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "supersession",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 37
-      },
-      {
-        "score": 155,
-        "branch": "alice-eipm-v1-query-edge-setwise-router",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
-        "blob_sha": "5f198cd9c1fe0075ab762bb9015d88c86a274dde",
-        "category": "design_document",
-        "title": "N0 Query-Edge Routed Specialist Failure Localization v0.1",
-        "declared": {},
-        "matched_terms": [
-          "frontier",
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "supersession",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 37
-      },
-      {
-        "score": 143,
-        "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
-        "branch_scope": "branch_specific",
-        "path": ".github/workflows/n0-dual-view-late-interaction-qualification-check.yml",
-        "blob_sha": "0d09da9cccd7a76efccc3888533ca5f9ccff5e88",
-        "category": "repository_file",
-        "title": "n0-dual-view-late-interaction-qualification-check.yml",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [],
-        "catalogs": [
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 19,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 143,
-        "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
-        "branch_scope": "branch_specific",
-        "path": ".github/workflows/n0-query-edge-binding-identifiability-audit-check.yml",
-        "blob_sha": "55b1b7989ffc6bc0e7cf5ec42a51020cfb5d1508",
-        "category": "repository_file",
-        "title": "n0-query-edge-binding-identifiability-audit-check.yml",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [],
-        "catalogs": [
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 11,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 143,
-        "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
-        "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
-        "category": "design_document",
-        "title": "N0 Query-Semantics Architecture Audit v0.1",
-        "declared": {},
-        "matched_terms": [
-          "research"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "supersession",
-          "lexical"
-        ],
-        "lexical_body_hits": 25,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 141,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-20/sol/N0_BINDING_IDENTIFIABILITY_BEFORE_MORE_ROUTING.md",
-        "blob_sha": "d4c1cc53fc93d452fb8e52c5e755a17d38f0379b",
-        "category": "working_context",
-        "title": "N0 Query–Edge Binding Identifiability Audit — Router Repair Loop Halted",
-        "declared": {},
-        "matched_terms": [
-          "competitor"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 48
-      },
-      {
-        "score": 141,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-20/sol/N0_QUERY_EDGE_ONE_P100_TRAINING_READY.md",
-        "blob_sha": "8293ff92906d441f49a7a812d3c661463f984682",
-        "category": "working_context",
-        "title": "N0 Query–Edge Routed Specialist — One P100 Run Ready",
-        "declared": {},
-        "matched_terms": [
-          "frontier"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 38
-      },
-      {
-        "score": 141,
-        "branch": "fable-builder-model",
-        "branch_scope": "branch_specific",
-        "path": "docs/fable-builder/traces/FBM_TRACE_20260920_N0_QUERY_EDGE_ROUTED_SPECIALIST_TRAINING_DECISION.jsonl",
-        "blob_sha": "e27b68c7dea895fed609384696ba53eb7e5905a1",
-        "category": "design_document",
-        "title": "FBM_TRACE_20260920_N0_QUERY_EDGE_ROUTED_SPECIALIST_TRAINING_DECISION.jsonl",
-        "declared": {},
-        "matched_terms": [
-          "frontier"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 18
-      },
-      {
-        "score": 139,
-        "branch": "alice-context",
-        "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_ARCHITECTURE_AUDIT_HANDOFF.md",
-        "blob_sha": "0b70134a42e598a15e01387d0f6339fbdbb97655",
-        "category": "working_context",
-        "title": "N0 Query-Semantics Architecture Audit Handoff",
+        "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
         "declared": {
-          "status": " QRR v0.3 failed validly at dev; heldout remained unopened; all gradient work is frozen pending one no-gradient semantic-representation audit"
+          "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
         },
         "matched_terms": [
-          "frontier",
-          "research"
+          "failure",
+          "hotfix",
+          "magnolia",
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "supersession",
           "lexical"
         ],
         "lexical_body_hits": 30
       },
       {
-        "score": 139,
+        "score": 138,
+        "branch": "alice-eipm-v1-query-edge-competitive-router",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+        "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
+        "category": "design_document",
+        "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
+        "declared": {
+          "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
+        },
+        "matched_terms": [
+          "failure",
+          "hotfix",
+          "magnolia",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 30
+      },
+      {
+        "score": 138,
+        "branch": "alice-eipm-v1-query-edge-cross-attention-bridge",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+        "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
+        "category": "design_document",
+        "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
+        "declared": {
+          "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
+        },
+        "matched_terms": [
+          "failure",
+          "hotfix",
+          "magnolia",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 30
+      },
+      {
+        "score": 138,
+        "branch": "alice-eipm-v1-query-edge-setwise-router",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+        "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
+        "category": "design_document",
+        "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
+        "declared": {
+          "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
+        },
+        "matched_terms": [
+          "failure",
+          "hotfix",
+          "magnolia",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 30
+      },
+      {
+        "score": 138,
+        "branch": "alice-eipm-v1-relation-conditioned-multilayer-interface",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+        "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
+        "category": "design_document",
+        "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
+        "declared": {
+          "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
+        },
+        "matched_terms": [
+          "failure",
+          "hotfix",
+          "magnolia",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 30
+      },
+      {
+        "score": 134,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md",
@@ -2160,107 +2031,295 @@
           "status": " architecture designed and CI-qualified from 575804 evidence; exact relation-layer map still must be compiled from the saved audit JSON; training remains unauthorized"
         },
         "matched_terms": [
-          "frontier",
-          "research"
+          "failed",
+          "magnolia"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
-          "failure",
           "lexical"
         ],
-        "lexical_body_hits": 31,
+        "lexical_body_hits": 21,
         "currentness_adjustment": 30
       },
       {
-        "score": 138,
-        "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
-        "branch_scope": "branch_specific",
-        "path": ".github/workflows/n0-setwise-edge-router-training-contract-check.yml",
-        "blob_sha": "83af946eee18a956f1406984c2e5d6c46a9a766a",
-        "category": "repository_file",
-        "title": "n0-setwise-edge-router-training-contract-check.yml",
-        "declared": {},
-        "matched_terms": [
-          "competitor"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 14,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 138,
-        "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
-        "branch_scope": "branch_specific",
-        "path": ".github/workflows/n0-setwise-query-edge-router-contract-check.yml",
-        "blob_sha": "cba63e64d5231ab3f5b65f0dc75e175f404fd633",
-        "category": "repository_file",
-        "title": "n0-setwise-query-edge-router-contract-check.yml",
-        "declared": {},
-        "matched_terms": [
-          "competitor"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 12,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 138,
-        "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
-        "branch_scope": "branch_specific",
-        "path": "configs/eipm/n0/n0_v02_setwise_edge_router_training_decision_v0_1.json",
-        "blob_sha": "afb68285e45b421b010c9134407d8df17808f10c",
-        "category": "configuration_state",
-        "title": "n0_v02_setwise_edge_router_training_decision_v0_1.json",
-        "declared": {},
-        "matched_terms": [
-          "competitor"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "frontier",
-          "document",
-          "failure",
-          "lexical"
-        ],
-        "lexical_body_hits": 7,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 136,
+        "score": 132,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
-        "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
-        "blob_sha": "19f407ba4d11922a5095d3570cb6a0474d54e6be",
+        "path": "docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_ARCHITECTURE_AUDIT_HANDOFF.md",
+        "blob_sha": "0b70134a42e598a15e01387d0f6339fbdbb97655",
         "category": "working_context",
-        "title": "N0 Final Frozen Challenge Ready Handoff",
+        "title": "N0 Query-Semantics Architecture Audit Handoff",
         "declared": {
-          "status": " one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized"
+          "status": " QRR v0.3 failed validly at dev; heldout remained unopened; all gradient work is frozen pending one no-gradient semantic-representation audit"
         },
         "matched_terms": [
-          "frontier"
+          "failed",
+          "failure",
+          "magnolia",
+          "repair"
         ],
         "supersession_hints": [],
         "catalogs": [
+          "failure",
           "frontier",
           "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 24
+      },
+      {
+        "score": 128,
+        "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+        "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+        "category": "design_document",
+        "title": "N0 Query-Semantics Architecture Audit v0.1",
+        "declared": {},
+        "matched_terms": [
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
           "failure",
+          "frontier",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 19,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 126,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-18/sol/N0_MULTILAYER_INTERFACE_RUNTIME_QUALIFICATION_READY.md",
+        "blob_sha": "c471f9a74cdfd12d06d8598df9e61ef30cafd157",
+        "category": "working_context",
+        "title": "N0 Relation-Conditioned Multi-Layer Interface — Runtime Qualification Ready",
+        "declared": {},
+        "matched_terms": [
+          "error",
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 42
+      },
+      {
+        "score": 123,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_LAYERWISE_AUDIT_HANDOFF.md",
+        "blob_sha": "ef36a23c17bf569a0697dcda6e936ede68fdeffc",
+        "category": "working_context",
+        "title": "N0 Query-Semantics Layerwise Audit Handoff",
+        "declared": {
+          "status": " 575801 completed the first architecture audit; final token states are stronger than pooled views but causes/supports remain at chance; gradient work remains frozen pending one no-gradient layerwise audit"
+        },
+        "matched_terms": [
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 20
+      },
+      {
+        "score": 120,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-19/sol/N0_QUERY_EDGE_BRIDGE_CPU_QUALIFICATION_READY.md",
+        "blob_sha": "a997c2726c300b0d204d3920c578c2b323d4d758",
+        "category": "working_context",
+        "title": "N0 Query–Edge Cross-Attention Bridge — CPU Qualification Ready",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 33
+      },
+      {
+        "score": 117,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md",
+        "blob_sha": "5bf63241b821ece2c6b74fc0512c575bd7db9c6e",
+        "category": "design_document",
+        "title": "N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 19,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 116,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-18/sol/N0_MISSING_EVIDENCE_LOCALIZATION_HANDOFF.md",
+        "blob_sha": "a39c72468a654060fba433b47324990f32134b63",
+        "category": "working_context",
+        "title": "N0 Missing-Evidence Localization Handoff",
+        "declared": {
+          "status": " final frozen challenge is an immutable valid FAIL; one fresh non-challenge causal-path localization run is ready; no rerun, threshold change, training, promotion, scaling, or N0 completion authorized"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
           "lexical"
         ],
         "lexical_body_hits": 30
+      },
+      {
+        "score": 116,
+        "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
+        "branch_scope": "branch_specific",
+        "path": ".github/workflows/n0-dual-view-late-interaction-qualification-check.yml",
+        "blob_sha": "0d09da9cccd7a76efccc3888533ca5f9ccff5e88",
+        "category": "repository_file",
+        "title": "n0-dual-view-late-interaction-qualification-check.yml",
+        "declared": {},
+        "matched_terms": [
+          "error",
+          "hotfix",
+          "magnolia",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 11,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 116,
+        "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
+        "branch_scope": "branch_specific",
+        "path": ".github/workflows/n0-query-semantics-architecture-audit-contract-check.yml",
+        "blob_sha": "9b1f85a38e87a5339f65957072d670235d0a06f1",
+        "category": "repository_file",
+        "title": "n0-query-semantics-architecture-audit-contract-check.yml",
+        "declared": {},
+        "matched_terms": [
+          "failure",
+          "magnolia",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "supersession",
+          "lexical"
+        ],
+        "lexical_body_hits": 11,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 114,
+        "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
+        "blob_sha": "b31b09cfbb87865c26ce9b700a2174a8a1954666",
+        "category": "design_document",
+        "title": "N0 Relation-Conditioned Multi-Layer Query Interface v0.1",
+        "declared": {
+          "status": " architecture designed from jobs 575801 and 575804; training remains unauthorized"
+        },
+        "matched_terms": [
+          "failed"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "frontier",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 22,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 113,
+        "branch": "alice-context",
+        "branch_scope": "branch_specific",
+        "path": "docs/chat-context/2026-09-20/sol/N0_COMPETITIVE_EDGE_ROUTER_CPU_QUALIFICATION_READY.md",
+        "blob_sha": "c1d6cbbf542f2a165ea98f8eb24bfcdbc01600ab",
+        "category": "working_context",
+        "title": "N0 Competitive Edge Router — CPU Qualification Ready",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 35
       }
     ],
     "private_external_route_recommended": true,

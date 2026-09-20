@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-dual-view-late-interaction-qualification-20260920-001
-- Question: Refresh A.L.I.C.E. N0 continuity to the dual-view late-interaction qualification frontier. Resolve branch alice-eipm-v1-dual-view-late-interaction-binding at static-contract head b736f55363254eb887664f33c35ac1a144a0b08e, CI 35490590850 success, authoritative state v0.33, and newest alice-context handoff N0_DUAL_VIEW_LATE_INTERACTION_QUALIFICATION_READY.md. Preserve identifiability audit SHA 6d166af91240cb67cae270c95bb963cafca0597d65da77de3b0ada53bb33b721: lexical and token-level query-field binding reach 1.0 DEV edge accuracy, final pooled semantics retain 0.8056 all-edge / 0.8889 same-relation, while structured parent state collapses to 0.2083 / 0.2361 and parent graph weighting to 0.1111 / 0.3542. The next architecture is dual-view: final semantic token late interaction determines edge identity, while the existing frozen structured/graph parent and multi-layer relation specialist perform directional reasoning. Routing is hierarchical: P(no-op)=1-P(specialist), P(edge)=P(specialist)*P(edge|specialist). No setwise transformer, no flat parent-plus-edge router, no hard-coded DEV-best layer. Only CPU no-gradient runtime qualification is authorized. GPU, gradient, TEST, challenge, scale, semantic retraining, graph-parent retraining, private identity gradient and promotion remain closed. Graphify remains navigation-only.
+- Request: n0-dual-view-qualification-bookkeeping-recovery-20260920-001
+- Question: Refresh A.L.I.C.E. N0 continuity to the dual-view qualification bookkeeping-recovery frontier. Resolve branch alice-eipm-v1-dual-view-late-interaction-binding at exact head edcee7dd7a53bac158793b805a29cfaa0c1b11b0, recovery CI run 35491442003 success, authoritative state v0.34, and newest alice-context handoff N0_DUAL_VIEW_QUALIFICATION_BOOKKEEPING_RECOVERY.md. Preserve attempt-1 CPU qualification source b736f55363254eb887664f33c35ac1a144a0b08e and terminal error 'direction-invariance pair coverage drift: 144' as validation-harness bookkeeping failure, not model evidence. The correct scientific expectation remains 72 unique reversal pairs = 6 relations x 6 DEV quads x 2 query roles. The qualifier now deduplicates by unique (quad_id, query_role) and compares A versus B once per key. Architecture, data, thresholds, audit lineage and no-gradient boundary are unchanged. Attempt-1 qualification directory must remain preserved. Corrected evidence writes to qualification-v0.2. Only one corrected CPU/no-gradient requalification is authorized. GPU, optimizer, gradient, TEST, challenge, scale, semantic retraining, graph-parent retraining, private identity gradient and promotion remain closed. Graphify remains navigation-only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: False
@@ -18,24 +18,30 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-dual-view-late-interaction-binding @ b736f55363254eb887664f33c35ac1a144a0b08e — ci(n0): guard dual-view qualification boundary
+- alice-eipm-v1-dual-view-late-interaction-binding @ edcee7dd7a53bac158793b805a29cfaa0c1b11b0 — ci(n0): guard dual-view bookkeeping recovery
 
 ## Source pointers
 
-- [180] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [161] alice-context:docs/chat-context/2026-09-20/sol/N0_COMPETITIVE_EDGE_ROUTER_CPU_QUALIFICATION_READY.md — N0 Competitive Edge Router — CPU Qualification Ready
-- [160] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [163] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [157] alice-context:docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_LAYERWISE_AUDIT_HANDOFF.md — N0 Query-Semantics Layerwise Audit Handoff
-  - status:  575801 completed the first architecture audit; final token states are stronger than pooled views but causes/supports remain at chance; gradient work remains frozen pending one no-gradient layerwise audit
-- [155] alice-eipm-v1-query-edge-binding-identifiability-audit:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [155] alice-eipm-v1-query-edge-competitive-router:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [155] alice-eipm-v1-query-edge-cross-attention-bridge:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [155] alice-eipm-v1-query-edge-setwise-router:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [143] alice-eipm-v1-dual-view-late-interaction-binding:.github/workflows/n0-dual-view-late-interaction-qualification-check.yml — n0-dual-view-late-interaction-qualification-check.yml
-- [143] alice-eipm-v1-dual-view-late-interaction-binding:.github/workflows/n0-query-edge-binding-identifiability-audit-check.yml — n0-query-edge-binding-identifiability-audit-check.yml
-- [143] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
-- [141] alice-context:docs/chat-context/2026-09-20/sol/N0_BINDING_IDENTIFIABILITY_BEFORE_MORE_ROUTING.md — N0 Query–Edge Binding Identifiability Audit — Router Repair Loop Halted
+- [151] alice-context:docs/chat-context/2026-09-20/sol/N0_DUAL_VIEW_QUALIFICATION_BOOKKEEPING_RECOVERY.md — N0 Dual-View Qualification Harness Recovery — One CPU Requalification Ready
+- [142] alice-eipm-v1-dual-view-late-interaction-binding:.github/workflows/n0-dual-view-requalification-recovery-check.yml — n0-dual-view-requalification-recovery-check.yml
+- [138] alice-eipm-v1-query-edge-binding-identifiability-audit:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [138] alice-eipm-v1-query-edge-competitive-router:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [138] alice-eipm-v1-query-edge-cross-attention-bridge:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [138] alice-eipm-v1-query-edge-setwise-router:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [138] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [134] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md — N0 Relation-Conditioned Multi-Layer Query Interface Handoff
+  - status:  architecture designed and CI-qualified from 575804 evidence; exact relation-layer map still must be compiled from the saved audit JSON; training remains unauthorized
+- [132] alice-context:docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_ARCHITECTURE_AUDIT_HANDOFF.md — N0 Query-Semantics Architecture Audit Handoff
+  - status:  QRR v0.3 failed validly at dev; heldout remained unopened; all gradient work is frozen pending one no-gradient semantic-representation audit
+- [128] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [126] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_INTERFACE_RUNTIME_QUALIFICATION_READY.md — N0 Relation-Conditioned Multi-Layer Interface — Runtime Qualification Ready
 
 ## Graphify navigation hints
 
