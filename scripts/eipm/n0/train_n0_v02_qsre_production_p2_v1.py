@@ -85,6 +85,7 @@ def operator_supervised_loss(
     modifier_target=split["modifier_target"][indices].to(device).float()
     applicability_target=split["applicability_target"][indices].to(device).float()
     control_target=split["control_target"][indices].to(device).long()
+    termination_target=split["termination_target"][indices].to(device).long()
 
     batch,pred_steps,_=operator.relation_distribution.shape
     target_steps=relation_target.size(1)
@@ -109,19 +110,23 @@ def operator_supervised_loss(
     )
 
     lengths=relation_mask.long().sum(dim=-1)
-    stop_supervised=relation_mask.clone()
+    termination_supervised=relation_mask.clone()
     stop_target=torch.zeros_like(operator.stop_probability)
+    unknown_target=torch.zeros_like(operator.unknown_probability)
     for row,length in enumerate(lengths.tolist()):
         if length<pred_steps:
-            stop_supervised[row,length]=True
-            stop_target[row,length]=1.0
+            termination_supervised[row,length]=True
+            if int(termination_target[row].item()) == 1:
+                unknown_target[row,length]=1.0
+            else:
+                stop_target[row,length]=1.0
     stop_loss=F.binary_cross_entropy(
-        operator.stop_probability[stop_supervised].clamp(1e-6,1-1e-6),
-        stop_target[stop_supervised],
+        operator.stop_probability[termination_supervised].clamp(1e-6,1-1e-6),
+        stop_target[termination_supervised],
     )
     unknown_loss=F.binary_cross_entropy(
-        operator.unknown_probability[stop_supervised].clamp(1e-6,1-1e-6),
-        torch.zeros_like(operator.unknown_probability[stop_supervised]),
+        operator.unknown_probability[termination_supervised].clamp(1e-6,1-1e-6),
+        unknown_target[termination_supervised],
     )
 
     relational=control_target.eq(CONTROL_RELATIONAL)
@@ -319,6 +324,8 @@ def evaluate(
         "traversal_accuracy_relational":min_metric("traversal_accuracy_relational"),
         "modifier_exact_accuracy_relational":min_metric("modifier_exact_accuracy_relational"),
         "control_accuracy":min_metric("control_accuracy"),
+        "termination_accuracy":min_metric("termination_accuracy"),
+        "unknown_termination_accuracy":min_metric("unknown_termination_accuracy"),
         "pair_consistency":paired_view_consistency(first=ops[0],second=ops[1]),
     }
 
@@ -351,6 +358,8 @@ def eligible(metrics:dict,thresholds:dict)->bool:
         and op["traversal_accuracy_relational"]>=thresholds["traversal_accuracy_relational"]
         and op["modifier_exact_accuracy_relational"]>=thresholds["modifier_exact_accuracy_relational"]
         and op["control_accuracy"]>=thresholds["control_accuracy"]
+        and op["termination_accuracy"]>=thresholds["termination_accuracy"]
+        and op["unknown_termination_accuracy"]>=thresholds["unknown_termination_accuracy"]
         and op["pair_consistency"]>=thresholds["pair_consistency"]
         and down["row_success_accuracy"]>=thresholds["downstream_row_success_accuracy"]
         and down["family_min_success"]>=thresholds["downstream_family_min_success"]
