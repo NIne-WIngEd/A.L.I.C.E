@@ -1,0 +1,146 @@
+{
+  "schema": "alice.eipm.n0.setwise-edge-router-training-decision.v0.1",
+  "decision": "AUTHORIZE_ONE_BOUNDED_SETWISE_EDGE_ROUTER_EXPERIMENT_AFTER_RUNTIME_QUALIFICATION",
+  "date": "2026-09-20",
+  "qualification": {
+    "status": "PASS_SETWISE_QUERY_EDGE_ROUTER_NO_GRADIENT_RUNTIME_CONTRACT",
+    "source_revision": "7a8bc6b63a9f32095ba3fe4ed27db5f62cf5e061",
+    "receipt_sha256": "4b1591e1eec5c450a872264a1bdf1130def5a29e443c8c35e974ae05f2861666",
+    "future_trainable_scope": "setwise_query_edge_bridge_only",
+    "future_trainable_parameter_count": 15204100,
+    "parent_parameters_exactly_unchanged": true,
+    "exact_parent_field_weights": true,
+    "exact_parent_pooled_state": true,
+    "route_probabilities_sum_to_one": true,
+    "explicit_parent_noop_route": true,
+    "all_active_directed_edges_jointly_contextualized": true,
+    "edge_set_permutation_equivariance": true,
+    "nonlocal_competitor_context": true,
+    "nonlocal_competitor_route_logit_delta": 0.05161154270172119,
+    "route_probability_is_actual_source_contribution_control": true,
+    "route_probability_is_actual_target_contribution_control": true,
+    "independent_per_edge_route_scoring": false,
+    "proxy_dot_product_router": false
+  },
+  "source_failure": {
+    "status": "FAIL_COMPETITIVE_EDGE_ROUTER_CAUSAL_DEV_OR_PRESERVATION_STOP_NO_HELDOUT_NO_AUTOMATIC_HOTFIX",
+    "source_revision": "a6b263be31d822f8781cefadf450b63dcae00acd",
+    "result_sha256": "08bef659779c2e6fcfb0d60ef209d9f6c7f03b0198bcf370e097e278f5436328",
+    "selected_checkpoint": null,
+    "eligible_checkpoint_keys": []
+  },
+  "experimental_isolation": {
+    "single_causal_change": "replace independent edge scalar routing with setwise contextual edge arbitration",
+    "same_query_edge_training_curriculum": true,
+    "same_preservation_train_anchors": true,
+    "same_frozen_parent_graph": true,
+    "same_frozen_parent_adapter": true,
+    "same_direct_runtime_route_supervision": true,
+    "same_parent_noop_supervision": true,
+    "same_parent_distillation": true,
+    "same_training_step_budget": true,
+    "same_optimizer_hyperparameters": true,
+    "same_checkpoint_eligibility_policy": true,
+    "reason": "isolate whether competitor-aware routing fixes the localized correct-edge identification failure without confounding the result with objective or optimization changes"
+  },
+  "training_objective": {
+    "causal_field_selection_cross_entropy": true,
+    "causal_target_margin_weight": 0.25,
+    "causal_route_cross_entropy": {
+      "enabled": true,
+      "target_space": "parent_noop_plus_all_active_directed_edges",
+      "target": "relevant_edge_index_plus_one",
+      "weight": 1.0,
+      "uses_exact_runtime_route_logits": true
+    },
+    "preservation_parent_distillation": {
+      "enabled": true,
+      "loss": "KL frozen parent field weights to candidate field weights",
+      "weight": 1.0,
+      "ordinary_and_endpoint_equal_share": true,
+      "gradient_data": "TRAIN anchors only"
+    },
+    "preservation_noop_route_cross_entropy": {
+      "enabled": true,
+      "target": "route_class_zero_parent_noop",
+      "weight": 1.0,
+      "ordinary_and_endpoint_equal_share": true,
+      "uses_exact_runtime_route_logits": true
+    },
+    "proxy_routing_loss": false,
+    "irrelevant_edge_gate_penalty": false,
+    "load_balancing_loss": false,
+    "gradient_surgery": false,
+    "route_probability_detachment": false,
+    "loss_weight_change_from_failed_competitive_run": false
+  },
+  "operating_budget": {
+    "max_training_runs": 1,
+    "max_steps": 200,
+    "checkpoint_every_steps": 40,
+    "learning_rate": 0.00015,
+    "weight_decay": 0.02,
+    "warmup_steps": 12,
+    "causal_quad_batch_size": 4,
+    "preservation_batch_size": 16,
+    "hard_parameter_ceiling": null,
+    "operating_budget_is_product_ceiling": false
+  },
+  "trainable_scope": {
+    "setwise_query_edge_bridge_only": true,
+    "semantic_backbone": false,
+    "structured_state": false,
+    "parent_adapter": false,
+    "parent_graph": false
+  },
+  "gradient_data": {
+    "query_edge_causal_train": true,
+    "ordinary_preservation_train_anchors": true,
+    "endpoint_preservation_train_anchors": true,
+    "query_edge_causal_dev": false,
+    "query_edge_causal_test": false,
+    "ordinary_preservation_dev": false,
+    "endpoint_preservation_dev": false,
+    "frozen_challenge": false,
+    "private_identity_data": false
+  },
+  "checkpoint_eligibility": {
+    "frozen_parent_preservation_policy_pass": true,
+    "no_relation_family_row_accuracy_regression_vs_initial_parent": true,
+    "overall_row_accuracy_strictly_improves": true,
+    "overall_quad_accuracy_strictly_improves": true,
+    "worst_family_quad_accuracy_may_not_regress": true,
+    "mean_target_margin_strictly_improves": true,
+    "causal_route_accuracy_must_exceed": 0.5,
+    "worst_family_causal_route_accuracy_must_strictly_exceed_uniform_five_route_chance": 0.2,
+    "causal_route_accuracy_must_strictly_improve_vs_initial": true,
+    "target_route_probability_must_strictly_improve_vs_initial": true
+  },
+  "selection_order": [
+    "preservation_pass",
+    "family_min_causal_route_accuracy",
+    "family_min_quad_accuracy",
+    "causal_route_accuracy",
+    "quad_accuracy",
+    "row_accuracy",
+    "mean_target_margin",
+    "earlier_checkpoint"
+  ],
+  "heldout_policy": {
+    "causal_test_open_during_training": false,
+    "frozen_challenge_open_during_training": false,
+    "eligible_checkpoint_only_enables_separate_decision": true,
+    "automatic_heldout_opening": false
+  },
+  "failure_policy": {
+    "first_genuine_model_failure_stops": true,
+    "automatic_rerun": false,
+    "automatic_hotfix": false,
+    "no_loss_weight_tuning_after_failure_without_reassessment": true,
+    "failure_requires_big_picture_reassessment": true
+  },
+  "scale_authorized": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
