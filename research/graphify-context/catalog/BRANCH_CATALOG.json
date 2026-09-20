@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "612fcbffebe388f6603cc1af174acc594c403d7f",
-      "head_committed_at": "2026-09-20T04:53:47-05:00",
-      "head_message": "context: hand off QSRE T1 pass and T2 static design",
+      "head": "a951378a5366d5a5ed66b659ac9e34577f2be6d4",
+      "head_committed_at": "2026-09-20T14:13:47-05:00",
+      "head_message": "context: hand off QSRE T2 static preparation frontier",
       "status": "diverged",
-      "ahead": 220,
+      "ahead": 221,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 567,
+      "changed_file_count_vs_source_merge_base": 568,
       "knowledge_surface": true
     },
     {
@@ -125,14 +125,14 @@
     },
     {
       "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-      "head": "92ea3f23109a8f0064dadaecb4f3ec25ad4678b8",
-      "head_committed_at": "2026-09-20T04:53:08-05:00",
-      "head_message": "state(n0): record QSRE T1 pass and open T2 static design",
+      "head": "b4eb70634f68ac3c6a34f431d016083c2c9002ce",
+      "head_committed_at": "2026-09-20T14:11:55-05:00",
+      "head_message": "fix(n0): preserve outside-support T2 query invariance",
       "status": "ahead",
-      "ahead": 270,
+      "ahead": 272,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 243,
+      "changed_file_count_vs_source_merge_base": 253,
       "knowledge_surface": true
     },
     {
@@ -545,11 +545,11 @@
     },
     {
       "branch": "research/frontier-watch",
-      "head": "a5848313a5ce655c879be6d8d2c4da96393e6e47",
-      "head_committed_at": "2026-09-20T00:05:29-05:00",
-      "head_message": "research: record first frontier watch and ALICE deltas",
+      "head": "54dbc38cbba98ff4282d990d42fae50767133b9c",
+      "head_committed_at": "2026-09-20T08:13:48-05:00",
+      "head_message": "research: add retrieval-driven reconsolidation frontier delta",
       "status": "ahead",
-      "ahead": 1,
+      "ahead": 2,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 1,
