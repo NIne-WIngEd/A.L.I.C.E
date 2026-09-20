@@ -1,0 +1,168 @@
+name: n0-qsre-t2-classified-recovery-authorization
+
+on:
+  push:
+    paths:
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.54.json"
+      - "configs/eipm/n0/n0_v02_qsre_t2_training_recovery_contract_v0_2.json"
+      - "scripts/eipm/n0/train_n0_v02_qsre_t2_operator_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_qsre_t2_operator_recovery_v0_2.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t2_operator_recovery_v0_2.sbatch"
+      - ".github/workflows/n0-qsre-t2-classified-recovery-authorization.yml"
+  workflow_dispatch:
+
+jobs:
+  authorize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Syntax
+        run: |
+          python -m py_compile scripts/eipm/n0/train_n0_v02_qsre_t2_operator_v0_1.py
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_t2_operator_recovery_v0_2.sh
+          bash -n scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t2_operator_recovery_v0_2.sbatch
+
+      - name: Recovery governance
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          state=json.loads(Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.54.json").read_text())
+          contract=json.loads(Path("configs/eipm/n0/n0_v02_qsre_t2_training_recovery_contract_v0_2.json").read_text())
+
+          assert state["failed_run_evidence"]["job_id"] == 575933
+          assert state["failed_run_evidence"]["classification"] == "EVALUATION_HARNESS_TOTALITY_FAILURE_NOT_MODEL_GATE_FAILURE"
+          assert state["failed_run_evidence"]["model_gate_conclusion"] == "UNDETERMINED"
+          assert state["totality_qualification"]["workflow_run_id"] == 35533710899
+          assert state["totality_qualification"]["conclusion"] == "SUCCESS"
+          assert state["replacement_experiment"]["same_t2_architecture"] is True
+          assert state["replacement_experiment"]["same_optimizer"] is True
+          assert state["replacement_experiment"]["same_learning_rate"] is True
+          assert state["replacement_experiment"]["same_loss"] is True
+          assert state["replacement_experiment"]["same_train_dev_rows"] is True
+          assert state["replacement_experiment"]["same_selection_gates"] is True
+          assert state["replacement_experiment"]["reuse_partial_optimizer_state"] is False
+
+          policy=state["execution_policy"]
+          assert policy["t2_replacement_training_authorized"] is True
+          assert policy["optimizer_authorized"] is True
+          assert policy["gradient_authorized"] is True
+          assert policy["gpu_training_authorized"] is True
+          assert policy["replacement_gpu_runs_authorized"] == 1
+          assert policy["automatic_rerun_authorized"] is False
+          assert policy["automatic_hotfix_chain_authorized"] is False
+          assert policy["semantic_backbone_gradient_authorized"] is False
+          assert policy["t1_executor_gradient_authorized"] is False
+          assert policy["learned_support_training_authorized"] is False
+          assert policy["causal_test_opening_authorized"] is False
+          assert policy["private_identity_gradient_authorized"] is False
+
+          assert contract["schema"] == "alice.eipm.n0.qsre-t2-training-recovery-contract.v0.2"
+          assert contract["failed_job"]["job_id"] == 575933
+          assert contract["failed_job"]["model_gate_conclusion"] == "UNDETERMINED"
+          assert contract["max_gpu_runs"] == 1
+          assert contract["replacement_gpu_runs_authorized"] == 1
+          assert contract["automatic_rerun"] is False
+          assert contract["automatic_hotfix"] is False
+          assert contract["causal_test_open"] is False
+          assert contract["frozen_challenge_open"] is False
+          assert contract["semantic_backbone_gradient"] is False
+          assert contract["t1_executor_gradient"] is False
+          assert contract["learned_support"] is False
+          assert contract["private_identity_gradient"] is False
+
+          print("PASS_QSRE_T2_CLASSIFIED_RECOVERY_GOVERNANCE")
+          PY
+
+      - name: No scientific tuning versus original T2 contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          old=json.loads(Path("configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_1.json").read_text())
+          new=json.loads(Path("configs/eipm/n0/n0_v02_qsre_t2_training_recovery_contract_v0_2.json").read_text())
+
+          exact_keys=[
+              "curriculum_sha256",
+              "expected_curriculum_receipt_sha256",
+              "expected_prepared_cache_sha256",
+              "expected_preparation_receipt_sha256",
+              "semantic_checkpoint_sha256",
+              "t1_checkpoint_sha256",
+              "operator_model",
+              "t1_executor_model",
+              "optimizer",
+              "loss_weights",
+              "continuous_operator_objective",
+              "training",
+              "eligibility",
+              "selection",
+          ]
+          for key in exact_keys:
+              if old[key] != new[key]:
+                  raise SystemExit(f"scientific recovery drift in {key}")
+
+          print("PASS_QSRE_T2_NO_RECOVERY_TUNING")
+          PY
+
+      - name: Qualified recovery source binding
+        run: |
+          CORE=157153b124d665880de237299d8dd8c81403d45c
+          git fetch --no-tags --depth=1 origin "$CORE"
+          for path in \
+            configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.54.json \
+            configs/eipm/n0/n0_v02_qsre_t2_training_recovery_contract_v0_2.json \
+            scripts/eipm/n0/train_n0_v02_qsre_t2_operator_v0_1.py \
+            src/alice_personality/n0/qsre_t2_operator.py \
+            src/alice_personality/n0/qsre_t1_executor.py
+          do
+            git diff --quiet "$CORE" HEAD -- "$path" || {
+              echo "Qualified recovery source drift: $path"
+              exit 1
+            }
+          done
+
+          grep -q 'AUTHORIZED_RECOVERY_CORE="157153b124d665880de237299d8dd8c81403d45c"' \
+            scripts/eipm/n0/run_n0_v02_qsre_t2_operator_recovery_v0_2.sh
+
+          echo "PASS_QSRE_T2_RECOVERY_SOURCE_BINDING"
+
+      - name: Evaluator totality self-test
+        run: |
+          python -m pip install -q torch
+          PYTHONPATH=src python scripts/eipm/n0/train_n0_v02_qsre_t2_operator_v0_1.py --self-test
+
+      - name: Failed-run preservation and shell boundaries
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_t2_operator_recovery_v0_2.sh").read_text()
+          sbatch=Path("scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t2_operator_recovery_v0_2.sbatch").read_text()
+
+          required=[
+              'FAILED_ROOT="$T2_ROOT/training-v0.1"',
+              'OUTROOT="$T2_ROOT/training-v0.2-evaluator-totality-recovery"',
+              '[[ ! -e "$FAILED_ROOT/result.json" ]]',
+              '"$FAILED_ROOT/hidden-cache-v0.1.pt"',
+              '"$FAILED_ROOT/best-observed/qsre_t2_operator.pt"',
+              'fresh_restart_from_seed=true',
+              'automatic_rerun=false',
+              'automatic_hotfix=false',
+          ]
+          missing=[x for x in required if x not in runner]
+          if missing:
+              raise SystemExit("recovery preservation boundary missing "+repr(missing))
+
+          if "$$${" in runner or "$$${" in sbatch:
+              raise SystemExit("double-dollar shell expansion bug")
+          if 'ROOT="$${SLURM_SUBMIT_DIR:?submit from the A.L.I.C.E repo root}"' not in sbatch:
+              raise SystemExit("Slurm submit root boundary missing")
+
+          print("PASS_QSRE_T2_RECOVERY_PRESERVATION_BOUNDARY")
+          PY
