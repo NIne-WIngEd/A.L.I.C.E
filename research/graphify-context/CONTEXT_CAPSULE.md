@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-qsre-t2-static-preparation-ready-20260920-001
-- Question: Refresh A.L.I.C.E. N0 continuity to the QSRE T2 static/operator-preparation frontier. T1 Magnolia job 575914 remains a governed PASS with immutable result SHA ba6b82c10fcb13f403569ad24dbd77cf0b3657dfc3eaf9cb9d10b6690b2d32be. Post-run binding on Magnolia passed: selected checkpoint step 50; selected T1 checkpoint SHA 483bd59499e9bea890072af9c01c12961f41504d48f988ae3b3ee9a3ae8154fb; post-run receipt SHA fe07035348e2f5e2d523ec94ae786dbe535a2a45e6fddd727254f3765b927b8f; TEST/challenge remained closed; T2 gradient remained closed. Current maximal experiment frontier is branch alice-eipm-v1-qsre-t2-operator-learning at b4eb70634f68ac3c6a34f431d016083c2c9002ce with authoritative state v0.50. T2 is learned natural-language operator + oracle structural support/focus + frozen proven T1 executor. Static operator mechanics use full frozen semantic hidden-state stack, learned layer embeddings, latent cross-attention, ordered relation slots, first-class role/operation/control latents, continuous residual state, migratable schema anchors, and no oracle relation/role/support input. The current continuous residual is not injected into frozen T1 because T1 was trained with zero operator context; doing so would confound T2. The public T2 curriculum derives from exact T1 v0.2 structural rows with two natural-language views per row, 720 TRAIN / 288 DEV expected, disjoint TRAIN/DEV template banks, all nine families, no TEST/private identity. First CI 35531380426 caught an outside-support counterfactual query-invariance curriculum bug after syntax/governance/operator mechanics passed. This was a data-contract failure, not model evidence. Only variant-dependent phrase keying was corrected; architecture, thresholds, permissions, causal boundary were unchanged. Corrected CI 35531513467 succeeded fully: syntax, governance, 5 operator-mechanics tests, deterministic T1/T2 curriculum contract, preparation import. T2 optimizer/gradient/GPU/support-learning/TEST/challenge/private identity remain closed. Immediate next action is one CPU/no-gradient tokenized T2 preparation on Magnolia, hash-bound to T1 curriculum 155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063, T1 prepared cache 03a45033dc41a51896f8b514c44e784ecabaa5837488a272306914979ab6b564, and selected T1 checkpoint 483bd59499e9bea890072af9c01c12961f41504d48f988ae3b3ee9a3ae8154fb. Expected status PASS_QSRE_T2_TOKENIZED_PREPARATION; no semantic hidden-state materialization, optimizer, gradient, or GPU. Durable alice-context handoff commit a951378a5366d5a5ed66b659ac9e34577f2be6d4. Preserve anti-MC10 rules and no-permanent-ceiling/full-EIPM workload doctrine. Graphify remains navigation-only.
+- Request: n0-qsre-t2-one-shot-authorized-20260920-001
+- Question: Refresh A.L.I.C.E. N0 continuity to the QSRE T2 one-shot operator-training frontier. T2 tokenized preparation passed on Magnolia after a resume-only recovery from a container PYTHONPATH infrastructure failure. That failure remains classified as infrastructure, not model evidence. Preserve exact preparation evidence: curriculum SHA 40e2d608eaa59ad13e2f9b37a2f3da5d6c20101a28ab76434c11be3d36cb5590; curriculum receipt SHA 26719ccff1ad8b08140a495a9cfefa8696270b70e3efd5d0a9b32e46393a2165; prepared cache SHA 774722d57ccaacc7dba8e53ff3aec66bc4b4b5c6efd20db6907ac5a70654e781; preparation receipt SHA 52e1e0599ecda2992dd2476305c377a4645a7ad079fc6e7ea660684fa35a5967; TRAIN 720, DEV 288; semantic hidden states were not materialized during preparation; no optimizer/gradient/GPU/TEST/private identity. Current maximal experiment frontier is branch alice-eipm-v1-qsre-t2-operator-learning at 6f20c807d0281fb00d6cd6def05a8ee8eef01518. Authoritative state is v0.52. Scientific core is bound at 9924227e7e7d7f3b26c2e294b5a3dde455b4cb12. Static authorization CI run 35532580204 succeeded: syntax, governance, scientific source binding, and trainer mechanics self-test. Exactly one P100 run is authorized. T2 trains only QSRET2OperatorEncoder over all 17 frozen N0 semantic token-state layers. It uses learned layer embeddings, latent cross-attention, ordered relation slots, first-class role/operation/control latents, schema anchors, and a retained continuous operator state. The continuous state now receives a supervised contrastive operator-signature objective so it is not an unused random projection. The semantic backbone and exact T1 step50 executor remain frozen. Structural support and focus remain oracle. No oracle relation/role/support is input to the encoder. Continuous operator context is still not injected into frozen T1 because T1 was trained with zero context and doing so would confound T2. Selection is first DEV checkpoint that simultaneously passes exact operator gates and downstream frozen-T1 gates. Operator gates require exact relation sequence, relational role, relational operation, control, full operator, query-view consistency, and every family all at 1.0. Downstream retains strict T1 causal gates including family minimum 1.0, single-target top1 1.0, causal pair completion 1.0, plural L1 <=0.1, outside-support mass 0 and invariance delta <=1e-7. TEST, challenge, support learning, private identity gradient and promotion remain closed. Automatic rerun and hotfix chains remain forbidden. If the model gate fails, preserve evidence and localize operator component versus frozen semantic representation versus downstream interaction before any change. Full EIPM workload and no-permanent-ceiling doctrine remain active. Durable alice-context handoff commit d36fafe2bd876ffd5cfa26cac0d3694dd773c14b. Graphify is navigation-only; consequential claims resolve to original branch/path sources.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: False
@@ -18,32 +18,33 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-qsre-t2-operator-learning @ b4eb70634f68ac3c6a34f431d016083c2c9002ce — fix(n0): preserve outside-support T2 query invariance
+- alice-eipm-v1-qsre-t2-operator-learning @ 6f20c807d0281fb00d6cd6def05a8ee8eef01518 — ci(n0): qualify QSRE T2 one-shot training
 
 ## Source pointers
 
-- [240] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T2_STATIC_OPERATOR_PREPARATION_READY.md — N0 QSRE T2 Static Operator / CPU Preparation Ready
+- [292] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T2_STATIC_OPERATOR_PREPARATION_READY.md — N0 QSRE T2 Static Operator / CPU Preparation Ready
   - status:  durable handoff after T1 checkpoint binding and T2 static contract pass
-- [237] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md — QSRE T1 PASS → T2 Learned-Operator Decision v0.1
-  - status:  T1 causal question passed on DEV; T2 static design/CPU mechanics justified; T2 gradient remains closed
-- [199] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md — N0 Relation-Semantic Role Residual Repair Handoff
+- [283] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T2_ONE_SHOT_OPERATOR_TRAINING_AUTHORIZED.md — N0 QSRE T2 One-Shot Operator Training Authorized
+  - status:  tokenized preparation passed; one governed T2 P100 run is statically qualified and authorized
+- [270] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md — N0 Relation-Semantic Role Residual Repair Handoff
   - status:  relation-semantic grounding v0.1 failed validly; failure localized to shared read-path entanglement; isolated zero-init semantic-role residual is CI-ready for one P100 run
-- [171] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T1_CORRECTED_PRETRAINING_FRONTIER.md — N0 QSRE T1 Corrected Pretraining Frontier
-- [169] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T1_PASS_T2_STATIC_DESIGN_FRONTIER.md — N0 QSRE T1 PASS / T2 STATIC DESIGN FRONTIER
-  - status:  durable handoff after Magnolia job 575914
-- [167] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md — N0 Relation-Conditioned Multi-Layer Query Interface Handoff
-  - status:  architecture designed and CI-qualified from 575804 evidence; exact relation-layer map still must be compiled from the saved audit JSON; training remains unauthorized
-- [166] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
-  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
-- [164] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
-  - status:  one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized
-- [162] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md — QSRE Static Tensor Interface and Mechanics Decision v0.1
-  - status:  authorizes CPU/no-gradient reference mechanics only
-- [159] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md — N0 Relation-Semantic Grounding Repair Handoff
+- [260] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md — QSRE T1 PASS → T2 Learned-Operator Decision v0.1
+  - status:  T1 causal question passed on DEV; T2 static design/CPU mechanics justified; T2 gradient remains closed
+- [253] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md — N0 Relation-Semantic Grounding Repair Handoff
   - status:  missing-evidence failure localized to relation-semantic endpoint grounding; one bounded repair is CI-ready; no frozen-challenge rerun, threshold change, promotion, scaling, or N0 completion authorized
-- [156] alice-eipm-v1-qsre-t2-operator-learning:.github/workflows/n0-qsre-t2-static-and-curriculum-contract.yml — n0-qsre-t2-static-and-curriculum-contract.yml
-- [151] alice-context:docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_LAYERWISE_AUDIT_HANDOFF.md — N0 Query-Semantics Layerwise Audit Handoff
-  - status:  575801 completed the first architecture audit; final token states are stronger than pooled views but causes/supports remain at chance; gradient work remains frozen pending one no-gradient layerwise audit
+- [241] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
+  - status:  one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized
+- [231] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md — N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization
+  - status:  final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged
+- [223] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [217] alice-context:docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md — Fusion frozen challenge failure + source-anchored repair — 2026-09-16
+  - status: `FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`.
+- [215] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md — N0 Clean-Sheet Relational Execution Architecture Audit v0.1
+  - status:  architecture-review authority; implementation and gradient work frozen
+- [213] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [207] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md — N0 downstream causal arbitration: full-stack graph binding v0.1
 
 ## Graphify navigation hints
 

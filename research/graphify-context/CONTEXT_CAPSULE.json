@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-qsre-t2-static-preparation-ready-20260920-001",
-  "question": "Refresh A.L.I.C.E. N0 continuity to the QSRE T2 static/operator-preparation frontier. T1 Magnolia job 575914 remains a governed PASS with immutable result SHA ba6b82c10fcb13f403569ad24dbd77cf0b3657dfc3eaf9cb9d10b6690b2d32be. Post-run binding on Magnolia passed: selected checkpoint step 50; selected T1 checkpoint SHA 483bd59499e9bea890072af9c01c12961f41504d48f988ae3b3ee9a3ae8154fb; post-run receipt SHA fe07035348e2f5e2d523ec94ae786dbe535a2a45e6fddd727254f3765b927b8f; TEST/challenge remained closed; T2 gradient remained closed. Current maximal experiment frontier is branch alice-eipm-v1-qsre-t2-operator-learning at b4eb70634f68ac3c6a34f431d016083c2c9002ce with authoritative state v0.50. T2 is learned natural-language operator + oracle structural support/focus + frozen proven T1 executor. Static operator mechanics use full frozen semantic hidden-state stack, learned layer embeddings, latent cross-attention, ordered relation slots, first-class role/operation/control latents, continuous residual state, migratable schema anchors, and no oracle relation/role/support input. The current continuous residual is not injected into frozen T1 because T1 was trained with zero operator context; doing so would confound T2. The public T2 curriculum derives from exact T1 v0.2 structural rows with two natural-language views per row, 720 TRAIN / 288 DEV expected, disjoint TRAIN/DEV template banks, all nine families, no TEST/private identity. First CI 35531380426 caught an outside-support counterfactual query-invariance curriculum bug after syntax/governance/operator mechanics passed. This was a data-contract failure, not model evidence. Only variant-dependent phrase keying was corrected; architecture, thresholds, permissions, causal boundary were unchanged. Corrected CI 35531513467 succeeded fully: syntax, governance, 5 operator-mechanics tests, deterministic T1/T2 curriculum contract, preparation import. T2 optimizer/gradient/GPU/support-learning/TEST/challenge/private identity remain closed. Immediate next action is one CPU/no-gradient tokenized T2 preparation on Magnolia, hash-bound to T1 curriculum 155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063, T1 prepared cache 03a45033dc41a51896f8b514c44e784ecabaa5837488a272306914979ab6b564, and selected T1 checkpoint 483bd59499e9bea890072af9c01c12961f41504d48f988ae3b3ee9a3ae8154fb. Expected status PASS_QSRE_T2_TOKENIZED_PREPARATION; no semantic hidden-state materialization, optimizer, gradient, or GPU. Durable alice-context handoff commit a951378a5366d5a5ed66b659ac9e34577f2be6d4. Preserve anti-MC10 rules and no-permanent-ceiling/full-EIPM workload doctrine. Graphify remains navigation-only.",
-  "generated_at_utc": "2026-09-20T19:14:27.840437+00:00",
+  "request_id": "n0-qsre-t2-one-shot-authorized-20260920-001",
+  "question": "Refresh A.L.I.C.E. N0 continuity to the QSRE T2 one-shot operator-training frontier. T2 tokenized preparation passed on Magnolia after a resume-only recovery from a container PYTHONPATH infrastructure failure. That failure remains classified as infrastructure, not model evidence. Preserve exact preparation evidence: curriculum SHA 40e2d608eaa59ad13e2f9b37a2f3da5d6c20101a28ab76434c11be3d36cb5590; curriculum receipt SHA 26719ccff1ad8b08140a495a9cfefa8696270b70e3efd5d0a9b32e46393a2165; prepared cache SHA 774722d57ccaacc7dba8e53ff3aec66bc4b4b5c6efd20db6907ac5a70654e781; preparation receipt SHA 52e1e0599ecda2992dd2476305c377a4645a7ad079fc6e7ea660684fa35a5967; TRAIN 720, DEV 288; semantic hidden states were not materialized during preparation; no optimizer/gradient/GPU/TEST/private identity. Current maximal experiment frontier is branch alice-eipm-v1-qsre-t2-operator-learning at 6f20c807d0281fb00d6cd6def05a8ee8eef01518. Authoritative state is v0.52. Scientific core is bound at 9924227e7e7d7f3b26c2e294b5a3dde455b4cb12. Static authorization CI run 35532580204 succeeded: syntax, governance, scientific source binding, and trainer mechanics self-test. Exactly one P100 run is authorized. T2 trains only QSRET2OperatorEncoder over all 17 frozen N0 semantic token-state layers. It uses learned layer embeddings, latent cross-attention, ordered relation slots, first-class role/operation/control latents, schema anchors, and a retained continuous operator state. The continuous state now receives a supervised contrastive operator-signature objective so it is not an unused random projection. The semantic backbone and exact T1 step50 executor remain frozen. Structural support and focus remain oracle. No oracle relation/role/support is input to the encoder. Continuous operator context is still not injected into frozen T1 because T1 was trained with zero context and doing so would confound T2. Selection is first DEV checkpoint that simultaneously passes exact operator gates and downstream frozen-T1 gates. Operator gates require exact relation sequence, relational role, relational operation, control, full operator, query-view consistency, and every family all at 1.0. Downstream retains strict T1 causal gates including family minimum 1.0, single-target top1 1.0, causal pair completion 1.0, plural L1 <=0.1, outside-support mass 0 and invariance delta <=1e-7. TEST, challenge, support learning, private identity gradient and promotion remain closed. Automatic rerun and hotfix chains remain forbidden. If the model gate fails, preserve evidence and localize operator component versus frozen semantic representation versus downstream interaction before any change. Full EIPM workload and no-permanent-ceiling doctrine remain active. Durable alice-context handoff commit d36fafe2bd876ffd5cfa26cac0d3694dd773c14b. Graphify is navigation-only; consequential claims resolve to original branch/path sources.",
+  "generated_at_utc": "2026-09-20T19:34:15.577117+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -13,17 +13,17 @@
     "graph_extraction_tree": null,
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "a951378a5366d5a5ed66b659ac9e34577f2be6d4",
-      "head_committed_at": "2026-09-20T14:13:47-05:00",
-      "head_message": "context: hand off QSRE T2 static preparation frontier"
+      "head": "d36fafe2bd876ffd5cfa26cac0d3694dd773c14b",
+      "head_committed_at": "2026-09-20T14:33:34-05:00",
+      "head_message": "context: hand off QSRE T2 one-shot authorization"
     },
     "continuity_stale_relative_to_experiment_frontier": true,
     "maximal_unmerged_experiment_heads": [
       {
         "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-        "head": "b4eb70634f68ac3c6a34f431d016083c2c9002ce",
-        "head_committed_at": "2026-09-20T14:11:55-05:00",
-        "head_message": "fix(n0): preserve outside-support T2 query invariance"
+        "head": "6f20c807d0281fb00d6cd6def05a8ee8eef01518",
+        "head_committed_at": "2026-09-20T14:31:31-05:00",
+        "head_message": "ci(n0): qualify QSRE T2 one-shot training"
       }
     ]
   },
@@ -107,9 +107,9 @@
     },
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "a951378a5366d5a5ed66b659ac9e34577f2be6d4",
-      "head_committed_at": "2026-09-20T14:13:47-05:00",
-      "head_message": "context: hand off QSRE T2 static preparation frontier"
+      "head": "d36fafe2bd876ffd5cfa26cac0d3694dd773c14b",
+      "head_committed_at": "2026-09-20T14:33:34-05:00",
+      "head_message": "context: hand off QSRE T2 one-shot authorization"
     },
     "unmerged_experiment_frontier": {
       "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -120,13 +120,13 @@
       "maximal_heads": [
         {
           "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-          "head": "b4eb70634f68ac3c6a34f431d016083c2c9002ce",
-          "head_committed_at": "2026-09-20T14:11:55-05:00",
-          "head_message": "fix(n0): preserve outside-support T2 query invariance",
-          "ahead": 272,
+          "head": "6f20c807d0281fb00d6cd6def05a8ee8eef01518",
+          "head_committed_at": "2026-09-20T14:31:31-05:00",
+          "head_message": "ci(n0): qualify QSRE T2 one-shot training",
+          "ahead": 283,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-          "changed_file_count_vs_source_merge_base": 253,
+          "changed_file_count_vs_source_merge_base": 261,
           "changed_paths_vs_source_merge_base": [
             ".github/workflows/n0-arbitration-contract-check.yml",
             ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -144,6 +144,7 @@
             ".github/workflows/n0-qsre-t1-forward-contract.yml",
             ".github/workflows/n0-qsre-t1-one-shot-authorization.yml",
             ".github/workflows/n0-qsre-t1-postrun-t2-design-contract.yml",
+            ".github/workflows/n0-qsre-t2-one-shot-authorization.yml",
             ".github/workflows/n0-qsre-t2-static-and-curriculum-contract.yml",
             ".github/workflows/n0-qsre-tensor-mechanics-contract.yml",
             ".github/workflows/n0-query-edge-binding-identifiability-audit-check.yml",
@@ -200,6 +201,8 @@
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.48.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.49.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.50.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.51.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.52.json",
             "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
@@ -217,6 +220,7 @@
             "configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_1.json",
             "configs/eipm/n0/n0_v02_qsre_t2_operator_learning_design_v0_1.json",
             "configs/eipm/n0/n0_v02_qsre_t2_operator_learning_design_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_1.json",
             "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json",
             "configs/eipm/n0/n0_v02_query_edge_setwise_router_design_decision_v0_1.json",
             "configs/eipm/n0/n0_v02_query_edge_training_decision_v0_1.json",
@@ -296,6 +300,7 @@
             "scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_failure_localization_v0_3.sbatch",
             "scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_training_v0_1.sbatch",
             "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t1_executor_training_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t2_operator_training_v0_1.sbatch",
             "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_competitive_router_training_v0_1.sbatch",
             "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_cross_attention_bridge_training_v0_1.sbatch",
             "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_setwise_router_training_v0_1.sbatch",
@@ -322,12 +327,7 @@
             "scripts/eipm/n0/run_n0_v02_dual_view_specialist_training_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_prepare_qsre_t1_real_cache_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_prepare_qsre_t2_tokenized_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_qsre_mechanics_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_qsre_oracle_contract_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_qsre_t1_executor_training_v0_1.sh"
+            "scripts/eipm/n0/run_n0_v02_prepare_qsre_t1_real_cache_v0_1.sh"
           ],
           "authority": "unmerged-experiment-pointer"
         }
@@ -335,13 +335,13 @@
       "all_ahead_candidates": [
         {
           "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-          "head": "b4eb70634f68ac3c6a34f431d016083c2c9002ce",
-          "head_committed_at": "2026-09-20T14:11:55-05:00",
-          "head_message": "fix(n0): preserve outside-support T2 query invariance",
-          "ahead": 272,
+          "head": "6f20c807d0281fb00d6cd6def05a8ee8eef01518",
+          "head_committed_at": "2026-09-20T14:31:31-05:00",
+          "head_message": "ci(n0): qualify QSRE T2 one-shot training",
+          "ahead": 283,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-          "changed_file_count_vs_source_merge_base": 253,
+          "changed_file_count_vs_source_merge_base": 261,
           "changed_paths_vs_source_merge_base": [
             ".github/workflows/n0-arbitration-contract-check.yml",
             ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -359,6 +359,7 @@
             ".github/workflows/n0-qsre-t1-forward-contract.yml",
             ".github/workflows/n0-qsre-t1-one-shot-authorization.yml",
             ".github/workflows/n0-qsre-t1-postrun-t2-design-contract.yml",
+            ".github/workflows/n0-qsre-t2-one-shot-authorization.yml",
             ".github/workflows/n0-qsre-t2-static-and-curriculum-contract.yml",
             ".github/workflows/n0-qsre-tensor-mechanics-contract.yml",
             ".github/workflows/n0-query-edge-binding-identifiability-audit-check.yml",
@@ -415,6 +416,8 @@
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.48.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.49.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.50.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.51.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.52.json",
             "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
@@ -432,6 +435,7 @@
             "configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_1.json",
             "configs/eipm/n0/n0_v02_qsre_t2_operator_learning_design_v0_1.json",
             "configs/eipm/n0/n0_v02_qsre_t2_operator_learning_design_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_1.json",
             "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json",
             "configs/eipm/n0/n0_v02_query_edge_setwise_router_design_decision_v0_1.json",
             "configs/eipm/n0/n0_v02_query_edge_training_decision_v0_1.json",
@@ -511,6 +515,7 @@
             "scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_failure_localization_v0_3.sbatch",
             "scripts/eipm/n0/magnolia_p100_n0_v02_dual_view_specialist_training_v0_1.sbatch",
             "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t1_executor_training_v0_1.sbatch",
+            "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t2_operator_training_v0_1.sbatch",
             "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_competitive_router_training_v0_1.sbatch",
             "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_cross_attention_bridge_training_v0_1.sbatch",
             "scripts/eipm/n0/magnolia_p100_n0_v02_query_edge_setwise_router_training_v0_1.sbatch",
@@ -537,12 +542,7 @@
             "scripts/eipm/n0/run_n0_v02_dual_view_specialist_training_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_final_frozen_challenge_after_graph_arbitration_v0_1.sh",
             "scripts/eipm/n0/run_n0_v02_missing_evidence_path_localization_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_prepare_qsre_t1_real_cache_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_prepare_qsre_t2_tokenized_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_prepare_relation_conditioned_multilayer_causal_study_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_qsre_mechanics_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_qsre_oracle_contract_v0_1.sh",
-            "scripts/eipm/n0/run_n0_v02_qsre_t1_executor_training_v0_1.sh"
+            "scripts/eipm/n0/run_n0_v02_prepare_qsre_t1_real_cache_v0_1.sh"
           ],
           "authority": "unmerged-experiment-pointer"
         },
@@ -2500,16 +2500,16 @@
     },
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": true,
-      "newest_experiment_frontier_time": "2026-09-20T14:11:55-05:00",
+      "newest_experiment_frontier_time": "2026-09-20T14:31:31-05:00",
       "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
-      "context_branch_head_time": "2026-09-20T14:13:47-05:00"
+      "context_branch_head_time": "2026-09-20T14:33:34-05:00"
     },
     "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
     "authority": "routing-and-freshness-only"
   },
   "authoritative_source_pointers": [
     {
-      "score": 240,
+      "score": 292,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-20/sol/N0_QSRE_T2_STATIC_OPERATOR_PREPARATION_READY.md",
@@ -2532,23 +2532,24 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 113
+      "lexical_body_hits": 98
     },
     {
-      "score": 237,
-      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
+      "score": 283,
+      "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md",
-      "blob_sha": "8b5017e74d5fa74a66668af3171763745cfc3804",
-      "category": "design_document",
-      "title": "QSRE T1 PASS → T2 Learned-Operator Decision v0.1",
+      "path": "docs/chat-context/2026-09-20/sol/N0_QSRE_T2_ONE_SHOT_OPERATOR_TRAINING_AUTHORIZED.md",
+      "blob_sha": "2cd1856b87416455cf70191c8ab37e9e3734c24d",
+      "category": "working_context",
+      "title": "N0 QSRE T2 One-Shot Operator Training Authorized",
       "declared": {
-        "status": " T1 causal question passed on DEV; T2 static design/CPU mechanics justified; T2 gradient remains closed"
+        "status": " tokenized preparation passed; one governed T2 P100 run is statically qualified and authorized"
       },
       "matched_terms": [
         "failure",
         "hotfix",
-        "magnolia"
+        "magnolia",
+        "recovery"
       ],
       "supersession_hints": [],
       "catalogs": [
@@ -2557,11 +2558,10 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 76,
-      "currentness_adjustment": 25
+      "lexical_body_hits": 139
     },
     {
-      "score": 199,
+      "score": 270,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md",
@@ -2586,73 +2586,22 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 53
+      "lexical_body_hits": 64
     },
     {
-      "score": 171,
-      "branch": "alice-context",
+      "score": 260,
+      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-20/sol/N0_QSRE_T1_CORRECTED_PRETRAINING_FRONTIER.md",
-      "blob_sha": "b9589a7e017d8ba54ee0198d08b906ae816a1a78",
-      "category": "working_context",
-      "title": "N0 QSRE T1 Corrected Pretraining Frontier",
-      "declared": {},
-      "matched_terms": [
-        "failure",
-        "fallback",
-        "incident",
-        "magnolia",
-        "smoke"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 45
-    },
-    {
-      "score": 169,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-20/sol/N0_QSRE_T1_PASS_T2_STATIC_DESIGN_FRONTIER.md",
-      "blob_sha": "e9df02972b24fbe43a068a55fd012ad22794d6d0",
-      "category": "working_context",
-      "title": "N0 QSRE T1 PASS / T2 STATIC DESIGN FRONTIER",
+      "path": "docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md",
+      "blob_sha": "8b5017e74d5fa74a66668af3171763745cfc3804",
+      "category": "design_document",
+      "title": "QSRE T1 PASS → T2 Learned-Operator Decision v0.1",
       "declared": {
-        "status": " durable handoff after Magnolia job 575914"
+        "status": " T1 causal question passed on DEV; T2 static design/CPU mechanics justified; T2 gradient remains closed"
       },
       "matched_terms": [
         "failure",
         "hotfix",
-        "magnolia",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "supersession",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 66
-    },
-    {
-      "score": 167,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md",
-      "blob_sha": "c20f2a28057015a3c7566da0d20895a6fa45a044",
-      "category": "working_context",
-      "title": "N0 Relation-Conditioned Multi-Layer Query Interface Handoff",
-      "declared": {
-        "status": " architecture designed and CI-qualified from 575804 evidence; exact relation-layer map still must be compiled from the saved audit JSON; training remains unauthorized"
-      },
-      "matched_terms": [
-        "failed",
         "magnolia"
       ],
       "supersession_hints": [],
@@ -2662,93 +2611,11 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 30,
-      "currentness_adjustment": 30
-    },
-    {
-      "score": 166,
-      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
-      "category": "design_document",
-      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
-      "declared": {
-        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "document",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 48,
+      "lexical_body_hits": 80,
       "currentness_adjustment": 25
     },
     {
-      "score": 164,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
-      "blob_sha": "19f407ba4d11922a5095d3570cb6a0474d54e6be",
-      "category": "working_context",
-      "title": "N0 Final Frozen Challenge Ready Handoff",
-      "declared": {
-        "status": " one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
-        "repair",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 46
-    },
-    {
-      "score": 162,
-      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md",
-      "blob_sha": "104918509ef7e20bfb37676f4d695737c883d52e",
-      "category": "design_document",
-      "title": "QSRE Static Tensor Interface and Mechanics Decision v0.1",
-      "declared": {
-        "status": " authorizes CPU/no-gradient reference mechanics only"
-      },
-      "matched_terms": [
-        "fallback",
-        "incident"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 41,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 159,
+      "score": 253,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md",
@@ -2774,38 +2641,79 @@
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 46
+      "lexical_body_hits": 62
     },
     {
-      "score": 156,
-      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
+      "score": 241,
+      "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-qsre-t2-static-and-curriculum-contract.yml",
-      "blob_sha": "2030c30643c8adbf27dc7ff9449c81ffc828bdd1",
-      "category": "repository_file",
-      "title": "n0-qsre-t2-static-and-curriculum-contract.yml",
-      "declared": {},
-      "matched_terms": [],
+      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
+      "blob_sha": "19f407ba4d11922a5095d3570cb6a0474d54e6be",
+      "category": "working_context",
+      "title": "N0 Final Frozen Challenge Ready Handoff",
+      "declared": {
+        "status": " one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
+        "hotfix",
+        "magnolia",
+        "repair",
+        "udocker"
+      ],
       "supersession_hints": [],
       "catalogs": [
+        "failure",
+        "frontier",
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 14,
-      "currentness_adjustment": 25
+      "lexical_body_hits": 60
     },
     {
-      "score": 151,
+      "score": 231,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_QUERY_SEMANTICS_LAYERWISE_AUDIT_HANDOFF.md",
-      "blob_sha": "ef36a23c17bf569a0697dcda6e936ede68fdeffc",
+      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
+      "blob_sha": "00e639bed1b0f0ca42f128a266345be54f9541ee",
       "category": "working_context",
-      "title": "N0 Query-Semantics Layerwise Audit Handoff",
+      "title": "N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization",
       "declared": {
-        "status": " 575801 completed the first architecture audit; final token states are stronger than pooled views but causes/supports remain at chance; gradient work remains frozen pending one no-gradient layerwise audit"
+        "status": " final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged"
       },
       "matched_terms": [
+        "failed",
+        "failure",
+        "hotfix",
+        "magnolia",
+        "repair",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 52
+    },
+    {
+      "score": 223,
+      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
+      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
+      "category": "design_document",
+      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
+      "declared": {
+        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
+        "hotfix",
         "magnolia",
         "repair"
       ],
@@ -2817,7 +2725,114 @@
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 31
+      "lexical_body_hits": 55,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 217,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md",
+      "blob_sha": "0fd59429e3c85c66ad4674cf2cfd94a84016410c",
+      "category": "working_context",
+      "title": "Fusion frozen challenge failure + source-anchored repair — 2026-09-16",
+      "declared": {
+        "status": "`FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`."
+      },
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 82,
+          "text": "The first frozen challenge is retired from future ratification because its failure categories informed this repair. It may remain diagnostic evidence but may never be used as the untouched ratification set for the repaired model."
+        }
+      ],
+      "catalogs": [
+        "supersession",
+        "failure",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 39,
+      "currentness_adjustment": -15
+    },
+    {
+      "score": 215,
+      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+      "blob_sha": "b768036497da7db21464b6959b46d86706353832",
+      "category": "design_document",
+      "title": "N0 Clean-Sheet Relational Execution Architecture Audit v0.1",
+      "declared": {
+        "status": " architecture-review authority; implementation and gradient work frozen"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
+        "fallback",
+        "network",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 87,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 213,
+      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+      "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
+      "category": "design_document",
+      "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
+      "declared": {
+        "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
+      },
+      "matched_terms": [
+        "failure",
+        "hotfix",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 40,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 207,
+      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+      "blob_sha": "dd92b91f568688250a64516420d26c475a8e63ad",
+      "category": "design_document",
+      "title": "N0 downstream causal arbitration: full-stack graph binding v0.1",
+      "declared": {},
+      "matched_terms": [
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 31,
+      "currentness_adjustment": 25
     }
   ],
   "graphify_navigation_hints": [],
