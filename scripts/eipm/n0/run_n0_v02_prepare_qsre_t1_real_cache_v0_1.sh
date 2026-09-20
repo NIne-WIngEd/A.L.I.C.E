@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="${ALICE_N0_REPO_ROOT:-$HOME/rayan-compute/rayan-eipm-main}"
+ROOT="${ALICE_N0_REPO_ROOT:-${ALICE_REPO_ROOT:-$PWD}}"
 WORKDIR="${ALICE_N0_WORKDIR:-$HOME/rayan-compute/rayan-n0/n0-v02}"
 
 SOURCE_CACHE="$WORKDIR/query-edge-setwise-router-v0.1/training-preflight-v0.2/setwise_query_edge_train_dev_hidden_cache.pt"
