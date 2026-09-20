@@ -1,0 +1,212 @@
+{
+  "schema": "alice.eipm.n0.qsre-preimplementation-diagnostic-contract.v0.1",
+  "status": "DETERMINISTIC_INTERFACE_DIAGNOSTICS_ONLY_NO_TRAINABLE_QSRE",
+  "architecture_family": "QSRE_QUERY_CONDITIONED_SPARSE_RELATIONAL_EXECUTOR",
+  "family_decision": "docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md",
+  "proof_obligations": "configs/eipm/n0/n0_v02_relational_execution_proof_obligations_v0_1.json",
+  "purpose": "Validate the factorization of semantic binding, relation/role operator state, structural support, relational execution, structural readout, and general-parent fallback before any trainable architecture is implemented.",
+  "diagnostic_principles": {
+    "deterministic_oracle_inputs": true,
+    "no_learned_new_qsre_parameters": true,
+    "no_optimizer": true,
+    "no_gradient": true,
+    "no_gpu_required": true,
+    "existing_model_weights_mutated": false,
+    "causal_test_open": false,
+    "frozen_challenge_open": false,
+    "private_identity_data": false,
+    "private_identity_gradient": false
+  },
+  "interface_candidate": {
+    "query_operator_state": {
+      "fields": [
+        "continuous_query_state",
+        "relation_hypothesis_state",
+        "requested_argument_role_state",
+        "temporal_status_state",
+        "applicability",
+        "uncertainty_plurality"
+      ],
+      "closed_relation_ontology": false
+    },
+    "structural_support": {
+      "fields": [
+        "field_support",
+        "edge_support",
+        "support_confidence",
+        "support_provenance",
+        "support_plurality"
+      ],
+      "support_cardinality": "zero_one_or_many",
+      "fixed_top_k_required": false
+    },
+    "executor_input": {
+      "fields": [
+        "query_operator_state",
+        "supported_field_states",
+        "supported_edges",
+        "relation_states",
+        "source_argument_states",
+        "target_argument_states",
+        "explicit_argument_position_states",
+        "reliability_provenance_temporal_metadata"
+      ]
+    },
+    "executor_output": {
+      "fields": [
+        "contextualized_supported_states",
+        "relational_result_distribution",
+        "role_binding_state",
+        "path_or_subgraph_state",
+        "uncertainty_plurality",
+        "not_applicable_or_defer"
+      ],
+      "scalar_global_field_winner_only": false
+    },
+    "fallback": {
+      "separate_from_edge_identity": true,
+      "separate_from_argument_role_reasoning": true,
+      "existing_parent_global_distribution_may_serve_as_fallback": true,
+      "existing_parent_global_distribution_is_universal_relational_authority": false
+    }
+  },
+  "diagnostics": [
+    {
+      "id": "D1",
+      "name": "oracle_support_role_factorization",
+      "purpose": "Prove that once support is fixed, relational role execution does not require unrelated global field competition.",
+      "cases": [
+        "same_supported_directed_edge_query_role_SOURCE",
+        "same_supported_directed_edge_query_role_TARGET",
+        "same_supported_edge_plus_unrelated_high_parent_score_distractor",
+        "edge_direction_reversal_with_role_held_fixed",
+        "role_reversal_with_edge_direction_held_fixed"
+      ],
+      "invariants": [
+        "fields_outside_oracle_support_cannot_win_relational_readout",
+        "SOURCE_and_TARGET_outputs_are_distinguishable_by_interface",
+        "role_change_can_change_result_without_support_change",
+        "edge_direction_change_can_change_result_without_phrase_memorization"
+      ],
+      "maps_to": [
+        "P1",
+        "P2",
+        "P3",
+        "P7",
+        "P8",
+        "P9"
+      ]
+    },
+    {
+      "id": "D2",
+      "name": "support_cardinality_and_ambiguity",
+      "purpose": "Prove the interface does not assume exactly one relevant edge.",
+      "cases": [
+        "no_relational_support",
+        "one_decisive_edge",
+        "two_independent_relevant_edges",
+        "two_co_valid_ambiguous_edges",
+        "three_edges_with_one_irrelevant_distractor"
+      ],
+      "invariants": [
+        "zero_support_routes_to_not_applicable_or_fallback",
+        "one_support_does_not_require_fixed_top1_product_rule",
+        "multiple_supports_remain_representable",
+        "co_valid_supports_can_preserve_plurality",
+        "irrelevant_support_can_be_exactly_excluded"
+      ],
+      "maps_to": [
+        "P4",
+        "P5",
+        "P12"
+      ]
+    },
+    {
+      "id": "D3",
+      "name": "ordered_two_hop_composition",
+      "purpose": "Prove the interface can represent relational composition rather than endpoint preference.",
+      "cases": [
+        "A_r1_B_r2_C",
+        "A_r2_B_r1_C",
+        "A_r1_D_r2_C",
+        "same_endpoints_different_relation_order",
+        "same_local_endpoint_preferences_different_valid_path"
+      ],
+      "invariants": [
+        "relation_order_is_recoverable",
+        "path_state_is_not_equivalent_to_unordered_edge_bag",
+        "local_endpoint_heuristic_is_insufficient",
+        "multi_hop_does_not_require_new_output_schema"
+      ],
+      "maps_to": [
+        "P6",
+        "P8",
+        "P10"
+      ]
+    },
+    {
+      "id": "D4",
+      "name": "parent_isolation_and_fallback",
+      "purpose": "Prove that relational execution can override an irrelevant parent global preference while non-relational behavior can still defer cleanly.",
+      "cases": [
+        "oracle_relational_support_parent_prefers_outside_distractor",
+        "oracle_relational_support_parent_prefers_wrong_endpoint",
+        "no_relational_support_parent_has_valid_general_answer",
+        "relational_applicability_uncertain"
+      ],
+      "invariants": [
+        "valid_claimed_relational_support_is_not_overridden_by_outside_parent_softmax",
+        "fallback_is_available_when_relational_support_is_empty",
+        "fallback_decision_is_separate_from_edge_selection",
+        "uncertain_applicability_can_preserve_mixture_or_defer_state"
+      ],
+      "maps_to": [
+        "P3",
+        "P12"
+      ]
+    },
+    {
+      "id": "D5",
+      "name": "continuous_operator_plurality",
+      "purpose": "Prove the query/operator interface can preserve several plausible relation/role hypotheses before final execution.",
+      "cases": [
+        "single_clear_relation_and_role",
+        "two_relation_hypotheses_same_support",
+        "same_relation_two_possible_requested_roles_due_to_ambiguous_wording",
+        "insufficient_evidence_for_operator_collapse",
+        "non_relational_query"
+      ],
+      "invariants": [
+        "operator_state_is_not_forced_to_one_hard_code_before_evidence_execution",
+        "relation_and_role_information_remain_probeable",
+        "uncertainty_plurality_is_explicit",
+        "closed_fixed_relation_ontology_is_not_required",
+        "non_relational_applicability_is_representable"
+      ],
+      "maps_to": [
+        "P0",
+        "P2",
+        "P5",
+        "P13",
+        "P16"
+      ]
+    }
+  ],
+  "completion_gate": {
+    "all_D1_D5_interface_invariants_defined": true,
+    "deterministic_fixture_design_required": true,
+    "trainable_qsre_code_allowed_after_this_file_alone": false,
+    "separate_post_diagnostic_architecture_decision_required": true,
+    "must_reject_if_global_softmax_residual_pattern_reappears": true,
+    "must_reject_if_source_target_role_is_only_implicit_scalar_preference": true,
+    "must_reject_if_support_cardinality_is_permanently_fixed": true
+  },
+  "next_artifact": "deterministic D1-D5 fixture specification and reference-contract evaluator; no trainable model",
+  "optimizer_authorized": false,
+  "gradient_authorized": false,
+  "gpu_training_authorized": false,
+  "test_opening_authorized": false,
+  "challenge_opening_authorized": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
