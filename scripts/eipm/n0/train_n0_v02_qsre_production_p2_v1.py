@@ -425,6 +425,17 @@ def main()->None:
         device=device,
     )
     operator_model=QSREProductionOperatorInducer(config).to(device)
+    # Start query/schema late interaction in the exact same learned semantic
+    # coordinate system. The query side remains trainable, but P2 does not
+    # waste its one governed run learning an arbitrary rotation before it can
+    # solve relation semantics.
+    with torch.no_grad():
+        operator_model.query_projection.weight.copy_(
+            schema_encoder.schema_projection.weight
+        )
+        operator_model.layer_embedding.weight.copy_(
+            schema_encoder.layer_embedding.weight
+        )
     optimizer=torch.optim.AdamW(
         operator_model.parameters(),
         lr=float(stage["optimizer"]["learning_rate"]),
@@ -479,10 +490,21 @@ def main()->None:
             downstream_losses.append(target_distribution_loss(down["relational_probability"],target))
 
         consistency=pair_loss(view_ops[0],view_ops[1])
+        projection_anchor=(
+            F.mse_loss(
+                operator_model.query_projection.weight,
+                schema_encoder.schema_projection.weight.detach(),
+            )
+            +0.25*F.mse_loss(
+                operator_model.layer_embedding.weight,
+                schema_encoder.layer_embedding.weight.detach(),
+            )
+        )
         loss=(
             0.5*(supervised[0]+supervised[1])
             +float(weights["downstream"])*0.5*(downstream_losses[0]+downstream_losses[1])
             +float(weights["pair_consistency"])*consistency
+            +float(weights["projection_anchor"])*projection_anchor
         )
         if not torch.isfinite(loss):
             raise RuntimeError("P2 nonfinite loss")
@@ -498,7 +520,14 @@ def main()->None:
                 max_steps=runtime_steps,batch_size=batch_size,device=device,
             )
             is_eligible=eligible(metrics,stage["eligibility"])
-            record={"step":step,"train_loss":float(loss.item()),"eligible":is_eligible,"dev":metrics}
+            record={
+                "step":step,
+                "train_loss":float(loss.item()),
+                "train_pair_consistency_loss":float(consistency.detach().item()),
+                "train_projection_anchor_loss":float(projection_anchor.detach().item()),
+                "eligible":is_eligible,
+                "dev":metrics,
+            }
             history.append(record)
             print("P2_EVAL="+json.dumps(record,sort_keys=True),flush=True)
             path=output_dir/f"step-{step:08d}"/"qsre_production_p2.pt"
