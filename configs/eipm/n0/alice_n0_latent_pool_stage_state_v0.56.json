@@ -1,0 +1,77 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.56",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.55.json",
+  "status": "QSRE_REALITY_AUDIT_STATIC_CONTRACT_PASS;ONE_COHERENT_MAGNOLIA_CPU_AUDIT_AUTHORIZED;ALL_GPU_AND_GRADIENT_WORK_REMAINS_CLOSED",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-qsre-t2-operator-learning",
+  "audit_core_revision": "31d758b7d1734911f332375f0c264f35cf193abc",
+  "static_qualification": {
+    "workflow": "n0-qsre-reality-audit-static-contract",
+    "workflow_run_id": 35536054506,
+    "conclusion": "SUCCESS",
+    "source_revision": "31d758b7d1734911f332375f0c264f35cf193abc",
+    "tracks_qualified": [
+      "exact T1 and T2 synthetic curriculum materialization",
+      "56-row curated public operator-reality corpus materialization",
+      "shallow shortcut audit execution",
+      "behavioral Bash/runtime parity execution",
+      "T2-to-T1 totality fuzz self-test",
+      "no-gradient governance"
+    ]
+  },
+  "prior_static_attempt": {
+    "workflow_run_id": 35535990783,
+    "conclusion": "FAILURE",
+    "classification": "CI_DEPENDENCY_ORDER_FAILURE_NOT_MODEL_EVIDENCE",
+    "cause": "behavioral runtime parity imported the QSRE modules before CPU torch had been installed in the GitHub runner",
+    "scientific_source_changed": false,
+    "model_evidence": false
+  },
+  "audit_scope": {
+    "single_coherent_runtime": true,
+    "runtime_behavioral_parity": true,
+    "realistic_public_operator_corpus": true,
+    "shallow_shortcut_attacks": true,
+    "frozen_semantic_layer_sufficiency": true,
+    "t2_to_t1_totality_fuzz": true,
+    "single_precommitted_architecture_decision": true,
+    "private_identity_data": false
+  },
+  "magnolia_cpu_audit": {
+    "sbatch": "scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_reality_audit_v0_1.sbatch",
+    "runner": "scripts/eipm/n0/run_n0_v02_qsre_reality_audit_v0_1.sh",
+    "partition": "node",
+    "cpus_per_task": 8,
+    "memory_gb": 32,
+    "time_limit_hours": 4,
+    "expected_output_root": "qsre-reality-audit-v0.1",
+    "max_cpu_runs": 1,
+    "gpu_required": false
+  },
+  "decision_contract": {
+    "path": "configs/eipm/n0/n0_v02_qsre_reality_audit_contract_v0_1.json",
+    "decision_is_precommitted_before_semantic_probe_result": true,
+    "automatic_training_authorization_from_result": false
+  },
+  "execution_policy": {
+    "cpu_reality_audit_authorized": true,
+    "max_cpu_reality_audit_runs": 1,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_chain_authorized": false,
+    "t1_rerun_authorized": false,
+    "semantic_backbone_gradient_authorized": false,
+    "t1_executor_gradient_authorized": false,
+    "learned_support_training_authorized": false,
+    "causal_test_opening_authorized": false,
+    "frozen_challenge_opening_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "next_action": "Run exactly one Magnolia CPU reality-audit job. It must execute all five evidence tracks and emit one combined architecture decision before any further T2/T3 or GPU work.",
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
