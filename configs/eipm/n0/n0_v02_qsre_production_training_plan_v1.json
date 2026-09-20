@@ -1,0 +1,193 @@
+{
+  "schema": "alice.eipm.n0.qsre-production-training-plan.v1",
+  "status": "PRECOMMITTED_CAUSAL_PIPELINE_NO_POSTHOC_TUNING",
+  "architecture": "configs/eipm/n0/n0_v02_qsre_production_core_v1.json",
+  "curriculum_contract": "configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json",
+  "curriculum_sha256": "bb2c1966586a43171f15d1b8f13328b89fb945d2e7d8f64fe52709bf95d4b38c",
+  "relation_schema": "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
+  "model": {
+    "semantic_dim": 640,
+    "model_dim": 512,
+    "num_hidden_states": 17,
+    "num_attention_heads": 8,
+    "operator_refinement_layers": 2,
+    "field_state_dim": 640,
+    "field_metadata_dim": 3,
+    "role_count": 4,
+    "traversal_count": 3,
+    "modifier_count": 4,
+    "control_count": 3,
+    "dropout": 0.05
+  },
+  "stages": {
+    "P0": {
+      "role": "real_artifact_static_runtime_qualification_and_cache_materialization",
+      "gradient": false,
+      "gpu": false,
+      "required_before": [
+        "P1"
+      ],
+      "obligations": [
+        "build_exact_curriculum",
+        "materialize_dynamic_schema_from_ratified_semantic_checkpoint",
+        "materialize_query_and_field_semantic_cache",
+        "execute_untrained_production_core_on_real_tensors",
+        "run_totality_and_dynamic_shape_mechanics",
+        "bind_exact_artifact_hashes"
+      ]
+    },
+    "P1": {
+      "role": "schema_encoder_plus_executor_with_oracle_operator_and_oracle_support",
+      "trainable": [
+        "schema_encoder",
+        "executor"
+      ],
+      "frozen": [
+        "semantic_backbone",
+        "operator",
+        "binder",
+        "structured_parent",
+        "fusion_parent"
+      ],
+      "optimizer": {
+        "name": "AdamW",
+        "learning_rate": 0.0002,
+        "weight_decay": 0.02
+      },
+      "training": {
+        "seed": 20260920,
+        "batch_size": 32,
+        "max_steps": 1000,
+        "eval_every": 50,
+        "save_every": 50
+      },
+      "eligibility": {
+        "row_success_accuracy": 0.99,
+        "single_target_top1_accuracy": 0.99,
+        "plural_l1_max": 0.05,
+        "family_min_success": 0.95,
+        "open_schema_success": 0.95,
+        "path_family_min_success": 0.95,
+        "outside_support_invariance_max_delta": 0.000001
+      },
+      "max_gpu_runs": 1
+    },
+    "P2": {
+      "role": "production_operator_induction_with_frozen_proven_schema_encoder_executor_and_oracle_support",
+      "trainable": [
+        "operator"
+      ],
+      "frozen": [
+        "semantic_backbone",
+        "schema_encoder",
+        "executor",
+        "binder",
+        "structured_parent",
+        "fusion_parent"
+      ],
+      "optimizer": {
+        "name": "AdamW",
+        "learning_rate": 0.0001,
+        "weight_decay": 0.02
+      },
+      "loss_weights": {
+        "relation": 1,
+        "role": 0.7,
+        "traversal": 0.7,
+        "modifiers": 0.5,
+        "applicability": 0.3,
+        "control": 0.5,
+        "continuous_alignment": 0.15,
+        "downstream": 0.5
+      },
+      "training": {
+        "seed": 20260921,
+        "batch_size": 16,
+        "max_steps": 1600,
+        "eval_every": 50,
+        "save_every": 50
+      },
+      "eligibility": {
+        "relation_sequence_exact_accuracy": 0.95,
+        "open_schema_relation_exact_accuracy": 0.85,
+        "role_accuracy_relational": 0.98,
+        "traversal_accuracy_relational": 0.98,
+        "modifier_exact_accuracy_relational": 0.95,
+        "control_accuracy": 0.98,
+        "pair_consistency": 0.9,
+        "downstream_row_success_accuracy": 0.95,
+        "downstream_family_min_success": 0.85
+      },
+      "max_gpu_runs": 1
+    },
+    "P3": {
+      "role": "adaptive_binder_with_oracle_operator_training_and_frozen_proven_schema_encoder_executor; predicted_operator_integration_eval_also_required",
+      "trainable": [
+        "binder"
+      ],
+      "frozen": [
+        "semantic_backbone",
+        "schema_encoder",
+        "executor",
+        "operator",
+        "structured_parent",
+        "fusion_parent"
+      ],
+      "optimizer": {
+        "name": "AdamW",
+        "learning_rate": 0.0001,
+        "weight_decay": 0.02
+      },
+      "loss_weights": {
+        "support_bce": 1,
+        "downstream": 0.5,
+        "type_violation": 0.5
+      },
+      "training": {
+        "seed": 20260922,
+        "batch_size": 16,
+        "max_steps": 1200,
+        "eval_every": 50,
+        "save_every": 50
+      },
+      "eligibility": {
+        "oracle_support_edge_f1": 0.98,
+        "oracle_support_exact_set_accuracy": 0.95,
+        "type_violation_rate_max": 0,
+        "oracle_downstream_row_success_accuracy": 0.95,
+        "predicted_operator_support_edge_f1": 0.95,
+        "predicted_operator_downstream_row_success_accuracy": 0.9
+      },
+      "max_gpu_runs": 1
+    },
+    "P4": {
+      "role": "end_to_end_qsre_evaluation_only",
+      "gradient": false,
+      "eligibility": {
+        "downstream_row_success_accuracy": 0.9,
+        "family_min_success": 0.8,
+        "open_schema_row_success_accuracy": 0.8,
+        "outside_support_invariance_max_delta": 0.000001,
+        "nonrelational_false_assertion_rate_max": 0.01
+      },
+      "failure_policy": "stop_and_localize_without_automatic_joint_finetune"
+    },
+    "P5": {
+      "role": "existing_n0_fusion_consumption_of_qsre_relational_view",
+      "gradient_default": false,
+      "policy": "first_attempt_is_adapter_plus_frozen_fusion_evaluation; only measured_fusion_bottleneck_can_authorize_fusion_gradient"
+    }
+  },
+  "governance": {
+    "one_owner_launch_after_static_ci": true,
+    "slurm_afterok_dependencies": true,
+    "automatic_rerun": false,
+    "automatic_hotfix": false,
+    "learning_rate_search": false,
+    "step_search": false,
+    "width_search": false,
+    "private_identity_gradient": false,
+    "test_split_open": false,
+    "production_promotion": false
+  }
+}
