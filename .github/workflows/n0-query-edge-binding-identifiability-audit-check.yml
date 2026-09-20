@@ -129,7 +129,7 @@ jobs:
               "maxsim(",
               "similarity.max(dim=1).values.mean()",
               "dev_pooled_to_best_token_accuracy_delta",
-              "raw_token_id_discriminative_overlap",
+              "lexical_token_id_overlap",
           ]
           missing=[x for x in required if x not in t]
           if missing:
