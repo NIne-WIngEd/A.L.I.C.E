@@ -1,0 +1,113 @@
+name: N0 QSRE T1 Curriculum Contract
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-n0-clean-sheet-relational-execution-review
+    paths:
+      - "configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_1.json"
+      - "scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_1.py"
+      - "scripts/eipm/n0/evaluate_n0_v02_qsre_t1_curriculum_v0_1.py"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.45.json"
+      - ".github/workflows/n0-qsre-t1-curriculum-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  curriculum:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax and static boundary
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_1.py \
+            scripts/eipm/n0/evaluate_n0_v02_qsre_t1_curriculum_v0_1.py
+
+          python - <<'PY'
+          from pathlib import Path
+          for path in (
+              "scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_1.py",
+              "scripts/eipm/n0/evaluate_n0_v02_qsre_t1_curriculum_v0_1.py",
+          ):
+              text=Path(path).read_text()
+              forbidden=["torch.optim",".backward(","cuda","safetensors"]
+              present=[x for x in forbidden if x in text]
+              if present:
+                  raise SystemExit(f"{path}: training/GPU path leaked {present!r}")
+          print("t1_curriculum_nontraining_boundary=PASS")
+          PY
+
+      - name: Contract scope
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          c=json.loads(Path(
+              "configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_1.json"
+          ).read_text())
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.45.json"
+          ).read_text())
+
+          if c["schema"]!="alice.eipm.n0.qsre-t1-curriculum-contract.v0.1":
+              raise SystemExit("curriculum contract drift")
+          expected={
+              "endpoint_role",
+              "relation_filter",
+              "multi_support_aggregate",
+              "ordered_path",
+              "reliability_arbitration",
+              "temporal_arbitration",
+              "ambiguity_plurality",
+              "fallback_defer",
+              "outside_support_distractor",
+          }
+          if set(c["families"])!=expected:
+              raise SystemExit("curriculum family coverage drift")
+          if c["row_counts_are_product_ceiling"] is not False:
+              raise SystemExit("row-count ceiling drift")
+          if c["relation_seed_count_is_permanent_ceiling"] is not False:
+              raise SystemExit("relation vocabulary ceiling drift")
+          if c["gradient_authorized"] is not False or c["gpu_training_authorized"] is not False:
+              raise SystemExit("curriculum contract self-authorized training")
+          if s["execution_policy"]["t1_training_authorized"] is not False:
+              raise SystemExit("state opened T1 training prematurely")
+          print("t1_curriculum_scope=PASS")
+          PY
+
+      - name: Build deterministic curriculum
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp
+          python scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_1.py \
+            --contract configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_1.json \
+            --output .tmp/n0_v02_qsre_t1_curriculum_v0_1.jsonl
+          sha256sum .tmp/n0_v02_qsre_t1_curriculum_v0_1.jsonl
+
+      - name: Evaluate structural coverage
+        run: |
+          set -euo pipefail
+          python scripts/eipm/n0/evaluate_n0_v02_qsre_t1_curriculum_v0_1.py \
+            --contract configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_1.json \
+            --curriculum .tmp/n0_v02_qsre_t1_curriculum_v0_1.jsonl \
+            --output .tmp/n0_v02_qsre_t1_curriculum_v0_1.receipt.json
+
+          cat .tmp/n0_v02_qsre_t1_curriculum_v0_1.receipt.json
+
+      - name: Rebuild determinism
+        run: |
+          set -euo pipefail
+          python scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_1.py \
+            --contract configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_1.json \
+            --output .tmp/rebuild.jsonl
+
+          cmp .tmp/n0_v02_qsre_t1_curriculum_v0_1.jsonl .tmp/rebuild.jsonl
+          echo "t1_curriculum_rebuild_determinism=PASS"
