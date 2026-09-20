@@ -1,0 +1,82 @@
+{
+  "schema": "alice.eipm.n0.qsre-t2-relation-schema.v0.1",
+  "status": "FROZEN_PUBLIC_RELATION_SCHEMA_FOR_T2_V03",
+  "relation_order": [
+    "SUPPORTS",
+    "CORRECTS",
+    "SUPERSEDES",
+    "DERIVED_FROM",
+    "CAUSES",
+    "TEMPORAL_SUCCESSOR"
+  ],
+  "none_is_structural_stop_not_schema_relation": true,
+  "relations": [
+    {
+      "id": 0,
+      "name": "SUPPORTS",
+      "direction": "A -> B",
+      "glosses": [
+        "A supports B when A provides evidence that makes B more credible.",
+        "The source endpoint is the evidence or reason; the target endpoint is the claim or conclusion being supported.",
+        "Support is evidential strengthening, not correction, replacement, provenance, causation, or simple chronology."
+      ]
+    },
+    {
+      "id": 1,
+      "name": "CORRECTS",
+      "direction": "A -> B",
+      "glosses": [
+        "A corrects B when A fixes an error or inaccurate detail in B.",
+        "The source endpoint carries the correction; the target endpoint is the record or statement containing the error.",
+        "Correction changes an erroneous claim without meaning that A merely replaces B as the current authority."
+      ]
+    },
+    {
+      "id": 2,
+      "name": "SUPERSEDES",
+      "direction": "A -> B",
+      "glosses": [
+        "A supersedes B when A replaces B as the version or authority that should now govern.",
+        "The source endpoint is the replacement or newer authority; the target endpoint is the displaced older version.",
+        "Supersession is about precedence and replacement, not merely happening later in time."
+      ]
+    },
+    {
+      "id": 3,
+      "name": "DERIVED_FROM",
+      "direction": "A -> B",
+      "glosses": [
+        "A is derived from B when A was produced, computed, summarized, or otherwise created using B as its source material.",
+        "The source endpoint is the derived artifact; the target endpoint is the provenance base it came from.",
+        "Derivation expresses provenance, not evidential support or causal production of an event."
+      ]
+    },
+    {
+      "id": 4,
+      "name": "CAUSES",
+      "direction": "A -> B",
+      "glosses": [
+        "A causes B when the condition or event in A brings about the event or outcome in B.",
+        "The source endpoint is the cause or antecedent; the target endpoint is the consequence.",
+        "Causation is stronger than evidence that merely supports a claim and stronger than temporal succession alone."
+      ]
+    },
+    {
+      "id": 5,
+      "name": "TEMPORAL_SUCCESSOR",
+      "direction": "A -> B",
+      "glosses": [
+        "A is the temporal successor of B when A comes after B in the relevant chronology.",
+        "The source endpoint is the later record or event; the target endpoint is its earlier predecessor.",
+        "Temporal succession encodes ordering in time without by itself implying replacement, correction, or causation."
+      ]
+    }
+  ],
+  "governance": {
+    "public_only": true,
+    "private_identity_data": false,
+    "training_examples": false,
+    "relation_ids_are_current_fixture_not_product_ceiling": true,
+    "schema_text_can_expand_or_migrate_in_future_stages": true
+  }
+}
