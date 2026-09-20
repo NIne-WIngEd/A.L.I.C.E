@@ -1,0 +1,114 @@
+name: n0-qsre-production-curriculum-v1-contract
+
+on:
+  push:
+    paths:
+      - "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json"
+      - "configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json"
+      - "scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py"
+      - ".github/workflows/n0-qsre-production-curriculum-v1-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  curriculum:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build deterministic curriculum
+        run: |
+          python scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py             --output /tmp/qsre-production-v1.jsonl             --train-groups-per-family 20             --dev-groups-per-family 8             --open-schema-groups 32             | tee /tmp/build.txt
+          cp /tmp/qsre-production-v1.jsonl /tmp/first.jsonl
+          python scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py             --output /tmp/qsre-production-v1.jsonl             --train-groups-per-family 20             --dev-groups-per-family 8             --open-schema-groups 32             >/tmp/build2.txt
+          cmp /tmp/first.jsonl /tmp/qsre-production-v1.jsonl
+
+      - name: Validate architecture/data obligations
+        run: |
+          python - <<'PY'
+          import json
+          from collections import Counter, defaultdict
+
+          rows=[json.loads(x) for x in open("/tmp/qsre-production-v1.jsonl") if x.strip()]
+          contract=json.load(open("configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json"))
+          schema=json.load(open("configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json"))
+
+          counts=Counter(r["split"] for r in rows)
+          assert counts["train"]==contract["expected_rows"]["train"], counts
+          assert counts["dev"]==contract["expected_rows"]["dev"], counts
+          assert len(rows)==contract["expected_rows"]["total"]
+
+          train_rel=set()
+          dev_open=set()
+          train_entities=set()
+          dev_entities=set()
+          support_cardinality=set()
+          relation_steps=set()
+          families=Counter()
+          path_recency=False
+          aggregate_reliability=False
+          three_hop=False
+          fallback=False
+          defer=False
+          ambiguity=False
+          outside_groups=defaultdict(list)
+
+          for row in rows:
+              assert row["private_identity_data"] is False
+              assert row["split"] in {"train","dev"}
+              families[row["family"]]+=1
+              seq=row["operator_target"]["relation_sequence"]
+              relation_steps.add(len(seq))
+              support_cardinality.add(len(row["support_edge_ids"]))
+              mods=row["operator_target"]["modifier_target"]
+              traversal=row["operator_target"]["traversal_id"]
+              if traversal==1 and mods["RECENCY"]==1.0:
+                  path_recency=True
+              if traversal==2 and mods["RELIABILITY"]==1.0:
+                  aggregate_reliability=True
+              if len(seq)==3:
+                  three_hop=True
+              if row["operator_target"]["control_id"]==0:
+                  fallback=True
+              if row["operator_target"]["control_id"]==2:
+                  defer=True
+              if len(row["target_distribution"])>1:
+                  ambiguity=True
+              if row["family"]=="outside_support":
+                  outside_groups[row["causal_group"]].append(row)
+
+              entities={f["entity"] for f in row["fields"]}
+              if row["split"]=="train":
+                  train_entities |= entities
+                  train_rel |= set(seq)
+                  assert row["open_schema_relation"] is False
+              else:
+                  dev_entities |= entities
+                  if row["open_schema_relation"]:
+                      dev_open |= set(seq)
+
+          assert not (train_entities & dev_entities)
+          assert train_rel==set(contract["core_train_relations"])
+          assert dev_open==set(contract["open_schema_dev_relations"])
+          assert set(contract["open_schema_dev_relations"]).isdisjoint(train_rel)
+          assert sum(r["open_schema_relation"] for r in rows)==contract["open_schema_dev_rows"]
+          assert {0,1,2,3}.issubset(relation_steps)
+          assert {0,1,2,3}.issubset(support_cardinality)
+          assert path_recency
+          assert aggregate_reliability
+          assert three_hop
+          assert fallback and defer and ambiguity
+          assert all(len(v)==2 for v in outside_groups.values())
+          assert set(contract["families"])==set(families)
+
+          relation_keys={r["key"] for r in schema["relations"]}
+          assert train_rel | dev_open <= relation_keys
+          assert schema["governance"]["relation_count_is_runtime_data"] is True
+
+          print("PASS_QSRE_PRODUCTION_CURRICULUM_V1_CONTRACT")
+          print("family_counts="+json.dumps(dict(sorted(families.items()))))
+          PY
+
+      - name: Hash result
+        run: |
+          echo "curriculum_sha256=$(sha256sum /tmp/qsre-production-v1.jsonl | awk '{print $1}')"
+          wc -l /tmp/qsre-production-v1.jsonl
