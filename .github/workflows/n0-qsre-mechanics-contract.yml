@@ -1,0 +1,179 @@
+name: N0 QSRE Reference Mechanics Contract
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-n0-clean-sheet-relational-execution-review
+    paths:
+      - "docs/research/eipm-full-eipm-workload-envelope-v0.1.md"
+      - "docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md"
+      - "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json"
+      - "configs/eipm/n0/n0_v02_qsre_static_mechanics_contract_v0_1.json"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.42.json"
+      - "evaluation/eipm/n0/n0_v02_qsre_mechanics_v0_1.jsonl"
+      - "scripts/eipm/n0/evaluate_n0_v02_qsre_mechanics_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_qsre_mechanics_v0_1.sh"
+      - ".github/workflows/n0-qsre-mechanics-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  mechanics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/eipm/n0/evaluate_n0_v02_qsre_mechanics_v0_1.py
+          bash -n \
+            scripts/eipm/n0/run_n0_v02_qsre_mechanics_v0_1.sh
+
+      - name: Full workload and mechanics boundary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          workload=json.loads(Path(
+              "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json"
+          ).read_text())
+          mechanics=json.loads(Path(
+              "configs/eipm/n0/n0_v02_qsre_static_mechanics_contract_v0_1.json"
+          ).read_text())
+          state=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.42.json"
+          ).read_text())
+
+          if workload["schema"]!="alice.eipm.full-workload-envelope.v0.1":
+              raise SystemExit("workload schema drift")
+          if len(workload["workload_families"])<15:
+              raise SystemExit("full workload envelope unexpectedly narrowed")
+          if workload["rule"]!="Select for full-envelope sufficiency, not minimum current-benchmark repair.":
+              raise SystemExit("architecture selection rule drift")
+
+          if mechanics["schema"]!="alice.eipm.n0.qsre-static-mechanics-contract.v0.1":
+              raise SystemExit("mechanics schema drift")
+          if mechanics["mechanics"]["fixed_top_k"] is not False:
+              raise SystemExit("fixed top-k became permanent")
+          if mechanics["mechanics"]["support_cardinality"]!="zero_one_or_many":
+              raise SystemExit("adaptive support cardinality drift")
+          if mechanics["mechanics"]["parent_global_softmax_universal_authority"] is not False:
+              raise SystemExit("global parent softmax authority reintroduced")
+          if mechanics["mechanics"]["applicability_separate_from_support_selection"] is not True:
+              raise SystemExit("applicability/support conflation reintroduced")
+
+          if state["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.42":
+              raise SystemExit("v0.42 state drift")
+          if state["architecture_selection_rule"]!="full-envelope sufficiency, not minimum current-benchmark repair":
+              raise SystemExit("full-envelope selection rule drift")
+          if state["batch_workflow_rule"]!="batch engineering steps while preserving sequential scientific causality":
+              raise SystemExit("batched workflow rule drift")
+          if state["trainable_qsre_implementation_authorized"] is not False:
+              raise SystemExit("trainable QSRE implementation opened prematurely")
+
+          for key in (
+              "learned_qsre_parameters_authorized",
+              "optimizer_authorized",
+              "gradient_authorized",
+              "gpu_required",
+              "causal_test_opening_authorized",
+              "frozen_challenge_opening_authorized",
+              "private_identity_gradient",
+          ):
+              if mechanics[key] is not False:
+                  raise SystemExit(f"mechanics boundary drift: {key}")
+
+          print("full_workload_and_mechanics_boundary=PASS")
+          PY
+
+      - name: No training constructs in reference evaluator
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          t=Path(
+              "scripts/eipm/n0/evaluate_n0_v02_qsre_mechanics_v0_1.py"
+          ).read_text()
+          forbidden=[
+              "torch",
+              "nn.Parameter",
+              "optim.",
+              ".backward(",
+              "cuda",
+              "safetensors",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("learned/GPU construct leaked into mechanics evaluator: "+repr(present))
+
+          required=[
+              "masked_sparsemax",
+              "role_incidence",
+              "support_local_mask",
+              "masked_softmax",
+              "control_state",
+              "execute_path",
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("reference mechanics missing: "+repr(missing))
+          print("reference_evaluator_nontraining=PASS")
+          PY
+
+      - name: Run reference mechanics
+        env:
+          ALICE_N0_QSRE_MECHANICS_RECEIPT: ${{ github.workspace }}/qsre_mechanics_receipt.json
+        run: |
+          set -euo pipefail
+          export ALICE_N0_REPO_ROOT="$PWD"
+          bash scripts/eipm/n0/run_n0_v02_qsre_mechanics_v0_1.sh
+
+      - name: Validate receipt
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          r=json.loads(Path("qsre_mechanics_receipt.json").read_text())
+          if r["status"]!="PASS_QSRE_CPU_NO_GRADIENT_REFERENCE_MECHANICS":
+              raise SystemExit("reference mechanics did not pass")
+          if not {0,1,2,3}.issubset(set(r["support_cardinalities_observed"])):
+              raise SystemExit("adaptive support cardinality coverage missing")
+          if r["dynamic_shape"]["field_count"]<=64:
+              raise SystemExit("field dynamics did not exceed historical hint")
+          if r["dynamic_shape"]["edge_count"]<=256:
+              raise SystemExit("edge dynamics did not exceed historical hint")
+          for key in (
+              "ordered_path_contrast_pass",
+              "permutation_path_pass",
+              "source_target_incidence_distinct",
+              "support_local_readout_pass",
+              "parent_global_distractor_exclusion_mechanic_pass",
+              "fallback_defer_states_pass",
+              "full_workload_envelope_bound",
+          ):
+              if r[key] is not True:
+                  raise SystemExit(f"mechanics invariant failed: {key}")
+          for key in (
+              "learned_qsre_parameters",
+              "optimizer",
+              "gradient",
+              "gpu",
+              "causal_test_opened",
+              "frozen_challenge_opened",
+              "private_identity_gradient",
+              "trainable_qsre_implementation_authorized",
+          ):
+              if r[key] is not False:
+                  raise SystemExit(f"receipt boundary drift: {key}")
+          print("qsre_reference_mechanics_receipt=PASS")
+          PY
