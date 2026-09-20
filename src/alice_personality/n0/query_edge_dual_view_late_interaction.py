@@ -245,6 +245,7 @@ class DualViewLateInteractionBridge(nn.Module):
         query_content_mask: torch.Tensor,
         field_tokens: torch.Tensor,
         field_content_mask: torch.Tensor,
+        field_valid_mask: torch.Tensor,
     ) -> torch.Tensor:
         if query_tokens.ndim != 3:
             raise ValueError("query_tokens must be [batch,tokens,semantic]")
@@ -259,10 +260,17 @@ class DualViewLateInteractionBridge(nn.Module):
             raise ValueError("query_content_mask shape mismatch")
         if field_content_mask.shape != field_tokens.shape[:3]:
             raise ValueError("field_content_mask shape mismatch")
+        if field_valid_mask.shape != field_tokens.shape[:2]:
+            raise ValueError("field_valid_mask shape mismatch")
+        if field_valid_mask.dtype != torch.bool:
+            raise ValueError("field_valid_mask must be bool")
         if not torch.all(query_content_mask.any(dim=1)):
             raise ValueError("every query needs at least one content token")
-        if not torch.all(field_content_mask.any(dim=2)):
-            raise ValueError("every field needs at least one content token")
+        valid_has_content = (
+            field_content_mask.any(dim=2) | ~field_valid_mask
+        )
+        if not torch.all(valid_has_content):
+            raise ValueError("every valid field needs at least one content token")
 
         query = F.normalize(query_tokens.float(), p=2, dim=-1, eps=1e-8)
         field = F.normalize(field_tokens.float(), p=2, dim=-1, eps=1e-8)
@@ -273,10 +281,11 @@ class DualViewLateInteractionBridge(nn.Module):
         )
         per_query_token = similarity.max(dim=-1).values
         query_weights = query_content_mask.to(per_query_token.dtype)[:, None, :]
-        return (
+        scores = (
             (per_query_token * query_weights).sum(dim=-1)
             / query_weights.sum(dim=-1).clamp_min(1.0)
         )
+        return scores.masked_fill(~field_valid_mask, -1.0e4)
 
     def forward(
         self,
@@ -452,6 +461,7 @@ class DualViewLateInteractionBridge(nn.Module):
             query_content_mask=query_content_mask,
             field_tokens=field_token_states,
             field_content_mask=field_content_mask,
+            field_valid_mask=valid_mask,
         )
         source_binding = field_binding_scores[batch_index, source]
         target_binding = field_binding_scores[batch_index, target]
@@ -464,9 +474,26 @@ class DualViewLateInteractionBridge(nn.Module):
             ~route_active,
             -1.0e4,
         )
-        conditional_edge_probability = torch.softmax(
+        has_any_route = route_active.any(dim=-1)
+        safe_binding_logits = torch.where(
+            has_any_route[:, None],
             edge_binding_logits,
+            torch.zeros_like(edge_binding_logits),
+        )
+        conditional_edge_probability = torch.softmax(
+            safe_binding_logits,
             dim=-1,
+        )
+        conditional_edge_probability = (
+            conditional_edge_probability
+            * route_active.to(conditional_edge_probability.dtype)
+        )
+        conditional_edge_probability = (
+            conditional_edge_probability
+            / conditional_edge_probability.sum(
+                dim=-1,
+                keepdim=True,
+            ).clamp_min(1.0e-8)
         )
 
         final_query_summary = self._masked_mean(
@@ -482,7 +509,10 @@ class DualViewLateInteractionBridge(nn.Module):
         specialist_logit = self.specialist_activation(
             torch.cat([global_query, specialist_edge_summary], dim=-1)
         ).squeeze(-1)
-        specialist_probability = torch.sigmoid(specialist_logit)
+        specialist_probability = (
+            torch.sigmoid(specialist_logit)
+            * has_any_route.to(specialist_logit.dtype)
+        )
         noop_route_probability = 1.0 - specialist_probability
         edge_route_probability = (
             specialist_probability[:, None]
