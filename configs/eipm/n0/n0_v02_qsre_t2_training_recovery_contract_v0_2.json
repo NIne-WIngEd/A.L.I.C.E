@@ -45,13 +45,13 @@
     "name": "AdamW",
     "learning_rate": 0.0002,
     "weight_decay": 0.01,
-    "gradient_clip_norm": 1.0
+    "gradient_clip_norm": 1
   },
   "loss_weights": {
-    "relation": 1.0,
-    "role": 1.0,
-    "operation": 1.0,
-    "control": 1.0,
+    "relation": 1,
+    "role": 1,
+    "operation": 1,
+    "control": 1,
     "continuous_supcon": 0.1
   },
   "continuous_operator_objective": {
@@ -68,19 +68,19 @@
     "eval_every_steps": 25
   },
   "eligibility": {
-    "relation_sequence_exact_accuracy_min": 1.0,
-    "role_accuracy_relational_min": 1.0,
-    "operation_accuracy_relational_min": 1.0,
-    "operator_control_accuracy_min": 1.0,
-    "full_operator_exact_accuracy_min": 1.0,
-    "query_view_pair_consistency_min": 1.0,
-    "operator_family_min_success_min": 1.0,
-    "downstream_control_accuracy_min": 1.0,
-    "downstream_single_target_top1_accuracy_min": 1.0,
-    "downstream_causal_pair_completion_min": 1.0,
-    "downstream_family_min_success_min": 1.0,
+    "relation_sequence_exact_accuracy_min": 1,
+    "role_accuracy_relational_min": 1,
+    "operation_accuracy_relational_min": 1,
+    "operator_control_accuracy_min": 1,
+    "full_operator_exact_accuracy_min": 1,
+    "query_view_pair_consistency_min": 1,
+    "operator_family_min_success_min": 1,
+    "downstream_control_accuracy_min": 1,
+    "downstream_single_target_top1_accuracy_min": 1,
+    "downstream_causal_pair_completion_min": 1,
+    "downstream_family_min_success_min": 1,
     "downstream_plural_l1_max": 0.1,
-    "downstream_outside_support_mass_max": 0.0,
+    "downstream_outside_support_mass_max": 0,
     "downstream_outside_support_invariance_max_delta": 1e-7
   },
   "selection": "first_eligible_dev_checkpoint_then_stop",
@@ -98,5 +98,6 @@
   "learned_operator": true,
   "learned_support": false,
   "private_identity_gradient": false,
-  "gpu_training_authorized": true
+  "gpu_training_authorized": true,
+  "max_gpu_runs": 1
 }
