@@ -1,0 +1,160 @@
+name: n0-qsre-t2-v03-schema-ordered-contract
+
+on:
+  push:
+    paths:
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.58.json"
+      - "configs/eipm/n0/n0_v02_qsre_t2_relation_schema_v0_1.json"
+      - "configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_3.json"
+      - "docs/research/eipm-n0-qsre-t2-v02-failure-localization-v03-decision.md"
+      - "src/alice_personality/n0/qsre_t2_schema_ordered_operator.py"
+      - "tests/eipm/test_n0_qsre_t2_schema_ordered_operator.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_t2_schema_ordered_v0_3.py"
+      - "scripts/eipm/n0/eval_n0_v02_qsre_t2_schema_ordered_challenge_v0_3.py"
+      - "scripts/eipm/n0/audit_n0_v02_qsre_t2_schema_ordered_runtime_v0_3.py"
+      - "scripts/eipm/n0/run_n0_v02_qsre_t2_schema_ordered_runtime_v0_3.sh"
+      - "scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_t2_schema_ordered_runtime_v0_3.sbatch"
+      - "scripts/eipm/n0/run_n0_v02_qsre_t2_schema_ordered_train_v0_3.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t2_schema_ordered_v0_3.sbatch"
+      - "scripts/eipm/n0/launch_n0_v02_qsre_t2_schema_ordered_pipeline_v0_3.sh"
+      - ".github/workflows/n0-qsre-t2-v03-schema-ordered-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python and shell syntax
+        run: |
+          python -m py_compile             src/alice_personality/n0/qsre_t2_schema_ordered_operator.py             scripts/eipm/n0/train_n0_v02_qsre_t2_schema_ordered_v0_3.py             scripts/eipm/n0/eval_n0_v02_qsre_t2_schema_ordered_challenge_v0_3.py             scripts/eipm/n0/audit_n0_v02_qsre_t2_schema_ordered_runtime_v0_3.py
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_t2_schema_ordered_runtime_v0_3.sh
+          bash -n scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_t2_schema_ordered_runtime_v0_3.sbatch
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_t2_schema_ordered_train_v0_3.sh
+          bash -n scripts/eipm/n0/magnolia_p100_n0_v02_qsre_t2_schema_ordered_v0_3.sbatch
+          bash -n scripts/eipm/n0/launch_n0_v02_qsre_t2_schema_ordered_pipeline_v0_3.sh
+
+      - name: Install CPU torch
+        run: python -m pip install -q torch pytest
+
+      - name: Schema-ordered relation mechanics
+        run: |
+          PYTHONPATH=src             pytest -q tests/eipm/test_n0_qsre_t2_schema_ordered_operator.py
+
+      - name: Trainer bridge and gradient self-test
+        run: |
+          PYTHONPATH=src:scripts/eipm/n0             python scripts/eipm/n0/train_n0_v02_qsre_t2_schema_ordered_v0_3.py --self-test
+
+      - name: Prove only the relation architecture changed
+        run: |
+          python - <<'PY'
+          import json
+          old=json.load(open("configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_2.json"))
+          new=json.load(open("configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_3.json"))
+
+          for key in (
+              "operator_model",
+              "t1_executor_model",
+              "optimizer",
+              "loss_weights",
+              "continuous_operator_objective",
+              "training",
+              "eligibility",
+              "selection",
+              "curriculum_sha256",
+              "semantic_checkpoint_sha256",
+              "t1_checkpoint_sha256",
+              "max_gpu_runs",
+              "automatic_rerun",
+              "automatic_hotfix",
+              "causal_test_open",
+              "frozen_challenge_open",
+              "semantic_backbone_gradient",
+              "t1_executor_gradient",
+              "learned_operator",
+              "learned_support",
+              "private_identity_gradient",
+              "gpu_training_authorized",
+          ):
+              assert old[key]==new[key], (key,old[key],new[key])
+
+          assert new["expected_prepared_cache_sha256"]=="f7d93a1ad0559ae2ad29d909062a88fbf2d1eea4a05246a5fb5a95e01d6b69ac"
+          assert new["operator_architecture"]=="schema_grounded_ordered_relation_v0.3"
+          change=new["causal_change"]
+          assert change["scope"]=="relation_extraction_only"
+          assert change["semantic_backbone_changed"] is False
+          assert change["role_head_changed"] is False
+          assert change["operation_head_changed"] is False
+          assert change["control_head_changed"] is False
+          assert change["optimizer_changed"] is False
+          assert change["learning_rate_changed"] is False
+          assert change["training_steps_changed"] is False
+          assert change["eligibility_changed"] is False
+          print("PASS_T2_V03_SINGLE_CAUSAL_ARCHITECTURE_CHANGE")
+          PY
+
+      - name: Verify relation schema and locked challenge hashes
+        run: |
+          test "$(sha256sum configs/eipm/n0/n0_v02_qsre_t2_relation_schema_v0_1.json | awk '{print $1}')" =             "bae45945fcb1a7f33b1177bc65da02c90335d443a0718aa7c796e744ace2e2c9"
+          python scripts/eipm/n0/build_n0_v02_qsre_t2_operator_challenge_v0_2.py             --output /tmp/t2v03-locked-challenge.jsonl
+          test "$(sha256sum /tmp/t2v03-locked-challenge.jsonl | awk '{print $1}')" =             "197cebe5ed4c59455839db5b2822582a03021c92a94670e1aede568278c1f205"
+          test "$(wc -l < /tmp/t2v03-locked-challenge.jsonl)" -eq 60
+          python - <<'PY'
+          import json
+          s=json.load(open("configs/eipm/n0/n0_v02_qsre_t2_relation_schema_v0_1.json"))
+          assert [r["id"] for r in s["relations"]]==list(range(6))
+          assert len({r["name"] for r in s["relations"]})==6
+          assert s["none_is_structural_stop_not_schema_relation"] is True
+          assert s["governance"]["private_identity_data"] is False
+          assert s["governance"]["relation_ids_are_current_fixture_not_product_ceiling"] is True
+          print("PASS_T2_V03_RELATION_SCHEMA_CONTRACT")
+          PY
+
+      - name: Behavioral Slurm dependency test
+        run: |
+          mkdir -p /tmp/fake-bin
+          cat > /tmp/fake-bin/sbatch <<'SH'
+          #!/usr/bin/env bash
+          echo "$*" >> /tmp/sbatch-v03-calls.txt
+          if [[ ! -f /tmp/sbatch-v03-first ]]; then
+            touch /tmp/sbatch-v03-first
+            printf '333\n'
+          else
+            printf '444\n'
+          fi
+          SH
+          chmod +x /tmp/fake-bin/sbatch
+          PATH="/tmp/fake-bin:$PATH"             ALICE_N0_WORKDIR="/tmp/alice-n0-v02"             bash scripts/eipm/n0/launch_n0_v02_qsre_t2_schema_ordered_pipeline_v0_3.sh             > /tmp/launch-v03.txt
+          cat /tmp/launch-v03.txt
+          cat /tmp/sbatch-v03-calls.txt
+          grep -F "runtime_qualification_job_id=333" /tmp/launch-v03.txt
+          grep -F "train_job_id=444" /tmp/launch-v03.txt
+          grep -F "dependency=afterok:333" /tmp/launch-v03.txt
+          grep -F -- "--dependency=afterok:333" /tmp/sbatch-v03-calls.txt
+
+      - name: Governance and no-hotfix state
+        run: |
+          python - <<'PY'
+          import json
+          state=json.load(open("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.58.json"))
+          contract=json.load(open("configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_3.json"))
+          p=state["execution_policy"]
+          assert state["localization"]["valid_model_failure"] is True
+          assert state["localization"]["relation_identity_order_is_primary_bottleneck"] is True
+          assert p["t2_v02_rerun_authorized"] is False
+          assert p["max_t2_v03_gpu_runs"]==1
+          assert p["automatic_rerun_authorized"] is False
+          assert p["automatic_hotfix_chain_authorized"] is False
+          assert p["learning_rate_search_authorized"] is False
+          assert p["step_search_authorized"] is False
+          assert p["model_size_search_authorized"] is False
+          assert p["semantic_backbone_gradient_authorized"] is False
+          assert p["t1_executor_gradient_authorized"] is False
+          assert p["learned_support_training_authorized"] is False
+          assert p["causal_test_opening_authorized"] is False
+          assert p["private_identity_gradient_authorized"] is False
+          assert contract["locked_operator_challenge"]["opening_rule"]=="only_after_PASS_QSRE_T2_OPERATOR_DEV_CONTRACT"
+          assert contract["locked_operator_challenge"]["training_allowed"] is False
+          print("PASS_T2_V03_GOVERNANCE")
+          PY
