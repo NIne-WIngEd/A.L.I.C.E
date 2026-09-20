@@ -49,6 +49,18 @@ jobs:
               .github/workflows/n0-qsre-tensor-mechanics-contract.yml|\
               docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md|\
               configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.44.json|\
+              docs/research/eipm-n0-qsre-t1-executor-decision-v0.1.md|\
+              configs/eipm/n0/n0_v02_qsre_t1_executor_design_v0_1.json|\
+              configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.45.json|\
+              src/alice_personality/n0/qsre_t1_executor.py|\
+              tests/eipm/test_n0_qsre_t1_executor.py|\
+              .github/workflows/n0-qsre-t1-forward-contract.yml|\
+              configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_1.json|\
+              scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_1.py|\
+              scripts/eipm/n0/evaluate_n0_v02_qsre_t1_curriculum_v0_1.py|\
+              evaluation/eipm/n0/n0_v02_qsre_t1_curriculum_v0_1.jsonl|\
+              .github/workflows/n0-qsre-t1-curriculum-contract.yml|\
+              configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.46.json|\
               configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.39.json|\
               configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.41.json|\
               configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.40.json|\
