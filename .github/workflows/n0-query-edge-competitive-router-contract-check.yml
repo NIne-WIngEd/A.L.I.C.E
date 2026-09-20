@@ -10,6 +10,7 @@ on:
       - "scripts/eipm/n0/qualify_n0_v02_query_edge_competitive_router_v0_1.py"
       - "scripts/eipm/n0/run_n0_v02_qualify_query_edge_competitive_router_v0_1.sh"
       - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.26.json"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.27.json"
       - ".github/workflows/n0-query-edge-competitive-router-contract-check.yml"
   workflow_dispatch:
 
@@ -36,10 +37,10 @@ jobs:
           import json
           from pathlib import Path
           s=json.loads(Path(
-              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.26.json"
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.27.json"
           ).read_text())
-          if s["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.26":
-              raise SystemExit("v0.26 schema drift")
+          if s["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.27":
+              raise SystemExit("v0.27 schema drift")
           f=s["source_failure"]
           if f["magnolia_job_id"]!=575888:
               raise SystemExit("source failure job drift")
@@ -200,7 +201,7 @@ jobs:
               "0d05f1dcd7d11cc1defdd0a4112c10e3b1d7febfaabf97fe611a854d6905b99a",
               "f5b3f438f776216f6dbd557a8c785aac70af38d256e3f7cf94f0f71a43f53e94",
               "ac0e5e28749cbb1e8dda62262c4c2761db887b965cbc3a74493ff6c9b5355304",
-              "v0_26_competitive_router_cpu_qualification_gate=PASS",
+              "v0_27_competitive_router_cpu_qualification_gate=PASS",
           ]
           missing=[x for x in required if x not in r]
           if missing:
