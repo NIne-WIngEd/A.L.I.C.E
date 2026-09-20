@@ -1264,15 +1264,20 @@ class QSREProductionExecutor(nn.Module):
                 + (1.0 - path_probability[:, None]) * frontier
             )
 
-        support_field_weight = torch.zeros(
+        source_support_weight = torch.zeros(
             batch,
             fields,
             dtype=edge_support_weight.dtype,
             device=edge_support_weight.device,
         )
-        support_field_weight.scatter_add_(1, source_index, edge_support_weight)
-        support_field_weight.scatter_add_(1, target_index, edge_support_weight)
-        support_field_weight = support_field_weight.clamp(max=1.0)
+        target_support_weight = torch.zeros_like(source_support_weight)
+        source_support_weight.scatter_add_(1, source_index, edge_support_weight)
+        target_support_weight.scatter_add_(1, target_index, edge_support_weight)
+        source_support_weight = source_support_weight.clamp(max=1.0)
+        target_support_weight = target_support_weight.clamp(max=1.0)
+        support_field_weight = (
+            source_support_weight + target_support_weight
+        ).clamp(max=1.0)
 
         role_query = role_state[:, None, :].expand(batch, fields, -1)
         operator_query = operator_state[:, None, :].expand(batch, fields, -1)
@@ -1282,14 +1287,46 @@ class QSREProductionExecutor(nn.Module):
         )
         relational_logit = self.readout(readout_input).squeeze(-1)
 
-        # Path execution reads the reached frontier. Other traversal modes read
-        # only the support-local field domain.
-        path_mask = frontier > 0
-        support_mask = (support_field_weight > 0) & field_valid_mask
+        # Argument roles are structural, not merely opaque learned labels.
+        # For local/aggregate execution SOURCE and TARGET select oriented
+        # endpoint support directly. For a path they select the path origin or
+        # reached frontier. SYMMETRIC preserves both endpoints. This makes role
+        # reversal systematic across relation families and path lengths.
+        source_role = operator.role_distribution[:, ROLE_SOURCE][:, None]
+        target_role = operator.role_distribution[:, ROLE_TARGET][:, None]
+        symmetric_role = operator.role_distribution[:, ROLE_SYMMETRIC][:, None]
+        none_role = operator.role_distribution[:, ROLE_NONE][:, None]
+
+        local_union = support_field_weight
+        local_role_weight = (
+            source_role * source_support_weight
+            + target_role * target_support_weight
+            + symmetric_role * local_union
+            + none_role * local_union
+        ).clamp(min=0.0, max=1.0)
+
+        path_origin = focus_field_weight.clamp(min=0.0, max=1.0)
+        path_target = frontier.clamp(min=0.0, max=1.0)
+        path_union = (path_origin + path_target).clamp(max=1.0)
+        path_role_weight = (
+            source_role * path_origin
+            + target_role * path_target
+            + symmetric_role * path_union
+            + none_role * path_union
+        ).clamp(min=0.0, max=1.0)
+
         path_rows = path_probability >= 0.5
-        readout_mask = torch.where(path_rows[:, None], path_mask, support_mask)
+        structural_role_weight = torch.where(
+            path_rows[:, None],
+            path_role_weight,
+            local_role_weight,
+        )
+        readout_mask = (structural_role_weight > 0) & field_valid_mask
+        structural_logit = relational_logit + torch.log(
+            structural_role_weight.clamp_min(1.0e-8)
+        )
         relational_probability = _masked_softmax(
-            relational_logit,
+            structural_logit,
             readout_mask,
             dim=-1,
         )
@@ -1327,6 +1364,9 @@ class QSREProductionExecutor(nn.Module):
             "last_edge_state": last_edge_state,
             "path_frontier": frontier,
             "support_field_weight": support_field_weight,
+            "source_support_weight": source_support_weight,
+            "target_support_weight": target_support_weight,
+            "structural_role_weight": structural_role_weight,
             "readout_mask": readout_mask,
             "relational_logit": relational_logit,
             "relational_probability": relational_probability,
@@ -1344,6 +1384,8 @@ class QSREProductionExecutor(nn.Module):
             "shared_iterative_execution_cell": True,
             "continuous_operator_state_consumed": True,
             "support_local_readout": True,
+            "structural_argument_role_readout": True,
+            "path_source_target_role_systematicity": True,
             "calibrated_execution_confidence_preserved": True,
             "role_count_ceiling": None,
             "traversal_count_ceiling": None,
