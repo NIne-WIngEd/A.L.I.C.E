@@ -1,0 +1,93 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.35",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.34.json",
+  "status": "DUAL_VIEW_RUNTIME_QUALIFICATION_PASS;EDGE_IDENTITY_FROZEN;ONE_SPECIALIST_ACTIVATION_PLUS_DIRECTIONAL_RESIDUAL_P100_RUN_AUTHORIZED",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-dual-view-late-interaction-binding",
+  "qualification": {
+    "receipt_sha256": "714f06d4939abad2b816a7e3ffb5c5fa10112129ef0b520fd838f2d182286278",
+    "status": "PASS_DUAL_VIEW_LATE_INTERACTION_NO_GRADIENT_RUNTIME_CONTRACT",
+    "source_revision": "edcee7dd7a53bac158793b805a29cfaa0c1b11b0",
+    "dev_all_edge_top1": 1.0,
+    "dev_same_relation_top1": 1.0,
+    "source_role_top1": 1.0,
+    "target_role_top1": 1.0,
+    "every_relation_family_top1": 1.0,
+    "edge_reversal_max_delta": 1.7881393432617188e-07,
+    "permutation_max_delta": 5.960464477539063e-08,
+    "route_sum_max_error": 1.1920928955078125e-07,
+    "specialist_probability_init": 0.5,
+    "exact_parent_field_weights": true,
+    "exact_parent_pooled_state": true,
+    "parent_parameters_exactly_unchanged": true,
+    "future_trainable_parameters": 9422597
+  },
+  "experiment": {
+    "decision_config": "configs/eipm/n0/n0_v02_dual_view_training_decision_v0_1.json",
+    "max_runs": 1,
+    "max_steps": 200,
+    "checkpoint_every": 40,
+    "learning_rate": 0.00015,
+    "weight_decay": 0.02,
+    "warmup_steps": 12,
+    "causal_quad_batch_size": 4,
+    "preservation_batch_size": 16,
+    "operating_budget_is_product_ceiling": false
+  },
+  "trainable_scope": {
+    "dual_view_query_edge_bridge": true,
+    "binding_logit_scale": false,
+    "semantic_backbone": false,
+    "structured_state": false,
+    "parent_adapter": false,
+    "parent_graph": false,
+    "reason": "hold the solved edge-identity channel fixed and test only specialist activation plus directional residual reasoning"
+  },
+  "objective": {
+    "causal_field_selection_ce": true,
+    "causal_target_margin_weight": 0.25,
+    "causal_specialist_activation_bce_weight": 1.0,
+    "preservation_parent_kl_weight": 1.0,
+    "preservation_noop_activation_bce_weight": 1.0,
+    "conditional_edge_binding_loss": false,
+    "route_load_balancing_loss": false,
+    "proxy_routing_loss": false,
+    "gradient_surgery": false
+  },
+  "gradient_data": {
+    "causal_train": true,
+    "ordinary_preservation_train_anchors": true,
+    "endpoint_preservation_train_anchors": true,
+    "causal_dev": false,
+    "causal_test": false,
+    "preservation_dev": false,
+    "frozen_challenge": false,
+    "private_identity": false
+  },
+  "execution_policy": {
+    "next_action": "static training-contract CI then exactly one Magnolia P100 run",
+    "gradient_authorized": true,
+    "gpu_training_authorized": true,
+    "gpu_runs_remaining": 1,
+    "training_output_claim_before_gpu_work_required": true,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "semantic_retraining_authorized": false,
+    "graph_parent_retraining_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "anti_mc10_rule": {
+    "edge_binding_channel_is_not_to_be_repaired_during_this_experiment": true,
+    "binding_scale_is_frozen": true,
+    "failure_must_be_localized_between_specialist_activation_and_directional_residual_reasoning": true,
+    "do_not_tune_lr_steps_loss_weights_or_thresholds_after_failure_without_reassessment": true,
+    "first_genuine_model_failure_stops": true
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
