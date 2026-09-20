@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "6251fbad44d0ca56c8108dacf920a7db0d81fb48",
-      "head_committed_at": "2026-09-20T00:48:43-05:00",
-      "head_message": "context: hand off dual-view specialist failure localization",
+      "head": "98ceba271a95ad9977af699fc474cfb6e948d100",
+      "head_committed_at": "2026-09-20T01:36:29-05:00",
+      "head_message": "context: hand off P100 inference localization placement",
       "status": "diverged",
-      "ahead": 214,
+      "ahead": 216,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 561,
+      "changed_file_count_vs_source_merge_base": 563,
       "knowledge_surface": true
     },
     {
@@ -65,14 +65,14 @@
     },
     {
       "branch": "alice-eipm-v1-dual-view-specialist-failure-localization",
-      "head": "9befcf4ae3574d671da211f994ff7529979403de",
-      "head_committed_at": "2026-09-20T00:47:59-05:00",
-      "head_message": "ci(n0): guard specialist failure localization audit",
+      "head": "d5d2a4f265d5d10a0e9cb6c12c60c864d257c495",
+      "head_committed_at": "2026-09-20T01:35:50-05:00",
+      "head_message": "ci(n0): guard P100 inference-only failure localization",
       "status": "ahead",
-      "ahead": 211,
+      "ahead": 220,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 171,
+      "changed_file_count_vs_source_merge_base": 180,
       "knowledge_surface": true
     },
     {
@@ -281,14 +281,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "8a68c7c86901ce4d9164d54c79e3db9b555ea865",
-      "head_committed_at": "2026-09-20T00:48:45-05:00",
-      "head_message": "trace(fbm): capture dual-view specialist failure localization",
+      "head": "a57a6b23d429557e699ac8b8feba934f7797f571",
+      "head_committed_at": "2026-09-20T01:36:32-05:00",
+      "head_message": "trace(fbm): capture inference compute-placement correction",
       "status": "diverged",
-      "ahead": 98,
+      "ahead": 100,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 97,
+      "changed_file_count_vs_source_merge_base": 99,
       "knowledge_surface": true
     },
     {

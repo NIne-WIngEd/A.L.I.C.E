@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-dual-view-specialist-failure-localization-20260920-001
-- Question: Refresh A.L.I.C.E. N0 continuity to the dual-view specialist failure-localization frontier. Resolve branch alice-eipm-v1-dual-view-specialist-failure-localization at exact head 9befcf4ae3574d671da211f994ff7529979403de, CI 35492586940 success, authoritative state v0.36, and newest alice-context handoff N0_DUAL_VIEW_SPECIALIST_FAILURE_LOCALIZATION_READY.md. Preserve Magnolia job 575912 result SHA 1a38c37a41de68bea0bb9bc897b86d62cbc457b8b93189c2d16731110c1694ec as genuine model evidence: edge identity remained 1.0 at every checkpoint, binding scale stayed frozen, preservation passes from step 80 onward, parent graph stayed unchanged, but causal specialist activation was unstable and causal field selection stayed weak. Critical evidence: at step 80 specialist top1 reached 0.8889 while row accuracy was only 0.0833 and quad accuracy 0.0, so activation alone cannot explain failure. No retraining is authorized. The only next work is a CPU no-gradient counterfactual audit over existing checkpoints 40/80/120/160/200 measuring gate rank separation, actual vs forced-specialist execution, soft vs model-predicted hard-top1 edge execution, and relevant-edge source/target residual proposal role accuracy. Hard top1 must use model prediction, never target labels. TEST, challenge, GPU, threshold tuning, binding-scale tuning, new router capacity, LR/step tuning, semantic/parent retraining, private identity gradient, and promotion remain closed. Graphify remains navigation-only.
+- Request: n0-p100-inference-localization-placement-20260920-001
+- Question: Refresh A.L.I.C.E. N0 continuity to the P100 inference-only dual-view specialist failure-localization frontier. Resolve branch alice-eipm-v1-dual-view-specialist-failure-localization at exact head d5d2a4f265d5d10a0e9cb6c12c60c864d257c495, CI 35494643335 success, authoritative state v0.38, and newest alice-context handoff N0_DUAL_VIEW_FAILURE_LOCALIZATION_P100_INFERENCE_READY.md. Preserve failure-localization-v0.1 and v0.2 as interrupted diagnostics with no result/model evidence. v0.1 was slow because it recomputed preservation semantic hidden states; v0.2 removed that but still spent >25 minutes in checkpoint-40 bridge counterfactual inference on Magnolia login-node CPU. Scientific question and counterfactual modes are unchanged. v0.3 moves the exact causal counterfactual audit to one P100 inference-only job: no optimizer, backward, gradient, training, semantic backbone execution, TEST or challenge. It reuses causal hidden states, field-token cache, and preservation metrics from source checkpoint receipts. One GPU job only; training remains closed until the localization result is interpreted. Graphify remains navigation-only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: False
@@ -18,22 +18,30 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-dual-view-specialist-failure-localization @ 9befcf4ae3574d671da211f994ff7529979403de — ci(n0): guard specialist failure localization audit
+- alice-eipm-v1-dual-view-specialist-failure-localization @ d5d2a4f265d5d10a0e9cb6c12c60c864d257c495 — ci(n0): guard P100 inference-only failure localization
 
 ## Source pointers
 
-- [174] alice-context:docs/chat-context/2026-09-20/sol/N0_DUAL_VIEW_SPECIALIST_FAILURE_LOCALIZATION_READY.md — N0 Dual-View Specialist Failure — Counterfactual Localization Ready
-- [168] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [148] alice-eipm-v1-dual-view-specialist-failure-localization:.github/workflows/n0-dual-view-specialist-failure-localization-check.yml — n0-dual-view-specialist-failure-localization-check.yml
-- [143] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [143] alice-eipm-v1-query-edge-binding-identifiability-audit:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [143] alice-eipm-v1-query-edge-competitive-router:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [143] alice-eipm-v1-query-edge-cross-attention-bridge:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [143] alice-eipm-v1-query-edge-setwise-router:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [141] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
-- [128] alice-eipm-v1-build:docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md — N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16
-- [126] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md — N0 downstream causal arbitration: full-stack graph binding v0.1
-- [120] alice-eipm-v1-dual-view-specialist-failure-localization:.github/workflows/n0-dual-view-specialist-training-contract-check.yml — n0-dual-view-specialist-training-contract-check.yml
+- [149] alice-context:docs/chat-context/2026-09-20/sol/N0_DUAL_VIEW_SPECIALIST_ONE_P100_READY.md — N0 Dual-View Specialist — One P100 Training Ready
+- [143] alice-context:docs/chat-context/2026-09-20/sol/N0_COMPETITIVE_EDGE_ROUTER_ONE_P100_TRAINING_READY.md — N0 Competitive Edge Router — One P100 Training Ready
+- [142] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100X2_REAL_N0_JOB_575546.md — Magnolia 2×P100 Real N0 Training — Job 575546
+  - status:  completed successfully; durable weights retained; LR scheduler defect identified before continuation
+- [132] alice-context:docs/chat-context/2026-09-20/sol/N0_QUERY_EDGE_ONE_P100_TRAINING_READY.md — N0 Query–Edge Routed Specialist — One P100 Run Ready
+- [132] alice-eipm-v1-build:docs/eipm/n0/runtime-results/MAGNOLIA_P100_N0_TEACHER_PROBE_JOB_575565.md — Magnolia single-P100 N0 teacher diagnostic — job 575565
+- [130] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [130] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [130] alice-eipm-v1-query-edge-binding-identifiability-audit:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [130] alice-eipm-v1-query-edge-competitive-router:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [130] alice-eipm-v1-query-edge-cross-attention-bridge:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [130] alice-eipm-v1-query-edge-setwise-router:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [130] alice-eipm-v1-relation-conditioned-multilayer-interface:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
 
 ## Graphify navigation hints
 
@@ -42,7 +50,7 @@
 ## External/private routing
 
 - Recommended: True
-- Reason: question references a private/external source class
+- Reason: host-specific operational history may contain newer failure lessons than public receipts
 
 ## Trust contract
 
