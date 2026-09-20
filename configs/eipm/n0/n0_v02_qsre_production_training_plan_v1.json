@@ -3,7 +3,7 @@
   "status": "PRECOMMITTED_CAUSAL_PIPELINE_NO_POSTHOC_TUNING",
   "architecture": "configs/eipm/n0/n0_v02_qsre_production_core_v1.json",
   "curriculum_contract": "configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json",
-  "curriculum_sha256": null,
+  "curriculum_sha256": "7907602681fde3595ad14a9209547c7272e2dab6690be24f9baf590f46b562ff",
   "relation_schema": "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
   "model": {
     "semantic_dim": 640,
@@ -219,6 +219,9 @@
     "schema_encoder_starts_geometry_preserving": true,
     "seed_role_traversal_control_counts_are_checkpoint_topology_not_product_ceilings": true,
     "p2_query_projection_initialized_from_proven_schema_space": true,
-    "p2_query_projection_softly_anchored_to_schema_space": true
+    "p2_query_projection_softly_anchored_to_schema_space": true,
+    "all_seed_roles_supervised": true,
+    "path_source_target_role_reversal_supervised": true,
+    "symmetric_pair_role_supervised": true
   }
 }
