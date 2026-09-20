@@ -91,6 +91,19 @@ TRAVERSAL = {"LOCAL_SELECT": 0, "PATH": 1, "AGGREGATE": 2}
 DIRECTION = {"FORWARD": 0, "REVERSE": 1, "BIDIRECTIONAL": 2}
 CONTROL = {"FALLBACK": 0, "RELATIONAL": 1, "DEFER": 2}
 
+INTEGRATED_QSRE_REQUIRED_FAMILIES = {
+    "path_source",
+    "path_target",
+    "path_order",
+    "three_hop",
+    "recency_arbitration",
+    "temporal_constraint",
+    "provenance_constraint",
+    "combined_constraints",
+    "final_unseen_enables",
+    "final_unseen_prevents",
+}
+
 RELATIONAL_FAMILIES = (
     "single_source",
     "single_target",
@@ -237,7 +250,7 @@ def make_row(
     applicability: float = 0.95,
     control: str = "RELATIONAL",
     termination: str = "STOP",
-    relational_required_for_integrated_answer: bool = True,
+    relational_required_for_integrated_answer: bool = False,
 ) -> dict[str, Any]:
     row_id = f"N0FINAL-{family.upper()}-{index + 1:02d}"
     positions = {value["id"]: pos for pos, value in enumerate(fields)}
@@ -256,6 +269,11 @@ def make_row(
         target_summary = "The requested relation is outside the active schema, so the relation must remain unresolved."
     else:
         target_summary = "No relational execution is required for this request."
+
+    relational_required_for_integrated_answer = (
+        relational_required_for_integrated_answer
+        or family in INTEGRATED_QSRE_REQUIRED_FAMILIES
+    )
 
     return {
         "schema": SCHEMA,
