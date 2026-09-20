@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "8b222d3768901478e2a4c9139b579776ac6bf3f8",
-      "head_committed_at": "2026-09-20T04:31:19-05:00",
-      "head_message": "context: hand off QSRE T1 one-shot P100 authorization",
+      "head": "612fcbffebe388f6603cc1af174acc594c403d7f",
+      "head_committed_at": "2026-09-20T04:53:47-05:00",
+      "head_message": "context: hand off QSRE T1 pass and T2 static design",
       "status": "diverged",
-      "ahead": 219,
+      "ahead": 220,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 566,
+      "changed_file_count_vs_source_merge_base": 567,
       "knowledge_surface": true
     },
     {
@@ -121,6 +121,18 @@
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 237,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-eipm-v1-qsre-t2-operator-learning",
+      "head": "92ea3f23109a8f0064dadaecb4f3ec25ad4678b8",
+      "head_committed_at": "2026-09-20T04:53:08-05:00",
+      "head_message": "state(n0): record QSRE T1 pass and open T2 static design",
+      "status": "ahead",
+      "ahead": 270,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 243,
       "knowledge_surface": true
     },
     {
