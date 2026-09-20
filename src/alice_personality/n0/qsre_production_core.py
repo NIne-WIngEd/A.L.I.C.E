@@ -502,7 +502,16 @@ class QSREProductionOperatorInducer(nn.Module):
                 need_weights=True,
                 average_attn_weights=True,
             )
-            step_state = self.query_cross_norm(state + attended.squeeze(1))
+            candidate_step_state = self.query_cross_norm(
+                state + attended.squeeze(1)
+            )
+            # Rows that already terminated retain their exact prior semantic
+            # state even when the external compute budget continues for other
+            # rows in the batch.
+            step_state = (
+                survival[:, None] * candidate_step_state
+                + (1.0 - survival[:, None]) * state
+            )
             relation_logits = self._relation_logits(
                 state=step_state,
                 query_projected=query_projected,
