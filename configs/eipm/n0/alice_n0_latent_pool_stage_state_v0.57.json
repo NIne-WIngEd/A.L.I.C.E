@@ -1,0 +1,73 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.57",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.56.json",
+  "status": "JOB_575950_RUNTIME_AND_TOTALITY_EVIDENCE_RATIFIED;V056_SEMANTIC_REOPEN_INFERENCE_NOT_RATIFIED_DUE_PROBE_MISMATCH;REALISTIC_T2_V02_CAUSAL_EXPERIMENT_PREPARATION_ACTIVE",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-qsre-t2-operator-learning",
+  "job_575950": {
+    "scheduler_state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:02:05",
+    "node": "node016",
+    "stderr_empty": true,
+    "decision_artifact_sha256": "5d389fa64ebfd7df4c233000f263ff7b184974a972d9cdef5bc232ce800b7379",
+    "runtime_artifact_sha256": "e2427f6f69906d73f1a5f402981d3d59b7c054cc1eb622ffe1f92d2297671d2c",
+    "shortcut_artifact_sha256": "c9b9bc5f5c464bd3abc44ab707750090779b6cce4d14bb36ea8b8fb6695300c5",
+    "semantic_probe_artifact_sha256": "24d55103d7ca1736f339dc552b0ad1026266de3cb7f38f7ca6dc8c2c5a9fb903",
+    "boundary_fuzz_artifact_sha256": "a464733b6d247a3cf6e37165b3b453b594bda0d67588b5e078b0696a1f611d64"
+  },
+  "scientific_interpretation": {
+    "runtime_parity_pass": true,
+    "t2_t1_boundary_totality_pass": true,
+    "synthetic_t2_head_level_shortcut_risk": true,
+    "mean_pool_transfer_is_weak": true,
+    "token_level_semantic_insufficiency_proven": false,
+    "reason_semantic_reopen_not_ratified": "v0.56 probe mean-pooled each layer and used centroid classification while T2 consumes all token-level hidden states with cross-attention; prior jobs 575801/575804 established stronger mid-layer token relation-role signal",
+    "qsre_t1_rejected": false,
+    "t2_operator_family_rejected": false,
+    "semantic_backbone_reopened": false
+  },
+  "t2_v02": {
+    "curriculum_contract": "configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_2.json",
+    "curriculum_builder": "scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_2.py",
+    "static_workflow_run": 35537157415,
+    "static_workflow_conclusion": "SUCCESS",
+    "curriculum_sha256": "5aa8f0aa3210466964f38b14081c71c1d3c58f4405247067c76a7cdfe115963c",
+    "rows": {"train": 720, "dev": 288},
+    "cue_collision_rows": 168,
+    "query_only_unigram": {
+      "dev_full_signature": 0.3923611111111111,
+      "reality_full_signature": 0.25,
+      "dev_control": 0.7430555555555556,
+      "dev_operation": 0.8854166666666666,
+      "dev_relation": 0.3090277777777778,
+      "dev_role": 0.6354166666666666
+    },
+    "architecture_changed_from_t2_v01": false,
+    "optimizer_changed_from_t2_v01": false,
+    "semantic_backbone_frozen": true,
+    "t1_executor_frozen": true,
+    "support_oracle": true
+  },
+  "execution_policy": {
+    "t2_v02_cpu_preparation_authorized": true,
+    "t2_v02_gpu_training_authorized_after_exact_preparation_receipt": true,
+    "max_t2_v02_gpu_runs": 1,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_chain_authorized": false,
+    "learning_rate_search_authorized": false,
+    "step_search_authorized": false,
+    "model_size_search_authorized": false,
+    "semantic_backbone_gradient_authorized": false,
+    "t1_executor_gradient_authorized": false,
+    "learned_support_training_authorized": false,
+    "causal_test_opening_authorized": false,
+    "operator_only_locked_challenge_authorized_only_after_perfect_dev_pass": true,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "next_action": "Complete the realistic T2 v0.2 preparation and one dependent P100 run without an owner-side micro-gate between them. If DEV is not perfect, stop with challenge unopened. If DEV is perfect, open exactly one prelocked operator-only public challenge and then stop for interpretation.",
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
