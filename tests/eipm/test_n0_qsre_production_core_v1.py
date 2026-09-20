@@ -555,6 +555,8 @@ def test_totality_fuzz_over_operator_space() -> None:
         role = role / role.sum(dim=-1, keepdim=True)
         traversal = torch.rand(4, 3)
         traversal = traversal / traversal.sum(dim=-1, keepdim=True)
+        direction = torch.rand(4, 3)
+        direction = direction / direction.sum(dim=-1, keepdim=True)
         modifiers = torch.rand(4, 4)
         control = torch.rand(4, 3)
         control = control / control.sum(dim=-1, keepdim=True)
@@ -565,6 +567,7 @@ def test_totality_fuzz_over_operator_space() -> None:
             unknown_probability=torch.rand(4, steps),
             role_distribution=role,
             traversal_distribution=traversal,
+            direction_distribution=direction,
             modifier_weight=modifiers,
             applicability=torch.rand(4),
             control_distribution=control,
