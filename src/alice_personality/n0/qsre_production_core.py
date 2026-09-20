@@ -543,11 +543,20 @@ class QSREProductionOperatorInducer(nn.Module):
                 schema_summary,
             )
             query_summary = attended.squeeze(1)
-            state = self.step_transition(
+            next_state = self.step_transition(
                 torch.cat([expected_relation, query_summary], dim=-1),
                 step_state,
             )
-            survival = survival * (1.0 - stop_probability)
+            # STOP and UNKNOWN both terminate relational continuation. Relation
+            # mass is therefore the differentiable continuation probability.
+            # Once a row terminates, later externally-budgeted iterations cannot
+            # mutate its semantic operator state.
+            continuation = relation_mass.clamp(min=0.0, max=1.0)
+            state = (
+                continuation[:, None] * next_state
+                + (1.0 - continuation[:, None]) * step_state
+            )
+            survival = survival * continuation
 
         relation_distribution = torch.stack(relation_steps, dim=1)
         relation_step_mass = torch.stack(relation_mass_steps, dim=1)
