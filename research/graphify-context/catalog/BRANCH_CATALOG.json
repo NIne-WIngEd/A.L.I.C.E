@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "aed0053a39f38e498c7a337d7b67f220b8c8843c",
-      "head_committed_at": "2026-09-20T00:21:23-05:00",
-      "head_message": "context: hand off dual-view qualification bookkeeping recovery",
+      "head": "2007e2f8cf9594221dfc26dcf51ff439951c3258",
+      "head_committed_at": "2026-09-20T00:35:24-05:00",
+      "head_message": "context: hand off dual-view specialist one-shot training",
       "status": "diverged",
-      "ahead": 212,
+      "ahead": 213,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 559,
+      "changed_file_count_vs_source_merge_base": 560,
       "knowledge_surface": true
     },
     {
@@ -53,14 +53,14 @@
     },
     {
       "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
-      "head": "edcee7dd7a53bac158793b805a29cfaa0c1b11b0",
-      "head_committed_at": "2026-09-20T00:20:52-05:00",
-      "head_message": "ci(n0): guard dual-view bookkeeping recovery",
+      "head": "57b085fd815cc784ae4090b8db7b619adec57040",
+      "head_committed_at": "2026-09-20T00:34:49-05:00",
+      "head_message": "ci(n0): narrow frozen-binding leak assertion",
       "status": "ahead",
-      "ahead": 200,
+      "ahead": 207,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 161,
+      "changed_file_count_vs_source_merge_base": 167,
       "knowledge_surface": true
     },
     {
@@ -269,14 +269,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "8cce18de4d4f5dee6a4521ac744414b7b5fe1ad2",
-      "head_committed_at": "2026-09-20T00:21:25-05:00",
-      "head_message": "trace(fbm): capture dual-view qualification harness recovery",
+      "head": "9892eb0349383888fe702fd5fe7bd8d7d7e2ae69",
+      "head_committed_at": "2026-09-20T00:35:26-05:00",
+      "head_message": "trace(fbm): capture dual-view specialist training decision",
       "status": "diverged",
-      "ahead": 96,
+      "ahead": 97,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 95,
+      "changed_file_count_vs_source_merge_base": 96,
       "knowledge_surface": true
     },
     {
