@@ -1,0 +1,139 @@
+name: N0 QSRE T1 Forward Contract
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-n0-clean-sheet-relational-execution-review
+    paths:
+      - "src/alice_personality/n0/qsre_t1_executor.py"
+      - "tests/eipm/test_n0_qsre_t1_executor.py"
+      - "configs/eipm/n0/n0_v02_qsre_t1_executor_design_v0_1.json"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.45.json"
+      - ".github/workflows/n0-qsre-t1-forward-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  forward-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install CPU tensor runtime
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install "torch>=2.7" --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Static T1 causal isolation
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          t=Path("src/alice_personality/n0/qsre_t1_executor.py").read_text()
+          required=[
+              "class QSRET1Config",
+              "class QSRET1OracleOperator",
+              "class QSRET1Executor",
+              "self.source_message",
+              "self.target_message",
+              "self.node_update",
+              "support_local_field_mask",
+              "support_local_softmax",
+              "relation_match",
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("T1 architecture missing "+repr(missing))
+
+          forbidden=[
+              "parent_global",
+              "parent_logit",
+              "query_hidden_states",
+              "field_token_states",
+              "masked_sparsemax(",
+              "torch.optim",
+              ".backward(",
+              "optimizer.step",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("T1 causal isolation violated "+repr(present))
+          print("t1_causal_isolation_static=PASS")
+          PY
+
+      - name: Design and state boundary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          d=json.loads(Path(
+              "configs/eipm/n0/n0_v02_qsre_t1_executor_design_v0_1.json"
+          ).read_text())
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.45.json"
+          ).read_text())
+
+          if d["schema"]!="alice.eipm.n0.qsre-t1-executor-design.v0.1":
+              raise SystemExit("T1 design drift")
+          if d["causal_stage"]!="T1":
+              raise SystemExit("wrong causal stage")
+          if d["parent_global_logits_input"] is not False:
+              raise SystemExit("parent global logits reintroduced")
+          if d["readout_domain"]!="support_local_only":
+              raise SystemExit("global readout reintroduced")
+          if d["fixed_top_k"] is not False:
+              raise SystemExit("fixed top-k reintroduced")
+          if d["oracle_inputs"]["relation_sequence"] is not True:
+              raise SystemExit("oracle relation sequence missing")
+          if d["oracle_inputs"]["structural_support"] is not True:
+              raise SystemExit("oracle support missing")
+
+          if s["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.45":
+              raise SystemExit("v0.45 state drift")
+          if s["execution_policy"]["t1_training_authorized"] is not False:
+              raise SystemExit("T1 training opened prematurely")
+          for key in ("optimizer_authorized","gradient_authorized","gpu_training_authorized"):
+              if s["execution_policy"][key] is not False:
+                  raise SystemExit(f"training boundary drift: {key}")
+          print("t1_design_state_boundary=PASS")
+          PY
+
+      - name: No-gradient T1 forward tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}/src
+        run: |
+          set -euo pipefail
+          python tests/eipm/test_n0_qsre_t1_executor.py
+
+      - name: Parameter and API report
+        env:
+          PYTHONPATH: ${{ github.workspace }}/src
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import inspect
+          from alice_personality.n0.qsre_t1_executor import QSRET1Config, QSRET1Executor
+
+          m=QSRET1Executor(QSRET1Config(
+              field_state_dim=8,
+              field_metadata_dim=3,
+              edge_metadata_dim=2,
+              operator_context_dim=5,
+              model_dim=16,
+              num_relations=7,
+              num_roles=4,
+              num_operations=5,
+          ))
+          print("parameter_report="+repr(m.parameter_report()))
+          sig=str(inspect.signature(m.forward))
+          if "parent" in sig or "query_hidden" in sig or "field_token" in sig:
+              raise SystemExit("T1 forward API escaped oracle-executor boundary")
+          print("t1_forward_api_boundary=PASS")
+          PY
