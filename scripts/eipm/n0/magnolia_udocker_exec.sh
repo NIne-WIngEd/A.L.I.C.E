@@ -11,6 +11,7 @@ ROOT="${ALICE_N0_REPO_ROOT:-${SLURM_SUBMIT_DIR:-$PWD}}"
 UDOCKER="${RAYAN_UDOCKER:-$BASE/tools/udocker-1.3.17/udocker/udocker}"
 CONTAINER="${RAYAN_N0_CONTAINER:-rayan-n0-base}"
 NVIDIA_MODE="${RAYAN_UDOCKER_NVIDIA:-auto}"
+CONTAINER_PYTHONPATH="$ROOT/src:$ROOT/scripts/eipm/n0${PYTHONPATH:+:$PYTHONPATH}"
 
 export UDOCKER_DIR="${UDOCKER_DIR:-$BASE/udocker-store}"
 export UDOCKER_TMP="${UDOCKER_TMP:-$BASE/udocker-tmp}"
@@ -51,6 +52,7 @@ ARGS=(
   --env="PYTHON=python"
   --env="ALICE_REPO_ROOT=$ROOT"
   --env="ALICE_N0_REPO_ROOT=$ROOT"
+  --env="PYTHONPATH=$CONTAINER_PYTHONPATH"
 )
 
 # Forward only the stage controls that are intentionally part of the N0
@@ -60,7 +62,6 @@ ARGS=(
 # ALICE_REPO_ROOT, so stage runners never fall back to container $HOME (/root).
 for name in \
   CUDA_VISIBLE_DEVICES \
-  PYTHONPATH \
   ALICE_REPO_ROOT \
   ALICE_N0_REPO_ROOT \
   ALICE_N0_WORKDIR \
