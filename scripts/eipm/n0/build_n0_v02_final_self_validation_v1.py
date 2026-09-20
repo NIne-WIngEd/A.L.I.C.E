@@ -262,6 +262,8 @@ def make_row(
         "id": row_id,
         "family": family,
         "split": "final_self_validation",
+        "causal_group": f"final:{family}:{index:02d}",
+        "variant": f"{family}:{index:02d}",
         "query": query,
         "query_views": [query, alternate_query(query)],
         "fields": fields,
