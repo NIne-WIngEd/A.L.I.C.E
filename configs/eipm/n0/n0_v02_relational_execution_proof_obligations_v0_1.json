@@ -1,0 +1,192 @@
+{
+  "schema": "alice.eipm.n0.relational-execution-proof-obligations.v0.1",
+  "status": "ARCHITECTURE_REVIEW_ONLY_NO_MODEL_IMPLEMENTATION",
+  "purpose": "Reject unsuitable relational-execution families before training by requiring oracle and no-gradient evidence that support selection, argument-role execution, and fallback are correctly factored.",
+  "source_audit": "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+  "obligations": [
+    {
+      "id": "P0",
+      "name": "n0_breadth_preservation",
+      "type": "design",
+      "requirement": "Relational execution remains a composable N0 capability and does not replace semantic, structured, fusion, latent, or later identity systems with narrow KG-QA logic."
+    },
+    {
+      "id": "P1",
+      "name": "oracle_support_closure",
+      "type": "oracle_no_gradient",
+      "requirement": "With correct relational support supplied, the executor can solve source/target role reversals without using the old parent global field scorer as the answer mechanism."
+    },
+    {
+      "id": "P2",
+      "name": "oracle_role_closure",
+      "type": "oracle_no_gradient",
+      "requirement": "With relevant support and requested argument role supplied, source/target behavior remains separable across every relation family."
+    },
+    {
+      "id": "P3",
+      "name": "no_global_competition_leak",
+      "type": "architecture",
+      "requirement": "Fields excluded from valid relational support cannot defeat the relational result solely through the old parent global softmax."
+    },
+    {
+      "id": "P4",
+      "name": "adaptive_support_cardinality",
+      "type": "architecture",
+      "requirement": "One architecture supports zero, one, or many relevant fields/edges and does not encode fixed top-k as a permanent capability rule."
+    },
+    {
+      "id": "P5",
+      "name": "ambiguity_preservation",
+      "type": "architecture",
+      "requirement": "Multiple genuinely co-valid supports may remain active without forced arbitrary singleton collapse."
+    },
+    {
+      "id": "P6",
+      "name": "compositional_path_execution",
+      "type": "oracle_no_gradient",
+      "requirement": "Ordered multi-edge relation chains are representable and noncommutative relation order remains distinguishable."
+    },
+    {
+      "id": "P7",
+      "name": "explicit_role_intervention",
+      "type": "causal_contract",
+      "requirement": "Changing only requested argument role on otherwise identical query/evidence produces the corresponding source/target execution change."
+    },
+    {
+      "id": "P8",
+      "name": "relation_intervention",
+      "type": "causal_contract",
+      "requirement": "Changing only relation semantics with endpoints fixed affects execution when relation meaning requires it."
+    },
+    {
+      "id": "P9",
+      "name": "endpoint_intervention",
+      "type": "causal_contract",
+      "requirement": "Changing endpoint content with query/relation fixed affects execution when endpoint identity matters."
+    },
+    {
+      "id": "P10",
+      "name": "permutation_equivariance",
+      "type": "mechanics",
+      "requirement": "Reordering unordered fields/edges does not change semantic result."
+    },
+    {
+      "id": "P11",
+      "name": "provenance_reliability_causality",
+      "type": "causal_contract",
+      "requirement": "Provenance/reliability affects execution only where behaviorally relevant and remains inspectable."
+    },
+    {
+      "id": "P12",
+      "name": "parent_fallback_isolation",
+      "type": "mechanics",
+      "requirement": "Non-relational examples may defer to the general parent without relational side effects; fallback is not the edge-identity mechanism."
+    },
+    {
+      "id": "P13",
+      "name": "representation_sufficiency_before_gradient",
+      "type": "no_gradient_probe",
+      "requirement": "Required query operator, relation, field/edge, and role information is recoverable at executor inputs before training is authorized."
+    },
+    {
+      "id": "P14",
+      "name": "fresh_generalization",
+      "type": "data_contract",
+      "requirement": "TRAIN/DEV/TEST lexical templates, subjects/entities, attributes, and query framing are split sufficiently to block phrase memorization."
+    },
+    {
+      "id": "P15",
+      "name": "identity_neutrality",
+      "type": "governance",
+      "requirement": "N0 uses no private Elaina identity gradient."
+    },
+    {
+      "id": "P16",
+      "name": "no_permanent_capacity_ceiling",
+      "type": "governance",
+      "requirement": "Test-time field count, edge count, support size, relation vocabulary, hop count, layer count, or compute budget is not reinterpreted as a permanent product capability ceiling."
+    }
+  ],
+  "family_comparison_fields": [
+    "satisfies_obligations",
+    "violates_obligations",
+    "query_operator_representation",
+    "support_selection_mechanism",
+    "argument_role_representation",
+    "query_conditioning_location",
+    "execution_mechanism",
+    "structural_readout",
+    "fallback_composition",
+    "multi_support_behavior",
+    "multi_hop_behavior",
+    "uncertainty_and_plurality",
+    "proven_component_reuse",
+    "new_failure_modes",
+    "compute_characteristics",
+    "reason_to_reject_or_advance"
+  ],
+  "candidate_families": [
+    {
+      "id": "F1",
+      "name": "query_conditioned_sparse_relational_gnn",
+      "allowed_for_research": true,
+      "implementation_authorized": false,
+      "inspirations": [
+        "NBFNet",
+        "query-conditioned graph attention",
+        "adaptive sparse structural selection"
+      ]
+    },
+    {
+      "id": "F2",
+      "name": "schema_anchored_continuous_relational_executor",
+      "allowed_for_research": true,
+      "implementation_authorized": false,
+      "inspirations": [
+        "SALR",
+        "continuous schema anchoring",
+        "explicit relation/role codes without rigid final symbolic parser"
+      ]
+    },
+    {
+      "id": "F3",
+      "name": "relational_set_graph_transformer",
+      "allowed_for_research": true,
+      "implementation_authorized": false,
+      "inspirations": [
+        "typed relation/argument tokens",
+        "query-conditioned graph/set attention",
+        "adaptive sparse support"
+      ]
+    },
+    {
+      "id": "F4",
+      "name": "evidence_justified_hybrid",
+      "allowed_for_research": true,
+      "implementation_authorized": false,
+      "inspirations": [
+        "token late interaction for binding",
+        "structured message passing for execution",
+        "continuous operator anchoring for role composition"
+      ],
+      "restriction": "Every mechanism must correspond to a proven failure boundary; mechanism accumulation by itself is not justification."
+    }
+  ],
+  "closed_shortcuts": [
+    "hardcode_top1_support",
+    "another_route_loss_weight_tune",
+    "another_parent_specialist_gate",
+    "another_scalar_source_target_residual",
+    "another_side_distribution_mixed_with_same_parent_global_field_distribution",
+    "semantic_retraining_without_missing_information_evidence",
+    "generic_scale_up"
+  ],
+  "next_artifact": "architecture family comparison plus oracle/no-gradient executor-contract diagnostic design",
+  "optimizer_authorized": false,
+  "gradient_authorized": false,
+  "gpu_training_authorized": false,
+  "test_opening_authorized": false,
+  "challenge_opening_authorized": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
