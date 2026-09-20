@@ -1,0 +1,40 @@
+{
+  "schema": "alice.eipm.n0.qsre-t2-curriculum-contract.v0.2",
+  "status": "REALISTIC_PUBLIC_OPERATOR_CURRICULUM_DEFINED_NO_TRAINING_AUTHORIZATION",
+  "source_t1_curriculum_sha256": "155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063",
+  "query_views_per_train_row": 2,
+  "query_views_per_dev_row": 2,
+  "expected_rows": {"train": 720, "dev": 288, "total": 1008},
+  "design": {
+    "natural_entity_rich_language": true,
+    "train_dev_name_pools_disjoint": true,
+    "train_dev_template_banks_disjoint": true,
+    "relation_name_required": false,
+    "relation_literal_fraction_target": 0.0,
+    "operation_label_words_required": false,
+    "control_label_words_forbidden": true,
+    "cue_collision_rows_required": true,
+    "counterfactual_role_pairs_preserved": true,
+    "outside_support_query_invariance_preserved": true,
+    "ordered_relation_sequence_preserved": true,
+    "same_t1_structural_distribution": true,
+    "private_identity_data": false,
+    "test_split": false
+  },
+  "challenge": {
+    "reality_corpus_builder": "scripts/eipm/n0/build_n0_v02_qsre_operator_reality_corpus_v0_1.py",
+    "rows": 56,
+    "training_allowed": false,
+    "purpose": "operator-only natural-language challenge after a selected DEV checkpoint exists"
+  },
+  "authorization": {
+    "curriculum_build": true,
+    "cpu_static_audit": true,
+    "tokenized_preparation": true,
+    "optimizer": false,
+    "gradient": false,
+    "gpu_training": false,
+    "test_open": false,
+    "private_identity_gradient": false
+  }
+}
