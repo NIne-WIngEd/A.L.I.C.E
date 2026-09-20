@@ -3,7 +3,7 @@
   "status": "PRECOMMITTED_CAUSAL_PIPELINE_NO_POSTHOC_TUNING",
   "architecture": "configs/eipm/n0/n0_v02_qsre_production_core_v1.json",
   "curriculum_contract": "configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json",
-  "curriculum_sha256": "a409a79fc206813776cd1b2e7ea22f720d02b75fe77b33b1f8fb8532bd7e0f8c",
+  "curriculum_sha256": null,
   "relation_schema": "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
   "model": {
     "semantic_dim": 640,
@@ -70,7 +70,11 @@
         "path_family_min_success": 0.95,
         "outside_support_invariance_max_delta": 0.000001
       },
-      "max_gpu_runs": 1
+      "max_gpu_runs": 1,
+      "loss_weights": {
+        "downstream": 1,
+        "schema_geometry": 0.1
+      }
     },
     "P2": {
       "role": "production_operator_induction_with_frozen_proven_schema_encoder_executor_and_oracle_support",
@@ -119,7 +123,9 @@
         "control_accuracy": 0.98,
         "pair_consistency": 0.9,
         "downstream_row_success_accuracy": 0.95,
-        "downstream_family_min_success": 0.85
+        "downstream_family_min_success": 0.85,
+        "termination_accuracy": 0.98,
+        "unknown_termination_accuracy": 0.95
       },
       "max_gpu_runs": 1
     },
@@ -172,7 +178,8 @@
         "family_min_success": 0.8,
         "open_schema_row_success_accuracy": 0.8,
         "outside_support_invariance_max_delta": 0.000001,
-        "nonrelational_false_assertion_rate_max": 0.01
+        "nonrelational_false_assertion_rate_max": 0.01,
+        "unknown_fail_closed_accuracy": 0.95
       },
       "failure_policy": "stop_and_localize_without_automatic_joint_finetune",
       "operator_runtime_max_steps": 4
@@ -201,5 +208,14 @@
     "p2_batch_size": 8,
     "p3_batch_size": 8,
     "batch_size_search_authorized": false
+  },
+  "architecture_closure": {
+    "unknown_out_of_schema_is_distinct_from_stop": true,
+    "temporal_constraint_modifier_is_supervised": true,
+    "provenance_constraint_modifier_is_supervised": true,
+    "combined_scope_constraints_are_supervised": true,
+    "calibrated_executor_mass_preserves_control_unknown_and_program_presence": true,
+    "schema_encoder_starts_geometry_preserving": true,
+    "seed_role_traversal_control_counts_are_checkpoint_topology_not_product_ceilings": true
   }
 }
