@@ -7,9 +7,9 @@
   "relation_schema": "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
   "model": {
     "semantic_dim": 640,
-    "model_dim": 512,
+    "model_dim": 640,
     "num_hidden_states": 17,
-    "num_attention_heads": 8,
+    "num_attention_heads": 10,
     "operator_refinement_layers": 2,
     "field_state_dim": 640,
     "field_metadata_dim": 3,
@@ -213,7 +213,7 @@
     "production_promotion": false
   },
   "compute_precommit": {
-    "reason": "P2 cross-layer token/schema late interaction is the dominant P100 memory path; batch 8 is fixed before any GPU execution to avoid a posthoc OOM repair cycle on 12GB P100 hardware.",
+    "reason": "Production QSRE keeps the full 640-dimensional ratified semantic geometry end-to-end so dynamic-schema and relational-summary information are not compressed before N1. P2/P3 batch 8 remains fixed before execution and is well within the current token/schema working-set estimate on a 12GB P100; no posthoc batch-size search is authorized.",
     "p1_batch_size": 32,
     "p2_batch_size": 8,
     "p3_batch_size": 8,
@@ -236,6 +236,9 @@
     "forward_reverse_bidirectional_path_execution": true,
     "direction_is_independent_operator_factor": true,
     "path_source_queries_can_execute_reverse_from_target_focus": true,
-    "oracle_focus_forbidden_in_p4": true
+    "oracle_focus_forbidden_in_p4": true,
+    "full_640_semantic_width_preserved_through_qsre": true,
+    "qsre_relational_summary_matches_n0_semantic_width": true,
+    "model_width_is_not_a_compression_bottleneck": true
   }
 }
