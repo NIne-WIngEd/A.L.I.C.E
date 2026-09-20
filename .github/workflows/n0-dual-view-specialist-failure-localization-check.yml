@@ -1,0 +1,186 @@
+name: N0 Dual View Specialist Failure Localization Check
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-dual-view-specialist-failure-localization
+    paths:
+      - "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_dual_view_specialist_failure_localization_v0_1.sh"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.36.json"
+      - ".github/workflows/n0-dual-view-specialist-failure-localization-check.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Syntax
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_1.py
+          bash -n \
+            scripts/eipm/n0/run_n0_v02_dual_view_specialist_failure_localization_v0_1.sh
+
+      - name: State closes retraining
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path(
+              "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.36.json"
+          ).read_text())
+          if s["schema"]!="alice.eipm.n0.latent-pool-stage-state.v0.36":
+              raise SystemExit("v0.36 schema drift")
+          if s["failed_experiment"]["result_sha256"]!="1a38c37a41de68bea0bb9bc897b86d62cbc457b8b93189c2d16731110c1694ec":
+              raise SystemExit("failed result lineage drift")
+          if s["failed_experiment"]["eligible_checkpoint_keys"]!=[]:
+              raise SystemExit("failed experiment unexpectedly eligible")
+          a=s["localization_audit"]
+          if a["authorized"] is not True:
+              raise SystemExit("localization not authorized")
+          for key in (
+              "gpu_required",
+              "optimizer_authorized",
+              "gradient_authorized",
+              "training_authorized",
+              "test_opening_authorized",
+              "challenge_opening_authorized",
+          ):
+              if a[key] is not False:
+                  raise SystemExit(f"localization boundary drift: {key}")
+          e=s["execution_policy"]
+          for key in (
+              "automatic_rerun_authorized",
+              "automatic_hotfix_authorized",
+              "gpu_training_authorized",
+              "heldout_opening_authorized",
+              "frozen_challenge_rerun_authorized",
+              "scale_authorized",
+              "semantic_retraining_authorized",
+              "graph_parent_retraining_authorized",
+              "private_identity_gradient_authorized",
+              "production_promotion_authorized",
+          ):
+              if e[key] is not False:
+                  raise SystemExit(f"premature authorization: {key}")
+          print("retraining_closed=PASS")
+          PY
+
+      - name: Counterfactual audit separates three failure modes
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_1.py"
+          ).read_text()
+          required=[
+              "actual_activation_soft_binding",
+              "forced_specialist_soft_binding",
+              "actual_activation_hard_top1_binding",
+              "forced_specialist_hard_top1_binding",
+              "hard_top1_distribution",
+              "relevant_edge_residual_proposal_role_accuracy",
+              "causal_vs_preservation_auc",
+              "strict_rank_separation",
+              "within_relevant_pair_endpoint_accuracy",
+              "reconstructed_actual_field_weight_max_delta",
+              "conditional_edge_top1_accuracy",
+              '"training_authorized": False',
+              '"causal_test_split_evaluated": False',
+              '"frozen_challenge_evaluated": False',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("localization contract missing "+repr(missing))
+          print("three_failure_mode_localization=PASS")
+          PY
+
+      - name: Hard top1 is prediction based not oracle labeled
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_1.py"
+          ).read_text()
+          required=[
+              'pred = conditional.argmax(dim=-1)',
+              'hard.scatter_(1, pred[:, None], 1.0)',
+              'conditional.argmax(dim=-1).eq(relevant)',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("predicted hard-top1 contract missing "+repr(missing))
+          forbidden=[
+              'hard.scatter_(1, relevant[:, None]',
+              'route = F.one_hot(relevant',
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("target-label oracle leaked into hard-top1 "+repr(present))
+          print("prediction_based_hard_top1=PASS")
+          PY
+
+      - name: No optimizer gradient or GPU
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_1.py"
+          ).read_text()
+          r=Path(
+              "scripts/eipm/n0/run_n0_v02_dual_view_specialist_failure_localization_v0_1.sh"
+          ).read_text()
+          forbidden=[
+              "torch.optim",
+              ".backward(",
+              "optimizer.step",
+              'torch.device("cuda")',
+              ".cuda()",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present:
+              raise SystemExit("training leaked into audit "+repr(present))
+          runner_forbidden=[
+              "sbatch",
+              "RAYAN_UDOCKER_NVIDIA=1",
+              "magnolia_p100",
+              "rm -rf",
+          ]
+          present=[x for x in runner_forbidden if x in r]
+          if present:
+              raise SystemExit("GPU/destructive runner leaked "+repr(present))
+          print("cpu_no_gradient_only=PASS")
+          PY
+
+      - name: Existing checkpoints only
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path(
+              "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_1.py"
+          ).read_text()
+          required=[
+              '40: "baae065f9869af316ac6ba82695b6076cedd223a319f36fd15cd24337e993f06"',
+              '80: "18eb6b4026472f64d12d87c2b048e1551dfe488a6e6e3ff07785c9ec4997b07f"',
+              '120: "5296ee7ffc1b8a5d85d70f8e14a643db088eef18a14f6b9267786baba0300664"',
+              '160: "f7d7ff95dd59758b326b3f4b70ae85e2328fb00f18a8175f02a145a4e1d9fdf0"',
+              '200: "bbe0e38955f5887acf24649007b8bf755aa9cdda8c95ead7afaf6e1d5bbebdd7"',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing:
+              raise SystemExit("checkpoint lineage missing "+repr(missing))
+          print("existing_checkpoint_lineage=PASS")
+          PY
