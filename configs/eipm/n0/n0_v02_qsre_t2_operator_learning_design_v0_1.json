@@ -1,0 +1,100 @@
+{
+  "schema": "alice.eipm.n0.qsre-t2-operator-learning-design.v0.1",
+  "status": "STATIC_DESIGN_ONLY;NO_T2_GRADIENT_AUTHORIZED",
+  "depends_on": {
+    "qsre_blueprint": "docs/research/eipm-n0-qsre-architecture-blueprint-v0.1.md",
+    "workload_envelope": "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json",
+    "t1_state": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.49.json",
+    "t1_result_sha256": "ba6b82c10fcb13f403569ad24dbd77cf0b3657dfc3eaf9cb9d10b6690b2d32be",
+    "selected_t1_step": 50,
+    "selected_t1_checkpoint_sha256": "PENDING_POSTRUN_BINDING"
+  },
+  "causal_question": "Can frozen natural-language semantic states recover the relation/role/operation/control operator required by the proven frozen T1 executor when structural support and focus binding remain oracle?",
+  "frozen_inputs_and_modules": [
+    "semantic backbone",
+    "structured parent modules",
+    "graph parent",
+    "selected T1 executor/readout checkpoint",
+    "oracle structural support",
+    "oracle focus-field binding for the first T2 causal study"
+  ],
+  "trainable_scope_when_later_authorized": [
+    "QSRE T2 query-operator encoder only"
+  ],
+  "operator_outputs": {
+    "relation_sequence": "ordered one-or-more relation-anchor predictions; v0.1 fixture may instantiate length 1/2 but this is not a permanent hop or operator ceiling",
+    "requested_argument_role": "SOURCE/TARGET/SYMMETRIC/NONE seed role bank; migratable, not a permanent role ontology",
+    "operation": "current T1 operation seed bank; migratable",
+    "control_applicability": "FALLBACK/RELATIONAL/DEFER or equivalent calibrated applicability state",
+    "continuous_residual": "continuous operator state retained alongside anchor predictions",
+    "uncertainty_plurality": "must remain inspectable and may not be forced to a single confident class when evidence is underdetermined"
+  },
+  "architecture_requirements": [
+    "Consume the frozen semantic hidden-state stack rather than only a final pooled vector.",
+    "Use query/operator-dependent token and layer evidence; do not hard-code one universal semantic layer.",
+    "Previous relation-layer audit results may seed soft priors only; they may not become hard permanent masks.",
+    "Do not take oracle relation id as an input to the learned operator encoder.",
+    "Do not use graph support selection to solve T2; support remains oracle.",
+    "Do not reintroduce parent global field logits or scalar residual competition.",
+    "Keep relation and argument role first-class and separately probeable.",
+    "Preserve ordered relation sequences for path operations.",
+    "Expose per-head token/layer diagnostics so a T2 failure can localize relation, role, operation, or applicability semantics.",
+    "No current relation/role/sequence/context/model width is a permanent product ceiling."
+  ],
+  "causal_evaluation": {
+    "primary_operator_metrics": [
+      "relation_sequence_exact",
+      "requested_role_accuracy",
+      "operation_accuracy",
+      "control_accuracy",
+      "causal_pair_completion",
+      "family_min_success"
+    ],
+    "downstream_frozen_executor_metrics": [
+      "row_success_accuracy",
+      "single_target_top1_accuracy",
+      "plural_l1",
+      "outside_support_mass_max",
+      "outside_support_invariance_max_delta"
+    ],
+    "principle": "T2 passes only if predicted operators preserve the T1 causal behavior through the frozen executor, not merely if individual operator labels look plausible."
+  },
+  "curriculum_requirements": {
+    "public_only": true,
+    "private_identity_data": false,
+    "train_dev_only_initially": true,
+    "separate_query_template_and_lexical_families_between_train_and_dev": true,
+    "paired_causal_interventions": true,
+    "must_cover": [
+      "SOURCE/TARGET reversal",
+      "relation paraphrase changes",
+      "ordered two-relation path reversal",
+      "aggregate/plural interpretation",
+      "reliability preference language",
+      "temporal/latest language",
+      "fallback versus defer versus relational applicability",
+      "lexical distractors and relation-name-free paraphrases"
+    ],
+    "shortcut_controls": [
+      "No literal relation token may be required for success.",
+      "No fixed sentence position may identify relation/role/operation.",
+      "No family may map to one invariant target field position.",
+      "DEV query templates and lexical pools must be unseen from TRAIN.",
+      "Graph/field order must not reveal operator labels."
+    ]
+  },
+  "initial_t2_boundary": {
+    "selected_t1_checkpoint_must_be_hash_bound_before_runtime_preparation": true,
+    "cpu_no_gradient_static_mechanics_may_be_built_before_that_binding": true,
+    "real_cache_preparation_authorized": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_training_authorized": false,
+    "causal_test_opening_authorized": false,
+    "frozen_challenge_opening_authorized": false,
+    "support_learning_authorized": false,
+    "private_identity_gradient_authorized": false
+  },
+  "anti_loop_rule": "If T2 later fails, localize operator semantics by relation/role/operation/control and downstream causal-pair metrics. Do not rerun, increase steps, change LR, unfreeze support, or redesign the executor without a new causal diagnosis.",
+  "full_eipm_scope_rule": "T2 is one causal construction stage of a full-production N0 foundation. Passing T2 does not define the final relation vocabulary, context size, model size, or personality capability envelope."
+}

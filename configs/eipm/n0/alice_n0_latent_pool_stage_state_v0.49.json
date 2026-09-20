@@ -1,0 +1,92 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.49",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.48.json",
+  "status": "QSRE_T1_EXECUTOR_DEV_CONTRACT_PASS_OBSERVED;FIRST_ELIGIBLE_CHECKPOINT_STEP_50;T2_OPERATOR_STAGE_SCIENTIFICALLY_JUSTIFIED;POSTRUN_CHECKPOINT_BINDING_REQUIRED_BEFORE_ANY_T2_GRADIENT",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-qsre-t2-operator-learning",
+  "t1_source_revision": "f4a9edb1915e39d893224f4503746bfd61fc6424",
+  "t1_magnolia_job_id": 575914,
+  "t1_result": {
+    "status": "PASS_QSRE_T1_EXECUTOR_DEV_CONTRACT",
+    "result_sha256": "ba6b82c10fcb13f403569ad24dbd77cf0b3657dfc3eaf9cb9d10b6690b2d32be",
+    "selected_checkpoint_step": 50,
+    "prepared_cache_sha256": "03a45033dc41a51896f8b514c44e784ecabaa5837488a272306914979ab6b564",
+    "curriculum_sha256": "155f62e92cf8c6bff71a3b7d8913927e48c950407985db5a164eadaa056fb063",
+    "selected_dev": {
+      "causal_pair_completion": 1.0,
+      "control_accuracy": 1.0,
+      "family_min_success": 1.0,
+      "row_success_accuracy": 1.0,
+      "single_target_top1_accuracy": 1.0,
+      "mean_target_support_mass": 0.9997953772544861,
+      "outside_support_invariance_max_delta": 0.0,
+      "outside_support_mass_max": 0.0,
+      "plural_l1": 0.015601305291056633,
+      "relational_cross_entropy": 0.17355327308177948
+    },
+    "all_nine_family_success": 1.0,
+    "causal_test_opened": false,
+    "frozen_challenge_opened": false,
+    "automatic_rerun_authorized": false
+  },
+  "interpretation": {
+    "t1_question_answered": "yes: with oracle operator and oracle structural support, the QSRE executor/readout can learn the current public causal execution workload over frozen production-real semantic field states",
+    "does_not_establish": [
+      "learned natural-language operator extraction",
+      "learned adaptive structural support",
+      "end-to-end QSRE competence",
+      "causal TEST performance",
+      "frozen challenge performance",
+      "private identity fidelity",
+      "production readiness",
+      "N0 completion"
+    ],
+    "why_t2_is_justified": "The executor boundary passed every predeclared DEV eligibility requirement at the first evaluated trained checkpoint. The next unresolved causal boundary in the ratified QSRE sequence is learned operator extraction with support kept oracle."
+  },
+  "t2_boundary": {
+    "stage": "T2_LEARNED_OPERATOR_ORACLE_SUPPORT",
+    "freeze_t1_executor": true,
+    "oracle_structural_support": true,
+    "oracle_focus_binding_initially": true,
+    "semantic_backbone_gradient": false,
+    "graph_parent_gradient": false,
+    "support_selector_gradient": false,
+    "private_identity_gradient": false,
+    "parent_global_logits_input": false,
+    "goal": "Recover relation sequence, requested argument role, operation/control semantics, and operator state from frozen natural-language semantic states, then drive the proven frozen T1 executor without changing support."
+  },
+  "execution_policy": {
+    "t1_rerun_authorized": false,
+    "t1_hotfix_authorized": false,
+    "t2_static_design_authorized": true,
+    "t2_cpu_no_gradient_mechanics_authorized": true,
+    "t2_curriculum_design_authorized": true,
+    "t2_real_cache_preparation_authorized": false,
+    "t2_optimizer_authorized": false,
+    "t2_gradient_authorized": false,
+    "t2_gpu_training_authorized": false,
+    "heldout_opening_authorized": false,
+    "frozen_challenge_rerun_authorized": false,
+    "scale_authorized": false,
+    "production_promotion_authorized": false,
+    "next_required_evidence": "Hash-bind the selected T1 step-50 checkpoint from job 575914 to the immutable T1 result before any T2 runtime/training preparation."
+  },
+  "anti_loop_policy": {
+    "no_automatic_rerun": true,
+    "no_lr_or_step_tuning_as_response_to_failure": true,
+    "one_causal_boundary_at_a_time": true,
+    "parallelize_engineering_but_preserve_sequential_scientific_causality": true,
+    "infrastructure_failure_is_not_model_evidence": true,
+    "validation_must_change_a_real_decision_or_stop": true
+  },
+  "capability_doctrine": {
+    "full_eipm_workload_envelope_remains_architecture_requirement": true,
+    "t1_t2_t3_are_causal_build_stages_not_product_limits": true,
+    "hard_parameter_ceiling": null,
+    "hard_relation_role_field_edge_support_hop_context_ceiling": null,
+    "current_fixture_shapes_are_not_permanent_limits": true
+  },
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}

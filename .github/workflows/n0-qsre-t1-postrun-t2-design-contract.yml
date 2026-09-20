@@ -1,0 +1,67 @@
+name: n0-qsre-t1-postrun-t2-design-contract
+
+on:
+  push:
+    paths:
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.49.json"
+      - "configs/eipm/n0/n0_v02_qsre_t2_operator_learning_design_v0_1.json"
+      - "docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md"
+      - "scripts/eipm/n0/capture_n0_v02_qsre_t1_postrun_evidence_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_capture_qsre_t1_postrun_evidence_v0_1.sh"
+      - ".github/workflows/n0-qsre-t1-postrun-t2-design-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Syntax
+        run: |
+          python -m py_compile scripts/eipm/n0/capture_n0_v02_qsre_t1_postrun_evidence_v0_1.py
+          bash -n scripts/eipm/n0/run_n0_v02_capture_qsre_t1_postrun_evidence_v0_1.sh
+
+      - name: Governance and causal-boundary contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          state = json.loads(
+              Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.49.json")
+              .read_text(encoding="utf-8")
+          )
+          design = json.loads(
+              Path("configs/eipm/n0/n0_v02_qsre_t2_operator_learning_design_v0_1.json")
+              .read_text(encoding="utf-8")
+          )
+
+          assert state["schema"] == "alice.eipm.n0.latent-pool-stage-state.v0.49"
+          assert state["n0_complete"] is False
+          assert state["t1_source_revision"] == "f4a9edb1915e39d893224f4503746bfd61fc6424"
+          assert state["t1_magnolia_job_id"] == 575914
+          assert state["t1_result"]["status"] == "PASS_QSRE_T1_EXECUTOR_DEV_CONTRACT"
+          assert state["t1_result"]["selected_checkpoint_step"] == 50
+          assert state["t1_result"]["causal_test_opened"] is False
+          assert state["t1_result"]["frozen_challenge_opened"] is False
+          assert state["execution_policy"]["t1_rerun_authorized"] is False
+          assert state["execution_policy"]["t1_hotfix_authorized"] is False
+          assert state["execution_policy"]["t2_optimizer_authorized"] is False
+          assert state["execution_policy"]["t2_gradient_authorized"] is False
+          assert state["execution_policy"]["t2_gpu_training_authorized"] is False
+          assert state["execution_policy"]["heldout_opening_authorized"] is False
+          assert state["private_identity_gradient"] is False
+          assert state["production_promotion_authorized"] is False
+
+          assert design["schema"] == "alice.eipm.n0.qsre-t2-operator-learning-design.v0.1"
+          assert design["depends_on"]["selected_t1_checkpoint_sha256"] == "PENDING_POSTRUN_BINDING"
+          assert design["initial_t2_boundary"]["selected_t1_checkpoint_must_be_hash_bound_before_runtime_preparation"] is True
+          assert design["initial_t2_boundary"]["real_cache_preparation_authorized"] is False
+          assert design["initial_t2_boundary"]["optimizer_authorized"] is False
+          assert design["initial_t2_boundary"]["gradient_authorized"] is False
+          assert design["initial_t2_boundary"]["gpu_training_authorized"] is False
+          assert design["initial_t2_boundary"]["support_learning_authorized"] is False
+          assert design["initial_t2_boundary"]["private_identity_gradient_authorized"] is False
+          print("PASS_T1_POSTRUN_T2_STATIC_DESIGN_CONTRACT")
+          PY
