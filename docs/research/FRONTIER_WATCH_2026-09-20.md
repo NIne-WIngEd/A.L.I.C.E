@@ -83,24 +83,13 @@ Current Stage G tests include **reordering** and **duplicate consolidation**, bu
 
 Add a **Consolidation Path-Dependence Suite**:
 
-1. Feed the exact same authorized evidence under:
-   - one-shot/static consolidation;
-   - chronological streaming;
-   - shuffled streaming;
-   - entity/episode/task-grouped batches;
-   - adversarially mixed unrelated experiences;
-   - near-duplicate-heavy streams.
-2. Keep raw evidence byte-identical and compare:
-   - MemoryProposalBundles;
-   - proposed claim scope and applicability conditions;
-   - adjudicated claims;
-   - episodes/projections;
-   - downstream retrieval and decisions.
+1. Feed the exact same authorized evidence under one-shot/static, chronological, shuffled, entity/episode/task-grouped, adversarially mixed, and near-duplicate-heavy schedules.
+2. Keep raw evidence byte-identical and compare MemoryProposalBundles, claim scope/applicability, adjudicated claims, episodes/projections, and downstream retrieval/decisions.
 3. Require abstractions to retain provenance to the full contributing source set plus grouping rationale.
 4. Detect applicability-condition loss and overgeneralization explicitly.
 5. Make `RETAIN_RAW / NO_CONSOLIDATION` a valid learned proposal/action rather than treating consolidation as mandatory.
 6. Measure divergence across schedules. Large unexplained divergence must fail or quarantine rather than silently become authority.
-7. Include later correction/deletion propagation through every abstraction created under each schedule.
+7. Include correction/deletion propagation through every abstraction created under each schedule.
 
 **Recommendation:** add these tests before Memory Formation/consolidation is considered qualified. No completed storage/authority migration is required.
 
@@ -114,41 +103,65 @@ Add a **Consolidation Path-Dependence Suite**:
 
 ### Relevant result
 
-The benchmark constructs high-general-quality response pairs whose key distinction is adherence to user-specific rubrics. State-of-the-art reward models still show a large personalization gap. The paper also finds that naively injecting raw user history/profile into a reward model can degrade evaluation, while a planner that converts history into structured personal rubric aspects recovers performance. It further evaluates whether static reward-model rankings predict actual downstream Best-of-N/PPO behavior, exposing the usual static-benchmark **proxy gap**.
+The benchmark constructs high-general-quality response pairs whose key distinction is adherence to user-specific rubrics. State-of-the-art reward models still show a large personalization gap. Naively injecting raw user history/profile can degrade evaluation, while a planner that converts history into structured personal rubric aspects recovers performance. It also evaluates whether static rankings predict downstream Best-of-N/PPO behavior, exposing the proxy gap.
 
 ### What A.L.I.C.E. already gets right
 
-The current EIPM design is already directionally stronger than naive profile injection:
+The current EIPM design is already directionally stronger than naive profile injection: specialist identity/judgment ownership, ACFP typed state, provenance-bound raw spans, explicit plus residual identity concepts, multi-view latent pooling, multi-head outputs, and candidate comparison.
 
-- EIPM is a specialist identity/judgment model, not the general generator;
-- ACFP provides structured typed state rather than a raw-history dump;
-- raw provenance-bound spans remain available when nuance matters;
-- explicit identity concepts and bounded residual concepts represent identity-relevant criteria;
-- multi-view latent pooling and multi-head/distributional outputs avoid a single generic scalar;
-- candidate comparison is already a first-class objective.
+### Genuine delta and recommendation
+
+Make **matched-general-quality personalized counterfactual pairs plus downstream proxy-gap validation** a named N1/N2 EIPM acceptance requirement. Compare raw-history, ACFP/structured, concept-bank, and combined conditioning; preserve provenance-grouped splits and plural-valid alternatives; require static ranking quality to predict downstream identity fidelity.
+
+**Recommendation:** record now and implement in N1/N2 evaluation design. Do not change N0 topology solely because of this paper.
+
+---
+
+## 4. Retrieval-Driven Memory Reconsolidation for Long-Term LLM Agents (REALM)
+
+**Primary source:** https://arxiv.org/abs/2609.16053  
+**Date:** 2026-09-13  
+**Impact:** future cognitive-graph/retrieval adaptation and a Stage G challenger/validation track; no completed Claim/Experience authority rewrite.
+
+### Relevant result
+
+REALM closes the memory lifecycle after retrieval. It organizes entity/event/episode/fact nodes in a heterogeneous cognitive graph; composes retrieval from seed, expansion, and filtering strategy atoms; and, after task feedback, modifies only the activated local topology using `add`, `strengthen`, or `weaken` edge operations. The paper reports 75.97% on LoCoMo and 65.11% on LongMemEval. Reconsolidation itself adds about +2.01 and +2.13 points average respectively, with larger gains on some multi-hop, preference, and knowledge-update slices. Randomized query-order experiments suggest the gain is not merely memorization of one evaluation sequence.
+
+### What A.L.I.C.E. already does similarly or more broadly
+
+A.L.I.C.E. already has a heterogeneous Cognitive Graph; adaptive context planning over claims, evidence, graph paths, vectors, episodes, sources, models, tools and agents; outcome observation and continuous revision; and explicit learned-retrieval/routing capacity. More importantly, A.L.I.C.E. has a stronger authority boundary: graph topology is a provenance-linked projection/cognitive structure and cannot override bitemporal Claim Fabric or raw Experience evidence.
 
 ### Genuine delta
 
-Our N0 plan contains preference/ranking and personalization-relevant research, but it does not yet make **matched-general-quality personalized counterfactual pairs plus downstream proxy-gap validation** a named EIPM acceptance requirement.
+The useful idea is **retrieval-driven adaptation of the retrieval substrate itself**. Current A.L.I.C.E. plans allow learned retrieval and continuous revision, but do not make successful/failed retrieval episodes a first-class governed signal for strengthening, weakening, or proposing associative graph edges. This is different from changing factual claims: it learns *how memories tend to become useful together*.
 
-### Proposed EIPM evaluation program
+### Compatibility and conflict analysis
 
-For N1/N2, build an Elaina-specific **Personalized Counterfactual Judgment Suite**:
+Compatible if implemented as a derived, versioned, rebuildable retrieval projection. Incompatible if retrieval co-activation can create factual/causal/identity authority, silently rewrite source relations, or bypass deletion/correction lineage. REALM's autonomous merge/skip and graph evolution are therefore too permissive for A.L.I.C.E.'s authority layer and must not be copied there.
 
-1. For each identity/value/relationship distinction, construct candidate pairs that are matched as tightly as possible on generic correctness, helpfulness, relevance, fluency, safety, and style.
-2. Make the discriminative variable an E0/E-INF-authorized identity criterion or relationship posture.
-3. Include swapped response order, paraphrase/style perturbations, and generic-quality adversaries so success cannot come from position or surface cues.
-4. Compare:
-   - raw-history/profile conditioning;
-   - ACFP/structured-state conditioning;
-   - concept-bank conditioning;
-   - combined raw-span + structured conditioning.
-5. Keep provenance-grouped splits so sibling evidence does not leak.
-6. Evaluate static pair/list ranking **and** downstream use: candidate selection, response posture, dialogue trajectories, and decision packets.
-7. Require static EIPM metrics to correlate with downstream identity fidelity; a high pairwise score with weak downstream behavior is not sufficient for acceptance.
-8. Preserve ties/plural-valid alternatives where identity evidence does not support a unique ordering.
+The immediately preceding frontier finding on consolidation path dependence makes an additional guard important: retrieval-driven reconsolidation can itself create path dependence and popularity feedback. Frequently retrieved memories may become easier to retrieve again even when the initial retrieval was accidental or biased.
 
-**Recommendation:** record now and implement in N1/N2 evaluation design. Do not change N0 topology solely because of this paper.
+### Proposed future design/validation track
+
+Create a **Usage-Aware Retrieval Projection** challenger rather than mutating the canonical Cognitive Graph:
+
+1. Log invocation-scoped retrieval receipts: query/context fingerprint, candidates, opened evidence, selected support, answer/outcome feedback, and correction/deletion status.
+2. Learn/propose associative accessibility edges or weights from repeated *successful* co-utilization; keep these edges explicitly typed as `retrieval_association`, never factual/causal authority.
+3. Require minimum evidence/repetition or calibrated confidence before strengthening; allow decay/weakening after misleading retrievals.
+4. Keep a frozen semantic/structural graph generation so the usage-aware projection is replayable, comparable, and rollback-safe.
+5. Apply correction/deletion/revocation lineage to learned retrieval associations and prevent deleted evidence from leaving active accessibility influence.
+6. Test cold-start, query-order shuffles, adversarial repeated queries, popularity loops, rare-but-critical memories, contradictory evidence, and distribution shift.
+7. Compare static graph retrieval vs usage-aware projection on evidence recall, authority correctness, temporal/update questions, latency/token cost, and calibration.
+8. Do not allow retrieval success alone to promote a claim, relationship, personality trait, or causal edge.
+
+### Expected upside / risk / cost / evidence strength
+
+- **Upside:** medium-high. Could make A.L.I.C.E.'s retrieval fabric improve through use, especially for recurring multi-hop evidence patterns and relationship/project contexts.
+- **Risk:** high if authority boundaries are blurred; medium in a projection-only challenger. Main risks are popularity bias, self-reinforcing retrieval errors, privacy/deletion influence residue, and path dependence.
+- **Compute/storage:** moderate. Local edge-weight updates are cheap relative to model inference, but the paper uses LLM-driven retrieval/reconsolidation decisions, so naive adoption adds inference cost. A.L.I.C.E. should evaluate smaller learned controllers or deterministic/statistical updates as challengers.
+- **Evidence strength:** moderate. Two standard memory benchmarks and ablations support the mechanism, but evaluation is LLM-as-judge, the absolute LongMemEval gain over the strongest baseline is only 1.31 points, and the architecture has not established long-horizon safety under adversarial or authority-sensitive personal memory.
+
+**Recommendation:** preserve as a future design seed and add a Stage G/G+ shadow challenger. Do **not** modify completed Claim/Experience authority or canonical graph semantics.
 
 ---
 
@@ -157,9 +170,16 @@ For N1/N2, build an Elaina-specific **Personalized Counterfactual Judgment Suite
 ### SodaMem: Evidence-Grounded Temporal Graph Memory for LLM Agents
 https://arxiv.org/abs/2608.08055
 
-Directly relevant in topic, but its main design elements—source-grounded temporal facts, validity/update relations, hybrid retrieval, and evidence-first answering—are already covered more broadly by A.L.I.C.E.'s Experience/Claim bitemporal authority, provenance graph, projections, and retrieval fabric. Keep as external corroboration/benchmark candidate; no new architecture change from today's review.
+Its source-grounded temporal facts, validity/update relations, hybrid retrieval, and evidence-first answering are already covered more broadly by A.L.I.C.E.'s Experience/Claim bitemporal authority, provenance graph, projections, and retrieval fabric.
 
-Other memory/RAG systems surfaced during the scan were excluded when they primarily reproduced graph+vector retrieval, memory summaries, or ordinary long-context RAG without adding a concrete missing A.L.I.C.E. invariant.
+### MemoryLACE / ROAM / Fortunate Recall
+Their lifecycle/supersession/contradiction/atomic-role ideas largely reinforce A.L.I.C.E.'s existing claim/provenance/temporal authority and do not currently justify a topology change.
+
+### EARM: The Retriever Should Remember
+Experience-amortized reranking is promising for future efficiency research, but its low-rank relevance matrix assumes stable memory identities and recurring query-memory relevance. It is best treated as a challenger under the broader usage-aware retrieval track above rather than a separate architectural commitment.
+
+### Selective Forgetting
+Useful negative evidence: a simple extracted graph underperformed a matched flat vector baseline, while pruning reduced storage with bounded loss. This reinforces A.L.I.C.E.'s decision not to make graph serialization the sole memory representation and to retain raw evidence. Its heuristic pruning policy is too weak for A.L.I.C.E.'s authority/deletion semantics, so no direct adoption.
 
 ---
 
@@ -168,14 +188,15 @@ Other memory/RAG systems surfaced during the scan were excluded when they primar
 ### Proposed current Stage G additions
 - **Evidence Consumption / Citation Lock invariant**
 - **Consolidation Path-Dependence / Schedule Sensitivity suite**
+- **Usage-Aware Retrieval Projection shadow challenger** (research-only; no authority mutation)
 
 ### Proposed future EIPM addition
-- **Personalized Counterfactual Judgment + downstream proxy-gap evaluation**
+- **Personalized Counterfactual Judgment + downstream proxy-gap validation**
 
 ### Explicit non-changes
 - Do not replace Claim Fabric authority.
 - Do not collapse Experience/Event evidence into learned summaries.
-- Do not make graph/vector/episode projections authoritative.
-- Do not force consolidation.
+- Do not make graph/vector/episode/retrieval-association projections authoritative.
+- Do not force consolidation or reconsolidation.
 - Do not replace the current EIPM multi-view/structured design with a generic reward model.
 - Do not change canonical plans until these deltas are reviewed and accepted through the existing governance process.
