@@ -1,0 +1,73 @@
+name: n0-qsre-reality-audit-static-contract
+
+on:
+  push:
+    paths:
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.55.json"
+      - "configs/eipm/n0/n0_v02_qsre_reality_audit_contract_v0_1.json"
+      - "scripts/eipm/n0/build_n0_v02_qsre_operator_reality_corpus_v0_1.py"
+      - "scripts/eipm/n0/audit_n0_v02_qsre_t2_shortcuts_v0_1.py"
+      - "scripts/eipm/n0/probe_n0_v02_qsre_semantic_reality_v0_1.py"
+      - "scripts/eipm/n0/audit_n0_v02_qsre_t2_t1_boundary_fuzz_v0_1.py"
+      - "scripts/eipm/n0/audit_n0_v02_qsre_runtime_parity_v0_1.py"
+      - "scripts/eipm/n0/decide_n0_v02_qsre_reality_audit_v0_1.py"
+      - "scripts/eipm/n0/run_n0_v02_qsre_reality_audit_v0_1.sh"
+      - "scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_reality_audit_v0_1.sbatch"
+      - ".github/workflows/n0-qsre-reality-audit-static-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  audit-static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python and shell syntax
+        run: |
+          python -m py_compile             scripts/eipm/n0/build_n0_v02_qsre_operator_reality_corpus_v0_1.py             scripts/eipm/n0/audit_n0_v02_qsre_t2_shortcuts_v0_1.py             scripts/eipm/n0/probe_n0_v02_qsre_semantic_reality_v0_1.py             scripts/eipm/n0/audit_n0_v02_qsre_t2_t1_boundary_fuzz_v0_1.py             scripts/eipm/n0/audit_n0_v02_qsre_runtime_parity_v0_1.py             scripts/eipm/n0/decide_n0_v02_qsre_reality_audit_v0_1.py
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_reality_audit_v0_1.sh
+          bash -n scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_reality_audit_v0_1.sbatch
+
+      - name: Materialize exact synthetic T2 and realistic audit corpus
+        run: |
+          python scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_2.py             --contract configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_2.json             --output /tmp/t1.jsonl
+          python scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_1.py             --contract configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_1.json             --t1-curriculum /tmp/t1.jsonl             --output /tmp/t2.jsonl
+          python scripts/eipm/n0/build_n0_v02_qsre_operator_reality_corpus_v0_1.py             --output /tmp/reality.jsonl
+          test "$(wc -l < /tmp/t2.jsonl)" -eq 1008
+          test "$(wc -l < /tmp/reality.jsonl)" -eq 56
+
+      - name: Run shallow shortcut attacks now
+        run: |
+          python scripts/eipm/n0/audit_n0_v02_qsre_t2_shortcuts_v0_1.py             --t2-curriculum /tmp/t2.jsonl             --reality-corpus /tmp/reality.jsonl             --output /tmp/shortcut.json
+          cat /tmp/shortcut.json
+
+      - name: Behavioral shell/runtime parity without source-string oracle
+        run: |
+          export ALICE_N0_REPO_ROOT="$GITHUB_WORKSPACE"
+          export ALICE_N0_WORKDIR="/tmp/alice-n0-work"
+          export PYTHONPATH="$GITHUB_WORKSPACE/src:$GITHUB_WORKSPACE/scripts/eipm/n0"
+          mkdir -p /tmp/alice-n0-work
+          python scripts/eipm/n0/audit_n0_v02_qsre_runtime_parity_v0_1.py             --repo-root "$GITHUB_WORKSPACE"             --workdir /tmp/alice-n0-work             --output /tmp/runtime.json
+          cat /tmp/runtime.json
+
+      - name: Boundary totality fuzz self-test
+        run: |
+          python -m pip install -q torch
+          PYTHONPATH=src:scripts/eipm/n0             python scripts/eipm/n0/audit_n0_v02_qsre_t2_t1_boundary_fuzz_v0_1.py               --self-test
+
+      - name: Governance remains no-gradient
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          state=json.loads(Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.55.json").read_text())
+          contract=json.loads(Path("configs/eipm/n0/n0_v02_qsre_reality_audit_contract_v0_1.json").read_text())
+          assert state["execution_policy"]["gpu_training_authorized"] is False
+          assert state["execution_policy"]["gradient_authorized"] is False
+          assert state["execution_policy"]["optimizer_authorized"] is False
+          assert contract["governance"]["gpu"] is False
+          assert contract["governance"]["gradient"] is False
+          assert contract["governance"]["optimizer"] is False
+          assert contract["governance"]["automatic_training_authorization_from_result"] is False
+          print("PASS_QSRE_REALITY_AUDIT_STATIC_GOVERNANCE")
+          PY
