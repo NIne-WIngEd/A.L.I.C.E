@@ -542,7 +542,7 @@ def pair_rows(
             edge("e1", ids[2], ids[3], r1, reliability=0.95),
         ]
         base_query = (
-            f"Two {r1.lower().replace('_',' ')}-type links are relevant. "
+            f"Two links match the requested relationship where a source {p1} a receiving record. "
             "Prefer the one backed by the stronger provenance and verification record."
         )
         return [
@@ -573,7 +573,10 @@ def pair_rows(
             edge("e0", ids[0], ids[1], r1, recency=0.10),
             edge("e1", ids[2], ids[3], r1, recency=0.95),
         ]
-        q = "Two structurally valid records apply at different times. Use the relationship that belongs to the latest applicable state."
+        q = (
+            f"Two links match the relationship where a source {p1} a receiving record. "
+            "They apply at different times. Use the one that belongs to the latest applicable state."
+        )
         return [
             make_row(
                 split=split, family=family, group=group, variant="LEFT_LATEST",
@@ -637,7 +640,10 @@ def pair_rows(
             edge("e0", ids[0], ids[1], r1, temporal_match=0.0),
             edge("e1", ids[2], ids[3], r1, temporal_match=1.0),
         ]
-        q = "Two relation-matching records exist, but only one is valid for the time window named by the request. Use the temporally applicable record."
+        q = (
+            f"Two links match the relationship where a source {p1} a receiving record, "
+            "but only one is valid for the time window named by the request. Use the temporally applicable record."
+        )
         return [
             make_row(
                 split=split, family=family, group=group, variant="LEFT_VALID",
@@ -666,7 +672,10 @@ def pair_rows(
             edge("e0", ids[0], ids[1], r1, provenance_match=0.0),
             edge("e1", ids[2], ids[3], r1, provenance_match=1.0),
         ]
-        q = "Two relation-matching records exist. Only one comes from the provenance class authorized by the request. Use the provenance-compatible record."
+        q = (
+            f"Two links match the relationship where a source {p1} a receiving record. "
+            "Only one comes from the provenance class authorized by the request. Use the provenance-compatible record."
+        )
         return [
             make_row(
                 split=split, family=family, group=group, variant="LEFT_VALID",
@@ -697,7 +706,11 @@ def pair_rows(
             edge("e1", ids[2], ids[3], r1, temporal_match=0.0, provenance_match=1.0),
             edge("e2", ids[4], ids[5], r1, temporal_match=1.0, provenance_match=1.0),
         ]
-        q = "Use only a relation-matching record that satisfies both the requested time scope and the required provenance. A record satisfying only one condition is not enough."
+        q = (
+            f"Use only a link matching the relationship where a source {p1} a receiving record "
+            "that also satisfies both the requested time scope and the required provenance. "
+            "A record satisfying only one condition is not enough."
+        )
         return [
             make_row(
                 split=split, family=family, group=group, variant="FIRST_BOTH",
@@ -726,13 +739,13 @@ def pair_rows(
         ]
         if split == "train":
             queries = [
-                "Find the record that is cryptographically signed by the same hardware key as the starting record. That relation is not defined in the supplied relation schema.",
-                "Trace the contractual-beneficiary relationship from the starting record. Do not substitute a merely similar known relation when that relation is absent from the schema.",
+                f"Starting from {names[0]}, which record is cryptographically signed by the same hardware key?",
+                f"From {names[0]}, trace the contractual-beneficiary relationship and return its endpoint.",
             ]
         else:
             queries = [
-                "Identify the endpoint linked by shared legal ownership. If the active schema has no ownership relation, do not coerce the request into another relation.",
-                "Follow the relation meaning 'authorized by the same physical custodian'. If that meaning is outside the active schema, preserve the unresolved state.",
+                f"Which record shares legal ownership with {names[0]}?",
+                f"From {names[0]}, follow the physical-custodian authorization relationship to its endpoint.",
             ]
         return [
             make_row(
@@ -764,7 +777,7 @@ def pair_rows(
             make_row(
                 split=split, family=family, group=group, variant="PLURAL_TARGET",
                 fields=fields, edges=edges,
-                query=f"Two equally valid links both match the requested relationship. Preserve both receiving records rather than inventing a winner.",
+                query=f"Two equally valid links both match the relationship where a source {p1} a receiving record. Preserve both receiving records rather than inventing a winner.",
                 relation_sequence=[r1], role="TARGET", traversal="AGGREGATE",
                 modifier_target=modifiers(), focus_field_id=None,
                 support_edge_ids=["e0", "e1"], target_distribution={ids[1]: 0.5, ids[3]: 0.5},
@@ -772,7 +785,7 @@ def pair_rows(
             make_row(
                 split=split, family=family, group=group, variant="PLURAL_SOURCE",
                 fields=fields, edges=edges,
-                query=f"Two equally valid links both match. Preserve both source-side records rather than collapsing the answer to one.",
+                query=f"Two equally valid links both match the relationship where a source {p1} a receiving record. Preserve both source-side records rather than collapsing the answer to one.",
                 relation_sequence=[r1], role="SOURCE", traversal="AGGREGATE",
                 modifier_target=modifiers(), focus_field_id=None,
                 support_edge_ids=["e0", "e1"], target_distribution={ids[0]: 0.5, ids[2]: 0.5},
