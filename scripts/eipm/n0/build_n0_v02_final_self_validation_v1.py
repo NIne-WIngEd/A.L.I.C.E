@@ -384,27 +384,38 @@ def build_relational_row(family: str, index: int) -> dict[str, Any]:
             edge("e3", ids[3], ids[4], r1),
         ]
         if family == "path_source":
-            role, seq, target = "SOURCE", [r1,r2], ids[0]
+            role, seq, target = "SOURCE", [r2, r1], ids[0]
+            direction = "REVERSE"
+            focus = ids[2]
+            support = ["e0", "e1"]
+            query = (
+                f"The ordered route ends at {fields[2]['entity']}. Trace backward first "
+                f"through the relation meaning '{p2}' and then through '{p1}'. "
+                "Which record is the original semantic source?"
+            )
         elif family == "path_target":
-            role, seq, target = "TARGET", [r1,r2], ids[2]
+            role, seq, target = "TARGET", [r1, r2], ids[2]
+            direction = "FORWARD"
+            focus = ids[0]
+            support = ["e0", "e1"]
+            query = (
+                f"Starting from {fields[0]['entity']}, trace first the relation meaning "
+                f"'{p1}' and then '{p2}'. Which record is the final semantic target?"
+            )
         else:
-            role, seq, target = "TARGET", [r2,r1], ids[4]
-        query = (
-            f"Start at {fields[0]['entity']}. Follow '{p1}' then '{p2}'."
-            if seq == [r1,r2]
-            else f"Start at {fields[0]['entity']}. Follow '{p2}' first and '{p1}' second."
-        )
-        query += (
-            " Return the origin of that ordered route."
-            if role == "SOURCE"
-            else " Return the final endpoint of that ordered route."
-        )
+            role, seq, target = "TARGET", [r2, r1], ids[4]
+            direction = "FORWARD"
+            focus = ids[0]
+            support = ["e2", "e3"]
+            query = (
+                f"Starting from {fields[0]['entity']}, trace '{p2}' before '{p1}'. "
+                "Which record is the endpoint of that exact ordered route?"
+            )
         return make_row(
             family=family,index=index,fields=fields,edges=edges,query=query,
-            relation_sequence=seq,role=role,traversal="PATH",
-            modifier_target=[0,0,0,0],
-            support_edge_ids=["e0","e1"] if seq==[r1,r2] else ["e2","e3"],
-            target_distribution={target:1.0},focus_field_id=ids[0],
+            relation_sequence=seq,role=role,traversal="PATH",direction=direction,
+            modifier_target=[0,0,0,0],support_edge_ids=support,
+            target_distribution={target:1.0},focus_field_id=focus,
         )
 
     if family == "three_hop":
@@ -531,7 +542,10 @@ def build_relational_row(family: str, index: int) -> dict[str, Any]:
         edges=[edge("e0",ids[0],ids[1],r1)]
         row=make_row(
             family=family,index=index,fields=fields,edges=edges,
-            query=f"{fields[0]['entity']} {p1} {fields[1]['entity']}. Which record is the receiving endpoint?",
+            query=(
+                f"Starting from {fields[0]['entity']}, use the relation whose meaning is "
+                f"'{p1}'. Which record is the receiving endpoint?"
+            ),
             relation_sequence=[r1],role="TARGET",traversal="LOCAL_SELECT",
             modifier_target=[0,0,0,0],support_edge_ids=["e0"],
             target_distribution={ids[1]:1.0},focus_field_id=ids[0],
