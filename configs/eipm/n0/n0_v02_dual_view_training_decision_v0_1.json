@@ -1,0 +1,147 @@
+{
+  "schema": "alice.eipm.n0.dual-view-training-decision.v0.1",
+  "decision": "AUTHORIZE_ONE_BOUNDED_DUAL_VIEW_SPECIALIST_EXPERIMENT_AFTER_RUNTIME_QUALIFICATION",
+  "date": "2026-09-20",
+  "qualification": {
+    "status": "PASS_DUAL_VIEW_LATE_INTERACTION_NO_GRADIENT_RUNTIME_CONTRACT",
+    "source_revision": "edcee7dd7a53bac158793b805a29cfaa0c1b11b0",
+    "receipt_sha256": "714f06d4939abad2b816a7e3ffb5c5fa10112129ef0b520fd838f2d182286278",
+    "dev_conditional_edge_all_four_top1_accuracy": 1.0,
+    "dev_conditional_edge_same_relation_top1_accuracy": 1.0,
+    "dev_source_role_edge_top1_accuracy": 1.0,
+    "dev_target_role_edge_top1_accuracy": 1.0,
+    "all_relation_families_edge_top1_accuracy": 1.0,
+    "direction_reversal_max_delta": 1.7881393432617188e-07,
+    "permutation_equivariance_max_delta": 5.960464477539063e-08,
+    "route_probability_sum_max_error": 1.1920928955078125e-07,
+    "specialist_probability_initialization": 0.5,
+    "exact_parent_field_weights": true,
+    "exact_parent_pooled_state": true,
+    "parent_parameters_exactly_unchanged": true,
+    "future_trainable_scope": "dual_view_query_edge_bridge_only",
+    "future_trainable_parameter_count": 9422597
+  },
+  "scientific_question": {
+    "solved_before_training": [
+      "which edge is relevant",
+      "whether fine-grained semantic binding survives outside structured compression",
+      "whether edge ranking is invariant to source-target reversal",
+      "whether edge ranking is permutation equivariant"
+    ],
+    "remaining_to_learn": [
+      "whether this query should invoke the specialist rather than the frozen parent",
+      "what independent source and target residuals should be contributed for the bound edge"
+    ],
+    "not_part_of_this_experiment": [
+      "learning edge identity",
+      "learning a new edge router",
+      "changing semantic token representations",
+      "changing the frozen graph parent"
+    ]
+  },
+  "trainable_scope": {
+    "dual_view_query_edge_bridge": true,
+    "binding_logit_scale": false,
+    "reason": "freeze the already-qualified edge-identity channel so failure localizes to specialist activation or directional residual reasoning",
+    "semantic_backbone": false,
+    "structured_state": false,
+    "parent_adapter": false,
+    "parent_graph": false
+  },
+  "training_objective": {
+    "causal_field_selection_cross_entropy": {
+      "enabled": true,
+      "weight": 1.0
+    },
+    "causal_target_margin": {
+      "enabled": true,
+      "weight": 0.25,
+      "margin": 0.20
+    },
+    "causal_specialist_activation_bce": {
+      "enabled": true,
+      "target": 1.0,
+      "weight": 1.0,
+      "uses_exact_runtime_specialist_logit": true
+    },
+    "preservation_parent_distillation": {
+      "enabled": true,
+      "loss": "KL frozen parent field weights to candidate field weights",
+      "weight": 1.0,
+      "ordinary_and_endpoint_equal_share": true,
+      "gradient_data": "TRAIN anchors only"
+    },
+    "preservation_noop_activation_bce": {
+      "enabled": true,
+      "target": 0.0,
+      "weight": 1.0,
+      "ordinary_and_endpoint_equal_share": true,
+      "uses_exact_runtime_specialist_logit": true
+    },
+    "conditional_edge_binding_loss": false,
+    "conditional_edge_binding_scale_trainable": false,
+    "route_load_balancing_loss": false,
+    "proxy_routing_loss": false,
+    "irrelevant_edge_penalty": false,
+    "gradient_surgery": false,
+    "reason": "edge identity is already perfect on DEV and should remain a fixed control while the remaining capabilities are tested"
+  },
+  "operating_budget": {
+    "max_training_runs": 1,
+    "max_steps": 200,
+    "checkpoint_every_steps": 40,
+    "learning_rate": 0.00015,
+    "weight_decay": 0.02,
+    "warmup_steps": 12,
+    "causal_quad_batch_size": 4,
+    "preservation_batch_size": 16,
+    "hard_parameter_ceiling": null,
+    "operating_budget_is_product_ceiling": false
+  },
+  "gradient_data": {
+    "query_edge_causal_train": true,
+    "ordinary_preservation_train_anchors": true,
+    "endpoint_preservation_train_anchors": true,
+    "query_edge_causal_dev": false,
+    "query_edge_causal_test": false,
+    "ordinary_preservation_dev": false,
+    "endpoint_preservation_dev": false,
+    "frozen_challenge": false,
+    "private_identity_data": false
+  },
+  "checkpoint_eligibility": {
+    "conditional_edge_all_four_top1_must_remain": 1.0,
+    "conditional_edge_same_relation_top1_must_remain": 1.0,
+    "frozen_parent_preservation_policy_pass": true,
+    "no_relation_family_row_accuracy_regression_vs_initial_parent": true,
+    "overall_row_accuracy_strictly_improves": true,
+    "overall_quad_accuracy_strictly_improves": true,
+    "worst_family_quad_accuracy_may_not_regress": true,
+    "mean_target_margin_strictly_improves": true,
+    "causal_specialist_top1_accuracy_must_equal": 1.0,
+    "causal_family_min_specialist_top1_accuracy_must_equal": 1.0,
+    "ordinary_noop_top1_accuracy_must_equal": 1.0,
+    "endpoint_noop_top1_accuracy_must_equal": 1.0,
+    "mean_causal_specialist_probability_must_strictly_exceed_initial": true,
+    "mean_preservation_noop_probability_must_strictly_exceed_initial": true
+  },
+  "heldout_policy": {
+    "causal_test_open_during_training": false,
+    "frozen_challenge_open_during_training": false,
+    "eligible_checkpoint_only_enables_separate_decision": true,
+    "automatic_heldout_opening": false
+  },
+  "failure_policy": {
+    "first_genuine_model_failure_stops": true,
+    "automatic_rerun": false,
+    "automatic_hotfix": false,
+    "binding_scale_tuning_after_failure": false,
+    "learning_rate_tuning_after_failure": false,
+    "step_count_tuning_after_failure": false,
+    "failure_requires_localization_between_specialist_activation_and_directional_residual_reasoning": true
+  },
+  "scale_authorized": false,
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false,
+  "n0_complete": false
+}
