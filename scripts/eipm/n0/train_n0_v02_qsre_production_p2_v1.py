@@ -82,6 +82,7 @@ def operator_supervised_loss(
     relation_mask=split["relation_target_mask"][indices].to(device).bool()
     role_target=split["role_target"][indices].to(device).long()
     traversal_target=split["traversal_target"][indices].to(device).long()
+    direction_target=split["direction_target"][indices].to(device).long()
     modifier_target=split["modifier_target"][indices].to(device).float()
     applicability_target=split["applicability_target"][indices].to(device).float()
     control_target=split["control_target"][indices].to(device).long()
@@ -139,6 +140,10 @@ def operator_supervised_loss(
             operator.traversal_distribution[relational].clamp_min(1e-8).log(),
             traversal_target[relational],
         )
+        direction_loss=F.nll_loss(
+            operator.direction_distribution[relational].clamp_min(1e-8).log(),
+            direction_target[relational],
+        )
         modifier_loss=F.binary_cross_entropy(
             operator.modifier_weight[relational],
             modifier_target[relational],
@@ -147,6 +152,7 @@ def operator_supervised_loss(
         zero=operator.continuous_state.sum()*0.0
         role_loss=zero
         traversal_loss=zero
+        direction_loss=zero
         modifier_loss=zero
 
     applicability_loss=F.mse_loss(operator.applicability,applicability_target)
@@ -172,6 +178,7 @@ def operator_supervised_loss(
         float(weights["relation"])*relation_total
         +float(weights["role"])*role_loss
         +float(weights["traversal"])*traversal_loss
+        +float(weights["direction"])*direction_loss
         +float(weights["modifiers"])*modifier_loss
         +float(weights["applicability"])*applicability_loss
         +float(weights["control"])*control_loss
@@ -181,6 +188,7 @@ def operator_supervised_loss(
         "relation":float(relation_total.detach().item()),
         "role":float(role_loss.detach().item()),
         "traversal":float(traversal_loss.detach().item()),
+        "direction":float(direction_loss.detach().item()),
         "modifiers":float(modifier_loss.detach().item()),
         "applicability":float(applicability_loss.detach().item()),
         "control":float(control_loss.detach().item()),
@@ -197,6 +205,7 @@ def pair_loss(a: QSREProductionOperatorState,b: QSREProductionOperatorState) -> 
         +F.mse_loss(a.unknown_probability,b.unknown_probability)
         +F.mse_loss(a.role_distribution,b.role_distribution)
         +F.mse_loss(a.traversal_distribution,b.traversal_distribution)
+        +F.mse_loss(a.direction_distribution,b.direction_distribution)
         +F.mse_loss(a.modifier_weight,b.modifier_weight)
         +F.mse_loss(a.applicability,b.applicability)
         +F.mse_loss(a.control_distribution,b.control_distribution)
@@ -322,6 +331,7 @@ def evaluate(
         "open_schema_relation_exact_accuracy":min_metric("open_schema_relation_exact_accuracy"),
         "role_accuracy_relational":min_metric("role_accuracy_relational"),
         "traversal_accuracy_relational":min_metric("traversal_accuracy_relational"),
+        "direction_accuracy_relational":min_metric("direction_accuracy_relational"),
         "modifier_exact_accuracy_relational":min_metric("modifier_exact_accuracy_relational"),
         "control_accuracy":min_metric("control_accuracy"),
         "termination_accuracy":min_metric("termination_accuracy"),
@@ -356,6 +366,7 @@ def eligible(metrics:dict,thresholds:dict)->bool:
         and op["open_schema_relation_exact_accuracy"]>=thresholds["open_schema_relation_exact_accuracy"]
         and op["role_accuracy_relational"]>=thresholds["role_accuracy_relational"]
         and op["traversal_accuracy_relational"]>=thresholds["traversal_accuracy_relational"]
+        and op["direction_accuracy_relational"]>=thresholds["direction_accuracy_relational"]
         and op["modifier_exact_accuracy_relational"]>=thresholds["modifier_exact_accuracy_relational"]
         and op["control_accuracy"]>=thresholds["control_accuracy"]
         and op["termination_accuracy"]>=thresholds["termination_accuracy"]
@@ -371,6 +382,7 @@ def score_tuple(metrics:dict)->tuple[float,...]:
     return (
         op["relation_sequence_exact_accuracy"],
         op["open_schema_relation_exact_accuracy"],
+        op["direction_accuracy_relational"],
         op["unknown_termination_accuracy"],
         op["termination_accuracy"],
         op["pair_consistency"],
