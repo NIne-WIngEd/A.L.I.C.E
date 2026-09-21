@@ -594,9 +594,31 @@ class SchemaConditionedSemanticOperator(nn.Module):
         for probability in factor_distributions.values():
             factor_uncertainty.append(self._entropy(probability))
         if factor_uncertainty:
-            factor_u = torch.stack(factor_uncertainty, dim=-1).mean(dim=-1)
+            global_factor_u = torch.stack(
+                factor_uncertainty,
+                dim=-1,
+            ).mean(dim=-1)
         else:
-            factor_u = torch.zeros_like(unknown_mass)
+            global_factor_u = torch.zeros_like(unknown_mass)
+
+        step_factor_uncertainty = []
+        for probability in step_factor_distributions.values():
+            entropy_by_step = self._entropy(probability)
+            weighted = (
+                entropy_by_step
+                * relation_step_mass
+            ).sum(dim=1) / relation_step_mass.sum(
+                dim=1
+            ).clamp_min(1.0e-6)
+            step_factor_uncertainty.append(weighted)
+        if step_factor_uncertainty:
+            step_factor_u = torch.stack(
+                step_factor_uncertainty,
+                dim=-1,
+            ).mean(dim=-1)
+            factor_u = 0.5 * (global_factor_u + step_factor_u)
+        else:
+            factor_u = global_factor_u
         relation_u = (
             relation_entropy
             * relation_step_mass
@@ -665,6 +687,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "semantic_backbone_gradient_can_flow": True,
             "factor_scorer_shared_across_schema_banks": True,
             "step_conditioned_factor_semantics": True,
+            "step_factor_uncertainty_supervised_in_state": True,
             "token_interaction_chunk_is_operating_point": True,
             "query_token_count_ceiling": None,
             "schema_token_count_ceiling": None,
