@@ -156,10 +156,15 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
                 torch.cat([aggregate, q], dim=-1).reshape(batch * fields, -1),
                 node.reshape(batch * fields, -1),
             ).reshape(batch, fields, -1)
-            touched = torch.zeros(batch, fields, device=node.device, dtype=torch.bool)
-            touched.scatter_(1, source_index, edge_valid_mask)
-            touched.scatter_(1, target_index, edge_valid_mask)
-            update_mask = touched & field_valid_mask
+            touched_count = torch.zeros(
+                batch,
+                fields,
+                device=node.device,
+                dtype=torch.long,
+            )
+            touched_count.scatter_add_(1, source_index, edge_valid_mask.long())
+            touched_count.scatter_add_(1, target_index, edge_valid_mask.long())
+            update_mask = touched_count.gt(0) & field_valid_mask
             node = torch.where(update_mask.unsqueeze(-1), updated, node)
 
         q = operator[:, None, :].expand(batch, fields, -1)
