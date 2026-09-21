@@ -650,6 +650,12 @@ def test_executor_symmetric_relation_ignores_forward_reverse_storage_orientation
             operator=_manual_operator(TRAVERSAL_PATH,DIRECTION_REVERSE),
             **common,
         )
+        reversed_storage=dict(common)
+        reversed_storage["edge_index"]=common["edge_index"].flip(-1)
+        storage_flip=executor(
+            operator=_manual_operator(TRAVERSAL_PATH,DIRECTION_FORWARD),
+            **reversed_storage,
+        )
     assert torch.allclose(
         forward["path_frontier"],
         reverse["path_frontier"],
@@ -662,4 +668,18 @@ def test_executor_symmetric_relation_ignores_forward_reverse_storage_orientation
         atol=1e-5,
         rtol=1e-5,
     )
-    assert executor.parameter_report()["symmetric_relation_direction_collapses_to_bidirectional"] is True
+    assert torch.allclose(
+        forward["node_state"],
+        storage_flip["node_state"],
+        atol=1e-5,
+        rtol=1e-5,
+    )
+    assert torch.allclose(
+        forward["relational_summary"],
+        storage_flip["relational_summary"],
+        atol=1e-5,
+        rtol=1e-5,
+    )
+    report=executor.parameter_report()
+    assert report["symmetric_relation_direction_collapses_to_bidirectional"] is True
+    assert report["symmetric_relation_endpoint_order_invariant"] is True
