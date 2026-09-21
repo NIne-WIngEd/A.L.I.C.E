@@ -362,7 +362,14 @@ def _manual_operator(
 ) -> FullEnvelopeOperatorState:
     batch,steps,relations,dim=1,3,1,24
     relation_distribution=torch.ones(batch,steps,relations)
-    relation_step_mass=torch.ones(batch,steps)
+    if float(truncation_probability) >= 0.5:
+        relation_step_mass=torch.ones(batch,steps)
+        stop_probability=torch.zeros(batch,steps)
+        truncation=torch.ones(batch)
+    else:
+        relation_step_mass=torch.tensor([[1.0,1.0,0.0]])
+        stop_probability=torch.tensor([[0.0,0.0,1.0]])
+        truncation=torch.zeros(batch)
     traversal=torch.zeros(batch,3)
     traversal[:,traversal_index]=1.0
     role=torch.zeros(batch,4)
@@ -374,12 +381,9 @@ def _manual_operator(
     return FullEnvelopeOperatorState(
         relation_distribution=relation_distribution,
         relation_step_mass=relation_step_mass,
-        stop_probability=torch.zeros(batch,steps),
+        stop_probability=stop_probability,
         unknown_probability=torch.zeros(batch,steps),
-        truncation_probability=torch.full(
-            (batch,),
-            float(truncation_probability),
-        ),
+        truncation_probability=truncation,
         role_distribution=role,
         traversal_distribution=traversal,
         direction_distribution=direction,
