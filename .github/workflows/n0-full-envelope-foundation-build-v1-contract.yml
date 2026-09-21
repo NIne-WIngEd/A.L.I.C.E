@@ -8,11 +8,16 @@ on:
       - "src/alice_personality/n0/semantic_operator_foundation.py"
       - "src/alice_personality/n0/dynamic_structured_state_v2.py"
       - "src/alice_personality/n0/dynamic_schema_evidence_graph_v1.py"
+      - "src/alice_personality/n0/dynamic_evidence_view_v2.py"
+      - "src/alice_personality/n0/dynamic_cross_context_fusion_v3.py"
+      - "src/alice_personality/n0/dynamic_competitive_latent_pool_v3.py"
+      - "src/alice_personality/n0/semantic_operator_objectives_v1.py"
       - "src/alice_personality/n0/semantic_operator_qsre_adapter.py"
       - "src/alice_personality/n0/qsre_full_envelope_binder_v1.py"
       - "src/alice_personality/n0/qsre_full_envelope_executor_v1.py"
       - "tests/eipm/test_n0_semantic_operator_foundation_v1.py"
       - "tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py"
+      - "tests/eipm/test_n0_full_envelope_fabric_v1.py"
       - "scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py"
       - "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json"
@@ -53,7 +58,8 @@ jobs:
         run: |
           pytest -q \
             tests/eipm/test_n0_semantic_operator_foundation_v1.py \
-            tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py
+            tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py \
+            tests/eipm/test_n0_full_envelope_fabric_v1.py
 
       - name: Materialize and audit intervention supplement
         run: |
@@ -187,4 +193,28 @@ jobs:
           assert i["invariants"]["no_early_relation_argmax"] is True
           assert i["invariants"]["no_exact_semantic_sparsity_before_binder"] is True
           print("PASS_N0_REOPENED_INTERFACE_CONTRACT")
+          PY
+
+      - name: Prove dynamic evidence fusion latent have no runtime identity axes
+        run: |
+          python - <<'PY'
+          from alice_personality.n0.dynamic_evidence_view_v2 import DynamicEvidenceViewV2
+          from alice_personality.n0.dynamic_cross_context_fusion_v3 import DynamicCrossContextFusionV3
+          from alice_personality.n0.dynamic_competitive_latent_pool_v3 import DynamicCompetitiveLatentPoolV3
+          e=DynamicEvidenceViewV2().parameter_report()
+          f=DynamicCrossContextFusionV3().parameter_report()
+          l=DynamicCompetitiveLatentPoolV3().parameter_report()
+          assert e["relation_identity_parameters"]==0
+          assert e["relation_count_dependent_parameters"]==0
+          assert e["pooled_only_query_conditioning"] is False
+          assert f["view_identity_parameters"]==0
+          assert f["view_count_dependent_parameters"]==0
+          assert f["view_count_ceiling"] is None
+          assert l["slot_identity_parameters"]==0
+          assert l["view_identity_parameters"]==0
+          assert l["slot_count_dependent_parameters"]==0
+          assert l["view_count_dependent_parameters"]==0
+          assert l["slot_count_ceiling"] is None
+          assert l["view_count_ceiling"] is None
+          print("PASS_N0_DYNAMIC_FABRIC_NO_RUNTIME_IDENTITY_AXIS")
           PY
