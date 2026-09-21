@@ -141,14 +141,19 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             raise ValueError("relation_symmetric must be bool [B,R]")
         if field_type_index.ndim != 2 or field_type_index.size(0) != batch:
             raise ValueError("field_type_index must be [B,F]")
-        if bool((field_type_index < 0).any()) or bool((field_type_index >= type_count).any()):
+        if bool((field_type_index < -1).any()) or bool((field_type_index >= type_count).any()):
             raise ValueError("field type index outside runtime type schema")
         source_index = edge_index[..., 0].clamp(min=0, max=field_type_index.size(1) - 1)
         target_index = edge_index[..., 1].clamp(min=0, max=field_type_index.size(1) - 1)
         relation_index = edge_relation_index.clamp(min=0, max=relations - 1)
         b = torch.arange(batch, device=edge_index.device)[:, None].expand_as(edge_relation_index)
-        source_type = field_type_index.gather(1, source_index)
-        target_type = field_type_index.gather(1, target_index)
+        source_type_raw = field_type_index.gather(1, source_index)
+        target_type_raw = field_type_index.gather(1, target_index)
+        endpoint_type_valid = (source_type_raw >= 0) & (target_type_raw >= 0)
+        if bool((edge_valid_mask & ~endpoint_type_valid).any()):
+            raise ValueError("valid edge references a field without a runtime type")
+        source_type = source_type_raw.clamp_min(0)
+        target_type = target_type_raw.clamp_min(0)
         domain = relation_domain_type_mask[b, relation_index, source_type]
         range_ok = relation_range_type_mask[b, relation_index, target_type]
         forward_ok = domain & range_ok
@@ -384,6 +389,7 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             "runtime_relation_schema": True,
             "inactive_runtime_relation_edges_exactly_excluded": True,
             "runtime_type_schema": True,
+            "padded_field_type_minus_one_supported": True,
             "runtime_relation_symmetry": True,
             "token_interaction_chunk_is_operating_point": True,
             "query_token_count_ceiling": None,
