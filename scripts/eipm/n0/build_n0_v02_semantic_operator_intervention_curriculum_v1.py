@@ -1,0 +1,441 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import random
+from pathlib import Path
+from typing import Any
+
+
+ROW_SCHEMA = "alice.eipm.n0.semantic-operator-intervention-row.v1"
+MANIFEST_SCHEMA = "alice.eipm.n0.semantic-operator-intervention-manifest.v1"
+
+
+def rel(
+    key: str,
+    family: str,
+    description: str,
+    source: str,
+    target: str,
+    phrases: list[str],
+    *,
+    symmetric: bool = False,
+) -> dict[str, Any]:
+    return {
+        "key": key,
+        "family": family,
+        "description": description,
+        "source_argument": source,
+        "target_argument": target,
+        "phrases": phrases,
+        "symmetric": symmetric,
+    }
+
+
+TRAIN_RELATIONS = [
+    rel("r001","evidential_support","The source provides evidence or independent backing for the target.","evidence or supporting record","claim or conclusion being supported",["provides evidence for","gives independent backing to","supports the conclusion in"]),
+    rel("r002","correction","The source corrects an error or false statement in the target.","correcting record","record containing the corrected error",["corrects an error in","rectifies a mistake in","fixes the false statement in"]),
+    rel("r003","supersession","The source is the controlling replacement for the target.","newer controlling version","older replaced version",["supersedes","replaces as the controlling version","makes obsolete"]),
+    rel("r004","derivation","The source was derived or constructed from the target.","derived artifact","source material used for derivation",["was derived from","was synthesized from","was constructed using"]),
+    rel("r005","causation","The source event causes or produces the target event.","causal event","effect event",["causes","produces","leads directly to"]),
+    rel("r006","temporal_successor","The source is the immediately later state after the target.","later state","earlier state",["comes immediately after","is the next state after","succeeds temporally"]),
+    rel("r007","quotation","The source reproduces exact wording from the target.","quoting artifact","source whose wording is reproduced",["quotes","reproduces words from","uses the exact wording of"]),
+    rel("r008","summary","The source gives a condensed account of the target.","summary or synopsis","material summarized",["summarizes","gives a condensed account of","provides a synopsis of"]),
+    rel("r009","publication","The source work was issued by the target organization.","published work","publishing organization",["was published by","was issued by","came out through"]),
+    rel("r010","testing","The source was evaluated using the target method or apparatus.","tested component","test method or apparatus",["was tested with","was evaluated using","underwent testing with"]),
+    rel("r011","storage","The source data or artifact is retained in the target repository.","stored item","repository or storage medium",["is stored in","is retained in","resides in"]),
+    rel("r012","display","The source content is visually presented on the target interface.","displayed content","display or interface",["is displayed on","is shown on","appears on"]),
+    rel("r013","prediction","The source model or statement forecasts the target outcome.","predictor","predicted outcome",["predicts","forecasts","anticipates"]),
+    rel("r014","observation_time","The source event was observed during the target interval or activity.","observed event","observation interval or activity",["was observed during","was detected during","appeared during"]),
+    rel("r015","labeling","The source item is assigned the target label or category.","labeled item","assigned label or category",["is labeled as","is tagged as","is classified under"]),
+    rel("r016","mention","The source text mentions the target without a stronger asserted relation.","mentioning text","mentioned entity or item",["mentions","names","refers to"]),
+    rel("r017","translation","The source expression is translated into the target language or representation.","source expression","target language or representation",["is translated to","is rendered into","has a translation into"]),
+    rel("r018","communication","The source participant exchanges messages or signals with the target participant.","participant","other participant",["communicates with","exchanges messages with","maintains communication with"],symmetric=True),
+    rel("r019","containment","The source item belongs as a constituent inside the target.","component","containing whole",["is part of","belongs inside","is a component of"]),
+    rel("r020","prerequisite","The source condition must hold before the target action or state.","required condition","dependent action or state",["is a prerequisite for","must hold before","is required before"]),
+    rel("r021","exemplification","The source is a concrete example illustrating the target principle.","example","principle or category illustrated",["exemplifies","is a concrete case of","illustrates"]),
+    rel("r022","conflict","The source and target cannot both hold as stated.","one conflicting claim","other conflicting claim",["conflicts with","cannot be simultaneously true with","is inconsistent with"],symmetric=True),
+    rel("r023","ownership","The source item belongs to or is owned by the target.","owned item","owner",["belongs to","is owned by","is the property of"]),
+    rel("r024","measurement","The source measurement was produced by the target device or observer.","measurement","measuring device or observer",["was measured by","was recorded by","was captured by"]),
+]
+
+DEV_RELATIONS = [
+    rel("h001","verification","The source claim or artifact was independently verified by the target.","verified claim or artifact","reviewer or verification procedure",["was verified by","was independently checked by","received verification from"]),
+    rel("h002","routing","The source flow passes through the target intermediary.","traffic or flow","intermediary",["is routed through","passes through","travels by way of"]),
+    rel("h003","purchase","The source item was purchased or acquired from the target seller.","purchased item","seller",["was purchased from","was bought from","was acquired from"]),
+    rel("h004","schedule_order","The source activity is scheduled after the target activity.","later scheduled activity","earlier activity",["is scheduled after","is planned after","will occur later than"]),
+    rel("h005","filtering","The source stream is filtered using the target mechanism.","stream or set being filtered","filter or rule",["is filtered by","is screened using","passes through the filter"]),
+    rel("h006","naming","The source entity received its name in reference to the target.","named entity","name source or honoree",["is named after","takes its name from","was named in reference to"]),
+    rel("h007","enablement","The source condition makes the target action possible.","enabling condition","enabled action or state",["enables","makes possible","allows"]),
+    rel("h008","prevention","The source condition blocks the target event.","preventing condition","prevented event",["prevents","blocks","stops the occurrence of"]),
+]
+
+
+FACTOR_BANKS = {
+    "role": [
+        "Select the endpoint that originates, provides, or performs the requested relation.",
+        "Select the receiving endpoint reached or acted on by the requested relation.",
+        "Preserve both endpoints equally because neither is the requested directional winner.",
+        "Select no endpoint role because relational execution is not grounded.",
+    ],
+    "traversal": [
+        "Resolve one immediate local relation step.",
+        "Follow an ordered sequence of relation steps.",
+        "Consider multiple matching links or endpoints together.",
+    ],
+    "direction": [
+        "Traverse from relation source toward target.",
+        "Traverse backward from relation target toward source.",
+        "Preserve both relation directions without one directed winner.",
+    ],
+    "control": [
+        "Use the ordinary non-relational path instead of relation execution.",
+        "Execute relational reasoning using the supplied runtime schema.",
+        "Preserve uncertainty and defer because the supplied schema is insufficient.",
+    ],
+    "reliability_modifier": [
+        "Do not use reliability as an arbitration criterion.",
+        "Prefer stronger reliability, verification, or provenance when alternatives remain.",
+    ],
+    "recency_modifier": [
+        "Do not use recency as an arbitration criterion.",
+        "Prefer the latest applicable state or relation when alternatives remain.",
+    ],
+    "temporal_constraint_modifier": [
+        "Do not filter support by an explicit time window.",
+        "Require support to satisfy the stated temporal scope.",
+    ],
+    "provenance_constraint_modifier": [
+        "Do not filter support by provenance class.",
+        "Require support to come from the authorized provenance class.",
+    ],
+}
+
+
+TRAIN_ENTITIES = [
+    "Aster","Beryl","Cinder","Dorian","Elio","Fenn","Galen","Hera","Ivo","Juno",
+    "Kora","Lyra","Miro","Nola","Orin","Pia","Quill","Rhea","Soren","Tala",
+]
+DEV_ENTITIES = [
+    "Umbra","Vega","Willow","Xanthe","Yarrow","Zephyr","Arden","Brio","Cyra","Delta",
+    "Ember","Fjord","Glint","Haven","Indigo","Juniper","Kestrel","Lumen","Mica","Nova",
+]
+
+
+def schema_text(row: dict[str, Any]) -> str:
+    symmetry = "The relation is symmetric." if row["symmetric"] else "The relation is directional."
+    return (
+        f"Relation meaning: {row['description']} "
+        f"Source argument: {row['source_argument']}. "
+        f"Target argument: {row['target_argument']}. {symmetry}"
+    )
+
+
+def factor_schema() -> dict[str, list[dict[str, Any]]]:
+    return {
+        name: [
+            {"key": f"{name}:{i}", "text": text}
+            for i, text in enumerate(values)
+        ]
+        for name, values in FACTOR_BANKS.items()
+    }
+
+
+def factor_targets(
+    *,
+    role: int,
+    traversal: int,
+    direction: int,
+    control: int,
+    reliability: int = 0,
+    recency: int = 0,
+    temporal: int = 0,
+    provenance: int = 0,
+) -> dict[str, int]:
+    return {
+        "role": role,
+        "traversal": traversal,
+        "direction": direction,
+        "control": control,
+        "reliability_modifier": reliability,
+        "recency_modifier": recency,
+        "temporal_constraint_modifier": temporal,
+        "provenance_constraint_modifier": provenance,
+    }
+
+
+def candidate_bank(
+    *,
+    correct: list[dict[str, Any]],
+    pool: list[dict[str, Any]],
+    count: int,
+    rng: random.Random,
+) -> tuple[list[dict[str, Any]], list[int]]:
+    if count < len(correct):
+        raise ValueError("candidate count smaller than required correct relations")
+    chosen = list(correct)
+    available = [x for x in pool if x["key"] not in {r["key"] for r in correct}]
+    rng.shuffle(available)
+    chosen.extend(available[: max(0, count - len(chosen))])
+    if len(chosen) < count:
+        raise ValueError("relation pool too small for requested candidate cardinality")
+    rng.shuffle(chosen)
+    index = {row["key"]: i for i, row in enumerate(chosen)}
+    return [
+        {
+            "key": row["key"],
+            "family": row["family"],
+            "text": schema_text(row),
+            "symmetric": bool(row["symmetric"]),
+        }
+        for row in chosen
+    ], [index[row["key"]] for row in correct]
+
+
+def make_row(
+    *,
+    split: str,
+    relation: dict[str, Any],
+    second: dict[str, Any],
+    example: int,
+    candidates: int,
+    rng: random.Random,
+) -> dict[str, Any]:
+    entities = TRAIN_ENTITIES if split == "train" else DEV_ENTITIES
+    left = entities[(example * 3) % len(entities)]
+    middle = entities[(example * 5 + 1) % len(entities)]
+    right = entities[(example * 7 + 2) % len(entities)]
+    phrase = relation["phrases"][example % len(relation["phrases"])]
+    phrase2 = second["phrases"][(example + 1) % len(second["phrases"])]
+    mode = example % 10
+
+    role = 1
+    traversal = 0
+    direction = 0
+    control = 1
+    reliability = recency = temporal = provenance = 0
+    sequence = [relation]
+    target_entities = [right]
+    intervention = "single_target"
+
+    if mode == 0:
+        query = f"{left} {phrase} {right}. Which participant is doing the relational work?"
+        role = 0
+        target_entities = [left]
+        intervention = "source_target_role"
+    elif mode == 1:
+        query = f"{left} {phrase} {right}. Which participant is on the receiving side?"
+        intervention = "source_target_role"
+    elif mode == 2:
+        sequence = [relation, second]
+        query = (
+            f"Begin with {left}. First use the relationship where it {phrase} {middle}; "
+            f"then use the relationship where {middle} {phrase2} {right}. Which endpoint is reached last?"
+        )
+        traversal = 1
+        target_entities = [right]
+        intervention = "ordered_composition"
+    elif mode == 3:
+        sequence = [second, relation]
+        query = (
+            f"Starting at {right}, trace backward first through the relation described by '{phrase2}' "
+            f"and then through the relation described by '{phrase}'. Which original source is reached?"
+        )
+        role = 0
+        traversal = 1
+        direction = 1
+        target_entities = [left]
+        intervention = "reverse_ordered_composition"
+    elif mode == 4:
+        query = (
+            f"Two candidate links express the same requested meaning as '{phrase}'. "
+            "Prefer the receiving endpoint backed by the stronger verification record."
+        )
+        traversal = 2
+        reliability = 1
+        intervention = "reliability_modifier"
+    elif mode == 5:
+        query = (
+            f"Two candidate links express the same requested meaning as '{phrase}'. "
+            "Prefer the receiving endpoint belonging to the latest applicable state."
+        )
+        traversal = 2
+        recency = 1
+        intervention = "recency_modifier"
+    elif mode == 6:
+        query = (
+            f"Use the relationship expressed by '{phrase}', but only when it is valid inside the requested time window."
+        )
+        temporal = 1
+        intervention = "temporal_constraint"
+    elif mode == 7:
+        query = (
+            f"Use the relationship expressed by '{phrase}', but only from the authorized provenance class."
+        )
+        provenance = 1
+        intervention = "provenance_constraint"
+    elif mode == 8:
+        query = (
+            "The requested relation is not represented by any supplied schema description. "
+            "Do not force a nearby relation; preserve uncertainty."
+        )
+        sequence = []
+        role = 3
+        control = 2
+        target_entities = []
+        intervention = "unknown_defer"
+    else:
+        query = (
+            f"{left} {phrase} {right}. Another independent record expresses the same relationship. "
+            "Preserve both co-valid receiving endpoints rather than forcing one winner."
+        )
+        traversal = 2
+        target_entities = [right, middle]
+        intervention = "plurality"
+
+    pool = TRAIN_RELATIONS if split == "train" else TRAIN_RELATIONS + DEV_RELATIONS
+    required = sequence if sequence else [relation]
+    bank, indices = candidate_bank(
+        correct=required,
+        pool=pool,
+        count=candidates,
+        rng=rng,
+    )
+    target_sequence = indices if sequence else []
+
+    semantic_text = " ".join([query] + [x["text"] for x in bank])
+    for item in bank:
+        if item["key"].lower() in semantic_text.lower():
+            raise RuntimeError("opaque relation key leaked into semantic text")
+
+    template_partition = "train_templates" if split == "train" else "dev_templates"
+    relation_partition = "seen_relation_family" if split == "train" else "heldout_relation_family"
+    row_id = f"so_{split}_{relation['key']}_{example:04d}_{intervention}"
+    return {
+        "schema": ROW_SCHEMA,
+        "id": row_id,
+        "split": split,
+        "lane": "schema_operator_intervention",
+        "relation_partition": relation_partition,
+        "relation_family": relation["family"],
+        "template_partition": template_partition,
+        "template_id": f"{template_partition}:{intervention}",
+        "domain": "public_synthetic_relational_reasoning",
+        "entities": [left, middle, right],
+        "query": query,
+        "relation_candidates": bank,
+        "relation_sequence_target": target_sequence,
+        "factor_schemas": factor_schema(),
+        "factor_targets": factor_targets(
+            role=role,
+            traversal=traversal,
+            direction=direction,
+            control=control,
+            reliability=reliability,
+            recency=recency,
+            temporal=temporal,
+            provenance=provenance,
+        ),
+        "target_entities": target_entities,
+        "intervention": intervention,
+        "runtime_relation_count": len(bank),
+        "runtime_reasoning_steps": len(target_sequence),
+        "private_identity_data": False,
+        "training_authorized": split == "train",
+        "generated_text": True,
+        "data_origin": "deterministic_public_semantic_operator_intervention_v1",
+        "relation_keys_are_metadata_only": True,
+    }
+
+
+def main() -> None:
+    p = argparse.ArgumentParser()
+    p.add_argument("--output", required=True)
+    p.add_argument("--manifest", required=True)
+    p.add_argument("--examples-per-relation", type=int, default=20)
+    p.add_argument("--seed", type=int, default=20260921)
+    p.add_argument(
+        "--candidate-counts",
+        default="2,4,8,16",
+        help="comma-separated operating coverage points; not a capability ceiling",
+    )
+    args = p.parse_args()
+    if args.examples_per_relation <= 0:
+        raise SystemExit("examples-per-relation must be positive")
+    candidate_counts = sorted({int(x) for x in args.candidate_counts.split(",") if x.strip()})
+    if not candidate_counts or min(candidate_counts) < 2:
+        raise SystemExit("candidate-counts must contain integers >=2")
+    if max(candidate_counts) > len(TRAIN_RELATIONS):
+        raise SystemExit("candidate-count operating point exceeds available training relation definitions")
+
+    rows: list[dict[str, Any]] = []
+    for split, relations in (("train", TRAIN_RELATIONS), ("dev", DEV_RELATIONS)):
+        for ri, relation in enumerate(relations):
+            second_pool = TRAIN_RELATIONS if split == "train" else DEV_RELATIONS
+            second = second_pool[(ri + 1) % len(second_pool)]
+            for example in range(args.examples_per_relation):
+                rng = random.Random(args.seed + ri * 10007 + example * 97 + (0 if split == "train" else 1_000_000))
+                count = candidate_counts[example % len(candidate_counts)]
+                rows.append(
+                    make_row(
+                        split=split,
+                        relation=relation,
+                        second=second,
+                        example=example,
+                        candidates=count,
+                        rng=rng,
+                    )
+                )
+
+    output = Path(args.output)
+    manifest_path = Path(args.manifest)
+    if output.exists() or manifest_path.exists():
+        raise SystemExit("refusing to overwrite curriculum artifact")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(
+        "".join(json.dumps(row, sort_keys=True) + "\n" for row in rows),
+        encoding="utf-8",
+    )
+    digest = hashlib.sha256(output.read_bytes()).hexdigest()
+    train = [x for x in rows if x["split"] == "train"]
+    dev = [x for x in rows if x["split"] == "dev"]
+    manifest = {
+        "schema": MANIFEST_SCHEMA,
+        "status": "MATERIALIZED_PUBLIC_INTERVENTION_SUPPLEMENT",
+        "sha256": digest,
+        "rows": len(rows),
+        "train_rows": len(train),
+        "dev_rows": len(dev),
+        "train_relation_families": sorted({x["relation_family"] for x in train}),
+        "dev_relation_families": sorted({x["relation_family"] for x in dev}),
+        "relation_family_overlap": sorted(
+            {x["relation_family"] for x in train}
+            & {x["relation_family"] for x in dev}
+        ),
+        "candidate_count_points": sorted({x["runtime_relation_count"] for x in rows}),
+        "reasoning_step_points": sorted({x["runtime_reasoning_steps"] for x in rows}),
+        "template_partition_overlap": sorted(
+            {x["template_id"] for x in train}
+            & {x["template_id"] for x in dev}
+        ),
+        "entity_overlap": sorted(
+            {e for x in train for e in x["entities"]}
+            & {e for x in dev for e in x["entities"]}
+        ),
+        "private_identity_data": False,
+        "is_complete_training_corpus": False,
+        "role": "schema/operator intervention supplement mixed with broad public semantic and governed teacher replay under the full curriculum contract",
+        "row_count_is_capability_ceiling": False,
+        "candidate_count_is_capability_ceiling": False,
+    }
+    manifest_path.write_text(
+        json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+    print(json.dumps(manifest, indent=2, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()
