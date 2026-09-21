@@ -16,7 +16,11 @@
     "factor_identity_parameters": 0,
     "runtime_dynamic_schema": true,
     "shared_recurrent_relation_transition": true,
-    "exact_semantic_sparsity_before_binder": false
+    "exact_semantic_sparsity_before_binder": false,
+    "full_stack_implementation": "src/alice_personality/n0/n0_full_envelope_stack_v1.py",
+    "public_judgment_probe": "src/alice_personality/n0/public_judgment_probe_v1.py",
+    "behavioral_objectives": "src/alice_personality/n0/full_envelope_behavioral_objectives_v1.py",
+    "loss_balancer": "src/alice_personality/n0/full_envelope_loss_balancer_v1.py"
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -27,7 +31,12 @@
     "relation_family_holdout_required": true,
     "factor_combination_holdout_required": true,
     "final_validation_exclusion_hash_required": true,
-    "private_identity_data": false
+    "private_identity_data": false,
+    "natural_relation_source_manifest": "configs/eipm/n0/n0_v02_natural_relation_sources_v1.json",
+    "natural_relation_builder": "scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py",
+    "natural_relation_audit": "scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py",
+    "sealed_natural_final_relation_families_required": true,
+    "final_relation_descriptions_excluded_from_train_dev_bank": true
   },
   "optimization_strategy": {
     "stages": [
@@ -37,7 +46,8 @@
         "trainable": [
           "semantic_backbone_all_layers",
           "semantic_existing_heads_for_replay",
-          "schema_conditioned_semantic_operator"
+          "schema_conditioned_semantic_operator",
+          "public_judgment_probe"
         ],
         "permanently_frozen": [],
         "downstream_modules_updated": false,
@@ -68,7 +78,10 @@
           "fusion_successor",
           "latent_successor",
           "production_executor_successor",
-          "binder_successor"
+          "binder_successor",
+          "public_judgment_probe",
+          "dynamic_fusion_successor",
+          "dynamic_latent_successor"
         ],
         "permanently_frozen": [],
         "architecture_reduced": false
@@ -114,13 +127,17 @@
       "unknown_defer_uncertainty",
       "token_evidence_grounding",
       "structured_context",
-      "multi_view_causal_preservation"
+      "multi_view_causal_preservation",
+      "natural_relation_semantics",
+      "behaviorally_grounded_latent_judgment"
     ],
     "fixed_relation_family_weighting_forbidden": true,
-    "loss_weight_search_after_results_forbidden": true
+    "loss_weight_search_after_results_forbidden": true,
+    "implementation": "src/alice_personality/n0/full_envelope_loss_balancer_v1.py"
   },
   "stage_gates": {
     "J1": [
+      "natural_heldout_relation_family_semantics",
       "heldout_relation_family_semantics",
       "dynamic_factor_semantics",
       "source_target_intervention",
@@ -142,7 +159,8 @@
       "latent_noncollapse",
       "missing_view_safety",
       "candidate_cardinality_extrapolation",
-      "composition_extrapolation"
+      "composition_extrapolation",
+      "behaviorally_grounded_public_judgment"
     ]
   },
   "scaling": {
@@ -171,6 +189,8 @@
   },
   "prerequisites_before_gradient": [
     "materialized_full_public_mixture_manifest",
+    "PASS FewRel natural relation materialization and leakage audit",
+    "sealed natural FINAL relation-family artifacts hashed and excluded from TRAIN/DEV bank",
     "PASS semantic_operator_curriculum_audit",
     "PASS static semantic_operator mechanics",
     "PASS reopened interface mechanics",
