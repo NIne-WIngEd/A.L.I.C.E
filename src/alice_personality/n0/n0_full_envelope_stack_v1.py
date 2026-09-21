@@ -265,6 +265,29 @@ class N0FullEnvelopeStackV1(nn.Module):
         )
 
         batch = query_hidden_states.size(0)
+        relation_mass = torch.einsum(
+            "bsr,bs->br",
+            operator.relation_distribution,
+            operator.relation_step_mass,
+        )
+        relation_mass = relation_mass / operator.relation_step_mass.sum(
+            dim=1,
+            keepdim=True,
+        ).clamp_min(1.0e-6)
+
+        graph = self.evidence_graph(
+            field_state=graph["field_states"],
+            field_valid_mask=field_valid_mask,
+            edge_index=edge_index,
+            edge_relation_index=edge_relation_index,
+            edge_metadata=edge_metadata,
+            edge_valid_mask=edge_valid_mask,
+            relation_schema_state=relation_state,
+            relation_mass=relation_mass,
+            operator_state=operator.continuous_state,
+            message_steps=graph_message_steps,
+        )
+
         domain = relation_schema.domain_type_mask[None, :, :].expand(
             batch, -1, -1
         )
@@ -291,7 +314,7 @@ class N0FullEnvelopeStackV1(nn.Module):
         )
 
         executor = self.executor(
-            field_state=structured["field_states"],
+            field_state=graph["field_states"],
             field_metadata=field_metadata,
             field_valid_mask=field_valid_mask,
             edge_index=edge_index,
@@ -307,13 +330,12 @@ class N0FullEnvelopeStackV1(nn.Module):
             focus_field_weight=binder["focus_field_weight"],
         )
 
-        relation_mass = binder["relation_mass"]
         evidence_view = self.evidence_view(
             query_hidden_states=query_hidden_states,
             query_token_mask=query_token_mask,
             field_hidden_states=field_hidden_states,
             field_token_mask=field_token_mask,
-            structured_field_state=structured["field_states"],
+            structured_field_state=graph["field_states"],
             field_valid_mask=field_valid_mask,
             field_confidence=field_confidence,
             field_missing=field_missing,
@@ -321,19 +343,6 @@ class N0FullEnvelopeStackV1(nn.Module):
             relation_schema_state=relation_state,
             relation_mass=relation_mass,
             operator_state=operator.continuous_state,
-        )
-
-        graph = self.evidence_graph(
-            field_state=structured["field_states"],
-            field_valid_mask=field_valid_mask,
-            edge_index=edge_index,
-            edge_relation_index=edge_relation_index,
-            edge_metadata=edge_metadata,
-            edge_valid_mask=edge_valid_mask,
-            relation_schema_state=relation_state,
-            relation_mass=relation_mass,
-            operator_state=operator.continuous_state,
-            message_steps=graph_message_steps,
         )
 
         raw_semantic = self._raw_field_semantic(
@@ -484,6 +493,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "module_reports": reports,
             "semantic_backbone_included": False,
             "semantic_backbone_gradient_must_remain_connected": True,
+            "continuous_graph_before_exact_binder_sparsity": True,
             "runtime_relation_ceiling": None,
             "runtime_factor_ceiling": None,
             "runtime_field_ceiling": None,
