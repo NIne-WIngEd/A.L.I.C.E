@@ -12,8 +12,10 @@ from alice_personality.n0.qsre_production_core import (
     QSREDynamicRelationSchema,
     QSREProductionBinder,
     QSREProductionExecutor,
-    QSREProductionOperatorInducer,
     QSREProductionSchemaEncoder,
+)
+from alice_personality.n0.qsre_production_operator_v2 import (
+    QSREProductionOperatorInducerV2,
 )
 from qsre_production_runtime import load_dynamic_schema_cache, sha256
 from qsre_production_training_utils import (
