@@ -16,6 +16,7 @@ on:
       - "configs/eipm/n0/n0_v02_qsre_p2_v2_recovery_contract_v1.json"
       - "tests/eipm/test_n0_qsre_production_operator_v2.py"
       - "tests/eipm/test_n0_qsre_production_binder_v2.py"
+      - "tests/eipm/test_n0_qsre_production_training_v2.py"
       - ".github/workflows/n0-open-schema-operator-binder-v2-qualification.yml"
   workflow_dispatch:
 
@@ -57,6 +58,10 @@ jobs:
           assert "event_distribution" in op
           assert "EVENT_CONTINUE" in op and "EVENT_STOP" in op and "EVENT_UNKNOWN" in op
           assert "schema_match_projected = self.project_semantic(schema.token_states)" in op
+          assert "schema_match_summary" in op
+          assert "F.normalize(schema_match_summary, dim=-1)" in op
+          assert "F.normalize(schema_relation_state, dim=-1)" not in op
+          assert "schema_match_summary," in op
           assert "self.query_projection(self.query_norm(states))" in op
           assert "schema_identity_logits" in op
           assert "factor_queries" in op
@@ -95,6 +100,8 @@ jobs:
           assert "del schema_relation_state" in binder
           assert "relation_semantics_owned_by_operator" in binder
           assert "p1_schema_relation_state_not_match_authority" in binder
+          assert "operator_continuous_state_not_support_authority" in binder
+          assert "self.operator_projection" not in binder
           assert "shared_query_field_metric" in binder
           assert "fixed_top_k" in binder
           assert "support_count_ceiling" in binder
