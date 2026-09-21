@@ -34,6 +34,19 @@
       "synthetic_only": false
     },
     {
+      "name": "natural_human_relation_schema",
+      "role": "train relation semantics on natural human-annotated sentences and relation descriptions, with relation-family and candidate-cardinality transfer that cannot be solved by synthetic template recognition",
+      "required": true,
+      "source_manifest": "configs/eipm/n0/n0_v02_natural_relation_sources_v1.json",
+      "active_source": "thunlp_fewrel_1_0",
+      "exact_revision_required": true,
+      "human_relation_labels_required": true,
+      "natural_source_text_required": true,
+      "relation_keys_metadata_only": true,
+      "synthetic_replacement_forbidden": true,
+      "sealed_final_relation_families_required": true
+    },
+    {
       "name": "dynamic_relation_schema",
       "role": "map natural queries to arbitrary runtime relation descriptions without relation-ID semantic parameters",
       "required": true,
@@ -188,7 +201,9 @@
     "relation_family_extrapolation_required": true,
     "composition_extrapolation_required": true,
     "schema_cardinality_extrapolation_required": true,
-    "context_length_extrapolation_required": true
+    "context_length_extrapolation_required": true,
+    "final_relation_family_partition_required": true,
+    "final_relation_descriptions_excluded_from_train_dev_inputs": true
   },
   "runtime_axis_coverage": {
     "relation_candidate_counts": {
@@ -298,7 +313,8 @@
     "generated_examples_require_shortcut_audit": true,
     "natural_language_must_remain_material": true,
     "exact_natural_share_precommitted": false,
-    "reason": "share must be chosen from materialized corpus availability and coverage rather than an arbitrary permanent ratio"
+    "reason": "share must be chosen from materialized corpus availability and coverage rather than an arbitrary permanent ratio",
+    "human_annotated_relation_lane_required": true
   },
   "coverage_stop_rule": {
     "hard_row_target": null,
@@ -316,7 +332,9 @@
     "relation_family_holdout_manifest_required": true,
     "factor_combination_holdout_manifest_required": true,
     "public_provenance_receipts_required": true,
-    "final_validation_excluded_by_hash_required": true
+    "final_validation_excluded_by_hash_required": true,
+    "natural_relation_materialization_audit_required": true,
+    "sealed_natural_final_relation_hash_required": true
   },
   "scale_policy": {
     "full_capability_architecture": true,
