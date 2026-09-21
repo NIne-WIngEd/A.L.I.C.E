@@ -64,6 +64,7 @@ class PublicJudgmentProbeV1(nn.Module):
         pooled_state: Tensor,
         candidate_hidden_states: Tensor,
         candidate_token_mask: Tensor,
+        candidate_valid_mask: Tensor | None = None,
     ) -> dict[str, Tensor]:
         if pooled_state.ndim != 2 or pooled_state.size(-1) != self.config.latent_dim:
             raise ValueError("pooled_state must be [B,D_latent]")
@@ -82,8 +83,27 @@ class PublicJudgmentProbeV1(nn.Module):
             raise ValueError("candidate_token_mask shape drift")
         if candidate_token_mask.dtype != torch.bool:
             raise ValueError("candidate_token_mask must be bool")
-        if bool((candidate_token_mask.sum(dim=-1) == 0).any()):
-            raise ValueError("every candidate requires at least one content token")
+        if candidate_valid_mask is None:
+            candidate_valid_mask = torch.ones(
+                batch,
+                candidates,
+                device=candidate_token_mask.device,
+                dtype=torch.bool,
+            )
+        if (
+            candidate_valid_mask.shape != (batch, candidates)
+            or candidate_valid_mask.dtype != torch.bool
+        ):
+            raise ValueError("candidate_valid_mask must be bool [B,C]")
+        if bool((candidate_valid_mask.sum(dim=-1) == 0).any()):
+            raise ValueError("every example requires at least one valid judgment candidate")
+        content_count = candidate_token_mask.sum(dim=-1)
+        if bool((candidate_valid_mask & (content_count == 0)).any()):
+            raise ValueError("every valid candidate requires at least one content token")
+        safe_candidate_token_mask = candidate_token_mask.clone()
+        invalid = ~candidate_valid_mask
+        if bool(invalid.any()):
+            safe_candidate_token_mask[invalid, 0] = True
 
         latent = self.latent_projection(pooled_state.float())
         candidate = self.candidate_projection(candidate_hidden_states.float())
@@ -95,7 +115,7 @@ class PublicJudgmentProbeV1(nn.Module):
             normalized_latent,
             normalized_candidate,
         )
-        token_mask = candidate_token_mask[:, :, None, :].expand(
+        token_mask = safe_candidate_token_mask[:, :, None, :].expand(
             batch,
             candidates,
             layers,
@@ -152,8 +172,11 @@ class PublicJudgmentProbeV1(nn.Module):
             dim=-1,
         )
         logit = self.score(feature).squeeze(-1)
+        logit = logit.masked_fill(~candidate_valid_mask, -1.0e4)
+        summary = summary * candidate_valid_mask.unsqueeze(-1).to(summary.dtype)
         return {
             "candidate_logits": logit,
+            "candidate_valid_mask": candidate_valid_mask,
             "candidate_summary": summary,
             "candidate_layer_weight": layer_weight,
             "candidate_token_weight": token_weight,
@@ -164,6 +187,8 @@ class PublicJudgmentProbeV1(nn.Module):
             "total_parameters": sum(p.numel() for p in self.parameters()),
             "candidate_identity_parameters": 0,
             "candidate_count_dependent_parameters": 0,
+            "per_example_candidate_subset_supported": True,
+            "padded_candidate_batching_supported": True,
             "candidate_count_ceiling": None,
             "multi_layer_candidate_read": True,
             "behavioral_supervision_required": True,
