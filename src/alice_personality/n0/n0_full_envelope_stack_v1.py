@@ -239,6 +239,7 @@ class N0FullEnvelopeStackV1(nn.Module):
         additional_view_reliability: Tensor | None = None,
         candidate_hidden_states: Tensor | None = None,
         candidate_token_mask: Tensor | None = None,
+        candidate_valid_mask: Tensor | None = None,
     ) -> dict[str, Any]:
         semantic = self.semantic_operator(
             query_hidden_states=query_hidden_states,
@@ -458,7 +459,11 @@ class N0FullEnvelopeStackV1(nn.Module):
         )
 
         public_judgment = None
-        if candidate_hidden_states is not None or candidate_token_mask is not None:
+        if (
+            candidate_hidden_states is not None
+            or candidate_token_mask is not None
+            or candidate_valid_mask is not None
+        ):
             if candidate_hidden_states is None or candidate_token_mask is None:
                 raise ValueError(
                     "candidate_hidden_states and candidate_token_mask must be supplied together"
@@ -467,6 +472,7 @@ class N0FullEnvelopeStackV1(nn.Module):
                 pooled_state=latent["pooled_state"],
                 candidate_hidden_states=candidate_hidden_states,
                 candidate_token_mask=candidate_token_mask,
+                candidate_valid_mask=candidate_valid_mask,
             )
 
         return {
