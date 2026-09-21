@@ -1,9 +1,9 @@
 {
-  "source_work_branch": "alice-eipm-v1-n0-closure-pass",
-  "source_work_commit": "fefc2e4ec54ddde113165b1a3103a1add9be34e8",
+  "source_work_branch": "alice-eipm-v1-n0-closure-semantic-v2",
+  "source_work_commit": "1c94065cd30abb9764260e239b2227b27d098040",
   "research_branch": "research/graphify-context-substrate",
-  "research_commit": "d521a0a08480310455263ece1a115e8f63c20534",
-  "workflow_run_id": "35561824623",
+  "research_commit": "f58c1e41cf64d43f8e720de09739cf094d5448de",
+  "workflow_run_id": "35566838101",
   "graph_mode": "code-only",
   "extraction_tree": "exact-source-worktree",
   "graphify_version": "0.9.63",

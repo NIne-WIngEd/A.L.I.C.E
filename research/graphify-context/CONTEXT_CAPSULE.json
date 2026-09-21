@@ -1,15 +1,15 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-closure-pass-post-handoff-refresh-20260921-012",
-  "question": "Post-handoff refresh after recording docs/chat-context/2026-09-21/sol/N0_JOB575958_CLOSURE_PASS_READY.md. Verify the continuity catalog now sees alice-context at that handoff, while the exact code graph remains alice-eipm-v1-n0-closure-pass@fefc2e4ec54ddde113165b1a3103a1add9be34e8. Reconfirm the same closure path: P2S unseen-schema matcher gate, frozen matcher in Production P2, ordered query-evidence coverage, semantic factor schemas, Binder v2 structural sparsity, factor-schema cache lineage through final validation, original frozen final reuse, and no bypass/holdout leak.",
-  "generated_at_utc": "2026-09-21T04:50:05.626321+00:00",
+  "request_id": "n0-semantic-v2-qualified-topology-20260921-013",
+  "question": "Verify the exact N0 semantic-v2 closure implementation after valid Magnolia job 575962. Trace preservation and fail-closed validation of the v1 P2S failure, QSRESchemaMatcher fixed semantic anchor plus learned residual, shared layer mixture, bidirectional candidate-conditioned query/schema pair refinement, absence of relation/factor identity parameter axes, auxiliary relation text using the exact Production runtime relation_schema_text grammar without relation keys, gradient use of factor train phrases while factor heldout phrases stay evaluation-only, auxiliary/core paired-view consistency, frozen v2 matcher loading into Production P2, preserved ordered query-evidence coverage and continuous relation hypotheses, Binder v2-only exact structural sparsity, factor-cache lineage through P3/P4/final, one new evidence root, and original frozen native final-validation reuse. Identify any bypass, holdout leakage, semantic key leakage, reintroduced identity/class head, dropped coverage, v1-failure lineage gap, or downstream gate/compute drift.",
+  "generated_at_utc": "2026-09-21T06:06:44.663036+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "catalog_source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "graphify_used": true,
-    "graph_source_branch": "alice-eipm-v1-n0-closure-pass",
-    "graph_source_commit": "fefc2e4ec54ddde113165b1a3103a1add9be34e8",
+    "graph_source_branch": "alice-eipm-v1-n0-closure-semantic-v2",
+    "graph_source_commit": "1c94065cd30abb9764260e239b2227b27d098040",
     "graph_extraction_tree": "exact-source-worktree",
     "continuity_branch_head": {
       "branch": "alice-context",
@@ -20,10 +20,10 @@
     "continuity_stale_relative_to_experiment_frontier": true,
     "maximal_unmerged_experiment_heads": [
       {
-        "branch": "alice-eipm-v1-n0-closure-pass",
-        "head": "fefc2e4ec54ddde113165b1a3103a1add9be34e8",
-        "head_committed_at": "2026-09-20T23:37:23-05:00",
-        "head_message": "fix(n0): repair closure matcher eval indentation"
+        "branch": "alice-eipm-v1-n0-closure-semantic-v2",
+        "head": "1c94065cd30abb9764260e239b2227b27d098040",
+        "head_committed_at": "2026-09-21T01:02:05-05:00",
+        "head_message": "test(n0): assert semantic-v2 matcher invariants"
       },
       {
         "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
@@ -43,11 +43,11 @@
     "graphify_mode": "always",
     "graphify_used": true,
     "reason": "request forced Graphify",
-    "graph_source_branch": "alice-eipm-v1-n0-closure-pass",
-    "graph_source_commit": "fefc2e4ec54ddde113165b1a3103a1add9be34e8",
+    "graph_source_branch": "alice-eipm-v1-n0-closure-semantic-v2",
+    "graph_source_commit": "1c94065cd30abb9764260e239b2227b27d098040",
     "graph_source_reason": "request explicitly selected graph source branch",
-    "graph_rebuild_required": false,
-    "private_external_route_recommended": false
+    "graph_rebuild_required": true,
+    "private_external_route_recommended": true
   },
   "active_mission": {
     "schema": "alice-context-active-mission-state-v2",
@@ -127,18 +127,18 @@
       "schema": "alice-context-unmerged-experiment-frontier-v1",
       "stable_build_branch": "alice-eipm-v1-build",
       "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "candidate_count": 22,
+      "candidate_count": 23,
       "maximal_head_count": 3,
       "maximal_heads": [
         {
-          "branch": "alice-eipm-v1-n0-closure-pass",
-          "head": "fefc2e4ec54ddde113165b1a3103a1add9be34e8",
-          "head_committed_at": "2026-09-20T23:37:23-05:00",
-          "head_message": "fix(n0): repair closure matcher eval indentation",
-          "ahead": 554,
+          "branch": "alice-eipm-v1-n0-closure-semantic-v2",
+          "head": "1c94065cd30abb9764260e239b2227b27d098040",
+          "head_committed_at": "2026-09-21T01:02:05-05:00",
+          "head_message": "test(n0): assert semantic-v2 matcher invariants",
+          "ahead": 567,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-          "changed_file_count_vs_source_merge_base": 383,
+          "changed_file_count_vs_source_merge_base": 390,
           "changed_paths_vs_source_merge_base": [
             ".github/workflows/n0-arbitration-contract-check.yml",
             ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -155,6 +155,7 @@
             ".github/workflows/n0-qsre-clean-sheet-review-contract.yml",
             ".github/workflows/n0-qsre-mechanics-contract.yml",
             ".github/workflows/n0-qsre-n0-closure-pass-contract.yml",
+            ".github/workflows/n0-qsre-n0-closure-semantic-v2-contract.yml",
             ".github/workflows/n0-qsre-production-core-v1-architecture-contract.yml",
             ".github/workflows/n0-qsre-production-core-v1-mechanics.yml",
             ".github/workflows/n0-qsre-production-curriculum-v1-contract.yml",
@@ -244,7 +245,9 @@
             "configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json",
             "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
             "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v2.json",
             "configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v2.json",
             "configs/eipm/n0/n0_v02_qsre_final_production_recovery_contract_v1.json",
             "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
             "configs/eipm/n0/n0_v02_qsre_n0_closure_training_plan_v1.json",
@@ -290,6 +293,7 @@
             "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
             "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
             "docs/research/eipm-n0-job-575958-closure-pass-v1.md",
+            "docs/research/eipm-n0-job-575962-semantic-matcher-v2.md",
             "docs/research/eipm-n0-multilayer-interface-failure-localization-v0.1.md",
             "docs/research/eipm-n0-qsre-architecture-blueprint-v0.1.md",
             "docs/research/eipm-n0-qsre-mechanics-result-v0.1.md",
@@ -335,11 +339,7 @@
             "scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_1.py",
             "scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_2.py",
             "scripts/eipm/n0/build_n0_v02_query_edge_binding_curriculum_v0_1.py",
-            "scripts/eipm/n0/build_n0_v02_query_edge_preservation_train_anchors_v0_1.py",
-            "scripts/eipm/n0/build_n0_v02_query_relation_role_router_curriculum_v0_3.py",
-            "scripts/eipm/n0/build_n0_v02_relation_conditioned_multilayer_interface_curriculum_v0_1.py",
-            "scripts/eipm/n0/build_n0_v02_relation_semantic_grounding_curriculum_v0_1.py",
-            "scripts/eipm/n0/build_n0_v02_relation_semantic_role_residual_curriculum_v0_2.py"
+            "scripts/eipm/n0/build_n0_v02_query_edge_preservation_train_anchors_v0_1.py"
           ],
           "authority": "unmerged-experiment-pointer"
         },
@@ -771,6 +771,219 @@
         }
       ],
       "all_ahead_candidates": [
+        {
+          "branch": "alice-eipm-v1-n0-closure-semantic-v2",
+          "head": "1c94065cd30abb9764260e239b2227b27d098040",
+          "head_committed_at": "2026-09-21T01:02:05-05:00",
+          "head_message": "test(n0): assert semantic-v2 matcher invariants",
+          "ahead": 567,
+          "behind": 0,
+          "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+          "changed_file_count_vs_source_merge_base": 390,
+          "changed_paths_vs_source_merge_base": [
+            ".github/workflows/n0-arbitration-contract-check.yml",
+            ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
+            ".github/workflows/n0-dual-view-late-interaction-qualification-check.yml",
+            ".github/workflows/n0-dual-view-requalification-recovery-check.yml",
+            ".github/workflows/n0-dual-view-specialist-failure-localization-check.yml",
+            ".github/workflows/n0-dual-view-specialist-training-contract-check.yml",
+            ".github/workflows/n0-fast-dual-view-failure-localization-check.yml",
+            ".github/workflows/n0-final-production-v3-qualification.yml",
+            ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
+            ".github/workflows/n0-open-schema-operator-binder-v2-qualification.yml",
+            ".github/workflows/n0-p100-dual-view-failure-localization-check.yml",
+            ".github/workflows/n0-production-core-v1-preflight.yml",
+            ".github/workflows/n0-qsre-clean-sheet-review-contract.yml",
+            ".github/workflows/n0-qsre-mechanics-contract.yml",
+            ".github/workflows/n0-qsre-n0-closure-pass-contract.yml",
+            ".github/workflows/n0-qsre-n0-closure-semantic-v2-contract.yml",
+            ".github/workflows/n0-qsre-production-core-v1-architecture-contract.yml",
+            ".github/workflows/n0-qsre-production-core-v1-mechanics.yml",
+            ".github/workflows/n0-qsre-production-curriculum-v1-contract.yml",
+            ".github/workflows/n0-qsre-reality-audit-static-contract.yml",
+            ".github/workflows/n0-qsre-t1-corrected-pretraining-contract.yml",
+            ".github/workflows/n0-qsre-t1-curriculum-contract.yml",
+            ".github/workflows/n0-qsre-t1-forward-contract.yml",
+            ".github/workflows/n0-qsre-t1-one-shot-authorization.yml",
+            ".github/workflows/n0-qsre-t1-postrun-t2-design-contract.yml",
+            ".github/workflows/n0-qsre-t2-classified-recovery-authorization.yml",
+            ".github/workflows/n0-qsre-t2-evaluator-totality-qualification.yml",
+            ".github/workflows/n0-qsre-t2-one-shot-authorization.yml",
+            ".github/workflows/n0-qsre-t2-static-and-curriculum-contract.yml",
+            ".github/workflows/n0-qsre-t2-v02-curriculum-contract.yml",
+            ".github/workflows/n0-qsre-t2-v02-pipeline-contract.yml",
+            ".github/workflows/n0-qsre-t2-v03-schema-ordered-contract.yml",
+            ".github/workflows/n0-qsre-tensor-mechanics-contract.yml",
+            ".github/workflows/n0-query-edge-binding-identifiability-audit-check.yml",
+            ".github/workflows/n0-query-edge-competitive-router-contract-check.yml",
+            ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
+            ".github/workflows/n0-query-edge-training-contract-check.yml",
+            ".github/workflows/n0-query-relation-role-router-contract-check.yml",
+            ".github/workflows/n0-query-semantics-architecture-audit-contract-check.yml",
+            ".github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml",
+            ".github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml",
+            ".github/workflows/n0-relation-semantic-grounding-contract-check.yml",
+            ".github/workflows/n0-relation-semantic-role-residual-contract-check.yml",
+            ".github/workflows/n0-setwise-edge-router-training-contract-check.yml",
+            ".github/workflows/n0-setwise-query-edge-router-contract-check.yml",
+            ".github/workflows/n0-setwise-training-boundary-recovery-check.yml",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.12.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.13.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.14.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.15.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.16.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.17.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.18.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.19.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.20.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.21.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.22.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.23.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.24.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.25.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.26.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.27.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.28.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.29.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.30.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.31.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.32.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.33.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.34.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.35.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.36.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.37.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.38.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.39.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.40.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.41.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.42.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.43.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.44.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.45.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.46.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.47.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.48.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.49.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.50.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.51.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.52.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.53.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.54.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.55.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.56.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.57.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.58.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.59.json",
+            "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
+            "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_dual_view_training_decision_v0_1.json",
+            "configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json",
+            "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v2.json",
+            "configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v2.json",
+            "configs/eipm/n0/n0_v02_qsre_final_production_recovery_contract_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_n0_closure_training_plan_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_p2_v2_recovery_contract_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_preimplementation_diagnostics_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_production_core_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_production_core_w1_w15_map_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_production_training_plan_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_production_training_plan_v2.json",
+            "configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json",
+            "configs/eipm/n0/n0_v02_qsre_reality_audit_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_static_mechanics_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_t1_executor_design_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t1_training_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t1_training_contract_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_operator_learning_design_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_operator_learning_design_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_relation_schema_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_3.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_training_recovery_contract_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json",
+            "configs/eipm/n0/n0_v02_query_edge_setwise_router_design_decision_v0_1.json",
+            "configs/eipm/n0/n0_v02_query_edge_training_decision_v0_1.json",
+            "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_training_decision_v0_1.json",
+            "configs/eipm/n0/n0_v02_relational_execution_proof_obligations_v0_1.json",
+            "configs/eipm/n0/n0_v02_setwise_edge_router_training_decision_v0_1.json",
+            "configs/eipm/n0/n0_v02_setwise_training_boundary_recovery_v0_1.json",
+            "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+            "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+            "docs/research/eipm-full-eipm-workload-envelope-v0.1.md",
+            "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+            "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+            "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+            "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+            "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+            "docs/research/eipm-n0-job-575958-closure-pass-v1.md",
+            "docs/research/eipm-n0-job-575962-semantic-matcher-v2.md",
+            "docs/research/eipm-n0-multilayer-interface-failure-localization-v0.1.md",
+            "docs/research/eipm-n0-qsre-architecture-blueprint-v0.1.md",
+            "docs/research/eipm-n0-qsre-mechanics-result-v0.1.md",
+            "docs/research/eipm-n0-qsre-post-reality-audit-interpretation-v0.57.md",
+            "docs/research/eipm-n0-qsre-preimplementation-contract-result-v0.1.md",
+            "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
+            "docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md",
+            "docs/research/eipm-n0-qsre-t1-executor-decision-v0.1.md",
+            "docs/research/eipm-n0-qsre-t1-one-shot-p100-authorization-v0.1.md",
+            "docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md",
+            "docs/research/eipm-n0-qsre-t1-pretraining-validity-correction-v0.1.md",
+            "docs/research/eipm-n0-qsre-t2-v02-failure-localization-v03-decision.md",
+            "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md",
+            "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
+            "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
+            "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+            "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
+            "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
+            "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+            "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
+            "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md",
+            "docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md",
+            "evaluation/eipm/n0/n0_v02_qsre_mechanics_v0_1.jsonl",
+            "evaluation/eipm/n0/n0_v02_qsre_oracle_contract_v0_1.jsonl",
+            "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_1.py",
+            "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py",
+            "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_3.py",
+            "scripts/eipm/n0/audit_n0_v02_qsre_production_p0_v1.py",
+            "scripts/eipm/n0/audit_n0_v02_qsre_runtime_parity_v0_1.py",
+            "scripts/eipm/n0/audit_n0_v02_qsre_t2_schema_ordered_runtime_v0_3.py",
+            "scripts/eipm/n0/audit_n0_v02_qsre_t2_shortcuts_v0_1.py",
+            "scripts/eipm/n0/audit_n0_v02_qsre_t2_t1_boundary_fuzz_v0_1.py",
+            "scripts/eipm/n0/audit_n0_v02_query_edge_binding_identifiability_v0_1.py",
+            "scripts/eipm/n0/audit_n0_v02_query_semantic_layers_v0_1.py",
+            "scripts/eipm/n0/audit_n0_v02_query_semantic_representations_v0_1.py",
+            "scripts/eipm/n0/build_n0_v02_final_self_validation_v1.py",
+            "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
+            "scripts/eipm/n0/build_n0_v02_qsre_operator_reality_corpus_v0_1.py",
+            "scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py",
+            "scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_1.py",
+            "scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_2.py",
+            "scripts/eipm/n0/build_n0_v02_qsre_t2_operator_challenge_v0_2.py",
+            "scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_1.py",
+            "scripts/eipm/n0/build_n0_v02_qsre_t2_operator_curriculum_v0_2.py",
+            "scripts/eipm/n0/build_n0_v02_query_edge_binding_curriculum_v0_1.py",
+            "scripts/eipm/n0/build_n0_v02_query_edge_preservation_train_anchors_v0_1.py"
+          ],
+          "authority": "unmerged-experiment-pointer"
+        },
         {
           "branch": "alice-eipm-v1-n0-closure-pass",
           "head": "fefc2e4ec54ddde113165b1a3103a1add9be34e8",
@@ -3790,7 +4003,7 @@
     },
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": true,
-      "newest_experiment_frontier_time": "2026-09-20T23:37:23-05:00",
+      "newest_experiment_frontier_time": "2026-09-21T01:02:05-05:00",
       "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
       "context_branch_head_time": "2026-09-20T23:49:11-05:00"
     },
@@ -3799,137 +4012,59 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 104,
-      "branch": "alice-context",
+      "score": 177,
+      "branch": "alice-eipm-v1-n0-closure-semantic-v2",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
-      "blob_sha": "19f407ba4d11922a5095d3570cb6a0474d54e6be",
-      "category": "working_context",
-      "title": "N0 Final Frozen Challenge Ready Handoff",
-      "declared": {
-        "status": " one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized"
-      },
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 13
-    },
-    {
-      "score": 104,
-      "branch": "alice-eipm-v1-n0-closure-pass",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-job-575958-closure-pass-v1.md",
-      "blob_sha": "1d7af6e6ed03b5f478f31107ee36165a95a845f2",
+      "path": "docs/research/eipm-n0-job-575962-semantic-matcher-v2.md",
+      "blob_sha": "74d01ced2d7610d5454610686989699fc9c401a6",
       "category": "design_document",
-      "title": "N0 closure-pass architecture after Magnolia job 575958",
-      "declared": {
-        "status": " implementation and static qualification package; GPU remains closed until exact-head qualification passes"
-      },
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 22,
-          "text": "That pattern says the final-v3 *package abstraction* still behaved like a small closed classifier even though its source code no longer contained an explicit learned relation-ID table."
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "document",
+      "title": "N0 job 575962 — semantic matcher v2 causal repair",
+      "declared": {},
+      "matched_terms": [
+        "failed",
         "failure",
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 25,
-      "currentness_adjustment": 25
+      "lexical_body_hits": 68
     },
     {
-      "score": 93,
+      "score": 172,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
-      "blob_sha": "00e639bed1b0f0ca42f128a266345be54f9541ee",
+      "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md",
+      "blob_sha": "c8753de75f50b757ebc209a7625f12be3c7b7f5b",
       "category": "working_context",
-      "title": "N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization",
+      "title": "N0 Relation-Semantic Role Residual Repair Handoff",
       "declared": {
-        "status": " final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged"
+        "status": " relation-semantic grounding v0.1 failed validly; failure localized to shared read-path entanglement; isolated zero-init semantic-role residual is CI-ready for one P100 run"
       },
-      "matched_terms": [],
+      "matched_terms": [
+        "failed",
+        "failure",
+        "hotfix",
+        "magnolia",
+        "repair",
+        "udocker"
+      ],
       "supersession_hints": [],
       "catalogs": [
-        "document",
         "failure",
+        "document",
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 11
+      "lexical_body_hits": 28
     },
     {
-      "score": 93,
-      "branch": "alice-eipm-v1-n0-closure-pass",
-      "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
-      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
-      "category": "repository_file",
-      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 4,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 93,
-      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
-      "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
-      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
-      "category": "repository_file",
-      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 4,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 93,
-      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
-      "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
-      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
-      "category": "repository_file",
-      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 4,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 91,
+      "score": 165,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-21/sol/N0_JOB575958_CLOSURE_PASS_READY.md",
@@ -3939,224 +4074,387 @@
       "declared": {
         "status": " closure package implemented, exact-head static/CPU qualification passed, Graphify exact-source topology verified, Fable failure/success seeds recorded, one owner Magnolia launch may proceed"
       },
-      "matched_terms": [],
+      "matched_terms": [
+        "failed",
+        "failure",
+        "hotfix",
+        "magnolia"
+      ],
       "supersession_hints": [],
       "catalogs": [
-        "document",
         "failure",
         "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 33
-    },
-    {
-      "score": 89,
-      "branch": "alice-eipm-v1-n0-closure-pass",
-      "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-final-production-v3-qualification.yml",
-      "blob_sha": "c86c69776b683df596947c6ac81e6fc0fd24799b",
-      "category": "repository_file",
-      "title": "n0-final-production-v3-qualification.yml",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
         "document",
-        "failure",
         "lexical"
       ],
-      "lexical_body_hits": 8,
-      "currentness_adjustment": 25
+      "lexical_body_hits": 51
     },
     {
-      "score": 86,
-      "branch": "alice-eipm-v1-n0-closure-pass",
+      "score": 157,
+      "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
-      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
-      "category": "design_document",
-      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
+      "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md",
+      "blob_sha": "9635954cb93dc3bf3e9c63de012dcca5d718ea9f",
+      "category": "working_context",
+      "title": "N0 Relation-Semantic Grounding Repair Handoff",
       "declared": {
-        "status": " production-architecture authority; implementation/training remains closed"
+        "status": " missing-evidence failure localized to relation-semantic endpoint grounding; one bounded repair is CI-ready; no frozen-challenge rerun, threshold change, promotion, scaling, or N0 completion authorized"
       },
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 5,
-          "text": "**Supersedes as production candidates:** T1 executor scaffold, T2 v0.1/v0.2 operator, unrun T2 v0.3 schema-ordered prototype"
-        }
+      "matched_terms": [
+        "failed",
+        "failure",
+        "hotfix",
+        "magnolia",
+        "repair",
+        "udocker"
       ],
+      "supersession_hints": [],
       "catalogs": [
+        "failure",
         "supersession",
         "document",
-        "failure",
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 16,
-      "currentness_adjustment": 25
+      "lexical_body_hits": 28
     },
     {
-      "score": 86,
+      "score": 143,
+      "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+      "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
+      "category": "design_document",
+      "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
+      "declared": {
+        "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
+      },
+      "matched_terms": [
+        "failure",
+        "hotfix",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 23
+    },
+    {
+      "score": 143,
+      "branch": "alice-eipm-v1-dual-view-specialist-failure-localization",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+      "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
+      "category": "design_document",
+      "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
+      "declared": {
+        "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
+      },
+      "matched_terms": [
+        "failure",
+        "hotfix",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 23
+    },
+    {
+      "score": 143,
+      "branch": "alice-eipm-v1-n0-clean-sheet-relational-execution-review",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+      "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
+      "category": "design_document",
+      "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
+      "declared": {
+        "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
+      },
+      "matched_terms": [
+        "failure",
+        "hotfix",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 23
+    },
+    {
+      "score": 143,
+      "branch": "alice-eipm-v1-n0-closure-pass",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+      "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
+      "category": "design_document",
+      "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
+      "declared": {
+        "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
+      },
+      "matched_terms": [
+        "failure",
+        "hotfix",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 23
+    },
+    {
+      "score": 143,
+      "branch": "alice-eipm-v1-n0-closure-semantic-v2",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+      "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
+      "category": "design_document",
+      "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
+      "declared": {
+        "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
+      },
+      "matched_terms": [
+        "failure",
+        "hotfix",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 23
+    },
+    {
+      "score": 143,
+      "branch": "alice-eipm-v1-qsre-production-core-v1",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+      "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
+      "category": "design_document",
+      "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
+      "declared": {
+        "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
+      },
+      "matched_terms": [
+        "failure",
+        "hotfix",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 23
+    },
+    {
+      "score": 143,
       "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
-      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
+      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+      "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
       "category": "design_document",
-      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
+      "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
       "declared": {
-        "status": " production-architecture authority; implementation/training remains closed"
+        "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
       },
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 5,
-          "text": "**Supersedes as production candidates:** T1 executor scaffold, T2 v0.1/v0.2 operator, unrun T2 v0.3 schema-ordered prototype"
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "document",
+      "matched_terms": [
         "failure",
-        "frontier",
-        "lexical"
+        "hotfix",
+        "magnolia",
+        "udocker"
       ],
-      "lexical_body_hits": 16,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 86,
-      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
-      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
-      "category": "design_document",
-      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
-      "declared": {
-        "status": " production-architecture authority; implementation/training remains closed"
-      },
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 5,
-          "text": "**Supersedes as production candidates:** T1 executor scaffold, T2 v0.1/v0.2 operator, unrun T2 v0.3 schema-ordered prototype"
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "document",
-        "failure",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 16,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 80,
-      "branch": "alice-eipm-v1-n0-closure-pass",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
-      "blob_sha": "eee60bbaeba09923431699702aa18d3d559dd85a",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration finalization v0.1",
-      "declared": {},
-      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "document",
         "failure",
+        "supersession",
+        "document",
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 8,
-      "currentness_adjustment": 25
+      "lexical_body_hits": 23
+    },
+    {
+      "score": 143,
+      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+      "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
+      "category": "design_document",
+      "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
+      "declared": {
+        "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
+      },
+      "matched_terms": [
+        "failure",
+        "hotfix",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 23
     }
   ],
   "graphify_navigation_hints": [
     {
-      "label": "run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh",
-      "source": "scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh",
-      "location": "L1",
-      "community": "354"
+      "label": "Use exactly the Production runtime relation-description grammar. Relation keys…",
+      "source": "scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py",
+      "location": "L37",
+      "community": "47"
     },
     {
-      "label": "run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh script",
-      "source": "scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh",
-      "location": "L1",
-      "community": "354"
+      "label": "Identity-neutral candidate-conditioned semantic schema matcher. Runtime schema…",
+      "source": "src/alice_personality/n0/qsre_schema_matcher.py",
+      "location": "L20",
+      "community": "163"
     },
     {
       "label": "prepare_n0_v02_final_self_validation_cache_v1.py",
       "source": "scripts/eipm/n0/prepare_n0_v02_final_self_validation_cache_v1.py",
       "location": "L1",
-      "community": "86"
+      "community": "47"
     },
     {
-      "label": "derive_tokenizer_corpus_v021_from_v01.py",
-      "source": "scripts/eipm/n0/derive_tokenizer_corpus_v021_from_v01.py",
-      "location": "L1",
-      "community": "217"
+      "label": "test_destroy_and_second_rebuild_preserve_deleted_memory_absence()",
+      "source": "tests/phase2/test_memory_deletion_indexes.py",
+      "location": "L428",
+      "community": "16"
     },
     {
       "label": "run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
       "source": "scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
       "location": "L1",
-      "community": "176"
+      "community": "168"
     },
     {
-      "label": "AliceN0V02Model",
-      "source": "src/alice_personality/n0/v02_model.py",
-      "location": "L13",
-      "community": "13"
+      "label": "anchor_loss()",
+      "source": "scripts/eipm/n0/train_n0_v02_evidence_graph_pilot.py",
+      "location": "L328",
+      "community": "84"
+    },
+    {
+      "label": "auxiliary_relation_schema_text()",
+      "source": "scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py",
+      "location": "L36",
+      "community": "47"
+    },
+    {
+      "label": "Shape contract for QSRE mechanics. Axes B/L/Tq/F/Tf/E and feature widths are…",
+      "source": "src/alice_personality/n0/qsre_mechanics.py",
+      "location": "L17",
+      "community": "54"
     },
     {
       "label": "QSREProductionBinderV2",
       "source": "src/alice_personality/n0/qsre_production_binder_v2.py",
       "location": "L16",
-      "community": "172"
+      "community": "167"
     },
     {
       "label": "test_fetch_provider_cannot_bypass_response_byte_budget()",
       "source": "tests/phase4/test_information_research_orchestration.py",
       "location": "L919",
-      "community": "14"
+      "community": "21"
     },
     {
       "label": "CachedStructuredDataset",
       "source": "scripts/eipm/n0/train_n0_v02_structured_state_pilot.py",
       "location": "L259",
-      "community": "55"
+      "community": "153"
     },
     {
-      "label": "chunk_catalog.py",
+      "label": "candidate()",
+      "source": "tests/phase5/test_memory_m2_adjudication_contracts.py",
+      "location": "L154",
+      "community": "25"
+    },
+    {
+      "label": "classify_owner_relation()",
+      "source": "src/alice_vault/owner_attribution.py",
+      "location": "L186",
+      "community": "180"
+    },
+    {
+      "label": "test_ordinary_plaintext_inspection_and_temporal_paths_fail_closed()",
+      "source": "tests/phase2/test_memory_sensitive_storage.py",
+      "location": "L202",
+      "community": "15"
+    },
+    {
+      "label": "train_n0_v02_qsre_closure_matcher_v2.py",
+      "source": "scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py",
+      "location": "L1",
+      "community": "47"
+    },
+    {
+      "label": "compute()",
       "source": "src/alice_vault/chunk_catalog.py",
+      "location": "L80",
+      "community": "93"
+    },
+    {
+      "label": "train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py",
+      "source": "scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py",
       "location": "L1",
-      "community": "91"
+      "community": "12"
     },
     {
-      "label": "train_n0_v02_qsre_closure_matcher_v1.py",
-      "source": "scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v1.py",
+      "label": "paired_view_consistency()",
+      "source": "scripts/eipm/n0/qsre_production_training_utils.py",
+      "location": "L440",
+      "community": "28"
+    },
+    {
+      "label": "test_binder_v2_operator_continuous_state_is_not_support_authority()",
+      "source": "tests/eipm/test_n0_qsre_production_binder_v2.py",
+      "location": "L152",
+      "community": "167"
+    },
+    {
+      "label": "qsre_production_core.py",
+      "source": "src/alice_personality/n0/qsre_production_core.py",
       "location": "L1",
-      "community": "86"
-    },
-    {
-      "label": "codes()",
-      "source": "tests/phase3/test_conversation_response_validation_adversarial.py",
-      "location": "L18",
-      "community": "63"
-    },
-    {
-      "label": "context()",
-      "source": "tests/phase1/test_claim_support_audit.py",
-      "location": "L17",
-      "community": "105"
-    },
-    {
-      "label": "Metadata-only provenance for source truth, inference, and continuity.",
-      "source": "src/cognitive_kernel/contracts.py",
-      "location": "L167",
-      "community": "0"
+      "community": "54"
     },
     {
       "label": "test_n0_curriculum_coverage.py",
@@ -4165,62 +4463,26 @@
       "community": "4"
     },
     {
-      "label": "test_docs_remove_obsolete_opaque_only_boundary()",
-      "source": "tests/governance/test_memory_identity_host_learning_architecture.py",
-      "location": "L154",
-      "community": "250"
-    },
-    {
-      "label": "train_n0_v02_relation_repair.py",
-      "source": "scripts/eipm/n0/train_n0_v02_relation_repair.py",
+      "label": "downstream_causal_arbitration_v0_1.py",
+      "source": "scripts/eipm/n0/downstream_causal_arbitration_v0_1.py",
       "location": "L1",
-      "community": "3"
+      "community": "129"
     },
     {
-      "label": "evidence()",
-      "source": "tests/phase3/test_conversation_phase1_grounding_bridge.py",
-      "location": "L26",
-      "community": "37"
+      "label": "test_policy_rejects_contract_drift()",
+      "source": "tests/phase3/test_conversation_response_repair_policy.py",
+      "location": "L64",
+      "community": "70"
     },
     {
-      "label": "ExactInformationLiveProviderRegistry",
-      "source": "src/alice_information/live_provider_registry.py",
-      "location": "L16",
-      "community": "204"
-    },
-    {
-      "label": "factor_losses()",
-      "source": "scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v1.py",
-      "location": "L257",
-      "community": "86"
-    },
-    {
-      "label": "final_evaluation_runtime.py",
-      "source": "src/alice_information/final_evaluation_runtime.py",
-      "location": "L1",
-      "community": "57"
-    },
-    {
-      "label": "Frozen graph parent plus dual-view late-interaction specialist.",
-      "source": "src/alice_personality/n0/evidence_graph_query_edge_dual_view.py",
-      "location": "L19",
-      "community": "28"
-    },
-    {
-      "label": "gate()",
-      "source": "scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
-      "location": "L155",
-      "community": "2"
-    },
-    {
-      "label": "GraphDataset",
-      "source": "scripts/eipm/n0/train_n0_v02_evidence_graph_pilot.py",
-      "location": "L224",
-      "community": "44"
+      "label": ".test_invalid_citations_are_removed_and_citationless_claims_are_dropped()",
+      "source": "tests/phase1/test_evidence_constrained_claim_generation.py",
+      "location": "L115",
+      "community": "53"
     }
   ],
-  "private_external_route_recommended": false,
-  "private_external_route_reason": null,
+  "private_external_route_recommended": true,
+  "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
   "trust_contract": [
     "This capsule routes retrieval; it is not canonical A.L.I.C.E. truth.",
     "Open consequential claims in the original branch/path source before acting.",
