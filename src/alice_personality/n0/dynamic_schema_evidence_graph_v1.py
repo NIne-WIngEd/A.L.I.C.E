@@ -142,12 +142,25 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             target = node[batch_index, target_index]
             rel = relation[batch_index, relation_index]
             edge_relation_mass = relation_mass.gather(1, relation_index)
+            edge_symmetric = relation_symmetric[batch_index, relation_index]
+            pair_mean = 0.5 * (source + target)
+            pair_delta = (source - target).abs()
+            edge_source = torch.where(
+                edge_symmetric.unsqueeze(-1),
+                pair_mean,
+                source,
+            )
+            edge_target = torch.where(
+                edge_symmetric.unsqueeze(-1),
+                pair_delta,
+                target,
+            )
             op = operator[:, None, :].expand(batch, edges, -1)
             edge = self.edge_update(
                 torch.cat(
                     [
-                        source,
-                        target,
+                        edge_source,
+                        edge_target,
                         rel,
                         op,
                         metadata,
@@ -161,7 +174,6 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
 
             source_msg = self.source_message(torch.cat([edge, op], dim=-1))
             target_msg = self.target_message(torch.cat([edge, op], dim=-1))
-            edge_symmetric = relation_symmetric[batch_index, relation_index]
             symmetric_message = 0.5 * (source_msg + target_msg)
             source_msg = torch.where(
                 edge_symmetric.unsqueeze(-1),
@@ -242,6 +254,7 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             "continuous_relation_conditioning": True,
             "runtime_relation_symmetry": True,
             "symmetric_edge_message_exchange": True,
+            "symmetric_edge_endpoint_order_invariant": True,
             "exact_structural_sparsity": False,
             "dual_endpoint_read": True,
             "field_count_ceiling": None,
