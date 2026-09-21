@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "cc202b81f95c1716d075f825f1f84e796e75a8a5",
-      "head_committed_at": "2026-09-21T01:07:47-05:00",
-      "head_message": "context(n0): record 575962 semantic-v2 ready frontier",
+      "head": "7bc0637c3650c224a7072a09bb2b09bbc82bc95f",
+      "head_committed_at": "2026-09-21T10:19:57-05:00",
+      "head_message": "context(n0): record final full-scale closure frontier",
       "status": "diverged",
-      "ahead": 233,
+      "ahead": 234,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 580,
+      "changed_file_count_vs_source_merge_base": 581,
       "knowledge_surface": true
     },
     {
@@ -389,14 +389,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "1037daa6c86669ccfc590394920e7a0db6191a5f",
-      "head_committed_at": "2026-09-21T02:10:49-05:00",
-      "head_message": "trace(fbm): capture 575966 and frozen authority v3",
+      "head": "ad4afdaee87726787efc9cbcaf7a8664553628d4",
+      "head_committed_at": "2026-09-21T10:18:17-05:00",
+      "head_message": "trace(fbm): record final full-scale N0 closure package",
       "status": "diverged",
-      "ahead": 107,
+      "ahead": 108,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 106,
+      "changed_file_count_vs_source_merge_base": 107,
       "knowledge_surface": true
     },
     {
