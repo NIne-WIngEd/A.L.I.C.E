@@ -1,0 +1,143 @@
+{
+  "schema": "alice.eipm.n0.final-full-scale-capability-package.v1",
+  "status": "PRECOMMITTED_FULL_SCALE_N0_CLOSURE_PACKAGE",
+  "purpose": "Close N0 only if the complete identity-neutral semantic, structured, evidence, relational, sparse-support, fusion, uncertainty and multi-view latent fabric passes the original frozen native N0 objective. This is not a pilot or reduced-capability target.",
+  "n0_complete": false,
+  "n1_authorized": false,
+  "closure_authority": "PASS_N0_FINAL_SELF_VALIDATION_OBJECTIVE",
+  "source_failure_chain": [
+    {
+      "job": 575956,
+      "meaning": "Production P2-v1 failed; operator semantics/localization evidence only"
+    },
+    {
+      "job": 575957,
+      "meaning": "ordered-evidence diagnostic localized relation identity/order collapse"
+    },
+    {
+      "job": 575958,
+      "meaning": "Production-v3 full P2 failed; implicit closed semantic metric and lost ordered evidence identified"
+    },
+    {
+      "job": 575962,
+      "meaning": "P2S-v1 failed broad semantic matching before Production P2"
+    },
+    {
+      "job": 575966,
+      "meaning": "P2S-v2 fit Production core but failed unseen/factor semantic generalization; learned matcher boundary rejected"
+    }
+  ],
+  "preserved_ratified_artifacts": {
+    "semantic_checkpoint": {
+      "path": "$ALICE_N0_WORKDIR/targeted-repair-v0.1/checkpoints/step-00000080/alice_n0_v02.safetensors",
+      "sha256": "6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43"
+    },
+    "p1_executor_checkpoint": {
+      "path": "$ALICE_N0_WORKDIR/qsre-production-core-v1-stop-tail-recovery-v1/p1/step-00000050/qsre_production_p1.pt",
+      "sha256": "91f2c78dcc35967064189af4a7110cdee83e5652fb037d3d88f58500ac3aaab9"
+    },
+    "fusion_checkpoint": {
+      "path": "$ALICE_N0_WORKDIR/cross-context-fusion-repair-training-v0.2/repair-step-00000240/cross_context_fusion.safetensors",
+      "sha256": "4d51494beb788f74ddc03590da05ea00f0e36574294649c2cd5d438f9472e577"
+    },
+    "latent_pool_checkpoint": {
+      "path": "$ALICE_N0_WORKDIR/adaptive-multi-view-latent-pool-training-v0.2.1/step-00000360/adaptive_multi_view_latent_pool_v0_2.safetensors",
+      "sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4"
+    },
+    "original_frozen_validation_root": "$ALICE_N0_WORKDIR/qsre-production-core-v1/final-frozen"
+  },
+  "architecture": {
+    "semantic_backbone": "ratified alice-n0-semantic-v0.2 targeted-repair step-80",
+    "semantic_authority": "zero-gradient runtime schema authority from trained joint candidate ranking, trained semantic projection, and parameter-free token evidence",
+    "semantic_authority_gradient": false,
+    "semantic_authority_optimizer": false,
+    "learned_schema_matcher": false,
+    "token_evidence_matcher_trainable_parameters": 0,
+    "production_operator": "ordered recurrent continuous operator with candidate-conditioned query coverage",
+    "relation_identity_owned_by_trainable_operator": false,
+    "factor_identity_owned_by_trainable_operator": false,
+    "relation_hypotheses": "continuous until structural binding",
+    "exact_relation_sparsity_before_binder": false,
+    "binder": "QSREProductionBinderV2",
+    "binder_owns_exact_structural_sparsity": true,
+    "executor": "ratified corrected P1 executor",
+    "dynamic_runtime_relation_schema": true,
+    "runtime_relation_identity_parameters": 0,
+    "structured_state": true,
+    "evidence_graph": true,
+    "heterogeneous_cross_context_fusion": true,
+    "adaptive_multi_view_latent_pool": true,
+    "uncertainty_surfaces": true,
+    "private_identity_data": false,
+    "private_identity_gradient": false
+  },
+  "scale_policy": {
+    "package_class": "full_scale_capability",
+    "pilot": false,
+    "reduced_capability_target": false,
+    "hard_parameter_ceiling": null,
+    "hard_parameter_floor": null,
+    "runtime_relation_count_ceiling": null,
+    "runtime_reasoning_step_ceiling": null,
+    "runtime_type_vocabulary_ceiling": null,
+    "current_semantic_width_is_capability_ceiling": false,
+    "current_model_width_is_capability_ceiling": false,
+    "current_hidden_depth_is_capability_ceiling": false,
+    "current_field_count_is_capability_ceiling": false,
+    "current_factor_counts_are_parameter_topology_ceiling": false,
+    "current_training_steps_are_serving_ceiling": false,
+    "current_batch_size_is_serving_ceiling": false,
+    "rule": "Current dimensions and training budgets are qualified operating points for this N0 closure experiment, not permanent capability ceilings. Future evidence may justify scaling or architectural expansion without violating N0 doctrine."
+  },
+  "causal_stage_order": [
+    "prove preserved 575966 failure lineage",
+    "P2A zero-gradient frozen semantic authority qualification",
+    "materialize Production and final zero-gradient authority caches bound to preserved runtime schemas",
+    "Production P2 ordered operator",
+    "Production P3 Binder v2",
+    "Production P4 fully predicted zero-gradient evaluation",
+    "original frozen native N0 self-validation"
+  ],
+  "stage_authorization": {
+    "p2a_to_p2": "P2A must pass all precommitted semantic-generalization gates",
+    "p2_to_p3": "P2 must select a checkpoint under unchanged Production eligibility",
+    "p3_to_p4": "P3 must select a Binder checkpoint under unchanged eligibility",
+    "p4_to_final": "P4 must pass unchanged end-to-end eligibility",
+    "final_to_n1": "Only PASS_N0_FINAL_SELF_VALIDATION_OBJECTIVE with n0_complete=true and n1_authorized=true"
+  },
+  "holdout_policy": {
+    "production_open_schema_descriptions_in_gradient": false,
+    "final_only_relation_descriptions_in_gradient": false,
+    "auxiliary_holdout_relation_descriptions_in_gradient": false,
+    "production_train_authority_candidates": "core six only",
+    "production_dev_authority_candidates": "full Production runtime schema",
+    "final_authority_candidates": "full original frozen final runtime schema",
+    "candidate_normalization_after_runtime_subset": true,
+    "test_split_opened_for_training": false
+  },
+  "governance": {
+    "max_new_owner_gpu_runs": 1,
+    "automatic_rerun": false,
+    "automatic_hotfix": false,
+    "learning_rate_search": false,
+    "step_search": false,
+    "width_search": false,
+    "batch_size_search": false,
+    "threshold_change_after_results": false,
+    "failed_evidence_preserved": true,
+    "original_frozen_validation_rebuilt": false,
+    "original_frozen_validation_thresholds_changed": false,
+    "one_causal_change_per_failed_model_gate": true
+  },
+  "source_files": {
+    "frozen_authority_plan": "configs/eipm/n0/n0_v02_qsre_frozen_semantic_authority_plan_v3.json",
+    "downstream_plan": "configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json",
+    "semantic_authority_runtime": "scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py",
+    "authority_qualification": "scripts/eipm/n0/qualify_n0_v02_qsre_frozen_semantic_authority_v3.py",
+    "authority_cache_builder": "scripts/eipm/n0/prepare_n0_v02_qsre_frozen_authority_cache_v3.py",
+    "operator": "src/alice_personality/n0/qsre_production_operator_v3.py",
+    "binder": "src/alice_personality/n0/qsre_production_binder_v2.py",
+    "runner": "scripts/eipm/n0/run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh",
+    "magnolia": "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_n0_frozen_semantic_authority_v3.sbatch"
+  }
+}
