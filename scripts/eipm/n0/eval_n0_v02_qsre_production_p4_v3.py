@@ -38,6 +38,7 @@ def main()->None:
     p.add_argument("--p1-root",required=True)
     p.add_argument("--p2-result",required=True)
     p.add_argument("--p2-root",required=True)
+    p.add_argument("--factor-schema-cache",required=True)
     p.add_argument("--p3-result",required=True)
     p.add_argument("--p3-root",required=True)
     p.add_argument("--output",required=True)
@@ -57,7 +58,11 @@ def main()->None:
     p3_path,_=load_selected(Path(args.p3_result),Path(args.p3_root),"qsre_production_p3.pt","PASS_QSRE_PRODUCTION_P3_BINDER")
 
     device=torch.device("cuda")
-    schema_encoder,executor,operator_model=load_parents(p1_path=p1_path,p2_path=p2_path,config=config,device=device)
+    schema_encoder,executor,operator_model=load_parents(
+        p1_path=p1_path,p2_path=p2_path,
+        factor_schema_cache_path=Path(args.factor_schema_cache),
+        config=config,device=device,
+    )
     binder=QSREProductionBinderV2(config)
     binder.load_state_dict(torch.load(p3_path,map_location="cpu")["binder"],strict=True)
     for parameter in binder.parameters():
