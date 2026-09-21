@@ -111,6 +111,44 @@ def test_v3_relation_hypotheses_remain_continuous_before_binding() -> None:
     )
 
 
+def test_v3_new_runtime_relation_can_win_from_semantic_description_only() -> None:
+    torch.manual_seed(101)
+    model = QSREProductionOperatorInducerV3(cfg()).eval()
+    with torch.no_grad():
+        model.step_query.weight.zero_()
+
+    g = torch.Generator().manual_seed(102)
+    target = torch.randn(3, 5, 24, generator=g)
+    relation_tokens = torch.stack(
+        [
+            -target,
+            torch.roll(target, shifts=7, dims=-1),
+            target,
+        ],
+        dim=0,
+    )
+    runtime_schema = QSREDynamicRelationSchema(
+        token_states=relation_tokens,
+        token_mask=torch.ones(3, 5, dtype=torch.bool),
+        domain_type_mask=torch.ones(3, 4, dtype=torch.bool),
+        range_type_mask=torch.ones(3, 4, dtype=torch.bool),
+        symmetric=torch.zeros(3, dtype=torch.bool),
+    )
+    query_hidden = target.unsqueeze(0)
+    query_mask = torch.ones(1, 5, dtype=torch.bool)
+    token, summary = encoded_schema_inputs(runtime_schema)
+    out = model(
+        query_hidden_states=query_hidden,
+        query_token_mask=query_mask,
+        schema=runtime_schema,
+        schema_token_state=token,
+        schema_relation_state=summary,
+        max_steps=1,
+    )["operator"].relation_distribution
+    assert int(out[0, 0].argmax().item()) == 2
+    assert torch.all(out > 0)
+
+
 def test_v3_schema_permutation_equivariance() -> None:
     torch.manual_seed(10)
     model = QSREProductionOperatorInducerV3(cfg()).eval()
