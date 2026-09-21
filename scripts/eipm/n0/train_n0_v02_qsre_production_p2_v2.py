@@ -212,8 +212,6 @@ def operator_supervised_loss_v2(
     device: torch.device,
 ) -> tuple[torch.Tensor, dict[str, float]]:
     operator: QSREProductionOperatorState = model_output["operator"]
-    event_distribution = model_output["event_distribution"]
-
     relation_target = split["relation_target"][indices].to(device).long()
     relation_mask = split["relation_target_mask"][indices].to(device).bool()
     role_target = split["role_target"][indices].to(device).long()
