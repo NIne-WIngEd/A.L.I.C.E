@@ -1,0 +1,159 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-interface-contract.v1",
+  "status": "STATIC_INTERFACE_CONTRACT_NO_GRADIENT",
+  "date": "2026-09-21",
+  "foundation": {
+    "implementation": "src/alice_personality/n0/semantic_operator_foundation.py",
+    "query_hidden_states": "[B,L,T,D] from shared trainable semantic backbone",
+    "relation_schema": "runtime DynamicRelationSchema [R,L,S,D] + exact [R,K] domain/range masks",
+    "factor_schemas": "runtime mapping of factor-name to DynamicSemanticSchema [C_i,L,S_i,D]",
+    "relation_cardinality_runtime_axis": true,
+    "factor_cardinality_runtime_axis": true,
+    "type_vocabulary_runtime_axis": true,
+    "reasoning_step_runtime_axis": true,
+    "relation_keys_semantic_tokens": false,
+    "factor_keys_semantic_tokens": false
+  },
+  "structured_state_successor": {
+    "preserve": [
+      "field_set_processing",
+      "permutation_equivariance",
+      "confidence",
+      "missingness",
+      "provenance_metadata",
+      "temporal_metadata"
+    ],
+    "replace_semantic_authority": [
+      "fixed_field_type_embedding_meaning",
+      "fixed_provenance_embedding_meaning",
+      "fixed_relation_role_embedding_meaning",
+      "fixed_temporal_scope_embedding_meaning"
+    ],
+    "successor_inputs": [
+      "field_content_token_states",
+      "runtime_type_descriptor_states",
+      "runtime_provenance_descriptor_states",
+      "runtime_temporal_descriptor_states",
+      "missingness",
+      "confidence"
+    ],
+    "integer_ids_role": "structural indexing/cache only; not semantic meaning",
+    "field_count_ceiling": null
+  },
+  "evidence_view_successor": {
+    "preserve": [
+      "query_conditioned_evidence_view",
+      "residual_parent_preservation",
+      "field_permutation_equivariance"
+    ],
+    "remove": [
+      "single_pooled_query_as_only_semantic_condition",
+      "fixed_relation_id_semantic_authority"
+    ],
+    "successor_inputs": [
+      "multi_layer_query_tokens",
+      "continuous_operator_state",
+      "dynamic_relation_schema_states",
+      "structured_field_states",
+      "field_content_tokens",
+      "edge_metadata"
+    ],
+    "field_count_ceiling": null,
+    "edge_count_ceiling": null
+  },
+  "evidence_graph_successor": {
+    "preserve": [
+      "directed_message_passing",
+      "dual_endpoint_read",
+      "symmetric_relation_behavior",
+      "reliability_and_temporal_metadata"
+    ],
+    "remove": [
+      "learned_relation_id_embedding_as_semantic_authority"
+    ],
+    "relation_state_source": "runtime semantic relation schema and continuous operator state",
+    "edge_relation_index_role": "runtime indexing into supplied schema only",
+    "graph_depth_ceiling": null,
+    "node_count_ceiling": null,
+    "edge_count_ceiling": null
+  },
+  "fusion_successor": {
+    "preserve": [
+      "multi_stream_self_refinement",
+      "bidirectional_cross_attention",
+      "exact_source_anchor",
+      "missing_view_masking",
+      "disagreement_geometry"
+    ],
+    "view_semantics": "runtime view descriptors plus source channels; checkpoint view IDs may not be sole semantic authority",
+    "view_count_ceiling": null,
+    "old_checkpoint_requires_requalification": true
+  },
+  "latent_successor": {
+    "preserve": [
+      "competitive_slot_attention",
+      "permutation_free_slots",
+      "source_and_contextualized_channels",
+      "multi_slot_uncertainty"
+    ],
+    "slot_count_ceiling": null,
+    "view_count_ceiling": null,
+    "old_step360_is_final_authority": false,
+    "old_step360_role": "initialization/comparison candidate only",
+    "old_checkpoint_requires_requalification": true
+  },
+  "qsre_executor_successor": {
+    "preserve": [
+      "dynamic_runtime_relation_schema",
+      "shared_recurrent_execution",
+      "ordered_evidence_coverage",
+      "continuous_relation_hypotheses",
+      "unknown_separate_from_stop",
+      "exact_nonrelational_fallback"
+    ],
+    "relation_identity_parameter_axis": false,
+    "hop_identity_parameter_axis": false,
+    "factor_identity_parameter_axis": false
+  },
+  "binder_successor": {
+    "preserve": [
+      "first_exact_structural_sparsity_boundary",
+      "adaptive_zero_one_many_support",
+      "no_fixed_topk",
+      "exact_domain_range_constraints",
+      "relation_mass_from_operator"
+    ],
+    "replace": [
+      "final_layer_only_query_read",
+      "single_layer_field_semantic_read",
+      "fixed_type_id_as_semantic_meaning"
+    ],
+    "successor_query_state": "multi-layer query/schema-conditioned semantic state",
+    "successor_field_state": "token-level field state co-adapted with runtime type descriptors",
+    "exact_type_masks_remain_structural": true,
+    "support_count_ceiling": null
+  },
+  "fusion_latent_integration": {
+    "qsre_bridge_parameter_count": 0,
+    "relational_summary_enters_evidence_view": true,
+    "ablation_geometry_must_match": true,
+    "downstream_modules_may_receive_gradient_in_later_joint_stage": true,
+    "permanent_parent_freeze_forbidden_before_full_envelope_sufficiency": true
+  },
+  "invariants": {
+    "no_early_relation_argmax": true,
+    "no_exact_semantic_sparsity_before_binder": true,
+    "no_fixed_runtime_relation_ontology": true,
+    "no_fixed_runtime_factor_ontology": true,
+    "no_private_identity_gradient": true,
+    "no_product_ceiling_from_checkpoint_shapes": true
+  },
+  "authorization": {
+    "source_and_static_mechanics": true,
+    "optimizer": false,
+    "gradient": false,
+    "gpu": false,
+    "test_opening": false,
+    "private_identity_gradient": false
+  }
+}
