@@ -131,6 +131,8 @@ def test_full_envelope_stack_forward_and_gradient_continuity() -> None:
     )
     factors, opcodes = factor_bundle()
     inputs = make_inputs()
+    candidate_hidden = torch.randn(2, 6, 3, 5, 24)
+    candidate_mask = torch.ones(2, 6, 5, dtype=torch.bool)
     out = model(
         relation_schema=schema(5, seed=90),
         factor_schemas=factors,
@@ -140,15 +142,18 @@ def test_full_envelope_stack_forward_and_gradient_continuity() -> None:
         fusion_refinement_steps=2,
         latent_slot_count=7,
         latent_refinement_steps=2,
+        candidate_hidden_states=candidate_hidden,
+        candidate_token_mask=candidate_mask,
         **inputs,
     )
     assert out["latent"]["latent_slots"].shape == (2, 7, 24)
     assert out["source_views"].shape == (2, 6, 24)
     assert out["binder"]["edge_support_weight"].shape == (2, 6)
     assert out["executor"]["relational_probability"].shape == (2, 5)
+    assert out["public_judgment"]["candidate_logits"].shape == (2, 6)
 
     loss = (
-        out["latent"]["pooled_state"].square().mean()
+        out["public_judgment"]["candidate_logits"].square().mean()
         + out["semantic_operator"]["relation_logits"].square().mean()
     )
     loss.backward()
@@ -194,6 +199,8 @@ def test_full_envelope_stack_accepts_additional_runtime_views_and_runtime_slots(
     assert out["source_views"].shape == (2, 10, 24)
     assert out["latent"]["latent_slots"].shape == (2, 13, 24)
     report = model.parameter_report()
+    assert report["module_reports"]["public_judgment_probe"]["candidate_identity_parameters"] == 0
+    assert report["module_reports"]["public_judgment_probe"]["candidate_count_ceiling"] is None
     assert report["runtime_relation_ceiling"] is None
     assert report["runtime_factor_ceiling"] is None
     assert report["runtime_field_ceiling"] is None
