@@ -10,6 +10,9 @@ on:
       - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.60.json"
       - "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py"
       - "scripts/eipm/n0/qsre_production_training_utils.py"
+      - "scripts/eipm/n0/qualify_n0_v02_qsre_production_p2_v3_real_artifact_v1.py"
+      - "scripts/eipm/n0/run_n0_v02_qsre_production_p2_v3_real_artifact_qualification_v1.sh"
+      - "scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_production_p2_v3_real_artifact_qualification_v1.sbatch"
       - ".github/workflows/n0-qsre-production-p2-ordered-evidence-v3-contract.yml"
   workflow_dispatch:
 
@@ -28,6 +31,9 @@ jobs:
           python -m py_compile tests/eipm/test_n0_qsre_production_operator_v3.py
           python -m py_compile scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py
           python -m py_compile scripts/eipm/n0/qsre_production_training_utils.py
+          python -m py_compile scripts/eipm/n0/qualify_n0_v02_qsre_production_p2_v3_real_artifact_v1.py
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_production_p2_v3_real_artifact_qualification_v1.sh
+          bash -n scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_production_p2_v3_real_artifact_qualification_v1.sbatch
 
       - name: Ordered-evidence mechanics
         run: |
@@ -81,4 +87,24 @@ jobs:
           assert state["interpretation"]["relation_identity_order_primary_bottleneck"] is True
           assert state["interpretation"]["active_survival_primary_bottleneck"] is False
           print("PASS_LOCALIZATION_BOUND_ORDERED_EVIDENCE_V3_CONTRACT")
+          PY
+
+
+      - name: Real-artifact qualification remains zero-gradient
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          q=Path("scripts/eipm/n0/qualify_n0_v02_qsre_production_p2_v3_real_artifact_v1.py").read_text()
+          r=Path("scripts/eipm/n0/run_n0_v02_qsre_production_p2_v3_real_artifact_qualification_v1.sh").read_text()
+          s=Path("scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_production_p2_v3_real_artifact_qualification_v1.sbatch").read_text()
+          for token in ("torch.optim", ".backward(", "optimizer.step("):
+              assert token not in q, token
+          assert "torch.inference_mode()" in q
+          assert '"gradient_performed": False' in q
+          assert '"p2_v3_gpu_training_authorized_by_this_receipt": False' in q
+          assert "RAYAN_UDOCKER_NVIDIA=0" in r
+          assert "RAYAN_UDOCKER_NVIDIA=0" in s
+          assert "#SBATCH --partition=node" in s
+          assert "#SBATCH --gres=gpu" not in s
+          print("PASS_P2_V3_ZERO_GRADIENT_REAL_ARTIFACT_BOUNDARY")
           PY
