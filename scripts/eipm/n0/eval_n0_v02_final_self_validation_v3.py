@@ -525,6 +525,14 @@ def main() -> None:
         raise SystemExit("final semantic-authority relation order drift")
     if final_authority.get("rows_sha256") != sha256(relational_path):
         raise SystemExit("final semantic-authority frozen corpus lineage drift")
+    if final_authority.get("qualification_result_sha256") != _production_authority.get(
+        "qualification_result_sha256"
+    ):
+        raise SystemExit("final/Production semantic-authority qualification lineage drift")
+    if final_authority.get("semantic_checkpoint_sha256") != _production_authority.get(
+        "semantic_checkpoint_sha256"
+    ):
+        raise SystemExit("final/Production semantic-authority checkpoint lineage drift")
 
     qsre_result, qsre_runtime = qsre_final_metrics(
         split=split,
