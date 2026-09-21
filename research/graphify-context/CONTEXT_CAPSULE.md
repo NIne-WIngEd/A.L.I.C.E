@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-final-full-scale-frozen-authority-post-handoff-20260921-018
-- Question: Post-handoff continuity refresh for the final full-scale N0 closure package. Rebuild the exact-source Graphify code graph from alice-eipm-v1-n0-frozen-semantic-authority-v3 at qualified HEAD 0a8ac74aa6fa73259c03dc4d8754a42a6fde2307 after the final continuity commits landed. Confirm the refreshed branch/document catalogs now see alice-context at 7bc0637c3650c224a7072a09bb2b09bbc82bc95f and fable-builder-model at ad4afdaee87726787efc9cbcaf7a8664553628d4, and that the final handoff/Fable traces both point to implementation HEAD 0a8ac74aa6fa73259c03dc4d8754a42a6fde2307. Reconfirm the current package retains the complete causal chain and architecture: preserved job575966 failure -> P2A zero-gradient FOUR-surface frozen semantic authority -> core-six-only Production TRAIN with runtime-subset-before-normalization -> ordered recurrent continuous Production P2 with explicit remaining-query-evidence coverage and P1 relation-state retained only as executor interface/alignment -> Binder v2 as the first exact sparse structural boundary -> P3/P4 -> original frozen native final objective. Reconfirm the selected repaired DualEndpoint graph step-200 SHA 3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f is the preselected full-scale base parent, major parent hashes are checked before evidence-root creation, no learned relation/factor identity or early exact relation sparsity exists, no open-schema/final-only TRAIN leakage exists, no pilot/reduced-capability substitution or hidden relation/factor/hop ceiling exists, and no automatic rerun/tuning/threshold drift exists. Compare the older ordered-evidence-v3 and P2-failure-localization maximal heads only for unique causal lessons; do not treat them as current execution frontiers. Report any concrete source or continuity defect that should block the one owner Magnolia launch. This is a routing/continuity verification only, not authorization for an architecture change.
+- Request: n0-job575986-p2a-frozen-authority-failure-causal-audit-20260921-019
+- Question: Causal postmortem of owner Magnolia job 575986 on alice-eipm-v1-n0-frozen-semantic-authority-v3 at exact implementation HEAD 0a8ac74aa6fa73259c03dc4d8754a42a6fde2307. Job 575986 is infrastructure-clean and failed at P2A before Production P2 with status FAIL_QSRE_FROZEN_SEMANTIC_AUTHORITY, exit 42, elapsed 00:05:04, no stderr. Preflight/source lineage passed and the selected repaired graph hash matched. P2A metrics were production_core_single_relation_top1=0.4068181812763214 against gate 0.95, auxiliary_seen_relation_top1=0.2708333432674408 against 0.95, auxiliary_holdout_relation_top1=0.2604166567325592 against 0.85, heldout_factor_macro_accuracy=0.36666667064030967 against 0.90. Component diagnostics: Production core joint_preference≈0.17045, principle_alignment≈0.13864, semantic_projection≈0.15909-0.18636, token_evidence≈0.50682-0.52955, combined≈0.40682-0.41591. Auxiliary holdout joint_preference=0, semantic_projection≈0-0.0104, principle_alignment=0.125, token_evidence≈0.219-0.302, combined≈0.260-0.292. Factor combined macro≈0.3667; token evidence was individually much stronger for role=0.875, traversal≈0.667, modifiers≈0.667, direction=0.5, control=0.5 while the learned/frozen semantic surfaces were near chance. Compare this with preserved learned P2S-v2 job575966 best metrics production_core≈0.9477, auxiliary_seen≈0.71875, auxiliary_holdout≈0.6667, heldout_factor_macro≈0.7167. Treat 575986 as valid model/capability evidence, not infrastructure and not a tuning excuse. Reconstruct the semantic-backbone training objectives, targeted-repair history, P2S-v1/v2 failure chain, QSRE operator boundary, N0 role, full EIPM workload envelope, and any earlier decision not to reopen the semantic backbone. Determine what 575986 newly falsifies versus what remains supported. Specifically test these hypotheses against source: (1) the ratified N0 semantic backbone does not contain sufficiently discriminative open-schema relation/factor semantics, (2) the four frozen surfaces are individually miscalibrated for runtime schema discrimination, (3) equal-weight candidate-axis z-score fusion is itself the primary defect, (4) prompt/task mismatch rather than representation deficiency explains the collapse, (5) P2S learned adaptation demonstrates semantic information is latent but inaccessible to zero-gradient readout, (6) the semantic-base architecture must now be reopened rather than adding another head. Do not propose LR/step/width/batch/threshold tuning or another hotfix chain. Compare all maximal unmerged N0 heads and supersession history. Identify the smallest scientifically meaningful next investigation that can distinguish representation deficiency, readout/task mismatch, and fusion/calibration failure without consuming another owner GPU run. Also identify what should be written to alice-context and Fable now. Graphify remains navigation-only; cite original source paths for consequential conclusions.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -24,45 +24,45 @@
 
 ## Source pointers
 
-- [242] alice-context:docs/chat-context/2026-09-21/sol/N0_FINAL_FULL_SCALE_FROZEN_AUTHORITY_READY.md — N0 final full-scale frozen-authority closure — ready for one owner Magnolia run
-  - status:  final pre-launch package completed; exact-head static/CPU qualification passed; exact-source Graphify passed; private operational history reconciled; Fable updated; one owner Magnolia run is the next scientific evidence
-- [222] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
-  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
-- [185] alice-context:docs/chat-context/2026-09-21/sol/N0_FINAL_PRODUCTION_V3_QUALIFIED.md — N0 final Production v3 qualified for one owner launch
-- [185] alice-context:docs/chat-context/2026-09-21/sol/N0_JOB575958_CLOSURE_PASS_READY.md — N0 job 575958 closure-pass — exact-head verified and ready for one Magnolia launch
+- [231] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-job-575962-semantic-matcher-v2.md — N0 job 575962 — semantic matcher v2 causal repair
+- [217] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md — N0 job 575966 — frozen semantic authority v3
+- [211] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md — Production QSRE P2 job 575956 failure localization v1
+  - status:  zero-gradient diagnosis authority; no rerun or GPU authorization
+- [211] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md — Production QSRE P2 job 575956 failure localization v1
+  - status:  zero-gradient diagnosis authority; no rerun or GPU authorization
+- [206] alice-eipm-v1-n0-closure-semantic-v2:docs/research/eipm-n0-job-575962-semantic-matcher-v2.md — N0 job 575962 — semantic matcher v2 causal repair
+- [203] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
+  - status:  production-architecture authority; implementation/training remains closed
+- [203] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
+  - status:  production-architecture authority; implementation/training remains closed
+- [203] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
+  - status:  production-architecture authority; implementation/training remains closed
+- [201] alice-context:docs/chat-context/2026-09-21/sol/N0_JOB575962_SEMANTIC_V2_READY.md — N0 job 575962 semantic-v2 closure — qualified for one owner launch
+  - status:  valid P2S model failure preserved; semantic-v2 repair implemented; exact-head static/CPU qualification passed; exact-source Graphify verification passed; Fable trace updated; one owner Magnolia launch may proceed
+- [199] alice-context:docs/chat-context/2026-09-21/sol/N0_JOB575958_CLOSURE_PASS_READY.md — N0 job 575958 closure-pass — exact-head verified and ready for one Magnolia launch
   - status:  closure package implemented, exact-head static/CPU qualification passed, Graphify exact-source topology verified, Fable failure/success seeds recorded, one owner Magnolia launch may proceed
-- [180] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
-  - status:  production-architecture authority; implementation/training remains closed
-- [180] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
-  - status:  production-architecture authority; implementation/training remains closed
-- [180] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
-  - status:  production-architecture authority; implementation/training remains closed
-- [176] alice-eipm-v1-n0-frozen-semantic-authority-v3:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [176] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [176] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [159] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
-  - status:  one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized
-- [155] alice-eipm-v1-n0-closure-pass:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
-  - status:  production-architecture authority; implementation/training remains closed
+- [186] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-job-575958-closure-pass-v1.md — N0 closure-pass architecture after Magnolia job 575958
+  - status:  implementation and static qualification package; GPU remains closed until exact-head qualification passes
+- [184] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
 
 ## Graphify navigation hints
 
-- test_binder_v2_p1_schema_state_is_not_match_authority() -> tests/eipm/test_n0_qsre_production_binder_v2.py:L102
 - run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh -> scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh:L1
 - run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh script -> scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh:L1
-- run_final_frozen_challenge_after_graph_arbitration_v0_1.py -> scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py:L1
+- run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh -> scripts/eipm/n0/run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh:L1
 - AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
+- continue_mlm_p100x2_segment.sh -> scripts/eipm/n0/continue_mlm_p100x2_segment.sh:L1
+- train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py -> scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py:L1
+- eval_n0_v02_final_self_validation_v3.py -> scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py:L1
+- eval_n0_v02_qsre_production_p4_v1.py -> scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v1.py:L1
+- test_phase5_parity_release.py -> tests/governance/test_phase5_parity_release.py:L1
+- canonical_sha256() -> src/cognitive_kernel/canonical.py:L39
+- accuracy() -> scripts/eipm/n0/qualify_n0_v02_qsre_frozen_semantic_authority_v3.py:L42
+- test_all_padding_is_rejected() -> tests/eipm/test_n0_structured_state.py:L104
+- verify_result_against_preflight() -> scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py:L146
 - principle_alignment_scores() -> scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py:L93
-- test_memory_identity_host_learning_architecture.py -> tests/governance/test_memory_identity_host_learning_architecture.py:L1
-- authority() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L87
-- authorization() -> tests/phase3/test_conversation_memory_grounding_bridge.py:L50
-- test_automatic_retry_is_rejected() -> tests/phase3/test_conversation_orchestration_policy.py:L85
-- base_parts() -> scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py:L91
-- test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
-- QSREProductionBinderV2 -> src/alice_personality/n0/qsre_production_binder_v2.py:L16
-- blocked_getaddrinfo() -> tests/phase4/test_information_live_http.py:L194
-- test_hybrid_conflict_expansion_surfaces_both_records() -> tests/phase2/test_memory_hybrid_retrieval.py:L314
-- .boundary() -> src/alice_conversation/cli_policy.py:L67
+- ConstitutionalSourceSnapshot -> src/alice_conversation/constitutional_prompt.py:L50
+- test_event_from_another_host_is_rejected() -> tests/phase5/test_experience_ledger_isolation.py:L18
 
 ## External/private routing
 
