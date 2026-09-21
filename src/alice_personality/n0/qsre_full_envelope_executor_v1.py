@@ -559,6 +559,10 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         relational_summary = self.summary_projection(
             torch.cat([node_summary, operator_state], dim=-1)
         )
+        relational_summary = (
+            relational_summary
+            * execution_confidence[:, None]
+        )
 
         return {
             "node_state": node,
@@ -603,6 +607,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "hard_traversal_threshold": False,
             "execution_confidence_requires_structural_support": True,
             "execution_confidence_requires_program_completion": True,
+            "zero_execution_confidence_zeroes_relational_summary": True,
             "relation_count_ceiling": None,
             "hop_count_ceiling": None,
             "field_count_ceiling": None,
