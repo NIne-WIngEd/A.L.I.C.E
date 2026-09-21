@@ -197,6 +197,7 @@ def main() -> None:
     p.add_argument("--semantic-checkpoint", required=True)
     p.add_argument("--tokenizer-dir", required=True)
     p.add_argument("--production-cache", required=True)
+    p.add_argument("--production-schema-cache", required=True)
     p.add_argument("--production-curriculum", required=True)
     p.add_argument("--production-relation-schema", required=True)
     p.add_argument("--output", required=True)
@@ -213,6 +214,7 @@ def main() -> None:
     semantic_checkpoint = Path(args.semantic_checkpoint)
     tokenizer_dir = Path(args.tokenizer_dir)
     production_cache_path = Path(args.production_cache)
+    production_schema_cache_path = Path(args.production_schema_cache)
     production_curriculum_path = Path(args.production_curriculum)
     production_relation_schema_path = Path(args.production_relation_schema)
     output_path = Path(args.output)
@@ -235,10 +237,32 @@ def main() -> None:
         raise SystemExit("relation key entered semantic authority text")
 
     production = torch.load(production_cache_path, map_location="cpu")
+    production_schema_cache = torch.load(
+        production_schema_cache_path,
+        map_location="cpu",
+    )
     if production.get("private_identity_data") is not False:
         raise SystemExit("private identity data entered Production cache")
     if production.get("test_present") is not False:
         raise SystemExit("TEST entered Production cache")
+    if production.get("curriculum_sha256") != sha256(production_curriculum_path):
+        raise SystemExit("Production authority qualification curriculum lineage drift")
+    if production.get("schema_cache_sha256") != sha256(production_schema_cache_path):
+        raise SystemExit("Production authority qualification schema-cache lineage drift")
+    if production.get("semantic_checkpoint_sha256") != sha256(semantic_checkpoint):
+        raise SystemExit("Production authority qualification semantic checkpoint drift")
+    if production_schema_cache.get("schema") != "alice.eipm.n0.qsre-production-schema-cache.v1":
+        raise SystemExit("Production dynamic schema cache version drift")
+    if production_schema_cache.get("source_schema_sha256") != sha256(
+        production_relation_schema_path
+    ):
+        raise SystemExit("Production relation-schema source hash drift")
+    if production_schema_cache.get("semantic_checkpoint_sha256") != sha256(
+        semantic_checkpoint
+    ):
+        raise SystemExit("Production relation-schema semantic checkpoint drift")
+    if production_schema_cache.get("private_identity_data") is not False:
+        raise SystemExit("private identity data entered Production relation schema cache")
     raw_rows = read_jsonl(production_curriculum_path)
     raw_train = [row for row in raw_rows if row["split"] == "train"]
     raw_by_id = {str(row["id"]): row for row in raw_train}
@@ -249,6 +273,14 @@ def main() -> None:
     relation_by_key = {str(row["key"]): row for row in relation_schema["relations"]}
     core_keys = [str(x) for x in relation_schema["core_train_relation_keys"]]
     open_keys = [str(x) for x in relation_schema["open_schema_dev_relation_keys"]]
+    if list(production_schema_cache["relation_keys"]) != [
+        str(row["key"]) for row in relation_schema["relations"]
+    ]:
+        raise SystemExit("Production relation-schema key order drift")
+    if list(production_schema_cache["core_train_relation_keys"]) != core_keys:
+        raise SystemExit("Production core relation-schema lineage drift")
+    if list(production_schema_cache["open_schema_dev_relation_keys"]) != open_keys:
+        raise SystemExit("Production open relation-schema lineage drift")
     forbidden = set(str(x) for x in meta["forbidden_semantics"])
     if not set(open_keys).issubset(forbidden):
         raise SystemExit("Production open relation escaped forbidden semantic set")
@@ -395,6 +427,7 @@ def main() -> None:
         "plan_sha256": sha256(plan_path),
         "meta_config_sha256": sha256(meta_path),
         "production_cache_sha256": sha256(production_cache_path),
+        "production_schema_cache_sha256": sha256(production_schema_cache_path),
         "production_curriculum_sha256": sha256(production_curriculum_path),
         "production_relation_schema_sha256": sha256(production_relation_schema_path),
         "gradient_performed": False,
