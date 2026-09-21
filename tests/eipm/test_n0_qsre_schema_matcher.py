@@ -3,10 +3,14 @@ from __future__ import annotations
 import torch
 
 from alice_personality.n0.qsre_schema_matcher import QSRESchemaMatcher
+from alice_personality.n0.qsre_semantic_authority import (
+    candidate_zscore,
+    combine_authority_components,
+    slice_relation_authority,
+)
 
 
 def matcher() -> QSRESchemaMatcher:
-    torch.manual_seed(1)
     return QSRESchemaMatcher(
         semantic_dim=24,
         model_dim=24,
@@ -14,26 +18,22 @@ def matcher() -> QSRESchemaMatcher:
     ).eval()
 
 
-def test_schema_matcher_has_no_relation_or_hop_parameter_axis() -> None:
-    report = matcher().parameter_report()
+def test_schema_matcher_is_parameter_free_and_identity_neutral() -> None:
+    model = matcher()
+    report = model.parameter_report()
+    assert sum(p.numel() for p in model.parameters()) == 0
+    assert report["total_parameters"] == 0
+    assert report["trainable_parameters"] == 0
     assert report["relation_identity_parameters"] == 0
+    assert report["factor_identity_parameters"] == 0
     assert report["candidate_count_dependent_parameters"] == 0
     assert report["reasoning_step_dependent_parameters"] == 0
-    assert report["shared_query_schema_projection"] is True
-    assert report["fixed_semantic_anchor"] is True
-    assert report["learned_projection_is_residual"] is True
-    assert report["shared_layer_mixture"] is True
-    assert report["bidirectional_pair_refinement"] is True
-    assert report["factor_identity_parameters"] == 0
-    assert report["candidate_conditioned_query_evidence"] is True
+    assert report["learned_semantic_metric"] is False
+    assert report["frozen_semantic_authority_required"] is True
     assert report["runtime_schema_cardinality_ceiling"] is None
-    assert all(
-        not parameter.requires_grad
-        for parameter in matcher().anchor_projection.parameters()
-    )
 
 
-def test_runtime_only_candidate_can_win_by_semantic_description() -> None:
+def test_parameter_free_token_evidence_prefers_matching_runtime_candidate() -> None:
     model = matcher()
     g = torch.Generator().manual_seed(2)
     target = torch.randn(3, 5, 24, generator=g)
@@ -45,21 +45,18 @@ def test_runtime_only_candidate_can_win_by_semantic_description() -> None:
         ],
         dim=0,
     )
-    query = target.unsqueeze(0)
-    qmask = torch.ones(1, 5, dtype=torch.bool)
-    smask = torch.ones(3, 5, dtype=torch.bool)
     out = model(
-        query_hidden_states=query,
-        query_token_mask=qmask,
+        query_hidden_states=target.unsqueeze(0),
+        query_token_mask=torch.ones(1, 5, dtype=torch.bool),
         schema_hidden_states=schema,
-        schema_token_mask=smask,
+        schema_token_mask=torch.ones(3, 5, dtype=torch.bool),
     )
-    assert int(out["logits"][0].argmax().item()) == 2
+    assert int(out["token_score"][0].argmax().item()) == 2
     assert out["query_evidence"].shape == (1, 3, 3, 5)
-    assert torch.isfinite(out["logits"]).all()
+    assert out["remaining_support"].shape == (1, 3)
 
 
-def test_schema_candidate_permutation_is_equivariant() -> None:
+def test_parameter_free_matcher_is_schema_permutation_equivariant() -> None:
     model = matcher()
     g = torch.Generator().manual_seed(3)
     query = torch.randn(2, 3, 7, 24, generator=g)
@@ -71,7 +68,7 @@ def test_schema_candidate_permutation_is_equivariant() -> None:
         query_token_mask=qmask,
         schema_hidden_states=schema,
         schema_token_mask=smask,
-    )["logits"]
+    )["token_score"]
 
     perm = torch.tensor([2, 4, 0, 3, 1])
     inverse = torch.argsort(perm)
@@ -80,62 +77,72 @@ def test_schema_candidate_permutation_is_equivariant() -> None:
         query_token_mask=qmask,
         schema_hidden_states=schema[perm],
         schema_token_mask=smask[perm],
-    )["logits"]
-    assert torch.allclose(base, moved[:, inverse], atol=1e-5, rtol=1e-5)
+    )["token_score"]
+    assert torch.allclose(base, moved[:, inverse], atol=1e-6, rtol=1e-6)
 
 
-def test_candidate_conditioned_query_evidence_changes_with_schema_meaning() -> None:
-    model = matcher()
-    query = torch.zeros(1, 3, 4, 24)
-    query[:, :, 0, 0] = 4.0
-    query[:, :, 1, 1] = 4.0
-    query[:, :, 2, 2] = 1.0
-    query[:, :, 3, 3] = 1.0
-
-    schema = torch.zeros(2, 3, 3, 24)
-    schema[0, :, :, 0] = 4.0
-    schema[1, :, :, 1] = 4.0
-    qmask = torch.ones(1, 4, dtype=torch.bool)
-    smask = torch.ones(2, 3, dtype=torch.bool)
-
-    evidence = model(
-        query_hidden_states=query,
-        query_token_mask=qmask,
-        schema_hidden_states=schema,
-        schema_token_mask=smask,
-    )["query_evidence"].sum(dim=2)
-
-    assert int(evidence[0, 0].argmax().item()) == 0
-    assert int(evidence[0, 1].argmax().item()) == 1
-
-
-def test_remaining_evidence_downweights_consumed_query_position() -> None:
+def test_remaining_support_decreases_when_candidate_evidence_is_consumed() -> None:
     model = matcher()
     query = torch.zeros(1, 3, 3, 24)
     query[:, :, 0, 0] = 5.0
-    query[:, :, 1, 0] = 4.0
+    query[:, :, 1, 1] = 1.0
     query[:, :, 2, 2] = 1.0
     schema = torch.zeros(1, 3, 2, 24)
     schema[:, :, :, 0] = 5.0
     qmask = torch.ones(1, 3, dtype=torch.bool)
     smask = torch.ones(1, 2, dtype=torch.bool)
 
-    projected_query = model.project(query)
-    projected_schema = model.project(schema)
-    full = model.match_projected(
-        query_projected=projected_query,
+    full = model(
+        query_hidden_states=query,
         query_token_mask=qmask,
-        schema_projected=projected_schema,
+        schema_hidden_states=schema,
         schema_token_mask=smask,
-    )["query_evidence"].sum(dim=2)
-    remaining = torch.tensor([[0.05, 1.0, 1.0]])
-    consumed = model.match_projected(
-        query_projected=projected_query,
+    )
+    consumed = model(
+        query_hidden_states=query,
         query_token_mask=qmask,
-        schema_projected=projected_schema,
+        schema_hidden_states=schema,
         schema_token_mask=smask,
-        query_remaining=remaining,
-    )["query_evidence"].sum(dim=2)
+        query_remaining=torch.tensor([[0.05, 1.0, 1.0]]),
+    )
+    assert float(consumed["remaining_support"][0, 0]) < float(
+        full["remaining_support"][0, 0]
+    )
 
-    assert float(consumed[0, 0, 0]) < float(full[0, 0, 0])
-    assert float(consumed[0, 0, 1]) > float(full[0, 0, 1])
+
+def test_frozen_authority_fusion_is_candidate_permutation_equivariant() -> None:
+    joint = torch.tensor([[2.0, -1.0, 0.5]])
+    semantic = torch.tensor([[0.1, 0.9, 0.4]])
+    token = torch.tensor([[0.8, 0.2, 0.5]])
+    base = combine_authority_components(
+        joint_preference=joint,
+        semantic_projection=semantic,
+        token_evidence=token,
+    )
+    perm = torch.tensor([2, 0, 1])
+    inverse = torch.argsort(perm)
+    moved = combine_authority_components(
+        joint_preference=joint[:, perm],
+        semantic_projection=semantic[:, perm],
+        token_evidence=token[:, perm],
+    )
+    assert torch.allclose(base, moved[:, inverse], atol=1e-6, rtol=1e-6)
+
+
+def test_runtime_subset_is_applied_before_candidate_normalization() -> None:
+    cache = {
+        "relation": {
+            "joint_preference": torch.tensor([[[1.0, 2.0, 100.0]]]),
+            "semantic_projection": torch.tensor([[[1.0, 3.0, -100.0]]]),
+        }
+    }
+    sliced = slice_relation_authority(
+        cache,
+        indices=torch.tensor([0]),
+        view=0,
+        relation_count=2,
+        device=torch.device("cpu"),
+    )
+    assert sliced["joint_preference"].shape == (1, 2)
+    normalized = candidate_zscore(sliced["joint_preference"])
+    assert torch.allclose(normalized, torch.tensor([[-1.0, 1.0]]), atol=1e-5)
