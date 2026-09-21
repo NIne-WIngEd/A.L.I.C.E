@@ -12,6 +12,10 @@ on:
       - "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json"
       - "docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md"
+      - "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json"
+      - "docs/research/eipm-n0-full-envelope-interface-contract-v1.md"
+      - "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json"
+      - "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"
       - ".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml"
   workflow_dispatch:
 
@@ -35,6 +39,9 @@ jobs:
           python -m py_compile             src/alice_personality/n0/semantic_operator_foundation.py             scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py             scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py
           python -m json.tool configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json >/dev/null
           python -m json.tool configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json >/dev/null
+          python -m json.tool configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json >/dev/null
+          python -m json.tool configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json >/dev/null
+          python -m json.tool configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json >/dev/null
 
       - name: Run semantic operator mechanics
         run: |
@@ -44,7 +51,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p /tmp/n0-so
-          python scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py             --output /tmp/n0-so/rows.jsonl             --manifest /tmp/n0-so/manifest.json             --examples-per-relation 20             --candidate-counts 2,4,8,16
+          python scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py             --output /tmp/n0-so/rows.jsonl             --manifest /tmp/n0-so/manifest.json             --examples-per-relation 20             --candidate-counts 1,2,4,8,16
           python scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py             --rows /tmp/n0-so/rows.jsonl             --manifest /tmp/n0-so/manifest.json             --contract configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json             --output /tmp/n0-so/audit.json
           python - <<'PY'
           import json
@@ -123,4 +130,53 @@ jobs:
               assert a["gpu"] is False
               assert a["private_identity_gradient"] is False
           print("PASS_N0_NO_PREMATURE_TRAINING_AUTHORIZATION")
+          PY
+
+      - name: Prove training plan is full architecture but still blocked from gradient
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open("configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"))
+          assert p["architecture"]["full_architecture_every_stage"] is True
+          assert p["architecture"]["reduced_pilot"] is False
+          assert p["optimization_strategy"]["full_stack_cogradient_required_before_final_selection"] is True
+          assert len(p["optimization_strategy"]["stages"])==3
+          assert p["scaling"]["hard_parameter_ceiling"] is None
+          assert p["scaling"]["hard_runtime_relation_ceiling"] is None
+          assert p["scaling"]["hard_runtime_factor_ceiling"] is None
+          assert p["scaling"]["hard_runtime_hop_ceiling"] is None
+          assert p["authorization"]["optimizer"] is False
+          assert p["authorization"]["gradient"] is False
+          assert p["authorization"]["gpu_training"] is False
+          print("PASS_N0_FULL_JOINT_TRAINING_PLAN_PRECOMMIT")
+          PY
+
+      - name: Prove successor final gate is behavioral not parent-cosine authority
+        run: |
+          python - <<'PY'
+          import json
+          c=json.load(open("configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json"))
+          assert c["authority"]["semantic_cosine_alone_can_authorize_n0"] is False
+          assert c["authority"]["all_gate_sections_must_pass"] is True
+          assert c["corpus"]["relation_family_holdout_required"] is True
+          assert c["corpus"]["composition_extrapolation_required"] is True
+          assert c["corpus"]["candidate_cardinality_extrapolation_required"] is True
+          assert c["deterministic_behavior_gate"]["source_target_causal_pair_completion_min"]==1.0
+          assert c["deterministic_behavior_gate"]["relation_order_causal_pair_completion_min"]==1.0
+          assert c["closure"]["automatic_repair_or_rerun"] is False
+          print("PASS_N0_FINAL_V2_BEHAVIORAL_AUTHORITY")
+          PY
+
+      - name: Prove reopened interface contract keeps delayed structural sparsity
+        run: |
+          python - <<'PY'
+          import json
+          i=json.load(open("configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json"))
+          assert i["foundation"]["relation_cardinality_runtime_axis"] is True
+          assert i["foundation"]["factor_cardinality_runtime_axis"] is True
+          assert i["evidence_graph_successor"]["remove"]==["learned_relation_id_embedding_as_semantic_authority"]
+          assert i["binder_successor"]["exact_type_masks_remain_structural"] is True
+          assert i["invariants"]["no_early_relation_argmax"] is True
+          assert i["invariants"]["no_exact_semantic_sparsity_before_binder"] is True
+          print("PASS_N0_REOPENED_INTERFACE_CONTRACT")
           PY
