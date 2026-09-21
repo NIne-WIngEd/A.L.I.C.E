@@ -7,6 +7,10 @@ import torch
 import torch.nn.functional as F
 from torch import Tensor, nn
 
+from alice_personality.n0.chunked_late_interaction import (
+    chunked_schema_bidirectional_late_max,
+)
+
 
 EVENT_CONTINUE = 0
 EVENT_STOP = 1
@@ -25,6 +29,7 @@ class SemanticOperatorFoundationConfig:
     semantic_dim: int = 640
     model_dim: int = 640
     num_hidden_states: int = 17
+    interaction_chunk_tokens: int = 128
     dropout: float = 0.0
 
     def validate(self) -> None:
@@ -32,6 +37,7 @@ class SemanticOperatorFoundationConfig:
             ("semantic_dim", self.semantic_dim),
             ("model_dim", self.model_dim),
             ("num_hidden_states", self.num_hidden_states),
+            ("interaction_chunk_tokens", self.interaction_chunk_tokens),
         ):
             if int(value) <= 0:
                 raise ValueError(f"{name} must be positive")
@@ -219,18 +225,16 @@ class _SharedSchemaTokenInteraction(nn.Module):
         q = F.normalize(q, dim=-1)
         s = F.normalize(s, dim=-1)
 
-        # [B,C,L,Tq,Ts]. Runtime C does not create parameters.
-        similarity = torch.einsum("blqd,clsd->bclqs", q, s)
         temperature = self.token_temperature.abs().clamp_min(0.05)
-        similarity = similarity / temperature
-
-        q_valid = query_token_mask[:, None, None, :, None]
-        s_valid = schema.token_mask[None, :, None, None, :]
-        valid = q_valid & s_valid
-        similarity = similarity.masked_fill(~valid, -1.0e4)
-
-        q_to_s = similarity.max(dim=-1).values
-        s_to_q = similarity.max(dim=-2).values
+        q_to_s, s_to_q = chunked_schema_bidirectional_late_max(
+            query=q,
+            query_mask=query_token_mask,
+            schema=s,
+            schema_mask=schema.token_mask,
+            chunk_tokens=self.config.interaction_chunk_tokens,
+        )
+        q_to_s = q_to_s / temperature
+        s_to_q = s_to_q / temperature
 
         if query_remaining is None:
             query_remaining = torch.ones(
@@ -592,4 +596,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "exact_structural_sparsity": False,
             "semantic_backbone_gradient_can_flow": True,
             "factor_scorer_shared_across_schema_banks": True,
+            "token_interaction_chunk_is_operating_point": True,
+            "query_token_count_ceiling": None,
+            "schema_token_count_ceiling": None,
         }
