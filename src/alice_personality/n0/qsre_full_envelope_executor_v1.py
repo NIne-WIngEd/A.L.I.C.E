@@ -106,6 +106,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         edge_temporal_match: Tensor,
         edge_provenance_match: Tensor,
         relation_schema_state: Tensor,
+        relation_symmetric: Tensor,
         operator: FullEnvelopeOperatorState,
         focus_field_weight: Tensor,
     ) -> dict[str, Tensor]:
@@ -125,6 +126,8 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         relation_count = relation_schema_state.size(1)
         if relation_schema_state.size(-1) != self.config.model_dim:
             raise ValueError("relation schema width drift")
+        if relation_symmetric.shape != (batch, relation_count) or relation_symmetric.dtype != torch.bool:
+            raise ValueError("relation_symmetric must be bool [B,R]")
         operator.validate(relation_count=relation_count, model_dim=self.config.model_dim)
 
         if edge_index.ndim != 3 or edge_index.size(0) != batch or edge_index.size(-1) != 2:
@@ -204,6 +207,13 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             forward = operator.direction_distribution[:, DIRECTION_FORWARD][:, None]
             reverse = operator.direction_distribution[:, DIRECTION_REVERSE][:, None]
             bidir = operator.direction_distribution[:, DIRECTION_BIDIRECTIONAL][:, None]
+            edge_symmetric = relation_symmetric[b, relation_index].to(forward.dtype)
+            directed = 1.0 - edge_symmetric
+            effective_forward = forward * directed
+            effective_reverse = reverse * directed
+            effective_bidir = (
+                bidir + edge_symmetric * (forward + reverse)
+            ).clamp(0.0, 1.0)
 
             reliability_multiplier = (
                 1.0
@@ -236,10 +246,10 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
                 * temporal_multiplier
                 * provenance_multiplier
             )
-            forward_gate = common * source_frontier * forward
-            reverse_gate = common * target_frontier * reverse
-            bidir_forward = common * source_frontier * bidir
-            bidir_reverse = common * target_frontier * bidir
+            forward_gate = common * source_frontier * effective_forward
+            reverse_gate = common * target_frontier * effective_reverse
+            bidir_forward = common * source_frontier * effective_bidir
+            bidir_reverse = common * target_frontier * effective_bidir
             path_gate = (
                 forward_gate
                 + reverse_gate
@@ -247,12 +257,12 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
                 + bidir_reverse
             ).clamp(max=1.0)
 
-            local_forward = common * source_origin * forward
-            local_reverse = common * target_origin * reverse
+            local_forward = common * source_origin * effective_forward
+            local_reverse = common * target_origin * effective_reverse
             local_bidir = common * torch.maximum(
                 source_origin,
                 target_origin,
-            ) * bidir
+            ) * effective_bidir
             local_gate = (
                 local_forward + local_reverse + local_bidir
             ).clamp(max=1.0)
@@ -449,6 +459,8 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "hop_count_dependent_parameters": 0,
             "shared_iterative_execution": True,
             "runtime_relation_schema": True,
+            "runtime_relation_symmetry": True,
+            "symmetric_relation_direction_collapses_to_bidirectional": True,
             "structural_factor_probabilities": True,
             "continuous_traversal_mixture": True,
             "local_path_aggregate_distinct": True,
