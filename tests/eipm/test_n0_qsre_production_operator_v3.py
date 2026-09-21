@@ -96,6 +96,7 @@ def authority(
         return {
             "joint_preference": torch.randn(batch, count, generator=g),
             "semantic_projection": torch.randn(batch, count, generator=g),
+            "principle_alignment": torch.randn(batch, count, generator=g),
         }
 
     relation = pair(relations)
@@ -107,6 +108,7 @@ def authority(
         "modifiers": {
             "joint_preference": torch.randn(batch, 4, 2, generator=g),
             "semantic_projection": torch.randn(batch, 4, 2, generator=g),
+            "principle_alignment": torch.randn(batch, 4, 2, generator=g),
         },
     }
     return relation, factors
@@ -171,8 +173,10 @@ def test_changing_only_frozen_relation_authority_changes_relation_output() -> No
     second = {k: v.clone() for k, v in rel.items()}
     first["joint_preference"][:] = torch.tensor([[8.0, -2.0, -2.0]])
     first["semantic_projection"][:] = torch.tensor([[8.0, -2.0, -2.0]])
+    first["principle_alignment"][:] = torch.tensor([[8.0, -2.0, -2.0]])
     second["joint_preference"][:] = torch.tensor([[-2.0, 8.0, -2.0]])
     second["semantic_projection"][:] = torch.tensor([[-2.0, 8.0, -2.0]])
+    second["principle_alignment"][:] = torch.tensor([[-2.0, 8.0, -2.0]])
     a = run(
         model, q=q, qmask=qmask, schema=schema, max_steps=1,
         relation_authority=first, factor_authority=fac,
