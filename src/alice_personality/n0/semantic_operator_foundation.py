@@ -25,8 +25,6 @@ class SemanticOperatorFoundationConfig:
     semantic_dim: int = 640
     model_dim: int = 640
     num_hidden_states: int = 17
-    num_attention_heads: int = 10
-    interaction_layers: int = 2
     dropout: float = 0.0
 
     def validate(self) -> None:
@@ -34,13 +32,9 @@ class SemanticOperatorFoundationConfig:
             ("semantic_dim", self.semantic_dim),
             ("model_dim", self.model_dim),
             ("num_hidden_states", self.num_hidden_states),
-            ("num_attention_heads", self.num_attention_heads),
-            ("interaction_layers", self.interaction_layers),
         ):
             if int(value) <= 0:
                 raise ValueError(f"{name} must be positive")
-        if self.model_dim % self.num_attention_heads:
-            raise ValueError("model_dim must be divisible by num_attention_heads")
         if not 0.0 <= self.dropout < 1.0:
             raise ValueError("dropout must be in [0,1)")
 
@@ -328,6 +322,12 @@ class SchemaConditionedSemanticOperator(nn.Module):
 
         self.matcher = _SharedSchemaTokenInteraction(self.config)
         self.query_state_projection = nn.Linear(self.config.semantic_dim, d)
+        self.query_token_gate = nn.Linear(d, 1, bias=False)
+        self.query_layer_gate = nn.Sequential(
+            nn.Linear(d, d),
+            nn.SiLU(),
+            nn.Linear(d, 1, bias=False),
+        )
         self.initial_state_norm = nn.LayerNorm(d)
         self.state_schema_score = nn.Linear(d, d, bias=False)
         self.transition = nn.GRUCell(2 * d, d)
@@ -343,20 +343,32 @@ class SchemaConditionedSemanticOperator(nn.Module):
         query_hidden_states: Tensor,
         query_token_mask: Tensor,
     ) -> Tensor:
-        weight = (
-            query_token_mask[:, None, :, None]
-            .expand(
-                query_hidden_states.size(0),
-                query_hidden_states.size(1),
-                query_hidden_states.size(2),
-                1,
-            )
-            .to(query_hidden_states.dtype)
+        projected = self.query_state_projection(query_hidden_states.float())
+        token_logit = self.query_token_gate(torch.tanh(projected)).squeeze(-1)
+        token_logit = token_logit.masked_fill(
+            ~query_token_mask[:, None, :],
+            -1.0e4,
         )
-        pooled = (query_hidden_states * weight).sum(dim=(1, 2))
-        denom = weight.sum(dim=(1, 2)).clamp_min(1.0)
-        pooled = pooled / denom
-        return self.initial_state_norm(self.query_state_projection(pooled.float()))
+        token_weight = torch.softmax(token_logit, dim=-1)
+        token_weight = (
+            token_weight
+            * query_token_mask[:, None, :].to(token_weight.dtype)
+        )
+        token_weight = token_weight / token_weight.sum(
+            dim=-1,
+            keepdim=True,
+        ).clamp_min(1.0e-12)
+        per_layer = torch.einsum(
+            "blt,bltd->bld",
+            token_weight,
+            projected,
+        )
+        layer_logit = self.query_layer_gate(
+            torch.tanh(per_layer)
+        ).squeeze(-1)
+        layer_weight = torch.softmax(layer_logit, dim=-1)
+        pooled = torch.einsum("bl,bld->bd", layer_weight, per_layer)
+        return self.initial_state_norm(pooled)
 
     @staticmethod
     def _entropy(probability: Tensor) -> Tensor:
@@ -575,6 +587,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "type_vocabulary_ceiling": None,
             "shared_query_schema_token_interaction": True,
             "candidate_conditioned_multilayer_read": True,
+            "content_conditioned_query_pooling": True,
             "continuous_relation_hypotheses": True,
             "exact_structural_sparsity": False,
             "semantic_backbone_gradient_can_flow": True,
