@@ -89,6 +89,33 @@ def macro_class_nll(
     return torch.stack(losses).mean()
 
 
+def macro_class_cross_entropy(
+    logits: torch.Tensor,
+    target: torch.Tensor,
+    *,
+    mask: torch.Tensor | None = None,
+) -> torch.Tensor:
+    if logits.ndim < 2:
+        raise ValueError("logits require class axis")
+    if mask is None:
+        mask = torch.ones_like(target, dtype=torch.bool)
+    mask = mask.bool()
+    if not bool(mask.any()):
+        return logits.sum() * 0.0
+    selected_logits = logits[mask]
+    selected_target = target[mask].long()
+    losses = []
+    for cls in torch.unique(selected_target).tolist():
+        cls_mask = selected_target.eq(int(cls))
+        losses.append(
+            F.cross_entropy(
+                selected_logits[cls_mask],
+                selected_target[cls_mask],
+            )
+        )
+    return torch.stack(losses).mean()
+
+
 def macro_binary_factor_loss(
     probability: torch.Tensor,
     target: torch.Tensor,
@@ -179,8 +206,9 @@ def operator_supervised_loss_v2(
         relation_target = F.pad(relation_target, (0, pad), value=0)
         relation_mask = F.pad(relation_mask, (0, pad), value=False)
 
-    relation_loss = macro_class_nll(
-        operator.relation_distribution,
+    relation_logits = model_output["relation_logits"]
+    relation_loss = macro_class_cross_entropy(
+        relation_logits,
         relation_target,
         mask=relation_mask,
     )
