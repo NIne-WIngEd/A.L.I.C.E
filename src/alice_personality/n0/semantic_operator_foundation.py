@@ -402,6 +402,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
         relation_scores: list[Tensor] = []
         layer_weights: list[Tensor] = []
         relation_schema_states: list[Tensor] = []
+        relation_query_evidence: list[Tensor] = []
 
         for _ in range(max_steps):
             remaining = (1.0 - coverage.float()).clamp(min=0.02, max=1.0)
@@ -452,6 +453,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             relation_scores.append(logits)
             layer_weights.append(matched["layer_weight"])
             relation_schema_states.append(schema_summary)
+            relation_query_evidence.append(matched["query_evidence"])
 
             evidence = torch.einsum(
                 "bc,bct->bt",
@@ -553,6 +555,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "relation_logits": torch.stack(relation_scores, dim=1),
             "relation_layer_weights": torch.stack(layer_weights, dim=1),
             "relation_schema_states": torch.stack(relation_schema_states, dim=1),
+            "relation_query_evidence": torch.stack(relation_query_evidence, dim=1),
             "factor_logits": factor_scores,
             "factor_layer_weights": factor_layer_weights,
         }
