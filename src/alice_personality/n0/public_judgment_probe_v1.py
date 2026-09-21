@@ -103,7 +103,9 @@ class PublicJudgmentProbeV1(nn.Module):
         safe_candidate_token_mask = candidate_token_mask.clone()
         invalid = ~candidate_valid_mask
         if bool(invalid.any()):
-            safe_candidate_token_mask[invalid, 0] = True
+            safe_candidate_token_mask[:, :, 0] = (
+                safe_candidate_token_mask[:, :, 0] | invalid
+            )
 
         latent = self.latent_projection(pooled_state.float())
         candidate = self.candidate_projection(candidate_hidden_states.float())
