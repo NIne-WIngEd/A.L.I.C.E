@@ -6,7 +6,13 @@ on:
       - alice-eipm-v1-n0-full-envelope-foundation-build-v1
     paths:
       - "src/alice_personality/n0/semantic_operator_foundation.py"
+      - "src/alice_personality/n0/dynamic_structured_state_v2.py"
+      - "src/alice_personality/n0/dynamic_schema_evidence_graph_v1.py"
+      - "src/alice_personality/n0/semantic_operator_qsre_adapter.py"
+      - "src/alice_personality/n0/qsre_full_envelope_binder_v1.py"
+      - "src/alice_personality/n0/qsre_full_envelope_executor_v1.py"
       - "tests/eipm/test_n0_semantic_operator_foundation_v1.py"
+      - "tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py"
       - "scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py"
       - "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json"
@@ -45,7 +51,9 @@ jobs:
 
       - name: Run semantic operator mechanics
         run: |
-          pytest -q tests/eipm/test_n0_semantic_operator_foundation_v1.py
+          pytest -q \
+            tests/eipm/test_n0_semantic_operator_foundation_v1.py \
+            tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py
 
       - name: Materialize and audit intervention supplement
         run: |
