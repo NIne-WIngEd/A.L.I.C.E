@@ -1,0 +1,77 @@
+{
+  "schema": "alice.eipm.n0.qsre-production-p2-v3-recovery-contract.v1",
+  "status": "ORDERED_EVIDENCE_ARCHITECTURE_RECOVERY_AFTER_ZERO_GRADIENT_LOCALIZATION",
+  "source_evidence": {
+    "failed_model_job": 575956,
+    "failed_model_status": "FAIL_QSRE_PRODUCTION_P2_OPERATOR",
+    "failed_model_result_sha256": "3bcd557c38b27b6f7768901015aeee1ece8f7ccb8a2de0ae0e4c495ef79c4a6b",
+    "localization_job": 575957,
+    "localization_status": "PASS_ZERO_GRADIENT_P2_FAILURE_LOCALIZATION",
+    "localization_result_sha256": "da87d9436a7d4a928e45ea65582ab432c9d43254e2d1cbbaa8235ad28627e55b",
+    "p1_checkpoint_sha256": "91f2c78dcc35967064189af4a7110cdee83e5652fb0373d88f58500ac3aaab9"
+  },
+  "localization": {
+    "active_mask_not_primary": true,
+    "relation_identity_order_primary": true,
+    "open_schema_identity_failure_concurrent": true,
+    "unknown_rejection_failure_concurrent": true,
+    "view0": {
+      "relation_identity_exact": 0.5059523582458496,
+      "active_mask_exact": 0.9523809552192688,
+      "length2_identity_exact": 0.0833333358168602,
+      "length3_identity_exact": 0,
+      "open_schema_identity_exact": 0.171875
+    },
+    "view1": {
+      "relation_identity_exact": 0.488095223903656,
+      "active_mask_exact": 0.9523809552192688,
+      "length2_identity_exact": 0.1041666641831398,
+      "length3_identity_exact": 0,
+      "open_schema_identity_exact": 0.09375
+    },
+    "repeated_relation_collapse_rate": 0.328125,
+    "unknown_terminal_win_rate": 0,
+    "query_schema_projection_cosine": 0.9947883486747742,
+    "query_vs_schema_projection_relative_l2": 0.10254310816526413,
+    "query_vs_schema_layer_embedding_relative_l2": 2.50577449798584
+  },
+  "v2_disposition": {
+    "p2_v2_gpu_authorization_revoked": true,
+    "p2_v2_model_evidence": false,
+    "p2_v2_gpu_run_occurred": false,
+    "p2_v2_static_work_preserved": true,
+    "reason": "operator v2 fixes relation/event coupling and shared schema matching but retains whole-query re-attention without explicit consumed-evidence state; localization shows later-step relation identity, not active-mask survival, is the primary unresolved failure"
+  },
+  "v3": {
+    "operator_module": "src/alice_personality/n0/qsre_production_operator_v3.py",
+    "trainer": "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py",
+    "plan": "configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json",
+    "ordered_query_evidence_consumption": true,
+    "coverage_axis": "query_token_position",
+    "coverage_shared_across_semantic_layers": true,
+    "coverage_update": "relation_grounded_attention_union",
+    "left_to_right_monotonicity_assumption": false,
+    "query_evidence_floor": 0.05,
+    "relation_count_parameter_axis": false,
+    "hop_count_parameter_axis": false,
+    "relation_selection_decoupled_from_stop_unknown": true,
+    "shared_query_schema_metric": true,
+    "full_runtime_schema_candidates": true,
+    "open_schema_training_query_labels_used": false
+  },
+  "authorization": {
+    "static_ci": true,
+    "zero_gradient_cpu_real_artifact_qualification_after_static_ci": true,
+    "p2_v3_gpu_training": false,
+    "p2_v2_gpu_training": false,
+    "optimizer": false,
+    "gradient": false,
+    "test_opening": false,
+    "frozen_final_opening": false,
+    "private_identity_gradient": false,
+    "production_promotion": false,
+    "automatic_rerun": false,
+    "automatic_hotfix": false
+  },
+  "next_action": "Pass ordered-evidence v3 static CI, then run one zero-gradient real-artifact CPU qualification. Only a clean qualification may authorize exactly one P100 P2-v3 run."
+}
