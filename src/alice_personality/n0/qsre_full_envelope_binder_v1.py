@@ -58,7 +58,16 @@ class FullEnvelopeQSREBinderV1(nn.Module):
         self.field_state_projection = nn.Linear(d, d, bias=False)
         self.relation_projection = nn.Linear(d, d, bias=False)
         self.operator_projection = nn.Linear(d, d, bias=False)
-        self.layer_logits = nn.Parameter(torch.zeros(self.config.num_hidden_states))
+        self.query_layer_gate = nn.Sequential(
+            nn.Linear(d, d),
+            nn.SiLU(),
+            nn.Linear(d, 1, bias=False),
+        )
+        self.interaction_layer_gate = nn.Sequential(
+            nn.Linear(3, 32),
+            nn.SiLU(),
+            nn.Linear(32, 1),
+        )
         self.edge_score = nn.Sequential(
             nn.Linear(5 * d + 7, 2 * d),
             nn.SiLU(),
@@ -105,8 +114,21 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             / fmask.sum(dim=-1).clamp_min(1).to(f_to_q.dtype)
         )
         per_layer = 0.5 * (q_score + f_score)
-        layer_weight = torch.softmax(self.layer_logits, dim=0)
-        return torch.einsum("l,bfl->bf", layer_weight, per_layer)
+        layers = per_layer.size(-1)
+        position = torch.linspace(
+            -1.0,
+            1.0,
+            layers,
+            device=per_layer.device,
+            dtype=per_layer.dtype,
+        ).view(1, 1, layers).expand_as(per_layer)
+        layer_feature = torch.stack(
+            [per_layer, q_score - f_score, position],
+            dim=-1,
+        )
+        layer_logit = self.interaction_layer_gate(layer_feature).squeeze(-1)
+        layer_weight = torch.softmax(layer_logit, dim=-1)
+        return torch.einsum("bfl,bfl->bf", layer_weight, per_layer)
 
     def _query_summary(self, query: Tensor, mask: Tensor) -> Tensor:
         projected = self.query_projection(query.float())
@@ -115,9 +137,13 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             (projected * token_weight).sum(dim=2)
             / token_weight.sum(dim=2).clamp_min(1.0)
         )
+        layer_logit = self.query_layer_gate(
+            torch.tanh(layer_summary)
+        ).squeeze(-1)
+        layer_weight = torch.softmax(layer_logit, dim=-1)
         return torch.einsum(
-            "l,bld->bd",
-            torch.softmax(self.layer_logits, dim=0),
+            "bl,bld->bd",
+            layer_weight,
             layer_summary,
         )
 
@@ -385,6 +411,9 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             "explicit_null_support_option": True,
             "zero_support_possible_with_compatible_edges": True,
             "multilayer_query_field_interaction": True,
+            "content_conditioned_query_layer_read": True,
+            "field_conditioned_interaction_layer_read": True,
+            "global_static_layer_mixture": False,
             "final_layer_only_query": False,
             "runtime_relation_schema": True,
             "inactive_runtime_relation_edges_exactly_excluded": True,
