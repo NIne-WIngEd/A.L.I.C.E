@@ -185,9 +185,7 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
                 symmetric_message,
                 target_msg,
             )
-            semantic_gate = (
-                0.05 + 0.95 * edge_relation_mass.clamp(0.0, 1.0)
-            ).unsqueeze(-1)
+            semantic_gate = edge_relation_mass.clamp(0.0, 1.0).unsqueeze(-1)
             source_msg = (
                 source_msg
                 * semantic_gate
@@ -210,16 +208,24 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
                 torch.cat([aggregate, q], dim=-1).reshape(batch * fields, -1),
                 node.reshape(batch * fields, -1),
             ).reshape(batch, fields, -1)
-            touched_count = torch.zeros(
+            node_gate = torch.zeros(
                 batch,
                 fields,
                 device=node.device,
-                dtype=torch.long,
+                dtype=node.dtype,
             )
-            touched_count.scatter_add_(1, source_index, edge_valid_mask.long())
-            touched_count.scatter_add_(1, target_index, edge_valid_mask.long())
-            update_mask = touched_count.gt(0) & field_valid_mask
-            node = torch.where(update_mask.unsqueeze(-1), updated, node)
+            edge_gate = (
+                edge_relation_mass.clamp(0.0, 1.0)
+                * edge_valid_mask.to(node.dtype)
+            )
+            node_gate.scatter_add_(1, source_index, edge_gate)
+            node_gate.scatter_add_(1, target_index, edge_gate)
+            node_gate = node_gate.clamp(0.0, 1.0)
+            node_gate = node_gate * field_valid_mask.to(node_gate.dtype)
+            node = (
+                node_gate.unsqueeze(-1) * updated
+                + (1.0 - node_gate.unsqueeze(-1)) * node
+            )
 
         q = operator[:, None, :].expand(batch, fields, -1)
         read_input = torch.cat([node, q], dim=-1)
@@ -252,6 +258,8 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             "edge_count_dependent_parameters": 0,
             "runtime_relation_schema": True,
             "continuous_relation_conditioning": True,
+            "relation_mass_floor": 0.0,
+            "continuous_node_update_gate": True,
             "runtime_relation_symmetry": True,
             "symmetric_edge_message_exchange": True,
             "symmetric_edge_endpoint_order_invariant": True,
