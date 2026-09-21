@@ -253,6 +253,7 @@ class SemanticOperatorQSREAdapter(nn.Module):
             relation_step_mass=semantic_operator.relation_step_mass,
             stop_probability=semantic_operator.stop_probability,
             unknown_probability=semantic_operator.unknown_probability,
+            truncation_probability=semantic_operator.truncation_probability,
             role_distribution=role,
             traversal_distribution=traversal,
             direction_distribution=direction,
@@ -282,6 +283,7 @@ class SemanticOperatorQSREAdapter(nn.Module):
             "structural_opcodes_are_runtime_metadata": True,
             "semantic_selection_owned_by_runtime_schema": True,
             "step_conditioned_direction_and_modifiers": True,
+            "program_truncation_preserved": True,
             "relation_count_ceiling": None,
             "factor_candidate_count_ceiling": None,
         }
