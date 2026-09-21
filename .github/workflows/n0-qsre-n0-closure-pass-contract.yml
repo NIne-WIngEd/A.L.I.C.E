@@ -1,0 +1,286 @@
+name: n0-qsre-n0-closure-pass-contract
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-n0-closure-pass
+    paths:
+      - "src/alice_personality/n0/qsre_schema_matcher.py"
+      - "src/alice_personality/n0/qsre_production_operator_v3.py"
+      - "src/alice_personality/n0/qsre_production_binder_v2.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v1.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py"
+      - "scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py"
+      - "scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py"
+      - "scripts/eipm/n0/qsre_production_training_utils.py"
+      - "scripts/eipm/n0/run_n0_v02_qsre_n0_closure_pass_v1.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_n0_closure_pass_v1.sbatch"
+      - "configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v1.json"
+      - "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v1.json"
+      - "configs/eipm/n0/n0_v02_qsre_n0_closure_training_plan_v1.json"
+      - "docs/research/eipm-n0-job-575958-closure-pass-v1.md"
+      - "tests/eipm/test_n0_qsre_schema_matcher.py"
+      - "tests/eipm/test_n0_qsre_production_operator_v3.py"
+      - ".github/workflows/n0-qsre-n0-closure-pass-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src:scripts/eipm/n0
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CPU qualification dependencies
+        run: python -m pip install -q torch pytest safetensors
+
+      - name: Compile closure stack
+        run: |
+          python -m py_compile \
+            src/alice_personality/n0/qsre_schema_matcher.py \
+            src/alice_personality/n0/qsre_production_operator_v3.py \
+            scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v1.py \
+            scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py \
+            scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py \
+            scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py \
+            scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py \
+            scripts/eipm/n0/qsre_production_training_utils.py
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_n0_closure_pass_v1.sh
+          bash -n scripts/eipm/n0/magnolia_p100_n0_v02_qsre_n0_closure_pass_v1.sbatch
+          python -m json.tool configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v1.json >/dev/null
+          python -m json.tool configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v1.json >/dev/null
+          python -m json.tool configs/eipm/n0/n0_v02_qsre_n0_closure_training_plan_v1.json >/dev/null
+
+      - name: Run closure mechanics
+        run: |
+          pytest -q \
+            tests/eipm/test_n0_qsre_schema_matcher.py \
+            tests/eipm/test_n0_qsre_production_operator_v3.py \
+            tests/eipm/test_n0_qsre_production_training_v3.py \
+            tests/eipm/test_n0_qsre_production_binder_v2.py \
+            tests/eipm/test_n0_qsre_production_core_v1.py \
+            tests/eipm/test_n0_qsre_production_training_utils.py
+
+      - name: Prove job 575958 package-level diagnosis is preserved
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          plan=json.load(open("configs/eipm/n0/n0_v02_qsre_n0_closure_training_plan_v1.json"))
+          doc=Path("docs/research/eipm-n0-job-575958-closure-pass-v1.md").read_text()
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_n0_closure_pass_v1.sh").read_text()
+
+          assert plan["stages"]["P2"]["failure_source"]["magnolia_job"]==575958
+          assert plan["stages"]["P2"]["failure_source"]["status"]=="FAIL_QSRE_PRODUCTION_P2_OPERATOR_V3"
+          assert "ordered-evidence repair was lost" in doc.lower()
+          assert "implicit six-relation ontology" in doc.lower()
+          assert "opaque learned class heads" in doc.lower()
+          assert 'assert p2["status"]=="FAIL_QSRE_PRODUCTION_P2_OPERATOR_V3"' in runner
+          assert "source_failed_job=575958" in runner
+          print("PASS_N0_575958_FAILURE_AUTHORITY")
+          PY
+
+      - name: Prove real open and final semantics are absent from P2S
+        run: |
+          python - <<'PY'
+          import json
+
+          meta=json.load(open("configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v1.json"))
+          production=json.load(open("configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json"))
+          final=json.load(open("configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json"))
+          final_contract=json.load(open("configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json"))
+
+          train={row["key"] for row in meta["relation_train"]}
+          heldout={row["key"] for row in meta["relation_holdout"]}
+          forbidden=set(meta["forbidden_semantics"])
+          prod_open=set(production["open_schema_dev_relation_keys"])
+          final_only=set(final_contract["corpus"]["final_only_relation_keys"])
+
+          assert train.isdisjoint(heldout)
+          assert forbidden.isdisjoint(train)
+          assert forbidden.isdisjoint(heldout)
+          assert prod_open <= forbidden
+          assert final_only <= forbidden
+          assert final_only <= {row["key"] for row in final["relations"]}
+          assert meta["governance"]["production_open_schema_descriptions_in_gradient"] is False
+          assert meta["governance"]["final_validation_relation_descriptions_in_gradient"] is False
+          assert meta["governance"]["auxiliary_holdout_relation_descriptions_in_gradient"] is False
+          print("PASS_N0_CLOSURE_HOLDOUT_ISOLATION")
+          PY
+
+      - name: Prove P2S trains a reusable matcher not relation IDs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          matcher=Path("src/alice_personality/n0/qsre_schema_matcher.py").read_text()
+          trainer=Path("scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v1.py").read_text()
+          plan=json.load(open("configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v1.json"))
+
+          assert "nn.Embedding(" in matcher  # semantic layer positions only
+          assert "relation_identity_parameters" in matcher
+          assert '"relation_identity_parameters": 0' in matcher
+          assert "candidate_count_dependent_parameters" in matcher
+          assert "reasoning_step_dependent_parameters" in matcher
+          assert "query_evidence" in matcher
+          assert "schema_evidence" in matcher
+          assert "query_remaining" in matcher
+          assert "relation_holdout" in trainer
+          assert 'phrase_field="train_phrases"' in trainer
+          assert 'phrase_field="phrases"' in trainer
+          assert "auxiliary_holdout_relation_top1" in trainer
+          assert "auxiliary_holdout_relation_descriptions_used_in_gradient" in trainer
+          assert plan["architecture"]["relation_identity_parameters"] is False
+          assert plan["architecture"]["candidate_count_parameter_axis"] is False
+          assert plan["architecture"]["reasoning_step_parameter_axis"] is False
+          assert plan["governance"]["max_gpu_runs"]==1
+          assert plan["governance"]["automatic_rerun"] is False
+          print("PASS_N0_CLOSURE_SCHEMA_GENERALIZATION_STAGE")
+          PY
+
+      - name: Prove Production P2 cannot destroy schema generalization
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          op=Path("src/alice_personality/n0/qsre_production_operator_v3.py").read_text()
+          p2=Path("scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py").read_text()
+          plan=json.load(open("configs/eipm/n0/n0_v02_qsre_n0_closure_training_plan_v1.json"))
+
+          assert "load_pretrained_schema_matcher" in op
+          assert "parameter.requires_grad = not freeze" in op
+          assert "query_coverage" in op
+          assert "query_remaining" not in op  # closure operator names it remaining
+          assert "remaining = (1.0 - query_coverage)" in op
+          assert "relation_distribution = torch.softmax" in op
+          assert "role_head" not in op
+          assert "traversal_head" not in op
+          assert "direction_head" not in op
+          assert "modifier_head" not in op
+          assert "control_head" not in op
+          assert "semantic_factor_schemas" in op
+
+          assert "--closure-matcher-result" in p2
+          assert "--factor-schema-cache" in p2
+          assert "freeze=True" in p2
+          assert "operator_model.schema_matcher.eval()" in p2
+          assert "query_projection.weight.copy_" not in p2
+          assert "schema_identity_logits(core_schema)" not in p2
+          assert "projection_anchor =" not in p2
+          assert "fixed factor class head reintroduced" in p2
+          assert 'failed_p2.get("status") != "FAIL_QSRE_PRODUCTION_P2_OPERATOR_V3"' in p2
+
+          architecture=plan["operator_architecture"]
+          assert architecture["matcher_frozen_in_production_p2"] is True
+          assert architecture["ordered_query_evidence_coverage"] is True
+          assert architecture["fixed_factor_class_heads"] is False
+          assert architecture["semantic_factor_schemas"] is True
+          assert architecture["continuous_relation_hypotheses_until_structural_binding"] is True
+          assert architecture["exact_relation_sparsity_before_binding"] is False
+          print("PASS_N0_CLOSURE_FROZEN_MATCHER_ORDERED_OPERATOR")
+          PY
+
+      - name: Prove previous Production thresholds and compute settings are unchanged
+        run: |
+          python - <<'PY'
+          import json
+
+          prior=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json"))
+          closure=json.load(open("configs/eipm/n0/n0_v02_qsre_n0_closure_training_plan_v1.json"))
+
+          assert prior["model"]==closure["model"]
+          assert prior["curriculum_sha256"]==closure["curriculum_sha256"]
+          for stage in ("P2","P3"):
+              assert prior["stages"][stage]["optimizer"]==closure["stages"][stage]["optimizer"]
+              for key in ("seed","batch_size","max_steps","eval_every","save_every","operator_runtime_max_steps"):
+                  assert prior["stages"][stage]["training"][key]==closure["stages"][stage]["training"][key], (stage,key)
+              assert prior["stages"][stage]["eligibility"]==closure["stages"][stage]["eligibility"]
+          assert prior["stages"]["P4"]["eligibility"]==closure["stages"]["P4"]["eligibility"]
+          assert closure["governance"]["learning_rate_search"] is False
+          assert closure["governance"]["step_search"] is False
+          assert closure["governance"]["width_search"] is False
+          assert closure["compute_precommit"]["batch_size_search_authorized"] is False
+          print("PASS_N0_CLOSURE_NO_POSTHOC_GATE_TUNING")
+          PY
+
+      - name: Prove exact sparse boundary remains structural Binder v2
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          op=Path("src/alice_personality/n0/qsre_production_operator_v3.py").read_text()
+          binder=Path("src/alice_personality/n0/qsre_production_binder_v2.py").read_text()
+
+          assert "relation_distribution = torch.softmax" in op
+          assert "masked_sparsemax" not in op
+          assert "masked_sparsemax" in binder
+          assert "edge_support_weight" in binder
+          assert '"exact_zero_sparse_support": True' in binder
+          assert '"fixed_top_k": False' in binder
+          print("PASS_N0_CLOSURE_CONTINUOUS_TO_STRUCTURAL_SPARSE_BOUNDARY")
+          PY
+
+      - name: Prove single-launch lineage and frozen native final reuse
+        run: |
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_n0_closure_pass_v1.sh").read_text()
+          sbatch=Path("scripts/eipm/n0/magnolia_p100_n0_v02_qsre_n0_closure_pass_v1.sbatch").read_text()
+
+          assert '#SBATCH --gres=gpu:p100:1' in sbatch
+          assert "ALICE_N0_EXPECTED_REVISION" in sbatch
+          assert "run_n0_v02_qsre_n0_closure_pass_v1.sh" in sbatch
+          assert 'CLOSURE_ROOT="$WORKDIR/qsre-n0-closure-pass-v1"' in runner
+          assert 'FAILED_FINAL="$WORKDIR/qsre-production-core-v1-final-v3"' in runner
+          assert 'FROZEN="$SOURCE/final-frozen"' in runner
+          assert "build_n0_v02_final_self_validation" not in runner
+          assert "freeze_n0_v02_final_self_validation" not in runner
+          assert "PASS_N0_FINAL_SELF_VALIDATION_OBJECTIVE" in runner
+          assert "n0_complete=true" in runner
+          assert "n1_authorized=true" in runner
+
+          scripts={
+              "train_n0_v02_qsre_closure_matcher_v1.py": [
+                  "--plan","--meta-config","--semantic-config","--semantic-checkpoint",
+                  "--tokenizer-dir","--production-cache","--production-schema-cache","--output-dir",
+              ],
+              "train_n0_v02_qsre_production_p2_v3.py": [
+                  "--plan","--prepared-cache","--schema-cache","--p1-result","--p1-root",
+                  "--failed-p2-result","--closure-matcher-result","--closure-matcher-root",
+                  "--factor-schema-cache","--output-dir",
+              ],
+              "train_n0_v02_qsre_production_p3_v3.py": [
+                  "--plan","--prepared-cache","--schema-cache","--p1-result","--p1-root",
+                  "--p2-result","--p2-root","--factor-schema-cache","--output-dir",
+              ],
+              "eval_n0_v02_qsre_production_p4_v3.py": [
+                  "--plan","--prepared-cache","--schema-cache","--p1-result","--p1-root",
+                  "--p2-result","--p2-root","--factor-schema-cache","--p3-result","--p3-root","--output",
+              ],
+              "eval_n0_v02_final_self_validation_v3.py": [
+                  "--factor-schema-cache","--p4-result","--output",
+              ],
+          }
+          for script, flags in scripts.items():
+              assert script in runner, script
+              for flag in flags:
+                  assert flag in runner, (script,flag)
+
+          for path in (
+              "scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v1.py",
+              "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py",
+              "scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py",
+              "scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py",
+              "scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py",
+          ):
+              ast.parse(Path(path).read_text())
+
+          print("PASS_N0_CLOSURE_SINGLE_LAUNCH_FROZEN_FINAL_LINEAGE")
+          PY
