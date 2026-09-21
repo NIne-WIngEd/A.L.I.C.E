@@ -50,7 +50,13 @@
     "unknown_defer_accuracy_min": 0.95,
     "nonrelational_false_assertion_rate_max": 0,
     "structural_type_violation_rate_max": 0,
-    "natural_heldout_relation_family_top1_min": 0.9
+    "natural_heldout_relation_family_top1_min": 0.9,
+    "exact_null_support_on_no_evidence_min": 0.98,
+    "truncated_program_false_completion_rate_max": 0,
+    "mixed_step_direction_sequence_exact_min": 0.9,
+    "mixed_step_modifier_sequence_exact_min": 0.9,
+    "symmetric_relation_endpoint_reversal_consistency_min": 0.98,
+    "directional_relation_endpoint_reversal_sensitivity_min": 0.9
   },
   "extrapolation_gate": {
     "unseen_relation_family_accuracy_min": 0.9,
@@ -58,7 +64,9 @@
     "unseen_factor_cardinality_accuracy_min": 0.9,
     "longer_composition_accuracy_min": 0.9,
     "unseen_type_schema_accuracy_min": 0.9,
-    "domain_transfer_accuracy_min": 0.88
+    "domain_transfer_accuracy_min": 0.88,
+    "per_example_candidate_subset_batch_accuracy_min": 0.9,
+    "runtime_relation_symmetry_transfer_min": 0.9
   },
   "invariance_gate": {
     "relation_candidate_permutation_max_delta": 0.000001,
@@ -68,7 +76,8 @@
     "opaque_key_rename_max_delta": 0.000001,
     "irrelevant_context_growth_max_delta": 0.02,
     "paraphrase_consistency_min": 0.95,
-    "natural_relation_candidate_permutation_max_delta": 0.000001
+    "natural_relation_candidate_permutation_max_delta": 0.000001,
+    "symmetric_edge_storage_reversal_max_delta": 0.000001
   },
   "uncertainty_plurality_gate": {
     "ambiguous_plurality_mass_on_valid_set_min": 0.9,
@@ -81,7 +90,8 @@
     "irrelevant_source_removal_invariance_min": 0.95,
     "query_evidence_counterfactual_sensitivity_min": 0.9,
     "schema_evidence_counterfactual_sensitivity_min": 0.9,
-    "source_anchor_exactness_required": true
+    "source_anchor_exactness_required": true,
+    "no_structural_support_execution_confidence_max": 0
   },
   "general_semantic_regression_gate": {
     "historical_teacher_dev_top1_floor": 0.8736842105263158,
@@ -116,7 +126,9 @@
     "hard_hop_ceiling": null,
     "hard_field_count_ceiling": null,
     "hard_edge_count_ceiling": null,
-    "hard_context_ceiling": null
+    "hard_context_ceiling": null,
+    "per_example_candidate_subset_batched_serving_required": true,
+    "native_encoder_window_may_not_be_product_context_ceiling": true
   },
   "closure": {
     "status_on_pass": "PASS_N0_FULL_ENVELOPE_FINAL_SELF_VALIDATION",
