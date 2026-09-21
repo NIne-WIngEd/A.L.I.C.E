@@ -11,10 +11,10 @@ from alice_personality.n0.chunked_late_interaction import (
     chunked_batched_bidirectional_late_max,
 )
 
-from alice_personality.n0.qsre_production_binder_v2 import masked_sparsemax
-from alice_personality.n0.qsre_production_core import (
+from alice_personality.n0.full_envelope_structural_types import (
     CONTROL_RELATIONAL,
-    QSREProductionOperatorState,
+    FullEnvelopeOperatorState,
+    masked_sparsemax,
 )
 
 
@@ -163,7 +163,7 @@ class FullEnvelopeQSREBinderV1(nn.Module):
         relation_domain_type_mask: Tensor,
         relation_range_type_mask: Tensor,
         relation_schema_state: Tensor,
-        operator: QSREProductionOperatorState,
+        operator: FullEnvelopeOperatorState,
     ) -> dict[str, Tensor]:
         if query_hidden_states.ndim != 4:
             raise ValueError("query_hidden_states must be [B,L,T,D]")
