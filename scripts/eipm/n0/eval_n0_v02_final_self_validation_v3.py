@@ -477,6 +477,8 @@ def main() -> None:
         p4.get("p1_checkpoint_sha256") != sha256(p1_path)
         or p4.get("p2_checkpoint_sha256") != sha256(p2_path)
         or p4.get("p3_checkpoint_sha256") != sha256(p3_path)
+        or p4.get("factor_schema_cache_sha256")
+        != sha256(Path(args.factor_schema_cache))
     ):
         raise SystemExit("P4 selected lineage drift")
 
@@ -837,6 +839,9 @@ def main() -> None:
             "p2_checkpoint_sha256": sha256(p2_path),
             "p3_checkpoint_sha256": sha256(p3_path),
             "p4_result_sha256": sha256(p4_path),
+            "factor_schema_cache_sha256": sha256(
+                Path(args.factor_schema_cache)
+            ),
             "fusion_sha256": EXPECTED_FUSION_SHA256,
             "latent_pool_sha256": EXPECTED_LATENT_SHA256,
         },
