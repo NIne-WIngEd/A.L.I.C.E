@@ -48,7 +48,7 @@
   },
   "architecture": {
     "semantic_backbone": "ratified alice-n0-semantic-v0.2 targeted-repair step-80",
-    "semantic_authority": "zero-gradient runtime schema authority from trained joint candidate ranking, trained semantic projection, and parameter-free token evidence",
+    "semantic_authority": "zero-gradient runtime schema authority from trained joint candidate ranking, trained semantic projection, trained semantic-to-rationale principle alignment, and parameter-free token evidence",
     "semantic_authority_gradient": false,
     "semantic_authority_optimizer": false,
     "learned_schema_matcher": false,
@@ -69,7 +69,16 @@
     "adaptive_multi_view_latent_pool": true,
     "uncertainty_surfaces": true,
     "private_identity_data": false,
-    "private_identity_gradient": false
+    "private_identity_gradient": false,
+    "semantic_authority_components": [
+      "joint_prompt_candidate_preference_score",
+      "shared_prompt_semantic_projection_cosine",
+      "trained_joint_semantic_to_rationale_principle_alignment",
+      "parameter_free_token_evidence_score"
+    ],
+    "trained_rationale_projection_reused": true,
+    "trained_principle_alignment_reused": true,
+    "new_semantic_authority_trainable_parameters": 0
   },
   "scale_policy": {
     "package_class": "full_scale_capability",
