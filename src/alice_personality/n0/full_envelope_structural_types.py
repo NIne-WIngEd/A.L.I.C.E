@@ -38,7 +38,9 @@ class FullEnvelopeOperatorState:
     role_distribution: Tensor
     traversal_distribution: Tensor
     direction_distribution: Tensor
+    step_direction_distribution: Tensor
     modifier_weight: Tensor
+    step_modifier_weight: Tensor
     applicability: Tensor
     control_distribution: Tensor
     continuous_state: Tensor
@@ -79,11 +81,15 @@ class FullEnvelopeOperatorState:
             or self.direction_distribution.size(1) != 3
         ):
             raise ValueError("direction_distribution must be [B,3]")
+        if self.step_direction_distribution.shape != (batch, steps, 3):
+            raise ValueError("step_direction_distribution must be [B,S,3]")
         if (
             self.modifier_weight.ndim != 2
             or self.modifier_weight.shape != (batch, 4)
         ):
             raise ValueError("modifier_weight must be [B,4]")
+        if self.step_modifier_weight.shape != (batch, steps, 4):
+            raise ValueError("step_modifier_weight must be [B,S,4]")
         if self.applicability.shape != (batch,):
             raise ValueError("applicability must be [B]")
         if (
@@ -103,7 +109,9 @@ class FullEnvelopeOperatorState:
             ("role_distribution", self.role_distribution),
             ("traversal_distribution", self.traversal_distribution),
             ("direction_distribution", self.direction_distribution),
+            ("step_direction_distribution", self.step_direction_distribution),
             ("modifier_weight", self.modifier_weight),
+            ("step_modifier_weight", self.step_modifier_weight),
             ("applicability", self.applicability),
             ("control_distribution", self.control_distribution),
             ("continuous_state", self.continuous_state),
