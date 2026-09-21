@@ -1,0 +1,120 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-final-validation-contract.v2",
+  "status": "PRECOMMITTED_FULL_ENVELOPE_STRUCTURE_NO_RESULTS_OBSERVED",
+  "date": "2026-09-21",
+  "supersedes_for_future_n0_closure": "configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json",
+  "historical_v1_result_reclassified": false,
+  "purpose": "Final public N0 closure must test independent behavioral capability across the complete runtime envelope rather than preservation of a parent embedding geometry.",
+  "authority": {
+    "training_use": "FORBIDDEN",
+    "checkpoint_selection": "FORBIDDEN",
+    "threshold_changes_after_results": false,
+    "results_observed": false,
+    "private_identity_data": false,
+    "semantic_cosine_alone_can_authorize_n0": false,
+    "all_gate_sections_must_pass": true
+  },
+  "corpus": {
+    "natural_public_language_required": true,
+    "adversarial_public_synthetic_required": true,
+    "relation_family_holdout_required": true,
+    "factor_combination_holdout_required": true,
+    "template_holdout_required": true,
+    "entity_holdout_required": true,
+    "domain_holdout_required": true,
+    "type_schema_holdout_required": true,
+    "composition_extrapolation_required": true,
+    "candidate_cardinality_extrapolation_required": true,
+    "context_length_extrapolation_required": true,
+    "no_training_row_or_template_hash_overlap": true,
+    "hard_total_row_count": null,
+    "row_count_selected_by_coverage_not_quota": true
+  },
+  "deterministic_behavior_gate": {
+    "relation_semantics_top1_min": 0.95,
+    "heldout_relation_family_top1_min": 0.9,
+    "factor_macro_accuracy_min": 0.9,
+    "heldout_factor_combination_accuracy_min": 0.9,
+    "ordered_relation_sequence_exact_min": 0.95,
+    "ordered_family_min_success_min": 0.9,
+    "source_target_causal_pair_completion_min": 1,
+    "relation_order_causal_pair_completion_min": 1,
+    "support_edge_f1_min": 0.95,
+    "path_focus_top1_min": 0.95,
+    "unknown_defer_accuracy_min": 0.95,
+    "nonrelational_false_assertion_rate_max": 0,
+    "structural_type_violation_rate_max": 0
+  },
+  "extrapolation_gate": {
+    "unseen_relation_family_accuracy_min": 0.9,
+    "unseen_candidate_cardinality_accuracy_min": 0.9,
+    "unseen_factor_cardinality_accuracy_min": 0.9,
+    "longer_composition_accuracy_min": 0.9,
+    "unseen_type_schema_accuracy_min": 0.9,
+    "domain_transfer_accuracy_min": 0.88
+  },
+  "invariance_gate": {
+    "relation_candidate_permutation_max_delta": 0.000001,
+    "factor_candidate_permutation_max_delta": 0.000001,
+    "field_permutation_max_delta": 0.000001,
+    "edge_permutation_max_delta": 0.000001,
+    "opaque_key_rename_max_delta": 0.000001,
+    "irrelevant_context_growth_max_delta": 0.02,
+    "paraphrase_consistency_min": 0.95
+  },
+  "uncertainty_plurality_gate": {
+    "ambiguous_plurality_mass_on_valid_set_min": 0.9,
+    "unsupported_schema_defer_min": 0.95,
+    "uncertainty_increase_on_evidence_removal_min": 0.05,
+    "forced_top1_on_co_valid_cases_max": 0.1
+  },
+  "evidence_causality_gate": {
+    "decisive_source_removal_behavior_change_min": 0.9,
+    "irrelevant_source_removal_invariance_min": 0.95,
+    "query_evidence_counterfactual_sensitivity_min": 0.9,
+    "schema_evidence_counterfactual_sensitivity_min": 0.9,
+    "source_anchor_exactness_required": true
+  },
+  "general_semantic_regression_gate": {
+    "historical_teacher_dev_top1_floor": 0.8736842105263158,
+    "historical_novel_cross_top1_floor": 0.875,
+    "historical_voice_top1_floor": 1,
+    "role": "minimum regression floors only; not sufficient for N0 closure",
+    "new_natural_public_challenge_required": true,
+    "new_natural_public_thresholds_frozen_before_candidate_results": true
+  },
+  "structured_fabric_gate": {
+    "semantic_cosine_metrics_diagnostic_only": true,
+    "permutation_equivariance_required": true,
+    "runtime_type_descriptor_transfer_required": true,
+    "unseen_provenance_descriptor_transfer_required": true,
+    "missingness_behavior_required": true
+  },
+  "fusion_latent_gate": {
+    "exact_source_anchor_required": true,
+    "missing_view_safety_required": true,
+    "decisive_view_causal_use_required": true,
+    "disagreement_preservation_required": true,
+    "competitive_latent_noncollapse_required": true,
+    "source_view_recoverability_required": true,
+    "behaviorally_grounded_readout_required": true,
+    "parent_embedding_cosine_not_sufficient": true
+  },
+  "scale_policy": {
+    "final_candidate_may_exceed_training_runtime_axes": true,
+    "hard_parameter_ceiling": null,
+    "hard_relation_count_ceiling": null,
+    "hard_factor_count_ceiling": null,
+    "hard_hop_ceiling": null,
+    "hard_field_count_ceiling": null,
+    "hard_edge_count_ceiling": null,
+    "hard_context_ceiling": null
+  },
+  "closure": {
+    "status_on_pass": "PASS_N0_FULL_ENVELOPE_FINAL_SELF_VALIDATION",
+    "n0_complete_on_pass": true,
+    "n1_authorized_on_pass": true,
+    "any_failed_gate_means_n0_complete_false": true,
+    "automatic_repair_or_rerun": false
+  }
+}
