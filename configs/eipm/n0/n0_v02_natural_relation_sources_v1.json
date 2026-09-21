@@ -1,0 +1,73 @@
+{
+  "schema": "alice.eipm.n0.natural-relation-sources.v1",
+  "status": "SOURCE_REVIEWED_EXACT_REVISION_NO_DOWNLOAD_OR_GRADIENT",
+  "date": "2026-09-21",
+  "purpose": "Add natural human-annotated relation-language supervision so open-schema semantic/operator learning is not dependent on deterministic synthetic templates.",
+  "sources": [
+    {
+      "source_id": "thunlp_fewrel_1_0",
+      "repository": "thunlp/FewRel",
+      "revision": "278a2315d2138810a379cd8d5718914dc56e2582",
+      "license": "MIT",
+      "license_blob_sha1": "6fec9b6238e7b4f2037aefcf4110821a2fd16c70",
+      "files": {
+        "pid2name": {
+          "path": "data/pid2name.json",
+          "git_blob_sha1": "00b632be58e00b5337c054ac8a46bda1f4c27b0e"
+        },
+        "train_wiki": {
+          "path": "data/train_wiki.json",
+          "git_blob_sha1": "4fee283724b455bab1fcbf76bfdef02283bb44f5"
+        },
+        "val_wiki": {
+          "path": "data/val_wiki.json",
+          "git_blob_sha1": "fe103ba5f52de1f0c070d66c7a8ba9de20c9f96c"
+        }
+      },
+      "natural_language": true,
+      "human_annotated": true,
+      "relation_descriptions_available": true,
+      "relation_family_split": {
+        "train_source": "train_wiki",
+        "heldout_dev_source": "val_wiki",
+        "expected_train_relation_count": 64,
+        "expected_dev_relation_count": 16,
+        "train_dev_relation_overlap_expected": 0
+      },
+      "roles": [
+        "natural_relation_semantic_matching",
+        "heldout_relation_family_transfer",
+        "entity_pair_grounding",
+        "candidate_cardinality_scaling",
+        "lexical_and_entity_diversity"
+      ],
+      "direct_training_authorized_after_materialization_audit": true,
+      "private_identity_data": false
+    }
+  ],
+  "not_yet_activated": [
+    {
+      "source_id": "thunlp_docred",
+      "repository": "thunlp/DocRED",
+      "revision": "64622e608d06e83deda6b6e0e871effb9d1fd74c",
+      "license": "MIT",
+      "reason": "Official repository does not contain the full data payload at this revision; require exact materialized bytes and SHA-256 receipt before training authorization.",
+      "desired_roles": [
+        "natural_document_level_relation_reasoning",
+        "multi_sentence_evidence",
+        "document_level_entity_relation_grounding"
+      ]
+    }
+  ],
+  "governance": {
+    "exact_revision_required": true,
+    "materialized_sha256_required": true,
+    "license_receipt_required": true,
+    "training_use_requires_audit_pass": true,
+    "dev_rows_training_forbidden": true,
+    "relation_keys_metadata_only": true,
+    "relation_names_and_descriptions_semantic_input": true,
+    "synthetic_replacement_for_natural_lane_forbidden": true,
+    "private_identity_gradient": false
+  }
+}
