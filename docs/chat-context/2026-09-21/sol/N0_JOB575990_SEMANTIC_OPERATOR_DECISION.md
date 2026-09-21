@@ -55,11 +55,11 @@ Branch:
 
 Qualified head:
 
-`907dcba89c5c2dbb7ac9119905bbde710f980845`
+`cef6e5ed48bb69e064596b30a87a73c3e79a0763`
 
 Static qualification:
 
-GitHub Actions run `35635353225` — SUCCESS
+GitHub Actions run `35635599088` — SUCCESS
 
 Architecture authority:
 
@@ -96,6 +96,16 @@ is preserved as:
 - historical semantic-base evidence.
 
 It is no longer frozen semantic authority for full QSRE.
+
+## Foundation freeze policy correction
+
+Job 575990 also closes a process error that contributed to the long repair chain.
+
+A locally ratified foundation component may be temporarily frozen for causal isolation, but a local PASS must not become a permanent architecture freeze before the full downstream workload depending on that representation has passed interface-sufficiency review.
+
+The old semantic-base ratification remains historically valid. It is no longer sufficient to keep the semantic representation permanently frozen once the broader QSRE workload has localized a deficit below that boundary.
+
+This rule is now encoded in the semantic-operator foundation state at qualified head `cef6e5ed48bb69e064596b30a87a73c3e79a0763`.
 
 ## No-ceiling policy
 
