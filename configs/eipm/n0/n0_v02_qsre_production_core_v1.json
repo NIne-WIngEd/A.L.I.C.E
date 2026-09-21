@@ -1,6 +1,6 @@
 {
   "schema": "alice.eipm.n0.qsre-production-core.v1",
-  "status": "ARCHITECTURE_CLOSED_PRODUCTION_IMPLEMENTATION_PRECOMMITTED",
+  "status": "FINAL_ARCHITECTURE_CLOSED_BEFORE_PRODUCTION_V3_GPU",
   "authority_doc": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
   "workload_envelope": "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json",
   "proof_obligations": "configs/eipm/n0/n0_v02_relational_execution_proof_obligations_v0_1.json",
@@ -17,7 +17,7 @@
       "shared_iterative_relation_step_cell": true,
       "learned_hop_specific_slots": false,
       "runtime_stop": true,
-      "sparse_plural_relation_hypotheses": true,
+      "sparse_plural_relation_hypotheses": false,
       "continuous_residual_state": true,
       "role_distribution": true,
       "traversal_mode": [
@@ -38,7 +38,12 @@
         "REVERSE",
         "BIDIRECTIONAL"
       ],
-      "direction_independent_from_role": true
+      "direction_independent_from_role": true,
+      "continuous_plural_relation_hypotheses": true,
+      "exact_relation_sparsity_before_binding": false,
+      "relation_selection_decoupled_from_stop_unknown": true,
+      "core_schema_only_gradient": true,
+      "open_schema_relation_descriptions_used_in_gradient": false
     },
     "binder": {
       "token_level_late_interaction": true,
@@ -48,7 +53,11 @@
       "zero_one_many_ambiguous_support": true,
       "supervised_score_is_runtime_score": true,
       "learned_path_focus_from_query_field_late_interaction": true,
-      "oracle_focus_required_at_end_to_end": false
+      "oracle_focus_required_at_end_to_end": false,
+      "exact_sparsity_is_first_hard_selection_boundary": true,
+      "operator_continuous_state_support_authority": false,
+      "p1_schema_relation_state_match_authority": false,
+      "relation_semantics_from_operator_relation_mass": true
     },
     "executor": {
       "learned_relation_id_embedding_is_semantic_authority": false,
@@ -109,7 +118,12 @@
     "calibrated_relational_mass_survives_normalization",
     "native_relational_summary_reaches_n0_fabric",
     "path_frontier_persists_across_inactive_stop_tail",
-    "shorter_paths_equal_unpadded_execution_under_larger_runtime_budget"
+    "shorter_paths_equal_unpadded_execution_under_larger_runtime_budget",
+    "continuous_relation_hypotheses_until_structural_binding",
+    "no_open_schema_relation_description_gradient_before_zero_shot_dev",
+    "exact_sparsity_first_occurs_at_structural_support",
+    "p1_schema_relation_state_is_executor_interface_not_operator_match_authority",
+    "operator_continuous_state_is_not_binder_support_authority"
   ],
   "training_sequence": [
     "P1_schema_conditioned_executor_oracle_operator_oracle_support",
