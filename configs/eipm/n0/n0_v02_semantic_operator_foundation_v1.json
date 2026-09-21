@@ -144,7 +144,14 @@
     "width_search_authorized": false,
     "batch_search_authorized": false,
     "n0_complete": false,
-    "n1_authorized": false
+    "n1_authorized": false,
+    "foundation_freeze_policy": {
+      "local_component_pass_is_permanent_freeze": false,
+      "temporary_freeze_for_causal_isolation": true,
+      "reopen_when_full_envelope_evidence_reaches_below_boundary": true,
+      "preserve_historical_ratification_when_reopened": true,
+      "durable_freeze_requires_full_envelope_interface_sufficiency": true
+    }
   },
   "next_work": [
     "full-envelope public semantic-operator curriculum",
