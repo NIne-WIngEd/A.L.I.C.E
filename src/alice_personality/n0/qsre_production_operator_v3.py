@@ -179,7 +179,11 @@ class QSREProductionOperatorInducerV3(nn.Module):
         shape: tuple[int, ...],
         name: str,
     ) -> None:
-        for key in ("joint_preference", "semantic_projection"):
+        for key in (
+            "joint_preference",
+            "semantic_projection",
+            "principle_alignment",
+        ):
             value = authority.get(key)
             if not isinstance(value, Tensor) or tuple(value.shape) != shape:
                 raise ValueError(
@@ -217,6 +221,7 @@ class QSREProductionOperatorInducerV3(nn.Module):
         matched["authority_score"] = combine_authority_components(
             joint_preference=authority["joint_preference"],
             semantic_projection=authority["semantic_projection"],
+            principle_alignment=authority["principle_alignment"],
             token_evidence=matched["token_score"],
         )
         return matched
@@ -304,7 +309,11 @@ class QSREProductionOperatorInducerV3(nn.Module):
         modifier_authority = factor_authority.get("modifiers")
         if not isinstance(modifier_authority, dict):
             raise ValueError("missing frozen modifier authority")
-        for key in ("joint_preference", "semantic_projection"):
+        for key in (
+            "joint_preference",
+            "semantic_projection",
+            "principle_alignment",
+        ):
             value = modifier_authority.get(key)
             expected = (batch, int(self.config.modifier_count), 2)
             if not isinstance(value, Tensor) or tuple(value.shape) != expected:
@@ -404,6 +413,7 @@ class QSREProductionOperatorInducerV3(nn.Module):
             authority_score = combine_authority_components(
                 joint_preference=relation_authority["joint_preference"],
                 semantic_projection=relation_authority["semantic_projection"],
+                principle_alignment=relation_authority["principle_alignment"],
                 token_evidence=matched["token_score"],
             )
             semantic_score = authority_score
@@ -583,6 +593,7 @@ class QSREProductionOperatorInducerV3(nn.Module):
         modifier_pair_logits = combine_authority_components(
             joint_preference=modifier_authority["joint_preference"],
             semantic_projection=modifier_authority["semantic_projection"],
+            principle_alignment=modifier_authority["principle_alignment"],
             token_evidence=modifier_token_score,
         )
         modifier_probability = torch.softmax(
@@ -744,7 +755,8 @@ class QSREProductionOperatorInducerV3(nn.Module):
             "coverage_is_position_based_not_left_to_right": True,
             "coverage_nonzero_recovery_floor": 0.05,
             "symmetric_late_interaction": True,
-            "authority_component_fusion": "equal_candidate_zscore_mean",
+            "authority_component_fusion": "equal_four_surface_candidate_zscore_mean",
+            "trained_principle_alignment_surface": True,
             "p1_schema_encoder_is_not_relation_match_authority": True,
             "p1_schema_relation_state_is_interface_only_for_operator": True,
             "relation_selection_decoupled_from_stop_unknown": True,
