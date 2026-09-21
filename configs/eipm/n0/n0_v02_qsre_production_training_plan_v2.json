@@ -146,7 +146,7 @@
       }
     },
     "P3": {
-      "role": "adaptive_binder_with_oracle_operator_training_and_frozen_proven_schema_encoder_executor; predicted_operator_integration_eval_also_required",
+      "role": "open_schema_adaptive_binder_with_shared_query_field_metric_and_operator_owned_relation_semantics",
       "trainable": [
         "binder"
       ],
@@ -175,7 +175,10 @@
         "max_steps": 1200,
         "eval_every": 50,
         "save_every": 50,
-        "operator_runtime_max_steps": 4
+        "operator_runtime_max_steps": 4,
+        "runtime_schema_candidates": "all_10_runtime_schema_relations; only_6_core_relations_have_train_query_positive_labels",
+        "open_schema_query_supervision": false,
+        "loss_reduction": "balanced_positive_negative_support_and_focus_supervision"
       },
       "eligibility": {
         "oracle_support_edge_f1": 0.98,
@@ -188,7 +191,16 @@
         "oracle_path_focus_exact_set_accuracy": 0.95,
         "predicted_operator_path_focus_top1_accuracy": 0.95
       },
-      "max_gpu_runs": 1
+      "max_gpu_runs": 1,
+      "architecture": {
+        "binder": "QSREProductionBinderV2",
+        "full_runtime_schema_candidates": true,
+        "open_schema_training_query_labels_used": false,
+        "p1_schema_relation_state_not_match_authority": true,
+        "relation_semantics_owned_by_operator": true,
+        "shared_query_field_metric": true,
+        "symmetric_query_field_late_interaction": true
+      }
     },
     "P4": {
       "role": "end_to_end_qsre_evaluation_only",
@@ -204,12 +216,14 @@
         "direction_accuracy_relational": 0.95
       },
       "failure_policy": "stop_and_localize_without_automatic_joint_finetune",
-      "operator_runtime_max_steps": 4
+      "operator_runtime_max_steps": 4,
+      "architecture": "operator-v2-plus-binder-v2"
     },
     "P5": {
       "role": "existing_n0_fusion_consumption_of_qsre_relational_view",
       "gradient_default": false,
-      "policy": "first_attempt_is_adapter_plus_frozen_fusion_evaluation; only measured_fusion_bottleneck_can_authorize_fusion_gradient"
+      "policy": "first_attempt_is_adapter_plus_frozen_fusion_evaluation; only measured_fusion_bottleneck_can_authorize_fusion_gradient",
+      "qsre_architecture": "operator-v2-plus-binder-v2"
     }
   },
   "governance": {
@@ -261,7 +275,14 @@
     "p2_factor_specific_query_slots": true,
     "p2_full_runtime_schema_candidate_training_without_open_query_labels": true,
     "p2_macro_balanced_factor_supervision": true,
-    "p2_unknown_is_rejection_event_not_extra_relation_class": true
+    "p2_unknown_is_rejection_event_not_extra_relation_class": true,
+    "p3_shared_query_field_metric": true,
+    "p3_relation_semantics_owned_by_operator": true,
+    "p3_p1_schema_state_not_match_authority": true,
+    "p3_full_runtime_schema_candidate_training_without_open_query_labels": true,
+    "p3_balanced_support_focus_supervision": true,
+    "p4_operator_v2_binder_v2_only": true,
+    "final_native_gate_uses_same_frozen_artifacts_with_operator_v2_binder_v2_runtime": true
   },
   "operator_architecture": {
     "module": "src/alice_personality/n0/qsre_production_operator_v2.py",
@@ -275,5 +296,21 @@
     "open_schema_runtime_candidates_are_present_during_training": true,
     "open_schema_training_query_labels_used": false,
     "schema_only_self_calibration": true
+  },
+  "binder_architecture": {
+    "module": "src/alice_personality/n0/qsre_production_binder_v2.py",
+    "class": "QSREProductionBinderV2",
+    "design": "shared_query_field_metric_plus_operator_owned_relation_semantics",
+    "shared_query_field_metric": true,
+    "symmetric_query_field_late_interaction": true,
+    "relation_semantics_owned_by_operator": true,
+    "p1_schema_relation_state_not_match_authority": true,
+    "exact_runtime_type_constraints": true,
+    "exact_zero_variable_support": true,
+    "fixed_top_k": false,
+    "learned_path_focus_without_oracle": true,
+    "support_count_ceiling": null,
+    "field_count_ceiling": null,
+    "edge_count_ceiling": null
   }
 }
