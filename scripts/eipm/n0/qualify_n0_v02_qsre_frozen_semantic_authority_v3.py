@@ -51,6 +51,7 @@ def component_accuracy(bundle: dict[str, torch.Tensor], target: torch.Tensor) ->
     result = {
         "joint_preference": accuracy(bundle["joint_preference"], target),
         "semantic_projection": accuracy(bundle["semantic_projection"], target),
+        "principle_alignment": accuracy(bundle["principle_alignment"], target),
         "token_evidence": accuracy(bundle["token_evidence"], target),
         "combined": accuracy(bundle["combined"], target),
     }
@@ -153,7 +154,16 @@ def factor_eval(
 
     modifier_texts, modifier_target = source["modifiers"]
     modifier_rows = list(meta["factors"]["modifiers"])
-    correct = {key: 0 for key in ("joint_preference", "semantic_projection", "token_evidence", "combined")}
+    correct = {
+        key: 0
+        for key in (
+            "joint_preference",
+            "semantic_projection",
+            "principle_alignment",
+            "token_evidence",
+            "combined",
+        )
+    }
     count = int(modifier_target.size(0))
     per_row = []
     for row_index in range(count):
