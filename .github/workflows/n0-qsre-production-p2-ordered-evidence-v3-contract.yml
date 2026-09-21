@@ -6,6 +6,8 @@ on:
       - "src/alice_personality/n0/qsre_production_operator_v3.py"
       - "tests/eipm/test_n0_qsre_production_operator_v3.py"
       - "configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py"
+      - "scripts/eipm/n0/qsre_production_training_utils.py"
       - ".github/workflows/n0-qsre-production-p2-ordered-evidence-v3-contract.yml"
   workflow_dispatch:
 
@@ -22,6 +24,8 @@ jobs:
         run: |
           python -m py_compile src/alice_personality/n0/qsre_production_operator_v3.py
           python -m py_compile tests/eipm/test_n0_qsre_production_operator_v3.py
+          python -m py_compile scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py
+          python -m py_compile scripts/eipm/n0/qsre_production_training_utils.py
 
       - name: Ordered-evidence mechanics
         run: |
