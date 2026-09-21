@@ -438,6 +438,7 @@ def main()->None:
                     "schema_cache_sha256":sha256(schema_cache_path),
                     "p1_checkpoint_sha256":sha256(p1_path),
                     "p2_checkpoint_sha256":sha256(p2_path),
+                    "factor_schema_cache_sha256":sha256(Path(args.factor_schema_cache)),
                 },
             )
             score=score_tuple(metrics)
@@ -457,6 +458,7 @@ def main()->None:
         "schema_cache_sha256":sha256(schema_cache_path),
         "p1_checkpoint_sha256":sha256(p1_path),
         "p2_checkpoint_sha256":sha256(p2_path),
+        "factor_schema_cache_sha256":sha256(Path(args.factor_schema_cache)),
         "schema_encoder_gradient":False,"executor_gradient":False,
         "operator_gradient":False,"binder_gradient":True,
         "private_identity_gradient":False,
