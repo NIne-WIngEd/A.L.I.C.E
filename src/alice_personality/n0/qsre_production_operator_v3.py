@@ -13,6 +13,9 @@ from alice_personality.n0.qsre_production_core import (
     QSREProductionOperatorState,
 )
 from alice_personality.n0.qsre_schema_matcher import QSRESchemaMatcher
+from alice_personality.n0.qsre_semantic_authority import (
+    combine_authority_components,
+)
 
 
 EVENT_CONTINUE = 0
@@ -22,18 +25,16 @@ EVENT_COUNT = 3
 
 
 class QSREProductionOperatorInducerV3(nn.Module):
-    """Final N0 closure operator.
+    """N0 operator using frozen semantic authority plus ordered evidence.
 
-    The filename/class name is retained so P3/P4/frozen-final pipeline wiring
-    stays lineage-compatible. The implementation no longer learns a six-class
-    semantic surface. Relation and factor meaning are supplied as runtime
-    schema text and matched by one relation-identity-independent matcher that
-    is pretrained on a broad public schema-generalization stage and frozen
-    before Production P2.
+    Relation and factor identity scores are supplied by a separately qualified,
+    zero-gradient semantic authority derived from the ratified N0 semantic
+    model. The local schema matcher is parameter-free and only exposes
+    candidate-conditioned token evidence and schema summaries.
 
-    Ordered relation programs keep a differentiable query-token coverage state.
-    Relation hypotheses stay continuous until the structural binder; exact
-    sparsity still begins only at evidence support.
+    Production P2 may learn ordering, termination, applicability and continuous
+    execution state, but it cannot rewrite relation or factor semantics.
+    Relation hypotheses remain continuous until structural Binder v2.
     """
 
     def __init__(self, config: QSREProductionConfig) -> None:
@@ -73,11 +74,6 @@ class QSREProductionOperatorInducerV3(nn.Module):
         self._factor_cache: dict[str, Any] | None = None
         self._reset_parameters()
 
-    @property
-    def relation_logit_scale(self) -> nn.Parameter:
-        # Compatibility surface for historical mechanics tests and receipts.
-        return self.schema_matcher.logit_scale
-
     def _reset_parameters(self) -> None:
         nn.init.normal_(
             self.program_query,
@@ -90,21 +86,11 @@ class QSREProductionOperatorInducerV3(nn.Module):
     def project_semantic(self, states: Tensor) -> Tensor:
         return self.schema_matcher.project(states)
 
-    def load_pretrained_schema_matcher(
-        self,
-        state_dict: dict[str, Tensor],
-        *,
-        freeze: bool = True,
-    ) -> None:
-        self.schema_matcher.load_state_dict(state_dict, strict=True)
-        for parameter in self.schema_matcher.parameters():
-            parameter.requires_grad = not freeze
-        if freeze:
-            self.schema_matcher.eval()
-
     def configure_factor_schema_cache(self, cache: dict[str, Any]) -> None:
-        if cache.get("schema") != "alice.eipm.n0.qsre-closure-factor-schema-cache.v1":
-            raise ValueError("closure factor-schema cache version drift")
+        if cache.get("schema") != "alice.eipm.n0.qsre-frozen-factor-schema-cache.v3":
+            raise ValueError("frozen factor-schema cache version drift")
+        if cache.get("gradient") is not False or cache.get("optimizer") is not False:
+            raise ValueError("factor-schema cache must be zero-gradient")
         if cache.get("private_identity_data") is not False:
             raise ValueError("private identity data entered factor schema cache")
 
@@ -186,23 +172,54 @@ class QSREProductionOperatorInducerV3(nn.Module):
         state = self.slot_norm(slot + attended).squeeze(1)
         return state, attention.squeeze(1)
 
+    @staticmethod
+    def _validate_authority_pair(
+        authority: dict[str, Tensor],
+        *,
+        shape: tuple[int, ...],
+        name: str,
+    ) -> None:
+        for key in ("joint_preference", "semantic_projection"):
+            value = authority.get(key)
+            if not isinstance(value, Tensor) or tuple(value.shape) != shape:
+                raise ValueError(
+                    f"{name} frozen semantic authority {key} shape drift"
+                )
+            if value.requires_grad:
+                raise ValueError(
+                    f"{name} frozen semantic authority unexpectedly requires gradient"
+                )
+
     def _factor_match(
         self,
         *,
         query_projected: Tensor,
         query_token_mask: Tensor,
         category: str,
+        authority: dict[str, Tensor],
     ) -> dict[str, Tensor]:
         raw, mask = self._factor_row(
             category,
             device=query_projected.device,
         )
-        return self.schema_matcher.match_projected(
+        matched = self.schema_matcher.match_projected(
             query_projected=query_projected,
             query_token_mask=query_token_mask,
             schema_projected=self.schema_matcher.project(raw),
             schema_token_mask=mask,
         )
+        expected = (query_projected.size(0), raw.size(0))
+        self._validate_authority_pair(
+            authority,
+            shape=expected,
+            name=category,
+        )
+        matched["authority_score"] = combine_authority_components(
+            joint_preference=authority["joint_preference"],
+            semantic_projection=authority["semantic_projection"],
+            token_evidence=matched["token_score"],
+        )
+        return matched
 
     def schema_identity_logits(
         self,
@@ -235,6 +252,8 @@ class QSREProductionOperatorInducerV3(nn.Module):
         schema: QSREDynamicRelationSchema,
         schema_token_state: Tensor,
         schema_relation_state: Tensor,
+        relation_authority: dict[str, Tensor],
+        factor_authority: dict[str, dict[str, Tensor]],
         max_steps: int,
     ) -> dict[str, Tensor | QSREProductionOperatorState]:
         del schema_token_state
@@ -264,6 +283,34 @@ class QSREProductionOperatorInducerV3(nn.Module):
         relations = int(schema_info["relations"])
         if schema_relation_state.shape != (relations, self.config.model_dim):
             raise ValueError("schema relation-state shape drift")
+        self._validate_authority_pair(
+            relation_authority,
+            shape=(batch, relations),
+            name="relation",
+        )
+        for category, count in (
+            ("role", int(self.config.role_count)),
+            ("traversal", int(self.config.traversal_count)),
+            ("direction", int(self.config.direction_count)),
+            ("control", int(self.config.control_count)),
+        ):
+            if category not in factor_authority:
+                raise ValueError(f"missing frozen factor authority: {category}")
+            self._validate_authority_pair(
+                factor_authority[category],
+                shape=(batch, count),
+                name=category,
+            )
+        modifier_authority = factor_authority.get("modifiers")
+        if not isinstance(modifier_authority, dict):
+            raise ValueError("missing frozen modifier authority")
+        for key in ("joint_preference", "semantic_projection"):
+            value = modifier_authority.get(key)
+            expected = (batch, int(self.config.modifier_count), 2)
+            if not isinstance(value, Tensor) or tuple(value.shape) != expected:
+                raise ValueError(f"modifier authority {key} shape drift")
+            if value.requires_grad:
+                raise ValueError("modifier frozen semantic authority requires gradient")
 
         query_projected = self.schema_matcher.project(query_hidden_states)
         relation_schema_projected = self.schema_matcher.project(
@@ -350,10 +397,21 @@ class QSREProductionOperatorInducerV3(nn.Module):
                 F.normalize(self.step_query(step_state), dim=-1),
                 F.normalize(matched["schema_summary"], dim=-1),
             )
-            # Semantic description matching remains the authority. Recurrent
-            # state is a bounded ordering residual and cannot replace it.
-            relation_logits = matched["logits"] + 0.75 * state_score
-            semantic_score = matched["semantic_score"] + 0.10 * state_score
+            # Frozen semantic authority owns relation identity. The
+            # parameter-free token component is recomputed after every coverage
+            # update. Remaining evidence and recurrent state may order a
+            # program, but cannot learn a replacement relation ontology.
+            authority_score = combine_authority_components(
+                joint_preference=relation_authority["joint_preference"],
+                semantic_projection=relation_authority["semantic_projection"],
+                token_evidence=matched["token_score"],
+            )
+            semantic_score = authority_score
+            relation_logits = (
+                authority_score
+                + torch.log(matched["remaining_support"].clamp_min(0.05))
+                + 0.25 * torch.tanh(state_score)
+            )
             relation_distribution = torch.softmax(
                 relation_logits,
                 dim=-1,
@@ -458,27 +516,31 @@ class QSREProductionOperatorInducerV3(nn.Module):
             query_projected=query_projected,
             query_token_mask=query_token_mask,
             category="role",
+            authority=factor_authority["role"],
         )
         traversal_match = self._factor_match(
             query_projected=query_projected,
             query_token_mask=query_token_mask,
             category="traversal",
+            authority=factor_authority["traversal"],
         )
         direction_match = self._factor_match(
             query_projected=query_projected,
             query_token_mask=query_token_mask,
             category="direction",
+            authority=factor_authority["direction"],
         )
         control_match = self._factor_match(
             query_projected=query_projected,
             query_token_mask=query_token_mask,
             category="control",
+            authority=factor_authority["control"],
         )
 
-        role_logits = role_match["logits"]
-        traversal_logits = traversal_match["logits"]
-        direction_logits = direction_match["logits"]
-        control_logits = control_match["logits"]
+        role_logits = role_match["authority_score"]
+        traversal_logits = traversal_match["authority_score"]
+        direction_logits = direction_match["authority_score"]
+        control_logits = control_match["authority_score"]
 
         role_distribution = torch.softmax(role_logits, dim=-1)
         traversal_distribution = torch.softmax(
@@ -513,10 +575,15 @@ class QSREProductionOperatorInducerV3(nn.Module):
             schema_projected=self.schema_matcher.project(modifier_flat),
             schema_token_mask=modifier_mask_flat,
         )
-        modifier_pair_logits = modifier_match["logits"].reshape(
+        modifier_token_score = modifier_match["token_score"].reshape(
             batch,
             modifier_count,
             2,
+        )
+        modifier_pair_logits = combine_authority_components(
+            joint_preference=modifier_authority["joint_preference"],
+            semantic_projection=modifier_authority["semantic_projection"],
+            token_evidence=modifier_token_score,
         )
         modifier_probability = torch.softmax(
             modifier_pair_logits,
@@ -670,12 +737,14 @@ class QSREProductionOperatorInducerV3(nn.Module):
             "hop_count_dependent_parameters": 0,
             "fixed_factor_class_head_parameters": 0,
             "runtime_dynamic_relation_schema": True,
-            "shared_query_schema_metric": True,
+            "shared_query_schema_metric": False,
+            "parameter_free_token_evidence_matcher": True,
             "candidate_conditioned_query_evidence": True,
             "ordered_query_evidence_coverage": True,
             "coverage_is_position_based_not_left_to_right": True,
             "coverage_nonzero_recovery_floor": 0.05,
             "symmetric_late_interaction": True,
+            "authority_component_fusion": "equal_candidate_zscore_mean",
             "p1_schema_encoder_is_not_relation_match_authority": True,
             "p1_schema_relation_state_is_interface_only_for_operator": True,
             "relation_selection_decoupled_from_stop_unknown": True,
@@ -687,6 +756,13 @@ class QSREProductionOperatorInducerV3(nn.Module):
             "schema_matcher_relation_identity_parameters": matcher_report[
                 "relation_identity_parameters"
             ],
+            "schema_matcher_trainable_parameters": matcher_report[
+                "trainable_parameters"
+            ],
+            "frozen_semantic_authority_external": True,
+            "frozen_authority_trainable_parameters": 0,
+            "relation_identity_owned_by_trainable_operator": False,
+            "factor_identity_owned_by_trainable_operator": False,
             "factor_schema_configured": self._factor_cache is not None,
             "continuous_operator_state": True,
             "role_count_ceiling": None,
