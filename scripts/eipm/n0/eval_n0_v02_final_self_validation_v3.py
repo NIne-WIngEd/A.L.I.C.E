@@ -61,6 +61,7 @@ from train_n0_v02_qsre_production_p3_v3 import (
 
 EXPECTED_LATENT_SHA256 = "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4"
 EXPECTED_FUSION_SHA256 = "4d51494beb788f74ddc03590da05ea00f0e36574294649c2cd5d438f9472e577"
+EXPECTED_EVIDENCE_GRAPH_SHA256 = "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f"
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -562,6 +563,10 @@ def main() -> None:
     del binder, operator_model, executor, schema_encoder, final_schema
     torch.cuda.empty_cache()
 
+    evidence_graph_path = Path(args.evidence_graph)
+    if sha256(evidence_graph_path) != EXPECTED_EVIDENCE_GRAPH_SHA256:
+        raise SystemExit("final validation selected repaired evidence-graph drift")
+
     semantic_model, tokenizer, structured, adapter, graph = load_public_parents(
         semantic_config_path=Path(args.semantic_config),
         semantic_checkpoint=Path(args.semantic_checkpoint).parent,
@@ -569,7 +574,7 @@ def main() -> None:
         structured_config_path=Path(args.structured_config),
         structured_checkpoint=Path(args.structured_checkpoint),
         evidence_adapter_path=Path(args.evidence_adapter),
-        evidence_graph_path=Path(args.evidence_graph),
+        evidence_graph_path=evidence_graph_path,
         device=device,
     )
     general_parent = build_parent_cache(
@@ -887,6 +892,7 @@ def main() -> None:
             "final_semantic_authority_cache_sha256": sha256(
                 Path(args.final_authority_cache)
             ),
+            "evidence_graph_sha256": EXPECTED_EVIDENCE_GRAPH_SHA256,
             "fusion_sha256": EXPECTED_FUSION_SHA256,
             "latent_pool_sha256": EXPECTED_LATENT_SHA256,
         },
