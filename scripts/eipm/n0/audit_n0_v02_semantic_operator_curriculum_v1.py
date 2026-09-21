@@ -100,6 +100,38 @@ def main() -> None:
             target = int(factor_targets[name])
             if target < 0 or target >= len(bank):
                 errors.append(f"{rid}: factor target outside {name} bank")
+
+        step_targets = row.get("step_factor_targets") or {}
+        required_step_factor_names = {
+            "direction",
+            "reliability_modifier",
+            "recency_modifier",
+            "temporal_constraint_modifier",
+            "provenance_constraint_modifier",
+        }
+        if set(step_targets) != required_step_factor_names:
+            errors.append(f"{rid}: step factor target names drift")
+        step_count = int(row.get("runtime_reasoning_steps", -1))
+        if step_count < 0:
+            errors.append(f"{rid}: invalid runtime_reasoning_steps")
+            step_count = 0
+        for name in required_step_factor_names:
+            values = list(step_targets.get(name) or [])
+            if len(values) != step_count:
+                errors.append(
+                    f"{rid}: step factor {name} length {len(values)} != reasoning steps {step_count}"
+                )
+                continue
+            bank = factor_schemas.get(name)
+            if bank is None:
+                errors.append(f"{rid}: step factor {name} has no semantic bank")
+                continue
+            for target in values:
+                target = int(target)
+                if target < 0 or target >= len(bank):
+                    errors.append(
+                        f"{rid}: step factor target outside {name} bank"
+                    )
         counts[int(row.get("runtime_relation_count", -1))] += 1
         interventions[str(row.get("intervention"))] += 1
         family = str(row.get("relation_family"))
@@ -130,6 +162,8 @@ def main() -> None:
         "provenance_constraint",
         "unknown_defer",
         "plurality",
+        "mixed_direction_composition",
+        "mixed_step_modifier_composition",
     }
     missing_interventions = sorted(required_interventions - set(interventions))
     if missing_interventions:
@@ -162,6 +196,8 @@ def main() -> None:
         "entity_overlap": entity_overlap,
         "candidate_count_histogram": {str(k): v for k, v in sorted(counts.items())},
         "intervention_histogram": dict(sorted(interventions.items())),
+        "step_conditioned_direction_present": interventions["mixed_direction_composition"] > 0,
+        "step_conditioned_modifier_present": interventions["mixed_step_modifier_composition"] > 0,
         "private_identity_data": False,
         "gradient": False,
         "optimizer": False,
