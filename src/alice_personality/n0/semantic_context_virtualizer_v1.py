@@ -79,6 +79,14 @@ class SemanticContextVirtualizerV1:
         lengths = attention_mask.long().sum(dim=-1)
         if bool((lengths == 0).any()):
             raise ValueError("every example requires at least one valid token")
+        expected_prefix = (
+            torch.arange(total_tokens, device=input_ids.device)[None, :]
+            < lengths[:, None]
+        )
+        if not torch.equal(attention_mask, expected_prefix):
+            raise ValueError(
+                "context virtualizer requires right-padded contiguous token masks"
+            )
 
         starts_by_row = [
             self._starts(int(length.item()))
