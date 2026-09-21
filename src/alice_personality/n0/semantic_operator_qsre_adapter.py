@@ -20,6 +20,14 @@ MODIFIER_OPCODES = (
     ("MOD_PROVENANCE_OFF", "MOD_PROVENANCE_ON"),
 )
 
+SUPPORTED_STRUCTURAL_OPCODES = frozenset(
+    ROLE_OPCODES
+    + TRAVERSAL_OPCODES
+    + DIRECTION_OPCODES
+    + CONTROL_OPCODES
+    + tuple(opcode for pair in MODIFIER_OPCODES for opcode in pair)
+)
+
 
 class SemanticOperatorQSREAdapter(nn.Module):
     """Parameter-free structural adapter from semantic schemas to QSRE opcodes.
@@ -45,6 +53,11 @@ class SemanticOperatorQSREAdapter(nn.Module):
             if probability.ndim != 2 or probability.size(1) != len(opcodes):
                 raise ValueError(f"factor opcode cardinality drift for {name!r}")
             for index, opcode in enumerate(opcodes):
+                if opcode not in SUPPORTED_STRUCTURAL_OPCODES:
+                    raise ValueError(
+                        f"unsupported structural opcode {opcode!r}; "
+                        "new executable primitives require an explicit architecture version"
+                    )
                 value = probability[:, index]
                 result[opcode] = result.get(opcode, torch.zeros_like(value)) + value
         return result
