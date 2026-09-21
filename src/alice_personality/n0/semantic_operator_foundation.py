@@ -691,7 +691,13 @@ class SchemaConditionedSemanticOperator(nn.Module):
         unknown_probability = torch.stack(unknowns, dim=1)
         query_coverage = torch.stack(coverage_history, dim=1)
 
-        relation_entropy = self._entropy(relation_distribution)
+        relation_mask_by_step = relation_candidate_mask[:, None, :].expand_as(
+            relation_distribution
+        )
+        relation_entropy = self._masked_entropy(
+            relation_distribution,
+            relation_mask_by_step,
+        )
         unknown_mass = unknown_probability.sum(dim=1).clamp(0.0, 1.0)
         factor_uncertainty = []
         for name, probability in factor_distributions.items():
@@ -793,6 +799,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "factor_identity_parameters": 0,
             "candidate_count_dependent_parameters": 0,
             "per_example_candidate_subset_supported": True,
+            "masked_candidate_uncertainty_normalization": True,
             "runtime_step_count_dependent_parameters": 0,
             "type_vocabulary_dependent_parameters": 0,
             "relation_count_ceiling": None,
