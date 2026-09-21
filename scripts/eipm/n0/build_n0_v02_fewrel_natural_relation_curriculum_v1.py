@@ -20,8 +20,9 @@ EXPECTED_BLOBS = {
 }
 ROW_SCHEMA = "alice.eipm.n0.fewrel-natural-relation-row.v1"
 BANK_SCHEMA = "alice.eipm.n0.fewrel-runtime-relation-bank.v1"
-MANIFEST_SCHEMA = "alice.eipm.n0.fewrel-natural-relation-manifest.v1"
+MANIFEST_SCHEMA = "alice.eipm.n0.fewrel-natural-relation-manifest.v2"
 PROPERTY_ID = re.compile(r"\bP\d+\b")
+FINAL_SPLIT_SALT = "alice-n0-fewrel-final-family-split-v1"
 
 
 def sha256(path: Path) -> str:
@@ -48,25 +49,28 @@ def require_source(root: Path) -> None:
         raise SystemExit(
             f"FewRel revision drift: expected {EXPECTED_REVISION}, got {revision}"
         )
-
     for relative, expected in EXPECTED_BLOBS.items():
-        path = root / relative
-        if not path.is_file():
+        source = root / relative
+        if not source.is_file():
             raise SystemExit(f"FewRel source file missing: {relative}")
-        actual = git_blob_sha1(path)
+        actual = git_blob_sha1(source)
         if actual != expected:
             raise SystemExit(
                 f"FewRel git-blob drift for {relative}: expected {expected}, got {actual}"
             )
-
     license_text = (root / "LICENSE").read_text(encoding="utf-8")
-    if "MIT License" not in license_text or "Copyright (c) 2018 THUNLP" not in license_text:
+    if (
+        "MIT License" not in license_text
+        or "Copyright (c) 2018 THUNLP" not in license_text
+    ):
         raise SystemExit("FewRel MIT license receipt drift")
 
 
 def semantic_relation_text(name: str, description: str) -> str:
     name = PROPERTY_ID.sub("referenced property", str(name)).strip()
-    description = PROPERTY_ID.sub("referenced property", str(description)).strip()
+    description = PROPERTY_ID.sub(
+        "referenced property", str(description)
+    ).strip()
     if not description or description.lower() == "no description defined":
         return f"Relation meaning: {name}."
     return f"Relation name: {name}. Relation meaning: {description}"
@@ -79,7 +83,9 @@ def relation_bank(pid2name: dict[str, Any]) -> dict[str, dict[str, str]]:
             raise SystemExit(f"FewRel pid2name malformed for {key}")
         text = semantic_relation_text(str(pair[0]), str(pair[1]))
         if key.lower() in text.lower():
-            raise SystemExit(f"opaque relation key leaked into semantic text: {key}")
+            raise SystemExit(
+                f"opaque relation key leaked into semantic text: {key}"
+            )
         out[str(key)] = {
             "name": str(pair[0]),
             "description": str(pair[1]),
@@ -97,6 +103,11 @@ def flatten_positions(value: Any) -> list[int]:
             out.extend(flatten_positions(item))
         return sorted(set(out))
     raise SystemExit("FewRel entity position structure is malformed")
+
+
+def stable_seed(*parts: str) -> int:
+    digest = hashlib.sha256("\x1f".join(parts).encode("utf-8")).digest()
+    return int.from_bytes(digest[:8], "big", signed=False)
 
 
 def candidate_keys(
@@ -119,15 +130,27 @@ def candidate_keys(
     return chosen
 
 
-def stable_seed(*parts: str) -> int:
-    digest = hashlib.sha256("\x1f".join(parts).encode("utf-8")).digest()
-    return int.from_bytes(digest[:8], "big", signed=False)
+def heldout_family_partition(
+    validation_relations: list[str],
+) -> tuple[list[str], list[str]]:
+    if len(validation_relations) != 16:
+        raise SystemExit(
+            "FewRel validation relation count must be 16 before family partition"
+        )
+    ordered = sorted(
+        validation_relations,
+        key=lambda key: hashlib.sha256(
+            f"{FINAL_SPLIT_SALT}:{key}".encode("utf-8")
+        ).hexdigest(),
+    )
+    return sorted(ordered[:8]), sorted(ordered[8:])
 
 
 def compile_split(
     *,
     split: str,
     data: dict[str, list[dict[str, Any]]],
+    active_relations: list[str],
     candidate_pool: list[str],
     candidate_points: list[int],
     max_per_relation: int,
@@ -136,7 +159,7 @@ def compile_split(
     if not candidate_points:
         raise SystemExit("candidate operating points must be non-empty")
 
-    for relation_key in sorted(data):
+    for relation_key in active_relations:
         examples = data[relation_key]
         if max_per_relation > 0:
             examples = examples[:max_per_relation]
@@ -157,7 +180,6 @@ def compile_split(
                 seed=stable_seed(split, relation_key, str(index)),
             )
             target_index = candidates.index(relation_key)
-            sentence = " ".join(tokens)
             source_key = hashlib.sha256(
                 json.dumps(
                     {
@@ -179,7 +201,7 @@ def compile_split(
                 "natural_source_text": True,
                 "generated_instruction_only": True,
                 "generated_relation_label": False,
-                "sentence": sentence,
+                "sentence": " ".join(tokens),
                 "tokens": tokens,
                 "head": {
                     "text": str(head[0]),
@@ -192,7 +214,7 @@ def compile_split(
                     "token_indices": flatten_positions(tail[2]),
                 },
                 "instruction": (
-                    "Given the natural sentence and the marked head/tail entities, "
+                    "Given the natural sentence and marked head/tail entities, "
                     "select the supplied relation description that best expresses "
                     "how the head entity relates to the tail entity."
                 ),
@@ -201,6 +223,8 @@ def compile_split(
                 "target_candidate_index": target_index,
                 "runtime_relation_count": len(candidates),
                 "training_authorized": split == "train",
+                "model_selection_authorized": split == "dev",
+                "final_validation_only": split == "final",
                 "relation_keys_are_metadata_only": True,
                 "private_identity_data": False,
             }
@@ -208,14 +232,62 @@ def compile_split(
     return rows
 
 
+def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
+    if path.exists():
+        raise SystemExit(f"refusing to overwrite {path}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        "".join(
+            json.dumps(row, sort_keys=True, ensure_ascii=False) + "\n"
+            for row in rows
+        ),
+        encoding="utf-8",
+    )
+
+
+def write_bank(
+    path: Path,
+    *,
+    bank: dict[str, dict[str, str]],
+    keys: list[str],
+    role: str,
+) -> None:
+    if path.exists():
+        raise SystemExit(f"refusing to overwrite {path}")
+    payload = {
+        "schema": BANK_SCHEMA,
+        "source_id": "thunlp_fewrel_1_0",
+        "source_revision": EXPECTED_REVISION,
+        "role": role,
+        "relations": {key: bank[key] for key in keys},
+        "relation_keys_are_metadata_only": True,
+        "semantic_text_field": "semantic_text",
+        "private_identity_data": False,
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(
+            payload,
+            indent=2,
+            sort_keys=True,
+            ensure_ascii=False,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--fewrel-root", required=True)
-    p.add_argument("--rows-output", required=True)
-    p.add_argument("--bank-output", required=True)
+    p.add_argument("--train-dev-rows-output", required=True)
+    p.add_argument("--train-dev-bank-output", required=True)
+    p.add_argument("--final-rows-output", required=True)
+    p.add_argument("--final-bank-output", required=True)
     p.add_argument("--manifest-output", required=True)
     p.add_argument("--train-candidate-counts", default="4,8,16,32,64")
-    p.add_argument("--dev-candidate-counts", default="3,7,12,24,48,80")
+    p.add_argument("--dev-candidate-counts", default="3,7,12,24,48,72")
+    p.add_argument("--final-candidate-counts", default="5,9,20,40,73,80")
     p.add_argument(
         "--max-per-relation",
         type=int,
@@ -226,37 +298,37 @@ def main() -> None:
 
     root = Path(args.fewrel_root)
     require_source(root)
-
     pid2name = json.loads(
         (root / "data/pid2name.json").read_text(encoding="utf-8")
     )
     train_data = json.loads(
         (root / "data/train_wiki.json").read_text(encoding="utf-8")
     )
-    dev_data = json.loads(
+    validation_data = json.loads(
         (root / "data/val_wiki.json").read_text(encoding="utf-8")
     )
     bank = relation_bank(pid2name)
 
     train_relations = sorted(str(x) for x in train_data)
-    dev_relations = sorted(str(x) for x in dev_data)
-    overlap = sorted(set(train_relations) & set(dev_relations))
-    if overlap:
-        raise SystemExit(f"FewRel train/dev relation leakage: {overlap}")
+    validation_relations = sorted(str(x) for x in validation_data)
+    if set(train_relations) & set(validation_relations):
+        raise SystemExit("FewRel official train/validation relation leakage")
     if len(train_relations) != 64:
         raise SystemExit(
             f"FewRel training relation count drift: {len(train_relations)}"
         )
-    if len(dev_relations) != 16:
+    if len(validation_relations) != 16:
         raise SystemExit(
-            f"FewRel heldout relation count drift: {len(dev_relations)}"
+            f"FewRel heldout relation count drift: {len(validation_relations)}"
         )
+    dev_relations, final_relations = heldout_family_partition(
+        validation_relations
+    )
+    if set(dev_relations) & set(final_relations):
+        raise SystemExit("DEV/final heldout relation split overlap")
 
-    missing = [
-        key
-        for key in train_relations + dev_relations
-        if key not in bank
-    ]
+    active = train_relations + dev_relations + final_relations
+    missing = [key for key in active if key not in bank]
     if missing:
         raise SystemExit(f"FewRel relation descriptions missing: {missing}")
 
@@ -266,95 +338,111 @@ def main() -> None:
     dev_points = sorted(
         {int(x) for x in args.dev_candidate_counts.split(",") if x.strip()}
     )
-    if min(train_points + dev_points) <= 0:
+    final_points = sorted(
+        {int(x) for x in args.final_candidate_counts.split(",") if x.strip()}
+    )
+    if min(train_points + dev_points + final_points) <= 0:
         raise SystemExit("candidate counts must be positive")
     if max(train_points) > len(train_relations):
-        raise SystemExit("train candidate operating point exceeds training relation bank")
-    all_relations = train_relations + dev_relations
-    if max(dev_points) > len(all_relations):
-        raise SystemExit("DEV candidate operating point exceeds full relation bank")
+        raise SystemExit("TRAIN candidate count exceeds TRAIN relation bank")
+    train_dev_relations = train_relations + dev_relations
+    if max(dev_points) > len(train_dev_relations):
+        raise SystemExit("DEV candidate count exceeds TRAIN+DEV relation bank")
+    if max(final_points) > len(active):
+        raise SystemExit("FINAL candidate count exceeds full relation bank")
 
     train_rows = compile_split(
         split="train",
         data=train_data,
+        active_relations=train_relations,
         candidate_pool=train_relations,
         candidate_points=train_points,
         max_per_relation=args.max_per_relation,
     )
     dev_rows = compile_split(
         split="dev",
-        data=dev_data,
-        candidate_pool=all_relations,
+        data=validation_data,
+        active_relations=dev_relations,
+        candidate_pool=train_dev_relations,
         candidate_points=dev_points,
         max_per_relation=args.max_per_relation,
     )
-    rows = train_rows + dev_rows
+    final_rows = compile_split(
+        split="final",
+        data=validation_data,
+        active_relations=final_relations,
+        candidate_pool=active,
+        candidate_points=final_points,
+        max_per_relation=args.max_per_relation,
+    )
+    train_dev_rows = train_rows + dev_rows
 
-    row_ids = [x["id"] for x in rows]
-    if len(row_ids) != len(set(row_ids)):
+    all_ids = [x["id"] for x in train_dev_rows + final_rows]
+    if len(all_ids) != len(set(all_ids)):
         raise SystemExit("FewRel compiled row IDs are not unique")
 
-    rows_path = Path(args.rows_output)
-    bank_path = Path(args.bank_output)
+    train_dev_rows_path = Path(args.train_dev_rows_output)
+    train_dev_bank_path = Path(args.train_dev_bank_output)
+    final_rows_path = Path(args.final_rows_output)
+    final_bank_path = Path(args.final_bank_output)
     manifest_path = Path(args.manifest_output)
-    for path in (rows_path, bank_path, manifest_path):
-        if path.exists():
-            raise SystemExit(f"refusing to overwrite {path}")
-        path.parent.mkdir(parents=True, exist_ok=True)
 
-    rows_path.write_text(
-        "".join(
-            json.dumps(row, sort_keys=True, ensure_ascii=False) + "\n"
-            for row in rows
-        ),
-        encoding="utf-8",
+    write_jsonl(train_dev_rows_path, train_dev_rows)
+    write_jsonl(final_rows_path, final_rows)
+    write_bank(
+        train_dev_bank_path,
+        bank=bank,
+        keys=train_dev_relations,
+        role="TRAIN_AND_MODEL_SELECTION_ONLY_NO_FINAL_RELATIONS",
     )
-    active_bank_keys = sorted(set(train_relations + dev_relations))
-    bank_payload = {
-        "schema": BANK_SCHEMA,
-        "source_id": "thunlp_fewrel_1_0",
-        "source_revision": EXPECTED_REVISION,
-        "relations": {
-            key: bank[key]
-            for key in active_bank_keys
-        },
-        "relation_keys_are_metadata_only": True,
-        "semantic_text_field": "semantic_text",
-        "private_identity_data": False,
-    }
-    bank_path.write_text(
-        json.dumps(bank_payload, indent=2, sort_keys=True, ensure_ascii=False)
-        + "\n",
-        encoding="utf-8",
+    write_bank(
+        final_bank_path,
+        bank=bank,
+        keys=active,
+        role="SEALED_FINAL_VALIDATION_RELATION_BANK",
     )
+    if manifest_path.exists():
+        raise SystemExit(f"refusing to overwrite {manifest_path}")
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
 
     manifest = {
         "schema": MANIFEST_SCHEMA,
-        "status": "MATERIALIZED_NATURAL_RELATION_CURRICULUM_NOT_TRAINING_AUTHORITY_BY_ITSELF",
+        "status": "MATERIALIZED_NATURAL_RELATION_CURRICULUM_WITH_SEALED_FINAL_FAMILIES",
         "source_id": "thunlp_fewrel_1_0",
         "source_revision": EXPECTED_REVISION,
         "source_git_blob_sha1": EXPECTED_BLOBS,
         "license": "MIT",
-        "rows_sha256": sha256(rows_path),
-        "bank_sha256": sha256(bank_path),
-        "rows": len(rows),
+        "family_split_rule": FINAL_SPLIT_SALT,
+        "train_dev_rows_sha256": sha256(train_dev_rows_path),
+        "train_dev_bank_sha256": sha256(train_dev_bank_path),
+        "final_rows_sha256": sha256(final_rows_path),
+        "final_bank_sha256": sha256(final_bank_path),
         "train_rows": len(train_rows),
         "dev_rows": len(dev_rows),
+        "final_rows": len(final_rows),
         "train_relation_count": len(train_relations),
         "dev_relation_count": len(dev_relations),
-        "train_dev_relation_overlap": overlap,
+        "final_relation_count": len(final_relations),
+        "train_relations": train_relations,
+        "dev_relations": dev_relations,
+        "final_relations": final_relations,
         "train_candidate_count_points": sorted(
             {x["runtime_relation_count"] for x in train_rows}
         ),
         "dev_candidate_count_points": sorted(
             {x["runtime_relation_count"] for x in dev_rows}
         ),
+        "final_candidate_count_points": sorted(
+            {x["runtime_relation_count"] for x in final_rows}
+        ),
         "max_per_relation_operating_cap": args.max_per_relation,
         "operating_cap_is_capability_ceiling": False,
         "natural_source_text": True,
         "human_relation_labels": True,
-        "synthetic_replacement": False,
-        "dev_training_authorized": False,
+        "final_relation_descriptions_absent_from_train_dev_bank": True,
+        "final_rows_separate_artifact": True,
+        "final_training_authorized": False,
+        "final_model_selection_authorized": False,
         "private_identity_data": False,
     }
     manifest_path.write_text(
