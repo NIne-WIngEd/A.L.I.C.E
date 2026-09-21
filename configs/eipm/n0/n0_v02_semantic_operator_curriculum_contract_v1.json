@@ -1,0 +1,341 @@
+{
+  "schema": "alice.eipm.n0.semantic-operator-curriculum-contract.v1",
+  "status": "FULL_ENVELOPE_PUBLIC_CURRICULUM_CONTRACT_NO_GRADIENT",
+  "date": "2026-09-21",
+  "purpose": "Train the N0 semantic representation and dynamic schema/operator behavior as one co-adapted public identity-neutral foundation rather than attaching a semantic authority head after freezing.",
+  "source_architecture": {
+    "config": "configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json",
+    "retrospective_audit": "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json"
+  },
+  "authority_boundaries": {
+    "public_identity_neutral_only": true,
+    "private_identity_data": false,
+    "private_identity_gradient": false,
+    "relation_keys_semantic_tokens": false,
+    "factor_keys_semantic_tokens": false,
+    "final_validation_rows_training_allowed": false,
+    "historical_frozen_challenge_rows_training_allowed": false,
+    "diagnostic_rows_training_allowed": false,
+    "test_rows_training_allowed": false
+  },
+  "mixture_lanes": [
+    {
+      "name": "broad_public_semantic_replay",
+      "role": "retain broad language, pragmatic, semantic, social and judgment competence while operator objectives co-adapt the backbone",
+      "required": true,
+      "source_rule": "approved public N0 corpus with row/source license and provenance",
+      "synthetic_only": false
+    },
+    {
+      "name": "governed_judgment_and_rationale_replay",
+      "role": "retain candidate preference, ambiguity, rationale, communication and public judgment geometry",
+      "required": true,
+      "source_rule": "governed public teacher bank plus future failure-driven public additions",
+      "synthetic_only": false
+    },
+    {
+      "name": "dynamic_relation_schema",
+      "role": "map natural queries to arbitrary runtime relation descriptions without relation-ID semantic parameters",
+      "required": true,
+      "interventions": [
+        "same_query_different_relation",
+        "same_endpoints_different_relation",
+        "lexical_overlap_wrong_relation",
+        "unseen_relation_family"
+      ]
+    },
+    {
+      "name": "argument_role_and_direction",
+      "role": "make source/target/symmetric and forward/reverse/bidirectional semantics behaviorally explicit",
+      "required": true,
+      "interventions": [
+        "source_target_flip",
+        "direction_reversal",
+        "symmetric_no_winner",
+        "same_relation_opposite_requested_role"
+      ]
+    },
+    {
+      "name": "dynamic_factor_schema",
+      "role": "learn role, traversal, direction, control, modifier and future operator factors as runtime semantic schemas",
+      "required": true,
+      "factor_banks_are_runtime_variable": true,
+      "opaque_fixed_class_semantics_forbidden": true
+    },
+    {
+      "name": "ordered_composition",
+      "role": "learn noncommutative multi-step relation programs with shared recurrent transition",
+      "required": true,
+      "interventions": [
+        "order_swap",
+        "prefix_distractor",
+        "branching_path",
+        "reverse_path",
+        "variable_length_path"
+      ]
+    },
+    {
+      "name": "unknown_defer_and_open_schema",
+      "role": "learn fail-closed behavior when supplied schema is absent, insufficient, ambiguous or irrelevant",
+      "required": true,
+      "interventions": [
+        "requested_relation_missing",
+        "near_miss_only",
+        "multiple_co_valid",
+        "insufficient_type_grounding",
+        "irrelevant_schema_bank"
+      ]
+    },
+    {
+      "name": "type_domain_range_semantics",
+      "role": "couple semantic type descriptions to exact structural domain/range constraints without fixed type-ID meaning",
+      "required": true,
+      "interventions": [
+        "same_relation_wrong_types",
+        "type_description_paraphrase",
+        "unseen_type_description",
+        "symmetric_type_swap"
+      ]
+    },
+    {
+      "name": "temporal_provenance_reliability",
+      "role": "learn recency, temporal scope, provenance and reliability as composable semantic modifiers rather than relation identities",
+      "required": true,
+      "interventions": [
+        "recency_flip",
+        "temporal_window_flip",
+        "provenance_authority_flip",
+        "reliability_flip",
+        "combined_modifier_conflict"
+      ]
+    },
+    {
+      "name": "plurality_and_uncertainty",
+      "role": "preserve co-valid hypotheses, conflict and calibrated uncertainty rather than forcing top-1 semantics",
+      "required": true,
+      "interventions": [
+        "two_valid_relations",
+        "two_valid_targets",
+        "unresolved_conflict",
+        "low_evidence",
+        "ambiguous_schema_descriptions"
+      ]
+    },
+    {
+      "name": "token_evidence_grounding",
+      "role": "bind operator hypotheses to supporting query/schema tokens and support ordered evidence consumption",
+      "required": true,
+      "supervision": [
+        "query_evidence_spans",
+        "schema_evidence_spans",
+        "counterfactual_token_removal",
+        "irrelevant_token_invariance"
+      ]
+    },
+    {
+      "name": "structured_context_semantics",
+      "role": "co-adapt field content with runtime type, provenance, temporal and missingness descriptors",
+      "required": true,
+      "interventions": [
+        "field_permutation",
+        "metadata_flip",
+        "missing_field",
+        "new_type_descriptor",
+        "provenance_descriptor_paraphrase"
+      ]
+    },
+    {
+      "name": "multi_view_fabric",
+      "role": "exercise semantic, structured, evidence and future runtime-described views under agreement, disagreement, missingness and decisive-source cases",
+      "required": true,
+      "interventions": [
+        "missing_view",
+        "decisive_view",
+        "cross_view_conflict",
+        "reliability_reversal",
+        "source_anchor_counterfactual"
+      ]
+    },
+    {
+      "name": "long_context_sparse_relevance",
+      "role": "prevent short synthetic fixtures from becoming the effective product context limit",
+      "required": true,
+      "interventions": [
+        "irrelevant_context_growth",
+        "distant_decisive_evidence",
+        "multiple_distractor_clusters",
+        "long_query_schema_separation"
+      ]
+    }
+  ],
+  "split_isolation": {
+    "required_dimensions": [
+      "relation_family",
+      "entity",
+      "lexical_paraphrase",
+      "template",
+      "domain",
+      "multi_hop_composition",
+      "factor_combination",
+      "type_schema_family",
+      "natural_source_document",
+      "causal_group"
+    ],
+    "train_dev_overlap_forbidden": true,
+    "train_test_overlap_forbidden": true,
+    "template_hash_overlap_forbidden_across_heldout_partitions": true,
+    "entity_set_overlap_forbidden_when_entity_isolation_partition_active": true,
+    "relation_family_extrapolation_required": true,
+    "composition_extrapolation_required": true,
+    "schema_cardinality_extrapolation_required": true,
+    "context_length_extrapolation_required": true
+  },
+  "runtime_axis_coverage": {
+    "relation_candidate_counts": {
+      "training_coverage_points": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "dev_must_include_unseen_counts": true,
+      "final_may_exceed_all_training_points": true,
+      "ceiling": null,
+      "role": "coverage points only"
+    },
+    "factor_candidate_counts": {
+      "training_coverage_points": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "dev_must_include_unseen_counts": true,
+      "ceiling": null,
+      "role": "coverage points only"
+    },
+    "reasoning_steps": {
+      "training_coverage_points": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "composition_extrapolation_required": true,
+      "ceiling": null,
+      "role": "coverage points only"
+    },
+    "type_vocabulary_counts": {
+      "training_coverage_points": [
+        4,
+        8,
+        16,
+        32
+      ],
+      "dev_must_include_unseen_counts": true,
+      "ceiling": null,
+      "role": "coverage points only"
+    },
+    "field_counts": {
+      "training_coverage_points": [
+        2,
+        4,
+        8,
+        16,
+        32
+      ],
+      "extrapolation_required": true,
+      "ceiling": null
+    },
+    "edge_counts": {
+      "training_coverage_points": [
+        1,
+        4,
+        12,
+        32,
+        64
+      ],
+      "extrapolation_required": true,
+      "ceiling": null
+    },
+    "context_lengths_tokens": {
+      "coverage_points": [
+        128,
+        512,
+        1024,
+        2048,
+        4096
+      ],
+      "longer_successor_context_allowed": true,
+      "ceiling": null,
+      "current_checkpoint_position_window_not_product_limit": true
+    }
+  },
+  "shortcut_controls": {
+    "answer_position_balance_required": true,
+    "candidate_order_permutation_required": true,
+    "relation_key_text_leak_forbidden": true,
+    "factor_key_text_leak_forbidden": true,
+    "target_entity_name_frequency_balance_required": true,
+    "template_only_prediction_probe_required": true,
+    "lexical_overlap_baseline_required": true,
+    "metadata_only_baseline_required": true,
+    "schema_only_without_query_baseline_required": true,
+    "query_only_without_schema_baseline_required": true,
+    "random_candidate_permutation_consistency_required": true,
+    "hard_negative_minimum_per_positive": true,
+    "counterfactual_pairs_required": true,
+    "no_single_shortcut_baseline_may_clear_operator_gate": true
+  },
+  "natural_synthetic_policy": {
+    "natural_public_language_required": true,
+    "synthetic_public_interventions_required": true,
+    "synthetic_rows_are_identity_authority": false,
+    "synthetic_template_family_count_is_not_cap": true,
+    "generated_examples_require_provenance": true,
+    "generated_examples_require_shortcut_audit": true,
+    "natural_language_must_remain_material": true,
+    "exact_natural_share_precommitted": false,
+    "reason": "share must be chosen from materialized corpus availability and coverage rather than an arbitrary permanent ratio"
+  },
+  "coverage_stop_rule": {
+    "hard_row_target": null,
+    "hard_token_target": null,
+    "stop_condition": "all mandatory coverage cells populated; held-out shortcut probes remain below task gates; new public expansion yields diminishing capability gain on fixed DEV; no unresolved family/domain/composition hole remains",
+    "blind_quota_filling": false,
+    "failure_driven_expansion": true
+  },
+  "validation_before_gradient": {
+    "materialized_manifest_required": true,
+    "content_hashes_required": true,
+    "split_leakage_audit_required": true,
+    "shortcut_probe_manifest_required": true,
+    "runtime_axis_histograms_required": true,
+    "relation_family_holdout_manifest_required": true,
+    "factor_combination_holdout_manifest_required": true,
+    "public_provenance_receipts_required": true,
+    "final_validation_excluded_by_hash_required": true
+  },
+  "scale_policy": {
+    "full_capability_architecture": true,
+    "reduced_pilot": false,
+    "hard_row_ceiling": null,
+    "hard_parameter_ceiling": null,
+    "runtime_relation_count_ceiling": null,
+    "runtime_factor_count_ceiling": null,
+    "runtime_reasoning_step_ceiling": null,
+    "runtime_type_count_ceiling": null,
+    "runtime_context_ceiling": null
+  },
+  "authorization": {
+    "curriculum_materialization": true,
+    "curriculum_audit": true,
+    "optimizer": false,
+    "gradient": false,
+    "gpu": false,
+    "test_opening": false,
+    "private_identity_gradient": false
+  }
+}
