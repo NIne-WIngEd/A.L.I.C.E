@@ -1,7 +1,7 @@
 {
-  "request_id": "n0-closure-pass-qualified-topology-20260921-011",
-  "question": "Verify the exact N0 closure-pass implementation after job 575958. Trace P2S QSRESchemaMatcher training and holdout boundary, frozen matcher loading into Production P2, ordered query-evidence coverage, semantic factor schemas with no fixed factor class heads, continuous relation hypotheses through Binder v2 structural sparsity, factor-schema cache lineage through P3/P4/final, the single Magnolia closure runner, and reuse of the original frozen native final validation. Identify any code path that bypasses the frozen matcher, reintroduces relation/factor identity parameters, drops coverage, uses open/final holdout descriptions in gradient, or fails to forward factor-schema lineage.",
-  "budget": 7000,
+  "request_id": "n0-closure-pass-post-handoff-refresh-20260921-012",
+  "question": "Post-handoff refresh after recording docs/chat-context/2026-09-21/sol/N0_JOB575958_CLOSURE_PASS_READY.md. Verify the continuity catalog now sees alice-context at that handoff, while the exact code graph remains alice-eipm-v1-n0-closure-pass@fefc2e4ec54ddde113165b1a3103a1add9be34e8. Reconfirm the same closure path: P2S unseen-schema matcher gate, frozen matcher in Production P2, ordered query-evidence coverage, semantic factor schemas, Binder v2 structural sparsity, factor-schema cache lineage through final validation, original frozen final reuse, and no bypass/holdout leak.",
+  "budget": 5000,
   "traversal": "bfs",
   "contexts": [
     "call",
