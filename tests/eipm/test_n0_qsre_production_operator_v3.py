@@ -54,8 +54,10 @@ def factor_cache(*, seed: int = 10) -> dict:
         }
 
     return {
-        "schema": "alice.eipm.n0.qsre-closure-factor-schema-cache.v1",
+        "schema": "alice.eipm.n0.qsre-frozen-factor-schema-cache.v3",
         "private_identity_data": False,
+        "gradient": False,
+        "optimizer": False,
         "role": categorical(4),
         "traversal": categorical(3),
         "direction": categorical(3),
@@ -82,6 +84,34 @@ def make_model(seed: int = 30) -> QSREProductionOperatorInducerV3:
     return model
 
 
+def authority(
+    *,
+    batch: int,
+    relations: int,
+    seed: int = 200,
+) -> tuple[dict, dict]:
+    g = torch.Generator().manual_seed(seed)
+
+    def pair(count: int) -> dict:
+        return {
+            "joint_preference": torch.randn(batch, count, generator=g),
+            "semantic_projection": torch.randn(batch, count, generator=g),
+        }
+
+    relation = pair(relations)
+    factors = {
+        "role": pair(4),
+        "traversal": pair(3),
+        "direction": pair(3),
+        "control": pair(3),
+        "modifiers": {
+            "joint_preference": torch.randn(batch, 4, 2, generator=g),
+            "semantic_projection": torch.randn(batch, 4, 2, generator=g),
+        },
+    }
+    return relation, factors
+
+
 def run(
     model: QSREProductionOperatorInducerV3,
     *,
@@ -90,9 +120,16 @@ def run(
     schema: QSREDynamicRelationSchema,
     max_steps: int = 2,
     schema_relation_state: torch.Tensor | None = None,
+    relation_authority: dict | None = None,
+    factor_authority: dict | None = None,
 ):
     if schema_relation_state is None:
         schema_relation_state = schema.token_states.mean(dim=(1, 2))
+    if relation_authority is None or factor_authority is None:
+        relation_authority, factor_authority = authority(
+            batch=q.size(0),
+            relations=schema.token_states.size(0),
+        )
     return model(
         query_hidden_states=q,
         query_token_mask=qmask,
@@ -104,39 +141,48 @@ def run(
             24,
         ),
         schema_relation_state=schema_relation_state,
+        relation_authority=relation_authority,
+        factor_authority=factor_authority,
         max_steps=max_steps,
     )
 
 
-def test_closure_operator_has_no_fixed_factor_class_heads() -> None:
+def test_operator_uses_external_frozen_authority_and_no_trainable_matcher() -> None:
     model = make_model()
-    for name in (
-        "role_head",
-        "traversal_head",
-        "direction_head",
-        "modifier_head",
-        "control_head",
-    ):
-        assert not hasattr(model, name)
     report = model.parameter_report()
     assert report["fixed_factor_class_head_parameters"] == 0
-    assert report["semantic_factor_schemas"] is True
+    assert report["schema_matcher_trainable_parameters"] == 0
+    assert report["frozen_semantic_authority_external"] is True
+    assert report["frozen_authority_trainable_parameters"] == 0
+    assert report["relation_identity_owned_by_trainable_operator"] is False
+    assert report["factor_identity_owned_by_trainable_operator"] is False
     assert report["ordered_query_evidence_coverage"] is True
-    assert report["relation_count_ceiling"] is None
-    assert report["runtime_step_count_ceiling"] is None
+    assert report["exact_sparsity_owned_by_binder"] is True
 
 
-def test_pretrained_schema_matcher_can_be_frozen_for_production_p2() -> None:
-    source = make_model(seed=40)
-    target = QSREProductionOperatorInducerV3(cfg())
-    target.load_pretrained_schema_matcher(
-        source.schema_matcher.state_dict(),
-        freeze=True,
-    )
-    assert all(
-        not parameter.requires_grad
-        for parameter in target.schema_matcher.parameters()
-    )
+def test_changing_only_frozen_relation_authority_changes_relation_output() -> None:
+    model = make_model(seed=40)
+    q, qmask = query(batch=1, seed=41)
+    schema = relation_schema(3, seed=42)
+    rel, fac = authority(batch=1, relations=3, seed=43)
+    with torch.no_grad():
+        model.step_query.weight.zero_()
+    first = {k: v.clone() for k, v in rel.items()}
+    second = {k: v.clone() for k, v in rel.items()}
+    first["joint_preference"][:] = torch.tensor([[8.0, -2.0, -2.0]])
+    first["semantic_projection"][:] = torch.tensor([[8.0, -2.0, -2.0]])
+    second["joint_preference"][:] = torch.tensor([[-2.0, 8.0, -2.0]])
+    second["semantic_projection"][:] = torch.tensor([[-2.0, 8.0, -2.0]])
+    a = run(
+        model, q=q, qmask=qmask, schema=schema, max_steps=1,
+        relation_authority=first, factor_authority=fac,
+    )["operator"].relation_distribution
+    b = run(
+        model, q=q, qmask=qmask, schema=schema, max_steps=1,
+        relation_authority=second, factor_authority=fac,
+    )["operator"].relation_distribution
+    assert int(a[0, 0].argmax()) == 0
+    assert int(b[0, 0].argmax()) == 1
 
 
 def test_relation_hypotheses_remain_continuous_until_binding() -> None:
@@ -186,16 +232,14 @@ def test_ordered_query_evidence_coverage_is_differentiable_and_monotone() -> Non
     assert float(coverage[:, -1].max()) > 0.0
 
 
-def test_schema_permutation_equivariance_survives_ordered_coverage() -> None:
+def test_schema_permutation_equivariance_requires_same_authority_permutation() -> None:
     model = make_model(seed=70)
     q, qmask = query(batch=1, seed=71)
     base_schema = relation_schema(5, seed=72)
+    rel, fac = authority(batch=1, relations=5, seed=73)
     base = run(
-        model,
-        q=q,
-        qmask=qmask,
-        schema=base_schema,
-        max_steps=3,
+        model, q=q, qmask=qmask, schema=base_schema, max_steps=2,
+        relation_authority=rel, factor_authority=fac,
     )["operator"].relation_distribution.detach()
 
     perm = torch.tensor([2, 4, 0, 3, 1])
@@ -207,12 +251,10 @@ def test_schema_permutation_equivariance_survives_ordered_coverage() -> None:
         range_type_mask=base_schema.range_type_mask[perm],
         symmetric=base_schema.symmetric[perm],
     )
+    moved_rel = {key: value[:, perm] for key, value in rel.items()}
     moved = run(
-        model,
-        q=q,
-        qmask=qmask,
-        schema=moved_schema,
-        max_steps=3,
+        model, q=q, qmask=qmask, schema=moved_schema, max_steps=2,
+        relation_authority=moved_rel, factor_authority=fac,
     )["operator"].relation_distribution.detach()
     assert torch.allclose(
         base,
@@ -222,72 +264,24 @@ def test_schema_permutation_equivariance_survives_ordered_coverage() -> None:
     )
 
 
-def test_p1_schema_relation_state_is_not_match_authority() -> None:
+def test_p1_schema_relation_state_remains_interface_only() -> None:
     model = make_model(seed=80)
     q, qmask = query(batch=1, seed=81)
     schema = relation_schema(4, seed=82)
+    rel, fac = authority(batch=1, relations=4, seed=83)
     summary = schema.token_states.mean(dim=(1, 2))
     a = run(
-        model,
-        q=q,
-        qmask=qmask,
-        schema=schema,
+        model, q=q, qmask=qmask, schema=schema,
         schema_relation_state=summary,
+        relation_authority=rel, factor_authority=fac,
     )["operator"]
     b = run(
-        model,
-        q=q,
-        qmask=qmask,
-        schema=schema,
+        model, q=q, qmask=qmask, schema=schema,
         schema_relation_state=torch.randn_like(summary) * 1000.0,
+        relation_authority=rel, factor_authority=fac,
     )["operator"]
-    assert torch.allclose(
-        a.relation_distribution,
-        b.relation_distribution,
-        atol=1e-6,
-        rtol=1e-6,
-    )
-    assert torch.allclose(
-        a.continuous_state,
-        b.continuous_state,
-        atol=1e-6,
-        rtol=1e-6,
-    )
-
-
-def test_factor_semantics_do_not_depend_on_relation_cardinality() -> None:
-    model = make_model(seed=90)
-    q, qmask = query(batch=1, seed=91)
-    small = relation_schema(3, seed=92)
-    extra = relation_schema(2, seed=93)
-    large = QSREDynamicRelationSchema(
-        token_states=torch.cat([small.token_states, extra.token_states], dim=0),
-        token_mask=torch.cat([small.token_mask, extra.token_mask], dim=0),
-        domain_type_mask=torch.cat(
-            [small.domain_type_mask, extra.domain_type_mask],
-            dim=0,
-        ),
-        range_type_mask=torch.cat(
-            [small.range_type_mask, extra.range_type_mask],
-            dim=0,
-        ),
-        symmetric=torch.cat([small.symmetric, extra.symmetric], dim=0),
-    )
-    a = run(model, q=q, qmask=qmask, schema=small, max_steps=1)["operator"]
-    b = run(model, q=q, qmask=qmask, schema=large, max_steps=1)["operator"]
-    for name in (
-        "role_distribution",
-        "traversal_distribution",
-        "direction_distribution",
-        "modifier_weight",
-        "control_distribution",
-    ):
-        assert torch.allclose(
-            getattr(a, name),
-            getattr(b, name),
-            atol=1e-6,
-            rtol=1e-6,
-        )
+    assert torch.allclose(a.relation_distribution, b.relation_distribution)
+    assert torch.allclose(a.continuous_state, b.continuous_state)
 
 
 def test_unknown_and_stop_remain_distinct_events() -> None:
@@ -303,24 +297,16 @@ def test_unknown_and_stop_remain_distinct_events() -> None:
         model.unknown_head.bias.fill_(-30.0)
         model.event_match_projection.weight.zero_()
         model.event_match_projection.bias.zero_()
-    stopped = run(
-        model,
-        q=q,
-        qmask=qmask,
-        schema=schema,
-        max_steps=1,
-    )["event_distribution"]
+    stopped = run(model, q=q, qmask=qmask, schema=schema, max_steps=1)[
+        "event_distribution"
+    ]
 
     with torch.no_grad():
         model.stop_head.bias.fill_(-30.0)
         model.unknown_head.bias.fill_(30.0)
-    unknown = run(
-        model,
-        q=q,
-        qmask=qmask,
-        schema=schema,
-        max_steps=1,
-    )["event_distribution"]
+    unknown = run(model, q=q, qmask=qmask, schema=schema, max_steps=1)[
+        "event_distribution"
+    ]
 
     assert float(stopped[0, 0, EVENT_STOP]) > 0.999
     assert float(stopped[0, 0, EVENT_UNKNOWN]) < 1.0e-6
