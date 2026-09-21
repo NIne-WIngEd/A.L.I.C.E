@@ -131,6 +131,7 @@ class SemanticOperatorState:
     stop_probability: Tensor
     unknown_probability: Tensor
     continuous_state: Tensor
+    applicability: Tensor
     query_coverage: Tensor
     uncertainty: Tensor
     factor_distributions: Mapping[str, Tensor]
@@ -157,6 +158,8 @@ class SemanticOperatorState:
             raise ValueError("unknown_probability shape drift")
         if self.continuous_state.shape != (batch, model_dim):
             raise ValueError("continuous_state shape drift")
+        if self.applicability.shape != (batch,):
+            raise ValueError("applicability shape drift")
         if self.query_coverage.shape != (batch, steps, query_tokens):
             raise ValueError("query_coverage shape drift")
         if self.uncertainty.shape != (batch,):
@@ -333,6 +336,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             nn.SiLU(),
             nn.Linear(d, 3),
         )
+        self.applicability_head = nn.Linear(d, 1)
 
     def _query_state(
         self,
@@ -397,6 +401,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
         coverage_history: list[Tensor] = []
         relation_scores: list[Tensor] = []
         layer_weights: list[Tensor] = []
+        relation_schema_states: list[Tensor] = []
 
         for _ in range(max_steps):
             remaining = (1.0 - coverage.float()).clamp(min=0.02, max=1.0)
@@ -446,6 +451,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             unknowns.append(survival * unknown_probability)
             relation_scores.append(logits)
             layer_weights.append(matched["layer_weight"])
+            relation_schema_states.append(schema_summary)
 
             evidence = torch.einsum(
                 "bc,bct->bt",
@@ -487,8 +493,15 @@ class SchemaConditionedSemanticOperator(nn.Module):
                 query_token_mask=query_token_mask,
                 schema=schema,
             )
-            factor_scores[str(name)] = matched["score"]
-            factor_distributions[str(name)] = torch.softmax(matched["score"], dim=-1)
+            factor_state_query = F.normalize(self.state_schema_score(state), dim=-1)
+            factor_state_score = torch.einsum(
+                "bd,bcd->bc",
+                factor_state_query,
+                F.normalize(matched["schema_summary"], dim=-1),
+            )
+            factor_logits = matched["score"] + 0.25 * torch.tanh(factor_state_score)
+            factor_scores[str(name)] = factor_logits
+            factor_distributions[str(name)] = torch.softmax(factor_logits, dim=-1)
             factor_layer_weights[str(name)] = matched["layer_weight"]
 
         relation_distribution = torch.stack(relation_distributions, dim=1)
@@ -517,6 +530,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             * (1.0 - unknown_mass)
         )
 
+        applicability = torch.sigmoid(self.applicability_head(state)).squeeze(-1)
         operator = SemanticOperatorState(
             relation_distribution=relation_distribution,
             relation_step_mass=relation_step_mass,
@@ -524,6 +538,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             stop_probability=stop_probability,
             unknown_probability=unknown_probability,
             continuous_state=state,
+            applicability=applicability,
             query_coverage=query_coverage,
             uncertainty=uncertainty,
             factor_distributions=factor_distributions,
@@ -537,6 +552,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "operator": operator,
             "relation_logits": torch.stack(relation_scores, dim=1),
             "relation_layer_weights": torch.stack(layer_weights, dim=1),
+            "relation_schema_states": torch.stack(relation_schema_states, dim=1),
             "factor_logits": factor_scores,
             "factor_layer_weights": factor_layer_weights,
         }
