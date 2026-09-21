@@ -284,6 +284,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             edge_valid_mask=edge_valid_mask,
             relation_schema_state=relation_state,
             relation_mass=relation_mass,
+            relation_symmetric=relation_symmetric,
             operator_state=operator.continuous_state,
             message_steps=graph_message_steps,
         )
@@ -293,6 +294,9 @@ class N0FullEnvelopeStackV1(nn.Module):
         )
         range_mask = relation_schema.range_type_mask[None, :, :].expand(
             batch, -1, -1
+        )
+        relation_symmetric = relation_schema.symmetric[None, :].expand(
+            batch, -1
         )
         binder = self.binder(
             query_hidden_states=query_hidden_states,
@@ -309,7 +313,9 @@ class N0FullEnvelopeStackV1(nn.Module):
             edge_recency=edge_recency,
             relation_domain_type_mask=domain,
             relation_range_type_mask=range_mask,
+            relation_symmetric=relation_symmetric,
             relation_schema_state=relation_state,
+            relation_symmetric=relation_symmetric,
             operator=operator,
         )
 
