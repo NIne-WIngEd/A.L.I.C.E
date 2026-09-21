@@ -428,6 +428,7 @@ class QSRESchemaMatcher(nn.Module):
             "reasoning_step_dependent_parameters": 0,
             "fixed_semantic_anchor": True,
             "learned_projection_is_residual": True,
+            "shared_query_schema_projection": True,
             "shared_layer_mixture": True,
             "bidirectional_pair_refinement": True,
             "candidate_conditioned_query_evidence": True,
