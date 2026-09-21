@@ -71,7 +71,7 @@ No learning-rate change, step extension, width change, batch change, threshold r
 
 The ratified `alice-n0-semantic-v0.2` model is not just a raw hidden-state generator.
 
-Its public semantic training already contains three useful surfaces:
+Its public semantic training already contains four useful surfaces:
 
 1. **joint prompt/candidate preference scoring**  
    The teacher collator tokenizes a prompt and candidate as one sequence pair. The model then scores that joint representation with the trained preference scorer.
@@ -79,7 +79,10 @@ Its public semantic training already contains three useful surfaces:
 2. **semantic projection**  
    The semantic projection is explicitly trained under the public semantic/rationale contrastive objective.
 
-3. **contextual token states**  
+3. **semantic-to-rationale principle alignment**  
+   Teacher training aligns the candidate-side semantic projection with the rationale projection. Frozen-authority v3 now reuses both the trained rationale projection and the learned principle-alignment scale/bias. The runtime candidate meaning occupies the rationale side while the query/candidate pair occupies the semantic side.
+
+4. **contextual token states**  
    Token states remain available for fine-grained local evidence and ordered coverage.
 
 P2S-v1/v2 largely ignored the first two trained surfaces and tried to learn a new semantic metric from cached raw hidden states.
@@ -100,7 +103,7 @@ There is:
 - no relation-ID parameter;
 - no factor-ID parameter.
 
-The three authority components are:
+The four authority components are:
 
 ### Joint prompt/candidate preference score
 
@@ -114,6 +117,12 @@ Query text and schema text are encoded through the same fixed semantic-represent
 
 Their normalized semantic projections are compared by cosine similarity.
 
+### Trained semantic-to-rationale principle alignment
+
+Each query/runtime-candidate pair is encoded through the same joint semantic side used by teacher training. The supplied runtime schema meaning is separately encoded through the frozen rationale projection. Their trained principle-alignment score becomes an independent authority component.
+
+No rationale or semantic parameter is updated.
+
 ### Parameter-free token evidence
 
 The existing hidden-state tensors are reduced with one deterministic layer mixture.
@@ -126,11 +135,11 @@ It has zero parameters.
 
 ## Fixed component fusion
 
-The raw joint, semantic-projection and token-evidence scores are normalized across **only the runtime candidates active in the current call**.
+The raw joint-preference, semantic-projection, principle-alignment and token-evidence scores are normalized across **only the runtime candidates active in the current call**.
 
 Each component receives candidate-axis z-normalization.
 
-The final semantic authority is their equal-weight mean.
+The final semantic authority is their equal-weight four-surface mean.
 
 No component weight is learned.
 
