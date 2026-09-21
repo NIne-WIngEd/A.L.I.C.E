@@ -1,0 +1,102 @@
+name: n0-production-p2-failure-localization-contract
+
+on:
+  push:
+    paths:
+      - "docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md"
+      - "scripts/eipm/n0/diagnose_n0_v02_qsre_production_p2_failure_v1.py"
+      - "scripts/eipm/n0/run_n0_v02_qsre_production_p2_failure_localization_v1.sh"
+      - "scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_production_p2_failure_localization_v1.sbatch"
+      - ".github/workflows/n0-production-p2-failure-localization-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Syntax
+        run: |
+          python -m py_compile scripts/eipm/n0/diagnose_n0_v02_qsre_production_p2_failure_v1.py
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_production_p2_failure_localization_v1.sh
+          bash -n scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_production_p2_failure_localization_v1.sbatch
+
+      - name: Zero-gradient boundary
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          diag=Path("scripts/eipm/n0/diagnose_n0_v02_qsre_production_p2_failure_v1.py").read_text()
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_production_p2_failure_localization_v1.sh").read_text()
+          sbatch=Path("scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_production_p2_failure_localization_v1.sbatch").read_text()
+
+          forbidden = [
+              "torch.optim",
+              ".backward(",
+              "optimizer.step(",
+              "loss.backward(",
+          ]
+          found=[token for token in forbidden if token in diag]
+          assert not found, found
+
+          assert "@torch.inference_mode()" in diag
+          assert '"optimizer_created": False' in diag
+          assert '"gradient_performed": False' in diag
+          assert '"parameters_mutated": False' in diag
+          assert '"test_split_opened": False' in diag
+          assert '"frozen_final_opened": False' in diag
+          assert '"private_identity_gradient": False' in diag
+
+          assert "RAYAN_UDOCKER_NVIDIA=0" in runner
+          assert "RAYAN_UDOCKER_NVIDIA=0" in sbatch
+          assert "#SBATCH --partition=node" in sbatch
+          assert "#SBATCH --gres=gpu" not in sbatch
+          print("PASS_ZERO_GRADIENT_LOCALIZATION_BOUNDARY")
+          PY
+
+      - name: Failed-evidence binding
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          diag=Path("scripts/eipm/n0/diagnose_n0_v02_qsre_production_p2_failure_v1.py").read_text()
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_production_p2_failure_localization_v1.sh").read_text()
+          doc=Path("docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md").read_text()
+
+          required = [
+              "dba3d4b100f081b0c09fe63ae002205244af5b44",
+              "16dd2681a18e9b5e371232c9206ca4a3b4d0ace8e5ec47e7ee492e9ab25364a0",
+              "FAIL_QSRE_PRODUCTION_P2_OPERATOR",
+              "1600",
+          ]
+          for value in required:
+              assert value in diag or value in runner
+          assert "575956" in runner
+          assert "575956" in doc
+          assert "qsre-production-core-v1-stop-tail-recovery-v1" in runner
+          assert "qsre-production-p2-failure-localization-v1" in runner
+          print("PASS_PRESERVED_FAILED_EVIDENCE_BINDING")
+          PY
+
+      - name: Diagnostic obligations
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          text=Path("scripts/eipm/n0/diagnose_n0_v02_qsre_production_p2_failure_v1.py").read_text()
+          required = [
+              "relation_identity_exact_ignoring_activity",
+              "active_mask_exact",
+              "identity_correct_but_activity_wrong_rate",
+              "open_schema_relation_identity_exact",
+              "multi_step_reversed_target_match_rate",
+              "multi_step_repeated_relation_collapse_rate",
+              "step_attention_cosine",
+              "step_relation_distribution_cosine",
+              "unknown_terminal",
+              "query_schema_alignment",
+          ]
+          missing=[name for name in required if name not in text]
+          assert not missing, missing
+          print("PASS_P2_FAILURE_LOCALIZATION_OBLIGATIONS")
+          PY
