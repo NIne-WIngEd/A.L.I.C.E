@@ -12,6 +12,12 @@ on:
       - "src/alice_personality/n0/dynamic_cross_context_fusion_v3.py"
       - "src/alice_personality/n0/dynamic_competitive_latent_pool_v3.py"
       - "src/alice_personality/n0/semantic_operator_objectives_v1.py"
+      - "src/alice_personality/n0/full_envelope_behavioral_objectives_v1.py"
+      - "src/alice_personality/n0/full_envelope_loss_balancer_v1.py"
+      - "src/alice_personality/n0/public_judgment_probe_v1.py"
+      - "src/alice_personality/n0/semantic_context_virtualizer_v1.py"
+      - "src/alice_personality/n0/chunked_late_interaction.py"
+      - "src/alice_personality/n0/full_envelope_structural_types.py"
       - "src/alice_personality/n0/semantic_operator_qsre_adapter.py"
       - "src/alice_personality/n0/qsre_full_envelope_binder_v1.py"
       - "src/alice_personality/n0/qsre_full_envelope_executor_v1.py"
@@ -20,15 +26,21 @@ on:
       - "tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py"
       - "tests/eipm/test_n0_full_envelope_fabric_v1.py"
       - "tests/eipm/test_n0_full_envelope_stack_v1.py"
+      - "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py"
       - "scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py"
+      - "scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py"
+      - "scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py"
+      - "configs/eipm/n0/n0_v02_natural_relation_sources_v1.json"
       - "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json"
-      - "docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md"
       - "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json"
-      - "docs/research/eipm-n0-full-envelope-interface-contract-v1.md"
       - "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json"
       - "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"
+      - "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json"
+      - "configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json"
+      - "docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md"
+      - "docs/research/eipm-n0-full-envelope-interface-contract-v1.md"
       - ".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml"
   workflow_dispatch:
 
@@ -39,37 +51,78 @@ jobs:
       PYTHONPATH: src:scripts/eipm/n0
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Install static mechanics dependencies
-        run: python -m pip install -q torch pytest
+        run: python -m pip install -q torch pytest numpy
 
-      - name: Compile source and curriculum tooling
+      - name: Compile complete successor source and governance
         run: |
           set -euo pipefail
-          python -m py_compile             src/alice_personality/n0/semantic_operator_foundation.py             scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py             scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py
-          python -m json.tool configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json >/dev/null
-          python -m json.tool configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json >/dev/null
-          python -m json.tool configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json >/dev/null
-          python -m json.tool configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json >/dev/null
-          python -m json.tool configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json >/dev/null
+          python -m py_compile \
+            src/alice_personality/n0/semantic_operator_foundation.py \
+            src/alice_personality/n0/dynamic_structured_state_v2.py \
+            src/alice_personality/n0/dynamic_schema_evidence_graph_v1.py \
+            src/alice_personality/n0/dynamic_evidence_view_v2.py \
+            src/alice_personality/n0/dynamic_cross_context_fusion_v3.py \
+            src/alice_personality/n0/dynamic_competitive_latent_pool_v3.py \
+            src/alice_personality/n0/semantic_operator_objectives_v1.py \
+            src/alice_personality/n0/full_envelope_behavioral_objectives_v1.py \
+            src/alice_personality/n0/full_envelope_loss_balancer_v1.py \
+            src/alice_personality/n0/public_judgment_probe_v1.py \
+            src/alice_personality/n0/semantic_context_virtualizer_v1.py \
+            src/alice_personality/n0/chunked_late_interaction.py \
+            src/alice_personality/n0/full_envelope_structural_types.py \
+            src/alice_personality/n0/semantic_operator_qsre_adapter.py \
+            src/alice_personality/n0/qsre_full_envelope_binder_v1.py \
+            src/alice_personality/n0/qsre_full_envelope_executor_v1.py \
+            src/alice_personality/n0/n0_full_envelope_stack_v1.py \
+            scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py \
+            scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py \
+            scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py \
+            scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py
 
-      - name: Run semantic operator mechanics
+          for f in \
+            configs/eipm/n0/n0_v02_natural_relation_sources_v1.json \
+            configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json \
+            configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json \
+            configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json \
+            configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
+            configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json \
+            configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json \
+            configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json
+          do
+            python -m json.tool "$f" >/dev/null
+          done
+
+      - name: Run complete successor mechanics suite
         run: |
+          set -euo pipefail
           pytest -q \
             tests/eipm/test_n0_semantic_operator_foundation_v1.py \
             tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py \
             tests/eipm/test_n0_full_envelope_fabric_v1.py \
-            tests/eipm/test_n0_full_envelope_stack_v1.py
+            tests/eipm/test_n0_full_envelope_stack_v1.py \
+            tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py
 
-      - name: Materialize and audit intervention supplement
+      - name: Materialize and audit synthetic intervention supplement
         run: |
           set -euo pipefail
+          rm -rf /tmp/n0-so
           mkdir -p /tmp/n0-so
-          python scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py             --output /tmp/n0-so/rows.jsonl             --manifest /tmp/n0-so/manifest.json             --examples-per-relation 20             --candidate-counts 1,2,4,8,16
-          python scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py             --rows /tmp/n0-so/rows.jsonl             --manifest /tmp/n0-so/manifest.json             --contract configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json             --output /tmp/n0-so/audit.json
+          python scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py \
+            --output /tmp/n0-so/rows.jsonl \
+            --manifest /tmp/n0-so/manifest.json \
+            --examples-per-relation 20 \
+            --candidate-counts 1,2,4,8,16
+          python scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py \
+            --rows /tmp/n0-so/rows.jsonl \
+            --manifest /tmp/n0-so/manifest.json \
+            --contract configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json \
+            --output /tmp/n0-so/audit.json
           python - <<'PY'
           import json
           r=json.load(open("/tmp/n0-so/audit.json"))
@@ -80,7 +133,109 @@ jobs:
           assert r["private_identity_data"] is False
           assert r["training_authorized_by_audit"] is False
           assert r["natural_public_replay_still_required"] is True
-          print("PASS_N0_FULL_ENVELOPE_CURRICULUM_STATIC_AUDIT")
+          print("PASS_N0_SYNTHETIC_INTERVENTION_STATIC_AUDIT")
+          PY
+
+      - name: Materialize and audit exact FewRel natural relation lane
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/fewrel /tmp/n0-fewrel
+          git init -q /tmp/fewrel
+          git -C /tmp/fewrel remote add origin https://github.com/thunlp/FewRel.git
+          git -C /tmp/fewrel fetch -q --depth 1 origin 278a2315d2138810a379cd8d5718914dc56e2582
+          git -C /tmp/fewrel checkout -q FETCH_HEAD
+          test "$(git -C /tmp/fewrel rev-parse HEAD)" = "278a2315d2138810a379cd8d5718914dc56e2582"
+
+          mkdir -p /tmp/n0-fewrel
+          python scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py \
+            --fewrel-root /tmp/fewrel \
+            --train-dev-rows-output /tmp/n0-fewrel/train_dev_rows.jsonl \
+            --train-dev-bank-output /tmp/n0-fewrel/train_dev_bank.json \
+            --final-rows-output /tmp/n0-fewrel/final_rows.jsonl \
+            --final-bank-output /tmp/n0-fewrel/final_bank.json \
+            --manifest-output /tmp/n0-fewrel/manifest.json
+          python scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py \
+            --train-dev-rows /tmp/n0-fewrel/train_dev_rows.jsonl \
+            --train-dev-bank /tmp/n0-fewrel/train_dev_bank.json \
+            --final-rows /tmp/n0-fewrel/final_rows.jsonl \
+            --final-bank /tmp/n0-fewrel/final_bank.json \
+            --manifest /tmp/n0-fewrel/manifest.json \
+            --output /tmp/n0-fewrel/audit.json
+          python - <<'PY'
+          import json
+          r=json.load(open("/tmp/n0-fewrel/audit.json"))
+          assert r["status"]=="PASS_FEWREL_NATURAL_RELATION_AUDIT_V2"
+          assert r["train_relation_count"]==64
+          assert r["dev_relation_count"]==8
+          assert r["final_relation_count"]==8
+          assert not r["relation_overlap"]["train_dev"]
+          assert not r["relation_overlap"]["train_final"]
+          assert not r["relation_overlap"]["dev_final"]
+          assert r["source_overlap"]["train_dev"]==0
+          assert r["source_overlap"]["train_final"]==0
+          assert r["source_overlap"]["dev_final"]==0
+          assert r["final_relation_descriptions_absent_from_train_dev_bank"] is True
+          assert r["final_training_authorized"] is False
+          assert r["final_model_selection_authorized"] is False
+          assert r["private_identity_data"] is False
+          print("PASS_N0_NATURAL_RELATION_SEALED_FINAL_AUDIT")
+          PY
+
+      - name: Prove successor lineage cannot import superseded semantic authority
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import ast, json, pathlib
+          successor = [
+              "src/alice_personality/n0/semantic_operator_foundation.py",
+              "src/alice_personality/n0/dynamic_structured_state_v2.py",
+              "src/alice_personality/n0/dynamic_schema_evidence_graph_v1.py",
+              "src/alice_personality/n0/dynamic_evidence_view_v2.py",
+              "src/alice_personality/n0/dynamic_cross_context_fusion_v3.py",
+              "src/alice_personality/n0/dynamic_competitive_latent_pool_v3.py",
+              "src/alice_personality/n0/semantic_operator_qsre_adapter.py",
+              "src/alice_personality/n0/qsre_full_envelope_binder_v1.py",
+              "src/alice_personality/n0/qsre_full_envelope_executor_v1.py",
+              "src/alice_personality/n0/n0_full_envelope_stack_v1.py",
+          ]
+          contract=json.load(open("configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json"))
+          forbidden=set(contract["forbidden_new_lineage_dependencies"])
+          found=[]
+          for path in successor:
+              tree=ast.parse(pathlib.Path(path).read_text())
+              for node in ast.walk(tree):
+                  if isinstance(node, ast.ImportFrom) and node.module in forbidden:
+                      found.append((path,node.module))
+                  if isinstance(node, ast.Import):
+                      for alias in node.names:
+                          if alias.name in forbidden:
+                              found.append((path,alias.name))
+          assert not found, found
+          print("PASS_N0_SUCCESSOR_NO_SUPERSEDED_IMPORTS")
+          PY
+
+      - name: Prove no detached semantic gradient or hidden identity tables in successor
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import pathlib
+          critical = [
+              "src/alice_personality/n0/semantic_operator_foundation.py",
+              "src/alice_personality/n0/dynamic_structured_state_v2.py",
+              "src/alice_personality/n0/dynamic_schema_evidence_graph_v1.py",
+              "src/alice_personality/n0/dynamic_evidence_view_v2.py",
+              "src/alice_personality/n0/dynamic_cross_context_fusion_v3.py",
+              "src/alice_personality/n0/dynamic_competitive_latent_pool_v3.py",
+              "src/alice_personality/n0/qsre_full_envelope_binder_v1.py",
+              "src/alice_personality/n0/qsre_full_envelope_executor_v1.py",
+              "src/alice_personality/n0/public_judgment_probe_v1.py",
+              "src/alice_personality/n0/n0_full_envelope_stack_v1.py",
+          ]
+          for path in critical:
+              text=pathlib.Path(path).read_text()
+              assert ".detach(" not in text, path
+              assert "nn.Embedding(" not in text, path
+          print("PASS_N0_SUCCESSOR_NO_DETACHED_SEMANTIC_PATH_OR_ID_EMBEDDING")
           PY
 
       - name: Prove runtime axes are not learned identity axes
@@ -92,8 +247,11 @@ jobs:
           )
           m=SchemaConditionedSemanticOperator(
               SemanticOperatorFoundationConfig(
-                  semantic_dim=24,model_dim=24,num_hidden_states=3,
-                  num_attention_heads=4,interaction_layers=1,dropout=0.0
+                  semantic_dim=24,
+                  model_dim=24,
+                  num_hidden_states=3,
+                  interaction_chunk_tokens=5,
+                  dropout=0.0,
               )
           )
           r=m.parameter_report()
@@ -106,6 +264,8 @@ jobs:
           assert r["factor_count_ceiling"] is None
           assert r["runtime_step_count_ceiling"] is None
           assert r["type_vocabulary_ceiling"] is None
+          assert r["query_token_count_ceiling"] is None
+          assert r["schema_token_count_ceiling"] is None
           assert r["shared_query_schema_token_interaction"] is True
           assert r["candidate_conditioned_multilayer_read"] is True
           assert r["continuous_relation_hypotheses"] is True
@@ -114,88 +274,37 @@ jobs:
           print("PASS_N0_RUNTIME_SCHEMA_NO_IDENTITY_AXIS")
           PY
 
-      - name: Prove retrospective audit reopens weak boundaries without deleting strong mechanics
+      - name: Prove retrospective audit and supersession map revoke narrow-pass authority
         run: |
           python - <<'PY'
           import json
           a=json.load(open("configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json"))
+          s=json.load(open("configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json"))
           assert "MUST_REOPEN_BEFORE_N0_CLOSURE" in a["stages"]["semantic_base"]["classification"]
           assert "PRESERVE_STRONG_ARCHITECTURE" in a["stages"]["fusion"]["classification"]
           assert "PRESERVE_STRONG_ARCHITECTURE" in a["stages"]["latent_pool"]["classification"]
           assert "PRESERVE_STRONG_ARCHITECTURE" in a["stages"]["causal_arbitration"]["classification"]
           assert "EXPERIMENTAL_OPERATING_POINT_ONLY" in a["stages"]["qsre_t1"]["classification"]
           assert "SUPERSEDED_DEFECT" in a["stages"]["qsre_t2"]["classification"]
-          assert "PRESERVE_STRONG_ARCHITECTURE" in a["stages"]["production_core"]["classification"]
-          assert "PRESERVE_STRONG_ARCHITECTURE" in a["stages"]["binder_v2"]["classification"]
           assert a["cross_cutting_findings"]["self_referential_validation_chain"] is True
           assert a["cross_cutting_findings"]["temporary_freezes_became_architecture_assumptions"] is True
-          print("PASS_N0_RETRO_AUDIT_BOUNDARY")
-          PY
-
-      - name: Prove no gradient or GPU authorization
-        run: |
-          python - <<'PY'
-          import json
-          for path in [
-              "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json",
-              "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json",
+          m=s["historical_to_successor"]
+          assert m["semantic_v02"]["frozen_authority"] is False
+          assert m["semantic_v02"]["must_coadapt"] is True
+          assert m["final_validation_v1"]["future_closure_authority"] is False
+          for key in [
+              "structured_state_v01",
+              "evidence_view_adapter_v01",
+              "dual_endpoint_evidence_graph",
+              "cross_context_fusion_v02",
+              "adaptive_latent_pool_v02",
+              "qsre_t1",
+              "qsre_t2",
+              "production_core_v1",
+              "binder_v2",
           ]:
-              s=json.load(open(path))
-              a=s["authorization"]
-              assert a["optimizer"] is False
-              assert a["gradient"] is False
-              assert a["gpu"] is False
-              assert a["private_identity_gradient"] is False
-          print("PASS_N0_NO_PREMATURE_TRAINING_AUTHORIZATION")
-          PY
-
-      - name: Prove training plan is full architecture but still blocked from gradient
-        run: |
-          python - <<'PY'
-          import json
-          p=json.load(open("configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"))
-          assert p["architecture"]["full_architecture_every_stage"] is True
-          assert p["architecture"]["reduced_pilot"] is False
-          assert p["optimization_strategy"]["full_stack_cogradient_required_before_final_selection"] is True
-          assert len(p["optimization_strategy"]["stages"])==3
-          assert p["scaling"]["hard_parameter_ceiling"] is None
-          assert p["scaling"]["hard_runtime_relation_ceiling"] is None
-          assert p["scaling"]["hard_runtime_factor_ceiling"] is None
-          assert p["scaling"]["hard_runtime_hop_ceiling"] is None
-          assert p["authorization"]["optimizer"] is False
-          assert p["authorization"]["gradient"] is False
-          assert p["authorization"]["gpu_training"] is False
-          print("PASS_N0_FULL_JOINT_TRAINING_PLAN_PRECOMMIT")
-          PY
-
-      - name: Prove successor final gate is behavioral not parent-cosine authority
-        run: |
-          python - <<'PY'
-          import json
-          c=json.load(open("configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json"))
-          assert c["authority"]["semantic_cosine_alone_can_authorize_n0"] is False
-          assert c["authority"]["all_gate_sections_must_pass"] is True
-          assert c["corpus"]["relation_family_holdout_required"] is True
-          assert c["corpus"]["composition_extrapolation_required"] is True
-          assert c["corpus"]["candidate_cardinality_extrapolation_required"] is True
-          assert c["deterministic_behavior_gate"]["source_target_causal_pair_completion_min"]==1.0
-          assert c["deterministic_behavior_gate"]["relation_order_causal_pair_completion_min"]==1.0
-          assert c["closure"]["automatic_repair_or_rerun"] is False
-          print("PASS_N0_FINAL_V2_BEHAVIORAL_AUTHORITY")
-          PY
-
-      - name: Prove reopened interface contract keeps delayed structural sparsity
-        run: |
-          python - <<'PY'
-          import json
-          i=json.load(open("configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json"))
-          assert i["foundation"]["relation_cardinality_runtime_axis"] is True
-          assert i["foundation"]["factor_cardinality_runtime_axis"] is True
-          assert i["evidence_graph_successor"]["remove"]==["learned_relation_id_embedding_as_semantic_authority"]
-          assert i["binder_successor"]["exact_type_masks_remain_structural"] is True
-          assert i["invariants"]["no_early_relation_argmax"] is True
-          assert i["invariants"]["no_exact_semantic_sparsity_before_binder"] is True
-          print("PASS_N0_REOPENED_INTERFACE_CONTRACT")
+              assert m[key]["weight_reuse"].startswith("FORBIDDEN"), (key,m[key]["weight_reuse"])
+          print("PASS_N0_NARROW_PASS_AUTHORITY_REVOKED")
           PY
 
       - name: Prove dynamic evidence fusion latent have no runtime identity axes
@@ -210,6 +319,8 @@ jobs:
           assert e["relation_identity_parameters"]==0
           assert e["relation_count_dependent_parameters"]==0
           assert e["pooled_only_query_conditioning"] is False
+          assert e["query_token_count_ceiling"] is None
+          assert e["field_token_count_ceiling"] is None
           assert f["view_identity_parameters"]==0
           assert f["view_count_dependent_parameters"]==0
           assert f["view_count_ceiling"] is None
@@ -222,11 +333,26 @@ jobs:
           print("PASS_N0_DYNAMIC_FABRIC_NO_RUNTIME_IDENTITY_AXIS")
           PY
 
-      - name: Prove full successor stack has no serving-axis ceilings
+      - name: Prove tiny full-stack wiring has no serving-axis ceilings
         run: |
           python - <<'PY'
-          from alice_personality.n0.n0_full_envelope_stack_v1 import N0FullEnvelopeStackV1
-          r=N0FullEnvelopeStackV1().parameter_report()
+          from alice_personality.n0.n0_full_envelope_stack_v1 import (
+              N0FullEnvelopeStackConfig,
+              N0FullEnvelopeStackV1,
+          )
+          m=N0FullEnvelopeStackV1(
+              N0FullEnvelopeStackConfig(
+                  semantic_dim=24,
+                  model_dim=24,
+                  num_hidden_states=3,
+                  num_attention_heads=4,
+                  structured_layers=1,
+                  field_metadata_dim=3,
+                  edge_metadata_dim=4,
+                  dropout=0.0,
+              )
+          )
+          r=m.parameter_report()
           assert r["runtime_relation_ceiling"] is None
           assert r["runtime_factor_ceiling"] is None
           assert r["runtime_field_ceiling"] is None
@@ -237,4 +363,69 @@ jobs:
           assert r["semantic_backbone_gradient_must_remain_connected"] is True
           assert r["exact_structural_sparsity_boundary"]=="FullEnvelopeQSREBinderV1"
           print("PASS_N0_FULL_SUCCESSOR_STACK_NO_SERVING_AXIS_CEILINGS")
+          PY
+
+      - name: Prove context virtualization removes native-window product ceiling
+        run: |
+          python - <<'PY'
+          from alice_personality.n0.semantic_context_virtualizer_v1 import SemanticContextVirtualizerV1
+          r=SemanticContextVirtualizerV1().parameter_report()
+          assert r["total_parameters"]==0
+          assert r["native_window_is_operating_point"] is True
+          assert r["segment_count_dependent_parameters"]==0
+          assert r["segment_count_ceiling"] is None
+          assert r["product_context_token_ceiling"] is None
+          assert r["lossless_content_ownership"] is True
+          print("PASS_N0_CONTEXT_NATIVE_WINDOW_NOT_PRODUCT_CEILING")
+          PY
+
+      - name: Prove final authority is behavioral and sealed
+        run: |
+          python - <<'PY'
+          import json
+          c=json.load(open("configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json"))
+          assert c["authority"]["semantic_cosine_alone_can_authorize_n0"] is False
+          assert c["authority"]["all_gate_sections_must_pass"] is True
+          assert c["authority"]["sealed_natural_final_rows_may_influence_training"] is False
+          assert c["authority"]["sealed_natural_final_rows_may_influence_checkpoint_selection"] is False
+          assert c["corpus"]["relation_family_holdout_required"] is True
+          assert c["corpus"]["composition_extrapolation_required"] is True
+          assert c["corpus"]["candidate_cardinality_extrapolation_required"] is True
+          assert c["corpus"]["final_relation_descriptions_absent_from_train_dev_inputs_required"] is True
+          assert c["fusion_latent_gate"]["behaviorally_grounded_readout_required"] is True
+          assert c["closure"]["automatic_repair_or_rerun"] is False
+          print("PASS_N0_FINAL_V2_BEHAVIORAL_SEALED_AUTHORITY")
+          PY
+
+      - name: Prove capacity policy is ceiling-free but evidence-gated
+        run: |
+          python - <<'PY'
+          import json
+          c=json.load(open("configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json"))
+          n=c["no_ceiling_policy"]
+          assert all(v is None for v in n.values())
+          assert len(c["scale_up_trigger"]["all_required"])>=8
+          assert c["authorization"]["capacity_change_now"] is False
+          assert c["authorization"]["gradient"] is False
+          assert c["authorization"]["gpu_training"] is False
+          print("PASS_N0_CAPACITY_CEILING_FREE_EVIDENCE_GATED")
+          PY
+
+      - name: Prove training remains blocked until runtime qualification
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open("configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"))
+          assert p["architecture"]["full_architecture_every_stage"] is True
+          assert p["architecture"]["reduced_pilot"] is False
+          assert p["optimization_strategy"]["full_stack_cogradient_required_before_final_selection"] is True
+          assert p["scaling"]["hard_parameter_ceiling"] is None
+          assert p["scaling"]["hard_runtime_relation_ceiling"] is None
+          assert p["scaling"]["hard_runtime_factor_ceiling"] is None
+          assert p["scaling"]["hard_runtime_hop_ceiling"] is None
+          assert p["authorization"]["optimizer"] is False
+          assert p["authorization"]["gradient"] is False
+          assert p["authorization"]["gpu_training"] is False
+          assert p["authorization"]["n0_complete"] is False
+          print("PASS_N0_NO_PREMATURE_TRAINING_OR_CLOSURE")
           PY
