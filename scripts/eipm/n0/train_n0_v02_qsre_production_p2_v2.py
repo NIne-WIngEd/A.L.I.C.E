@@ -322,30 +322,59 @@ def operator_supervised_loss_v2(
     return total, parts
 
 
-def pair_loss(
-    a: QSREProductionOperatorState,
-    b: QSREProductionOperatorState,
-) -> torch.Tensor:
+def pair_loss_v2(a: dict, b: dict) -> torch.Tensor:
+    op_a: QSREProductionOperatorState = a["operator"]
+    op_b: QSREProductionOperatorState = b["operator"]
+    factor_a = a["factor_logits"]
+    factor_b = b["factor_logits"]
+
+    relation_consistency = F.mse_loss(
+        torch.softmax(a["relation_logits"], dim=-1),
+        torch.softmax(b["relation_logits"], dim=-1),
+    )
+    event_consistency = F.mse_loss(
+        torch.softmax(a["event_logits"], dim=-1),
+        torch.softmax(b["event_logits"], dim=-1),
+    )
+    factor_consistency = (
+        F.mse_loss(
+            torch.softmax(factor_a["role"], dim=-1),
+            torch.softmax(factor_b["role"], dim=-1),
+        )
+        + F.mse_loss(
+            torch.softmax(factor_a["traversal"], dim=-1),
+            torch.softmax(factor_b["traversal"], dim=-1),
+        )
+        + F.mse_loss(
+            torch.softmax(factor_a["direction"], dim=-1),
+            torch.softmax(factor_b["direction"], dim=-1),
+        )
+        + F.mse_loss(
+            torch.sigmoid(factor_a["modifier"]),
+            torch.sigmoid(factor_b["modifier"]),
+        )
+        + F.mse_loss(
+            torch.softmax(factor_a["control"], dim=-1),
+            torch.softmax(factor_b["control"], dim=-1),
+        )
+        + F.mse_loss(
+            torch.sigmoid(factor_a["applicability"]),
+            torch.sigmoid(factor_b["applicability"]),
+        )
+    )
+    continuous_consistency = (
+        1.0
+        - F.cosine_similarity(
+            op_a.continuous_state,
+            op_b.continuous_state,
+            dim=-1,
+        )
+    ).mean()
     return (
-        F.mse_loss(a.relation_distribution, b.relation_distribution)
-        + F.mse_loss(a.relation_step_mass, b.relation_step_mass)
-        + F.mse_loss(a.stop_probability, b.stop_probability)
-        + F.mse_loss(a.unknown_probability, b.unknown_probability)
-        + F.mse_loss(a.role_distribution, b.role_distribution)
-        + F.mse_loss(a.traversal_distribution, b.traversal_distribution)
-        + F.mse_loss(a.direction_distribution, b.direction_distribution)
-        + F.mse_loss(a.modifier_weight, b.modifier_weight)
-        + F.mse_loss(a.applicability, b.applicability)
-        + F.mse_loss(a.control_distribution, b.control_distribution)
-        + 0.25
-        * (
-            1.0
-            - F.cosine_similarity(
-                a.continuous_state,
-                b.continuous_state,
-                dim=-1,
-            )
-        ).mean()
+        relation_consistency
+        + event_consistency
+        + factor_consistency
+        + 0.25 * continuous_consistency
     )
 
 
@@ -764,6 +793,7 @@ def main() -> None:
             device=device,
         )
         view_ops = []
+        view_outputs = []
         supervised = []
         downstream_losses = []
         supervised_parts = []
@@ -781,6 +811,7 @@ def main() -> None:
             )
             op = model_output["operator"]
             view_ops.append(op)
+            view_outputs.append(model_output)
             sup, parts = operator_supervised_loss_v2(
                 model_output=model_output,
                 split=train,
@@ -809,7 +840,7 @@ def main() -> None:
                 )
             )
 
-        consistency = pair_loss(view_ops[0], view_ops[1])
+        consistency = pair_loss_v2(view_outputs[0], view_outputs[1])
         projection_anchor = (
             F.mse_loss(
                 operator_model.query_projection.weight,
