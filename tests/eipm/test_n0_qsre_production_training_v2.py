@@ -8,6 +8,7 @@ from train_n0_v02_qsre_production_p2_v2 import (
     EVENT_UNKNOWN,
     build_event_targets,
     macro_binary_factor_loss,
+    macro_class_cross_entropy,
     macro_class_nll,
 )
 from train_n0_v02_qsre_production_p3_v2 import (
@@ -45,6 +46,25 @@ def test_event_targets_separate_program_length_from_unknown_rejection() -> None:
         EVENT_STOP,
     ]
     assert supervised[2].tolist() == [True, True, True, True]
+
+
+def test_dense_relation_supervision_can_recover_sparse_pruned_target() -> None:
+    logits = torch.tensor(
+        [[[12.0, -12.0]]],
+        requires_grad=True,
+    )
+    target = torch.tensor([[1]])
+    mask = torch.tensor([[True]])
+    loss = macro_class_cross_entropy(
+        logits,
+        target,
+        mask=mask,
+    )
+    loss.backward()
+    assert torch.isfinite(loss)
+    assert logits.grad is not None
+    assert float(logits.grad[0, 0, 1]) < 0.0
+    assert float(logits.grad[0, 0, 0]) > 0.0
 
 
 def test_macro_class_nll_does_not_let_majority_class_dominate() -> None:
