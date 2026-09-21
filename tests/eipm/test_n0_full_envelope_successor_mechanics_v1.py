@@ -357,6 +357,7 @@ def test_unknown_structural_opcode_fails_closed() -> None:
 def _manual_operator(
     traversal_index: int,
     direction_index: int = DIRECTION_FORWARD,
+    truncation_probability: float = 0.0,
 ) -> FullEnvelopeOperatorState:
     batch,steps,relations,dim=1,3,1,24
     relation_distribution=torch.ones(batch,steps,relations)
@@ -374,7 +375,10 @@ def _manual_operator(
         relation_step_mass=relation_step_mass,
         stop_probability=torch.zeros(batch,steps),
         unknown_probability=torch.zeros(batch,steps),
-        truncation_probability=torch.zeros(batch),
+        truncation_probability=torch.full(
+            (batch,),
+            float(truncation_probability),
+        ),
         role_distribution=role,
         traversal_distribution=traversal,
         direction_distribution=direction,
@@ -686,3 +690,59 @@ def test_executor_symmetric_relation_ignores_forward_reverse_storage_orientation
     report=executor.parameter_report()
     assert report["symmetric_relation_direction_collapses_to_bidirectional"] is True
     assert report["symmetric_relation_endpoint_order_invariant"] is True
+
+
+def test_executor_truncated_program_cannot_claim_relational_execution_confidence() -> None:
+    executor=FullEnvelopeQSREExecutorV1(
+        FullEnvelopeExecutorConfig(
+            field_dim=24,
+            model_dim=24,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    common=dict(
+        field_state=torch.randn(1,3,24),
+        field_metadata=torch.zeros(1,3,3),
+        field_valid_mask=torch.ones(1,3,dtype=torch.bool),
+        edge_index=torch.tensor([[[0,1],[1,2]]]),
+        edge_relation_index=torch.zeros(1,2,dtype=torch.long),
+        edge_valid_mask=torch.ones(1,2,dtype=torch.bool),
+        edge_support_weight=torch.ones(1,2),
+        support_available=torch.ones(1),
+        edge_reliability=torch.ones(1,2),
+        edge_recency=torch.ones(1,2),
+        edge_temporal_match=torch.ones(1,2),
+        edge_provenance_match=torch.ones(1,2),
+        relation_schema_state=torch.randn(1,1,24),
+        relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
+        focus_field_weight=torch.tensor([[1.0,0.0,0.0]]),
+    )
+    with torch.no_grad():
+        complete=executor(
+            operator=_manual_operator(
+                TRAVERSAL_PATH,
+                DIRECTION_FORWARD,
+                truncation_probability=0.0,
+            ),
+            **common,
+        )
+        truncated=executor(
+            operator=_manual_operator(
+                TRAVERSAL_PATH,
+                DIRECTION_FORWARD,
+                truncation_probability=1.0,
+            ),
+            **common,
+        )
+    assert float(complete["execution_confidence"].item()) > 0.0
+    assert torch.equal(
+        truncated["execution_confidence"],
+        torch.zeros_like(truncated["execution_confidence"]),
+    )
+    assert torch.equal(
+        truncated["relational_probability"],
+        torch.zeros_like(truncated["relational_probability"]),
+    )
+    assert executor.parameter_report()["execution_confidence_requires_program_completion"] is True
