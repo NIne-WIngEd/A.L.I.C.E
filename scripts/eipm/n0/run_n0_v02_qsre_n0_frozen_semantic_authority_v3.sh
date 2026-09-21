@@ -97,7 +97,7 @@ done
 
 python - "$P1_RESULT" "$P1_ROOT" "$FAILED_P2_RESULT" "$SEM_V2_RESULT"   "$FINAL_FREEZE" "$ORIGINAL_PRODUCTION_REVISION" "$P1_EXPECTED_SHA"   "$PLAN" "$AUTH_PLAN" "$META" "$PROD_SCHEMA_JSON" "$FINAL_SCHEMA_JSON" \
   "$PROD_SCHEMA_CACHE" "$FINAL_SCHEMA_CACHE" "$FULL_SCALE_PACKAGE" <<'PY'
-import hashlib,json,math,sys
+import hashlib,json,math,sys,torch
 from pathlib import Path
 
 p1_path=Path(sys.argv[1]); p1_root=Path(sys.argv[2]); failed_p2_path=Path(sys.argv[3])
