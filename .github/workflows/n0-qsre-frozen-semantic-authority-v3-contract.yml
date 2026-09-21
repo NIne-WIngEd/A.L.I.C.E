@@ -1,0 +1,218 @@
+name: n0-qsre-frozen-semantic-authority-v3-contract
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-n0-frozen-semantic-authority-v3
+    paths:
+      - "src/alice_personality/n0/qsre_schema_matcher.py"
+      - "src/alice_personality/n0/qsre_semantic_authority.py"
+      - "src/alice_personality/n0/qsre_production_operator_v3.py"
+      - "scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py"
+      - "scripts/eipm/n0/qualify_n0_v02_qsre_frozen_semantic_authority_v3.py"
+      - "scripts/eipm/n0/prepare_n0_v02_qsre_frozen_authority_cache_v3.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py"
+      - "scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py"
+      - "scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py"
+      - "scripts/eipm/n0/qsre_production_training_utils.py"
+      - "scripts/eipm/n0/run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_n0_frozen_semantic_authority_v3.sbatch"
+      - "configs/eipm/n0/n0_v02_qsre_frozen_semantic_authority_plan_v3.json"
+      - "configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json"
+      - "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md"
+      - "tests/eipm/test_n0_qsre_schema_matcher.py"
+      - "tests/eipm/test_n0_qsre_production_operator_v3.py"
+      - ".github/workflows/n0-qsre-frozen-semantic-authority-v3-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src:scripts/eipm/n0
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CPU qualification dependencies
+        run: python -m pip install -q torch pytest safetensors
+
+      - name: Compile frozen-authority closure stack
+        run: |
+          python -m py_compile             src/alice_personality/n0/qsre_schema_matcher.py             src/alice_personality/n0/qsre_semantic_authority.py             src/alice_personality/n0/qsre_production_operator_v3.py             scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py             scripts/eipm/n0/qualify_n0_v02_qsre_frozen_semantic_authority_v3.py             scripts/eipm/n0/prepare_n0_v02_qsre_frozen_authority_cache_v3.py             scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py             scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py             scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py             scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py             scripts/eipm/n0/qsre_production_training_utils.py
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh
+          bash -n scripts/eipm/n0/magnolia_p100_n0_v02_qsre_n0_frozen_semantic_authority_v3.sbatch
+          python -m json.tool configs/eipm/n0/n0_v02_qsre_frozen_semantic_authority_plan_v3.json >/dev/null
+          python -m json.tool configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json >/dev/null
+
+      - name: Run matcher operator binder mechanics
+        run: |
+          pytest -q             tests/eipm/test_n0_qsre_schema_matcher.py             tests/eipm/test_n0_qsre_production_operator_v3.py             tests/eipm/test_n0_qsre_production_training_v3.py             tests/eipm/test_n0_qsre_production_binder_v2.py             tests/eipm/test_n0_qsre_production_core_v1.py             tests/eipm/test_n0_qsre_production_training_utils.py
+
+      - name: Prove 575966 is the causal source and not a tuning excuse
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          auth=json.load(open("configs/eipm/n0/n0_v02_qsre_frozen_semantic_authority_plan_v3.json"))
+          downstream=json.load(open("configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json"))
+          prior=json.load(open("configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v2.json"))
+          doc=Path("docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md").read_text()
+
+          assert auth["source_failure"]["job"]==575966
+          assert auth["source_failure"]["status"]=="FAIL_QSRE_CLOSURE_SCHEMA_MATCHER"
+          assert auth["source_failure"]["p2_authorized"] is False
+          assert auth["source_failure"]["full_budget_steps"]==1000
+          assert auth["source_failure"]["best_observed"]=={
+              "step":150,
+              "auxiliary_holdout_relation_top1":0.6666666666666666,
+              "auxiliary_seen_relation_top1":0.71875,
+              "production_core_single_relation_top1":0.9477272727272728,
+              "heldout_factor_macro_accuracy":0.7166666666666667,
+          }
+          assert auth["eligibility"]==prior["eligibility"]
+          assert downstream["stages"]["P2"]["failure_source"]["magnolia_job"]==575966
+          assert downstream["stages"]["P2"]["failure_source"]["no_lr_step_width_batch_or_gate_search"] is True
+          assert "production core reached `1.0`" in doc.lower()
+          assert "does **not** train p2s again" in doc.lower()
+          print("PASS_N0_575966_CAUSAL_AUTHORITY")
+          PY
+
+      - name: Prove semantic authority reuses trained N0 surfaces without gradient
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          auth=json.load(open("configs/eipm/n0/n0_v02_qsre_frozen_semantic_authority_plan_v3.json"))
+          runtime=Path("scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py").read_text()
+          qualify=Path("scripts/eipm/n0/qualify_n0_v02_qsre_frozen_semantic_authority_v3.py").read_text()
+          model=Path("src/alice_personality/n0/v02_model.py").read_text()
+
+          assert auth["semantic_authority"]["gradient"] is False
+          assert auth["semantic_authority"]["optimizer"] is False
+          assert auth["semantic_authority"]["trainable_authority_parameters"]==0
+          assert "model.score_candidates" in runtime
+          assert "model.project_semantic_pooled" in runtime
+          assert "token_evidence_scores" in runtime
+          assert "@torch.inference_mode()" in runtime
+          assert '"gradient_performed": False' in qualify
+          assert '"optimizer": False' in qualify
+          assert "def score_candidates" in model
+          assert "def project_semantic_pooled" in model
+          print("PASS_N0_FROZEN_AUTHORITY_EXISTING_SEMANTIC_SURFACES")
+          PY
+
+      - name: Prove parameter-free token evidence and subset-before-normalization
+        run: |
+          python - <<'PY'
+          from alice_personality.n0.qsre_schema_matcher import QSRESchemaMatcher
+          from pathlib import Path
+
+          matcher=QSRESchemaMatcher(semantic_dim=24,model_dim=24,num_hidden_states=3)
+          report=matcher.parameter_report()
+          assert report["total_parameters"]==0
+          assert report["trainable_parameters"]==0
+          assert report["relation_identity_parameters"]==0
+          assert report["factor_identity_parameters"]==0
+          assert report["ordered_evidence_remaining_support"] is True
+
+          cache=Path("scripts/eipm/n0/prepare_n0_v02_qsre_frozen_authority_cache_v3.py").read_text()
+          combiner=Path("src/alice_personality/n0/qsre_semantic_authority.py").read_text()
+          assert 'if split == "train"' in cache
+          assert 'relation_schema["core_train_relation_keys"]' in cache
+          assert "candidate_zscore" in combiner
+          assert "relation_count" in combiner
+          print("PASS_N0_FROZEN_AUTHORITY_NO_TRAINABLE_MATCHER")
+          PY
+
+      - name: Prove open and final semantics never enter Production TRAIN authority
+        run: |
+          python - <<'PY'
+          import json
+          meta=json.load(open("configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v2.json"))
+          prod=json.load(open("configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json"))
+          final=json.load(open("configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json"))
+          forbidden=set(meta["forbidden_semantics"])
+          assert set(prod["open_schema_dev_relation_keys"]) <= forbidden
+          assert set(final["corpus"]["final_only_relation_keys"]) <= forbidden
+          assert meta["governance"]["production_open_schema_descriptions_in_gradient"] is False
+          assert meta["governance"]["final_validation_relation_descriptions_in_gradient"] is False
+          print("PASS_N0_FROZEN_AUTHORITY_HOLDOUT_ISOLATION")
+          PY
+
+      - name: Prove operator cannot rewrite semantic identity
+        run: |
+          python - <<'PY'
+          from alice_personality.n0.qsre_production_core import QSREProductionConfig
+          from alice_personality.n0.qsre_production_operator_v3 import QSREProductionOperatorInducerV3
+
+          cfg=QSREProductionConfig(
+              semantic_dim=24,model_dim=24,num_hidden_states=3,
+              num_attention_heads=4,operator_refinement_layers=1,
+              field_state_dim=24,field_metadata_dim=3,
+              role_count=4,traversal_count=3,direction_count=3,
+              modifier_count=4,control_count=3,dropout=0.0,
+          )
+          op=QSREProductionOperatorInducerV3(cfg)
+          report=op.parameter_report()
+          assert report["schema_matcher_trainable_parameters"]==0
+          assert report["frozen_semantic_authority_external"] is True
+          assert report["frozen_authority_trainable_parameters"]==0
+          assert report["relation_identity_owned_by_trainable_operator"] is False
+          assert report["factor_identity_owned_by_trainable_operator"] is False
+          assert report["continuous_relation_hypotheses"] is True
+          assert report["relation_sparsity_before_structural_binding"] is False
+          print("PASS_N0_FROZEN_AUTHORITY_OPERATOR_BOUNDARY")
+          PY
+
+      - name: Prove downstream Production compute and gates are unchanged
+        run: |
+          python - <<'PY'
+          import json
+          prior=json.load(open("configs/eipm/n0/n0_v02_qsre_n0_closure_training_plan_v1.json"))
+          new=json.load(open("configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json"))
+          assert prior["model"]==new["model"]
+          assert prior["curriculum_sha256"]==new["curriculum_sha256"]
+          for stage in ("P2","P3"):
+              assert prior["stages"][stage]["optimizer"]==new["stages"][stage]["optimizer"]
+              for key in ("seed","batch_size","max_steps","eval_every","save_every","operator_runtime_max_steps"):
+                  assert prior["stages"][stage]["training"][key]==new["stages"][stage]["training"][key]
+              assert prior["stages"][stage]["eligibility"]==new["stages"][stage]["eligibility"]
+          assert prior["stages"]["P4"]["eligibility"]==new["stages"]["P4"]["eligibility"]
+          print("PASS_N0_FROZEN_AUTHORITY_DOWNSTREAM_UNCHANGED")
+          PY
+
+      - name: Prove exact sparsity still begins only at Binder v2
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          op=Path("src/alice_personality/n0/qsre_production_operator_v3.py").read_text()
+          binder=Path("src/alice_personality/n0/qsre_production_binder_v2.py").read_text()
+          assert "relation_distribution = torch.softmax" in op
+          assert "masked_sparsemax" not in op
+          assert "masked_sparsemax" in binder
+          assert '"exact_zero_sparse_support": True' in binder
+          assert '"fixed_top_k": False' in binder
+          print("PASS_N0_FROZEN_AUTHORITY_STRUCTURAL_SPARSE_BOUNDARY")
+          PY
+
+      - name: Prove single new evidence root and original frozen final reuse
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh").read_text()
+          sbatch=Path("scripts/eipm/n0/magnolia_p100_n0_v02_qsre_n0_frozen_semantic_authority_v3.sbatch").read_text()
+          assert 'SEM_V2="$WORKDIR/qsre-n0-closure-semantic-v2"' in runner
+          assert 'RUN_ROOT="$WORKDIR/qsre-n0-frozen-semantic-authority-v3"' in runner
+          assert "575966" in runner
+          assert "qualify_n0_v02_qsre_frozen_semantic_authority_v3.py" in runner
+          assert "prepare_n0_v02_qsre_frozen_authority_cache_v3.py" in runner
+          assert 'FROZEN="$SOURCE/final-frozen"' in runner
+          assert "build_n0_v02_final_self_validation" not in runner
+          assert "freeze_n0_v02_final_self_validation" not in runner
+          assert "#SBATCH --gres=gpu:p100:1" in sbatch
+          assert "run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh" in sbatch
+          print("PASS_N0_FROZEN_AUTHORITY_SINGLE_RUN_LINEAGE")
+          PY
