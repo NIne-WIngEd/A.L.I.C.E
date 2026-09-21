@@ -208,6 +208,7 @@ def main() -> None:
     p.add_argument("--mode", choices=("production", "final"), required=True)
     p.add_argument("--rows", required=True)
     p.add_argument("--relation-schema", required=True)
+    p.add_argument("--schema-cache", required=True)
     p.add_argument("--meta-config", required=True)
     p.add_argument("--qualification-result", required=True)
     p.add_argument("--semantic-config", required=True)
@@ -224,6 +225,7 @@ def main() -> None:
 
     rows_path = Path(args.rows)
     relation_schema_path = Path(args.relation_schema)
+    schema_cache_path = Path(args.schema_cache)
     meta_path = Path(args.meta_config)
     qualification_path = Path(args.qualification_result)
     semantic_config_path = Path(args.semantic_config)
@@ -254,11 +256,22 @@ def main() -> None:
     if qualification.get("semantic_checkpoint_sha256") != sha256(semantic_checkpoint):
         raise SystemExit("authority qualification semantic checkpoint drift")
     relation_schema = read_json(relation_schema_path)
+    schema_cache = torch.load(schema_cache_path, map_location="cpu")
+    if schema_cache.get("schema") != "alice.eipm.n0.qsre-production-schema-cache.v1":
+        raise SystemExit("authority-cache dynamic schema cache version drift")
+    if schema_cache.get("source_schema_sha256") != sha256(relation_schema_path):
+        raise SystemExit("authority-cache relation-schema source hash drift")
+    if schema_cache.get("semantic_checkpoint_sha256") != sha256(semantic_checkpoint):
+        raise SystemExit("authority-cache semantic checkpoint/schema-cache drift")
+    if schema_cache.get("private_identity_data") is not False:
+        raise SystemExit("private identity data entered authority-cache dynamic schema")
     relation_rows = list(relation_schema["relations"])
     relation_by_key = {str(row["key"]): row for row in relation_rows}
     all_keys = [str(row["key"]) for row in relation_rows]
     if len(all_keys) != len(set(all_keys)):
         raise SystemExit("duplicate runtime relation key")
+    if list(schema_cache["relation_keys"]) != all_keys:
+        raise SystemExit("authority-cache runtime relation key order drift")
     relation_text = {
         key: relation_schema_text(relation_by_key[key])
         for key in all_keys
@@ -276,6 +289,7 @@ def main() -> None:
         "mode": args.mode,
         "rows_sha256": sha256(rows_path),
         "relation_schema_sha256": sha256(relation_schema_path),
+        "schema_cache_sha256": sha256(schema_cache_path),
         "meta_config_sha256": sha256(meta_path),
         "qualification_result_sha256": sha256(qualification_path),
         "semantic_checkpoint_sha256": sha256(semantic_checkpoint),
@@ -393,6 +407,7 @@ def main() -> None:
         "cache_sha256": sha256(output_path),
         "rows": len(rows),
         "semantic_checkpoint_sha256": sha256(semantic_checkpoint),
+        "schema_cache_sha256": sha256(schema_cache_path),
         "qualification_result_sha256": sha256(qualification_path),
         "relation_keys_used_as_semantic_tokens": False,
         "gradient": False,
