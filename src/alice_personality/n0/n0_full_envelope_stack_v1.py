@@ -34,6 +34,7 @@ from alice_personality.n0.qsre_full_envelope_executor_v1 import (
     FullEnvelopeExecutorConfig,
     FullEnvelopeQSREExecutorV1,
 )
+from alice_personality.n0.full_envelope_structural_types import CONTROL_RELATIONAL
 from alice_personality.n0.public_judgment_probe_v1 import (
     PublicJudgmentProbeConfig,
     PublicJudgmentProbeV1,
@@ -273,15 +274,27 @@ class N0FullEnvelopeStackV1(nn.Module):
         relation_symmetric = relation_schema.symmetric[None, :].expand(
             batch, -1
         )
-        relation_mass = torch.einsum(
+        raw_relation_mass = torch.einsum(
             "bsr,bs->br",
             operator.relation_distribution,
             operator.relation_step_mass,
         )
-        relation_mass = relation_mass / operator.relation_step_mass.sum(
+        relation_program_mass = operator.relation_step_mass.sum(
             dim=1,
             keepdim=True,
-        ).clamp_min(1.0e-6)
+        )
+        relation_mass = raw_relation_mass / relation_program_mass.clamp_min(
+            1.0e-6
+        )
+        known_mass = (
+            1.0 - operator.unknown_probability.sum(dim=1).clamp(max=1.0)
+        ).clamp(0.0, 1.0)
+        semantic_activity = (
+            relation_program_mass.squeeze(1).clamp(0.0, 1.0)
+            * operator.applicability.clamp(0.0, 1.0)
+            * operator.control_distribution[:, CONTROL_RELATIONAL]
+            * known_mass
+        ).clamp(0.0, 1.0)
 
         graph = self.evidence_graph(
             field_state=structured["field_states"],
@@ -293,6 +306,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             relation_schema_state=relation_state,
             relation_mass=relation_mass,
             relation_symmetric=relation_symmetric,
+            semantic_activity=semantic_activity,
             operator_state=operator.continuous_state,
             message_steps=graph_message_steps,
         )
@@ -479,6 +493,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "semantic_operator": semantic,
             "operator": operator,
             "relation_schema_state": relation_state,
+            "semantic_activity": semantic_activity,
             "structured": structured,
             "binder": binder,
             "executor": executor,
@@ -511,6 +526,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "semantic_backbone_included": False,
             "semantic_backbone_gradient_must_remain_connected": True,
             "continuous_graph_before_exact_binder_sparsity": True,
+            "pre_binder_graph_soft_activity_gated": True,
             "runtime_relation_ceiling": None,
             "per_example_candidate_subset_supported": True,
             "runtime_factor_ceiling": None,
