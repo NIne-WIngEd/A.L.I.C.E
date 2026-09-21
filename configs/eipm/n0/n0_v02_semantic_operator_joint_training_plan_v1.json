@@ -1,0 +1,196 @@
+{
+  "schema": "alice.eipm.n0.semantic-operator-joint-training-plan.v1",
+  "status": "PRECOMMITTED_FULL_ARCHITECTURE_PLAN_CPU_PREPARATION_ONLY",
+  "date": "2026-09-21",
+  "purpose": "Train one full public N0 semantic/operator foundation with staged optimization but no reduced architecture and no permanent parent freezes.",
+  "architecture": {
+    "semantic_parent_checkpoint": "targeted-repair-v0.1/step-00000080",
+    "semantic_parent_sha256": "6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43",
+    "semantic_parent_role": "initialization_and_regression_baseline_not_frozen_authority",
+    "semantic_operator_implementation": "src/alice_personality/n0/semantic_operator_foundation.py",
+    "interface_contract": "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json",
+    "curriculum_contract": "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json",
+    "full_architecture_every_stage": true,
+    "reduced_pilot": false,
+    "relation_identity_parameters": 0,
+    "factor_identity_parameters": 0,
+    "runtime_dynamic_schema": true,
+    "shared_recurrent_relation_transition": true,
+    "exact_semantic_sparsity_before_binder": false
+  },
+  "data": {
+    "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
+    "governed_teacher_replay_required": true,
+    "intervention_supplement_builder": "scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py",
+    "intervention_audit": "scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py",
+    "materialized_full_mixture_manifest_required_before_gradient": true,
+    "relation_family_holdout_required": true,
+    "factor_combination_holdout_required": true,
+    "final_validation_exclusion_hash_required": true,
+    "private_identity_data": false
+  },
+  "optimization_strategy": {
+    "stages": [
+      {
+        "name": "J1_joint_semantic_operator",
+        "role": "co-adapt all semantic backbone layers with the shared runtime-schema operator while preserving broad public semantic/judgment replay",
+        "trainable": [
+          "semantic_backbone_all_layers",
+          "semantic_existing_heads_for_replay",
+          "schema_conditioned_semantic_operator"
+        ],
+        "permanently_frozen": [],
+        "downstream_modules_updated": false,
+        "architecture_reduced": false
+      },
+      {
+        "name": "J2_reopened_representation_interfaces",
+        "role": "adapt structured/evidence semantic interfaces against the same foundation without freezing semantic/operator learning",
+        "trainable": [
+          "semantic_backbone_all_layers",
+          "schema_conditioned_semantic_operator",
+          "structured_successor_interface",
+          "evidence_successor_interface",
+          "dynamic_relation_graph_semantic_interface"
+        ],
+        "permanently_frozen": [],
+        "architecture_reduced": false
+      },
+      {
+        "name": "J3_full_public_n0_coadaptation",
+        "role": "co-adapt all reopened public N0 representation modules end-to-end while preserving structural invariants and delayed Binder sparsity",
+        "trainable": [
+          "semantic_backbone_all_layers",
+          "schema_conditioned_semantic_operator",
+          "structured_successor",
+          "evidence_successor",
+          "dynamic_evidence_graph",
+          "fusion_successor",
+          "latent_successor",
+          "production_executor_successor",
+          "binder_successor"
+        ],
+        "permanently_frozen": [],
+        "architecture_reduced": false
+      }
+    ],
+    "temporary_freeze_allowed_only_for_causal_debug": true,
+    "full_stack_cogradient_required_before_final_selection": true,
+    "optimizer_name": "AdamW",
+    "optimizer_parameter_groups": {
+      "pretrained_semantic_backbone": {
+        "learning_rate": 0.00001,
+        "weight_decay": 0.1
+      },
+      "new_or_reopened_interfaces": {
+        "learning_rate": 0.00005,
+        "weight_decay": 0.05
+      },
+      "norm_and_bias": {
+        "weight_decay": 0
+      }
+    },
+    "gradient_clip_norm": 1,
+    "precision": "fp16_on_p100_or_successor_mixed_precision",
+    "gradient_checkpointing": true,
+    "scheduler": "linear_warmup_cosine_decay",
+    "warmup_fraction": 0.05,
+    "fixed_total_steps": null,
+    "stop_rule": "continue until precommitted DEV capability saturates without broad-semantic regression; do not stop merely because an arbitrary step budget expires",
+    "checkpoint_selection": "first checkpoint satisfying every active stage gate with no regression; otherwise keep failure evidence",
+    "automatic_hyperparameter_search": false,
+    "automatic_rerun": false
+  },
+  "loss_balancing": {
+    "method": "macro_family_balanced_with_per_objective_scale_normalization",
+    "principle": "normalize heterogeneous losses to comparable running scale, average within capability family, then weight capability families rather than raw row counts",
+    "families": [
+      "broad_semantic_replay",
+      "governed_judgment_replay",
+      "dynamic_schema_semantics",
+      "argument_role_direction",
+      "dynamic_factor_semantics",
+      "ordered_composition",
+      "unknown_defer_uncertainty",
+      "token_evidence_grounding",
+      "structured_context",
+      "multi_view_causal_preservation"
+    ],
+    "fixed_relation_family_weighting_forbidden": true,
+    "loss_weight_search_after_results_forbidden": true
+  },
+  "stage_gates": {
+    "J1": [
+      "heldout_relation_family_semantics",
+      "dynamic_factor_semantics",
+      "source_target_intervention",
+      "ordered_relation_intervention",
+      "unknown_defer",
+      "historical_semantic_regression"
+    ],
+    "J2": [
+      "J1_gates_retained",
+      "runtime_type_descriptor_transfer",
+      "evidence_endpoint_causality",
+      "field_permutation",
+      "no_relation_id_semantic_authority"
+    ],
+    "J3": [
+      "J1_and_J2_gates_retained",
+      "full_stack_support",
+      "fusion_decisive_source_causality",
+      "latent_noncollapse",
+      "missing_view_safety",
+      "candidate_cardinality_extrapolation",
+      "composition_extrapolation"
+    ]
+  },
+  "scaling": {
+    "current_136m_semantic_checkpoint_is_initialization_not_ceiling": true,
+    "hard_parameter_ceiling": null,
+    "hard_width_ceiling": null,
+    "hard_depth_ceiling": null,
+    "hard_runtime_relation_ceiling": null,
+    "hard_runtime_factor_ceiling": null,
+    "hard_runtime_hop_ceiling": null,
+    "hard_context_ceiling": null,
+    "capacity_growth_authorized_only_after_objective_and_interface_validity": true,
+    "capacity_study_if_needed": "compare larger width/depth/heads only after a valid full-envelope DEV plateau localizes residual error to expressivity rather than data/objective/interface"
+  },
+  "compute": {
+    "current_known_route": "Magnolia P100; architecture must not be constrained to that serving/training hardware",
+    "gpu_count_precommit": false,
+    "reason": "actual memory footprint must be measured from the completed successor modules before selecting a safe full-model sharding/accumulation route",
+    "cpu_memory_preflight_required": true,
+    "gpu_memory_dry_run_required_before_first_gradient": true
+  },
+  "final_validation": {
+    "contract": "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+    "may_open_during_training": false,
+    "thresholds_may_change_after_candidate_results": false
+  },
+  "prerequisites_before_gradient": [
+    "materialized_full_public_mixture_manifest",
+    "PASS semantic_operator_curriculum_audit",
+    "PASS static semantic_operator mechanics",
+    "PASS reopened interface mechanics",
+    "successor structured/evidence/graph/fusion/latent implementation complete",
+    "full model parameter and memory report",
+    "CPU no-gradient end-to-end forward",
+    "GPU no-gradient memory dry run",
+    "final validation v2 corpus built and frozen without candidate results",
+    "exact source revision and clean worktree"
+  ],
+  "authorization": {
+    "architecture_closed_for_implementation": true,
+    "cpu_preparation": true,
+    "no_gradient_runtime_qualification": true,
+    "optimizer": false,
+    "gradient": false,
+    "gpu_training": false,
+    "test_opening": false,
+    "final_validation_opening": false,
+    "private_identity_gradient": false,
+    "n0_complete": false
+  }
+}
