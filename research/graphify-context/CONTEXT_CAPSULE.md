@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-job575986-post-record-continuity-refresh-20260921-020
-- Question: Refresh context after recording the valid Magnolia job 575986 P2A failure. Confirm alice-context now includes N0_JOB575986_P2A_FROZEN_AUTHORITY_VALID_FAIL.md at branch head 97fbe41ecce0026054e10d895c198d344969d224 and fable-builder-model includes FBM_TRACE_20260921_N0_JOB575986_P2A_VALID_FAIL.jsonl at branch head 0accefa3139f93a8823bcd19e80fa711af0e94ef. Keep implementation source pinned to alice-eipm-v1-n0-frozen-semantic-authority-v3@0a8ac74aa6fa73259c03dc4d8754a42a6fde2307. Treat job575986 as infrastructure-clean valid model/capability evidence: P2A FAIL_QSRE_FROZEN_SEMANTIC_AUTHORITY with Production core 0.406818, auxiliary seen 0.270833, auxiliary holdout 0.260417, heldout factor macro 0.366667; P2 stayed closed. Preserve the anti-loop decision: no identical rerun, no threshold reduction, no P2S-v3, no hyperparameter search, no Production P2, and no semantic-backbone retraining yet. The next authorized investigation is zero-gradient semantic-base localization that separates representation deficiency from prompt/readout/task mismatch and fusion/calibration failure. Reconfirm older maximal heads are causal-history sources rather than current execution authority. This query is continuity refresh only.
+- Request: n0-job575986-semantic-localization-v1-qualified-refresh-20260921-021
+- Question: Exact-source continuity and defect audit for the newly qualified CPU/no-gradient post-575986 semantic localization package. Use graph source branch alice-eipm-v1-n0-p2a-semantic-localization-v1 at qualified HEAD 8180ed500fcf2181d3a70f5a01481d00ebbbb24a. Confirm the package descends exactly from frozen-authority implementation 0a8ac74aa6fa73259c03dc4d8754a42a6fde2307, binds the preserved Magnolia job575986 P2A failure metrics exactly, uses the ratified semantic checkpoint SHA 6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43, and is diagnostic-only: CPU, zero gradient, no optimizer/model training/TEST/threshold drift/rerun/P2/semantic-backbone retraining/private identity. Verify the audit genuinely distinguishes frozen representation deficiency versus prompt/readout/task-geometry mismatch versus fusion/calibration loss by comparing current P2A meta-prompt heads, teacher-native prompt/candidate geometry, current semantic projection, current and teacher-native principle alignment, mixed token evidence, and every hidden-state token layer. Check that its reconstruction requirement forces the current four-surface metrics to reproduce job575986 within 1e-6 before interpretation. Check the new continuity records now exist at alice-context@390508407880ffaef55e74326763af76f8bca541 and fable-builder-model@a6b8660578709beb628d63cff057f4056869c1cf. Identify any concrete source defect that should block the one owner Magnolia CPU launch. Do not authorize architecture changes or training. Graphify is routing/navigation only; consequential conclusions must point to original source paths.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -18,51 +18,50 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-n0-frozen-semantic-authority-v3 @ 0a8ac74aa6fa73259c03dc4d8754a42a6fde2307 — ci(n0): prove repaired graph parent reaches native final
+- alice-eipm-v1-n0-p2a-semantic-localization-v1 @ 8180ed500fcf2181d3a70f5a01481d00ebbbb24a — ci(n0): qualify P2A semantic localization
 - alice-eipm-v1-qsre-production-p2-ordered-evidence-v3 @ 342bdbbe8c5dfbe74ff3ab8210a30b1a456aa482 — state(n0): ratify P2 v3 static pass and authorize CPU qualification
 - alice-eipm-v1-qsre-production-p2-failure-localization @ c9b1d35823cb89245625bbc6afb05b0ef5fb69fb — fix(n0): emit strict JSON from P2 localization
 
 ## Source pointers
 
-- [192] alice-context:docs/chat-context/2026-09-21/sol/N0_JOB575986_P2A_FROZEN_AUTHORITY_VALID_FAIL.md — N0 job 575986 — P2A frozen semantic authority valid FAIL
-  - status:  valid model/capability failure at P2A; Production P2 remained closed; no rerun/tuning authorized
-- [170] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md — Production QSRE P2 job 575956 failure localization v1
-  - status:  zero-gradient diagnosis authority; no rerun or GPU authorization
-- [170] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md — Production QSRE P2 job 575956 failure localization v1
-  - status:  zero-gradient diagnosis authority; no rerun or GPU authorization
-- [147] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260921_N0_JOB575986_P2A_VALID_FAIL.jsonl — FBM_TRACE_20260921_N0_JOB575986_P2A_VALID_FAIL.jsonl
-- [138] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [138] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [138] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [134] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-qsre-t2-v02-failure-localization-v03-decision.md — N0 QSRE T2 v0.2 failure localization and T2 v0.3 architecture decision
-- [134] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-qsre-t2-v02-failure-localization-v03-decision.md — N0 QSRE T2 v0.2 failure localization and T2 v0.3 architecture decision
-- [134] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-qsre-t2-v02-failure-localization-v03-decision.md — N0 QSRE T2 v0.2 failure localization and T2 v0.3 architecture decision
-- [127] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-qsre-t1-pretraining-validity-correction-v0.1.md — QSRE T1 Pretraining Validity Correction v0.1
-- [127] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-qsre-t1-pretraining-validity-correction-v0.1.md — QSRE T1 Pretraining Validity Correction v0.1
+- [206] alice-eipm-v1-n0-p2a-semantic-localization-v1:docs/research/eipm-n0-job575986-p2a-semantic-localization-v1.md — N0 job 575986 — P2A semantic localization v1
+  - status:  zero-gradient diagnostic package; no architecture change, optimizer, P2, TEST, or semantic-backbone retraining authorized
+- [170] alice-eipm-v1-n0-p2a-semantic-localization-v1:.github/workflows/n0-query-semantics-architecture-audit-contract-check.yml — n0-query-semantics-architecture-audit-contract-check.yml
+- [170] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-query-semantics-architecture-audit-contract-check.yml — n0-query-semantics-architecture-audit-contract-check.yml
+- [170] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-query-semantics-architecture-audit-contract-check.yml — n0-query-semantics-architecture-audit-contract-check.yml
+- [168] alice-eipm-v1-n0-p2a-semantic-localization-v1:.github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml — n0-query-semantics-layerwise-audit-contract-check.yml
+- [168] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml — n0-query-semantics-layerwise-audit-contract-check.yml
+- [168] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml — n0-query-semantics-layerwise-audit-contract-check.yml
+- [162] alice-eipm-v1-n0-p2a-semantic-localization-v1:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [162] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [162] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [161] alice-context:docs/chat-context/2026-09-21/sol/N0_JOB575962_SEMANTIC_V2_READY.md — N0 job 575962 semantic-v2 closure — qualified for one owner launch
+  - status:  valid P2S model failure preserved; semantic-v2 repair implemented; exact-head static/CPU qualification passed; exact-source Graphify verification passed; Fable trace updated; one owner Magnolia launch may proceed
+- [160] alice-eipm-v1-n0-p2a-semantic-localization-v1:docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md — N0 Query-Semantics Layerwise Audit v0.1
 
 ## Graphify navigation hints
 
-- run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh -> scripts/eipm/n0/run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh:L1
-- qualify_n0_v02_qsre_frozen_semantic_authority_v3.py -> scripts/eipm/n0/qualify_n0_v02_qsre_frozen_semantic_authority_v3.py:L1
-- run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh script -> scripts/eipm/n0/run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh:L1
+- audit_n0_v02_qsre_p2a_semantic_localization_v1.py -> scripts/eipm/n0/audit_n0_v02_qsre_p2a_semantic_localization_v1.py:L1
+- run_n0_v02_qsre_p2a_semantic_localization_v1.sh -> scripts/eipm/n0/run_n0_v02_qsre_p2a_semantic_localization_v1.sh:L1
+- run_n0_v02_qsre_p2a_semantic_localization_v1.sh script -> scripts/eipm/n0/run_n0_v02_qsre_p2a_semantic_localization_v1.sh:L1
+- QSRET1Executor -> src/alice_personality/n0/qsre_t1_executor.py:L106
+- canonical_sha256() -> src/cognitive_kernel/canonical.py:L39
 - AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
-- run_final_frozen_challenge_after_graph_arbitration_v0_1.py -> scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py:L1
-- semantic_retrieval.py -> src/alice_vault/semantic_retrieval.py:L1
+- principle_alignment_scores() -> scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py:L93
+- test_memory_identity_host_learning_architecture.py -> tests/governance/test_memory_identity_host_learning_architecture.py:L1
+- audit() -> scripts/audit_capability_barriers.py:L521
 - authority() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L87
-- _authorized() -> tests/phase2/test_memory_service.py:L66
-- auxiliary_relation_schema_text() -> scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py:L36
+- authorize_boolean_map() -> src/alice_capability_profiles.py:L88
 - .backbone() -> src/alice_personality/n0/v02_model.py:L48
-- base_parts() -> scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py:L91
+- test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
+- test_report_binds_observation_digest() -> tests/phase4/test_information_final_evaluation.py:L158
+- blocked_getaddrinfo() -> tests/phase4/test_information_live_http.py:L194
 - branch_forward() -> scripts/eipm/n0/train_n0_v02_structured_state_pilot.py:L287
-- DeterministicInformationGroundingBuilder -> src/alice_information/grounding.py:L667
-- CalibrationError -> scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py:L44
-- CapabilityRuntime -> src/alice_evolution/capability_runtime.py:L77
-- causal_specialist_probabilities() -> scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py:L83
 
 ## External/private routing
 
 - Recommended: True
-- Reason: host-specific operational history may contain newer failure lessons than public receipts
+- Reason: question references a private/external source class
 
 ## Trust contract
 
