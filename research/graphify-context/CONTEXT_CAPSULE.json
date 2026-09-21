@@ -1,15 +1,15 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-final-full-scale-frozen-authority-exact-head-20260921-016",
-  "question": "Final pre-launch exact-source audit of alice-eipm-v1-n0-frozen-semantic-authority-v3 at exact qualified HEAD 65888330f9771884639faf50e40392d60605abf0. Trace the complete full-scale N0 closure package from preserved job575966 P2S-v2 failure through P2A zero-gradient FOUR-surface frozen semantic authority (joint prompt-candidate preference, semantic projection, trained semantic-to-rationale principle alignment/rationale projection, parameter-free token evidence), preserved Production/final runtime schema-cache lineage, core-only Production TRAIN authority candidates and subset-before-normalization, ordered continuous Production P2, Binder v2 P3, P4, and original frozen native final validation. Verify no bypass around P2A; no trainable relation/factor semantic identity; no missing principle-alignment component in caches/operator; no open-schema/final-only leakage into TRAIN or its normalization; no authority/factor/schema lineage drop through P2/P3/P4/final; no early exact relation sparsity; no hidden relation/factor/hop parameter ceiling; no reduced/pilot substitution for the full N0 semantic/structured/evidence/fusion/latent fabric; no final-validation rebuild or threshold mutation; and no automatic rerun/search. Also compare the maximal older ordered-evidence-v3 and P2-failure-localization frontiers and identify any unique causal mechanism or failure lesson not preserved by the final package. Report any concrete source defect that should block the owner Magnolia launch.",
-  "generated_at_utc": "2026-09-21T07:32:45.677483+00:00",
+  "request_id": "n0-final-full-scale-frozen-authority-exact-head-20260921-017",
+  "question": "Final exact-source launch audit of alice-eipm-v1-n0-frozen-semantic-authority-v3 at qualified HEAD 0a8ac74aa6fa73259c03dc4d8754a42a6fde2307. Trace the complete full-scale N0 closure package. Verify preserved job575966 failure -> P2A zero-gradient FOUR-surface frozen semantic authority (joint prompt-candidate preference, semantic projection, trained semantic-to-rationale principle alignment/rationale projection, parameter-free token evidence) -> runtime-subset normalization with core-six-only Production TRAIN -> ordered recurrent continuous Production P2 with explicit remaining-evidence coverage and P1 relation-state interface/continuous alignment preserved -> Binder v2 as first exact sparse structural support -> P3/P4 -> original frozen native final objective. Verify full parent stack lineage: semantic checkpoint, structured state, evidence adapter, PRESELECTED repaired endpoint graph relation-endpoint-repair-v0.2 step-200 SHA 3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f, frozen fusion, frozen latent pool. Confirm the older canonical relation-repair-v0.1 graph is no longer the full-scale parent, but do not rewrite the historical fact that the repaired graph was not previously production-promoted. Confirm prior full-stack arbitration established compatibility/no frozen-metric degradation, and that selecting it here does not rebuild the final corpus/schema/thresholds. Verify all major parent hashes are checked before the new evidence root is created, so preflight/setup defects cannot poison the immutable run root. Also verify no bypass around P2A; no trainable relation/factor semantic identity; no missing principle-alignment component; no open-schema/final-only leakage or negative participation in TRAIN normalization; no authority/factor/schema lineage drop through P2/P3/P4/final; no early exact relation sparsity; no hidden relation/factor/hop parameter ceiling; no pilot/reduced-capability substitution; no final-validation rebuild/threshold drift; and no automatic rerun/LR-step-width-batch search. Compare maximal older ordered-evidence-v3 and P2-failure-localization frontiers for any unique causal mechanism/lesson omitted from the final package. Report any concrete source defect that should block one owner Magnolia launch.",
+  "generated_at_utc": "2026-09-21T15:16:21.936784+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "catalog_source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "graphify_used": true,
     "graph_source_branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-    "graph_source_commit": "65888330f9771884639faf50e40392d60605abf0",
+    "graph_source_commit": "0a8ac74aa6fa73259c03dc4d8754a42a6fde2307",
     "graph_extraction_tree": "exact-source-worktree",
     "continuity_branch_head": {
       "branch": "alice-context",
@@ -21,9 +21,9 @@
     "maximal_unmerged_experiment_heads": [
       {
         "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-        "head": "65888330f9771884639faf50e40392d60605abf0",
-        "head_committed_at": "2026-09-21T02:29:33-05:00",
-        "head_message": "fix(n0): pass preserved schema caches through full-scale runner"
+        "head": "0a8ac74aa6fa73259c03dc4d8754a42a6fde2307",
+        "head_committed_at": "2026-09-21T10:12:57-05:00",
+        "head_message": "ci(n0): prove repaired graph parent reaches native final"
       },
       {
         "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
@@ -44,7 +44,7 @@
     "graphify_used": true,
     "reason": "request forced Graphify",
     "graph_source_branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-    "graph_source_commit": "65888330f9771884639faf50e40392d60605abf0",
+    "graph_source_commit": "0a8ac74aa6fa73259c03dc4d8754a42a6fde2307",
     "graph_source_reason": "request explicitly selected graph source branch",
     "graph_rebuild_required": true,
     "private_external_route_recommended": true
@@ -132,10 +132,10 @@
       "maximal_heads": [
         {
           "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-          "head": "65888330f9771884639faf50e40392d60605abf0",
-          "head_committed_at": "2026-09-21T02:29:33-05:00",
-          "head_message": "fix(n0): pass preserved schema caches through full-scale runner",
-          "ahead": 615,
+          "head": "0a8ac74aa6fa73259c03dc4d8754a42a6fde2307",
+          "head_committed_at": "2026-09-21T10:12:57-05:00",
+          "head_message": "ci(n0): prove repaired graph parent reaches native final",
+          "ahead": 624,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
           "changed_file_count_vs_source_merge_base": 402,
@@ -773,10 +773,10 @@
       "all_ahead_candidates": [
         {
           "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-          "head": "65888330f9771884639faf50e40392d60605abf0",
-          "head_committed_at": "2026-09-21T02:29:33-05:00",
-          "head_message": "fix(n0): pass preserved schema caches through full-scale runner",
-          "ahead": 615,
+          "head": "0a8ac74aa6fa73259c03dc4d8754a42a6fde2307",
+          "head_committed_at": "2026-09-21T10:12:57-05:00",
+          "head_message": "ci(n0): prove repaired graph parent reaches native final",
+          "ahead": 624,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
           "changed_file_count_vs_source_merge_base": 402,
@@ -4216,7 +4216,7 @@
     },
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": true,
-      "newest_experiment_frontier_time": "2026-09-21T02:29:33-05:00",
+      "newest_experiment_frontier_time": "2026-09-21T10:12:57-05:00",
       "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
       "context_branch_head_time": "2026-09-21T01:07:47-05:00"
     },
@@ -4225,36 +4225,11 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 188,
-      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md",
-      "blob_sha": "9f07bc2ed47716788c0af7545e3c3cebda60b950",
-      "category": "design_document",
-      "title": "N0 job 575966 — frozen semantic authority v3",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "supersession",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 52
-    },
-    {
-      "score": 180,
+      "score": 267,
       "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
       "branch_scope": "branch_specific",
       "path": "docs/research/eipm-n0-final-full-scale-capability-package-v1.md",
-      "blob_sha": "69325ad1a84ce5e122779924cc5761c0800ab270",
+      "blob_sha": "fb5e10c4f86c439d974f56ac4a52ba985cd0ef32",
       "category": "design_document",
       "title": "N0 final full-scale capability package v1",
       "declared": {
@@ -4269,15 +4244,46 @@
       "supersession_hints": [],
       "catalogs": [
         "failure",
-        "document",
         "frontier",
+        "document",
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 50
+      "lexical_body_hits": 85,
+      "currentness_adjustment": 25
     },
     {
-      "score": 162,
+      "score": 263,
+      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md",
+      "blob_sha": "9f07bc2ed47716788c0af7545e3c3cebda60b950",
+      "category": "design_document",
+      "title": "N0 job 575966 — frozen semantic authority v3",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 56,
+          "text": "The failure is no longer explained by:"
+        },
+        {
+          "line": 154,
+          "text": "The trainable Production operator no longer owns semantic relation identity."
+        }
+      ],
+      "catalogs": [
+        "supersession",
+        "failure",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 66,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 254,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
@@ -4302,160 +4308,10 @@
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 20
+      "lexical_body_hits": 33
     },
     {
-      "score": 159,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-21/sol/N0_FINAL_PRODUCTION_V3_QUALIFIED.md",
-      "blob_sha": "5255f7d234ea5900495fb06f4b80f0a3e12e6532",
-      "category": "working_context",
-      "title": "N0 final Production v3 qualified for one owner launch",
-      "declared": {},
-      "matched_terms": [
-        "failure",
-        "hotfix",
-        "magnolia",
-        "recovery",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 41
-    },
-    {
-      "score": 145,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-21/sol/N0_JOB575958_CLOSURE_PASS_READY.md",
-      "blob_sha": "c0474585e0255d3f8ca55b1b25cf0f38934f6ccb",
-      "category": "working_context",
-      "title": "N0 job 575958 closure-pass — exact-head verified and ready for one Magnolia launch",
-      "declared": {
-        "status": " closure package implemented, exact-head static/CPU qualification passed, Graphify exact-source topology verified, Fable failure/success seeds recorded, one owner Magnolia launch may proceed"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 48
-    },
-    {
-      "score": 144,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-21/sol/N0_JOB575962_SEMANTIC_V2_READY.md",
-      "blob_sha": "383994873ca6b0604046510dc365a441e98dc4ad",
-      "category": "working_context",
-      "title": "N0 job 575962 semantic-v2 closure — qualified for one owner launch",
-      "declared": {
-        "status": " valid P2S model failure preserved; semantic-v2 repair implemented; exact-head static/CPU qualification passed; exact-source Graphify verification passed; Fable trace updated; one owner Magnolia launch may proceed"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 52
-    },
-    {
-      "score": 136,
-      "branch": "fable-builder-model",
-      "branch_scope": "branch_specific",
-      "path": "docs/fable-builder/traces/2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl",
-      "blob_sha": "dd9b39a6333344be9a3690220608496213fdbc47",
-      "category": "design_document",
-      "title": "2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 6
-    },
-    {
-      "score": 135,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md",
-      "blob_sha": "9635954cb93dc3bf3e9c63de012dcca5d718ea9f",
-      "category": "working_context",
-      "title": "N0 Relation-Semantic Grounding Repair Handoff",
-      "declared": {
-        "status": " missing-evidence failure localized to relation-semantic endpoint grounding; one bounded repair is CI-ready; no frozen-challenge rerun, threshold change, promotion, scaling, or N0 completion authorized"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
-        "repair",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 28
-    },
-    {
-      "score": 132,
-      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-      "branch_scope": "branch_specific",
-      "path": ".github/workflows/n0-qsre-frozen-semantic-authority-v3-contract.yml",
-      "blob_sha": "a51c5b5bc19df9eaf5a835dca830c7e0f67cc53e",
-      "category": "repository_file",
-      "title": "n0-qsre-frozen-semantic-authority-v3-contract.yml",
-      "declared": {},
-      "matched_terms": [
-        "failure",
-        "magnolia"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 26
-    },
-    {
-      "score": 130,
+      "score": 206,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
@@ -4480,22 +4336,22 @@
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 21
+      "lexical_body_hits": 43
     },
     {
-      "score": 129,
-      "branch": "alice-context",
+      "score": 199,
+      "branch": "fable-builder-model",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md",
-      "blob_sha": "a8be2d6d77884b715635b5a97d3b3e7abbb93e67",
-      "category": "working_context",
-      "title": "MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready",
+      "path": "docs/fable-builder/traces/2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl",
+      "blob_sha": "dd9b39a6333344be9a3690220608496213fdbc47",
+      "category": "design_document",
+      "title": "2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl",
       "declared": {},
       "matched_terms": [
         "failed",
         "failure",
-        "kaggle",
-        "magnolia"
+        "hotfix",
+        "repair"
       ],
       "supersession_hints": [],
       "catalogs": [
@@ -4503,25 +4359,146 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 15
+      "lexical_body_hits": 7
     },
     {
-      "score": 129,
+      "score": 191,
+      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-job-575962-semantic-matcher-v2.md",
+      "blob_sha": "74d01ced2d7610d5454610686989699fc9c401a6",
+      "category": "design_document",
+      "title": "N0 job 575962 — semantic matcher v2 causal repair",
+      "declared": {},
+      "matched_terms": [
+        "failed",
+        "failure",
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 52,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 189,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md",
-      "blob_sha": "c8753de75f50b757ebc209a7625f12be3c7b7f5b",
+      "path": "docs/chat-context/2026-09-21/sol/N0_JOB575958_CLOSURE_PASS_READY.md",
+      "blob_sha": "c0474585e0255d3f8ca55b1b25cf0f38934f6ccb",
       "category": "working_context",
-      "title": "N0 Relation-Semantic Role Residual Repair Handoff",
+      "title": "N0 job 575958 closure-pass — exact-head verified and ready for one Magnolia launch",
       "declared": {
-        "status": " relation-semantic grounding v0.1 failed validly; failure localized to shared read-path entanglement; isolated zero-init semantic-role residual is CI-ready for one P100 run"
+        "status": " closure package implemented, exact-head static/CPU qualification passed, Graphify exact-source topology verified, Fable failure/success seeds recorded, one owner Magnolia launch may proceed"
       },
       "matched_terms": [
         "failed",
         "failure",
         "hotfix",
+        "magnolia"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 62
+    },
+    {
+      "score": 189,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-21/sol/N0_JOB575962_SEMANTIC_V2_READY.md",
+      "blob_sha": "383994873ca6b0604046510dc365a441e98dc4ad",
+      "category": "working_context",
+      "title": "N0 job 575962 semantic-v2 closure — qualified for one owner launch",
+      "declared": {
+        "status": " valid P2S model failure preserved; semantic-v2 repair implemented; exact-head static/CPU qualification passed; exact-source Graphify verification passed; Fable trace updated; one owner Magnolia launch may proceed"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
         "magnolia",
-        "repair",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 69
+    },
+    {
+      "score": 186,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-21/sol/N0_FINAL_PRODUCTION_V3_QUALIFIED.md",
+      "blob_sha": "5255f7d234ea5900495fb06f4b80f0a3e12e6532",
+      "category": "working_context",
+      "title": "N0 final Production v3 qualified for one owner launch",
+      "declared": {},
+      "matched_terms": [
+        "failure",
+        "hotfix",
+        "magnolia",
+        "recovery",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 47
+    },
+    {
+      "score": 181,
+      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-qsre-frozen-semantic-authority-v3-contract.yml",
+      "blob_sha": "688076e42aa92cb7aaf9fcc0ff3cf4058d54d8dd",
+      "category": "repository_file",
+      "title": "n0-qsre-frozen-semantic-authority-v3-contract.yml",
+      "declared": {},
+      "matched_terms": [
+        "failure",
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 35,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 178,
+      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
+      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
+      "category": "repository_file",
+      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
+      "declared": {},
+      "matched_terms": [
+        "hotfix",
+        "magnolia",
+        "recovery",
         "udocker"
       ],
       "supersession_hints": [],
@@ -4531,7 +4508,33 @@
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 20
+      "lexical_body_hits": 15,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 178,
+      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
+      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
+      "category": "repository_file",
+      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
+      "declared": {},
+      "matched_terms": [
+        "hotfix",
+        "magnolia",
+        "recovery",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 15,
+      "currentness_adjustment": 25
     }
   ],
   "graphify_navigation_hints": [
@@ -4539,145 +4542,145 @@
       "label": "run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh",
       "source": "scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh",
       "location": "L1",
-      "community": "355"
+      "community": "349"
     },
     {
       "label": "run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh script",
       "source": "scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh",
       "location": "L1",
-      "community": "355"
+      "community": "349"
     },
     {
-      "label": "Reuse the trained semantic-to-rationale alignment surface. The semantic side…",
-      "source": "scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py",
-      "location": "L103",
-      "community": "117"
+      "label": "train_n0_v02_adaptive_multi_view_latent_pool_v0_2_1_full_scale.py",
+      "source": "scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_1_full_scale.py",
+      "location": "L1",
+      "community": "3"
+    },
+    {
+      "label": "train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py",
+      "source": "scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py",
+      "location": "L1",
+      "community": "48"
     },
     {
       "label": "AliceN0V02Model",
       "source": "src/alice_personality/n0/v02_model.py",
       "location": "L13",
-      "community": "147"
+      "community": "69"
+    },
+    {
+      "label": "adapter()",
+      "source": "tests/phase4/test_information_research_mode.py",
+      "location": "L312",
+      "community": "35"
     },
     {
       "label": "principle_alignment_scores()",
       "source": "scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py",
       "location": "L93",
-      "community": "117"
+      "community": "115"
     },
     {
       "label": "ConstitutionalSourceSnapshot",
       "source": "src/alice_conversation/constitutional_prompt.py",
       "location": "L50",
-      "community": "136"
+      "community": "133"
+    },
+    {
+      "label": "ArbitrationV02Tests",
+      "source": "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
+      "location": "L12",
+      "community": "188"
     },
     {
       "label": "Small backend boundary around one operating-system DNS call.",
       "source": "src/alice_information/live_http.py",
       "location": "L98",
-      "community": "2"
+      "community": "4"
     },
     {
       "label": "audit()",
       "source": "scripts/audit_capability_barriers.py",
       "location": "L521",
-      "community": "131"
+      "community": "130"
     },
     {
       "label": "authority()",
       "source": "tests/eipm/test_n0_qsre_production_operator_v3.py",
       "location": "L87",
-      "community": "187"
+      "community": "189"
     },
     {
       "label": "test_automatic_retry_is_rejected()",
       "source": "tests/phase3/test_conversation_orchestration_policy.py",
       "location": "L85",
-      "community": "115"
+      "community": "105"
+    },
+    {
+      "label": "batch_indices()",
+      "source": "scripts/eipm/n0/qsre_production_training_utils.py",
+      "location": "L150",
+      "community": "23"
     },
     {
       "label": "test_candidates_never_enter_derived_indexes_before_promotion()",
       "source": "tests/phase2/test_memory_candidate_security_gates.py",
       "location": "L312",
-      "community": "105"
+      "community": "107"
     },
     {
       "label": "QSREProductionBinderV2",
       "source": "src/alice_personality/n0/qsre_production_binder_v2.py",
       "location": "L16",
-      "community": "167"
+      "community": "163"
     },
     {
       "label": "blocked_getaddrinfo()",
       "source": "tests/phase4/test_information_live_http.py",
       "location": "L194",
-      "community": "2"
+      "community": "4"
     },
     {
       "label": "test_fetch_provider_cannot_bypass_response_byte_budget()",
       "source": "tests/phase4/test_information_research_orchestration.py",
       "location": "L919",
-      "community": "9"
-    },
-    {
-      "label": "CachedStructuredDataset",
-      "source": "scripts/eipm/n0/train_n0_v02_structured_state_pilot.py",
-      "location": "L259",
-      "community": "150"
-    },
-    {
-      "label": "Normalize only across the candidates that are active in this call. Caches store…",
-      "source": "src/alice_personality/n0/qsre_semantic_authority.py",
-      "location": "L16",
-      "community": "117"
+      "community": "10"
     },
     {
       "label": "candidate()",
       "source": "tests/phase5/test_memory_m2_adjudication_contracts.py",
       "location": "L154",
-      "community": "0"
+      "community": "6"
     },
     {
-      "label": "test_memory_candidates.py",
-      "source": "tests/phase2/test_memory_candidates.py",
-      "location": "L1",
-      "community": "6"
+      "label": "test_duplicate_resolution_cannot_be_rebound_to_second_target()",
+      "source": "tests/phase2/test_memory_candidate_security_gates.py",
+      "location": "L499",
+      "community": "107"
+    },
+    {
+      "label": "_canonical()",
+      "source": "src/alice_vault/grounded_context.py",
+      "location": "L24",
+      "community": "140"
+    },
+    {
+      "label": "CapabilityRuntime",
+      "source": "src/alice_evolution/capability_runtime.py",
+      "location": "L77",
+      "community": "93"
     },
     {
       "label": "causal_specialist_probabilities()",
       "source": "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py",
       "location": "L83",
-      "community": "19"
+      "community": "5"
     },
     {
       "label": "test_memory_capability_ceiling.py",
       "source": "tests/governance/test_memory_capability_ceiling.py",
       "location": "L1",
       "community": "209"
-    },
-    {
-      "label": "train_n0_v02_qsre_closure_matcher_v2.py",
-      "source": "scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py",
-      "location": "L1",
-      "community": "73"
-    },
-    {
-      "label": "compare_metric()",
-      "source": "scripts/eipm/n0/downstream_causal_arbitration_v0_2.py",
-      "location": "L220",
-      "community": "133"
-    },
-    {
-      "label": "CompletedProcess",
-      "source": "",
-      "location": "",
-      "community": "60"
-    },
-    {
-      "label": "component_accuracy()",
-      "source": "scripts/eipm/n0/qualify_n0_v02_qsre_frozen_semantic_authority_v3.py",
-      "location": "L50",
-      "community": "73"
     }
   ],
   "private_external_route_recommended": true,

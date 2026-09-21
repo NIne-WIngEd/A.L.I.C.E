@@ -1,9 +1,9 @@
 {
   "source_work_branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-  "source_work_commit": "65888330f9771884639faf50e40392d60605abf0",
+  "source_work_commit": "0a8ac74aa6fa73259c03dc4d8754a42a6fde2307",
   "research_branch": "research/graphify-context-substrate",
-  "research_commit": "ff2d53922d4a94b61a21d292fdf4176caf2ac41d",
-  "workflow_run_id": "35573360868",
+  "research_commit": "39319222f98a289b05ad27ed95cec6b14b7af3bc",
+  "workflow_run_id": "35617626581",
   "graph_mode": "code-only",
   "extraction_tree": "exact-source-worktree",
   "graphify_version": "0.9.63",

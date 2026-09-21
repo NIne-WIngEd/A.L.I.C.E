@@ -7,10 +7,10 @@
   "maximal_heads": [
     {
       "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-      "head": "65888330f9771884639faf50e40392d60605abf0",
-      "head_committed_at": "2026-09-21T02:29:33-05:00",
-      "head_message": "fix(n0): pass preserved schema caches through full-scale runner",
-      "ahead": 615,
+      "head": "0a8ac74aa6fa73259c03dc4d8754a42a6fde2307",
+      "head_committed_at": "2026-09-21T10:12:57-05:00",
+      "head_message": "ci(n0): prove repaired graph parent reaches native final",
+      "ahead": 624,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 402,
@@ -648,10 +648,10 @@
   "all_ahead_candidates": [
     {
       "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-      "head": "65888330f9771884639faf50e40392d60605abf0",
-      "head_committed_at": "2026-09-21T02:29:33-05:00",
-      "head_message": "fix(n0): pass preserved schema caches through full-scale runner",
-      "ahead": 615,
+      "head": "0a8ac74aa6fa73259c03dc4d8754a42a6fde2307",
+      "head_committed_at": "2026-09-21T10:12:57-05:00",
+      "head_message": "ci(n0): prove repaired graph parent reaches native final",
+      "ahead": 624,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 402,
