@@ -866,7 +866,7 @@ def main() -> None:
                 batch_size=batch_size,
                 device=device,
             )
-                        passed = eligible(metrics, plan["eligibility"])
+            passed = eligible(metrics, plan["eligibility"])
             record = {
                 "step": step,
                 "train_loss": float(loss.detach().item()),
