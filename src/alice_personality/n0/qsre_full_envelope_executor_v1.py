@@ -184,18 +184,6 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             batch, edges, self.config.model_dim, device=node.device, dtype=node.dtype
         )
 
-        structural = torch.cat(
-            [
-                operator.role_distribution[:, :4],
-                operator.traversal_distribution[:, :3],
-                operator.direction_distribution[:, :3],
-                operator.modifier_weight[:, :4],
-                operator.applicability[:, None],
-                operator.uncertainty[:, None],
-            ],
-            dim=-1,
-        )
-
         for step in range(operator.relation_distribution.size(1)):
             relation_distribution = operator.relation_distribution[:, step]
             step_mass = operator.relation_step_mass[:, step]
@@ -205,9 +193,11 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             target_frontier = frontier.gather(1, target_index)
             source_origin = origin_focus.gather(1, source_index)
             target_origin = origin_focus.gather(1, target_index)
-            forward = operator.direction_distribution[:, DIRECTION_FORWARD][:, None]
-            reverse = operator.direction_distribution[:, DIRECTION_REVERSE][:, None]
-            bidir = operator.direction_distribution[:, DIRECTION_BIDIRECTIONAL][:, None]
+            step_direction = operator.step_direction_distribution[:, step]
+            step_modifier = operator.step_modifier_weight[:, step]
+            forward = step_direction[:, DIRECTION_FORWARD][:, None]
+            reverse = step_direction[:, DIRECTION_REVERSE][:, None]
+            bidir = step_direction[:, DIRECTION_BIDIRECTIONAL][:, None]
             edge_symmetric = edge_symmetric_mask.to(forward.dtype)
             directed = 1.0 - edge_symmetric
             effective_forward = forward * directed
@@ -218,22 +208,22 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
 
             reliability_multiplier = (
                 1.0
-                + operator.modifier_weight[:, MOD_RELIABILITY][:, None]
+                + step_modifier[:, MOD_RELIABILITY][:, None]
                 * (edge_reliability - 0.5)
             ).clamp_min(0.0)
             recency_multiplier = (
                 1.0
-                + operator.modifier_weight[:, MOD_RECENCY][:, None]
+                + step_modifier[:, MOD_RECENCY][:, None]
                 * (edge_recency - 0.5)
             ).clamp_min(0.0)
             temporal_multiplier = (
                 1.0
-                - operator.modifier_weight[:, MOD_TEMPORAL_CONSTRAINT][:, None]
+                - step_modifier[:, MOD_TEMPORAL_CONSTRAINT][:, None]
                 * (1.0 - edge_temporal_match)
             ).clamp_min(0.0)
             provenance_multiplier = (
                 1.0
-                - operator.modifier_weight[:, MOD_PROVENANCE_CONSTRAINT][:, None]
+                - step_modifier[:, MOD_PROVENANCE_CONSTRAINT][:, None]
                 * (1.0 - edge_provenance_match)
             ).clamp_min(0.0)
 
@@ -306,6 +296,17 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             )
             edge_scalar = torch.stack(
                 [edge_reliability, edge_recency, edge_temporal_match, edge_provenance_match],
+                dim=-1,
+            )
+            structural = torch.cat(
+                [
+                    operator.role_distribution[:, :4],
+                    operator.traversal_distribution[:, :3],
+                    step_direction[:, :3],
+                    step_modifier[:, :4],
+                    operator.applicability[:, None],
+                    operator.uncertainty[:, None],
+                ],
                 dim=-1,
             )
             structural_edge = structural[:, None, :].expand(batch, edges, -1)
@@ -522,6 +523,8 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "symmetric_relation_endpoint_order_invariant": True,
             "structural_factor_probabilities": True,
             "continuous_traversal_mixture": True,
+            "step_conditioned_direction": True,
+            "step_conditioned_modifiers": True,
             "local_path_aggregate_distinct": True,
             "hard_traversal_threshold": False,
             "execution_confidence_requires_structural_support": True,
