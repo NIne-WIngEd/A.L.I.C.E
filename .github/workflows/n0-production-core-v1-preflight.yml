@@ -131,13 +131,25 @@ jobs:
 
           runner_lines=runner.splitlines()
           for script in scripts:
-              candidates=[line for line in runner_lines if script in line and line.lstrip().startswith("python ")]
-              assert len(candidates)==1, (script,len(candidates))
-              line=candidates[0]
+              candidates=[
+                  line for line in runner_lines
+                  if script in line and line.lstrip().startswith("python ")
+              ]
+              assert candidates, (script,"missing runner invocation")
               expected=required_flags("scripts/eipm/n0/"+script)
-              present=set(re.findall(r'--[a-z0-9-]+',line))
-              missing=sorted(expected-present)
-              assert not missing, (script,missing,line)
+              for line in candidates:
+                  present=set(re.findall(r'--[a-z0-9-]+',line))
+                  missing=sorted(expected-present)
+                  assert not missing, (script,missing,line)
+
+          schema_invocations=[
+              line for line in runner_lines
+              if "prepare_n0_v02_qsre_production_schema_v1.py" in line
+              and line.lstrip().startswith("python ")
+          ]
+          assert len(schema_invocations)==2, len(schema_invocations)
+          assert any('--schema "$PROD_SCHEMA"' in line for line in schema_invocations)
+          assert any('--schema "$FINAL_SCHEMA"' in line for line in schema_invocations)
 
           freeze_pos=runner.index("freeze_n0_v02_final_self_validation_v1.py")
           p1_pos=runner.index("train_n0_v02_qsre_production_p1_v1.py")
