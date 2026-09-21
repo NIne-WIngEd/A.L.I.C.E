@@ -312,3 +312,57 @@ def test_unknown_and_stop_remain_distinct_events() -> None:
     assert float(stopped[0, 0, EVENT_UNKNOWN]) < 1.0e-6
     assert float(unknown[0, 0, EVENT_UNKNOWN]) > 0.999
     assert float(unknown[0, 0, EVENT_STOP]) < 1.0e-6
+
+
+def test_factor_cardinality_is_runtime_config_not_parameter_topology() -> None:
+    base = QSREProductionOperatorInducerV3(cfg())
+    expanded_cfg = QSREProductionConfig(
+        semantic_dim=24,
+        model_dim=24,
+        num_hidden_states=3,
+        num_attention_heads=4,
+        operator_refinement_layers=1,
+        field_state_dim=24,
+        field_metadata_dim=3,
+        role_count=6,
+        traversal_count=5,
+        direction_count=4,
+        modifier_count=7,
+        control_count=5,
+        dropout=0.0,
+    )
+    expanded = QSREProductionOperatorInducerV3(expanded_cfg)
+    assert sum(p.numel() for p in base.parameters()) == sum(
+        p.numel() for p in expanded.parameters()
+    )
+
+    g = torch.Generator().manual_seed(333)
+
+    def categorical(count: int) -> dict:
+        return {
+            "keys": [f"x{i}" for i in range(count)],
+            "token_states": torch.randn(count, 3, 4, 24, generator=g),
+            "token_mask": torch.ones(count, 4, dtype=torch.bool),
+        }
+
+    cache = {
+        "schema": "alice.eipm.n0.qsre-frozen-factor-schema-cache.v3",
+        "private_identity_data": False,
+        "gradient": False,
+        "optimizer": False,
+        "role": categorical(6),
+        "traversal": categorical(5),
+        "direction": categorical(4),
+        "control": categorical(5),
+        "modifiers": {
+            "keys": [f"m{i}" for i in range(7)],
+            "token_states": torch.randn(7, 2, 3, 4, 24, generator=g),
+            "token_mask": torch.ones(7, 2, 4, dtype=torch.bool),
+        },
+    }
+    expanded.configure_factor_schema_cache(cache)
+    report = expanded.parameter_report()
+    assert report["role_count_ceiling"] is None
+    assert report["traversal_count_ceiling"] is None
+    assert report["direction_count_ceiling"] is None
+    assert report["control_count_ceiling"] is None
