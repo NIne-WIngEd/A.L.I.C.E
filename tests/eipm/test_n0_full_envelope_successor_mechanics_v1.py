@@ -746,3 +746,37 @@ def test_executor_truncated_program_cannot_claim_relational_execution_confidence
         torch.zeros_like(truncated["relational_probability"]),
     )
     assert executor.parameter_report()["execution_confidence_requires_program_completion"] is True
+
+
+def test_binder_allows_minus_one_type_for_padded_fields_but_not_valid_edge_endpoints() -> None:
+    domain=torch.ones(1,1,2,dtype=torch.bool)
+    range_mask=torch.ones_like(domain)
+    relation_symmetric=torch.zeros(1,1,dtype=torch.bool)
+    field_types=torch.tensor([[0,1,-1]])
+    edge_relation=torch.zeros(1,1,dtype=torch.long)
+
+    compatible=FullEnvelopeQSREBinderV1._type_compatibility(
+        relation_domain_type_mask=domain,
+        relation_range_type_mask=range_mask,
+        relation_symmetric=relation_symmetric,
+        edge_relation_index=edge_relation,
+        edge_index=torch.tensor([[[0,1]]]),
+        field_type_index=field_types,
+        edge_valid_mask=torch.ones(1,1,dtype=torch.bool),
+    )
+    assert compatible.item() is True
+
+    try:
+        FullEnvelopeQSREBinderV1._type_compatibility(
+            relation_domain_type_mask=domain,
+            relation_range_type_mask=range_mask,
+            relation_symmetric=relation_symmetric,
+            edge_relation_index=edge_relation,
+            edge_index=torch.tensor([[[1,2]]]),
+            field_type_index=field_types,
+            edge_valid_mask=torch.ones(1,1,dtype=torch.bool),
+        )
+    except ValueError as exc:
+        assert "without a runtime type" in str(exc)
+    else:
+        raise AssertionError("valid edge to padded untyped field did not fail closed")
