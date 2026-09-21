@@ -371,3 +371,64 @@ def test_step_conditioned_factor_distributions_exist_for_every_reasoning_slot() 
         torch.ones(2,4),
         atol=1e-6,
     )
+
+
+def test_masked_runtime_relation_padding_does_not_change_operator_uncertainty() -> None:
+    torch.manual_seed(113)
+    model = SchemaConditionedSemanticOperator(config()).eval()
+    q, qm = hidden(batch=1)
+    base = schema(3, types=6)
+    torch.manual_seed(114)
+    extra_states = torch.randn(2, 3, 5, 24)
+    extended = DynamicRelationSchema(
+        token_states=torch.cat([base.token_states, extra_states], dim=0),
+        token_mask=torch.cat(
+            [base.token_mask, torch.ones(2, 5, dtype=torch.bool)],
+            dim=0,
+        ),
+        domain_type_mask=torch.cat(
+            [base.domain_type_mask, torch.ones(2, 6, dtype=torch.bool)],
+            dim=0,
+        ),
+        range_type_mask=torch.cat(
+            [base.range_type_mask, torch.ones(2, 6, dtype=torch.bool)],
+            dim=0,
+        ),
+        symmetric=torch.cat(
+            [base.symmetric, torch.zeros(2, dtype=torch.bool)],
+            dim=0,
+        ),
+    )
+    factors = {"role": factor(4, 115)}
+    with torch.no_grad():
+        a = model(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            relation_schema=base,
+            factor_schemas=factors,
+            max_steps=3,
+        )["operator"]
+        b = model(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            relation_schema=extended,
+            factor_schemas=factors,
+            max_steps=3,
+            relation_candidate_mask=torch.tensor(
+                [[True, True, True, False, False]],
+                dtype=torch.bool,
+            ),
+        )["operator"]
+    assert torch.allclose(
+        a.relation_distribution,
+        b.relation_distribution[..., :3],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.allclose(
+        a.uncertainty,
+        b.uncertainty,
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert model.parameter_report()["masked_candidate_uncertainty_normalization"] is True
