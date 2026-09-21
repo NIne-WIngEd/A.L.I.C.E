@@ -20,7 +20,9 @@ on:
       - "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_n0_frozen_semantic_authority_v3.sbatch"
       - "configs/eipm/n0/n0_v02_qsre_frozen_semantic_authority_plan_v3.json"
       - "configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json"
+      - "configs/eipm/n0/n0_v02_final_full_scale_capability_package_v1.json"
       - "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md"
+      - "docs/research/eipm-n0-final-full-scale-capability-package-v1.md"
       - "tests/eipm/test_n0_qsre_schema_matcher.py"
       - "tests/eipm/test_n0_qsre_production_operator_v3.py"
       - ".github/workflows/n0-qsre-frozen-semantic-authority-v3-contract.yml"
@@ -44,6 +46,7 @@ jobs:
           bash -n scripts/eipm/n0/magnolia_p100_n0_v02_qsre_n0_frozen_semantic_authority_v3.sbatch
           python -m json.tool configs/eipm/n0/n0_v02_qsre_frozen_semantic_authority_plan_v3.json >/dev/null
           python -m json.tool configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json >/dev/null
+          python -m json.tool configs/eipm/n0/n0_v02_final_full_scale_capability_package_v1.json >/dev/null
 
       - name: Run matcher operator binder mechanics
         run: |
@@ -101,6 +104,8 @@ jobs:
           assert '"optimizer": False' in qualify
           assert "def score_candidates" in model
           assert "def project_semantic_pooled" in model
+          assert "--production-schema-cache" in qualify
+          assert "Production relation-schema source hash drift" in qualify
           print("PASS_N0_FROZEN_AUTHORITY_EXISTING_SEMANTIC_SURFACES")
           PY
 
@@ -124,6 +129,8 @@ jobs:
           assert 'relation_schema["core_train_relation_keys"]' in cache
           assert "candidate_zscore" in combiner
           assert "relation_count" in combiner
+          assert "--schema-cache" in cache
+          assert "runtime relation key order drift" in cache
           print("PASS_N0_FROZEN_AUTHORITY_NO_TRAINABLE_MATCHER")
           PY
 
@@ -165,6 +172,38 @@ jobs:
           assert report["continuous_relation_hypotheses"] is True
           assert report["relation_sparsity_before_structural_binding"] is False
           print("PASS_N0_FROZEN_AUTHORITY_OPERATOR_BOUNDARY")
+          PY
+
+      - name: Prove final package is full-scale and ceiling-free by contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          package=json.load(open("configs/eipm/n0/n0_v02_final_full_scale_capability_package_v1.json"))
+          operator=Path("src/alice_personality/n0/qsre_production_operator_v3.py").read_text()
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh").read_text()
+
+          assert package["schema"]=="alice.eipm.n0.final-full-scale-capability-package.v1"
+          assert package["status"]=="PRECOMMITTED_FULL_SCALE_N0_CLOSURE_PACKAGE"
+          assert package["n0_complete"] is False
+          assert package["n1_authorized"] is False
+          assert package["closure_authority"]=="PASS_N0_FINAL_SELF_VALIDATION_OBJECTIVE"
+          scale=package["scale_policy"]
+          assert scale["pilot"] is False
+          assert scale["reduced_capability_target"] is False
+          assert scale["hard_parameter_ceiling"] is None
+          assert scale["runtime_relation_count_ceiling"] is None
+          assert scale["runtime_reasoning_step_ceiling"] is None
+          assert scale["runtime_type_vocabulary_ceiling"] is None
+          assert scale["current_training_steps_are_serving_ceiling"] is False
+          assert package["architecture"]["runtime_relation_identity_parameters"]==0
+          assert package["architecture"]["semantic_authority_gradient"] is False
+          assert package["architecture"]["exact_relation_sparsity_before_binder"] is False
+          assert package["architecture"]["binder_owns_exact_structural_sparsity"] is True
+          assert 'FULL_SCALE_PACKAGE="$ROOT/configs/eipm/n0/n0_v02_final_full_scale_capability_package_v1.json"' in runner
+          assert '"runtime_step_count_ceiling": None' in operator
+          print("PASS_N0_FINAL_FULL_SCALE_CAPABILITY_CONTRACT")
           PY
 
       - name: Prove downstream Production compute and gates are unchanged
@@ -209,10 +248,32 @@ jobs:
           assert "575966" in runner
           assert "qualify_n0_v02_qsre_frozen_semantic_authority_v3.py" in runner
           assert "prepare_n0_v02_qsre_frozen_authority_cache_v3.py" in runner
+          assert "--production-schema-cache" in runner
+          assert '--schema-cache "$PROD_SCHEMA_CACHE"' in runner
+          assert '--schema-cache "$FINAL_SCHEMA_CACHE"' in runner
+          assert "n0_v02_final_full_scale_capability_package_v1.json" in runner
           assert 'FROZEN="$SOURCE/final-frozen"' in runner
           assert "build_n0_v02_final_self_validation" not in runner
           assert "freeze_n0_v02_final_self_validation" not in runner
           assert "#SBATCH --gres=gpu:p100:1" in sbatch
           assert "run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh" in sbatch
           print("PASS_N0_FROZEN_AUTHORITY_SINGLE_RUN_LINEAGE")
+          PY
+
+      - name: Prove P3 P4 final semantic-authority lineage is fail-closed
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p3=Path("scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py").read_text()
+          p4=Path("scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py").read_text()
+          final=Path("scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py").read_text()
+
+          assert '"semantic_authority_cache_sha256":sha256(Path(args.authority_cache))' in p3
+          assert "P4 observed P3 semantic-authority lineage drift" in p4
+          assert '"p3_semantic_authority_cache_sha256"' in p4
+          assert "final semantic-authority schema-cache lineage drift" in final
+          assert "final/Production semantic-authority qualification lineage drift" in final
+          assert "Production semantic-authority schema-cache lineage drift" in final
+          print("PASS_N0_FROZEN_AUTHORITY_END_TO_END_LINEAGE")
           PY
