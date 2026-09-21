@@ -41,12 +41,15 @@ jobs:
           assert core["core"]["dynamic_relation_schema"]["learned_relation_class_embedding_table"] is False
           assert core["core"]["operator_inducer"]["shared_iterative_relation_step_cell"] is True
           assert core["core"]["operator_inducer"]["learned_hop_specific_slots"] is False
-          assert core["core"]["operator_inducer"]["sparse_plural_relation_hypotheses"] is True
+          assert core["core"]["operator_inducer"]["sparse_plural_relation_hypotheses"] is False
+          assert core["core"]["operator_inducer"]["continuous_plural_relation_hypotheses"] is True
+          assert core["core"]["operator_inducer"]["exact_relation_sparsity_before_binding"] is False
           assert core["core"]["operator_inducer"]["modifiers_composable"] is True
           assert core["core"]["executor"]["learned_relation_id_embedding_is_semantic_authority"] is False
           assert core["core"]["executor"]["consumes_dynamic_relation_semantic_state"] is True
           assert core["core"]["executor"]["consumes_continuous_operator_state"] is True
           assert core["core"]["binder"]["fixed_top_k"] is False
+          assert core["core"]["binder"]["exact_sparsity_is_first_hard_selection_boundary"] is True
 
           expected={f"W{i}" for i in range(1,16)}
           assert set(mapping["families"])==expected
