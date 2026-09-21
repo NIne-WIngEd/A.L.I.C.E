@@ -130,6 +130,7 @@ class SemanticOperatorState:
     event_distribution: Tensor
     stop_probability: Tensor
     unknown_probability: Tensor
+    truncation_probability: Tensor
     continuous_state: Tensor
     applicability: Tensor
     query_coverage: Tensor
@@ -157,6 +158,8 @@ class SemanticOperatorState:
             raise ValueError("stop_probability shape drift")
         if self.unknown_probability.shape != (batch, steps):
             raise ValueError("unknown_probability shape drift")
+        if self.truncation_probability.shape != (batch,):
+            raise ValueError("truncation_probability must be [B]")
         if self.continuous_state.shape != (batch, model_dim):
             raise ValueError("continuous_state shape drift")
         if self.applicability.shape != (batch,):
@@ -623,10 +626,12 @@ class SchemaConditionedSemanticOperator(nn.Module):
             relation_entropy
             * relation_step_mass
         ).sum(dim=1) / relation_step_mass.sum(dim=1).clamp_min(1.0e-6)
+        truncation_probability = survival.clamp(0.0, 1.0)
         uncertainty = 1.0 - (
             (1.0 - relation_u.clamp(0.0, 1.0))
             * (1.0 - factor_u.clamp(0.0, 1.0))
             * (1.0 - unknown_mass)
+            * (1.0 - truncation_probability)
         )
 
         applicability = torch.sigmoid(self.applicability_head(state)).squeeze(-1)
@@ -636,6 +641,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             event_distribution=event_distribution,
             stop_probability=stop_probability,
             unknown_probability=unknown_probability,
+            truncation_probability=truncation_probability,
             continuous_state=state,
             applicability=applicability,
             query_coverage=query_coverage,
@@ -683,6 +689,8 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "candidate_conditioned_multilayer_read": True,
             "content_conditioned_query_pooling": True,
             "continuous_relation_hypotheses": True,
+            "runtime_step_truncation_exposed": True,
+            "silent_program_truncation_forbidden": True,
             "exact_structural_sparsity": False,
             "semantic_backbone_gradient_can_flow": True,
             "factor_scorer_shared_across_schema_banks": True,
