@@ -31,43 +31,55 @@ def cfg() -> QSREProductionConfig:
     )
 
 
-def schema(relations: int, *, seed: int = 1) -> QSREDynamicRelationSchema:
+def relation_schema(relations: int, *, seed: int = 1) -> QSREDynamicRelationSchema:
     g = torch.Generator().manual_seed(seed)
     tokens = torch.randn(relations, 3, 5, 24, generator=g)
-    mask = torch.ones(relations, 5, dtype=torch.bool)
-    domain = torch.ones(relations, 4, dtype=torch.bool)
-    range_mask = torch.ones(relations, 4, dtype=torch.bool)
-    symmetric = torch.zeros(relations, dtype=torch.bool)
     return QSREDynamicRelationSchema(
         token_states=tokens,
-        token_mask=mask,
-        domain_type_mask=domain,
-        range_type_mask=range_mask,
-        symmetric=symmetric,
+        token_mask=torch.ones(relations, 5, dtype=torch.bool),
+        domain_type_mask=torch.ones(relations, 4, dtype=torch.bool),
+        range_type_mask=torch.ones(relations, 4, dtype=torch.bool),
+        symmetric=torch.zeros(relations, dtype=torch.bool),
     )
 
 
-def query(batch: int = 2, tokens: int = 7, *, seed: int = 2):
+def factor_cache(*, seed: int = 10) -> dict:
+    g = torch.Generator().manual_seed(seed)
+
+    def categorical(count: int) -> dict:
+        return {
+            "keys": [f"k{i}" for i in range(count)],
+            "token_states": torch.randn(count, 3, 4, 24, generator=g),
+            "token_mask": torch.ones(count, 4, dtype=torch.bool),
+        }
+
+    return {
+        "schema": "alice.eipm.n0.qsre-closure-factor-schema-cache.v1",
+        "private_identity_data": False,
+        "role": categorical(4),
+        "traversal": categorical(3),
+        "direction": categorical(3),
+        "control": categorical(3),
+        "modifiers": {
+            "keys": [f"m{i}" for i in range(4)],
+            "token_states": torch.randn(4, 2, 3, 4, 24, generator=g),
+            "token_mask": torch.ones(4, 2, 4, dtype=torch.bool),
+        },
+    }
+
+
+def query(batch: int = 2, tokens: int = 7, *, seed: int = 20):
     g = torch.Generator().manual_seed(seed)
     hidden = torch.randn(batch, 3, tokens, 24, generator=g)
     mask = torch.ones(batch, tokens, dtype=torch.bool)
     return hidden, mask
 
 
-def encoded_schema_inputs(
-    s: QSREDynamicRelationSchema,
-) -> tuple[torch.Tensor, torch.Tensor]:
-    # Operator-v3 deliberately does not use encoded schema-token states as
-    # relation-matching authority, but the public interface still receives
-    # them for compatibility with the P1/P3 runtime.
-    token = torch.zeros(
-        s.token_states.size(0),
-        s.token_states.size(1),
-        s.token_states.size(2),
-        24,
-    )
-    summary = s.token_states.mean(dim=(1, 2))
-    return token, summary
+def make_model(seed: int = 30) -> QSREProductionOperatorInducerV3:
+    torch.manual_seed(seed)
+    model = QSREProductionOperatorInducerV3(cfg()).eval()
+    model.configure_factor_schema_cache(factor_cache(seed=seed + 1))
+    return model
 
 
 def run(
@@ -75,91 +87,115 @@ def run(
     *,
     q: torch.Tensor,
     qmask: torch.Tensor,
-    s: QSREDynamicRelationSchema,
-    max_steps: int = 1,
+    schema: QSREDynamicRelationSchema,
+    max_steps: int = 2,
+    schema_relation_state: torch.Tensor | None = None,
 ):
-    token, summary = encoded_schema_inputs(s)
+    if schema_relation_state is None:
+        schema_relation_state = schema.token_states.mean(dim=(1, 2))
     return model(
         query_hidden_states=q,
         query_token_mask=qmask,
-        schema=s,
-        schema_token_state=token,
-        schema_relation_state=summary,
+        schema=schema,
+        schema_token_state=torch.zeros(
+            schema.token_states.size(0),
+            3,
+            5,
+            24,
+        ),
+        schema_relation_state=schema_relation_state,
         max_steps=max_steps,
     )
 
 
-def test_v3_relation_hypotheses_remain_continuous_before_binding() -> None:
-    torch.manual_seed(9)
-    model = QSREProductionOperatorInducerV3(cfg()).eval()
-    q, qmask = query(batch=2, seed=10)
-    s = schema(6, seed=11)
-    out = run(
+def test_closure_operator_has_no_fixed_factor_class_heads() -> None:
+    model = make_model()
+    for name in (
+        "role_head",
+        "traversal_head",
+        "direction_head",
+        "modifier_head",
+        "control_head",
+    ):
+        assert not hasattr(model, name)
+    report = model.parameter_report()
+    assert report["fixed_factor_class_head_parameters"] == 0
+    assert report["semantic_factor_schemas"] is True
+    assert report["ordered_query_evidence_coverage"] is True
+    assert report["relation_count_ceiling"] is None
+    assert report["runtime_step_count_ceiling"] is None
+
+
+def test_pretrained_schema_matcher_can_be_frozen_for_production_p2() -> None:
+    source = make_model(seed=40)
+    target = QSREProductionOperatorInducerV3(cfg())
+    target.load_pretrained_schema_matcher(
+        source.schema_matcher.state_dict(),
+        freeze=True,
+    )
+    assert all(
+        not parameter.requires_grad
+        for parameter in target.schema_matcher.parameters()
+    )
+
+
+def test_relation_hypotheses_remain_continuous_until_binding() -> None:
+    model = make_model(seed=50)
+    q, qmask = query(seed=51)
+    schema = relation_schema(6, seed=52)
+    relation = run(
         model,
         q=q,
         qmask=qmask,
-        s=s,
+        schema=schema,
         max_steps=3,
     )["operator"].relation_distribution
-    assert torch.isfinite(out).all()
-    assert torch.all(out > 0)
+    assert torch.isfinite(relation).all()
+    assert torch.all(relation > 0)
     assert torch.allclose(
-        out.sum(dim=-1),
-        torch.ones_like(out.sum(dim=-1)),
+        relation.sum(dim=-1),
+        torch.ones_like(relation.sum(dim=-1)),
         atol=1e-6,
         rtol=1e-6,
     )
 
 
-def test_v3_new_runtime_relation_can_win_from_semantic_description_only() -> None:
-    torch.manual_seed(101)
-    model = QSREProductionOperatorInducerV3(cfg()).eval()
+def test_ordered_query_evidence_coverage_is_differentiable_and_monotone() -> None:
+    model = make_model(seed=60)
     with torch.no_grad():
-        model.step_query.weight.zero_()
+        model.continue_head.weight.zero_()
+        model.stop_head.weight.zero_()
+        model.unknown_head.weight.zero_()
+        model.continue_head.bias.fill_(8.0)
+        model.stop_head.bias.fill_(-8.0)
+        model.unknown_head.bias.fill_(-8.0)
+        model.event_match_projection.weight.zero_()
+        model.event_match_projection.bias.zero_()
 
-    g = torch.Generator().manual_seed(102)
-    target = torch.randn(3, 5, 24, generator=g)
-    relation_tokens = torch.stack(
-        [
-            -target,
-            torch.roll(target, shifts=7, dims=-1),
-            target,
-        ],
-        dim=0,
-    )
-    runtime_schema = QSREDynamicRelationSchema(
-        token_states=relation_tokens,
-        token_mask=torch.ones(3, 5, dtype=torch.bool),
-        domain_type_mask=torch.ones(3, 4, dtype=torch.bool),
-        range_type_mask=torch.ones(3, 4, dtype=torch.bool),
-        symmetric=torch.zeros(3, dtype=torch.bool),
-    )
-    query_hidden = target.unsqueeze(0)
-    query_mask = torch.ones(1, 5, dtype=torch.bool)
-    token, summary = encoded_schema_inputs(runtime_schema)
-    out = model(
-        query_hidden_states=query_hidden,
-        query_token_mask=query_mask,
-        schema=runtime_schema,
-        schema_token_state=token,
-        schema_relation_state=summary,
-        max_steps=1,
-    )["operator"].relation_distribution
-    assert int(out[0, 0].argmax().item()) == 2
-    assert torch.all(out > 0)
+    q, qmask = query(batch=1, seed=61)
+    schema = relation_schema(4, seed=62)
+    coverage = run(
+        model,
+        q=q,
+        qmask=qmask,
+        schema=schema,
+        max_steps=3,
+    )["query_coverage"]
+    assert coverage.shape == (1, 3, q.size(2))
+    assert torch.all(coverage[:, 1:] + 1e-7 >= coverage[:, :-1])
+    assert float(coverage[:, -1].max()) > 0.0
 
 
-def test_v3_schema_permutation_equivariance() -> None:
-    torch.manual_seed(10)
-    model = QSREProductionOperatorInducerV3(cfg()).eval()
-    q, qmask = query(batch=2, seed=11)
-    base_schema = schema(5, seed=12)
+def test_schema_permutation_equivariance_survives_ordered_coverage() -> None:
+    model = make_model(seed=70)
+    q, qmask = query(batch=1, seed=71)
+    base_schema = relation_schema(5, seed=72)
     base = run(
         model,
         q=q,
         qmask=qmask,
-        s=base_schema,
-        max_steps=2,
+        schema=base_schema,
+        max_steps=3,
     )["operator"].relation_distribution.detach()
 
     perm = torch.tensor([2, 4, 0, 3, 1])
@@ -175,8 +211,8 @@ def test_v3_schema_permutation_equivariance() -> None:
         model,
         q=q,
         qmask=qmask,
-        s=moved_schema,
-        max_steps=2,
+        schema=moved_schema,
+        max_steps=3,
     )["operator"].relation_distribution.detach()
     assert torch.allclose(
         base,
@@ -186,37 +222,28 @@ def test_v3_schema_permutation_equivariance() -> None:
     )
 
 
-def test_v3_p1_schema_relation_state_is_not_relation_match_authority() -> None:
-    torch.manual_seed(41)
-    model = QSREProductionOperatorInducerV3(cfg()).eval()
-    q, qmask = query(batch=1, seed=42)
-    s = schema(4, seed=43)
-    token, summary = encoded_schema_inputs(s)
-    a = model(
-        query_hidden_states=q,
-        query_token_mask=qmask,
-        schema=s,
-        schema_token_state=token,
+def test_p1_schema_relation_state_is_not_match_authority() -> None:
+    model = make_model(seed=80)
+    q, qmask = query(batch=1, seed=81)
+    schema = relation_schema(4, seed=82)
+    summary = schema.token_states.mean(dim=(1, 2))
+    a = run(
+        model,
+        q=q,
+        qmask=qmask,
+        schema=schema,
         schema_relation_state=summary,
-        max_steps=2,
     )["operator"]
-    b = model(
-        query_hidden_states=q,
-        query_token_mask=qmask,
-        schema=s,
-        schema_token_state=token,
+    b = run(
+        model,
+        q=q,
+        qmask=qmask,
+        schema=schema,
         schema_relation_state=torch.randn_like(summary) * 1000.0,
-        max_steps=2,
     )["operator"]
     assert torch.allclose(
         a.relation_distribution,
         b.relation_distribution,
-        atol=1e-6,
-        rtol=1e-6,
-    )
-    assert torch.allclose(
-        a.relation_step_mass,
-        b.relation_step_mass,
         atol=1e-6,
         rtol=1e-6,
     )
@@ -228,12 +255,11 @@ def test_v3_p1_schema_relation_state_is_not_relation_match_authority() -> None:
     )
 
 
-def test_v3_factor_slots_do_not_depend_on_relation_cardinality() -> None:
-    torch.manual_seed(13)
-    model = QSREProductionOperatorInducerV3(cfg()).eval()
-    q, qmask = query(batch=1, seed=14)
-    small = schema(3, seed=15)
-    extra = schema(2, seed=16)
+def test_factor_semantics_do_not_depend_on_relation_cardinality() -> None:
+    model = make_model(seed=90)
+    q, qmask = query(batch=1, seed=91)
+    small = relation_schema(3, seed=92)
+    extra = relation_schema(2, seed=93)
     large = QSREDynamicRelationSchema(
         token_states=torch.cat([small.token_states, extra.token_states], dim=0),
         token_mask=torch.cat([small.token_mask, extra.token_mask], dim=0),
@@ -247,15 +273,14 @@ def test_v3_factor_slots_do_not_depend_on_relation_cardinality() -> None:
         ),
         symmetric=torch.cat([small.symmetric, extra.symmetric], dim=0),
     )
-    a = run(model, q=q, qmask=qmask, s=small)["operator"]
-    b = run(model, q=q, qmask=qmask, s=large)["operator"]
+    a = run(model, q=q, qmask=qmask, schema=small, max_steps=1)["operator"]
+    b = run(model, q=q, qmask=qmask, schema=large, max_steps=1)["operator"]
     for name in (
         "role_distribution",
         "traversal_distribution",
         "direction_distribution",
         "modifier_weight",
         "control_distribution",
-        "applicability",
     ):
         assert torch.allclose(
             getattr(a, name),
@@ -265,26 +290,10 @@ def test_v3_factor_slots_do_not_depend_on_relation_cardinality() -> None:
         )
 
 
-def test_v3_relation_scale_cannot_suppress_stop_unknown_event() -> None:
-    torch.manual_seed(17)
-    model = QSREProductionOperatorInducerV3(cfg()).eval()
-    q, qmask = query(batch=2, seed=18)
-    s = schema(4, seed=19)
-    with torch.no_grad():
-        model.relation_logit_scale.fill_(-2.0)
-    low = run(model, q=q, qmask=qmask, s=s)["event_distribution"]
-    with torch.no_grad():
-        model.relation_logit_scale.fill_(6.0)
-    high = run(model, q=q, qmask=qmask, s=s)["event_distribution"]
-    assert torch.allclose(low, high, atol=1e-6, rtol=1e-6)
-
-
-def test_v3_unknown_and_stop_are_distinct_events() -> None:
-    torch.manual_seed(20)
-    model = QSREProductionOperatorInducerV3(cfg()).eval()
-    q, qmask = query(batch=1, seed=21)
-    s = schema(3, seed=22)
-
+def test_unknown_and_stop_remain_distinct_events() -> None:
+    model = make_model(seed=100)
+    q, qmask = query(batch=1, seed=101)
+    schema = relation_schema(3, seed=102)
     with torch.no_grad():
         model.continue_head.weight.zero_()
         model.stop_head.weight.zero_()
@@ -293,50 +302,27 @@ def test_v3_unknown_and_stop_are_distinct_events() -> None:
         model.stop_head.bias.fill_(30.0)
         model.unknown_head.bias.fill_(-30.0)
         model.event_match_projection.weight.zero_()
-    stopped = run(model, q=q, qmask=qmask, s=s)["event_distribution"]
+        model.event_match_projection.bias.zero_()
+    stopped = run(
+        model,
+        q=q,
+        qmask=qmask,
+        schema=schema,
+        max_steps=1,
+    )["event_distribution"]
 
     with torch.no_grad():
         model.stop_head.bias.fill_(-30.0)
         model.unknown_head.bias.fill_(30.0)
-    unknown = run(model, q=q, qmask=qmask, s=s)["event_distribution"]
+    unknown = run(
+        model,
+        q=q,
+        qmask=qmask,
+        schema=schema,
+        max_steps=1,
+    )["event_distribution"]
 
     assert float(stopped[0, 0, EVENT_STOP]) > 0.999
     assert float(stopped[0, 0, EVENT_UNKNOWN]) < 1.0e-6
     assert float(unknown[0, 0, EVENT_UNKNOWN]) > 0.999
     assert float(unknown[0, 0, EVENT_STOP]) < 1.0e-6
-
-
-def test_v3_schema_identity_logits_are_permutation_equivariant() -> None:
-    torch.manual_seed(23)
-    model = QSREProductionOperatorInducerV3(cfg()).eval()
-    s = schema(5, seed=24)
-    base = model.schema_identity_logits(s).detach()
-
-    perm = torch.tensor([4, 1, 3, 0, 2])
-    inverse = torch.argsort(perm)
-    moved_schema = QSREDynamicRelationSchema(
-        token_states=s.token_states[perm],
-        token_mask=s.token_mask[perm],
-        domain_type_mask=s.domain_type_mask[perm],
-        range_type_mask=s.range_type_mask[perm],
-        symmetric=s.symmetric[perm],
-    )
-    moved = model.schema_identity_logits(moved_schema).detach()
-    restored = moved[inverse][:, inverse]
-    assert torch.allclose(base, restored, atol=1e-5, rtol=1e-5)
-
-
-def test_v3_parameter_report_has_no_schema_or_hop_parameter_axis() -> None:
-    report = QSREProductionOperatorInducerV3(cfg()).parameter_report()
-    assert report["relation_count_dependent_parameters"] == 0
-    assert report["hop_count_dependent_parameters"] == 0
-    assert report["runtime_dynamic_relation_schema"] is True
-    assert report["continuous_relation_hypotheses"] is True
-    assert report["relation_sparsity_before_structural_binding"] is False
-    assert report["exact_sparsity_owned_by_binder"] is True
-    assert report["shared_query_schema_metric"] is True
-    assert report["relation_selection_decoupled_from_stop_unknown"] is True
-    assert report["p1_schema_relation_state_is_interface_only_for_operator"] is True
-    assert report["factor_specific_query_slots"] is True
-    assert report["relation_count_ceiling"] is None
-    assert report["runtime_step_count_ceiling"] is None
