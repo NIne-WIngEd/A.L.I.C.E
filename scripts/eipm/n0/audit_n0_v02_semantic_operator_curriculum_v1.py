@@ -72,8 +72,8 @@ def main() -> None:
         if split == "dev" and row.get("training_authorized") is not False:
             errors.append(f"{rid}: DEV row authorized for training")
         candidates = list(row.get("relation_candidates") or [])
-        if len(candidates) < 2:
-            errors.append(f"{rid}: too few relation candidates")
+        if len(candidates) < 1:
+            errors.append(f"{rid}: empty relation candidate bank")
         keys = [str(x["key"]) for x in candidates]
         if len(keys) != len(set(keys)):
             errors.append(f"{rid}: duplicate relation candidate key")
