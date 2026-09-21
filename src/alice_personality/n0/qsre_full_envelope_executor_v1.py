@@ -100,6 +100,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         edge_relation_index: Tensor,
         edge_valid_mask: Tensor,
         edge_support_weight: Tensor,
+        support_available: Tensor,
         edge_reliability: Tensor,
         edge_recency: Tensor,
         edge_temporal_match: Tensor,
@@ -145,6 +146,8 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             raise ValueError("edge_valid_mask must be bool")
         if focus_field_weight.shape != (batch, fields):
             raise ValueError("focus_field_weight must be [B,F]")
+        if support_available.shape != (batch,):
+            raise ValueError("support_available must be [B]")
 
         if bool(edge_valid_mask.any()):
             valid_edge = edge_index[edge_valid_mask]
@@ -411,6 +414,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             * operator.control_distribution[:, CONTROL_RELATIONAL]
             * known
             * program
+            * support_available.clamp(0.0, 1.0)
         ).clamp(0.0, 1.0)
         probability = probability * execution_confidence[:, None]
 
@@ -449,6 +453,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "continuous_traversal_mixture": True,
             "local_path_aggregate_distinct": True,
             "hard_traversal_threshold": False,
+            "execution_confidence_requires_structural_support": True,
             "relation_count_ceiling": None,
             "hop_count_ceiling": None,
             "field_count_ceiling": None,
