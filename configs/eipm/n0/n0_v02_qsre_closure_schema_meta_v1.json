@@ -429,6 +429,18 @@
     ],
     "control": [
       {
+        "key": "FALLBACK",
+        "description": "The request does not need relational execution and should pass through to the base non-relational path.",
+        "train_phrases": [
+          "answer without using the graph",
+          "the request is ordinary non-relational interpretation"
+        ],
+        "heldout_phrases": [
+          "use the base path instead of relation execution",
+          "relational reasoning is not applicable"
+        ]
+      },
+      {
         "key": "RELATIONAL",
         "description": "The request is grounded in the supplied relation schema and should execute relational reasoning.",
         "train_phrases": [
@@ -439,18 +451,6 @@
         "heldout_phrases": [
           "execute relational reasoning",
           "the query has a grounded relation"
-        ]
-      },
-      {
-        "key": "FALLBACK",
-        "description": "The request does not need relational execution and should pass through to the base non-relational path.",
-        "train_phrases": [
-          "answer without using the graph",
-          "the request is ordinary non-relational interpretation"
-        ],
-        "heldout_phrases": [
-          "use the base path instead of relation execution",
-          "relational reasoning is not applicable"
         ]
       },
       {
