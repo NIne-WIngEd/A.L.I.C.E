@@ -52,7 +52,8 @@
     "p3_shared_query_field_metric": true,
     "p3_balanced_support_focus_supervision": true,
     "dense_pre_sparse_relation_logits_for_supervision": true,
-    "sparse_runtime_relation_selection_preserved": true
+    "sparse_runtime_relation_selection_preserved": true,
+    "dense_pre_sparse_paraphrase_consistency": true
   },
   "recovery": {
     "output_root": "$ALICE_N0_WORKDIR/qsre-production-core-v1-operator-v2-recovery-v1",
