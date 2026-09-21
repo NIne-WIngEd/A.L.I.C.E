@@ -276,7 +276,7 @@ class N0FullEnvelopeStackV1(nn.Module):
         ).clamp_min(1.0e-6)
 
         graph = self.evidence_graph(
-            field_state=graph["field_states"],
+            field_state=structured["field_states"],
             field_valid_mask=field_valid_mask,
             edge_index=edge_index,
             edge_relation_index=edge_relation_index,
@@ -299,7 +299,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             query_token_mask=query_token_mask,
             field_hidden_states=field_hidden_states,
             field_token_mask=field_token_mask,
-            field_state=structured["field_states"],
+            field_state=graph["field_states"],
             field_valid_mask=field_valid_mask,
             field_type_index=field_type_index,
             edge_index=edge_index,
