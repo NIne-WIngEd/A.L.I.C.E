@@ -382,6 +382,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
         stop_steps: list[Tensor] = []
         unknown_steps: list[Tensor] = []
         event_steps: list[Tensor] = []
+        event_logits_steps: list[Tensor] = []
         state_steps: list[Tensor] = []
         attention_steps: list[Tensor] = []
         semantic_score_steps: list[Tensor] = []
@@ -459,6 +460,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
             stop_steps.append(effective_stop)
             unknown_steps.append(effective_unknown)
             event_steps.append(event_probability)
+            event_logits_steps.append(event_logits)
             state_steps.append(step_state)
             semantic_score_steps.append(semantic_score)
             attention_steps.append(
@@ -486,6 +488,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
         stop_probability = torch.stack(stop_steps, dim=1)
         unknown_probability = torch.stack(unknown_steps, dim=1)
         event_distribution = torch.stack(event_steps, dim=1)
+        event_logits = torch.stack(event_logits_steps, dim=1)
         step_state_history = torch.stack(state_steps, dim=1)
         step_attention = torch.stack(attention_steps, dim=1)
         semantic_scores = torch.stack(semantic_score_steps, dim=1)
@@ -497,23 +500,30 @@ class QSREProductionOperatorInducerV2(nn.Module):
         control_state = factor_states[:, FACTOR_CONTROL]
         applicability_state = factor_states[:, FACTOR_APPLICABILITY]
 
-        role_distribution = torch.softmax(self.role_head(role_state), dim=-1)
+        role_logits = self.role_head(role_state)
+        traversal_logits = self.traversal_head(traversal_state)
+        direction_logits = self.direction_head(direction_state)
+        modifier_logits = self.modifier_head(modifier_state)
+        control_logits = self.control_head(control_state)
+        applicability_logit = self.applicability_head(
+            applicability_state
+        ).squeeze(-1)
+
+        role_distribution = torch.softmax(role_logits, dim=-1)
         traversal_distribution = torch.softmax(
-            self.traversal_head(traversal_state),
+            traversal_logits,
             dim=-1,
         )
         direction_distribution = torch.softmax(
-            self.direction_head(direction_state),
+            direction_logits,
             dim=-1,
         )
-        modifier_weight = torch.sigmoid(self.modifier_head(modifier_state))
+        modifier_weight = torch.sigmoid(modifier_logits)
         control_distribution = torch.softmax(
-            self.control_head(control_state),
+            control_logits,
             dim=-1,
         )
-        applicability = torch.sigmoid(
-            self.applicability_head(applicability_state)
-        ).squeeze(-1)
+        applicability = torch.sigmoid(applicability_logit)
 
         factor_summary = factor_states.mean(dim=1)
         continuous_state = self.continuous_projection(
@@ -580,7 +590,16 @@ class QSREProductionOperatorInducerV2(nn.Module):
         return {
             "operator": operator,
             "relation_logits": relation_logits,
+            "event_logits": event_logits,
             "event_distribution": event_distribution,
+            "factor_logits": {
+                "role": role_logits,
+                "traversal": traversal_logits,
+                "direction": direction_logits,
+                "modifier": modifier_logits,
+                "control": control_logits,
+                "applicability": applicability_logit,
+            },
             "semantic_relation_score": semantic_scores,
             "initial_query_attention": initial_attention.reshape(
                 batch, layers, tokens
@@ -608,6 +627,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
             "p1_schema_relation_state_is_interface_only_for_operator": True,
             "relation_selection_decoupled_from_stop_unknown": True,
             "dense_relation_logits_exposed_for_trainability": True,
+            "dense_event_and_factor_logits_exposed_for_trainability": True,
             "cardinality_invariant_termination_event_head": True,
             "match_confidence_guides_unknown_rejection": True,
             "factor_specific_query_slots": True,
