@@ -43,7 +43,13 @@
     "schema_only_self_calibration": true,
     "learning_rate_search": false,
     "max_step_search": false,
-    "width_search": false
+    "width_search": false,
+    "p1_schema_relation_state_match_authority": false,
+    "shared_matcher_schema_summary_for_program_context": true,
+    "operator_continuous_state_binder_support_authority": false,
+    "operator_relation_mass_binder_relation_authority": true,
+    "p3_shared_query_field_metric": true,
+    "p3_balanced_support_focus_supervision": true
   },
   "recovery": {
     "output_root": "$ALICE_N0_WORKDIR/qsre-production-core-v1-operator-v2-recovery-v1",
