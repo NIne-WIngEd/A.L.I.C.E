@@ -469,6 +469,105 @@ def test_multi_hop_relation_order_changes_path_execution() -> None:
     assert not torch.allclose(a["path_frontier"], b["path_frontier"])
 
 
+
+def _pad_operator_with_inactive_tail(
+    operator: QSREProductionOperatorState,
+    *,
+    relation_id: int = 0,
+) -> QSREProductionOperatorState:
+    batch, steps, relations = operator.relation_distribution.shape
+    tail_relation = torch.zeros(batch, 1, relations)
+    tail_relation[:, 0, relation_id] = 1.0
+    return QSREProductionOperatorState(
+        relation_distribution=torch.cat(
+            [operator.relation_distribution, tail_relation],
+            dim=1,
+        ),
+        relation_step_mass=torch.cat(
+            [operator.relation_step_mass, torch.zeros(batch, 1)],
+            dim=1,
+        ),
+        stop_probability=torch.cat(
+            [operator.stop_probability, torch.ones(batch, 1)],
+            dim=1,
+        ),
+        unknown_probability=torch.cat(
+            [operator.unknown_probability, torch.zeros(batch, 1)],
+            dim=1,
+        ),
+        role_distribution=operator.role_distribution,
+        traversal_distribution=operator.traversal_distribution,
+        direction_distribution=operator.direction_distribution,
+        modifier_weight=operator.modifier_weight,
+        applicability=operator.applicability,
+        control_distribution=operator.control_distribution,
+        continuous_state=operator.continuous_state,
+        uncertainty=operator.uncertainty,
+    )
+
+
+def test_path_stop_tail_is_semantically_idempotent_forward_and_reverse() -> None:
+    torch.manual_seed(34)
+    executor = QSREProductionExecutor(cfg()).eval()
+    g = graph_inputs()
+    schema_state = torch.randn(2, 32)
+
+    cases = [
+        (
+            one_hot_operator(
+                batch=1,
+                relation_count=2,
+                relation_sequence=[0, 1],
+                traversal=TRAVERSAL_PATH,
+                direction=DIRECTION_FORWARD,
+                role=ROLE_TARGET,
+            ),
+            torch.tensor([[1.0, 0.0, 0.0, 0.0]]),
+            2,
+        ),
+        (
+            one_hot_operator(
+                batch=1,
+                relation_count=2,
+                relation_sequence=[1, 0],
+                traversal=TRAVERSAL_PATH,
+                direction=DIRECTION_REVERSE,
+                role=ROLE_SOURCE,
+            ),
+            torch.tensor([[0.0, 0.0, 1.0, 0.0]]),
+            0,
+        ),
+    ]
+    for base_operator, focus, expected in cases:
+        padded_operator = _pad_operator_with_inactive_tail(base_operator)
+        base = executor(
+            **g,
+            schema_relation_state=schema_state,
+            operator=base_operator,
+            focus_field_weight=focus,
+        )
+        padded = executor(
+            **g,
+            schema_relation_state=schema_state,
+            operator=padded_operator,
+            focus_field_weight=focus,
+        )
+        assert int(base["path_frontier"].argmax(dim=-1).item()) == expected
+        assert int(padded["path_frontier"].argmax(dim=-1).item()) == expected
+        assert torch.allclose(
+            base["path_frontier"],
+            padded["path_frontier"],
+            atol=1e-6,
+            rtol=1e-6,
+        )
+        assert torch.allclose(
+            base["relational_probability"],
+            padded["relational_probability"],
+            atol=1e-6,
+            rtol=1e-6,
+        )
+
+
 def test_edge_and_field_permutation_equivariance() -> None:
     torch.manual_seed(17)
     executor = QSREProductionExecutor(cfg()).eval()
