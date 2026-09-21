@@ -68,9 +68,9 @@
   },
   "continuity_branch_head": {
     "branch": "alice-context",
-    "head": "32b6308b201ba112270109e3a139fbc16812121b",
-    "head_committed_at": "2026-09-20T23:49:11-05:00",
-    "head_message": "context(n0): record 575958 closure-pass ready frontier"
+    "head": "cc202b81f95c1716d075f825f1f84e796e75a8a5",
+    "head_committed_at": "2026-09-21T01:07:47-05:00",
+    "head_message": "context(n0): record 575962 semantic-v2 ready frontier"
   },
   "unmerged_experiment_frontier": {
     "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -3954,7 +3954,7 @@
     "stale_relative_to_unmerged_experiment_frontier": true,
     "newest_experiment_frontier_time": "2026-09-21T01:02:05-05:00",
     "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
-    "context_branch_head_time": "2026-09-20T23:49:11-05:00"
+    "context_branch_head_time": "2026-09-21T01:07:47-05:00"
   },
   "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
   "authority": "routing-and-freshness-only"
