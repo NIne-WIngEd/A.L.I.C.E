@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-job575986-semantic-localization-v1-qualified-refresh-20260921-021
-- Question: Exact-source continuity and defect audit for the newly qualified CPU/no-gradient post-575986 semantic localization package. Use graph source branch alice-eipm-v1-n0-p2a-semantic-localization-v1 at qualified HEAD 8180ed500fcf2181d3a70f5a01481d00ebbbb24a. Confirm the package descends exactly from frozen-authority implementation 0a8ac74aa6fa73259c03dc4d8754a42a6fde2307, binds the preserved Magnolia job575986 P2A failure metrics exactly, uses the ratified semantic checkpoint SHA 6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43, and is diagnostic-only: CPU, zero gradient, no optimizer/model training/TEST/threshold drift/rerun/P2/semantic-backbone retraining/private identity. Verify the audit genuinely distinguishes frozen representation deficiency versus prompt/readout/task-geometry mismatch versus fusion/calibration loss by comparing current P2A meta-prompt heads, teacher-native prompt/candidate geometry, current semantic projection, current and teacher-native principle alignment, mixed token evidence, and every hidden-state token layer. Check that its reconstruction requirement forces the current four-surface metrics to reproduce job575986 within 1e-6 before interpretation. Check the new continuity records now exist at alice-context@390508407880ffaef55e74326763af76f8bca541 and fable-builder-model@a6b8660578709beb628d63cff057f4056869c1cf. Identify any concrete source defect that should block the one owner Magnolia CPU launch. Do not authorize architecture changes or training. Graphify is routing/navigation only; consequential conclusions must point to original source paths.
+- Request: n0-job575990-semantic-localization-result-architecture-decision-20260921-022
+- Question: Interpret completed Magnolia CPU/no-gradient job 575990 from branch alice-eipm-v1-n0-p2a-semantic-localization-v1@8180ed500fcf2181d3a70f5a01481d00ebbbb24a and route the smallest correct architecture decision. Job 575990 completed 0:0 with empty stderr and reconstructed job575986 exactly. Headline metrics: current P2A auxiliary_holdout=0.2604166567, auxiliary_seen=0.2708333433, heldout_factor_macro=0.3666666731, production_core=0.4068181813. Teacher-native prompt/candidate geometry did not rescue it: holdout=0.2604166567, seen=0.2291666716, factors=0.4166666731, production_core=0.3840909004. Even the posthoc teacher-native + best-hidden-layer token oracle remained weak: holdout=0.3541666567, seen=0.3333333433, factors=0.4166666731, production_core=0.4090909064. Compare this to learned P2S-v2 job575966 best metrics holdout=0.6666666667, seen=0.71875, factors=0.7166666667, production_core=0.9477272727 and later core fit 1.0. Use original source docs and semantic model configuration to determine what is now falsified. In particular inspect the ratified alice-n0-semantic-v0.2 objectives/data scale and whether the 136.6M ModernBERT encoder was ever trained to supply dynamic open-schema relation/factor semantics. Decide whether prompt/readout/fusion remain plausible primary defects or whether the public semantic base/objective must be reopened. Preserve proven structured/evidence/fusion/latent/QSRE executor/binder work unless evidence directly falsifies them. Do not propose another P2S/P2A hotfix, threshold change, blind scale search, or immediate GPU run. Identify a frontier-style architecture family that learns semantic representation and dynamic schema/operator behavior jointly, with runtime-variable schema cardinality, no relation-ID ontology, token-level interaction, explicit role/direction/traversal/modifier/control semantics, uncertainty/plurality, shared recurrent step transition with structural stop, and compatibility with existing QSRE structural execution. This is architecture decision/research only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -24,44 +24,45 @@
 
 ## Source pointers
 
-- [206] alice-eipm-v1-n0-p2a-semantic-localization-v1:docs/research/eipm-n0-job575986-p2a-semantic-localization-v1.md — N0 job 575986 — P2A semantic localization v1
-  - status:  zero-gradient diagnostic package; no architecture change, optimizer, P2, TEST, or semantic-backbone retraining authorized
-- [170] alice-eipm-v1-n0-p2a-semantic-localization-v1:.github/workflows/n0-query-semantics-architecture-audit-contract-check.yml — n0-query-semantics-architecture-audit-contract-check.yml
-- [170] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-query-semantics-architecture-audit-contract-check.yml — n0-query-semantics-architecture-audit-contract-check.yml
-- [170] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-query-semantics-architecture-audit-contract-check.yml — n0-query-semantics-architecture-audit-contract-check.yml
-- [168] alice-eipm-v1-n0-p2a-semantic-localization-v1:.github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml — n0-query-semantics-layerwise-audit-contract-check.yml
-- [168] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml — n0-query-semantics-layerwise-audit-contract-check.yml
-- [168] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml — n0-query-semantics-layerwise-audit-contract-check.yml
-- [162] alice-eipm-v1-n0-p2a-semantic-localization-v1:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
-- [162] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
-- [162] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
-- [161] alice-context:docs/chat-context/2026-09-21/sol/N0_JOB575962_SEMANTIC_V2_READY.md — N0 job 575962 semantic-v2 closure — qualified for one owner launch
-  - status:  valid P2S model failure preserved; semantic-v2 repair implemented; exact-head static/CPU qualification passed; exact-source Graphify verification passed; Fable trace updated; one owner Magnolia launch may proceed
-- [160] alice-eipm-v1-n0-p2a-semantic-localization-v1:docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md — N0 Query-Semantics Layerwise Audit v0.1
+- [225] alice-eipm-v1-n0-p2a-semantic-localization-v1:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [225] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [225] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [202] alice-eipm-v1-n0-p2a-semantic-localization-v1:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
+  - status:  production-architecture authority; implementation/training remains closed
+- [202] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
+  - status:  production-architecture authority; implementation/training remains closed
+- [202] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
+  - status:  production-architecture authority; implementation/training remains closed
+- [200] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [200] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [200] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [200] alice-eipm-v1-n0-closure-pass:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [200] alice-eipm-v1-n0-closure-semantic-v2:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [200] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
 
 ## Graphify navigation hints
 
-- audit_n0_v02_qsre_p2a_semantic_localization_v1.py -> scripts/eipm/n0/audit_n0_v02_qsre_p2a_semantic_localization_v1.py:L1
+- run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh -> scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh:L1
+- run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh script -> scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh:L1
 - run_n0_v02_qsre_p2a_semantic_localization_v1.sh -> scripts/eipm/n0/run_n0_v02_qsre_p2a_semantic_localization_v1.sh:L1
-- run_n0_v02_qsre_p2a_semantic_localization_v1.sh script -> scripts/eipm/n0/run_n0_v02_qsre_p2a_semantic_localization_v1.sh:L1
-- QSRET1Executor -> src/alice_personality/n0/qsre_t1_executor.py:L106
-- canonical_sha256() -> src/cognitive_kernel/canonical.py:L39
 - AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
-- principle_alignment_scores() -> scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py:L93
+- train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py -> scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py:L1
+- test_event_from_another_host_is_rejected() -> tests/phase5/test_experience_ledger_isolation.py:L18
 - test_memory_identity_host_learning_architecture.py -> tests/governance/test_memory_identity_host_learning_architecture.py:L1
-- audit() -> scripts/audit_capability_barriers.py:L521
-- authority() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L87
-- authorize_boolean_map() -> src/alice_capability_profiles.py:L88
-- .backbone() -> src/alice_personality/n0/v02_model.py:L48
-- test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
-- test_report_binds_observation_digest() -> tests/phase4/test_information_final_evaluation.py:L158
-- blocked_getaddrinfo() -> tests/phase4/test_information_live_http.py:L194
+- auxiliary_relation_schema_text() -> scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py:L36
+- base_parts() -> scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py:L91
+- test_disabled_repair_preserves_original_rejection_behavior() -> tests/phase3/test_conversation_response_repair_orchestration.py:L48
+- best_slot_semantic_alignment_loss() -> src/alice_personality/n0/adaptive_multi_view_latent_pool_objectives_v0_2.py:L39
+- QSREProductionBinderV2 -> src/alice_personality/n0/qsre_production_binder_v2.py:L16
+- Use exactly the evidence windows shown during blind human review. -> src/alice_vault/hhem_calibration.py:L508
 - branch_forward() -> scripts/eipm/n0/train_n0_v02_structured_state_pilot.py:L287
+- candidate() -> tests/phase5/test_memory_m2_adjudication_contracts.py:L154
+- test_dynamic_relation_cardinality_has_no_parameter_axis() -> tests/eipm/test_n0_qsre_production_core_v1.py:L157
 
 ## External/private routing
 
 - Recommended: True
-- Reason: question references a private/external source class
+- Reason: host-specific operational history may contain newer failure lessons than public receipts
 
 ## Trust contract
 
