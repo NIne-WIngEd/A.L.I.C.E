@@ -28,6 +28,7 @@ from alice_personality.n0.semantic_operator_qsre_adapter import SemanticOperator
 from alice_personality.n0.full_envelope_structural_types import (
     CONTROL_RELATIONAL,
     DIRECTION_FORWARD,
+    DIRECTION_REVERSE,
     FullEnvelopeOperatorState,
     ROLE_TARGET,
     TRAVERSAL_AGGREGATE,
@@ -353,7 +354,10 @@ def test_unknown_structural_opcode_fails_closed() -> None:
         raise AssertionError("unknown executable primitive was silently accepted")
 
 
-def _manual_operator(traversal_index: int) -> FullEnvelopeOperatorState:
+def _manual_operator(
+    traversal_index: int,
+    direction_index: int = DIRECTION_FORWARD,
+) -> FullEnvelopeOperatorState:
     batch,steps,relations,dim=1,3,1,24
     relation_distribution=torch.ones(batch,steps,relations)
     relation_step_mass=torch.ones(batch,steps)
@@ -362,7 +366,7 @@ def _manual_operator(traversal_index: int) -> FullEnvelopeOperatorState:
     role=torch.zeros(batch,4)
     role[:,ROLE_TARGET]=1.0
     direction=torch.zeros(batch,3)
-    direction[:,DIRECTION_FORWARD]=1.0
+    direction[:,direction_index]=1.0
     control=torch.zeros(batch,3)
     control[:,CONTROL_RELATIONAL]=1.0
     return FullEnvelopeOperatorState(
@@ -520,3 +524,142 @@ def test_executor_zero_support_forces_zero_relational_execution_confidence() -> 
         torch.zeros_like(out["relational_probability"]),
     )
     assert executor.parameter_report()["execution_confidence_requires_structural_support"] is True
+
+
+def test_binder_symmetric_relation_accepts_reversed_domain_range_types() -> None:
+    domain=torch.tensor([[[True,False]]],dtype=torch.bool)
+    range_mask=torch.tensor([[[False,True]]],dtype=torch.bool)
+    edge_index=torch.tensor([[[0,1]]])
+    edge_relation=torch.tensor([[0]])
+    field_types=torch.tensor([[1,0]])
+    edge_valid=torch.ones(1,1,dtype=torch.bool)
+
+    directed=FullEnvelopeQSREBinderV1._type_compatibility(
+        relation_domain_type_mask=domain,
+        relation_range_type_mask=range_mask,
+        relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
+        edge_relation_index=edge_relation,
+        edge_index=edge_index,
+        field_type_index=field_types,
+        edge_valid_mask=edge_valid,
+    )
+    symmetric=FullEnvelopeQSREBinderV1._type_compatibility(
+        relation_domain_type_mask=domain,
+        relation_range_type_mask=range_mask,
+        relation_symmetric=torch.ones(1,1,dtype=torch.bool),
+        edge_relation_index=edge_relation,
+        edge_index=edge_index,
+        field_type_index=field_types,
+        edge_valid_mask=edge_valid,
+    )
+    assert directed.item() is False
+    assert symmetric.item() is True
+
+
+def test_dynamic_graph_symmetric_edge_reversal_is_invariant() -> None:
+    torch.manual_seed(811)
+    graph=DynamicSchemaEvidenceGraphV1(
+        DynamicSchemaEvidenceGraphConfig(
+            field_dim=24,
+            relation_dim=24,
+            operator_dim=24,
+            model_dim=24,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    field=torch.randn(1,4,24)
+    valid=torch.ones(1,4,dtype=torch.bool)
+    edge=torch.tensor([[[0,1],[1,2],[2,3]]])
+    reversed_edge=edge.flip(-1)
+    relation_index=torch.zeros(1,3,dtype=torch.long)
+    metadata=torch.zeros(1,3,4)
+    edge_valid=torch.ones(1,3,dtype=torch.bool)
+    relation_state=torch.randn(1,1,24)
+    relation_mass=torch.ones(1,1)
+    symmetric=torch.ones(1,1,dtype=torch.bool)
+    operator_state=torch.randn(1,24)
+    with torch.no_grad():
+        a=graph(
+            field_state=field,
+            field_valid_mask=valid,
+            edge_index=edge,
+            edge_relation_index=relation_index,
+            edge_metadata=metadata,
+            edge_valid_mask=edge_valid,
+            relation_schema_state=relation_state,
+            relation_mass=relation_mass,
+            relation_symmetric=symmetric,
+            operator_state=operator_state,
+            message_steps=2,
+        )
+        b=graph(
+            field_state=field,
+            field_valid_mask=valid,
+            edge_index=reversed_edge,
+            edge_relation_index=relation_index,
+            edge_metadata=metadata,
+            edge_valid_mask=edge_valid,
+            relation_schema_state=relation_state,
+            relation_mass=relation_mass,
+            relation_symmetric=symmetric,
+            operator_state=operator_state,
+            message_steps=2,
+        )
+    assert torch.allclose(a["field_states"],b["field_states"],atol=1e-5,rtol=1e-5)
+    assert torch.allclose(a["source_summary"],b["source_summary"],atol=1e-5,rtol=1e-5)
+    assert torch.allclose(a["target_summary"],b["target_summary"],atol=1e-5,rtol=1e-5)
+    report=graph.parameter_report()
+    assert report["symmetric_edge_endpoint_order_invariant"] is True
+
+
+def test_executor_symmetric_relation_ignores_forward_reverse_storage_orientation() -> None:
+    torch.manual_seed(812)
+    executor=FullEnvelopeQSREExecutorV1(
+        FullEnvelopeExecutorConfig(
+            field_dim=24,
+            model_dim=24,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    common=dict(
+        field_state=torch.randn(1,3,24),
+        field_metadata=torch.zeros(1,3,3),
+        field_valid_mask=torch.ones(1,3,dtype=torch.bool),
+        edge_index=torch.tensor([[[0,1],[1,2]]]),
+        edge_relation_index=torch.zeros(1,2,dtype=torch.long),
+        edge_valid_mask=torch.ones(1,2,dtype=torch.bool),
+        edge_support_weight=torch.ones(1,2),
+        support_available=torch.ones(1),
+        edge_reliability=torch.ones(1,2),
+        edge_recency=torch.ones(1,2),
+        edge_temporal_match=torch.ones(1,2),
+        edge_provenance_match=torch.ones(1,2),
+        relation_schema_state=torch.randn(1,1,24),
+        relation_symmetric=torch.ones(1,1,dtype=torch.bool),
+        focus_field_weight=torch.tensor([[1.0,0.0,0.0]]),
+    )
+    with torch.no_grad():
+        forward=executor(
+            operator=_manual_operator(TRAVERSAL_PATH,DIRECTION_FORWARD),
+            **common,
+        )
+        reverse=executor(
+            operator=_manual_operator(TRAVERSAL_PATH,DIRECTION_REVERSE),
+            **common,
+        )
+    assert torch.allclose(
+        forward["path_frontier"],
+        reverse["path_frontier"],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.allclose(
+        forward["relational_summary"],
+        reverse["relational_summary"],
+        atol=1e-5,
+        rtol=1e-5,
+    )
+    assert executor.parameter_report()["symmetric_relation_direction_collapses_to_bidirectional"] is True
