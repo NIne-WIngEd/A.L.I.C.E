@@ -60,7 +60,9 @@
       "plural_execution_supported": true,
       "support_local_readout": true,
       "forward_reverse_bidirectional_path_execution": true,
-      "path_role_semantics_direction_aware": true
+      "path_role_semantics_direction_aware": true,
+      "inactive_or_stopped_relation_step_preserves_frontier": true,
+      "stop_tail_is_semantically_idempotent": true
     },
     "fallback": {
       "separate_from_support_selection": true,
@@ -105,7 +107,9 @@
     "reverse_path_source_execution",
     "direction_factor_independent_from_role",
     "calibrated_relational_mass_survives_normalization",
-    "native_relational_summary_reaches_n0_fabric"
+    "native_relational_summary_reaches_n0_fabric",
+    "path_frontier_persists_across_inactive_stop_tail",
+    "shorter_paths_equal_unpadded_execution_under_larger_runtime_budget"
   ],
   "training_sequence": [
     "P1_schema_conditioned_executor_oracle_operator_oracle_support",
