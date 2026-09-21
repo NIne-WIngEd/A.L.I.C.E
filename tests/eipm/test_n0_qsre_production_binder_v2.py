@@ -149,6 +149,44 @@ def test_binder_v2_operator_relation_mass_controls_support_semantics() -> None:
     )
 
 
+def test_binder_v2_operator_continuous_state_is_not_support_authority() -> None:
+    torch.manual_seed(40)
+    binder = QSREProductionBinderV2(cfg()).eval()
+    s = schema()
+    base = inputs()
+    op_a = operator()
+    op_b = QSREProductionOperatorState(
+        **{
+            **op_a.__dict__,
+            "continuous_state": torch.randn_like(op_a.continuous_state) * 1000.0,
+        }
+    )
+    a = binder(
+        **base,
+        schema=s,
+        schema_relation_state=torch.zeros(3, 24),
+        operator=op_a,
+    )
+    b = binder(
+        **base,
+        schema=s,
+        schema_relation_state=torch.zeros(3, 24),
+        operator=op_b,
+    )
+    assert torch.allclose(
+        a["support_logits"],
+        b["support_logits"],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.allclose(
+        a["edge_support_weight"],
+        b["edge_support_weight"],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+
+
 def test_binder_v2_type_contradiction_is_exact_zero() -> None:
     torch.manual_seed(5)
     binder = QSREProductionBinderV2(cfg()).eval()
@@ -241,7 +279,8 @@ def test_binder_v2_edge_permutation_equivariance() -> None:
 def test_binder_v2_parameter_report_has_no_support_ceiling() -> None:
     report = QSREProductionBinderV2(cfg()).parameter_report()
     assert report["relation_count_dependent_parameters"] == 0
-    assert report["relation_semantics_owned_by_operator"] is True
+    assert report["relation_semantics_owned_by_operator_relation_mass"] is True
+    assert report["operator_continuous_state_not_support_authority"] is True
     assert report["p1_schema_relation_state_not_match_authority"] is True
     assert report["shared_query_field_metric"] is True
     assert report["fixed_top_k"] is False
