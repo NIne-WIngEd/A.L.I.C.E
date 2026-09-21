@@ -1,0 +1,83 @@
+{
+  "schema": "alice.eipm.n0.capacity-escalation-contract.v1",
+  "status": "PRECOMMITTED_EVIDENCE_BASED_SCALE_POLICY_NO_GRADIENT",
+  "date": "2026-09-21",
+  "purpose": "Prevent both under-scaling and blind scaling. Architecture/runtime axes stay ceiling-free; learned model capacity grows only when a valid full-envelope objective localizes residual error to representational capacity.",
+  "current_initialization": {
+    "semantic_checkpoint_parameters": 136594435,
+    "semantic_hidden_layers": 16,
+    "semantic_hidden_size": 640,
+    "semantic_heads": 10,
+    "role": "initialization operating point, not capability ceiling or proof of sufficiency"
+  },
+  "no_ceiling_policy": {
+    "hard_total_parameter_ceiling": null,
+    "hard_semantic_width_ceiling": null,
+    "hard_semantic_depth_ceiling": null,
+    "hard_attention_head_ceiling": null,
+    "hard_latent_slot_ceiling": null,
+    "hard_runtime_relation_ceiling": null,
+    "hard_runtime_factor_ceiling": null,
+    "hard_runtime_field_ceiling": null,
+    "hard_runtime_edge_ceiling": null,
+    "hard_runtime_view_ceiling": null,
+    "hard_runtime_reasoning_step_ceiling": null,
+    "hard_product_context_token_ceiling": null
+  },
+  "scale_up_trigger": {
+    "all_required": [
+      "curriculum_materialization_and_leakage_audits_pass",
+      "full_architecture_static_and_no_gradient_mechanics_pass",
+      "optimization_is_stable_without_divergence_or_gradient_path_break",
+      "TRAIN_behavioral_objectives_do_not_reach_required_fit_or_DEV_plateaus_below_precommitted_gate",
+      "failure_persists_across_relation_family_domain_composition_slices_not_one_template_or_data_hole",
+      "shortcut_and_label_leakage_probes_do_not_explain_failure",
+      "data_coverage_audit_finds_no_material_missing_capability_cell",
+      "interface_ablation_localizes_error_to_shared_representation_capacity_not_binder_executor_or_data_contract"
+    ],
+    "forbidden_shortcuts": [
+      "increase_size_because_one_historical_gate_failed",
+      "increase_size_before_correct_objective_is_trainable",
+      "blind_width_depth_grid_search",
+      "use_FINAL_or_TEST_results_to_choose_size",
+      "lower_behavioral_thresholds_instead_of_localizing_capacity"
+    ]
+  },
+  "comparison_protocol": {
+    "candidate_changes": "one capacity axis or one predeclared compound scaling rule per causal comparison",
+    "same_train_dev_curriculum_hashes": true,
+    "same_optimizer_family_and_loss_contract": true,
+    "same_final_data_unopened": true,
+    "compute_normalized_reporting": true,
+    "compare": [
+      "train_fit",
+      "heldout_relation_family",
+      "heldout_factor_combination",
+      "composition_extrapolation",
+      "candidate_cardinality_extrapolation",
+      "long_context_sparse_relevance",
+      "public_judgment_regression",
+      "latency",
+      "peak_memory",
+      "gpu_hours"
+    ],
+    "promotion_rule": "larger capacity is retained only if fixed DEV capability gain is material and cannot be explained by leakage, extra data, changed thresholds, or changed architecture semantics"
+  },
+  "scale_down_trigger": {
+    "allowed_only_if": [
+      "all_precommitted_DEV_gates_remain_satisfied",
+      "final_data_remains_unopened",
+      "latency_or_memory_gain_is_material",
+      "no_capability_slice_regresses_beyond_frozen_tolerance"
+    ],
+    "reduced_model_cannot_replace_full_capability_target": true
+  },
+  "authorization": {
+    "capacity_measurement": true,
+    "capacity_change_now": false,
+    "optimizer": false,
+    "gradient": false,
+    "gpu_training": false,
+    "final_validation_opening": false
+  }
+}
