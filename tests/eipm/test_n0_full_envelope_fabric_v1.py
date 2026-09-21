@@ -334,3 +334,52 @@ def test_latent_slot_seed_coordinates_are_count_stable() -> None:
         )
     )
     assert model.parameter_report()["slot_seed_coordinates_count_stable"] is True
+
+
+def test_public_judgment_probe_supports_padded_candidate_subsets() -> None:
+    from alice_personality.n0.public_judgment_probe_v1 import (
+        PublicJudgmentProbeConfig,
+        PublicJudgmentProbeV1,
+    )
+    from alice_personality.n0.full_envelope_behavioral_objectives_v1 import (
+        public_judgment_loss,
+    )
+
+    torch.manual_seed(707)
+    probe=PublicJudgmentProbeV1(
+        PublicJudgmentProbeConfig(
+            semantic_dim=24,
+            latent_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+        )
+    ).eval()
+    hidden=torch.randn(2,5,3,4,24)
+    token_mask=torch.ones(2,5,4,dtype=torch.bool)
+    valid=torch.tensor(
+        [[True,True,False,False,False],
+         [True,True,True,True,False]],
+        dtype=torch.bool,
+    )
+    token_mask[~valid]=False
+    with torch.no_grad():
+        out=probe(
+            pooled_state=torch.randn(2,24),
+            candidate_hidden_states=hidden,
+            candidate_token_mask=token_mask,
+            candidate_valid_mask=valid,
+        )
+    assert torch.equal(
+        out["candidate_logits"].masked_select(~valid),
+        torch.full_like(
+            out["candidate_logits"].masked_select(~valid),
+            -1.0e4,
+        ),
+    )
+    loss=public_judgment_loss(
+        out["candidate_logits"],
+        torch.tensor([1,3]),
+        candidate_valid_mask=valid,
+    )
+    assert torch.isfinite(loss)
+    assert probe.parameter_report()["padded_candidate_batching_supported"] is True
