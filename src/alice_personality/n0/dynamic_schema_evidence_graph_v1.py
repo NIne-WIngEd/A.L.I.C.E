@@ -80,6 +80,7 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
         relation_schema_state: Tensor,
         relation_mass: Tensor,
         relation_symmetric: Tensor,
+        semantic_activity: Tensor,
         operator_state: Tensor,
         message_steps: int,
     ) -> dict[str, Tensor]:
@@ -114,6 +115,15 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             raise ValueError("relation_mass must be [B,R]")
         if relation_symmetric.shape != (batch, relations) or relation_symmetric.dtype != torch.bool:
             raise ValueError("relation_symmetric must be bool [B,R]")
+        if semantic_activity.shape != (batch,):
+            raise ValueError("semantic_activity must be [B]")
+        if bool(
+            (
+                (semantic_activity < -1.0e-6)
+                | (semantic_activity > 1.0 + 1.0e-6)
+            ).any()
+        ):
+            raise ValueError("semantic_activity must stay inside [0,1]")
         if operator_state.shape != (batch, self.config.operator_dim):
             raise ValueError("operator_state shape drift")
 
@@ -185,7 +195,11 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
                 symmetric_message,
                 target_msg,
             )
-            semantic_gate = edge_relation_mass.clamp(0.0, 1.0).unsqueeze(-1)
+            semantic_gate_scalar = (
+                edge_relation_mass.clamp(0.0, 1.0)
+                * semantic_activity[:, None]
+            )
+            semantic_gate = semantic_gate_scalar.unsqueeze(-1)
             source_msg = (
                 source_msg
                 * semantic_gate
@@ -215,7 +229,7 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
                 dtype=node.dtype,
             )
             edge_gate = (
-                edge_relation_mass.clamp(0.0, 1.0)
+                semantic_gate_scalar
                 * edge_valid_mask.to(node.dtype)
             )
             node_gate.scatter_add_(1, source_index, edge_gate)
@@ -233,8 +247,14 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
         target_logits = self.target_read(read_input).squeeze(-1)
         source_weight = self._masked_softmax(source_logits, field_valid_mask)
         target_weight = self._masked_softmax(target_logits, field_valid_mask)
-        source_summary = (node * source_weight.unsqueeze(-1)).sum(dim=1)
-        target_summary = (node * target_weight.unsqueeze(-1)).sum(dim=1)
+        source_summary = (
+            (node * source_weight.unsqueeze(-1)).sum(dim=1)
+            * semantic_activity[:, None]
+        )
+        target_summary = (
+            (node * target_weight.unsqueeze(-1)).sum(dim=1)
+            * semantic_activity[:, None]
+        )
 
         return {
             "field_states": node,
@@ -243,6 +263,7 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             "target_weight": target_weight,
             "source_summary": source_summary,
             "target_summary": target_summary,
+            "semantic_activity": semantic_activity,
             "evidence_tokens": torch.stack([source_summary, target_summary], dim=1),
             "evidence_mask": torch.ones(batch, 2, dtype=torch.bool, device=node.device),
         }
@@ -258,6 +279,8 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             "edge_count_dependent_parameters": 0,
             "runtime_relation_schema": True,
             "continuous_relation_conditioning": True,
+            "soft_relational_activity_gate": True,
+            "zero_activity_preserves_pre_message_graph_state": True,
             "relation_mass_floor": 0.0,
             "continuous_node_update_gate": True,
             "runtime_relation_symmetry": True,
