@@ -1410,8 +1410,20 @@ class QSREProductionExecutor(nn.Module):
                 reverse_gate + bidirectional_reverse_gate,
             )
             next_frontier = next_frontier.clamp(max=1.0)
+
+            # relation_step_mass is a survival/continuation mass, not a command
+            # to erase state after STOP. next_frontier already contains the
+            # active step mass through common_gate. Carry the unconsumed
+            # frontier through an inactive/partially active tail so padding or a
+            # learned STOP event is semantically idempotent. Without this,
+            # every path shorter than the runtime step budget is destroyed by
+            # the first inactive slot, while a max-length path appears correct.
+            stepped_frontier = (
+                next_frontier
+                + (1.0 - step_mass[:, None]).clamp(min=0.0, max=1.0) * frontier
+            ).clamp(max=1.0)
             frontier = (
-                path_probability[:, None] * next_frontier
+                path_probability[:, None] * stepped_frontier
                 + (1.0 - path_probability[:, None]) * frontier
             )
 
