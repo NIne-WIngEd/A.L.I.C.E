@@ -20,8 +20,17 @@ def test_schema_matcher_has_no_relation_or_hop_parameter_axis() -> None:
     assert report["candidate_count_dependent_parameters"] == 0
     assert report["reasoning_step_dependent_parameters"] == 0
     assert report["shared_query_schema_projection"] is True
+    assert report["fixed_semantic_anchor"] is True
+    assert report["learned_projection_is_residual"] is True
+    assert report["shared_layer_mixture"] is True
+    assert report["bidirectional_pair_refinement"] is True
+    assert report["factor_identity_parameters"] == 0
     assert report["candidate_conditioned_query_evidence"] is True
     assert report["runtime_schema_cardinality_ceiling"] is None
+    assert all(
+        not parameter.requires_grad
+        for parameter in matcher().anchor_projection.parameters()
+    )
 
 
 def test_runtime_only_candidate_can_win_by_semantic_description() -> None:
