@@ -208,7 +208,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
         query_attention: Tensor,
         query_token_mask: Tensor,
         schema_match_projected: Tensor,
-        schema_relation_state: Tensor,
+        schema_match_summary: Tensor,
         schema_token_mask: Tensor,
     ) -> tuple[Tensor, Tensor]:
         batch, layers, query_tokens, _ = query_projected.shape
@@ -261,7 +261,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
         state_score = torch.einsum(
             "bd,rd->br",
             F.normalize(self.step_query(state), dim=-1),
-            F.normalize(schema_relation_state, dim=-1),
+            F.normalize(schema_match_summary, dim=-1),
         )
         semantic_score = 0.8 * grounded + 0.2 * state_score
         scale = self.relation_logit_scale.exp().clamp(max=100.0)
@@ -357,6 +357,13 @@ class QSREProductionOperatorInducerV2(nn.Module):
         if schema_relation_state.shape != (relations, self.config.model_dim):
             raise ValueError("schema relation-state shape drift")
         schema_match_projected = self.project_semantic(schema.token_states)
+        schema_match_mask = schema.token_mask[:, None, :, None].to(
+            schema_match_projected.dtype
+        )
+        schema_match_per_layer = (
+            schema_match_projected * schema_match_mask
+        ).sum(dim=2) / schema_match_mask.sum(dim=2).clamp_min(1.0)
+        schema_match_summary = schema_match_per_layer.mean(dim=1)
 
         memory = query_projected.reshape(batch, layers * tokens, -1)
         flat_valid = (
@@ -400,7 +407,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
                 query_attention=attention.squeeze(1),
                 query_token_mask=query_token_mask,
                 schema_match_projected=schema_match_projected,
-                schema_relation_state=schema_relation_state,
+                schema_match_summary=schema_match_summary,
                 schema_token_mask=schema.token_mask,
             )
 
@@ -459,7 +466,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
             expected_relation = torch.einsum(
                 "br,rd->bd",
                 relation_distribution,
-                schema_relation_state,
+                schema_match_summary,
             )
             next_state = self.step_transition(
                 torch.cat([expected_relation, attended.squeeze(1)], dim=-1),
@@ -579,6 +586,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
             "factor_state": factor_states,
             "schema_relation_state": schema_relation_state,
             "schema_match_token_state": schema_match_projected,
+            "schema_match_relation_state": schema_match_summary,
         }
 
     def parameter_report(self) -> dict[str, int | bool | None]:
@@ -593,6 +601,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
             "shared_query_schema_metric": True,
             "symmetric_late_interaction": True,
             "p1_schema_encoder_is_not_relation_match_authority": True,
+            "p1_schema_relation_state_is_interface_only_for_operator": True,
             "relation_selection_decoupled_from_stop_unknown": True,
             "cardinality_invariant_termination_event_head": True,
             "match_confidence_guides_unknown_rejection": True,
