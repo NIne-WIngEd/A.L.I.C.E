@@ -23,7 +23,10 @@ PATH_FAMILIES = {"path_role", "ordered_path", "three_hop", "path_latest"}
 
 def load_plan(path: Path) -> dict:
     data = json.loads(path.read_text(encoding="utf-8"))
-    if data.get("schema") != "alice.eipm.n0.qsre-production-training-plan.v1":
+    if data.get("schema") not in {
+        "alice.eipm.n0.qsre-production-training-plan.v1",
+        "alice.eipm.n0.qsre-production-training-plan.v2",
+    }:
         raise RuntimeError("production training-plan schema drift")
     return data
 
