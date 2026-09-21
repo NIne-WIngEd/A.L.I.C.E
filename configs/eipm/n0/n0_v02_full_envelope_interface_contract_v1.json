@@ -12,7 +12,11 @@
     "type_vocabulary_runtime_axis": true,
     "reasoning_step_runtime_axis": true,
     "relation_keys_semantic_tokens": false,
-    "factor_keys_semantic_tokens": false
+    "factor_keys_semantic_tokens": false,
+    "per_example_relation_candidate_subset": true,
+    "per_example_factor_candidate_subset": true,
+    "runtime_relation_symmetry": true,
+    "residual_program_survival_exposed_as_truncation": true
   },
   "structured_state_successor": {
     "preserve": [
@@ -109,7 +113,12 @@
       "ordered_evidence_coverage",
       "continuous_relation_hypotheses",
       "unknown_separate_from_stop",
-      "exact_nonrelational_fallback"
+      "exact_nonrelational_fallback",
+      "step_conditioned_direction",
+      "step_conditioned_modifiers",
+      "runtime_relation_symmetry",
+      "program_truncation_fail_closed",
+      "continuous_node_update_gates"
     ],
     "relation_identity_parameter_axis": false,
     "hop_identity_parameter_axis": false,
@@ -121,7 +130,10 @@
       "adaptive_zero_one_many_support",
       "no_fixed_topk",
       "exact_domain_range_constraints",
-      "relation_mass_from_operator"
+      "relation_mass_from_operator",
+      "explicit_null_support",
+      "masked_relation_exact_exclusion",
+      "padded_untyped_field_safety"
     ],
     "replace": [
       "final_layer_only_query_read",
@@ -146,7 +158,13 @@
     "no_fixed_runtime_relation_ontology": true,
     "no_fixed_runtime_factor_ontology": true,
     "no_private_identity_gradient": true,
-    "no_product_ceiling_from_checkpoint_shapes": true
+    "no_product_ceiling_from_checkpoint_shapes": true,
+    "no_silent_program_truncation": true,
+    "no_forced_support_when_null_is_best": true,
+    "no_hard_touched_edge_update_threshold": true,
+    "symmetric_relation_storage_orientation_invariant": true,
+    "mixed_direction_programs_supported": true,
+    "step_specific_modifiers_supported": true
   },
   "authorization": {
     "source_and_static_mechanics": true,
