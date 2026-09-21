@@ -45,11 +45,16 @@ class SemanticOperatorQSREAdapter(nn.Module):
         factor_distributions: Mapping[str, Tensor],
         factor_opcodes: Mapping[str, Sequence[str]],
     ) -> dict[str, Tensor]:
-        if set(factor_distributions) != set(factor_opcodes):
-            raise ValueError("factor distributions/opcode metadata names must match")
+        unknown = set(factor_opcodes) - set(factor_distributions)
+        if unknown:
+            raise ValueError(
+                "factor opcode metadata supplied for unknown semantic banks: "
+                + repr(sorted(unknown))
+            )
         result: dict[str, Tensor] = {}
-        for name, probability in factor_distributions.items():
-            opcodes = list(factor_opcodes[name])
+        for name, opcodes_raw in factor_opcodes.items():
+            probability = factor_distributions[name]
+            opcodes = list(opcodes_raw)
             if probability.ndim != 2 or probability.size(1) != len(opcodes):
                 raise ValueError(f"factor opcode cardinality drift for {name!r}")
             for index, opcode in enumerate(opcodes):
@@ -67,11 +72,16 @@ class SemanticOperatorQSREAdapter(nn.Module):
         factor_distributions: Mapping[str, Tensor],
         factor_opcodes: Mapping[str, Sequence[str]],
     ) -> dict[str, Tensor]:
-        if set(factor_distributions) != set(factor_opcodes):
-            raise ValueError("step factor distributions/opcode metadata names must match")
+        unknown = set(factor_opcodes) - set(factor_distributions)
+        if unknown:
+            raise ValueError(
+                "step factor opcode metadata supplied for unknown semantic banks: "
+                + repr(sorted(unknown))
+            )
         result: dict[str, Tensor] = {}
-        for name, probability in factor_distributions.items():
-            opcodes = list(factor_opcodes[name])
+        for name, opcodes_raw in factor_opcodes.items():
+            probability = factor_distributions[name]
+            opcodes = list(opcodes_raw)
             if probability.ndim != 3 or probability.size(-1) != len(opcodes):
                 raise ValueError(
                     f"step factor opcode cardinality drift for {name!r}"
@@ -282,6 +292,9 @@ class SemanticOperatorQSREAdapter(nn.Module):
             "relation_identity_parameters": 0,
             "structural_opcodes_are_runtime_metadata": True,
             "semantic_selection_owned_by_runtime_schema": True,
+            "structural_factor_mapping_may_be_subset_of_semantic_banks": True,
+            "semantic_only_factor_banks_supported": True,
+            "runtime_semantic_factor_bank_ceiling": None,
             "step_conditioned_direction_and_modifiers": True,
             "program_truncation_preserved": True,
             "relation_count_ceiling": None,
