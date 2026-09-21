@@ -1,0 +1,53 @@
+{
+  "schema": "alice.eipm.n0.latent-pool-stage-state.v0.61",
+  "authoritative_for_current_latent_stage": true,
+  "supersedes": "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.60.json",
+  "status": "JOB_575957_RELATION_ORDER_LOCALIZATION_RATIFIED;P2_V3_STATIC_CI_PASS;ONE_ZERO_GRADIENT_REAL_ARTIFACT_CPU_QUALIFICATION_AUTHORIZED;GPU_CLOSED",
+  "n0_complete": false,
+  "current_branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+  "evidence": {
+    "failed_model_job": 575956,
+    "localization_job": 575957,
+    "localization_result_sha256": "da87d9436a7d4a928e45ea65582ab432c9d43254e2d1cbbaa8235ad28627e55b",
+    "relation_identity_order_primary": true,
+    "active_survival_primary": false
+  },
+  "static_qualification": {
+    "workflow": "n0-qsre-production-p2-ordered-evidence-v3-contract",
+    "workflow_run_id": 35552250112,
+    "source_revision": "631d77612f11336a383a6d9d6eeec0526f2fca2e",
+    "conclusion": "SUCCESS",
+    "syntax": true,
+    "ordered_evidence_mechanics": true,
+    "localization_bound_contract": true,
+    "zero_gradient_real_artifact_boundary": true
+  },
+  "v3": {
+    "operator": "src/alice_personality/n0/qsre_production_operator_v3.py",
+    "trainer": "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py",
+    "plan": "configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json",
+    "recovery_contract": "configs/eipm/n0/n0_v02_qsre_p2_v3_recovery_contract_v1.json",
+    "real_artifact_qualifier": "scripts/eipm/n0/qualify_n0_v02_qsre_production_p2_v3_real_artifact_v1.py",
+    "cpu_sbatch": "scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_production_p2_v3_real_artifact_qualification_v1.sbatch"
+  },
+  "execution_policy": {
+    "p2_v2_gpu_training_authorized": false,
+    "p2_v3_gpu_training_authorized": false,
+    "zero_gradient_real_artifact_cpu_qualification_authorized": true,
+    "max_zero_gradient_real_artifact_cpu_qualification_runs": 1,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_chain_authorized": false,
+    "learning_rate_search_authorized": false,
+    "step_search_authorized": false,
+    "model_size_search_authorized": false,
+    "test_opening_authorized": false,
+    "frozen_final_opening_authorized": false,
+    "private_identity_gradient_authorized": false,
+    "production_promotion_authorized": false
+  },
+  "next_action": "Run exactly one CPU-only real-artifact P2-v3 qualification. Inspect and ratify its receipt before deciding whether exactly one P100 P2-v3 run is authorized.",
+  "private_identity_gradient": false,
+  "production_promotion_authorized": false
+}
