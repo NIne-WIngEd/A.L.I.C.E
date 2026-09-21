@@ -113,10 +113,12 @@ def test_remaining_support_decreases_when_candidate_evidence_is_consumed() -> No
 def test_frozen_authority_fusion_is_candidate_permutation_equivariant() -> None:
     joint = torch.tensor([[2.0, -1.0, 0.5]])
     semantic = torch.tensor([[0.1, 0.9, 0.4]])
+    principle = torch.tensor([[0.4, 0.7, 0.1]])
     token = torch.tensor([[0.8, 0.2, 0.5]])
     base = combine_authority_components(
         joint_preference=joint,
         semantic_projection=semantic,
+        principle_alignment=principle,
         token_evidence=token,
     )
     perm = torch.tensor([2, 0, 1])
@@ -124,6 +126,7 @@ def test_frozen_authority_fusion_is_candidate_permutation_equivariant() -> None:
     moved = combine_authority_components(
         joint_preference=joint[:, perm],
         semantic_projection=semantic[:, perm],
+        principle_alignment=principle[:, perm],
         token_evidence=token[:, perm],
     )
     assert torch.allclose(base, moved[:, inverse], atol=1e-6, rtol=1e-6)
@@ -134,6 +137,7 @@ def test_runtime_subset_is_applied_before_candidate_normalization() -> None:
         "relation": {
             "joint_preference": torch.tensor([[[1.0, 2.0, 100.0]]]),
             "semantic_projection": torch.tensor([[[1.0, 3.0, -100.0]]]),
+            "principle_alignment": torch.tensor([[[0.5, 0.8, 90.0]]]),
         }
     }
     sliced = slice_relation_authority(
