@@ -74,6 +74,8 @@ def load_closure_matcher(
     factor_cache_path: Path,
 ) -> tuple[dict, dict, dict]:
     result = json.loads(result_path.read_text())
+    if result.get("schema") != "alice.eipm.n0.qsre-closure-matcher-result.v2":
+        raise SystemExit("closure schema matcher result version drift")
     if result.get("status") != "PASS_QSRE_CLOSURE_SCHEMA_MATCHER":
         raise SystemExit("closure schema matcher did not pass")
     selected = result.get("selected")
@@ -84,7 +86,7 @@ def load_closure_matcher(
     if sha256(path) != selected["checkpoint_sha256"]:
         raise SystemExit("closure schema matcher checkpoint hash drift")
     payload = torch.load(path, map_location="cpu")
-    if payload.get("schema") != "alice.eipm.n0.qsre-closure-matcher-checkpoint.v1":
+    if payload.get("schema") != "alice.eipm.n0.qsre-closure-matcher-checkpoint.v2":
         raise SystemExit("closure schema matcher checkpoint schema drift")
     factor_cache = torch.load(factor_cache_path, map_location="cpu")
     if factor_cache.get("schema") != "alice.eipm.n0.qsre-closure-factor-schema-cache.v1":
