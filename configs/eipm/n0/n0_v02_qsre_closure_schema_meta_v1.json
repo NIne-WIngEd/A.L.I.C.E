@@ -1,0 +1,580 @@
+{
+  "schema": "alice.eipm.n0.qsre-closure-schema-meta.v1",
+  "status": "PRECOMMITTED_PUBLIC_IDENTITY_NEUTRAL_SCHEMA_GENERALIZATION_SUBSTRATE",
+  "purpose": "Train one relation-identity-independent semantic matcher on many runtime schema meanings before Production operator learning, then freeze it so six core relations cannot become an implicit ontology and unseen runtime descriptions cannot be destroyed by P2 optimization.",
+  "forbidden_semantics": [
+    "CONFLICTS_WITH",
+    "EXEMPLIFIES",
+    "PREREQUISITE_FOR",
+    "PART_OF",
+    "ENABLES",
+    "PREVENTS"
+  ],
+  "relation_train": [
+    {
+      "key": "AUTHORED_BY",
+      "description": "The source work was written or composed by the target person or organization.",
+      "train_phrases": [
+        "was written by",
+        "was authored by",
+        "credits its writing to"
+      ],
+      "heldout_phrases": [
+        "lists as its writer",
+        "names as the author of"
+      ]
+    },
+    {
+      "key": "LOCATED_AT",
+      "description": "The source entity is situated or found at the target place.",
+      "train_phrases": [
+        "is located at",
+        "can be found at",
+        "is situated at"
+      ],
+      "heldout_phrases": [
+        "occupies a location at",
+        "resides at the place"
+      ]
+    },
+    {
+      "key": "MEASURED_BY",
+      "description": "The source quantity or phenomenon is measured using the target instrument or method.",
+      "train_phrases": [
+        "is measured by",
+        "is quantified using",
+        "uses the measurement method"
+      ],
+      "heldout_phrases": [
+        "is assessed with",
+        "takes its measurement from"
+      ]
+    },
+    {
+      "key": "REFERENCES",
+      "description": "The source text explicitly refers to or cites the target item.",
+      "train_phrases": [
+        "references",
+        "cites",
+        "points the reader to"
+      ],
+      "heldout_phrases": [
+        "makes an explicit reference to",
+        "directly cites"
+      ]
+    },
+    {
+      "key": "SUMMARIZES",
+      "description": "The source text condenses the main content of the target material.",
+      "train_phrases": [
+        "summarizes",
+        "gives a condensed account of",
+        "provides a short summary of"
+      ],
+      "heldout_phrases": [
+        "compresses the main points of",
+        "offers a concise account of"
+      ]
+    },
+    {
+      "key": "QUOTES",
+      "description": "The source reproduces words or a passage from the target.",
+      "train_phrases": [
+        "quotes",
+        "reproduces a passage from",
+        "uses the exact words of"
+      ],
+      "heldout_phrases": [
+        "includes a quotation from",
+        "repeats wording from"
+      ]
+    },
+    {
+      "key": "LABELED_AS",
+      "description": "The source item is assigned the target label or category name.",
+      "train_phrases": [
+        "is labeled as",
+        "carries the label",
+        "is tagged with the label"
+      ],
+      "heldout_phrases": [
+        "is classified under the label",
+        "has been given the label"
+      ]
+    },
+    {
+      "key": "PREDICTS",
+      "description": "The source model or statement forecasts the target outcome.",
+      "train_phrases": [
+        "predicts",
+        "forecasts",
+        "anticipates the outcome"
+      ],
+      "heldout_phrases": [
+        "projects that",
+        "gives a prediction of"
+      ]
+    },
+    {
+      "key": "OBSERVED_DURING",
+      "description": "The source event or signal was observed during the target interval or activity.",
+      "train_phrases": [
+        "was observed during",
+        "appeared during",
+        "was detected during"
+      ],
+      "heldout_phrases": [
+        "was seen in the course of",
+        "was recorded during"
+      ]
+    },
+    {
+      "key": "PUBLISHED_BY",
+      "description": "The source work was published or issued by the target organization.",
+      "train_phrases": [
+        "was published by",
+        "was issued by",
+        "lists as its publisher"
+      ],
+      "heldout_phrases": [
+        "came out through",
+        "was released by the publisher"
+      ]
+    },
+    {
+      "key": "TESTED_WITH",
+      "description": "The source component or hypothesis was tested using the target method or apparatus.",
+      "train_phrases": [
+        "was tested with",
+        "was evaluated using",
+        "underwent testing with"
+      ],
+      "heldout_phrases": [
+        "was checked using",
+        "was experimentally tested with"
+      ]
+    },
+    {
+      "key": "STORED_IN",
+      "description": "The source data or artifact is stored in the target repository or medium.",
+      "train_phrases": [
+        "is stored in",
+        "is kept in",
+        "resides in the storage system"
+      ],
+      "heldout_phrases": [
+        "is retained inside",
+        "has its data stored in"
+      ]
+    },
+    {
+      "key": "DISPLAYED_ON",
+      "description": "The source content is visually presented on the target interface or device.",
+      "train_phrases": [
+        "is displayed on",
+        "appears on the display",
+        "is shown on"
+      ],
+      "heldout_phrases": [
+        "is rendered on",
+        "is presented visually on"
+      ]
+    },
+    {
+      "key": "MENTIONS",
+      "description": "The source text names or mentions the target without asserting a stronger relation.",
+      "train_phrases": [
+        "mentions",
+        "names",
+        "refers to by name"
+      ],
+      "heldout_phrases": [
+        "contains a mention of",
+        "briefly names"
+      ]
+    },
+    {
+      "key": "TRANSLATED_TO",
+      "description": "The source expression or document is translated into the target language or representation.",
+      "train_phrases": [
+        "is translated to",
+        "is rendered into the language",
+        "has a translation into"
+      ],
+      "heldout_phrases": [
+        "is converted by translation to",
+        "is expressed in the target language"
+      ]
+    },
+    {
+      "key": "COMMUNICATES_WITH",
+      "description": "The source participant exchanges messages or signals with the target participant.",
+      "train_phrases": [
+        "communicates with",
+        "exchanges messages with",
+        "sends and receives signals with"
+      ],
+      "heldout_phrases": [
+        "maintains communication with",
+        "is in message exchange with"
+      ]
+    }
+  ],
+  "relation_holdout": [
+    {
+      "key": "VERIFIED_BY",
+      "description": "The source claim, result, or artifact was checked and verified by the target procedure or reviewer.",
+      "phrases": [
+        "was verified by",
+        "was independently checked by",
+        "received verification from"
+      ]
+    },
+    {
+      "key": "ROUTED_THROUGH",
+      "description": "The source traffic, request, or flow passes through the target intermediary.",
+      "phrases": [
+        "is routed through",
+        "passes through the intermediary",
+        "travels by way of"
+      ]
+    },
+    {
+      "key": "PURCHASED_FROM",
+      "description": "The source item was bought or acquired from the target seller.",
+      "phrases": [
+        "was purchased from",
+        "was bought from",
+        "was acquired from the seller"
+      ]
+    },
+    {
+      "key": "SCHEDULED_AFTER",
+      "description": "The source activity is scheduled to occur after the target activity.",
+      "phrases": [
+        "is scheduled after",
+        "is planned for a time following",
+        "will occur later than"
+      ]
+    },
+    {
+      "key": "RECORDED_BY",
+      "description": "The source event or measurement was recorded by the target device or observer.",
+      "phrases": [
+        "was recorded by",
+        "was captured by",
+        "has a record made by"
+      ]
+    },
+    {
+      "key": "ACCOMPANIES",
+      "description": "The source item occurs or appears together with the target item without implying causation.",
+      "phrases": [
+        "accompanies",
+        "appears together with",
+        "occurs alongside"
+      ]
+    },
+    {
+      "key": "FILTERED_BY",
+      "description": "The source stream or set is filtered using the target rule or mechanism.",
+      "phrases": [
+        "is filtered by",
+        "passes through the filter",
+        "is screened using"
+      ]
+    },
+    {
+      "key": "NAMED_AFTER",
+      "description": "The source entity received its name in reference to the target entity.",
+      "phrases": [
+        "is named after",
+        "takes its name from",
+        "was named in honor of"
+      ]
+    }
+  ],
+  "factors": {
+    "role": [
+      {
+        "key": "SOURCE",
+        "description": "Select the source-side endpoint that originates, provides, or performs the requested relation.",
+        "train_phrases": [
+          "which record is doing the relational work",
+          "return the source-side record",
+          "which endpoint originates the relation"
+        ],
+        "heldout_phrases": [
+          "identify the relation's source endpoint",
+          "which participant is on the source side"
+        ]
+      },
+      {
+        "key": "TARGET",
+        "description": "Select the receiving target-side endpoint reached or acted on by the requested relation.",
+        "train_phrases": [
+          "which record is on the receiving side",
+          "return the target-side record",
+          "which endpoint is reached"
+        ],
+        "heldout_phrases": [
+          "identify the relation's target endpoint",
+          "which participant receives the relation"
+        ]
+      },
+      {
+        "key": "SYMMETRIC",
+        "description": "Preserve both endpoints equally because neither endpoint is the requested directional winner.",
+        "train_phrases": [
+          "return both participants",
+          "keep the two endpoints as a co-valid pair",
+          "preserve both endpoints"
+        ],
+        "heldout_phrases": [
+          "treat both sides as equally valid",
+          "do not choose a directional winner"
+        ]
+      },
+      {
+        "key": "NONE",
+        "description": "No relational endpoint role should be selected because the request is fallback, deferred, or ungrounded.",
+        "train_phrases": [
+          "no relational endpoint is requested",
+          "preserve uncertainty instead of choosing an endpoint"
+        ],
+        "heldout_phrases": [
+          "do not select either endpoint",
+          "there is no grounded endpoint role"
+        ]
+      }
+    ],
+    "traversal": [
+      {
+        "key": "LOCAL_SELECT",
+        "description": "Use one local relation and select its requested endpoint rather than following a multi-step route or combining many links.",
+        "train_phrases": [
+          "use this single relationship",
+          "which record is reached by that relationship",
+          "select the endpoint of the link"
+        ],
+        "heldout_phrases": [
+          "resolve one local relation step",
+          "use the immediate link only"
+        ]
+      },
+      {
+        "key": "PATH",
+        "description": "Follow an ordered sequence of relation steps from a focused starting or ending endpoint.",
+        "train_phrases": [
+          "follow the ordered route",
+          "first use one relationship then another",
+          "trace the multi-step path"
+        ],
+        "heldout_phrases": [
+          "walk the relation chain in order",
+          "follow a sequence of links"
+        ]
+      },
+      {
+        "key": "AGGREGATE",
+        "description": "Consider multiple matching links or endpoints together and preserve, combine, or arbitrate among them.",
+        "train_phrases": [
+          "return both matching records",
+          "two links match the request",
+          "consider the matching links together"
+        ],
+        "heldout_phrases": [
+          "aggregate across the matching relations",
+          "evaluate multiple valid links together"
+        ]
+      }
+    ],
+    "direction": [
+      {
+        "key": "FORWARD",
+        "description": "Traverse from a relation source toward its target in the relation's forward direction.",
+        "train_phrases": [
+          "begin at the source and move to the target",
+          "follow the relationship forward"
+        ],
+        "heldout_phrases": [
+          "traverse source to target",
+          "use forward relation direction"
+        ]
+      },
+      {
+        "key": "REVERSE",
+        "description": "Traverse backward from a relation target toward its source.",
+        "train_phrases": [
+          "trace backward from the endpoint",
+          "follow the relationship in reverse"
+        ],
+        "heldout_phrases": [
+          "traverse target to source",
+          "reverse the relation direction"
+        ]
+      },
+      {
+        "key": "BIDIRECTIONAL",
+        "description": "Treat both directions or both endpoints as valid without imposing one directed traversal.",
+        "train_phrases": [
+          "keep both directions valid",
+          "do not impose a directional winner"
+        ],
+        "heldout_phrases": [
+          "use bidirectional semantics",
+          "preserve both endpoint directions"
+        ]
+      }
+    ],
+    "control": [
+      {
+        "key": "RELATIONAL",
+        "description": "The request is grounded in the supplied relation schema and should execute relational reasoning.",
+        "train_phrases": [
+          "use the requested relationship",
+          "follow the relation",
+          "apply the supplied relation semantics"
+        ],
+        "heldout_phrases": [
+          "execute relational reasoning",
+          "the query has a grounded relation"
+        ]
+      },
+      {
+        "key": "FALLBACK",
+        "description": "The request does not need relational execution and should pass through to the base non-relational path.",
+        "train_phrases": [
+          "answer without using the graph",
+          "the request is ordinary non-relational interpretation"
+        ],
+        "heldout_phrases": [
+          "use the base path instead of relation execution",
+          "relational reasoning is not applicable"
+        ]
+      },
+      {
+        "key": "DEFER",
+        "description": "Relational intent exists or may exist but the available schema or request is insufficient, so preserve uncertainty and defer.",
+        "train_phrases": [
+          "the requested relationship is not supplied",
+          "the relation is underspecified",
+          "preserve uncertainty"
+        ],
+        "heldout_phrases": [
+          "defer because the schema cannot ground the relation",
+          "do not force an unsupported relation"
+        ]
+      }
+    ],
+    "modifiers": [
+      {
+        "key": "RELIABILITY",
+        "on_description": "Prefer stronger reliability, provenance, or verification when multiple relation paths remain valid.",
+        "off_description": "Do not use reliability or verification as an arbitration criterion for this request.",
+        "train_on": [
+          "prefer the stronger provenance",
+          "use the better verified link"
+        ],
+        "train_off": [
+          "no reliability preference is requested"
+        ],
+        "heldout_on": [
+          "choose using evidential reliability",
+          "arbitrate by verification strength"
+        ],
+        "heldout_off": [
+          "ignore reliability as a selection factor"
+        ]
+      },
+      {
+        "key": "RECENCY",
+        "on_description": "Prefer the latest applicable state or most recent valid relation when multiple candidates remain.",
+        "off_description": "Do not use recency or latest-state preference for this request.",
+        "train_on": [
+          "use the latest applicable state",
+          "prefer the more recent link"
+        ],
+        "train_off": [
+          "no latest-state preference is requested"
+        ],
+        "heldout_on": [
+          "arbitrate by recency",
+          "choose the newest applicable relation"
+        ],
+        "heldout_off": [
+          "do not use recency as a criterion"
+        ]
+      },
+      {
+        "key": "TEMPORAL_CONSTRAINT",
+        "on_description": "Require that a relation satisfy the request's stated time window or temporal scope.",
+        "off_description": "No explicit time-window constraint should filter relation support.",
+        "train_on": [
+          "only one is valid for the time window",
+          "satisfy the requested time scope"
+        ],
+        "train_off": [
+          "there is no time-window restriction"
+        ],
+        "heldout_on": [
+          "enforce the temporal scope",
+          "filter by the requested interval"
+        ],
+        "heldout_off": [
+          "do not apply a temporal filter"
+        ]
+      },
+      {
+        "key": "PROVENANCE_CONSTRAINT",
+        "on_description": "Require that a relation come from the provenance class authorized by the request.",
+        "off_description": "No provenance-class constraint should filter relation support.",
+        "train_on": [
+          "use the required provenance",
+          "only the authorized provenance class"
+        ],
+        "train_off": [
+          "there is no provenance-class restriction"
+        ],
+        "heldout_on": [
+          "enforce source provenance compatibility",
+          "filter by the authorized provenance class"
+        ],
+        "heldout_off": [
+          "do not apply a provenance-class filter"
+        ]
+      }
+    ]
+  },
+  "generation": {
+    "train_examples_per_relation": 24,
+    "holdout_examples_per_relation": 12,
+    "abstract_entity_prefixes": [
+      "Aster",
+      "Beryl",
+      "Cinder",
+      "Dorian",
+      "Elio",
+      "Fenn",
+      "Galen",
+      "Hera",
+      "Ivo",
+      "Juno",
+      "Kora",
+      "Lyra"
+    ],
+    "query_views_per_example": 2,
+    "seed": 20260921
+  },
+  "governance": {
+    "public_only": true,
+    "private_identity_data": false,
+    "production_open_schema_descriptions_in_gradient": false,
+    "final_validation_relation_descriptions_in_gradient": false,
+    "auxiliary_holdout_relation_descriptions_in_gradient": false,
+    "matcher_has_relation_identity_parameters": false,
+    "matcher_is_frozen_before_production_p2": true,
+    "no_lr_step_width_search": true,
+    "no_automatic_rerun": true
+  }
+}
