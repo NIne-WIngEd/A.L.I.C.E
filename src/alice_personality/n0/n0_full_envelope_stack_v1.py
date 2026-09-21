@@ -332,6 +332,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             edge_temporal_match=edge_temporal_match,
             edge_provenance_match=edge_provenance_match,
             relation_schema_state=relation_state,
+            relation_symmetric=relation_symmetric,
             operator=operator,
             focus_field_weight=binder["focus_field_weight"],
         )
