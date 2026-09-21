@@ -104,6 +104,76 @@ class FullEnvelopeOperatorState:
             raise ValueError("continuous_state shape drift")
         if self.uncertainty.shape != (batch,):
             raise ValueError("uncertainty must be [B]")
+        probability_tensors = (
+            ("relation_step_mass", self.relation_step_mass),
+            ("stop_probability", self.stop_probability),
+            ("unknown_probability", self.unknown_probability),
+            ("truncation_probability", self.truncation_probability),
+            ("modifier_weight", self.modifier_weight),
+            ("step_modifier_weight", self.step_modifier_weight),
+            ("applicability", self.applicability),
+            ("uncertainty", self.uncertainty),
+        )
+        for name, tensor in probability_tensors:
+            if bool(((tensor < -1.0e-6) | (tensor > 1.0 + 1.0e-6)).any()):
+                raise ValueError(f"{name} must stay inside [0,1]")
+
+        normalized_distributions = (
+            ("relation_distribution", self.relation_distribution),
+            ("role_distribution", self.role_distribution),
+            ("traversal_distribution", self.traversal_distribution),
+            ("direction_distribution", self.direction_distribution),
+            ("step_direction_distribution", self.step_direction_distribution),
+            ("control_distribution", self.control_distribution),
+        )
+        for name, tensor in normalized_distributions:
+            if bool(((tensor < -1.0e-6) | (tensor > 1.0 + 1.0e-6)).any()):
+                raise ValueError(f"{name} must stay inside [0,1]")
+            total = tensor.sum(dim=-1)
+            if not torch.allclose(
+                total,
+                torch.ones_like(total),
+                atol=1.0e-5,
+                rtol=1.0e-5,
+            ):
+                raise ValueError(f"{name} must sum to one on its candidate axis")
+
+        event_mass = (
+            self.relation_step_mass
+            + self.stop_probability
+            + self.unknown_probability
+        )
+        expected_mass = torch.cat(
+            [
+                torch.ones(
+                    batch,
+                    1,
+                    device=event_mass.device,
+                    dtype=event_mass.dtype,
+                ),
+                self.relation_step_mass[:, :-1],
+            ],
+            dim=1,
+        )
+        if not torch.allclose(
+            event_mass,
+            expected_mass,
+            atol=1.0e-5,
+            rtol=1.0e-5,
+        ):
+            raise ValueError(
+                "relation/stop/unknown masses violate recurrent survival conservation"
+            )
+        if not torch.allclose(
+            self.truncation_probability,
+            self.relation_step_mass[:, -1],
+            atol=1.0e-5,
+            rtol=1.0e-5,
+        ):
+            raise ValueError(
+                "truncation_probability must equal residual survival after final slot"
+            )
+
         for name, tensor in (
             ("relation_distribution", self.relation_distribution),
             ("relation_step_mass", self.relation_step_mass),
