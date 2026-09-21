@@ -214,6 +214,11 @@ assert full_scale["scale_policy"]["current_training_steps_are_serving_ceiling"] 
 assert full_scale["architecture"]["semantic_authority_gradient"] is False
 assert full_scale["architecture"]["exact_relation_sparsity_before_binder"] is False
 assert full_scale["architecture"]["binder_owns_exact_structural_sparsity"] is True
+selected_graph=full_scale["preselected_full_scale_inputs"]["selected_repaired_evidence_graph"]
+assert selected_graph["sha256"]=="3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f"
+assert selected_graph["production_promotion_claim"] is False
+assert selected_graph["package_role"]=="preselected full-scale base evidence parent"
+assert full_scale["architecture"]["old_canonical_graph_is_full_scale_parent"] is False
 assert full_scale["governance"]["automatic_rerun"] is False
 assert full_scale["governance"]["threshold_change_after_results"] is False
 
