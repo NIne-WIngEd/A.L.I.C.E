@@ -63,6 +63,33 @@ class SemanticOperatorQSREAdapter(nn.Module):
         return result
 
     @staticmethod
+    def _step_opcode_mass(
+        factor_distributions: Mapping[str, Tensor],
+        factor_opcodes: Mapping[str, Sequence[str]],
+    ) -> dict[str, Tensor]:
+        if set(factor_distributions) != set(factor_opcodes):
+            raise ValueError("step factor distributions/opcode metadata names must match")
+        result: dict[str, Tensor] = {}
+        for name, probability in factor_distributions.items():
+            opcodes = list(factor_opcodes[name])
+            if probability.ndim != 3 or probability.size(-1) != len(opcodes):
+                raise ValueError(
+                    f"step factor opcode cardinality drift for {name!r}"
+                )
+            for index, opcode in enumerate(opcodes):
+                if opcode not in SUPPORTED_STRUCTURAL_OPCODES:
+                    raise ValueError(
+                        f"unsupported structural opcode {opcode!r}; "
+                        "new executable primitives require an explicit architecture version"
+                    )
+                value = probability[:, :, index]
+                result[opcode] = result.get(
+                    opcode,
+                    torch.zeros_like(value),
+                ) + value
+        return result
+
+    @staticmethod
     def _canonical_distribution(
         mass: Mapping[str, Tensor],
         opcodes: Sequence[str],
@@ -100,6 +127,51 @@ class SemanticOperatorQSREAdapter(nn.Module):
         denom = (off + on).clamp_min(1.0e-12)
         return (on / denom).to(device=device, dtype=dtype)
 
+    @staticmethod
+    def _canonical_step_distribution(
+        mass: Mapping[str, Tensor],
+        opcodes: Sequence[str],
+        *,
+        batch: int,
+        steps: int,
+        device: torch.device,
+        dtype: torch.dtype,
+    ) -> Tensor:
+        rows = []
+        for opcode in opcodes:
+            if opcode not in mass:
+                raise ValueError(f"required structural opcode missing: {opcode}")
+            rows.append(mass[opcode])
+        value = torch.stack(rows, dim=-1).to(device=device, dtype=dtype)
+        if value.shape[:2] != (batch, steps):
+            raise ValueError("step structural opcode geometry drift")
+        return value / value.sum(dim=-1, keepdim=True).clamp_min(1.0e-12)
+
+    @staticmethod
+    def _step_modifier_probability(
+        mass: Mapping[str, Tensor],
+        off_opcode: str,
+        on_opcode: str,
+        *,
+        batch: int,
+        steps: int,
+        device: torch.device,
+        dtype: torch.dtype,
+    ) -> Tensor:
+        off = mass.get(off_opcode)
+        on = mass.get(on_opcode)
+        if off is None and on is None:
+            return torch.zeros(batch, steps, device=device, dtype=dtype)
+        if off is None:
+            off = torch.zeros_like(on)
+        if on is None:
+            on = torch.zeros_like(off)
+        denom = (off + on).clamp_min(1.0e-12)
+        value = (on / denom).to(device=device, dtype=dtype)
+        if value.shape != (batch, steps):
+            raise ValueError("step modifier geometry drift")
+        return value
+
     def forward(
         self,
         *,
@@ -116,6 +188,10 @@ class SemanticOperatorQSREAdapter(nn.Module):
 
         mass = self._opcode_mass(
             semantic_operator.factor_distributions,
+            factor_opcodes,
+        )
+        step_mass_by_opcode = self._step_opcode_mass(
+            semantic_operator.step_factor_distributions,
             factor_opcodes,
         )
         device = relation.device
@@ -141,6 +217,29 @@ class SemanticOperatorQSREAdapter(nn.Module):
             ],
             dim=-1,
         )
+        step_direction = self._canonical_step_distribution(
+            step_mass_by_opcode,
+            DIRECTION_OPCODES,
+            batch=batch,
+            steps=steps,
+            device=device,
+            dtype=dtype,
+        )
+        step_modifier = torch.stack(
+            [
+                self._step_modifier_probability(
+                    step_mass_by_opcode,
+                    off,
+                    on,
+                    batch=batch,
+                    steps=steps,
+                    device=device,
+                    dtype=dtype,
+                )
+                for off, on in MODIFIER_OPCODES
+            ],
+            dim=-1,
+        )
 
         step_mass = semantic_operator.relation_step_mass
         normalizer = step_mass.sum(dim=1, keepdim=True).clamp_min(1.0e-6)
@@ -157,7 +256,9 @@ class SemanticOperatorQSREAdapter(nn.Module):
             role_distribution=role,
             traversal_distribution=traversal,
             direction_distribution=direction,
+            step_direction_distribution=step_direction,
             modifier_weight=modifier,
+            step_modifier_weight=step_modifier,
             applicability=semantic_operator.applicability,
             control_distribution=control,
             continuous_state=semantic_operator.continuous_state,
@@ -180,6 +281,7 @@ class SemanticOperatorQSREAdapter(nn.Module):
             "relation_identity_parameters": 0,
             "structural_opcodes_are_runtime_metadata": True,
             "semantic_selection_owned_by_runtime_schema": True,
+            "step_conditioned_direction_and_modifiers": True,
             "relation_count_ceiling": None,
             "factor_candidate_count_ceiling": None,
         }
