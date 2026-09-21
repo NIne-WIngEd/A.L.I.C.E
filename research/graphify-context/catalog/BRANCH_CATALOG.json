@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "7bc0637c3650c224a7072a09bb2b09bbc82bc95f",
-      "head_committed_at": "2026-09-21T10:19:57-05:00",
-      "head_message": "context(n0): record final full-scale closure frontier",
+      "head": "97fbe41ecce0026054e10d895c198d344969d224",
+      "head_committed_at": "2026-09-21T11:29:27-05:00",
+      "head_message": "context(n0): record job 575986 P2A valid failure",
       "status": "diverged",
-      "ahead": 234,
+      "ahead": 235,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 581,
+      "changed_file_count_vs_source_merge_base": 582,
       "knowledge_surface": true
     },
     {
@@ -389,14 +389,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "ad4afdaee87726787efc9cbcaf7a8664553628d4",
-      "head_committed_at": "2026-09-21T10:18:17-05:00",
-      "head_message": "trace(fbm): record final full-scale N0 closure package",
+      "head": "0accefa3139f93a8823bcd19e80fa711af0e94ef",
+      "head_committed_at": "2026-09-21T11:29:31-05:00",
+      "head_message": "trace(fbm): record job 575986 P2A valid failure",
       "status": "diverged",
-      "ahead": 108,
+      "ahead": 109,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 107,
+      "changed_file_count_vs_source_merge_base": 108,
       "knowledge_surface": true
     },
     {

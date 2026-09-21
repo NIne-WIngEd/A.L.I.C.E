@@ -68,9 +68,9 @@
   },
   "continuity_branch_head": {
     "branch": "alice-context",
-    "head": "7bc0637c3650c224a7072a09bb2b09bbc82bc95f",
-    "head_committed_at": "2026-09-21T10:19:57-05:00",
-    "head_message": "context(n0): record final full-scale closure frontier"
+    "head": "97fbe41ecce0026054e10d895c198d344969d224",
+    "head_committed_at": "2026-09-21T11:29:27-05:00",
+    "head_message": "context(n0): record job 575986 P2A valid failure"
   },
   "unmerged_experiment_frontier": {
     "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -4167,7 +4167,7 @@
     "stale_relative_to_unmerged_experiment_frontier": true,
     "newest_experiment_frontier_time": "2026-09-21T10:12:57-05:00",
     "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
-    "context_branch_head_time": "2026-09-21T10:19:57-05:00"
+    "context_branch_head_time": "2026-09-21T11:29:27-05:00"
   },
   "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
   "authority": "routing-and-freshness-only"
