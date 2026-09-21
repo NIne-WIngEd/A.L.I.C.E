@@ -213,6 +213,68 @@ class SemanticContextVirtualizerV1:
             ),
         }
 
+    def stitch_owned_content(
+        self,
+        *,
+        segment_hidden_states: Tensor,
+        segmented: dict[str, Tensor],
+    ) -> tuple[Tensor, Tensor]:
+        """Reconstruct unique downstream token states from encoded segments.
+
+        This is intended for long queries/schema text that exceed one native
+        encoder window. Overlap participates in local encoding but only the
+        unique owned token state is retained downstream.
+        """
+        if segment_hidden_states.ndim != 5:
+            raise ValueError(
+                "segment_hidden_states must be [B,G,L,W,D]"
+            )
+        batch, segments, layers, window, width = segment_hidden_states.shape
+        if segmented["segment_content_mask"].shape != (
+            batch,
+            segments,
+            window,
+        ):
+            raise ValueError("segment content-mask geometry drift")
+        lengths = segmented["original_lengths"]
+        if lengths.shape != (batch,):
+            raise ValueError("original_lengths shape drift")
+        max_tokens = int(lengths.max().item())
+        stitched = torch.zeros(
+            batch,
+            layers,
+            max_tokens,
+            width,
+            dtype=segment_hidden_states.dtype,
+            device=segment_hidden_states.device,
+        )
+        stitched_mask = torch.zeros(
+            batch,
+            max_tokens,
+            dtype=torch.bool,
+            device=segment_hidden_states.device,
+        )
+
+        for b in range(batch):
+            cursor = 0
+            for g in range(segments):
+                if not bool(segmented["segment_valid_mask"][b, g]):
+                    continue
+                owned = segmented["segment_content_mask"][b, g]
+                count = int(owned.sum().item())
+                if count == 0:
+                    continue
+                values = segment_hidden_states[b, g, :, owned, :]
+                stitched[b, :, cursor : cursor + count, :] = values
+                stitched_mask[b, cursor : cursor + count] = True
+                cursor += count
+            if cursor != int(lengths[b].item()):
+                raise RuntimeError(
+                    "stitched query content length does not match original token length"
+                )
+
+        return stitched, stitched_mask
+
     def parameter_report(self) -> dict[str, Any]:
         return {
             "total_parameters": 0,
@@ -223,4 +285,5 @@ class SemanticContextVirtualizerV1:
             "segment_count_ceiling": None,
             "product_context_token_ceiling": None,
             "lossless_content_ownership": True,
+            "long_query_stitching": True,
         }
