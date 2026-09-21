@@ -7,6 +7,10 @@ import torch
 import torch.nn.functional as F
 from torch import Tensor, nn
 
+from alice_personality.n0.chunked_late_interaction import (
+    chunked_batched_bidirectional_late_max,
+)
+
 from alice_personality.n0.qsre_production_binder_v2 import masked_sparsemax
 from alice_personality.n0.qsre_production_core import (
     CONTROL_RELATIONAL,
@@ -20,6 +24,7 @@ class FullEnvelopeBinderConfig:
     model_dim: int = 640
     num_hidden_states: int = 17
     edge_metadata_dim: int = 4
+    interaction_chunk_tokens: int = 128
 
     def validate(self) -> None:
         for name, value in (
@@ -27,6 +32,7 @@ class FullEnvelopeBinderConfig:
             ("model_dim", self.model_dim),
             ("num_hidden_states", self.num_hidden_states),
             ("edge_metadata_dim", self.edge_metadata_dim),
+            ("interaction_chunk_tokens", self.interaction_chunk_tokens),
         ):
             if int(value) <= 0:
                 raise ValueError(f"{name} must be positive")
@@ -75,13 +81,13 @@ class FullEnvelopeQSREBinderV1(nn.Module):
         # query [B,L,T,D], field [B,F,L,S,D] -> [B,F]
         q = F.normalize(self.query_projection(query.float()), dim=-1)
         f = F.normalize(self.field_projection(field.float()), dim=-1)
-        similarity = torch.einsum("bltd,bflsd->bflts", q, f)
-        q_valid = query_mask[:, None, None, :, None]
-        f_valid = field_mask[:, :, None, None, :]
-        valid = q_valid & f_valid
-        similarity = similarity.masked_fill(~valid, -1.0e4)
-        q_to_f = similarity.max(dim=-1).values
-        f_to_q = similarity.max(dim=-2).values
+        q_to_f, f_to_q = chunked_batched_bidirectional_late_max(
+            query=q,
+            query_mask=query_mask,
+            items=f,
+            item_mask=field_mask,
+            chunk_tokens=self.config.interaction_chunk_tokens,
+        )
 
         qmask = query_mask[:, None, None, :].expand_as(q_to_f)
         fmask = field_mask[:, :, None, :].expand_as(f_to_q)
@@ -325,6 +331,9 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             "final_layer_only_query": False,
             "runtime_relation_schema": True,
             "runtime_type_schema": True,
+            "token_interaction_chunk_is_operating_point": True,
+            "query_token_count_ceiling": None,
+            "field_token_count_ceiling": None,
             "field_count_ceiling": None,
             "edge_count_ceiling": None,
             "support_count_ceiling": None,
