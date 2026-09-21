@@ -57,6 +57,13 @@ def main()->None:
     p1_path,_=load_selected(Path(args.p1_result),Path(args.p1_root),"qsre_production_p1.pt","PASS_QSRE_PRODUCTION_P1_EXECUTOR")
     p2_path,_=load_selected(Path(args.p2_result),Path(args.p2_root),"qsre_production_p2.pt","PASS_QSRE_PRODUCTION_P2_OPERATOR")
     p3_path,_=load_selected(Path(args.p3_result),Path(args.p3_root),"qsre_production_p3.pt","PASS_QSRE_PRODUCTION_P3_BINDER")
+    p3_payload=torch.load(p3_path,map_location="cpu")
+    if p3_payload.get("p2_checkpoint_sha256") != sha256(p2_path):
+        raise SystemExit("P4 observed P3/P2 checkpoint lineage drift")
+    if p3_payload.get("factor_schema_cache_sha256") != sha256(Path(args.factor_schema_cache)):
+        raise SystemExit("P4 observed P3 factor-schema lineage drift")
+    if p3_payload.get("semantic_authority_cache_sha256") != sha256(Path(args.authority_cache)):
+        raise SystemExit("P4 observed P3 semantic-authority lineage drift")
 
     device=torch.device("cuda")
     schema_encoder,executor,operator_model,authority_cache=load_parents(
@@ -196,6 +203,7 @@ def main()->None:
         "p1_checkpoint_sha256":sha256(p1_path),
         "p2_checkpoint_sha256":sha256(p2_path),
         "p3_checkpoint_sha256":sha256(p3_path),
+        "p3_semantic_authority_cache_sha256":p3_payload["semantic_authority_cache_sha256"],
         "factor_schema_cache_sha256":sha256(Path(args.factor_schema_cache)),
         "semantic_authority_cache_sha256":sha256(Path(args.authority_cache)),
         "frozen_semantic_authority":True,
