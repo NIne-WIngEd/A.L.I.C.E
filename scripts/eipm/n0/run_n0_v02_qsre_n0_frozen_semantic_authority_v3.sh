@@ -45,7 +45,6 @@ if [[ -e "$RUN_ROOT" ]]; then
   echo "STOP: frozen-authority evidence already exists; preserve it: $RUN_ROOT" >&2
   exit 93
 fi
-mkdir -p "$RUN_ROOT"
 
 PLAN="$ROOT/configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json"
 AUTH_PLAN="$ROOT/configs/eipm/n0/n0_v02_qsre_frozen_semantic_authority_plan_v3.json"
@@ -87,7 +86,7 @@ GRAPH="$WORKDIR/relation-repair-v0.1/step-00000080/evidence_graph_dual_endpoint.
 FUSION="$WORKDIR/cross-context-fusion-repair-training-v0.2/repair-step-00000240"
 LATENT="$WORKDIR/adaptive-multi-view-latent-pool-training-v0.2.1/step-00000360/adaptive_multi_view_latent_pool_v0_2.safetensors"
 
-for required in   "$PLAN" "$AUTH_PLAN" "$META" "$PROD_SCHEMA_JSON" "$FINAL_SCHEMA_JSON"   "$PROD_CURRICULUM" "$PROD_CACHE" "$PROD_SCHEMA_CACHE"   "$P1_RESULT" "$FAILED_P2_RESULT" "$SEM_V2_RESULT"   "$FINAL_CONTRACT" "$FINAL_GENERAL" "$FINAL_RELATIONAL" "$FINAL_MANIFEST"   "$FINAL_SCHEMA_CACHE" "$FINAL_CACHE" "$FINAL_FREEZE"   "$SEMANTIC_CONFIG" "$STRUCTURED_CONFIG" "$FUSION_CONFIG"   "$FUSION_RATIFICATION" "$LATENT_CONFIG" "$TOKENIZER/tokenizer.json"   "$SEMANTIC" "$STRUCTURED/structured_state.safetensors" "$ADAPTER" "$GRAPH"   "$FUSION/cross_context_fusion.safetensors" "$LATENT"
+for required in   "$PLAN" "$AUTH_PLAN" "$META" "$PROD_SCHEMA_JSON" "$FINAL_SCHEMA_JSON" "$FULL_SCALE_PACKAGE"   "$PROD_CURRICULUM" "$PROD_CACHE" "$PROD_SCHEMA_CACHE"   "$P1_RESULT" "$FAILED_P2_RESULT" "$SEM_V2_RESULT"   "$FINAL_CONTRACT" "$FINAL_GENERAL" "$FINAL_RELATIONAL" "$FINAL_MANIFEST"   "$FINAL_SCHEMA_CACHE" "$FINAL_CACHE" "$FINAL_FREEZE"   "$SEMANTIC_CONFIG" "$STRUCTURED_CONFIG" "$FUSION_CONFIG"   "$FUSION_RATIFICATION" "$LATENT_CONFIG" "$TOKENIZER/tokenizer.json"   "$SEMANTIC" "$STRUCTURED/structured_state.safetensors" "$ADAPTER" "$GRAPH"   "$FUSION/cross_context_fusion.safetensors" "$LATENT"
 do
   if [[ ! -e "$required" ]]; then
     echo "STOP: missing frozen-authority prerequisite: $required" >&2
@@ -200,6 +199,11 @@ print("source_failed_p2s_v1_job=575962")
 print("source_failed_p2s_v2_job=575966")
 print("original_frozen_final_validation_reused=true")
 PY
+
+# Create immutable evidence only after every read-only source/artifact preflight
+# has passed. A preflight/setup defect therefore cannot poison the governed
+# run root or force a manual delete before any scientific evidence exists.
+mkdir -p "$RUN_ROOT"
 
 echo "===== N0 FROZEN SEMANTIC AUTHORITY V3 ====="
 date -Is
