@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "3be86965482e33bef45c472374b7cac021a395ed",
-      "head_committed_at": "2026-09-20T17:02:51-05:00",
-      "head_message": "context: record QSRE production architecture closure",
+      "head": "f514e97b004a9bbd03649de615baf29789a0ee01",
+      "head_committed_at": "2026-09-20T21:20:03-05:00",
+      "head_message": "context(n0): record final Production v3 qualified frontier",
       "status": "diverged",
-      "ahead": 228,
+      "ahead": 231,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 575,
+      "changed_file_count_vs_source_merge_base": 578,
       "knowledge_surface": true
     },
     {
@@ -112,6 +112,42 @@
       "knowledge_surface": true
     },
     {
+      "branch": "alice-eipm-v1-qsre-production-core-v1",
+      "head": "2204f61f3a2d49eccc10d834dda83921a9af5be1",
+      "head_committed_at": "2026-09-20T21:17:48-05:00",
+      "head_message": "ci(n0): requalify final v3 on exact architecture-contract HEAD",
+      "status": "ahead",
+      "ahead": 528,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 373,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+      "head": "c9b1d35823cb89245625bbc6afb05b0ef5fb69fb",
+      "head_committed_at": "2026-09-20T20:34:34-05:00",
+      "head_message": "fix(n0): emit strict JSON from P2 localization",
+      "status": "ahead",
+      "ahead": 489,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 357,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+      "head": "342bdbbe8c5dfbe74ff3ab8210a30b1a456aa482",
+      "head_committed_at": "2026-09-20T20:53:27-05:00",
+      "head_message": "state(n0): ratify P2 v3 static pass and authorize CPU qualification",
+      "status": "ahead",
+      "ahead": 528,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 373,
+      "knowledge_surface": true
+    },
+    {
       "branch": "alice-eipm-v1-qsre-t1-executor-training",
       "head": "f4a9edb1915e39d893224f4503746bfd61fc6424",
       "head_committed_at": "2026-09-20T04:29:49-05:00",
@@ -125,14 +161,14 @@
     },
     {
       "branch": "alice-eipm-v1-qsre-t2-operator-learning",
-      "head": "b99e28c8408dd863c6fa6e960d99c17995b4e705",
-      "head_committed_at": "2026-09-20T17:02:04-05:00",
-      "head_message": "ci(n0): enforce production QSRE architecture closure",
+      "head": "821c6b0e3e5b407be35e7b78d32522ae7f73ab79",
+      "head_committed_at": "2026-09-20T17:17:43-05:00",
+      "head_message": "fix(n0): restore shared Production QSRE schema projection",
       "status": "ahead",
-      "ahead": 355,
+      "ahead": 361,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 315,
+      "changed_file_count_vs_source_merge_base": 318,
       "knowledge_surface": true
     },
     {

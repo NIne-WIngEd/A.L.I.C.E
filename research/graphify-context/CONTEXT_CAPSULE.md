@@ -1,31 +1,10 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-final-production-v3-qualified-20260921-008
-- Question: Refresh A.L.I.C.E. N0 continuity to the final pre-launch Production architecture. Exact experiment branch HEAD is alice-eipm-v1-qsre-production-core-v1 @ 2204f61f3a2d49eccc10d834dda83921a9af5be1. Final qualification GitHub Actions 35553707475 SUCCESS on that exact HEAD. Preserved evidence: job 575955 exposed STOP-tail path-state erasure; unchanged P1 step-50 checkpoint SHA 91f2c78dcc35967064189af4a7110cdee83e5652fb037d3d88f58500ac3aaab9 later fully passed under corrected executor. Job 575956 produced genuine P2-v1 operator failure and did not authorize P3. Final Operator v3 keeps relation hypotheses continuous until structural binding, uses shared query/schema semantic projection + symmetric late interaction, separates relation selection from CONTINUE/STOP/UNKNOWN, has dedicated factor query slots, excludes P1 schema relation state from match authority, and exposes dense logits only for stable supervision. Exact sparsity begins in Binder v2 structural edge support, not in relation hypotheses. P2/P3 gradient is core-schema only; four Production open-schema DEV relation descriptions do not enter gradient as labels, negatives, schema-identity targets, or query candidates. Final-only ENABLES/PREVENTS remain isolated until the original frozen native final validation. P1 is reused and never retrained; P2-v2 was never GPU-run. Exactly one P2-v3 run is authorized, followed conditionally by P3-v3, zero-gradient P4-v3, and the unchanged frozen native final N0 gate. No LR/step/width/batch search, automatic rerun/hotfix, TEST opening or private identity gradient. Durable alice-context source: docs/chat-context/2026-09-21/sol/N0_FINAL_PRODUCTION_V3_QUALIFIED.md @ f514e97b004a9bbd03649de615baf29789a0ee01. Graphify is navigation only; verify consequential claims in experiment branch files.
-- Stable build: alice-eipm-v1-build (lags this unmerged experiment frontier)
-- Catalog source: unmerged experiment head 2204f61f3a2d49eccc10d834dda83921a9af5be1
-- Graphify used: False
-
-
-- Request: n0-production-p1-stop-tail-recovery-20260920-007
-- Question: Refresh A.L.I.C.E. N0 continuity after genuine Production P1 failure in Magnolia job 575955. P0 and the pre-gradient native final-validation freeze passed. P1 then failed structurally: ordered_path=0.0, path_latest=0.0, path_role=0.5 at every checkpoint while three_hop=1.0 and nearly every other family=1.0. Source localization showed that shorter path programs are padded to the curriculum/runtime relation-step width; inactive STOP-tail slots have relation_step_mass=0, but QSREProductionExecutor replaced the already reached frontier with zero on that inactive slot. Thus 2-hop paths were erased after completion while 3-hop paths survived. This is a production variable-program semantic defect, not an optimizer/data/semantic-backbone problem. Production executor now carries unconsumed frontier mass through inactive/partial STOP tails. New forward+reverse mechanics test proves padded and unpadded path outputs are identical. Original Production training-plan bytes/hyperparameters were restored unchanged. Recovery first zero-gradient requalifies every preserved P1 checkpoint from job 575955 under corrected semantics; only if none passes may the same governed job perform one corrected P1 run using the original precommitted data/LR/steps/batch/thresholds. Then P2->P3->P4->native final validation proceed in the same owner launch. The exact frozen 320-row final validation from before the original P1 result is reused; it is not rebuilt. Qualified experiment HEAD: dba3d4b100f081b0c09fe63ae002205244af5b44. Recovery preflight 35548666874 SUCCESS; Production mechanics 35548858918 SUCCESS. Durable alice-context: docs/chat-context/2026-09-20/sol/N0_PRODUCTION_P1_STOP_TAIL_FAILURE_LOCALIZED_RECOVERY_READY.md @ 335d994de3f60aa428fc8f15b0adf47df2f6b6e9. Graphify is navigation only; verify consequential claims in original experiment branch files.
-- Stable build: alice-eipm-v1-build (lags this unmerged experiment frontier)
-- Catalog source: unmerged experiment head dba3d4b100f081b0c09fe63ae002205244af5b44
-- Graphify used: False
-
-
-- Request: n0-production-single-launch-qualified-20260920-006
-- Question: Refresh A.L.I.C.E. N0 continuity to the qualified Production QSRE single-launch frontier. Authoritative experiment branch is alice-eipm-v1-qsre-production-core-v1 @ b32fabe49f206c2d71e17df5197a62b2a37c8c43. Full preflight GitHub Actions 35546280865 SUCCESS. Before launch, static qualification caught that ALICE_N0_EXPECTED_REVISION was not forwarded across Magnolia uDocker; magnolia_udocker_exec.sh now forwards it. Final N0 causal ablation was also corrected so integrated and ablated evidence tensors have identical token geometry; the ablated path carries the same two extra positions as zero+invalid, preventing fp16 sequence-shape effects from masquerading as QSRE contribution. Preflight now bash-parses the full runner/sbatch/uDocker wrapper, checks P100 and revision/workdir forwarding, parses required argparse flags for every P0-P5 script, verifies final validation freezes before P1 and never enters P1/P2/P3/P4, rebuilds the exact 1016-row production curriculum and frozen 320-row native validation, proves P4 has no oracle focus path, reruns mechanics, and audits no accidental capability ceilings. Next authorized action is one owner-submitted Magnolia P100 job using scripts/eipm/n0/magnolia_p100_n0_v02_qsre_production_full_pipeline_v1.sbatch with ALICE_N0_EXPECTED_REVISION bound to exact HEAD. Job executes P0->P1->P2->P3->P4->native P5/final validation; failure stops and preserves evidence. No automatic rerun/hotfix/LR/step/width search. N0 closes only on PASS_N0_FINAL_SELF_VALIDATION_OBJECTIVE with n0_complete=true and n1_authorized=true. Durable alice-context source: docs/chat-context/2026-09-20/sol/N0_PRODUCTION_SINGLE_LAUNCH_QUALIFIED.md @ cca662a1a03556065534b45ebc56552536e67da5. Graphify is navigation only; consequential claims must resolve to original experiment branch/path.
-- Stable build: alice-eipm-v1-build (may lag this unmerged experiment frontier)
-- Catalog source: unmerged experiment head b32fabe49f206c2d71e17df5197a62b2a37c8c43
-- Graphify used: False
-
-
-- Request: n0-qsre-production-architecture-closure-20260920-005
-- Question: Refresh A.L.I.C.E. N0 continuity to the production-QSRE architecture-closure frontier. Owner correctly identified risk of a T2 v0.3 -> v0.4 repair chain before N0 completion. T2 v0.3 was frozen before any GPU execution and remains only an unrun static diagnostic prototype. Authoritative state is configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.59.json. Obsolete v0.3 launcher, train runner, and P100 sbatch now fail closed with exit 90. Deep source review found known production gaps independent of the v0.2 benchmark: fixed relation cardinality, learned fixed hop slots, early argmax destroying plurality, mutually-exclusive operation class despite composable traversal/arbitration, fixed applicability centers, continuous operator state discarded before T1, fixed semantic relation-ID embedding authority inside T1, missing domain/range/type grounding, prematurely averaged schema gloss states, and binder interface not closed before operator redesign. Therefore no additional T2-only GPU run is authorized. Production architecture authority is docs/research/eipm-n0-qsre-production-architecture-closure-v1.md; machine contract configs/eipm/n0/n0_v02_qsre_production_core_v1.json; explicit W1-W15 responsibility map configs/eipm/n0/n0_v02_qsre_production_core_w1_w15_map_v1.json. Production Core v1 requires runtime-variable typed relation schema with no learned relation-class table, schema token/multifacet semantics plus domain/range constraints, UNKNOWN distinct from STOP, one shared iterative relation decoder with runtime stopping and no hop-specific slots, sparse plural operator hypotheses, composable traversal/arbitration factors, continuous applicability/uncertainty, continuous operator state reaching executor, adaptive zero/one/many support, schema-conditioned executor with no relation-ID semantic authority, shared iterative node/edge execution, support-local readout, and exact non-relational pass-through. Build sequence is predesigned once: P0 static/CPU closure -> P1 executor with oracle operator/support -> P2 operator with proven executor/oracle support -> P3 binder with proven operator/executor -> P4 end-to-end QSRE -> P5 N0 fusion. Eventual Magnolia stages may be chained with afterok under one owner launch; failure stops the chain. No LR/step/width tuning chain or permission micro-gates. Architecture contract workflow 35540416348 SUCCESS. Durable alice-context commit 3be86965482e33bef45c472374b7cac021a395ed. Graphify is navigation only; verify consequential claims in original experiment branch files.
+- Request: n0-final-production-v3-live-code-topology-20260920-009
+- Question: Use the exact current code graph to locate the N0 final Production v3 implementation path, its runner and Magnolia launcher, the P2-v3 continuous operator, P3-v3 structural binder, P4 evaluator, frozen native final validation integration, source-lineage guards, and any code-level dependencies or failure boundaries that could invalidate the next launch. Also surface code paths tied to the preserved P1 STOP-tail recovery, genuine P2-v1 failure, no-hotfix/no-automatic-rerun policy, dynamic/open-schema capability, runtime-variable relation semantics, and nonrelational pass-through. This is a code-topology query, not an authority promotion; all consequential claims will be verified in original files.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
-- Graphify used: False
+- Graphify used: True
 
 ## Active mission
 
@@ -39,36 +18,47 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-qsre-t2-operator-learning @ b99e28c8408dd863c6fa6e960d99c17995b4e705 — ci(n0): enforce production QSRE architecture closure
+- alice-eipm-v1-qsre-production-core-v1 @ 2204f61f3a2d49eccc10d834dda83921a9af5be1 — ci(n0): requalify final v3 on exact architecture-contract HEAD
+- alice-eipm-v1-qsre-production-p2-ordered-evidence-v3 @ 342bdbbe8c5dfbe74ff3ab8210a30b1a456aa482 — state(n0): ratify P2 v3 static pass and authorize CPU qualification
+- alice-eipm-v1-qsre-production-p2-failure-localization @ c9b1d35823cb89245625bbc6afb05b0ef5fb69fb — fix(n0): emit strict JSON from P2 localization
 
 ## Source pointers
 
-- [364] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
-  - status:  production-architecture authority; implementation/training remains closed
-- [205] alice-context:docs/chat-context/2026-09-20/sol/N0_QSRE_T2_ONE_SHOT_OPERATOR_TRAINING_AUTHORIZED.md — N0 QSRE T2 One-Shot Operator Training Authorized
-  - status:  tokenized preparation passed; one governed T2 P100 run is statically qualified and authorized
-- [204] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [199] alice-eipm-v1-qsre-t2-operator-learning:.github/workflows/n0-qsre-production-core-v1-architecture-contract.yml — n0-qsre-production-core-v1-architecture-contract.yml
-- [195] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md — N0 Clean-Sheet Relational Execution Architecture Audit v0.1
-  - status:  architecture-review authority; implementation and gradient work frozen
-- [191] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-t2-v02-failure-localization-v03-decision.md — N0 QSRE T2 v0.2 failure localization and T2 v0.3 architecture decision
-- [184] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md — QSRE T1 PASS → T2 Learned-Operator Decision v0.1
-  - status:  T1 causal question passed on DEV; T2 static design/CPU mechanics justified; T2 gradient remains closed
-- [183] alice-eipm-v1-qsre-t2-operator-learning:docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md — N0 Relational Execution Architecture Family Comparison v0.1
-  - status:  research decision; no implementation or gradient authorized
-- [181] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md — N0 Relation-Conditioned Multi-Layer Query Interface Handoff
-  - status:  architecture designed and CI-qualified from 575804 evidence; exact relation-layer map still must be compiled from the saved audit JSON; training remains unauthorized
-- [179] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [179] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [179] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
+- [119] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md — Production QSRE P2 job 575956 failure localization v1
+  - status:  zero-gradient diagnosis authority; no rerun or GPU authorization
+- [119] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md — Production QSRE P2 job 575956 failure localization v1
+  - status:  zero-gradient diagnosis authority; no rerun or GPU authorization
+- [112] alice-context:docs/chat-context/2026-09-20/sol/N0_PRODUCTION_P1_STOP_TAIL_FAILURE_LOCALIZED_RECOVERY_READY.md — N0 Production P1 STOP-tail failure localized; causal recovery ready
+- [111] alice-eipm-v1-qsre-production-core-v1:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
+- [111] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
+- [111] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
+- [110] alice-eipm-v1-qsre-production-core-v1:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [110] alice-eipm-v1-qsre-production-p2-failure-localization:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [110] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [109] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
+  - status:  one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized
+- [105] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md — N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization
+  - status:  final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged
+- [104] alice-eipm-v1-qsre-production-core-v1:configs/eipm/n0/n0_v02_qsre_final_production_recovery_contract_v1.json — n0_v02_qsre_final_production_recovery_contract_v1.json
 
 ## Graphify navigation hints
 
-- skipped: document/branch/private routing was sufficient
+- run_n0_v02_qsre_production_stop_tail_recovery_v1.sh -> scripts/eipm/n0/run_n0_v02_qsre_production_stop_tail_recovery_v1.sh:L1
+- run_n0_v02_qsre_production_stop_tail_recovery_v1.sh script -> scripts/eipm/n0/run_n0_v02_qsre_production_stop_tail_recovery_v1.sh:L1
+- run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh -> scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh:L1
+- ConstitutionalSourceSnapshot -> src/alice_conversation/constitutional_prompt.py:L50
+- authority.py -> src/cognitive_kernel/authority.py:L1
+- test_automatic_retry_is_rejected() -> tests/phase3/test_conversation_orchestration_policy.py:L85
+- QSREProductionBinderV2 -> src/alice_personality/n0/qsre_production_binder_v2.py:L16
+- _boundaries() -> tests/phase4/test_information_grounding.py:L46
+- CapabilityRuntime -> src/alice_evolution/capability_runtime.py:L77
+- ClaimSupportAuditTests -> tests/phase1/test_claim_support_audit.py:L43
+- codes() -> tests/phase3/test_conversation_response_validation_adversarial.py:L18
+- test_binder_v2_operator_continuous_state_is_not_support_authority() -> tests/eipm/test_n0_qsre_production_binder_v2.py:L152
+- CurrentClaimProjection -> src/cognitive_kernel/claim_contracts.py:L755
+- dependencies() -> tests/phase4/test_information_research_execution_policy.py:L52
+- Dynamic contiguous-span masking with BERT-style 80/10/10 replacement. -> src/alice_personality/n0/data.py:L113
+- downstream_full_stack_graph_evaluator_v0_1.py -> scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py:L1
 
 ## External/private routing
 
