@@ -44,7 +44,22 @@
       "path": "$ALICE_N0_WORKDIR/adaptive-multi-view-latent-pool-training-v0.2.1/step-00000360/adaptive_multi_view_latent_pool_v0_2.safetensors",
       "sha256": "503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4"
     },
-    "original_frozen_validation_root": "$ALICE_N0_WORKDIR/qsre-production-core-v1/final-frozen"
+    "original_frozen_validation_root": "$ALICE_N0_WORKDIR/qsre-production-core-v1/final-frozen",
+    "structured_state_checkpoint": {
+      "path": "$ALICE_N0_WORKDIR/structured-state-pilot-v0.1/step-00000080/structured_state.safetensors",
+      "sha256": "77e9793f50bf1ada2f5f22b59e5cd023668af9392921886102fbdc3b7fee186b"
+    },
+    "evidence_adapter": {
+      "path": "$ALICE_N0_WORKDIR/evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080/evidence_view_adapter.safetensors",
+      "sha256": "50eeeea3dfff5b6bddaa8da667b6b6c2f917dc668b1acd0410923822ae5ad2df"
+    },
+    "selected_repaired_evidence_graph": {
+      "path": "$ALICE_N0_WORKDIR/relation-endpoint-repair-v0.2/training/step-00000200/evidence_graph_dual_endpoint.safetensors",
+      "sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+      "selection_evidence": "downstream causal arbitration classified this checkpoint as IMPROVEMENT versus the older canonical graph with no frozen metric degradation; later N0 relation/query experiments retained it as the immutable parent graph",
+      "production_promotion_claim": false,
+      "package_role": "preselected full-scale base evidence parent"
+    }
   },
   "architecture": {
     "semantic_backbone": "ratified alice-n0-semantic-v0.2 targeted-repair step-80",
@@ -78,7 +93,10 @@
     ],
     "trained_rationale_projection_reused": true,
     "trained_principle_alignment_reused": true,
-    "new_semantic_authority_trainable_parameters": 0
+    "new_semantic_authority_trainable_parameters": 0,
+    "base_evidence_graph": "selected repaired DualEndpoint graph step-200",
+    "old_canonical_graph_is_full_scale_parent": false,
+    "qsre_replaces_global_graph_semantic_authority": true
   },
   "scale_policy": {
     "package_class": "full_scale_capability",
@@ -136,7 +154,9 @@
     "failed_evidence_preserved": true,
     "original_frozen_validation_rebuilt": false,
     "original_frozen_validation_thresholds_changed": false,
-    "one_causal_change_per_failed_model_gate": true
+    "one_causal_change_per_failed_model_gate": true,
+    "selected_repaired_graph_chosen_before_this_qsre_closure": true,
+    "final_validation_corpus_rebuilt_for_graph_change": false
   },
   "source_files": {
     "frozen_authority_plan": "configs/eipm/n0/n0_v02_qsre_frozen_semantic_authority_plan_v3.json",
