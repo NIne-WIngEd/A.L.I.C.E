@@ -15,9 +15,11 @@ on:
       - "src/alice_personality/n0/semantic_operator_qsre_adapter.py"
       - "src/alice_personality/n0/qsre_full_envelope_binder_v1.py"
       - "src/alice_personality/n0/qsre_full_envelope_executor_v1.py"
+      - "src/alice_personality/n0/n0_full_envelope_stack_v1.py"
       - "tests/eipm/test_n0_semantic_operator_foundation_v1.py"
       - "tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py"
       - "tests/eipm/test_n0_full_envelope_fabric_v1.py"
+      - "tests/eipm/test_n0_full_envelope_stack_v1.py"
       - "scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py"
       - "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json"
@@ -59,7 +61,8 @@ jobs:
           pytest -q \
             tests/eipm/test_n0_semantic_operator_foundation_v1.py \
             tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py \
-            tests/eipm/test_n0_full_envelope_fabric_v1.py
+            tests/eipm/test_n0_full_envelope_fabric_v1.py \
+            tests/eipm/test_n0_full_envelope_stack_v1.py
 
       - name: Materialize and audit intervention supplement
         run: |
@@ -217,4 +220,21 @@ jobs:
           assert l["slot_count_ceiling"] is None
           assert l["view_count_ceiling"] is None
           print("PASS_N0_DYNAMIC_FABRIC_NO_RUNTIME_IDENTITY_AXIS")
+          PY
+
+      - name: Prove full successor stack has no serving-axis ceilings
+        run: |
+          python - <<'PY'
+          from alice_personality.n0.n0_full_envelope_stack_v1 import N0FullEnvelopeStackV1
+          r=N0FullEnvelopeStackV1().parameter_report()
+          assert r["runtime_relation_ceiling"] is None
+          assert r["runtime_factor_ceiling"] is None
+          assert r["runtime_field_ceiling"] is None
+          assert r["runtime_edge_ceiling"] is None
+          assert r["runtime_view_ceiling"] is None
+          assert r["runtime_slot_ceiling"] is None
+          assert r["runtime_reasoning_step_ceiling"] is None
+          assert r["semantic_backbone_gradient_must_remain_connected"] is True
+          assert r["exact_structural_sparsity_boundary"]=="FullEnvelopeQSREBinderV1"
+          print("PASS_N0_FULL_SUCCESSOR_STACK_NO_SERVING_AXIS_CEILINGS")
           PY
