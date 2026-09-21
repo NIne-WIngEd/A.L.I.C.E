@@ -122,12 +122,12 @@ def factor_holdout_examples(meta: dict) -> dict[str, tuple[list[str], torch.Tens
     for modifier_index, row in enumerate(meta["factors"]["modifiers"]):
         for phrase in row["heldout_off"]:
             modifier_texts.append(
-                f"{phrase}. Decide whether the {row['key'].lower()} modifier is active."
+                f"{phrase}. Decide whether the supplied modifier meaning is active."
             )
             modifier_targets.append((modifier_index, 0))
         for phrase in row["heldout_on"]:
             modifier_texts.append(
-                f"{phrase}. Decide whether the {row['key'].lower()} modifier is active."
+                f"{phrase}. Decide whether the supplied modifier meaning is active."
             )
             modifier_targets.append((modifier_index, 1))
     result["modifiers"] = (
@@ -405,24 +405,33 @@ def factor_instruction_losses(
 
     modifier_item = factor_queries["modifiers"]
     modifier_cache = factor_cache["modifiers"]
-    modifier_losses: list[torch.Tensor] = []
-    for row in range(int(modifier_item["targets"].size(0))):
-        modifier_index = int(modifier_item["targets"][row, 0].item())
-        target = modifier_item["targets"][row, 1:2].to(device).long()
-        output = matcher(
-            query_hidden_states=modifier_item["states"][row : row + 1].to(
-                device, dtype=torch.float32
-            ),
-            query_token_mask=modifier_item["mask"][row : row + 1].to(device).bool(),
-            schema_hidden_states=modifier_cache["token_states"][modifier_index].to(
-                device, dtype=torch.float32
-            ),
-            schema_token_mask=modifier_cache["token_mask"][modifier_index].to(
-                device
-            ).bool(),
-        )
-        modifier_losses.append(F.cross_entropy(output["logits"], target))
-    modifier_loss = torch.stack(modifier_losses).mean()
+    modifier_count = int(modifier_cache["token_states"].size(0))
+    modifier_schema_states = modifier_cache["token_states"].reshape(
+        modifier_count * 2,
+        *modifier_cache["token_states"].shape[2:],
+    )
+    modifier_schema_mask = modifier_cache["token_mask"].reshape(
+        modifier_count * 2,
+        modifier_cache["token_mask"].size(-1),
+    )
+    modifier_target = (
+        modifier_item["targets"][:, 0] * 2
+        + modifier_item["targets"][:, 1]
+    ).to(device).long()
+    modifier_output = matcher(
+        query_hidden_states=modifier_item["states"].to(
+            device, dtype=torch.float32
+        ),
+        query_token_mask=modifier_item["mask"].to(device).bool(),
+        schema_hidden_states=modifier_schema_states.to(
+            device, dtype=torch.float32
+        ),
+        schema_token_mask=modifier_schema_mask.to(device).bool(),
+    )
+    modifier_loss = F.cross_entropy(
+        modifier_output["logits"],
+        modifier_target,
+    )
     total = total + float(weights["modifiers"]) * modifier_loss
     parts["modifiers"] = float(modifier_loss.detach().item())
     return total, parts
