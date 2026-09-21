@@ -57,6 +57,7 @@ def test_dynamic_evidence_view_uses_multilayer_tokens_and_has_no_relation_axis_p
             field_reliability=reliability,
             relation_schema_state=relation_state,
             relation_mass=relation_mass,
+            semantic_activity=torch.ones(batch),
             operator_state=operator,
         )
     assert out["evidence_field_state"].shape == (batch, fields, 24)
