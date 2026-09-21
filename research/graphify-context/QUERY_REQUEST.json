@@ -1,9 +1,12 @@
 {
-  "request_id": "n0-final-production-v3-live-code-topology-20260920-009",
-  "question": "Use the exact current code graph to locate the N0 final Production v3 implementation path, its runner and Magnolia launcher, the P2-v3 continuous operator, P3-v3 structural binder, P4 evaluator, frozen native final validation integration, source-lineage guards, and any code-level dependencies or failure boundaries that could invalidate the next launch. Also surface code paths tied to the preserved P1 STOP-tail recovery, genuine P2-v1 failure, no-hotfix/no-automatic-rerun policy, dynamic/open-schema capability, runtime-variable relation semantics, and nonrelational pass-through. This is a code-topology query, not an authority promotion; all consequential claims will be verified in original files.",
-  "budget": 5000,
+  "request_id": "n0-575958-p2v3-failure-forensic-20260921-010",
+  "question": "Forensic code-topology audit after Magnolia job 575958 failed FAIL_QSRE_PRODUCTION_P2_OPERATOR_V3 at 1600 steps. Trace the exact Production v3 P2 path from prepared query hidden states through QSREProductionOperatorInducerV3 relation matching, recurrent relation steps, factor slots/heads, schema projection and schema identity calibration, losses, DEV full-schema expansion, executor with oracle support, checkpoint selection and exit 31. Surface whether the final Production v3 code contains or omits the query-token coverage/remaining-evidence mechanism from alice-eipm-v1-qsre-production-p2-ordered-evidence-v3; identify all relation/factor class heads or fixed ontologies; and identify trainable semantic transforms that can drift despite open-schema relations being excluded from gradient. Navigation only; original source must be opened before edits.",
+  "budget": 7000,
   "traversal": "bfs",
-  "contexts": ["call", "import"],
+  "contexts": [
+    "call",
+    "import"
+  ],
   "graphify_mode": "always",
   "graph_source_branch": "alice-eipm-v1-qsre-production-core-v1"
 }
