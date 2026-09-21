@@ -97,6 +97,8 @@ def load_frozen_authority(
         "semantic_checkpoint_sha256"
     ):
         raise SystemExit("semantic authority checkpoint lineage drift")
+    if authority_cache.get("qualification_result_sha256") != sha256(result_path):
+        raise SystemExit("semantic authority qualification/cache lineage drift")
 
     factor_cache = torch.load(factor_cache_path, map_location="cpu")
     if factor_cache.get("schema") != "alice.eipm.n0.qsre-frozen-factor-schema-cache.v3":
