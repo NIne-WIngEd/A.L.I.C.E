@@ -103,6 +103,7 @@ def test_dynamic_structured_state_is_field_permutation_equivariant_and_descripto
             num_hidden_states=3,
             num_attention_heads=4,
             num_layers=1,
+            continuous_metadata_dim=3,
             dropout=0.0,
         )
     ).eval()
@@ -125,6 +126,7 @@ def test_dynamic_structured_state_is_field_permutation_equivariant_and_descripto
             field_valid_mask=valid,
             field_confidence=confidence,
             field_missing=missing,
+            field_metadata=torch.randn(2, 5, 3),
             descriptor_banks=banks,
             descriptor_indices=indices,
         )
@@ -201,7 +203,7 @@ def test_semantic_operator_adapter_and_full_envelope_binder_executor_integrate()
     structured=DynamicStructuredStateV2(
         DynamicStructuredStateConfig(
             semantic_dim=24,model_dim=24,num_hidden_states=3,
-            num_attention_heads=4,num_layers=1,dropout=0.0
+            num_attention_heads=4,num_layers=1,continuous_metadata_dim=3,dropout=0.0
         )
     ).eval()
     with torch.no_grad():
@@ -211,6 +213,7 @@ def test_semantic_operator_adapter_and_full_envelope_binder_executor_integrate()
             field_valid_mask=torch.ones(batch,fields,dtype=torch.bool),
             field_confidence=torch.ones(batch,fields),
             field_missing=torch.zeros(batch,fields),
+            field_metadata=torch.zeros(batch,fields,3),
             descriptor_banks={"type":factor_schema(4,55)},
             descriptor_indices={"type":torch.tensor([[0,1,2,3,0],[1,2,3,0,1]])},
         )
