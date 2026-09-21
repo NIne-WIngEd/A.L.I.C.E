@@ -486,6 +486,8 @@ def main() -> None:
         != sha256(Path(args.factor_schema_cache))
         or p4.get("semantic_authority_cache_sha256")
         != sha256(Path(args.authority_cache))
+        or p4.get("p3_semantic_authority_cache_sha256")
+        != sha256(Path(args.authority_cache))
     ):
         raise SystemExit("P4 selected lineage drift")
 
@@ -525,6 +527,12 @@ def main() -> None:
         raise SystemExit("final semantic-authority relation order drift")
     if final_authority.get("rows_sha256") != sha256(relational_path):
         raise SystemExit("final semantic-authority frozen corpus lineage drift")
+    if final_authority.get("schema_cache_sha256") != sha256(final_schema_cache_path):
+        raise SystemExit("final semantic-authority schema-cache lineage drift")
+    if _production_authority.get("schema_cache_sha256") != p4.get(
+        "schema_cache_sha256"
+    ):
+        raise SystemExit("Production semantic-authority schema-cache lineage drift")
     if final_authority.get("qualification_result_sha256") != _production_authority.get(
         "qualification_result_sha256"
     ):
