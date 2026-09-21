@@ -184,6 +184,7 @@ def test_dynamic_evidence_graph_relation_permutation_is_equivariant() -> None:
             edge_relation_index=edge_rel,edge_metadata=meta,edge_valid_mask=edge_valid,
             relation_schema_state=rel,
             relation_mass=torch.full((batch,relations),1.0/relations),
+            relation_symmetric=torch.zeros(batch,relations,dtype=torch.bool),
             operator_state=op,message_steps=2
         )
         perm=torch.tensor([2,0,3,1])
@@ -195,6 +196,7 @@ def test_dynamic_evidence_graph_relation_permutation_is_equivariant() -> None:
             edge_relation_index=inverse[edge_rel],edge_metadata=meta,edge_valid_mask=edge_valid,
             relation_schema_state=rel[:,perm],
             relation_mass=uniform_mass[:,perm],
+            relation_symmetric=torch.zeros(batch,relations,dtype=torch.bool)[:,perm],
             operator_state=op,message_steps=2
         )
     assert torch.allclose(a["field_states"],b["field_states"],atol=1e-5,rtol=1e-5)
@@ -268,6 +270,7 @@ def test_semantic_operator_adapter_and_full_envelope_binder_executor_integrate()
             edge_recency=recency,
             relation_domain_type_mask=domain,
             relation_range_type_mask=range_mask,
+            relation_symmetric=torch.zeros(batch,relation_state.size(1),dtype=torch.bool),
             relation_schema_state=relation_state,
             operator=operator,
         )
@@ -292,6 +295,7 @@ def test_semantic_operator_adapter_and_full_envelope_binder_executor_integrate()
             edge_temporal_match=torch.ones(batch,edges),
             edge_provenance_match=torch.ones(batch,edges),
             relation_schema_state=relation_state,
+            relation_symmetric=torch.zeros(batch,relation_state.size(1),dtype=torch.bool),
             operator=operator,
             focus_field_weight=bound["focus_field_weight"],
         )
@@ -404,6 +408,7 @@ def test_executor_local_path_aggregate_are_causally_distinct_without_hard_thresh
         edge_temporal_match=torch.ones(1,3),
         edge_provenance_match=torch.ones(1,3),
         relation_schema_state=torch.randn(1,1,24),
+        relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
         focus_field_weight=torch.tensor([[1.0,0.0,0.0,0.0]]),
     )
     with torch.no_grad():
@@ -462,6 +467,7 @@ def test_binder_can_choose_exact_no_support_even_with_type_compatible_edges() ->
             edge_recency=torch.ones(1,2),
             relation_domain_type_mask=torch.ones(1,2,2,dtype=torch.bool),
             relation_range_type_mask=torch.ones(1,2,2,dtype=torch.bool),
+            relation_symmetric=torch.zeros(1,2,dtype=torch.bool),
             relation_schema_state=relation_state,
             operator=operator,
         )
@@ -497,6 +503,7 @@ def test_executor_zero_support_forces_zero_relational_execution_confidence() -> 
         edge_temporal_match=torch.ones(1,2),
         edge_provenance_match=torch.ones(1,2),
         relation_schema_state=torch.randn(1,1,24),
+        relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
         focus_field_weight=torch.tensor([[1.0,0.0,0.0]]),
     )
     with torch.no_grad():
