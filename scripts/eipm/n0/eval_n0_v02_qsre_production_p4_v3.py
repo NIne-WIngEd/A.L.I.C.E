@@ -39,6 +39,7 @@ def main()->None:
     p.add_argument("--p2-result",required=True)
     p.add_argument("--p2-root",required=True)
     p.add_argument("--factor-schema-cache",required=True)
+    p.add_argument("--authority-cache",required=True)
     p.add_argument("--p3-result",required=True)
     p.add_argument("--p3-root",required=True)
     p.add_argument("--output",required=True)
@@ -58,9 +59,10 @@ def main()->None:
     p3_path,_=load_selected(Path(args.p3_result),Path(args.p3_root),"qsre_production_p3.pt","PASS_QSRE_PRODUCTION_P3_BINDER")
 
     device=torch.device("cuda")
-    schema_encoder,executor,operator_model=load_parents(
+    schema_encoder,executor,operator_model,authority_cache=load_parents(
         p1_path=p1_path,p2_path=p2_path,
         factor_schema_cache_path=Path(args.factor_schema_cache),
+        authority_cache_path=Path(args.authority_cache),
         config=config,device=device,
     )
     binder=QSREProductionBinderV2(config)
@@ -72,6 +74,10 @@ def main()->None:
     schema,_=load_dynamic_schema_cache(schema_cache_path,device=device)
     encoded=schema_encoder(schema)
     split=prepared["dev"]
+    if authority_cache["dev"]["ids"] != list(split["ids"]):
+        raise SystemExit("P4 DEV semantic-authority row order drift")
+    if len(authority_cache["dev"]["relation_keys"]) != int(schema.token_states.size(0)):
+        raise SystemExit("P4 DEV semantic-authority relation cardinality drift")
     max_steps=int(stage["operator_runtime_max_steps"])
     batch_size=8
 
@@ -80,7 +86,8 @@ def main()->None:
         idx=torch.arange(start,min(start+batch_size,len(split["ids"])))
         for view in (0,1):
             op=infer_operator(
-                split=split,indices=idx,view=view,schema=schema,encoded=encoded,
+                split=split,authority_split=authority_cache["dev"],
+                indices=idx,view=view,schema=schema,encoded=encoded,
                 operator=operator_model,max_steps=max_steps,device=device,
             )
             bound=bind(
@@ -190,6 +197,8 @@ def main()->None:
         "p2_checkpoint_sha256":sha256(p2_path),
         "p3_checkpoint_sha256":sha256(p3_path),
         "factor_schema_cache_sha256":sha256(Path(args.factor_schema_cache)),
+        "semantic_authority_cache_sha256":sha256(Path(args.authority_cache)),
+        "frozen_semantic_authority":True,
         "gradient":False,
         "test_open":False,
         "private_identity_data":False,
