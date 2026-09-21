@@ -432,3 +432,84 @@ def test_masked_runtime_relation_padding_does_not_change_operator_uncertainty() 
         rtol=1e-6,
     )
     assert model.parameter_report()["masked_candidate_uncertainty_normalization"] is True
+
+
+def test_runtime_factor_bank_order_is_semantically_permutation_invariant() -> None:
+    torch.manual_seed(121)
+    model = SchemaConditionedSemanticOperator(config()).eval()
+    q, qm = hidden(batch=2)
+    alpha = factor(3, 122)
+    beta = factor(5, 123)
+    with torch.no_grad():
+        a = model(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            relation_schema=schema(4),
+            factor_schemas={"alpha": alpha, "beta": beta},
+            max_steps=3,
+        )
+        b = model(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            relation_schema=schema(4),
+            factor_schemas={"beta": beta, "alpha": alpha},
+            max_steps=3,
+        )
+    assert torch.allclose(
+        a["operator"].continuous_state,
+        b["operator"].continuous_state,
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.allclose(
+        a["operator"].factor_distributions["alpha"],
+        b["operator"].factor_distributions["alpha"],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.allclose(
+        a["operator"].factor_distributions["beta"],
+        b["operator"].factor_distributions["beta"],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert model.parameter_report()["runtime_factor_bank_set_aggregation"] is True
+
+
+def test_semantic_only_factor_bank_changes_continuous_operator_context() -> None:
+    torch.manual_seed(124)
+    model = SchemaConditionedSemanticOperator(config()).eval()
+    q, qm = hidden(batch=1)
+    structural = factor(4, 125)
+    semantic_a = factor(3, 126)
+    semantic_b = factor(3, 127)
+    with torch.no_grad():
+        a = model(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            relation_schema=schema(4),
+            factor_schemas={
+                "role": structural,
+                "open_semantic_factor": semantic_a,
+            },
+            max_steps=3,
+        )
+        b = model(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            relation_schema=schema(4),
+            factor_schemas={
+                "role": structural,
+                "open_semantic_factor": semantic_b,
+            },
+            max_steps=3,
+        )
+    assert not torch.allclose(
+        a["operator"].continuous_state,
+        b["operator"].continuous_state,
+    )
+    assert a["factor_context_state"].shape == (1, 24)
+    assert a["step_factor_context_states"].shape == (1, 3, 24)
+    report = model.parameter_report()
+    assert report["semantic_factor_context_in_continuous_state"] is True
+    assert report["semantic_factor_bank_count_ceiling"] is None
