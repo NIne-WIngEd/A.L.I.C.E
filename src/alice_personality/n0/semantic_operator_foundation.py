@@ -345,7 +345,12 @@ class SchemaConditionedSemanticOperator(nn.Module):
         )
         self.initial_state_norm = nn.LayerNorm(d)
         self.state_schema_score = nn.Linear(d, d, bias=False)
-        self.transition = nn.GRUCell(2 * d, d)
+        self.factor_context_query = nn.Linear(d, d, bias=False)
+        self.factor_context_key = nn.Linear(d, d, bias=False)
+        self.factor_context_value = nn.Linear(d, d, bias=False)
+        self.factor_state_norm = nn.LayerNorm(d)
+        self.transition = nn.GRUCell(3 * d, d)
+        self.global_factor_transition = nn.GRUCell(d, d)
         self.event_head = nn.Sequential(
             nn.Linear(d + 3, d),
             nn.SiLU(),
@@ -414,6 +419,37 @@ class SchemaConditionedSemanticOperator(nn.Module):
             normalized,
             torch.zeros_like(normalized),
         )
+
+    def _aggregate_factor_context(
+        self,
+        *,
+        state: Tensor,
+        factor_states: list[Tensor],
+    ) -> tuple[Tensor, Tensor]:
+        """Permutation-invariant context over a runtime number of factor banks."""
+        if not factor_states:
+            empty = torch.zeros_like(state)
+            weight = torch.zeros(
+                state.size(0),
+                0,
+                device=state.device,
+                dtype=state.dtype,
+            )
+            return empty, weight
+        bank_state = torch.stack(factor_states, dim=1)
+        query = F.normalize(
+            self.factor_context_query(state.float()),
+            dim=-1,
+        )
+        key = F.normalize(
+            self.factor_context_key(bank_state.float()),
+            dim=-1,
+        )
+        logit = torch.einsum("bd,bfd->bf", query, key)
+        weight = torch.softmax(logit, dim=-1)
+        value = self.factor_context_value(bank_state.float())
+        context = torch.einsum("bf,bfd->bd", weight, value)
+        return context, weight
 
     @staticmethod
     def _masked_candidate_distribution(
@@ -528,6 +564,8 @@ class SchemaConditionedSemanticOperator(nn.Module):
         step_factor_distributions_lists: dict[str, list[Tensor]] = {
             str(name): [] for name in factor_schemas
         }
+        step_factor_context_states: list[Tensor] = []
+        step_factor_bank_weights: list[Tensor] = []
         for _ in range(max_steps):
             remaining = (1.0 - coverage.float()).clamp(min=0.02, max=1.0)
             matched = self.matcher(
@@ -562,6 +600,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             # multi-hop program from being forced to use one global direction
             # or one modifier setting for every edge in the sequence.
             factor_state_basis = state + expected_schema
+            step_factor_expected_states: list[Tensor] = []
             for name, factor_schema in factor_schemas.items():
                 step_matched = self.matcher(
                     query_hidden_states=query_hidden_states,
@@ -592,6 +631,23 @@ class SchemaConditionedSemanticOperator(nn.Module):
                     step_matched["layer_weight"]
                 )
                 step_factor_distributions_lists[name].append(step_probability)
+                step_factor_expected_states.append(
+                    torch.einsum(
+                        "bc,bcd->bd",
+                        step_probability,
+                        step_matched["schema_summary"],
+                    )
+                )
+
+            step_factor_context, step_factor_bank_weight = self._aggregate_factor_context(
+                state=factor_state_basis,
+                factor_states=step_factor_expected_states,
+            )
+            step_factor_context_states.append(step_factor_context)
+            step_factor_bank_weights.append(step_factor_bank_weight)
+            factor_conditioned_state = self.factor_state_norm(
+                state + step_factor_context
+            )
 
             best = logits.max(dim=-1).values
             if relation_info["candidates"] > 1:
@@ -609,7 +665,12 @@ class SchemaConditionedSemanticOperator(nn.Module):
                 relation_candidate_mask,
             )
             event_input = torch.cat(
-                [state, best[:, None], margin[:, None], entropy[:, None]],
+                [
+                    factor_conditioned_state,
+                    best[:, None],
+                    margin[:, None],
+                    entropy[:, None],
+                ],
                 dim=-1,
             )
             event_logits = self.event_head(event_input)
@@ -642,7 +703,14 @@ class SchemaConditionedSemanticOperator(nn.Module):
 
             query_context = self._query_state(query_hidden_states, query_token_mask)
             next_state = self.transition(
-                torch.cat([expected_schema, query_context], dim=-1),
+                torch.cat(
+                    [
+                        expected_schema,
+                        step_factor_context,
+                        query_context,
+                    ],
+                    dim=-1,
+                ),
                 state,
             )
             state = (
@@ -658,6 +726,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
         factor_distributions: dict[str, Tensor] = {}
         factor_scores: dict[str, Tensor] = {}
         factor_layer_weights: dict[str, Tensor] = {}
+        global_factor_expected_states: list[Tensor] = []
         for name, schema in factor_schemas.items():
             schema.validate(
                 num_hidden_states=self.config.num_hidden_states,
@@ -683,6 +752,24 @@ class SchemaConditionedSemanticOperator(nn.Module):
             factor_scores[name] = factor_logits
             factor_distributions[name] = factor_probability
             factor_layer_weights[name] = matched["layer_weight"]
+            global_factor_expected_states.append(
+                torch.einsum(
+                    "bc,bcd->bd",
+                    factor_probability,
+                    matched["schema_summary"],
+                )
+            )
+
+        factor_context_state, factor_bank_weight = self._aggregate_factor_context(
+            state=state,
+            factor_states=global_factor_expected_states,
+        )
+        if global_factor_expected_states:
+            state = self.global_factor_transition(
+                factor_context_state,
+                state,
+            )
+            state = self.factor_state_norm(state)
 
         relation_distribution = torch.stack(relation_distributions, dim=1)
         relation_step_mass = torch.stack(relation_masses, dim=1)
@@ -789,6 +876,23 @@ class SchemaConditionedSemanticOperator(nn.Module):
                 name: torch.stack(values, dim=1)
                 for name, values in step_factor_layer_weights.items()
             },
+            "factor_context_state": factor_context_state,
+            "factor_bank_weight": factor_bank_weight,
+            "step_factor_context_states": torch.stack(
+                step_factor_context_states,
+                dim=1,
+            ),
+            "step_factor_bank_weights": (
+                torch.stack(step_factor_bank_weights, dim=1)
+                if factor_schemas
+                else torch.zeros(
+                    batch,
+                    max_steps,
+                    0,
+                    device=query_hidden_states.device,
+                    dtype=query_hidden_states.dtype,
+                )
+            ),
         }
 
     def parameter_report(self) -> dict[str, Any]:
@@ -815,6 +919,9 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "exact_structural_sparsity": False,
             "semantic_backbone_gradient_can_flow": True,
             "factor_scorer_shared_across_schema_banks": True,
+            "runtime_factor_bank_set_aggregation": True,
+            "semantic_factor_context_in_continuous_state": True,
+            "semantic_factor_bank_count_ceiling": None,
             "step_conditioned_factor_semantics": True,
             "step_factor_uncertainty_supervised_in_state": True,
             "token_interaction_chunk_is_operating_point": True,
