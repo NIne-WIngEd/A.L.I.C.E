@@ -379,6 +379,12 @@ def make_row(
         rng=rng,
     )
     target_sequence = indices if sequence else []
+    if intervention == "unknown_defer":
+        event_sequence_target = ["UNKNOWN"]
+        applicability_target = 0
+    else:
+        event_sequence_target = ["CONTINUE"] * len(target_sequence) + ["STOP"]
+        applicability_target = 1
 
     semantic_text = " ".join([query] + [x["text"] for x in bank])
     for item in bank:
@@ -402,6 +408,8 @@ def make_row(
         "query": query,
         "relation_candidates": bank,
         "relation_sequence_target": target_sequence,
+        "event_sequence_target": event_sequence_target,
+        "applicability_target": applicability_target,
         "factor_schemas": factor_schema(),
         "factor_targets": factor_targets(
             role=role,
@@ -424,6 +432,7 @@ def make_row(
         "intervention": intervention,
         "runtime_relation_count": len(bank),
         "runtime_reasoning_steps": len(target_sequence),
+        "runtime_operator_slots": len(event_sequence_target),
         "private_identity_data": False,
         "training_authorized": split == "train",
         "generated_text": True,
@@ -498,6 +507,7 @@ def main() -> None:
         ),
         "candidate_count_points": sorted({x["runtime_relation_count"] for x in rows}),
         "reasoning_step_points": sorted({x["runtime_reasoning_steps"] for x in rows}),
+        "operator_slot_points": sorted({x["runtime_operator_slots"] for x in rows}),
         "mixed_direction_rows": sum(
             1 for x in rows if x["intervention"] == "mixed_direction_composition"
         ),
