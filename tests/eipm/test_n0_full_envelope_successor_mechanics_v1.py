@@ -75,8 +75,6 @@ def operator_bundle(batch: int = 2, relations: int = 5):
             semantic_dim=24,
             model_dim=24,
             num_hidden_states=3,
-            num_attention_heads=4,
-            interaction_layers=1,
             dropout=0.0,
         )
     ).eval()
