@@ -87,31 +87,50 @@ def support_selection_loss(
     support_logits: Tensor,
     support_target: Tensor,
     valid_mask: Tensor,
+    *,
+    null_support_logit: Tensor | None = None,
 ) -> Tensor:
     if support_logits.shape != support_target.shape:
         raise ValueError("support target shape drift")
     if valid_mask.shape != support_logits.shape or valid_mask.dtype != torch.bool:
         raise ValueError("support valid mask shape drift")
-    if not bool(valid_mask.any()):
-        return support_logits.sum() * 0.0
+    batch = support_logits.size(0)
     target = support_target.float()
-    selected = target[valid_mask]
-    positives = selected.sum()
-    negatives = selected.numel() - positives
-    pos_weight = (
-        torch.as_tensor(
-            float(negatives) / max(float(positives), 1.0),
-            device=support_logits.device,
-            dtype=support_logits.dtype,
+
+    if bool(valid_mask.any()):
+        selected = target[valid_mask]
+        positives = selected.sum()
+        negatives = selected.numel() - positives
+        pos_weight = (
+            torch.as_tensor(
+                float(negatives) / max(float(positives), 1.0),
+                device=support_logits.device,
+                dtype=support_logits.dtype,
+            )
+            if float(positives) > 0.0
+            else None
         )
-        if float(positives) > 0.0
-        else None
+        edge_loss = F.binary_cross_entropy_with_logits(
+            support_logits[valid_mask],
+            selected,
+            pos_weight=pos_weight,
+        )
+    else:
+        edge_loss = support_logits.sum() * 0.0
+
+    if null_support_logit is None:
+        return edge_loss
+    if null_support_logit.shape != (batch,):
+        raise ValueError("null_support_logit must be [B]")
+    positive_by_row = (
+        target * valid_mask.to(target.dtype)
+    ).sum(dim=-1) > 0
+    null_target = (~positive_by_row).to(null_support_logit.dtype)
+    null_loss = F.binary_cross_entropy_with_logits(
+        null_support_logit,
+        null_target,
     )
-    return F.binary_cross_entropy_with_logits(
-        support_logits[valid_mask],
-        selected,
-        pos_weight=pos_weight,
-    )
+    return 0.5 * (edge_loss + null_loss)
 
 
 def endpoint_role_loss(
@@ -260,6 +279,7 @@ def full_envelope_behavioral_objective(
     support_logits: Tensor,
     support_target: Tensor,
     support_valid_mask: Tensor,
+    null_support_logit: Tensor | None = None,
     source_weight: Tensor,
     target_weight: Tensor,
     source_target_index: Tensor,
@@ -285,6 +305,7 @@ def full_envelope_behavioral_objective(
         support_logits,
         support_target,
         support_valid_mask,
+        null_support_logit=null_support_logit,
     )
     endpoints = endpoint_role_loss(
         source_weight,
