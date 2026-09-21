@@ -1,0 +1,133 @@
+name: n0-p2a-semantic-localization-v1-contract
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-n0-p2a-semantic-localization-v1
+    paths:
+      - "scripts/eipm/n0/audit_n0_v02_qsre_p2a_semantic_localization_v1.py"
+      - "scripts/eipm/n0/run_n0_v02_qsre_p2a_semantic_localization_v1.sh"
+      - "scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_p2a_semantic_localization_v1.sbatch"
+      - "docs/research/eipm-n0-job575986-p2a-semantic-localization-v1.md"
+      - ".github/workflows/n0-p2a-semantic-localization-v1-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile diagnostic package
+        run: |
+          set -euo pipefail
+          python -m py_compile scripts/eipm/n0/audit_n0_v02_qsre_p2a_semantic_localization_v1.py
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_p2a_semantic_localization_v1.sh
+          bash -n scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_p2a_semantic_localization_v1.sbatch
+
+      - name: Prove zero-gradient CPU-only boundary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("scripts/eipm/n0/audit_n0_v02_qsre_p2a_semantic_localization_v1.py").read_text()
+          r=Path("scripts/eipm/n0/run_n0_v02_qsre_p2a_semantic_localization_v1.sh").read_text()
+          s=Path("scripts/eipm/n0/magnolia_cpu_n0_v02_qsre_p2a_semantic_localization_v1.sbatch").read_text()
+
+          required=[
+              "@torch.inference_mode()",
+              "This diagnostic is deliberately CPU-only.",
+              '"gradient": False',
+              '"optimizer": False',
+              '"model_training": False',
+              '"gpu": False',
+              '"production_p2_authorized": False',
+              '"semantic_backbone_retraining_authorized": False',
+              "best_layer_token_oracle",
+              "teacher_native_joint_preference",
+              "teacher_native_principle_alignment",
+              "matches_job575986_within_1e-6",
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("diagnostic contract missing "+repr(missing))
+
+          forbidden=[
+              ".backward(",
+              "torch.optim.",
+              "optimizer.step",
+              "requires_grad = True",
+              "save_file(",
+          ]
+          present=[x for x in forbidden if x in t]
+          if present: raise SystemExit("gradient/mutation leaked into diagnostic "+repr(present))
+
+          assert "#SBATCH --partition=node" in s
+          assert "RAYAN_UDOCKER_NVIDIA=0" in s
+          assert "torch.cuda.is_available()" in r
+          print("PASS_ZERO_GRADIENT_CPU_BOUNDARY")
+          PY
+
+      - name: Bind exact job 575986 failure
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("scripts/eipm/n0/audit_n0_v02_qsre_p2a_semantic_localization_v1.py").read_text()
+          r=Path("scripts/eipm/n0/run_n0_v02_qsre_p2a_semantic_localization_v1.sh").read_text()
+          required=[
+              "0.4068181812763214",
+              "0.2708333432674408",
+              "0.2604166567325592",
+              "0.36666667064030967",
+              "FAIL_QSRE_FROZEN_SEMANTIC_AUTHORITY",
+              "6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43",
+          ]
+          for x in required:
+              assert x in t or x in r, x
+          assert 'SOURCE_FAIL="$WORKDIR/qsre-n0-frozen-semantic-authority-v3/p2a/result.json"' in r
+          print("PASS_JOB575986_LINEAGE")
+          PY
+
+      - name: Prove diagnostic spans all three hypotheses
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          t=Path("scripts/eipm/n0/audit_n0_v02_qsre_p2a_semantic_localization_v1.py").read_text()
+          required=[
+              "JOINT_MATCH_PROMPT",
+              "meta_prompt=False",
+              "semantic_projection",
+              "meta_principle_alignment",
+              "teacher_native_principle_alignment",
+              "mixed_token_evidence",
+              "layer_token_accuracy",
+              "per_row_any_component_oracle_accuracy",
+              '"representation_recoverable"',
+              '"readout_or_prompt_mismatch"',
+              '"fusion_or_calibration"',
+              '"semantic_objective_reopen"',
+          ]
+          missing=[x for x in required if x not in t]
+          if missing: raise SystemExit("hypothesis coverage missing "+repr(missing))
+          print("PASS_LOCALIZATION_HYPOTHESIS_COVERAGE")
+          PY
+
+      - name: Prove no hotfix or downstream authorization
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          d=Path("docs/research/eipm-n0-job575986-p2a-semantic-localization-v1.md").read_text().lower()
+          assert "one audit result -> one architecture decision" in d
+          assert "p2s-v3" in d
+          assert "production p2" in d
+          assert "semantic-backbone retraining before the audit is interpreted" in d
+          r=Path("scripts/eipm/n0/run_n0_v02_qsre_p2a_semantic_localization_v1.sh").read_text()
+          assert "train_n0_v02_qsre_production_p2" not in r
+          assert "sbatch" not in r
+          print("PASS_ANTI_LOOP_CONTRACT")
+          PY
