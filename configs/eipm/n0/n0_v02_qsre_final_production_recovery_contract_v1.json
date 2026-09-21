@@ -1,0 +1,55 @@
+{
+  "schema": "alice.eipm.n0.qsre-final-production-recovery-contract.v1",
+  "status": "FINAL_N0_PRODUCTION_ARCHITECTURE_PRECOMMITTED_BEFORE_NEXT_GPU_RUN",
+  "evidence": {
+    "original_production_job": 575955,
+    "stop_tail_recovery_job": 575956,
+    "p1_status": "PASS_QSRE_PRODUCTION_P1_EXECUTOR",
+    "p1_selected_step": 50,
+    "p1_checkpoint_sha256": "91f2c78dcc35967064189af4a7110cdee83e5652fb037d3d88f58500ac3aaab9",
+    "p2_v1_status": "FAIL_QSRE_PRODUCTION_P2_OPERATOR",
+    "p2_v1_failure_class": "genuine_operator_generalization_and_interface_failure",
+    "p2_v2_gpu_executed": false
+  },
+  "final_architecture": {
+    "operator": "QSREProductionOperatorInducerV3",
+    "operator_path": "src/alice_personality/n0/qsre_production_operator_v3.py",
+    "binder": "QSREProductionBinderV2",
+    "binder_path": "src/alice_personality/n0/qsre_production_binder_v2.py",
+    "plan": "configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json",
+    "relation_hypotheses_continuous_until_binding": true,
+    "exact_relation_sparsity_before_binding": false,
+    "exact_sparse_structural_support": true,
+    "relation_selection_decoupled_from_stop_unknown": true,
+    "core_schema_only_gradient": true,
+    "open_schema_query_labels_used_in_gradient": false,
+    "open_schema_relation_descriptions_used_in_gradient": false,
+    "zero_shot_dynamic_schema_expansion_at_dev_and_final": true,
+    "p1_relation_state_is_executor_interface_not_match_authority": true,
+    "operator_continuous_state_is_not_binder_support_authority": true
+  },
+  "compute": {
+    "p1_retrain": false,
+    "p2_v1_retrain": false,
+    "p2_v2_run": false,
+    "p2_v3_gpu_runs_authorized": 1,
+    "p3_v3_if_p2_passes": true,
+    "p4_v3_if_p3_passes": true,
+    "final_native_validation_if_p4_passes": true,
+    "learning_rate_search": false,
+    "step_search": false,
+    "width_search": false,
+    "batch_size_search": false,
+    "automatic_rerun": false,
+    "automatic_hotfix": false
+  },
+  "validation": {
+    "reuse_original_frozen_final_validation": true,
+    "rebuild_final_validation": false,
+    "threshold_changes_after_results": false,
+    "external_validator": false,
+    "private_identity_data": false,
+    "private_identity_gradient": false,
+    "n0_complete_only_if": "PASS_N0_FINAL_SELF_VALIDATION_OBJECTIVE && n0_complete==true && n1_authorized==true"
+  }
+}
