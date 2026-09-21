@@ -1,0 +1,68 @@
+{
+  "schema": "alice.eipm.n0.qsre-frozen-semantic-authority-plan.v3",
+  "status": "PRECOMMITTED_AFTER_VALID_JOB_575966_P2S_SEMANTIC_MATCHER_FAILURE",
+  "source_failure": {
+    "job": 575966,
+    "stage": "P2S",
+    "source_revision": "1c94065cd30abb9764260e239b2227b27d098040",
+    "status": "FAIL_QSRE_CLOSURE_SCHEMA_MATCHER",
+    "exit_code": 41,
+    "full_budget_steps": 1000,
+    "p2_authorized": false,
+    "best_observed": {
+      "step": 150,
+      "auxiliary_holdout_relation_top1": 0.6666666666666666,
+      "auxiliary_seen_relation_top1": 0.71875,
+      "production_core_single_relation_top1": 0.9477272727272728,
+      "heldout_factor_macro_accuracy": 0.7166666666666667
+    },
+    "interpretation": "Semantic-v2 reached perfect Production-core fit but unseen relations and heldout factor semantics plateaued. Near-zero training losses with stable sub-gate heldout metrics localize overfitting/generalization failure to the learned P2S matcher boundary rather than infrastructure or downstream Production."
+  },
+  "semantic_authority": {
+    "model": "ratified alice-n0-semantic-v0.2 targeted-repair step-80",
+    "semantic_checkpoint_sha256": "6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43",
+    "gradient": false,
+    "optimizer": false,
+    "components": [
+      "joint_prompt_candidate_preference_score",
+      "shared_prompt_semantic_projection_cosine",
+      "parameter_free_token_evidence_score"
+    ],
+    "component_normalization": "candidate_axis_zscore_after_runtime_candidate_subset",
+    "component_fusion": "equal_weight_mean",
+    "relation_keys_in_semantic_text": false,
+    "production_runtime_relation_text_grammar": true,
+    "learned_relation_or_factor_matcher": false,
+    "trainable_authority_parameters": 0
+  },
+  "qualification": {
+    "meta_schema": "configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v2.json",
+    "production_curriculum": "preserved qsre-production-core-v1/p0/qsre_production_curriculum_v1.jsonl",
+    "production_relation_schema": "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
+    "query_views_per_example": 2,
+    "selection": "none; one frozen ensemble only"
+  },
+  "eligibility": {
+    "auxiliary_seen_relation_top1": 0.95,
+    "auxiliary_holdout_relation_top1": 0.85,
+    "production_core_single_relation_top1": 0.95,
+    "heldout_factor_macro_accuracy": 0.9
+  },
+  "governance": {
+    "max_gpu_runs": 1,
+    "automatic_rerun": false,
+    "learning_rate_search": false,
+    "step_search": false,
+    "width_search": false,
+    "batch_size_search": false,
+    "threshold_changes_after_results": false,
+    "matcher_training": false,
+    "semantic_backbone_gradient": false,
+    "private_identity_gradient": false,
+    "production_open_schema_descriptions_in_gradient": false,
+    "final_only_relation_descriptions_in_gradient": false,
+    "auxiliary_holdout_relation_descriptions_in_gradient": false,
+    "p2_authorized_only_if_frozen_authority_passes": true,
+    "source_v2_failure_must_be_preserved": true
+  }
+}
