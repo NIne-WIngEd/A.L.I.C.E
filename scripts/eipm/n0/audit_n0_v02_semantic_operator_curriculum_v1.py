@@ -89,9 +89,34 @@ def main() -> None:
         for key in keys:
             if key.lower() in semantic_text:
                 errors.append(f"{rid}: opaque relation key leaked into semantic text")
-        for target in row.get("relation_sequence_target") or []:
+        relation_targets = list(row.get("relation_sequence_target") or [])
+        for target in relation_targets:
             if int(target) < 0 or int(target) >= len(candidates):
                 errors.append(f"{rid}: relation target outside runtime candidate bank")
+        events = list(row.get("event_sequence_target") or [])
+        expected_slots = int(row.get("runtime_operator_slots", -1))
+        if len(events) != expected_slots:
+            errors.append(
+                f"{rid}: event sequence length {len(events)} != runtime_operator_slots {expected_slots}"
+            )
+        allowed_events = {"CONTINUE", "STOP", "UNKNOWN"}
+        if any(str(event) not in allowed_events for event in events):
+            errors.append(f"{rid}: invalid event target")
+        if row.get("intervention") == "unknown_defer":
+            if events != ["UNKNOWN"]:
+                errors.append(f"{rid}: unknown/defer must terminate with UNKNOWN")
+            if relation_targets:
+                errors.append(f"{rid}: unknown/defer cannot execute a relation")
+            if int(row.get("applicability_target", -1)) != 0:
+                errors.append(f"{rid}: unknown/defer applicability target must be 0")
+        else:
+            expected_events = ["CONTINUE"] * len(relation_targets) + ["STOP"]
+            if events != expected_events:
+                errors.append(
+                    f"{rid}: relation program must execute each relation with CONTINUE then STOP"
+                )
+            if int(row.get("applicability_target", -1)) != 1:
+                errors.append(f"{rid}: relational applicability target must be 1")
         factor_schemas = row.get("factor_schemas") or {}
         factor_targets = row.get("factor_targets") or {}
         if set(factor_schemas) != set(factor_targets):
@@ -195,6 +220,7 @@ def main() -> None:
         "template_overlap": template_overlap,
         "entity_overlap": entity_overlap,
         "candidate_count_histogram": {str(k): v for k, v in sorted(counts.items())},
+        "terminal_event_contract_explicit": True,
         "intervention_histogram": dict(sorted(interventions.items())),
         "step_conditioned_direction_present": interventions["mixed_direction_composition"] > 0,
         "step_conditioned_modifier_present": interventions["mixed_step_modifier_composition"] > 0,
