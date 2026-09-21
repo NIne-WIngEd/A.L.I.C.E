@@ -30,22 +30,56 @@ def public_judgment_loss(
     candidate_logits: Tensor,
     target_index: Tensor,
     *,
+    candidate_valid_mask: Tensor | None = None,
     hard_negative_margin: float = 0.20,
 ) -> Tensor:
     if candidate_logits.ndim != 2:
         raise ValueError("candidate_logits must be [B,C]")
-    if target_index.shape != (candidate_logits.size(0),):
+    batch, candidates = candidate_logits.shape
+    if target_index.shape != (batch,):
         raise ValueError("target_index shape drift")
-    ce = F.cross_entropy(candidate_logits, target_index.long())
-    if candidate_logits.size(1) <= 1:
-        return ce
-    correct = candidate_logits.gather(
+    if candidate_valid_mask is None:
+        candidate_valid_mask = torch.ones_like(
+            candidate_logits,
+            dtype=torch.bool,
+        )
+    if (
+        candidate_valid_mask.shape != candidate_logits.shape
+        or candidate_valid_mask.dtype != torch.bool
+    ):
+        raise ValueError("candidate_valid_mask must be bool [B,C]")
+    if bool((candidate_valid_mask.sum(dim=-1) == 0).any()):
+        raise ValueError("every example requires a valid judgment candidate")
+    if bool((target_index < 0).any()) or bool((target_index >= candidates).any()):
+        raise ValueError("target_index outside candidate axis")
+    target_valid = candidate_valid_mask.gather(
+        1,
+        target_index.long()[:, None],
+    ).squeeze(1)
+    if not bool(target_valid.all()):
+        raise ValueError("judgment target points to a padded candidate")
+
+    masked_logits = candidate_logits.masked_fill(
+        ~candidate_valid_mask,
+        -1.0e4,
+    )
+    ce = F.cross_entropy(masked_logits, target_index.long())
+    correct = masked_logits.gather(
         1, target_index.long()[:, None]
     ).squeeze(1)
-    mask = torch.ones_like(candidate_logits, dtype=torch.bool)
-    mask.scatter_(1, target_index.long()[:, None], False)
-    hardest = candidate_logits.masked_fill(~mask, -1.0e4).max(dim=-1).values
-    margin = F.relu(float(hard_negative_margin) - (correct - hardest)).mean()
+    negative_mask = candidate_valid_mask.clone()
+    negative_mask.scatter_(1, target_index.long()[:, None], False)
+    has_negative = negative_mask.any(dim=-1)
+    if not bool(has_negative.any()):
+        return ce
+    hardest = masked_logits.masked_fill(
+        ~negative_mask,
+        -1.0e4,
+    ).max(dim=-1).values
+    margin = F.relu(
+        float(hard_negative_margin) - (correct - hardest)
+    )
+    margin = margin.masked_select(has_negative).mean()
     return ce + margin
 
 
@@ -222,6 +256,7 @@ def full_envelope_behavioral_objective(
     *,
     candidate_logits: Tensor,
     target_index: Tensor,
+    candidate_valid_mask: Tensor | None = None,
     support_logits: Tensor,
     support_target: Tensor,
     support_valid_mask: Tensor,
@@ -241,7 +276,11 @@ def full_envelope_behavioral_objective(
 ) -> dict[str, Tensor]:
     w = weights or FullEnvelopeBehavioralWeights()
     w.validate()
-    judgment = public_judgment_loss(candidate_logits, target_index)
+    judgment = public_judgment_loss(
+        candidate_logits,
+        target_index,
+        candidate_valid_mask=candidate_valid_mask,
+    )
     support = support_selection_loss(
         support_logits,
         support_target,
