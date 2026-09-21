@@ -1,0 +1,347 @@
+{
+  "schema": "alice.eipm.n0.qsre-production-training-plan.v3",
+  "status": "FINAL_PRECOMMITTED_N0_PRODUCTION_ARCHITECTURE_AFTER_P1_PASS_AND_GENUINE_P2_FAILURE",
+  "architecture": "configs/eipm/n0/n0_v02_qsre_production_core_v1.json",
+  "curriculum_contract": "configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json",
+  "curriculum_sha256": "8d0120bfb4b6149990906ca9732f75e62d1b12c181e3527f12be391ccd63016f",
+  "relation_schema": "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
+  "model": {
+    "semantic_dim": 640,
+    "model_dim": 640,
+    "num_hidden_states": 17,
+    "num_attention_heads": 10,
+    "operator_refinement_layers": 2,
+    "field_state_dim": 640,
+    "field_metadata_dim": 3,
+    "role_count": 4,
+    "traversal_count": 3,
+    "modifier_count": 4,
+    "control_count": 3,
+    "dropout": 0.05,
+    "direction_count": 3
+  },
+  "stages": {
+    "P0": {
+      "role": "real_artifact_static_runtime_qualification_and_cache_materialization",
+      "gradient": false,
+      "gpu": false,
+      "required_before": [
+        "P1"
+      ],
+      "obligations": [
+        "build_exact_curriculum",
+        "materialize_dynamic_schema_from_ratified_semantic_checkpoint",
+        "materialize_query_and_field_semantic_cache",
+        "execute_untrained_production_core_on_real_tensors",
+        "run_totality_and_dynamic_shape_mechanics",
+        "bind_exact_artifact_hashes"
+      ]
+    },
+    "P1": {
+      "role": "schema_encoder_plus_executor_with_oracle_operator_and_oracle_support",
+      "trainable": [
+        "schema_encoder",
+        "executor"
+      ],
+      "frozen": [
+        "semantic_backbone",
+        "operator",
+        "binder",
+        "structured_parent",
+        "fusion_parent"
+      ],
+      "optimizer": {
+        "name": "AdamW",
+        "learning_rate": 0.0002,
+        "weight_decay": 0.02
+      },
+      "training": {
+        "seed": 20260920,
+        "batch_size": 32,
+        "max_steps": 1000,
+        "eval_every": 50,
+        "save_every": 50
+      },
+      "eligibility": {
+        "row_success_accuracy": 0.99,
+        "single_target_top1_accuracy": 0.99,
+        "plural_l1_max": 0.05,
+        "family_min_success": 0.95,
+        "open_schema_success": 0.95,
+        "path_family_min_success": 0.95,
+        "outside_support_invariance_max_delta": 0.000001
+      },
+      "max_gpu_runs": 1,
+      "loss_weights": {
+        "downstream": 1,
+        "schema_geometry": 0.1
+      }
+    },
+    "P2": {
+      "role": "final_continuous_open_schema_operator_induction_core_only_query_supervision",
+      "trainable": [
+        "operator"
+      ],
+      "frozen": [
+        "semantic_backbone",
+        "schema_encoder",
+        "executor",
+        "binder",
+        "structured_parent",
+        "fusion_parent"
+      ],
+      "optimizer": {
+        "name": "AdamW",
+        "learning_rate": 0.0001,
+        "weight_decay": 0.02
+      },
+      "loss_weights": {
+        "relation": 1,
+        "event": 1,
+        "role": 0.7,
+        "traversal": 0.7,
+        "modifiers": 0.5,
+        "applicability": 0.3,
+        "control": 0.5,
+        "continuous_alignment": 0.15,
+        "downstream": 0.5,
+        "pair_consistency": 0.2,
+        "projection_anchor": 0.02,
+        "direction": 0.7,
+        "schema_identity": 0.1
+      },
+      "training": {
+        "seed": 20260921,
+        "batch_size": 8,
+        "max_steps": 1600,
+        "eval_every": 50,
+        "save_every": 50,
+        "operator_runtime_max_steps": 4,
+        "operator_step_policy": "max supervised relation length 3 plus one explicit STOP step; shared weights permit larger serving budgets later",
+        "loss_reduction": "macro_balanced_by_present_target_class_for_relation_event_role_traversal_direction_control_and_binary_modifier_state",
+        "runtime_schema_candidates": "core_6_only_during_gradient; full_dynamic_schema_first_enters_at_DEV_runtime",
+        "open_schema_query_supervision": false,
+        "schema_only_self_calibration": true,
+        "open_schema_relation_descriptions_used_in_gradient": false,
+        "schema_only_self_calibration_scope": "core_train_schema_only",
+        "relation_runtime_projection": "continuous_softmax_until_structural_binding",
+        "exact_relation_sparsity": false
+      },
+      "eligibility": {
+        "relation_sequence_exact_accuracy": 0.95,
+        "open_schema_relation_exact_accuracy": 0.85,
+        "role_accuracy_relational": 0.98,
+        "traversal_accuracy_relational": 0.98,
+        "modifier_exact_accuracy_relational": 0.95,
+        "control_accuracy": 0.98,
+        "pair_consistency": 0.9,
+        "downstream_row_success_accuracy": 0.95,
+        "downstream_family_min_success": 0.85,
+        "termination_accuracy": 0.98,
+        "unknown_termination_accuracy": 0.95,
+        "direction_accuracy_relational": 0.98
+      },
+      "max_gpu_runs": 1,
+      "failure_source": {
+        "magnolia_job": 575956,
+        "status": "FAIL_QSRE_PRODUCTION_P2_OPERATOR",
+        "evidence": "train_loss_near_zero_but_dev_relation_transfer_and_open_schema_remained_far_below_gate; unknown termination nearly always zero; factor heads mostly tracked majority behavior",
+        "no_lr_step_or_width_search": true
+      }
+    },
+    "P3": {
+      "role": "final_adaptive_structural_binder_with_core_only_gradient_and_exact_sparse_evidence_support",
+      "trainable": [
+        "binder"
+      ],
+      "frozen": [
+        "semantic_backbone",
+        "schema_encoder",
+        "executor",
+        "operator",
+        "structured_parent",
+        "fusion_parent"
+      ],
+      "optimizer": {
+        "name": "AdamW",
+        "learning_rate": 0.0001,
+        "weight_decay": 0.02
+      },
+      "loss_weights": {
+        "support_bce": 1,
+        "downstream": 0.5,
+        "type_violation": 0.5,
+        "focus_bce": 0.6
+      },
+      "training": {
+        "seed": 20260922,
+        "batch_size": 8,
+        "max_steps": 1200,
+        "eval_every": 50,
+        "save_every": 50,
+        "operator_runtime_max_steps": 4,
+        "runtime_schema_candidates": "core_6_only_during_gradient; full_dynamic_schema_first_enters_at_DEV_runtime",
+        "open_schema_query_supervision": false,
+        "loss_reduction": "balanced_positive_negative_support_and_focus_supervision",
+        "open_schema_relation_descriptions_used_in_gradient": false
+      },
+      "eligibility": {
+        "oracle_support_edge_f1": 0.98,
+        "oracle_support_exact_set_accuracy": 0.95,
+        "type_violation_rate_max": 0,
+        "oracle_downstream_row_success_accuracy": 0.95,
+        "predicted_operator_support_edge_f1": 0.95,
+        "predicted_operator_downstream_row_success_accuracy": 0.9,
+        "oracle_path_focus_top1_accuracy": 0.98,
+        "oracle_path_focus_exact_set_accuracy": 0.95,
+        "predicted_operator_path_focus_top1_accuracy": 0.95
+      },
+      "max_gpu_runs": 1,
+      "architecture": {
+        "binder": "QSREProductionBinderV2",
+        "operator": "QSREProductionOperatorInducerV3",
+        "continuous_relation_hypotheses": true,
+        "exact_sparse_structural_support": true,
+        "core_schema_only_gradient": true,
+        "open_schema_training_query_labels_used": false,
+        "open_schema_relation_descriptions_used_in_gradient": false,
+        "p1_schema_relation_state_not_match_authority": true,
+        "operator_continuous_state_support_authority": false,
+        "relation_semantics_owned_by_operator_relation_mass": true,
+        "shared_query_field_metric": true,
+        "symmetric_query_field_late_interaction": true
+      }
+    },
+    "P4": {
+      "role": "end_to_end_qsre_evaluation_only",
+      "gradient": false,
+      "eligibility": {
+        "downstream_row_success_accuracy": 0.9,
+        "family_min_success": 0.8,
+        "open_schema_row_success_accuracy": 0.8,
+        "outside_support_invariance_max_delta": 0.000001,
+        "nonrelational_false_assertion_rate_max": 0.01,
+        "unknown_fail_closed_accuracy": 0.95,
+        "path_focus_top1_accuracy": 0.95,
+        "direction_accuracy_relational": 0.95
+      },
+      "failure_policy": "stop_and_localize_without_automatic_joint_finetune",
+      "operator_runtime_max_steps": 4,
+      "architecture": "operator-v3-plus-binder-v2"
+    },
+    "P5": {
+      "role": "existing_n0_fusion_consumption_of_qsre_relational_view",
+      "gradient_default": false,
+      "policy": "first_attempt_is_adapter_plus_frozen_fusion_evaluation; only measured_fusion_bottleneck_can_authorize_fusion_gradient",
+      "qsre_architecture": "operator-v3-plus-binder-v2"
+    }
+  },
+  "governance": {
+    "one_owner_launch_after_static_ci": true,
+    "slurm_afterok_dependencies": true,
+    "automatic_rerun": false,
+    "automatic_hotfix": false,
+    "learning_rate_search": false,
+    "step_search": false,
+    "width_search": false,
+    "private_identity_gradient": false,
+    "test_split_open": false,
+    "production_promotion": false,
+    "source_failed_p2_job": 575956,
+    "p2_v1_failure_must_be_preserved": true,
+    "p2_v2_single_architecture_recovery_run": true,
+    "final_n0_architecture_version": "operator-v3+binder-v2",
+    "p2_v2_not_gpu_executed": true,
+    "p2_v3_single_final_architecture_run": true,
+    "no_additional_n0_architecture_revision_after_launch_without_new_model_evidence": true
+  },
+  "compute_precommit": {
+    "reason": "Production QSRE keeps the full 640-dimensional ratified semantic geometry end-to-end so dynamic-schema and relational-summary information are not compressed before N1. P2/P3 batch 8 remains fixed before execution and is well within the current token/schema working-set estimate on a 12GB P100; no posthoc batch-size search is authorized.",
+    "p1_batch_size": 32,
+    "p2_batch_size": 8,
+    "p3_batch_size": 8,
+    "batch_size_search_authorized": false
+  },
+  "architecture_closure": {
+    "unknown_out_of_schema_is_distinct_from_stop": true,
+    "temporal_constraint_modifier_is_supervised": true,
+    "provenance_constraint_modifier_is_supervised": true,
+    "combined_scope_constraints_are_supervised": true,
+    "calibrated_executor_mass_preserves_control_unknown_and_program_presence": true,
+    "schema_encoder_starts_geometry_preserving": true,
+    "seed_role_traversal_control_counts_are_checkpoint_topology_not_product_ceilings": true,
+    "p2_query_projection_initialized_from_proven_schema_space": true,
+    "p2_query_projection_softly_anchored_to_schema_space": true,
+    "all_seed_roles_supervised": true,
+    "path_source_target_role_reversal_supervised": true,
+    "symmetric_pair_role_supervised": true,
+    "learned_path_focus_no_oracle_at_p4": true,
+    "forward_reverse_bidirectional_path_execution": true,
+    "direction_is_independent_operator_factor": true,
+    "path_source_queries_can_execute_reverse_from_target_focus": true,
+    "oracle_focus_forbidden_in_p4": true,
+    "full_640_semantic_width_preserved_through_qsre": true,
+    "qsre_relational_summary_matches_n0_semantic_width": true,
+    "model_width_is_not_a_compression_bottleneck": true,
+    "p2_relation_selection_decoupled_from_stop_unknown": true,
+    "p2_shared_query_schema_metric": true,
+    "p2_symmetric_query_schema_late_interaction": true,
+    "p2_factor_specific_query_slots": true,
+    "p2_macro_balanced_factor_supervision": true,
+    "p2_unknown_is_rejection_event_not_extra_relation_class": true,
+    "p3_shared_query_field_metric": true,
+    "p3_relation_semantics_owned_by_operator": true,
+    "p3_p1_schema_state_not_match_authority": true,
+    "p3_balanced_support_focus_supervision": true,
+    "p4_operator_v2_binder_v2_only": true,
+    "final_native_gate_uses_same_frozen_artifacts_with_operator_v2_binder_v2_runtime": true,
+    "p2_p1_schema_relation_state_is_interface_only_for_operator": true,
+    "p3_operator_continuous_state_not_support_authority": true,
+    "operator_relation_hypotheses_remain_continuous_until_binder": true,
+    "exact_zero_sparsity_begins_at_structural_support_not_relation_hypotheses": true,
+    "p2_core_schema_only_query_gradient": true,
+    "p2_open_schema_relation_descriptions_never_enter_gradient": true,
+    "p2_dynamic_schema_expansion_is_true_zero_shot_runtime_test": true,
+    "p2_schema_identity_regularization_is_core_only": true,
+    "p3_core_schema_only_gradient": true,
+    "p3_open_schema_relation_descriptions_never_enter_gradient": true,
+    "p4_operator_v3_binder_v2_only": true,
+    "final_native_gate_uses_frozen_artifacts_with_operator_v3_binder_v2_runtime": true
+  },
+  "operator_architecture": {
+    "module": "src/alice_personality/n0/qsre_production_operator_v3.py",
+    "class": "QSREProductionOperatorInducerV3",
+    "design": "continuous_open_schema_relation_operator_plus_factor_slots_plus_decoupled_program_events",
+    "continuous_relation_hypotheses_until_structural_binding": true,
+    "relation_sparsity_before_structural_binding": false,
+    "exact_sparsity_owned_by_binder": true,
+    "relation_selection_and_termination_are_separate_distributions": true,
+    "shared_query_schema_metric": true,
+    "symmetric_late_interaction": true,
+    "factor_specific_query_slots": true,
+    "p1_schema_relation_state_match_authority": false,
+    "shared_matcher_schema_summary_used_for_recurrent_relation_context": true,
+    "dense_relation_event_factor_logits_for_supervision": true,
+    "core_schema_only_query_supervision": true,
+    "open_schema_relation_descriptions_used_in_gradient": false,
+    "schema_only_self_calibration_scope": "core_train_schema_only",
+    "dynamic_candidate_expansion_tested_without_relation_specific_retraining": true
+  },
+  "binder_architecture": {
+    "module": "src/alice_personality/n0/qsre_production_binder_v2.py",
+    "class": "QSREProductionBinderV2",
+    "design": "shared_query_field_metric_plus_operator_owned_relation_semantics",
+    "shared_query_field_metric": true,
+    "symmetric_query_field_late_interaction": true,
+    "relation_semantics_owned_by_operator_relation_mass": true,
+    "p1_schema_relation_state_not_match_authority": true,
+    "operator_continuous_state_support_authority": false,
+    "exact_runtime_type_constraints": true,
+    "exact_zero_variable_support": true,
+    "fixed_top_k": false,
+    "learned_path_focus_without_oracle": true,
+    "support_count_ceiling": null,
+    "field_count_ceiling": null,
+    "edge_count_ceiling": null
+  }
+}
