@@ -19,6 +19,8 @@ from alice_personality.n0.full_envelope_structural_types import (
     ROLE_SOURCE,
     ROLE_SYMMETRIC,
     ROLE_TARGET,
+    TRAVERSAL_AGGREGATE,
+    TRAVERSAL_LOCAL,
     TRAVERSAL_PATH,
     FullEnvelopeOperatorState,
 )
@@ -166,8 +168,11 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         b = torch.arange(batch, device=edge_index.device)[:, None].expand(batch, edges)
         edge_relation_state = relation_state[b, relation_index]
 
-        frontier = focus_field_weight.clamp(min=0.0, max=1.0)
+        origin_focus = focus_field_weight.clamp(min=0.0, max=1.0)
+        frontier = origin_focus
+        local_probability = operator.traversal_distribution[:, TRAVERSAL_LOCAL]
         path_probability = operator.traversal_distribution[:, TRAVERSAL_PATH]
+        aggregate_probability = operator.traversal_distribution[:, TRAVERSAL_AGGREGATE]
         last_edge_state = torch.zeros(
             batch, edges, self.config.model_dim, device=node.device, dtype=node.dtype
         )
@@ -191,6 +196,8 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
 
             source_frontier = frontier.gather(1, source_index)
             target_frontier = frontier.gather(1, target_index)
+            source_origin = origin_focus.gather(1, source_index)
+            target_origin = origin_focus.gather(1, target_index)
             forward = operator.direction_distribution[:, DIRECTION_FORWARD][:, None]
             reverse = operator.direction_distribution[:, DIRECTION_REVERSE][:, None]
             bidir = operator.direction_distribution[:, DIRECTION_BIDIRECTIONAL][:, None]
@@ -230,11 +237,29 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             reverse_gate = common * target_frontier * reverse
             bidir_forward = common * source_frontier * bidir
             bidir_reverse = common * target_frontier * bidir
-            path_gate = (forward_gate + reverse_gate + bidir_forward + bidir_reverse).clamp(max=1.0)
+            path_gate = (
+                forward_gate
+                + reverse_gate
+                + bidir_forward
+                + bidir_reverse
+            ).clamp(max=1.0)
+
+            local_forward = common * source_origin * forward
+            local_reverse = common * target_origin * reverse
+            local_bidir = common * torch.maximum(
+                source_origin,
+                target_origin,
+            ) * bidir
+            local_gate = (
+                local_forward + local_reverse + local_bidir
+            ).clamp(max=1.0)
+
+            aggregate_gate = common
             gate = (
-                path_probability[:, None] * path_gate
-                + (1.0 - path_probability[:, None]) * common
-            )
+                local_probability[:, None] * local_gate
+                + path_probability[:, None] * path_gate
+                + aggregate_probability[:, None] * aggregate_gate
+            ).clamp(max=1.0)
 
             source_node = node[b, source_index]
             target_node = node[b, target_index]
@@ -298,7 +323,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             ).clamp(max=1.0)
             frontier = (
                 path_probability[:, None] * stepped
-                + (1.0 - path_probability[:, None]) * frontier
+                + (1.0 - path_probability[:, None]) * origin_focus
             )
 
         source_support = torch.zeros(batch, fields, device=node.device, dtype=node.dtype)
@@ -307,20 +332,41 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         target_support.scatter_add_(1, target_index, edge_support_weight)
         source_support = source_support.clamp(max=1.0)
         target_support = target_support.clamp(max=1.0)
-        local_union = (source_support + target_support).clamp(max=1.0)
+        aggregate_union = (source_support + target_support).clamp(max=1.0)
+
+        local_edge_focus = torch.maximum(
+            origin_focus.gather(1, source_index),
+            origin_focus.gather(1, target_index),
+        )
+        local_edge_support = edge_support_weight * local_edge_focus
+        local_source_support = torch.zeros_like(source_support)
+        local_target_support = torch.zeros_like(target_support)
+        local_source_support.scatter_add_(1, source_index, local_edge_support)
+        local_target_support.scatter_add_(1, target_index, local_edge_support)
+        local_source_support = local_source_support.clamp(max=1.0)
+        local_target_support = local_target_support.clamp(max=1.0)
+        local_union = (
+            local_source_support + local_target_support
+        ).clamp(max=1.0)
 
         source_role = operator.role_distribution[:, ROLE_SOURCE][:, None]
         target_role = operator.role_distribution[:, ROLE_TARGET][:, None]
         symmetric_role = operator.role_distribution[:, ROLE_SYMMETRIC][:, None]
         none_role = operator.role_distribution[:, ROLE_NONE][:, None]
         local_role = (
-            source_role * source_support
-            + target_role * target_support
+            source_role * local_source_support
+            + target_role * local_target_support
             + symmetric_role * local_union
             + none_role * local_union
         ).clamp(0.0, 1.0)
+        aggregate_role = (
+            source_role * source_support
+            + target_role * target_support
+            + symmetric_role * aggregate_union
+            + none_role * aggregate_union
+        ).clamp(0.0, 1.0)
 
-        path_origin = focus_field_weight.clamp(0.0, 1.0)
+        path_origin = origin_focus
         path_reached = frontier.clamp(0.0, 1.0)
         path_union = (path_origin + path_reached).clamp(max=1.0)
         forward = operator.direction_distribution[:, DIRECTION_FORWARD][:, None]
@@ -334,7 +380,11 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             + symmetric_role * path_union
             + none_role * path_union
         ).clamp(0.0, 1.0)
-        role_weight = torch.where((path_probability >= 0.5)[:, None], path_role, local_role)
+        role_weight = (
+            local_probability[:, None] * local_role
+            + path_probability[:, None] * path_role
+            + aggregate_probability[:, None] * aggregate_role
+        ).clamp(0.0, 1.0)
         readout_mask = (role_weight > 0) & field_valid_mask
 
         op_node = operator_state[:, None, :].expand(batch, fields, -1)
@@ -396,6 +446,9 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "shared_iterative_execution": True,
             "runtime_relation_schema": True,
             "structural_factor_probabilities": True,
+            "continuous_traversal_mixture": True,
+            "local_path_aggregate_distinct": True,
+            "hard_traversal_threshold": False,
             "relation_count_ceiling": None,
             "hop_count_ceiling": None,
             "field_count_ceiling": None,
