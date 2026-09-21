@@ -189,6 +189,7 @@ def main()->None:
         "p1_checkpoint_sha256":sha256(p1_path),
         "p2_checkpoint_sha256":sha256(p2_path),
         "p3_checkpoint_sha256":sha256(p3_path),
+        "factor_schema_cache_sha256":sha256(Path(args.factor_schema_cache)),
         "gradient":False,
         "test_open":False,
         "private_identity_data":False,
