@@ -235,7 +235,7 @@ def diagnose_view(
             "relation_top1": (
                 _mean(pred[select, step].eq(target[select, step]))
                 if bool(select.any())
-                else float("nan")
+                else None
             ),
         }
         step_mass[str(step)] = {
