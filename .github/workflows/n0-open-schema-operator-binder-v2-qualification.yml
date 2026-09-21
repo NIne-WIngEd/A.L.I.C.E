@@ -1,0 +1,216 @@
+name: n0-open-schema-operator-binder-v2-qualification
+
+on:
+  push:
+    paths:
+      - "src/alice_personality/n0/qsre_production_operator_v2.py"
+      - "src/alice_personality/n0/qsre_production_binder_v2.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v2.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p3_v2.py"
+      - "scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v2.py"
+      - "scripts/eipm/n0/eval_n0_v02_final_self_validation_v2.py"
+      - "scripts/eipm/n0/qsre_production_training_utils.py"
+      - "scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_operator_binder_v2_recovery_v1.sbatch"
+      - "configs/eipm/n0/n0_v02_qsre_production_training_plan_v2.json"
+      - "configs/eipm/n0/n0_v02_qsre_p2_v2_recovery_contract_v1.json"
+      - "tests/eipm/test_n0_qsre_production_operator_v2.py"
+      - "tests/eipm/test_n0_qsre_production_binder_v2.py"
+      - ".github/workflows/n0-open-schema-operator-binder-v2-qualification.yml"
+  workflow_dispatch:
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src:scripts/eipm/n0
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CPU qualification dependencies
+        run: python -m pip install -q torch pytest safetensors
+
+      - name: Compile complete v2 recovery and final gate
+        run: |
+          python -m py_compile             src/alice_personality/n0/qsre_production_operator_v2.py             src/alice_personality/n0/qsre_production_binder_v2.py             scripts/eipm/n0/qsre_production_training_utils.py             scripts/eipm/n0/train_n0_v02_qsre_production_p2_v2.py             scripts/eipm/n0/train_n0_v02_qsre_production_p3_v2.py             scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v2.py             scripts/eipm/n0/eval_n0_v02_final_self_validation_v2.py
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh
+          bash -n scripts/eipm/n0/magnolia_p100_n0_v02_qsre_operator_binder_v2_recovery_v1.sbatch
+          bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
+
+      - name: Run operator and binder v2 mechanics
+        run: |
+          pytest -q             tests/eipm/test_n0_qsre_production_operator_v2.py             tests/eipm/test_n0_qsre_production_binder_v2.py             tests/eipm/test_n0_qsre_production_core_v1.py             tests/eipm/test_n0_qsre_production_training_utils.py
+
+      - name: Prove P2 v2 architecture closes observed failure modes
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          op=Path("src/alice_personality/n0/qsre_production_operator_v2.py").read_text()
+          p2=Path("scripts/eipm/n0/train_n0_v02_qsre_production_p2_v2.py").read_text()
+          plan=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v2.json"))
+          contract=json.load(open("configs/eipm/n0/n0_v02_qsre_p2_v2_recovery_contract_v1.json"))
+
+          assert "all_logits" not in op
+          assert "relation_selection_decoupled_from_stop_unknown" in op
+          assert "event_distribution" in op
+          assert "EVENT_CONTINUE" in op and "EVENT_STOP" in op and "EVENT_UNKNOWN" in op
+          assert "schema_match_projected = self.project_semantic(schema.token_states)" in op
+          assert "self.query_projection(self.query_norm(states))" in op
+          assert "schema_identity_logits" in op
+          assert "factor_queries" in op
+          assert "relation_count_dependent_parameters" in op
+          assert "runtime_step_count_ceiling" in op
+
+          assert "train_schema=subset_schema" not in p2.replace(" ","")
+          assert "schema=full_schema" in p2
+          assert "open_schema_training_query_labels_used" in p2
+          assert "macro_class_nll" in p2
+          assert "macro_binary_factor_loss" in p2
+          assert "schema_identity" in p2
+          assert "--failed-p2-result" in p2
+
+          assert plan["operator_architecture"]["relation_selection_and_termination_are_separate_distributions"] is True
+          assert plan["operator_architecture"]["shared_query_schema_metric"] is True
+          assert plan["operator_architecture"]["factor_specific_query_slots"] is True
+          assert plan["stages"]["P2"]["training"]["open_schema_query_supervision"] is False
+          assert plan["stages"]["P2"]["training"]["schema_only_self_calibration"] is True
+          assert contract["recovery"]["p1_retrain"] is False
+          assert contract["recovery"]["p2_v1_retrain"] is False
+          assert contract["recovery"]["p2_v2_gpu_runs_authorized"]==1
+          print("PASS_N0_P2_V2_ARCHITECTURE_CLOSURE")
+          PY
+
+      - name: Prove P3 v2 does not reintroduce a second relation ontology
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          binder=Path("src/alice_personality/n0/qsre_production_binder_v2.py").read_text()
+          p3=Path("scripts/eipm/n0/train_n0_v02_qsre_production_p3_v2.py").read_text()
+          plan=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v2.json"))
+
+          assert "del schema_relation_state" in binder
+          assert "relation_semantics_owned_by_operator" in binder
+          assert "p1_schema_relation_state_not_match_authority" in binder
+          assert "shared_query_field_metric" in binder
+          assert "fixed_top_k" in binder
+          assert "support_count_ceiling" in binder
+          assert "edge_relation_mass" in binder
+          assert "balanced_binary_bce_with_logits" in p3
+          assert "train_schema=subset_schema" not in p3.replace(" ","")
+          assert "encoded_train=schema_encoder(full_schema)" in p3.replace(" ","")
+          assert "QSREProductionBinderV2" in p3
+          assert "QSREProductionOperatorInducerV2" in p3
+
+          assert plan["binder_architecture"]["relation_semantics_owned_by_operator"] is True
+          assert plan["binder_architecture"]["p1_schema_relation_state_not_match_authority"] is True
+          assert plan["stages"]["P3"]["training"]["open_schema_query_supervision"] is False
+          assert plan["architecture_closure"]["p3_balanced_support_focus_supervision"] is True
+          print("PASS_N0_P3_V2_ARCHITECTURE_CLOSURE")
+          PY
+
+      - name: Prove recovery keeps original compute settings and frozen final gate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          old=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v1.json"))
+          new=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v2.json"))
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh").read_text()
+          sbatch=Path("scripts/eipm/n0/magnolia_p100_n0_v02_qsre_operator_binder_v2_recovery_v1.sbatch").read_text()
+
+          for stage in ("P2","P3"):
+              assert old["stages"][stage]["optimizer"]==new["stages"][stage]["optimizer"]
+              for key in ("seed","batch_size","max_steps","eval_every","save_every","operator_runtime_max_steps"):
+                  assert old["stages"][stage]["training"][key]==new["stages"][stage]["training"][key], (stage,key)
+              assert old["stages"][stage]["eligibility"]==new["stages"][stage]["eligibility"]
+
+          assert old["model"]==new["model"]
+          assert old["curriculum_sha256"]==new["curriculum_sha256"]
+          assert new["governance"]["learning_rate_search"] is False
+          assert new["governance"]["step_search"] is False
+          assert new["governance"]["width_search"] is False
+          assert new["governance"]["private_identity_gradient"] is False
+
+          assert "build_n0_v02_final_self_validation_v1.py" not in runner
+          assert "prepare_n0_v02_final_self_validation_cache_v1.py" not in runner
+          assert "freeze_n0_v02_final_self_validation_v1.py" not in runner
+          assert "FINAL_FREEZE" in runner
+          assert "frozen_final_validation_reused=true" in runner
+          assert "p1_retrain=false" in runner
+          assert "p2_v1_retrain=false" in runner
+          assert "train_n0_v02_qsre_production_p2_v1.py" not in runner
+          assert "train_n0_v02_qsre_production_p2_v2.py" in runner
+          assert "train_n0_v02_qsre_production_p3_v2.py" in runner
+          assert "eval_n0_v02_qsre_production_p4_v2.py" in runner
+          assert "eval_n0_v02_final_self_validation_v2.py" in runner
+          assert '#SBATCH --gres=gpu:p100:1' in sbatch
+          assert 'ALICE_N0_EXPECTED_REVISION' in sbatch
+          print("PASS_N0_V2_NO_POSTHOC_COMPUTE_TUNING_AND_FROZEN_GATE_REUSE")
+          PY
+
+      - name: Qualify CLI lineage and no-oracle P4/final runtime
+        run: |
+          python - <<'PY'
+          import ast
+          import re
+          from pathlib import Path
+
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh").read_text()
+          scripts=[
+              "train_n0_v02_qsre_production_p2_v2.py",
+              "train_n0_v02_qsre_production_p3_v2.py",
+              "eval_n0_v02_qsre_production_p4_v2.py",
+              "eval_n0_v02_final_self_validation_v2.py",
+          ]
+
+          def required_flags(path):
+              tree=ast.parse(Path(path).read_text())
+              flags=set()
+              for node in ast.walk(tree):
+                  if not isinstance(node,ast.Call):
+                      continue
+                  if not isinstance(node.func,ast.Attribute) or node.func.attr!="add_argument":
+                      continue
+                  if not node.args or not isinstance(node.args[0],ast.Constant):
+                      continue
+                  flag=node.args[0].value
+                  if not isinstance(flag,str) or not flag.startswith("--"):
+                      continue
+                  if any(
+                      kw.arg=="required"
+                      and isinstance(kw.value,ast.Constant)
+                      and bool(kw.value.value)
+                      for kw in node.keywords
+                  ):
+                      flags.add(flag)
+              return flags
+
+          for script in scripts:
+              lines=[
+                  line for line in runner.splitlines()
+                  if script in line and line.lstrip().startswith("python ")
+              ]
+              assert len(lines)==1, (script,len(lines))
+              present=set(re.findall(r'--[a-z0-9-]+',lines[0]))
+              missing=required_flags("scripts/eipm/n0/"+script)-present
+              assert not missing, (script,sorted(missing))
+
+          p4=Path("scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v2.py").read_text()
+          final=Path("scripts/eipm/n0/eval_n0_v02_final_self_validation_v2.py").read_text()
+          assert 'focus=bound["focus_field_weight"]' in p4
+          assert 'focus=split["focus_field_weight"]' not in p4
+          assert 'edge_support_weight=split["oracle_edge_support"]' not in p4
+          assert 'QSREProductionBinderV2' in p4
+          assert 'train_n0_v02_qsre_production_p3_v2' in p4
+
+          assert 'QSREProductionBinderV2' in final
+          assert 'train_n0_v02_qsre_production_p3_v2' in final
+          assert 'single_frozen_validation' in final
+          assert 'threshold_changed_after_results' in final
+          print("PASS_N0_V2_CLI_LINEAGE_AND_NO_ORACLE_FINAL_RUNTIME")
+          PY
