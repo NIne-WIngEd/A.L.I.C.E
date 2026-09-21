@@ -98,12 +98,24 @@ jobs:
           assert auth["semantic_authority"]["trainable_authority_parameters"]==0
           assert "model.score_candidates" in runtime
           assert "model.project_semantic_pooled" in runtime
+          assert "model.project_rationale_pooled" in runtime
+          assert "model.principle_alignment_from_projected" in runtime
+          assert "principle_alignment_scores" in runtime
           assert "token_evidence_scores" in runtime
           assert "@torch.inference_mode()" in runtime
           assert '"gradient_performed": False' in qualify
           assert '"optimizer": False' in qualify
           assert "def score_candidates" in model
           assert "def project_semantic_pooled" in model
+          assert "def project_rationale_pooled" in model
+          assert "def principle_alignment_from_projected" in model
+          assert auth["semantic_authority"]["components"]==[
+              "joint_prompt_candidate_preference_score",
+              "shared_prompt_semantic_projection_cosine",
+              "trained_joint_semantic_to_rationale_principle_alignment",
+              "parameter_free_token_evidence_score",
+          ]
+          assert auth["semantic_authority"]["new_trainable_semantic_parameters"]==0
           assert "--production-schema-cache" in qualify
           assert "Production relation-schema source hash drift" in qualify
           print("PASS_N0_FROZEN_AUTHORITY_EXISTING_SEMANTIC_SURFACES")
@@ -199,6 +211,15 @@ jobs:
           assert scale["current_training_steps_are_serving_ceiling"] is False
           assert package["architecture"]["runtime_relation_identity_parameters"]==0
           assert package["architecture"]["semantic_authority_gradient"] is False
+          assert package["architecture"]["semantic_authority_components"]==[
+              "joint_prompt_candidate_preference_score",
+              "shared_prompt_semantic_projection_cosine",
+              "trained_joint_semantic_to_rationale_principle_alignment",
+              "parameter_free_token_evidence_score",
+          ]
+          assert package["architecture"]["trained_rationale_projection_reused"] is True
+          assert package["architecture"]["trained_principle_alignment_reused"] is True
+          assert package["architecture"]["new_semantic_authority_trainable_parameters"]==0
           assert package["architecture"]["exact_relation_sparsity_before_binder"] is False
           assert package["architecture"]["binder_owns_exact_structural_sparsity"] is True
           assert 'FULL_SCALE_PACKAGE="$ROOT/configs/eipm/n0/n0_v02_final_full_scale_capability_package_v1.json"' in runner
