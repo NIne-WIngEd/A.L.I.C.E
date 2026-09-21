@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from dataclasses import replace
+
 import torch
 
 from alice_personality.n0.dynamic_schema_evidence_graph_v1 import (
@@ -25,6 +27,15 @@ from alice_personality.n0.semantic_operator_foundation import (
     SemanticOperatorFoundationConfig,
 )
 from alice_personality.n0.semantic_operator_qsre_adapter import SemanticOperatorQSREAdapter
+from alice_personality.n0.full_envelope_structural_types import (
+    CONTROL_RELATIONAL,
+    DIRECTION_FORWARD,
+    FullEnvelopeOperatorState,
+    ROLE_TARGET,
+    TRAVERSAL_AGGREGATE,
+    TRAVERSAL_LOCAL,
+    TRAVERSAL_PATH,
+)
 
 
 def relation_schema(count: int = 5, types: int = 4) -> DynamicRelationSchema:
@@ -312,3 +323,104 @@ def test_dynamic_graph_and_binder_parameter_counts_do_not_depend_on_runtime_card
     assert graph.parameter_report()["relation_count_dependent_parameters"]==0
     assert binder.parameter_report()["relation_count_dependent_parameters"]==0
     assert executor.parameter_report()["relation_count_dependent_parameters"]==0
+
+
+def test_unknown_structural_opcode_fails_closed() -> None:
+    q,qm,raw,_=operator_bundle(batch=1,relations=3)
+    factor_opcodes = {
+        "role": ["ROLE_SOURCE","ROLE_TARGET","ROLE_SYMMETRIC","ROLE_NONE"],
+        "traversal": ["TRAVERSAL_LOCAL","TRAVERSAL_PATH","TRAVERSAL_AGGREGATE"],
+        "direction": ["DIRECTION_FORWARD","DIRECTION_REVERSE","DIRECTION_BIDIRECTIONAL"],
+        "control": ["CONTROL_FALLBACK","CONTROL_RELATIONAL","CONTROL_DEFER"],
+        "reliability": ["MOD_RELIABILITY_OFF","MOD_RELIABILITY_ON"],
+        "recency": ["MOD_RECENCY_OFF","MOD_RECENCY_ON"],
+        "temporal": ["MOD_TEMPORAL_OFF","MOD_TEMPORAL_ON"],
+        "provenance": ["MOD_PROVENANCE_OFF","MOD_PROVENANCE_ON"],
+    }
+    factor_opcodes["role"][0] = "ROLE_FUTURE_UNKNOWN"
+    try:
+        SemanticOperatorQSREAdapter()(
+            semantic_operator=raw["operator"],
+            relation_schema_states=raw["relation_schema_states"],
+            factor_opcodes=factor_opcodes,
+        )
+    except ValueError as exc:
+        assert "unsupported structural opcode" in str(exc)
+    else:
+        raise AssertionError("unknown executable primitive was silently accepted")
+
+
+def _manual_operator(traversal_index: int) -> FullEnvelopeOperatorState:
+    batch,steps,relations,dim=1,3,1,24
+    relation_distribution=torch.ones(batch,steps,relations)
+    relation_step_mass=torch.ones(batch,steps)
+    traversal=torch.zeros(batch,3)
+    traversal[:,traversal_index]=1.0
+    role=torch.zeros(batch,4)
+    role[:,ROLE_TARGET]=1.0
+    direction=torch.zeros(batch,3)
+    direction[:,DIRECTION_FORWARD]=1.0
+    control=torch.zeros(batch,3)
+    control[:,CONTROL_RELATIONAL]=1.0
+    return FullEnvelopeOperatorState(
+        relation_distribution=relation_distribution,
+        relation_step_mass=relation_step_mass,
+        stop_probability=torch.zeros(batch,steps),
+        unknown_probability=torch.zeros(batch,steps),
+        role_distribution=role,
+        traversal_distribution=traversal,
+        direction_distribution=direction,
+        modifier_weight=torch.zeros(batch,4),
+        applicability=torch.ones(batch),
+        control_distribution=control,
+        continuous_state=torch.randn(batch,dim),
+        uncertainty=torch.zeros(batch),
+    )
+
+
+def test_executor_local_path_aggregate_are_causally_distinct_without_hard_threshold() -> None:
+    torch.manual_seed(73)
+    executor=FullEnvelopeQSREExecutorV1(
+        FullEnvelopeExecutorConfig(
+            field_dim=24,
+            model_dim=24,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    field_state=torch.randn(1,4,24)
+    edge_index=torch.tensor([[[0,1],[1,2],[2,3]]])
+    common=dict(
+        field_state=field_state,
+        field_metadata=torch.zeros(1,4,3),
+        field_valid_mask=torch.ones(1,4,dtype=torch.bool),
+        edge_index=edge_index,
+        edge_relation_index=torch.zeros(1,3,dtype=torch.long),
+        edge_valid_mask=torch.ones(1,3,dtype=torch.bool),
+        edge_support_weight=torch.ones(1,3),
+        edge_reliability=torch.ones(1,3),
+        edge_recency=torch.ones(1,3),
+        edge_temporal_match=torch.ones(1,3),
+        edge_provenance_match=torch.ones(1,3),
+        relation_schema_state=torch.randn(1,1,24),
+        focus_field_weight=torch.tensor([[1.0,0.0,0.0,0.0]]),
+    )
+    with torch.no_grad():
+        local=executor(operator=_manual_operator(TRAVERSAL_LOCAL),**common)
+        path=executor(operator=_manual_operator(TRAVERSAL_PATH),**common)
+        aggregate=executor(operator=_manual_operator(TRAVERSAL_AGGREGATE),**common)
+    assert torch.equal(local["path_frontier"],torch.tensor([[1.0,0.0,0.0,0.0]]))
+    assert float(path["path_frontier"][0,1:].sum()) > 0.0
+    assert not torch.allclose(
+        local["structural_role_weight"],
+        aggregate["structural_role_weight"],
+    )
+    assert not torch.allclose(
+        local["relational_summary"],
+        aggregate["relational_summary"],
+    )
+    report=executor.parameter_report()
+    assert report["continuous_traversal_mixture"] is True
+    assert report["local_path_aggregate_distinct"] is True
+    assert report["hard_traversal_threshold"] is False
