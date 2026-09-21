@@ -353,14 +353,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "ba3f124bf69e88572325552ac47a115dc37aff14",
-      "head_committed_at": "2026-09-20T04:31:22-05:00",
-      "head_message": "trace(fbm): capture QSRE T1 one-shot authorization",
+      "head": "705676ca0f48a6d48e18bac10ba5cf888ab462d7",
+      "head_committed_at": "2026-09-20T22:40:51-05:00",
+      "head_message": "trace(fbm): backfill QSRE production failure and success seeds",
       "status": "diverged",
-      "ahead": 103,
+      "ahead": 104,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 102,
+      "changed_file_count_vs_source_merge_base": 103,
       "knowledge_surface": true
     },
     {

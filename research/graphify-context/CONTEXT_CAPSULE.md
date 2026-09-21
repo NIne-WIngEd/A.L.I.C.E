@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-final-production-v3-live-code-topology-20260920-009
-- Question: Use the exact current code graph to locate the N0 final Production v3 implementation path, its runner and Magnolia launcher, the P2-v3 continuous operator, P3-v3 structural binder, P4 evaluator, frozen native final validation integration, source-lineage guards, and any code-level dependencies or failure boundaries that could invalidate the next launch. Also surface code paths tied to the preserved P1 STOP-tail recovery, genuine P2-v1 failure, no-hotfix/no-automatic-rerun policy, dynamic/open-schema capability, runtime-variable relation semantics, and nonrelational pass-through. This is a code-topology query, not an authority promotion; all consequential claims will be verified in original files.
+- Request: n0-575958-p2v3-failure-forensic-20260921-010
+- Question: Forensic code-topology audit after Magnolia job 575958 failed FAIL_QSRE_PRODUCTION_P2_OPERATOR_V3 at 1600 steps. Trace the exact Production v3 P2 path from prepared query hidden states through QSREProductionOperatorInducerV3 relation matching, recurrent relation steps, factor slots/heads, schema projection and schema identity calibration, losses, DEV full-schema expansion, executor with oracle support, checkpoint selection and exit 31. Surface whether the final Production v3 code contains or omits the query-token coverage/remaining-evidence mechanism from alice-eipm-v1-qsre-production-p2-ordered-evidence-v3; identify all relation/factor class heads or fixed ontologies; and identify trainable semantic transforms that can drift despite open-schema relations being excluded from gradient. Navigation only; original source must be opened before edits.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -24,41 +24,42 @@
 
 ## Source pointers
 
-- [119] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md — Production QSRE P2 job 575956 failure localization v1
+- [133] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md — Production QSRE P2 job 575956 failure localization v1
   - status:  zero-gradient diagnosis authority; no rerun or GPU authorization
-- [119] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md — Production QSRE P2 job 575956 failure localization v1
+- [133] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md — Production QSRE P2 job 575956 failure localization v1
   - status:  zero-gradient diagnosis authority; no rerun or GPU authorization
-- [112] alice-context:docs/chat-context/2026-09-20/sol/N0_PRODUCTION_P1_STOP_TAIL_FAILURE_LOCALIZED_RECOVERY_READY.md — N0 Production P1 STOP-tail failure localized; causal recovery ready
-- [111] alice-eipm-v1-qsre-production-core-v1:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [111] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [111] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md — N0 Query-Edge Routed Specialist Failure Localization v0.1
-- [110] alice-eipm-v1-qsre-production-core-v1:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
-- [110] alice-eipm-v1-qsre-production-p2-failure-localization:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
-- [110] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
-- [109] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
-  - status:  one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized
-- [105] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md — N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization
-  - status:  final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged
-- [104] alice-eipm-v1-qsre-production-core-v1:configs/eipm/n0/n0_v02_qsre_final_production_recovery_contract_v1.json — n0_v02_qsre_final_production_recovery_contract_v1.json
+- [132] alice-eipm-v1-qsre-production-core-v1:configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json — n0_v02_qsre_production_relation_schema_v1.json
+- [132] alice-eipm-v1-qsre-production-p2-failure-localization:configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json — n0_v02_qsre_production_relation_schema_v1.json
+- [132] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json — n0_v02_qsre_production_relation_schema_v1.json
+- [123] alice-eipm-v1-qsre-production-core-v1:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [123] alice-eipm-v1-qsre-production-p2-failure-localization:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [123] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [119] alice-eipm-v1-qsre-production-core-v1:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
+  - status:  production-architecture authority; implementation/training remains closed
+- [119] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
+  - status:  production-architecture authority; implementation/training remains closed
+- [119] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
+  - status:  production-architecture authority; implementation/training remains closed
+- [116] alice-eipm-v1-qsre-production-core-v1:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
 
 ## Graphify navigation hints
 
-- run_n0_v02_qsre_production_stop_tail_recovery_v1.sh -> scripts/eipm/n0/run_n0_v02_qsre_production_stop_tail_recovery_v1.sh:L1
-- run_n0_v02_qsre_production_stop_tail_recovery_v1.sh script -> scripts/eipm/n0/run_n0_v02_qsre_production_stop_tail_recovery_v1.sh:L1
-- run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh -> scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh:L1
-- ConstitutionalSourceSnapshot -> src/alice_conversation/constitutional_prompt.py:L50
-- authority.py -> src/cognitive_kernel/authority.py:L1
-- test_automatic_retry_is_rejected() -> tests/phase3/test_conversation_orchestration_policy.py:L85
-- QSREProductionBinderV2 -> src/alice_personality/n0/qsre_production_binder_v2.py:L16
-- _boundaries() -> tests/phase4/test_information_grounding.py:L46
-- CapabilityRuntime -> src/alice_evolution/capability_runtime.py:L77
-- ClaimSupportAuditTests -> tests/phase1/test_claim_support_audit.py:L43
+- QSREProductionOperatorInducerV3 -> src/alice_personality/n0/qsre_production_operator_v3.py:L38
+- Decode ordered relation slots with semantic schema grounding. -> src/alice_personality/n0/qsre_t2_schema_ordered_operator.py:L227
+- test_v3_factor_slots_do_not_depend_on_relation_cardinality() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L231
+- test_http_last_modified_uses_rfc7231_parsing() -> tests/phase4/test_information_temporal_metadata.py:L119
+- run_final_frozen_challenge_after_graph_arbitration_v0_1.py -> scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py:L1
+- AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
+- audit() -> scripts/audit_capability_barriers.py:L521
+- test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
+- CalibrationError -> scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py:L44
+- checkpoint_capability_tuple() -> scripts/eipm/n0/train_n0_v02_evidence_graph_pilot.py:L669
+- classify_owner_relation() -> src/alice_vault/owner_attribution.py:L186
 - codes() -> tests/phase3/test_conversation_response_validation_adversarial.py:L18
-- test_binder_v2_operator_continuous_state_is_not_support_authority() -> tests/eipm/test_n0_qsre_production_binder_v2.py:L152
-- CurrentClaimProjection -> src/cognitive_kernel/claim_contracts.py:L755
-- dependencies() -> tests/phase4/test_information_research_execution_policy.py:L52
-- Dynamic contiguous-span masking with BERT-style 80/10/10 replacement. -> src/alice_personality/n0/data.py:L113
-- downstream_full_stack_graph_evaluator_v0_1.py -> scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py:L1
+- contains() -> src/alice_vault/inventory.py:L24
+- test_n0_curriculum_coverage.py -> tests/eipm/test_n0_curriculum_coverage.py:L1
+- device -> :
+- test_policy_rejects_contract_drift() -> tests/phase3/test_conversation_response_repair_policy.py:L64
 
 ## External/private routing
 

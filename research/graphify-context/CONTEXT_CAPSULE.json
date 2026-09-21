@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-final-production-v3-live-code-topology-20260920-009",
-  "question": "Use the exact current code graph to locate the N0 final Production v3 implementation path, its runner and Magnolia launcher, the P2-v3 continuous operator, P3-v3 structural binder, P4 evaluator, frozen native final validation integration, source-lineage guards, and any code-level dependencies or failure boundaries that could invalidate the next launch. Also surface code paths tied to the preserved P1 STOP-tail recovery, genuine P2-v1 failure, no-hotfix/no-automatic-rerun policy, dynamic/open-schema capability, runtime-variable relation semantics, and nonrelational pass-through. This is a code-topology query, not an authority promotion; all consequential claims will be verified in original files.",
-  "generated_at_utc": "2026-09-21T03:40:39.586424+00:00",
+  "request_id": "n0-575958-p2v3-failure-forensic-20260921-010",
+  "question": "Forensic code-topology audit after Magnolia job 575958 failed FAIL_QSRE_PRODUCTION_P2_OPERATOR_V3 at 1600 steps. Trace the exact Production v3 P2 path from prepared query hidden states through QSREProductionOperatorInducerV3 relation matching, recurrent relation steps, factor slots/heads, schema projection and schema identity calibration, losses, DEV full-schema expansion, executor with oracle support, checkpoint selection and exit 31. Surface whether the final Production v3 code contains or omits the query-token coverage/remaining-evidence mechanism from alice-eipm-v1-qsre-production-p2-ordered-evidence-v3; identify all relation/factor class heads or fixed ontologies; and identify trainable semantic transforms that can drift despite open-schema relations being excluded from gradient. Navigation only; original source must be opened before edits.",
+  "generated_at_utc": "2026-09-21T04:18:11.938200+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -46,7 +46,7 @@
     "graph_source_branch": "alice-eipm-v1-qsre-production-core-v1",
     "graph_source_commit": "2204f61f3a2d49eccc10d834dda83921a9af5be1",
     "graph_source_reason": "request explicitly selected graph source branch",
-    "graph_rebuild_required": true,
+    "graph_rebuild_required": false,
     "private_external_route_recommended": true
   },
   "active_mission": {
@@ -3586,7 +3586,7 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 119,
+      "score": 133,
       "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
       "branch_scope": "branch_specific",
       "path": "docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md",
@@ -3610,11 +3610,11 @@
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 17,
+      "lexical_body_hits": 32,
       "currentness_adjustment": 25
     },
     {
-      "score": 119,
+      "score": 133,
       "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
       "branch_scope": "branch_specific",
       "path": "docs/research/eipm-n0-production-p2-575956-failure-localization-v1.md",
@@ -3638,116 +3638,80 @@
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 19,
+      "lexical_body_hits": 34,
       "currentness_adjustment": 25
     },
     {
-      "score": 112,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-20/sol/N0_PRODUCTION_P1_STOP_TAIL_FAILURE_LOCALIZED_RECOVERY_READY.md",
-      "blob_sha": "c70815d84a60d2c72ffdbe0161417b0955ee880e",
-      "category": "working_context",
-      "title": "N0 Production P1 STOP-tail failure localized; causal recovery ready",
-      "declared": {},
-      "matched_terms": [
-        "failed",
-        "failure",
-        "magnolia",
-        "recovery"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 20
-    },
-    {
-      "score": 111,
+      "score": 132,
       "branch": "alice-eipm-v1-qsre-production-core-v1",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
-      "blob_sha": "5f198cd9c1fe0075ab762bb9015d88c86a274dde",
-      "category": "design_document",
-      "title": "N0 Query-Edge Routed Specialist Failure Localization v0.1",
+      "path": "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
+      "blob_sha": "90003da9d9838aacb8080743a134df2e6bacfe5d",
+      "category": "configuration_state",
+      "title": "n0_v02_qsre_production_relation_schema_v1.json",
       "declared": {},
       "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
+        "error",
         "repair"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
-        "supersession",
         "document",
-        "frontier",
+        "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 10,
+      "lexical_body_hits": 5,
       "currentness_adjustment": 25
     },
     {
-      "score": 111,
+      "score": 132,
       "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
-      "blob_sha": "5f198cd9c1fe0075ab762bb9015d88c86a274dde",
-      "category": "design_document",
-      "title": "N0 Query-Edge Routed Specialist Failure Localization v0.1",
+      "path": "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
+      "blob_sha": "90003da9d9838aacb8080743a134df2e6bacfe5d",
+      "category": "configuration_state",
+      "title": "n0_v02_qsre_production_relation_schema_v1.json",
       "declared": {},
       "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
+        "error",
         "repair"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
-        "supersession",
         "document",
-        "frontier",
+        "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 10,
+      "lexical_body_hits": 5,
       "currentness_adjustment": 25
     },
     {
-      "score": 111,
+      "score": 132,
       "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
-      "blob_sha": "5f198cd9c1fe0075ab762bb9015d88c86a274dde",
-      "category": "design_document",
-      "title": "N0 Query-Edge Routed Specialist Failure Localization v0.1",
+      "path": "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
+      "blob_sha": "90003da9d9838aacb8080743a134df2e6bacfe5d",
+      "category": "configuration_state",
+      "title": "n0_v02_qsre_production_relation_schema_v1.json",
       "declared": {},
       "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
+        "error",
         "repair"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
-        "supersession",
         "document",
-        "frontier",
+        "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 10,
+      "lexical_body_hits": 5,
       "currentness_adjustment": 25
     },
     {
-      "score": 110,
+      "score": 123,
       "branch": "alice-eipm-v1-qsre-production-core-v1",
       "branch_scope": "branch_specific",
       "path": "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
@@ -3770,7 +3734,7 @@
       "currentness_adjustment": 25
     },
     {
-      "score": 110,
+      "score": 123,
       "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
       "branch_scope": "branch_specific",
       "path": "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
@@ -3793,7 +3757,7 @@
       "currentness_adjustment": 25
     },
     {
-      "score": 110,
+      "score": 123,
       "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
       "branch_scope": "branch_specific",
       "path": "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
@@ -3816,145 +3780,184 @@
       "currentness_adjustment": 25
     },
     {
-      "score": 109,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md",
-      "blob_sha": "19f407ba4d11922a5095d3570cb6a0474d54e6be",
-      "category": "working_context",
-      "title": "N0 Final Frozen Challenge Ready Handoff",
-      "declared": {
-        "status": " one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
-        "repair",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 20
-    },
-    {
-      "score": 105,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
-      "blob_sha": "00e639bed1b0f0ca42f128a266345be54f9541ee",
-      "category": "working_context",
-      "title": "N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization",
-      "declared": {
-        "status": " final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
-        "repair",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 14
-    },
-    {
-      "score": 104,
+      "score": 119,
       "branch": "alice-eipm-v1-qsre-production-core-v1",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_qsre_final_production_recovery_contract_v1.json",
-      "blob_sha": "9fb6b495e8e041386c27a00cec94bb7d7e0e1b75",
-      "category": "configuration_state",
-      "title": "n0_v02_qsre_final_production_recovery_contract_v1.json",
+      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
+      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
+      "category": "design_document",
+      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
+      "declared": {
+        "status": " production-architecture authority; implementation/training remains closed"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
+        "fallback",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 31,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 119,
+      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
+      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
+      "category": "design_document",
+      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
+      "declared": {
+        "status": " production-architecture authority; implementation/training remains closed"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
+        "fallback",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 31,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 119,
+      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
+      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
+      "category": "design_document",
+      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
+      "declared": {
+        "status": " production-architecture authority; implementation/training remains closed"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
+        "fallback",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 31,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 116,
+      "branch": "alice-eipm-v1-qsre-production-core-v1",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
+      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
+      "category": "repository_file",
+      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
       "declared": {},
       "matched_terms": [
-        "failure",
         "hotfix",
-        "recovery"
+        "magnolia",
+        "recovery",
+        "udocker"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
         "document",
+        "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 3,
+      "lexical_body_hits": 13,
       "currentness_adjustment": 25
     }
   ],
   "graphify_navigation_hints": [
     {
-      "label": "run_n0_v02_qsre_production_stop_tail_recovery_v1.sh",
-      "source": "scripts/eipm/n0/run_n0_v02_qsre_production_stop_tail_recovery_v1.sh",
+      "label": "QSREProductionOperatorInducerV3",
+      "source": "src/alice_personality/n0/qsre_production_operator_v3.py",
+      "location": "L38",
+      "community": "135"
+    },
+    {
+      "label": "Decode ordered relation slots with semantic schema grounding.",
+      "source": "src/alice_personality/n0/qsre_t2_schema_ordered_operator.py",
+      "location": "L227",
+      "community": "215"
+    },
+    {
+      "label": "test_v3_factor_slots_do_not_depend_on_relation_cardinality()",
+      "source": "tests/eipm/test_n0_qsre_production_operator_v3.py",
+      "location": "L231",
+      "community": "135"
+    },
+    {
+      "label": "test_http_last_modified_uses_rfc7231_parsing()",
+      "source": "tests/phase4/test_information_temporal_metadata.py",
+      "location": "L119",
+      "community": "30"
+    },
+    {
+      "label": "run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
+      "source": "scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
       "location": "L1",
-      "community": "346"
+      "community": "177"
     },
     {
-      "label": "run_n0_v02_qsre_production_stop_tail_recovery_v1.sh script",
-      "source": "scripts/eipm/n0/run_n0_v02_qsre_production_stop_tail_recovery_v1.sh",
-      "location": "L1",
-      "community": "346"
+      "label": "AliceN0V02Model",
+      "source": "src/alice_personality/n0/v02_model.py",
+      "location": "L13",
+      "community": "160"
     },
     {
-      "label": "run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh",
-      "source": "scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh",
-      "location": "L1",
-      "community": "345"
+      "label": "audit()",
+      "source": "scripts/audit_capability_barriers.py",
+      "location": "L521",
+      "community": "143"
     },
     {
-      "label": "ConstitutionalSourceSnapshot",
-      "source": "src/alice_conversation/constitutional_prompt.py",
-      "location": "L50",
-      "community": "20"
+      "label": "test_candidates_never_enter_derived_indexes_before_promotion()",
+      "source": "tests/phase2/test_memory_candidate_security_gates.py",
+      "location": "L312",
+      "community": "37"
     },
     {
-      "label": "authority.py",
-      "source": "src/cognitive_kernel/authority.py",
-      "location": "L1",
-      "community": "100"
+      "label": "CalibrationError",
+      "source": "scripts/eipm/n0/calibrate_downstream_causal_arbitration_metric_policy_v0_1.py",
+      "location": "L44",
+      "community": "203"
     },
     {
-      "label": "test_automatic_retry_is_rejected()",
-      "source": "tests/phase3/test_conversation_orchestration_policy.py",
-      "location": "L85",
-      "community": "123"
+      "label": "checkpoint_capability_tuple()",
+      "source": "scripts/eipm/n0/train_n0_v02_evidence_graph_pilot.py",
+      "location": "L669",
+      "community": "47"
     },
     {
-      "label": "QSREProductionBinderV2",
-      "source": "src/alice_personality/n0/qsre_production_binder_v2.py",
-      "location": "L16",
-      "community": "174"
-    },
-    {
-      "label": "_boundaries()",
-      "source": "tests/phase4/test_information_grounding.py",
-      "location": "L46",
-      "community": "61"
-    },
-    {
-      "label": "CapabilityRuntime",
-      "source": "src/alice_evolution/capability_runtime.py",
-      "location": "L77",
-      "community": "95"
-    },
-    {
-      "label": "ClaimSupportAuditTests",
-      "source": "tests/phase1/test_claim_support_audit.py",
-      "location": "L43",
-      "community": "105"
+      "label": "classify_owner_relation()",
+      "source": "src/alice_vault/owner_attribution.py",
+      "location": "L186",
+      "community": "192"
     },
     {
       "label": "codes()",
@@ -3963,34 +3966,40 @@
       "community": "38"
     },
     {
-      "label": "test_binder_v2_operator_continuous_state_is_not_support_authority()",
-      "source": "tests/eipm/test_n0_qsre_production_binder_v2.py",
-      "location": "L152",
-      "community": "174"
+      "label": "contains()",
+      "source": "src/alice_vault/inventory.py",
+      "location": "L24",
+      "community": "201"
     },
     {
-      "label": "CurrentClaimProjection",
-      "source": "src/cognitive_kernel/claim_contracts.py",
-      "location": "L755",
-      "community": "2"
-    },
-    {
-      "label": "dependencies()",
-      "source": "tests/phase4/test_information_research_execution_policy.py",
-      "location": "L52",
-      "community": "89"
-    },
-    {
-      "label": "Dynamic contiguous-span masking with BERT-style 80/10/10 replacement.",
-      "source": "src/alice_personality/n0/data.py",
-      "location": "L113",
-      "community": "26"
-    },
-    {
-      "label": "downstream_full_stack_graph_evaluator_v0_1.py",
-      "source": "scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py",
+      "label": "test_n0_curriculum_coverage.py",
+      "source": "tests/eipm/test_n0_curriculum_coverage.py",
       "location": "L1",
-      "community": "190"
+      "community": "28"
+    },
+    {
+      "label": "device",
+      "source": "",
+      "location": "",
+      "community": "55"
+    },
+    {
+      "label": "test_policy_rejects_contract_drift()",
+      "source": "tests/phase3/test_conversation_response_repair_policy.py",
+      "location": "L64",
+      "community": "69"
+    },
+    {
+      "label": "train_n0_v02_relation_repair.py",
+      "source": "scripts/eipm/n0/train_n0_v02_relation_repair.py",
+      "location": "L1",
+      "community": "5"
+    },
+    {
+      "label": "evidence()",
+      "source": "tests/phase3/test_conversation_phase1_grounding_bridge.py",
+      "location": "L26",
+      "community": "25"
     },
     {
       "label": "ExactInformationLiveProviderRegistry",
@@ -3999,46 +4008,34 @@
       "community": "22"
     },
     {
-      "label": "_failure()",
-      "source": "src/alice_information/brave_search_live.py",
-      "location": "L72",
-      "community": "36"
+      "label": "test_pending_deletion_memory_is_excluded_from_rebuilt_index()",
+      "source": "tests/phase2/test_memory_lexical_index.py",
+      "location": "L204",
+      "community": "8"
     },
     {
-      "label": "alice_capability_profiles.py",
-      "source": "src/alice_capability_profiles.py",
+      "label": "qsre_t1_executor.py",
+      "source": "src/alice_personality/n0/qsre_t1_executor.py",
       "location": "L1",
-      "community": "95"
+      "community": "5"
     },
     {
-      "label": "final_evaluation_runtime.py",
-      "source": "src/alice_information/final_evaluation_runtime.py",
-      "location": "L1",
-      "community": "58"
+      "label": ".__exit__()",
+      "source": "src/cognitive_kernel/bounded_serving_prototype.py",
+      "location": "L522",
+      "community": "15"
     },
     {
-      "label": "Frozen graph parent plus dual-view late-interaction specialist.",
-      "source": "src/alice_personality/n0/evidence_graph_query_edge_dual_view.py",
-      "location": "L19",
-      "community": "35"
+      "label": "test_hybrid_conflict_expansion_surfaces_both_records()",
+      "source": "tests/phase2/test_memory_hybrid_retrieval.py",
+      "location": "L314",
+      "community": "21"
     },
     {
-      "label": "GraphDataset",
-      "source": "scripts/eipm/n0/train_n0_v02_evidence_graph_pilot.py",
-      "location": "L224",
-      "community": "47"
-    },
-    {
-      "label": "test_disabling_required_lifecycle_guards_is_rejected()",
-      "source": "tests/phase3/test_conversation_orchestration_policy.py",
-      "location": "L59",
-      "community": "123"
-    },
-    {
-      "label": "test_component_false_implementation_states_are_registered_without_contract_mutation()",
-      "source": "tests/governance/test_memory_capability_ceiling.py",
-      "location": "L235",
-      "community": "211"
+      "label": "test_v2_factor_slots_do_not_depend_on_relation_cardinality()",
+      "source": "tests/eipm/test_n0_qsre_production_operator_v2.py",
+      "location": "L171",
+      "community": "128"
     }
   ],
   "private_external_route_recommended": true,
