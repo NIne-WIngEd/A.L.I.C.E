@@ -25,7 +25,8 @@
     "P2 v1 trained with six core relation candidates but evaluated with ten runtime candidates",
     "query relation projection was trainable while runtime schema matching authority came from a separately frozen P1 schema projection",
     "role/traversal/direction/control were decoded from one terminal recurrent state despite causal factor imbalance and paraphrase shift",
-    "train loss approached zero while DEV transfer remained far below gate, establishing memorization/representation-interface failure rather than under-training"
+    "train loss approached zero while DEV transfer remained far below gate, establishing memorization/representation-interface failure rather than under-training",
+    "sparse runtime relation probabilities cannot be used as clamped NLL supervision because zeroed target classes lose gradient"
   ],
   "correction": {
     "operator_module": "src/alice_personality/n0/qsre_production_operator_v2.py",
@@ -49,7 +50,9 @@
     "operator_continuous_state_binder_support_authority": false,
     "operator_relation_mass_binder_relation_authority": true,
     "p3_shared_query_field_metric": true,
-    "p3_balanced_support_focus_supervision": true
+    "p3_balanced_support_focus_supervision": true,
+    "dense_pre_sparse_relation_logits_for_supervision": true,
+    "sparse_runtime_relation_selection_preserved": true
   },
   "recovery": {
     "output_root": "$ALICE_N0_WORKDIR/qsre-production-core-v1-operator-v2-recovery-v1",
