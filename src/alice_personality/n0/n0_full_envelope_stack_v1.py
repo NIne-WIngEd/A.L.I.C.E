@@ -34,6 +34,10 @@ from alice_personality.n0.qsre_full_envelope_executor_v1 import (
     FullEnvelopeExecutorConfig,
     FullEnvelopeQSREExecutorV1,
 )
+from alice_personality.n0.public_judgment_probe_v1 import (
+    PublicJudgmentProbeConfig,
+    PublicJudgmentProbeV1,
+)
 from alice_personality.n0.semantic_operator_foundation import (
     DynamicRelationSchema,
     DynamicSemanticSchema,
@@ -162,6 +166,14 @@ class N0FullEnvelopeStackV1(nn.Module):
                 dropout=self.config.dropout,
             )
         )
+        self.public_judgment_probe = PublicJudgmentProbeV1(
+            PublicJudgmentProbeConfig(
+                semantic_dim=d,
+                latent_dim=d,
+                model_dim=d,
+                num_hidden_states=self.config.num_hidden_states,
+            )
+        )
 
     def _raw_field_semantic(
         self,
@@ -220,6 +232,8 @@ class N0FullEnvelopeStackV1(nn.Module):
         additional_view_descriptor_states: Tensor | None = None,
         additional_view_available: Tensor | None = None,
         additional_view_reliability: Tensor | None = None,
+        candidate_hidden_states: Tensor | None = None,
+        candidate_token_mask: Tensor | None = None,
     ) -> dict[str, Any]:
         semantic = self.semantic_operator(
             query_hidden_states=query_hidden_states,
@@ -418,6 +432,18 @@ class N0FullEnvelopeStackV1(nn.Module):
             refinement_steps=latent_refinement_steps,
         )
 
+        public_judgment = None
+        if candidate_hidden_states is not None or candidate_token_mask is not None:
+            if candidate_hidden_states is None or candidate_token_mask is None:
+                raise ValueError(
+                    "candidate_hidden_states and candidate_token_mask must be supplied together"
+                )
+            public_judgment = self.public_judgment_probe(
+                pooled_state=latent["pooled_state"],
+                candidate_hidden_states=candidate_hidden_states,
+                candidate_token_mask=candidate_token_mask,
+            )
+
         return {
             "semantic_operator": semantic,
             "operator": operator,
@@ -429,6 +455,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "evidence_graph": graph,
             "fusion": fusion,
             "latent": latent,
+            "public_judgment": public_judgment,
             "source_views": source_views,
             "view_descriptors": descriptors,
             "view_available": available,
@@ -445,6 +472,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "evidence_graph": self.evidence_graph.parameter_report(),
             "fusion": self.fusion.parameter_report(),
             "latent": self.latent.parameter_report(),
+            "public_judgment_probe": self.public_judgment_probe.parameter_report(),
         }
         return {
             "total_parameters": sum(p.numel() for p in self.parameters()),
