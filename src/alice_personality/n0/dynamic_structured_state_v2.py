@@ -124,6 +124,8 @@ class DynamicStructuredStateV2(nn.Module):
             raise ValueError("field_token_mask must be bool [B,F,T]")
         if field_valid_mask.shape != (batch, fields) or field_valid_mask.dtype != torch.bool:
             raise ValueError("field_valid_mask must be bool [B,F]")
+        if bool((field_valid_mask.sum(dim=-1) == 0).any()):
+            raise ValueError("every example requires at least one valid field")
         if field_confidence.shape != (batch, fields):
             raise ValueError("field_confidence must be [B,F]")
         if field_missing.shape != (batch, fields):
