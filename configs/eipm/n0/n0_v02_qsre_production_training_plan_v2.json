@@ -282,7 +282,9 @@
     "p3_full_runtime_schema_candidate_training_without_open_query_labels": true,
     "p3_balanced_support_focus_supervision": true,
     "p4_operator_v2_binder_v2_only": true,
-    "final_native_gate_uses_same_frozen_artifacts_with_operator_v2_binder_v2_runtime": true
+    "final_native_gate_uses_same_frozen_artifacts_with_operator_v2_binder_v2_runtime": true,
+    "p2_p1_schema_relation_state_is_interface_only_for_operator": true,
+    "p3_operator_continuous_state_not_support_authority": true
   },
   "operator_architecture": {
     "module": "src/alice_personality/n0/qsre_production_operator_v2.py",
@@ -295,7 +297,9 @@
     "factor_specific_query_slots": true,
     "open_schema_runtime_candidates_are_present_during_training": true,
     "open_schema_training_query_labels_used": false,
-    "schema_only_self_calibration": true
+    "schema_only_self_calibration": true,
+    "p1_schema_relation_state_match_authority": false,
+    "shared_matcher_schema_summary_used_for_recurrent_relation_context": true
   },
   "binder_architecture": {
     "module": "src/alice_personality/n0/qsre_production_binder_v2.py",
@@ -311,6 +315,8 @@
     "learned_path_focus_without_oracle": true,
     "support_count_ceiling": null,
     "field_count_ceiling": null,
-    "edge_count_ceiling": null
+    "edge_count_ceiling": null,
+    "operator_continuous_state_support_authority": false,
+    "operator_relation_mass_is_relation_semantic_authority": true
   }
 }
