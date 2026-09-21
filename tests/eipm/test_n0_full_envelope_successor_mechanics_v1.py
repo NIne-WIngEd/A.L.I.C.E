@@ -286,6 +286,7 @@ def test_semantic_operator_adapter_and_full_envelope_binder_executor_integrate()
             edge_relation_index=edge_relation,
             edge_valid_mask=edge_valid,
             edge_support_weight=bound["edge_support_weight"],
+            support_available=bound["support_available"],
             edge_reliability=reliability,
             edge_recency=recency,
             edge_temporal_match=torch.ones(batch,edges),
@@ -397,6 +398,7 @@ def test_executor_local_path_aggregate_are_causally_distinct_without_hard_thresh
         edge_relation_index=torch.zeros(1,3,dtype=torch.long),
         edge_valid_mask=torch.ones(1,3,dtype=torch.bool),
         edge_support_weight=torch.ones(1,3),
+        support_available=torch.ones(1),
         edge_reliability=torch.ones(1,3),
         edge_recency=torch.ones(1,3),
         edge_temporal_match=torch.ones(1,3),
@@ -422,3 +424,92 @@ def test_executor_local_path_aggregate_are_causally_distinct_without_hard_thresh
     assert report["continuous_traversal_mixture"] is True
     assert report["local_path_aggregate_distinct"] is True
     assert report["hard_traversal_threshold"] is False
+
+
+def test_binder_can_choose_exact_no_support_even_with_type_compatible_edges() -> None:
+    q,qm,raw,adapted=operator_bundle(batch=1,relations=2)
+    operator=adapted["operator"]
+    relation_state=adapted["relation_schema_state"]
+    torch.manual_seed(97)
+    binder=FullEnvelopeQSREBinderV1(
+        FullEnvelopeBinderConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            edge_metadata_dim=4,
+        )
+    ).eval()
+    with torch.no_grad():
+        for parameter in binder.edge_score.parameters():
+            parameter.zero_()
+        binder.edge_score[-1].bias.fill_(-4.0)
+        for parameter in binder.null_support_score.parameters():
+            parameter.zero_()
+        binder.null_support_score[-1].bias.fill_(4.0)
+
+        out=binder(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            field_hidden_states=torch.randn(1,3,3,4,24),
+            field_token_mask=torch.ones(1,3,4,dtype=torch.bool),
+            field_state=torch.randn(1,3,24),
+            field_valid_mask=torch.ones(1,3,dtype=torch.bool),
+            field_type_index=torch.tensor([[0,1,0]]),
+            edge_index=torch.tensor([[[0,1],[1,2]]]),
+            edge_relation_index=torch.tensor([[0,1]]),
+            edge_valid_mask=torch.ones(1,2,dtype=torch.bool),
+            edge_reliability=torch.ones(1,2),
+            edge_recency=torch.ones(1,2),
+            relation_domain_type_mask=torch.ones(1,2,2,dtype=torch.bool),
+            relation_range_type_mask=torch.ones(1,2,2,dtype=torch.bool),
+            relation_schema_state=relation_state,
+            operator=operator,
+        )
+    assert torch.equal(out["edge_support_weight"], torch.zeros_like(out["edge_support_weight"]))
+    assert torch.equal(out["support_available"], torch.zeros_like(out["support_available"]))
+    assert torch.equal(out["null_support_mass"], torch.ones_like(out["null_support_mass"]))
+    report=binder.parameter_report()
+    assert report["explicit_null_support_option"] is True
+    assert report["zero_support_possible_with_compatible_edges"] is True
+
+
+def test_executor_zero_support_forces_zero_relational_execution_confidence() -> None:
+    executor=FullEnvelopeQSREExecutorV1(
+        FullEnvelopeExecutorConfig(
+            field_dim=24,
+            model_dim=24,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    common=dict(
+        field_state=torch.randn(1,3,24),
+        field_metadata=torch.zeros(1,3,3),
+        field_valid_mask=torch.ones(1,3,dtype=torch.bool),
+        edge_index=torch.tensor([[[0,1],[1,2]]]),
+        edge_relation_index=torch.zeros(1,2,dtype=torch.long),
+        edge_valid_mask=torch.ones(1,2,dtype=torch.bool),
+        edge_support_weight=torch.zeros(1,2),
+        support_available=torch.zeros(1),
+        edge_reliability=torch.ones(1,2),
+        edge_recency=torch.ones(1,2),
+        edge_temporal_match=torch.ones(1,2),
+        edge_provenance_match=torch.ones(1,2),
+        relation_schema_state=torch.randn(1,1,24),
+        focus_field_weight=torch.tensor([[1.0,0.0,0.0]]),
+    )
+    with torch.no_grad():
+        out=executor(
+            operator=_manual_operator(TRAVERSAL_PATH),
+            **common,
+        )
+    assert torch.equal(
+        out["execution_confidence"],
+        torch.zeros_like(out["execution_confidence"]),
+    )
+    assert torch.equal(
+        out["relational_probability"],
+        torch.zeros_like(out["relational_probability"]),
+    )
+    assert executor.parameter_report()["execution_confidence_requires_structural_support"] is True
