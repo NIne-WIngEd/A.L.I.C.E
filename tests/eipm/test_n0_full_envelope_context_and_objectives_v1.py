@@ -286,3 +286,36 @@ def test_support_objective_explicitly_trains_null_support_head() -> None:
     assert null_logit.grad is not None
     assert float(null_logit.grad.abs().sum()) > 0.0
     assert support_logits.grad is not None
+
+
+def test_chunked_late_interaction_allows_empty_padded_items_without_signal() -> None:
+    torch.manual_seed(191)
+    query = F.normalize(torch.randn(2,3,9,8),dim=-1)
+    items = F.normalize(torch.randn(2,4,3,7,8),dim=-1)
+    query_mask = torch.ones(2,9,dtype=torch.bool)
+    item_mask = torch.ones(2,4,7,dtype=torch.bool)
+    item_mask[0,3] = False
+    item_mask[1,2:] = False
+    q_to_i, i_to_q = chunked_batched_bidirectional_late_max(
+        query=query,
+        query_mask=query_mask,
+        items=items,
+        item_mask=item_mask,
+        chunk_tokens=3,
+    )
+    assert torch.equal(
+        q_to_i[0,3],
+        torch.zeros_like(q_to_i[0,3]),
+    )
+    assert torch.equal(
+        i_to_q[0,3],
+        torch.zeros_like(i_to_q[0,3]),
+    )
+    assert torch.equal(
+        q_to_i[1,2:],
+        torch.zeros_like(q_to_i[1,2:]),
+    )
+    assert torch.equal(
+        i_to_q[1,2:],
+        torch.zeros_like(i_to_q[1,2:]),
+    )
