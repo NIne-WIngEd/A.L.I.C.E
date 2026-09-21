@@ -1,0 +1,57 @@
+{
+  "schema": "alice.eipm.n0.qsre-closure-matcher-plan.v1",
+  "status": "PRECOMMITTED_SCHEMA_GENERALIZATION_STAGE_AFTER_575958",
+  "source_failure": {
+    "job": 575958,
+    "status": "FAIL_QSRE_PRODUCTION_P2_OPERATOR_V3",
+    "exit_code": 31
+  },
+  "architecture": {
+    "module": "src/alice_personality/n0/qsre_schema_matcher.py",
+    "class": "QSRESchemaMatcher",
+    "relation_identity_parameters": false,
+    "candidate_count_parameter_axis": false,
+    "reasoning_step_parameter_axis": false,
+    "candidate_conditioned_query_evidence": true,
+    "symmetric_late_interaction": true,
+    "same_matcher_for_relations_and_operator_factors": true
+  },
+  "training": {
+    "seed": 20260921,
+    "batch_size": 16,
+    "max_steps": 1000,
+    "eval_every": 50,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.02,
+    "gradient_clip": 1,
+    "core_relation_weight": 1,
+    "auxiliary_relation_weight": 1,
+    "role_weight": 0.5,
+    "traversal_weight": 0.7,
+    "direction_weight": 0.5,
+    "control_weight": 0.5,
+    "modifier_weight": 0.4,
+    "pair_consistency_weight": 0.15
+  },
+  "eligibility": {
+    "auxiliary_seen_relation_top1": 0.95,
+    "auxiliary_holdout_relation_top1": 0.85,
+    "production_core_single_relation_top1": 0.95,
+    "heldout_factor_macro_accuracy": 0.9
+  },
+  "governance": {
+    "production_open_schema_query_labels_used": false,
+    "production_open_schema_descriptions_used_in_gradient": false,
+    "final_only_relation_descriptions_used_in_gradient": false,
+    "auxiliary_holdout_relation_descriptions_used_in_gradient": false,
+    "private_identity_data": false,
+    "private_identity_gradient": false,
+    "max_gpu_runs": 1,
+    "automatic_rerun": false,
+    "learning_rate_search": false,
+    "step_search": false,
+    "width_search": false,
+    "threshold_changes_after_results": false,
+    "matcher_frozen_after_pass": true
+  }
+}
