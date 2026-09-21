@@ -39,6 +39,26 @@ No smaller pilot model is substituted.
 
 No previous full-scale subsystem is replaced by a convenience mock or reduced-width proxy.
 
+### Base evidence parent reconciliation
+
+The final pre-launch audit found one stale inherited path in the closure runner. It still pointed at the older canonical `relation-repair-v0.1` graph even though the later endpoint-repair checkpoint had already been selected as the stronger full-stack base parent for subsequent N0 work.
+
+The full-scale package now binds:
+
+`relation-endpoint-repair-v0.2/training/step-00000200/evidence_graph_dual_endpoint.safetensors`
+
+SHA-256:
+
+`3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f`
+
+This is not a posthoc reaction to the current QSRE result. The checkpoint predates the Production QSRE closure. Earlier downstream causal arbitration found it improved the frozen stack relative to the older canonical graph without degrading the precommitted arbitration surface. Later relation/query experiments continued from this step-200 graph as their immutable parent.
+
+The earlier arbitration did not call that graph "production promoted". This package does not rewrite that historical claim. It preselects the already-repaired parent for the new full-scale N0 closure experiment and binds its exact hash.
+
+The frozen native validation corpus, schema, manifest and thresholds are not rebuilt or changed. The evidence graph is a model input supplied at evaluation time, not part of the frozen corpus receipt.
+
+The runner also hashes the semantic checkpoint, structured-state checkpoint, evidence adapter, repaired evidence graph, fusion checkpoint and latent-pool checkpoint before any new evidence root is created.
+
 ## Semantic authority
 
 The relation/factor semantic authority is now derived directly from the already-trained, ratified N0 semantic model.
