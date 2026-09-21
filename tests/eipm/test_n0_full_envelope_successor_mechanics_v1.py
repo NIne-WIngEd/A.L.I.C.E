@@ -374,6 +374,7 @@ def _manual_operator(
         relation_step_mass=relation_step_mass,
         stop_probability=torch.zeros(batch,steps),
         unknown_probability=torch.zeros(batch,steps),
+        truncation_probability=torch.zeros(batch),
         role_distribution=role,
         traversal_distribution=traversal,
         direction_distribution=direction,
