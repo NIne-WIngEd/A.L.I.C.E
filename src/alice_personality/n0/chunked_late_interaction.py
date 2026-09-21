@@ -12,21 +12,11 @@ def chunked_batched_bidirectional_late_max(
     item_mask: Tensor,
     chunk_tokens: int = 128,
 ) -> tuple[Tensor, Tensor]:
-    """Memory-bounded bidirectional token max interaction.
+    """Memory-bounded differentiable bidirectional token max interaction.
 
-    Args:
-        query: [B,L,T,D]
-        query_mask: bool [B,T]
-        items: [B,N,L,S,D]
-        item_mask: bool [B,N,S]
-        chunk_tokens: runtime compute chunk, never a semantic/context ceiling.
-
-    Returns:
-        query_to_item: [B,N,L,T], max over item tokens.
-        item_to_query: [B,N,L,S], max over query tokens.
-
-    This computes the same pairwise max statistics as materializing the full
-    [B,N,L,T,S] tensor, but bounds peak interaction memory by chunk size.
+    This computes the same max statistics as the dense [B,N,L,T,S]
+    interaction without materializing that full tensor. All accumulation is
+    functional rather than in-place so gradients remain valid.
     """
     if chunk_tokens <= 0:
         raise ValueError("chunk_tokens must be positive")
@@ -53,29 +43,24 @@ def chunked_batched_bidirectional_late_max(
         raise ValueError("every item requires at least one valid token")
 
     neg = torch.finfo(query.dtype).min
-    query_to_item = torch.full(
-        (batch, item_count, layers, query_tokens),
-        fill_value=neg,
-        dtype=query.dtype,
-        device=query.device,
-    )
-    item_to_query = torch.full(
-        (batch, item_count, layers, item_tokens),
-        fill_value=neg,
-        dtype=query.dtype,
-        device=query.device,
-    )
+    query_parts: list[Tensor] = []
+    item_running: list[Tensor | None] = []
+
+    item_ranges = [
+        (s0, min(s0 + chunk_tokens, item_tokens))
+        for s0 in range(0, item_tokens, chunk_tokens)
+    ]
+    item_running = [None for _ in item_ranges]
 
     for q0 in range(0, query_tokens, chunk_tokens):
         q1 = min(q0 + chunk_tokens, query_tokens)
         q_chunk = query[:, :, q0:q1, :]
         q_valid = query_mask[:, q0:q1]
+        q_running: Tensor | None = None
 
-        for s0 in range(0, item_tokens, chunk_tokens):
-            s1 = min(s0 + chunk_tokens, item_tokens)
+        for item_index, (s0, s1) in enumerate(item_ranges):
             item_chunk = items[:, :, :, s0:s1, :]
             item_valid = item_mask[:, :, s0:s1]
-
             similarity = torch.einsum(
                 "blqd,bnlsd->bnlqs",
                 q_chunk,
@@ -89,15 +74,29 @@ def chunked_batched_bidirectional_late_max(
 
             q_max = similarity.max(dim=-1).values
             s_max = similarity.max(dim=-2).values
-            query_to_item[:, :, :, q0:q1] = torch.maximum(
-                query_to_item[:, :, :, q0:q1],
-                q_max,
+            q_running = (
+                q_max
+                if q_running is None
+                else torch.maximum(q_running, q_max)
             )
-            item_to_query[:, :, :, s0:s1] = torch.maximum(
-                item_to_query[:, :, :, s0:s1],
-                s_max,
+            previous = item_running[item_index]
+            item_running[item_index] = (
+                s_max
+                if previous is None
+                else torch.maximum(previous, s_max)
             )
 
+        assert q_running is not None
+        query_parts.append(q_running)
+
+    if any(value is None for value in item_running):
+        raise RuntimeError("late-interaction item accumulation incomplete")
+
+    query_to_item = torch.cat(query_parts, dim=-1)
+    item_to_query = torch.cat(
+        [value for value in item_running if value is not None],
+        dim=-1,
+    )
     query_to_item = query_to_item.masked_fill(
         ~query_mask[:, None, None, :],
         0.0,
