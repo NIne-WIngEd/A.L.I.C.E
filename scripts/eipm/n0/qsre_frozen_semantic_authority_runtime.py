@@ -60,6 +60,101 @@ def semantic_embeddings(
 
 
 @torch.inference_mode()
+def rationale_embeddings(
+    *,
+    texts: list[str],
+    model,
+    tokenizer,
+    device: torch.device,
+    max_length: int = 160,
+    batch_size: int = 32,
+) -> Tensor:
+    """Encode schema meanings through the rationale side trained in N0 v0.2."""
+    if not texts:
+        raise ValueError("rationale embedding text list is empty")
+    output: list[Tensor] = []
+    for start, stop in _chunks(len(texts), batch_size):
+        tokenized = tokenizer(
+            texts[start:stop],
+            padding=True,
+            truncation=True,
+            max_length=max_length,
+            return_tensors="pt",
+        )
+        ids = tokenized["input_ids"].to(device)
+        mask = tokenized["attention_mask"].to(device)
+        pooled = model.encode(ids, mask)
+        projected = model.project_rationale_pooled(pooled)
+        output.append(projected.detach().float().cpu())
+    return torch.cat(output, dim=0)
+
+
+@torch.inference_mode()
+def principle_alignment_scores(
+    *,
+    queries: list[str],
+    candidates: list[str],
+    model,
+    tokenizer,
+    device: torch.device,
+    max_length: int = 192,
+    batch_size: int = 32,
+) -> Tensor:
+    """Reuse the trained semantic-to-rationale alignment surface.
+
+    The semantic side follows the same joint prompt/candidate geometry used by
+    teacher training. Candidate schema meanings are encoded through the trained
+    rationale projection. No parameter is updated or fitted here.
+    """
+    if not queries or not candidates:
+        raise ValueError("principle alignment requires queries and candidates")
+
+    candidate_rationale = rationale_embeddings(
+        texts=candidates,
+        model=model,
+        tokenizer=tokenizer,
+        device=device,
+        max_length=max_length,
+        batch_size=batch_size,
+    )
+    prompts: list[str] = []
+    candidate_text: list[str] = []
+    candidate_index: list[int] = []
+    for query in queries:
+        prompt = JOINT_MATCH_PROMPT + str(query)
+        for index, candidate in enumerate(candidates):
+            prompts.append(prompt)
+            candidate_text.append(str(candidate))
+            candidate_index.append(index)
+
+    values: list[Tensor] = []
+    for start, stop in _chunks(len(prompts), batch_size):
+        tokenized = tokenizer(
+            prompts[start:stop],
+            candidate_text[start:stop],
+            padding=True,
+            truncation=True,
+            max_length=max_length,
+            return_tensors="pt",
+        )
+        ids = tokenized["input_ids"].to(device)
+        mask = tokenized["attention_mask"].to(device)
+        semantic = model.project_semantic_pooled(model.encode(ids, mask))
+        rationale = candidate_rationale[
+            torch.tensor(
+                candidate_index[start:stop],
+                dtype=torch.long,
+            )
+        ].to(device=device, dtype=semantic.dtype)
+        aligned = model.principle_alignment_from_projected(
+            semantic,
+            rationale,
+        )
+        values.append(aligned.detach().float().cpu())
+    return torch.cat(values, dim=0).reshape(len(queries), len(candidates))
+
+
+@torch.inference_mode()
 def joint_preference_scores(
     *,
     queries: list[str],
@@ -204,6 +299,15 @@ def frozen_authority_scores(
         max_length=max_length,
         batch_size=batch_size,
     )
+    principle = principle_alignment_scores(
+        queries=queries,
+        candidates=candidates,
+        model=model,
+        tokenizer=tokenizer,
+        device=device,
+        max_length=max_length,
+        batch_size=batch_size,
+    )
     if include_token_evidence:
         token = token_evidence_scores(
             queries=queries,
@@ -219,6 +323,7 @@ def frozen_authority_scores(
         combined = combine_authority_components(
             joint_preference=joint,
             semantic_projection=semantic,
+            principle_alignment=principle,
             token_evidence=token,
         )
     else:
@@ -227,6 +332,7 @@ def frozen_authority_scores(
     return {
         "joint_preference": joint,
         "semantic_projection": semantic,
+        "principle_alignment": principle,
         "token_evidence": token,
         "combined": combined,
     }
