@@ -113,6 +113,7 @@ class N0FullEnvelopeStackV1(nn.Module):
                 model_dim=d,
                 num_hidden_states=self.config.num_hidden_states,
                 num_layers=self.config.structured_layers,
+                continuous_metadata_dim=self.config.field_metadata_dim,
                 dropout=self.config.dropout,
             )
         )
@@ -256,6 +257,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             field_valid_mask=field_valid_mask,
             field_confidence=field_confidence,
             field_missing=field_missing,
+            field_metadata=field_metadata,
             descriptor_banks=descriptor_banks,
             descriptor_indices=descriptor_indices,
         )
