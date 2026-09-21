@@ -35,6 +35,7 @@ class FullEnvelopeOperatorState:
     relation_step_mass: Tensor
     stop_probability: Tensor
     unknown_probability: Tensor
+    truncation_probability: Tensor
     role_distribution: Tensor
     traversal_distribution: Tensor
     direction_distribution: Tensor
@@ -63,6 +64,8 @@ class FullEnvelopeOperatorState:
             raise ValueError("stop_probability must be [B,S]")
         if self.unknown_probability.shape != (batch, steps):
             raise ValueError("unknown_probability must be [B,S]")
+        if self.truncation_probability.shape != (batch,):
+            raise ValueError("truncation_probability must be [B]")
         if (
             self.role_distribution.ndim != 2
             or self.role_distribution.size(0) != batch
@@ -106,6 +109,7 @@ class FullEnvelopeOperatorState:
             ("relation_step_mass", self.relation_step_mass),
             ("stop_probability", self.stop_probability),
             ("unknown_probability", self.unknown_probability),
+            ("truncation_probability", self.truncation_probability),
             ("role_distribution", self.role_distribution),
             ("traversal_distribution", self.traversal_distribution),
             ("direction_distribution", self.direction_distribution),
