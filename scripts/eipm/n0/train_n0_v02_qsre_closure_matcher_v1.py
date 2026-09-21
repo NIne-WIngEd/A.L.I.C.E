@@ -227,7 +227,7 @@ def cyclic_batch(
     batch_size: int,
     seed: int,
 ) -> torch.Tensor:
-    generator = torch.Generator().manual_seed(seed + step // max(1, values.numel()))
+    generator = torch.Generator().manual_seed(seed + step)
     order = values[torch.randperm(values.numel(), generator=generator)]
     if order.numel() >= batch_size:
         return order[:batch_size]
@@ -542,6 +542,10 @@ def main() -> None:
     production_schema = torch.load(production_schema_path, map_location="cpu")
     if production_schema.get("private_identity_data") is not False:
         raise SystemExit("private identity data entered Production schema cache")
+    if production_schema.get("semantic_checkpoint_sha256") != sha256(
+        semantic_checkpoint
+    ):
+        raise SystemExit("Production schema cache semantic checkpoint drift")
 
     device = torch.device("cuda")
     semantic_model = load_frozen_semantic_model(
