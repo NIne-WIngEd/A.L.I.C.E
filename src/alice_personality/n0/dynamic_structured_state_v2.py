@@ -16,6 +16,7 @@ class DynamicStructuredStateConfig:
     num_hidden_states: int = 17
     num_attention_heads: int = 10
     num_layers: int = 2
+    continuous_metadata_dim: int = 3
     dropout: float = 0.0
 
     def validate(self) -> None:
@@ -25,6 +26,7 @@ class DynamicStructuredStateConfig:
             ("num_hidden_states", self.num_hidden_states),
             ("num_attention_heads", self.num_attention_heads),
             ("num_layers", self.num_layers),
+            ("continuous_metadata_dim", self.continuous_metadata_dim),
         ):
             if int(value) <= 0:
                 raise ValueError(f"{name} must be positive")
@@ -53,6 +55,11 @@ class DynamicStructuredStateV2(nn.Module):
         self.layer_logits = nn.Parameter(torch.zeros(self.config.num_hidden_states))
         self.scalar_projection = nn.Sequential(
             nn.Linear(2, d),
+            nn.SiLU(),
+            nn.Linear(d, d),
+        )
+        self.continuous_metadata_projection = nn.Sequential(
+            nn.Linear(self.config.continuous_metadata_dim, d),
             nn.SiLU(),
             nn.Linear(d, d),
         )
@@ -112,6 +119,7 @@ class DynamicStructuredStateV2(nn.Module):
         field_valid_mask: Tensor,
         field_confidence: Tensor,
         field_missing: Tensor,
+        field_metadata: Tensor,
         descriptor_banks: Mapping[str, DynamicSemanticSchema],
         descriptor_indices: Mapping[str, Tensor],
     ) -> dict[str, Tensor]:
@@ -130,6 +138,12 @@ class DynamicStructuredStateV2(nn.Module):
             raise ValueError("field_confidence must be [B,F]")
         if field_missing.shape != (batch, fields):
             raise ValueError("field_missing must be [B,F]")
+        if field_metadata.shape != (
+            batch,
+            fields,
+            self.config.continuous_metadata_dim,
+        ):
+            raise ValueError("field_metadata continuous geometry drift")
         if set(descriptor_banks) != set(descriptor_indices):
             raise ValueError("descriptor bank/index names must match")
 
@@ -159,7 +173,13 @@ class DynamicStructuredStateV2(nn.Module):
             [field_confidence.float(), field_missing.float()],
             dim=-1,
         )
-        value = self.input_norm(content + descriptor + self.scalar_projection(scalar))
+        metadata = self.continuous_metadata_projection(field_metadata.float())
+        value = self.input_norm(
+            content
+            + descriptor
+            + self.scalar_projection(scalar)
+            + metadata
+        )
         value = value * field_valid_mask.unsqueeze(-1).to(value.dtype)
 
         encoded = self.encoder(
@@ -192,6 +212,7 @@ class DynamicStructuredStateV2(nn.Module):
             "descriptor_bank_count_dependent_parameters": 0,
             "descriptor_candidate_count_dependent_parameters": 0,
             "field_count_dependent_parameters": 0,
+            "continuous_metadata_supported": True,
             "field_count_ceiling": None,
             "runtime_descriptor_semantics": True,
             "permutation_safe_field_encoder": True,
