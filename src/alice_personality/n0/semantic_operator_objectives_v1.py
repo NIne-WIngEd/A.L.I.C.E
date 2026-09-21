@@ -71,6 +71,35 @@ def factor_semantic_loss(
     return torch.stack(losses).mean()
 
 
+def step_factor_semantic_loss(
+    step_factor_logits: Mapping[str, Tensor],
+    step_factor_targets: Mapping[str, Tensor],
+    step_mask: Tensor,
+) -> Tensor:
+    if set(step_factor_logits) != set(step_factor_targets):
+        raise ValueError("step factor logits/targets names must match")
+    if step_mask.ndim != 2 or step_mask.dtype != torch.bool:
+        raise ValueError("step factor mask must be bool [B,S]")
+    losses = []
+    for name in sorted(step_factor_logits):
+        logits = step_factor_logits[name]
+        target = step_factor_targets[name]
+        if logits.ndim != 3:
+            raise ValueError(f"step factor logits {name!r} must be [B,S,C]")
+        if target.shape != logits.shape[:2] or step_mask.shape != logits.shape[:2]:
+            raise ValueError(f"step factor target geometry drift for {name!r}")
+        losses.append(
+            masked_cross_entropy(
+                logits,
+                target.long(),
+                step_mask,
+            )
+        )
+    if not losses:
+        raise ValueError("at least one step-conditioned factor bank is required")
+    return torch.stack(losses).mean()
+
+
 def binary_token_evidence_loss(
     predicted: Tensor,
     target: Tensor,
@@ -133,6 +162,9 @@ def semantic_operator_objective(
     counterfactual_relation_score: Tensor,
     correct_factor_score: Tensor,
     counterfactual_factor_score: Tensor,
+    step_factor_logits: Mapping[str, Tensor] | None = None,
+    step_factor_targets: Mapping[str, Tensor] | None = None,
+    step_factor_mask: Tensor | None = None,
     weights: SemanticOperatorObjectiveWeights | None = None,
 ) -> dict[str, Tensor]:
     w = weights or SemanticOperatorObjectiveWeights()
@@ -151,7 +183,30 @@ def semantic_operator_objective(
         relation_targets.long(),
         relation_step_mask.bool(),
     )
-    factor = factor_semantic_loss(factor_logits, factor_targets)
+    global_factor = factor_semantic_loss(factor_logits, factor_targets)
+    supplied_step = (
+        step_factor_logits is not None
+        or step_factor_targets is not None
+        or step_factor_mask is not None
+    )
+    if supplied_step:
+        if (
+            step_factor_logits is None
+            or step_factor_targets is None
+            or step_factor_mask is None
+        ):
+            raise ValueError(
+                "step factor logits, targets and mask must be supplied together"
+            )
+        step_factor = step_factor_semantic_loss(
+            step_factor_logits,
+            step_factor_targets,
+            step_factor_mask,
+        )
+        factor = 0.5 * (global_factor + step_factor)
+    else:
+        step_factor = global_factor * 0.0
+        factor = global_factor
 
     if event_distribution.shape != (batch, steps, 3):
         raise ValueError("event_distribution shape drift")
@@ -201,6 +256,8 @@ def semantic_operator_objective(
         "loss": total,
         "relation_sequence": relation,
         "factor_semantics": factor,
+        "global_factor_semantics": global_factor,
+        "step_factor_semantics": step_factor,
         "event_control": event,
         "applicability": applicability_loss,
         "query_evidence": evidence,
