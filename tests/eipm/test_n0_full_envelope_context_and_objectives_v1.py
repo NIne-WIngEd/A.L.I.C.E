@@ -8,6 +8,7 @@ from alice_personality.n0.chunked_late_interaction import (
 )
 from alice_personality.n0.full_envelope_behavioral_objectives_v1 import (
     full_envelope_behavioral_objective,
+    support_selection_loss,
 )
 from alice_personality.n0.full_envelope_loss_balancer_v1 import (
     MacroFamilyLossBalancer,
@@ -263,3 +264,25 @@ def test_macro_family_balancer_has_no_learned_task_weights() -> None:
     assert report["total_parameters"] == 0
     assert report["learned_family_weight_parameters"] == 0
     assert report["test_adaptive_weights"] is False
+
+
+def test_support_objective_explicitly_trains_null_support_head() -> None:
+    support_logits=torch.tensor(
+        [[-1.0,-2.0],[2.0,-1.0]],
+        requires_grad=True,
+    )
+    target=torch.tensor(
+        [[0.0,0.0],[1.0,0.0]],
+    )
+    valid=torch.ones(2,2,dtype=torch.bool)
+    null_logit=torch.tensor([0.2,-0.3],requires_grad=True)
+    loss=support_selection_loss(
+        support_logits,
+        target,
+        valid,
+        null_support_logit=null_logit,
+    )
+    loss.backward()
+    assert null_logit.grad is not None
+    assert float(null_logit.grad.abs().sum()) > 0.0
+    assert support_logits.grad is not None
