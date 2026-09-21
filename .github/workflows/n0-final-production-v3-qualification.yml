@@ -20,6 +20,7 @@ on:
       - "tests/eipm/test_n0_qsre_production_binder_v2.py"
       - "tests/eipm/test_n0_qsre_production_training_v3.py"
       - ".github/workflows/n0-final-production-v3-qualification.yml"
+      - ".github/workflows/n0-qsre-production-core-v1-architecture-contract.yml"
   workflow_dispatch:
 
 jobs:
