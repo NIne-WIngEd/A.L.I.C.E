@@ -83,7 +83,7 @@ class QSRESchemaMatcher(nn.Module):
         self.logit_scale = nn.Parameter(torch.tensor(math.log(8.0)))
         self.query_evidence_scale = nn.Parameter(torch.tensor(4.0))
         self.schema_evidence_scale = nn.Parameter(torch.tensor(4.0))
-        self.cross_alignment_scale = nn.Parameter(torch.tensor(4.0))
+        self.cross_alignment_scale = nn.Parameter(torch.tensor(math.log(4.0)))
         self.token_residual_scale = nn.Parameter(torch.tensor(0.35))
         self.pair_residual_scale = nn.Parameter(torch.tensor(0.35))
         self.reset_parameters()
