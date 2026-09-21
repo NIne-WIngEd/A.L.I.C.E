@@ -1,0 +1,82 @@
+{
+  "schema": "alice.eipm.n0.qsre-closure-matcher-plan.v2",
+  "status": "PRECOMMITTED_AFTER_VALID_JOB_575962_P2S_ARCHITECTURE_FAILURE",
+  "source_failure": {
+    "job": 575962,
+    "stage": "P2S",
+    "source_revision": "fefc2e4ec54ddde113165b1a3103a1add9be34e8",
+    "status": "FAIL_QSRE_CLOSURE_SCHEMA_MATCHER",
+    "exit_code": 41,
+    "full_budget_steps": 1000,
+    "p2_authorized": false,
+    "best_observed": {
+      "step": 850,
+      "auxiliary_holdout_relation_top1": 0.5416666666666666,
+      "auxiliary_seen_relation_top1": 0.5625,
+      "production_core_single_relation_top1": 0.7090909090909091,
+      "heldout_factor_macro_accuracy": 0.6666666666666667
+    },
+    "interpretation": "The P2S gate localized the next causal boundary before Production P2. Seen and unseen auxiliary performance remained similarly sub-gate, so the evidence supports a semantic matching/encoding alignment deficit rather than a simple seen-relation memorization failure."
+  },
+  "architecture": {
+    "module": "src/alice_personality/n0/qsre_schema_matcher.py",
+    "class": "QSRESchemaMatcher",
+    "version": "anchored-bidirectional-pair-refinement-v2",
+    "fixed_semantic_anchor": true,
+    "learned_projection_is_residual": true,
+    "shared_layer_mixture": true,
+    "bidirectional_pair_refinement": true,
+    "relation_identity_parameters": false,
+    "factor_identity_parameters": false,
+    "candidate_count_parameter_axis": false,
+    "reasoning_step_parameter_axis": false,
+    "candidate_conditioned_query_evidence": true,
+    "same_matcher_for_relations_and_operator_factors": true
+  },
+  "training": {
+    "seed": 20260921,
+    "batch_size": 16,
+    "max_steps": 1000,
+    "eval_every": 50,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.02,
+    "gradient_clip": 1,
+    "core_relation_weight": 1,
+    "auxiliary_relation_weight": 1,
+    "role_weight": 0.5,
+    "traversal_weight": 0.7,
+    "direction_weight": 0.5,
+    "control_weight": 0.5,
+    "modifier_weight": 0.4,
+    "pair_consistency_weight": 0.15
+  },
+  "eligibility": {
+    "auxiliary_seen_relation_top1": 0.95,
+    "auxiliary_holdout_relation_top1": 0.85,
+    "production_core_single_relation_top1": 0.95,
+    "heldout_factor_macro_accuracy": 0.9
+  },
+  "governance": {
+    "production_open_schema_query_labels_used": false,
+    "production_open_schema_descriptions_used_in_gradient": false,
+    "final_only_relation_descriptions_used_in_gradient": false,
+    "auxiliary_holdout_relation_descriptions_used_in_gradient": false,
+    "private_identity_data": false,
+    "private_identity_gradient": false,
+    "max_gpu_runs": 1,
+    "automatic_rerun": false,
+    "learning_rate_search": false,
+    "step_search": false,
+    "width_search": false,
+    "threshold_changes_after_results": false,
+    "matcher_frozen_after_pass": true,
+    "source_v1_failure_must_be_preserved": true
+  },
+  "objective_revision": {
+    "production_runtime_relation_text_grammar_reused_for_auxiliary_schema": true,
+    "relation_keys_used_as_semantic_tokens": false,
+    "factor_train_phrase_bank_gradient_bearing": true,
+    "production_factor_queries_remain_gradient_bearing": true,
+    "paired_view_consistency_applies_to_auxiliary_and_core_relations": true
+  }
+}
