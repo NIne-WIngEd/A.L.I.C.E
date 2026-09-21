@@ -1000,3 +1000,50 @@ def test_reopened_structured_evidence_and_binder_have_no_global_static_layer_log
         assert "layer_logits" not in names
         report=module.parameter_report()
         assert report["global_static_layer_mixture"] is False
+
+
+def test_dynamic_graph_zero_semantic_activity_cannot_inject_relation_messages() -> None:
+    torch.manual_seed(171)
+    graph = DynamicSchemaEvidenceGraphV1(
+        DynamicSchemaEvidenceGraphConfig(
+            field_dim=24,
+            relation_dim=24,
+            operator_dim=24,
+            model_dim=24,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    common = dict(
+        field_state=torch.randn(1,4,24),
+        field_valid_mask=torch.ones(1,4,dtype=torch.bool),
+        edge_index=torch.tensor([[[0,1],[1,2],[2,3]]]),
+        edge_relation_index=torch.zeros(1,3,dtype=torch.long),
+        edge_metadata=torch.randn(1,3,4),
+        edge_valid_mask=torch.ones(1,3,dtype=torch.bool),
+        relation_schema_state=torch.randn(1,1,24),
+        relation_mass=torch.ones(1,1),
+        relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
+        semantic_activity=torch.zeros(1),
+        operator_state=torch.randn(1,24),
+    )
+    with torch.no_grad():
+        one = graph(message_steps=1, **common)
+        four = graph(message_steps=4, **common)
+    assert torch.allclose(
+        one["field_states"],
+        four["field_states"],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.equal(
+        one["source_summary"],
+        torch.zeros_like(one["source_summary"]),
+    )
+    assert torch.equal(
+        one["target_summary"],
+        torch.zeros_like(one["target_summary"]),
+    )
+    report = graph.parameter_report()
+    assert report["soft_relational_activity_gate"] is True
+    assert report["zero_activity_preserves_pre_message_graph_state"] is True
