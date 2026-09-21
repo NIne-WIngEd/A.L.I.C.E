@@ -247,13 +247,17 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
         target_logits = self.target_read(read_input).squeeze(-1)
         source_weight = self._masked_softmax(source_logits, field_valid_mask)
         target_weight = self._masked_softmax(target_logits, field_valid_mask)
+        graph_support_activity = (
+            semantic_activity
+            * edge_valid_mask.any(dim=-1).to(semantic_activity.dtype)
+        ).clamp(0.0, 1.0)
         source_summary = (
             (node * source_weight.unsqueeze(-1)).sum(dim=1)
-            * semantic_activity[:, None]
+            * graph_support_activity[:, None]
         )
         target_summary = (
             (node * target_weight.unsqueeze(-1)).sum(dim=1)
-            * semantic_activity[:, None]
+            * graph_support_activity[:, None]
         )
 
         return {
@@ -264,6 +268,7 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             "source_summary": source_summary,
             "target_summary": target_summary,
             "semantic_activity": semantic_activity,
+            "graph_support_activity": graph_support_activity,
             "evidence_tokens": torch.stack([source_summary, target_summary], dim=1),
             "evidence_mask": torch.ones(batch, 2, dtype=torch.bool, device=node.device),
         }
@@ -281,6 +286,7 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             "continuous_relation_conditioning": True,
             "soft_relational_activity_gate": True,
             "zero_activity_preserves_pre_message_graph_state": True,
+            "zero_edge_graph_summary_is_zero": True,
             "relation_mass_floor": 0.0,
             "continuous_node_update_gate": True,
             "runtime_relation_symmetry": True,
