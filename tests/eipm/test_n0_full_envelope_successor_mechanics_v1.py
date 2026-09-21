@@ -180,10 +180,13 @@ def test_dynamic_evidence_graph_relation_permutation_is_equivariant() -> None:
         perm=torch.tensor([2,0,3,1])
         inverse=torch.empty_like(perm)
         inverse[perm]=torch.arange(relations)
+        uniform_mass=torch.full((batch,relations),1.0/relations)
         b=model(
             field_state=field,field_valid_mask=valid,edge_index=edge_index,
             edge_relation_index=inverse[edge_rel],edge_metadata=meta,edge_valid_mask=edge_valid,
-            relation_schema_state=rel[:,perm],operator_state=op,message_steps=2
+            relation_schema_state=rel[:,perm],
+            relation_mass=uniform_mass[:,perm],
+            operator_state=op,message_steps=2
         )
     assert torch.allclose(a["field_states"],b["field_states"],atol=1e-5,rtol=1e-5)
     assert torch.allclose(a["source_summary"],b["source_summary"],atol=1e-5,rtol=1e-5)
