@@ -21,6 +21,9 @@ on:
       - "scripts/eipm/n0/eval_n0_v02_final_self_validation_v1.py"
       - "scripts/eipm/n0/run_n0_v02_qsre_production_full_pipeline_v1.sh"
       - "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_production_full_pipeline_v1.sbatch"
+      - "scripts/eipm/n0/requalify_n0_v02_qsre_production_p1_stop_tail_v1.py"
+      - "scripts/eipm/n0/run_n0_v02_qsre_production_stop_tail_recovery_v1.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_production_stop_tail_recovery_v1.sbatch"
       - "scripts/eipm/n0/magnolia_udocker_exec.sh"
       - "configs/eipm/n0/n0_v02_qsre_production_core_v1.json"
       - "configs/eipm/n0/n0_v02_qsre_production_core_w1_w15_map_v1.json"
@@ -64,7 +67,8 @@ jobs:
             scripts/eipm/n0/build_n0_v02_final_self_validation_v1.py \
             scripts/eipm/n0/prepare_n0_v02_final_self_validation_cache_v1.py \
             scripts/eipm/n0/freeze_n0_v02_final_self_validation_v1.py \
-            scripts/eipm/n0/eval_n0_v02_final_self_validation_v1.py
+            scripts/eipm/n0/eval_n0_v02_final_self_validation_v1.py \
+            scripts/eipm/n0/requalify_n0_v02_qsre_production_p1_stop_tail_v1.py
 
       - name: Qualify Magnolia launcher and P0-P5 wiring
         run: |
@@ -169,6 +173,96 @@ jobs:
               assert "FINAL_" not in line, (script,line)
 
           print("PASS_N0_MAGNOLIA_FULL_PIPELINE_STATIC_QUALIFICATION")
+          PY
+
+      - name: Qualify stop-tail causal recovery wiring
+        run: |
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_production_stop_tail_recovery_v1.sh
+          bash -n scripts/eipm/n0/magnolia_p100_n0_v02_qsre_production_stop_tail_recovery_v1.sbatch
+          python - <<'PY'
+          import ast
+          import json
+          import re
+          from pathlib import Path
+
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_production_stop_tail_recovery_v1.sh").read_text()
+          sbatch=Path("scripts/eipm/n0/magnolia_p100_n0_v02_qsre_production_stop_tail_recovery_v1.sbatch").read_text()
+          core=json.load(open("configs/eipm/n0/n0_v02_qsre_production_core_v1.json"))
+          plan=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v1.json"))
+
+          assert '#SBATCH --gres=gpu:p100:1' in sbatch
+          assert 'ALICE_N0_EXPECTED_REVISION' in sbatch
+          assert 'run_n0_v02_qsre_production_stop_tail_recovery_v1.sh' in sbatch
+          assert 'qsre-production-core-v1' in runner
+          assert 'qsre-production-core-v1-stop-tail-recovery-v1' in runner
+          assert 'requalify_n0_v02_qsre_production_p1_stop_tail_v1.py' in runner
+          assert 'REQUAL_RC' in runner
+          assert 'REQUAL_RC" -eq 10' in runner
+          assert 'train_n0_v02_qsre_production_p1_v1.py' in runner
+          assert 'train_n0_v02_qsre_production_p2_v1.py' in runner
+          assert 'train_n0_v02_qsre_production_p3_v1.py' in runner
+          assert 'eval_n0_v02_qsre_production_p4_v1.py' in runner
+          assert 'eval_n0_v02_final_self_validation_v1.py' in runner
+          assert 'build_n0_v02_final_self_validation_v1.py' not in runner
+          assert 'prepare_n0_v02_final_self_validation_cache_v1.py' not in runner
+          assert 'FROZEN_N0_FINAL_SELF_VALIDATION_BEFORE_P1_RESULTS' in runner
+          assert 'threshold_changes_after_results_forbidden' in runner
+          assert 'automatic_hotfix=false' in runner
+          assert 'learning_rate_search=false' in runner
+          assert 'step_search=false' in runner
+          assert 'width_search=false' in runner
+
+          assert core["core"]["executor"]["inactive_or_stopped_relation_step_preserves_frontier"] is True
+          assert core["core"]["executor"]["stop_tail_is_semantically_idempotent"] is True
+          assert plan["stages"]["P1"]["training"]["max_steps"]==1000
+          assert plan["stages"]["P1"]["optimizer"]["learning_rate"]==0.0002
+          assert plan["governance"]["learning_rate_search"] is False
+          assert plan["governance"]["step_search"] is False
+          assert plan["governance"]["width_search"] is False
+
+          def required_flags(path):
+              tree=ast.parse(Path(path).read_text())
+              flags=set()
+              for node in ast.walk(tree):
+                  if not isinstance(node,ast.Call):
+                      continue
+                  if not isinstance(node.func,ast.Attribute) or node.func.attr!="add_argument":
+                      continue
+                  if not node.args or not isinstance(node.args[0],ast.Constant):
+                      continue
+                  flag=node.args[0].value
+                  if not isinstance(flag,str) or not flag.startswith("--"):
+                      continue
+                  if any(
+                      kw.arg=="required"
+                      and isinstance(kw.value,ast.Constant)
+                      and bool(kw.value.value)
+                      for kw in node.keywords
+                  ):
+                      flags.add(flag)
+              return flags
+
+          invocations={}
+          for line in runner.splitlines():
+              if not line.lstrip().startswith("python "):
+                  continue
+              for script in (
+                  "requalify_n0_v02_qsre_production_p1_stop_tail_v1.py",
+                  "train_n0_v02_qsre_production_p1_v1.py",
+                  "train_n0_v02_qsre_production_p2_v1.py",
+                  "train_n0_v02_qsre_production_p3_v1.py",
+                  "eval_n0_v02_qsre_production_p4_v1.py",
+                  "eval_n0_v02_final_self_validation_v1.py",
+              ):
+                  if script in line:
+                      invocations[script]=line
+          for script,line in invocations.items():
+              expected=required_flags("scripts/eipm/n0/"+script)
+              present=set(re.findall(r'--[a-z0-9-]+',line))
+              assert not (expected-present), (script,sorted(expected-present))
+
+          assert len(invocations)==6, sorted(invocations)
+          print("PASS_N0_STOP_TAIL_CAUSAL_RECOVERY_STATIC_QUALIFICATION")
           PY
 
       - name: Run production mechanics and metric tests
