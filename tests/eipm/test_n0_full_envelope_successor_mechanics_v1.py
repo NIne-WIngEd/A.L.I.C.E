@@ -780,3 +780,69 @@ def test_binder_allows_minus_one_type_for_padded_fields_but_not_valid_edge_endpo
         assert "without a runtime type" in str(exc)
     else:
         raise AssertionError("valid edge to padded untyped field did not fail closed")
+
+
+def test_executor_mixed_forward_then_reverse_tracks_final_semantic_source() -> None:
+    torch.manual_seed(913)
+    executor=FullEnvelopeQSREExecutorV1(
+        FullEnvelopeExecutorConfig(
+            field_dim=24,
+            model_dim=24,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    relation_distribution=torch.tensor(
+        [[[1.0,0.0],[0.0,1.0],[0.5,0.5]]]
+    )
+    step_direction=torch.zeros(1,3,3)
+    step_direction[0,0,DIRECTION_FORWARD]=1.0
+    step_direction[0,1,DIRECTION_REVERSE]=1.0
+    step_direction[0,2,DIRECTION_FORWARD]=1.0
+    role=torch.zeros(1,4)
+    role[0,ROLE_SOURCE]=1.0
+    traversal=torch.zeros(1,3)
+    traversal[0,TRAVERSAL_PATH]=1.0
+    control=torch.zeros(1,3)
+    control[0,CONTROL_RELATIONAL]=1.0
+    operator=FullEnvelopeOperatorState(
+        relation_distribution=relation_distribution,
+        relation_step_mass=torch.tensor([[1.0,1.0,0.0]]),
+        stop_probability=torch.tensor([[0.0,0.0,1.0]]),
+        unknown_probability=torch.zeros(1,3),
+        truncation_probability=torch.zeros(1),
+        role_distribution=role,
+        traversal_distribution=traversal,
+        direction_distribution=torch.tensor([[0.5,0.5,0.0]]),
+        step_direction_distribution=step_direction,
+        modifier_weight=torch.zeros(1,4),
+        step_modifier_weight=torch.zeros(1,3,4),
+        applicability=torch.ones(1),
+        control_distribution=control,
+        continuous_state=torch.zeros(1,24),
+        uncertainty=torch.zeros(1),
+    )
+    with torch.no_grad():
+        out=executor(
+            field_state=torch.randn(1,3,24),
+            field_metadata=torch.zeros(1,3,3),
+            field_valid_mask=torch.ones(1,3,dtype=torch.bool),
+            edge_index=torch.tensor([[[0,1],[2,1]]]),
+            edge_relation_index=torch.tensor([[0,1]]),
+            edge_valid_mask=torch.ones(1,2,dtype=torch.bool),
+            edge_support_weight=torch.ones(1,2),
+            support_available=torch.ones(1),
+            edge_reliability=torch.ones(1,2),
+            edge_recency=torch.ones(1,2),
+            edge_temporal_match=torch.ones(1,2),
+            edge_provenance_match=torch.ones(1,2),
+            relation_schema_state=torch.randn(1,2,24),
+            relation_symmetric=torch.zeros(1,2,dtype=torch.bool),
+            operator=operator,
+            focus_field_weight=torch.tensor([[1.0,0.0,0.0]]),
+        )
+    assert int(out["relational_probability"].argmax(dim=-1).item()) == 2
+    assert int(out["path_semantic_source_weight"].argmax(dim=-1).item()) == 2
+    assert executor.parameter_report()["semantic_endpoint_tracking_is_step_conditioned"] is True
+    assert executor.parameter_report()["global_direction_not_used_for_final_path_role"] is True
