@@ -91,12 +91,16 @@ def load_selected(result_path:Path,root:Path,filename:str,expected_status:str)->
     return path,result
 
 
-def load_parents(*,p1_path:Path,p2_path:Path,config,device):
+def load_parents(*,p1_path:Path,p2_path:Path,factor_schema_cache_path:Path,config,device):
     p1=torch.load(p1_path,map_location="cpu")
     p2=torch.load(p2_path,map_location="cpu")
+    factor_cache=torch.load(factor_schema_cache_path,map_location="cpu")
+    if p2.get("factor_schema_cache_sha256") != sha256(factor_schema_cache_path):
+        raise SystemExit("P2 factor-schema cache lineage drift")
     schema_encoder=QSREProductionSchemaEncoder(config)
     executor=QSREProductionExecutor(config)
     operator=QSREProductionOperatorInducerV3(config)
+    operator.configure_factor_schema_cache(factor_cache)
     schema_encoder.load_state_dict(p1["schema_encoder"],strict=True)
     executor.load_state_dict(p1["executor"],strict=True)
     operator.load_state_dict(p2["operator"],strict=True)
@@ -289,6 +293,7 @@ def main()->None:
     p.add_argument("--p1-root",required=True)
     p.add_argument("--p2-result",required=True)
     p.add_argument("--p2-root",required=True)
+    p.add_argument("--factor-schema-cache",required=True)
     p.add_argument("--output-dir",required=True)
     args=p.parse_args()
 
@@ -314,7 +319,9 @@ def main()->None:
     )
     device=torch.device("cuda")
     schema_encoder,executor,operator_model=load_parents(
-        p1_path=p1_path,p2_path=p2_path,config=config,device=device,
+        p1_path=p1_path,p2_path=p2_path,
+        factor_schema_cache_path=Path(args.factor_schema_cache),
+        config=config,device=device,
     )
     full_schema,schema_payload=load_dynamic_schema_cache(schema_cache_path,device=device)
     core_keys=list(schema_payload["core_train_relation_keys"])
