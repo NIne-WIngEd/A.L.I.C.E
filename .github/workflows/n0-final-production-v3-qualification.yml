@@ -2,6 +2,8 @@ name: n0-final-production-v3-qualification
 
 on:
   push:
+    branches:
+      - alice-eipm-v1-qsre-production-core-v1
     paths:
       - "src/alice_personality/n0/qsre_production_operator_v3.py"
       - "src/alice_personality/n0/qsre_production_binder_v2.py"
