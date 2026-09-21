@@ -297,10 +297,11 @@ def make_row(
 
     pool = TRAIN_RELATIONS if split == "train" else TRAIN_RELATIONS + DEV_RELATIONS
     required = sequence if sequence else [relation]
+    effective_count = max(int(candidates), len(required))
     bank, indices = candidate_bank(
         correct=required,
         pool=pool,
-        count=candidates,
+        count=effective_count,
         rng=rng,
     )
     target_sequence = indices if sequence else []
@@ -365,8 +366,8 @@ def main() -> None:
     if args.examples_per_relation <= 0:
         raise SystemExit("examples-per-relation must be positive")
     candidate_counts = sorted({int(x) for x in args.candidate_counts.split(",") if x.strip()})
-    if not candidate_counts or min(candidate_counts) < 2:
-        raise SystemExit("candidate-counts must contain integers >=2")
+    if not candidate_counts or min(candidate_counts) < 1:
+        raise SystemExit("candidate-counts must contain integers >=1")
     if max(candidate_counts) > len(TRAIN_RELATIONS):
         raise SystemExit("candidate-count operating point exceeds available training relation definitions")
 
