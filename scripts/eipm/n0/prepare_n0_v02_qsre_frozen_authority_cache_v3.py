@@ -9,6 +9,7 @@ import torch
 from prepare_n0_v02_qsre_production_cache_v1 import encode_texts
 from qsre_frozen_semantic_authority_runtime import (
     joint_preference_scores,
+    principle_alignment_scores,
     semantic_projection_scores,
 )
 from qsre_production_runtime import (
@@ -70,9 +71,18 @@ def score_components(
         device=device,
         batch_size=batch_size,
     )
+    principle = principle_alignment_scores(
+        queries=queries,
+        candidates=candidates,
+        model=model,
+        tokenizer=tokenizer,
+        device=device,
+        batch_size=batch_size,
+    )
     return {
         "joint_preference": joint.to(dtype=torch.float32),
         "semantic_projection": semantic.to(dtype=torch.float32),
+        "principle_alignment": principle.to(dtype=torch.float32),
     }
 
 
@@ -296,6 +306,7 @@ def main() -> None:
         "authority_components": [
             "joint_preference",
             "semantic_projection",
+            "principle_alignment",
             "runtime_parameter_free_token_evidence",
         ],
         "component_normalization": "candidate_axis_zscore_after_runtime_candidate_subset",
