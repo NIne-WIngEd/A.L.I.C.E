@@ -21,6 +21,11 @@ from alice_personality.n0.qsre_production_operator_v3 import (
     EVENT_UNKNOWN,
     QSREProductionOperatorInducerV3,
 )
+from alice_personality.n0.qsre_semantic_authority import (
+    slice_factor_authority,
+    slice_relation_authority,
+    validate_authority_cache,
+)
 from qsre_production_runtime import load_dynamic_schema_cache, sha256
 from qsre_production_training_utils import (
     batch_indices,
@@ -67,36 +72,47 @@ def load_p1(
     }
 
 
-def load_closure_matcher(
+def load_frozen_authority(
     *,
     result_path: Path,
-    root: Path,
+    authority_cache_path: Path,
     factor_cache_path: Path,
 ) -> tuple[dict, dict, dict]:
     result = json.loads(result_path.read_text())
-    if result.get("schema") != "alice.eipm.n0.qsre-closure-matcher-result.v2":
-        raise SystemExit("closure schema matcher result version drift")
-    if result.get("status") != "PASS_QSRE_CLOSURE_SCHEMA_MATCHER":
-        raise SystemExit("closure schema matcher did not pass")
-    selected = result.get("selected")
-    if not selected:
-        raise SystemExit("closure schema matcher selected checkpoint missing")
-    step = int(selected["step"])
-    path = root / f"step-{step:08d}" / "qsre_closure_matcher.pt"
-    if sha256(path) != selected["checkpoint_sha256"]:
-        raise SystemExit("closure schema matcher checkpoint hash drift")
-    payload = torch.load(path, map_location="cpu")
-    if payload.get("schema") != "alice.eipm.n0.qsre-closure-matcher-checkpoint.v2":
-        raise SystemExit("closure schema matcher checkpoint schema drift")
+    if result.get("schema") != "alice.eipm.n0.qsre-frozen-semantic-authority-result.v3":
+        raise SystemExit("frozen semantic authority result version drift")
+    if result.get("status") != "PASS_QSRE_FROZEN_SEMANTIC_AUTHORITY":
+        raise SystemExit("frozen semantic authority qualification did not pass")
+    if result.get("p2_authorized") is not True:
+        raise SystemExit("frozen semantic authority did not authorize P2")
+    if result.get("gradient_performed") is not False or result.get("optimizer") is not False:
+        raise SystemExit("semantic authority qualification was not zero-gradient")
+
+    authority_cache = torch.load(authority_cache_path, map_location="cpu")
+    validate_authority_cache(
+        authority_cache,
+        expected_schema="alice.eipm.n0.qsre-frozen-semantic-authority-production-cache.v3",
+    )
+    if authority_cache.get("semantic_checkpoint_sha256") != result.get(
+        "semantic_checkpoint_sha256"
+    ):
+        raise SystemExit("semantic authority checkpoint lineage drift")
+
     factor_cache = torch.load(factor_cache_path, map_location="cpu")
-    if factor_cache.get("schema") != "alice.eipm.n0.qsre-closure-factor-schema-cache.v1":
-        raise SystemExit("closure factor schema cache drift")
-    if sha256(factor_cache_path) != result["factor_schema_cache_sha256"]:
-        raise SystemExit("closure factor schema cache hash drift")
-    return payload, factor_cache, {
-        "path": path,
-        "sha256": sha256(path),
+    if factor_cache.get("schema") != "alice.eipm.n0.qsre-frozen-factor-schema-cache.v3":
+        raise SystemExit("frozen factor schema cache drift")
+    if factor_cache.get("gradient") is not False or factor_cache.get("optimizer") is not False:
+        raise SystemExit("frozen factor schema cache is not zero-gradient")
+    if factor_cache.get("private_identity_data") is not False:
+        raise SystemExit("private identity data entered frozen factor schema cache")
+    if authority_cache.get("factor_schema_cache_sha256") != sha256(factor_cache_path):
+        raise SystemExit("frozen factor schema cache hash drift")
+
+    return authority_cache, factor_cache, {
+        "result_sha256": sha256(result_path),
+        "authority_cache_sha256": sha256(authority_cache_path),
         "factor_schema_cache_sha256": sha256(factor_cache_path),
+        "semantic_checkpoint_sha256": result["semantic_checkpoint_sha256"],
     }
 
 
@@ -456,6 +472,7 @@ def execute_with_oracle_support(
 def infer_view_output(
     *,
     split: dict,
+    authority_split: dict,
     indices: torch.Tensor,
     view: int,
     schema: QSREDynamicRelationSchema,
@@ -464,6 +481,20 @@ def infer_view_output(
     max_steps: int,
     device: torch.device,
 ):
+    relation_count = int(schema.token_states.size(0))
+    relation_authority = slice_relation_authority(
+        authority_split,
+        indices=indices,
+        view=view,
+        relation_count=relation_count,
+        device=device,
+    )
+    factor_authority = slice_factor_authority(
+        authority_split,
+        indices=indices,
+        view=view,
+        device=device,
+    )
     return operator_model(
         query_hidden_states=split["query_hidden_states"][indices, view]
         .to(device)
@@ -474,6 +505,8 @@ def infer_view_output(
         schema=schema,
         schema_token_state=encoded["schema_token_state"],
         schema_relation_state=encoded["schema_relation_state"],
+        relation_authority=relation_authority,
+        factor_authority=factor_authority,
         max_steps=max_steps,
     )
 
@@ -482,6 +515,7 @@ def infer_view_output(
 def evaluate(
     *,
     split: dict,
+    authority_split: dict,
     schema: QSREDynamicRelationSchema,
     schema_encoder: QSREProductionSchemaEncoder,
     executor: QSREProductionExecutor,
@@ -506,6 +540,7 @@ def evaluate(
         for view in (0, 1):
             output = infer_view_output(
                 split=split,
+                authority_split=authority_split,
                 indices=idx,
                 view=view,
                 schema=schema,
@@ -710,7 +745,7 @@ def save_checkpoint(
     torch.save(
         {
             "schema": "alice.eipm.n0.qsre-production-p2-checkpoint.v3",
-            "architecture": "closure-schema-matcher-plus-ordered-continuous-operator",
+            "architecture": "frozen-semantic-authority-plus-ordered-continuous-operator",
             "stage": "P2",
             "step": step,
             "config": config.__dict__,
@@ -730,8 +765,8 @@ def main() -> None:
     p.add_argument("--p1-result", required=True)
     p.add_argument("--p1-root", required=True)
     p.add_argument("--failed-p2-result", required=True)
-    p.add_argument("--closure-matcher-result", required=True)
-    p.add_argument("--closure-matcher-root", required=True)
+    p.add_argument("--authority-result", required=True)
+    p.add_argument("--authority-cache", required=True)
     p.add_argument("--factor-schema-cache", required=True)
     p.add_argument("--output-dir", required=True)
     args = p.parse_args()
@@ -786,22 +821,16 @@ def main() -> None:
         config=config,
         device=device,
     )
-    matcher_payload, factor_cache, closure_matcher = load_closure_matcher(
-        result_path=Path(args.closure_matcher_result),
-        root=Path(args.closure_matcher_root),
+    authority_cache, factor_cache, frozen_authority = load_frozen_authority(
+        result_path=Path(args.authority_result),
+        authority_cache_path=Path(args.authority_cache),
         factor_cache_path=Path(args.factor_schema_cache),
     )
     operator_model = QSREProductionOperatorInducerV3(config).to(device)
-    operator_model.load_pretrained_schema_matcher(
-        matcher_payload["matcher"],
-        freeze=True,
-    )
     operator_model.configure_factor_schema_cache(factor_cache)
-    if any(
-        parameter.requires_grad
-        for parameter in operator_model.schema_matcher.parameters()
-    ):
-        raise SystemExit("closure schema matcher must remain frozen in P2")
+    matcher_report = operator_model.schema_matcher.parameter_report()
+    if matcher_report["trainable_parameters"] != 0:
+        raise SystemExit("parameter-free token evidence matcher gained trainable parameters")
     if any(
         hasattr(operator_model, name)
         for name in (
@@ -838,6 +867,14 @@ def main() -> None:
     output_dir.mkdir(parents=True)
     train = prepared["train"]
     dev = prepared["dev"]
+    if authority_cache["train"]["ids"] != list(train["ids"]):
+        raise SystemExit("Production TRAIN authority-cache row order drift")
+    if authority_cache["dev"]["ids"] != list(dev["ids"]):
+        raise SystemExit("Production DEV authority-cache row order drift")
+    if list(authority_cache["train"]["relation_keys"]) != core_keys:
+        raise SystemExit("TRAIN authority cache must contain core relation candidates only")
+    if list(authority_cache["dev"]["relation_keys"]) != relation_keys:
+        raise SystemExit("DEV authority cache relation cardinality/order drift")
 
     # Query-supervised training is strictly core-schema only. DEV/open
     # relation descriptions never enter a gradient-bearing query path and are
@@ -891,6 +928,7 @@ def main() -> None:
         for view in (0, 1):
             model_output = infer_view_output(
                 split=train,
+                authority_split=authority_cache["train"],
                 indices=idx,
                 view=view,
                 schema=core_schema,
@@ -931,21 +969,15 @@ def main() -> None:
             )
 
         consistency = pair_loss_v3(view_outputs[0], view_outputs[1])
-        # The semantic matcher already passed an unseen-schema stage and is
-        # frozen here. Production P2 may learn ordering/event/applicability and
-        # continuous execution state, but it cannot rotate the semantic metric
-        # around the six core relations or destroy runtime zero-shot matching.
-        matcher_anchor = sum(
-            parameter.sum() * 0.0
-            for parameter in operator_model.schema_matcher.parameters()
-        )
+        # Semantic identity is supplied by a frozen zero-gradient authority.
+        # P2 learns only ordering, events, applicability and continuous
+        # execution state around that fixed semantic surface.
         loss = (
             0.5 * (supervised[0] + supervised[1])
             + float(weights["downstream"])
             * 0.5
             * (downstream_losses[0] + downstream_losses[1])
             + float(weights["pair_consistency"]) * consistency
-            + matcher_anchor
         )
         if not torch.isfinite(loss):
             raise RuntimeError("P2 v3 nonfinite loss")
@@ -960,6 +992,7 @@ def main() -> None:
         if step % eval_every == 0 or step == max_train_steps:
             metrics = evaluate(
                 split=dev,
+                authority_split=authority_cache["dev"],
                 schema=full_schema,
                 schema_encoder=schema_encoder,
                 executor=executor,
@@ -976,7 +1009,8 @@ def main() -> None:
                 "train_pair_consistency_loss": float(
                     consistency.detach().item()
                 ),
-                "closure_schema_matcher_frozen": True,
+                "frozen_semantic_authority": True,
+                "schema_matcher_trainable_parameters": 0,
                 "fixed_factor_class_heads": False,
                 "train_supervised_parts_view0": supervised_parts[0],
                 "train_supervised_parts_view1": supervised_parts[1],
@@ -1007,8 +1041,13 @@ def main() -> None:
                     "source_failed_p2_result_sha256": sha256(
                         failed_p2_path
                     ),
-                    "closure_matcher_checkpoint_sha256": closure_matcher["sha256"],
-                    "factor_schema_cache_sha256": closure_matcher[
+                    "semantic_authority_result_sha256": frozen_authority[
+                        "result_sha256"
+                    ],
+                    "semantic_authority_cache_sha256": frozen_authority[
+                        "authority_cache_sha256"
+                    ],
+                    "factor_schema_cache_sha256": frozen_authority[
                         "factor_schema_cache_sha256"
                     ],
                 },
@@ -1053,11 +1092,16 @@ def main() -> None:
         "open_schema_runtime_candidates_used_during_training": False,
         "core_schema_only_query_training": True,
         "schema_only_self_calibration_used": False,
-        "closure_schema_matcher_frozen": True,
-        "closure_matcher_checkpoint_sha256": closure_matcher["sha256"],
-        "factor_schema_cache_sha256": closure_matcher[
+        "frozen_semantic_authority": True,
+        "semantic_authority_gradient": False,
+        "semantic_authority_result_sha256": frozen_authority["result_sha256"],
+        "semantic_authority_cache_sha256": frozen_authority[
+            "authority_cache_sha256"
+        ],
+        "factor_schema_cache_sha256": frozen_authority[
             "factor_schema_cache_sha256"
         ],
+        "schema_matcher_trainable_parameters": 0,
         "fixed_factor_class_heads": False,
         "semantic_factor_schemas": True,
         "ordered_query_evidence_coverage": True,
