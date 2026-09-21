@@ -124,6 +124,18 @@
       "knowledge_surface": true
     },
     {
+      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
+      "head": "7564c9fa0716929e80a2b6591edc066ffbf415f3",
+      "head_committed_at": "2026-09-21T02:09:04-05:00",
+      "head_message": "state(n0): remove obsolete matcher calibration from v3 plan",
+      "status": "ahead",
+      "ahead": 591,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 400,
+      "knowledge_surface": true
+    },
+    {
       "branch": "alice-eipm-v1-post-arbitration-gate",
       "head": "00a95d2690641605964f91a79aa1358e05f3edbf",
       "head_committed_at": "2026-09-17T14:45:12-05:00",
@@ -377,14 +389,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "032654de6cdbde2f7a533b14f3f052bf47851de6",
-      "head_committed_at": "2026-09-21T01:04:02-05:00",
-      "head_message": "trace(fbm): capture 575962 and semantic-v2 repair",
+      "head": "1037daa6c86669ccfc590394920e7a0db6191a5f",
+      "head_committed_at": "2026-09-21T02:10:49-05:00",
+      "head_message": "trace(fbm): capture 575966 and frozen authority v3",
       "status": "diverged",
-      "ahead": 106,
+      "ahead": 107,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 105,
+      "changed_file_count_vs_source_merge_base": 106,
       "knowledge_surface": true
     },
     {
