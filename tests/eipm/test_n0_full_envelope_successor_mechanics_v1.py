@@ -30,6 +30,7 @@ from alice_personality.n0.full_envelope_structural_types import (
     DIRECTION_FORWARD,
     DIRECTION_REVERSE,
     FullEnvelopeOperatorState,
+    ROLE_SOURCE,
     ROLE_TARGET,
     TRAVERSAL_AGGREGATE,
     TRAVERSAL_LOCAL,
