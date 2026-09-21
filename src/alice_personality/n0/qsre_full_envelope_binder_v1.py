@@ -69,6 +69,11 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             nn.SiLU(),
             nn.Linear(d, 1),
         )
+        self.null_support_score = nn.Sequential(
+            nn.Linear(2 * d + 3, d),
+            nn.SiLU(),
+            nn.Linear(d, 1),
+        )
 
     def _token_late(
         self,
@@ -286,13 +291,42 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             field_type_index=field_type_index,
             edge_valid_mask=edge_valid_mask,
         )
-        sparse = masked_sparsemax(support_logits, type_compatible, dim=-1)
-        sparse_max = sparse.max(dim=-1, keepdim=True).values
-        sparse = torch.where(
-            sparse_max > 0,
-            sparse / sparse_max.clamp_min(1.0e-12),
-            torch.zeros_like(sparse),
+
+        null_feature = torch.cat(
+            [
+                query_summary,
+                self.operator_projection(operator.continuous_state),
+                operator.applicability[:, None],
+                operator.uncertainty[:, None],
+                operator.control_distribution[:, CONTROL_RELATIONAL][:, None],
+            ],
+            dim=-1,
         )
+        null_support_logit = self.null_support_score(null_feature).squeeze(-1)
+        augmented_logits = torch.cat(
+            [support_logits, null_support_logit[:, None]],
+            dim=-1,
+        )
+        augmented_mask = torch.cat(
+            [
+                type_compatible,
+                torch.ones(
+                    batch,
+                    1,
+                    device=type_compatible.device,
+                    dtype=torch.bool,
+                ),
+            ],
+            dim=-1,
+        )
+        augmented_sparse = masked_sparsemax(
+            augmented_logits,
+            augmented_mask,
+            dim=-1,
+        )
+        sparse = augmented_sparse[:, :edges]
+        null_support_mass = augmented_sparse[:, edges]
+        support_available = (1.0 - null_support_mass).clamp(0.0, 1.0)
 
         activation = operator.applicability.clamp(0.0, 1.0)
         activation = activation * operator.control_distribution[:, CONTROL_RELATIONAL]
@@ -310,6 +344,9 @@ class FullEnvelopeQSREBinderV1(nn.Module):
 
         return {
             "support_logits": support_logits,
+            "null_support_logit": null_support_logit,
+            "null_support_mass": null_support_mass,
+            "support_available": support_available,
             "edge_support_weight": edge_support_weight,
             "field_support_weight": field_support_weight,
             "type_compatible": type_compatible,
@@ -327,6 +364,8 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             "type_vocab_dependent_parameters": 0,
             "fixed_top_k": False,
             "exact_zero_sparse_support": True,
+            "explicit_null_support_option": True,
+            "zero_support_possible_with_compatible_edges": True,
             "multilayer_query_field_interaction": True,
             "final_layer_only_query": False,
             "runtime_relation_schema": True,
