@@ -226,7 +226,7 @@ echo "===== P2A: ZERO-GRADIENT FROZEN SEMANTIC AUTHORITY ====="
 P2A="$RUN_ROOT/p2a"
 mkdir -p "$P2A"
 AUTH_RESULT="$P2A/result.json"
-python "$ROOT/scripts/eipm/n0/qualify_n0_v02_qsre_frozen_semantic_authority_v3.py"   --plan "$AUTH_PLAN"   --meta-config "$META"   --semantic-config "$SEMANTIC_CONFIG"   --semantic-checkpoint "$SEMANTIC"   --tokenizer-dir "$TOKENIZER"   --production-cache "$PROD_CACHE"   --production-curriculum "$PROD_CURRICULUM"   --production-relation-schema "$PROD_SCHEMA_JSON"   --output "$AUTH_RESULT"   --batch-size 32
+python "$ROOT/scripts/eipm/n0/qualify_n0_v02_qsre_frozen_semantic_authority_v3.py"   --plan "$AUTH_PLAN"   --meta-config "$META"   --semantic-config "$SEMANTIC_CONFIG"   --semantic-checkpoint "$SEMANTIC"   --tokenizer-dir "$TOKENIZER"   --production-cache "$PROD_CACHE"   --production-schema-cache "$PROD_SCHEMA_CACHE"   --production-curriculum "$PROD_CURRICULUM"   --production-relation-schema "$PROD_SCHEMA_JSON"   --output "$AUTH_RESULT"   --batch-size 32
 
 python - "$AUTH_RESULT" <<'PY'
 import json,sys
@@ -248,9 +248,9 @@ PROD_AUTH="$P2A/production_authority_v3.pt"
 FINAL_AUTH="$P2A/final_authority_v3.pt"
 FACTOR_CACHE="$P2A/factor_schema_v3.pt"
 
-python "$ROOT/scripts/eipm/n0/prepare_n0_v02_qsre_frozen_authority_cache_v3.py"   --mode production   --rows "$PROD_CURRICULUM"   --relation-schema "$PROD_SCHEMA_JSON"   --meta-config "$META"   --qualification-result "$AUTH_RESULT"   --semantic-config "$SEMANTIC_CONFIG"   --semantic-checkpoint "$SEMANTIC"   --tokenizer-dir "$TOKENIZER"   --output "$PROD_AUTH"   --factor-schema-output "$FACTOR_CACHE"   --batch-size 32
+python "$ROOT/scripts/eipm/n0/prepare_n0_v02_qsre_frozen_authority_cache_v3.py"   --mode production   --rows "$PROD_CURRICULUM"   --relation-schema "$PROD_SCHEMA_JSON"   --schema-cache "$PROD_SCHEMA_CACHE"   --meta-config "$META"   --qualification-result "$AUTH_RESULT"   --semantic-config "$SEMANTIC_CONFIG"   --semantic-checkpoint "$SEMANTIC"   --tokenizer-dir "$TOKENIZER"   --output "$PROD_AUTH"   --factor-schema-output "$FACTOR_CACHE"   --batch-size 32
 
-python "$ROOT/scripts/eipm/n0/prepare_n0_v02_qsre_frozen_authority_cache_v3.py"   --mode final   --rows "$FINAL_RELATIONAL"   --relation-schema "$FINAL_SCHEMA_JSON"   --meta-config "$META"   --qualification-result "$AUTH_RESULT"   --semantic-config "$SEMANTIC_CONFIG"   --semantic-checkpoint "$SEMANTIC"   --tokenizer-dir "$TOKENIZER"   --output "$FINAL_AUTH"   --batch-size 32
+python "$ROOT/scripts/eipm/n0/prepare_n0_v02_qsre_frozen_authority_cache_v3.py"   --mode final   --rows "$FINAL_RELATIONAL"   --relation-schema "$FINAL_SCHEMA_JSON"   --schema-cache "$FINAL_SCHEMA_CACHE"   --meta-config "$META"   --qualification-result "$AUTH_RESULT"   --semantic-config "$SEMANTIC_CONFIG"   --semantic-checkpoint "$SEMANTIC"   --tokenizer-dir "$TOKENIZER"   --output "$FINAL_AUTH"   --batch-size 32
 
 echo "===== P2: ORDERED OPERATOR AROUND FROZEN AUTHORITY ====="
 P2="$RUN_ROOT/p2"
