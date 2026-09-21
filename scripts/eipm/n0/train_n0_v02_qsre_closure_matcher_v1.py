@@ -383,7 +383,7 @@ def evaluate(
             batched_accuracy(
                 matcher,
                 query_states=aux_train_eval[view],
-                query_mask=aux_train_eval["mask"],
+                query_mask=aux_train_eval[f"mask{0 if view == 'view0' else 1}"],
                 schema_states=aux_train_schema[0],
                 schema_mask=aux_train_schema[1],
                 target=aux_train_eval["target"],
@@ -399,7 +399,7 @@ def evaluate(
             batched_accuracy(
                 matcher,
                 query_states=aux_holdout[view],
-                query_mask=aux_holdout["mask"],
+                query_mask=aux_holdout[f"mask{0 if view == 'view0' else 1}"],
                 schema_states=aux_full_schema[0],
                 schema_mask=aux_full_schema[1],
                 target=holdout_target,
@@ -699,6 +699,7 @@ def main() -> None:
     core_single_indices = core_single.nonzero(as_tuple=False).flatten()
     if core_single_indices.numel() == 0:
         raise SystemExit("no single-relation core Production rows for matcher training")
+    factor_indices = torch.arange(len(train_split["ids"]))
 
     core_count = len(production_schema["core_train_relation_keys"])
     if production_schema["relation_keys"][:core_count] != production_schema["core_train_relation_keys"]:
@@ -731,6 +732,12 @@ def main() -> None:
             batch_size=batch_size,
             seed=seed + 1000,
         )
+        factor_idx = cyclic_batch(
+            factor_indices,
+            step=step,
+            batch_size=batch_size,
+            seed=seed + 2000,
+        )
         view = step % 2
 
         aux_query_bank = train_q0 if view == 0 else train_q1
@@ -762,20 +769,26 @@ def main() -> None:
             target=core_target,
         )
 
+        factor_query = train_split["query_hidden_states"][
+            factor_idx, view
+        ].to(device, dtype=torch.float32)
+        factor_query_mask = train_split["query_token_mask"][
+            factor_idx, view
+        ].to(device).bool()
         factor_target = {
-            "role": train_split["role_target"][core_idx].to(device).long(),
-            "traversal": train_split["traversal_target"][core_idx].to(device).long(),
-            "direction": train_split["direction_target"][core_idx].to(device).long(),
-            "control": train_split["control_target"][core_idx].to(device).long(),
-            "modifiers": train_split["modifier_target"][core_idx].to(device).long(),
+            "role": train_split["role_target"][factor_idx].to(device).long(),
+            "traversal": train_split["traversal_target"][factor_idx].to(device).long(),
+            "direction": train_split["direction_target"][factor_idx].to(device).long(),
+            "control": train_split["control_target"][factor_idx].to(device).long(),
+            "modifiers": train_split["modifier_target"][factor_idx].to(device).long(),
         }
-        relational = train_split["control_target"][core_idx].to(device).eq(
+        relational = train_split["control_target"][factor_idx].to(device).eq(
             CONTROL_RELATIONAL
         )
         factor_total, factor_parts = factor_losses(
             matcher,
-            query=core_query,
-            query_mask=core_query_mask,
+            query=factor_query,
+            query_mask=factor_query_mask,
             factor_cache=factor_cache,
             targets=factor_target,
             relational_mask=relational,
@@ -828,13 +841,15 @@ def main() -> None:
                     "view1": seen_q1,
                     # Views can tokenize to different widths, so evaluate stores
                     # their own masks below.
-                    "mask": seen_mask0,
+                    "mask0": seen_mask0,
+                    "mask1": seen_mask1,
                     "target": seen_targets,
                 },
                 aux_holdout={
                     "view0": hold_q0,
                     "view1": hold_q1,
-                    "mask": hold_mask0,
+                    "mask0": hold_mask0,
+                    "mask1": hold_mask1,
                     "target": hold_targets,
                 },
                 aux_train_schema=(train_aux_states, train_aux_mask),
@@ -847,56 +862,7 @@ def main() -> None:
                 batch_size=batch_size,
                 device=device,
             )
-            # Correct masks for alternate views if token widths differ.
-            if seen_q1.size(2) != seen_q0.size(2) or not torch.equal(seen_mask1, seen_mask0):
-                metrics["auxiliary_seen_relation_top1"] = min(
-                    batched_accuracy(
-                        matcher,
-                        query_states=seen_q0,
-                        query_mask=seen_mask0,
-                        schema_states=train_aux_states,
-                        schema_mask=train_aux_mask,
-                        target=seen_targets,
-                        batch_size=batch_size,
-                        device=device,
-                    ),
-                    batched_accuracy(
-                        matcher,
-                        query_states=seen_q1,
-                        query_mask=seen_mask1,
-                        schema_states=train_aux_states,
-                        schema_mask=train_aux_mask,
-                        target=seen_targets,
-                        batch_size=batch_size,
-                        device=device,
-                    ),
-                )
-            if hold_q1.size(2) != hold_q0.size(2) or not torch.equal(hold_mask1, hold_mask0):
-                shifted = hold_targets + len(relation_train)
-                metrics["auxiliary_holdout_relation_top1"] = min(
-                    batched_accuracy(
-                        matcher,
-                        query_states=hold_q0,
-                        query_mask=hold_mask0,
-                        schema_states=full_aux_states,
-                        schema_mask=full_aux_mask,
-                        target=shifted,
-                        batch_size=batch_size,
-                        device=device,
-                    ),
-                    batched_accuracy(
-                        matcher,
-                        query_states=hold_q1,
-                        query_mask=hold_mask1,
-                        schema_states=full_aux_states,
-                        schema_mask=full_aux_mask,
-                        target=shifted,
-                        batch_size=batch_size,
-                        device=device,
-                    ),
-                )
-
-            passed = eligible(metrics, plan["eligibility"])
+                        passed = eligible(metrics, plan["eligibility"])
             record = {
                 "step": step,
                 "train_loss": float(loss.detach().item()),
