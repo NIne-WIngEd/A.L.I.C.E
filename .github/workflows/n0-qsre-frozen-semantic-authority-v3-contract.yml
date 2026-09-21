@@ -227,6 +227,29 @@ jobs:
           print("PASS_N0_FINAL_FULL_SCALE_CAPABILITY_CONTRACT")
           PY
 
+      - name: Prove full-scale base parent uses selected repaired graph
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          package=json.load(open("configs/eipm/n0/n0_v02_final_full_scale_capability_package_v1.json"))
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh").read_text()
+          final=Path("scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py").read_text()
+          graph=package["preselected_full_scale_inputs"]["selected_repaired_evidence_graph"]
+          expected="3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f"
+
+          assert graph["sha256"]==expected
+          assert graph["production_promotion_claim"] is False
+          assert graph["package_role"]=="preselected full-scale base evidence parent"
+          assert "relation-endpoint-repair-v0.2/training/step-00000200/evidence_graph_dual_endpoint.safetensors" in runner
+          assert 'GRAPH_EXPECTED_SHA="'+expected+'"' in runner
+          assert "relation-repair-v0.1/step-00000080/evidence_graph_dual_endpoint.safetensors" not in runner
+          assert 'EXPECTED_EVIDENCE_GRAPH_SHA256 = "'+expected+'"' in final
+          assert '"evidence_graph_sha256": EXPECTED_EVIDENCE_GRAPH_SHA256' in final
+          print("PASS_N0_FINAL_FULL_SCALE_REPAIRED_GRAPH_PARENT")
+          PY
+
       - name: Prove downstream Production compute and gates are unchanged
         run: |
           python - <<'PY'
