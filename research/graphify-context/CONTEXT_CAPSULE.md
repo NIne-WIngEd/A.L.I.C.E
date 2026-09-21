@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-frozen-authority-v3-prelaunch-topology-20260921-015
-- Question: Pre-launch exact-source audit of alice-eipm-v1-n0-frozen-semantic-authority-v3. Trace the complete governed N0 closure path from preserved job575966 P2S-v2 failure through P2A zero-gradient frozen semantic authority qualification, production/final authority cache materialization, Production P2 ordered continuous operator, P3 Binder v2, P4, and original frozen native final validation. Verify there is no bypass around P2A, no trainable relation/factor semantic authority reintroduced, no open-schema or final-only semantic leakage into Production TRAIN, no candidate-normalization leakage from held-out relations, no factor/authority lineage drop through P2/P3/P4/final, no reintroduced exact relation sparsity before Binder v2, no hidden fixed schema/factor cardinality ceiling, no rebuild or mutation of the original frozen final validation, and no automatic rerun/search/gate drift. Identify any concrete code path, config, runner, test, or lineage defect that could invalidate the full-scale N0 package.
+- Request: n0-final-full-scale-frozen-authority-exact-head-20260921-016
+- Question: Final pre-launch exact-source audit of alice-eipm-v1-n0-frozen-semantic-authority-v3 at exact qualified HEAD 65888330f9771884639faf50e40392d60605abf0. Trace the complete full-scale N0 closure package from preserved job575966 P2S-v2 failure through P2A zero-gradient FOUR-surface frozen semantic authority (joint prompt-candidate preference, semantic projection, trained semantic-to-rationale principle alignment/rationale projection, parameter-free token evidence), preserved Production/final runtime schema-cache lineage, core-only Production TRAIN authority candidates and subset-before-normalization, ordered continuous Production P2, Binder v2 P3, P4, and original frozen native final validation. Verify no bypass around P2A; no trainable relation/factor semantic identity; no missing principle-alignment component in caches/operator; no open-schema/final-only leakage into TRAIN or its normalization; no authority/factor/schema lineage drop through P2/P3/P4/final; no early exact relation sparsity; no hidden relation/factor/hop parameter ceiling; no reduced/pilot substitution for the full N0 semantic/structured/evidence/fusion/latent fabric; no final-validation rebuild or threshold mutation; and no automatic rerun/search. Also compare the maximal older ordered-evidence-v3 and P2-failure-localization frontiers and identify any unique causal mechanism or failure lesson not preserved by the final package. Report any concrete source defect that should block the owner Magnolia launch.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -18,49 +18,55 @@
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-n0-frozen-semantic-authority-v3 @ 7564c9fa0716929e80a2b6591edc066ffbf415f3 — state(n0): remove obsolete matcher calibration from v3 plan
+- alice-eipm-v1-n0-frozen-semantic-authority-v3 @ 65888330f9771884639faf50e40392d60605abf0 — fix(n0): pass preserved schema caches through full-scale runner
 - alice-eipm-v1-qsre-production-p2-ordered-evidence-v3 @ 342bdbbe8c5dfbe74ff3ab8210a30b1a456aa482 — state(n0): ratify P2 v3 static pass and authorize CPU qualification
 - alice-eipm-v1-qsre-production-p2-failure-localization @ c9b1d35823cb89245625bbc6afb05b0ef5fb69fb — fix(n0): emit strict JSON from P2 localization
 
 ## Source pointers
 
-- [184] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md — N0 job 575966 — frozen semantic authority v3
-- [158] alice-eipm-v1-n0-frozen-semantic-authority-v3:configs/eipm/n0/n0_v02_qsre_frozen_semantic_authority_plan_v3.json — n0_v02_qsre_frozen_semantic_authority_plan_v3.json
-- [152] alice-eipm-v1-n0-frozen-semantic-authority-v3:.github/workflows/n0-qsre-frozen-semantic-authority-v3-contract.yml — n0-qsre-frozen-semantic-authority-v3-contract.yml
-- [139] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260921_N0_JOB575966_FROZEN_AUTHORITY_V3.jsonl — FBM_TRACE_20260921_N0_JOB575966_FROZEN_AUTHORITY_V3.jsonl
-- [132] alice-eipm-v1-n0-frozen-semantic-authority-v3:configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json — n0_v02_qsre_n0_frozen_authority_training_plan_v2.json
-- [126] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md — N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization
+- [188] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md — N0 job 575966 — frozen semantic authority v3
+- [180] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
+  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
+- [162] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md — N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization
   - status:  final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged
-- [119] alice-eipm-v1-n0-closure-pass:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [119] alice-eipm-v1-n0-closure-semantic-v2:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [119] alice-eipm-v1-n0-frozen-semantic-authority-v3:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [119] alice-eipm-v1-qsre-production-core-v1:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [119] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [119] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [159] alice-context:docs/chat-context/2026-09-21/sol/N0_FINAL_PRODUCTION_V3_QUALIFIED.md — N0 final Production v3 qualified for one owner launch
+- [145] alice-context:docs/chat-context/2026-09-21/sol/N0_JOB575958_CLOSURE_PASS_READY.md — N0 job 575958 closure-pass — exact-head verified and ready for one Magnolia launch
+  - status:  closure package implemented, exact-head static/CPU qualification passed, Graphify exact-source topology verified, Fable failure/success seeds recorded, one owner Magnolia launch may proceed
+- [144] alice-context:docs/chat-context/2026-09-21/sol/N0_JOB575962_SEMANTIC_V2_READY.md — N0 job 575962 semantic-v2 closure — qualified for one owner launch
+  - status:  valid P2S model failure preserved; semantic-v2 repair implemented; exact-head static/CPU qualification passed; exact-source Graphify verification passed; Fable trace updated; one owner Magnolia launch may proceed
+- [136] fable-builder-model:docs/fable-builder/traces/2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl — 2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl
+- [135] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md — N0 Relation-Semantic Grounding Repair Handoff
+  - status:  missing-evidence failure localized to relation-semantic endpoint grounding; one bounded repair is CI-ready; no frozen-challenge rerun, threshold change, promotion, scaling, or N0 completion authorized
+- [132] alice-eipm-v1-n0-frozen-semantic-authority-v3:.github/workflows/n0-qsre-frozen-semantic-authority-v3-contract.yml — n0-qsre-frozen-semantic-authority-v3-contract.yml
+- [130] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
+  - status:  one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized
+- [129] alice-context:docs/chat-context/2026-09-09/sol/MC10D_V102_PREWORKER_FAILURE_V103_FINAL_MAGNOLIA_ATTEMPT.md — MC10D Magnolia v1.0.2 pre-worker failure — v1.0.3 final attempt ready
+- [129] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_ROLE_RESIDUAL_HANDOFF.md — N0 Relation-Semantic Role Residual Repair Handoff
+  - status:  relation-semantic grounding v0.1 failed validly; failure localized to shared read-path entanglement; isolated zero-init semantic-role residual is CI-ready for one P100 run
 
 ## Graphify navigation hints
 
 - run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh -> scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh:L1
 - run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh script -> scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh:L1
-- test_binder_v2_operator_continuous_state_is_not_support_authority() -> tests/eipm/test_n0_qsre_production_binder_v2.py:L152
+- Reuse the trained semantic-to-rationale alignment surface. The semantic side… -> scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py:L103
 - AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
+- principle_alignment_scores() -> scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py:L93
+- ConstitutionalSourceSnapshot -> src/alice_conversation/constitutional_prompt.py:L50
 - Small backend boundary around one operating-system DNS call. -> src/alice_information/live_http.py:L98
 - audit() -> scripts/audit_capability_barriers.py:L521
 - authority() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L87
 - test_automatic_retry_is_rejected() -> tests/phase3/test_conversation_orchestration_policy.py:L85
 - test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
 - QSREProductionBinderV2 -> src/alice_personality/n0/qsre_production_binder_v2.py:L16
+- blocked_getaddrinfo() -> tests/phase4/test_information_live_http.py:L194
 - test_fetch_provider_cannot_bypass_response_byte_budget() -> tests/phase4/test_information_research_orchestration.py:L919
 - CachedStructuredDataset -> scripts/eipm/n0/train_n0_v02_structured_state_pilot.py:L259
-- candidate() -> tests/phase5/test_memory_m2_adjudication_contracts.py:L154
-- test_dynamic_relation_cardinality_has_no_parameter_axis() -> tests/eipm/test_n0_qsre_production_core_v1.py:L157
-- test_memory_capability_ceiling.py -> tests/governance/test_memory_capability_ceiling.py:L1
-- train_n0_v02_qsre_closure_matcher_v2.py -> scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py:L1
+- Normalize only across the candidates that are active in this call. Caches store… -> src/alice_personality/n0/qsre_semantic_authority.py:L16
 
 ## External/private routing
 
-- Recommended: False
-- Reason: None
+- Recommended: True
+- Reason: host-specific operational history may contain newer failure lessons than public receipts
 
 ## Trust contract
 

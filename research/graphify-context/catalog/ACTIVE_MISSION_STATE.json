@@ -81,13 +81,13 @@
     "maximal_heads": [
       {
         "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-        "head": "7564c9fa0716929e80a2b6591edc066ffbf415f3",
-        "head_committed_at": "2026-09-21T02:09:04-05:00",
-        "head_message": "state(n0): remove obsolete matcher calibration from v3 plan",
-        "ahead": 591,
+        "head": "65888330f9771884639faf50e40392d60605abf0",
+        "head_committed_at": "2026-09-21T02:29:33-05:00",
+        "head_message": "fix(n0): pass preserved schema caches through full-scale runner",
+        "ahead": 615,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 400,
+        "changed_file_count_vs_source_merge_base": 402,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -192,6 +192,7 @@
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
           "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
           "configs/eipm/n0/n0_v02_dual_view_training_decision_v0_1.json",
+          "configs/eipm/n0/n0_v02_final_full_scale_capability_package_v1.json",
           "configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json",
           "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
           "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v1.json",
@@ -244,6 +245,7 @@
           "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
           "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
           "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+          "docs/research/eipm-n0-final-full-scale-capability-package-v1.md",
           "docs/research/eipm-n0-job-575958-closure-pass-v1.md",
           "docs/research/eipm-n0-job-575962-semantic-matcher-v2.md",
           "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md",
@@ -286,9 +288,7 @@
           "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
           "scripts/eipm/n0/build_n0_v02_qsre_operator_reality_corpus_v0_1.py",
           "scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py",
-          "scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_1.py",
-          "scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_2.py",
-          "scripts/eipm/n0/build_n0_v02_qsre_t2_operator_challenge_v0_2.py"
+          "scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_1.py"
         ],
         "authority": "unmerged-experiment-pointer"
       },
@@ -722,13 +722,13 @@
     "all_ahead_candidates": [
       {
         "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-        "head": "7564c9fa0716929e80a2b6591edc066ffbf415f3",
-        "head_committed_at": "2026-09-21T02:09:04-05:00",
-        "head_message": "state(n0): remove obsolete matcher calibration from v3 plan",
-        "ahead": 591,
+        "head": "65888330f9771884639faf50e40392d60605abf0",
+        "head_committed_at": "2026-09-21T02:29:33-05:00",
+        "head_message": "fix(n0): pass preserved schema caches through full-scale runner",
+        "ahead": 615,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 400,
+        "changed_file_count_vs_source_merge_base": 402,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -833,6 +833,7 @@
           "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
           "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
           "configs/eipm/n0/n0_v02_dual_view_training_decision_v0_1.json",
+          "configs/eipm/n0/n0_v02_final_full_scale_capability_package_v1.json",
           "configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json",
           "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
           "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v1.json",
@@ -885,6 +886,7 @@
           "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
           "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
           "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+          "docs/research/eipm-n0-final-full-scale-capability-package-v1.md",
           "docs/research/eipm-n0-job-575958-closure-pass-v1.md",
           "docs/research/eipm-n0-job-575962-semantic-matcher-v2.md",
           "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md",
@@ -927,9 +929,7 @@
           "scripts/eipm/n0/build_n0_v02_missing_evidence_fresh_localization_v0_1.py",
           "scripts/eipm/n0/build_n0_v02_qsre_operator_reality_corpus_v0_1.py",
           "scripts/eipm/n0/build_n0_v02_qsre_production_curriculum_v1.py",
-          "scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_1.py",
-          "scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_2.py",
-          "scripts/eipm/n0/build_n0_v02_qsre_t2_operator_challenge_v0_2.py"
+          "scripts/eipm/n0/build_n0_v02_qsre_t1_curriculum_v0_1.py"
         ],
         "authority": "unmerged-experiment-pointer"
       },
@@ -4165,7 +4165,7 @@
   },
   "continuity_freshness": {
     "stale_relative_to_unmerged_experiment_frontier": true,
-    "newest_experiment_frontier_time": "2026-09-21T02:09:04-05:00",
+    "newest_experiment_frontier_time": "2026-09-21T02:29:33-05:00",
     "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
     "context_branch_head_time": "2026-09-21T01:07:47-05:00"
   },

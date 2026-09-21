@@ -125,14 +125,14 @@
     },
     {
       "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-      "head": "7564c9fa0716929e80a2b6591edc066ffbf415f3",
-      "head_committed_at": "2026-09-21T02:09:04-05:00",
-      "head_message": "state(n0): remove obsolete matcher calibration from v3 plan",
+      "head": "65888330f9771884639faf50e40392d60605abf0",
+      "head_committed_at": "2026-09-21T02:29:33-05:00",
+      "head_message": "fix(n0): pass preserved schema caches through full-scale runner",
       "status": "ahead",
-      "ahead": 591,
+      "ahead": 615,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 400,
+      "changed_file_count_vs_source_merge_base": 402,
       "knowledge_surface": true
     },
     {
