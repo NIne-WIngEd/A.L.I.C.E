@@ -206,6 +206,8 @@ class N0FullEnvelopeStackV1(nn.Module):
         relation_schema: DynamicRelationSchema,
         factor_schemas: Mapping[str, DynamicSemanticSchema],
         factor_opcodes: Mapping[str, list[str]],
+        relation_candidate_mask: Tensor | None = None,
+        factor_candidate_masks: Mapping[str, Tensor] | None = None,
         field_hidden_states: Tensor,
         field_token_mask: Tensor,
         field_valid_mask: Tensor,
@@ -244,6 +246,8 @@ class N0FullEnvelopeStackV1(nn.Module):
             relation_schema=relation_schema,
             factor_schemas=factor_schemas,
             max_steps=max_reasoning_steps,
+            relation_candidate_mask=relation_candidate_mask,
+            factor_candidate_masks=factor_candidate_masks,
         )
         adapted = self.operator_adapter(
             semantic_operator=semantic["operator"],
@@ -502,6 +506,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "semantic_backbone_gradient_must_remain_connected": True,
             "continuous_graph_before_exact_binder_sparsity": True,
             "runtime_relation_ceiling": None,
+            "per_example_candidate_subset_supported": True,
             "runtime_factor_ceiling": None,
             "runtime_field_ceiling": None,
             "runtime_edge_ceiling": None,
