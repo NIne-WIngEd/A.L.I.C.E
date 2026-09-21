@@ -9,6 +9,11 @@ P1_EXPECTED_SHA="91f2c78dcc35967064189af4a7110cdee83e5652fb037d3d88f58500ac3aaab
 
 cd "$ROOT"
 HEAD="$(git rev-parse HEAD)"
+
+echo "STOP: operator-v2 GPU recovery was revoked by zero-gradient localization job 575957." >&2
+echo "Use the ordered-evidence P2 v3 qualification path instead." >&2
+exit 89
+
 if [[ "$HEAD" != "$EXPECTED" ]]; then
   echo "STOP: operator-v2 recovery source revision drift HEAD=$HEAD expected=$EXPECTED" >&2
   exit 90
