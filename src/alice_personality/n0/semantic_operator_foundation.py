@@ -339,7 +339,16 @@ class SchemaConditionedSemanticOperator(nn.Module):
         query_hidden_states: Tensor,
         query_token_mask: Tensor,
     ) -> Tensor:
-        weight = query_token_mask[:, None, :, None].to(query_hidden_states.dtype)
+        weight = (
+            query_token_mask[:, None, :, None]
+            .expand(
+                query_hidden_states.size(0),
+                query_hidden_states.size(1),
+                query_hidden_states.size(2),
+                1,
+            )
+            .to(query_hidden_states.dtype)
+        )
         pooled = (query_hidden_states * weight).sum(dim=(1, 2))
         denom = weight.sum(dim=(1, 2)).clamp_min(1.0)
         pooled = pooled / denom
