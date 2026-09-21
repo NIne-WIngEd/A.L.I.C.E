@@ -312,3 +312,25 @@ def test_semantic_operator_objective_is_behavioral_and_finite() -> None:
     assert factor_logits["role"].grad is not None
     assert step_factor_logits["direction"].grad is not None
     assert torch.isfinite(result["step_factor_semantics"])
+
+
+def test_latent_slot_seed_coordinates_are_count_stable() -> None:
+    small = DynamicCompetitiveLatentPoolV3._slot_coordinates(
+        5,
+        device=torch.device("cpu"),
+        dtype=torch.float32,
+    )
+    large = DynamicCompetitiveLatentPoolV3._slot_coordinates(
+        17,
+        device=torch.device("cpu"),
+        dtype=torch.float32,
+    )
+    assert torch.equal(small, large[:5])
+    model = DynamicCompetitiveLatentPoolV3(
+        DynamicLatentPoolConfig(
+            semantic_dim=24,
+            model_dim=24,
+            dropout=0.0,
+        )
+    )
+    assert model.parameter_report()["slot_seed_coordinates_count_stable"] is True
