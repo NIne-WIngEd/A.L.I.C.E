@@ -177,6 +177,8 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
 
         origin_focus = focus_field_weight.clamp(min=0.0, max=1.0)
         frontier = origin_focus
+        path_semantic_source = torch.zeros_like(origin_focus)
+        path_semantic_target = torch.zeros_like(origin_focus)
         local_probability = operator.traversal_distribution[:, TRAVERSAL_LOCAL]
         path_probability = operator.traversal_distribution[:, TRAVERSAL_PATH]
         aggregate_probability = operator.traversal_distribution[:, TRAVERSAL_AGGREGATE]
@@ -247,6 +249,52 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
                 + bidir_forward
                 + bidir_reverse
             ).clamp(max=1.0)
+
+            # Track semantic SOURCE/TARGET support for the latest executed
+            # relation step. This is distinct from traversal orientation:
+            # reverse traversal reaches a relation's semantic SOURCE. The
+            # continuous recurrence preserves the previous semantic endpoint
+            # state when the current operator slot terminates instead of
+            # executing a relation.
+            step_semantic_source = torch.zeros_like(origin_focus)
+            step_semantic_target = torch.zeros_like(origin_focus)
+            step_semantic_source.scatter_add_(
+                1,
+                source_index,
+                path_gate,
+            )
+            step_semantic_target.scatter_add_(
+                1,
+                target_index,
+                path_gate,
+            )
+            symmetric_path_gate = (
+                path_gate
+                * edge_symmetric_mask.to(path_gate.dtype)
+            )
+            step_semantic_source.scatter_add_(
+                1,
+                target_index,
+                symmetric_path_gate,
+            )
+            step_semantic_target.scatter_add_(
+                1,
+                source_index,
+                symmetric_path_gate,
+            )
+            step_semantic_source = step_semantic_source.clamp(0.0, 1.0)
+            step_semantic_target = step_semantic_target.clamp(0.0, 1.0)
+            residual_previous = (
+                1.0 - step_mass[:, None]
+            ).clamp(0.0, 1.0)
+            path_semantic_source = (
+                step_semantic_source
+                + residual_previous * path_semantic_source
+            ).clamp(0.0, 1.0)
+            path_semantic_target = (
+                step_semantic_target
+                + residual_previous * path_semantic_target
+            ).clamp(0.0, 1.0)
 
             local_forward = common * source_origin * effective_forward
             local_reverse = common * target_origin * effective_reverse
@@ -458,15 +506,13 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         path_origin = origin_focus
         path_reached = frontier.clamp(0.0, 1.0)
         path_union = (path_origin + path_reached).clamp(max=1.0)
-        forward = operator.direction_distribution[:, DIRECTION_FORWARD][:, None]
-        reverse = operator.direction_distribution[:, DIRECTION_REVERSE][:, None]
-        bidir = operator.direction_distribution[:, DIRECTION_BIDIRECTIONAL][:, None]
-        semantic_source = (forward * path_origin + reverse * path_reached + bidir * path_union).clamp(max=1.0)
-        semantic_target = (forward * path_reached + reverse * path_origin + bidir * path_union).clamp(max=1.0)
+        semantic_union = (
+            path_semantic_source + path_semantic_target
+        ).clamp(max=1.0)
         path_role = (
-            source_role * semantic_source
-            + target_role * semantic_target
-            + symmetric_role * path_union
+            source_role * path_semantic_source
+            + target_role * path_semantic_target
+            + symmetric_role * semantic_union
             + none_role * path_union
         ).clamp(0.0, 1.0)
         role_weight = (
@@ -518,6 +564,8 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "node_state": node,
             "last_edge_state": last_edge_state,
             "path_frontier": frontier,
+            "path_semantic_source_weight": path_semantic_source,
+            "path_semantic_target_weight": path_semantic_target,
             "source_support_weight": source_support,
             "target_support_weight": target_support,
             "structural_role_weight": role_weight,
@@ -548,6 +596,8 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "structural_factor_probabilities": True,
             "continuous_traversal_mixture": True,
             "step_conditioned_direction": True,
+            "semantic_endpoint_tracking_is_step_conditioned": True,
+            "global_direction_not_used_for_final_path_role": True,
             "step_conditioned_modifiers": True,
             "local_path_aggregate_distinct": True,
             "hard_traversal_threshold": False,
