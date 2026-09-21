@@ -52,13 +52,6 @@
     "evidence_adapter": {
       "path": "$ALICE_N0_WORKDIR/evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080/evidence_view_adapter.safetensors",
       "sha256": "50eeeea3dfff5b6bddaa8da667b6b6c2f917dc668b1acd0410923822ae5ad2df"
-    },
-    "selected_repaired_evidence_graph": {
-      "path": "$ALICE_N0_WORKDIR/relation-endpoint-repair-v0.2/training/step-00000200/evidence_graph_dual_endpoint.safetensors",
-      "sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
-      "selection_evidence": "downstream causal arbitration classified this checkpoint as IMPROVEMENT versus the older canonical graph with no frozen metric degradation; later N0 relation/query experiments retained it as the immutable parent graph",
-      "production_promotion_claim": false,
-      "package_role": "preselected full-scale base evidence parent"
     }
   },
   "architecture": {
@@ -168,5 +161,15 @@
     "binder": "src/alice_personality/n0/qsre_production_binder_v2.py",
     "runner": "scripts/eipm/n0/run_n0_v02_qsre_n0_frozen_semantic_authority_v3.sh",
     "magnolia": "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_n0_frozen_semantic_authority_v3.sbatch"
+  },
+  "preselected_full_scale_inputs": {
+    "selected_repaired_evidence_graph": {
+      "path": "$ALICE_N0_WORKDIR/relation-endpoint-repair-v0.2/training/step-00000200/evidence_graph_dual_endpoint.safetensors",
+      "sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+      "selection_evidence": "downstream causal arbitration classified this checkpoint as IMPROVEMENT versus the older canonical graph with no frozen metric degradation; later N0 relation/query experiments retained it as the immutable parent graph",
+      "production_promotion_claim": false,
+      "package_role": "preselected full-scale base evidence parent"
+    },
+    "interpretation": "This checkpoint is not retrospectively relabeled as production-promoted. It is preselected here as the stronger frozen base evidence parent for the new full-scale N0 closure, based on prior independent full-stack arbitration and subsequent N0 parent usage."
   }
 }
