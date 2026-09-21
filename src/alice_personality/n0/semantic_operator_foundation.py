@@ -168,6 +168,70 @@ class SemanticOperatorState:
             raise ValueError("query_coverage shape drift")
         if self.uncertainty.shape != (batch,):
             raise ValueError("uncertainty shape drift")
+        normalized_distributions = (
+            ("relation_distribution", self.relation_distribution),
+            ("event_distribution", self.event_distribution),
+        )
+        for name, tensor in normalized_distributions:
+            if bool(((tensor < -1.0e-6) | (tensor > 1.0 + 1.0e-6)).any()):
+                raise ValueError(f"{name} must stay inside [0,1]")
+            total = tensor.sum(dim=-1)
+            if not torch.allclose(
+                total,
+                torch.ones_like(total),
+                atol=1.0e-5,
+                rtol=1.0e-5,
+            ):
+                raise ValueError(f"{name} must sum to one on its candidate axis")
+
+        for name, tensor in (
+            ("relation_step_mass", self.relation_step_mass),
+            ("stop_probability", self.stop_probability),
+            ("unknown_probability", self.unknown_probability),
+            ("truncation_probability", self.truncation_probability),
+            ("applicability", self.applicability),
+            ("uncertainty", self.uncertainty),
+            ("query_coverage", self.query_coverage),
+        ):
+            if bool(((tensor < -1.0e-6) | (tensor > 1.0 + 1.0e-6)).any()):
+                raise ValueError(f"{name} must stay inside [0,1]")
+
+        event_mass = (
+            self.relation_step_mass
+            + self.stop_probability
+            + self.unknown_probability
+        )
+        expected_mass = torch.cat(
+            [
+                torch.ones(
+                    batch,
+                    1,
+                    device=event_mass.device,
+                    dtype=event_mass.dtype,
+                ),
+                self.relation_step_mass[:, :-1],
+            ],
+            dim=1,
+        )
+        if not torch.allclose(
+            event_mass,
+            expected_mass,
+            atol=1.0e-5,
+            rtol=1.0e-5,
+        ):
+            raise ValueError(
+                "relation/stop/unknown masses violate recurrent survival conservation"
+            )
+        if not torch.allclose(
+            self.truncation_probability,
+            self.relation_step_mass[:, -1],
+            atol=1.0e-5,
+            rtol=1.0e-5,
+        ):
+            raise ValueError(
+                "truncation_probability must equal residual survival after final slot"
+            )
+
         if set(self.factor_distributions) != set(self.step_factor_distributions):
             raise ValueError("global/step factor distribution names must match")
         for name, value in self.factor_distributions.items():
@@ -178,6 +242,25 @@ class SemanticOperatorState:
                 raise ValueError(
                     f"step factor distribution {name!r} must be [B,S,C]"
                 )
+            for label, probability in (
+                (f"factor distribution {name!r}", value),
+                (f"step factor distribution {name!r}", step_value),
+            ):
+                if bool(
+                    (
+                        (probability < -1.0e-6)
+                        | (probability > 1.0 + 1.0e-6)
+                    ).any()
+                ):
+                    raise ValueError(f"{label} must stay inside [0,1]")
+                total = probability.sum(dim=-1)
+                if not torch.allclose(
+                    total,
+                    torch.ones_like(total),
+                    atol=1.0e-5,
+                    rtol=1.0e-5,
+                ):
+                    raise ValueError(f"{label} must sum to one")
         return {"batch": batch, "steps": steps, "relations": relations}
 
 
@@ -916,6 +999,8 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "continuous_relation_hypotheses": True,
             "runtime_step_truncation_exposed": True,
             "silent_program_truncation_forbidden": True,
+            "operator_probability_contract_fail_closed": True,
+            "recurrent_survival_mass_conservation_checked": True,
             "exact_structural_sparsity": False,
             "semantic_backbone_gradient_can_flow": True,
             "factor_scorer_shared_across_schema_banks": True,
