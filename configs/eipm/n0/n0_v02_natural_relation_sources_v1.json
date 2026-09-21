@@ -46,8 +46,9 @@
         "lexical_and_entity_diversity",
         "sealed_natural_final_relation_family_validation"
       ],
-      "direct_training_authorized_after_materialization_audit": true,
-      "private_identity_data": false
+      "private_identity_data": false,
+      "training_eligible_after_materialization_audit": true,
+      "training_authority_requires_full_plan_prerequisites": true
     }
   ],
   "not_yet_activated": [
