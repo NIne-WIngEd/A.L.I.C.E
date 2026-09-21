@@ -126,6 +126,48 @@ def test_v2_schema_permutation_equivariance() -> None:
     )
 
 
+def test_v2_p1_schema_relation_state_is_not_relation_match_authority() -> None:
+    torch.manual_seed(41)
+    model = QSREProductionOperatorInducerV2(cfg()).eval()
+    q, qmask = query(batch=1, seed=42)
+    s = schema(4, seed=43)
+    token, summary = encoded_schema_inputs(s)
+    a = model(
+        query_hidden_states=q,
+        query_token_mask=qmask,
+        schema=s,
+        schema_token_state=token,
+        schema_relation_state=summary,
+        max_steps=2,
+    )["operator"]
+    b = model(
+        query_hidden_states=q,
+        query_token_mask=qmask,
+        schema=s,
+        schema_token_state=token,
+        schema_relation_state=torch.randn_like(summary) * 1000.0,
+        max_steps=2,
+    )["operator"]
+    assert torch.allclose(
+        a.relation_distribution,
+        b.relation_distribution,
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.allclose(
+        a.relation_step_mass,
+        b.relation_step_mass,
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.allclose(
+        a.continuous_state,
+        b.continuous_state,
+        atol=1e-6,
+        rtol=1e-6,
+    )
+
+
 def test_v2_factor_slots_do_not_depend_on_relation_cardinality() -> None:
     torch.manual_seed(13)
     model = QSREProductionOperatorInducerV2(cfg()).eval()
@@ -231,6 +273,7 @@ def test_v2_parameter_report_has_no_schema_or_hop_parameter_axis() -> None:
     assert report["runtime_dynamic_relation_schema"] is True
     assert report["shared_query_schema_metric"] is True
     assert report["relation_selection_decoupled_from_stop_unknown"] is True
+    assert report["p1_schema_relation_state_is_interface_only_for_operator"] is True
     assert report["factor_specific_query_slots"] is True
     assert report["relation_count_ceiling"] is None
     assert report["runtime_step_count_ceiling"] is None
