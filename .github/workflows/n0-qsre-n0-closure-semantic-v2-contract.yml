@@ -1,0 +1,225 @@
+name: n0-qsre-n0-closure-semantic-v2-contract
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-n0-closure-semantic-v2
+    paths:
+      - "src/alice_personality/n0/qsre_schema_matcher.py"
+      - "src/alice_personality/n0/qsre_production_operator_v3.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py"
+      - "scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py"
+      - "scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py"
+      - "scripts/eipm/n0/run_n0_v02_qsre_n0_closure_semantic_v2.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_n0_closure_semantic_v2.sbatch"
+      - "configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v2.json"
+      - "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v2.json"
+      - "docs/research/eipm-n0-job-575962-semantic-matcher-v2.md"
+      - "tests/eipm/test_n0_qsre_schema_matcher.py"
+      - "tests/eipm/test_n0_qsre_production_operator_v3.py"
+      - ".github/workflows/n0-qsre-n0-closure-semantic-v2-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src:scripts/eipm/n0
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CPU qualification dependencies
+        run: python -m pip install -q torch pytest safetensors
+
+      - name: Compile semantic-v2 closure stack
+        run: |
+          python -m py_compile             src/alice_personality/n0/qsre_schema_matcher.py             src/alice_personality/n0/qsre_production_operator_v3.py             scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py             scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py             scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py             scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py             scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_n0_closure_semantic_v2.sh
+          bash -n scripts/eipm/n0/magnolia_p100_n0_v02_qsre_n0_closure_semantic_v2.sbatch
+          python -m json.tool configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v2.json >/dev/null
+          python -m json.tool configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v2.json >/dev/null
+
+      - name: Run matcher and operator mechanics
+        run: |
+          pytest -q             tests/eipm/test_n0_qsre_schema_matcher.py             tests/eipm/test_n0_qsre_production_operator_v3.py             tests/eipm/test_n0_qsre_production_training_v3.py             tests/eipm/test_n0_qsre_production_binder_v2.py             tests/eipm/test_n0_qsre_production_core_v1.py             tests/eipm/test_n0_qsre_production_training_utils.py
+
+      - name: Prove job 575962 is the causal source and not a tuning excuse
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          old=json.load(open("configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v1.json"))
+          new=json.load(open("configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v2.json"))
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_n0_closure_semantic_v2.sh").read_text()
+          doc=Path("docs/research/eipm-n0-job-575962-semantic-matcher-v2.md").read_text()
+
+          assert new["source_failure"]["job"]==575962
+          assert new["source_failure"]["status"]=="FAIL_QSRE_CLOSURE_SCHEMA_MATCHER"
+          assert new["source_failure"]["p2_authorized"] is False
+          assert new["source_failure"]["full_budget_steps"]==1000
+          assert old["training"]==new["training"]
+          assert old["eligibility"]==new["eligibility"]
+          assert new["governance"]["max_gpu_runs"]==1
+          assert new["governance"]["automatic_rerun"] is False
+          assert new["governance"]["learning_rate_search"] is False
+          assert new["governance"]["step_search"] is False
+          assert new["governance"]["width_search"] is False
+          assert "575962" in runner
+          assert "FAIL_QSRE_CLOSURE_SCHEMA_MATCHER" in runner
+          assert "seen and unseen" in doc.lower()
+          print("PASS_N0_575962_CAUSAL_AUTHORITY")
+          PY
+
+      - name: Prove auxiliary schema encoding matches Production runtime grammar
+        run: |
+          python - <<'PY'
+          import json
+          from train_n0_v02_qsre_closure_matcher_v2 import (
+              auxiliary_relation_schema_text,
+              factor_schema_text,
+          )
+          from qsre_production_runtime import relation_schema_text
+
+          meta=json.load(open("configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v2.json"))
+          assert meta["schema_text_contract"]["production_runtime_encoding_aligned"] is True
+          assert meta["schema_text_contract"]["relation_key_in_semantic_text"] is False
+          for row in meta["relation_train"]+meta["relation_holdout"]:
+              actual=auxiliary_relation_schema_text(row)
+              expected=relation_schema_text({
+                  "descriptions":[row["description"]],
+                  "source_argument":row["source_argument"],
+                  "target_argument":row["target_argument"],
+                  "symmetric":row["symmetric"],
+              })
+              assert actual==expected
+              assert row["key"] not in actual
+          for category in ("role","traversal","direction","control"):
+              for row in meta["factors"][category]:
+                  assert row["key"] not in factor_schema_text(category,row["description"])
+          print("PASS_N0_SEMANTIC_V2_ENCODING_ALIGNMENT")
+          PY
+
+      - name: Prove factor train phrases are gradient-bearing and heldout phrases are not
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from train_n0_v02_qsre_closure_matcher_v2 import (
+              factor_holdout_examples,
+              factor_train_examples,
+          )
+
+          meta=json.load(open("configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v2.json"))
+          train=factor_train_examples(meta)
+          heldout=factor_holdout_examples(meta)
+          for category in train:
+              train_text=set(train[category][0])
+              heldout_text=set(heldout[category][0])
+              assert train_text
+              assert heldout_text
+              assert train_text.isdisjoint(heldout_text)
+          script=Path("scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py").read_text()
+          assert "factor_train_queries = encode_factor_queries" in script
+          assert "factor_instruction_losses(" in script
+          assert "factor_train_phrases_used_in_gradient" in script
+          print("PASS_N0_SEMANTIC_V2_FACTOR_DOMAIN_ALIGNMENT")
+          PY
+
+      - name: Prove actual Production and final holdouts remain isolated
+        run: |
+          python - <<'PY'
+          import json
+
+          meta=json.load(open("configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v2.json"))
+          production=json.load(open("configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json"))
+          final_contract=json.load(open("configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json"))
+
+          train={row["key"] for row in meta["relation_train"]}
+          heldout={row["key"] for row in meta["relation_holdout"]}
+          forbidden=set(meta["forbidden_semantics"])
+          prod_open=set(production["open_schema_dev_relation_keys"])
+          final_only=set(final_contract["corpus"]["final_only_relation_keys"])
+          assert train.isdisjoint(heldout)
+          assert forbidden.isdisjoint(train)
+          assert forbidden.isdisjoint(heldout)
+          assert prod_open <= forbidden
+          assert final_only <= forbidden
+          assert meta["governance"]["production_open_schema_descriptions_in_gradient"] is False
+          assert meta["governance"]["final_validation_relation_descriptions_in_gradient"] is False
+          assert meta["governance"]["auxiliary_holdout_relation_descriptions_in_gradient"] is False
+          print("PASS_N0_SEMANTIC_V2_HOLDOUT_ISOLATION")
+          PY
+
+      - name: Prove matcher architecture remains identity-neutral
+        run: |
+          python - <<'PY'
+          from alice_personality.n0.qsre_schema_matcher import QSRESchemaMatcher
+
+          model=QSRESchemaMatcher(
+              semantic_dim=24,
+              model_dim=24,
+              num_hidden_states=3,
+          )
+          report=model.parameter_report()
+          assert report["relation_identity_parameters"]==0
+          assert report["factor_identity_parameters"]==0
+          assert report["candidate_count_dependent_parameters"]==0
+          assert report["reasoning_step_dependent_parameters"]==0
+          assert report["fixed_semantic_anchor"] is True
+          assert report["learned_projection_is_residual"] is True
+          assert report["shared_layer_mixture"] is True
+          assert report["bidirectional_pair_refinement"] is True
+          assert report["runtime_schema_cardinality_ceiling"] is None
+          assert all(not p.requires_grad for p in model.anchor_projection.parameters())
+          print("PASS_N0_SEMANTIC_V2_IDENTITY_NEUTRAL_MATCHER")
+          PY
+
+      - name: Prove Production P2 freezes only a passing v2 matcher
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p2=Path("scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py").read_text()
+          assert "alice.eipm.n0.qsre-closure-matcher-result.v2" in p2
+          assert "alice.eipm.n0.qsre-closure-matcher-checkpoint.v2" in p2
+          assert "freeze=True" in p2
+          assert "operator_model.schema_matcher.eval()" in p2
+          print("PASS_N0_SEMANTIC_V2_FROZEN_BEFORE_P2")
+          PY
+
+      - name: Prove downstream Production contract remains unchanged
+        run: |
+          python - <<'PY'
+          import json
+          plan=json.load(open("configs/eipm/n0/n0_v02_qsre_n0_closure_training_plan_v1.json"))
+          prior=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json"))
+          assert prior["model"]==plan["model"]
+          assert prior["curriculum_sha256"]==plan["curriculum_sha256"]
+          for stage in ("P2","P3"):
+              assert prior["stages"][stage]["optimizer"]==plan["stages"][stage]["optimizer"]
+              for key in ("seed","batch_size","max_steps","eval_every","save_every","operator_runtime_max_steps"):
+                  assert prior["stages"][stage]["training"][key]==plan["stages"][stage]["training"][key]
+              assert prior["stages"][stage]["eligibility"]==plan["stages"][stage]["eligibility"]
+          assert prior["stages"]["P4"]["eligibility"]==plan["stages"]["P4"]["eligibility"]
+          print("PASS_N0_SEMANTIC_V2_DOWNSTREAM_UNCHANGED")
+          PY
+
+      - name: Prove one new evidence root and original frozen final reuse
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_n0_closure_semantic_v2.sh").read_text()
+          sbatch=Path("scripts/eipm/n0/magnolia_p100_n0_v02_qsre_n0_closure_semantic_v2.sbatch").read_text()
+          assert 'V1_CLOSURE="$WORKDIR/qsre-n0-closure-pass-v1"' in runner
+          assert 'CLOSURE_ROOT="$WORKDIR/qsre-n0-closure-semantic-v2"' in runner
+          assert "refusing to overwrite" not in runner or "evidence" in runner
+          assert 'FROZEN="$SOURCE/final-frozen"' in runner
+          assert "build_n0_v02_final_self_validation" not in runner
+          assert "freeze_n0_v02_final_self_validation" not in runner
+          assert "train_n0_v02_qsre_closure_matcher_v2.py" in runner
+          assert "#SBATCH --gres=gpu:p100:1" in sbatch
+          assert "run_n0_v02_qsre_n0_closure_semantic_v2.sh" in sbatch
+          print("PASS_N0_SEMANTIC_V2_SINGLE_LAUNCH_LINEAGE")
+          PY
