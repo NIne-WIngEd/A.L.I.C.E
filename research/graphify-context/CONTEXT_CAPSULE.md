@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-closure-pass-qualified-topology-20260921-011
-- Question: Verify the exact N0 closure-pass implementation after job 575958. Trace P2S QSRESchemaMatcher training and holdout boundary, frozen matcher loading into Production P2, ordered query-evidence coverage, semantic factor schemas with no fixed factor class heads, continuous relation hypotheses through Binder v2 structural sparsity, factor-schema cache lineage through P3/P4/final, the single Magnolia closure runner, and reuse of the original frozen native final validation. Identify any code path that bypasses the frozen matcher, reintroduces relation/factor identity parameters, drops coverage, uses open/final holdout descriptions in gradient, or fails to forward factor-schema lineage.
+- Request: n0-closure-pass-post-handoff-refresh-20260921-012
+- Question: Post-handoff refresh after recording docs/chat-context/2026-09-21/sol/N0_JOB575958_CLOSURE_PASS_READY.md. Verify the continuity catalog now sees alice-context at that handoff, while the exact code graph remains alice-eipm-v1-n0-closure-pass@fefc2e4ec54ddde113165b1a3103a1add9be34e8. Reconfirm the same closure path: P2S unseen-schema matcher gate, frozen matcher in Production P2, ordered query-evidence coverage, semantic factor schemas, Binder v2 structural sparsity, factor-schema cache lineage through final validation, original frozen final reuse, and no bypass/holdout leak.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -24,45 +24,49 @@
 
 ## Source pointers
 
-- [145] alice-eipm-v1-n0-closure-pass:docs/research/eipm-n0-job-575958-closure-pass-v1.md — N0 closure-pass architecture after Magnolia job 575958
-  - status:  implementation and static qualification package; GPU remains closed until exact-head qualification passes
-- [107] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md — N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization
-  - status:  final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged
-- [103] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
+- [104] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_CHALLENGE_READY_HANDOFF.md — N0 Final Frozen Challenge Ready Handoff
   - status:  one final frozen latent challenge authorized and execution-bound; no promotion/training/scale/N0 completion authorized
-- [101] alice-eipm-v1-build:docs/PHASE_1_HHEM_HOLDOUT_VALIDATION.md — Phase 1.11 — HHEM Frozen-Threshold Holdout Validation
-- [97] alice-eipm-v1-n0-closure-pass:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [97] alice-eipm-v1-qsre-production-core-v1:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [97] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [97] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [95] alice-context:docs/chat-context/2026-09-15/sol/N0_RELATION_REPAIR_FROZEN_RATIFICATION_PENDING.md — N0 relation repair — frozen ratification pending
-- [95] alice-context:docs/chat-context/2026-09-16/sol/FULL_SCALE_FUSION_JOB575619_AND_FROZEN_CHALLENGE.md — Full-Scale Fusion Job 575619 + Frozen Challenge Gate — 2026-09-16
-- [93] fable-builder-model:docs/fable-builder/traces/2026-09-13_training_lineage_boundary.jsonl — 2026-09-13_training_lineage_boundary.jsonl
-- [87] fable-builder-model:docs/fable-builder/traces/2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl — 2026-09-18_n0_final_frozen_fail_missing_evidence_localization.jsonl
+- [104] alice-eipm-v1-n0-closure-pass:docs/research/eipm-n0-job-575958-closure-pass-v1.md — N0 closure-pass architecture after Magnolia job 575958
+  - status:  implementation and static qualification package; GPU remains closed until exact-head qualification passes
+- [93] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md — N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization
+  - status:  final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged
+- [93] alice-eipm-v1-n0-closure-pass:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [93] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [93] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [91] alice-context:docs/chat-context/2026-09-21/sol/N0_JOB575958_CLOSURE_PASS_READY.md — N0 job 575958 closure-pass — exact-head verified and ready for one Magnolia launch
+  - status:  closure package implemented, exact-head static/CPU qualification passed, Graphify exact-source topology verified, Fable failure/success seeds recorded, one owner Magnolia launch may proceed
+- [89] alice-eipm-v1-n0-closure-pass:.github/workflows/n0-final-production-v3-qualification.yml — n0-final-production-v3-qualification.yml
+- [86] alice-eipm-v1-n0-closure-pass:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
+  - status:  production-architecture authority; implementation/training remains closed
+- [86] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
+  - status:  production-architecture authority; implementation/training remains closed
+- [86] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-qsre-production-architecture-closure-v1.md — QSRE Production Core v1 — Architecture Closure Before Further GPU Work
+  - status:  production-architecture authority; implementation/training remains closed
+- [80] alice-eipm-v1-n0-closure-pass:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
 
 ## Graphify navigation hints
 
-- Final N0 closure operator. The filename/class name is retained so P3/P4/frozen-… -> src/alice_personality/n0/qsre_production_operator_v3.py:L25
-- test_closure_operator_has_no_fixed_factor_class_heads() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L111
-- QSRESchemaMatcher -> src/alice_personality/n0/qsre_schema_matcher.py:L22
+- run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh -> scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh:L1
+- run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh script -> scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh:L1
+- prepare_n0_v02_final_self_validation_cache_v1.py -> scripts/eipm/n0/prepare_n0_v02_final_self_validation_cache_v1.py:L1
+- derive_tokenizer_corpus_v021_from_v01.py -> scripts/eipm/n0/derive_tokenizer_corpus_v021_from_v01.py:L1
 - run_final_frozen_challenge_after_graph_arbitration_v0_1.py -> scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py:L1
+- AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
 - QSREProductionBinderV2 -> src/alice_personality/n0/qsre_production_binder_v2.py:L16
-- .boundary() -> src/alice_conversation/cli_policy.py:L67
-- .test_custom_search_bypasses_production_evidence_expansion() -> tests/phase1/test_grounded_response_injected_retrieval.py:L15
+- test_fetch_provider_cannot_bypass_response_byte_budget() -> tests/phase4/test_information_research_orchestration.py:L919
 - CachedStructuredDataset -> scripts/eipm/n0/train_n0_v02_structured_state_pilot.py:L259
-- classify_owner_relation() -> src/alice_vault/owner_attribution.py:L186
+- chunk_catalog.py -> src/alice_vault/chunk_catalog.py:L1
 - train_n0_v02_qsre_closure_matcher_v1.py -> scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v1.py:L1
 - codes() -> tests/phase3/test_conversation_response_validation_adversarial.py:L18
-- test_binder_v2_operator_continuous_state_is_not_support_authority() -> tests/eipm/test_n0_qsre_production_binder_v2.py:L152
+- context() -> tests/phase1/test_claim_support_audit.py:L17
+- Metadata-only provenance for source truth, inference, and continuity. -> src/cognitive_kernel/contracts.py:L167
 - test_n0_curriculum_coverage.py -> tests/eipm/test_n0_curriculum_coverage.py:L1
-- evidence() -> tests/phase3/test_conversation_phase1_grounding_bridge.py:L26
-- ExactInformationLiveProviderRegistry -> src/alice_information/live_provider_registry.py:L16
-- factor_losses() -> scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v1.py:L257
+- test_docs_remove_obsolete_opaque_only_boundary() -> tests/governance/test_memory_identity_host_learning_architecture.py:L154
 
 ## External/private routing
 
-- Recommended: True
-- Reason: host-specific operational history may contain newer failure lessons than public receipts
+- Recommended: False
+- Reason: None
 
 ## Trust contract
 

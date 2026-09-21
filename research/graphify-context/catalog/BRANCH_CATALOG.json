@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "f514e97b004a9bbd03649de615baf29789a0ee01",
-      "head_committed_at": "2026-09-20T21:20:03-05:00",
-      "head_message": "context(n0): record final Production v3 qualified frontier",
+      "head": "32b6308b201ba112270109e3a139fbc16812121b",
+      "head_committed_at": "2026-09-20T23:49:11-05:00",
+      "head_message": "context(n0): record 575958 closure-pass ready frontier",
       "status": "diverged",
-      "ahead": 231,
+      "ahead": 232,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 578,
+      "changed_file_count_vs_source_merge_base": 579,
       "knowledge_surface": true
     },
     {
