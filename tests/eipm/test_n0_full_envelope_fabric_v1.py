@@ -256,6 +256,14 @@ def test_semantic_operator_objective_is_behavioral_and_finite() -> None:
         "role": torch.randint(0, 4, (batch,)),
         "control": torch.randint(0, 3, (batch,)),
     }
+    step_factor_logits = {
+        "direction": torch.randn(batch, steps, 3, requires_grad=True),
+        "reliability_modifier": torch.randn(batch, steps, 2, requires_grad=True),
+    }
+    step_factor_targets = {
+        "direction": torch.randint(0, 3, (batch, steps)),
+        "reliability_modifier": torch.randint(0, 2, (batch, steps)),
+    }
     event = torch.softmax(torch.randn(batch, steps, 3), dim=-1)
     event_targets = torch.randint(0, 3, (batch, steps))
     event_mask = torch.ones(batch, steps, dtype=torch.bool)
@@ -294,8 +302,13 @@ def test_semantic_operator_objective_is_behavioral_and_finite() -> None:
         counterfactual_relation_score=torch.zeros(batch),
         correct_factor_score=torch.ones(batch),
         counterfactual_factor_score=torch.zeros(batch),
+        step_factor_logits=step_factor_logits,
+        step_factor_targets=step_factor_targets,
+        step_factor_mask=relation_mask,
     )
     assert torch.isfinite(result["loss"])
     result["loss"].backward()
     assert relation_logits.grad is not None
     assert factor_logits["role"].grad is not None
+    assert step_factor_logits["direction"].grad is not None
+    assert torch.isfinite(result["step_factor_semantics"])
