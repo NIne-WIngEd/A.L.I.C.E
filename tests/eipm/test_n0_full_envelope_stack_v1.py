@@ -1,0 +1,204 @@
+from __future__ import annotations
+
+import torch
+
+from alice_personality.n0.n0_full_envelope_stack_v1 import (
+    N0FullEnvelopeStackConfig,
+    N0FullEnvelopeStackV1,
+)
+from alice_personality.n0.semantic_operator_foundation import (
+    DynamicRelationSchema,
+    DynamicSemanticSchema,
+)
+
+
+def schema(count: int, *, tokens: int = 4, types: int = 4, seed: int = 1) -> DynamicRelationSchema:
+    torch.manual_seed(seed)
+    return DynamicRelationSchema(
+        token_states=torch.randn(count, 3, tokens, 24),
+        token_mask=torch.ones(count, tokens, dtype=torch.bool),
+        domain_type_mask=torch.ones(count, types, dtype=torch.bool),
+        range_type_mask=torch.ones(count, types, dtype=torch.bool),
+        symmetric=torch.zeros(count, dtype=torch.bool),
+    )
+
+
+def bank(count: int, seed: int) -> DynamicSemanticSchema:
+    torch.manual_seed(seed)
+    return DynamicSemanticSchema(
+        token_states=torch.randn(count, 3, 4, 24),
+        token_mask=torch.ones(count, 4, dtype=torch.bool),
+    )
+
+
+def factor_bundle():
+    factor_schemas = {
+        "role": bank(4, 11),
+        "traversal": bank(3, 12),
+        "direction": bank(3, 13),
+        "control": bank(3, 14),
+        "reliability": bank(2, 15),
+        "recency": bank(2, 16),
+        "temporal": bank(2, 17),
+        "provenance": bank(2, 18),
+    }
+    factor_opcodes = {
+        "role": ["ROLE_SOURCE", "ROLE_TARGET", "ROLE_SYMMETRIC", "ROLE_NONE"],
+        "traversal": ["TRAVERSAL_LOCAL", "TRAVERSAL_PATH", "TRAVERSAL_AGGREGATE"],
+        "direction": ["DIRECTION_FORWARD", "DIRECTION_REVERSE", "DIRECTION_BIDIRECTIONAL"],
+        "control": ["CONTROL_FALLBACK", "CONTROL_RELATIONAL", "CONTROL_DEFER"],
+        "reliability": ["MOD_RELIABILITY_OFF", "MOD_RELIABILITY_ON"],
+        "recency": ["MOD_RECENCY_OFF", "MOD_RECENCY_ON"],
+        "temporal": ["MOD_TEMPORAL_OFF", "MOD_TEMPORAL_ON"],
+        "provenance": ["MOD_PROVENANCE_OFF", "MOD_PROVENANCE_ON"],
+    }
+    return factor_schemas, factor_opcodes
+
+
+def make_inputs(batch_size: int = 2):
+    batch, fields, edges = batch_size, 5, 6
+    torch.manual_seed(77)
+    query = torch.randn(batch, 3, 7, 24, requires_grad=True)
+    field = torch.randn(batch, fields, 3, 5, 24, requires_grad=True)
+    query_mask = torch.ones(batch, 7, dtype=torch.bool)
+    field_mask = torch.ones(batch, fields, 5, dtype=torch.bool)
+    field_valid = torch.ones(batch, fields, dtype=torch.bool)
+    confidence = torch.rand(batch, fields)
+    missing = torch.zeros(batch, fields)
+    reliability = torch.rand(batch, fields)
+    field_type = torch.tensor([[0,1,2,3,0],[1,2,3,0,1]])[:batch]
+    field_metadata = torch.randn(batch, fields, 3)
+    edge_index = torch.tensor([
+        [[0,1],[1,2],[2,3],[3,4],[0,2],[1,4]],
+        [[0,1],[1,3],[3,4],[0,2],[2,4],[1,2]],
+    ])[:batch]
+    edge_relation = torch.tensor([
+        [0,1,2,3,4,0],
+        [1,2,3,4,0,1],
+    ])[:batch]
+    edge_valid = torch.ones(batch, edges, dtype=torch.bool)
+    edge_metadata = torch.randn(batch, edges, 4)
+    edge_reliability = torch.rand(batch, edges)
+    edge_recency = torch.rand(batch, edges)
+    temporal = torch.ones(batch, edges)
+    provenance = torch.ones(batch, edges)
+    descriptors = {"type": bank(4, 31), "provenance": bank(3, 32), "temporal": bank(3, 33)}
+    descriptor_indices = {
+        "type": field_type,
+        "provenance": torch.tensor([[0,1,2,0,1],[2,1,0,2,1]])[:batch],
+        "temporal": torch.tensor([[0,1,2,0,1],[1,2,0,1,2]])[:batch],
+    }
+    internal_view_descriptors = torch.randn(batch, 6, 24)
+    internal_view_reliability = torch.rand(batch, 6)
+    return dict(
+        query_hidden_states=query,
+        query_token_mask=query_mask,
+        field_hidden_states=field,
+        field_token_mask=field_mask,
+        field_valid_mask=field_valid,
+        field_confidence=confidence,
+        field_missing=missing,
+        field_reliability=reliability,
+        descriptor_banks=descriptors,
+        descriptor_indices=descriptor_indices,
+        field_type_index=field_type,
+        field_metadata=field_metadata,
+        edge_index=edge_index,
+        edge_relation_index=edge_relation,
+        edge_valid_mask=edge_valid,
+        edge_metadata=edge_metadata,
+        edge_reliability=edge_reliability,
+        edge_recency=edge_recency,
+        edge_temporal_match=temporal,
+        edge_provenance_match=provenance,
+        internal_view_descriptor_states=internal_view_descriptors,
+        internal_view_reliability=internal_view_reliability,
+    )
+
+
+def test_full_envelope_stack_forward_and_gradient_continuity() -> None:
+    model = N0FullEnvelopeStackV1(
+        N0FullEnvelopeStackConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            num_attention_heads=4,
+            structured_layers=1,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    )
+    factors, opcodes = factor_bundle()
+    inputs = make_inputs()
+    out = model(
+        relation_schema=schema(5, seed=90),
+        factor_schemas=factors,
+        factor_opcodes=opcodes,
+        max_reasoning_steps=3,
+        graph_message_steps=2,
+        fusion_refinement_steps=2,
+        latent_slot_count=7,
+        latent_refinement_steps=2,
+        **inputs,
+    )
+    assert out["latent"]["latent_slots"].shape == (2, 7, 24)
+    assert out["source_views"].shape == (2, 6, 24)
+    assert out["binder"]["edge_support_weight"].shape == (2, 6)
+    assert out["executor"]["relational_probability"].shape == (2, 5)
+
+    loss = (
+        out["latent"]["pooled_state"].square().mean()
+        + out["semantic_operator"]["relation_logits"].square().mean()
+    )
+    loss.backward()
+    assert inputs["query_hidden_states"].grad is not None
+    assert inputs["field_hidden_states"].grad is not None
+    assert float(inputs["query_hidden_states"].grad.abs().sum()) > 0.0
+    assert float(inputs["field_hidden_states"].grad.abs().sum()) > 0.0
+
+
+def test_full_envelope_stack_accepts_additional_runtime_views_and_runtime_slots() -> None:
+    torch.manual_seed(88)
+    model = N0FullEnvelopeStackV1(
+        N0FullEnvelopeStackConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            num_attention_heads=4,
+            structured_layers=1,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    factors, opcodes = factor_bundle()
+    inputs = make_inputs()
+    extras = 4
+    with torch.no_grad():
+        out = model(
+            relation_schema=schema(5, seed=91),
+            factor_schemas=factors,
+            factor_opcodes=opcodes,
+            max_reasoning_steps=5,
+            graph_message_steps=3,
+            fusion_refinement_steps=3,
+            latent_slot_count=13,
+            latent_refinement_steps=4,
+            additional_source_views=torch.randn(2, extras, 24),
+            additional_view_descriptor_states=torch.randn(2, extras, 24),
+            additional_view_available=torch.ones(2, extras, dtype=torch.bool),
+            additional_view_reliability=torch.rand(2, extras),
+            **inputs,
+        )
+    assert out["source_views"].shape == (2, 10, 24)
+    assert out["latent"]["latent_slots"].shape == (2, 13, 24)
+    report = model.parameter_report()
+    assert report["runtime_relation_ceiling"] is None
+    assert report["runtime_factor_ceiling"] is None
+    assert report["runtime_field_ceiling"] is None
+    assert report["runtime_edge_ceiling"] is None
+    assert report["runtime_view_ceiling"] is None
+    assert report["runtime_slot_ceiling"] is None
+    assert report["runtime_reasoning_step_ceiling"] is None
+    assert report["exact_structural_sparsity_boundary"] == "FullEnvelopeQSREBinderV1"
