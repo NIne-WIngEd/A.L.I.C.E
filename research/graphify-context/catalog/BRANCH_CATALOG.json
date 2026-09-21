@@ -100,6 +100,18 @@
       "knowledge_surface": true
     },
     {
+      "branch": "alice-eipm-v1-n0-closure-pass",
+      "head": "fefc2e4ec54ddde113165b1a3103a1add9be34e8",
+      "head_committed_at": "2026-09-20T23:37:23-05:00",
+      "head_message": "fix(n0): repair closure matcher eval indentation",
+      "status": "ahead",
+      "ahead": 554,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 383,
+      "knowledge_surface": true
+    },
+    {
       "branch": "alice-eipm-v1-post-arbitration-gate",
       "head": "00a95d2690641605964f91a79aa1358e05f3edbf",
       "head_committed_at": "2026-09-17T14:45:12-05:00",
@@ -353,14 +365,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "705676ca0f48a6d48e18bac10ba5cf888ab462d7",
-      "head_committed_at": "2026-09-20T22:40:51-05:00",
-      "head_message": "trace(fbm): backfill QSRE production failure and success seeds",
+      "head": "0994838c62c57912b1808243397c08e1b3f368a0",
+      "head_committed_at": "2026-09-20T23:39:53-05:00",
+      "head_message": "trace(fbm): capture 575958 failure and closure-pass architecture",
       "status": "diverged",
-      "ahead": 104,
+      "ahead": 105,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 103,
+      "changed_file_count_vs_source_merge_base": 104,
       "knowledge_surface": true
     },
     {
