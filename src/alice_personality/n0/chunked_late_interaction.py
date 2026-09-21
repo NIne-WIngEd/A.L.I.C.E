@@ -39,8 +39,7 @@ def chunked_batched_bidirectional_late_max(
         raise ValueError("late-interaction masks must be bool")
     if bool((query_mask.sum(dim=-1) == 0).any()):
         raise ValueError("every query requires at least one valid token")
-    if bool((item_mask.sum(dim=-1) == 0).any()):
-        raise ValueError("every item requires at least one valid token")
+    item_available = item_mask.any(dim=-1)
 
     neg = torch.finfo(query.dtype).min
     query_parts: list[Tensor] = []
@@ -99,6 +98,10 @@ def chunked_batched_bidirectional_late_max(
     )
     query_to_item = query_to_item.masked_fill(
         ~query_mask[:, None, None, :],
+        0.0,
+    )
+    query_to_item = query_to_item.masked_fill(
+        ~item_available[:, :, None, None],
         0.0,
     )
     item_to_query = item_to_query.masked_fill(
