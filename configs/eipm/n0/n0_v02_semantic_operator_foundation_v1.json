@@ -1,0 +1,156 @@
+{
+  "schema": "alice.eipm.n0.semantic-operator-foundation.v1",
+  "status": "ARCHITECTURE_DECISION_ONLY_NO_GRADIENT",
+  "date": "2026-09-21",
+  "source_diagnostic": {
+    "magnolia_job": 575990,
+    "source_branch": "alice-eipm-v1-n0-p2a-semantic-localization-v1",
+    "source_revision": "8180ed500fcf2181d3a70f5a01481d00ebbbb24a",
+    "completed_cleanly": true,
+    "gradient": false,
+    "model_training": false,
+    "current_metrics": {
+      "auxiliary_holdout_relation_top1": 0.2604166567325592,
+      "auxiliary_seen_relation_top1": 0.2708333432674408,
+      "heldout_factor_macro_accuracy": 0.3666666731238365,
+      "production_core_single_relation_top1": 0.4068181812763214
+    },
+    "teacher_native_metrics": {
+      "auxiliary_holdout_relation_top1": 0.2604166567325592,
+      "auxiliary_seen_relation_top1": 0.2291666716337204,
+      "heldout_factor_macro_accuracy": 0.41666667312383654,
+      "production_core_single_relation_top1": 0.3840909004211426
+    },
+    "teacher_native_plus_best_layer_oracle": {
+      "auxiliary_holdout_relation_top1": 0.3541666567325592,
+      "auxiliary_seen_relation_top1": 0.3333333432674408,
+      "heldout_factor_macro_accuracy": 0.41666667312383654,
+      "production_core_single_relation_top1": 0.40909090638160706,
+      "posthoc_diagnostic_only": true
+    }
+  },
+  "decision": {
+    "reopen_public_semantic_representation_objective": true,
+    "reopen_semantic_operator_boundary": true,
+    "another_p2s_matcher_authorized": false,
+    "another_p2a_frozen_head_ensemble_authorized": false,
+    "prompt_search_authorized": false,
+    "fusion_weight_search_authorized": false,
+    "semantic_backbone_retraining_authorized_now": false,
+    "reason": "architecture/data/objective package must be closed before gradient"
+  },
+  "semantic_parent": {
+    "model_id": "alice-n0-semantic-v0.2",
+    "checkpoint_sha256": "6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43",
+    "role": "preserved initialization and comparison baseline, not frozen semantic authority",
+    "semantic_base_ratification_remains_historically_valid": true,
+    "semantic_base_ratification_sufficient_for_full_qsre": false
+  },
+  "architecture": {
+    "family": "schema_conditioned_semantic_operator_foundation",
+    "shared_bidirectional_semantic_backbone": true,
+    "runtime_schema_first_class_input": true,
+    "shared_query_schema_token_interaction": true,
+    "dynamic_relation_schema": true,
+    "relation_keys_semantic_tokens": false,
+    "relation_identity_parameter_axis": false,
+    "factor_identity_parameter_axis": false,
+    "candidate_count_parameter_axis": false,
+    "hop_index_parameter_axis": false,
+    "continuous_operator_latent": true,
+    "shared_recurrent_relation_transition": true,
+    "structural_stop": true,
+    "uncertainty_plurality": true,
+    "ordered_query_evidence_coverage": true,
+    "continuous_relation_hypotheses": true,
+    "exact_relation_sparsity_before_binder": false,
+    "binder_owns_exact_structural_sparsity": true,
+    "existing_qsre_structural_executor_preserved": true,
+    "existing_structured_evidence_fusion_latent_fabric_preserved": true
+  },
+  "semantic_schema_inputs": [
+    "relation_description",
+    "source_argument_meaning",
+    "target_argument_meaning",
+    "symmetry_direction",
+    "domain_range_type_constraints",
+    "optional_provenance_semantics",
+    "optional_temporal_semantics"
+  ],
+  "operator_outputs": [
+    "relation_distribution",
+    "role_semantics",
+    "direction_semantics",
+    "traversal_semantics",
+    "control_semantics",
+    "modifier_semantics",
+    "applicability",
+    "stop_continue_defer",
+    "continuous_operator_state",
+    "token_level_evidence_alignment",
+    "uncertainty_plurality"
+  ],
+  "training_objectives_required": [
+    "broad_public_semantic_replay",
+    "dynamic_schema_discrimination",
+    "argument_role_intervention",
+    "relation_intervention",
+    "factor_schema_semantics",
+    "ordered_noncommutative_composition",
+    "token_level_evidence_grounding",
+    "open_schema_unknown_defer",
+    "hard_semantic_negatives",
+    "paraphrase_and_counterfactual_consistency",
+    "existing_candidate_preference_and_rationale_semantics"
+  ],
+  "split_isolation_required": [
+    "relation_family",
+    "entity",
+    "lexical_paraphrase",
+    "template",
+    "domain",
+    "multi_hop_composition",
+    "factor_combination"
+  ],
+  "scale_policy": {
+    "full_capability_architecture": true,
+    "pilot": false,
+    "reduced_capability_target": false,
+    "hard_parameter_ceiling": null,
+    "hard_width_ceiling": null,
+    "hard_depth_ceiling": null,
+    "runtime_relation_count_ceiling": null,
+    "runtime_factor_count_ceiling": null,
+    "runtime_reasoning_step_ceiling": null,
+    "context_view_ceiling": null,
+    "current_136m_parameter_count_is_capability_ceiling": false,
+    "blind_parameter_scaling_authorized": false,
+    "parameter_growth_rule": "only after objective/data/mechanics are correct and measured capacity evidence localizes scale as the remaining bottleneck"
+  },
+  "governance": {
+    "public_identity_neutral_only": true,
+    "private_identity_data": false,
+    "private_identity_gradient": false,
+    "optimizer_authorized": false,
+    "gradient_authorized": false,
+    "gpu_launch_authorized": false,
+    "test_opening_authorized": false,
+    "final_validation_opening_authorized": false,
+    "threshold_change_authorized": false,
+    "automatic_rerun_authorized": false,
+    "automatic_hotfix_chain_authorized": false,
+    "learning_rate_search_authorized": false,
+    "step_search_authorized": false,
+    "width_search_authorized": false,
+    "batch_search_authorized": false,
+    "n0_complete": false,
+    "n1_authorized": false
+  },
+  "next_work": [
+    "full-envelope public semantic-operator curriculum",
+    "schema-conditioned semantic-operator interfaces",
+    "shortcut and leakage audits",
+    "static and no-gradient mechanics",
+    "one precommitted training and evaluation plan"
+  ]
+}
