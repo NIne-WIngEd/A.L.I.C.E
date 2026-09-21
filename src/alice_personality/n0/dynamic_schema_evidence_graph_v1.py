@@ -50,7 +50,7 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
         self.operator_projection = nn.Linear(self.config.operator_dim, d, bias=False)
         self.edge_metadata_projection = nn.Linear(self.config.edge_metadata_dim, d)
         self.edge_update = nn.Sequential(
-            nn.Linear(5 * d, 2 * d),
+            nn.Linear(5 * d + 1, 2 * d),
             nn.SiLU(),
             nn.Dropout(self.config.dropout),
             nn.Linear(2 * d, d),
@@ -78,6 +78,7 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
         edge_metadata: Tensor,
         edge_valid_mask: Tensor,
         relation_schema_state: Tensor,
+        relation_mass: Tensor,
         operator_state: Tensor,
         message_steps: int,
     ) -> dict[str, Tensor]:
@@ -108,6 +109,8 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
         relations = relation_schema_state.size(1)
         if relations <= 0:
             raise ValueError("runtime relation schema is empty")
+        if relation_mass.shape != (batch, relations):
+            raise ValueError("relation_mass must be [B,R]")
         if operator_state.shape != (batch, self.config.operator_dim):
             raise ValueError("operator_state shape drift")
 
@@ -135,15 +138,39 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             source = node[batch_index, source_index]
             target = node[batch_index, target_index]
             rel = relation[batch_index, relation_index]
+            edge_relation_mass = relation_mass.gather(1, relation_index)
             op = operator[:, None, :].expand(batch, edges, -1)
-            edge = self.edge_update(torch.cat([source, target, rel, op, metadata], dim=-1))
+            edge = self.edge_update(
+                torch.cat(
+                    [
+                        source,
+                        target,
+                        rel,
+                        op,
+                        metadata,
+                        edge_relation_mass.unsqueeze(-1),
+                    ],
+                    dim=-1,
+                )
+            )
             edge = edge * edge_valid_mask.unsqueeze(-1).to(edge.dtype)
             last_edge = edge
 
             source_msg = self.source_message(torch.cat([edge, op], dim=-1))
             target_msg = self.target_message(torch.cat([edge, op], dim=-1))
-            source_msg = source_msg * edge_valid_mask.unsqueeze(-1).to(source_msg.dtype)
-            target_msg = target_msg * edge_valid_mask.unsqueeze(-1).to(target_msg.dtype)
+            semantic_gate = (
+                0.05 + 0.95 * edge_relation_mass.clamp(0.0, 1.0)
+            ).unsqueeze(-1)
+            source_msg = (
+                source_msg
+                * semantic_gate
+                * edge_valid_mask.unsqueeze(-1).to(source_msg.dtype)
+            )
+            target_msg = (
+                target_msg
+                * semantic_gate
+                * edge_valid_mask.unsqueeze(-1).to(target_msg.dtype)
+            )
 
             aggregate = torch.zeros_like(node)
             source_scatter = source_index.unsqueeze(-1).expand(-1, -1, self.config.model_dim)
@@ -197,6 +224,8 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             "field_count_dependent_parameters": 0,
             "edge_count_dependent_parameters": 0,
             "runtime_relation_schema": True,
+            "continuous_relation_conditioning": True,
+            "exact_structural_sparsity": False,
             "dual_endpoint_read": True,
             "field_count_ceiling": None,
             "edge_count_ceiling": None,
