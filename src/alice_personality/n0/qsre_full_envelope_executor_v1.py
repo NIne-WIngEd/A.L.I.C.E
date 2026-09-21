@@ -493,12 +493,16 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         probability = probability * readout_mask.to(probability.dtype)
         probability = probability / probability.sum(dim=-1, keepdim=True).clamp_min(1.0e-12)
 
-        known = (1.0 - operator.unknown_probability.sum(dim=1).clamp(max=1.0)).clamp(0.0, 1.0)
+        known = (
+            1.0 - operator.unknown_probability.sum(dim=1).clamp(max=1.0)
+        ).clamp(0.0, 1.0)
+        complete = (1.0 - operator.truncation_probability).clamp(0.0, 1.0)
         program = operator.relation_step_mass.sum(dim=1).clamp(0.0, 1.0)
         execution_confidence = (
             operator.applicability
             * operator.control_distribution[:, CONTROL_RELATIONAL]
             * known
+            * complete
             * program
             * support_available.clamp(0.0, 1.0)
         ).clamp(0.0, 1.0)
@@ -548,6 +552,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "local_path_aggregate_distinct": True,
             "hard_traversal_threshold": False,
             "execution_confidence_requires_structural_support": True,
+            "execution_confidence_requires_program_completion": True,
             "relation_count_ceiling": None,
             "hop_count_ceiling": None,
             "field_count_ceiling": None,
