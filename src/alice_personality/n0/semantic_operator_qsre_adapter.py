@@ -5,7 +5,7 @@ from typing import Mapping, Sequence
 import torch
 from torch import Tensor, nn
 
-from alice_personality.n0.qsre_production_core import QSREProductionOperatorState
+from alice_personality.n0.full_envelope_structural_types import FullEnvelopeOperatorState
 from alice_personality.n0.semantic_operator_foundation import SemanticOperatorState
 
 
@@ -93,7 +93,7 @@ class SemanticOperatorQSREAdapter(nn.Module):
         semantic_operator: SemanticOperatorState,
         relation_schema_states: Tensor,
         factor_opcodes: Mapping[str, Sequence[str]],
-    ) -> dict[str, Tensor | QSREProductionOperatorState]:
+    ) -> dict[str, Tensor | FullEnvelopeOperatorState]:
         relation = semantic_operator.relation_distribution
         batch, steps, relations = relation.shape
         if relation_schema_states.ndim != 4:
@@ -136,7 +136,7 @@ class SemanticOperatorQSREAdapter(nn.Module):
             * step_mass[:, :, None, None].to(relation_schema_states.dtype)
         ).sum(dim=1) / normalizer[:, :, None].to(relation_schema_states.dtype)
 
-        operator = QSREProductionOperatorState(
+        operator = FullEnvelopeOperatorState(
             relation_distribution=semantic_operator.relation_distribution,
             relation_step_mass=semantic_operator.relation_step_mass,
             stop_probability=semantic_operator.stop_probability,
