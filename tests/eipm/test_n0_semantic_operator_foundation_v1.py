@@ -247,3 +247,127 @@ def test_semantic_backbone_gradient_is_not_detached_by_operator() -> None:
     assert q.grad is not None
     assert bool(torch.isfinite(q.grad).all())
     assert float(q.grad.abs().sum()) > 0.0
+
+
+def test_per_example_candidate_masks_enable_variable_runtime_subsets_in_one_batch() -> None:
+    torch.manual_seed(37)
+    model = SchemaConditionedSemanticOperator(config()).eval()
+    q, qm = hidden(batch=2)
+    relation_bank = schema(6)
+    role_bank = factor(4, 41)
+    relation_mask = torch.tensor(
+        [
+            [True, True, False, False, False, False],
+            [False, True, True, True, False, False],
+        ],
+        dtype=torch.bool,
+    )
+    role_mask = torch.tensor(
+        [
+            [True, False, True, False],
+            [False, True, True, True],
+        ],
+        dtype=torch.bool,
+    )
+    with torch.no_grad():
+        out = model(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            relation_schema=relation_bank,
+            factor_schemas={"role": role_bank},
+            max_steps=3,
+            relation_candidate_mask=relation_mask,
+            factor_candidate_masks={"role": role_mask},
+        )
+    relation = out["operator"].relation_distribution
+    role = out["operator"].factor_distributions["role"]
+    step_role = out["operator"].step_factor_distributions["role"]
+    assert torch.equal(
+        relation.masked_select(~relation_mask[:, None, :]),
+        torch.zeros_like(relation.masked_select(~relation_mask[:, None, :])),
+    )
+    assert torch.equal(
+        role.masked_select(~role_mask),
+        torch.zeros_like(role.masked_select(~role_mask)),
+    )
+    expanded_role_mask = role_mask[:, None, :].expand_as(step_role)
+    assert torch.equal(
+        step_role.masked_select(~expanded_role_mask),
+        torch.zeros_like(step_role.masked_select(~expanded_role_mask)),
+    )
+    assert torch.allclose(
+        relation.sum(dim=-1),
+        torch.ones_like(relation.sum(dim=-1)),
+        atol=1e-6,
+    )
+    assert model.parameter_report()["per_example_candidate_subset_supported"] is True
+
+
+def test_single_active_candidate_mask_has_zero_relation_entropy_not_fake_confidence_margin_failure() -> None:
+    model = SchemaConditionedSemanticOperator(config()).eval()
+    q, qm = hidden(batch=1)
+    mask = torch.tensor([[False, True, False]], dtype=torch.bool)
+    with torch.no_grad():
+        out = model(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            relation_schema=schema(3),
+            factor_schemas={},
+            max_steps=2,
+            relation_candidate_mask=mask,
+        )
+    probability = out["operator"].relation_distribution
+    assert torch.equal(
+        probability[..., 0],
+        torch.zeros_like(probability[..., 0]),
+    )
+    assert torch.equal(
+        probability[..., 2],
+        torch.zeros_like(probability[..., 2]),
+    )
+    assert torch.allclose(
+        probability[..., 1],
+        torch.ones_like(probability[..., 1]),
+        atol=1e-6,
+    )
+
+
+def test_residual_program_survival_is_exposed_as_truncation_and_uncertainty() -> None:
+    model = SchemaConditionedSemanticOperator(config()).eval()
+    q, qm = hidden(batch=1)
+    with torch.no_grad():
+        operator = model(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            relation_schema=schema(4),
+            factor_schemas={"role": factor(4, 43)},
+            max_steps=1,
+        )["operator"]
+    assert operator.truncation_probability.shape == (1,)
+    assert bool((operator.truncation_probability >= 0).all())
+    assert bool((operator.truncation_probability <= 1).all())
+    assert model.parameter_report()["runtime_step_truncation_exposed"] is True
+    assert model.parameter_report()["silent_program_truncation_forbidden"] is True
+
+
+def test_step_conditioned_factor_distributions_exist_for_every_reasoning_slot() -> None:
+    model = SchemaConditionedSemanticOperator(config()).eval()
+    q, qm = hidden(batch=2)
+    with torch.no_grad():
+        operator = model(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            relation_schema=schema(5),
+            factor_schemas={
+                "direction": factor(3, 47),
+                "reliability_modifier": factor(2, 48),
+            },
+            max_steps=4,
+        )["operator"]
+    assert operator.step_factor_distributions["direction"].shape == (2,4,3)
+    assert operator.step_factor_distributions["reliability_modifier"].shape == (2,4,2)
+    assert torch.allclose(
+        operator.step_factor_distributions["direction"].sum(dim=-1),
+        torch.ones(2,4),
+        atol=1e-6,
+    )
