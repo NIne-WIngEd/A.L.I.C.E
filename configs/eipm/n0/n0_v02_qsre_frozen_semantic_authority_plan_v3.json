@@ -26,14 +26,22 @@
     "components": [
       "joint_prompt_candidate_preference_score",
       "shared_prompt_semantic_projection_cosine",
+      "trained_joint_semantic_to_rationale_principle_alignment",
       "parameter_free_token_evidence_score"
     ],
     "component_normalization": "candidate_axis_zscore_after_runtime_candidate_subset",
-    "component_fusion": "equal_weight_mean",
+    "component_fusion": "equal_weight_mean_of_four_candidate_axis_zscores",
     "relation_keys_in_semantic_text": false,
     "production_runtime_relation_text_grammar": true,
     "learned_relation_or_factor_matcher": false,
-    "trainable_authority_parameters": 0
+    "trainable_authority_parameters": 0,
+    "trained_surfaces_reused": [
+      "preference_scorer",
+      "semantic_projection",
+      "rationale_projection",
+      "principle_alignment_scale_bias"
+    ],
+    "new_trainable_semantic_parameters": 0
   },
   "qualification": {
     "meta_schema": "configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v2.json",
