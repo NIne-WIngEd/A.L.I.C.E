@@ -1,12 +1,12 @@
 {
-  "request_id": "n0-closure-pass-post-handoff-refresh-20260921-012",
-  "question": "Post-handoff refresh after recording docs/chat-context/2026-09-21/sol/N0_JOB575958_CLOSURE_PASS_READY.md. Verify the continuity catalog now sees alice-context at that handoff, while the exact code graph remains alice-eipm-v1-n0-closure-pass@fefc2e4ec54ddde113165b1a3103a1add9be34e8. Reconfirm the same closure path: P2S unseen-schema matcher gate, frozen matcher in Production P2, ordered query-evidence coverage, semantic factor schemas, Binder v2 structural sparsity, factor-schema cache lineage through final validation, original frozen final reuse, and no bypass/holdout leak.",
-  "budget": 5000,
+  "request_id": "n0-semantic-v2-qualified-topology-20260921-013",
+  "question": "Verify the exact N0 semantic-v2 closure implementation after valid Magnolia job 575962. Trace preservation and fail-closed validation of the v1 P2S failure, QSRESchemaMatcher fixed semantic anchor plus learned residual, shared layer mixture, bidirectional candidate-conditioned query/schema pair refinement, absence of relation/factor identity parameter axes, auxiliary relation text using the exact Production runtime relation_schema_text grammar without relation keys, gradient use of factor train phrases while factor heldout phrases stay evaluation-only, auxiliary/core paired-view consistency, frozen v2 matcher loading into Production P2, preserved ordered query-evidence coverage and continuous relation hypotheses, Binder v2-only exact structural sparsity, factor-cache lineage through P3/P4/final, one new evidence root, and original frozen native final-validation reuse. Identify any bypass, holdout leakage, semantic key leakage, reintroduced identity/class head, dropped coverage, v1-failure lineage gap, or downstream gate/compute drift.",
+  "budget": 8000,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
   "graphify_mode": "always",
-  "graph_source_branch": "alice-eipm-v1-n0-closure-pass"
+  "graph_source_branch": "alice-eipm-v1-n0-closure-semantic-v2"
 }
