@@ -20,7 +20,13 @@
     "full_stack_implementation": "src/alice_personality/n0/n0_full_envelope_stack_v1.py",
     "public_judgment_probe": "src/alice_personality/n0/public_judgment_probe_v1.py",
     "behavioral_objectives": "src/alice_personality/n0/full_envelope_behavioral_objectives_v1.py",
-    "loss_balancer": "src/alice_personality/n0/full_envelope_loss_balancer_v1.py"
+    "loss_balancer": "src/alice_personality/n0/full_envelope_loss_balancer_v1.py",
+    "per_example_candidate_subsets": true,
+    "step_conditioned_factor_semantics": true,
+    "runtime_relation_symmetry": true,
+    "explicit_null_support_at_binder": true,
+    "program_truncation_exposed_and_fail_closed": true,
+    "continuous_pre_binder_graph_and_executor_gates": true
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -42,12 +48,11 @@
     "stages": [
       {
         "name": "J1_joint_semantic_operator",
-        "role": "co-adapt all semantic backbone layers with the shared runtime-schema operator while preserving broad public semantic/judgment replay",
+        "role": "co-adapt all semantic backbone layers with the shared runtime-schema operator while preserving broad public semantic/judgment replay through existing semantic replay heads; the downstream latent judgment probe is not activated before the full fabric exists",
         "trainable": [
           "semantic_backbone_all_layers",
           "semantic_existing_heads_for_replay",
-          "schema_conditioned_semantic_operator",
-          "public_judgment_probe"
+          "schema_conditioned_semantic_operator"
         ],
         "permanently_frozen": [],
         "downstream_modules_updated": false,
@@ -75,8 +80,6 @@
           "structured_successor",
           "evidence_successor",
           "dynamic_evidence_graph",
-          "fusion_successor",
-          "latent_successor",
           "production_executor_successor",
           "binder_successor",
           "public_judgment_probe",
@@ -143,14 +146,20 @@
       "source_target_intervention",
       "ordered_relation_intervention",
       "unknown_defer",
-      "historical_semantic_regression"
+      "historical_semantic_regression",
+      "mixed_step_direction_composition",
+      "mixed_step_modifier_composition",
+      "runtime_relation_symmetry_causal_pairs",
+      "program_truncation_fail_closed"
     ],
     "J2": [
       "J1_gates_retained",
       "runtime_type_descriptor_transfer",
       "evidence_endpoint_causality",
       "field_permutation",
-      "no_relation_id_semantic_authority"
+      "no_relation_id_semantic_authority",
+      "exact_zero_support_with_compatible_distractors",
+      "masked_runtime_relation_exclusion"
     ],
     "J3": [
       "J1_and_J2_gates_retained",
@@ -160,7 +169,10 @@
       "missing_view_safety",
       "candidate_cardinality_extrapolation",
       "composition_extrapolation",
-      "behaviorally_grounded_public_judgment"
+      "behaviorally_grounded_public_judgment",
+      "no_support_zero_execution_confidence",
+      "long_context_virtualized_query",
+      "per_example_candidate_subset_batching"
     ]
   },
   "scaling": {
@@ -199,7 +211,11 @@
     "CPU no-gradient end-to-end forward",
     "GPU no-gradient memory dry run",
     "final validation v2 corpus built and frozen without candidate results",
-    "exact source revision and clean worktree"
+    "exact source revision and clean worktree",
+    "PASS mixed-direction and mixed-step-modifier curriculum audit",
+    "PASS exact null-support and program-truncation fail-closed mechanics",
+    "PASS symmetric relation endpoint-storage invariance",
+    "PASS batched per-example candidate-subset mechanics"
   ],
   "authorization": {
     "architecture_closed_for_implementation": true,
