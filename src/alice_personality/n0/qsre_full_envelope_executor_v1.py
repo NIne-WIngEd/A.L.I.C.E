@@ -351,15 +351,15 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             active = torch.zeros(batch, fields, device=node.device, dtype=node.dtype)
             active.scatter_add_(1, source_index, gate)
             active.scatter_add_(1, target_index, gate)
+            active = active.clamp(0.0, 1.0) * field_valid_mask.to(node.dtype)
             q_node = operator_state[:, None, :].expand(batch, fields, -1)
             updated = self.node_update(
                 torch.cat([aggregate, q_node], dim=-1).reshape(batch * fields, -1),
                 node.reshape(batch * fields, -1),
             ).reshape(batch, fields, -1)
-            node = torch.where(
-                ((active > 0) & field_valid_mask).unsqueeze(-1),
-                updated,
-                node,
+            node = (
+                active.unsqueeze(-1) * updated
+                + (1.0 - active.unsqueeze(-1)) * node
             )
 
             next_frontier = torch.zeros_like(frontier)
@@ -514,6 +514,8 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "relation_count_dependent_parameters": 0,
             "hop_count_dependent_parameters": 0,
             "shared_iterative_execution": True,
+            "continuous_node_update_gate": True,
+            "hard_active_edge_update_threshold": False,
             "runtime_relation_schema": True,
             "runtime_relation_symmetry": True,
             "symmetric_relation_direction_collapses_to_bidirectional": True,
