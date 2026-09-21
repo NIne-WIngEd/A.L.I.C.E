@@ -12,7 +12,9 @@
     "results_observed": false,
     "private_identity_data": false,
     "semantic_cosine_alone_can_authorize_n0": false,
-    "all_gate_sections_must_pass": true
+    "all_gate_sections_must_pass": true,
+    "sealed_natural_final_rows_may_influence_training": false,
+    "sealed_natural_final_rows_may_influence_checkpoint_selection": false
   },
   "corpus": {
     "natural_public_language_required": true,
@@ -28,7 +30,11 @@
     "context_length_extrapolation_required": true,
     "no_training_row_or_template_hash_overlap": true,
     "hard_total_row_count": null,
-    "row_count_selected_by_coverage_not_quota": true
+    "row_count_selected_by_coverage_not_quota": true,
+    "sealed_natural_relation_family_source": "thunlp_fewrel_1_0",
+    "sealed_natural_relation_family_manifest_schema": "alice.eipm.n0.fewrel-natural-relation-manifest.v2",
+    "final_relation_descriptions_absent_from_train_dev_inputs_required": true,
+    "final_rows_separate_hashed_artifact_required": true
   },
   "deterministic_behavior_gate": {
     "relation_semantics_top1_min": 0.95,
@@ -43,7 +49,8 @@
     "path_focus_top1_min": 0.95,
     "unknown_defer_accuracy_min": 0.95,
     "nonrelational_false_assertion_rate_max": 0,
-    "structural_type_violation_rate_max": 0
+    "structural_type_violation_rate_max": 0,
+    "natural_heldout_relation_family_top1_min": 0.9
   },
   "extrapolation_gate": {
     "unseen_relation_family_accuracy_min": 0.9,
@@ -60,7 +67,8 @@
     "edge_permutation_max_delta": 0.000001,
     "opaque_key_rename_max_delta": 0.000001,
     "irrelevant_context_growth_max_delta": 0.02,
-    "paraphrase_consistency_min": 0.95
+    "paraphrase_consistency_min": 0.95,
+    "natural_relation_candidate_permutation_max_delta": 0.000001
   },
   "uncertainty_plurality_gate": {
     "ambiguous_plurality_mass_on_valid_set_min": 0.9,
