@@ -67,6 +67,37 @@ def load_p1(
     }
 
 
+def load_closure_matcher(
+    *,
+    result_path: Path,
+    root: Path,
+    factor_cache_path: Path,
+) -> tuple[dict, dict, dict]:
+    result = json.loads(result_path.read_text())
+    if result.get("status") != "PASS_QSRE_CLOSURE_SCHEMA_MATCHER":
+        raise SystemExit("closure schema matcher did not pass")
+    selected = result.get("selected")
+    if not selected:
+        raise SystemExit("closure schema matcher selected checkpoint missing")
+    step = int(selected["step"])
+    path = root / f"step-{step:08d}" / "qsre_closure_matcher.pt"
+    if sha256(path) != selected["checkpoint_sha256"]:
+        raise SystemExit("closure schema matcher checkpoint hash drift")
+    payload = torch.load(path, map_location="cpu")
+    if payload.get("schema") != "alice.eipm.n0.qsre-closure-matcher-checkpoint.v1":
+        raise SystemExit("closure schema matcher checkpoint schema drift")
+    factor_cache = torch.load(factor_cache_path, map_location="cpu")
+    if factor_cache.get("schema") != "alice.eipm.n0.qsre-closure-factor-schema-cache.v1":
+        raise SystemExit("closure factor schema cache drift")
+    if sha256(factor_cache_path) != result["factor_schema_cache_sha256"]:
+        raise SystemExit("closure factor schema cache hash drift")
+    return payload, factor_cache, {
+        "path": path,
+        "sha256": sha256(path),
+        "factor_schema_cache_sha256": sha256(factor_cache_path),
+    }
+
+
 def subset_schema(
     schema: QSREDynamicRelationSchema,
     count: int,
@@ -677,7 +708,7 @@ def save_checkpoint(
     torch.save(
         {
             "schema": "alice.eipm.n0.qsre-production-p2-checkpoint.v3",
-            "architecture": "continuous-relation-open-schema-operator-v3",
+            "architecture": "closure-schema-matcher-plus-ordered-continuous-operator",
             "stage": "P2",
             "step": step,
             "config": config.__dict__,
@@ -697,6 +728,9 @@ def main() -> None:
     p.add_argument("--p1-result", required=True)
     p.add_argument("--p1-root", required=True)
     p.add_argument("--failed-p2-result", required=True)
+    p.add_argument("--closure-matcher-result", required=True)
+    p.add_argument("--closure-matcher-root", required=True)
+    p.add_argument("--factor-schema-cache", required=True)
     p.add_argument("--output-dir", required=True)
     args = p.parse_args()
 
@@ -708,8 +742,10 @@ def main() -> None:
 
     failed_p2_path = Path(args.failed_p2_result)
     failed_p2 = json.loads(failed_p2_path.read_text())
-    if failed_p2.get("status") != "FAIL_QSRE_PRODUCTION_P2_OPERATOR":
-        raise SystemExit("P2 v3 requires preserved genuine P2 failure evidence")
+    if failed_p2.get("status") != "FAIL_QSRE_PRODUCTION_P2_OPERATOR_V3":
+        raise SystemExit(
+            "closure P2 requires preserved Magnolia 575958 P2-v3 failure evidence"
+        )
     if failed_p2.get("selected") is not None:
         raise SystemExit("failed P2 unexpectedly selected a checkpoint")
     if failed_p2.get("p3_authorized") is not False:
@@ -748,22 +784,41 @@ def main() -> None:
         config=config,
         device=device,
     )
+    matcher_payload, factor_cache, closure_matcher = load_closure_matcher(
+        result_path=Path(args.closure_matcher_result),
+        root=Path(args.closure_matcher_root),
+        factor_cache_path=Path(args.factor_schema_cache),
+    )
     operator_model = QSREProductionOperatorInducerV3(config).to(device)
-
-    # One shared semantic metric is initialized in the proven P1 semantic
-    # coordinate system and is applied symmetrically to query and schema text.
-    # Training sees only the core relation schema; unseen relation descriptions
-    # enter for the first time during DEV/runtime evaluation.
-    with torch.no_grad():
-        operator_model.query_projection.weight.copy_(
-            schema_encoder.schema_projection.weight
+    operator_model.load_pretrained_schema_matcher(
+        matcher_payload["matcher"],
+        freeze=True,
+    )
+    operator_model.configure_factor_schema_cache(factor_cache)
+    if any(
+        parameter.requires_grad
+        for parameter in operator_model.schema_matcher.parameters()
+    ):
+        raise SystemExit("closure schema matcher must remain frozen in P2")
+    if any(
+        hasattr(operator_model, name)
+        for name in (
+            "role_head",
+            "traversal_head",
+            "direction_head",
+            "modifier_head",
+            "control_head",
         )
-        operator_model.layer_embedding.weight.copy_(
-            schema_encoder.layer_embedding.weight
-        )
+    ):
+        raise SystemExit("fixed factor class head reintroduced in closure P2")
 
+    trainable_parameters = [
+        parameter
+        for parameter in operator_model.parameters()
+        if parameter.requires_grad
+    ]
     optimizer = torch.optim.AdamW(
-        operator_model.parameters(),
+        trainable_parameters,
         lr=float(stage["optimizer"]["learning_rate"]),
         weight_decay=float(stage["optimizer"]["weight_decay"]),
     )
@@ -815,6 +870,7 @@ def main() -> None:
             epoch += 1
         idx = batches.pop(0)
         operator_model.train()
+        operator_model.schema_matcher.eval()
         optimizer.zero_grad(set_to_none=True)
 
         oracle = oracle_operator_from_targets(
@@ -873,35 +929,21 @@ def main() -> None:
             )
 
         consistency = pair_loss_v3(view_outputs[0], view_outputs[1])
-        projection_anchor = (
-            F.mse_loss(
-                operator_model.query_projection.weight,
-                schema_encoder.schema_projection.weight.detach(),
-            )
-            + 0.25
-            * F.mse_loss(
-                operator_model.layer_embedding.weight,
-                schema_encoder.layer_embedding.weight.detach(),
-            )
+        # The semantic matcher already passed an unseen-schema stage and is
+        # frozen here. Production P2 may learn ordering/event/applicability and
+        # continuous execution state, but it cannot rotate the semantic metric
+        # around the six core relations or destroy runtime zero-shot matching.
+        matcher_anchor = sum(
+            parameter.sum() * 0.0
+            for parameter in operator_model.schema_matcher.parameters()
         )
-        identity_logits = operator_model.schema_identity_logits(core_schema)
-        identity_target = torch.arange(
-            identity_logits.size(0),
-            device=device,
-        )
-        schema_identity = F.cross_entropy(
-            identity_logits,
-            identity_target,
-        )
-
         loss = (
             0.5 * (supervised[0] + supervised[1])
             + float(weights["downstream"])
             * 0.5
             * (downstream_losses[0] + downstream_losses[1])
             + float(weights["pair_consistency"]) * consistency
-            + float(weights["projection_anchor"]) * projection_anchor
-            + float(weights["schema_identity"]) * schema_identity
+            + matcher_anchor
         )
         if not torch.isfinite(loss):
             raise RuntimeError("P2 v3 nonfinite loss")
@@ -932,12 +974,8 @@ def main() -> None:
                 "train_pair_consistency_loss": float(
                     consistency.detach().item()
                 ),
-                "train_projection_anchor_loss": float(
-                    projection_anchor.detach().item()
-                ),
-                "train_schema_identity_loss": float(
-                    schema_identity.detach().item()
-                ),
+                "closure_schema_matcher_frozen": True,
+                "fixed_factor_class_heads": False,
                 "train_supervised_parts_view0": supervised_parts[0],
                 "train_supervised_parts_view1": supervised_parts[1],
                 "eligible": is_eligible,
@@ -967,6 +1005,10 @@ def main() -> None:
                     "source_failed_p2_result_sha256": sha256(
                         failed_p2_path
                     ),
+                    "closure_matcher_checkpoint_sha256": closure_matcher["sha256"],
+                    "factor_schema_cache_sha256": closure_matcher[
+                        "factor_schema_cache_sha256"
+                    ],
                 },
             )
             score = score_tuple(metrics)
@@ -1008,8 +1050,15 @@ def main() -> None:
         "open_schema_relation_descriptions_used_in_gradient": False,
         "open_schema_runtime_candidates_used_during_training": False,
         "core_schema_only_query_training": True,
-        "schema_only_self_calibration_used": True,
-        "schema_only_self_calibration_scope": "core_train_schema_only",
+        "schema_only_self_calibration_used": False,
+        "closure_schema_matcher_frozen": True,
+        "closure_matcher_checkpoint_sha256": closure_matcher["sha256"],
+        "factor_schema_cache_sha256": closure_matcher[
+            "factor_schema_cache_sha256"
+        ],
+        "fixed_factor_class_heads": False,
+        "semantic_factor_schemas": True,
+        "ordered_query_evidence_coverage": True,
         "continuous_relation_hypotheses": True,
         "exact_relation_sparsity_before_binder": False,
         "runtime_max_steps": runtime_steps,
