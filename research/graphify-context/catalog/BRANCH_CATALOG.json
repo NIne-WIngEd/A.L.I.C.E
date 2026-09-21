@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "390508407880ffaef55e74326763af76f8bca541",
-      "head_committed_at": "2026-09-21T11:42:30-05:00",
-      "head_message": "context(n0): record semantic localization package",
+      "head": "1e6788879f41c941f115c98e09518a295ebcf96b",
+      "head_committed_at": "2026-09-21T13:01:00-05:00",
+      "head_message": "context(n0): bind qualified foundation freeze correction",
       "status": "diverged",
-      "ahead": 236,
+      "ahead": 238,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 583,
+      "changed_file_count_vs_source_merge_base": 584,
       "knowledge_surface": true
     },
     {
@@ -145,6 +145,18 @@
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 407,
+      "knowledge_surface": true
+    },
+    {
+      "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
+      "head": "cef6e5ed48bb69e064596b30a87a73c3e79a0763",
+      "head_committed_at": "2026-09-21T13:00:29-05:00",
+      "head_message": "state(n0): encode full-envelope foundation freeze rule",
+      "status": "ahead",
+      "ahead": 634,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 410,
       "knowledge_surface": true
     },
     {
@@ -401,14 +413,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "a6b8660578709beb628d63cff057f4056869c1cf",
-      "head_committed_at": "2026-09-21T11:42:33-05:00",
-      "head_message": "trace(fbm): record semantic localization package",
+      "head": "751eb3fc07ba176118d63a56cca6b5455473dd15",
+      "head_committed_at": "2026-09-21T13:01:18-05:00",
+      "head_message": "trace(fbm): record foundation freeze policy correction",
       "status": "diverged",
-      "ahead": 110,
+      "ahead": 112,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 109,
+      "changed_file_count_vs_source_merge_base": 111,
       "knowledge_surface": true
     },
     {
