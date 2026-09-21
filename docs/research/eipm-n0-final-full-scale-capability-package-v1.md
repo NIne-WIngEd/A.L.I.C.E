@@ -43,11 +43,14 @@ No previous full-scale subsystem is replaced by a convenience mock or reduced-wi
 
 The relation/factor semantic authority is now derived directly from the already-trained, ratified N0 semantic model.
 
-It combines three frozen views:
+It combines four frozen views:
 
 1. the trained joint prompt/candidate preference scorer;
 2. the trained semantic projection;
-3. a parameter-free token evidence matcher.
+3. the trained semantic-to-rationale principle-alignment surface, including the rationale projection;
+4. a parameter-free token evidence matcher.
+
+The fourth view matters because the original N0 teacher objective explicitly trained semantic candidate representations against rationale representations. The closure package now uses that trained surface rather than leaving it idle.
 
 There is no semantic-authority optimizer.
 
