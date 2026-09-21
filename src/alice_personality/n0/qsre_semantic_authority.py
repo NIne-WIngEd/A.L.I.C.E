@@ -4,7 +4,12 @@ import torch
 from torch import Tensor
 
 
-AUTHORITY_COMPONENTS = ("joint_preference", "semantic_projection", "token_evidence")
+AUTHORITY_COMPONENTS = (
+    "joint_preference",
+    "semantic_projection",
+    "principle_alignment",
+    "token_evidence",
+)
 
 
 def candidate_zscore(values: Tensor) -> Tensor:
@@ -28,18 +33,22 @@ def combine_authority_components(
     *,
     joint_preference: Tensor,
     semantic_projection: Tensor,
+    principle_alignment: Tensor,
     token_evidence: Tensor,
 ) -> Tensor:
+    shape = joint_preference.shape
     if (
-        joint_preference.shape != semantic_projection.shape
-        or joint_preference.shape != token_evidence.shape
+        semantic_projection.shape != shape
+        or principle_alignment.shape != shape
+        or token_evidence.shape != shape
     ):
         raise ValueError("frozen semantic authority component shape drift")
     return (
         candidate_zscore(joint_preference)
         + candidate_zscore(semantic_projection)
+        + candidate_zscore(principle_alignment)
         + candidate_zscore(token_evidence)
-    ) / 3.0
+    ) / 4.0
 
 
 def slice_relation_authority(
@@ -54,7 +63,7 @@ def slice_relation_authority(
         raise ValueError("relation_count must be positive")
     relation = cache_split["relation"]
     result = {}
-    for key in ("joint_preference", "semantic_projection"):
+    for key in ("joint_preference", "semantic_projection", "principle_alignment"):
         value = relation[key]
         if value.ndim != 3:
             raise ValueError(f"relation authority {key} must be [N,V,R]")
@@ -80,7 +89,7 @@ def slice_factor_authority(
     result: dict[str, dict[str, Tensor]] = {}
     for category, row in factors.items():
         result[category] = {}
-        for key in ("joint_preference", "semantic_projection"):
+        for key in ("joint_preference", "semantic_projection", "principle_alignment"):
             value = row[key]
             if value.ndim < 3:
                 raise ValueError(
