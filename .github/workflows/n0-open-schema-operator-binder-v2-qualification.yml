@@ -56,6 +56,8 @@ jobs:
           assert "all_logits" not in op
           assert "relation_selection_decoupled_from_stop_unknown" in op
           assert "event_distribution" in op
+          assert '"relation_logits": relation_logits' in op
+          assert "dense_relation_logits_exposed_for_trainability" in op
           assert "EVENT_CONTINUE" in op and "EVENT_STOP" in op and "EVENT_UNKNOWN" in op
           assert "schema_match_projected = self.project_semantic(schema.token_states)" in op
           assert "schema_match_summary" in op
@@ -72,6 +74,8 @@ jobs:
           assert "schema=full_schema" in p2
           assert "open_schema_training_query_labels_used" in p2
           assert "macro_class_nll" in p2
+          assert "macro_class_cross_entropy" in p2
+          assert 'relation_logits = model_output["relation_logits"]' in p2
           assert "macro_binary_factor_loss" in p2
           assert "schema_identity" in p2
           assert "--failed-p2-result" in p2
