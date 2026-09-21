@@ -321,6 +321,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             edge_relation_index=edge_relation_index,
             edge_valid_mask=edge_valid_mask,
             edge_support_weight=binder["edge_support_weight"],
+            support_available=binder["support_available"],
             edge_reliability=edge_reliability,
             edge_recency=edge_recency,
             edge_temporal_match=edge_temporal_match,
