@@ -298,18 +298,37 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
                 [edge_reliability, edge_recency, edge_temporal_match, edge_provenance_match],
                 dim=-1,
             )
-            structural = torch.cat(
+            effective_direction = torch.stack(
+                [
+                    effective_forward,
+                    effective_reverse,
+                    effective_bidir,
+                ],
+                dim=-1,
+            )
+            structural_prefix = torch.cat(
                 [
                     operator.role_distribution[:, :4],
                     operator.traversal_distribution[:, :3],
-                    step_direction[:, :3],
+                ],
+                dim=-1,
+            )[:, None, :].expand(batch, edges, -1)
+            structural_suffix = torch.cat(
+                [
                     step_modifier[:, :4],
                     operator.applicability[:, None],
                     operator.uncertainty[:, None],
                 ],
                 dim=-1,
+            )[:, None, :].expand(batch, edges, -1)
+            structural_edge = torch.cat(
+                [
+                    structural_prefix,
+                    effective_direction,
+                    structural_suffix,
+                ],
+                dim=-1,
             )
-            structural_edge = structural[:, None, :].expand(batch, edges, -1)
             edge_state = self.edge_update(
                 torch.cat(
                     [
@@ -521,6 +540,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "runtime_relation_symmetry": True,
             "symmetric_relation_direction_collapses_to_bidirectional": True,
             "symmetric_relation_endpoint_order_invariant": True,
+            "symmetric_relation_raw_direction_not_in_edge_features": True,
             "structural_factor_probabilities": True,
             "continuous_traversal_mixture": True,
             "step_conditioned_direction": True,
