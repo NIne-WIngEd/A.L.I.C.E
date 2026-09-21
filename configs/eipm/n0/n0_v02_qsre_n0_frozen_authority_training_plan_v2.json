@@ -363,10 +363,13 @@
     "authority_components": [
       "joint_prompt_candidate_preference_score",
       "shared_prompt_semantic_projection_cosine",
+      "trained_joint_semantic_to_rationale_principle_alignment",
       "parameter_free_token_evidence_score"
     ],
-    "authority_component_fusion": "equal_candidate_zscore_mean",
-    "trainable_operator_cannot_rewrite_relation_identity": true
+    "authority_component_fusion": "equal_four_surface_candidate_zscore_mean",
+    "trainable_operator_cannot_rewrite_relation_identity": true,
+    "trained_rationale_projection_reused": true,
+    "trained_principle_alignment_reused": true
   },
   "binder_architecture": {
     "module": "src/alice_personality/n0/qsre_production_binder_v2.py",
@@ -401,6 +404,12 @@
     "gradient": false,
     "optimizer": false,
     "matcher_training": false,
-    "p2_only_after_pass": true
+    "p2_only_after_pass": true,
+    "components": [
+      "joint_prompt_candidate_preference_score",
+      "shared_prompt_semantic_projection_cosine",
+      "trained_joint_semantic_to_rationale_principle_alignment",
+      "parameter_free_token_evidence_score"
+    ]
   }
 }
