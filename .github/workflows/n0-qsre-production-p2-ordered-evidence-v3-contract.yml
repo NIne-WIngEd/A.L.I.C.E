@@ -6,6 +6,8 @@ on:
       - "src/alice_personality/n0/qsre_production_operator_v3.py"
       - "tests/eipm/test_n0_qsre_production_operator_v3.py"
       - "configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json"
+      - "configs/eipm/n0/n0_v02_qsre_p2_v3_recovery_contract_v1.json"
+      - "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.60.json"
       - "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py"
       - "scripts/eipm/n0/qsre_production_training_utils.py"
       - ".github/workflows/n0-qsre-production-p2-ordered-evidence-v3-contract.yml"
@@ -38,6 +40,8 @@ jobs:
           from pathlib import Path
 
           plan=json.loads(Path("configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json").read_text())
+          recovery=json.loads(Path("configs/eipm/n0/n0_v02_qsre_p2_v3_recovery_contract_v1.json").read_text())
+          state=json.loads(Path("configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.60.json").read_text())
           source=Path("src/alice_personality/n0/qsre_production_operator_v3.py").read_text()
 
           assert plan["schema"]=="alice.eipm.n0.qsre-production-training-plan.v3"
@@ -69,5 +73,12 @@ jobs:
           assert "query_remaining" in source
           assert "coverage_steps" in source
           assert "hop_count_dependent_parameters" in source
+
+          assert recovery["source_evidence"]["localization_job"]==575957
+          assert recovery["v2_disposition"]["p2_v2_gpu_authorization_revoked"] is True
+          assert recovery["authorization"]["p2_v3_gpu_training"] is False
+          assert state["execution_policy"]["p2_v3_gpu_training_authorized"] is False
+          assert state["interpretation"]["relation_identity_order_primary_bottleneck"] is True
+          assert state["interpretation"]["active_survival_primary_bottleneck"] is False
           print("PASS_LOCALIZATION_BOUND_ORDERED_EVIDENCE_V3_CONTRACT")
           PY
