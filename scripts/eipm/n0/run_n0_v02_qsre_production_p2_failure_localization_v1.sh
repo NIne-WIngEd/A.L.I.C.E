@@ -21,6 +21,7 @@ export PYTHONPATH="$ROOT/src:$ROOT/scripts/eipm/n0${PYTHONPATH:+:$PYTHONPATH}"
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=true
+export RAYAN_UDOCKER_NVIDIA=0
 
 SOURCE="$WORKDIR/qsre-production-core-v1"
 RECOVERY="$WORKDIR/qsre-production-core-v1-stop-tail-recovery-v1"
