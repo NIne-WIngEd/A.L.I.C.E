@@ -112,6 +112,7 @@ def test_dynamic_structured_state_is_field_permutation_equivariant_and_descripto
     valid = torch.ones(2, 5, dtype=torch.bool)
     confidence = torch.rand(2, 5)
     missing = torch.zeros(2, 5)
+    metadata = torch.randn(2, 5, 3)
     type_bank = factor_schema(7, 31)
     provenance_bank = factor_schema(3, 32)
     type_idx = torch.tensor([[0,1,2,3,4],[4,3,2,1,0]])
@@ -126,7 +127,7 @@ def test_dynamic_structured_state_is_field_permutation_equivariant_and_descripto
             field_valid_mask=valid,
             field_confidence=confidence,
             field_missing=missing,
-            field_metadata=torch.randn(2, 5, 3),
+            field_metadata=metadata,
             descriptor_banks=banks,
             descriptor_indices=indices,
         )
@@ -137,6 +138,7 @@ def test_dynamic_structured_state_is_field_permutation_equivariant_and_descripto
             field_valid_mask=valid[:, perm],
             field_confidence=confidence[:, perm],
             field_missing=missing[:, perm],
+            field_metadata=metadata[:, perm],
             descriptor_banks=banks,
             descriptor_indices={k:v[:, perm] for k,v in indices.items()},
         )
