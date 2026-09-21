@@ -151,6 +151,7 @@ class DynamicEvidenceViewV2(nn.Module):
         field_reliability: Tensor,
         relation_schema_state: Tensor,
         relation_mass: Tensor,
+        semantic_activity: Tensor,
         operator_state: Tensor,
     ) -> dict[str, Tensor]:
         if query_hidden_states.ndim != 4:
@@ -195,6 +196,15 @@ class DynamicEvidenceViewV2(nn.Module):
         relations = relation_schema_state.size(1)
         if relation_mass.shape != (batch, relations):
             raise ValueError("relation_mass shape drift")
+        if semantic_activity.shape != (batch,):
+            raise ValueError("semantic_activity must be [B]")
+        if bool(
+            (
+                (semantic_activity < -1.0e-6)
+                | (semantic_activity > 1.0 + 1.0e-6)
+            ).any()
+        ):
+            raise ValueError("semantic_activity must stay inside [0,1]")
         if operator_state.shape != (batch, self.config.model_dim):
             raise ValueError("operator_state shape drift")
 
@@ -210,6 +220,10 @@ class DynamicEvidenceViewV2(nn.Module):
             "br,brd->bd",
             relation_mass.float(),
             self.relation_projection(relation_schema_state.float()),
+        )
+        expected_relation = (
+            expected_relation
+            * semantic_activity[:, None].to(expected_relation.dtype)
         )
         operator = self.operator_projection(operator_state.float())
 
@@ -268,6 +282,7 @@ class DynamicEvidenceViewV2(nn.Module):
             "selector_logit": selector_logit,
             "late_interaction": late,
             "evidence_summary": evidence_summary,
+            "semantic_activity": semantic_activity,
             "evidence_tokens": evidence_field_state,
             "evidence_token_mask": field_valid_mask,
         }
@@ -289,4 +304,5 @@ class DynamicEvidenceViewV2(nn.Module):
             "field_token_count_ceiling": None,
             "field_count_ceiling": None,
             "relation_count_ceiling": None,
+            "soft_relation_context_activity_gate": True,
         }
