@@ -1,0 +1,171 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-supersession-map.v1",
+  "status": "PRECOMMITTED_SUCCESSOR_LINEAGE_NO_GRADIENT",
+  "date": "2026-09-21",
+  "rule": "Historical artifacts remain immutable evidence. Only explicitly listed initialization or regression roles may cross into the new full-envelope lineage; no historical PASS checkpoint is silently treated as final authority.",
+  "historical_to_successor": {
+    "semantic_v02": {
+      "historical": "alice-n0-semantic-v0.2 targeted-repair-v0.1/step-00000080",
+      "successor_role": "shared semantic backbone initialization",
+      "weight_reuse": "INITIALIZATION_ALLOWED",
+      "frozen_authority": false,
+      "permanent_freeze": false,
+      "must_coadapt": true
+    },
+    "structured_state_v01": {
+      "historical": "src/alice_personality/n0/structured_state.py + selected historical checkpoint",
+      "successor": "src/alice_personality/n0/dynamic_structured_state_v2.py",
+      "weight_reuse": "FORBIDDEN_INTERFACE_CHANGED",
+      "preserve_mechanics": [
+        "permutation_safe_set_processing",
+        "confidence",
+        "missingness",
+        "structured_field_state"
+      ],
+      "removed_weaknesses": [
+        "fixed_category_id_semantics",
+        "frozen_parent_semantic_target_authority"
+      ]
+    },
+    "evidence_view_adapter_v01": {
+      "historical": "src/alice_personality/n0/evidence_view_adapter.py",
+      "successor": "src/alice_personality/n0/dynamic_evidence_view_v2.py",
+      "weight_reuse": "FORBIDDEN_INTERFACE_CHANGED",
+      "preserve_mechanics": [
+        "non_destructive_evidence_specialization",
+        "permutation_safe_field_view"
+      ],
+      "removed_weaknesses": [
+        "single_pooled_frozen_query_bottleneck",
+        "parent_selector_authority"
+      ]
+    },
+    "dual_endpoint_evidence_graph": {
+      "historical": "src/alice_personality/n0/evidence_graph_dual_endpoint.py",
+      "successor": "src/alice_personality/n0/dynamic_schema_evidence_graph_v1.py",
+      "historical_selected_graph_sha256": "3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f",
+      "weight_reuse": "FORBIDDEN_RELATION_SEMANTIC_INTERFACE_CHANGED",
+      "preserve_mechanics": [
+        "directed_messages",
+        "source_target_distinction",
+        "dual_endpoint_read",
+        "causal_endpoint_repair_lesson"
+      ],
+      "removed_weaknesses": [
+        "fixed_relation_id_semantic_embedding",
+        "unconditioned_runtime_relation_ontology"
+      ],
+      "historical_graph_role": "causal evidence and initialization study only"
+    },
+    "cross_context_fusion_v02": {
+      "historical": "src/alice_personality/n0/cross_context_fusion.py and anchored repair checkpoint",
+      "successor": "src/alice_personality/n0/dynamic_cross_context_fusion_v3.py",
+      "weight_reuse": "FORBIDDEN_VIEW_INTERFACE_CHANGED",
+      "preserve_mechanics": [
+        "exact_source_anchor",
+        "cross_view_attention",
+        "missing_view_masking",
+        "reliability_conditioning"
+      ],
+      "removed_weaknesses": [
+        "checkpoint_sized_view_identity",
+        "fixed_three_view_semantic_interface"
+      ]
+    },
+    "adaptive_latent_pool_v02": {
+      "historical": "src/alice_personality/n0/adaptive_multi_view_latent_pool_v0_2.py step360 candidate",
+      "successor": "src/alice_personality/n0/dynamic_competitive_latent_pool_v3.py",
+      "historical_step360_final_authority": false,
+      "weight_reuse": "FORBIDDEN_SLOT_VIEW_INTERFACE_CHANGED",
+      "preserve_mechanics": [
+        "competitive_item_ownership",
+        "multi_slot_noncollapse",
+        "source_and_contextualized_channels"
+      ],
+      "removed_weaknesses": [
+        "fixed_slot_identity_table",
+        "fixed_slot_count_parameter_axis",
+        "fixed_view_count_assumption"
+      ]
+    },
+    "qsre_t1": {
+      "historical": "src/alice_personality/n0/qsre_t1_executor.py",
+      "successor": "src/alice_personality/n0/semantic_operator_foundation.py + src/alice_personality/n0/qsre_full_envelope_executor_v1.py",
+      "weight_reuse": "FORBIDDEN_ORACLE_AND_FIXED_ID_SCAFFOLD",
+      "preserve_mechanics": [
+        "directed_relational_execution",
+        "path_frontier",
+        "support_locality"
+      ],
+      "historical_role": "causal scaffold only"
+    },
+    "qsre_t2": {
+      "historical": "T2 operator-learning experiments",
+      "successor": "src/alice_personality/n0/semantic_operator_foundation.py",
+      "weight_reuse": "FORBIDDEN_FIXED_SLOT_CLASS_SCAFFOLD",
+      "historical_role": "negative and localization evidence only"
+    },
+    "production_core_v1": {
+      "historical": "src/alice_personality/n0/qsre_production_core.py",
+      "successor": "src/alice_personality/n0/full_envelope_structural_types.py + src/alice_personality/n0/semantic_operator_qsre_adapter.py + src/alice_personality/n0/qsre_full_envelope_executor_v1.py",
+      "weight_reuse": "FORBIDDEN_SEMANTIC_FACTOR_INTERFACE_CHANGED",
+      "preserve_mechanics": [
+        "dynamic_relation_cardinality",
+        "shared_recurrent_execution",
+        "structural_stop",
+        "continuous_hypotheses",
+        "exact_fallback"
+      ],
+      "legacy_code_dependency_allowed": false
+    },
+    "binder_v2": {
+      "historical": "src/alice_personality/n0/qsre_production_binder_v2.py",
+      "successor": "src/alice_personality/n0/qsre_full_envelope_binder_v1.py",
+      "weight_reuse": "FORBIDDEN_SEMANTIC_INPUT_INTERFACE_CHANGED",
+      "preserve_mechanics": [
+        "first_exact_sparsity_boundary",
+        "adaptive_zero_one_many_support",
+        "no_fixed_topk",
+        "exact_type_constraints"
+      ],
+      "removed_weaknesses": [
+        "final_layer_only_query_read",
+        "single_layer_field_read",
+        "legacy_structural_type_dependency"
+      ]
+    },
+    "final_validation_v1": {
+      "historical": "configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json",
+      "successor": "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+      "historical_result_rewritten": false,
+      "future_closure_authority": false,
+      "role": "historical regression evidence only"
+    }
+  },
+  "new_components": {
+    "full_stack": "src/alice_personality/n0/n0_full_envelope_stack_v1.py",
+    "public_behavioral_readout": "src/alice_personality/n0/public_judgment_probe_v1.py",
+    "semantic_operator_behavioral_objective": "src/alice_personality/n0/semantic_operator_objectives_v1.py",
+    "full_fabric_behavioral_objective": "src/alice_personality/n0/full_envelope_behavioral_objectives_v1.py",
+    "macro_loss_balancer": "src/alice_personality/n0/full_envelope_loss_balancer_v1.py",
+    "long_context_virtualizer": "src/alice_personality/n0/semantic_context_virtualizer_v1.py",
+    "bounded_memory_late_interaction": "src/alice_personality/n0/chunked_late_interaction.py"
+  },
+  "forbidden_new_lineage_dependencies": [
+    "alice_personality.n0.qsre_production_core",
+    "alice_personality.n0.qsre_production_binder_v2",
+    "alice_personality.n0.qsre_t1_executor",
+    "alice_personality.n0.evidence_view_adapter",
+    "alice_personality.n0.evidence_graph",
+    "alice_personality.n0.cross_context_fusion",
+    "alice_personality.n0.adaptive_multi_view_latent_pool_v0_2"
+  ],
+  "authorization": {
+    "static_lineage_audit": true,
+    "old_weight_promotion": false,
+    "optimizer": false,
+    "gradient": false,
+    "gpu_training": false,
+    "n0_complete": false
+  }
+}
