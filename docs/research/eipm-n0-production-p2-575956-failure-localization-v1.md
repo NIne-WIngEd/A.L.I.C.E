@@ -143,3 +143,52 @@ After the diagnostic:
 - **All of the above occur:** keep the factorized v2 corrections but do not treat them as sufficient until ordered-step differentiation is explicitly qualified.
 
 This diagnosis does not authorize a P2 rerun. It exists to prevent another GPU architecture loop.
+
+
+## 7. Post-run localization result — job 575957
+
+Job 575957 completed the zero-gradient diagnostic successfully.
+
+Receipt SHA-256:
+
+`da87d9436a7d4a928e45ea65582ab432c9d43254e2d1cbbaa8235ad28627e55b`
+
+Key evidence:
+
+- active-mask exact: 0.952381 on both views;
+- relation identity exact ignoring activity: 0.505952 / 0.488095;
+- one-hop identity exact: 0.558333 / 0.529167;
+- two-hop identity exact: 0.083333 / 0.104167;
+- three-hop identity exact: 0.0 / 0.0;
+- open-schema identity exact: 0.171875 / 0.09375;
+- repeated-relation collapse on multi-step rows: 0.328125 on both views;
+- UNKNOWN terminal win rate: 0.0;
+- relation mass on supervised positive steps: 1.0 at each supervised step;
+- identity-correct but activity-wrong rate: only 0.047619.
+
+This decisively rejects the hypothesis that cumulative active-mass survival is the primary cause of the positive-path failure. For supervised one/two/three-hop rows, activity is effectively correct while relation identity/order collapses with path length.
+
+The primary failure is therefore ordered relation identity extraction.
+
+The concurrent open-schema and UNKNOWN failures remain real. They are not the explanation for the multi-hop collapse, but they must be corrected in the same architecture boundary before another GPU run.
+
+The v2 architecture already addresses:
+
+- relation versus STOP/UNKNOWN competition;
+- shared query/runtime-schema matching;
+- full runtime candidate exposure;
+- factor-specific query states;
+- macro-balanced supervision.
+
+However, v2 still re-attends the complete query at every recurrent relation step. Job 575957 provides enough evidence to revoke the unrun v2 GPU authorization rather than spending a P100 run to rediscover the remaining order failure.
+
+Production P2 v3 therefore adds relation-grounded query-token evidence consumption. It keeps a runtime coverage state across recurrent relation steps. The state is token-position based, shared across semantic layers, has no hop-specific learned parameters, and does not assume left-to-right relation order.
+
+### Updated decision
+
+- P2 v1: rejected by valid learned-model evidence.
+- P2 v2: preserved as useful static architecture work; GPU run revoked before execution.
+- P2 v3: static qualification required.
+- P2 v3 GPU: not authorized yet.
+- Next gate: one zero-gradient real-artifact CPU runtime qualification.
+- If that gate passes: exactly one P100 P2-v3 causal run may be separately authorized.
