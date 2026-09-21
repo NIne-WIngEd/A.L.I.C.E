@@ -99,7 +99,6 @@ class N0FullEnvelopeStackV1(nn.Module):
                 semantic_dim=d,
                 model_dim=d,
                 num_hidden_states=self.config.num_hidden_states,
-                num_attention_heads=self.config.num_attention_heads,
                 dropout=self.config.dropout,
             )
         )
@@ -109,7 +108,6 @@ class N0FullEnvelopeStackV1(nn.Module):
                 semantic_dim=d,
                 model_dim=d,
                 num_hidden_states=self.config.num_hidden_states,
-                num_attention_heads=self.config.num_attention_heads,
                 num_layers=self.config.structured_layers,
                 dropout=self.config.dropout,
             )
@@ -153,7 +151,6 @@ class N0FullEnvelopeStackV1(nn.Module):
             DynamicCrossContextFusionConfig(
                 semantic_dim=d,
                 model_dim=d,
-                num_attention_heads=self.config.num_attention_heads,
                 recurrent_refinement_steps=2,
                 dropout=self.config.dropout,
             )
