@@ -54,7 +54,7 @@ def load_parents(*,p1_path:Path,p2_path:Path,config,device):
     p2=torch.load(p2_path,map_location="cpu")
     schema_encoder=QSREProductionSchemaEncoder(config)
     executor=QSREProductionExecutor(config)
-    operator=QSREProductionOperatorInducer(config)
+    operator=QSREProductionOperatorInducerV2(config)
     schema_encoder.load_state_dict(p1["schema_encoder"],strict=True)
     executor.load_state_dict(p1["executor"],strict=True)
     operator.load_state_dict(p2["operator"],strict=True)
