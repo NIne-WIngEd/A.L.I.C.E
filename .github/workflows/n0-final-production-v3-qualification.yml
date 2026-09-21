@@ -1,0 +1,259 @@
+name: n0-final-production-v3-qualification
+
+on:
+  push:
+    paths:
+      - "src/alice_personality/n0/qsre_production_operator_v3.py"
+      - "src/alice_personality/n0/qsre_production_binder_v2.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py"
+      - "scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py"
+      - "scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py"
+      - "scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py"
+      - "scripts/eipm/n0/qsre_production_training_utils.py"
+      - "scripts/eipm/n0/run_n0_v02_qsre_final_production_v3.sh"
+      - "scripts/eipm/n0/magnolia_p100_n0_v02_qsre_final_production_v3.sbatch"
+      - "scripts/eipm/n0/magnolia_udocker_exec.sh"
+      - "configs/eipm/n0/n0_v02_qsre_production_core_v1.json"
+      - "configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json"
+      - "configs/eipm/n0/n0_v02_qsre_final_production_recovery_contract_v1.json"
+      - "tests/eipm/test_n0_qsre_production_operator_v3.py"
+      - "tests/eipm/test_n0_qsre_production_binder_v2.py"
+      - "tests/eipm/test_n0_qsre_production_training_v3.py"
+      - ".github/workflows/n0-final-production-v3-qualification.yml"
+  workflow_dispatch:
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src:scripts/eipm/n0
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install CPU qualification dependencies
+        run: python -m pip install -q torch pytest safetensors
+
+      - name: Compile final N0 Production v3 stack
+        run: |
+          python -m py_compile             src/alice_personality/n0/qsre_production_operator_v3.py             src/alice_personality/n0/qsre_production_binder_v2.py             scripts/eipm/n0/qsre_production_training_utils.py             scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py             scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py             scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py             scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py
+          bash -n scripts/eipm/n0/run_n0_v02_qsre_final_production_v3.sh
+          bash -n scripts/eipm/n0/magnolia_p100_n0_v02_qsre_final_production_v3.sbatch
+          bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
+
+      - name: Run final operator binder executor mechanics
+        run: |
+          pytest -q             tests/eipm/test_n0_qsre_production_operator_v3.py             tests/eipm/test_n0_qsre_production_binder_v2.py             tests/eipm/test_n0_qsre_production_training_v3.py             tests/eipm/test_n0_qsre_production_core_v1.py             tests/eipm/test_n0_qsre_production_training_utils.py
+
+      - name: Prove continuous operator and sparse structural boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          op=Path("src/alice_personality/n0/qsre_production_operator_v3.py").read_text()
+          binder=Path("src/alice_personality/n0/qsre_production_binder_v2.py").read_text()
+          core=json.load(open("configs/eipm/n0/n0_v02_qsre_production_core_v1.json"))
+          plan=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json"))
+
+          assert "masked_sparsemax" not in op
+          assert "relation_distribution = torch.softmax" in op
+          assert '"continuous_relation_hypotheses": True' in op
+          assert '"relation_sparsity_before_structural_binding": False' in op
+          assert '"exact_sparsity_owned_by_binder": True' in op
+
+          assert "masked_sparsemax" in binder
+          assert "edge_support_weight" in binder
+          assert '"exact_zero_sparse_support": True' in binder
+          assert '"fixed_top_k": False' in binder
+          assert '"operator_continuous_state_not_support_authority": True' in binder
+          assert "self.operator_projection" not in binder
+
+          oi=core["core"]["operator_inducer"]
+          bi=core["core"]["binder"]
+          assert oi["continuous_plural_relation_hypotheses"] is True
+          assert oi["exact_relation_sparsity_before_binding"] is False
+          assert bi["exact_sparsity_is_first_hard_selection_boundary"] is True
+          assert bi["operator_continuous_state_support_authority"] is False
+
+          assert plan["operator_architecture"]["continuous_relation_hypotheses_until_structural_binding"] is True
+          assert plan["operator_architecture"]["relation_sparsity_before_structural_binding"] is False
+          assert plan["binder_architecture"]["exact_zero_variable_support"] is True
+          print("PASS_FINAL_N0_CONTINUOUS_OPERATOR_SPARSE_STRUCTURE_BOUNDARY")
+          PY
+
+      - name: Prove open-schema relations do not enter gradient
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          p2=Path("scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py").read_text()
+          p3=Path("scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py").read_text()
+          plan=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json"))
+
+          assert "core_schema = subset_schema(full_schema, core_count)" in p2
+          assert "encoded_core = schema_encoder(core_schema)" in p2
+          assert "schema=core_schema" in p2
+          assert "schema=full_schema" in p2
+          assert "schema_identity_logits(core_schema)" in p2
+          assert "schema_identity_logits(full_schema)" not in p2
+          assert '"open_schema_relation_descriptions_used_in_gradient": False' in p2
+          assert '"core_schema_only_query_training": True' in p2
+
+          assert "core_schema=subset_schema(full_schema,core_count)" in p3.replace(" ","")
+          assert "encoded_train=schema_encoder(core_schema)" in p3.replace(" ","")
+          assert "encoded_dev=schema_encoder(full_schema)" in p3.replace(" ","")
+          assert "schema=core_schema" in p3
+          assert '"open_schema_relation_descriptions_used_in_gradient":False' in p3.replace(" ","")
+          assert '"core_schema_only_binder_training":True' in p3.replace(" ","")
+
+          assert plan["stages"]["P2"]["training"]["open_schema_relation_descriptions_used_in_gradient"] is False
+          assert plan["stages"]["P3"]["training"]["open_schema_relation_descriptions_used_in_gradient"] is False
+          assert plan["architecture_closure"]["p2_dynamic_schema_expansion_is_true_zero_shot_runtime_test"] is True
+          print("PASS_FINAL_N0_TRUE_ZERO_SHOT_SCHEMA_EXPANSION_BOUNDARY")
+          PY
+
+      - name: Prove final plan did not tune compute or gates post hoc
+        run: |
+          python - <<'PY'
+          import json
+
+          base=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v1.json"))
+          final=json.load(open("configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json"))
+
+          assert base["model"]==final["model"]
+          assert base["curriculum_sha256"]==final["curriculum_sha256"]
+          for stage in ("P2","P3"):
+              assert base["stages"][stage]["optimizer"]==final["stages"][stage]["optimizer"]
+              for key in (
+                  "seed","batch_size","max_steps","eval_every",
+                  "save_every","operator_runtime_max_steps",
+              ):
+                  assert base["stages"][stage]["training"][key]==final["stages"][stage]["training"][key], (stage,key)
+              assert base["stages"][stage]["eligibility"]==final["stages"][stage]["eligibility"]
+
+          assert final["governance"]["learning_rate_search"] is False
+          assert final["governance"]["step_search"] is False
+          assert final["governance"]["width_search"] is False
+          assert final["compute_precommit"]["batch_size_search_authorized"] is False
+          print("PASS_FINAL_N0_NO_POSTHOC_COMPUTE_OR_GATE_TUNING")
+          PY
+
+      - name: Prove P1 reuse and frozen final validation preservation
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_final_production_v3.sh").read_text()
+          contract=json.load(open("configs/eipm/n0/n0_v02_qsre_final_production_recovery_contract_v1.json"))
+
+          assert "P1_EXPECTED_SHA=\"91f2c78dcc35967064189af4a7110cdee83e5652fb037d3d88f58500ac3aaab9\"" in runner
+          assert "train_n0_v02_qsre_production_p1" not in runner
+          assert "train_n0_v02_qsre_production_p2_v1.py" not in runner
+          assert "train_n0_v02_qsre_production_p2_v2.py" not in runner
+          assert "train_n0_v02_qsre_production_p2_v3.py" in runner
+          assert "train_n0_v02_qsre_production_p3_v3.py" in runner
+          assert "eval_n0_v02_qsre_production_p4_v3.py" in runner
+          assert "eval_n0_v02_final_self_validation_v3.py" in runner
+
+          assert "build_n0_v02_final_self_validation" not in runner
+          assert "prepare_n0_v02_final_self_validation_cache" not in runner
+          assert "freeze_n0_v02_final_self_validation" not in runner
+          assert 'FROZEN="$SOURCE/final-frozen"' in runner
+          assert "frozen_final_validation_reused=true" in runner
+
+          assert contract["compute"]["p1_retrain"] is False
+          assert contract["compute"]["p2_v1_retrain"] is False
+          assert contract["compute"]["p2_v2_run"] is False
+          assert contract["compute"]["p2_v3_gpu_runs_authorized"]==1
+          assert contract["validation"]["reuse_original_frozen_final_validation"] is True
+          assert contract["validation"]["rebuild_final_validation"] is False
+          print("PASS_FINAL_N0_P1_REUSE_AND_FROZEN_HOLDOUT_PRESERVATION")
+          PY
+
+      - name: Qualify final runner CLI and no-oracle evaluation path
+        run: |
+          python - <<'PY'
+          import ast
+          import re
+          from pathlib import Path
+
+          runner=Path("scripts/eipm/n0/run_n0_v02_qsre_final_production_v3.sh").read_text()
+          sbatch=Path("scripts/eipm/n0/magnolia_p100_n0_v02_qsre_final_production_v3.sbatch").read_text()
+          udocker=Path("scripts/eipm/n0/magnolia_udocker_exec.sh").read_text()
+
+          assert '#SBATCH --gres=gpu:p100:1' in sbatch
+          assert "ALICE_N0_EXPECTED_REVISION" in sbatch
+          assert "ALICE_N0_EXPECTED_REVISION" in udocker
+          assert "run_n0_v02_qsre_final_production_v3.sh" in sbatch
+
+          scripts=[
+              "train_n0_v02_qsre_production_p2_v3.py",
+              "train_n0_v02_qsre_production_p3_v3.py",
+              "eval_n0_v02_qsre_production_p4_v3.py",
+              "eval_n0_v02_final_self_validation_v3.py",
+          ]
+
+          def required_flags(path):
+              tree=ast.parse(Path(path).read_text())
+              flags=set()
+              for node in ast.walk(tree):
+                  if not isinstance(node,ast.Call):
+                      continue
+                  if not isinstance(node.func,ast.Attribute) or node.func.attr!="add_argument":
+                      continue
+                  if not node.args or not isinstance(node.args[0],ast.Constant):
+                      continue
+                  flag=node.args[0].value
+                  if not isinstance(flag,str) or not flag.startswith("--"):
+                      continue
+                  if any(
+                      kw.arg=="required"
+                      and isinstance(kw.value,ast.Constant)
+                      and bool(kw.value.value)
+                      for kw in node.keywords
+                  ):
+                      flags.add(flag)
+              return flags
+
+          for script in scripts:
+              lines=[
+                  line for line in runner.splitlines()
+                  if script in line and line.lstrip().startswith("python ")
+              ]
+              assert len(lines)==1, (script,len(lines))
+              present=set(re.findall(r'--[a-z0-9-]+',lines[0]))
+              missing=required_flags("scripts/eipm/n0/"+script)-present
+              assert not missing, (script,sorted(missing))
+
+          p4=Path("scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py").read_text()
+          final=Path("scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py").read_text()
+
+          assert 'focus=bound["focus_field_weight"]' in p4
+          assert 'focus=split["focus_field_weight"]' not in p4
+          assert 'edge_support_weight=split["oracle_edge_support"]' not in p4
+          assert "train_n0_v02_qsre_production_p3_v3" in p4
+          assert "train_n0_v02_qsre_production_p3_v3" in final
+          assert "single_frozen_validation" in final
+          assert "threshold_changed_after_results" in final
+          print("PASS_FINAL_N0_RUNNER_AND_NO_ORACLE_RUNTIME")
+          PY
+
+      - name: Prove final-only schema remains outside Production gradients
+        run: |
+          python - <<'PY'
+          import json
+
+          prod=json.load(open("configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json"))
+          final=json.load(open("configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json"))
+          contract=json.load(open("configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json"))
+
+          prod_keys={r["key"] for r in prod["relations"]}
+          final_keys={r["key"] for r in final["relations"]}
+          final_only=set(contract["corpus"]["final_only_relation_keys"])
+          assert final_only.isdisjoint(prod_keys)
+          assert final_only <= final_keys
+          assert final["governance"]["final_validation_relations_excluded_from_p1_p2_p3"] is True
+          print("PASS_FINAL_N0_UNSEEN_RELATION_HOLDOUT")
+          PY
