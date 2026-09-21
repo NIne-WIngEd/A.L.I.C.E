@@ -5,6 +5,12 @@ ROOT="${ALICE_N0_REPO_ROOT:?ALICE_N0_REPO_ROOT is required}"
 WORKDIR="${ALICE_N0_WORKDIR:?ALICE_N0_WORKDIR is required}"
 EXPECTED="${ALICE_N0_EXPECTED_REVISION:?ALICE_N0_EXPECTED_REVISION is required}"
 P1_EXPECTED_SHA="91f2c78dcc35967064189af4a7110cdee83e5652fb037d3d88f58500ac3aaab9"
+SEMANTIC_EXPECTED_SHA="6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43"
+STRUCTURED_EXPECTED_SHA="77e9793f50bf1ada2f5f22b59e5cd023668af9392921886102fbdc3b7fee186b"
+ADAPTER_EXPECTED_SHA="50eeeea3dfff5b6bddaa8da667b6b6c2f917dc668b1acd0410923822ae5ad2df"
+GRAPH_EXPECTED_SHA="3ae08aa2fc2c46ed74a47792310c6c2bf202fad800549cecc36c5365523dc47f"
+FUSION_EXPECTED_SHA="4d51494beb788f74ddc03590da05ea00f0e36574294649c2cd5d438f9472e577"
+LATENT_EXPECTED_SHA="503d4064df6258d3a1bc0edeae17888cbeb4fb67e07ad7e27042f785ed092ba4"
 ORIGINAL_PRODUCTION_REVISION="b32fabe49f206c2d71e17df5197a62b2a37c8c43"
 
 cd "$ROOT"
@@ -82,7 +88,7 @@ SEMANTIC="$WORKDIR/targeted-repair-v0.1/checkpoints/step-00000080/alice_n0_v02.s
 STRUCTURED="$WORKDIR/structured-state-pilot-v0.1/step-00000080"
 SPECIALIST="$WORKDIR/evidence-graph-specialist-v0.1/specialized_expanded_640x3_graph512x2/step-00000080"
 ADAPTER="$SPECIALIST/evidence_view_adapter.safetensors"
-GRAPH="$WORKDIR/relation-repair-v0.1/step-00000080/evidence_graph_dual_endpoint.safetensors"
+GRAPH="$WORKDIR/relation-endpoint-repair-v0.2/training/step-00000200/evidence_graph_dual_endpoint.safetensors"
 FUSION="$WORKDIR/cross-context-fusion-repair-training-v0.2/repair-step-00000240"
 LATENT="$WORKDIR/adaptive-multi-view-latent-pool-training-v0.2.1/step-00000360/adaptive_multi_view_latent_pool_v0_2.safetensors"
 
@@ -93,6 +99,25 @@ do
     exit 94
   fi
 done
+
+verify_sha256() {
+  local path="$1"
+  local expected="$2"
+  local label="$3"
+  local actual
+  actual="$(sha256sum "$path" | awk '{print $1}')"
+  if [[ "$actual" != "$expected" ]]; then
+    echo "STOP: $label SHA-256 drift actual=$actual expected=$expected path=$path" >&2
+    exit 95
+  fi
+}
+
+verify_sha256 "$SEMANTIC" "$SEMANTIC_EXPECTED_SHA" "semantic checkpoint"
+verify_sha256 "$STRUCTURED/structured_state.safetensors" "$STRUCTURED_EXPECTED_SHA" "structured-state checkpoint"
+verify_sha256 "$ADAPTER" "$ADAPTER_EXPECTED_SHA" "evidence adapter"
+verify_sha256 "$GRAPH" "$GRAPH_EXPECTED_SHA" "selected repaired evidence graph"
+verify_sha256 "$FUSION/cross_context_fusion.safetensors" "$FUSION_EXPECTED_SHA" "fusion checkpoint"
+verify_sha256 "$LATENT" "$LATENT_EXPECTED_SHA" "latent-pool checkpoint"
 
 python - "$P1_RESULT" "$P1_ROOT" "$FAILED_P2_RESULT" "$SEM_V2_RESULT"   "$FINAL_FREEZE" "$ORIGINAL_PRODUCTION_REVISION" "$P1_EXPECTED_SHA"   "$PLAN" "$AUTH_PLAN" "$META" "$PROD_SCHEMA_JSON" "$FINAL_SCHEMA_JSON" \
   "$PROD_SCHEMA_CACHE" "$FINAL_SCHEMA_CACHE" "$FULL_SCALE_PACKAGE" <<'PY'
@@ -225,6 +250,7 @@ echo "width_search=false"
 echo "batch_size_search=false"
 echo "threshold_change=false"
 echo "private_identity_gradient=false"
+echo "selected_repaired_graph_sha256=$GRAPH_EXPECTED_SHA"
 
 echo "===== P2A: ZERO-GRADIENT FROZEN SEMANTIC AUTHORITY ====="
 P2A="$RUN_ROOT/p2a"
