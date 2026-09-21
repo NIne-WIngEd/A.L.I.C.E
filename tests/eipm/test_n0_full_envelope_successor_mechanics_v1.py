@@ -900,3 +900,95 @@ def test_adapter_allows_semantic_only_factor_banks_without_structural_opcode_map
     assert report["semantic_only_factor_banks_supported"] is True
     assert report["structural_factor_mapping_may_be_subset_of_semantic_banks"] is True
     assert report["runtime_semantic_factor_bank_ceiling"] is None
+
+
+def test_structured_descriptor_bank_count_does_not_rescale_duplicate_semantics() -> None:
+    torch.manual_seed(151)
+    model = DynamicStructuredStateV2(
+        DynamicStructuredStateConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            num_attention_heads=4,
+            num_layers=1,
+            continuous_metadata_dim=3,
+            dropout=0.0,
+        )
+    ).eval()
+    fields = torch.randn(1,4,3,5,24)
+    token_mask = torch.ones(1,4,5,dtype=torch.bool)
+    valid = torch.ones(1,4,dtype=torch.bool)
+    confidence = torch.ones(1,4)
+    missing = torch.zeros(1,4)
+    metadata = torch.zeros(1,4,3)
+    bank = factor_schema(4,152)
+    index = torch.tensor([[0,1,2,3]])
+    with torch.no_grad():
+        one = model(
+            field_hidden_states=fields,
+            field_token_mask=token_mask,
+            field_valid_mask=valid,
+            field_confidence=confidence,
+            field_missing=missing,
+            field_metadata=metadata,
+            descriptor_banks={"a":bank},
+            descriptor_indices={"a":index},
+        )
+        duplicate = model(
+            field_hidden_states=fields,
+            field_token_mask=token_mask,
+            field_valid_mask=valid,
+            field_confidence=confidence,
+            field_missing=missing,
+            field_metadata=metadata,
+            descriptor_banks={"a":bank,"b":bank},
+            descriptor_indices={"a":index,"b":index},
+        )
+    assert torch.allclose(
+        one["field_states"],
+        duplicate["field_states"],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    report=model.parameter_report()
+    assert report["descriptor_bank_count_normalized"] is True
+    assert report["global_static_layer_mixture"] is False
+
+
+def test_reopened_structured_evidence_and_binder_have_no_global_static_layer_logits() -> None:
+    structured = DynamicStructuredStateV2(
+        DynamicStructuredStateConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            num_attention_heads=4,
+            num_layers=1,
+            continuous_metadata_dim=3,
+            dropout=0.0,
+        )
+    )
+    from alice_personality.n0.dynamic_evidence_view_v2 import (
+        DynamicEvidenceViewConfig,
+        DynamicEvidenceViewV2,
+    )
+    evidence = DynamicEvidenceViewV2(
+        DynamicEvidenceViewConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            dropout=0.0,
+        )
+    )
+    binder = FullEnvelopeQSREBinderV1(
+        FullEnvelopeBinderConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            edge_metadata_dim=4,
+        )
+    )
+    for module in (structured,evidence,binder):
+        names={name for name,_ in module.named_parameters()}
+        assert "layer_logits" not in names
+        report=module.parameter_report()
+        assert report["global_static_layer_mixture"] is False
