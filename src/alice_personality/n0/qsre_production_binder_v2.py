@@ -34,15 +34,13 @@ class QSREProductionBinderV2(nn.Module):
             d,
             bias=False,
         )
-        self.operator_projection = nn.Linear(d, d, bias=False)
-
         self.focus_score = nn.Sequential(
             nn.Linear(2 * d + 1, d),
             nn.GELU(),
             nn.Linear(d, 1),
         )
         self.edge_score = nn.Sequential(
-            nn.Linear(4 * d + 7, 2 * d),
+            nn.Linear(3 * d + 7, 2 * d),
             nn.GELU(),
             nn.Linear(2 * d, 1),
         )
@@ -51,7 +49,6 @@ class QSREProductionBinderV2(nn.Module):
             nn.init.eye_(self.semantic_projection.weight)
         else:
             nn.init.orthogonal_(self.semantic_projection.weight)
-        nn.init.xavier_uniform_(self.operator_projection.weight)
         for head in (self.focus_score, self.edge_score):
             final = head[-1]
             assert isinstance(final, nn.Linear)
@@ -362,9 +359,6 @@ class QSREProductionBinderV2(nn.Module):
             edges,
             -1,
         )
-        op = self.operator_projection(
-            operator.continuous_state
-        )[:, None, :].expand(batch, edges, -1)
         scalar = torch.stack(
             [
                 edge_relation_mass,
@@ -382,7 +376,6 @@ class QSREProductionBinderV2(nn.Module):
                 q,
                 source_state,
                 target_state,
-                op,
                 scalar,
             ],
             dim=-1,
@@ -477,7 +470,8 @@ class QSREProductionBinderV2(nn.Module):
             "exact_zero_sparse_support": True,
             "support_strength_not_simplex_cardinality_limited": True,
             "schema_type_compatibility": True,
-            "relation_semantics_owned_by_operator": True,
+            "relation_semantics_owned_by_operator_relation_mass": True,
+            "operator_continuous_state_not_support_authority": True,
             "p1_schema_relation_state_not_match_authority": True,
             "shared_query_field_metric": True,
             "symmetric_query_field_late_interaction": True,
