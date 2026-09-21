@@ -135,6 +135,7 @@ class SemanticOperatorState:
     query_coverage: Tensor
     uncertainty: Tensor
     factor_distributions: Mapping[str, Tensor]
+    step_factor_distributions: Mapping[str, Tensor]
 
     def validate(
         self,
@@ -164,9 +165,16 @@ class SemanticOperatorState:
             raise ValueError("query_coverage shape drift")
         if self.uncertainty.shape != (batch,):
             raise ValueError("uncertainty shape drift")
+        if set(self.factor_distributions) != set(self.step_factor_distributions):
+            raise ValueError("global/step factor distribution names must match")
         for name, value in self.factor_distributions.items():
             if value.ndim != 2 or value.size(0) != batch or value.size(1) <= 0:
                 raise ValueError(f"factor distribution {name!r} must be [B,C]")
+            step_value = self.step_factor_distributions[name]
+            if step_value.shape != (batch, steps, value.size(1)):
+                raise ValueError(
+                    f"step factor distribution {name!r} must be [B,S,C]"
+                )
         return {"batch": batch, "steps": steps, "relations": relations}
 
 
@@ -419,6 +427,20 @@ class SchemaConditionedSemanticOperator(nn.Module):
         layer_weights: list[Tensor] = []
         relation_schema_states: list[Tensor] = []
         relation_query_evidence: list[Tensor] = []
+        step_factor_scores: dict[str, list[Tensor]] = {
+            str(name): [] for name in factor_schemas
+        }
+        step_factor_layer_weights: dict[str, list[Tensor]] = {
+            str(name): [] for name in factor_schemas
+        }
+        step_factor_distributions_lists: dict[str, list[Tensor]] = {
+            str(name): [] for name in factor_schemas
+        }
+        for schema in factor_schemas.values():
+            schema.validate(
+                num_hidden_states=self.config.num_hidden_states,
+                semantic_dim=self.config.semantic_dim,
+            )
 
         for _ in range(max_steps):
             remaining = (1.0 - coverage.float()).clamp(min=0.02, max=1.0)
@@ -441,6 +463,44 @@ class SchemaConditionedSemanticOperator(nn.Module):
                 + torch.log(matched["remaining_support"].clamp_min(0.02))
             )
             distribution = torch.softmax(logits, dim=-1)
+            expected_schema = torch.einsum(
+                "bc,bcd->bd",
+                distribution,
+                schema_summary,
+            )
+
+            # Factor meaning can change by relation step. This prevents a
+            # multi-hop program from being forced to use one global direction
+            # or one modifier setting for every edge in the sequence.
+            factor_state_basis = state + expected_schema
+            for name, factor_schema in factor_schemas.items():
+                step_matched = self.matcher(
+                    query_hidden_states=query_hidden_states,
+                    query_token_mask=query_token_mask,
+                    schema=factor_schema,
+                    query_remaining=remaining,
+                )
+                factor_state_query = F.normalize(
+                    self.state_schema_score(factor_state_basis),
+                    dim=-1,
+                )
+                factor_state_score = torch.einsum(
+                    "bd,bcd->bc",
+                    factor_state_query,
+                    F.normalize(step_matched["schema_summary"], dim=-1),
+                )
+                step_logits = (
+                    step_matched["score"]
+                    + 0.25 * torch.tanh(factor_state_score)
+                )
+                name = str(name)
+                step_factor_scores[name].append(step_logits)
+                step_factor_layer_weights[name].append(
+                    step_matched["layer_weight"]
+                )
+                step_factor_distributions_lists[name].append(
+                    torch.softmax(step_logits, dim=-1)
+                )
 
             if relation_info["candidates"] > 1:
                 top2 = logits.topk(2, dim=-1).values
@@ -482,11 +542,6 @@ class SchemaConditionedSemanticOperator(nn.Module):
             coverage = coverage.clamp(0.0, 1.0)
             coverage_history.append(coverage)
 
-            expected_schema = torch.einsum(
-                "bc,bcd->bd",
-                distribution,
-                schema_summary,
-            )
             query_context = self._query_state(query_hidden_states, query_token_mask)
             next_state = self.transition(
                 torch.cat([expected_schema, query_context], dim=-1),
@@ -498,6 +553,10 @@ class SchemaConditionedSemanticOperator(nn.Module):
             )
             survival = survival * continue_probability
 
+        step_factor_distributions = {
+            name: torch.stack(values, dim=1)
+            for name, values in step_factor_distributions_lists.items()
+        }
         factor_distributions: dict[str, Tensor] = {}
         factor_scores: dict[str, Tensor] = {}
         factor_layer_weights: dict[str, Tensor] = {}
@@ -560,6 +619,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             query_coverage=query_coverage,
             uncertainty=uncertainty,
             factor_distributions=factor_distributions,
+            step_factor_distributions=step_factor_distributions,
         )
         operator.validate(
             relation_count=relation_info["candidates"],
@@ -574,6 +634,14 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "relation_query_evidence": torch.stack(relation_query_evidence, dim=1),
             "factor_logits": factor_scores,
             "factor_layer_weights": factor_layer_weights,
+            "step_factor_logits": {
+                name: torch.stack(values, dim=1)
+                for name, values in step_factor_scores.items()
+            },
+            "step_factor_layer_weights": {
+                name: torch.stack(values, dim=1)
+                for name, values in step_factor_layer_weights.items()
+            },
         }
 
     def parameter_report(self) -> dict[str, Any]:
@@ -596,6 +664,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "exact_structural_sparsity": False,
             "semantic_backbone_gradient_can_flow": True,
             "factor_scorer_shared_across_schema_banks": True,
+            "step_conditioned_factor_semantics": True,
             "token_interaction_chunk_is_operating_point": True,
             "query_token_count_ceiling": None,
             "schema_token_count_ceiling": None,
