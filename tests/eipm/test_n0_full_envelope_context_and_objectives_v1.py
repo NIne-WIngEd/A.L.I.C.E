@@ -123,6 +123,48 @@ def test_context_virtualizer_handles_variable_lengths_and_encoded_geometry() -> 
     )
 
 
+def test_context_virtualizer_stitches_long_query_content_without_overlap_duplication() -> None:
+    virtualizer = SemanticContextVirtualizerV1(
+        SemanticContextVirtualizerConfig(
+            native_window_tokens=10,
+            overlap_tokens=3,
+        )
+    )
+    ids = torch.arange(1, 28).view(1, 27)
+    mask = torch.ones_like(ids, dtype=torch.bool)
+    segmented = virtualizer.segment(
+        input_ids=ids,
+        attention_mask=mask,
+    )
+    batch, segments, window = segmented["segment_input_ids"].shape
+    encoded = torch.zeros(batch, segments, 2, window, 3)
+    for g in range(segments):
+        start = int(segmented["segment_absolute_start"][0, g])
+        valid = segmented["segment_attention_mask"][0, g]
+        absolute = torch.arange(
+            start,
+            start + int(valid.sum()),
+            dtype=torch.float32,
+        )
+        encoded[0, g, 0, : absolute.numel(), 0] = absolute
+        encoded[0, g, 1, : absolute.numel(), 0] = absolute + 100.0
+
+    stitched, stitched_mask = virtualizer.stitch_owned_content(
+        segment_hidden_states=encoded,
+        segmented=segmented,
+    )
+    assert stitched.shape == (1, 2, 27, 3)
+    assert bool(stitched_mask.all())
+    assert torch.equal(
+        stitched[0, 0, :, 0],
+        torch.arange(27, dtype=torch.float32),
+    )
+    assert torch.equal(
+        stitched[0, 1, :, 0],
+        torch.arange(27, dtype=torch.float32) + 100.0,
+    )
+
+
 def test_context_virtualizer_fails_closed_on_noncontiguous_mask() -> None:
     virtualizer = SemanticContextVirtualizerV1(
         SemanticContextVirtualizerConfig(
