@@ -19,6 +19,11 @@ from alice_personality.n0.qsre_production_binder_v2 import (
 from alice_personality.n0.qsre_production_operator_v3 import (
     QSREProductionOperatorInducerV3,
 )
+from alice_personality.n0.qsre_semantic_authority import (
+    slice_factor_authority,
+    slice_relation_authority,
+    validate_authority_cache,
+)
 from qsre_production_runtime import load_dynamic_schema_cache, sha256
 from qsre_production_training_utils import (
     batch_indices,
@@ -91,12 +96,27 @@ def load_selected(result_path:Path,root:Path,filename:str,expected_status:str)->
     return path,result
 
 
-def load_parents(*,p1_path:Path,p2_path:Path,factor_schema_cache_path:Path,config,device):
+def load_parents(
+    *,
+    p1_path:Path,
+    p2_path:Path,
+    factor_schema_cache_path:Path,
+    authority_cache_path:Path,
+    config,
+    device,
+):
     p1=torch.load(p1_path,map_location="cpu")
     p2=torch.load(p2_path,map_location="cpu")
     factor_cache=torch.load(factor_schema_cache_path,map_location="cpu")
+    authority_cache=torch.load(authority_cache_path,map_location="cpu")
+    validate_authority_cache(
+        authority_cache,
+        expected_schema="alice.eipm.n0.qsre-frozen-semantic-authority-production-cache.v3",
+    )
     if p2.get("factor_schema_cache_sha256") != sha256(factor_schema_cache_path):
         raise SystemExit("P2 factor-schema cache lineage drift")
+    if p2.get("semantic_authority_cache_sha256") != sha256(authority_cache_path):
+        raise SystemExit("P2 semantic-authority cache lineage drift")
     schema_encoder=QSREProductionSchemaEncoder(config)
     executor=QSREProductionExecutor(config)
     operator=QSREProductionOperatorInducerV3(config)
@@ -108,16 +128,42 @@ def load_parents(*,p1_path:Path,p2_path:Path,factor_schema_cache_path:Path,confi
         for parameter in module.parameters():
             parameter.requires_grad=False
         module.to(device).eval()
-    return schema_encoder,executor,operator
+    return schema_encoder,executor,operator,authority_cache
 
 
-def infer_operator(*,split,indices,view,schema,encoded,operator,max_steps,device):
+def infer_operator(
+    *,
+    split,
+    authority_split,
+    indices,
+    view,
+    schema,
+    encoded,
+    operator,
+    max_steps,
+    device,
+):
+    relation_authority=slice_relation_authority(
+        authority_split,
+        indices=indices,
+        view=view,
+        relation_count=int(schema.token_states.size(0)),
+        device=device,
+    )
+    factor_authority=slice_factor_authority(
+        authority_split,
+        indices=indices,
+        view=view,
+        device=device,
+    )
     return operator(
         query_hidden_states=split["query_hidden_states"][indices,view].to(device).float(),
         query_token_mask=split["query_token_mask"][indices,view].to(device).bool(),
         schema=schema,
         schema_token_state=encoded["schema_token_state"],
         schema_relation_state=encoded["schema_relation_state"],
+        relation_authority=relation_authority,
+        factor_authority=factor_authority,
         max_steps=max_steps,
     )["operator"]
 
@@ -165,7 +211,7 @@ def execute(*,split,indices,encoded,executor,operator_state,support,focus,device
 @torch.no_grad()
 def evaluate_mode(
     *,
-    split,schema,encoded,schema_encoder,executor,operator_model,binder,
+    split,authority_split,schema,encoded,schema_encoder,executor,operator_model,binder,
     config,max_steps,batch_size,device,predicted_operator:bool,
 ):
     supports=[]; oracle_supports=[]; compatible=[]; probabilities=[]; focuses=[]; oracle_focuses=[]
@@ -176,7 +222,8 @@ def evaluate_mode(
         for view in (0,1):
             if predicted_operator:
                 op=infer_operator(
-                    split=split,indices=idx,view=view,schema=schema,encoded=encoded,
+                    split=split,authority_split=authority_split,
+                    indices=idx,view=view,schema=schema,encoded=encoded,
                     operator=operator_model,max_steps=max_steps,device=device,
                 )
             else:
@@ -294,6 +341,7 @@ def main()->None:
     p.add_argument("--p2-result",required=True)
     p.add_argument("--p2-root",required=True)
     p.add_argument("--factor-schema-cache",required=True)
+    p.add_argument("--authority-cache",required=True)
     p.add_argument("--output-dir",required=True)
     args=p.parse_args()
 
@@ -318,9 +366,10 @@ def main()->None:
         "qsre_production_p2.pt","PASS_QSRE_PRODUCTION_P2_OPERATOR",
     )
     device=torch.device("cuda")
-    schema_encoder,executor,operator_model=load_parents(
+    schema_encoder,executor,operator_model,authority_cache=load_parents(
         p1_path=p1_path,p2_path=p2_path,
         factor_schema_cache_path=Path(args.factor_schema_cache),
+        authority_cache_path=Path(args.authority_cache),
         config=config,device=device,
     )
     full_schema,schema_payload=load_dynamic_schema_cache(schema_cache_path,device=device)
@@ -354,6 +403,10 @@ def main()->None:
     eval_every=int(stage["training"]["eval_every"]); runtime_steps=int(stage["training"]["operator_runtime_max_steps"])
     weights=stage["loss_weights"]
     train=prepared["train"]; dev=prepared["dev"]
+    if authority_cache["dev"]["ids"] != list(dev["ids"]):
+        raise SystemExit("P3 DEV semantic-authority row order drift")
+    if list(authority_cache["dev"]["relation_keys"]) != relation_keys:
+        raise SystemExit("P3 DEV semantic-authority relation order drift")
 
     output_dir.mkdir(parents=True)
     batches=[]; epoch=0; step=0; history=[]; selected=None; best=None; best_score=None
@@ -420,7 +473,8 @@ def main()->None:
         if step%eval_every==0 or step==max_train_steps:
             binder.eval()
             metrics=evaluate(
-                split=dev,schema=full_schema,encoded=encoded_dev,
+                split=dev,authority_split=authority_cache["dev"],
+                schema=full_schema,encoded=encoded_dev,
                 schema_encoder=schema_encoder,executor=executor,operator_model=operator_model,
                 binder=binder,config=config,max_steps=runtime_steps,
                 batch_size=batch_size,device=device,
@@ -439,6 +493,8 @@ def main()->None:
                     "p1_checkpoint_sha256":sha256(p1_path),
                     "p2_checkpoint_sha256":sha256(p2_path),
                     "factor_schema_cache_sha256":sha256(Path(args.factor_schema_cache)),
+        "semantic_authority_cache_sha256":sha256(Path(args.authority_cache)),
+                    "semantic_authority_cache_sha256":sha256(Path(args.authority_cache)),
                 },
             )
             score=score_tuple(metrics)
