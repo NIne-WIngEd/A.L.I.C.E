@@ -1,0 +1,61 @@
+{
+  "schema": "alice.eipm.n0.qsre-production-p2-v2-recovery-contract.v1",
+  "status": "ONE_CAUSAL_ARCHITECTURE_RECOVERY_AFTER_GENUINE_P2_V1_FAILURE",
+  "source_evidence": {
+    "magnolia_job": 575956,
+    "failed_root": "$ALICE_N0_WORKDIR/qsre-production-core-v1-stop-tail-recovery-v1",
+    "p1_result": "$ALICE_N0_WORKDIR/qsre-production-core-v1-stop-tail-recovery-v1/p1/result.json",
+    "p2_result": "$ALICE_N0_WORKDIR/qsre-production-core-v1-stop-tail-recovery-v1/p2/result.json",
+    "expected_p1_status": "PASS_QSRE_PRODUCTION_P1_EXECUTOR",
+    "expected_p2_status": "FAIL_QSRE_PRODUCTION_P2_OPERATOR",
+    "p1_selected_step": 50,
+    "p1_checkpoint_sha256": "91f2c78dcc35967064189af4a7110cdee83e5652fb037d3d88f58500ac3aaab9",
+    "p2_observed": {
+      "best_relation_sequence_exact_accuracy": 0.4404761791229248,
+      "best_open_schema_relation_exact_accuracy": 0.171875,
+      "best_unknown_termination_accuracy": 0.3125,
+      "recurrent_traversal_plateau_accuracy": 0.7894737124443054,
+      "final_relation_sequence_exact_accuracy": 0.4404761791229248,
+      "final_open_schema_relation_exact_accuracy": 0.09375,
+      "final_unknown_termination_accuracy": 0
+    }
+  },
+  "causal_findings": [
+    "relation candidates and CONTINUE/STOP/UNKNOWN competed inside one sparsemax despite having different semantics and scales",
+    "P2 v1 trained with six core relation candidates but evaluated with ten runtime candidates",
+    "query relation projection was trainable while runtime schema matching authority came from a separately frozen P1 schema projection",
+    "role/traversal/direction/control were decoded from one terminal recurrent state despite causal factor imbalance and paraphrase shift",
+    "train loss approached zero while DEV transfer remained far below gate, establishing memorization/representation-interface failure rather than under-training"
+  ],
+  "correction": {
+    "operator_module": "src/alice_personality/n0/qsre_production_operator_v2.py",
+    "trainer": "scripts/eipm/n0/train_n0_v02_qsre_production_p2_v2.py",
+    "plan": "configs/eipm/n0/n0_v02_qsre_production_training_plan_v2.json",
+    "shared_query_schema_metric": true,
+    "symmetric_late_interaction": true,
+    "p1_schema_projection_not_relation_match_authority": true,
+    "relation_selection_decoupled_from_termination": true,
+    "semantic_match_confidence_guides_unknown_rejection": true,
+    "factor_specific_query_slots": true,
+    "macro_balanced_factor_and_event_supervision": true,
+    "full_runtime_schema_candidates_during_training": true,
+    "open_schema_training_query_labels_used": false,
+    "schema_only_self_calibration": true,
+    "learning_rate_search": false,
+    "max_step_search": false,
+    "width_search": false
+  },
+  "recovery": {
+    "output_root": "$ALICE_N0_WORKDIR/qsre-production-core-v1-operator-v2-recovery-v1",
+    "preserve_failed_roots": true,
+    "p1_retrain": false,
+    "p2_v1_retrain": false,
+    "p2_v2_gpu_runs_authorized": 1,
+    "p3_if_p2_passes": true,
+    "p4_if_p3_passes": true,
+    "final_native_validation_if_p4_passes": true,
+    "reuse_original_frozen_final_validation": true,
+    "private_identity_gradient": false,
+    "automatic_rerun": false
+  }
+}
