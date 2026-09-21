@@ -377,6 +377,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
         )
 
         relation_steps: list[Tensor] = []
+        relation_logits_steps: list[Tensor] = []
         relation_mass_steps: list[Tensor] = []
         stop_steps: list[Tensor] = []
         unknown_steps: list[Tensor] = []
@@ -453,6 +454,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
             effective_unknown = survival * unknown_probability
 
             relation_steps.append(relation_distribution)
+            relation_logits_steps.append(relation_logits)
             relation_mass_steps.append(effective_mass)
             stop_steps.append(effective_stop)
             unknown_steps.append(effective_unknown)
@@ -479,6 +481,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
             survival = survival * continue_probability
 
         relation_distribution = torch.stack(relation_steps, dim=1)
+        relation_logits = torch.stack(relation_logits_steps, dim=1)
         relation_step_mass = torch.stack(relation_mass_steps, dim=1)
         stop_probability = torch.stack(stop_steps, dim=1)
         unknown_probability = torch.stack(unknown_steps, dim=1)
@@ -576,6 +579,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
 
         return {
             "operator": operator,
+            "relation_logits": relation_logits,
             "event_distribution": event_distribution,
             "semantic_relation_score": semantic_scores,
             "initial_query_attention": initial_attention.reshape(
@@ -603,6 +607,7 @@ class QSREProductionOperatorInducerV2(nn.Module):
             "p1_schema_encoder_is_not_relation_match_authority": True,
             "p1_schema_relation_state_is_interface_only_for_operator": True,
             "relation_selection_decoupled_from_stop_unknown": True,
+            "dense_relation_logits_exposed_for_trainability": True,
             "cardinality_invariant_termination_event_head": True,
             "match_confidence_guides_unknown_rejection": True,
             "factor_specific_query_slots": True,
