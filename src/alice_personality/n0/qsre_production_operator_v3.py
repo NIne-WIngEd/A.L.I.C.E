@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+from typing import Any
 
 import torch
 import torch.nn.functional as F
@@ -11,321 +12,220 @@ from alice_personality.n0.qsre_production_core import (
     QSREProductionConfig,
     QSREProductionOperatorState,
 )
+from alice_personality.n0.qsre_schema_matcher import QSRESchemaMatcher
 
 
 EVENT_CONTINUE = 0
 EVENT_STOP = 1
 EVENT_UNKNOWN = 2
-
-FACTOR_ROLE = 0
-FACTOR_TRAVERSAL = 1
-FACTOR_DIRECTION = 2
-FACTOR_MODIFIER = 3
-FACTOR_CONTROL = 4
-FACTOR_APPLICABILITY = 5
-FACTOR_COUNT = 6
-
-
-def _masked_mean(value: Tensor, mask: Tensor, dim: int) -> Tensor:
-    weight = mask.to(value.dtype)
-    while weight.ndim < value.ndim:
-        weight = weight.unsqueeze(-1)
-    numerator = (value * weight).sum(dim=dim)
-    denominator = weight.sum(dim=dim).clamp_min(1.0)
-    return numerator / denominator
+EVENT_COUNT = 3
 
 
 class QSREProductionOperatorInducerV3(nn.Module):
-    """Final open-schema query-conditioned operator inducer.
+    """Final N0 closure operator.
 
-    Relation hypotheses stay continuous until structural binding. This keeps
-    ambiguity and future-schema candidates alive while exact-zero sparsity is
-    applied only to evidence structure, where it is semantically meaningful.
+    The filename/class name is retained so P3/P4/frozen-final pipeline wiring
+    stays lineage-compatible. The implementation no longer learns a six-class
+    semantic surface. Relation and factor meaning are supplied as runtime
+    schema text and matched by one relation-identity-independent matcher that
+    is pretrained on a broad public schema-generalization stage and frozen
+    before Production P2.
 
-    The design separates three concerns that must not compete in one classifier:
-
-    1. relation-schema matching,
-    2. program continuation / STOP / UNKNOWN,
-    3. non-relational operator factors such as role, traversal and direction.
-
-    Relation matching uses one shared semantic metric on both query and runtime
-    schema text. No learned parameter is indexed by relation identity or relation
-    count. The runtime schema can therefore grow without changing topology.
-
-    STOP/UNKNOWN never compete with relation candidates. Their probabilities
-    come from a separate 3-way event distribution and receive cardinality-
-    invariant semantic-match confidence features. This prevents relation-logit
-    scale or candidate count from suppressing fail-closed behavior.
-
-    Factor-specific query slots keep role/traversal/direction/modifier/control
-    prediction from collapsing onto the terminal relation-decoder state.
+    Ordered relation programs keep a differentiable query-token coverage state.
+    Relation hypotheses stay continuous until the structural binder; exact
+    sparsity still begins only at evidence support.
     """
 
     def __init__(self, config: QSREProductionConfig) -> None:
         super().__init__()
-        config.validate()
         self.config = config
-        d = config.model_dim
+        d = int(config.model_dim)
 
-        # Shared query/schema semantic metric. This exact module is applied to
-        # both query hidden states and raw runtime-schema hidden states.
-        self.query_norm = nn.LayerNorm(config.semantic_dim)
-        self.query_projection = nn.Linear(config.semantic_dim, d, bias=False)
-        self.layer_embedding = nn.Embedding(config.num_hidden_states, d)
+        self.schema_matcher = QSRESchemaMatcher(
+            semantic_dim=int(config.semantic_dim),
+            model_dim=d,
+            num_hidden_states=int(config.num_hidden_states),
+        )
 
-        # One program slot plus independent factor slots. All attend to the same
-        # full hidden-state stack, but each factor receives its own latent query.
-        self.program_query = nn.Parameter(torch.empty(d))
-        self.factor_queries = nn.Parameter(torch.empty(FACTOR_COUNT, d))
+        self.program_query = nn.Parameter(torch.empty(1, 1, d))
         self.query_cross_attention = nn.MultiheadAttention(
             d,
-            config.num_attention_heads,
-            dropout=config.dropout,
+            int(config.num_attention_heads),
+            dropout=float(config.dropout),
             batch_first=True,
         )
         self.slot_norm = nn.LayerNorm(d)
-
-        layer = nn.TransformerEncoderLayer(
-            d_model=d,
-            nhead=config.num_attention_heads,
-            dim_feedforward=4 * d,
-            dropout=config.dropout,
-            activation="gelu",
-            batch_first=True,
-            norm_first=True,
-        )
-        self.slot_refiner = nn.TransformerEncoder(
-            layer,
-            num_layers=config.operator_refinement_layers,
-        )
-
-        # Shared recurrent program cell: no hop-count-dependent parameters.
         self.step_query = nn.Linear(d, d, bias=False)
         self.step_transition = nn.GRUCell(2 * d, d)
 
-        # Relation distribution and event distribution are intentionally
-        # decoupled. The relation scale cannot suppress STOP or UNKNOWN.
-        self.relation_logit_scale = nn.Parameter(torch.tensor(2.0))
         self.continue_head = nn.Linear(d, 1)
         self.stop_head = nn.Linear(d, 1)
         self.unknown_head = nn.Linear(d, 1)
+        self.event_match_projection = nn.Linear(2, EVENT_COUNT)
 
-        # Confidence features are [best semantic match, best-vs-second margin].
-        # They are relation-cardinality independent statistics, not relation IDs.
-        self.event_match_projection = nn.Linear(2, 3, bias=False)
-
-        self.role_head = nn.Linear(d, config.role_count)
-        self.traversal_head = nn.Linear(d, config.traversal_count)
-        self.direction_head = nn.Linear(d, config.direction_count)
-        self.modifier_head = nn.Linear(d, config.modifier_count)
-        self.control_head = nn.Linear(d, config.control_count)
-        self.applicability_head = nn.Linear(d, 1)
-
-        # Continuous state fuses the program state and all dedicated factor
-        # states without compressing below the production model width.
-        self.continuous_projection = nn.Linear(2 * d, d)
-
-        self.reset_parameters()
-
-    def reset_parameters(self) -> None:
-        if self.config.semantic_dim == self.config.model_dim:
-            nn.init.eye_(self.query_projection.weight)
-        else:
-            nn.init.orthogonal_(self.query_projection.weight)
-        nn.init.zeros_(self.layer_embedding.weight)
-        nn.init.normal_(self.program_query, mean=0.0, std=0.02)
-        nn.init.normal_(self.factor_queries, mean=0.0, std=0.02)
-        nn.init.xavier_uniform_(self.step_query.weight)
-        for head in (
-            self.continue_head,
-            self.stop_head,
-            self.unknown_head,
-            self.role_head,
-            self.traversal_head,
-            self.direction_head,
-            self.modifier_head,
-            self.control_head,
-            self.applicability_head,
-            self.continuous_projection,
-        ):
-            nn.init.xavier_uniform_(head.weight)
-            if head.bias is not None:
-                nn.init.zeros_(head.bias)
-
-        # Sensible fail-closed initialization. Strong semantic match and margin
-        # favor CONTINUE; weak match favors UNKNOWN. STOP is controlled by the
-        # recurrent program state rather than candidate-set scale.
-        with torch.no_grad():
-            self.event_match_projection.weight.zero_()
-            self.event_match_projection.weight[EVENT_CONTINUE] = torch.tensor(
-                [1.0, 0.5]
-            )
-            self.event_match_projection.weight[EVENT_UNKNOWN] = torch.tensor(
-                [-1.0, -0.5]
-            )
-
-    def project_semantic(self, states: Tensor) -> Tensor:
-        if states.ndim != 4:
-            raise ValueError("semantic states must be [B_or_R,L,T,D]")
-        count, layers, tokens, width = states.shape
-        if layers != self.config.num_hidden_states:
-            raise ValueError("semantic hidden-state depth drift")
-        if width != self.config.semantic_dim:
-            raise ValueError("semantic width drift")
-        projected = self.query_projection(self.query_norm(states))
-        layer_ids = torch.arange(layers, device=states.device)
-        return projected + self.layer_embedding(layer_ids).view(
-            1, layers, 1, self.config.model_dim
+        self.applicability_head = nn.Linear(2 * d, 1)
+        self.continuous_projection = nn.Sequential(
+            nn.Linear(2 * d, d),
+            nn.GELU(),
+            nn.LayerNorm(d),
         )
 
-    def _initial_slots(
+        self._factor_cache: dict[str, Any] | None = None
+        self._reset_parameters()
+
+    @property
+    def relation_logit_scale(self) -> nn.Parameter:
+        # Compatibility surface for historical mechanics tests and receipts.
+        return self.schema_matcher.logit_scale
+
+    def _reset_parameters(self) -> None:
+        nn.init.normal_(
+            self.program_query,
+            mean=0.0,
+            std=self.config.model_dim ** -0.5,
+        )
+        nn.init.zeros_(self.event_match_projection.weight)
+        nn.init.zeros_(self.event_match_projection.bias)
+
+    def project_semantic(self, states: Tensor) -> Tensor:
+        return self.schema_matcher.project(states)
+
+    def load_pretrained_schema_matcher(
         self,
-        query_memory: Tensor,
+        state_dict: dict[str, Tensor],
+        *,
+        freeze: bool = True,
+    ) -> None:
+        self.schema_matcher.load_state_dict(state_dict, strict=True)
+        for parameter in self.schema_matcher.parameters():
+            parameter.requires_grad = not freeze
+        if freeze:
+            self.schema_matcher.eval()
+
+    def configure_factor_schema_cache(self, cache: dict[str, Any]) -> None:
+        if cache.get("schema") != "alice.eipm.n0.qsre-closure-factor-schema-cache.v1":
+            raise ValueError("closure factor-schema cache version drift")
+        if cache.get("private_identity_data") is not False:
+            raise ValueError("private identity data entered factor schema cache")
+
+        expected = {
+            "role": int(self.config.role_count),
+            "traversal": int(self.config.traversal_count),
+            "direction": int(self.config.direction_count),
+            "control": int(self.config.control_count),
+        }
+        for category, count in expected.items():
+            row = cache.get(category)
+            if not isinstance(row, dict):
+                raise ValueError(f"missing factor schema category {category}")
+            states = row.get("token_states")
+            mask = row.get("token_mask")
+            if not isinstance(states, Tensor) or states.ndim != 4:
+                raise ValueError(f"{category}: factor token-state geometry drift")
+            if states.size(0) != count:
+                raise ValueError(
+                    f"{category}: factor count {states.size(0)} != config {count}"
+                )
+            if not isinstance(mask, Tensor) or mask.shape != states.shape[:1] + states.shape[2:3]:
+                raise ValueError(f"{category}: factor token-mask geometry drift")
+
+        modifiers = cache.get("modifiers")
+        if not isinstance(modifiers, dict):
+            raise ValueError("missing modifier factor schema")
+        modifier_states = modifiers.get("token_states")
+        modifier_mask = modifiers.get("token_mask")
+        if not isinstance(modifier_states, Tensor) or modifier_states.ndim != 5:
+            raise ValueError("modifier factor token-state geometry drift")
+        if modifier_states.size(0) != int(self.config.modifier_count):
+            raise ValueError("modifier factor count drift")
+        if modifier_states.size(1) != 2:
+            raise ValueError("every modifier requires OFF/ON semantic states")
+        if (
+            not isinstance(modifier_mask, Tensor)
+            or modifier_mask.shape
+            != (
+                modifier_states.size(0),
+                2,
+                modifier_states.size(3),
+            )
+        ):
+            raise ValueError("modifier token-mask geometry drift")
+        self._factor_cache = cache
+
+    def _factor_row(
+        self,
+        category: str,
+        *,
+        device: torch.device,
+    ) -> tuple[Tensor, Tensor]:
+        if self._factor_cache is None:
+            raise RuntimeError(
+                "closure factor schema cache must be configured before operator use"
+            )
+        row = self._factor_cache[category]
+        return (
+            row["token_states"].to(device=device, dtype=torch.float32),
+            row["token_mask"].to(device=device).bool(),
+        )
+
+    def _initial_program_state(
+        self,
+        memory: Tensor,
         flat_valid: Tensor,
-    ) -> tuple[Tensor, Tensor, Tensor]:
-        batch = query_memory.size(0)
-        seed = torch.cat(
-            [self.program_query.unsqueeze(0), self.factor_queries],
-            dim=0,
-        ).unsqueeze(0).expand(batch, -1, -1)
+    ) -> tuple[Tensor, Tensor]:
+        batch = memory.size(0)
+        slot = self.program_query.expand(batch, -1, -1)
         attended, attention = self.query_cross_attention(
-            seed,
-            query_memory,
-            query_memory,
+            slot,
+            memory,
+            memory,
             key_padding_mask=~flat_valid,
             need_weights=True,
             average_attn_weights=True,
         )
-        slots = self.slot_norm(seed + attended)
-        slots = self.slot_refiner(slots)
-        program_state = slots[:, 0]
-        factor_states = slots[:, 1:]
-        program_attention = attention[:, 0]
-        return program_state, factor_states, program_attention
+        state = self.slot_norm(slot + attended).squeeze(1)
+        return state, attention.squeeze(1)
 
-    def _semantic_match(
+    def _factor_match(
         self,
         *,
-        state: Tensor,
         query_projected: Tensor,
-        query_attention: Tensor,
         query_token_mask: Tensor,
-        schema_match_projected: Tensor,
-        schema_match_summary: Tensor,
-        schema_token_mask: Tensor,
-    ) -> tuple[Tensor, Tensor]:
-        batch, layers, query_tokens, _ = query_projected.shape
-        relations, schema_layers, schema_tokens, _ = schema_match_projected.shape
-        if schema_layers != layers:
-            raise ValueError("query/schema layer mismatch")
-
-        q = F.normalize(query_projected, dim=-1)
-        s = F.normalize(schema_match_projected, dim=-1)
-        similarity = torch.einsum("bltd,rlsd->brlts", q, s)
-
-        schema_valid = schema_token_mask[None, :, None, None, :].expand(
-            batch,
-            relations,
-            layers,
-            query_tokens,
-            schema_tokens,
+        category: str,
+    ) -> dict[str, Tensor]:
+        raw, mask = self._factor_row(
+            category,
+            device=query_projected.device,
         )
-        query_valid = query_token_mask[:, None, None, :, None].expand(
-            batch,
-            relations,
-            layers,
-            query_tokens,
-            schema_tokens,
+        return self.schema_matcher.match_projected(
+            query_projected=query_projected,
+            query_token_mask=query_token_mask,
+            schema_projected=self.schema_matcher.project(raw),
+            schema_token_mask=mask,
         )
-        valid = schema_valid & query_valid
-        similarity = similarity.masked_fill(~valid, -1.0e4)
 
-        # Query -> schema late interaction, weighted by current step attention.
-        q_to_s = similarity.max(dim=-1).values
-        q_weight = query_attention.reshape(batch, layers, query_tokens)
-        q_weight = q_weight * query_token_mask[:, None, :].to(q_weight.dtype)
-        q_weight = q_weight / q_weight.sum(dim=(1, 2), keepdim=True).clamp_min(1.0e-12)
-        q_to_s_score = torch.einsum("blt,brlt->br", q_weight, q_to_s)
-
-        # Schema -> query late interaction keeps the relation description itself
-        # from being reduced to whichever one query token happened to match.
-        s_to_q = similarity.max(dim=-2).values
-        s_valid = schema_token_mask[None, :, None, :].expand(
-            batch, relations, layers, schema_tokens
-        )
-        s_to_q = s_to_q.masked_fill(~s_valid, 0.0)
-        s_den = s_valid.to(s_to_q.dtype).sum(dim=(2, 3)).clamp_min(1.0)
-        s_to_q_score = s_to_q.sum(dim=(2, 3)) / s_den
-
-        grounded = 0.5 * (q_to_s_score + s_to_q_score)
-
-        # Recurrent state provides ordered-program context, but it is only a
-        # bounded residual on top of the shared text-to-schema match.
-        state_score = torch.einsum(
-            "bd,rd->br",
-            F.normalize(self.step_query(state), dim=-1),
-            F.normalize(schema_match_summary, dim=-1),
-        )
-        semantic_score = 0.8 * grounded + 0.2 * state_score
-        scale = self.relation_logit_scale.exp().clamp(max=100.0)
-        return scale * semantic_score, semantic_score
-
-    def schema_identity_logits(self, schema: QSREDynamicRelationSchema) -> Tensor:
-        """Schema-only self-calibration logits.
-
-        Each runtime relation description is treated as a pseudo-query against
-        all runtime relation descriptions. No DEV query/example labels enter.
-        """
-        info = schema.validate(
+    def schema_identity_logits(
+        self,
+        schema: QSREDynamicRelationSchema,
+    ) -> Tensor:
+        schema.validate(
             num_hidden_states=self.config.num_hidden_states,
             semantic_dim=self.config.semantic_dim,
         )
-        projected = self.project_semantic(schema.token_states)
-        relation_count, layers, tokens, _ = projected.shape
-        normalized = F.normalize(projected, dim=-1)
-        similarity = torch.einsum(
-            "altd,rlsd->arlts",
-            normalized,
-            normalized,
-        )
-        q_valid = schema.token_mask[:, None, None, :, None].expand(
-            relation_count,
-            relation_count,
-            layers,
-            tokens,
-            tokens,
-        )
-        s_valid = schema.token_mask[None, :, None, None, :].expand(
-            relation_count,
-            relation_count,
-            layers,
-            tokens,
-            tokens,
-        )
-        valid = q_valid & s_valid
-        similarity = similarity.masked_fill(~valid, -1.0e4)
+        projected = self.schema_matcher.project(schema.token_states)
+        return self.schema_matcher.match_projected(
+            query_projected=projected,
+            query_token_mask=schema.token_mask,
+            schema_projected=projected,
+            schema_token_mask=schema.token_mask,
+        )["logits"]
 
-        q_to_s = similarity.max(dim=-1).values
-        qmask = schema.token_mask[:, None, :, None].expand(
-            relation_count, layers, tokens, 1
-        ).squeeze(-1)
-        qden = qmask.to(q_to_s.dtype).sum(dim=(1, 2)).clamp_min(1.0)
-        qscore = (
-            q_to_s
-            * qmask[:, None, :, :].to(q_to_s.dtype)
-        ).sum(dim=(2, 3)) / qden[:, None]
-
-        s_to_q = similarity.max(dim=-2).values
-        smask = schema.token_mask[None, :, None, :].expand(
-            relation_count, relation_count, layers, tokens
-        )
-        sden = smask.to(s_to_q.dtype).sum(dim=(2, 3)).clamp_min(1.0)
-        sscore = (
-            s_to_q * smask.to(s_to_q.dtype)
-        ).sum(dim=(2, 3)) / sden
-
-        scale = self.relation_logit_scale.exp().clamp(max=100.0)
-        return scale * 0.5 * (qscore + sscore)
+    @staticmethod
+    def _expected(
+        probability: Tensor,
+        candidates: Tensor,
+    ) -> Tensor:
+        return torch.einsum("bc,cd->bd", probability, candidates)
 
     def forward(
         self,
@@ -337,16 +237,21 @@ class QSREProductionOperatorInducerV3(nn.Module):
         schema_relation_state: Tensor,
         max_steps: int,
     ) -> dict[str, Tensor | QSREProductionOperatorState]:
-        del schema_token_state  # Executor-space schema states are not matcher authority.
+        del schema_token_state
         if max_steps <= 0:
             raise ValueError("max_steps must be positive")
         if query_hidden_states.ndim != 4:
             raise ValueError("query_hidden_states must be [B,L,T,D]")
         if query_token_mask.ndim != 2 or query_token_mask.dtype != torch.bool:
             raise ValueError("query_token_mask must be bool [B,T]")
+        if self._factor_cache is None:
+            raise RuntimeError("factor schema cache is not configured")
 
-        query_projected = self.project_semantic(query_hidden_states)
-        batch, layers, tokens, _ = query_projected.shape
+        batch, layers, tokens, semantic_dim = query_hidden_states.shape
+        if layers != int(self.config.num_hidden_states):
+            raise ValueError("query hidden-state depth drift")
+        if semantic_dim != int(self.config.semantic_dim):
+            raise ValueError("query semantic width drift")
         if query_token_mask.shape != (batch, tokens):
             raise ValueError("query token-mask shape drift")
         if bool((query_token_mask.sum(dim=-1) == 0).any()):
@@ -356,27 +261,34 @@ class QSREProductionOperatorInducerV3(nn.Module):
             num_hidden_states=self.config.num_hidden_states,
             semantic_dim=self.config.semantic_dim,
         )
-        relations = schema_info["relations"]
+        relations = int(schema_info["relations"])
         if schema_relation_state.shape != (relations, self.config.model_dim):
             raise ValueError("schema relation-state shape drift")
-        schema_match_projected = self.project_semantic(schema.token_states)
-        schema_match_mask = schema.token_mask[:, None, :, None].to(
-            schema_match_projected.dtype
-        )
-        schema_match_per_layer = (
-            schema_match_projected * schema_match_mask
-        ).sum(dim=2) / schema_match_mask.sum(dim=2).clamp_min(1.0)
-        schema_match_summary = schema_match_per_layer.mean(dim=1)
 
+        query_projected = self.schema_matcher.project(query_hidden_states)
+        relation_schema_projected = self.schema_matcher.project(
+            schema.token_states
+        )
         memory = query_projected.reshape(batch, layers * tokens, -1)
         flat_valid = (
             query_token_mask[:, None, :]
             .expand(batch, layers, tokens)
             .reshape(batch, layers * tokens)
         )
-        state, factor_states, initial_attention = self._initial_slots(
+        state, initial_attention = self._initial_program_state(
             memory,
             flat_valid,
+        )
+
+        # Ordered-evidence state. It is token-position based and shared across
+        # semantic layers; it is not a left-to-right pointer. A nonzero floor
+        # lets later steps recover evidence if an earlier soft hypothesis was
+        # wrong.
+        query_coverage = torch.zeros(
+            batch,
+            tokens,
+            device=query_hidden_states.device,
+            dtype=query_projected.dtype,
         )
 
         relation_steps: list[Tensor] = []
@@ -389,14 +301,27 @@ class QSREProductionOperatorInducerV3(nn.Module):
         state_steps: list[Tensor] = []
         attention_steps: list[Tensor] = []
         semantic_score_steps: list[Tensor] = []
+        coverage_steps: list[Tensor] = []
 
-        survival = torch.ones(batch, device=state.device, dtype=state.dtype)
+        survival = torch.ones(
+            batch,
+            device=state.device,
+            dtype=state.dtype,
+        )
 
         for _ in range(max_steps):
+            remaining = (1.0 - query_coverage).clamp(min=0.05, max=1.0)
+            remaining_by_layer = (
+                remaining[:, None, :]
+                .expand(batch, layers, tokens)
+                .reshape(batch, layers * tokens)
+            )
+            memory_step = memory * remaining_by_layer.unsqueeze(-1)
+
             attended, attention = self.query_cross_attention(
                 state.unsqueeze(1),
-                memory,
-                memory,
+                memory_step,
+                memory_step,
                 key_padding_mask=~flat_valid,
                 need_weights=True,
                 average_attn_weights=True,
@@ -406,22 +331,29 @@ class QSREProductionOperatorInducerV3(nn.Module):
                 survival[:, None] * candidate
                 + (1.0 - survival[:, None]) * state
             )
-            relation_logits, semantic_score = self._semantic_match(
-                state=step_state,
-                query_projected=query_projected,
-                query_attention=attention.squeeze(1),
-                query_token_mask=query_token_mask,
-                schema_match_projected=schema_match_projected,
-                schema_match_summary=schema_match_summary,
-                schema_token_mask=schema.token_mask,
+            query_prior = attention.squeeze(1).reshape(
+                batch,
+                layers,
+                tokens,
             )
 
-            # Relation hypotheses remain continuous through the operator.
-            # Exact sparsity belongs to structural evidence selection in the
-            # binder. Keeping every schema hypothesis alive here preserves
-            # uncertainty, supports candidate expansion, and prevents an
-            # upstream sparse projection from permanently deleting a relation
-            # before structural evidence can adjudicate it.
+            matched = self.schema_matcher.match_projected(
+                query_projected=query_projected,
+                query_token_mask=query_token_mask,
+                schema_projected=relation_schema_projected,
+                schema_token_mask=schema.token_mask,
+                query_remaining=remaining,
+                query_prior=query_prior,
+            )
+            state_score = torch.einsum(
+                "bd,rd->br",
+                F.normalize(self.step_query(step_state), dim=-1),
+                F.normalize(matched["schema_summary"], dim=-1),
+            )
+            # Semantic description matching remains the authority. Recurrent
+            # state is a bounded ordering residual and cannot replace it.
+            relation_logits = matched["logits"] + 0.75 * state_score
+            semantic_score = matched["semantic_score"] + 0.10 * state_score
             relation_distribution = torch.softmax(
                 relation_logits,
                 dim=-1,
@@ -466,17 +398,42 @@ class QSREProductionOperatorInducerV3(nn.Module):
             event_logits_steps.append(event_logits)
             state_steps.append(step_state)
             semantic_score_steps.append(semantic_score)
-            attention_steps.append(
-                attention.squeeze(1).reshape(batch, layers, tokens)
+            attention_steps.append(query_prior)
+
+            relation_evidence = torch.einsum(
+                "br,brlt->blt",
+                relation_distribution,
+                matched["query_evidence"],
             )
+            evidence_by_token = relation_evidence.sum(dim=1)
+            evidence_by_token = (
+                evidence_by_token
+                / evidence_by_token.amax(dim=-1, keepdim=True).clamp_min(1.0e-6)
+            )
+            evidence_by_token = (
+                evidence_by_token
+                * query_token_mask.to(evidence_by_token.dtype)
+            )
+            consumed = (
+                continue_probability[:, None]
+                * evidence_by_token
+            ).clamp(0.0, 1.0)
+            query_coverage = 1.0 - (
+                (1.0 - query_coverage) * (1.0 - consumed)
+            )
+            query_coverage = query_coverage.clamp(0.0, 1.0)
+            coverage_steps.append(query_coverage)
 
             expected_relation = torch.einsum(
                 "br,rd->bd",
                 relation_distribution,
-                schema_match_summary,
+                matched["schema_summary"],
             )
             next_state = self.step_transition(
-                torch.cat([expected_relation, attended.squeeze(1)], dim=-1),
+                torch.cat(
+                    [expected_relation, attended.squeeze(1)],
+                    dim=-1,
+                ),
                 step_state,
             )
             state = (
@@ -495,22 +452,33 @@ class QSREProductionOperatorInducerV3(nn.Module):
         step_state_history = torch.stack(state_steps, dim=1)
         step_attention = torch.stack(attention_steps, dim=1)
         semantic_scores = torch.stack(semantic_score_steps, dim=1)
+        query_coverage_history = torch.stack(coverage_steps, dim=1)
 
-        role_state = factor_states[:, FACTOR_ROLE]
-        traversal_state = factor_states[:, FACTOR_TRAVERSAL]
-        direction_state = factor_states[:, FACTOR_DIRECTION]
-        modifier_state = factor_states[:, FACTOR_MODIFIER]
-        control_state = factor_states[:, FACTOR_CONTROL]
-        applicability_state = factor_states[:, FACTOR_APPLICABILITY]
+        role_match = self._factor_match(
+            query_projected=query_projected,
+            query_token_mask=query_token_mask,
+            category="role",
+        )
+        traversal_match = self._factor_match(
+            query_projected=query_projected,
+            query_token_mask=query_token_mask,
+            category="traversal",
+        )
+        direction_match = self._factor_match(
+            query_projected=query_projected,
+            query_token_mask=query_token_mask,
+            category="direction",
+        )
+        control_match = self._factor_match(
+            query_projected=query_projected,
+            query_token_mask=query_token_mask,
+            category="control",
+        )
 
-        role_logits = self.role_head(role_state)
-        traversal_logits = self.traversal_head(traversal_state)
-        direction_logits = self.direction_head(direction_state)
-        modifier_logits = self.modifier_head(modifier_state)
-        control_logits = self.control_head(control_state)
-        applicability_logit = self.applicability_head(
-            applicability_state
-        ).squeeze(-1)
+        role_logits = role_match["logits"]
+        traversal_logits = traversal_match["logits"]
+        direction_logits = direction_match["logits"]
+        control_logits = control_match["logits"]
 
         role_distribution = torch.softmax(role_logits, dim=-1)
         traversal_distribution = torch.softmax(
@@ -521,16 +489,90 @@ class QSREProductionOperatorInducerV3(nn.Module):
             direction_logits,
             dim=-1,
         )
-        modifier_weight = torch.sigmoid(modifier_logits)
         control_distribution = torch.softmax(
             control_logits,
             dim=-1,
         )
-        applicability = torch.sigmoid(applicability_logit)
 
+        modifier_raw, modifier_mask = self._factor_row(
+            "modifiers",
+            device=query_hidden_states.device,
+        )
+        modifier_count = int(modifier_raw.size(0))
+        modifier_flat = modifier_raw.reshape(
+            modifier_count * 2,
+            *modifier_raw.shape[2:],
+        )
+        modifier_mask_flat = modifier_mask.reshape(
+            modifier_count * 2,
+            modifier_mask.size(-1),
+        )
+        modifier_match = self.schema_matcher.match_projected(
+            query_projected=query_projected,
+            query_token_mask=query_token_mask,
+            schema_projected=self.schema_matcher.project(modifier_flat),
+            schema_token_mask=modifier_mask_flat,
+        )
+        modifier_pair_logits = modifier_match["logits"].reshape(
+            batch,
+            modifier_count,
+            2,
+        )
+        modifier_probability = torch.softmax(
+            modifier_pair_logits,
+            dim=-1,
+        )
+        modifier_weight = modifier_probability[..., 1]
+        modifier_logits = (
+            modifier_pair_logits[..., 1]
+            - modifier_pair_logits[..., 0]
+        )
+
+        role_summary = self._expected(
+            role_distribution,
+            role_match["schema_summary"],
+        )
+        traversal_summary = self._expected(
+            traversal_distribution,
+            traversal_match["schema_summary"],
+        )
+        direction_summary = self._expected(
+            direction_distribution,
+            direction_match["schema_summary"],
+        )
+        control_summary = self._expected(
+            control_distribution,
+            control_match["schema_summary"],
+        )
+        modifier_summary_states = modifier_match[
+            "schema_summary"
+        ].reshape(modifier_count, 2, -1)
+        modifier_expected = (
+            modifier_probability.unsqueeze(-1)
+            * modifier_summary_states.unsqueeze(0)
+        ).sum(dim=2).mean(dim=1)
+        factor_states = torch.stack(
+            [
+                role_summary,
+                traversal_summary,
+                direction_summary,
+                control_summary,
+                modifier_expected,
+            ],
+            dim=1,
+        )
         factor_summary = factor_states.mean(dim=1)
+
+        applicability_input = torch.cat(
+            [state, factor_summary],
+            dim=-1,
+        )
+        applicability_logit = self.applicability_head(
+            applicability_input
+        ).squeeze(-1)
+        applicability = torch.sigmoid(applicability_logit)
         continuous_state = self.continuous_projection(
-            torch.cat([state, factor_summary], dim=-1)
+            applicability_input
         )
 
         relation_entropy = -(
@@ -605,17 +647,20 @@ class QSREProductionOperatorInducerV3(nn.Module):
             },
             "semantic_relation_score": semantic_scores,
             "initial_query_attention": initial_attention.reshape(
-                batch, layers, tokens
+                batch,
+                layers,
+                tokens,
             ),
             "step_query_attention": step_attention,
+            "query_coverage": query_coverage_history,
             "step_state_history": step_state_history,
             "factor_state": factor_states,
             "schema_relation_state": schema_relation_state,
-            "schema_match_token_state": schema_match_projected,
-            "schema_match_relation_state": schema_match_summary,
+            "schema_match_relation_state": matched["schema_summary"],
         }
 
     def parameter_report(self) -> dict[str, int | bool | None]:
+        matcher_report = self.schema_matcher.parameter_report()
         return {
             "total_parameters": sum(p.numel() for p in self.parameters()),
             "trainable_parameters": sum(
@@ -623,20 +668,26 @@ class QSREProductionOperatorInducerV3(nn.Module):
             ),
             "relation_count_dependent_parameters": 0,
             "hop_count_dependent_parameters": 0,
+            "fixed_factor_class_head_parameters": 0,
             "runtime_dynamic_relation_schema": True,
             "shared_query_schema_metric": True,
+            "candidate_conditioned_query_evidence": True,
+            "ordered_query_evidence_coverage": True,
+            "coverage_is_position_based_not_left_to_right": True,
+            "coverage_nonzero_recovery_floor": 0.05,
             "symmetric_late_interaction": True,
             "p1_schema_encoder_is_not_relation_match_authority": True,
             "p1_schema_relation_state_is_interface_only_for_operator": True,
             "relation_selection_decoupled_from_stop_unknown": True,
-            "dense_relation_logits_exposed_for_trainability": True,
-            "dense_event_and_factor_logits_exposed_for_trainability": True,
             "continuous_relation_hypotheses": True,
             "relation_sparsity_before_structural_binding": False,
             "exact_sparsity_owned_by_binder": True,
-            "cardinality_invariant_termination_event_head": True,
-            "match_confidence_guides_unknown_rejection": True,
-            "factor_specific_query_slots": True,
+            "semantic_factor_schemas": True,
+            "same_matcher_for_relations_and_factors": True,
+            "schema_matcher_relation_identity_parameters": matcher_report[
+                "relation_identity_parameters"
+            ],
+            "factor_schema_configured": self._factor_cache is not None,
             "continuous_operator_state": True,
             "role_count_ceiling": None,
             "traversal_count_ceiling": None,
