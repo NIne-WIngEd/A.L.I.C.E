@@ -52,6 +52,7 @@ AUTH_PLAN="$ROOT/configs/eipm/n0/n0_v02_qsre_frozen_semantic_authority_plan_v3.j
 META="$ROOT/configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v2.json"
 PROD_SCHEMA_JSON="$ROOT/configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json"
 FINAL_SCHEMA_JSON="$ROOT/configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json"
+FULL_SCALE_PACKAGE="$ROOT/configs/eipm/n0/n0_v02_final_full_scale_capability_package_v1.json"
 
 P0="$SOURCE/p0"
 PROD_CURRICULUM="$P0/qsre_production_curriculum_v1.jsonl"
@@ -94,7 +95,8 @@ do
   fi
 done
 
-python - "$P1_RESULT" "$P1_ROOT" "$FAILED_P2_RESULT" "$SEM_V2_RESULT"   "$FINAL_FREEZE" "$ORIGINAL_PRODUCTION_REVISION" "$P1_EXPECTED_SHA"   "$PLAN" "$AUTH_PLAN" "$META" <<'PY'
+python - "$P1_RESULT" "$P1_ROOT" "$FAILED_P2_RESULT" "$SEM_V2_RESULT"   "$FINAL_FREEZE" "$ORIGINAL_PRODUCTION_REVISION" "$P1_EXPECTED_SHA"   "$PLAN" "$AUTH_PLAN" "$META" "$PROD_SCHEMA_JSON" "$FINAL_SCHEMA_JSON" \
+  "$PROD_SCHEMA_CACHE" "$FINAL_SCHEMA_CACHE" "$FULL_SCALE_PACKAGE" <<'PY'
 import hashlib,json,math,sys
 from pathlib import Path
 
@@ -102,6 +104,9 @@ p1_path=Path(sys.argv[1]); p1_root=Path(sys.argv[2]); failed_p2_path=Path(sys.ar
 sem_v2_path=Path(sys.argv[4]); freeze_path=Path(sys.argv[5])
 original_revision=sys.argv[6]; expected_p1_sha=sys.argv[7]
 plan_path=Path(sys.argv[8]); auth_plan_path=Path(sys.argv[9]); meta_path=Path(sys.argv[10])
+prod_schema_json=Path(sys.argv[11]); final_schema_json=Path(sys.argv[12])
+prod_schema_cache_path=Path(sys.argv[13]); final_schema_cache_path=Path(sys.argv[14])
+full_scale_path=Path(sys.argv[15])
 
 p1=json.loads(p1_path.read_text())
 failed_p2=json.loads(failed_p2_path.read_text())
@@ -164,6 +169,29 @@ assert auth_plan["governance"]["threshold_changes_after_results"] is False
 
 assert meta["schema"]=="alice.eipm.n0.qsre-closure-schema-meta.v2"
 assert meta["schema_text_contract"]["relation_key_in_semantic_text"] is False
+
+prod_schema_cache=torch.load(prod_schema_cache_path,map_location="cpu")
+final_schema_cache=torch.load(final_schema_cache_path,map_location="cpu")
+assert prod_schema_cache["schema"]=="alice.eipm.n0.qsre-production-schema-cache.v1"
+assert final_schema_cache["schema"]=="alice.eipm.n0.qsre-production-schema-cache.v1"
+assert prod_schema_cache["source_schema_sha256"]==hashlib.sha256(prod_schema_json.read_bytes()).hexdigest()
+assert final_schema_cache["source_schema_sha256"]==hashlib.sha256(final_schema_json.read_bytes()).hexdigest()
+assert prod_schema_cache["semantic_checkpoint_sha256"]==final_schema_cache["semantic_checkpoint_sha256"]
+
+full_scale=json.loads(full_scale_path.read_text())
+assert full_scale["schema"]=="alice.eipm.n0.final-full-scale-capability-package.v1"
+assert full_scale["status"]=="PRECOMMITTED_FULL_SCALE_N0_CLOSURE_PACKAGE"
+assert full_scale["n0_complete"] is False
+assert full_scale["closure_authority"]=="PASS_N0_FINAL_SELF_VALIDATION_OBJECTIVE"
+assert full_scale["scale_policy"]["hard_parameter_ceiling"] is None
+assert full_scale["scale_policy"]["runtime_relation_count_ceiling"] is None
+assert full_scale["scale_policy"]["runtime_reasoning_step_ceiling"] is None
+assert full_scale["scale_policy"]["current_training_steps_are_serving_ceiling"] is False
+assert full_scale["architecture"]["semantic_authority_gradient"] is False
+assert full_scale["architecture"]["exact_relation_sparsity_before_binder"] is False
+assert full_scale["architecture"]["binder_owns_exact_structural_sparsity"] is True
+assert full_scale["governance"]["automatic_rerun"] is False
+assert full_scale["governance"]["threshold_change_after_results"] is False
 
 print("PASS_N0_FROZEN_AUTHORITY_SOURCE_LINEAGE")
 print("p1_checkpoint_sha256="+digest)
