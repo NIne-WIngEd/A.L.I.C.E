@@ -155,8 +155,8 @@ jobs:
           assert "load_pretrained_schema_matcher" in op
           assert "parameter.requires_grad = not freeze" in op
           assert "query_coverage" in op
-          assert "query_remaining" not in op  # closure operator names it remaining
           assert "remaining = (1.0 - query_coverage)" in op
+          assert "query_remaining=remaining" in op
           assert "relation_distribution = torch.softmax" in op
           assert "role_head" not in op
           assert "traversal_head" not in op
