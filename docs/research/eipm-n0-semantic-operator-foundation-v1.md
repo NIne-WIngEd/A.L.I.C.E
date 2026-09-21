@@ -80,6 +80,27 @@ That training was useful for the original semantic readiness task. It was never 
 
 Semantic-base ratification therefore remains valid **for the evidence on which it was ratified**, but it is no longer sufficient authority for the broader QSRE/N0 workload now exposed.
 
+## Governance correction: do not freeze the foundation before the full-envelope contract
+
+The main process error was not that earlier validations were useless. It was that a locally ratified semantic component was allowed to become a **frozen architectural boundary before the broader N0 workload had been closed**.
+
+The semantic base was correctly validated for its original scope. Later QSRE work introduced requirements that were not present in that ratification contract: dynamic relation schemas, explicit argument-role semantics, operator factors, open-schema uncertainty, and ordered compositional execution.
+
+Downstream work then tried to recover those missing capabilities with adapters, matchers, routers, and frozen-authority readouts around a semantic representation that could no longer co-adapt.
+
+New rule:
+
+> A foundation representation may be preserved as a baseline or temporarily frozen for causal experiments, but it must not become permanently frozen authority until the full downstream workload that depends on it has passed an interface-sufficiency review.
+
+For N0 specifically:
+- local component PASS does not imply permanent architectural freeze;
+- causal isolation may freeze a parent temporarily;
+- if a later full-envelope requirement reaches below that boundary, the boundary may reopen once evidence localizes the deficit;
+- re-opening does not erase the historical validity of the earlier ratification;
+- once the joint semantic/operator foundation passes full-envelope proof obligations, downstream freezes may become durable again.
+
+This policy is intended to prevent another sequence where increasingly capable downstream heads are forced to compensate for a representation objective that was frozen too early.
+
 ## Architecture family
 
 ### 1. Shared semantic token foundation
