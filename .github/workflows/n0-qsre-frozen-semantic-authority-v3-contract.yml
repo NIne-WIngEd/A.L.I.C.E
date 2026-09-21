@@ -273,6 +273,10 @@ jobs:
           assert '--schema-cache "$PROD_SCHEMA_CACHE"' in runner
           assert '--schema-cache "$FINAL_SCHEMA_CACHE"' in runner
           assert "n0_v02_final_full_scale_capability_package_v1.json" in runner
+          assert '"$FULL_SCALE_PACKAGE"' in runner
+          preflight_marker='print("original_frozen_final_validation_reused=true")'
+          root_create='mkdir -p "$RUN_ROOT"'
+          assert runner.index(root_create) > runner.index(preflight_marker)
           assert 'FROZEN="$SOURCE/final-frozen"' in runner
           assert "build_n0_v02_final_self_validation" not in runner
           assert "freeze_n0_v02_final_self_validation" not in runner
