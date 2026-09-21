@@ -209,6 +209,7 @@ def main() -> None:
     p.add_argument("--rows", required=True)
     p.add_argument("--relation-schema", required=True)
     p.add_argument("--meta-config", required=True)
+    p.add_argument("--qualification-result", required=True)
     p.add_argument("--semantic-config", required=True)
     p.add_argument("--semantic-checkpoint", required=True)
     p.add_argument("--tokenizer-dir", required=True)
@@ -224,6 +225,7 @@ def main() -> None:
     rows_path = Path(args.rows)
     relation_schema_path = Path(args.relation_schema)
     meta_path = Path(args.meta_config)
+    qualification_path = Path(args.qualification_result)
     semantic_config_path = Path(args.semantic_config)
     semantic_checkpoint = Path(args.semantic_checkpoint)
     tokenizer_dir = Path(args.tokenizer_dir)
@@ -240,6 +242,17 @@ def main() -> None:
     meta = read_json(meta_path)
     if meta.get("schema") != "alice.eipm.n0.qsre-closure-schema-meta.v2":
         raise SystemExit("authority-cache meta schema drift")
+    qualification = read_json(qualification_path)
+    if qualification.get("schema") != "alice.eipm.n0.qsre-frozen-semantic-authority-result.v3":
+        raise SystemExit("authority qualification result schema drift")
+    if qualification.get("status") != "PASS_QSRE_FROZEN_SEMANTIC_AUTHORITY":
+        raise SystemExit("authority cache requires passing frozen semantic qualification")
+    if qualification.get("p2_authorized") is not True:
+        raise SystemExit("authority qualification did not authorize Production P2")
+    if qualification.get("gradient_performed") is not False or qualification.get("optimizer") is not False:
+        raise SystemExit("authority qualification was not zero-gradient")
+    if qualification.get("semantic_checkpoint_sha256") != sha256(semantic_checkpoint):
+        raise SystemExit("authority qualification semantic checkpoint drift")
     relation_schema = read_json(relation_schema_path)
     relation_rows = list(relation_schema["relations"])
     relation_by_key = {str(row["key"]): row for row in relation_rows}
@@ -264,6 +277,7 @@ def main() -> None:
         "rows_sha256": sha256(rows_path),
         "relation_schema_sha256": sha256(relation_schema_path),
         "meta_config_sha256": sha256(meta_path),
+        "qualification_result_sha256": sha256(qualification_path),
         "semantic_checkpoint_sha256": sha256(semantic_checkpoint),
         "authority_components": [
             "joint_preference",
@@ -379,6 +393,7 @@ def main() -> None:
         "cache_sha256": sha256(output_path),
         "rows": len(rows),
         "semantic_checkpoint_sha256": sha256(semantic_checkpoint),
+        "qualification_result_sha256": sha256(qualification_path),
         "relation_keys_used_as_semantic_tokens": False,
         "gradient": False,
         "optimizer": False,
