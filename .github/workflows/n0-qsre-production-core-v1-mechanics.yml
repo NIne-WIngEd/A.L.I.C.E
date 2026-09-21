@@ -40,7 +40,32 @@ jobs:
           assert core["schema"]=="alice.eipm.n0.qsre-production-core.v1"
           assert core["authorization"]["gpu"] is False
           assert core["authorization"]["gradient"] is False
-          assert len(core["static_proof_obligations"])==17
+          obligations=set(core["static_proof_obligations"])
+          required={
+              "dynamic_schema_cardinality",
+              "dynamic_relation_step_count",
+              "schema_permutation_equivariance",
+              "semantic_schema_intervention",
+              "type_domain_range_contradiction",
+              "unknown_vs_stop",
+              "plural_relation_hypothesis",
+              "composable_operations",
+              "continuous_state_causality",
+              "variable_support",
+              "multi_hop_order",
+              "field_edge_permutation",
+              "exact_nonrelational_pass_through",
+              "totality_fuzz",
+              "w1_w15_interface_mapping_bound_to_explicit_map",
+              "learned_path_focus_no_oracle_at_end_to_end",
+              "reverse_path_source_execution",
+              "direction_factor_independent_from_role",
+              "calibrated_relational_mass_survives_normalization",
+              "native_relational_summary_reaches_n0_fabric",
+              "path_frontier_persists_across_inactive_stop_tail",
+              "shorter_paths_equal_unpadded_execution_under_larger_runtime_budget",
+          }
+          assert required <= obligations, sorted(required-obligations)
           assert set(mapping["families"])=={f"W{i}" for i in range(1,16)}
           assert Path("src/alice_personality/n0/qsre_production_core.py").is_file()
           assert Path("tests/eipm/test_n0_qsre_production_core_v1.py").is_file()
