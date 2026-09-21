@@ -21,6 +21,7 @@ from alice_personality.n0.qsre_production_core import QSREProductionOperatorStat
 from alice_personality.n0.qsre_production_binder_v2 import (
     QSREProductionBinderV2,
 )
+from alice_personality.n0.qsre_semantic_authority import validate_authority_cache
 from qsre_production_runtime import load_dynamic_schema_cache, sha256
 from qsre_production_training_utils import (
     config_from_plan,
@@ -85,6 +86,7 @@ def concat_operator_states(values: list[QSREProductionOperatorState]) -> QSREPro
 def qsre_final_metrics(
     *,
     split: dict[str, Any],
+    authority_split: dict[str, Any],
     schema,
     schema_encoder,
     executor,
@@ -108,6 +110,7 @@ def qsre_final_metrics(
         for view in (0, 1):
             op = infer_operator(
                 split=split,
+                authority_split=authority_split,
                 indices=idx,
                 view=view,
                 schema=schema,
@@ -395,6 +398,8 @@ def main() -> None:
     p.add_argument("--p2-result", required=True)
     p.add_argument("--p2-root", required=True)
     p.add_argument("--factor-schema-cache", required=True)
+    p.add_argument("--authority-cache", required=True)
+    p.add_argument("--final-authority-cache", required=True)
     p.add_argument("--p3-result", required=True)
     p.add_argument("--p3-root", required=True)
     p.add_argument("--p4-result", required=True)
@@ -479,13 +484,16 @@ def main() -> None:
         or p4.get("p3_checkpoint_sha256") != sha256(p3_path)
         or p4.get("factor_schema_cache_sha256")
         != sha256(Path(args.factor_schema_cache))
+        or p4.get("semantic_authority_cache_sha256")
+        != sha256(Path(args.authority_cache))
     ):
         raise SystemExit("P4 selected lineage drift")
 
-    schema_encoder, executor, operator_model = load_parents(
+    schema_encoder, executor, operator_model, _production_authority = load_parents(
         p1_path=p1_path,
         p2_path=p2_path,
         factor_schema_cache_path=Path(args.factor_schema_cache),
+        authority_cache_path=Path(args.authority_cache),
         config=config,
         device=device,
     )
@@ -505,9 +513,22 @@ def main() -> None:
     if relational_cache.get("schema") != "alice.eipm.n0.qsre-final-self-validation-cache.v1":
         raise SystemExit("final relational cache schema drift")
     split = relational_cache["rows"]
+    final_authority = torch.load(Path(args.final_authority_cache), map_location="cpu")
+    validate_authority_cache(
+        final_authority,
+        expected_schema="alice.eipm.n0.qsre-frozen-semantic-authority-final-cache.v3",
+    )
+    authority_rows = final_authority["rows"]
+    if authority_rows["ids"] != list(split["ids"]):
+        raise SystemExit("final semantic-authority row order drift")
+    if list(authority_rows["relation_keys"]) != list(schema_payload["relation_keys"]):
+        raise SystemExit("final semantic-authority relation order drift")
+    if final_authority.get("rows_sha256") != sha256(relational_path):
+        raise SystemExit("final semantic-authority frozen corpus lineage drift")
 
     qsre_result, qsre_runtime = qsre_final_metrics(
         split=split,
+        authority_split=authority_rows,
         schema=final_schema,
         schema_encoder=schema_encoder,
         executor=executor,
@@ -823,6 +844,8 @@ def main() -> None:
         "gradient_performed": False,
         "private_identity_data": False,
         "private_identity_gradient": False,
+        "frozen_semantic_authority": True,
+        "semantic_authority_gradient": False,
         "qsre": qsre_result,
         "general_fabric": general_metrics,
         "integrated_relational_fabric": integrated_summary,
@@ -841,6 +864,12 @@ def main() -> None:
             "p4_result_sha256": sha256(p4_path),
             "factor_schema_cache_sha256": sha256(
                 Path(args.factor_schema_cache)
+            ),
+            "semantic_authority_cache_sha256": sha256(
+                Path(args.authority_cache)
+            ),
+            "final_semantic_authority_cache_sha256": sha256(
+                Path(args.final_authority_cache)
             ),
             "fusion_sha256": EXPECTED_FUSION_SHA256,
             "latent_pool_sha256": EXPECTED_LATENT_SHA256,
