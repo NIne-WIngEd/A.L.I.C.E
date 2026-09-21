@@ -395,6 +395,44 @@ class SchemaConditionedSemanticOperator(nn.Module):
             torch.tensor(float(count), device=probability.device, dtype=probability.dtype)
         )
 
+    @staticmethod
+    def _masked_entropy(probability: Tensor, mask: Tensor) -> Tensor:
+        if probability.shape != mask.shape or mask.dtype != torch.bool:
+            raise ValueError("probability/mask geometry drift")
+        active = mask.sum(dim=-1)
+        entropy = -(
+            probability
+            * probability.clamp_min(1.0e-12).log()
+            * mask.to(probability.dtype)
+        ).sum(dim=-1)
+        denom = torch.log(
+            active.clamp_min(2).to(probability.dtype)
+        )
+        normalized = entropy / denom
+        return torch.where(
+            active > 1,
+            normalized,
+            torch.zeros_like(normalized),
+        )
+
+    @staticmethod
+    def _masked_candidate_distribution(
+        logits: Tensor,
+        mask: Tensor,
+    ) -> tuple[Tensor, Tensor]:
+        if logits.shape != mask.shape or mask.dtype != torch.bool:
+            raise ValueError("candidate logits/mask geometry drift")
+        if bool((mask.sum(dim=-1) == 0).any()):
+            raise ValueError("every example requires at least one active candidate")
+        masked_logits = logits.masked_fill(~mask, -1.0e4)
+        probability = torch.softmax(masked_logits, dim=-1)
+        probability = probability * mask.to(probability.dtype)
+        probability = probability / probability.sum(
+            dim=-1,
+            keepdim=True,
+        ).clamp_min(1.0e-12)
+        return masked_logits, probability
+
     def forward(
         self,
         *,
@@ -403,6 +441,8 @@ class SchemaConditionedSemanticOperator(nn.Module):
         relation_schema: DynamicRelationSchema,
         factor_schemas: Mapping[str, DynamicSemanticSchema],
         max_steps: int,
+        relation_candidate_mask: Tensor | None = None,
+        factor_candidate_masks: Mapping[str, Tensor] | None = None,
     ) -> dict[str, Any]:
         if max_steps <= 0:
             raise ValueError("max_steps must be positive")
@@ -411,6 +451,55 @@ class SchemaConditionedSemanticOperator(nn.Module):
             semantic_dim=self.config.semantic_dim,
         )
         batch, _, query_tokens, _ = query_hidden_states.shape
+        if relation_candidate_mask is None:
+            relation_candidate_mask = torch.ones(
+                batch,
+                relation_info["candidates"],
+                device=query_hidden_states.device,
+                dtype=torch.bool,
+            )
+        if (
+            relation_candidate_mask.shape
+            != (batch, relation_info["candidates"])
+            or relation_candidate_mask.dtype != torch.bool
+        ):
+            raise ValueError("relation_candidate_mask must be bool [B,R]")
+        if bool((relation_candidate_mask.sum(dim=-1) == 0).any()):
+            raise ValueError("every example requires an active relation candidate")
+
+        factor_candidate_masks = (
+            {} if factor_candidate_masks is None else dict(factor_candidate_masks)
+        )
+        unknown_factor_masks = set(factor_candidate_masks) - set(factor_schemas)
+        if unknown_factor_masks:
+            raise ValueError(
+                "factor candidate mask supplied for unknown banks: "
+                + repr(sorted(unknown_factor_masks))
+            )
+        resolved_factor_masks: dict[str, Tensor] = {}
+        for name, schema in factor_schemas.items():
+            info = schema.validate(
+                num_hidden_states=self.config.num_hidden_states,
+                semantic_dim=self.config.semantic_dim,
+            )
+            mask = factor_candidate_masks.get(str(name))
+            if mask is None:
+                mask = torch.ones(
+                    batch,
+                    info["candidates"],
+                    device=query_hidden_states.device,
+                    dtype=torch.bool,
+                )
+            if mask.shape != (batch, info["candidates"]) or mask.dtype != torch.bool:
+                raise ValueError(
+                    f"factor candidate mask {name!r} must be bool [B,C]"
+                )
+            if bool((mask.sum(dim=-1) == 0).any()):
+                raise ValueError(
+                    f"every example requires an active {name!r} candidate"
+                )
+            resolved_factor_masks[str(name)] = mask
+
         state = self._query_state(query_hidden_states, query_token_mask)
         coverage = torch.zeros(
             batch,
@@ -439,12 +528,6 @@ class SchemaConditionedSemanticOperator(nn.Module):
         step_factor_distributions_lists: dict[str, list[Tensor]] = {
             str(name): [] for name in factor_schemas
         }
-        for schema in factor_schemas.values():
-            schema.validate(
-                num_hidden_states=self.config.num_hidden_states,
-                semantic_dim=self.config.semantic_dim,
-            )
-
         for _ in range(max_steps):
             remaining = (1.0 - coverage.float()).clamp(min=0.02, max=1.0)
             matched = self.matcher(
@@ -465,7 +548,10 @@ class SchemaConditionedSemanticOperator(nn.Module):
                 + 0.25 * torch.tanh(state_score)
                 + torch.log(matched["remaining_support"].clamp_min(0.02))
             )
-            distribution = torch.softmax(logits, dim=-1)
+            logits, distribution = self._masked_candidate_distribution(
+                logits,
+                relation_candidate_mask,
+            )
             expected_schema = torch.einsum(
                 "bc,bcd->bd",
                 distribution,
@@ -497,22 +583,31 @@ class SchemaConditionedSemanticOperator(nn.Module):
                     + 0.25 * torch.tanh(factor_state_score)
                 )
                 name = str(name)
+                step_logits, step_probability = self._masked_candidate_distribution(
+                    step_logits,
+                    resolved_factor_masks[name],
+                )
                 step_factor_scores[name].append(step_logits)
                 step_factor_layer_weights[name].append(
                     step_matched["layer_weight"]
                 )
-                step_factor_distributions_lists[name].append(
-                    torch.softmax(step_logits, dim=-1)
-                )
+                step_factor_distributions_lists[name].append(step_probability)
 
+            best = logits.max(dim=-1).values
             if relation_info["candidates"] > 1:
                 top2 = logits.topk(2, dim=-1).values
-                best = top2[:, 0]
-                margin = top2[:, 0] - top2[:, 1]
+                active_count = relation_candidate_mask.sum(dim=-1)
+                margin = torch.where(
+                    active_count > 1,
+                    top2[:, 0] - top2[:, 1],
+                    torch.ones_like(best),
+                )
             else:
-                best = logits[:, 0]
                 margin = torch.ones_like(best)
-            entropy = self._entropy(distribution)
+            entropy = self._masked_entropy(
+                distribution,
+                relation_candidate_mask,
+            )
             event_input = torch.cat(
                 [state, best[:, None], margin[:, None], entropy[:, None]],
                 dim=-1,
@@ -580,9 +675,14 @@ class SchemaConditionedSemanticOperator(nn.Module):
                 F.normalize(matched["schema_summary"], dim=-1),
             )
             factor_logits = matched["score"] + 0.25 * torch.tanh(factor_state_score)
-            factor_scores[str(name)] = factor_logits
-            factor_distributions[str(name)] = torch.softmax(factor_logits, dim=-1)
-            factor_layer_weights[str(name)] = matched["layer_weight"]
+            name = str(name)
+            factor_logits, factor_probability = self._masked_candidate_distribution(
+                factor_logits,
+                resolved_factor_masks[name],
+            )
+            factor_scores[name] = factor_logits
+            factor_distributions[name] = factor_probability
+            factor_layer_weights[name] = matched["layer_weight"]
 
         relation_distribution = torch.stack(relation_distributions, dim=1)
         relation_step_mass = torch.stack(relation_masses, dim=1)
@@ -594,8 +694,13 @@ class SchemaConditionedSemanticOperator(nn.Module):
         relation_entropy = self._entropy(relation_distribution)
         unknown_mass = unknown_probability.sum(dim=1).clamp(0.0, 1.0)
         factor_uncertainty = []
-        for probability in factor_distributions.values():
-            factor_uncertainty.append(self._entropy(probability))
+        for name, probability in factor_distributions.items():
+            factor_uncertainty.append(
+                self._masked_entropy(
+                    probability,
+                    resolved_factor_masks[name],
+                )
+            )
         if factor_uncertainty:
             global_factor_u = torch.stack(
                 factor_uncertainty,
@@ -605,8 +710,14 @@ class SchemaConditionedSemanticOperator(nn.Module):
             global_factor_u = torch.zeros_like(unknown_mass)
 
         step_factor_uncertainty = []
-        for probability in step_factor_distributions.values():
-            entropy_by_step = self._entropy(probability)
+        for name, probability in step_factor_distributions.items():
+            step_mask = resolved_factor_masks[name][:, None, :].expand_as(
+                probability
+            )
+            entropy_by_step = self._masked_entropy(
+                probability,
+                step_mask,
+            )
             weighted = (
                 entropy_by_step
                 * relation_step_mass
@@ -662,6 +773,8 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "relation_query_evidence": torch.stack(relation_query_evidence, dim=1),
             "factor_logits": factor_scores,
             "factor_layer_weights": factor_layer_weights,
+            "relation_candidate_mask": relation_candidate_mask,
+            "factor_candidate_masks": resolved_factor_masks,
             "step_factor_logits": {
                 name: torch.stack(values, dim=1)
                 for name, values in step_factor_scores.items()
@@ -679,6 +792,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "relation_identity_parameters": 0,
             "factor_identity_parameters": 0,
             "candidate_count_dependent_parameters": 0,
+            "per_example_candidate_subset_supported": True,
             "runtime_step_count_dependent_parameters": 0,
             "type_vocabulary_dependent_parameters": 0,
             "relation_count_ceiling": None,
