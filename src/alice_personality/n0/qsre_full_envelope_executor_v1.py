@@ -6,7 +6,7 @@ from typing import Any
 import torch
 from torch import Tensor, nn
 
-from alice_personality.n0.qsre_production_core import (
+from alice_personality.n0.full_envelope_structural_types import (
     CONTROL_RELATIONAL,
     DIRECTION_BIDIRECTIONAL,
     DIRECTION_FORWARD,
@@ -20,7 +20,7 @@ from alice_personality.n0.qsre_production_core import (
     ROLE_SYMMETRIC,
     ROLE_TARGET,
     TRAVERSAL_PATH,
-    QSREProductionOperatorState,
+    FullEnvelopeOperatorState,
 )
 
 
@@ -103,7 +103,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         edge_temporal_match: Tensor,
         edge_provenance_match: Tensor,
         relation_schema_state: Tensor,
-        operator: QSREProductionOperatorState,
+        operator: FullEnvelopeOperatorState,
         focus_field_weight: Tensor,
     ) -> dict[str, Tensor]:
         if field_state.ndim != 3:
