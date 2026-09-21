@@ -26,6 +26,7 @@ def load_plan(path: Path) -> dict:
     if data.get("schema") not in {
         "alice.eipm.n0.qsre-production-training-plan.v1",
         "alice.eipm.n0.qsre-production-training-plan.v2",
+        "alice.eipm.n0.qsre-production-training-plan.v3",
     }:
         raise RuntimeError("production training-plan schema drift")
     return data
