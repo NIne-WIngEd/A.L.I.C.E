@@ -79,6 +79,7 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
         edge_valid_mask: Tensor,
         relation_schema_state: Tensor,
         relation_mass: Tensor,
+        relation_symmetric: Tensor,
         operator_state: Tensor,
         message_steps: int,
     ) -> dict[str, Tensor]:
@@ -111,6 +112,8 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             raise ValueError("runtime relation schema is empty")
         if relation_mass.shape != (batch, relations):
             raise ValueError("relation_mass must be [B,R]")
+        if relation_symmetric.shape != (batch, relations) or relation_symmetric.dtype != torch.bool:
+            raise ValueError("relation_symmetric must be bool [B,R]")
         if operator_state.shape != (batch, self.config.operator_dim):
             raise ValueError("operator_state shape drift")
 
@@ -158,6 +161,18 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
 
             source_msg = self.source_message(torch.cat([edge, op], dim=-1))
             target_msg = self.target_message(torch.cat([edge, op], dim=-1))
+            edge_symmetric = relation_symmetric[batch_index, relation_index]
+            symmetric_message = 0.5 * (source_msg + target_msg)
+            source_msg = torch.where(
+                edge_symmetric.unsqueeze(-1),
+                symmetric_message,
+                source_msg,
+            )
+            target_msg = torch.where(
+                edge_symmetric.unsqueeze(-1),
+                symmetric_message,
+                target_msg,
+            )
             semantic_gate = (
                 0.05 + 0.95 * edge_relation_mass.clamp(0.0, 1.0)
             ).unsqueeze(-1)
@@ -225,6 +240,8 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             "edge_count_dependent_parameters": 0,
             "runtime_relation_schema": True,
             "continuous_relation_conditioning": True,
+            "runtime_relation_symmetry": True,
+            "symmetric_edge_message_exchange": True,
             "exact_structural_sparsity": False,
             "dual_endpoint_read": True,
             "field_count_ceiling": None,
