@@ -54,7 +54,15 @@ class QSREProductionOperatorInducerV3(nn.Module):
     invariant semantic-match confidence features. This prevents relation-logit
     scale or candidate count from suppressing fail-closed behavior.
 
-    Factor-specific query slots keep role/traversal/direction/modifier/control\n    prediction from collapsing onto the terminal relation-decoder state.\n\n    Ordered relation programs additionally maintain a differentiable query-token\n    coverage state. Evidence strongly attended at one relation step is softly\n    consumed for the next step. The same recurrent cell is reused at every\n    step, so this introduces no hop-count parameter axis and does not assume a\n    fixed left-to-right language order.\n    """
+    Factor-specific query slots keep role/traversal/direction/modifier/control
+    prediction from collapsing onto the terminal relation-decoder state.
+
+    Ordered relation programs additionally maintain a differentiable query-token
+    coverage state. Evidence strongly attended at one relation step is softly
+    consumed for the next step. The same recurrent cell is reused at every
+    step, so this introduces no hop-count parameter axis and does not assume a
+    fixed left-to-right language order.
+    """
 
     def __init__(self, config: QSREProductionConfig) -> None:
         super().__init__()
@@ -206,7 +214,10 @@ class QSREProductionOperatorInducerV3(nn.Module):
         query_attention: Tensor,
         query_token_mask: Tensor,
         schema_match_projected: Tensor,
-        schema_match_summary: Tensor,\n        schema_token_mask: Tensor,\n        query_remaining: Tensor,\n    ) -> tuple[Tensor, Tensor, Tensor]:
+        schema_match_summary: Tensor,
+        schema_token_mask: Tensor,
+        query_remaining: Tensor,
+    ) -> tuple[Tensor, Tensor, Tensor]:
         batch, layers, query_tokens, _ = query_projected.shape
         relations, schema_layers, schema_tokens, _ = schema_match_projected.shape
         if schema_layers != layers:
@@ -231,9 +242,21 @@ class QSREProductionOperatorInducerV3(nn.Module):
             schema_tokens,
         )
         valid = schema_valid & query_valid
-        similarity = similarity.masked_fill(~valid, -1.0e4)\n\n        # Soft evidence consumption. A token heavily consumed by an earlier\n        # relation step remains available through a nonzero floor, but it no\n        # longer dominates every later step. This is position-agnostic and\n        # therefore does not impose a left-to-right parser.\n        remaining = query_remaining.clamp(min=0.05, max=1.0)\n        similarity = similarity + torch.log(remaining)[:, None, None, :, None]\n\n        # Query -> schema late interaction, weighted by current step attention.
+        similarity = similarity.masked_fill(~valid, -1.0e4)
+
+        # Soft evidence consumption. A token heavily consumed by an earlier
+        # relation step remains available through a nonzero floor, but it no
+        # longer dominates every later step. This is position-agnostic and
+        # therefore does not impose a left-to-right parser.
+        remaining = query_remaining.clamp(min=0.05, max=1.0)
+        similarity = similarity + torch.log(remaining)[:, None, None, :, None]
+
+        # Query -> schema late interaction, weighted by current step attention.
         q_to_s = similarity.max(dim=-1).values
-        q_weight = query_attention.reshape(batch, layers, query_tokens)\n        q_weight = q_weight * query_token_mask[:, None, :].to(q_weight.dtype)\n        q_weight = q_weight * remaining[:, None, :]\n        q_weight = q_weight / q_weight.sum(dim=(1, 2), keepdim=True).clamp_min(1.0e-12)
+        q_weight = query_attention.reshape(batch, layers, query_tokens)
+        q_weight = q_weight * query_token_mask[:, None, :].to(q_weight.dtype)
+        q_weight = q_weight * remaining[:, None, :]
+        q_weight = q_weight / q_weight.sum(dim=(1, 2), keepdim=True).clamp_min(1.0e-12)
         q_to_s_score = torch.einsum("blt,brlt->br", q_weight, q_to_s)
 
         # Schema -> query late interaction keeps the relation description itself
@@ -377,7 +400,27 @@ class QSREProductionOperatorInducerV3(nn.Module):
         event_logits_steps: list[Tensor] = []
         state_steps: list[Tensor] = []
         attention_steps: list[Tensor] = []
-        semantic_score_steps: list[Tensor] = []\n        coverage_steps: list[Tensor] = []\n        remaining_steps: list[Tensor] = []\n\n        survival = torch.ones(batch, device=state.device, dtype=state.dtype)\n        query_coverage = torch.zeros(\n            batch, tokens, device=state.device, dtype=state.dtype\n        )\n\n        for _ in range(max_steps):\n            query_remaining = (1.0 - query_coverage).clamp(min=0.05, max=1.0)\n            remaining_flat = (\n                query_remaining[:, None, :]\n                .expand(batch, layers, tokens)\n                .reshape(batch, layers * tokens)\n            )\n            step_memory = memory * remaining_flat.unsqueeze(-1)\n            attended, attention = self.query_cross_attention(\n                state.unsqueeze(1),\n                step_memory,\n                step_memory,
+        semantic_score_steps: list[Tensor] = []
+        coverage_steps: list[Tensor] = []
+        remaining_steps: list[Tensor] = []
+
+        survival = torch.ones(batch, device=state.device, dtype=state.dtype)
+        query_coverage = torch.zeros(
+            batch, tokens, device=state.device, dtype=state.dtype
+        )
+
+        for _ in range(max_steps):
+            query_remaining = (1.0 - query_coverage).clamp(min=0.05, max=1.0)
+            remaining_flat = (
+                query_remaining[:, None, :]
+                .expand(batch, layers, tokens)
+                .reshape(batch, layers * tokens)
+            )
+            step_memory = memory * remaining_flat.unsqueeze(-1)
+            attended, attention = self.query_cross_attention(
+                state.unsqueeze(1),
+                step_memory,
+                step_memory,
                 key_padding_mask=~flat_valid,
                 need_weights=True,
                 average_attn_weights=True,
@@ -387,12 +430,16 @@ class QSREProductionOperatorInducerV3(nn.Module):
                 survival[:, None] * candidate
                 + (1.0 - survival[:, None]) * state
             )
-            relation_logits, semantic_score, query_relation_evidence = self._semantic_match(\n                state=step_state,
+            relation_logits, semantic_score, query_relation_evidence = self._semantic_match(
+                state=step_state,
                 query_projected=query_projected,
                 query_attention=attention.squeeze(1),
                 query_token_mask=query_token_mask,
                 schema_match_projected=schema_match_projected,
-                schema_match_summary=schema_match_summary,\n                schema_token_mask=schema.token_mask,\n                query_remaining=query_remaining,\n            )
+                schema_match_summary=schema_match_summary,
+                schema_token_mask=schema.token_mask,
+                query_remaining=query_remaining,
+            )
 
             relation_mask = torch.ones_like(relation_logits, dtype=torch.bool)
             relation_distribution = masked_sparsemax(
@@ -443,7 +490,39 @@ class QSREProductionOperatorInducerV3(nn.Module):
             event_steps.append(event_probability)
             event_logits_steps.append(event_logits)
             state_steps.append(step_state)
-            semantic_score_steps.append(semantic_score)\n            step_attention = attention.squeeze(1).reshape(batch, layers, tokens)\n            attention_steps.append(step_attention)\n\n            # Consume the token evidence used by this relation step. Attention\n            # is aggregated across semantic layers so all representations of a\n            # token position are jointly downweighted at the next step. The\n            # relation evidence term prevents generic high-attention tokens from\n            # being consumed solely because they are globally salient.\n            relation_evidence = torch.einsum(\n                "br,brlt->blt",\n                relation_distribution,\n                query_relation_evidence,\n            )\n            relation_evidence = torch.sigmoid(relation_evidence).mean(dim=1)\n            token_attention = step_attention.sum(dim=1)\n            consume_score = token_attention * relation_evidence\n            consume_score = consume_score / consume_score.amax(\n                dim=-1, keepdim=True\n            ).clamp_min(1.0e-12)\n            consume_score = (\n                consume_score\n                * continue_probability[:, None]\n                * query_token_mask.to(consume_score.dtype)\n            ).clamp(0.0, 1.0)\n            query_coverage = 1.0 - (\n                (1.0 - query_coverage) * (1.0 - consume_score)\n            )\n            query_coverage = query_coverage.clamp(0.0, 1.0)\n            coverage_steps.append(query_coverage)\n            remaining_steps.append((1.0 - query_coverage).clamp(0.05, 1.0))\n\n            expected_relation = torch.einsum(
+            semantic_score_steps.append(semantic_score)
+            step_attention = attention.squeeze(1).reshape(batch, layers, tokens)
+            attention_steps.append(step_attention)
+
+            # Consume the token evidence used by this relation step. Attention
+            # is aggregated across semantic layers so all representations of a
+            # token position are jointly downweighted at the next step. The
+            # relation evidence term prevents generic high-attention tokens from
+            # being consumed solely because they are globally salient.
+            relation_evidence = torch.einsum(
+                "br,brlt->blt",
+                relation_distribution,
+                query_relation_evidence,
+            )
+            relation_evidence = torch.sigmoid(relation_evidence).mean(dim=1)
+            token_attention = step_attention.sum(dim=1)
+            consume_score = token_attention * relation_evidence
+            consume_score = consume_score / consume_score.amax(
+                dim=-1, keepdim=True
+            ).clamp_min(1.0e-12)
+            consume_score = (
+                consume_score
+                * continue_probability[:, None]
+                * query_token_mask.to(consume_score.dtype)
+            ).clamp(0.0, 1.0)
+            query_coverage = 1.0 - (
+                (1.0 - query_coverage) * (1.0 - consume_score)
+            )
+            query_coverage = query_coverage.clamp(0.0, 1.0)
+            coverage_steps.append(query_coverage)
+            remaining_steps.append((1.0 - query_coverage).clamp(0.05, 1.0))
+
+            expected_relation = torch.einsum(
                 "br,rd->bd",
                 relation_distribution,
                 schema_match_summary,
@@ -467,7 +546,10 @@ class QSREProductionOperatorInducerV3(nn.Module):
         event_logits = torch.stack(event_logits_steps, dim=1)
         step_state_history = torch.stack(state_steps, dim=1)
         step_attention = torch.stack(attention_steps, dim=1)
-        semantic_scores = torch.stack(semantic_score_steps, dim=1)\n        step_query_coverage = torch.stack(coverage_steps, dim=1)\n        step_query_remaining = torch.stack(remaining_steps, dim=1)\n
+        semantic_scores = torch.stack(semantic_score_steps, dim=1)
+        step_query_coverage = torch.stack(coverage_steps, dim=1)
+        step_query_remaining = torch.stack(remaining_steps, dim=1)
+
         role_state = factor_states[:, FACTOR_ROLE]
         traversal_state = factor_states[:, FACTOR_TRAVERSAL]
         direction_state = factor_states[:, FACTOR_DIRECTION]
@@ -580,7 +662,10 @@ class QSREProductionOperatorInducerV3(nn.Module):
                 batch, layers, tokens
             ),
             "step_query_attention": step_attention,
-            "step_state_history": step_state_history,\n            "step_query_coverage": step_query_coverage,\n            "step_query_remaining": step_query_remaining,\n            "factor_state": factor_states,
+            "step_state_history": step_state_history,
+            "step_query_coverage": step_query_coverage,
+            "step_query_remaining": step_query_remaining,
+            "factor_state": factor_states,
             "schema_relation_state": schema_relation_state,
             "schema_match_token_state": schema_match_projected,
             "schema_match_relation_state": schema_match_summary,
