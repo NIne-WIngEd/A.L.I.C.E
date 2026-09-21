@@ -1,0 +1,160 @@
+name: n0-semantic-operator-foundation-v1-contract
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-n0-semantic-operator-foundation-v1
+    paths:
+      - "docs/research/eipm-n0-semantic-operator-foundation-v1.md"
+      - "configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json"
+      - ".github/workflows/n0-semantic-operator-foundation-v1-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate architecture state
+        run: |
+          set -euo pipefail
+          python -m json.tool configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json >/dev/null
+          python - <<'PY'
+          import json
+          p="configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json"
+          s=json.load(open(p))
+          assert s["schema"]=="alice.eipm.n0.semantic-operator-foundation.v1"
+          assert s["status"]=="ARCHITECTURE_DECISION_ONLY_NO_GRADIENT"
+          assert s["source_diagnostic"]["magnolia_job"]==575990
+          assert s["source_diagnostic"]["completed_cleanly"] is True
+          assert s["decision"]["reopen_public_semantic_representation_objective"] is True
+          assert s["decision"]["reopen_semantic_operator_boundary"] is True
+          assert s["decision"]["another_p2s_matcher_authorized"] is False
+          assert s["decision"]["another_p2a_frozen_head_ensemble_authorized"] is False
+          print("PASS_N0_SEMANTIC_OPERATOR_FOUNDATION_DECISION")
+          PY
+
+      - name: Prove dynamic schema and continuous operator contract
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          s=json.load(open("configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json"))
+          a=s["architecture"]
+          assert a["runtime_schema_first_class_input"] is True
+          assert a["shared_query_schema_token_interaction"] is True
+          assert a["dynamic_relation_schema"] is True
+          assert a["relation_keys_semantic_tokens"] is False
+          assert a["relation_identity_parameter_axis"] is False
+          assert a["factor_identity_parameter_axis"] is False
+          assert a["candidate_count_parameter_axis"] is False
+          assert a["hop_index_parameter_axis"] is False
+          assert a["continuous_operator_latent"] is True
+          assert a["shared_recurrent_relation_transition"] is True
+          assert a["structural_stop"] is True
+          assert a["uncertainty_plurality"] is True
+          assert a["ordered_query_evidence_coverage"] is True
+          assert a["continuous_relation_hypotheses"] is True
+          assert a["exact_relation_sparsity_before_binder"] is False
+          assert a["binder_owns_exact_structural_sparsity"] is True
+          print("PASS_N0_DYNAMIC_SCHEMA_OPERATOR_CONTRACT")
+          PY
+
+      - name: Prove full capability no hidden ceilings
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          s=json.load(open("configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json"))
+          x=s["scale_policy"]
+          assert x["full_capability_architecture"] is True
+          assert x["pilot"] is False
+          assert x["reduced_capability_target"] is False
+          assert x["hard_parameter_ceiling"] is None
+          assert x["hard_width_ceiling"] is None
+          assert x["hard_depth_ceiling"] is None
+          assert x["runtime_relation_count_ceiling"] is None
+          assert x["runtime_factor_count_ceiling"] is None
+          assert x["runtime_reasoning_step_ceiling"] is None
+          assert x["context_view_ceiling"] is None
+          assert x["current_136m_parameter_count_is_capability_ceiling"] is False
+          assert x["blind_parameter_scaling_authorized"] is False
+          print("PASS_N0_SEMANTIC_OPERATOR_NO_HIDDEN_CEILING")
+          PY
+
+      - name: Prove complete training objective family
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          s=json.load(open("configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json"))
+          objectives=set(s["training_objectives_required"])
+          required={
+            "broad_public_semantic_replay",
+            "dynamic_schema_discrimination",
+            "argument_role_intervention",
+            "relation_intervention",
+            "factor_schema_semantics",
+            "ordered_noncommutative_composition",
+            "token_level_evidence_grounding",
+            "open_schema_unknown_defer",
+            "hard_semantic_negatives",
+            "paraphrase_and_counterfactual_consistency",
+            "existing_candidate_preference_and_rationale_semantics",
+          }
+          assert required <= objectives
+          splits=set(s["split_isolation_required"])
+          assert {
+            "relation_family","entity","lexical_paraphrase","template",
+            "domain","multi_hop_composition","factor_combination"
+          } <= splits
+          print("PASS_N0_SEMANTIC_OPERATOR_OBJECTIVE_COVERAGE")
+          PY
+
+      - name: Prove proven N0 fabric remains preserved
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.load(open("configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json"))
+          a=s["architecture"]
+          assert a["existing_qsre_structural_executor_preserved"] is True
+          assert a["existing_structured_evidence_fusion_latent_fabric_preserved"] is True
+          d=Path("docs/research/eipm-n0-semantic-operator-foundation-v1.md").read_text()
+          for phrase in [
+            "structured-state encoder",
+            "selected repaired evidence graph",
+            "Binder v2",
+            "original final N0 validation",
+          ]:
+              assert phrase in d
+          print("PASS_N0_PRESERVED_FABRIC")
+          PY
+
+      - name: Prove no training or hotfix authorization
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.load(open("configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json"))
+          g=s["governance"]
+          for key in [
+            "optimizer_authorized","gradient_authorized","gpu_launch_authorized",
+            "test_opening_authorized","final_validation_opening_authorized",
+            "threshold_change_authorized","automatic_rerun_authorized",
+            "automatic_hotfix_chain_authorized","learning_rate_search_authorized",
+            "step_search_authorized","width_search_authorized","batch_search_authorized",
+            "private_identity_gradient","n0_complete","n1_authorized",
+          ]:
+              assert g[key] is False, key
+          d=Path("docs/research/eipm-n0-semantic-operator-foundation-v1.md").read_text().lower()
+          for phrase in ["p2s-v3","p2a-v4","prompt-template search","fixed top-k"]:
+              assert phrase in d
+          print("PASS_N0_SEMANTIC_OPERATOR_ANTI_LOOP")
+          PY
