@@ -343,7 +343,7 @@ def make_row(
             f"then traverse the second relation backward from {middle} to {right}. "
             "Which endpoint is reached last?"
         )
-        role = 1
+        role = 0
         traversal = 1
         direction = 2
         target_entities = [right]
