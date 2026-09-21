@@ -368,6 +368,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             field_reliability=field_reliability,
             relation_schema_state=relation_state,
             relation_mass=relation_mass,
+            semantic_activity=semantic_activity,
             operator_state=operator.continuous_state,
         )
 
