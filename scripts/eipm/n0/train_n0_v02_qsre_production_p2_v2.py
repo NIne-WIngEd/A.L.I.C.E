@@ -116,6 +116,33 @@ def macro_class_cross_entropy(
     return torch.stack(losses).mean()
 
 
+def macro_binary_factor_loss_with_logits(
+    logits: torch.Tensor,
+    target: torch.Tensor,
+) -> torch.Tensor:
+    if logits.shape != target.shape:
+        raise ValueError("binary factor logits/target shape drift")
+    per_factor = []
+    for factor in range(logits.size(-1)):
+        x = logits[:, factor]
+        y = target[:, factor]
+        class_losses = []
+        for value in (0.0, 1.0):
+            mask = y.eq(value)
+            if bool(mask.any()):
+                class_losses.append(
+                    F.binary_cross_entropy_with_logits(
+                        x[mask],
+                        y[mask],
+                    )
+                )
+        if class_losses:
+            per_factor.append(torch.stack(class_losses).mean())
+    if not per_factor:
+        return logits.sum() * 0.0
+    return torch.stack(per_factor).mean()
+
+
 def macro_binary_factor_loss(
     probability: torch.Tensor,
     target: torch.Tensor,
@@ -218,28 +245,29 @@ def operator_supervised_loss_v2(
         termination_target=termination_target,
         pred_steps=pred_steps,
     )
-    event_loss = macro_class_nll(
-        event_distribution,
+    event_loss = macro_class_cross_entropy(
+        model_output["event_logits"],
         event_target,
         mask=event_supervised,
     )
 
+    factor_logits = model_output["factor_logits"]
     relational = control_target.eq(CONTROL_RELATIONAL)
     if bool(relational.any()):
-        role_loss = macro_class_nll(
-            operator.role_distribution[relational],
+        role_loss = macro_class_cross_entropy(
+            factor_logits["role"][relational],
             role_target[relational],
         )
-        traversal_loss = macro_class_nll(
-            operator.traversal_distribution[relational],
+        traversal_loss = macro_class_cross_entropy(
+            factor_logits["traversal"][relational],
             traversal_target[relational],
         )
-        direction_loss = macro_class_nll(
-            operator.direction_distribution[relational],
+        direction_loss = macro_class_cross_entropy(
+            factor_logits["direction"][relational],
             direction_target[relational],
         )
-        modifier_loss = macro_binary_factor_loss(
-            operator.modifier_weight[relational],
+        modifier_loss = macro_binary_factor_loss_with_logits(
+            factor_logits["modifier"][relational],
             modifier_target[relational],
         )
     else:
@@ -249,12 +277,12 @@ def operator_supervised_loss_v2(
         direction_loss = zero
         modifier_loss = zero
 
-    applicability_loss = F.mse_loss(
-        operator.applicability,
+    applicability_loss = F.binary_cross_entropy_with_logits(
+        factor_logits["applicability"],
         applicability_target,
     )
-    control_loss = macro_class_nll(
-        operator.control_distribution,
+    control_loss = macro_class_cross_entropy(
+        factor_logits["control"],
         control_target,
     )
 
