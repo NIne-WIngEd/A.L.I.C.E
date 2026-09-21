@@ -493,7 +493,6 @@ def main()->None:
                     "p1_checkpoint_sha256":sha256(p1_path),
                     "p2_checkpoint_sha256":sha256(p2_path),
                     "factor_schema_cache_sha256":sha256(Path(args.factor_schema_cache)),
-        "semantic_authority_cache_sha256":sha256(Path(args.authority_cache)),
                     "semantic_authority_cache_sha256":sha256(Path(args.authority_cache)),
                 },
             )
@@ -515,6 +514,8 @@ def main()->None:
         "p1_checkpoint_sha256":sha256(p1_path),
         "p2_checkpoint_sha256":sha256(p2_path),
         "factor_schema_cache_sha256":sha256(Path(args.factor_schema_cache)),
+        "semantic_authority_cache_sha256":sha256(Path(args.authority_cache)),
+        "frozen_semantic_authority":True,
         "schema_encoder_gradient":False,"executor_gradient":False,
         "operator_gradient":False,"binder_gradient":True,
         "private_identity_gradient":False,
