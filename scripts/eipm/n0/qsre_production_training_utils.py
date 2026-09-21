@@ -27,6 +27,7 @@ def load_plan(path: Path) -> dict:
         "alice.eipm.n0.qsre-production-training-plan.v1",
         "alice.eipm.n0.qsre-production-training-plan.v2",
         "alice.eipm.n0.qsre-production-training-plan.v3",
+        "alice.eipm.n0.qsre-n0-closure-training-plan.v1",
     }:
         raise RuntimeError("production training-plan schema drift")
     return data
