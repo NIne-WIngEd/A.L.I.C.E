@@ -126,6 +126,7 @@ class FullEnvelopeQSREBinderV1(nn.Module):
         *,
         relation_domain_type_mask: Tensor,
         relation_range_type_mask: Tensor,
+        relation_symmetric: Tensor,
         edge_relation_index: Tensor,
         edge_index: Tensor,
         field_type_index: Tensor,
@@ -136,6 +137,8 @@ class FullEnvelopeQSREBinderV1(nn.Module):
         if relation_range_type_mask.shape != relation_domain_type_mask.shape:
             raise ValueError("domain/range type-mask drift")
         batch, relations, type_count = relation_domain_type_mask.shape
+        if relation_symmetric.shape != (batch, relations) or relation_symmetric.dtype != torch.bool:
+            raise ValueError("relation_symmetric must be bool [B,R]")
         if field_type_index.ndim != 2 or field_type_index.size(0) != batch:
             raise ValueError("field_type_index must be [B,F]")
         if bool((field_type_index < 0).any()) or bool((field_type_index >= type_count).any()):
@@ -148,7 +151,12 @@ class FullEnvelopeQSREBinderV1(nn.Module):
         target_type = field_type_index.gather(1, target_index)
         domain = relation_domain_type_mask[b, relation_index, source_type]
         range_ok = relation_range_type_mask[b, relation_index, target_type]
-        return edge_valid_mask & domain & range_ok
+        forward_ok = domain & range_ok
+        symmetric = relation_symmetric[b, relation_index]
+        reverse_domain = relation_domain_type_mask[b, relation_index, target_type]
+        reverse_range = relation_range_type_mask[b, relation_index, source_type]
+        reverse_ok = reverse_domain & reverse_range
+        return edge_valid_mask & (forward_ok | (symmetric & reverse_ok))
 
     def forward(
         self,
@@ -167,6 +175,7 @@ class FullEnvelopeQSREBinderV1(nn.Module):
         edge_recency: Tensor,
         relation_domain_type_mask: Tensor,
         relation_range_type_mask: Tensor,
+        relation_symmetric: Tensor,
         relation_schema_state: Tensor,
         operator: FullEnvelopeOperatorState,
     ) -> dict[str, Tensor]:
@@ -286,6 +295,7 @@ class FullEnvelopeQSREBinderV1(nn.Module):
         type_compatible = self._type_compatibility(
             relation_domain_type_mask=relation_domain_type_mask,
             relation_range_type_mask=relation_range_type_mask,
+            relation_symmetric=relation_symmetric,
             edge_relation_index=edge_relation_index,
             edge_index=edge_index,
             field_type_index=field_type_index,
@@ -370,6 +380,7 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             "final_layer_only_query": False,
             "runtime_relation_schema": True,
             "runtime_type_schema": True,
+            "runtime_relation_symmetry": True,
             "token_interaction_chunk_is_operating_point": True,
             "query_token_count_ceiling": None,
             "field_token_count_ceiling": None,
