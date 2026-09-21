@@ -239,6 +239,8 @@
     "oracle_focus_forbidden_in_p4": true,
     "full_640_semantic_width_preserved_through_qsre": true,
     "qsre_relational_summary_matches_n0_semantic_width": true,
-    "model_width_is_not_a_compression_bottleneck": true
+    "model_width_is_not_a_compression_bottleneck": true,
+    "path_frontier_persists_across_stop_tail": true,
+    "runtime_step_budget_does_not_change_shorter_path_semantics": true
   }
 }
