@@ -966,8 +966,7 @@ def main() -> None:
         "p3_authorized": bool(selected),
     }
     (output_dir / "result.json").write_text(
-        json.dumps(result, indent=2, sort_keys=True) + "
-"
+        json.dumps(result, indent=2, sort_keys=True) + "\n"
     )
     print(
         "P2_V3_RESULT=" + json.dumps(result, sort_keys=True),
