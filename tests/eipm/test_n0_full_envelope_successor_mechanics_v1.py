@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from dataclasses import replace
-
 import torch
 
 from alice_personality.n0.dynamic_schema_evidence_graph_v1 import (
@@ -373,7 +371,7 @@ def _manual_operator(traversal_index: int) -> FullEnvelopeOperatorState:
         modifier_weight=torch.zeros(batch,4),
         applicability=torch.ones(batch),
         control_distribution=control,
-        continuous_state=torch.randn(batch,dim),
+        continuous_state=torch.zeros(batch,dim),
         uncertainty=torch.zeros(batch),
     )
 
