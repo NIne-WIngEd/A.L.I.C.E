@@ -329,6 +329,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             edge_metadata=edge_metadata,
             edge_valid_mask=edge_valid_mask,
             relation_schema_state=relation_state,
+            relation_mass=relation_mass,
             operator_state=operator.continuous_state,
             message_steps=graph_message_steps,
         )
