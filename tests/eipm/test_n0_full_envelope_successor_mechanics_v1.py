@@ -847,3 +847,56 @@ def test_executor_mixed_forward_then_reverse_tracks_final_semantic_source() -> N
     assert int(out["path_semantic_source_weight"].argmax(dim=-1).item()) == 2
     assert executor.parameter_report()["semantic_endpoint_tracking_is_step_conditioned"] is True
     assert executor.parameter_report()["global_direction_not_used_for_final_path_role"] is True
+
+
+def test_adapter_allows_semantic_only_factor_banks_without_structural_opcode_mapping() -> None:
+    torch.manual_seed(131)
+    q = torch.randn(1,3,7,24)
+    qm = torch.ones(1,7,dtype=torch.bool)
+    factors = {
+        "role": factor_schema(4,132),
+        "traversal": factor_schema(3,133),
+        "direction": factor_schema(3,134),
+        "control": factor_schema(3,135),
+        "reliability": factor_schema(2,136),
+        "recency": factor_schema(2,137),
+        "temporal": factor_schema(2,138),
+        "provenance": factor_schema(2,139),
+        "open_semantic_factor": factor_schema(5,140),
+    }
+    model = SchemaConditionedSemanticOperator(
+        SemanticOperatorFoundationConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            dropout=0.0,
+        )
+    ).eval()
+    with torch.no_grad():
+        raw = model(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            relation_schema=relation_schema(4),
+            factor_schemas=factors,
+            max_steps=3,
+        )
+        adapted = SemanticOperatorQSREAdapter()(
+            semantic_operator=raw["operator"],
+            relation_schema_states=raw["relation_schema_states"],
+            factor_opcodes={
+                "role": ["ROLE_SOURCE","ROLE_TARGET","ROLE_SYMMETRIC","ROLE_NONE"],
+                "traversal": ["TRAVERSAL_LOCAL","TRAVERSAL_PATH","TRAVERSAL_AGGREGATE"],
+                "direction": ["DIRECTION_FORWARD","DIRECTION_REVERSE","DIRECTION_BIDIRECTIONAL"],
+                "control": ["CONTROL_FALLBACK","CONTROL_RELATIONAL","CONTROL_DEFER"],
+                "reliability": ["MOD_RELIABILITY_OFF","MOD_RELIABILITY_ON"],
+                "recency": ["MOD_RECENCY_OFF","MOD_RECENCY_ON"],
+                "temporal": ["MOD_TEMPORAL_OFF","MOD_TEMPORAL_ON"],
+                "provenance": ["MOD_PROVENANCE_OFF","MOD_PROVENANCE_ON"],
+            },
+        )
+    assert "open_semantic_factor" in raw["operator"].factor_distributions
+    assert adapted["operator"].continuous_state.shape == (1,24)
+    report = SemanticOperatorQSREAdapter().parameter_report()
+    assert report["semantic_only_factor_banks_supported"] is True
+    assert report["structural_factor_mapping_may_be_subset_of_semantic_banks"] is True
+    assert report["runtime_semantic_factor_bank_ceiling"] is None
