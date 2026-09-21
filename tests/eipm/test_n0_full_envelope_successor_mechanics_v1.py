@@ -187,6 +187,7 @@ def test_dynamic_evidence_graph_relation_permutation_is_equivariant() -> None:
             relation_schema_state=rel,
             relation_mass=torch.full((batch,relations),1.0/relations),
             relation_symmetric=torch.zeros(batch,relations,dtype=torch.bool),
+            semantic_activity=torch.ones(batch),
             operator_state=op,message_steps=2
         )
         perm=torch.tensor([2,0,3,1])
@@ -199,6 +200,7 @@ def test_dynamic_evidence_graph_relation_permutation_is_equivariant() -> None:
             relation_schema_state=rel[:,perm],
             relation_mass=uniform_mass[:,perm],
             relation_symmetric=torch.zeros(batch,relations,dtype=torch.bool)[:,perm],
+            semantic_activity=torch.ones(batch),
             operator_state=op,message_steps=2
         )
     assert torch.allclose(a["field_states"],b["field_states"],atol=1e-5,rtol=1e-5)
@@ -602,6 +604,7 @@ def test_dynamic_graph_symmetric_edge_reversal_is_invariant() -> None:
             relation_schema_state=relation_state,
             relation_mass=relation_mass,
             relation_symmetric=symmetric,
+            semantic_activity=torch.ones(1),
             operator_state=operator_state,
             message_steps=2,
         )
@@ -615,6 +618,7 @@ def test_dynamic_graph_symmetric_edge_reversal_is_invariant() -> None:
             relation_schema_state=relation_state,
             relation_mass=relation_mass,
             relation_symmetric=symmetric,
+            semantic_activity=torch.ones(1),
             operator_state=operator_state,
             message_steps=2,
         )
