@@ -284,7 +284,8 @@
     "p4_operator_v2_binder_v2_only": true,
     "final_native_gate_uses_same_frozen_artifacts_with_operator_v2_binder_v2_runtime": true,
     "p2_p1_schema_relation_state_is_interface_only_for_operator": true,
-    "p3_operator_continuous_state_not_support_authority": true
+    "p3_operator_continuous_state_not_support_authority": true,
+    "p2_sparse_pruned_relation_targets_retain_dense_training_gradient": true
   },
   "operator_architecture": {
     "module": "src/alice_personality/n0/qsre_production_operator_v2.py",
@@ -299,7 +300,9 @@
     "open_schema_training_query_labels_used": false,
     "schema_only_self_calibration": true,
     "p1_schema_relation_state_match_authority": false,
-    "shared_matcher_schema_summary_used_for_recurrent_relation_context": true
+    "shared_matcher_schema_summary_used_for_recurrent_relation_context": true,
+    "sparse_runtime_relation_distribution": true,
+    "dense_pre_sparse_relation_logits_for_supervision": true
   },
   "binder_architecture": {
     "module": "src/alice_personality/n0/qsre_production_binder_v2.py",
