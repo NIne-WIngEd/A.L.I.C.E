@@ -537,7 +537,13 @@ def test_executor_zero_support_forces_zero_relational_execution_confidence() -> 
         out["relational_probability"],
         torch.zeros_like(out["relational_probability"]),
     )
-    assert executor.parameter_report()["execution_confidence_requires_structural_support"] is True
+    assert torch.equal(
+        out["relational_summary"],
+        torch.zeros_like(out["relational_summary"]),
+    )
+    report=executor.parameter_report()
+    assert report["execution_confidence_requires_structural_support"] is True
+    assert report["zero_execution_confidence_zeroes_relational_summary"] is True
 
 
 def test_binder_symmetric_relation_accepts_reversed_domain_range_types() -> None:
@@ -1047,3 +1053,45 @@ def test_dynamic_graph_zero_semantic_activity_cannot_inject_relation_messages() 
     report = graph.parameter_report()
     assert report["soft_relational_activity_gate"] is True
     assert report["zero_activity_preserves_pre_message_graph_state"] is True
+
+
+def test_empty_evidence_graph_produces_zero_graph_summaries() -> None:
+    torch.manual_seed(201)
+    graph=DynamicSchemaEvidenceGraphV1(
+        DynamicSchemaEvidenceGraphConfig(
+            field_dim=24,
+            relation_dim=24,
+            operator_dim=24,
+            model_dim=24,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    with torch.no_grad():
+        out=graph(
+            field_state=torch.randn(1,3,24),
+            field_valid_mask=torch.ones(1,3,dtype=torch.bool),
+            edge_index=torch.empty(1,0,2,dtype=torch.long),
+            edge_relation_index=torch.empty(1,0,dtype=torch.long),
+            edge_metadata=torch.empty(1,0,4),
+            edge_valid_mask=torch.empty(1,0,dtype=torch.bool),
+            relation_schema_state=torch.randn(1,2,24),
+            relation_mass=torch.tensor([[0.6,0.4]]),
+            relation_symmetric=torch.zeros(1,2,dtype=torch.bool),
+            semantic_activity=torch.ones(1),
+            operator_state=torch.randn(1,24),
+            message_steps=3,
+        )
+    assert torch.equal(
+        out["source_summary"],
+        torch.zeros_like(out["source_summary"]),
+    )
+    assert torch.equal(
+        out["target_summary"],
+        torch.zeros_like(out["target_summary"]),
+    )
+    assert torch.equal(
+        out["graph_support_activity"],
+        torch.zeros_like(out["graph_support_activity"]),
+    )
+    assert graph.parameter_report()["zero_edge_graph_summary_is_zero"] is True
