@@ -384,3 +384,52 @@ def test_public_judgment_probe_supports_padded_candidate_subsets() -> None:
     )
     assert torch.isfinite(loss)
     assert probe.parameter_report()["padded_candidate_batching_supported"] is True
+
+
+def test_evidence_view_inactive_relation_context_is_schema_invariant() -> None:
+    torch.manual_seed(181)
+    model = DynamicEvidenceViewV2(
+        DynamicEvidenceViewConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            dropout=0.0,
+        )
+    ).eval()
+    batch,fields,relations=1,4,3
+    common=dict(
+        query_hidden_states=torch.randn(batch,3,6,24),
+        query_token_mask=torch.ones(batch,6,dtype=torch.bool),
+        field_hidden_states=torch.randn(batch,fields,3,5,24),
+        field_token_mask=torch.ones(batch,fields,5,dtype=torch.bool),
+        structured_field_state=torch.randn(batch,fields,24),
+        field_valid_mask=torch.ones(batch,fields,dtype=torch.bool),
+        field_confidence=torch.rand(batch,fields),
+        field_missing=torch.zeros(batch,fields),
+        field_reliability=torch.rand(batch,fields),
+        relation_mass=torch.softmax(torch.randn(batch,relations),dim=-1),
+        semantic_activity=torch.zeros(batch),
+        operator_state=torch.randn(batch,24),
+    )
+    with torch.no_grad():
+        a=model(
+            relation_schema_state=torch.randn(batch,relations,24),
+            **common,
+        )
+        b=model(
+            relation_schema_state=torch.randn(batch,relations,24)*9.0,
+            **common,
+        )
+    assert torch.allclose(
+        a["evidence_summary"],
+        b["evidence_summary"],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.allclose(
+        a["field_weight"],
+        b["field_weight"],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert model.parameter_report()["soft_relation_context_activity_gate"] is True
