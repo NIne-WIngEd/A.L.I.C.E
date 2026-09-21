@@ -54,7 +54,16 @@ class DynamicEvidenceViewV2(nn.Module):
         self.structured_projection = nn.Linear(d, d, bias=False)
         self.relation_projection = nn.Linear(d, d, bias=False)
         self.operator_projection = nn.Linear(d, d, bias=False)
-        self.layer_logits = nn.Parameter(torch.zeros(self.config.num_hidden_states))
+        self.query_layer_gate = nn.Sequential(
+            nn.Linear(d, d),
+            nn.SiLU(),
+            nn.Linear(d, 1, bias=False),
+        )
+        self.interaction_layer_gate = nn.Sequential(
+            nn.Linear(3, 32),
+            nn.SiLU(),
+            nn.Linear(32, 1),
+        )
 
         self.field_update = nn.Sequential(
             nn.Linear(5 * d + 3, 2 * d),
@@ -77,8 +86,11 @@ class DynamicEvidenceViewV2(nn.Module):
             (projected * weight).sum(dim=2)
             / weight.sum(dim=2).clamp_min(1.0)
         )
-        layer_weight = torch.softmax(self.layer_logits, dim=0)
-        return torch.einsum("l,bld->bd", layer_weight, per_layer)
+        layer_logit = self.query_layer_gate(
+            torch.tanh(per_layer)
+        ).squeeze(-1)
+        layer_weight = torch.softmax(layer_logit, dim=-1)
+        return torch.einsum("bl,bld->bd", layer_weight, per_layer)
 
     def _late_interaction(
         self,
@@ -109,11 +121,21 @@ class DynamicEvidenceViewV2(nn.Module):
             / f_mask.sum(dim=-1).clamp_min(1).to(f_to_q.dtype)
         )
         per_layer = 0.5 * (q_score + f_score)
-        return torch.einsum(
-            "l,bfl->bf",
-            torch.softmax(self.layer_logits, dim=0),
-            per_layer,
+        layers = per_layer.size(-1)
+        position = torch.linspace(
+            -1.0,
+            1.0,
+            layers,
+            device=per_layer.device,
+            dtype=per_layer.dtype,
+        ).view(1, 1, layers).expand_as(per_layer)
+        layer_feature = torch.stack(
+            [per_layer, q_score - f_score, position],
+            dim=-1,
         )
+        layer_logit = self.interaction_layer_gate(layer_feature).squeeze(-1)
+        layer_weight = torch.softmax(layer_logit, dim=-1)
+        return torch.einsum("bfl,bfl->bf", layer_weight, per_layer)
 
     def forward(
         self,
@@ -258,6 +280,9 @@ class DynamicEvidenceViewV2(nn.Module):
             "field_count_dependent_parameters": 0,
             "pooled_only_query_conditioning": False,
             "multi_layer_query_field_interaction": True,
+            "content_conditioned_query_layer_read": True,
+            "field_conditioned_interaction_layer_read": True,
+            "global_static_layer_mixture": False,
             "exact_structural_sparsity": False,
             "token_interaction_chunk_is_operating_point": True,
             "query_token_count_ceiling": None,
