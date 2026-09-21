@@ -70,10 +70,21 @@ class DynamicCompetitiveLatentPoolV3(nn.Module):
     ) -> Tensor:
         if slot_count <= 0:
             raise ValueError("slot_count must be positive")
-        if slot_count == 1:
-            x = torch.zeros(1, device=device, dtype=dtype)
-        else:
-            x = torch.linspace(-1.0, 1.0, slot_count, device=device, dtype=dtype)
+        # Count-stable low-discrepancy coordinates. Increasing runtime
+        # slot count appends new seeds without moving the coordinates of
+        # existing slots, so slot-count scaling does not silently redefine the
+        # prior latent workspace.
+        values: list[float] = []
+        for index in range(slot_count):
+            n = index + 1
+            inverse = 0.0
+            scale = 0.5
+            while n:
+                inverse += scale * (n & 1)
+                n >>= 1
+                scale *= 0.5
+            values.append(2.0 * inverse - 1.0)
+        x = torch.tensor(values, device=device, dtype=dtype)
         return torch.stack(
             [
                 x,
@@ -243,6 +254,7 @@ class DynamicCompetitiveLatentPoolV3(nn.Module):
             "competitive_item_ownership": True,
             "source_and_contextualized_channels": True,
             "runtime_slot_count": True,
+            "slot_seed_coordinates_count_stable": True,
             "runtime_view_count": True,
             "slot_count_ceiling": None,
             "view_count_ceiling": None,
