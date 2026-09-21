@@ -173,6 +173,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         relation_index = edge_relation_index.clamp(min=0, max=relation_count - 1)
         b = torch.arange(batch, device=edge_index.device)[:, None].expand(batch, edges)
         edge_relation_state = relation_state[b, relation_index]
+        edge_symmetric_mask = relation_symmetric[b, relation_index]
 
         origin_focus = focus_field_weight.clamp(min=0.0, max=1.0)
         frontier = origin_focus
@@ -207,7 +208,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             forward = operator.direction_distribution[:, DIRECTION_FORWARD][:, None]
             reverse = operator.direction_distribution[:, DIRECTION_REVERSE][:, None]
             bidir = operator.direction_distribution[:, DIRECTION_BIDIRECTIONAL][:, None]
-            edge_symmetric = relation_symmetric[b, relation_index].to(forward.dtype)
+            edge_symmetric = edge_symmetric_mask.to(forward.dtype)
             directed = 1.0 - edge_symmetric
             effective_forward = forward * directed
             effective_reverse = reverse * directed
@@ -276,9 +277,33 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
 
             source_node = node[b, source_index]
             target_node = node[b, target_index]
+            pair_mean = 0.5 * (source_node + target_node)
+            pair_delta = (source_node - target_node).abs()
+            edge_source_node = torch.where(
+                edge_symmetric_mask.unsqueeze(-1),
+                pair_mean,
+                source_node,
+            )
+            edge_target_node = torch.where(
+                edge_symmetric_mask.unsqueeze(-1),
+                pair_delta,
+                target_node,
+            )
             op = operator_state[:, None, :].expand(batch, edges, -1)
             source_pos = self.source_position.view(1, 1, -1).expand(batch, edges, -1)
             target_pos = self.target_position.view(1, 1, -1).expand(batch, edges, -1)
+            position_mean = 0.5 * (source_pos + target_pos)
+            position_delta = (source_pos - target_pos).abs()
+            edge_source_pos = torch.where(
+                edge_symmetric_mask.unsqueeze(-1),
+                position_mean,
+                source_pos,
+            )
+            edge_target_pos = torch.where(
+                edge_symmetric_mask.unsqueeze(-1),
+                position_delta,
+                target_pos,
+            )
             edge_scalar = torch.stack(
                 [edge_reliability, edge_recency, edge_temporal_match, edge_provenance_match],
                 dim=-1,
@@ -287,12 +312,12 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             edge_state = self.edge_update(
                 torch.cat(
                     [
-                        source_node,
-                        target_node,
+                        edge_source_node,
+                        edge_target_node,
                         edge_relation_state,
                         op,
-                        source_pos,
-                        target_pos,
+                        edge_source_pos,
+                        edge_target_pos,
                         edge_scalar,
                         structural_edge,
                     ],
@@ -303,6 +328,17 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
 
             source_message = self.source_message(torch.cat([edge_state, op], dim=-1))
             target_message = self.target_message(torch.cat([edge_state, op], dim=-1))
+            symmetric_message = 0.5 * (source_message + target_message)
+            source_message = torch.where(
+                edge_symmetric_mask.unsqueeze(-1),
+                symmetric_message,
+                source_message,
+            )
+            target_message = torch.where(
+                edge_symmetric_mask.unsqueeze(-1),
+                symmetric_message,
+                target_message,
+            )
             source_message = source_message * gate.unsqueeze(-1)
             target_message = target_message * gate.unsqueeze(-1)
 
@@ -343,6 +379,12 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         target_support = torch.zeros_like(source_support)
         source_support.scatter_add_(1, source_index, edge_support_weight)
         target_support.scatter_add_(1, target_index, edge_support_weight)
+        symmetric_support = (
+            edge_support_weight
+            * edge_symmetric_mask.to(edge_support_weight.dtype)
+        )
+        source_support.scatter_add_(1, target_index, symmetric_support)
+        target_support.scatter_add_(1, source_index, symmetric_support)
         source_support = source_support.clamp(max=1.0)
         target_support = target_support.clamp(max=1.0)
         aggregate_union = (source_support + target_support).clamp(max=1.0)
@@ -356,6 +398,20 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         local_target_support = torch.zeros_like(target_support)
         local_source_support.scatter_add_(1, source_index, local_edge_support)
         local_target_support.scatter_add_(1, target_index, local_edge_support)
+        symmetric_local_support = (
+            local_edge_support
+            * edge_symmetric_mask.to(local_edge_support.dtype)
+        )
+        local_source_support.scatter_add_(
+            1,
+            target_index,
+            symmetric_local_support,
+        )
+        local_target_support.scatter_add_(
+            1,
+            source_index,
+            symmetric_local_support,
+        )
         local_source_support = local_source_support.clamp(max=1.0)
         local_target_support = local_target_support.clamp(max=1.0)
         local_union = (
@@ -461,6 +517,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "runtime_relation_schema": True,
             "runtime_relation_symmetry": True,
             "symmetric_relation_direction_collapses_to_bidirectional": True,
+            "symmetric_relation_endpoint_order_invariant": True,
             "structural_factor_probabilities": True,
             "continuous_traversal_mixture": True,
             "local_path_aggregate_distinct": True,
