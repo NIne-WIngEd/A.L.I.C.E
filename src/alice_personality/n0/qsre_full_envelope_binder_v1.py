@@ -301,6 +301,8 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             field_type_index=field_type_index,
             edge_valid_mask=edge_valid_mask,
         )
+        active_relation_edge = edge_relation_mass > 0.0
+        support_compatible = type_compatible & active_relation_edge
 
         null_feature = torch.cat(
             [
@@ -319,7 +321,7 @@ class FullEnvelopeQSREBinderV1(nn.Module):
         )
         augmented_mask = torch.cat(
             [
-                type_compatible,
+                support_compatible,
                 torch.ones(
                     batch,
                     1,
@@ -360,6 +362,7 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             "edge_support_weight": edge_support_weight,
             "field_support_weight": field_support_weight,
             "type_compatible": type_compatible,
+            "support_compatible": support_compatible,
             "relation_mass": relation_mass,
             "field_query_relevance": field_late,
             "focus_logits": focus_logits,
@@ -379,6 +382,7 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             "multilayer_query_field_interaction": True,
             "final_layer_only_query": False,
             "runtime_relation_schema": True,
+            "inactive_runtime_relation_edges_exactly_excluded": True,
             "runtime_type_schema": True,
             "runtime_relation_symmetry": True,
             "token_interaction_chunk_is_operating_point": True,
