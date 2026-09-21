@@ -52,7 +52,11 @@ class DynamicStructuredStateV2(nn.Module):
 
         self.content_projection = nn.Linear(self.config.semantic_dim, d, bias=False)
         self.descriptor_projection = nn.Linear(self.config.semantic_dim, d, bias=False)
-        self.layer_logits = nn.Parameter(torch.zeros(self.config.num_hidden_states))
+        self.layer_gate = nn.Sequential(
+            nn.Linear(self.config.semantic_dim + 1, self.config.semantic_dim),
+            nn.SiLU(),
+            nn.Linear(self.config.semantic_dim, 1),
+        )
         self.scalar_projection = nn.Sequential(
             nn.Linear(2, d),
             nn.SiLU(),
@@ -96,9 +100,26 @@ class DynamicStructuredStateV2(nn.Module):
             raise ValueError("every structured semantic item requires content tokens")
         weight = mask.to(states.dtype).unsqueeze(-2).unsqueeze(-1)
         # [...,1,T,1] broadcasts across L.
-        pooled_layer = (states * weight).sum(dim=-2) / weight.sum(dim=-2).clamp_min(1.0)
-        layer_weight = torch.softmax(self.layer_logits, dim=0)
-        return torch.einsum("l,...ld->...d", layer_weight, pooled_layer.float())
+        pooled_layer = (
+            (states * weight).sum(dim=-2)
+            / weight.sum(dim=-2).clamp_min(1.0)
+        ).float()
+        layers = pooled_layer.size(-2)
+        layer_position = torch.linspace(
+            -1.0,
+            1.0,
+            layers,
+            device=pooled_layer.device,
+            dtype=pooled_layer.dtype,
+        )
+        position_shape = (1,) * (pooled_layer.ndim - 2) + (layers, 1)
+        position = layer_position.view(position_shape).expand(
+            pooled_layer.shape[:-1] + (1,)
+        )
+        gate_input = torch.cat([pooled_layer, position], dim=-1)
+        layer_logit = self.layer_gate(gate_input).squeeze(-1)
+        layer_weight = torch.softmax(layer_logit, dim=-1)
+        return torch.einsum("...l,...ld->...d", layer_weight, pooled_layer)
 
     def _descriptor_summaries(
         self,
@@ -156,7 +177,14 @@ class DynamicStructuredStateV2(nn.Module):
         content = self._summarize_tokens(field_hidden_states, safe_mask)
         content = self.content_projection(content)
 
-        descriptor = torch.zeros_like(content)
+        descriptor_sum = torch.zeros_like(content)
+        descriptor_count = torch.zeros(
+            batch,
+            fields,
+            1,
+            device=content.device,
+            dtype=content.dtype,
+        )
         for name, bank in descriptor_banks.items():
             index = descriptor_indices[name]
             if index.shape != (batch, fields):
@@ -167,7 +195,10 @@ class DynamicStructuredStateV2(nn.Module):
                 selected = index.clamp(min=0)
                 if int(selected[valid_index].max()) >= summary.size(0):
                     raise ValueError(f"descriptor index {name!r} outside runtime bank")
-                descriptor = descriptor + summary[selected] * valid_index.unsqueeze(-1).to(summary.dtype)
+                active = valid_index.unsqueeze(-1).to(summary.dtype)
+                descriptor_sum = descriptor_sum + summary[selected] * active
+                descriptor_count = descriptor_count + active
+        descriptor = descriptor_sum / descriptor_count.clamp_min(1.0)
 
         scalar = torch.stack(
             [field_confidence.float(), field_missing.float()],
@@ -213,6 +244,9 @@ class DynamicStructuredStateV2(nn.Module):
             "descriptor_candidate_count_dependent_parameters": 0,
             "field_count_dependent_parameters": 0,
             "continuous_metadata_supported": True,
+            "content_conditioned_layer_read": True,
+            "global_static_layer_mixture": False,
+            "descriptor_bank_count_normalized": True,
             "field_count_ceiling": None,
             "runtime_descriptor_semantics": True,
             "permutation_safe_field_encoder": True,
