@@ -73,6 +73,18 @@ DEV_RELATIONS = [
 ]
 
 
+FACTOR_OPCODES = {
+    "role": ["ROLE_SOURCE", "ROLE_TARGET", "ROLE_SYMMETRIC", "ROLE_NONE"],
+    "traversal": ["TRAVERSAL_LOCAL", "TRAVERSAL_PATH", "TRAVERSAL_AGGREGATE"],
+    "direction": ["DIRECTION_FORWARD", "DIRECTION_REVERSE", "DIRECTION_BIDIRECTIONAL"],
+    "control": ["CONTROL_FALLBACK", "CONTROL_RELATIONAL", "CONTROL_DEFER"],
+    "reliability_modifier": ["MOD_RELIABILITY_OFF", "MOD_RELIABILITY_ON"],
+    "recency_modifier": ["MOD_RECENCY_OFF", "MOD_RECENCY_ON"],
+    "temporal_constraint_modifier": ["MOD_TEMPORAL_OFF", "MOD_TEMPORAL_ON"],
+    "provenance_constraint_modifier": ["MOD_PROVENANCE_OFF", "MOD_PROVENANCE_ON"],
+}
+
+
 FACTOR_BANKS = {
     "role": [
         "Select the endpoint that originates, provides, or performs the requested relation.",
@@ -136,7 +148,11 @@ def schema_text(row: dict[str, Any]) -> str:
 def factor_schema() -> dict[str, list[dict[str, Any]]]:
     return {
         name: [
-            {"key": f"{name}:{i}", "text": text}
+            {
+                "key": f"{name}:{i}",
+                "opcode": FACTOR_OPCODES[name][i],
+                "text": text,
+            }
             for i, text in enumerate(values)
         ]
         for name, values in FACTOR_BANKS.items()
