@@ -225,7 +225,7 @@ def make_row(
     right = entities[(example * 7 + 2) % len(entities)]
     phrase = relation["phrases"][example % len(relation["phrases"])]
     phrase2 = second["phrases"][(example + 1) % len(second["phrases"])]
-    mode = example % 10
+    mode = example % 12
 
     role = 1
     traversal = 0
@@ -233,6 +233,11 @@ def make_row(
     control = 1
     reliability = recency = temporal = provenance = 0
     sequence = [relation]
+    step_direction = [0]
+    step_reliability = [0]
+    step_recency = [0]
+    step_temporal = [0]
+    step_provenance = [0]
     target_entities = [right]
     intervention = "single_target"
 
@@ -246,6 +251,11 @@ def make_row(
         intervention = "source_target_role"
     elif mode == 2:
         sequence = [relation, second]
+        step_direction = [0, 0]
+        step_reliability = [0, 0]
+        step_recency = [0, 0]
+        step_temporal = [0, 0]
+        step_provenance = [0, 0]
         query = (
             f"Begin with {left}. First use the relationship where it {phrase} {middle}; "
             f"then use the relationship where {middle} {phrase2} {right}. Which endpoint is reached last?"
@@ -255,6 +265,11 @@ def make_row(
         intervention = "ordered_composition"
     elif mode == 3:
         sequence = [second, relation]
+        step_direction = [1, 1]
+        step_reliability = [0, 0]
+        step_recency = [0, 0]
+        step_temporal = [0, 0]
+        step_provenance = [0, 0]
         query = (
             f"Starting at {right}, trace backward first through the relation described by '{phrase2}' "
             f"and then through the relation described by '{phrase}'. Which original source is reached?"
@@ -298,11 +313,16 @@ def make_row(
             "Do not force a nearby relation; preserve uncertainty."
         )
         sequence = []
+        step_direction = []
+        step_reliability = []
+        step_recency = []
+        step_temporal = []
+        step_provenance = []
         role = 3
         control = 2
         target_entities = []
         intervention = "unknown_defer"
-    else:
+    elif mode == 9:
         query = (
             f"{left} {phrase} {right}. Another independent record expresses the same relationship. "
             "Preserve both co-valid receiving endpoints rather than forcing one winner."
@@ -310,6 +330,44 @@ def make_row(
         traversal = 2
         target_entities = [right, middle]
         intervention = "plurality"
+    elif mode == 10:
+        sequence = [relation, second]
+        step_direction = [0, 1]
+        step_reliability = [0, 0]
+        step_recency = [0, 0]
+        step_temporal = [0, 0]
+        step_provenance = [0, 0]
+        query = (
+            f"{left} {phrase} {middle}. Separately, {right} {phrase2} {middle}. "
+            f"Start from {left}; traverse the first relation forward to {middle}, "
+            f"then traverse the second relation backward from {middle} to {right}. "
+            "Which endpoint is reached last?"
+        )
+        role = 1
+        traversal = 1
+        direction = 2
+        target_entities = [right]
+        intervention = "mixed_direction_composition"
+    else:
+        sequence = [relation, second]
+        step_direction = [0, 0]
+        step_reliability = [1, 0]
+        step_recency = [0, 0]
+        step_temporal = [0, 1]
+        step_provenance = [0, 0]
+        query = (
+            f"First use the relationship where {left} {phrase} {middle}, "
+            "preferring the stronger verified support for that first step. "
+            f"Then use the relationship where {middle} {phrase2} {right}, "
+            "but require the second step to satisfy the requested time window. "
+            "Which endpoint is reached last?"
+        )
+        role = 1
+        traversal = 1
+        reliability = 1
+        temporal = 1
+        target_entities = [right]
+        intervention = "mixed_step_modifier_composition"
 
     pool = TRAIN_RELATIONS if split == "train" else TRAIN_RELATIONS + DEV_RELATIONS
     required = sequence if sequence else [relation]
@@ -355,6 +413,13 @@ def make_row(
             temporal=temporal,
             provenance=provenance,
         ),
+        "step_factor_targets": {
+            "direction": step_direction,
+            "reliability_modifier": step_reliability,
+            "recency_modifier": step_recency,
+            "temporal_constraint_modifier": step_temporal,
+            "provenance_constraint_modifier": step_provenance,
+        },
         "target_entities": target_entities,
         "intervention": intervention,
         "runtime_relation_count": len(bank),
@@ -433,6 +498,12 @@ def main() -> None:
         ),
         "candidate_count_points": sorted({x["runtime_relation_count"] for x in rows}),
         "reasoning_step_points": sorted({x["runtime_reasoning_steps"] for x in rows}),
+        "mixed_direction_rows": sum(
+            1 for x in rows if x["intervention"] == "mixed_direction_composition"
+        ),
+        "mixed_step_modifier_rows": sum(
+            1 for x in rows if x["intervention"] == "mixed_step_modifier_composition"
+        ),
         "template_partition_overlap": sorted(
             {x["template_id"] for x in train}
             & {x["template_id"] for x in dev}
