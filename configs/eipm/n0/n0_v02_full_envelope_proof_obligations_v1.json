@@ -8,7 +8,9 @@
     "tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py",
     "tests/eipm/test_n0_full_envelope_fabric_v1.py",
     "tests/eipm/test_n0_full_envelope_stack_v1.py",
-    "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py"
+    "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py",
+    "tests/eipm/test_n0_full_envelope_backbone_interface_v1.py",
+    "tests/eipm/test_n0_chunked_set_attention_v1.py"
   ],
   "critical_source_files": [
     "src/alice_personality/n0/semantic_operator_foundation.py",
@@ -21,7 +23,10 @@
     "src/alice_personality/n0/qsre_full_envelope_binder_v1.py",
     "src/alice_personality/n0/qsre_full_envelope_executor_v1.py",
     "src/alice_personality/n0/public_judgment_probe_v1.py",
-    "src/alice_personality/n0/n0_full_envelope_stack_v1.py"
+    "src/alice_personality/n0/n0_full_envelope_stack_v1.py",
+    "src/alice_personality/n0/semantic_backbone_interface_v1.py",
+    "src/alice_personality/n0/chunked_set_attention_v1.py",
+    "src/alice_personality/n0/numeric_contracts.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
@@ -42,6 +47,13 @@
       "kind": "CI_REQUIRED",
       "receipt": "PASS_N0_HISTORICAL_AUTHORITY_FIREWALL",
       "requirement": "All historical N0 PASS/qualified artifacts are non-authoritative by default; only explicitly scoped initialization/regression/data carry-forwards may enter the successor."
+    },
+    {
+      "id": "N0-P00B",
+      "stage": "semantic_backbone_interface",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_backbone_interface_preserves_all_layers_and_gradient",
+      "requirement": "The actual shared backbone interface exposes every hidden layer and preserves gradient connectivity instead of reintroducing pooled/final-layer authority."
     },
     {
       "id": "N0-P01",
@@ -119,6 +131,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_dynamic_structured_state_is_field_permutation_equivariant_and_descriptor_open",
       "requirement": "Structured fields are permutation-safe and use runtime semantic descriptors."
+    },
+    {
+      "id": "N0-P10A",
+      "stage": "structured_state",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_chunked_set_attention_matches_dense_reference_and_gradient",
+      "requirement": "Structured field set attention uses exact streaming softmax with dense-equivalent outputs/gradients while never materializing the full field-pair score matrix."
     },
     {
       "id": "N0-P11",
@@ -259,6 +278,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_dynamic_latent_pool_is_view_permutation_invariant_at_pooled_output",
       "requirement": "Latent result is invariant to unordered runtime view permutation."
+    },
+    {
+      "id": "N0-P28A",
+      "stage": "latent_pool",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_latent_streamed_competition_matches_dense_one_step_reference",
+      "requirement": "Latent slot-item competition is exact under chunked streaming and does not require a full slot-by-view score matrix."
+    },
+    {
+      "id": "N0-P28R",
+      "stage": "latent_pool",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_latent_view_reliability_changes_item_contribution",
+      "requirement": "Runtime view reliability must causally alter latent evidence contribution; it cannot cancel as a constant inside the wrong softmax axis."
     },
     {
       "id": "N0-P29",
