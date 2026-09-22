@@ -839,3 +839,16 @@ def test_evidence_token_alignment_fails_closed_when_labeled_span_is_truncated() 
         assert "no surviving tokenizer token" in str(exc)
     else:
         raise AssertionError("truncated evidence span did not fail closed")
+
+
+def test_candidate_mask_extreme_invalid_logit_cannot_erase_valid_probability() -> None:
+    logits=torch.tensor([[-20000.0,5000.0]])
+    mask=torch.tensor([[True,False]],dtype=torch.bool)
+    masked,probability=SchemaConditionedSemanticOperator._masked_candidate_distribution(
+        logits,
+        mask,
+    )
+    assert torch.isfinite(masked[:,0]).all()
+    assert probability[0,0] == 1.0
+    assert probability[0,1] == 0.0
+    assert probability.sum() == 1.0
