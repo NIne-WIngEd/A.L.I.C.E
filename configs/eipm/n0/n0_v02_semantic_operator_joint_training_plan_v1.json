@@ -157,20 +157,62 @@
     "families": [
       "broad_semantic_replay",
       "governed_judgment_replay",
-      "dynamic_schema_semantics",
-      "argument_role_direction",
+      "relation_program_semantics",
       "dynamic_factor_semantics",
-      "ordered_composition",
-      "unknown_defer_uncertainty",
+      "uncertainty_and_control",
       "token_evidence_grounding",
-      "structured_context",
+      "structural_support_and_roles",
       "multi_view_causal_preservation",
-      "natural_relation_semantics",
-      "behaviorally_grounded_latent_judgment"
+      "latent_judgment_and_noncollapse",
+      "natural_relation_semantics"
     ],
     "fixed_relation_family_weighting_forbidden": true,
     "loss_weight_search_after_results_forbidden": true,
-    "implementation": "src/alice_personality/n0/full_envelope_loss_balancer_v1.py"
+    "implementation": "src/alice_personality/n0/full_envelope_loss_balancer_v1.py",
+    "component_assignment": {
+      "broad_semantic_replay": [
+        "semantic replay lane loss"
+      ],
+      "governed_judgment_replay": [
+        "governed teacher replay lane loss"
+      ],
+      "relation_program_semantics": [
+        "relation_sequence",
+        "causal_relation_margin"
+      ],
+      "dynamic_factor_semantics": [
+        "factor_semantics",
+        "causal_factor_margin"
+      ],
+      "uncertainty_and_control": [
+        "event_control",
+        "applicability",
+        "uncertainty"
+      ],
+      "token_evidence_grounding": [
+        "token_evidence"
+      ],
+      "structural_support_and_roles": [
+        "support_selection",
+        "endpoint_roles"
+      ],
+      "multi_view_causal_preservation": [
+        "decisive_view_causality",
+        "irrelevant_view_invariance",
+        "source_view_recoverability",
+        "permutation_consistency"
+      ],
+      "latent_judgment_and_noncollapse": [
+        "public_judgment",
+        "latent_noncollapse"
+      ],
+      "natural_relation_semantics": [
+        "natural relation lane loss"
+      ]
+    },
+    "component_double_counting_forbidden": true,
+    "equal_family_weights_before_results": true,
+    "integrated_objective": "src/alice_personality/n0/full_envelope_training_objective_v1.py"
   },
   "stage_gates": {
     "J1": [
@@ -271,6 +313,8 @@
     "evidence char spans converted to tokenizer-aligned token targets with fail-closed audit",
     "PASS exact registered trainable topology mechanics",
     "PASS shared-backbone replay/full-envelope gradient continuity",
+    "PASS integrated joint objective family assignment",
+    "PASS joint objective gradient reaches backbone/operator/Binder/fusion/judgment/long-context bridge",
     "full model parameter and memory report",
     "CPU no-gradient end-to-end forward",
     "GPU no-gradient memory dry run",
