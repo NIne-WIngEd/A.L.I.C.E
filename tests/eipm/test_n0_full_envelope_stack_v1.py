@@ -304,3 +304,65 @@ def test_graph_views_require_exact_binder_support_before_final_fusion() -> None:
         reliability[0,3:],
         torch.zeros_like(reliability[0,3:]),
     )
+
+
+def test_full_stack_pregraph_type_gate_matches_exact_binder_compatibility() -> None:
+    torch.manual_seed(292)
+    model=N0FullEnvelopeStackV1(
+        N0FullEnvelopeStackConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            num_attention_heads=4,
+            structured_layers=1,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    factors,opcodes=factor_bundle()
+    inputs=make_inputs(batch_size=1)
+    relation=DynamicRelationSchema(
+        token_states=torch.randn(5,3,4,24),
+        token_mask=torch.ones(5,4,dtype=torch.bool),
+        domain_type_mask=torch.tensor(
+            [
+                [True,False,False,False],
+                [False,True,False,False],
+                [False,False,True,False],
+                [False,False,False,True],
+                [True,False,False,False],
+            ],
+            dtype=torch.bool,
+        ),
+        range_type_mask=torch.tensor(
+            [
+                [False,True,False,False],
+                [False,False,True,False],
+                [False,False,False,True],
+                [True,False,False,False],
+                [False,False,True,False],
+            ],
+            dtype=torch.bool,
+        ),
+        symmetric=torch.tensor([False,False,False,False,False]),
+    )
+    with torch.no_grad():
+        out=model(
+            relation_schema=relation,
+            factor_schemas=factors,
+            factor_opcodes=opcodes,
+            max_reasoning_steps=3,
+            graph_message_steps=2,
+            fusion_refinement_steps=2,
+            latent_slot_count=5,
+            latent_refinement_steps=2,
+            **inputs,
+        )
+    assert torch.equal(
+        out["pregraph_type_compatible"],
+        out["binder"]["type_compatible"],
+    )
+    assert bool((~out["pregraph_type_compatible"]).any())
+    report=model.parameter_report()
+    assert report["pre_binder_graph_exact_type_schema_gated"] is True
