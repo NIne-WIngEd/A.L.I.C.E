@@ -240,7 +240,8 @@ def make_row(
     left = entities[(entity_example * 3) % len(entities)]
     middle = entities[(entity_example * 5 + 1) % len(entities)]
     right = entities[(entity_example * 7 + 2) % len(entities)]
-    phrase = relation["phrases"][example % len(relation["phrases"])]
+    phrase_example = pair_anchor if mode in {0, 1} else example
+    phrase = relation["phrases"][phrase_example % len(relation["phrases"])]
     phrase2 = second["phrases"][(example + 1) % len(second["phrases"])]
 
     role = 1
