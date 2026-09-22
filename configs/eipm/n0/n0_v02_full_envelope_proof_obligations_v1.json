@@ -11,7 +11,8 @@
     "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py",
     "tests/eipm/test_n0_full_envelope_backbone_interface_v1.py",
     "tests/eipm/test_n0_chunked_set_attention_v1.py",
-    "tests/eipm/test_n0_full_envelope_trainable_system_v1.py"
+    "tests/eipm/test_n0_full_envelope_trainable_system_v1.py",
+    "tests/eipm/test_n0_full_envelope_modifier_gating_v1.py"
   ],
   "critical_source_files": [
     "src/alice_personality/n0/semantic_operator_foundation.py",
@@ -742,6 +743,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_graph_views_require_exact_binder_support_before_final_fusion",
       "requirement": "Binder null support must prevent graph source/target summaries from entering final fusion even when a soft pre-Binder graph was active."
+    },
+    {
+      "id": "N0-P24C",
+      "stage": "binder",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_binder_modifier_off_blocks_raw_reliability_and_recency_shortcuts",
+      "requirement": "When reliability or recency is semantically OFF, Binder may not directly read the raw criterion scalar as a support-selection shortcut; enabling the corresponding modifier must restore criterion sensitivity."
+    },
+    {
+      "id": "N0-P24D",
+      "stage": "executor",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_executor_modifier_off_blocks_raw_edge_criterion_features",
+      "requirement": "Reliability, recency, temporal, and provenance edge scalars must be neutralized before executor edge-state construction whenever the corresponding semantic modifier is OFF, while ON retains sensitivity."
     }
   ],
   "closure_rule": {
