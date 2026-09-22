@@ -262,6 +262,26 @@ class FullEnvelopeQSREBinderV1(nn.Module):
                 raise ValueError(f"{name} shape drift")
         if edge_valid_mask.dtype != torch.bool:
             raise ValueError("edge_valid_mask must be bool")
+        if (
+            relation_domain_type_mask.dtype != torch.bool
+            or relation_range_type_mask.dtype != torch.bool
+        ):
+            raise ValueError("relation domain/range type masks must be bool")
+        if bool(edge_valid_mask.any()):
+            valid_endpoint = edge_index[edge_valid_mask]
+            if int(valid_endpoint.min()) < 0 or int(valid_endpoint.max()) >= fields:
+                raise ValueError("valid edge endpoint outside runtime field set")
+            valid_relation = edge_relation_index[edge_valid_mask]
+            if int(valid_relation.min()) < 0 or int(valid_relation.max()) >= relation_count:
+                raise ValueError("valid edge relation outside runtime relation schema")
+            source_index_valid = edge_index[...,0].clamp(min=0,max=fields-1)
+            target_index_valid = edge_index[...,1].clamp(min=0,max=fields-1)
+            endpoint_field_valid = (
+                field_valid_mask.gather(1,source_index_valid)
+                & field_valid_mask.gather(1,target_index_valid)
+            )
+            if bool((edge_valid_mask & ~endpoint_field_valid).any()):
+                raise ValueError("valid edge references padded invalid field")
         require_unit_interval("edge_reliability", edge_reliability)
         require_unit_interval("edge_recency", edge_recency)
         require_finite("field_state", field_state)
