@@ -778,6 +778,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_public_judgment_loss_with_one_valid_candidate_is_exactly_zero_under_extreme_logits",
       "requirement": "Padded candidates must be exactly excluded from public-judgment normalization and gradients; with one valid candidate the classification loss is exactly zero regardless of padded logits."
+    },
+    {
+      "id": "N0-P37C",
+      "stage": "behavioral_objective",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_inactive_behavioral_candidate_losses_stay_finite_with_structural_invalid_floor",
+      "requirement": "When a causal behavioral lane is inactive, exact padded-candidate exclusion may not create -inf×0/NaN zero losses; zero-return paths must depend only on valid logits and padded candidates must receive exactly zero gradient."
     }
   ],
   "closure_rule": {
