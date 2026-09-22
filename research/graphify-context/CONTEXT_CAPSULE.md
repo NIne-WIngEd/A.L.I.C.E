@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-cpu-runtime-preflight-architecture-audit-20260922-041
-- Question: Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@1608d35230c970ff2b56da62d2d1498b4b7739ba for the remaining pre-Magnolia CPU/runtime qualification path. Trace proof obligations N0-P40/P40A/P41/P42 into tokenizer config, evidence-alignment audit, public corpus materialization, full 640-wide construction, exact semantic initialization loading, variable-cardinality runtime inputs, long-context semantic input, finite-output checks, parameter accounting and peak-RSS receipt. Determine whether any statically discoverable gap means the current runtime scripts could pass while failing to exercise the actual full-envelope topology or newly added causal/curriculum mechanics. Distinguish A concrete pre-runtime defect, B missing falsification, C closed. Do not run GPU/optimizer/gradient, do not open final validation, and do not treat historical T1/T2 receipts as authority. Original exact branch source is authority; Graphify is navigation only.
+- Request: n0-final-v2-sealed-independence-audit-20260922-042
+- Question: Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@2ddae9439f5bc8f41ca2956e786f4f63289e3dd4 for the unresolved sealed-final-independence requirement. Trace n0_v02_full_envelope_final_validation_contract_v2.json, proof obligation N0-P46, the joint training plan prerequisite that final-v2 corpus be built and frozen before gradient, current FewRel natural final split handling, behavioral/intervention builders, and legacy final-self-validation v1/v3 builder/freeze/evaluator. Determine whether there is any current successor-v2 builder, immutable hash manifest/freeze receipt, overlap audit against TRAIN/DEV/public replay, and evaluator targeting N0FullEnvelopeTrainableSystemV1. Identify which legacy final artifacts are superseded and must not be reused as authority. Classify missing successor-v2 package as A concrete pre-gradient defect / B missing falsification / C closed, and propose the minimum architecture-faithful package boundaries without opening or scoring final rows. Do not expose candidate model results, do not authorize gradient/GPU/final opening/N0 completion. Original exact branch source is authority; Graphify is navigation only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -46,56 +46,52 @@ The old stable-build latent-stage pointer is historical routing context, not the
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ 1608d35230c970ff2b56da62d2d1498b4b7739ba — fix(n0): block truncated programs from global relational views
+- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ 2ddae9439f5bc8f41ca2956e786f4f63289e3dd4 — governance(n0): remove misleading runtime text cap
 - alice-eipm-v1-qsre-production-p2-ordered-evidence-v3 @ 342bdbbe8c5dfbe74ff3ab8210a30b1a456aa482 — state(n0): ratify P2 v3 static pass and authorize CPU qualification
 - alice-eipm-v1-qsre-production-p2-failure-localization @ c9b1d35823cb89245625bbc6afb05b0ef5fb69fb — fix(n0): emit strict JSON from P2 localization
 
 ## Source pointers
 
-- [135] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md — N0 Full-Envelope Retrospective Architecture Audit v1
-  - status:  retrospective architecture authority; no gradient/GPU authorization
-- [128] alice-context:docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md — N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff
-  - status:  active continuity authority for the current Sol handoff
-- [123] alice-eipm-v1-n0-full-envelope-foundation-build-v1:configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json — n0_v02_full_envelope_cpu_runtime_qualification_v1.json
-- [122] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [122] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [122] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [119] alice-eipm-v1-n0-full-envelope-foundation-build-v1:configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json — n0_v02_full_envelope_proof_obligations_v1.json
-- [114] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md — N0 job 575966 — frozen semantic authority v3
-- [110] alice-personal-development-architecture-v1:docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md — N0 Full-Envelope Retrospective Architecture Audit v1
-  - status:  retrospective architecture authority; no gradient/GPU authorization
-- [108] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-semantic-operator-foundation-v1.md — N0 Semantic-Operator Foundation v1 — architecture decision after job 575990
-  - status:  architecture decision; no gradient or GPU authorization
-- [104] alice-eipm-v1-n0-full-envelope-foundation-build-v1:.github/workflows/n0-qsre-frozen-semantic-authority-v3-contract.yml — n0-qsre-frozen-semantic-authority-v3-contract.yml
-- [104] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
+- [149] alice-eipm-v1-n0-full-envelope-foundation-build-v1:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [149] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
+  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
+- [149] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [149] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [133] alice-eipm-v1-n0-full-envelope-foundation-build-v1:configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json — n0_v02_qsre_n0_frozen_authority_training_plan_v2.json
+- [128] alice-context:docs/chat-context/2026-09-21/sol/N0_FINAL_FULL_SCALE_FROZEN_AUTHORITY_READY.md — N0 final full-scale frozen-authority closure — ready for one owner Magnolia run
+  - status:  final pre-launch package completed; exact-head static/CPU qualification passed; exact-source Graphify passed; private operational history reconciled; Fable updated; one owner Magnolia run is the next scientific evidence
+- [124] alice-eipm-v1-n0-closure-pass:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [124] alice-eipm-v1-n0-closure-semantic-v2:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [124] alice-eipm-v1-n0-frozen-semantic-authority-v3:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [124] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
+  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
+- [124] alice-eipm-v1-n0-p2a-semantic-localization-v1:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [124] alice-eipm-v1-n0-p2a-semantic-localization-v1:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
   - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
 
 ## Graphify navigation hints
 
 - audit_n0_v02_full_envelope_proof_obligations_v1.py -> scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py:L1
-- audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py -> scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py:L1
-- qualify_n0_v02_full_envelope_cpu_runtime_v1.py -> scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py:L1
-- .accounting() -> src/cognitive_kernel/payload_store.py:L370
-- diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py -> scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py:L1
-- .encode_padded_items() -> src/alice_personality/n0/full_envelope_semantic_input_v1.py:L349
+- N0FullEnvelopeTrainableSystemV1 -> src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py:L58
+- freeze_n0_v02_final_self_validation_v1.py -> scripts/eipm/n0/freeze_n0_v02_final_self_validation_v1.py:L1
+- verify_result_against_preflight() -> scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py:L146
 - AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
-- audit_n0_v02_operator_evidence_token_alignment_v1.py -> scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py:L1
+- test_memory_identity_host_learning_architecture.py -> tests/governance/test_memory_identity_host_learning_architecture.py:L1
+- test_local_only_turn_has_no_web_artifacts() -> tests/phase4/test_information_research_mode.py:L367
 - audit() -> scripts/audit_capability_barriers.py:L521
 - authority() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L87
+- authorize_boolean_map() -> src/alice_capability_profiles.py:L88
+- test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
+- BehavioralBatchCompileConfig -> src/alice_personality/n0/full_envelope_behavioral_batch_v1.py:L30
+- _boundaries() -> tests/phase4/test_information_grounding.py:L46
 - branch_forward() -> scripts/eipm/n0/train_n0_v02_structured_state_pilot.py:L287
 - _build() -> tests/phase4/test_information_grounding.py:L154
-- test_dynamic_relation_cardinality_has_no_parameter_axis() -> tests/eipm/test_n0_qsre_production_core_v1.py:L157
-- causal_specialist_probabilities() -> scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py:L83
-- test_plane_result_checks_expected_generation() -> tests/phase5/test_deletion_prototype.py:L279
-- test_ordinary_plaintext_inspection_and_temporal_paths_fail_closed() -> tests/phase2/test_memory_sensitive_storage.py:L202
+- DeterministicInformationGroundingBuilder -> src/alice_information/grounding.py:L667
 
 ## External/private routing
 
-- Recommended: True
-- Reason: host-specific operational history may contain newer failure lessons than public receipts
+- Recommended: False
+- Reason: None
 
 ## Trust contract
 
