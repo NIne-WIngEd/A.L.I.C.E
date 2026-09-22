@@ -1,6 +1,6 @@
 {
-  "schema_version": "2.0.0",
-  "decision_id": "alice.memory.identity-formation-host-learning.repo-lifecycle.v2",
+  "schema_version": "2.1.0",
+  "decision_id": "alice.memory.identity-formation-host-learning.repo-lifecycle.v2.1",
   "status": "owner_ratified",
   "capability_ceiling": false,
   "named_roles": {
@@ -65,7 +65,10 @@
       "may_modify_elaina_core_identity": false
     },
     "alice_continuity_self_model": {
-      "distinct_from_elaina_source_history": true
+      "distinct_from_elaina_source_history": true,
+      "updates_over_time": true,
+      "ordinary_post_activation_experience_may_update_self_state": true,
+      "may_rewrite_elaina_source_history": false
     }
   },
   "runtime_data_flow": {
@@ -98,7 +101,10 @@
     "receives_alice_rayan_relationship_history": false,
     "receives_alice_continuity": false,
     "host_neutral_memory_formation_architecture_transfer_allowed": true,
-    "friday_personality_develops_from_its_own_host_data": true
+    "friday_personality_develops_from_its_own_host_data": true,
+    "continuing_user_and_assistant_development_required": true,
+    "user_must_declare_ideal_self": false,
+    "assistant_self_must_remain_distinct_from_user_model": true
   },
   "stage_g": {
     "backend_persistence_alone_sufficient": false,
@@ -141,5 +147,44 @@
       "remote_repository_may_be_reestablished_when_useful": true,
       "must_preserve_history_provenance_backups_rollback_and_recovery": true
     }
+  },
+  "personal_development": {
+    "status": "required_destination_capability",
+    "user_or_host_model_required": true,
+    "assistant_self_model_required": true,
+    "relationship_state_required": true,
+    "neutral_assistant_self_subject_type": "assistant_self",
+    "alice_compatibility_self_subject_type": "alice_self",
+    "alice_subject_separation": [
+      "Rayan_owner_host",
+      "Mehejabin_Elaina_source_person",
+      "ALICE_current_self"
+    ],
+    "fable_subject_separation": [
+      "user_host",
+      "fable_current_self"
+    ],
+    "user_declared_ideal_self_is_authoritative": false,
+    "user_statements_are_evidence_not_identity_authority": true,
+    "observations_may_revise_user_hypotheses": true,
+    "outcomes_may_revise_assistant_self_and_relationship_state": true,
+    "user_approval_or_disapproval_is_ground_truth_for_judgment": false,
+    "fixed_prompt_is_sufficient_evidence_of_learned_personal_judgment": false,
+    "downstream_foundation_model_behavior_is_sufficient_evidence_of_personal_judgment": false,
+    "required_causal_flow": [
+      "authorized_experience_or_observation",
+      "subject_bound_user_source_relationship_and_assistant_self_state",
+      "native_identity_or_personal_judgment",
+      "action_or_response",
+      "observed_outcome_and_later_evidence",
+      "governed_state_revision",
+      "changed_future_judgment_when_relevant"
+    ],
+    "native_judgment_integration_required": true,
+    "outcome_based_revision_required": true,
+    "behavioral_intervention_evidence_required": true,
+    "static_schema_or_storage_tests_sufficient": false,
+    "ordinary_personal_development_may_bypass_memory_authority": false,
+    "unrestricted_self_modification_authorized": false
   }
 }
