@@ -366,3 +366,78 @@ def test_full_stack_pregraph_type_gate_matches_exact_binder_compatibility() -> N
     assert bool((~out["pregraph_type_compatible"]).any())
     report=model.parameter_report()
     assert report["pre_binder_graph_exact_type_schema_gated"] is True
+
+
+def test_additional_runtime_view_order_has_no_hidden_identity_axis() -> None:
+    torch.manual_seed(294)
+    model=N0FullEnvelopeStackV1(
+        N0FullEnvelopeStackConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            num_attention_heads=4,
+            structured_layers=1,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    factors,opcodes=factor_bundle()
+    inputs=make_inputs(batch_size=1)
+    extras=torch.randn(1,4,24)
+    descriptors=torch.randn(1,4,24)
+    available=torch.tensor([[True,True,False,True]],dtype=torch.bool)
+    reliability=torch.tensor([[0.9,0.3,0.8,0.6]])
+    candidate_hidden=torch.randn(1,5,3,4,24)
+    candidate_mask=torch.ones(1,5,4,dtype=torch.bool)
+    candidate_valid=torch.tensor([[True,True,True,False,True]],dtype=torch.bool)
+    perm=torch.tensor([3,0,2,1])
+
+    common=dict(
+        relation_schema=schema(5,seed=295),
+        factor_schemas=factors,
+        factor_opcodes=opcodes,
+        max_reasoning_steps=4,
+        graph_message_steps=2,
+        fusion_refinement_steps=2,
+        latent_slot_count=6,
+        latent_refinement_steps=2,
+        candidate_hidden_states=candidate_hidden,
+        candidate_token_mask=candidate_mask,
+        candidate_valid_mask=candidate_valid,
+        **inputs,
+    )
+    with torch.no_grad():
+        original=model(
+            additional_source_views=extras,
+            additional_view_descriptor_states=descriptors,
+            additional_view_available=available,
+            additional_view_reliability=reliability,
+            **common,
+        )
+        permuted=model(
+            additional_source_views=extras[:,perm],
+            additional_view_descriptor_states=descriptors[:,perm],
+            additional_view_available=available[:,perm],
+            additional_view_reliability=reliability[:,perm],
+            **common,
+        )
+
+    assert torch.allclose(
+        original["fusion"]["fused_state"],
+        permuted["fusion"]["fused_state"],
+        atol=1.0e-6,
+        rtol=1.0e-6,
+    )
+    assert torch.allclose(
+        original["latent"]["pooled_state"],
+        permuted["latent"]["pooled_state"],
+        atol=1.0e-6,
+        rtol=1.0e-6,
+    )
+    assert torch.allclose(
+        original["public_judgment"]["candidate_logits"],
+        permuted["public_judgment"]["candidate_logits"],
+        atol=1.0e-6,
+        rtol=1.0e-6,
+    )
