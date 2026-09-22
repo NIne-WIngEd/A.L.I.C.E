@@ -205,8 +205,20 @@ class DynamicCompetitiveLatentPoolV3(nn.Module):
                     slot_key_chunk,
                     item_key[:, i0:i1, :],
                 ) * scale
+                # An unavailable item has a zero softmax denominator from pass
+                # one. Neutralize both score and max before exponentiation so
+                # masking cannot become inf * 0 -> NaN.
+                safe_score = score.masked_fill(
+                    ~valid[:, None, :],
+                    0.0,
+                )
+                safe_item_max = torch.where(
+                    valid,
+                    item_max,
+                    torch.zeros_like(item_max),
+                )
                 ownership = torch.exp(
-                    score - item_max[:, None, :]
+                    safe_score - safe_item_max[:, None, :]
                 ) / item_denominator[:, None, :].clamp_min(1.0e-12)
                 ownership = (
                     ownership
