@@ -252,11 +252,21 @@ class SemanticOperatorQSREAdapter(nn.Module):
         )
 
         step_mass = semantic_operator.relation_step_mass
-        normalizer = step_mass.sum(dim=1, keepdim=True).clamp_min(1.0e-6)
+        relation_assignment_mass = (
+            step_mass[:, :, None]
+            * semantic_operator.relation_distribution
+        )
+        relation_normalizer = relation_assignment_mass.sum(
+            dim=1
+        ).clamp_min(1.0e-6)
         relation_schema_state = (
             relation_schema_states
-            * step_mass[:, :, None, None].to(relation_schema_states.dtype)
-        ).sum(dim=1) / normalizer[:, :, None].to(relation_schema_states.dtype)
+            * relation_assignment_mass[:, :, :, None].to(
+                relation_schema_states.dtype
+            )
+        ).sum(dim=1) / relation_normalizer[:, :, None].to(
+            relation_schema_states.dtype
+        )
 
         operator = FullEnvelopeOperatorState(
             relation_distribution=semantic_operator.relation_distribution,
@@ -297,6 +307,8 @@ class SemanticOperatorQSREAdapter(nn.Module):
             "semantic_only_factor_banks_supported": True,
             "runtime_semantic_factor_bank_ceiling": None,
             "step_conditioned_direction_and_modifiers": True,
+            "program_relation_state_probability_weighted": True,
+            "step_conditioned_relation_schema_state_preserved": True,
             "program_truncation_preserved": True,
             "relation_count_ceiling": None,
             "factor_candidate_count_ceiling": None,
