@@ -256,6 +256,56 @@ class N0FullEnvelopeStackV1(nn.Module):
         ).clamp(0.0, 1.0)
         return relation_mass, semantic_activity
 
+    @staticmethod
+    def _internal_view_gates(
+        *,
+        internal_view_reliability: Tensor,
+        graph_support_activity: Tensor,
+        execution_confidence: Tensor,
+    ) -> tuple[Tensor, Tensor]:
+        batch = internal_view_reliability.size(0)
+        if internal_view_reliability.shape != (
+            batch,
+            N0FullEnvelopeStackV1.INTERNAL_VIEW_COUNT,
+        ):
+            raise ValueError("internal_view_reliability must be [B,6]")
+        if graph_support_activity.shape != (batch,):
+            raise ValueError("graph_support_activity must be [B]")
+        if execution_confidence.shape != (batch,):
+            raise ValueError("execution_confidence must be [B]")
+
+        always = torch.ones(
+            batch,
+            3,
+            device=internal_view_reliability.device,
+            dtype=internal_view_reliability.dtype,
+        )
+        causal_gate = torch.cat(
+            [
+                always,
+                graph_support_activity[:, None].expand(batch, 2),
+                execution_confidence[:, None],
+            ],
+            dim=1,
+        ).clamp(0.0, 1.0)
+        effective_reliability = (
+            internal_view_reliability * causal_gate
+        )
+        availability = torch.cat(
+            [
+                torch.ones(
+                    batch,
+                    3,
+                    device=internal_view_reliability.device,
+                    dtype=torch.bool,
+                ),
+                graph_support_activity[:, None].gt(0).expand(batch, 2),
+                execution_confidence[:, None].gt(0),
+            ],
+            dim=1,
+        )
+        return availability, effective_reliability
+
     def forward(
         self,
         *,
@@ -436,17 +486,18 @@ class N0FullEnvelopeStackV1(nn.Module):
             self.INTERNAL_VIEW_COUNT,
         ):
             raise ValueError("internal_view_reliability must be [B,6]")
-        internal_available = torch.ones(
-            batch,
-            self.INTERNAL_VIEW_COUNT,
-            device=internal_views.device,
-            dtype=torch.bool,
+        internal_available, effective_internal_reliability = (
+            self._internal_view_gates(
+                internal_view_reliability=internal_view_reliability,
+                graph_support_activity=graph["graph_support_activity"],
+                execution_confidence=executor["execution_confidence"],
+            )
         )
 
         source_views = internal_views
         descriptors = internal_view_descriptor_states
         available = internal_available
-        reliability = internal_view_reliability
+        reliability = effective_internal_reliability
 
         extras = (
             additional_source_views,
@@ -545,6 +596,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "source_views": source_views,
             "view_descriptors": descriptors,
             "view_available": available,
+            "view_reliability": reliability,
         }
 
     def parameter_report(self) -> dict[str, Any]:
@@ -569,6 +621,8 @@ class N0FullEnvelopeStackV1(nn.Module):
             "raw_semantic_view_static_layer_mean": False,
             "raw_semantic_view_content_conditioned_layer_read": True,
             "pre_binder_graph_soft_activity_gated": True,
+            "graph_and_executor_views_causally_availability_gated": True,
+            "unavailable_internal_view_descriptor_cannot_create_signal": True,
             "semantic_activity_uses_program_start_probability_not_expected_step_count": True,
             "runtime_relation_ceiling": None,
             "per_example_candidate_subset_supported": True,
