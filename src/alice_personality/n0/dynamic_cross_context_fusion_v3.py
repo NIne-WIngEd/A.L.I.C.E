@@ -6,6 +6,11 @@ from typing import Any
 import torch
 from torch import Tensor, nn
 
+from alice_personality.n0.chunked_set_attention_v1 import (
+    ChunkedExactSetSelfAttention,
+    ChunkedSetAttentionConfig,
+)
+
 
 @dataclass(frozen=True)
 class DynamicCrossContextFusionConfig:
@@ -13,6 +18,8 @@ class DynamicCrossContextFusionConfig:
     model_dim: int = 640
     num_attention_heads: int = 10
     recurrent_refinement_steps: int = 2
+    query_chunk_views: int = 32
+    key_chunk_views: int = 64
     dropout: float = 0.0
 
     def validate(self) -> None:
@@ -21,6 +28,8 @@ class DynamicCrossContextFusionConfig:
             ("model_dim", self.model_dim),
             ("num_attention_heads", self.num_attention_heads),
             ("recurrent_refinement_steps", self.recurrent_refinement_steps),
+            ("query_chunk_views", self.query_chunk_views),
+            ("key_chunk_views", self.key_chunk_views),
         ):
             if int(value) <= 0:
                 raise ValueError(f"{name} must be positive")
@@ -50,11 +59,15 @@ class DynamicCrossContextFusionV3(nn.Module):
         self.reliability_projection = nn.Linear(1, d, bias=False)
 
         self.self_refine = nn.GRUCell(2 * d, d)
-        self.cross_attention = nn.MultiheadAttention(
-            d,
-            self.config.num_attention_heads,
-            dropout=self.config.dropout,
-            batch_first=True,
+        self.cross_attention = ChunkedExactSetSelfAttention(
+            ChunkedSetAttentionConfig(
+                model_dim=d,
+                num_attention_heads=self.config.num_attention_heads,
+                query_chunk_fields=self.config.query_chunk_views,
+                key_chunk_fields=self.config.key_chunk_views,
+                feedforward_multiplier=4,
+                dropout=self.config.dropout,
+            )
         )
         self.cross_norm = nn.LayerNorm(d)
         self.route_score = nn.Sequential(
@@ -128,12 +141,9 @@ class DynamicCrossContextFusionV3(nn.Module):
                 state,
             )
 
-            attended, _ = self.cross_attention(
+            attended = self.cross_attention(
                 state,
-                state,
-                state,
-                key_padding_mask=~view_available,
-                need_weights=False,
+                view_available,
             )
             state = self.cross_norm(state + attended)
             state = state * view_available.unsqueeze(-1).to(state.dtype)
@@ -198,6 +208,9 @@ class DynamicCrossContextFusionV3(nn.Module):
             "runtime_view_descriptors": True,
             "exact_source_anchor_retained": True,
             "shared_cross_view_attention": True,
+            "full_view_pair_score_matrix_materialized": False,
+            "exact_dense_view_attention_semantics": True,
+            "view_attention_chunk_is_operating_point": True,
             "view_count_ceiling": None,
             "refinement_step_ceiling": None,
         }
