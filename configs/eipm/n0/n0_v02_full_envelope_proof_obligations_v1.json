@@ -128,6 +128,13 @@
       "requirement": "No global task-agnostic layer mixture erases relation/query-specific intermediate-layer signal."
     },
     {
+      "id": "N0-P12R",
+      "stage": "full_stack",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_envelope_stack_forward_and_gradient_continuity",
+      "requirement": "Raw semantic fusion view must not reintroduce a static all-layer mean that erases task-relevant intermediate-layer signal."
+    },
+    {
       "id": "N0-P13",
       "stage": "evidence_graph",
       "kind": "STATIC_REQUIRED",
