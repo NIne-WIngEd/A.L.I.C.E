@@ -161,6 +161,13 @@
       "requirement": "Raw semantic fusion view must not reintroduce a static all-layer mean that erases task-relevant intermediate-layer signal."
     },
     {
+      "id": "N0-P12M",
+      "stage": "numeric_contracts",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_structured_state_rejects_out_of_range_confidence_metadata",
+      "requirement": "Probability-like structured confidence/missingness metadata fails closed outside [0,1] instead of silently steering semantics."
+    },
+    {
       "id": "N0-P13",
       "stage": "evidence_graph",
       "kind": "STATIC_REQUIRED",
@@ -259,11 +266,25 @@
       "requirement": "No-support means no relational execution result."
     },
     {
+      "id": "N0-P25M",
+      "stage": "executor",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_executor_rejects_out_of_range_support_metadata",
+      "requirement": "Binder/executor support and evidence quality metadata cannot exceed their probability contracts."
+    },
+    {
       "id": "N0-P26",
       "stage": "fusion",
       "kind": "STATIC_REQUIRED",
       "test": "test_dynamic_fusion_is_view_permutation_equivariant_and_source_exact",
       "requirement": "Runtime view ordering is not semantic and exact source anchors survive contextualization."
+    },
+    {
+      "id": "N0-P26M",
+      "stage": "fusion",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_fusion_rejects_out_of_range_view_reliability",
+      "requirement": "Fusion reliability metadata must be finite and inside [0,1]."
     },
     {
       "id": "N0-P27",
@@ -472,6 +493,48 @@
         "runtime_factor_bank_set_aggregation"
       ],
       "reason": "Relation and factor schema subsets must remain runtime-variable per example."
+    },
+    {
+      "path": "src/alice_personality/n0/dynamic_structured_state_v2.py",
+      "required_patterns": [
+        "require_unit_interval"
+      ],
+      "reason": "Shared numeric contract must fail closed on probability-like runtime metadata."
+    },
+    {
+      "path": "src/alice_personality/n0/dynamic_evidence_view_v2.py",
+      "required_patterns": [
+        "require_unit_interval"
+      ],
+      "reason": "Shared numeric contract must fail closed on probability-like runtime metadata."
+    },
+    {
+      "path": "src/alice_personality/n0/dynamic_cross_context_fusion_v3.py",
+      "required_patterns": [
+        "require_unit_interval"
+      ],
+      "reason": "Shared numeric contract must fail closed on probability-like runtime metadata."
+    },
+    {
+      "path": "src/alice_personality/n0/qsre_full_envelope_binder_v1.py",
+      "required_patterns": [
+        "require_unit_interval"
+      ],
+      "reason": "Shared numeric contract must fail closed on probability-like runtime metadata."
+    },
+    {
+      "path": "src/alice_personality/n0/qsre_full_envelope_executor_v1.py",
+      "required_patterns": [
+        "require_unit_interval"
+      ],
+      "reason": "Shared numeric contract must fail closed on probability-like runtime metadata."
+    },
+    {
+      "path": "src/alice_personality/n0/dynamic_schema_evidence_graph_v1.py",
+      "required_patterns": [
+        "require_unit_interval"
+      ],
+      "reason": "Shared numeric contract must fail closed on probability-like runtime metadata."
     }
   ],
   "critical_governance_files": [
