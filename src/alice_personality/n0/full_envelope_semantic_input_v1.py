@@ -384,6 +384,8 @@ class FullEnvelopeSemanticInputV1(nn.Module):
             tokens = hidden_valid.size(2)
             dtype = hidden_valid.dtype
             device = hidden_valid.device
+            used_virtualization = bool(encoded["used_virtualization"])
+            segment_count_max = int(encoded["segment_count_max"])
         else:
             # Entire optional padded bank is absent. Preserve tensor geometry
             # without creating fake semantic content or touching the backbone.
@@ -404,6 +406,8 @@ class FullEnvelopeSemanticInputV1(nn.Module):
                 dtype=torch.bool,
                 device=device,
             )
+            used_virtualization = False
+            segment_count_max = 0
 
         hidden = torch.zeros(
             batch * items,
@@ -431,6 +435,8 @@ class FullEnvelopeSemanticInputV1(nn.Module):
             ),
             "token_mask": token_mask.reshape(batch, items, tokens),
             "item_valid_mask": item_valid_mask,
+            "used_virtualization": used_virtualization,
+            "segment_count_max": segment_count_max,
         }
 
     def parameter_report(self) -> dict[str, Any]:
