@@ -6,6 +6,11 @@ from typing import Any
 import torch
 from torch import Tensor, nn
 
+from alice_personality.n0.numeric_contracts import (
+    require_finite,
+    require_unit_interval,
+)
+
 from alice_personality.n0.full_envelope_structural_types import (
     CONTROL_RELATIONAL,
     DIRECTION_BIDIRECTIONAL,
@@ -151,6 +156,29 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             raise ValueError("focus_field_weight must be [B,F]")
         if support_available.shape != (batch,):
             raise ValueError("support_available must be [B]")
+        require_unit_interval("edge_support_weight", edge_support_weight)
+        require_unit_interval("support_available", support_available)
+        require_unit_interval("edge_reliability", edge_reliability)
+        require_unit_interval("edge_recency", edge_recency)
+        require_unit_interval("edge_temporal_match", edge_temporal_match)
+        require_unit_interval("edge_provenance_match", edge_provenance_match)
+        require_unit_interval("focus_field_weight", focus_field_weight)
+        require_finite("field_state", field_state)
+        require_finite("field_metadata", field_metadata)
+        require_finite("relation_schema_state", relation_schema_state)
+        focus_total = (
+            focus_field_weight
+            * field_valid_mask.to(focus_field_weight.dtype)
+        ).sum(dim=-1)
+        if not torch.allclose(
+            focus_total,
+            torch.ones_like(focus_total),
+            atol=1.0e-5,
+            rtol=1.0e-5,
+        ):
+            raise ValueError("focus_field_weight must sum to one over valid fields")
+        if bool((focus_field_weight.masked_select(~field_valid_mask) > 1.0e-6).any()):
+            raise ValueError("invalid padded fields cannot carry focus mass")
 
         if bool(edge_valid_mask.any()):
             valid_edge = edge_index[edge_valid_mask]
