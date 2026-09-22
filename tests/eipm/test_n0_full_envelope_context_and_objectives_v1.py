@@ -19,6 +19,7 @@ from alice_personality.n0.full_envelope_behavioral_objectives_v1 import (
 from alice_personality.n0.full_envelope_loss_balancer_v1 import (
     MacroFamilyLossBalancer,
 )
+from alice_personality.n0.numeric_contracts import exact_masked_softmax
 from alice_personality.n0.semantic_context_virtualizer_v1 import (
     SemanticContextVirtualizerConfig,
     SemanticContextVirtualizerV1,
@@ -1053,3 +1054,29 @@ def test_public_judgment_loss_with_one_valid_candidate_is_exactly_zero_under_ext
         logits.grad.masked_select(~valid),
         torch.zeros_like(logits.grad.masked_select(~valid)),
     )
+
+
+def test_exact_masked_softmax_preserves_extreme_valid_logits_and_empty_rows() -> None:
+    logits=torch.tensor(
+        [[-20000.0,5000.0,-30000.0],[7.0,-9.0,11.0]]
+    )
+    mask=torch.tensor(
+        [[True,False,True],[False,False,False]],
+        dtype=torch.bool,
+    )
+    probability=exact_masked_softmax(
+        logits,
+        mask,
+        dim=-1,
+        allow_empty=True,
+    )
+    assert probability[0,1] == 0.0
+    assert probability[0,0] > probability[0,2]
+    assert torch.allclose(
+        probability[0].sum(),
+        torch.tensor(1.0),
+        atol=0.0,
+        rtol=0.0,
+    )
+    assert torch.equal(probability[1],torch.zeros_like(probability[1]))
+    assert bool(torch.isfinite(probability).all())
