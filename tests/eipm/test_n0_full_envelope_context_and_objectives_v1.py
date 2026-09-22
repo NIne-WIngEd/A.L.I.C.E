@@ -865,3 +865,84 @@ def test_irrelevant_view_invariance_gradient_is_finite_with_masked_candidates() 
         removed.grad.masked_select(~valid),
         torch.zeros_like(removed.grad.masked_select(~valid)),
     )
+
+
+def test_macro_family_balancer_effective_batch_scaling_is_microbatch_partition_invariant() -> None:
+    balancer=MacroFamilyLossBalancer(
+        {"semantic":1.0,"operator":1.0}
+    )
+    balancer.observe_detached_family_means(
+        {
+            "semantic":torch.tensor(4.0),
+            "operator":torch.tensor(2.0),
+        }
+    )
+    initial=balancer.ema_scale_snapshot()
+
+    semantic_a=torch.tensor(2.0,requires_grad=True)
+    operator_a=torch.tensor(1.0,requires_grad=True)
+    semantic_b=torch.tensor(6.0,requires_grad=True)
+    operator_b=torch.tensor(3.0,requires_grad=True)
+    first=balancer(
+        {
+            "semantic":{"loss":semantic_a},
+            "operator":{"loss":operator_a},
+        },
+        update_ema=False,
+    )
+    second=balancer(
+        {
+            "semantic":{"loss":semantic_b},
+            "operator":{"loss":operator_b},
+        },
+        update_ema=False,
+    )
+    effective=balancer(
+        {
+            "semantic":{"loss":0.5*(semantic_a+semantic_b)},
+            "operator":{"loss":0.5*(operator_a+operator_b)},
+        },
+        update_ema=False,
+    )
+    partitioned=0.5*(first["loss"]+second["loss"])
+    assert torch.allclose(
+        partitioned,
+        effective["loss"],
+        atol=1e-7,
+        rtol=1e-7,
+    )
+    assert torch.equal(
+        balancer.ema_scale_snapshot(),
+        initial,
+    )
+    partitioned.backward()
+    for value in (semantic_a,operator_a,semantic_b,operator_b):
+        assert value.grad is not None
+        assert bool(torch.isfinite(value.grad))
+
+    report=balancer.parameter_report()
+    assert report["effective_batch_ema_observation_supported"] is True
+    assert report["microbatch_partition_invariant_with_frozen_ema"] is True
+    assert report["ema_update_once_per_effective_batch_required"] is True
+
+
+def test_macro_family_balancer_effective_batch_observation_updates_ema_once() -> None:
+    balancer=MacroFamilyLossBalancer(
+        {"semantic":1.0,"operator":1.0}
+    )
+    balancer.observe_detached_family_means(
+        {
+            "semantic":torch.tensor(4.0),
+            "operator":torch.tensor(2.0),
+        }
+    )
+    before=balancer.ema_scale_snapshot()
+    balancer.observe_detached_family_means(
+        {
+            "semantic":torch.tensor(8.0),
+            "operator":torch.tensor(6.0),
+        }
+    )
+    after=balancer.ema_scale_snapshot()
+    expected=before*0.98+torch.tensor([8.0,6.0])*0.02
+    assert torch.allclose(after,expected,atol=1e-7,rtol=1e-7)
