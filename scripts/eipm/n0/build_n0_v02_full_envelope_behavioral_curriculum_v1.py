@@ -168,6 +168,19 @@ DEV_ENTITIES = [
     "Yarrow","Zephyr","Arden","Brio","Cyra","Delta","Ember","Fjord",
 ]
 
+FINAL_ENTITIES = [
+    "Grove","Harbor","Ion","Juniper","Kestrel","Lattice","Meridian","Nimbus",
+    "Onyx","Pioneer","Quill","Radian","Summit","Trellis","Vale","Willow",
+]
+
+FINAL_TYPE_SCHEMA = [
+    {"key":"t_actor","text":"an accountable human or institutional participant in a public process"},
+    {"key":"t_record","text":"a traceable public memorandum, instrument record, notice, or source document"},
+    {"key":"t_claim","text":"a proposition or operational conclusion whose support can change with evidence"},
+    {"key":"t_event","text":"an observed occurrence, transition, or process state in a public system"},
+    {"key":"t_context","text":"background material that can supply context without deciding the requested conclusion"},
+]
+
 INTERNAL_VIEWS = [
     "raw_semantic",
     "structured",
@@ -706,7 +719,7 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         }
         decisive_fields=list(range(1,chain_steps))
         irrelevant_fields=[irrelevant_index]
-    else:
+    elif mode in {15,16}:
         family="candidate_context_swap"
         first_is_stronger=mode==15
         first_reliability=0.97 if first_is_stronger else 0.31
@@ -770,6 +783,128 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
             if first_is_stronger
             else "second_source_stronger"
         )
+    elif mode == 17:
+        family="long_causal_chain"
+        chain_steps=5
+        names=[
+            entities[(example*5+i*3) % len(entities)]
+            for i in range(chain_steps+1)
+        ]
+        entities_used=list(dict.fromkeys(names))
+        fields=[
+            field(
+                f"Process observation {names[i]} records verified stage {i+1} of a five-link public causal sequence.",
+                "t_event",
+                reliability=0.95-0.015*i,
+            )
+            for i in range(chain_steps+1)
+        ]
+        fields.append(
+            field(
+                "A separate public maintenance bulletin concerns an unrelated subsystem and is not part of the causal sequence.",
+                "t_context",
+                reliability=0.25,
+            )
+        )
+        edges=[]
+        support_edges=[]
+        for i in range(chain_steps):
+            support_edges.append(len(edges))
+            edges.append(
+                edge(
+                    i,i+1,"r_cause",
+                    reliability=0.94-0.015*i,
+                    support=True,
+                    decisive=True,
+                )
+            )
+        irrelevant_index=len(fields)-1
+        edges.append(
+            edge(
+                irrelevant_index,0,"r_context",
+                reliability=0.2,
+                irrelevant=True,
+            )
+        )
+        query=(
+            f"Beginning with process observation {names[0]}, execute all five "
+            f"cause-and-effect links in their stated order. Which observation "
+            "is reached only after completing the entire five-step program?"
+        )
+        answers=[
+            f"Process observation {names[-1]} is the endpoint after all five causal steps.",
+            f"Process observation {names[1]} is the final endpoint.",
+            "The unrelated maintenance bulletin is the terminal causal result.",
+            "The ordered five-step program can be shortened without changing the endpoint.",
+        ]
+        correct=0
+        relation_sequence=["r_cause"]*chain_steps
+        relation_counterfactuals=["r_context"]*chain_steps
+        event_sequence=["CONTINUE"]*chain_steps+["STOP"]
+        targets["traversal"]="TRAVERSAL_PATH"
+        step_targets=[
+            {**targets,"direction":"DIRECTION_FORWARD"}
+            for _ in range(chain_steps)
+        ]
+        endpoint={"active":True,"source_field":0,"target_field":chain_steps}
+        decisive_fields=list(range(1,chain_steps))
+        irrelevant_fields=[irrelevant_index]
+    elif mode == 18:
+        family="heldout_recency_provenance_combo"
+        fields=[
+            field(
+                f"Authorized memorandum {a} supports Proposition {b}, but it is the older authorized source.",
+                "t_record",
+                reliability=0.94,
+                recency=0.35,
+                provenance="authorized audited public source",
+            ),
+            field(f"Proposition {b}: conclusion from the older authorized source.","t_claim"),
+            field(
+                f"External bulletin {c} supports a competing conclusion and is newest overall, but its provenance is outside the authorized class.",
+                "t_record",
+                reliability=0.96,
+                recency=0.99,
+                provenance="outside authorized public provenance class",
+            ),
+            field(f"Proposition {c}: conclusion from the unauthorized newest source.","t_claim"),
+            field(
+                f"Authorized memorandum {d} supports the controlling conclusion and is newer than the other authorized memorandum.",
+                "t_record",
+                reliability=0.95,
+                recency=0.82,
+                provenance="authorized audited public source",
+            ),
+            field(f"Proposition {d}: conclusion from the newest authorized source.","t_claim"),
+        ]
+        edges=[
+            edge(0,1,"r_support",recency=0.35,provenance_match=1.0,support=True),
+            edge(2,3,"r_support",recency=0.99,provenance_match=0.0,support=True),
+            edge(4,5,"r_support",recency=0.82,provenance_match=1.0,support=True,decisive=True),
+        ]
+        query=(
+            "Several sources support competing propositions. Restrict evidence "
+            "to the authorized provenance class and, within that class, use "
+            "recency to identify the controlling supported conclusion."
+        )
+        answers=[
+            f"Select Proposition {d}; it is supported by the newest authorized source.",
+            f"Select Proposition {c}; it is newest overall even though its provenance is unauthorized.",
+            f"Select Proposition {b}; it is authorized but older than the other authorized evidence.",
+            "Ignore both provenance and recency and choose an arbitrary candidate.",
+        ]
+        correct=0
+        relation_sequence=["r_support"]
+        relation_counterfactuals=["r_context"]
+        event_sequence=["CONTINUE","STOP"]
+        targets["traversal"]="TRAVERSAL_AGGREGATE"
+        targets["recency"]="MOD_RECENCY_ON"
+        targets["provenance"]="MOD_PROVENANCE_ON"
+        decisive_fields=[4]
+        support_edges=[0,1,2]
+        endpoint={"active":False,"source_field":-1,"target_field":-1}
+    else:
+        raise ValueError(f"unsupported behavioral scenario mode: {mode}")
 
     if not step_targets and relation_sequence:
         step_targets=[dict(targets) for _ in relation_sequence]
@@ -817,6 +952,66 @@ DEV_QUERY_PARAPHRASES = {
     "causal_chain":"Trace every causal stage in the stated order from the initial event to the terminal effect; intermediate stages and unrelated context are not the requested endpoint.",
     "candidate_context_swap":"Two evidence sources back different propositions. Select the proposition whose support is stronger under the active reliability criterion.",
 }
+
+FINAL_QUERY_PARAPHRASES = {
+    "source_target_role":"Within this held-out public case, determine which proposition receives direct evidential backing from the validated measurement source.",
+    "ordered_composition":"Execute the two cause-and-effect transitions in sequence and return only the endpoint reached after the second transition.",
+    "reverse_traversal":"Starting from the identified author, traverse the authorship relation against its stored direction and name the document reached.",
+    "symmetric_relation":"Find the peer source connected by mutual corroboration while treating stored endpoint orientation as irrelevant.",
+    "reliability_arbitration":"When competing propositions have differently verified evidence, choose the proposition supported by the more dependable source.",
+    "recency_supersession":"A signed revision replaces an earlier public record. Determine which version governs after the replacement.",
+    "temporal_constraint":"Apply the stated time-scope restriction to the causal evidence and identify the admissible effect.",
+    "provenance_constraint":"Apply the authorized-source restriction and identify the proposition that remains supported.",
+    "conflict_plurality":"The evidence sustains incompatible propositions without resolving them. Preserve the unresolved interpretation rather than forcing one side.",
+    "unknown_defer":"No runtime relation description represents the requested relationship. Select the response that preserves uncertainty instead of inventing a mapping.",
+    "decisive_source":"Only one validated measurement establishes the requested conclusion. Identify the conclusion whose justification depends on that source.",
+    "irrelevant_distractor":"Separate evidence bearing on the technical question from newer background material and identify the conclusion that remains justified.",
+    "multiple_co_valid_support":"Independent sources converge on one proposition. Preserve both sources as valid support rather than discarding one without cause.",
+    "mixed_direction_composition":"Traverse the first causal link forward and the second causal link backward from the shared intermediate state, then report the resulting endpoint.",
+    "causal_chain":"Follow the entire ordered causal program from its initial observation to the terminal state and ignore unrelated background material.",
+    "candidate_context_swap":"Use the active reliability criterion to compare the two evidence-backed propositions and select the one with stronger support.",
+    "long_causal_chain":"Execute the complete five-step causal program and identify the endpoint that appears only after every transition has been applied.",
+    "heldout_recency_provenance_combo":"First enforce the authorized-provenance requirement, then use recency among the remaining eligible sources to select the controlling proposition.",
+}
+
+FINAL_SURFACE_REWRITES = (
+    ("provides evidence for", "supplies documented support for"),
+    ("supports", "backs with evidence"),
+    ("supported", "justified by the evidence"),
+    ("verified", "independently validated"),
+    ("record", "memorandum"),
+    ("claim", "proposition"),
+    ("context item", "background material"),
+    ("context note", "background memorandum"),
+    ("unrelated", "not germane"),
+    ("causal relation", "cause-and-effect transition"),
+    ("causal sequence", "ordered process sequence"),
+    ("causal stage", "process transition"),
+    ("causal chain", "multi-stage process"),
+    ("event", "process observation"),
+    ("actor", "participant"),
+    ("is reached last", "is obtained after the complete sequence"),
+    ("is reached", "is obtained"),
+    ("select proposition", "choose proposition"),
+    ("use unrelated option", "choose a non-germane alternative"),
+    ("candidate position", "response position"),
+)
+
+def final_surface_paraphrase(text: str) -> str:
+    """Deterministic FINAL-only lexical variant with no split marker in semantics."""
+    value=str(text)
+    lower=value.lower()
+    for source,replacement in FINAL_SURFACE_REWRITES:
+        start=0
+        source_lower=source.lower()
+        while True:
+            index=lower.find(source_lower,start)
+            if index < 0:
+                break
+            value=value[:index]+replacement+value[index+len(source):]
+            lower=value.lower()
+            start=index+len(replacement)
+    return value
 
 
 DEV_SURFACE_REWRITES = (
@@ -943,11 +1138,19 @@ def materialize_row(
     field_count: int,
     answer_count: int,
 ) -> dict[str,Any]:
-    entities=TRAIN_ENTITIES if split=="train" else DEV_ENTITIES
-    mode=example % 17
+    if split not in {"train","dev","final"}:
+        raise ValueError("behavioral split must be train/dev/final")
+    entities={
+        "train":TRAIN_ENTITIES,
+        "dev":DEV_ENTITIES,
+        "final":FINAL_ENTITIES,
+    }[split]
+    mode=example % (19 if split=="final" else 17)
     base=scenario(mode,entities,example)
     if split=="dev":
         base["query"]=DEV_QUERY_PARAPHRASES[base["scenario_family"]]
+    elif split=="final":
+        base["query"]=FINAL_QUERY_PARAPHRASES[base["scenario_family"]]
     add_distractors(base,max(field_count,len(base["fields"])),entities)
     if split=="dev":
         for item in base["fields"]:
@@ -956,11 +1159,36 @@ def materialize_row(
             dev_surface_paraphrase(text)
             for text in base["answers"]
         ]
+    elif split=="final":
+        for item in base["fields"]:
+            item["text"]=final_surface_paraphrase(item["text"])
+        base["answers"]=[
+            final_surface_paraphrase(text)
+            for text in base["answers"]
+        ]
+        if example % 4 == 0:
+            long_context=(
+                " Additional public context records calibration history, procedural "
+                "background, noncontrolling observations, and provenance notes that "
+                "must remain available without displacing the explicitly relevant evidence."
+            )
+            base["query"] += long_context * 10
+            if base["fields"]:
+                base["fields"][-1]["text"] += long_context * 8
+        if example % 5 == 0:
+            base["answers"]=[
+                text + (
+                    " The comparison must still be made from the governed evidence "
+                    "state rather than from response length or wording."
+                ) * 6
+                for text in base["answers"]
+            ]
     randomization_example=example-1 if mode==16 else example
+    split_offset={"train":0,"dev":10_000_000,"final":20_000_000}[split]
     rng=random.Random(
         seed
         + randomization_example*1009
-        + (0 if split=="train" else 10_000_000)
+        + split_offset
     )
 
     required_relations=list(dict.fromkeys(
@@ -994,15 +1222,32 @@ def materialize_row(
 
     template_id=f"{split}:behavioral-template:{mode}"
     causal_group=f"{split}:causal:{mode}:{example:05d}"
+    type_schema=(
+        [dict(x) for x in FINAL_TYPE_SCHEMA]
+        if split=="final"
+        else [dict(x) for x in TYPE_SCHEMA]
+    )
+    factor_schemas={
+        name:[dict(item) for item in bank]
+        for name,bank in FACTOR_BANKS.items()
+    }
+    if split=="final":
+        factor_schemas["open_semantic_factor"].append(
+            {
+                "key":"OPEN_FINAL_4",
+                "opcode":None,
+                "text":"a held-out public semantic qualifier indicates that evidence remains conditional on an unresolved operational dependency",
+            }
+        )
     semantic_text=" ".join(
         [base["query"]]
         + [x["text"] for x in relation_candidates]
-        + [x["text"] for bank in FACTOR_BANKS.values() for x in bank]
+        + [x["text"] for bank in factor_schemas.values() for x in bank]
         + [x["text"] for x in base["fields"]]
         + answers
-        + [x["text"] for x in TYPE_SCHEMA]
+        + [x["text"] for x in type_schema]
     ).lower()
-    opaque_keys=[x["key"] for x in TYPE_SCHEMA] + [x["key"] for x in RELATIONS]
+    opaque_keys=[x["key"] for x in type_schema] + [x["key"] for x in RELATIONS]
     if any(key.lower() in semantic_text for key in opaque_keys):
         raise RuntimeError("opaque metadata key leaked into semantic text")
 
@@ -1068,9 +1313,9 @@ def materialize_row(
         ),
         "causal_group":causal_group,
         "query":base["query"],
-        "type_schema":TYPE_SCHEMA,
+        "type_schema":type_schema,
         "relation_candidates":relation_candidates,
-        "factor_schemas":FACTOR_BANKS,
+        "factor_schemas":factor_schemas,
         "fields":base["fields"],
         "edges":base["edges"],
         "candidate_answers":answers,
@@ -1099,13 +1344,18 @@ def materialize_row(
         "runtime_reasoning_steps":len(relation_targets),
         "runtime_candidate_answer_count":len(answers),
         "generated_text":True,
-        "data_origin":"deterministic_public_full_envelope_behavioral_fabric_v1",
+        "data_origin":("deterministic_public_full_envelope_final_v2" if split=="final" else "deterministic_public_full_envelope_behavioral_fabric_v1"),
         "private_identity_data":False,
         "relation_keys_are_metadata_only":True,
         "type_keys_are_metadata_only":True,
         "training_authorized":split=="train",
         "model_selection_authorized":split=="dev",
-        "final_validation_only":False,
+        "final_validation_only":split=="final",
+        "domain_family":(
+            "heldout_public_operations_and_instrumentation"
+            if split=="final"
+            else "public_synthetic_relational_reasoning"
+        ),
     }
 
 
