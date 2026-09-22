@@ -20,6 +20,7 @@ from alice_personality.n0.qsre_full_envelope_executor_v1 import (
     FullEnvelopeExecutorConfig,
     FullEnvelopeQSREExecutorV1,
 )
+from alice_personality.n0.n0_full_envelope_stack_v1 import N0FullEnvelopeStackV1
 from alice_personality.n0.semantic_operator_foundation import (
     DynamicRelationSchema,
     DynamicSemanticSchema,
