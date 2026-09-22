@@ -1,0 +1,829 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-cpu-runtime-qualification.v1",
+  "status": "PRECOMMITTED_NO_GRADIENT_RUNTIME_QUALIFICATION",
+  "date": "2026-09-21",
+  "semantic_initialization": {
+    "config": "configs/eipm/n0/alice_n0_semantic_v0.2.json",
+    "checkpoint_role": "targeted-repair-v0.1/step-00000080 initialization and regression baseline only",
+    "checkpoint_sha256": "6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43",
+    "exact_model_parameters": 136594435,
+    "tokenizer_version": "v0.2.1",
+    "tokenizer_vocab_size": 48000
+  },
+  "successor": {
+    "implementation": "src/alice_personality/n0/n0_full_envelope_stack_v1.py",
+    "semantic_backbone_interface": "src/alice_personality/n0/semantic_backbone_interface_v1.py",
+    "semantic_dim": 640,
+    "model_dim": 640,
+    "num_hidden_states": 17,
+    "num_attention_heads": 10,
+    "structured_layers": 2,
+    "field_metadata_dim": 3,
+    "edge_metadata_dim": 4
+  },
+  "tokenizer_stress": {
+    "unknown_token_count_max": 0,
+    "english_mean_characters_per_token_min": 1.75,
+    "unicode_nfc_roundtrip_required": true,
+    "max_stress_sequence_tokens": 256,
+    "english_samples": [
+      "A later correction supersedes an earlier report when both address the same claim.",
+      "Evidence may support a conclusion without proving that conclusion with certainty.",
+      "When two sources conflict, provenance reliability and recency can change which evidence should be trusted.",
+      "A symmetric relationship should not change meaning when its stored endpoints are reversed.",
+      "The requested target is the endpoint reached after following the relation in the stated direction."
+    ],
+    "unicode_roundtrip_samples": [
+      "café naïve coöperate résumé",
+      "বাংলা ভাষায় প্রমাণ ও সম্পর্ক",
+      "العلاقة بين الدليل والنتيجة",
+      "因果関係と証拠の更新",
+      "Δt ≤ 2.5 ms; x₁ → x₂; f(x)=∑ᵢwᵢxᵢ",
+      "emoji context: 🧭🧠⚙️"
+    ],
+    "long_entity_sample": "International_Consortium_for_Adaptive_Relational_Evidence_Interpretation_and_Contextual_Semantic_Alignment_2026"
+  },
+  "runtime_case": {
+    "batch_size": 2,
+    "max_text_tokens": 48,
+    "max_reasoning_steps": 4,
+    "graph_message_steps": 3,
+    "fusion_refinement_steps": 2,
+    "latent_slot_count": 7,
+    "latent_refinement_steps": 2,
+    "type_descriptions": [
+      "person or social actor",
+      "document report message or written record",
+      "claim proposition or asserted conclusion",
+      "event occurrence or state transition",
+      "general context item"
+    ],
+    "relations": [
+      {
+        "key": "supports",
+        "description": "the source provides evidence in favor of the target claim",
+        "domain": [
+          "claim proposition or asserted conclusion",
+          "document report message or written record"
+        ],
+        "range": [
+          "claim proposition or asserted conclusion"
+        ],
+        "symmetric": false
+      },
+      {
+        "key": "contradicts",
+        "description": "the source conflicts with or provides evidence against the target claim",
+        "domain": [
+          "claim proposition or asserted conclusion",
+          "document report message or written record"
+        ],
+        "range": [
+          "claim proposition or asserted conclusion"
+        ],
+        "symmetric": false
+      },
+      {
+        "key": "supersedes",
+        "description": "the source is a newer replacement that should take precedence over the target record",
+        "domain": [
+          "document report message or written record"
+        ],
+        "range": [
+          "document report message or written record"
+        ],
+        "symmetric": false
+      },
+      {
+        "key": "causes",
+        "description": "the source event causally contributes to the target event or state transition",
+        "domain": [
+          "event occurrence or state transition"
+        ],
+        "range": [
+          "event occurrence or state transition"
+        ],
+        "symmetric": false
+      },
+      {
+        "key": "authored_by",
+        "description": "the source document was authored or issued by the target person or actor",
+        "domain": [
+          "document report message or written record"
+        ],
+        "range": [
+          "person or social actor"
+        ],
+        "symmetric": false
+      },
+      {
+        "key": "refers_to",
+        "description": "the source record refers to or is about the target context item",
+        "domain": [
+          "document report message or written record",
+          "claim proposition or asserted conclusion"
+        ],
+        "range": [
+          "general context item",
+          "person or social actor",
+          "event occurrence or state transition"
+        ],
+        "symmetric": false
+      },
+      {
+        "key": "corroborates",
+        "description": "the two endpoints independently reinforce the same underlying information",
+        "domain": [
+          "document report message or written record",
+          "claim proposition or asserted conclusion"
+        ],
+        "range": [
+          "document report message or written record",
+          "claim proposition or asserted conclusion"
+        ],
+        "symmetric": true
+      },
+      {
+        "key": "related_context",
+        "description": "the two endpoints are contextually related without an asserted causal direction",
+        "domain": [
+          "person or social actor",
+          "document report message or written record",
+          "claim proposition or asserted conclusion",
+          "event occurrence or state transition",
+          "general context item"
+        ],
+        "range": [
+          "person or social actor",
+          "document report message or written record",
+          "claim proposition or asserted conclusion",
+          "event occurrence or state transition",
+          "general context item"
+        ],
+        "symmetric": true
+      }
+    ],
+    "factor_banks": {
+      "role": [
+        "read the semantic source endpoint",
+        "read the semantic target endpoint",
+        "treat both endpoints symmetrically",
+        "no endpoint-specific readout"
+      ],
+      "traversal": [
+        "use only directly local relational support",
+        "follow an ordered multi-edge path",
+        "aggregate matching support without path propagation"
+      ],
+      "direction": [
+        "follow the stored relation from source to target",
+        "follow the stored relation from target to source",
+        "treat traversal as bidirectional"
+      ],
+      "control": [
+        "fall back to general semantic judgment because relational execution is not applicable",
+        "execute relational reasoning over the supplied schema and evidence",
+        "defer because available evidence is insufficient or unresolved"
+      ],
+      "reliability": [
+        "do not apply a reliability modifier",
+        "weight execution by evidence reliability"
+      ],
+      "recency": [
+        "do not apply a recency modifier",
+        "weight execution by evidence recency"
+      ],
+      "temporal": [
+        "do not require temporal compatibility",
+        "require the evidence to satisfy the active temporal constraint"
+      ],
+      "provenance": [
+        "do not require a provenance match",
+        "require evidence provenance to match the active constraint"
+      ],
+      "open_semantic_factor": [
+        "an explicit correction is present",
+        "the evidence is incomplete and should preserve plurality",
+        "the evidence contains a conflict that requires comparison",
+        "no additional semantic qualifier is active"
+      ]
+    },
+    "structural_factor_opcodes": {
+      "role": [
+        "ROLE_SOURCE",
+        "ROLE_TARGET",
+        "ROLE_SYMMETRIC",
+        "ROLE_NONE"
+      ],
+      "traversal": [
+        "TRAVERSAL_LOCAL",
+        "TRAVERSAL_PATH",
+        "TRAVERSAL_AGGREGATE"
+      ],
+      "direction": [
+        "DIRECTION_FORWARD",
+        "DIRECTION_REVERSE",
+        "DIRECTION_BIDIRECTIONAL"
+      ],
+      "control": [
+        "CONTROL_FALLBACK",
+        "CONTROL_RELATIONAL",
+        "CONTROL_DEFER"
+      ],
+      "reliability": [
+        "MOD_RELIABILITY_OFF",
+        "MOD_RELIABILITY_ON"
+      ],
+      "recency": [
+        "MOD_RECENCY_OFF",
+        "MOD_RECENCY_ON"
+      ],
+      "temporal": [
+        "MOD_TEMPORAL_OFF",
+        "MOD_TEMPORAL_ON"
+      ],
+      "provenance": [
+        "MOD_PROVENANCE_OFF",
+        "MOD_PROVENANCE_ON"
+      ]
+    },
+    "queries": [
+      "A correction says the earlier report was wrong. Which record should control the conclusion, and what evidence supports that choice?",
+      "Two independent notes agree on the same claim, but one unrelated note is newer. Which evidence is actually relevant and should the system defer if support is insufficient?"
+    ],
+    "relation_candidate_masks": [
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        false,
+        false,
+        true,
+        true,
+        true
+      ]
+    ],
+    "factor_candidate_masks": {
+      "role": [
+        [
+          true,
+          true,
+          true,
+          true
+        ],
+        [
+          true,
+          true,
+          true,
+          false
+        ]
+      ],
+      "traversal": [
+        [
+          true,
+          true,
+          true
+        ],
+        [
+          true,
+          true,
+          true
+        ]
+      ],
+      "direction": [
+        [
+          true,
+          true,
+          true
+        ],
+        [
+          true,
+          false,
+          true
+        ]
+      ],
+      "control": [
+        [
+          true,
+          true,
+          true
+        ],
+        [
+          true,
+          true,
+          true
+        ]
+      ],
+      "reliability": [
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ]
+      ],
+      "recency": [
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ]
+      ],
+      "temporal": [
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ]
+      ],
+      "provenance": [
+        [
+          true,
+          true
+        ],
+        [
+          true,
+          true
+        ]
+      ],
+      "open_semantic_factor": [
+        [
+          true,
+          true,
+          true,
+          true
+        ],
+        [
+          false,
+          true,
+          true,
+          true
+        ]
+      ]
+    },
+    "field_texts": [
+      [
+        "Report A states that the shipment arrived on Monday.",
+        "Report B is a signed correction stating that Report A used the wrong delivery record.",
+        "Claim: the shipment arrived on Tuesday.",
+        "Event: the verified delivery scan occurred on Tuesday morning.",
+        "Analyst Mira issued Report B after reviewing the scan.",
+        "Context: both reports concern the same shipment identifier.",
+        "Independent audit note says the scan log supports Tuesday.",
+        "Unrelated weather note about the same city."
+      ],
+      [
+        "Claim: the component failed because of thermal overload.",
+        "Lab note one reports thermal discoloration and high measured temperature.",
+        "Lab note two independently reports the same thermal evidence.",
+        "A newer cafeteria notice has no connection to the component failure.",
+        "Context: both lab notes refer to the same component serial number.",
+        "padding field one",
+        "padding field two",
+        "padding field three"
+      ]
+    ],
+    "field_valid_mask": [
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        false,
+        false
+      ]
+    ],
+    "field_type_index": [
+      [
+        1,
+        1,
+        2,
+        3,
+        0,
+        4,
+        1,
+        4
+      ],
+      [
+        2,
+        1,
+        1,
+        4,
+        4,
+        -1,
+        -1,
+        -1
+      ]
+    ],
+    "descriptor_banks": {
+      "provenance": [
+        "primary direct record",
+        "independent corroborating record",
+        "secondary contextual record",
+        "unrelated or weakly relevant record"
+      ],
+      "temporal_scope": [
+        "earlier information",
+        "later updated information",
+        "same-time information",
+        "time unspecified"
+      ]
+    },
+    "descriptor_indices": {
+      "provenance": [
+        [
+          2,
+          0,
+          2,
+          0,
+          0,
+          2,
+          1,
+          3
+        ],
+        [
+          2,
+          0,
+          1,
+          3,
+          2,
+          -1,
+          -1,
+          -1
+        ]
+      ],
+      "temporal_scope": [
+        [
+          0,
+          1,
+          1,
+          1,
+          1,
+          2,
+          1,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          2,
+          -1,
+          -1,
+          -1
+        ]
+      ]
+    },
+    "field_confidence": [
+      [
+        0.75,
+        0.98,
+        0.9,
+        0.96,
+        0.9,
+        0.85,
+        0.92,
+        0.4
+      ],
+      [
+        0.82,
+        0.95,
+        0.93,
+        0.7,
+        0.88,
+        0,
+        0,
+        0
+      ]
+    ],
+    "field_missing": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1
+      ]
+    ],
+    "field_reliability": [
+      [
+        0.75,
+        0.98,
+        0.88,
+        0.96,
+        0.9,
+        0.85,
+        0.94,
+        0.3
+      ],
+      [
+        0.8,
+        0.96,
+        0.94,
+        0.4,
+        0.85,
+        0,
+        0,
+        0
+      ]
+    ],
+    "field_metadata": [
+      [
+        [
+          0,
+          0.1,
+          1
+        ],
+        [
+          0.8,
+          1,
+          1
+        ],
+        [
+          0.8,
+          1,
+          1
+        ],
+        [
+          0.8,
+          1,
+          1
+        ],
+        [
+          0.8,
+          1,
+          1
+        ],
+        [
+          0.5,
+          0.7,
+          1
+        ],
+        [
+          0.75,
+          0.95,
+          1
+        ],
+        [
+          0.6,
+          0.9,
+          1
+        ]
+      ],
+      [
+        [
+          0.2,
+          0.45,
+          1
+        ],
+        [
+          0.2,
+          0.45,
+          1
+        ],
+        [
+          0.2,
+          0.45,
+          1
+        ],
+        [
+          0.8,
+          1,
+          1
+        ],
+        [
+          0.2,
+          0.45,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    ],
+    "edges": [
+      [
+        {
+          "source": 1,
+          "target": 0,
+          "relation": "supersedes"
+        },
+        {
+          "source": 1,
+          "target": 2,
+          "relation": "supports"
+        },
+        {
+          "source": 3,
+          "target": 2,
+          "relation": "supports"
+        },
+        {
+          "source": 4,
+          "target": 1,
+          "relation": "authored_by"
+        },
+        {
+          "source": 1,
+          "target": 5,
+          "relation": "refers_to"
+        },
+        {
+          "source": 6,
+          "target": 2,
+          "relation": "supports"
+        },
+        {
+          "source": 6,
+          "target": 1,
+          "relation": "corroborates"
+        },
+        {
+          "source": 0,
+          "target": 2,
+          "relation": "contradicts"
+        },
+        {
+          "source": 7,
+          "target": 5,
+          "relation": "related_context"
+        },
+        {
+          "source": 2,
+          "target": 5,
+          "relation": "refers_to"
+        }
+      ],
+      [
+        {
+          "source": 1,
+          "target": 0,
+          "relation": "supports"
+        },
+        {
+          "source": 2,
+          "target": 0,
+          "relation": "supports"
+        },
+        {
+          "source": 1,
+          "target": 2,
+          "relation": "corroborates"
+        },
+        {
+          "source": 0,
+          "target": 4,
+          "relation": "refers_to"
+        },
+        {
+          "source": 3,
+          "target": 4,
+          "relation": "related_context"
+        },
+        {
+          "source": 0,
+          "target": 1,
+          "relation": "related_context"
+        },
+        {
+          "source": 0,
+          "target": 0,
+          "relation": "related_context",
+          "valid": false
+        },
+        {
+          "source": 0,
+          "target": 0,
+          "relation": "supports",
+          "valid": false
+        },
+        {
+          "source": 0,
+          "target": 0,
+          "relation": "contradicts",
+          "valid": false
+        },
+        {
+          "source": 0,
+          "target": 0,
+          "relation": "supersedes",
+          "valid": false
+        }
+      ]
+    ],
+    "candidate_texts": [
+      [
+        "Prefer the signed correction and the verified scan; Report B supersedes Report A and supports Tuesday.",
+        "Prefer Report A because it was written first.",
+        "Use the weather note because it is newer.",
+        "Treat every record as equally decisive.",
+        "Defer even though multiple high-reliability records agree."
+      ],
+      [
+        "Use the two independent lab notes as mutually corroborating support for thermal overload.",
+        "Use the cafeteria notice because it is newer than the lab notes.",
+        "Treat the two independent lab notes as one duplicated source without checking provenance.",
+        "Defer only if the two lab notes are not enough to establish the claim.",
+        "Ignore all evidence and choose arbitrarily."
+      ]
+    ],
+    "candidate_valid_mask": [
+      [
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      [
+        true,
+        true,
+        true,
+        true,
+        false
+      ]
+    ],
+    "internal_view_descriptions": [
+      "raw semantic field evidence",
+      "structured contextual field representation",
+      "query-conditioned evidence-specialist view",
+      "graph source-endpoint summary",
+      "graph target-endpoint summary",
+      "relational executor summary"
+    ],
+    "additional_views": [
+      "external retrieval summary from an independently governed public source",
+      "future optional sensor or voice-derived public N0 observation"
+    ]
+  },
+  "qualification": {
+    "require_cpu_only": true,
+    "require_inference_mode": true,
+    "optimizer": false,
+    "gradient": false,
+    "model_training": false,
+    "final_validation_opening": false,
+    "private_identity_data": false,
+    "exact_semantic_checkpoint_hash_required": true,
+    "exact_corpus_reverification_required": true,
+    "exact_tokenizer_receipt_required": true,
+    "finite_all_float_outputs_required": true,
+    "runtime_axis_ceiling_fields_must_be_null": true
+  }
+}
