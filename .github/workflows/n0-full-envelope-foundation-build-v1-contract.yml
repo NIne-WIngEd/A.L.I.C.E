@@ -50,6 +50,12 @@ on:
       - "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json"
+      - "configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json"
+      - "configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json"
+      - "scripts/eipm/n0/build_n0_v02_full_envelope_final_v2_package.py"
+      - "scripts/eipm/n0/audit_n0_v02_full_envelope_final_v2_package.py"
+      - "scripts/eipm/n0/freeze_n0_v02_full_envelope_final_v2_package.py"
+      - "tests/eipm/test_n0_full_envelope_final_v2_package_v1.py"
       - "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json"
       - "configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json"
@@ -123,6 +129,9 @@ jobs:
             scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py \
             scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py \
+            scripts/eipm/n0/build_n0_v02_full_envelope_final_v2_package.py \
+            scripts/eipm/n0/audit_n0_v02_full_envelope_final_v2_package.py \
+            scripts/eipm/n0/freeze_n0_v02_full_envelope_final_v2_package.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py \
             scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py
@@ -134,6 +143,8 @@ jobs:
             configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
+            configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json \
+            configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json \
             configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json \
             configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json \
@@ -303,6 +314,80 @@ jobs:
           assert r["final_model_selection_authorized"] is False
           assert r["private_identity_data"] is False
           print("PASS_N0_NATURAL_RELATION_SEALED_FINAL_AUDIT")
+          PY
+
+      - name: Build audit and freeze successor final-v2 package without model results
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/n0-final-v2
+          mkdir -p /tmp/n0-final-v2
+
+          python scripts/eipm/n0/build_n0_v02_full_envelope_final_v2_package.py \
+            --behavioral-train-dev-rows /tmp/n0-behavioral/rows.jsonl \
+            --fewrel-final-rows /tmp/n0-fewrel/final_rows.jsonl \
+            --fewrel-final-bank /tmp/n0-fewrel/final_bank.json \
+            --fewrel-manifest /tmp/n0-fewrel/manifest.json \
+            --final-contract configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
+            --synthetic-output /tmp/n0-final-v2/synthetic_final_rows.jsonl \
+            --manifest-output /tmp/n0-final-v2/package_manifest.json
+
+          python scripts/eipm/n0/audit_n0_v02_full_envelope_final_v2_package.py \
+            --package-config configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json \
+            --evaluator-contract configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json \
+            --final-contract configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
+            --behavioral-train-dev-rows /tmp/n0-behavioral/rows.jsonl \
+            --semantic-train-dev-rows /tmp/n0-so/rows.jsonl \
+            --synthetic-final-rows /tmp/n0-final-v2/synthetic_final_rows.jsonl \
+            --package-manifest /tmp/n0-final-v2/package_manifest.json \
+            --fewrel-final-rows /tmp/n0-fewrel/final_rows.jsonl \
+            --fewrel-final-bank /tmp/n0-fewrel/final_bank.json \
+            --fewrel-manifest /tmp/n0-fewrel/manifest.json \
+            --fewrel-audit /tmp/n0-fewrel/audit.json \
+            --output /tmp/n0-final-v2/audit.json
+
+          python scripts/eipm/n0/freeze_n0_v02_full_envelope_final_v2_package.py \
+            --package-config configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json \
+            --evaluator-contract configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json \
+            --final-contract configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
+            --synthetic-final-rows /tmp/n0-final-v2/synthetic_final_rows.jsonl \
+            --package-manifest /tmp/n0-final-v2/package_manifest.json \
+            --fewrel-final-rows /tmp/n0-fewrel/final_rows.jsonl \
+            --fewrel-final-bank /tmp/n0-fewrel/final_bank.json \
+            --fewrel-manifest /tmp/n0-fewrel/manifest.json \
+            --audit /tmp/n0-final-v2/audit.json \
+            --output /tmp/n0-final-v2/freeze_receipt.json
+
+          python - <<'PY'
+          import json
+          audit=json.load(open("/tmp/n0-final-v2/audit.json"))
+          freeze=json.load(open("/tmp/n0-final-v2/freeze_receipt.json"))
+          assert audit["status"]=="PASS_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_AUDIT_V1"
+          assert all(audit["axis_extrapolation"].values())
+          assert audit["entity_overlap"]==[]
+          assert audit["template_overlap"]==[]
+          assert audit["field_surface_overlap"]==[]
+          assert audit["candidate_surface_overlap"]==[]
+          assert audit["domain_overlap"]==[]
+          assert audit["type_schema_overlap"]==[]
+          assert audit["heldout_recency_provenance_combo_present"] is True
+          assert audit["heldout_recency_provenance_combo_seen_in_behavioral_train_dev"] is False
+          assert audit["heldout_recency_provenance_combo_seen_in_semantic_train_dev"] is False
+          assert audit["results_observed"] is False
+          assert audit["training_authorized"] is False
+          assert audit["model_selection_authorized"] is False
+          assert audit["final_opening_authorized"] is False
+          assert freeze["status"]=="FROZEN_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_BEFORE_GRADIENT"
+          assert freeze["registered_system"]=="N0FullEnvelopeTrainableSystemV1"
+          assert freeze["legacy_final_v1_authority"] is False
+          assert freeze["legacy_final_v3_evaluator_authority"] is False
+          assert freeze["results_observed"] is False
+          assert freeze["training_authorized"] is False
+          assert freeze["model_selection_authorized"] is False
+          assert freeze["final_opening_authorized"] is False
+          assert freeze["gradient_performed"] is False
+          assert freeze["optimizer_performed"] is False
+          assert freeze["n0_complete"] is False
+          print("PASS_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_FROZEN_STATIC")
           PY
 
       - name: Prove successor lineage cannot import superseded semantic authority
