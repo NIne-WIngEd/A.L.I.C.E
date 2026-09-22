@@ -853,6 +853,25 @@
     "exact_corpus_reverification_required": true,
     "exact_tokenizer_receipt_required": true,
     "finite_all_float_outputs_required": true,
-    "runtime_axis_ceiling_fields_must_be_null": true
+    "runtime_axis_ceiling_fields_must_be_null": true,
+    "cross_window_bridge_required": true,
+    "standalone_window_stitching_insufficient": true
+  },
+  "long_context_bridge_runtime": {
+    "native_window_tokens": 32,
+    "overlap_tokens": 8,
+    "bridge_layers": 2,
+    "bridge_heads": 10,
+    "query_chunk_segments": 8,
+    "key_chunk_segments": 8,
+    "minimum_segments": 3,
+    "max_reasoning_steps": 2,
+    "text": [
+      "The first report says a component failed after a temperature spike. It was written before the full logs were available.",
+      "Several unrelated maintenance notes discuss paint, packaging, and cafeteria schedules. They should not control the engineering conclusion.",
+      "Much later in the context, a signed correction states that the original report used the wrong sensor channel and that the verified trace shows no temperature spike.",
+      "An independent lab note near the end corroborates the correction and says the failure followed a voltage transient instead.",
+      "The query asks which account should control the conclusion, which evidence supports it, and whether the system should preserve uncertainty if the correction cannot be connected to the original report."
+    ]
   }
 }
