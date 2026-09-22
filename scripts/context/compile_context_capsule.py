@@ -42,6 +42,8 @@ def main() -> None:
             break
 
     stable=(active.get("stable_build_base") or {})
+    continuity=(active.get("continuity_overlay") or {})
+    implementation=(active.get("implementation_state") or active)
     frontier=(active.get("unmerged_experiment_frontier") or {})
     freshness=(active.get("continuity_freshness") or {})
     maximal_heads=frontier.get("maximal_heads") or []
@@ -73,6 +75,16 @@ def main() -> None:
         },
         "routing_decision":data.get("routing_decision"),
         "active_mission":active,
+        "current_continuity":{
+            "path":continuity.get("path"),
+            "title":continuity.get("title"),
+            "status":continuity.get("status_declared"),
+            "current_build_head":continuity.get("current_build_head_declared"),
+            "magnolia_authorization":continuity.get("magnolia_authorization_declared"),
+            "n0_complete":continuity.get("n0_complete_declared"),
+            "authoritative_build_state":continuity.get("authoritative_build_state_excerpt"),
+            "next_action":continuity.get("next_action_excerpt"),
+        },
         "authoritative_source_pointers":hits,
         "graphify_navigation_hints":graph_nodes,
         "private_external_route_recommended":cat.get("private_external_route_recommended"),
@@ -100,10 +112,16 @@ def main() -> None:
         "## Active mission",
         "",
         f"- Mission schema: {active.get('schema')}",
-        f"- Implementation status: {(active.get('implementation_state') or active).get('status')}",
-        f"- Implementation source: {(active.get('implementation_state') or active).get('source_path')}",
-        f"- Continuity overlay: {(active.get('continuity_overlay') or {}).get('path')}",
-        f"- Latest observed Magnolia job: {(active.get('continuity_overlay') or {}).get('magnolia_job_observed')}",
+        f"- Current continuity status: {continuity.get('status_declared')}",
+        f"- Current build head: {continuity.get('current_build_head_declared')}",
+        f"- Magnolia authorization: {continuity.get('magnolia_authorization_declared')}",
+        f"- N0 complete: {continuity.get('n0_complete_declared')}",
+        f"- Continuity overlay: {continuity.get('path')}",
+        f"- Current next action: {continuity.get('next_action_excerpt')}",
+        f"- Authoritative build state: {continuity.get('authoritative_build_state_excerpt')}",
+        f"- Stable-base implementation pointer status (historical/routing): {implementation.get('status')}",
+        f"- Stable-base implementation pointer source: {implementation.get('source_path')}",
+        f"- Latest observed Magnolia job: {continuity.get('magnolia_job_observed')}",
         f"- Continuity stale vs experiment frontier: {freshness.get('stale_relative_to_unmerged_experiment_frontier')}",
         f"- Execution rule: {active.get('execution_rule')}",
         "",
