@@ -33,7 +33,8 @@
     "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
     "src/alice_personality/n0/full_envelope_structural_types.py",
     "src/alice_personality/n0/full_envelope_training_objective_v1.py",
-    "src/alice_personality/n0/semantic_operator_objectives_v1.py"
+    "src/alice_personality/n0/semantic_operator_objectives_v1.py",
+    "src/alice_personality/n0/full_envelope_behavioral_batch_v1.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
@@ -523,6 +524,34 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_joint_training_objective_allows_zero_active_relation_margin_without_nan",
       "requirement": "UNKNOWN/DEFER or other rows with no active relational comparison cannot create NaN causal-margin losses."
+    },
+    {
+      "id": "N0-P39BA",
+      "stage": "behavioral_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_behavioral_batch_compiler_builds_primary_and_causal_variants_without_key_leak",
+      "requirement": "Materialized behavioral rows compile into primary, decisive-ablation, irrelevant-removal and exact field-permutation variants without semantic use of opaque metadata keys."
+    },
+    {
+      "id": "N0-P39BB",
+      "stage": "behavioral_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_behavioral_compiler_batches_execute_all_counterfactual_paths_and_joint_objective",
+      "requirement": "Compiled behavioral batches execute through the registered system and integrated objective on every causal path with gradient reaching the shared semantic backbone and structural judgment path."
+    },
+    {
+      "id": "N0-P39BC",
+      "stage": "behavioral_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_behavioral_compiler_support_targets_are_structurally_valid_and_unknown_rows_use_null_support",
+      "requirement": "Positive support targets are structurally valid and UNKNOWN/DEFER rows supervise explicit null support with inactive endpoint sentinels."
+    },
+    {
+      "id": "N0-P39BD",
+      "stage": "behavioral_curriculum",
+      "kind": "CI_REQUIRED",
+      "receipt": "PASS_N0_FULL_ENVELOPE_BEHAVIORAL_FABRIC_STATIC_AUDIT",
+      "requirement": "Generated public behavioral fabric passes split isolation, semantic-key leakage, support/endpoint consistency, intervention and runtime-axis audits before any gradient."
     },
     {
       "id": "N0-P40",
