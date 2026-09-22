@@ -748,8 +748,8 @@
       "id": "N0-P24C",
       "stage": "binder",
       "kind": "STATIC_REQUIRED",
-      "test": "test_binder_modifier_off_blocks_raw_reliability_and_recency_shortcuts",
-      "requirement": "When reliability or recency is semantically OFF, Binder may not directly read the raw criterion scalar as a support-selection shortcut; enabling the corresponding modifier must restore criterion sensitivity."
+      "test": "test_binder_support_remains_neutral_to_reliability_and_recency_criteria",
+      "requirement": "Binder sparse support must represent structurally/semantically relevant candidate support and remain neutral to reliability/recency arbitration so one global support set cannot violate later step-local modifier semantics."
     },
     {
       "id": "N0-P24D",
@@ -806,6 +806,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_dynamic_fusion_unavailable_view_cannot_erase_valid_mass_under_extreme_route_logits",
       "requirement": "An unavailable runtime view may never receive fusion mass or erase available-view mass when learned route logits take extreme finite values."
+    },
+    {
+      "id": "N0-P24F",
+      "stage": "binder_executor_boundary",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_binder_global_support_cannot_apply_step0_reliability_to_step1_off_edge",
+      "requirement": "When one relation is reused across steps and reliability is ON for an earlier step but OFF for a later step, Binder's global sparse support may not let the earlier criterion alter the later step's edge eligibility."
     }
   ],
   "closure_rule": {
