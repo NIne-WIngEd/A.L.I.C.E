@@ -376,11 +376,12 @@ def test_public_judgment_probe_supports_padded_candidate_subsets() -> None:
             candidate_token_mask=token_mask,
             candidate_valid_mask=valid,
         )
+    invalid_logits=out["candidate_logits"].masked_select(~valid)
     assert torch.equal(
-        out["candidate_logits"].masked_select(~valid),
+        invalid_logits,
         torch.full_like(
-            out["candidate_logits"].masked_select(~valid),
-            -1.0e4,
+            invalid_logits,
+            torch.finfo(invalid_logits.dtype).min,
         ),
     )
     loss=public_judgment_loss(
