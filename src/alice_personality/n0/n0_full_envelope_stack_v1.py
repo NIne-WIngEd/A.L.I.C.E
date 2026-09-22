@@ -257,6 +257,21 @@ class N0FullEnvelopeStackV1(nn.Module):
         return relation_mass, semantic_activity
 
     @staticmethod
+    def _supported_graph_view_activity(
+        *,
+        graph_support_activity: Tensor,
+        binder_support_available: Tensor,
+    ) -> Tensor:
+        if graph_support_activity.shape != binder_support_available.shape:
+            raise ValueError("graph/binder support activity shape drift")
+        if graph_support_activity.ndim != 1:
+            raise ValueError("graph/binder support activity must be [B]")
+        return (
+            graph_support_activity.clamp(0.0, 1.0)
+            * binder_support_available.clamp(0.0, 1.0)
+        ).clamp(0.0, 1.0)
+
+    @staticmethod
     def _internal_view_gates(
         *,
         internal_view_reliability: Tensor,
@@ -487,10 +502,10 @@ class N0FullEnvelopeStackV1(nn.Module):
             self.INTERNAL_VIEW_COUNT,
         ):
             raise ValueError("internal_view_reliability must be [B,6]")
-        supported_graph_view_activity = (
-            graph["graph_support_activity"]
-            * binder["support_available"].clamp(0.0, 1.0)
-        ).clamp(0.0, 1.0)
+        supported_graph_view_activity = self._supported_graph_view_activity(
+            graph_support_activity=graph["graph_support_activity"],
+            binder_support_available=binder["support_available"],
+        )
         internal_available, effective_internal_reliability = (
             self._internal_view_gates(
                 internal_view_reliability=internal_view_reliability,
