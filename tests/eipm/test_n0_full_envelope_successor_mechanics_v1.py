@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from dataclasses import replace
+
 import torch
 
 from alice_personality.n0.dynamic_schema_evidence_graph_v1 import (
@@ -800,6 +802,69 @@ def test_binder_allows_minus_one_type_for_padded_fields_but_not_valid_edge_endpo
         assert "without a runtime type" in str(exc)
     else:
         raise AssertionError("valid edge to padded untyped field did not fail closed")
+
+
+def test_executor_role_source_target_causally_switches_endpoint_readout() -> None:
+    """ROLE_SOURCE/TARGET must control the actual executor readout, not only labels."""
+    torch.manual_seed(912)
+    executor=FullEnvelopeQSREExecutorV1(
+        FullEnvelopeExecutorConfig(
+            field_dim=24,
+            model_dim=24,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    # Remove learned readout preference so this intervention isolates the
+    # structural role path itself.
+    with torch.no_grad():
+        for parameter in executor.readout.parameters():
+            parameter.zero_()
+
+    base=_manual_operator(TRAVERSAL_LOCAL,DIRECTION_FORWARD)
+    source_role=torch.zeros_like(base.role_distribution)
+    source_role[:,ROLE_SOURCE]=1.0
+    target_role=torch.zeros_like(base.role_distribution)
+    target_role[:,ROLE_TARGET]=1.0
+    source_operator=replace(base,role_distribution=source_role)
+    target_operator=replace(base,role_distribution=target_role)
+
+    common=dict(
+        field_state=torch.stack(
+            [
+                torch.linspace(-1.0,1.0,24),
+                torch.linspace(1.0,-1.0,24),
+            ]
+        )[None,:,:],
+        field_metadata=torch.zeros(1,2,3),
+        field_valid_mask=torch.ones(1,2,dtype=torch.bool),
+        edge_index=torch.tensor([[[0,1]]]),
+        edge_relation_index=torch.zeros(1,1,dtype=torch.long),
+        edge_valid_mask=torch.ones(1,1,dtype=torch.bool),
+        edge_support_weight=torch.ones(1,1),
+        support_available=torch.ones(1),
+        edge_reliability=torch.ones(1,1),
+        edge_recency=torch.ones(1,1),
+        edge_temporal_match=torch.ones(1,1),
+        edge_provenance_match=torch.ones(1,1),
+        relation_schema_state=torch.randn(1,1,24),
+        step_relation_schema_state=torch.randn(1,3,1,24),
+        relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
+        focus_field_weight=torch.tensor([[1.0,0.0]]),
+    )
+    with torch.no_grad():
+        source=executor(operator=source_operator,**common)
+        target=executor(operator=target_operator,**common)
+
+    assert int(source["structural_role_weight"].argmax(dim=-1).item()) == 0
+    assert int(target["structural_role_weight"].argmax(dim=-1).item()) == 1
+    assert int(source["relational_probability"].argmax(dim=-1).item()) == 0
+    assert int(target["relational_probability"].argmax(dim=-1).item()) == 1
+    assert not torch.allclose(
+        source["relational_summary"],
+        target["relational_summary"],
+    )
 
 
 def test_executor_mixed_forward_then_reverse_tracks_final_semantic_source() -> None:
