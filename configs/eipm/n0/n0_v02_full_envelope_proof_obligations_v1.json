@@ -10,7 +10,8 @@
     "tests/eipm/test_n0_full_envelope_stack_v1.py",
     "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py",
     "tests/eipm/test_n0_full_envelope_backbone_interface_v1.py",
-    "tests/eipm/test_n0_chunked_set_attention_v1.py"
+    "tests/eipm/test_n0_chunked_set_attention_v1.py",
+    "tests/eipm/test_n0_full_envelope_trainable_system_v1.py"
   ],
   "critical_source_files": [
     "src/alice_personality/n0/semantic_operator_foundation.py",
@@ -29,8 +30,7 @@
     "src/alice_personality/n0/numeric_contracts.py",
     "src/alice_personality/n0/semantic_segment_context_bridge_v1.py",
     "src/alice_personality/n0/full_envelope_semantic_input_v1.py",
-    "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
-    "tests/eipm/test_n0_full_envelope_trainable_system_v1.py"
+    "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
