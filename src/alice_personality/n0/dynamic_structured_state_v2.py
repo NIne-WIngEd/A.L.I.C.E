@@ -7,6 +7,10 @@ import torch
 from torch import Tensor, nn
 
 from alice_personality.n0.semantic_operator_foundation import DynamicSemanticSchema
+from alice_personality.n0.chunked_set_attention_v1 import (
+    ChunkedSetAttentionConfig,
+    ChunkedSetTransformerEncoder,
+)
 
 
 @dataclass(frozen=True)
@@ -17,6 +21,8 @@ class DynamicStructuredStateConfig:
     num_attention_heads: int = 10
     num_layers: int = 2
     continuous_metadata_dim: int = 3
+    query_chunk_fields: int = 64
+    key_chunk_fields: int = 128
     dropout: float = 0.0
 
     def validate(self) -> None:
@@ -27,6 +33,8 @@ class DynamicStructuredStateConfig:
             ("num_attention_heads", self.num_attention_heads),
             ("num_layers", self.num_layers),
             ("continuous_metadata_dim", self.continuous_metadata_dim),
+            ("query_chunk_fields", self.query_chunk_fields),
+            ("key_chunk_fields", self.key_chunk_fields),
         ):
             if int(value) <= 0:
                 raise ValueError(f"{name} must be positive")
@@ -68,16 +76,17 @@ class DynamicStructuredStateV2(nn.Module):
             nn.Linear(d, d),
         )
         self.input_norm = nn.LayerNorm(d)
-        layer = nn.TransformerEncoderLayer(
-            d_model=d,
-            nhead=self.config.num_attention_heads,
-            dim_feedforward=4 * d,
-            dropout=self.config.dropout,
-            activation="gelu",
-            batch_first=True,
-            norm_first=True,
+        self.encoder = ChunkedSetTransformerEncoder(
+            ChunkedSetAttentionConfig(
+                model_dim=d,
+                num_attention_heads=self.config.num_attention_heads,
+                query_chunk_fields=self.config.query_chunk_fields,
+                key_chunk_fields=self.config.key_chunk_fields,
+                feedforward_multiplier=4,
+                dropout=self.config.dropout,
+            ),
+            num_layers=self.config.num_layers,
         )
-        self.encoder = nn.TransformerEncoder(layer, num_layers=self.config.num_layers)
         self.pool_query = nn.Parameter(torch.zeros(d))
         self.pool_score = nn.Linear(d, d, bias=False)
         self.output_norm = nn.LayerNorm(d)
@@ -215,7 +224,7 @@ class DynamicStructuredStateV2(nn.Module):
 
         encoded = self.encoder(
             value,
-            src_key_padding_mask=~field_valid_mask,
+            field_valid_mask,
         )
         encoded = encoded * field_valid_mask.unsqueeze(-1).to(encoded.dtype)
 
@@ -250,4 +259,7 @@ class DynamicStructuredStateV2(nn.Module):
             "field_count_ceiling": None,
             "runtime_descriptor_semantics": True,
             "permutation_safe_field_encoder": True,
+            "full_field_pair_matrix_materialized": False,
+            "exact_dense_set_attention_semantics": True,
+            "field_attention_chunk_is_operating_point": True,
         }
