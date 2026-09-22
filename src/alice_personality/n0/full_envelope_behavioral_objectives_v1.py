@@ -286,6 +286,7 @@ def source_view_recoverability_loss(
     latent_slots: Tensor,
     source_views: Tensor,
     view_available: Tensor,
+    recoverable_view_mask: Tensor | None = None,
 ) -> Tensor:
     if latent_slots.ndim != 3 or source_views.ndim != 3:
         raise ValueError("latent/source views must be rank 3")
@@ -295,11 +296,21 @@ def source_view_recoverability_loss(
         raise ValueError("latent/source width drift")
     if view_available.shape != source_views.shape[:2]:
         raise ValueError("view_available shape drift")
+    if view_available.dtype != torch.bool:
+        raise ValueError("view_available must be bool")
+    if recoverable_view_mask is None:
+        recoverable_view_mask = view_available
+    if (
+        recoverable_view_mask.shape != view_available.shape
+        or recoverable_view_mask.dtype != torch.bool
+    ):
+        raise ValueError("recoverable_view_mask must be bool [B,V]")
+    recoverable_view_mask = recoverable_view_mask & view_available
     slots = F.normalize(latent_slots.float(), dim=-1)
     views = F.normalize(source_views.float(), dim=-1)
     cosine = torch.einsum("bsd,bvd->bsv", slots, views)
     best = cosine.max(dim=1).values
-    selected = (1.0 - best).masked_select(view_available)
+    selected = (1.0 - best).masked_select(recoverable_view_mask)
     if selected.numel() == 0:
         return cosine.sum() * 0.0
     return selected.mean()
@@ -337,6 +348,7 @@ def full_envelope_behavioral_objective(
     latent_slots: Tensor,
     source_views: Tensor,
     view_available: Tensor,
+    recoverable_view_mask: Tensor | None = None,
     pooled_state_permuted: Tensor,
     pooled_state_original: Tensor,
     weights: FullEnvelopeBehavioralWeights | None = None,
@@ -377,6 +389,7 @@ def full_envelope_behavioral_objective(
         latent_slots,
         source_views,
         view_available,
+        recoverable_view_mask,
     )
     permutation = permutation_consistency_loss(
         pooled_state_original,
