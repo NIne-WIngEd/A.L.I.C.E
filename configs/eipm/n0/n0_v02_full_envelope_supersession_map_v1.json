@@ -140,6 +140,81 @@
       "historical_result_rewritten": false,
       "future_closure_authority": false,
       "role": "historical regression evidence only"
+    },
+    "tokenizer_v021": {
+      "historical": "alice-n0-semantic-v0.2 tokenizer v0.2.1 / byte-fallback BPE 48k",
+      "successor_role": "shared lexical frontend initialization subject to fragmentation and normalization qualification",
+      "weight_reuse": "ALLOWED_AS_FRONTEND_NOT_SEMANTIC_AUTHORITY",
+      "fixed_vocabulary_is_semantic_ontology": false,
+      "byte_fallback_required": true,
+      "oov_semantic_failure_allowed": false,
+      "runtime_fragmentation_audit_required": true,
+      "retraining_if_fragmentation_failure_authorized_by_evidence": true,
+      "permanent_vocabulary_size_ceiling": false
+    },
+    "public_corpus_v021": {
+      "historical": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
+      "successor_role": "broad public semantic replay source with exact provenance/license governance",
+      "weight_reuse": "NOT_APPLICABLE_DATA_SOURCE",
+      "preserved_strengths": [
+        "exact_revision",
+        "row_level_license",
+        "row_level_provenance",
+        "source_balance",
+        "private_identity_exclusion"
+      ],
+      "full_n0_authority": false,
+      "natural_relation_lane_required": true,
+      "operator_curriculum_supplement_required": true
+    },
+    "governed_teacher_bank_v02": {
+      "historical": "1020-row / 51-competency governed public teacher bank and heldout teacher-dev",
+      "successor_role": "broad judgment regression replay only",
+      "weight_reuse": "NOT_APPLICABLE_DATA_SOURCE",
+      "full_capability_authority": false,
+      "fixed_competency_taxonomy_is_product_ceiling": false,
+      "final_closure_authority": false,
+      "reason": "historical teacher suite was useful but too narrow to define full-envelope N0 capability"
+    },
+    "semantic_auxiliary_heads_v02": {
+      "historical": "v02 preference_scorer + semantic_projection + rationale_projection",
+      "successor_role": "optional regression/replay heads during semantic co-adaptation",
+      "weight_reuse": "INITIALIZATION_ALLOWED_REGRESSION_ONLY",
+      "runtime_semantic_authority": false,
+      "final_operator_authority": false,
+      "final_judgment_authority": false
+    },
+    "fixed_readiness_and_novel_cross_suites_v02": {
+      "historical": "fixed readiness + voice readiness + novel cross challenge + targeted repair DEV",
+      "successor_role": "historical regression slices only",
+      "weight_reuse": "NOT_APPLICABLE_EVALUATION",
+      "future_closure_authority": false,
+      "threshold_tuning_authority": false,
+      "reason": "historically useful but small and repeatedly observed; cannot define unseen full-envelope closure"
+    },
+    "downstream_causal_arbitration": {
+      "historical": "downstream causal arbitration calibration/finalization artifacts",
+      "successor_role": "preserved evaluation methodology",
+      "weight_reuse": "NOT_APPLICABLE_METHOD",
+      "preserve_mechanics": [
+        "candidate_blind_calibration",
+        "one_arm_change",
+        "hash_bound_full_stack",
+        "deterministic_finalization"
+      ],
+      "old_model_selection_authority": false,
+      "must_bind_new_successor_hashes": true
+    },
+    "query_edge_repair_chain": {
+      "historical": "query-edge bridge/router/multilayer repair experiments",
+      "successor_role": "negative evidence and causal-localization archive only",
+      "weight_reuse": "FORBIDDEN_SUPERSEDED_REPAIR_CHAIN",
+      "runtime_dependency_allowed": false,
+      "preserve_mechanics": [
+        "failure_localization_evidence",
+        "intermediate_layer_signal_evidence",
+        "endpoint_causal_lessons"
+      ]
     }
   },
   "new_components": {
