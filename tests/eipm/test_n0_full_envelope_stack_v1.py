@@ -243,6 +243,7 @@ def test_stack_semantic_activity_uses_program_start_not_expected_step_count() ->
         ),
         relation_step_mass=torch.tensor([[0.2,0.2,0.0]]),
         unknown_probability=torch.zeros(1,3),
+        truncation_probability=torch.zeros(1),
         applicability=torch.ones(1),
         control_distribution=torch.tensor([[0.0,1.0,0.0]]),
     )
@@ -255,6 +256,23 @@ def test_stack_semantic_activity_uses_program_start_not_expected_step_count() ->
         torch.tensor([[0.5,0.5]]),
         atol=1e-6,
     )
+
+
+
+def test_truncated_program_cannot_activate_global_relational_views() -> None:
+    """Residual CONTINUE survival is incomplete execution, not completion."""
+    operator=SimpleNamespace(
+        relation_distribution=torch.tensor(
+            [[[1.0,0.0],[0.0,1.0],[1.0,0.0]]]
+        ),
+        relation_step_mass=torch.tensor([[1.0,1.0,1.0]]),
+        unknown_probability=torch.zeros(1,3),
+        truncation_probability=torch.ones(1),
+        applicability=torch.ones(1),
+        control_distribution=torch.tensor([[0.0,1.0,0.0]]),
+    )
+    _,activity=N0FullEnvelopeStackV1._relation_program_summary(operator)
+    assert torch.equal(activity,torch.zeros_like(activity))
 
 
 def test_full_stack_disables_unavailable_graph_and_executor_views() -> None:
