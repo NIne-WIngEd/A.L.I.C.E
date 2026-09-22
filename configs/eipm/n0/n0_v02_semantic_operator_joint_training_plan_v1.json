@@ -32,7 +32,9 @@
     "long_context_segment_bridge": "src/alice_personality/n0/semantic_segment_context_bridge_v1.py",
     "long_context_claim": "native windows are token-lossless operating units; global cross-window semantics require the trainable segment bridge and no dense-unbounded-token-attention equivalence is claimed",
     "fusion_to_latent_route_activity": true,
-    "latent_recoverability_uses_labeled_relevance_not_availability": true
+    "latent_recoverability_uses_labeled_relevance_not_availability": true,
+    "step_conditioned_relation_schema_execution": true,
+    "program_averaged_relation_state_role": "whole-program support geometry only; not executable per-step edge meaning"
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -163,7 +165,8 @@
       "mixed_step_modifier_composition",
       "runtime_relation_symmetry_causal_pairs",
       "program_truncation_fail_closed",
-      "cross_window_semantic_causal_transfer"
+      "cross_window_semantic_causal_transfer",
+      "step_relation_schema_causal_sensitivity"
     ],
     "J2": [
       "J1_gates_retained",
@@ -188,7 +191,8 @@
       "per_example_candidate_subset_batching",
       "distant_decisive_evidence_across_native_windows",
       "fusion_route_gradient_reaches_final_judgment",
-      "irrelevant_available_view_not_forced_recoverable"
+      "irrelevant_available_view_not_forced_recoverable",
+      "ordered_relation_semantics_remain_step_conditioned_through_executor"
     ]
   },
   "scaling": {
