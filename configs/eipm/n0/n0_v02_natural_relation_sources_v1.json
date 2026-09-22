@@ -29,14 +29,16 @@
       "relation_descriptions_available": true,
       "relation_family_split": {
         "train_source": "train_wiki",
-        "heldout_source": "val_wiki",
-        "deterministic_partition_rule": "alice-n0-fewrel-final-family-split-v1",
-        "expected_train_relation_count": 64,
+        "dev_source": "train_wiki_relation_family_holdout",
+        "final_source": "val_wiki_all_relation_families",
+        "deterministic_dev_partition_rule": "alice-n0-fewrel-train-dev-family-split-v1",
+        "expected_train_relation_count": 56,
         "expected_dev_relation_count": 8,
-        "expected_final_relation_count": 8,
+        "expected_final_relation_count": 16,
         "pairwise_relation_overlap_expected": 0,
         "final_relation_descriptions_present_in_train_dev_bank": false,
-        "final_rows_separate_artifact": true
+        "all_official_validation_relations_reserved_for_final": true,
+        "final_family_subset_selected_after_observation": false
       },
       "roles": [
         "natural_relation_semantic_matching",
@@ -44,7 +46,7 @@
         "entity_pair_grounding",
         "candidate_cardinality_scaling",
         "lexical_and_entity_diversity",
-        "sealed_natural_final_relation_family_validation"
+        "official_validation_relation_family_final_benchmark"
       ],
       "private_identity_data": false,
       "training_eligible_after_materialization_audit": true,
@@ -77,6 +79,8 @@
     "private_identity_gradient": false,
     "final_rows_training_forbidden": true,
     "final_rows_model_selection_forbidden": true,
-    "final_relation_descriptions_excluded_from_train_dev_bank": true
+    "final_relation_descriptions_excluded_from_train_dev_bank": true,
+    "final_family_subset_tuning_forbidden": true,
+    "public_natural_final_benchmark_is_not_full_n0_final_closure": true
   }
 }
