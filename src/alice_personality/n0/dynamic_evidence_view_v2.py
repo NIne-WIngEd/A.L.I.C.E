@@ -11,6 +11,7 @@ from alice_personality.n0.chunked_late_interaction import (
     chunked_batched_bidirectional_late_max,
 )
 from alice_personality.n0.numeric_contracts import (
+    exact_masked_softmax,
     require_finite,
     require_unit_interval,
 )
@@ -264,14 +265,14 @@ class DynamicEvidenceViewV2(nn.Module):
             torch.cat([evidence_field_state, q, rel, op, selector_scalar], dim=-1)
         ).squeeze(-1)
         selector_logit = selector_logit + 1.5 * late
-        selector_logit = selector_logit.masked_fill(~field_valid_mask, -1.0e4)
 
-        # Deliberately soft. Exact zero support remains Binder's responsibility.
-        field_weight = torch.softmax(selector_logit, dim=-1)
-        field_weight = field_weight * field_valid_mask.to(field_weight.dtype)
-        field_weight = field_weight / field_weight.sum(
-            dim=-1, keepdim=True
-        ).clamp_min(1.0e-12)
+        # Deliberately soft over valid fields. Exact zero support remains
+        # Binder's responsibility, while padded fields are structurally absent.
+        field_weight = exact_masked_softmax(
+            selector_logit,
+            field_valid_mask,
+            dim=-1,
+        )
 
         weighted = torch.einsum(
             "bf,bfd->bd",
