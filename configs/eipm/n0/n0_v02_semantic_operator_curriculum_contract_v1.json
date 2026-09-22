@@ -168,8 +168,12 @@
         "decisive_view",
         "cross_view_conflict",
         "reliability_reversal",
-        "source_anchor_counterfactual"
-      ]
+        "source_anchor_counterfactual",
+        "relevant_vs_merely_available_view",
+        "fusion_route_flip_with_constant_reliability"
+      ],
+      "view_relevance_labels_required": true,
+      "recoverability_supervision": "only behaviorally relevant or explicitly information-preserving views; availability alone is not a recoverability target"
     },
     {
       "name": "long_context_sparse_relevance",
@@ -304,7 +308,8 @@
     "random_candidate_permutation_consistency_required": true,
     "hard_negative_minimum_per_positive": true,
     "counterfactual_pairs_required": true,
-    "no_single_shortcut_baseline_may_clear_operator_gate": true
+    "no_single_shortcut_baseline_may_clear_operator_gate": true,
+    "view_availability_may_not_be_used_as_relevance_label": true
   },
   "natural_synthetic_policy": {
     "natural_public_language_required": true,
