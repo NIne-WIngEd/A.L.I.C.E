@@ -13,6 +13,7 @@ from alice_personality.n0.full_envelope_structural_types import (
     MOD_TEMPORAL_CONSTRAINT,
     ROLE_TARGET,
     TRAVERSAL_LOCAL,
+    TRAVERSAL_PATH,
     FullEnvelopeOperatorState,
 )
 from alice_personality.n0.qsre_full_envelope_binder_v1 import (
@@ -158,6 +159,97 @@ def test_binder_modifier_off_blocks_raw_reliability_and_recency_shortcuts() -> N
             atol=1.0e-7,
             rtol=0.0,
         )
+
+
+def _mixed_step_same_relation_operator() -> FullEnvelopeOperatorState:
+    """One relation is reused across two steps with reliability ON then OFF."""
+    modifier=torch.zeros(1,4)
+    modifier[:,MOD_RELIABILITY]=1.0
+    step_modifier=torch.zeros(1,3,4)
+    step_modifier[:,0,MOD_RELIABILITY]=1.0
+
+    role=torch.zeros(1,4)
+    role[:,ROLE_TARGET]=1.0
+    traversal=torch.zeros(1,3)
+    traversal[:,TRAVERSAL_PATH]=1.0
+    direction=torch.zeros(1,3)
+    direction[:,DIRECTION_FORWARD]=1.0
+    control=torch.zeros(1,3)
+    control[:,CONTROL_RELATIONAL]=1.0
+
+    return FullEnvelopeOperatorState(
+        relation_distribution=torch.ones(1,3,1),
+        relation_step_mass=torch.tensor([[1.0,1.0,0.0]]),
+        stop_probability=torch.tensor([[0.0,0.0,1.0]]),
+        unknown_probability=torch.zeros(1,3),
+        truncation_probability=torch.zeros(1),
+        role_distribution=role,
+        traversal_distribution=traversal,
+        direction_distribution=direction,
+        step_direction_distribution=direction[:,None,:].expand(1,3,3).clone(),
+        modifier_weight=modifier,
+        step_modifier_weight=step_modifier,
+        applicability=torch.ones(1),
+        control_distribution=control,
+        continuous_state=torch.zeros(1,DIM),
+        uncertainty=torch.zeros(1),
+    )
+
+
+def test_binder_global_support_cannot_apply_step0_reliability_to_step1_off_edge() -> None:
+    """A global Binder support set is reused by every Executor step.
+
+    When the same relation is executed twice and reliability is ON only for the
+    first step, changing reliability on the second-step edge must not alter
+    Binder support for that edge. Otherwise the global sparse boundary can
+    prune evidence before the step-local Executor gets a chance to honor OFF.
+    """
+    torch.manual_seed(603)
+    binder=FullEnvelopeQSREBinderV1(
+        FullEnvelopeBinderConfig(
+            semantic_dim=DIM,
+            model_dim=DIM,
+            num_hidden_states=3,
+            edge_metadata_dim=4,
+        )
+    ).eval()
+    # Isolate the direct reliability criterion in Binder support scoring.
+    binder.edge_score=_FeatureProbe(5*DIM+1)
+
+    common={
+        "query_hidden_states":torch.randn(1,3,5,DIM),
+        "query_token_mask":torch.ones(1,5,dtype=torch.bool),
+        "field_hidden_states":torch.randn(1,3,3,4,DIM),
+        "field_token_mask":torch.ones(1,3,4,dtype=torch.bool),
+        "field_state":torch.randn(1,3,DIM),
+        "field_valid_mask":torch.ones(1,3,dtype=torch.bool),
+        "field_type_index":torch.zeros(1,3,dtype=torch.long),
+        "edge_index":torch.tensor([[[0,1],[1,2]]]),
+        "edge_relation_index":torch.zeros(1,2,dtype=torch.long),
+        "edge_valid_mask":torch.ones(1,2,dtype=torch.bool),
+        "edge_recency":torch.full((1,2),0.5),
+        "relation_domain_type_mask":torch.ones(1,1,1,dtype=torch.bool),
+        "relation_range_type_mask":torch.ones(1,1,1,dtype=torch.bool),
+        "relation_symmetric":torch.zeros(1,1,dtype=torch.bool),
+        "relation_schema_state":torch.randn(1,1,DIM),
+        "operator":_mixed_step_same_relation_operator(),
+    }
+    with torch.no_grad():
+        low=binder(
+            edge_reliability=torch.tensor([[0.9,0.1]]),
+            **common,
+        )
+        high=binder(
+            edge_reliability=torch.tensor([[0.9,0.9]]),
+            **common,
+        )
+
+    assert torch.allclose(
+        low["support_logits"][:,1],
+        high["support_logits"][:,1],
+        atol=1.0e-7,
+        rtol=0.0,
+    )
 
 
 def _executor_common() -> dict[str, torch.Tensor]:
