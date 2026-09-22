@@ -65,6 +65,13 @@
       "requirement": "Variable runtime schema subsets work in one batch."
     },
     {
+      "id": "N0-P04F",
+      "stage": "semantic_operator",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_per_example_factor_candidate_masks_enable_variable_runtime_subsets",
+      "requirement": "Variable runtime factor-schema subsets work per example in one batch; padded factor candidates cannot become hidden semantic authority."
+    },
+    {
       "id": "N0-P05",
       "stage": "semantic_operator",
       "kind": "STATIC_REQUIRED",
