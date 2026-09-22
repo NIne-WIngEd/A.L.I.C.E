@@ -963,15 +963,47 @@ class SchemaConditionedSemanticOperator(nn.Module):
             model_dim=self.config.model_dim,
             query_tokens=query_tokens,
         )
+
+        relation_query_evidence_tensor = torch.stack(
+            relation_query_evidence,
+            dim=1,
+        )
+        relation_schema_evidence_tensor = torch.stack(
+            relation_schema_evidence,
+            dim=1,
+        )
+        relation_active = relation_candidate_mask[
+            :, None, :, None
+        ].to(relation_query_evidence_tensor.dtype)
+        relation_query_evidence_tensor = (
+            relation_query_evidence_tensor * relation_active
+        )
+        relation_schema_evidence_tensor = (
+            relation_schema_evidence_tensor * relation_active
+        )
+
+        masked_factor_schema_evidence = {
+            name: value
+            * resolved_factor_masks[name][:, :, None].to(value.dtype)
+            for name, value in factor_schema_evidence.items()
+        }
+        masked_step_factor_schema_evidence = {
+            name: torch.stack(values, dim=1)
+            * resolved_factor_masks[name][:, None, :, None].to(
+                values[0].dtype
+            )
+            for name, values in step_factor_schema_evidence_lists.items()
+        }
+
         return {
             "operator": operator,
             "relation_logits": torch.stack(relation_scores, dim=1),
             "relation_layer_weights": torch.stack(layer_weights, dim=1),
             "relation_schema_states": torch.stack(relation_schema_states, dim=1),
-            "relation_query_evidence": torch.stack(relation_query_evidence, dim=1),
-            "relation_schema_evidence": torch.stack(relation_schema_evidence, dim=1),
+            "relation_query_evidence": relation_query_evidence_tensor,
+            "relation_schema_evidence": relation_schema_evidence_tensor,
             "factor_logits": factor_scores,
-            "factor_schema_evidence": factor_schema_evidence,
+            "factor_schema_evidence": masked_factor_schema_evidence,
             "factor_layer_weights": factor_layer_weights,
             "relation_candidate_mask": relation_candidate_mask,
             "factor_candidate_masks": resolved_factor_masks,
@@ -983,10 +1015,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
                 name: torch.stack(values, dim=1)
                 for name, values in step_factor_layer_weights.items()
             },
-            "step_factor_schema_evidence": {
-                name: torch.stack(values, dim=1)
-                for name, values in step_factor_schema_evidence_lists.items()
-            },
+            "step_factor_schema_evidence": masked_step_factor_schema_evidence,
             "factor_context_state": factor_context_state,
             "factor_bank_weight": factor_bank_weight,
             "step_factor_context_states": torch.stack(
@@ -1040,6 +1069,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "relation_schema_token_evidence_exposed": True,
             "factor_schema_token_evidence_exposed": True,
             "step_factor_schema_token_evidence_exposed": True,
+            "inactive_candidate_token_evidence_zeroed": True,
             "step_factor_uncertainty_supervised_in_state": True,
             "token_interaction_chunk_is_operating_point": True,
             "query_token_count_ceiling": None,
