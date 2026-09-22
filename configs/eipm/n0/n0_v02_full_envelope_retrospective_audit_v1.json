@@ -214,13 +214,97 @@
         "relation_family_diversity",
         "cardinality_extrapolation"
       ]
+    },
+    "tokenizer_v021": {
+      "classification": [
+        "HISTORICALLY_VALID_INSUFFICIENT_VALIDATION",
+        "EXPERIMENTAL_OPERATING_POINT_ONLY"
+      ],
+      "preserve": [
+        "byte_fallback",
+        "exact_tokenizer_receipt",
+        "public_only_training",
+        "special_token_contract"
+      ],
+      "reopen": [
+        "heldout_fragmentation_stress",
+        "unicode_normalization_stress",
+        "multilingual_and_symbolic_stress",
+        "vocab_size_as_non_ceiling"
+      ],
+      "historical_ratification_valid": true
+    },
+    "public_corpus_v021": {
+      "classification": [
+        "PRESERVE_STRONG_ARCHITECTURE",
+        "HISTORICALLY_VALID_INSUFFICIENT_VALIDATION"
+      ],
+      "preserve": [
+        "exact_revision",
+        "row_license",
+        "row_provenance",
+        "source_balance",
+        "private_identity_exclusion"
+      ],
+      "reopen": [
+        "operator_specific_natural_relation_coverage",
+        "full_workload_coverage",
+        "materialized_hash_reverification_before_joint_training"
+      ]
+    },
+    "governed_teacher_bank_v02": {
+      "classification": [
+        "HISTORICALLY_VALID_INSUFFICIENT_VALIDATION"
+      ],
+      "preserve": [
+        "governed_public_rows",
+        "rationale_signal",
+        "heldout_teacher_dev_regression"
+      ],
+      "reopen": [
+        "fixed_51_competency_taxonomy_as_full_authority",
+        "1020_rows_as_full_capability_coverage",
+        "repeated_suite_as_final_selection_authority"
+      ]
+    },
+    "semantic_auxiliary_heads_v02": {
+      "classification": [
+        "HISTORICALLY_VALID_INSUFFICIENT_VALIDATION"
+      ],
+      "preserve": [
+        "preference_replay",
+        "principle_rationale_regression",
+        "semantic_contrastive_regression"
+      ],
+      "reopen": [
+        "preference_head_as_relation_authority",
+        "rationale_projection_as_runtime_schema_authority",
+        "frozen_auxiliary_heads_as_final_judgment_authority"
+      ]
+    },
+    "fixed_readiness_suites_v02": {
+      "classification": [
+        "HISTORICALLY_VALID_INSUFFICIENT_VALIDATION"
+      ],
+      "preserve": [
+        "historical_regression_signal",
+        "known_failure_reproduction"
+      ],
+      "reopen": [
+        "small_fixed_suite_as_closure_authority",
+        "observed_novel_cross_suite_as_unseen_final",
+        "threshold_selection_after_repeated_exposure"
+      ]
     }
   },
   "cross_cutting_findings": {
     "self_referential_validation_chain": true,
     "temporary_freezes_became_architecture_assumptions": true,
     "local_pass_never_implies_full_envelope_sufficiency": true,
-    "checkpoint_vocabulary_migratable_does_not_equal_runtime_open_semantics": true
+    "checkpoint_vocabulary_migratable_does_not_equal_runtime_open_semantics": true,
+    "tokenizer_receipt_does_not_prove_full_semantic_efficiency": true,
+    "public_corpus_governance_does_not_equal_full_operator_coverage": true,
+    "teacher_bank_regression_does_not_equal_full_envelope_authority": true
   },
   "scale_policy": {
     "hard_parameter_ceiling": null,
