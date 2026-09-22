@@ -143,6 +143,14 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             valid_relation = edge_relation_index[edge_valid_mask]
             if int(valid_relation.min()) < 0 or int(valid_relation.max()) >= relations:
                 raise ValueError("edge relation index outside runtime schema")
+            source_index_valid = edge_index[...,0].clamp(min=0,max=fields-1)
+            target_index_valid = edge_index[...,1].clamp(min=0,max=fields-1)
+            endpoint_field_valid = (
+                field_valid_mask.gather(1,source_index_valid)
+                & field_valid_mask.gather(1,target_index_valid)
+            )
+            if bool((edge_valid_mask & ~endpoint_field_valid).any()):
+                raise ValueError("valid edge references padded invalid field")
 
         node = self.field_projection(field_state.float())
         node = node * field_valid_mask.unsqueeze(-1).to(node.dtype)
