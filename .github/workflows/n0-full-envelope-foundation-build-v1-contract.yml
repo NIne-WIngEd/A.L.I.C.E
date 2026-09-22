@@ -35,6 +35,9 @@ on:
       - "tests/eipm/test_n0_full_envelope_fabric_v1.py"
       - "tests/eipm/test_n0_full_envelope_stack_v1.py"
       - "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py"
+      - "scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py"
+      - "scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py"
+      - "configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json"
       - "scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py"
@@ -111,6 +114,8 @@ jobs:
             scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py \
+            scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py \
+            scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py \
             scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py \
@@ -120,6 +125,7 @@ jobs:
           for f in \
             configs/eipm/n0/n0_v02_natural_relation_sources_v1.json \
             configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json \
+            configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
@@ -132,17 +138,20 @@ jobs:
             python -m json.tool "$f" >/dev/null
           done
 
-      - name: Run complete successor mechanics suite
+      - name: Run every proof-matrix static mechanics test
         run: |
           set -euo pipefail
-          pytest -q \
-            tests/eipm/test_n0_semantic_operator_foundation_v1.py \
-            tests/eipm/test_n0_full_envelope_backbone_interface_v1.py \
-            tests/eipm/test_n0_chunked_set_attention_v1.py \
-            tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py \
-            tests/eipm/test_n0_full_envelope_fabric_v1.py \
-            tests/eipm/test_n0_full_envelope_stack_v1.py \
-            tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py
+          mapfile -t TESTS < <(
+            python - <<'PY'
+          import json
+          p=json.load(open("configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json"))
+          for path in p["static_test_files"]:
+              print(path)
+          PY
+          )
+          test "${#TESTS[@]}" -ge 1
+          printf 'proof-matrix-test=%s\n' "${TESTS[@]}"
+          pytest -q "${TESTS[@]}"
 
       - name: Materialize and audit synthetic intervention supplement
         run: |
@@ -174,6 +183,39 @@ jobs:
           assert r["factor_schema_evidence_spans_required"] is True
           assert r["step_factor_schema_evidence_spans_required"] is True
           print("PASS_N0_SYNTHETIC_INTERVENTION_STATIC_AUDIT")
+          PY
+
+      - name: Materialize and audit full-envelope behavioral fabric
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/n0-behavioral
+          mkdir -p /tmp/n0-behavioral
+          python scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py \
+            --output /tmp/n0-behavioral/rows.jsonl \
+            --manifest /tmp/n0-behavioral/manifest.json \
+            --train-rows 280 \
+            --dev-rows 112
+          python scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py \
+            --rows /tmp/n0-behavioral/rows.jsonl \
+            --manifest /tmp/n0-behavioral/manifest.json \
+            --contract configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json \
+            --output /tmp/n0-behavioral/audit.json
+          python - <<'PY'
+          import json
+          r=json.load(open("/tmp/n0-behavioral/audit.json"))
+          assert r["status"]=="PASS_N0_FULL_ENVELOPE_BEHAVIORAL_CURRICULUM_AUDIT_V1"
+          assert r["train_dev_entity_overlap"]==[]
+          assert r["train_dev_template_overlap"]==[]
+          assert set(r["reasoning_step_points"]) >= {0,1,2}
+          assert len(r["relation_count_points"]) >= 4
+          assert len(r["field_count_points"]) >= 4
+          assert len(r["edge_count_points"]) >= 4
+          assert r["private_identity_data"] is False
+          assert r["gradient"] is False
+          assert r["optimizer"] is False
+          assert r["gpu_training_authorized"] is False
+          assert r["n0_complete"] is False
+          print("PASS_N0_FULL_ENVELOPE_BEHAVIORAL_FABRIC_STATIC_AUDIT")
           PY
 
       - name: Materialize and audit exact FewRel natural relation lane
