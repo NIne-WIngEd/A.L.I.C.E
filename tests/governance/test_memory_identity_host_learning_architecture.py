@@ -189,3 +189,59 @@ def test_docs_remove_obsolete_opaque_only_boundary() -> None:
     assert "**Rayan** is A.L.I.C.E.'s owner/host." in readme
     assert "represented publicly only through opaque directives" not in readme
     assert "Their meanings are not stored in this repository." not in readme
+
+
+def test_personal_development_is_required_and_subject_separated() -> None:
+    policy = _json("policies/memory_identity_host_learning_policy.json")
+    development = policy["personal_development"]
+
+    assert development["status"] == "required_destination_capability"
+    assert development["user_or_host_model_required"] is True
+    assert development["assistant_self_model_required"] is True
+    assert development["relationship_state_required"] is True
+    assert development["neutral_assistant_self_subject_type"] == "assistant_self"
+    assert development["alice_compatibility_self_subject_type"] == "alice_self"
+    assert development["alice_subject_separation"] == [
+        "Rayan_owner_host",
+        "Mehejabin_Elaina_source_person",
+        "ALICE_current_self",
+    ]
+    assert development["fable_subject_separation"] == [
+        "user_host",
+        "fable_current_self",
+    ]
+    assert development["user_declared_ideal_self_is_authoritative"] is False
+    assert development["user_statements_are_evidence_not_identity_authority"] is True
+
+
+def test_personal_judgment_requires_a_causal_learning_loop_not_prompt_claims() -> None:
+    policy = _json("policies/memory_identity_host_learning_policy.json")
+    development = policy["personal_development"]
+
+    assert development["native_judgment_integration_required"] is True
+    assert development["outcome_based_revision_required"] is True
+    assert development["behavioral_intervention_evidence_required"] is True
+    assert development["static_schema_or_storage_tests_sufficient"] is False
+    assert development["fixed_prompt_is_sufficient_evidence_of_learned_personal_judgment"] is False
+    assert development["downstream_foundation_model_behavior_is_sufficient_evidence_of_personal_judgment"] is False
+    assert development["user_approval_or_disapproval_is_ground_truth_for_judgment"] is False
+    assert development["ordinary_personal_development_may_bypass_memory_authority"] is False
+    assert development["unrestricted_self_modification_authorized"] is False
+
+    assert development["required_causal_flow"] == [
+        "authorized_experience_or_observation",
+        "subject_bound_user_source_relationship_and_assistant_self_state",
+        "native_identity_or_personal_judgment",
+        "action_or_response",
+        "observed_outcome_and_later_evidence",
+        "governed_state_revision",
+        "changed_future_judgment_when_relevant",
+    ]
+
+
+def test_friday_requires_continuing_user_and_assistant_development() -> None:
+    friday = _json("policies/memory_identity_host_learning_policy.json")["friday"]
+
+    assert friday["continuing_user_and_assistant_development_required"] is True
+    assert friday["user_must_declare_ideal_self"] is False
+    assert friday["assistant_self_must_remain_distinct_from_user_model"] is True
