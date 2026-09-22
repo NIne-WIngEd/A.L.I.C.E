@@ -1462,7 +1462,7 @@ def test_empty_evidence_graph_produces_zero_graph_summaries() -> None:
     assert graph.parameter_report()["zero_edge_graph_summary_is_zero"] is True
 
 
-def test_executor_confidence_uses_program_start_probability_not_expected_step_count() -> None:
+def test_executor_confidence_uses_exact_completed_program_mass_not_expected_step_count() -> None:
     torch.manual_seed(221)
     batch,steps,relations,dim=1,3,1,24
     role=torch.zeros(batch,4)
@@ -1526,9 +1526,11 @@ def test_executor_confidence_uses_program_start_probability_not_expected_step_co
         atol=1e-6,
         rtol=1e-6,
     )
-    assert executor.parameter_report()[
+    report=executor.parameter_report()
+    assert report[
         "execution_confidence_uses_program_start_probability_not_expected_step_count"
-    ] is True
+    ] is False
+    assert report["execution_confidence_uses_exact_joint_completed_program_mass"] is True
 
 
 def test_structured_state_rejects_out_of_range_confidence_metadata() -> None:

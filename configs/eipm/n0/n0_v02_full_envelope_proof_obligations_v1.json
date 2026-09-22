@@ -252,8 +252,8 @@
       "id": "N0-P22C",
       "stage": "executor",
       "kind": "STATIC_REQUIRED",
-      "test": "test_executor_confidence_uses_program_start_probability_not_expected_step_count",
-      "requirement": "Multi-hop path length cannot inflate relational execution confidence by summing recurrent survival mass."
+      "test": "test_executor_confidence_uses_exact_completed_program_mass_not_expected_step_count",
+      "requirement": "Multi-hop path length cannot inflate relational execution confidence by summing recurrent survival mass; confidence is governed by exact joint completed relational-program probability."
     },
     {
       "id": "N0-P23",
