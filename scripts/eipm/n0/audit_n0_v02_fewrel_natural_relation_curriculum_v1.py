@@ -10,8 +10,8 @@ from typing import Any
 
 ROW_SCHEMA = "alice.eipm.n0.fewrel-natural-relation-row.v1"
 BANK_SCHEMA = "alice.eipm.n0.fewrel-runtime-relation-bank.v1"
-MANIFEST_SCHEMA = "alice.eipm.n0.fewrel-natural-relation-manifest.v2"
-AUDIT_SCHEMA = "alice.eipm.n0.fewrel-natural-relation-audit.v2"
+MANIFEST_SCHEMA = "alice.eipm.n0.fewrel-natural-relation-manifest.v3"
+AUDIT_SCHEMA = "alice.eipm.n0.fewrel-natural-relation-audit.v3"
 
 
 def sha256(path: Path) -> str:
@@ -112,13 +112,13 @@ def main() -> None:
         if overlap:
             errors.append(f"{name} relation-family leakage: {overlap}")
 
-    if len(train_relations) != 64:
-        errors.append(f"TRAIN relation count {len(train_relations)} != 64")
+    if len(train_relations) != 56:
+        errors.append(f"TRAIN relation count {len(train_relations)} != 56")
     if len(dev_relations) != 8:
         errors.append(f"DEV heldout relation count {len(dev_relations)} != 8")
-    if len(final_relations) != 8:
+    if len(final_relations) != 16:
         errors.append(
-            f"FINAL heldout relation count {len(final_relations)} != 8"
+            f"FINAL heldout relation count {len(final_relations)} != 16"
         )
 
     train_dev_bank_relations = set(
@@ -253,6 +253,18 @@ def main() -> None:
     if not (final_counts - (train_counts | dev_counts)):
         errors.append("FINAL lacks candidate-cardinality points unseen in TRAIN/DEV")
 
+    if manifest.get("official_training_relation_count") != 64:
+        errors.append("official FewRel training relation count receipt drift")
+    if manifest.get("official_validation_relation_count") != 16:
+        errors.append("official FewRel validation relation count receipt drift")
+    if manifest.get("all_official_validation_relation_families_are_final") is not True:
+        errors.append("official validation relation families are not all reserved for FINAL")
+    if manifest.get("final_family_subset_selected_after_observation") is not False:
+        errors.append("FINAL relation families were selected as a post-observation subset")
+    if manifest.get("relation_ids_omitted_from_manifest") is not True:
+        errors.append("manifest leaks explicit relation-family IDs")
+
+
     for bank_name, relation_payload in (
         ("train_dev", train_dev_bank.get("relations", {})),
         ("final", final_bank.get("relations", {})),
@@ -269,7 +281,7 @@ def main() -> None:
     result = {
         "schema": AUDIT_SCHEMA,
         "status": (
-            "PASS_FEWREL_NATURAL_RELATION_AUDIT_V2"
+            "PASS_FEWREL_NATURAL_RELATION_AUDIT_V3"
             if not errors
             else "FAIL_FEWREL_NATURAL_RELATION_AUDIT_V2"
         ),
