@@ -7,6 +7,8 @@ import torch
 import torch.nn.functional as F
 from torch import Tensor, nn
 
+from alice_personality.n0.numeric_contracts import exact_masked_softmax
+
 
 @dataclass(frozen=True)
 class PublicJudgmentProbeConfig:
@@ -123,13 +125,11 @@ class PublicJudgmentProbeV1(nn.Module):
             layers,
             tokens,
         )
-        token_score = token_score.masked_fill(~token_mask, -1.0e4)
-        token_weight = torch.softmax(4.0 * token_score, dim=-1)
-        token_weight = token_weight * token_mask.to(token_weight.dtype)
-        token_weight = token_weight / token_weight.sum(
+        token_weight = exact_masked_softmax(
+            4.0 * token_score,
+            token_mask,
             dim=-1,
-            keepdim=True,
-        ).clamp_min(1.0e-12)
+        )
         layer_candidate = torch.einsum(
             "bclt,bcltd->bcld",
             token_weight,
