@@ -559,6 +559,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             view_available=available,
             query_state=operator.continuous_state,
             view_reliability=reliability,
+            view_activity=fusion["view_weight"],
             slot_count=latent_slot_count,
             refinement_steps=latent_refinement_steps,
         )
@@ -622,6 +623,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "raw_semantic_view_content_conditioned_layer_read": True,
             "pre_binder_graph_soft_activity_gated": True,
             "graph_and_executor_views_causally_availability_gated": True,
+            "fusion_route_weight_causally_controls_latent_contribution": True,
             "unavailable_internal_view_descriptor_cannot_create_signal": True,
             "semantic_activity_uses_program_start_probability_not_expected_step_count": True,
             "runtime_relation_ceiling": None,
