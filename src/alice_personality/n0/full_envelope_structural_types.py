@@ -29,6 +29,87 @@ CONTROL_RELATIONAL = 1
 CONTROL_DEFER = 2
 
 
+def runtime_edge_type_compatibility(
+    *,
+    relation_domain_type_mask: Tensor,
+    relation_range_type_mask: Tensor,
+    relation_symmetric: Tensor,
+    edge_relation_index: Tensor,
+    edge_index: Tensor,
+    field_type_index: Tensor,
+    edge_valid_mask: Tensor,
+) -> Tensor:
+    """Exact structural type compatibility shared before graph and at Binder."""
+    if relation_domain_type_mask.ndim != 3:
+        raise ValueError("relation domain mask must be [B,R,K]")
+    if relation_range_type_mask.shape != relation_domain_type_mask.shape:
+        raise ValueError("domain/range type-mask drift")
+    batch, relations, type_count = relation_domain_type_mask.shape
+    if (
+        relation_symmetric.shape != (batch, relations)
+        or relation_symmetric.dtype != torch.bool
+    ):
+        raise ValueError("relation_symmetric must be bool [B,R]")
+    if field_type_index.ndim != 2 or field_type_index.size(0) != batch:
+        raise ValueError("field_type_index must be [B,F]")
+    if bool((field_type_index < -1).any()) or bool(
+        (field_type_index >= type_count).any()
+    ):
+        raise ValueError("field type index outside runtime type schema")
+    if (
+        edge_index.ndim != 3
+        or edge_index.size(0) != batch
+        or edge_index.size(-1) != 2
+    ):
+        raise ValueError("edge_index must be [B,E,2]")
+    edges = edge_index.size(1)
+    if edge_relation_index.shape != (batch, edges):
+        raise ValueError("edge_relation_index shape drift")
+    if (
+        edge_valid_mask.shape != (batch, edges)
+        or edge_valid_mask.dtype != torch.bool
+    ):
+        raise ValueError("edge_valid_mask must be bool [B,E]")
+
+    fields = field_type_index.size(1)
+    if fields <= 0:
+        raise ValueError("runtime field set must be nonempty")
+    if bool(edge_valid_mask.any()):
+        valid_endpoint = edge_index[edge_valid_mask]
+        if int(valid_endpoint.min()) < 0 or int(valid_endpoint.max()) >= fields:
+            raise ValueError("valid edge endpoint outside runtime field set")
+        valid_relation = edge_relation_index[edge_valid_mask]
+        if int(valid_relation.min()) < 0 or int(valid_relation.max()) >= relations:
+            raise ValueError("valid edge relation outside runtime relation schema")
+
+    source_index = edge_index[..., 0].clamp(min=0, max=fields - 1)
+    target_index = edge_index[..., 1].clamp(min=0, max=fields - 1)
+    relation_index = edge_relation_index.clamp(min=0, max=relations - 1)
+    b = torch.arange(
+        batch,
+        device=edge_index.device,
+    )[:, None].expand_as(edge_relation_index)
+
+    source_type_raw = field_type_index.gather(1, source_index)
+    target_type_raw = field_type_index.gather(1, target_index)
+    endpoint_type_valid = (source_type_raw >= 0) & (target_type_raw >= 0)
+    if bool((edge_valid_mask & ~endpoint_type_valid).any()):
+        raise ValueError("valid edge references a field without a runtime type")
+
+    source_type = source_type_raw.clamp_min(0)
+    target_type = target_type_raw.clamp_min(0)
+    forward_ok = (
+        relation_domain_type_mask[b, relation_index, source_type]
+        & relation_range_type_mask[b, relation_index, target_type]
+    )
+    symmetric = relation_symmetric[b, relation_index]
+    reverse_ok = (
+        relation_domain_type_mask[b, relation_index, target_type]
+        & relation_range_type_mask[b, relation_index, source_type]
+    )
+    return edge_valid_mask & (forward_ok | (symmetric & reverse_ok))
+
+
 @dataclass(frozen=True)
 class FullEnvelopeOperatorState:
     relation_distribution: Tensor
