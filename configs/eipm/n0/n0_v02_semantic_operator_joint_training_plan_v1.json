@@ -34,7 +34,9 @@
     "fusion_to_latent_route_activity": true,
     "latent_recoverability_uses_labeled_relevance_not_availability": true,
     "step_conditioned_relation_schema_execution": true,
-    "program_averaged_relation_state_role": "whole-program support geometry only; not executable per-step edge meaning"
+    "program_averaged_relation_state_role": "whole-program support geometry only; not executable per-step edge meaning",
+    "graph_view_activity_requires_supported_relation_mass": true,
+    "program_relation_state_aggregation": "survival-weighted relation assignment probability"
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -166,7 +168,8 @@
       "runtime_relation_symmetry_causal_pairs",
       "program_truncation_fail_closed",
       "cross_window_semantic_causal_transfer",
-      "step_relation_schema_causal_sensitivity"
+      "step_relation_schema_causal_sensitivity",
+      "program_relation_state_assignment_weighting"
     ],
     "J2": [
       "J1_gates_retained",
@@ -175,7 +178,8 @@
       "field_permutation",
       "no_relation_id_semantic_authority",
       "exact_zero_support_with_compatible_distractors",
-      "masked_runtime_relation_exclusion"
+      "masked_runtime_relation_exclusion",
+      "unsupported_relation_mass_cannot_activate_graph_views"
     ],
     "J3": [
       "J1_and_J2_gates_retained",
