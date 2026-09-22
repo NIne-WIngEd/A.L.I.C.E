@@ -11,6 +11,11 @@ from alice_personality.n0.chunked_late_interaction import (
     chunked_batched_bidirectional_late_max,
 )
 
+from alice_personality.n0.numeric_contracts import (
+    require_finite,
+    require_unit_interval,
+)
+
 from alice_personality.n0.full_envelope_structural_types import (
     CONTROL_RELATIONAL,
     FullEnvelopeOperatorState,
@@ -227,13 +232,19 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             raise ValueError("field semantic width drift")
         if field_token_mask.shape != (batch, fields, field_tokens):
             raise ValueError("field_token_mask shape drift")
+        if field_token_mask.dtype != torch.bool:
+            raise ValueError("field_token_mask must be bool")
         if field_state.shape != (batch, fields, self.config.model_dim):
             raise ValueError("field_state must match model_dim")
         if field_valid_mask.shape != (batch, fields) or field_valid_mask.dtype != torch.bool:
             raise ValueError("field_valid_mask must be bool [B,F]")
+        if bool((field_valid_mask.sum(dim=-1) == 0).any()):
+            raise ValueError("every example requires at least one valid field")
         if relation_schema_state.ndim != 3 or relation_schema_state.size(0) != batch:
             raise ValueError("relation_schema_state must be [B,R,D]")
         relation_count = relation_schema_state.size(1)
+        if relation_count <= 0:
+            raise ValueError("runtime relation schema is empty")
         if relation_schema_state.size(-1) != self.config.model_dim:
             raise ValueError("relation schema state width drift")
         operator.validate(relation_count=relation_count, model_dim=self.config.model_dim)
@@ -251,6 +262,10 @@ class FullEnvelopeQSREBinderV1(nn.Module):
                 raise ValueError(f"{name} shape drift")
         if edge_valid_mask.dtype != torch.bool:
             raise ValueError("edge_valid_mask must be bool")
+        require_unit_interval("edge_reliability", edge_reliability)
+        require_unit_interval("edge_recency", edge_recency)
+        require_finite("field_state", field_state)
+        require_finite("relation_schema_state", relation_schema_state)
 
         field_late = self._token_late(
             query=query_hidden_states,
