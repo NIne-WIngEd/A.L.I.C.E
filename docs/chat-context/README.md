@@ -8,10 +8,12 @@ The active N0 implementation frontier is:
 
 ```text
 alice-eipm-v1-n0-full-envelope-foundation-build-v1
-6c4e3c02672b7a5415fb3407942d86cc9723b8d9
+6ee63bd39175e76fca702dd8e2493cb9abcf6e9a
 ```
 
-The latest exact-head static receipt is green, but **Magnolia is not yet authorized**. The deep original-source audit remains open. New chats must not convert a green static suite into CPU/GPU/training authorization without first reading the 2026-09-22 handoff.
+The latest exact-head static receipt is green at 115 tests / 100 proof obligations / 86 static obligations, but **Magnolia is not yet authorized**. The deep original-source audit remains open. New chats must not convert a green static suite into CPU/GPU/training authorization without first reading the 2026-09-22 handoff.
+
+The current deep audit has already justified this caution: after the earlier 114-test green head, it exposed and repaired TRAIN/DEV behavioral field/answer surface leakage plus an undeclared mixed-direction scenario-family governance drift. Those failures are preserved in the 2026-09-22 handoff.
 
 The current method is failure-driven and anti-hotfix: try to expose structural defects cheaply, verify original source rather than report flags, repair one localized causal defect, preserve failure evidence, rerun affected exact-head evidence, and continue the broader audit.
 
