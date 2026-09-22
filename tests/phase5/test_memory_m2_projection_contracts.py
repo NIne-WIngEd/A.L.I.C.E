@@ -319,6 +319,7 @@ def test_projection_digest_tampering_is_detected() -> None:
         ("owner_model", "owner"),
         ("source_person_model", "source_person"),
         ("self_model", "alice_self"),
+        ("self_model", "assistant_self"),
         ("temporal", "episode"),
     ],
 )
@@ -333,3 +334,25 @@ def test_projection_subject_families_are_explicit(
     )
     assert value.projection_type == projection_type
     assert value.subject_type == subject_type
+
+
+def test_product_neutral_assistant_self_coexists_with_alice_compatibility_subject() -> None:
+    assert "assistant_self" in PROJECTION_SUBJECT_TYPES
+    assert "alice_self" in PROJECTION_SUBJECT_TYPES
+
+    assistant = projection(
+        modalities=("symbolic", "temporal"),
+        projection_type="self_model",
+        subject_type="assistant_self",
+        content={"self_state": "developing assistant judgment"},
+    )
+    alice = projection(
+        modalities=("symbolic", "temporal"),
+        projection_type="self_model",
+        subject_type="alice_self",
+        content={"self_state": "A.L.I.C.E. compatibility state"},
+    )
+
+    assistant.validate()
+    alice.validate()
+    assert assistant.subject_type != alice.subject_type
