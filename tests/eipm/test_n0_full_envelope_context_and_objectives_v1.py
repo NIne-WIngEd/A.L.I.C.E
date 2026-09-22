@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 import torch
 import torch.nn.functional as F
 
@@ -20,6 +22,10 @@ from alice_personality.n0.semantic_context_virtualizer_v1 import (
 from alice_personality.n0.semantic_segment_context_bridge_v1 import (
     SemanticSegmentContextBridgeConfig,
     SemanticSegmentContextBridgeV1,
+)
+from alice_personality.n0.full_envelope_semantic_input_v1 import (
+    FullEnvelopeSemanticInputConfig,
+    FullEnvelopeSemanticInputV1,
 )
 
 
@@ -558,3 +564,206 @@ def test_segment_context_bridge_padded_segments_are_inert() -> None:
         a["contextualized_segment_hidden_states"][1,2:],
         torch.zeros_like(a["contextualized_segment_hidden_states"][1,2:]),
     )
+
+
+class _FakeSemanticBackbone(torch.nn.Module):
+    def __init__(self, *, vocab: int = 128, width: int = 24, hidden_states: int = 3) -> None:
+        super().__init__()
+        self.embedding = torch.nn.Embedding(vocab, width)
+        self.layers = torch.nn.ModuleList(
+            [torch.nn.Linear(width, width) for _ in range(hidden_states - 1)]
+        )
+
+    def forward(
+        self,
+        *,
+        input_ids: torch.Tensor,
+        attention_mask: torch.Tensor,
+        output_hidden_states: bool = True,
+        return_dict: bool = True,
+    ):
+        x = self.embedding(input_ids)
+        states = [x]
+        for layer in self.layers:
+            x = torch.tanh(layer(x))
+            states.append(x)
+        mask = attention_mask.to(x.dtype).unsqueeze(-1)
+        x = x * mask
+        states = [state * mask for state in states]
+        return SimpleNamespace(
+            last_hidden_state=x,
+            hidden_states=tuple(states) if output_hidden_states else None,
+        )
+
+
+def _tiny_semantic_input() -> FullEnvelopeSemanticInputV1:
+    return FullEnvelopeSemanticInputV1(
+        FullEnvelopeSemanticInputConfig(
+            semantic_dim=24,
+            num_hidden_states=3,
+            num_attention_heads=4,
+            native_window_tokens=8,
+            overlap_tokens=2,
+            segment_bridge_layers=1,
+            segment_query_chunk=2,
+            segment_key_chunk=2,
+            special_token_ids=(0,1,2,3,4),
+            pad_token_id=0,
+            dropout=0.0,
+        )
+    )
+
+
+def test_full_semantic_input_short_path_preserves_all_layers() -> None:
+    torch.manual_seed(271)
+    backbone=_FakeSemanticBackbone()
+    encoder=_tiny_semantic_input().eval()
+    ids=torch.tensor(
+        [[2,10,11,12,3,0],[2,20,21,22,23,3]],
+        dtype=torch.long,
+    )
+    mask=ids.ne(0)
+    with torch.no_grad():
+        out=encoder.encode_items(
+            backbone=backbone,
+            input_ids=ids,
+            attention_mask=mask,
+        )
+    assert out["used_virtualization"] is False
+    assert out["hidden_states"].shape == (2,3,6,24)
+    assert out["content_mask"].shape == (2,6)
+    assert torch.equal(
+        out["content_mask"][0],
+        torch.tensor([False,True,True,True,False,False]),
+    )
+
+
+def test_full_semantic_input_virtualizes_long_relation_factor_and_descriptor_text() -> None:
+    torch.manual_seed(272)
+    backbone=_FakeSemanticBackbone()
+    encoder=_tiny_semantic_input().eval()
+    ids=torch.tensor(
+        [
+            [2,10,11,12,13,14,15,16,17,18,19,20,3],
+            [2,30,31,32,33,34,35,36,37,38,39,40,3],
+        ],
+        dtype=torch.long,
+    )
+    mask=torch.ones_like(ids,dtype=torch.bool)
+    domain=torch.tensor([[True,False],[False,True]])
+    range_mask=torch.tensor([[False,True],[True,False]])
+    symmetric=torch.tensor([False,True])
+    with torch.no_grad():
+        relation=encoder.encode_relation_bank(
+            backbone=backbone,
+            input_ids=ids,
+            attention_mask=mask,
+            domain_type_mask=domain,
+            range_type_mask=range_mask,
+            symmetric=symmetric,
+        )
+        factor=encoder.encode_semantic_bank(
+            backbone=backbone,
+            input_ids=ids,
+            attention_mask=mask,
+        )
+    assert relation.token_states.shape[:3] == (2,3,13)
+    assert factor.token_states.shape[:3] == (2,3,13)
+    assert torch.equal(relation.token_mask,factor.token_mask)
+    report=encoder.parameter_report()
+    assert report["long_relation_description_supported"] is True
+    assert report["long_factor_description_supported"] is True
+    assert report["long_descriptor_supported"] is True
+    assert report["product_context_token_ceiling"] is None
+
+
+def test_full_semantic_input_padded_items_keep_invalid_fields_and_candidates_inert() -> None:
+    torch.manual_seed(273)
+    backbone=_FakeSemanticBackbone()
+    encoder=_tiny_semantic_input().eval()
+    ids=torch.tensor(
+        [[
+            [2,10,11,12,13,14,15,16,17,3],
+            [2,20,21,22,23,24,25,26,27,3],
+            [0,0,0,0,0,0,0,0,0,0],
+        ]],
+        dtype=torch.long,
+    )
+    changed=ids.clone()
+    changed[0,2]=torch.tensor([2,90,91,92,93,94,95,96,97,3])
+    valid=torch.tensor([[True,True,False]])
+    mask=ids.ne(0)
+    changed_mask=changed.ne(0)
+    with torch.no_grad():
+        a=encoder.encode_padded_items(
+            backbone=backbone,
+            input_ids=ids,
+            attention_mask=mask,
+            item_valid_mask=valid,
+        )
+        b=encoder.encode_padded_items(
+            backbone=backbone,
+            input_ids=changed,
+            attention_mask=changed_mask,
+            item_valid_mask=valid,
+        )
+    assert torch.allclose(
+        a["hidden_states"][:,:2],
+        b["hidden_states"][:,:2],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.equal(
+        a["hidden_states"][:,2],
+        torch.zeros_like(a["hidden_states"][:,2]),
+    )
+    assert torch.equal(
+        b["hidden_states"][:,2],
+        torch.zeros_like(b["hidden_states"][:,2]),
+    )
+    assert not bool(a["token_mask"][:,2].any())
+    assert not bool(b["token_mask"][:,2].any())
+
+
+def test_full_semantic_input_long_path_gradient_reaches_backbone_and_segment_bridge() -> None:
+    torch.manual_seed(274)
+    backbone=_FakeSemanticBackbone()
+    encoder=_tiny_semantic_input().train()
+    ids=torch.tensor(
+        [[2,10,11,12,13,14,15,16,17,18,19,20,21,22,3]],
+        dtype=torch.long,
+    )
+    mask=torch.ones_like(ids,dtype=torch.bool)
+    out=encoder.encode_items(
+        backbone=backbone,
+        input_ids=ids,
+        attention_mask=mask,
+    )
+    assert out["used_virtualization"] is True
+    loss=out["hidden_states"][:,:,-3:,:].square().mean()
+    loss.backward()
+    assert backbone.embedding.weight.grad is not None
+    assert float(backbone.embedding.weight.grad.abs().sum()) > 0.0
+    bridge_grads=[
+        p.grad
+        for p in encoder.segment_bridge.parameters()
+        if p.requires_grad
+    ]
+    assert bridge_grads
+    assert any(g is not None and float(g.abs().sum()) > 0.0 for g in bridge_grads)
+
+
+def test_full_semantic_input_has_no_text_surface_native_window_product_ceiling() -> None:
+    report=_tiny_semantic_input().parameter_report()
+    assert report["single_shared_backbone_reference"] is True
+    assert report["all_text_surfaces_share_virtualization_policy"] is True
+    assert report["long_query_supported"] is True
+    assert report["long_relation_description_supported"] is True
+    assert report["long_factor_description_supported"] is True
+    assert report["long_field_supported"] is True
+    assert report["long_candidate_supported"] is True
+    assert report["long_descriptor_supported"] is True
+    assert report["item_count_dependent_parameters"] == 0
+    assert report["token_count_dependent_parameters"] == 0
+    assert report["item_count_ceiling"] is None
+    assert report["product_context_token_ceiling"] is None
