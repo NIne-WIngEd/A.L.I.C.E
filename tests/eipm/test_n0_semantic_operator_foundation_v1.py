@@ -2,6 +2,9 @@ from __future__ import annotations
 
 import torch
 
+from alice_personality.n0.semantic_operator_evidence_targets_v1 import (
+    compile_operator_evidence_targets,
+)
 from alice_personality.n0.semantic_operator_foundation import (
     DynamicRelationSchema,
     DynamicSemanticSchema,
@@ -656,3 +659,183 @@ def test_schema_token_evidence_keeps_gradient_path_to_query_semantics() -> None:
     assert q.grad is not None
     assert bool(torch.isfinite(q.grad).all())
     assert float(q.grad.abs().sum()) > 0.0
+
+
+class _OffsetTokenizer:
+    def __call__(
+        self,
+        texts,
+        *,
+        padding,
+        return_offsets_mapping,
+        return_special_tokens_mask,
+        return_tensors,
+        truncation=False,
+        max_length=None,
+    ):
+        assert padding is True
+        assert return_offsets_mapping is True
+        assert return_special_tokens_mask is True
+        assert return_tensors=="pt"
+        rows=[]
+        for text in texts:
+            tokens=[]
+            cursor=0
+            for piece in text.split():
+                start=text.find(piece,cursor)
+                end=start+len(piece)
+                tokens.append((piece,start,end))
+                cursor=end
+            ids=[2]+list(range(10,10+len(tokens)))+[3]
+            offsets=[(0,0)]+[(s,e) for _,s,e in tokens]+[(0,0)]
+            special=[1]+[0]*len(tokens)+[1]
+            if truncation and max_length is not None:
+                ids=ids[:max_length]
+                offsets=offsets[:max_length]
+                special=special[:max_length]
+            rows.append((ids,offsets,special))
+        width=max(len(ids) for ids,_,_ in rows)
+        input_ids=[]
+        attention=[]
+        offsets=[]
+        special=[]
+        for ids,row_offsets,row_special in rows:
+            pad=width-len(ids)
+            input_ids.append(ids+[0]*pad)
+            attention.append([1]*len(ids)+[0]*pad)
+            offsets.append(row_offsets+[(0,0)]*pad)
+            special.append(row_special+[1]*pad)
+        return {
+            "input_ids":torch.tensor(input_ids),
+            "attention_mask":torch.tensor(attention),
+            "offset_mapping":torch.tensor(offsets),
+            "special_tokens_mask":torch.tensor(special),
+        }
+
+
+def _evidence_row():
+    query="Alpha supports Beta then Beta corrects Gamma"
+    relation_texts=[
+        "Relation meaning: supports evidence target.",
+        "Relation meaning: corrects earlier target.",
+        "Relation meaning: unrelated distractor.",
+    ]
+    factors={
+        "direction":[
+            {"text":"Traverse forward."},
+            {"text":"Traverse backward."},
+        ],
+        "control":[
+            {"text":"Use fallback."},
+            {"text":"Execute relation."},
+        ],
+    }
+    def span(text,needle,**extra):
+        start=text.index(needle)
+        return {"start":start,"end":start+len(needle),"text":needle,**extra}
+    return {
+        "query":query,
+        "relation_candidates":[{"text":x} for x in relation_texts],
+        "relation_sequence_target":[0,1],
+        "runtime_operator_slots":3,
+        "query_relation_evidence_char_spans":[
+            span(query,"supports",step=0),
+            span(query,"corrects",step=1),
+        ],
+        "relation_schema_evidence_char_spans":[
+            span(relation_texts[0],"supports",step=0,candidate_index=0),
+            span(relation_texts[1],"corrects",step=1,candidate_index=1),
+        ],
+        "factor_schemas":factors,
+        "factor_targets":{"direction":0,"control":1},
+        "factor_schema_evidence_char_spans":{
+            "direction":span(
+                factors["direction"][0]["text"],
+                factors["direction"][0]["text"],
+                candidate_index=0,
+            ),
+            "control":span(
+                factors["control"][1]["text"],
+                factors["control"][1]["text"],
+                candidate_index=1,
+            ),
+        },
+        "step_factor_targets":{
+            "direction":[0,1],
+            "control":[1,1],
+        },
+        "step_factor_schema_evidence_char_spans":{
+            "direction":[
+                span(
+                    factors["direction"][0]["text"],
+                    factors["direction"][0]["text"],
+                    step=0,
+                    candidate_index=0,
+                ),
+                span(
+                    factors["direction"][1]["text"],
+                    factors["direction"][1]["text"],
+                    step=1,
+                    candidate_index=1,
+                ),
+            ],
+            "control":[
+                span(
+                    factors["control"][1]["text"],
+                    factors["control"][1]["text"],
+                    step=0,
+                    candidate_index=1,
+                ),
+                span(
+                    factors["control"][1]["text"],
+                    factors["control"][1]["text"],
+                    step=1,
+                    candidate_index=1,
+                ),
+            ],
+        },
+    }
+
+
+def test_evidence_char_spans_compile_to_selected_token_targets_without_distractor_labels() -> None:
+    compiled=compile_operator_evidence_targets(
+        _evidence_row(),
+        _OffsetTokenizer(),
+    )
+    qtarget=compiled["relation_query_evidence_target"]
+    qvalid=compiled["relation_query_evidence_valid_mask"]
+    rtarget=compiled["relation_schema_evidence_target"]
+    rvalid=compiled["relation_schema_evidence_valid_mask"]
+    assert qtarget.shape[:2]==(3,3)
+    assert rtarget.shape[:2]==(3,3)
+    assert int(qtarget[0,0].sum())==1
+    assert int(qtarget[1,1].sum())==1
+    assert int(rtarget[0,0].sum())==1
+    assert int(rtarget[1,1].sum())==1
+    assert not bool(qvalid[0,1:].any())
+    assert not bool(qvalid[1,[0,2]].any())
+    assert not bool(qvalid[2].any())
+    assert not bool(rvalid[2].any())
+    assert bool(
+        compiled["factor_schema_evidence_valid_mask"]["control"][1].any()
+    )
+    assert not bool(
+        compiled["factor_schema_evidence_valid_mask"]["control"][0].any()
+    )
+    step_control=compiled["step_factor_schema_evidence_valid_mask"]["control"]
+    assert bool(step_control[0,1].any())
+    assert bool(step_control[1,1].any())
+    assert not bool(step_control[2].any())
+
+
+def test_evidence_token_alignment_fails_closed_when_labeled_span_is_truncated() -> None:
+    try:
+        compile_operator_evidence_targets(
+            _evidence_row(),
+            _OffsetTokenizer(),
+            max_length=3,
+        )
+    except ValueError as exc:
+        assert "no surviving tokenizer token" in str(exc)
+    else:
+        raise AssertionError("truncated evidence span did not fail closed")
