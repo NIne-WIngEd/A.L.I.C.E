@@ -1,15 +1,15 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-full-envelope-retro-audit-and-semantic-operator-build-20260921-025",
-  "question": "Perform a full-envelope retrospective audit of ALL completed N0 stages before continuing the schema-conditioned semantic-operator foundation. The owner suspects some earlier N0 stages passed cleanly only because they were evaluated against weak local contracts, under-scaled operating points, or frozen interfaces that carried hidden limitations into later QSRE work. Starting from exact current architecture authority alice-eipm-v1-n0-semantic-operator-foundation-v1@cef6e5ed48bb69e064596b30a87a73c3e79a0763, reconstruct N0 from semantic base onward: semantic v0.2 and targeted repair; structured-state; evidence graph and evidence adapter; relation/endpoint repairs; cross-context fusion; adaptive multi-view latent pool; causal arbitration / downstream arbitration; query-edge and relation semantic experiments; QSRE T1/T2; Production Core; ordered-evidence P2; Binder v2; frozen final validation. For every major stage, inspect original configs, implementation, training/eval contracts, data scale, parameter counts, fixture cardinalities, split isolation, hard-coded dimensions/classes/counts/top-k/hop limits, fixed ontologies, pooled bottlenecks, early hard decisions, local-vs-full-envelope validation mismatch, and whether a PASS was ever promoted beyond the evidence it actually supported. Classify findings into: preserved strong architecture; historically valid but insufficiently validated; hidden serving/product ceiling; experimental operating point only; superseded defect; or must-reopen-before-N0-closure. Do not assume prior PASS means sound architecture. Do not discard previously proven work without source evidence. Also audit whether earlier 'no-gradient/frozen parent' governance unintentionally prevented co-adaptation and caused later repair chains. Then, based on the retro audit, define the complete full-envelope public curriculum, schema-conditioned semantic-operator interfaces, shortcut/leakage audits, and static/no-gradient mechanics needed before one precommitted joint training plan. Requirements remain: no reduced pilot architecture, no hard parameter/width/depth/relation/factor/hop/context ceiling, runtime-variable schema cardinality, no relation/factor identity parameter axes, shared query/schema token interaction, continuous operator latent, uncertainty/plurality, shared recurrent relation transition with structural stop, token-level evidence coverage, Binder v2 or evidence-supported successor as first exact structural sparsity boundary, preserve structured/evidence/fusion/latent/QSRE components only where the audit supports them, public identity-neutral data only, no optimizer/gradient/GPU/TEST/private identity yet. Compare all relevant maximal unmerged N0 experiment branches and supersession history. Identify concrete source paths and exact defects. Graphify is navigation only; original source files are authority.",
-  "generated_at_utc": "2026-09-21T18:12:43.739409+00:00",
+  "request_id": "n0-full-envelope-successor-pre-magnolia-audit-20260921-027",
+  "question": "Audit the exact current N0 full-envelope successor before the first Magnolia CPU runtime qualification. Graph source authority is alice-eipm-v1-n0-full-envelope-foundation-build-v1@4022aa570e5fbc129471f5d6143e4a4001c98369. Reconstruct every historical N0 stage and verify earlier narrow-pass weaknesses are either superseded, retained only as regression/causal evidence, or repaired in the successor. Focus on semantic v0.2/tokenizer/corpus/teacher gates; structured state; evidence view and graph; relation/endpoint repair chain; fusion and latent fabric; query-edge and relation semantics; QSRE T1/T2; Production Core; ordered-evidence P2; Binder; causal arbitration; old final self-validation; context virtualization; the new trainable cross-window semantic bridge; public judgment path; and the full proof matrix. Inspect the exact successor source and current 81-test static suite, default-deny historical authority firewall, natural FewRel + intervention contracts, no-runtime-ID-axis claims, memory-bounded attention/latent mechanics, explicit null support, truncation, per-example candidate subsets, symmetric relations, padded fields and padded long-context segments, unavailable views, probability metadata, open semantic factor banks, fusion route weights now passed as latent view activity, relevance-masked latent recoverability, and causal/behavioral objectives. Then inspect the CPU runtime package including configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json, scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py, scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py, scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh, and scripts/eipm/n0/magnolia_cpu_n0_v02_full_envelope_runtime_v1.sbatch. Look for any remaining architecture defect, hidden product ceiling, leakage, self-referential validation, stale historical authority, incorrect probability or causal semantics, mismatch between runtime fixture and full stack, impossible/no-op factor semantics, masking defect, disconnected training gradient, or resource assumption that should be fixed BEFORE owner compute. Do not infer sufficiency from green CI. Distinguish static proof from unresolved runtime/training/final evidence. Do not authorize optimizer/gradient/GPU training or N0 closure. Original source files are authority; Graphify is navigation only.",
+  "generated_at_utc": "2026-09-22T01:35:17.107588+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "catalog_source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "graphify_used": true,
-    "graph_source_branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
-    "graph_source_commit": "cef6e5ed48bb69e064596b30a87a73c3e79a0763",
+    "graph_source_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+    "graph_source_commit": "4022aa570e5fbc129471f5d6143e4a4001c98369",
     "graph_extraction_tree": "exact-source-worktree",
     "continuity_branch_head": {
       "branch": "alice-context",
@@ -20,10 +20,10 @@
     "continuity_stale_relative_to_experiment_frontier": true,
     "maximal_unmerged_experiment_heads": [
       {
-        "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
-        "head": "cef6e5ed48bb69e064596b30a87a73c3e79a0763",
-        "head_committed_at": "2026-09-21T13:00:29-05:00",
-        "head_message": "state(n0): encode full-envelope foundation freeze rule"
+        "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+        "head": "4022aa570e5fbc129471f5d6143e4a4001c98369",
+        "head_committed_at": "2026-09-21T20:17:33-05:00",
+        "head_message": "test(n0): prove padded long-context segments are inert"
       },
       {
         "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
@@ -43,10 +43,10 @@
     "graphify_mode": "always",
     "graphify_used": true,
     "reason": "request forced Graphify",
-    "graph_source_branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
-    "graph_source_commit": "cef6e5ed48bb69e064596b30a87a73c3e79a0763",
+    "graph_source_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+    "graph_source_commit": "4022aa570e5fbc129471f5d6143e4a4001c98369",
     "graph_source_reason": "request explicitly selected graph source branch",
-    "graph_rebuild_required": false,
+    "graph_rebuild_required": true,
     "private_external_route_recommended": true
   },
   "active_mission": {
@@ -127,18 +127,18 @@
       "schema": "alice-context-unmerged-experiment-frontier-v1",
       "stable_build_branch": "alice-eipm-v1-build",
       "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "candidate_count": 26,
+      "candidate_count": 27,
       "maximal_head_count": 3,
       "maximal_heads": [
         {
-          "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
-          "head": "cef6e5ed48bb69e064596b30a87a73c3e79a0763",
-          "head_committed_at": "2026-09-21T13:00:29-05:00",
-          "head_message": "state(n0): encode full-envelope foundation freeze rule",
-          "ahead": 634,
+          "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+          "head": "4022aa570e5fbc129471f5d6143e4a4001c98369",
+          "head_committed_at": "2026-09-21T20:17:33-05:00",
+          "head_message": "test(n0): prove padded long-context segments are inert",
+          "ahead": 911,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-          "changed_file_count_vs_source_merge_base": 410,
+          "changed_file_count_vs_source_merge_base": 461,
           "changed_paths_vs_source_merge_base": [
             ".github/workflows/n0-arbitration-contract-check.yml",
             ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -148,6 +148,7 @@
             ".github/workflows/n0-dual-view-specialist-training-contract-check.yml",
             ".github/workflows/n0-fast-dual-view-failure-localization-check.yml",
             ".github/workflows/n0-final-production-v3-qualification.yml",
+            ".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml",
             ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
             ".github/workflows/n0-open-schema-operator-binder-v2-qualification.yml",
             ".github/workflows/n0-p100-dual-view-failure-localization-check.yml",
@@ -239,6 +240,7 @@
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.57.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.58.json",
             "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.59.json",
+            "configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json",
             "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
             "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
@@ -247,6 +249,13 @@
             "configs/eipm/n0/n0_v02_dual_view_training_decision_v0_1.json",
             "configs/eipm/n0/n0_v02_final_full_scale_capability_package_v1.json",
             "configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json",
+            "configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json",
+            "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+            "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json",
+            "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
+            "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json",
+            "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json",
+            "configs/eipm/n0/n0_v02_natural_relation_sources_v1.json",
             "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
             "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v1.json",
             "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v2.json",
@@ -288,9 +297,12 @@
             "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json",
             "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_training_decision_v0_1.json",
             "configs/eipm/n0/n0_v02_relational_execution_proof_obligations_v0_1.json",
+            "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json",
             "configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json",
+            "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json",
             "configs/eipm/n0/n0_v02_setwise_edge_router_training_decision_v0_1.json",
             "configs/eipm/n0/n0_v02_setwise_training_boundary_recovery_v0_1.json",
+            "configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json",
             "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
             "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
             "docs/research/eipm-full-eipm-workload-envelope-v0.1.md",
@@ -300,6 +312,8 @@
             "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
             "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
             "docs/research/eipm-n0-final-full-scale-capability-package-v1.md",
+            "docs/research/eipm-n0-full-envelope-interface-contract-v1.md",
+            "docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md",
             "docs/research/eipm-n0-job-575958-closure-pass-v1.md",
             "docs/research/eipm-n0-job-575962-semantic-matcher-v2.md",
             "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md",
@@ -325,21 +339,7 @@
             "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
             "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
             "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md",
-            "docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md",
-            "docs/research/eipm-n0-semantic-operator-foundation-v1.md",
-            "evaluation/eipm/n0/n0_v02_qsre_mechanics_v0_1.jsonl",
-            "evaluation/eipm/n0/n0_v02_qsre_oracle_contract_v0_1.jsonl",
-            "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_1.py",
-            "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py",
-            "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_3.py",
-            "scripts/eipm/n0/audit_n0_v02_qsre_p2a_semantic_localization_v1.py",
-            "scripts/eipm/n0/audit_n0_v02_qsre_production_p0_v1.py",
-            "scripts/eipm/n0/audit_n0_v02_qsre_runtime_parity_v0_1.py",
-            "scripts/eipm/n0/audit_n0_v02_qsre_t2_schema_ordered_runtime_v0_3.py",
-            "scripts/eipm/n0/audit_n0_v02_qsre_t2_shortcuts_v0_1.py",
-            "scripts/eipm/n0/audit_n0_v02_qsre_t2_t1_boundary_fuzz_v0_1.py",
-            "scripts/eipm/n0/audit_n0_v02_query_edge_binding_identifiability_v0_1.py",
-            "scripts/eipm/n0/audit_n0_v02_query_semantic_layers_v0_1.py"
+            "docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md"
           ],
           "authority": "unmerged-experiment-pointer"
         },
@@ -771,6 +771,219 @@
         }
       ],
       "all_ahead_candidates": [
+        {
+          "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+          "head": "4022aa570e5fbc129471f5d6143e4a4001c98369",
+          "head_committed_at": "2026-09-21T20:17:33-05:00",
+          "head_message": "test(n0): prove padded long-context segments are inert",
+          "ahead": 911,
+          "behind": 0,
+          "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+          "changed_file_count_vs_source_merge_base": 461,
+          "changed_paths_vs_source_merge_base": [
+            ".github/workflows/n0-arbitration-contract-check.yml",
+            ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
+            ".github/workflows/n0-dual-view-late-interaction-qualification-check.yml",
+            ".github/workflows/n0-dual-view-requalification-recovery-check.yml",
+            ".github/workflows/n0-dual-view-specialist-failure-localization-check.yml",
+            ".github/workflows/n0-dual-view-specialist-training-contract-check.yml",
+            ".github/workflows/n0-fast-dual-view-failure-localization-check.yml",
+            ".github/workflows/n0-final-production-v3-qualification.yml",
+            ".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml",
+            ".github/workflows/n0-missing-evidence-localization-contract-check.yml",
+            ".github/workflows/n0-open-schema-operator-binder-v2-qualification.yml",
+            ".github/workflows/n0-p100-dual-view-failure-localization-check.yml",
+            ".github/workflows/n0-p2a-semantic-localization-v1-contract.yml",
+            ".github/workflows/n0-production-core-v1-preflight.yml",
+            ".github/workflows/n0-qsre-clean-sheet-review-contract.yml",
+            ".github/workflows/n0-qsre-frozen-semantic-authority-v3-contract.yml",
+            ".github/workflows/n0-qsre-mechanics-contract.yml",
+            ".github/workflows/n0-qsre-n0-closure-pass-contract.yml",
+            ".github/workflows/n0-qsre-n0-closure-semantic-v2-contract.yml",
+            ".github/workflows/n0-qsre-production-core-v1-architecture-contract.yml",
+            ".github/workflows/n0-qsre-production-core-v1-mechanics.yml",
+            ".github/workflows/n0-qsre-production-curriculum-v1-contract.yml",
+            ".github/workflows/n0-qsre-reality-audit-static-contract.yml",
+            ".github/workflows/n0-qsre-t1-corrected-pretraining-contract.yml",
+            ".github/workflows/n0-qsre-t1-curriculum-contract.yml",
+            ".github/workflows/n0-qsre-t1-forward-contract.yml",
+            ".github/workflows/n0-qsre-t1-one-shot-authorization.yml",
+            ".github/workflows/n0-qsre-t1-postrun-t2-design-contract.yml",
+            ".github/workflows/n0-qsre-t2-classified-recovery-authorization.yml",
+            ".github/workflows/n0-qsre-t2-evaluator-totality-qualification.yml",
+            ".github/workflows/n0-qsre-t2-one-shot-authorization.yml",
+            ".github/workflows/n0-qsre-t2-static-and-curriculum-contract.yml",
+            ".github/workflows/n0-qsre-t2-v02-curriculum-contract.yml",
+            ".github/workflows/n0-qsre-t2-v02-pipeline-contract.yml",
+            ".github/workflows/n0-qsre-t2-v03-schema-ordered-contract.yml",
+            ".github/workflows/n0-qsre-tensor-mechanics-contract.yml",
+            ".github/workflows/n0-query-edge-binding-identifiability-audit-check.yml",
+            ".github/workflows/n0-query-edge-competitive-router-contract-check.yml",
+            ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
+            ".github/workflows/n0-query-edge-training-contract-check.yml",
+            ".github/workflows/n0-query-relation-role-router-contract-check.yml",
+            ".github/workflows/n0-query-semantics-architecture-audit-contract-check.yml",
+            ".github/workflows/n0-query-semantics-layerwise-audit-contract-check.yml",
+            ".github/workflows/n0-relation-conditioned-multilayer-interface-contract-check.yml",
+            ".github/workflows/n0-relation-semantic-grounding-contract-check.yml",
+            ".github/workflows/n0-relation-semantic-role-residual-contract-check.yml",
+            ".github/workflows/n0-semantic-operator-foundation-v1-contract.yml",
+            ".github/workflows/n0-setwise-edge-router-training-contract-check.yml",
+            ".github/workflows/n0-setwise-query-edge-router-contract-check.yml",
+            ".github/workflows/n0-setwise-training-boundary-recovery-check.yml",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.10.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.11.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.12.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.13.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.14.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.15.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.16.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.17.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.18.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.19.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.20.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.21.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.22.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.23.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.24.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.25.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.26.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.27.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.28.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.29.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.30.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.31.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.32.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.33.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.34.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.35.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.36.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.37.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.38.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.39.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.40.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.41.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.42.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.43.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.44.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.45.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.46.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.47.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.48.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.49.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.50.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.51.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.52.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.53.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.54.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.55.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.56.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.57.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.58.json",
+            "configs/eipm/n0/alice_n0_latent_pool_stage_state_v0.59.json",
+            "configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json",
+            "configs/eipm/n0/n0_v02_competitive_edge_router_training_decision_v0_1.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_metric_policy_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_downstream_causal_arbitration_v0_2.example.json",
+            "configs/eipm/n0/n0_v02_downstream_full_stack_graph_evaluator_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_dual_view_training_decision_v0_1.json",
+            "configs/eipm/n0/n0_v02_final_full_scale_capability_package_v1.json",
+            "configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json",
+            "configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json",
+            "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+            "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json",
+            "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
+            "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json",
+            "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json",
+            "configs/eipm/n0/n0_v02_natural_relation_sources_v1.json",
+            "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
+            "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v2.json",
+            "configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_closure_schema_meta_v2.json",
+            "configs/eipm/n0/n0_v02_qsre_final_production_recovery_contract_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_frozen_semantic_authority_plan_v3.json",
+            "configs/eipm/n0/n0_v02_qsre_n0_closure_training_plan_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json",
+            "configs/eipm/n0/n0_v02_qsre_p2_v2_recovery_contract_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_preimplementation_diagnostics_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_production_core_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_production_core_w1_w15_map_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_production_curriculum_contract_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_production_relation_schema_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_production_training_plan_v1.json",
+            "configs/eipm/n0/n0_v02_qsre_production_training_plan_v2.json",
+            "configs/eipm/n0/n0_v02_qsre_production_training_plan_v3.json",
+            "configs/eipm/n0/n0_v02_qsre_reality_audit_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_static_mechanics_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t1_curriculum_contract_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_t1_executor_design_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t1_training_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t1_training_contract_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_curriculum_contract_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_operator_learning_design_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_operator_learning_design_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_relation_schema_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_training_contract_v0_3.json",
+            "configs/eipm/n0/n0_v02_qsre_t2_training_recovery_contract_v0_2.json",
+            "configs/eipm/n0/n0_v02_qsre_workload_envelope_v0_1.json",
+            "configs/eipm/n0/n0_v02_query_edge_setwise_router_design_decision_v0_1.json",
+            "configs/eipm/n0/n0_v02_query_edge_training_decision_v0_1.json",
+            "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_preservation_contract_v0_1.json",
+            "configs/eipm/n0/n0_v02_relation_conditioned_multilayer_training_decision_v0_1.json",
+            "configs/eipm/n0/n0_v02_relational_execution_proof_obligations_v0_1.json",
+            "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json",
+            "configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json",
+            "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json",
+            "configs/eipm/n0/n0_v02_setwise_edge_router_training_decision_v0_1.json",
+            "configs/eipm/n0/n0_v02_setwise_training_boundary_recovery_v0_1.json",
+            "configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json",
+            "docs/eipm/EIPM_N0_DOWNSTREAM_CAUSAL_ARBITRATION_V0_1.md",
+            "docs/eipm/n0/N0_V0_2_PRODUCTION_BUILD_PLAN.md",
+            "docs/research/eipm-full-eipm-workload-envelope-v0.1.md",
+            "docs/research/eipm-n0-causal-arbitration-full-stack-binding-v0.1.md",
+            "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+            "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+            "docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md",
+            "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
+            "docs/research/eipm-n0-final-full-scale-capability-package-v1.md",
+            "docs/research/eipm-n0-full-envelope-interface-contract-v1.md",
+            "docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md",
+            "docs/research/eipm-n0-job-575958-closure-pass-v1.md",
+            "docs/research/eipm-n0-job-575962-semantic-matcher-v2.md",
+            "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md",
+            "docs/research/eipm-n0-job575986-p2a-semantic-localization-v1.md",
+            "docs/research/eipm-n0-multilayer-interface-failure-localization-v0.1.md",
+            "docs/research/eipm-n0-qsre-architecture-blueprint-v0.1.md",
+            "docs/research/eipm-n0-qsre-mechanics-result-v0.1.md",
+            "docs/research/eipm-n0-qsre-post-reality-audit-interpretation-v0.57.md",
+            "docs/research/eipm-n0-qsre-preimplementation-contract-result-v0.1.md",
+            "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
+            "docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md",
+            "docs/research/eipm-n0-qsre-t1-executor-decision-v0.1.md",
+            "docs/research/eipm-n0-qsre-t1-one-shot-p100-authorization-v0.1.md",
+            "docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md",
+            "docs/research/eipm-n0-qsre-t1-pretraining-validity-correction-v0.1.md",
+            "docs/research/eipm-n0-qsre-t2-v02-failure-localization-v03-decision.md",
+            "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md",
+            "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
+            "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
+            "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+            "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
+            "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
+            "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+            "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
+            "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md",
+            "docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md"
+          ],
+          "authority": "unmerged-experiment-pointer"
+        },
         {
           "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
           "head": "cef6e5ed48bb69e064596b30a87a73c3e79a0763",
@@ -4642,7 +4855,7 @@
     },
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": true,
-      "newest_experiment_frontier_time": "2026-09-21T13:00:29-05:00",
+      "newest_experiment_frontier_time": "2026-09-21T20:17:33-05:00",
       "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
       "context_branch_head_time": "2026-09-21T13:01:00-05:00"
     },
@@ -4651,8 +4864,261 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 297,
-      "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
+      "score": 243,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md",
+      "blob_sha": "983b8a0dee77a7cb0fd7e7ffdf4383187128073a",
+      "category": "design_document",
+      "title": "N0 Full-Envelope Retrospective Architecture Audit v1",
+      "declared": {
+        "decision": " preserve step80 as an initialization and comparison baseline. Reopen public semantic representation learning jointly with the operator/schema objective. Do not treat the current semantic heads as universal frozen authority.",
+        "status": " retrospective architecture authority; no gradient/GPU authorization"
+      },
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 44,
+          "text": "| QSRE T2 v0.x | **SUPERSEDED_CAUSAL_SCAFFOLD** | Do not revive fixed slots/classes. Production Core design supersedes it. |"
+        },
+        {
+          "line": 47,
+          "text": "| Final self-validation v1 | **HISTORICALLY_VALID BUT INSUFFICIENT FULL-ENVELOPE GATE** | Preserve as historical frozen test. Supersede with a new broader final contract before N0 closure. |"
+        },
+        {
+          "line": 315,
+          "text": "## 12. Final self-validation v1 — preserve history, supersede before closure"
+        },
+        {
+          "line": 346,
+          "text": "Once job 575990 proved that geometry insufficient for the new open-schema semantic/operator requirement, those downstream preservation PASS results can no longer be interpreted as independent evidence that the representation is sufficient."
+        }
+      ],
+      "catalogs": [
+        "supersession",
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 73,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 231,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-21/sol/N0_FINAL_FULL_SCALE_FROZEN_AUTHORITY_READY.md",
+      "blob_sha": "f346cb43988419bdec97b98447e0b89e6933d270",
+      "category": "working_context",
+      "title": "N0 final full-scale frozen-authority closure — ready for one owner Magnolia run",
+      "declared": {
+        "status": " final pre-launch package completed; exact-head static/CPU qualification passed; exact-source Graphify passed; private operational history reconciled; Fable updated; one owner Magnolia run is the next scientific evidence"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 58
+    },
+    {
+      "score": 205,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md",
+      "blob_sha": "9f07bc2ed47716788c0af7545e3c3cebda60b950",
+      "category": "design_document",
+      "title": "N0 job 575966 — frozen semantic authority v3",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 56,
+          "text": "The failure is no longer explained by:"
+        },
+        {
+          "line": 154,
+          "text": "The trainable Production operator no longer owns semantic relation identity."
+        }
+      ],
+      "catalogs": [
+        "supersession",
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 41,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 196,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 21,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 196,
+      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 21,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 196,
+      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 21,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 194,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
+      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
+      "category": "design_document",
+      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
+      "declared": {
+        "status": " production-architecture authority; implementation/training remains closed"
+      },
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 5,
+          "text": "**Supersedes as production candidates:** T1 executor scaffold, T2 v0.1/v0.2 operator, unrun T2 v0.3 schema-ordered prototype"
+        }
+      ],
+      "catalogs": [
+        "supersession",
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 46,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 194,
+      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
+      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
+      "category": "design_document",
+      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
+      "declared": {
+        "status": " production-architecture authority; implementation/training remains closed"
+      },
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 5,
+          "text": "**Supersedes as production candidates:** T1 executor scaffold, T2 v0.1/v0.2 operator, unrun T2 v0.3 schema-ordered prototype"
+        }
+      ],
+      "catalogs": [
+        "supersession",
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 46,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 194,
+      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
+      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
+      "category": "design_document",
+      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
+      "declared": {
+        "status": " production-architecture authority; implementation/training remains closed"
+      },
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 5,
+          "text": "**Supersedes as production candidates:** T1 executor scaffold, T2 v0.1/v0.2 operator, unrun T2 v0.3 schema-ordered prototype"
+        }
+      ],
+      "catalogs": [
+        "supersession",
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 46,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 181,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
       "path": "docs/research/eipm-n0-semantic-operator-foundation-v1.md",
       "blob_sha": "31338ca72c39905d61f8487e3118ee016c4fbae1",
@@ -4679,457 +5145,216 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 98,
+      "lexical_body_hits": 56,
       "currentness_adjustment": 25
     },
     {
-      "score": 256,
-      "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
+      "score": 180,
+      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
-      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
+      "path": "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md",
+      "blob_sha": "9f07bc2ed47716788c0af7545e3c3cebda60b950",
       "category": "design_document",
-      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
-      "declared": {
-        "status": " production-architecture authority; implementation/training remains closed"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "fallback",
-        "magnolia",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "supersession",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 63,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 256,
-      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
-      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
-      "category": "design_document",
-      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
-      "declared": {
-        "status": " production-architecture authority; implementation/training remains closed"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "fallback",
-        "magnolia",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "supersession",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 63,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 256,
-      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
-      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
-      "category": "design_document",
-      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
-      "declared": {
-        "status": " production-architecture authority; implementation/training remains closed"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "fallback",
-        "magnolia",
-        "udocker"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "supersession",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 63,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 253,
-      "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
-      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
-      "category": "design_document",
-      "title": "N0 Query-Semantics Architecture Audit v0.1",
-      "declared": {},
-      "matched_terms": [
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "supersession",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 38,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 253,
-      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
-      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
-      "category": "design_document",
-      "title": "N0 Query-Semantics Architecture Audit v0.1",
-      "declared": {},
-      "matched_terms": [
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "supersession",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 38,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 253,
-      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
-      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
-      "category": "design_document",
-      "title": "N0 Query-Semantics Architecture Audit v0.1",
-      "declared": {},
-      "matched_terms": [
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "supersession",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 38,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 244,
-      "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
-      "blob_sha": "b768036497da7db21464b6959b46d86706353832",
-      "category": "design_document",
-      "title": "N0 Clean-Sheet Relational Execution Architecture Audit v0.1",
-      "declared": {
-        "status": " architecture-review authority; implementation and gradient work frozen"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "fallback",
-        "network",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "supersession",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 82,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 244,
-      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
-      "blob_sha": "b768036497da7db21464b6959b46d86706353832",
-      "category": "design_document",
-      "title": "N0 Clean-Sheet Relational Execution Architecture Audit v0.1",
-      "declared": {
-        "status": " architecture-review authority; implementation and gradient work frozen"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "fallback",
-        "network",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "supersession",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 82,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 244,
-      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
-      "blob_sha": "b768036497da7db21464b6959b46d86706353832",
-      "category": "design_document",
-      "title": "N0 Clean-Sheet Relational Execution Architecture Audit v0.1",
-      "declared": {
-        "status": " architecture-review authority; implementation and gradient work frozen"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "fallback",
-        "network",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "supersession",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 82,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 233,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/N0_LATENT_POOL_V01_CHALLENGE_FAILURE_AND_SCALE_ADEQUACY_AUDIT_2026-09-16.md",
-      "blob_sha": "5bf63241b821ece2c6b74fc0512c575bd7db9c6e",
-      "category": "design_document",
-      "title": "N0 Latent Pool v0.1 Frozen Challenge Failure and Scale Adequacy Audit — 2026-09-16",
+      "title": "N0 job 575966 — frozen semantic authority v3",
       "declared": {},
       "matched_terms": [],
       "supersession_hints": [
         {
-          "line": 52,
-          "text": "The v0.1 challenge rows are retired from future latent-pool ratification because their observed result informed this validator correction. A new untouched v0.2 challenge is required."
+          "line": 56,
+          "text": "The failure is no longer explained by:"
+        },
+        {
+          "line": 154,
+          "text": "The trainable Production operator no longer owns semantic relation identity."
         }
       ],
       "catalogs": [
         "supersession",
         "failure",
+        "frontier",
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 38,
-      "currentness_adjustment": 4
+      "lexical_body_hits": 41
     },
     {
-      "score": 231,
-      "branch": "alice-eipm-v1-n0-closure-pass",
+      "score": 180,
+      "branch": "alice-eipm-v1-n0-p2a-semantic-localization-v1",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
-      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
+      "path": "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md",
+      "blob_sha": "9f07bc2ed47716788c0af7545e3c3cebda60b950",
       "category": "design_document",
-      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
-      "declared": {
-        "status": " production-architecture authority; implementation/training remains closed"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "fallback",
-        "magnolia",
-        "udocker"
+      "title": "N0 job 575966 — frozen semantic authority v3",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 56,
+          "text": "The failure is no longer explained by:"
+        },
+        {
+          "line": 154,
+          "text": "The trainable Production operator no longer owns semantic relation identity."
+        }
       ],
-      "supersession_hints": [],
       "catalogs": [
+        "supersession",
         "failure",
         "frontier",
-        "supersession",
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 63
+      "lexical_body_hits": 41
     }
   ],
   "graphify_navigation_hints": [
     {
-      "label": "run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh",
-      "source": "scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh",
+      "label": "audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py",
+      "source": "scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py",
       "location": "L1",
-      "community": "351"
+      "community": "0"
     },
     {
-      "label": "run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh script",
-      "source": "scripts/eipm/n0/run_n0_v02_qsre_production_operator_binder_v2_recovery_v1.sh",
+      "label": "qualify_n0_v02_full_envelope_cpu_runtime_v1.py",
+      "source": "scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py",
       "location": "L1",
-      "community": "351"
+      "community": "273"
     },
     {
-      "label": "train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py",
-      "source": "scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py",
+      "label": "run_n0_v02_qualify_query_edge_cross_attention_bridge_v0_1.sh",
+      "source": "scripts/eipm/n0/run_n0_v02_qualify_query_edge_cross_attention_bridge_v0_1.sh",
       "location": "L1",
-      "community": "3"
+      "community": "337"
     },
     {
       "label": "AliceN0V02Model",
       "source": "src/alice_personality/n0/v02_model.py",
       "location": "L13",
-      "community": "64"
+      "community": "159"
     },
     {
-      "label": "Estimate when view specialization is actually warranted. Near-consensus views…",
-      "source": "src/alice_personality/n0/adaptive_multi_view_latent_pool_objectives_v0_2.py",
-      "location": "L169",
-      "community": "107"
-    },
-    {
-      "label": "adapter()",
-      "source": "tests/phase4/test_information_research_mode.py",
-      "location": "L312",
-      "community": "39"
-    },
-    {
-      "label": "AdaptiveMultiViewLatentPoolV02",
-      "source": "src/alice_personality/n0/adaptive_multi_view_latent_pool_v0_2.py",
-      "location": "L191",
-      "community": "3"
-    },
-    {
-      "label": "verify_result_against_preflight()",
-      "source": "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
-      "location": "L146",
-      "community": "189"
-    },
-    {
-      "label": "ConstitutionalSourceSnapshot",
-      "source": "src/alice_conversation/constitutional_prompt.py",
-      "location": "L50",
-      "community": "138"
+      "label": "._activity()",
+      "source": "src/alice_information/research_orchestration.py",
+      "location": "L694",
+      "community": "14"
     },
     {
       "label": "ArbitrationV02Tests",
       "source": "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
       "location": "L12",
-      "community": "184"
+      "community": "201"
     },
     {
       "label": "test_memory_identity_host_learning_architecture.py",
       "source": "tests/governance/test_memory_identity_host_learning_architecture.py",
       "location": "L1",
-      "community": "243"
+      "community": "270"
+    },
+    {
+      "label": "attention.py",
+      "source": "src/cognitive_kernel/attention.py",
+      "location": "L1",
+      "community": "1"
     },
     {
       "label": "audit()",
       "source": "scripts/audit_capability_barriers.py",
       "location": "L521",
-      "community": "141"
-    },
-    {
-      "label": "test_plaintext_read_decrypts_after_authorization_and_audits_without_content()",
-      "source": "tests/phase2/test_memory_sensitive_access.py",
-      "location": "L389",
-      "community": "58"
+      "community": "139"
     },
     {
       "label": "authority()",
       "source": "tests/eipm/test_n0_qsre_production_operator_v3.py",
       "location": "L87",
-      "community": "185"
+      "community": "202"
     },
     {
-      "label": "Shape contract for QSRE mechanics. Axes B/L/Tq/F/Tf/E and feature widths are…",
-      "source": "src/alice_personality/n0/qsre_mechanics.py",
-      "location": "L17",
-      "community": "123"
-    },
-    {
-      "label": "base_parts()",
-      "source": "scripts/eipm/n0/build_n0_v02_evidence_graph_curriculum.py",
-      "location": "L91",
-      "community": "25"
-    },
-    {
-      "label": "test_metadata_search_is_selector_based_and_returns_no_plaintext()",
-      "source": "tests/phase2/test_memory_sensitive_access.py",
-      "location": "L149",
-      "community": "58"
-    },
-    {
-      "label": "test_candidates_never_enter_derived_indexes_before_promotion()",
-      "source": "tests/phase2/test_memory_candidate_security_gates.py",
-      "location": "L312",
-      "community": "15"
-    },
-    {
-      "label": "test_source_time_beyond_clock_skew_is_rejected()",
-      "source": "tests/phase4/test_information_freshness.py",
-      "location": "L158",
-      "community": "48"
-    },
-    {
-      "label": "QSREProductionBinderV2",
-      "source": "src/alice_personality/n0/qsre_production_binder_v2.py",
-      "location": "L16",
-      "community": "167"
-    },
-    {
-      "label": ".boundary()",
-      "source": "src/alice_conversation/cli_policy.py",
-      "location": "L67",
-      "community": "76"
+      "label": "authorize_boolean_map()",
+      "source": "src/alice_capability_profiles.py",
+      "location": "L88",
+      "community": "95"
     },
     {
       "label": "test_dynamic_relation_cardinality_has_no_parameter_axis()",
       "source": "tests/eipm/test_n0_qsre_production_core_v1.py",
       "location": "L157",
-      "community": "37"
+      "community": "42"
     },
     {
-      "label": "One exact source token carried into conversational grounding.",
-      "source": "src/alice_conversation/contracts.py",
-      "location": "L190",
-      "community": "11"
+      "label": "test_adapter_allows_semantic_only_factor_banks_without_structural_opcode_mapping()",
+      "source": "tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py",
+      "location": "L866",
+      "community": "74"
+    },
+    {
+      "label": "test_candidates_never_enter_derived_indexes_before_promotion()",
+      "source": "tests/phase2/test_memory_candidate_security_gates.py",
+      "location": "L312",
+      "community": "115"
+    },
+    {
+      "label": "Behavioral readout for public N0 judgment supervision. Candidate meaning comes…",
+      "source": "src/alice_personality/n0/public_judgment_probe_v1.py",
+      "location": "L30",
+      "community": "150"
+    },
+    {
+      "label": "test_reliability_prior_can_route_between_equivalent_views()",
+      "source": "tests/eipm/test_n0_cross_context_fusion.py",
+      "location": "L79",
+      "community": "80"
+    },
+    {
+      "label": "QSREProductionBinderV2",
+      "source": "src/alice_personality/n0/qsre_production_binder_v2.py",
+      "location": "L16",
+      "community": "175"
+    },
+    {
+      "label": "bounded_serving_prototype.py",
+      "source": "src/cognitive_kernel/bounded_serving_prototype.py",
+      "location": "L1",
+      "community": "33"
+    },
+    {
+      "label": "._bridge_relation_bias()",
+      "source": "src/alice_personality/n0/evidence_graph_query_edge_bridge.py",
+      "location": "L43",
+      "community": "161"
+    },
+    {
+      "label": "_build()",
+      "source": "tests/phase4/test_information_grounding.py",
+      "location": "L154",
+      "community": "54"
+    },
+    {
+      "label": "candidate()",
+      "source": "tests/phase5/test_memory_m2_adjudication_contracts.py",
+      "location": "L154",
+      "community": "12"
     },
     {
       "label": "causal_specialist_probabilities()",
       "source": "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py",
       "location": "L83",
-      "community": "19"
+      "community": "37"
+    },
+    {
+      "label": "test_memory_capability_ceiling.py",
+      "source": "tests/governance/test_memory_capability_ceiling.py",
+      "location": "L1",
+      "community": "226"
+    },
+    {
+      "label": "TracebackChain",
+      "source": "src/cognitive_kernel/results.py",
+      "location": "L316",
+      "community": "1"
     }
   ],
   "private_external_route_recommended": true,
-  "private_external_route_reason": "question references a private/external source class",
+  "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
   "trust_contract": [
     "This capsule routes retrieval; it is not canonical A.L.I.C.E. truth.",
     "Open consequential claims in the original branch/path source before acting.",

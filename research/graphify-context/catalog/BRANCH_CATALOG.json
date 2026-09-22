@@ -136,6 +136,18 @@
       "knowledge_surface": true
     },
     {
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+      "head": "4022aa570e5fbc129471f5d6143e4a4001c98369",
+      "head_committed_at": "2026-09-21T20:17:33-05:00",
+      "head_message": "test(n0): prove padded long-context segments are inert",
+      "status": "ahead",
+      "ahead": 911,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 461,
+      "knowledge_surface": true
+    },
+    {
       "branch": "alice-eipm-v1-n0-p2a-semantic-localization-v1",
       "head": "8180ed500fcf2181d3a70f5a01481d00ebbbb24a",
       "head_committed_at": "2026-09-21T11:41:51-05:00",

@@ -1,9 +1,9 @@
 {
-  "source_work_branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
-  "source_work_commit": "cef6e5ed48bb69e064596b30a87a73c3e79a0763",
+  "source_work_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+  "source_work_commit": "4022aa570e5fbc129471f5d6143e4a4001c98369",
   "research_branch": "research/graphify-context-substrate",
-  "research_commit": "fd0401a284924030cc3c7e2b886ade4f6bf4e51b",
-  "workflow_run_id": "35635752768",
+  "research_commit": "6403186c0a1b56c80514c5c6653e5b51c1e0597c",
+  "workflow_run_id": "35676237526",
   "graph_mode": "code-only",
   "extraction_tree": "exact-source-worktree",
   "graphify_version": "0.9.63",
