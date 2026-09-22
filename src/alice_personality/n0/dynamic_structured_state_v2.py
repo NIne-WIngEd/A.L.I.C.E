@@ -7,6 +7,10 @@ import torch
 from torch import Tensor, nn
 
 from alice_personality.n0.semantic_operator_foundation import DynamicSemanticSchema
+from alice_personality.n0.numeric_contracts import (
+    require_finite,
+    require_unit_interval,
+)
 from alice_personality.n0.chunked_set_attention_v1 import (
     ChunkedSetAttentionConfig,
     ChunkedSetTransformerEncoder,
@@ -168,12 +172,15 @@ class DynamicStructuredStateV2(nn.Module):
             raise ValueError("field_confidence must be [B,F]")
         if field_missing.shape != (batch, fields):
             raise ValueError("field_missing must be [B,F]")
+        require_unit_interval("field_confidence", field_confidence)
+        require_unit_interval("field_missing", field_missing)
         if field_metadata.shape != (
             batch,
             fields,
             self.config.continuous_metadata_dim,
         ):
             raise ValueError("field_metadata continuous geometry drift")
+        require_finite("field_metadata", field_metadata)
         if set(descriptor_banks) != set(descriptor_indices):
             raise ValueError("descriptor bank/index names must match")
 
