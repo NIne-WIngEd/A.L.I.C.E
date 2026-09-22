@@ -699,7 +699,11 @@ def test_behavioral_compiler_batches_execute_all_counterfactual_paths_and_joint_
         operator_targets=compiled["operator_targets"],
         behavioral_targets=compiled["behavioral_targets"],
         broad_semantic_replay_loss=primary["latent"]["pooled_state"].square().mean(),
-        governed_judgment_replay_loss=primary["public_judgment"]["candidate_logits"].square().mean(),
+        governed_judgment_replay_loss=primary["public_judgment"][
+            "candidate_logits"
+        ].masked_select(
+            primary["public_judgment"]["candidate_valid_mask"]
+        ).square().mean(),
         natural_relation_loss=primary["semantic_operator"]["relation_logits"].square().mean(),
         update_ema=True,
     )
