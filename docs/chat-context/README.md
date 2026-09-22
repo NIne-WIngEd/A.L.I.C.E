@@ -8,12 +8,12 @@ The active N0 implementation frontier is:
 
 ```text
 alice-eipm-v1-n0-full-envelope-foundation-build-v1
-6ee63bd39175e76fca702dd8e2493cb9abcf6e9a
+6822626db833ded0575871f2126e5770d0072293
 ```
 
-The latest exact-head static receipt is green at 115 tests / 100 proof obligations / 86 static obligations, but **Magnolia is not yet authorized**. The deep original-source audit remains open. New chats must not convert a green static suite into CPU/GPU/training authorization without first reading the 2026-09-22 handoff.
+The latest exact-head static receipt is green at 118 tests / 103 proof obligations / 89 static obligations, but **Magnolia is not yet authorized**. The deep original-source audit remains open. New chats must not convert a green static suite into CPU/GPU/training authorization without first reading the 2026-09-22 handoff.
 
-The current deep audit has already justified this caution: after the earlier 114-test green head, it exposed and repaired TRAIN/DEV behavioral field/answer surface leakage plus an undeclared mixed-direction scenario-family governance drift. Those failures are preserved in the 2026-09-22 handoff.
+The current deep audit has repeatedly justified this caution: after earlier green heads it exposed and repaired TRAIN/DEV behavioral field/answer surface leakage, undeclared mixed-direction scenario governance drift, and a semantic modifier bypass that allowed reliability/recency/temporal/provenance metadata to remain available through learned paths even when the corresponding criterion was OFF. Those failures are preserved in the 2026-09-22 handoff.
 
 The current method is failure-driven and anti-hotfix: try to expose structural defects cheaply, verify original source rather than report flags, repair one localized causal defect, preserve failure evidence, rerun affected exact-head evidence, and continue the broader audit.
 
@@ -55,9 +55,7 @@ experience / observation
 
 A.L.I.C.E. keeps Rayan host state, Mehejabin Elaina source-person identity, and A.L.I.C.E. current self distinct. A general Fable keeps user/host state and Fable current self distinct.
 
-The bounded architecture correction lives on:
-
-`alice-personal-development-architecture-v1`
+The accepted personal-development architecture is now canonical on `main` at `d77b990b76de37984c4fd1a523aeb628d5b84afa` (protected PR #90).
 
 The Fable process-capture branch has also been updated so continuing user learning and assistant self-development are required destination capabilities rather than optional identity-maintenance decoration.
 
@@ -79,4 +77,4 @@ The validation-heavy MC10D continuation remains historical evidence rather than 
 
 Private Elaina, Rayan, and owner-specific payloads remain outside the public repository unless separately authorized. Architecture may name roles where needed for continuity, but raw private corpora, secrets, credentials, and private evidence do not belong in Git.
 
-Canonical `main` remains separate from these active research/build branches.
+Canonical `main` now carries the accepted personal-development architecture. Active N0 implementation and Graphify/process research remain separate build/research branches until their own evidence gates justify promotion.
