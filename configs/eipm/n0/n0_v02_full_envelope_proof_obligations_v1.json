@@ -282,6 +282,13 @@
       "requirement": "Long-query segmentation preserves unique token order without overlap duplication."
     },
     {
+      "id": "N0-P32B",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_context_virtualizer_splits_overlap_at_midpoint_instead_of_later_window_bias",
+      "requirement": "Overlapping long-context windows use balanced ownership rather than systematically retaining boundary tokens from the context-poor later window."
+    },
+    {
       "id": "N0-P33",
       "stage": "context",
       "kind": "STATIC_REQUIRED",
