@@ -554,6 +554,20 @@
       "requirement": "Generated public behavioral fabric passes split isolation, semantic-key leakage, support/endpoint consistency, intervention and runtime-axis audits before any gradient."
     },
     {
+      "id": "N0-P39BE",
+      "stage": "optimization_numerics",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_latent_noncollapse_penalizes_antipodal_rank_one_collapse",
+      "requirement": "Anti-collapse supervision must detect rank-one collapse even when duplicated slots flip sign rather than align positively."
+    },
+    {
+      "id": "N0-P39BF",
+      "stage": "optimization_numerics",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_irrelevant_view_invariance_gradient_is_finite_with_masked_candidates",
+      "requirement": "Irrelevant-view invariance must remain backward-finite when padded candidate probabilities underflow to exact zero."
+    },
+    {
       "id": "N0-P40",
       "stage": "tokenizer",
       "kind": "RUNTIME_REQUIRED",
