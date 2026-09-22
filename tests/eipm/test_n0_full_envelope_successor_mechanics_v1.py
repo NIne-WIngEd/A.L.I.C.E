@@ -299,6 +299,7 @@ def test_semantic_operator_adapter_and_full_envelope_binder_executor_integrate()
             edge_temporal_match=torch.ones(batch,edges),
             edge_provenance_match=torch.ones(batch,edges),
             relation_schema_state=relation_state,
+            step_relation_schema_state=adapted["step_relation_schema_state"],
             relation_symmetric=torch.zeros(batch,relation_state.size(1),dtype=torch.bool),
             operator=operator,
             focus_field_weight=bound["focus_field_weight"],
@@ -426,6 +427,7 @@ def test_executor_local_path_aggregate_are_causally_distinct_without_hard_thresh
         edge_temporal_match=torch.ones(1,3),
         edge_provenance_match=torch.ones(1,3),
         relation_schema_state=torch.randn(1,1,24),
+        step_relation_schema_state=torch.randn(1,3,1,24),
         relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
         focus_field_weight=torch.tensor([[1.0,0.0,0.0,0.0]]),
     )
@@ -521,6 +523,7 @@ def test_executor_zero_support_forces_zero_relational_execution_confidence() -> 
         edge_temporal_match=torch.ones(1,2),
         edge_provenance_match=torch.ones(1,2),
         relation_schema_state=torch.randn(1,1,24),
+        step_relation_schema_state=torch.randn(1,3,1,24),
         relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
         focus_field_weight=torch.tensor([[1.0,0.0,0.0]]),
     )
@@ -660,6 +663,7 @@ def test_executor_symmetric_relation_ignores_forward_reverse_storage_orientation
         edge_temporal_match=torch.ones(1,2),
         edge_provenance_match=torch.ones(1,2),
         relation_schema_state=torch.randn(1,1,24),
+        step_relation_schema_state=torch.randn(1,3,1,24),
         relation_symmetric=torch.ones(1,1,dtype=torch.bool),
         focus_field_weight=torch.tensor([[1.0,0.0,0.0]]),
     )
@@ -731,6 +735,7 @@ def test_executor_truncated_program_cannot_claim_relational_execution_confidence
         edge_temporal_match=torch.ones(1,2),
         edge_provenance_match=torch.ones(1,2),
         relation_schema_state=torch.randn(1,1,24),
+        step_relation_schema_state=torch.randn(1,3,1,24),
         relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
         focus_field_weight=torch.tensor([[1.0,0.0,0.0]]),
     )
@@ -853,6 +858,7 @@ def test_executor_mixed_forward_then_reverse_tracks_final_semantic_source() -> N
             edge_temporal_match=torch.ones(1,2),
             edge_provenance_match=torch.ones(1,2),
             relation_schema_state=torch.randn(1,2,24),
+            step_relation_schema_state=torch.randn(1,3,2,24),
             relation_symmetric=torch.zeros(1,2,dtype=torch.bool),
             operator=operator,
             focus_field_weight=torch.tensor([[1.0,0.0,0.0]]),
@@ -1150,6 +1156,7 @@ def test_executor_confidence_uses_program_start_probability_not_expected_step_co
             edge_temporal_match=torch.ones(1,1),
             edge_provenance_match=torch.ones(1,1),
             relation_schema_state=torch.randn(1,1,24),
+            step_relation_schema_state=torch.randn(1,3,1,24),
             relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
             operator=operator,
             focus_field_weight=torch.tensor([[1.0,0.0]]),
@@ -1220,6 +1227,7 @@ def test_executor_rejects_out_of_range_support_metadata() -> None:
             edge_temporal_match=torch.ones(1,1),
             edge_provenance_match=torch.ones(1,1),
             relation_schema_state=torch.randn(1,1,24),
+            step_relation_schema_state=torch.randn(1,3,1,24),
             relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
             operator=_manual_operator(TRAVERSAL_LOCAL),
             focus_field_weight=torch.tensor([[1.0,0.0]]),
