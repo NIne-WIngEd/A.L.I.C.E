@@ -291,6 +291,34 @@ def test_full_trainable_system_final_judgment_gradient_reaches_shared_backbone_a
     assert any(g is not None and float(g.abs().sum()) > 0.0 for g in bridge_grads)
 
 
+def test_full_trainable_system_encodes_additional_runtime_view_source_text() -> None:
+    torch.manual_seed(2821)
+    system=_system().eval()
+    batch=_full_batch()
+    source_ids,source_mask=_tokens(2,length=13,offset=81)
+    descriptor_ids,descriptor_mask=_tokens(2,length=12,offset=101)
+    batch["additional_view_source_input_ids"]=source_ids.reshape(1,2,-1)
+    batch["additional_view_source_attention_mask"]=source_mask.reshape(1,2,-1)
+    batch["additional_view_descriptor_input_ids"]=descriptor_ids.reshape(1,2,-1)
+    batch["additional_view_descriptor_attention_mask"]=descriptor_mask.reshape(1,2,-1)
+    batch["additional_view_available"]=torch.tensor([[True,False]])
+    batch["additional_view_reliability"]=torch.tensor([[1.0,1.0]])
+    with torch.no_grad():
+        out=system(task="full_envelope",batch=batch)
+    assert out["source_views"].shape[1] == 8
+    assert out["view_available"][0,-2:].tolist() == [True,False]
+    assert out["semantic_input_metadata"]["additional_view_source"]["precomputed"] is False
+    assert out["semantic_input_metadata"]["additional_view_source"]["used_virtualization"] is True
+    assert out["semantic_input_metadata"]["additional_view_descriptor"]["used_virtualization"] is True
+    assert torch.equal(
+        out["source_views"][0,-1],
+        torch.zeros_like(out["source_views"][0,-1]),
+    )
+    report=system.parameter_report()
+    assert report["additional_runtime_view_source_text_adapter"] is True
+    assert report["precomputed_additional_runtime_views_still_supported"] is True
+
+
 def test_full_trainable_system_replay_and_full_envelope_share_same_backbone_parameters() -> None:
     torch.manual_seed(283)
     system=_system().train()

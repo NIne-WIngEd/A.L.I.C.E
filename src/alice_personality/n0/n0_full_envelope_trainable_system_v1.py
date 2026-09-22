@@ -260,13 +260,24 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
             candidate_token_mask = candidate["token_mask"]
 
         additional_source_views = batch.get("additional_source_views")
+        additional_source_ids = batch.get("additional_view_source_input_ids")
+        additional_source_encoded = None
+        if additional_source_views is not None and additional_source_ids is not None:
+            raise ValueError(
+                "additional views may use precomputed source vectors or source-text tokens, not both"
+            )
         additional_view_available = batch.get("additional_view_available")
         additional_view_reliability = batch.get("additional_view_reliability")
         additional_view_descriptor_states = None
+        additional_descriptor_encoded = None
         additional_descriptor_ids = batch.get(
             "additional_view_descriptor_input_ids"
         )
-        if additional_source_views is not None:
+        has_additional_views = (
+            additional_source_views is not None
+            or additional_source_ids is not None
+        )
+        if has_additional_views:
             if (
                 additional_view_available is None
                 or additional_view_reliability is None
@@ -276,6 +287,49 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
                 raise ValueError(
                     "additional views require availability, reliability, and descriptor tokens"
                 )
+
+            if additional_source_ids is not None:
+                source_attention = batch.get(
+                    "additional_view_source_attention_mask"
+                )
+                if source_attention is None:
+                    raise ValueError(
+                        "additional view source-text tokens require an attention mask"
+                    )
+                additional_source_encoded = self.semantic_input.encode_padded_items(
+                    backbone=self.backbone,
+                    input_ids=additional_source_ids,
+                    attention_mask=source_attention,
+                    item_valid_mask=additional_view_available,
+                )
+                b, views, layers, tokens, width = (
+                    additional_source_encoded["hidden_states"].shape
+                )
+                flat_hidden = additional_source_encoded[
+                    "hidden_states"
+                ].reshape(b * views, layers, tokens, width)
+                flat_mask = additional_source_encoded["token_mask"].reshape(
+                    b * views,
+                    tokens,
+                )
+                flat_valid = additional_view_available.reshape(-1)
+                flat_summary = torch.zeros(
+                    b * views,
+                    width,
+                    device=flat_hidden.device,
+                    dtype=flat_hidden.dtype,
+                )
+                if bool(flat_valid.any()):
+                    flat_summary[flat_valid] = self.semantic_input.summarize_items(
+                        hidden_states=flat_hidden[flat_valid],
+                        token_mask=flat_mask[flat_valid],
+                    )
+                additional_source_views = flat_summary.reshape(
+                    b,
+                    views,
+                    width,
+                )
+
             additional_descriptor_encoded = self.semantic_input.encode_padded_items(
                 backbone=self.backbone,
                 input_ids=additional_descriptor_ids,
@@ -377,6 +431,27 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
                 if candidate_valid_mask is not None
                 else None
             ),
+            "additional_view_source": (
+                {
+                    "precomputed": False,
+                    "used_virtualization": bool(
+                        additional_source_encoded["used_virtualization"]
+                    ),
+                    "segment_count_max": int(
+                        additional_source_encoded["segment_count_max"]
+                    ),
+                }
+                if additional_source_encoded is not None
+                else (
+                    {
+                        "precomputed": True,
+                        "used_virtualization": False,
+                        "segment_count_max": 0,
+                    }
+                    if has_additional_views
+                    else None
+                )
+            ),
             "additional_view_descriptor": (
                 {
                     "used_virtualization": bool(
@@ -386,7 +461,7 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
                         additional_descriptor_encoded["segment_count_max"]
                     ),
                 }
-                if additional_source_views is not None
+                if additional_descriptor_encoded is not None
                 else None
             ),
         }
@@ -437,6 +512,8 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
             "semantic_replay_and_full_envelope_share_backbone": True,
             "full_envelope_gradient_path_registered": True,
             "all_text_surfaces_share_semantic_input": True,
+            "additional_runtime_view_source_text_adapter": True,
+            "precomputed_additional_runtime_views_still_supported": True,
             "native_window_is_product_ceiling": False,
             "runtime_relation_ceiling": None,
             "runtime_factor_ceiling": None,

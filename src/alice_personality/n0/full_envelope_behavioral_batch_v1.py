@@ -254,6 +254,23 @@ def _remove_fields_variant(
     return batch
 
 
+def _remove_additional_views_variant(
+    *,
+    primary: Mapping[str, Any],
+    rows: Sequence[Mapping[str, Any]],
+    flag_key: str,
+) -> dict[str, Any]:
+    batch = _clone_batch(primary)
+    available = batch.get("additional_view_available")
+    if available is None:
+        return batch
+    for b, row in enumerate(rows):
+        for i, item in enumerate(row.get("additional_views") or []):
+            if bool(item.get(flag_key, False)):
+                available[b, i] = False
+    return batch
+
+
 def _permuted_batch(
     *,
     primary: Mapping[str, Any],
@@ -435,6 +452,82 @@ def compile_behavioral_batch(
         tokenizer, candidate_rows
     )
 
+    additional_rows = [
+        list(row.get("additional_views") or [])
+        for row in rows
+    ]
+    max_additional_views = max((len(items) for items in additional_rows), default=0)
+    additional_source_ids = None
+    additional_source_attention = None
+    additional_descriptor_ids = None
+    additional_descriptor_attention = None
+    additional_available = None
+    additional_reliability = None
+    additional_recoverable = None
+    additional_decisive = None
+    additional_irrelevant = None
+    if max_additional_views > 0:
+        source_rows = [
+            [str(item["source_text"]) for item in items]
+            for items in additional_rows
+        ]
+        descriptor_rows = [
+            [str(item["descriptor_text"]) for item in items]
+            for items in additional_rows
+        ]
+        (
+            additional_source_ids,
+            additional_source_attention,
+            source_present,
+        ) = _tokenize_nested(tokenizer, source_rows)
+        (
+            additional_descriptor_ids,
+            additional_descriptor_attention,
+            descriptor_present,
+        ) = _tokenize_nested(tokenizer, descriptor_rows)
+        if not torch.equal(source_present, descriptor_present):
+            raise RuntimeError("additional view source/descriptor presence drift")
+
+        additional_available = torch.zeros(
+            batch_size, max_additional_views, dtype=torch.bool
+        )
+        additional_reliability = torch.zeros(
+            batch_size, max_additional_views
+        )
+        additional_recoverable = torch.zeros(
+            batch_size, max_additional_views, dtype=torch.bool
+        )
+        additional_decisive = torch.zeros(
+            batch_size, max_additional_views, dtype=torch.bool
+        )
+        additional_irrelevant = torch.zeros(
+            batch_size, max_additional_views, dtype=torch.bool
+        )
+        for b, items in enumerate(additional_rows):
+            for i, item in enumerate(items):
+                available = bool(item.get("available", True))
+                reliability = float(item.get("reliability", 1.0))
+                if not 0.0 <= reliability <= 1.0:
+                    raise ValueError("additional view reliability must stay inside [0,1]")
+                additional_available[b, i] = available
+                additional_reliability[b, i] = reliability
+                additional_recoverable[b, i] = (
+                    available and bool(item.get("recoverable", False))
+                )
+                additional_decisive[b, i] = (
+                    available and bool(item.get("decisive", False))
+                )
+                additional_irrelevant[b, i] = (
+                    available and bool(item.get("irrelevant", False))
+                )
+                if (
+                    bool(item.get("decisive", False))
+                    and bool(item.get("irrelevant", False))
+                ):
+                    raise ValueError(
+                        "one additional runtime view cannot be both decisive and irrelevant"
+                    )
+
     row_internal_descriptions=[
         row.get("internal_view_descriptions")
         for row in rows
@@ -551,12 +644,21 @@ def compile_behavioral_batch(
         if endpoint_active[b]:
             source_target[b] = int(endpoint["source_field"])
             target_target[b] = int(endpoint["target_field"])
-        decisive_active[b] = bool(row["decisive_view_active"])
-        irrelevant_active[b] = bool(row["irrelevant_view_active"])
+        decisive_active[b] = bool(row["decisive_view_active"]) or (
+            additional_decisive is not None
+            and bool(additional_decisive[b].any())
+        )
+        irrelevant_active[b] = bool(row["irrelevant_view_active"]) or (
+            additional_irrelevant is not None
+            and bool(additional_irrelevant[b].any())
+        )
         for name in row["recoverable_view_names"]:
             recoverable[b, view_index[str(name)]] = True
         applicability_target[b] = float(row["applicability_target"])
         uncertainty_target[b] = float(row["uncertainty_target"])
+
+    if additional_recoverable is not None:
+        recoverable = torch.cat([recoverable, additional_recoverable], dim=1)
 
     support_valid_mask = _structural_type_compatibility(
         rows=rows,
@@ -615,6 +717,14 @@ def compile_behavioral_batch(
         "latent_slot_count": cfg.latent_slot_count,
         "latent_refinement_steps": cfg.latent_refinement_steps,
     }
+
+    if max_additional_views > 0:
+        primary["additional_view_source_input_ids"] = additional_source_ids
+        primary["additional_view_source_attention_mask"] = additional_source_attention
+        primary["additional_view_descriptor_input_ids"] = additional_descriptor_ids
+        primary["additional_view_descriptor_attention_mask"] = additional_descriptor_attention
+        primary["additional_view_available"] = additional_available
+        primary["additional_view_reliability"] = additional_reliability
 
     # Behavioral rows intentionally do not own token-evidence targets. The
     # dedicated operator intervention lane supplies exact char->token evidence
@@ -701,10 +811,20 @@ def compile_behavioral_batch(
         rows=rows,
         field_index_key="decisive_field_indices",
     )
+    decisive = _remove_additional_views_variant(
+        primary=decisive,
+        rows=rows,
+        flag_key="decisive",
+    )
     irrelevant = _remove_fields_variant(
         primary=primary,
         rows=rows,
         field_index_key="irrelevant_field_indices",
+    )
+    irrelevant = _remove_additional_views_variant(
+        primary=irrelevant,
+        rows=rows,
+        flag_key="irrelevant",
     )
 
     # Pad each row's semantic permutation to the compiled field width with all
@@ -742,6 +862,8 @@ def compile_behavioral_batch(
             "max_edges": max_edges,
             "max_reasoning_steps": max_slots,
             "max_candidates": candidate_ids.size(1),
+            "max_additional_views": max_additional_views,
+            "additional_runtime_view_text_adapter": max_additional_views > 0,
             "evidence_targets_owned_by_this_lane": False,
             "private_identity_data": False,
         },
