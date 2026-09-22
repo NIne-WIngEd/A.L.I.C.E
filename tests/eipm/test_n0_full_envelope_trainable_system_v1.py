@@ -13,6 +13,9 @@ from alice_personality.n0.full_envelope_training_objective_v1 import (
     DEFAULT_FAMILY_WEIGHTS,
     FullEnvelopeJointTrainingObjectiveV1,
 )
+from alice_personality.n0.full_envelope_behavioral_batch_v1 import (
+    compile_behavioral_batch,
+)
 
 
 class TinyBackbone(nn.Module):
@@ -566,3 +569,160 @@ def test_joint_training_objective_allows_absent_counterfactual_sentinel() -> Non
     assert float(result["behavioral"]["decisive_view_causality"]) == 0.0
     assert float(result["behavioral"]["irrelevant_view_invariance"]) == 0.0
     assert float(result["behavioral"]["endpoint_roles"]) == 0.0
+
+
+class _TinyTokenizer:
+    pad_token_id=0
+    unk_token_id=1
+    cls_token_id=2
+    sep_token_id=3
+    mask_token_id=4
+
+    @staticmethod
+    def _word_id(word: str) -> int:
+        import hashlib
+        value=int(hashlib.sha256(word.encode("utf-8")).hexdigest()[:8],16)
+        return 5 + (value % 500)
+
+    def __call__(
+        self,
+        texts,
+        *,
+        padding=True,
+        truncation=False,
+        return_tensors="pt",
+    ):
+        assert truncation is False
+        rows=[]
+        for text in texts:
+            words=str(text).lower().split()
+            rows.append(
+                [self.cls_token_id]
+                + [self._word_id(word) for word in words]
+                + [self.sep_token_id]
+            )
+        width=max(len(row) for row in rows)
+        ids=torch.full((len(rows),width),self.pad_token_id,dtype=torch.long)
+        mask=torch.zeros(len(rows),width,dtype=torch.long)
+        for i,row in enumerate(rows):
+            ids[i,:len(row)]=torch.tensor(row,dtype=torch.long)
+            mask[i,:len(row)]=1
+        return {"input_ids":ids,"attention_mask":mask}
+
+
+def _behavioral_rows_for_compiler():
+    from build_n0_v02_full_envelope_behavioral_curriculum_v1 import (
+        materialize_row,
+    )
+    rows=[]
+    for example in (0,1,9,13,14):
+        rows.append(
+            materialize_row(
+                split="train",
+                example=example,
+                seed=20260922,
+                relation_count=(1,2,4,6,8)[example % 5],
+                field_count=(4,6,8,12,16)[example % 5],
+                answer_count=(2,3,4,6)[example % 4],
+            )
+        )
+    return rows
+
+
+def test_behavioral_batch_compiler_builds_primary_and_causal_variants_without_key_leak() -> None:
+    rows=_behavioral_rows_for_compiler()
+    compiled=compile_behavioral_batch(
+        rows=rows,
+        tokenizer=_TinyTokenizer(),
+    )
+    primary=compiled["primary_batch"]
+    decisive=compiled["decisive_ablated_batch"]
+    irrelevant=compiled["irrelevant_removed_batch"]
+    permuted=compiled["permuted_batch"]
+    targets=compiled["behavioral_targets"]
+
+    assert compiled["metadata"]["batch_size"] == len(rows)
+    assert compiled["metadata"]["private_identity_data"] is False
+    assert compiled["metadata"]["evidence_targets_owned_by_this_lane"] is False
+    assert primary["relation_candidate_mask"].ndim == 2
+    assert primary["field_valid_mask"].ndim == 2
+    assert primary["edge_valid_mask"].ndim == 2
+    assert targets["support_target"].shape == primary["edge_valid_mask"].shape
+    assert targets["support_valid_mask"].shape == primary["edge_valid_mask"].shape
+
+    for b,row in enumerate(rows):
+        for field_index in row["decisive_field_indices"]:
+            assert not bool(decisive["field_valid_mask"][b,field_index])
+        for field_index in row["irrelevant_field_indices"]:
+            assert not bool(irrelevant["field_valid_mask"][b,field_index])
+        for edge_index in row["support_edge_indices"]:
+            if row["irrelevant_field_indices"]:
+                assert bool(irrelevant["edge_valid_mask"][b,edge_index])
+        assert sorted(row["field_permutation"]) == list(range(len(row["fields"])))
+
+    assert not torch.equal(
+        primary["field_input_ids"],
+        permuted["field_input_ids"],
+    )
+
+
+def test_behavioral_compiler_batches_execute_all_counterfactual_paths_and_joint_objective() -> None:
+    torch.manual_seed(288)
+    rows=_behavioral_rows_for_compiler()
+    compiled=compile_behavioral_batch(
+        rows=rows,
+        tokenizer=_TinyTokenizer(),
+    )
+    system=_system().train()
+    primary=system(
+        task="full_envelope",
+        batch=compiled["primary_batch"],
+    )
+    decisive=system(
+        task="full_envelope",
+        batch=compiled["decisive_ablated_batch"],
+    )
+    irrelevant=system(
+        task="full_envelope",
+        batch=compiled["irrelevant_removed_batch"],
+    )
+    permuted=system(
+        task="full_envelope",
+        batch=compiled["permuted_batch"],
+    )
+    objective=FullEnvelopeJointTrainingObjectiveV1()
+    result=objective(
+        primary_outputs=primary,
+        decisive_ablated_outputs=decisive,
+        irrelevant_removed_outputs=irrelevant,
+        permuted_outputs=permuted,
+        operator_targets=compiled["operator_targets"],
+        behavioral_targets=compiled["behavioral_targets"],
+        broad_semantic_replay_loss=primary["latent"]["pooled_state"].square().mean(),
+        governed_judgment_replay_loss=primary["public_judgment"]["candidate_logits"].square().mean(),
+        natural_relation_loss=primary["semantic_operator"]["relation_logits"].square().mean(),
+        update_ema=True,
+    )
+    assert torch.isfinite(result["loss"])
+    result["loss"].backward()
+    assert system.semantic_model.backbone.embedding.weight.grad is not None
+    assert float(system.semantic_model.backbone.embedding.weight.grad.abs().sum()) > 0.0
+    assert next(system.stack.binder.null_support_score.parameters()).grad is not None
+    assert next(system.stack.public_judgment_probe.score.parameters()).grad is not None
+
+
+def test_behavioral_compiler_support_targets_are_structurally_valid_and_unknown_rows_use_null_support() -> None:
+    rows=_behavioral_rows_for_compiler()
+    compiled=compile_behavioral_batch(
+        rows=rows,
+        tokenizer=_TinyTokenizer(),
+    )
+    support=compiled["behavioral_targets"]["support_target"].bool()
+    valid=compiled["behavioral_targets"]["support_valid_mask"]
+    assert not bool((support & ~valid).any())
+    for b,row in enumerate(rows):
+        if row["scenario_family"]=="unknown_defer":
+            assert not bool(support[b].any())
+            assert compiled["behavioral_targets"]["endpoint_active_mask"][b] == False
+            assert int(compiled["behavioral_targets"]["source_target_index"][b]) == -1
+            assert int(compiled["behavioral_targets"]["target_target_index"][b]) == -1
