@@ -863,6 +863,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_full_envelope_shortcut_preflight_is_current_successor_authority",
       "requirement": "The current full-envelope successor must have an executable pre-gradient shortcut audit registered in CI for every shortcut probe declared by the semantic/operator curriculum contract. Superseded T2 shortcut receipts cannot satisfy this obligation."
+    },
+    {
+      "id": "N0-P37F",
+      "stage": "behavioral_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_behavioral_candidate_answers_require_context_to_choose_between_identical_options",
+      "requirement": "The behavioral curriculum must include matched rows with identical query and candidate-answer set/order but different evidence-conditioned public targets, so candidate wording cannot be a stable shortcut for final judgment."
     }
   ],
   "closure_rule": {

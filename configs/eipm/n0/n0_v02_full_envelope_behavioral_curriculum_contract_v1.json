@@ -81,7 +81,10 @@
     "absent_counterfactual_may_use_minus_one_sentinel": true,
     "support_target_must_be_query_relevant_not_relation_key_equality": true,
     "same_relation_irrelevant_hard_negative_required": true,
-    "criterion_neutral_support_preserves_relevant_quality_alternatives": true
+    "criterion_neutral_support_preserves_relevant_quality_alternatives": true,
+    "matched_candidate_context_swap_required": true,
+    "matched_candidate_context_swap_keeps_query_and_candidate_order_fixed": true,
+    "matched_candidate_context_swap_changes_governing_evidence_and_target": true
   },
   "runtime_coverage": {
     "relation_candidate_counts": {

@@ -678,6 +678,43 @@ def test_behavioral_support_targets_do_not_promote_same_relation_distractors() -
     assert bool(row["edges"][support_relation_edges[1]]["irrelevant"]) is True
 
 
+
+def test_behavioral_candidate_answers_require_context_to_choose_between_identical_options() -> None:
+    """Candidate wording alone may not identify the governed public answer.
+
+    This pair must keep the query and candidate-answer set/order identical while
+    changing only the evidence state that determines which option is correct.
+    The public judgment path therefore has to use the governed context/latent
+    state instead of learning that one answer surface simply sounds correct.
+    """
+    from build_n0_v02_full_envelope_behavioral_curriculum_v1 import (
+        materialize_row,
+    )
+
+    common=dict(
+        split="train",
+        seed=20260922,
+        relation_count=4,
+        field_count=4,
+        answer_count=4,
+    )
+    first=materialize_row(example=15,**common)
+    second=materialize_row(example=16,**common)
+
+    assert first["candidate_context_swap_pair_id"] == second[
+        "candidate_context_swap_pair_id"
+    ]
+    assert first["candidate_context_swap_variant"] != second[
+        "candidate_context_swap_variant"
+    ]
+    assert first["query"] == second["query"]
+    assert first["candidate_answers"] == second["candidate_answers"]
+    assert first["public_target_index"] != second["public_target_index"]
+    assert first["relation_sequence_target"] == second["relation_sequence_target"]
+    assert first["factor_target_keys"] == second["factor_target_keys"]
+    assert first["fields"] != second["fields"]
+
+
 def test_behavioral_batch_compiler_builds_primary_and_causal_variants_without_key_leak() -> None:
     rows=_behavioral_rows_for_compiler()
     compiled=compile_behavioral_batch(
