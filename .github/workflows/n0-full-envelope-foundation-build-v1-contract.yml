@@ -168,10 +168,10 @@ jobs:
           python - <<'PY'
           import json
           r=json.load(open("/tmp/n0-fewrel/audit.json"))
-          assert r["status"]=="PASS_FEWREL_NATURAL_RELATION_AUDIT_V2"
-          assert r["train_relation_count"]==64
+          assert r["status"]=="PASS_FEWREL_NATURAL_RELATION_AUDIT_V3"
+          assert r["train_relation_count"]==56
           assert r["dev_relation_count"]==8
-          assert r["final_relation_count"]==8
+          assert r["final_relation_count"]==16
           assert not r["relation_overlap"]["train_dev"]
           assert not r["relation_overlap"]["train_final"]
           assert not r["relation_overlap"]["dev_final"]
@@ -179,6 +179,8 @@ jobs:
           assert r["source_overlap"]["train_final"]==0
           assert r["source_overlap"]["dev_final"]==0
           assert r["final_relation_descriptions_absent_from_train_dev_bank"] is True
+          assert r["final_training_authorized"] is False
+          assert r["final_model_selection_authorized"] is False
           assert r["final_training_authorized"] is False
           assert r["final_model_selection_authorized"] is False
           assert r["private_identity_data"] is False
