@@ -352,7 +352,11 @@
     "relation_schema_evidence_char_spans_materialized_required": true,
     "factor_schema_evidence_char_spans_materialized_required": true,
     "step_factor_schema_evidence_char_spans_materialized_required": true,
-    "evidence_char_to_token_alignment_audit_required": true
+    "evidence_char_to_token_alignment_audit_required": true,
+    "full_envelope_behavioral_fabric_materialized_required": true,
+    "behavioral_variant_reindex_audit_required": true,
+    "behavioral_support_endpoint_consistency_audit_required": true,
+    "behavioral_row_to_system_batch_compiler_required": true
   },
   "scale_policy": {
     "full_capability_architecture": true,
