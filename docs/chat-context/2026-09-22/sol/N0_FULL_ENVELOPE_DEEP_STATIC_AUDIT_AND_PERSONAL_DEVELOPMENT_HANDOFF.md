@@ -4,8 +4,28 @@
 **Status:** active continuity authority for the current Sol handoff  
 **N0 branch:** `alice-eipm-v1-n0-full-envelope-foundation-build-v1`  
 **N0 head at handoff:** `6c4e3c02672b7a5415fb3407942d86cc9723b8d9`  
+Current build head: `6c4e3c02672b7a5415fb3407942d86cc9723b8d9`  
 **Magnolia authorization:** **NO — deep source-level audit remains open**  
 **N0 complete:** false
+
+## Authoritative build state
+
+```text
+source_branch=alice-eipm-v1-n0-full-envelope-foundation-build-v1
+current_build_head=6c4e3c02672b7a5415fb3407942d86cc9723b8d9
+deep_source_audit_complete=false
+exact_head_static_suite=PASS_114
+proof_obligations_total=99
+proof_obligations_static=85
+magnolia_cpu_runtime_authorized=false
+gpu_memory_dry_run_authorized=false
+optimizer_authorized=false
+gradient_training_authorized=false
+final_validation_open_authorized=false
+n0_complete=false
+```
+
+The old stable-build latent-stage pointer is historical routing context, not the current implementation frontier. For execution decisions, this handoff plus the exact unmerged full-envelope branch source takes precedence over stale stable-branch stage-state language.
 
 ## Why this handoff exists
 
