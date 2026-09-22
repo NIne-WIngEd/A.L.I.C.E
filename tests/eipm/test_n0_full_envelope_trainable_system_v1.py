@@ -246,8 +246,19 @@ def test_full_trainable_system_runs_end_to_end_with_unified_text_virtualization(
     system=_system().eval()
     with torch.no_grad():
         out=system(task="full_envelope",batch=_full_batch())
-    assert out["semantic_input_metadata"]["query_virtualized"] is True
-    assert out["semantic_input_metadata"]["query_segment_count_max"] >= 2
+    assert out["semantic_input_metadata"]["query"]["used_virtualization"] is True
+    assert out["semantic_input_metadata"]["query"]["segment_count_max"] >= 2
+    assert out["semantic_input_metadata"]["relation_schema"]["used_virtualization"] is True
+    assert out["semantic_input_metadata"]["field_text"]["used_virtualization"] is True
+    assert out["semantic_input_metadata"]["candidate_text"]["used_virtualization"] is True
+    assert any(
+        row["used_virtualization"]
+        for row in out["semantic_input_metadata"]["factor_schema"].values()
+    )
+    assert any(
+        row["used_virtualization"]
+        for row in out["semantic_input_metadata"]["descriptor_text"].values()
+    )
     assert out["public_judgment"]["candidate_logits"].shape == (1,3)
     assert out["operator"].relation_distribution.shape == (1,3,2)
     assert out["latent"]["pooled_state"].shape == (1,24)
