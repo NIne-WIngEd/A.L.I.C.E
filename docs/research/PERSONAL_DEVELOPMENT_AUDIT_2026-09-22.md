@@ -85,7 +85,7 @@ Protecting the Elaina-derived foundation must not be interpreted as freezing A.L
 
 This audit does **not** redefine N0 as the user model, self model, memory authority, or continual-learning engine.
 
-N0 remains the public, identity-neutral semantic/evidential/relational/candidate-comparison foundation. Its runtime interfaces should be able to consume semantically described future personal-state views without hard-coded Rayan, Elaina, Alice, Fable, relation-count, view-count, or candidate-count identities.
+N0 remains the public, identity-neutral semantic/evidential/relational/candidate-comparison foundation. Its runtime interfaces should be able to consume semantically described future personal-state views without hard-coded subject identities or fixed relation-count, view-count, or candidate-count axes.
 
 Later EIPM/runtime integration must bind versioned subject state into the ACFP and make the resulting identity decision packet causally control downstream behavior. Outcome-based revision belongs to the governed personal-development/memory path, not inside the N0 semantic substrate.
 
