@@ -391,5 +391,14 @@
     "gpu": false,
     "test_opening": false,
     "private_identity_gradient": false
+  },
+  "shortcut_probe_gate": {
+    "relation_sequence_exact_clear_min": 0.95,
+    "factor_macro_accuracy_clear_min": 0.9,
+    "event_sequence_exact_clear_min": 0.95,
+    "full_operator_exact_clear_min": 0.9,
+    "behavioral_shortcut_clear_min": 0.9,
+    "threshold_source": "precommitted final-v2 deterministic gate where available; remaining shortcut thresholds frozen before first successor shortcut result",
+    "results_observed": false
   }
 }

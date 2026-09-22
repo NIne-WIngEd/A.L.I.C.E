@@ -41,6 +41,7 @@ on:
       - "configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json"
       - "scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py"
+      - "scripts/eipm/n0/audit_n0_v02_full_envelope_shortcuts_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py"
       - "scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py"
@@ -116,6 +117,7 @@ jobs:
             src/alice_personality/n0/n0_full_envelope_stack_v1.py \
             scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py \
+            scripts/eipm/n0/audit_n0_v02_full_envelope_shortcuts_v1.py \
             scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py \
             scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py \
@@ -219,6 +221,36 @@ jobs:
           assert r["gpu_training_authorized"] is False
           assert r["n0_complete"] is False
           print("PASS_N0_FULL_ENVELOPE_BEHAVIORAL_FABRIC_STATIC_AUDIT")
+          PY
+
+      - name: Audit full-envelope shortcut preflight
+        run: |
+          set -euo pipefail
+          rm -f /tmp/n0-full-envelope-shortcuts.json
+          python scripts/eipm/n0/audit_n0_v02_full_envelope_shortcuts_v1.py \
+            --semantic-rows /tmp/n0-so/rows.jsonl \
+            --semantic-manifest /tmp/n0-so/manifest.json \
+            --behavioral-rows /tmp/n0-behavioral/rows.jsonl \
+            --behavioral-manifest /tmp/n0-behavioral/manifest.json \
+            --semantic-contract configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json \
+            --behavioral-contract configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json \
+            --final-contract configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
+            --output /tmp/n0-full-envelope-shortcuts.json
+          python - <<'PY'
+          import json
+          r=json.load(open("/tmp/n0-full-envelope-shortcuts.json"))
+          assert r["status"]=="PASS_N0_FULL_ENVELOPE_SHORTCUT_PREFLIGHT_V1"
+          assert not r["operator_baselines_clearing_gate"]
+          assert not r["behavioral_shortcuts_clearing_gate"]
+          assert r["candidate_permutation"]["semantic_target_invariant"] is True
+          assert r["hard_negative"]["all_target_relations_have_hard_negative_coverage"] is True
+          assert r["counterfactual"]["pair_count"] > 0
+          assert r["legacy_t2_shortcut_receipt_used_as_authority"] is False
+          assert r["gradient"] is False
+          assert r["optimizer"] is False
+          assert r["gpu_training_authorized"] is False
+          assert r["n0_complete"] is False
+          print("PASS_N0_FULL_ENVELOPE_SHORTCUT_PREFLIGHT_V1")
           PY
 
       - name: Materialize and audit exact FewRel natural relation lane
