@@ -14,7 +14,6 @@ import torch
 
 
 PASS = "PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1"
-FAIL = "FAIL_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1"
 
 
 def sha256(path: Path) -> str:
@@ -26,26 +25,7 @@ def sha256(path: Path) -> str:
 
 
 def rss_mb() -> float:
-    # Linux ru_maxrss is KiB.
     return float(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss) / 1024.0
-
-
-def tokenize_fixed(tokenizer: Any, texts: list[str], max_length: int) -> tuple[torch.Tensor, torch.Tensor]:
-    encoded = tokenizer(
-        texts,
-        padding="max_length",
-        truncation=True,
-        max_length=max_length,
-        return_tensors="pt",
-    )
-    return encoded["input_ids"], encoded["attention_mask"].bool()
-
-
-def summarize_schema(schema: Any) -> torch.Tensor:
-    states = schema.token_states.float()
-    mask = schema.token_mask[:, None, :, None].to(states.dtype)
-    per_layer = (states * mask).sum(dim=2) / mask.sum(dim=2).clamp_min(1.0)
-    return per_layer.mean(dim=1)
 
 
 def flatten_float_tensors(value: Any, prefix: str = "") -> list[tuple[str, torch.Tensor]]:
@@ -56,12 +36,47 @@ def flatten_float_tensors(value: Any, prefix: str = "") -> list[tuple[str, torch
         return out
     if isinstance(value, dict):
         for key, child in value.items():
-            out.extend(flatten_float_tensors(child, f"{prefix}.{key}" if prefix else str(key)))
+            out.extend(
+                flatten_float_tensors(
+                    child,
+                    f"{prefix}.{key}" if prefix else str(key),
+                )
+            )
         return out
     if isinstance(value, (tuple, list)):
         for i, child in enumerate(value):
             out.extend(flatten_float_tensors(child, f"{prefix}[{i}]"))
     return out
+
+
+def tokenize_texts(
+    tokenizer: Any,
+    texts: list[str],
+) -> tuple[torch.Tensor, torch.Tensor]:
+    encoded = tokenizer(
+        texts,
+        padding=True,
+        truncation=False,
+        return_tensors="pt",
+    )
+    return encoded["input_ids"], encoded["attention_mask"].bool()
+
+
+def tokenize_nested(
+    tokenizer: Any,
+    rows: list[list[str]],
+) -> tuple[torch.Tensor, torch.Tensor]:
+    if not rows or not rows[0]:
+        raise ValueError("nested text rows must be nonempty")
+    width = len(rows[0])
+    if any(len(row) != width for row in rows):
+        raise ValueError("nested text row cardinality drift")
+    flat = [text for row in rows for text in row]
+    ids, mask = tokenize_texts(tokenizer, flat)
+    return (
+        ids.reshape(len(rows), width, ids.size(1)),
+        mask.reshape(len(rows), width, mask.size(1)),
+    )
 
 
 def tokenizer_stress(tokenizer: Any, cfg: dict[str, Any]) -> dict[str, Any]:
@@ -75,14 +90,22 @@ def tokenizer_stress(tokenizer: Any, cfg: dict[str, Any]) -> dict[str, Any]:
         chars = len(text.replace(" ", ""))
         ratio = chars / max(len(ids), 1)
         english_ratios.append(ratio)
-        english_rows.append({"tokens": len(ids), "chars": chars, "chars_per_token": ratio})
+        english_rows.append(
+            {
+                "tokens": len(ids),
+                "chars": chars,
+                "chars_per_token": ratio,
+            }
+        )
 
     roundtrip_rows = []
     for text in cfg["unicode_roundtrip_samples"]:
         ids = tokenizer.encode(text, add_special_tokens=False)
         unknown += sum(int(x == unk) for x in ids)
         if len(ids) > int(cfg["max_stress_sequence_tokens"]):
-            raise ValueError("unicode tokenizer stress sequence exceeded precommitted token limit")
+            raise ValueError(
+                "unicode tokenizer stress sequence exceeded precommitted token limit"
+            )
         decoded = tokenizer.decode(
             ids,
             skip_special_tokens=True,
@@ -91,15 +114,24 @@ def tokenizer_stress(tokenizer: Any, cfg: dict[str, Any]) -> dict[str, Any]:
         source_nfc = unicodedata.normalize("NFC", text)
         decoded_nfc = unicodedata.normalize("NFC", decoded)
         ok = source_nfc == decoded_nfc
-        roundtrip_rows.append({"tokens": len(ids), "roundtrip_nfc_equal": ok})
+        roundtrip_rows.append(
+            {
+                "tokens": len(ids),
+                "roundtrip_nfc_equal": ok,
+            }
+        )
         if cfg["unicode_nfc_roundtrip_required"] and not ok:
-            raise ValueError(f"tokenizer unicode NFC roundtrip failed for {text!r}")
+            raise ValueError(
+                f"tokenizer unicode NFC roundtrip failed for {text!r}"
+            )
 
     long_entity = str(cfg["long_entity_sample"])
     long_ids = tokenizer.encode(long_entity, add_special_tokens=False)
     unknown += sum(int(x == unk) for x in long_ids)
     if len(long_ids) > int(cfg["max_stress_sequence_tokens"]):
-        raise ValueError("long-entity tokenizer fragmentation exceeded precommitted token limit")
+        raise ValueError(
+            "long-entity tokenizer fragmentation exceeded precommitted token limit"
+        )
 
     if unknown > int(cfg["unknown_token_count_max"]):
         raise ValueError(f"tokenizer produced {unknown} unknown tokens")
@@ -139,29 +171,21 @@ def main() -> None:
         raise SystemExit(f"refusing to overwrite {output_path}")
 
     cfg = json.loads(qualification_path.read_text(encoding="utf-8"))
-    if cfg.get("schema") != "alice.eipm.n0.full-envelope-cpu-runtime-qualification.v1":
+    if (
+        cfg.get("schema")
+        != "alice.eipm.n0.full-envelope-cpu-runtime-qualification.v1"
+    ):
         raise SystemExit("qualification config schema drift")
     if torch.cuda.is_available():
         raise SystemExit("CPU runtime qualification must not expose CUDA")
 
     from safetensors.torch import load_file
+
     from alice_personality.n0.config import load_n0_config
     from alice_personality.n0.curriculum_data import load_tokenizer
-    from alice_personality.n0.n0_full_envelope_stack_v1 import (
-        N0FullEnvelopeStackConfig,
-        N0FullEnvelopeStackV1,
-    )
-    from alice_personality.n0.semantic_backbone_interface_v1 import (
-        FullEnvelopeSemanticBackboneInterfaceV1,
-        SemanticBackboneInterfaceConfig,
-    )
-    from alice_personality.n0.semantic_context_virtualizer_v1 import (
-        SemanticContextVirtualizerConfig,
-        SemanticContextVirtualizerV1,
-    )
-    from alice_personality.n0.semantic_segment_context_bridge_v1 import (
-        SemanticSegmentContextBridgeConfig,
-        SemanticSegmentContextBridgeV1,
+    from alice_personality.n0.n0_full_envelope_trainable_system_v1 import (
+        N0FullEnvelopeTrainableSystemConfig,
+        N0FullEnvelopeTrainableSystemV1,
     )
     from alice_personality.n0.v02_model import AliceN0V02Model
     from alice_personality.n0.v02_training import (
@@ -174,14 +198,18 @@ def main() -> None:
     observed_sha = sha256(checkpoint_path)
     if observed_sha != expected["checkpoint_sha256"]:
         raise SystemExit(
-            f"semantic checkpoint SHA drift expected={expected['checkpoint_sha256']} observed={observed_sha}"
+            "semantic checkpoint SHA drift "
+            f"expected={expected['checkpoint_sha256']} observed={observed_sha}"
         )
 
     tokenizer_receipt = verify_tokenizer_v021(tokenizer_dir)
     tokenizer = load_tokenizer(tokenizer_dir)
     if len(tokenizer) != int(expected["tokenizer_vocab_size"]):
         raise SystemExit("tokenizer vocabulary size drift")
-    tokenizer_result = tokenizer_stress(tokenizer, cfg["tokenizer_stress"])
+    tokenizer_result = tokenizer_stress(
+        tokenizer,
+        cfg["tokenizer_stress"],
+    )
 
     corpus_receipt, corpus_paths = verify_public_corpus_v021(
         corpus_dir,
@@ -197,17 +225,20 @@ def main() -> None:
     )
     if missing or unexpected:
         raise SystemExit(
-            f"semantic checkpoint mismatch missing={list(missing)} unexpected={list(unexpected)}"
+            "semantic checkpoint mismatch "
+            f"missing={list(missing)} unexpected={list(unexpected)}"
         )
     semantic_report = semantic_model.parameter_report()
-    if int(semantic_report["total_parameters"]) != int(expected["exact_model_parameters"]):
+    if int(semantic_report["total_parameters"]) != int(
+        expected["exact_model_parameters"]
+    ):
         raise SystemExit("semantic parameter count drift")
-    semantic_model.eval()
-    memory["after_semantic_model_load_mb"] = rss_mb()
 
     scfg = cfg["successor"]
-    stack = N0FullEnvelopeStackV1(
-        N0FullEnvelopeStackConfig(
+    long_cfg = cfg["long_context_bridge_runtime"]
+    system = N0FullEnvelopeTrainableSystemV1(
+        semantic_model=semantic_model,
+        config=N0FullEnvelopeTrainableSystemConfig(
             semantic_dim=int(scfg["semantic_dim"]),
             model_dim=int(scfg["model_dim"]),
             num_hidden_states=int(scfg["num_hidden_states"]),
@@ -215,400 +246,408 @@ def main() -> None:
             structured_layers=int(scfg["structured_layers"]),
             field_metadata_dim=int(scfg["field_metadata_dim"]),
             edge_metadata_dim=int(scfg["edge_metadata_dim"]),
-            dropout=0.0,
-        )
-    ).eval()
-    stack_report = stack.parameter_report()
-    memory["after_successor_construct_mb"] = rss_mb()
-
-    interface = FullEnvelopeSemanticBackboneInterfaceV1(
-        SemanticBackboneInterfaceConfig(
-            num_hidden_states=int(scfg["num_hidden_states"]),
-            semantic_dim=int(scfg["semantic_dim"]),
-            special_token_ids=(
-                semantic_cfg.pad_token_id,
-                semantic_cfg.unk_token_id,
-                semantic_cfg.cls_token_id,
-                semantic_cfg.sep_token_id,
-                semantic_cfg.mask_token_id,
-            ),
-        )
-    )
-
-    long_cfg = cfg["long_context_bridge_runtime"]
-    virtualizer = SemanticContextVirtualizerV1(
-        SemanticContextVirtualizerConfig(
             native_window_tokens=int(long_cfg["native_window_tokens"]),
             overlap_tokens=int(long_cfg["overlap_tokens"]),
+            segment_bridge_layers=int(long_cfg["bridge_layers"]),
+            segment_query_chunk=int(long_cfg["query_chunk_segments"]),
+            segment_key_chunk=int(long_cfg["key_chunk_segments"]),
+            special_token_ids=(
+                int(semantic_cfg.pad_token_id),
+                int(semantic_cfg.unk_token_id),
+                int(semantic_cfg.cls_token_id),
+                int(semantic_cfg.sep_token_id),
+                int(semantic_cfg.mask_token_id),
+            ),
             pad_token_id=int(semantic_cfg.pad_token_id),
-        )
-    )
-    segment_bridge = SemanticSegmentContextBridgeV1(
-        SemanticSegmentContextBridgeConfig(
-            semantic_dim=int(scfg["semantic_dim"]),
-            num_hidden_states=int(scfg["num_hidden_states"]),
-            num_attention_heads=int(long_cfg["bridge_heads"]),
-            num_layers=int(long_cfg["bridge_layers"]),
-            metadata_dim=3,
-            query_chunk_segments=int(long_cfg["query_chunk_segments"]),
-            key_chunk_segments=int(long_cfg["key_chunk_segments"]),
             dropout=0.0,
-        )
+        ),
     ).eval()
-    bridge_report = segment_bridge.parameter_report()
-    memory["after_segment_bridge_construct_mb"] = rss_mb()
+    system_report = system.parameter_report()
+    stack_report = system.stack.parameter_report()
+    semantic_input_report = system.semantic_input.parameter_report()
+    memory["after_registered_system_construct_mb"] = rss_mb()
 
     case = cfg["runtime_case"]
-    max_tokens = int(case["max_text_tokens"])
-    batch = int(case["batch_size"])
-    backbone = semantic_model.backbone
+    batch_size = int(case["batch_size"])
+    stress = cfg["text_surface_virtualization_stress"]
+    stressed_surfaces = set(
+        str(x) for x in stress["minimum_virtualized_surfaces"]
+    )
+    suffix = " " + " ".join(
+        [str(stress["suffix_text"])] * int(stress["suffix_repeat_count"])
+    )
+    native_window = int(stress["native_window_tokens"])
+    if native_window != int(long_cfg["native_window_tokens"]):
+        raise ValueError("text-surface stress/native-window contract drift")
+
+    def longify(surface: str, text: str) -> str:
+        return text + suffix if surface in stressed_surfaces else text
+
+    queries = [str(x) for x in case["queries"]]
+    queries[0] = longify("query", queries[0])
+    q_ids, q_mask = tokenize_texts(tokenizer, queries)
+
+    relation_rows = [dict(x) for x in case["relations"]]
+    relation_texts = [str(x["description"]) for x in relation_rows]
+    relation_texts[0] = longify("relation_schema", relation_texts[0])
+    r_ids, r_mask = tokenize_texts(tokenizer, relation_texts)
+
+    type_texts = [str(x) for x in case["type_descriptions"]]
+    type_index = {name: i for i, name in enumerate(type_texts)}
+    relation_count = len(relation_texts)
+    type_count = len(type_texts)
+    relation_domain = torch.zeros(
+        relation_count,
+        type_count,
+        dtype=torch.bool,
+    )
+    relation_range = torch.zeros_like(relation_domain)
+    relation_symmetric = torch.zeros(
+        relation_count,
+        dtype=torch.bool,
+    )
+    relation_key_index: dict[str, int] = {}
+    for i, row in enumerate(relation_rows):
+        relation_key_index[str(row["key"])] = i
+        for name in row["domain"]:
+            relation_domain[i, type_index[str(name)]] = True
+        for name in row["range"]:
+            relation_range[i, type_index[str(name)]] = True
+        relation_symmetric[i] = bool(row["symmetric"])
+
+    factor_input_ids: dict[str, torch.Tensor] = {}
+    factor_attention_mask: dict[str, torch.Tensor] = {}
+    for bank_index, (name, texts_raw) in enumerate(
+        case["factor_banks"].items()
+    ):
+        texts = [str(x) for x in texts_raw]
+        if bank_index == 0:
+            texts[0] = longify("factor_schema", texts[0])
+        ids, mask = tokenize_texts(tokenizer, texts)
+        factor_input_ids[str(name)] = ids
+        factor_attention_mask[str(name)] = mask
+
+    descriptor_input_ids: dict[str, torch.Tensor] = {}
+    descriptor_attention_mask: dict[str, torch.Tensor] = {}
+    for bank_index, (name, texts_raw) in enumerate(
+        case["descriptor_banks"].items()
+    ):
+        texts = [str(x) for x in texts_raw]
+        if bank_index == 0:
+            texts[0] = longify("descriptor_text", texts[0])
+        ids, mask = tokenize_texts(tokenizer, texts)
+        descriptor_input_ids[str(name)] = ids
+        descriptor_attention_mask[str(name)] = mask
+
+    field_texts = [
+        [str(x) for x in row]
+        for row in case["field_texts"]
+    ]
+    field_count = len(field_texts[0])
+    if any(len(row) != field_count for row in field_texts):
+        raise ValueError("field row cardinality drift")
+    field_texts[0][0] = longify("field_text", field_texts[0][0])
+    field_ids, field_attention = tokenize_nested(
+        tokenizer,
+        field_texts,
+    )
+    field_valid = torch.tensor(
+        case["field_valid_mask"],
+        dtype=torch.bool,
+    )
+
+    candidate_texts = [
+        [str(x) for x in row]
+        for row in case["candidate_texts"]
+    ]
+    candidate_count = len(candidate_texts[0])
+    if any(len(row) != candidate_count for row in candidate_texts):
+        raise ValueError("candidate row cardinality drift")
+    candidate_texts[0][0] = longify(
+        "candidate_text",
+        candidate_texts[0][0],
+    )
+    candidate_ids, candidate_attention = tokenize_nested(
+        tokenizer,
+        candidate_texts,
+    )
+    candidate_valid = torch.tensor(
+        case["candidate_valid_mask"],
+        dtype=torch.bool,
+    )
+
+    internal_ids, internal_attention = tokenize_texts(
+        tokenizer,
+        [str(x) for x in case["internal_view_descriptions"]],
+    )
+
+    additional_texts = [str(x) for x in case["additional_views"]]
+    additional_ids_single, additional_attention_single = tokenize_texts(
+        tokenizer,
+        additional_texts,
+    )
+    additional_count = len(additional_texts)
+    additional_ids = additional_ids_single[None, :, :].expand(
+        batch_size,
+        -1,
+        -1,
+    ).contiguous()
+    additional_attention = additional_attention_single[
+        None,
+        :,
+        :,
+    ].expand(batch_size, -1, -1).contiguous()
+    additional_available = torch.ones(
+        batch_size,
+        additional_count,
+        dtype=torch.bool,
+    )
+    if batch_size > 1 and additional_count > 1:
+        additional_available[1, -1] = False
+    additional_reliability = (
+        additional_available.float()
+        * torch.linspace(
+            0.90,
+            0.70,
+            additional_count,
+        )[None, :]
+    )
+
+    edges = case["edges"]
+    edge_count = len(edges[0])
+    edge_index = torch.zeros(
+        batch_size,
+        edge_count,
+        2,
+        dtype=torch.long,
+    )
+    edge_relation_index = torch.zeros(
+        batch_size,
+        edge_count,
+        dtype=torch.long,
+    )
+    edge_valid = torch.zeros(
+        batch_size,
+        edge_count,
+        dtype=torch.bool,
+    )
+    for b, rows in enumerate(edges):
+        if len(rows) != edge_count:
+            raise ValueError("edge cardinality drift")
+        for e, row in enumerate(rows):
+            edge_index[b, e, 0] = int(row["source"])
+            edge_index[b, e, 1] = int(row["target"])
+            edge_relation_index[b, e] = relation_key_index[
+                str(row["relation"])
+            ]
+            edge_valid[b, e] = bool(row.get("valid", True))
+
+    edge_reliability = edge_valid.float() * 0.90
+    edge_recency = edge_valid.float() * 0.80
+    edge_temporal_match = edge_valid.float()
+    edge_provenance_match = edge_valid.float() * 0.95
+    edge_metadata = torch.stack(
+        [
+            edge_reliability,
+            edge_recency,
+            edge_temporal_match,
+            edge_provenance_match,
+        ],
+        dim=-1,
+    )
+
+    relation_candidate_mask = torch.tensor(
+        case["relation_candidate_masks"],
+        dtype=torch.bool,
+    )
+    factor_candidate_masks = {
+        str(name): torch.tensor(mask, dtype=torch.bool)
+        for name, mask in case["factor_candidate_masks"].items()
+    }
+    descriptor_indices = {
+        str(name): torch.tensor(values, dtype=torch.long)
+        for name, values in case["descriptor_indices"].items()
+    }
 
     with torch.inference_mode():
-        q_ids, q_attn = tokenize_fixed(tokenizer, list(case["queries"]), max_tokens)
-        query = interface.encode_batch(
-            backbone=backbone,
-            input_ids=q_ids,
-            attention_mask=q_attn,
+        additional_encoded = system.semantic_input.encode_items(
+            backbone=system.backbone,
+            input_ids=additional_ids_single,
+            attention_mask=additional_attention_single,
         )
-
-        relation_text = [str(x["description"]) for x in case["relations"]]
-        r_ids, r_attn = tokenize_fixed(tokenizer, relation_text, max_tokens)
-        type_text = [str(x) for x in case["type_descriptions"]]
-        type_index = {name: i for i, name in enumerate(type_text)}
-        relation_count = len(relation_text)
-        type_count = len(type_text)
-        domain = torch.zeros(relation_count, type_count, dtype=torch.bool)
-        range_mask = torch.zeros_like(domain)
-        symmetric = torch.zeros(relation_count, dtype=torch.bool)
-        relation_key_index: dict[str, int] = {}
-        for i, row in enumerate(case["relations"]):
-            relation_key_index[str(row["key"])] = i
-            for name in row["domain"]:
-                domain[i, type_index[str(name)]] = True
-            for name in row["range"]:
-                range_mask[i, type_index[str(name)]] = True
-            symmetric[i] = bool(row["symmetric"])
-        relation_schema = interface.encode_relation_bank(
-            backbone=backbone,
-            input_ids=r_ids,
-            attention_mask=r_attn,
-            domain_type_mask=domain,
-            range_type_mask=range_mask,
-            symmetric=symmetric,
+        additional_summary = system.semantic_input.summarize_items(
+            hidden_states=additional_encoded["hidden_states"],
+            token_mask=additional_encoded["content_mask"],
         )
-
-        factor_schemas: dict[str, Any] = {}
-        for name, texts in case["factor_banks"].items():
-            ids, attn = tokenize_fixed(tokenizer, [str(x) for x in texts], max_tokens)
-            factor_schemas[str(name)] = interface.encode_semantic_bank(
-                backbone=backbone,
-                input_ids=ids,
-                attention_mask=attn,
+        additional_source_views = additional_summary[
+            None,
+            :,
+            :,
+        ].expand(batch_size, -1, -1).contiguous()
+        additional_source_views = (
+            additional_source_views
+            * additional_available[:, :, None].to(
+                additional_source_views.dtype
             )
-
-        # Exact 640-wide hierarchical long-context path. Native windows are
-        # locally encoded, globally contextualized by the trainable segment
-        # bridge, then stitched back to unique token order before semantic
-        # operator use.
-        long_text = " ".join(str(x) for x in long_cfg["text"])
-        long_encoded = tokenizer(
-            [long_text],
-            padding=True,
-            truncation=False,
-            return_tensors="pt",
-        )
-        long_ids = long_encoded["input_ids"]
-        long_attention = long_encoded["attention_mask"].bool()
-        segmented = virtualizer.segment(
-            input_ids=long_ids,
-            attention_mask=long_attention,
-        )
-        segment_count = int(segmented["segment_valid_mask"].sum().item())
-        if segment_count < int(long_cfg["minimum_segments"]):
-            raise ValueError(
-                f"long-context runtime fixture produced only {segment_count} segments"
-            )
-        _, segment_slots, window = segmented["segment_input_ids"].shape
-        segment_encoded = interface.encode_batch(
-            backbone=backbone,
-            input_ids=segmented["segment_input_ids"].reshape(
-                segment_slots,
-                window,
-            ),
-            attention_mask=segmented["segment_attention_mask"].reshape(
-                segment_slots,
-                window,
-            ),
-        )
-        segment_hidden = segment_encoded["hidden_states"].reshape(
-            1,
-            segment_slots,
-            int(scfg["num_hidden_states"]),
-            window,
-            int(scfg["semantic_dim"]),
-        )
-        bridged = segment_bridge(
-            segment_hidden_states=segment_hidden,
-            segment_attention_mask=segmented["segment_attention_mask"],
-            segment_valid_mask=segmented["segment_valid_mask"],
-            segment_metadata=segmented["field_metadata"],
-        )
-        stitched_long, stitched_long_mask = virtualizer.stitch_owned_content(
-            segment_hidden_states=bridged[
-                "contextualized_segment_hidden_states"
-            ],
-            segmented=segmented,
-        )
-        original_length = int(long_attention.sum().item())
-        if stitched_long.size(2) != original_length:
-            raise ValueError("stitched long-context token length drift")
-        if not bool(stitched_long_mask[:, :original_length].all()):
-            raise ValueError("stitched long-context mask lost owned tokens")
-
-        long_content_mask = long_attention.clone()
-        for token_id in (
-            semantic_cfg.pad_token_id,
-            semantic_cfg.unk_token_id,
-            semantic_cfg.cls_token_id,
-            semantic_cfg.sep_token_id,
-            semantic_cfg.mask_token_id,
-        ):
-            long_content_mask &= long_ids.ne(int(token_id))
-        if not bool(long_content_mask.any()):
-            raise ValueError("long-context runtime fixture has no content tokens")
-        long_operator = stack.semantic_operator(
-            query_hidden_states=stitched_long,
-            query_token_mask=long_content_mask,
-            relation_schema=relation_schema,
-            factor_schemas=factor_schemas,
-            max_steps=int(long_cfg["max_reasoning_steps"]),
-            relation_candidate_mask=torch.tensor(
-                [case["relation_candidate_masks"][0]],
-                dtype=torch.bool,
-            ),
-            factor_candidate_masks={
-                str(name): torch.tensor(
-                    [mask[0]],
-                    dtype=torch.bool,
-                )
-                for name, mask in case["factor_candidate_masks"].items()
-            },
-        )
-        for name, tensor in flatten_float_tensors(
-            long_operator,
-            "long_operator",
-        ):
-            if not bool(torch.isfinite(tensor).all()):
-                raise ValueError(
-                    f"non-finite cross-window semantic tensor: {name}"
-                )
-        memory["after_long_context_bridge_mb"] = rss_mb()
-
-        field_texts = [[str(x) for x in row] for row in case["field_texts"]]
-        field_count = len(field_texts[0])
-        if any(len(row) != field_count for row in field_texts):
-            raise ValueError("field row cardinality drift")
-        flat_fields = [text for row in field_texts for text in row]
-        f_ids, f_attn = tokenize_fixed(tokenizer, flat_fields, max_tokens)
-        f_ids = f_ids.reshape(batch, field_count, max_tokens)
-        f_attn = f_attn.reshape(batch, field_count, max_tokens)
-        field_valid = torch.tensor(case["field_valid_mask"], dtype=torch.bool)
-        fields = interface.encode_fields(
-            backbone=backbone,
-            input_ids=f_ids,
-            attention_mask=f_attn,
-            field_valid_mask=field_valid,
         )
 
-        descriptor_banks: dict[str, Any] = {}
-        descriptor_indices: dict[str, torch.Tensor] = {}
-        for name, texts in case["descriptor_banks"].items():
-            ids, attn = tokenize_fixed(tokenizer, [str(x) for x in texts], max_tokens)
-            descriptor_banks[str(name)] = interface.encode_semantic_bank(
-                backbone=backbone,
-                input_ids=ids,
-                attention_mask=attn,
-            )
-            descriptor_indices[str(name)] = torch.tensor(
-                case["descriptor_indices"][name],
-                dtype=torch.long,
-            )
-
-        iv_ids, iv_attn = tokenize_fixed(
-            tokenizer,
-            [str(x) for x in case["internal_view_descriptions"]],
-            max_tokens,
-        )
-        internal_descriptor_schema = interface.encode_semantic_bank(
-            backbone=backbone,
-            input_ids=iv_ids,
-            attention_mask=iv_attn,
-        )
-        internal_view_descriptors = summarize_schema(
-            internal_descriptor_schema
-        ).unsqueeze(0).expand(batch, -1, -1).contiguous()
-
-        av_ids, av_attn = tokenize_fixed(
-            tokenizer,
-            [str(x) for x in case["additional_views"]],
-            max_tokens,
-        )
-        additional_schema = interface.encode_semantic_bank(
-            backbone=backbone,
-            input_ids=av_ids,
-            attention_mask=av_attn,
-        )
-        additional_summary = summarize_schema(additional_schema)
-        additional_source_views = additional_summary.unsqueeze(0).expand(
-            batch, -1, -1
-        ).contiguous()
-        additional_view_descriptors = additional_source_views.clone()
-        additional_available = torch.tensor(
-            [[True, True], [True, False]],
-            dtype=torch.bool,
-        )
-        additional_reliability = torch.tensor(
-            [[0.90, 0.70], [0.85, 0.0]],
-            dtype=torch.float32,
-        )
-
-        candidate_rows = [[str(x) for x in row] for row in case["candidate_texts"]]
-        candidate_count = len(candidate_rows[0])
-        flat_candidates = [text for row in candidate_rows for text in row]
-        c_ids, c_attn = tokenize_fixed(tokenizer, flat_candidates, max_tokens)
-        candidate_encoded = interface.encode_batch(
-            backbone=backbone,
-            input_ids=c_ids,
-            attention_mask=c_attn,
-        )
-        candidate_hidden = candidate_encoded["hidden_states"].reshape(
-            batch,
-            candidate_count,
-            int(scfg["num_hidden_states"]),
-            max_tokens,
-            int(scfg["semantic_dim"]),
-        )
-        candidate_token_mask = candidate_encoded["content_mask"].reshape(
-            batch,
-            candidate_count,
-            max_tokens,
-        )
-        candidate_valid = torch.tensor(
-            case["candidate_valid_mask"],
-            dtype=torch.bool,
-        )
-
-        edges = case["edges"]
-        edge_count = len(edges[0])
-        edge_index = torch.zeros(batch, edge_count, 2, dtype=torch.long)
-        edge_relation_index = torch.zeros(batch, edge_count, dtype=torch.long)
-        edge_valid = torch.zeros(batch, edge_count, dtype=torch.bool)
-        for b, rows in enumerate(edges):
-            if len(rows) != edge_count:
-                raise ValueError("edge cardinality drift")
-            for e, row in enumerate(rows):
-                edge_index[b, e, 0] = int(row["source"])
-                edge_index[b, e, 1] = int(row["target"])
-                edge_relation_index[b, e] = relation_key_index[str(row["relation"])]
-                edge_valid[b, e] = bool(row.get("valid", True))
-
-        edge_reliability = edge_valid.float() * 0.90
-        edge_recency = edge_valid.float() * 0.80
-        edge_temporal_match = edge_valid.float()
-        edge_provenance_match = edge_valid.float() * 0.95
-        edge_metadata = torch.stack(
-            [
-                edge_reliability,
-                edge_recency,
-                edge_temporal_match,
-                edge_provenance_match,
-            ],
-            dim=-1,
-        )
-
-        relation_candidate_mask = torch.tensor(
-            case["relation_candidate_masks"],
-            dtype=torch.bool,
-        )
-        factor_candidate_masks = {
-            str(name): torch.tensor(mask, dtype=torch.bool)
-            for name, mask in case["factor_candidate_masks"].items()
-        }
-
-        memory["after_semantic_encoding_mb"] = rss_mb()
-
-        outputs = stack(
-            query_hidden_states=query["hidden_states"],
-            query_token_mask=query["content_mask"],
-            relation_schema=relation_schema,
-            factor_schemas=factor_schemas,
-            factor_opcodes={
+        runtime_batch = {
+            "query_input_ids": q_ids,
+            "query_attention_mask": q_mask,
+            "relation_input_ids": r_ids,
+            "relation_attention_mask": r_mask,
+            "relation_domain_type_mask": relation_domain,
+            "relation_range_type_mask": relation_range,
+            "relation_symmetric": relation_symmetric,
+            "relation_candidate_mask": relation_candidate_mask,
+            "factor_input_ids": factor_input_ids,
+            "factor_attention_mask": factor_attention_mask,
+            "factor_candidate_masks": factor_candidate_masks,
+            "factor_opcodes": {
                 str(name): [str(x) for x in values]
-                for name, values in case["structural_factor_opcodes"].items()
+                for name, values in case[
+                    "structural_factor_opcodes"
+                ].items()
             },
-            relation_candidate_mask=relation_candidate_mask,
-            factor_candidate_masks=factor_candidate_masks,
-            field_hidden_states=fields["field_hidden_states"],
-            field_token_mask=fields["field_token_mask"],
-            field_valid_mask=fields["field_valid_mask"],
-            field_confidence=torch.tensor(case["field_confidence"], dtype=torch.float32),
-            field_missing=torch.tensor(case["field_missing"], dtype=torch.float32),
-            field_reliability=torch.tensor(case["field_reliability"], dtype=torch.float32),
-            descriptor_banks=descriptor_banks,
-            descriptor_indices=descriptor_indices,
-            field_type_index=torch.tensor(case["field_type_index"], dtype=torch.long),
-            field_metadata=torch.tensor(case["field_metadata"], dtype=torch.float32),
-            edge_index=edge_index,
-            edge_relation_index=edge_relation_index,
-            edge_valid_mask=edge_valid,
-            edge_metadata=edge_metadata,
-            edge_reliability=edge_reliability,
-            edge_recency=edge_recency,
-            edge_temporal_match=edge_temporal_match,
-            edge_provenance_match=edge_provenance_match,
-            internal_view_descriptor_states=internal_view_descriptors,
-            internal_view_reliability=torch.tensor(
-                [[0.95,0.95,0.90,0.90,0.90,0.90],
-                 [0.95,0.95,0.90,0.90,0.90,0.90]],
+            "field_input_ids": field_ids,
+            "field_attention_mask": field_attention,
+            "field_valid_mask": field_valid,
+            "field_confidence": torch.tensor(
+                case["field_confidence"],
                 dtype=torch.float32,
             ),
-            max_reasoning_steps=int(case["max_reasoning_steps"]),
-            graph_message_steps=int(case["graph_message_steps"]),
-            fusion_refinement_steps=int(case["fusion_refinement_steps"]),
-            latent_slot_count=int(case["latent_slot_count"]),
-            latent_refinement_steps=int(case["latent_refinement_steps"]),
-            additional_source_views=additional_source_views,
-            additional_view_descriptor_states=additional_view_descriptors,
-            additional_view_available=additional_available,
-            additional_view_reliability=additional_reliability,
-            candidate_hidden_states=candidate_hidden,
-            candidate_token_mask=candidate_token_mask,
-            candidate_valid_mask=candidate_valid,
+            "field_missing": torch.tensor(
+                case["field_missing"],
+                dtype=torch.float32,
+            ),
+            "field_reliability": torch.tensor(
+                case["field_reliability"],
+                dtype=torch.float32,
+            ),
+            "descriptor_input_ids": descriptor_input_ids,
+            "descriptor_attention_mask": descriptor_attention_mask,
+            "descriptor_indices": descriptor_indices,
+            "field_type_index": torch.tensor(
+                case["field_type_index"],
+                dtype=torch.long,
+            ),
+            "field_metadata": torch.tensor(
+                case["field_metadata"],
+                dtype=torch.float32,
+            ),
+            "edge_index": edge_index,
+            "edge_relation_index": edge_relation_index,
+            "edge_valid_mask": edge_valid,
+            "edge_metadata": edge_metadata,
+            "edge_reliability": edge_reliability,
+            "edge_recency": edge_recency,
+            "edge_temporal_match": edge_temporal_match,
+            "edge_provenance_match": edge_provenance_match,
+            "internal_view_descriptor_input_ids": internal_ids,
+            "internal_view_descriptor_attention_mask": internal_attention,
+            "internal_view_reliability": torch.tensor(
+                [
+                    [0.95,0.95,0.90,0.90,0.90,0.90]
+                    for _ in range(batch_size)
+                ],
+                dtype=torch.float32,
+            ),
+            "candidate_input_ids": candidate_ids,
+            "candidate_attention_mask": candidate_attention,
+            "candidate_valid_mask": candidate_valid,
+            "additional_source_views": additional_source_views,
+            "additional_view_descriptor_input_ids": additional_ids,
+            "additional_view_descriptor_attention_mask": additional_attention,
+            "additional_view_available": additional_available,
+            "additional_view_reliability": additional_reliability,
+            "max_reasoning_steps": int(case["max_reasoning_steps"]),
+            "graph_message_steps": int(case["graph_message_steps"]),
+            "fusion_refinement_steps": int(
+                case["fusion_refinement_steps"]
+            ),
+            "latent_slot_count": int(case["latent_slot_count"]),
+            "latent_refinement_steps": int(
+                case["latent_refinement_steps"]
+            ),
+        }
+        memory["before_full_registered_forward_mb"] = rss_mb()
+        outputs = system(
+            task="full_envelope",
+            batch=runtime_batch,
         )
-        memory["after_full_forward_mb"] = rss_mb()
+        memory["after_full_registered_forward_mb"] = rss_mb()
 
     for name, tensor in flatten_float_tensors(outputs):
         if not bool(torch.isfinite(tensor).all()):
-            raise ValueError(f"non-finite full-envelope output tensor: {name}")
+            raise ValueError(
+                f"non-finite full-envelope output tensor: {name}"
+            )
 
     outputs["operator"].validate(
-        relation_count=len(case["relations"]),
+        relation_count=relation_count,
         model_dim=int(scfg["model_dim"]),
     )
     if outputs["public_judgment"] is None:
-        raise ValueError("public judgment readout missing from full runtime case")
+        raise ValueError("public judgment readout missing")
     if outputs["public_judgment"]["candidate_logits"].shape != (
-        batch,
+        batch_size,
         candidate_count,
     ):
         raise ValueError("public judgment candidate geometry drift")
     if outputs["latent"]["pooled_state"].shape != (
-        batch,
+        batch_size,
         int(scfg["model_dim"]),
     ):
         raise ValueError("latent pooled-state geometry drift")
-    if outputs["view_available"].size(1) != 8:
-        raise ValueError("dynamic additional-view path did not reach fusion")
+    if outputs["source_views"].size(1) != 6 + additional_count:
+        raise ValueError(
+            "dynamic additional-view path did not reach fusion"
+        )
+
+    meta = outputs["semantic_input_metadata"]
+    surface_receipt = {
+        "query": bool(meta["query"]["used_virtualization"]),
+        "relation_schema": bool(
+            meta["relation_schema"]["used_virtualization"]
+        ),
+        "factor_schema": any(
+            bool(row["used_virtualization"])
+            for row in meta["factor_schema"].values()
+        ),
+        "field_text": bool(
+            meta["field_text"]["used_virtualization"]
+        ),
+        "candidate_text": bool(
+            meta["candidate_text"]["used_virtualization"]
+        ),
+        "descriptor_text": any(
+            bool(row["used_virtualization"])
+            for row in meta["descriptor_text"].values()
+        ),
+    }
+    required_surfaces = set(
+        str(x) for x in stress["minimum_virtualized_surfaces"]
+    )
+    if set(surface_receipt) != required_surfaces:
+        raise ValueError(
+            "virtualization surface receipt/contract drift "
+            f"{sorted(surface_receipt)} != {sorted(required_surfaces)}"
+        )
+    failed_surfaces = [
+        name for name, value in surface_receipt.items() if not value
+    ]
+    if failed_surfaces:
+        raise ValueError(
+            "registered full-envelope system did not virtualize required "
+            f"surfaces: {failed_surfaces}"
+        )
+
+    if int(meta["query"]["segment_count_max"]) < int(
+        long_cfg["minimum_segments"]
+    ):
+        raise ValueError(
+            "long query did not exercise minimum cross-window segments"
+        )
 
     ceiling_keys = [
         "runtime_relation_ceiling",
@@ -618,21 +657,28 @@ def main() -> None:
         "runtime_view_ceiling",
         "runtime_slot_ceiling",
         "runtime_reasoning_step_ceiling",
+        "product_context_token_ceiling",
     ]
     for key in ceiling_keys:
-        if stack_report.get(key) is not None:
-            raise ValueError(f"serving-axis ceiling unexpectedly set: {key}")
+        if system_report.get(key) is not None:
+            raise ValueError(
+                f"serving-axis ceiling unexpectedly set: {key}"
+            )
 
-    if any(parameter.grad is not None for parameter in semantic_model.parameters()):
-        raise ValueError("semantic model gradient unexpectedly created")
-    if any(parameter.grad is not None for parameter in stack.parameters()):
-        raise ValueError("successor gradient unexpectedly created")
-    if any(parameter.grad is not None for parameter in segment_bridge.parameters()):
-        raise ValueError("segment bridge gradient unexpectedly created")
+    if any(
+        parameter.grad is not None
+        for parameter in system.parameters()
+    ):
+        raise ValueError(
+            "registered trainable system created gradients during CPU "
+            "no-gradient qualification"
+        )
 
     memory["peak_rss_mb"] = rss_mb()
     result = {
-        "schema": "alice.eipm.n0.full-envelope-cpu-runtime-result.v1",
+        "schema": (
+            "alice.eipm.n0.full-envelope-cpu-runtime-result.v1"
+        ),
         "status": PASS,
         "cpu_only": True,
         "inference_mode": True,
@@ -642,53 +688,104 @@ def main() -> None:
         "private_identity_data": False,
         "final_validation_opened": False,
         "semantic_checkpoint_sha256": observed_sha,
-        "semantic_parameters": int(semantic_report["total_parameters"]),
-        "successor_parameters": int(stack_report["total_parameters"]),
+        "semantic_parameters": int(
+            system_report["semantic_model_parameters"]
+        ),
+        "semantic_input_parameters": int(
+            system_report["semantic_input_parameters"]
+        ),
+        "successor_parameters": int(
+            system_report["successor_stack_parameters"]
+        ),
         "segment_context_bridge_parameters": int(
-            bridge_report["total_parameters"]
+            semantic_input_report["segment_bridge"][
+                "total_parameters"
+            ]
         ),
         "combined_parameters": int(
-            semantic_report["total_parameters"]
-            + stack_report["total_parameters"]
-            + bridge_report["total_parameters"]
+            system_report["total_parameters"]
+        ),
+        "registered_trainable_system": (
+            "N0FullEnvelopeTrainableSystemV1"
+        ),
+        "single_shared_backbone": bool(
+            system_report["single_shared_backbone"]
         ),
         "memory_mb": memory,
         "tokenizer_stress": tokenizer_result,
-        "corpus_source_count": len(corpus_receipt.get("sources", [])),
+        "corpus_source_count": len(
+            corpus_receipt.get("sources", [])
+        ),
         "corpus_shard_count": len(corpus_paths),
-        "tokenizer_receipt_model_id": tokenizer_receipt.get("model_id"),
-        "long_context_bridge": {
-            "native_window_tokens": int(long_cfg["native_window_tokens"]),
-            "overlap_tokens": int(long_cfg["overlap_tokens"]),
-            "original_tokens": original_length,
-            "segments": segment_count,
-            "stitched_tokens": int(stitched_long.size(2)),
-            "bridge_report": bridge_report,
-            "operator_relation_distribution_shape": list(
-                long_operator["operator"].relation_distribution.shape
+        "tokenizer_receipt_model_id": tokenizer_receipt.get(
+            "model_id"
+        ),
+        "text_surface_virtualization": {
+            "native_window_tokens": native_window,
+            "overlap_tokens": int(
+                long_cfg["overlap_tokens"]
             ),
-            "standalone_virtualizer_semantics_complete": virtualizer.parameter_report()[
-                "standalone_cross_window_semantics_complete"
+            "required_surfaces": sorted(required_surfaces),
+            "surface_receipt": surface_receipt,
+            "semantic_input_metadata": meta,
+        },
+        "long_context_bridge": {
+            "native_window_tokens": native_window,
+            "overlap_tokens": int(
+                long_cfg["overlap_tokens"]
+            ),
+            "segments": int(
+                meta["query"]["segment_count_max"]
+            ),
+            "bridge_report": semantic_input_report[
+                "segment_bridge"
             ],
+            "standalone_virtualizer_semantics_complete": (
+                system.semantic_input.virtualizer.parameter_report()[
+                    "standalone_cross_window_semantics_complete"
+                ]
+            ),
         },
         "runtime_case": {
-            "batch_size": batch,
-            "relations": len(case["relations"]),
+            "batch_size": batch_size,
+            "relations": relation_count,
             "factor_banks": len(case["factor_banks"]),
             "fields": field_count,
             "edges": edge_count,
-            "views_after_additional": int(outputs["source_views"].size(1)),
-            "latent_slots": int(outputs["latent"]["latent_slots"].size(1)),
-            "reasoning_steps": int(case["max_reasoning_steps"]),
+            "views_after_additional": int(
+                outputs["source_views"].size(1)
+            ),
+            "latent_slots": int(
+                outputs["latent"]["latent_slots"].size(1)
+            ),
+            "reasoning_steps": int(
+                case["max_reasoning_steps"]
+            ),
             "candidate_count": candidate_count,
         },
+        "system_report": system_report,
         "stack_report": stack_report,
+        "semantic_input_report": semantic_input_report,
         "output_shapes": {
-            "latent_pooled_state": list(outputs["latent"]["pooled_state"].shape),
-            "candidate_logits": list(outputs["public_judgment"]["candidate_logits"].shape),
-            "relation_distribution": list(outputs["operator"].relation_distribution.shape),
-            "edge_support_weight": list(outputs["binder"]["edge_support_weight"].shape),
-            "relational_probability": list(outputs["executor"]["relational_probability"].shape),
+            "latent_pooled_state": list(
+                outputs["latent"]["pooled_state"].shape
+            ),
+            "candidate_logits": list(
+                outputs["public_judgment"][
+                    "candidate_logits"
+                ].shape
+            ),
+            "relation_distribution": list(
+                outputs["operator"].relation_distribution.shape
+            ),
+            "edge_support_weight": list(
+                outputs["binder"]["edge_support_weight"].shape
+            ),
+            "relational_probability": list(
+                outputs["executor"][
+                    "relational_probability"
+                ].shape
+            ),
         },
         "gpu_training_authorized": False,
         "n0_complete": False,
@@ -701,7 +798,7 @@ def main() -> None:
     )
     print(json.dumps(result, indent=2, sort_keys=True))
 
-    del outputs, long_operator, segment_bridge, stack, semantic_model
+    del outputs, system
     gc.collect()
 
 
