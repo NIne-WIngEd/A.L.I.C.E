@@ -248,10 +248,20 @@ def audit_row(row: dict[str,Any], contract: dict[str,Any]) -> list[str]:
     # runtime relation.
     criterion_neutral_families={
         "reliability_arbitration",
+        "candidate_context_swap",
         "temporal_constraint",
         "provenance_constraint",
     }
     scenario=str(row.get("scenario_family",""))
+    pair_id=row.get("candidate_context_swap_pair_id")
+    pair_variant=row.get("candidate_context_swap_variant")
+    if scenario=="candidate_context_swap":
+        if not isinstance(pair_id,str) or not pair_id:
+            errors.append(prefix+"candidate-context-swap row missing pair id")
+        if pair_variant not in {"first_source_stronger","second_source_stronger"}:
+            errors.append(prefix+"candidate-context-swap variant invalid")
+    elif pair_id is not None or pair_variant is not None:
+        errors.append(prefix+"non-swap row carries candidate-context-swap metadata")
     if scenario in criterion_neutral_families:
         required_quality_alternatives={
             i
@@ -509,6 +519,88 @@ def main() -> None:
             "contract must preserve relevant quality alternatives through Binder"
         )
 
+    pair_groups={}
+    for row in rows:
+        pair_id=row.get("candidate_context_swap_pair_id")
+        if pair_id is not None:
+            pair_groups.setdefault(str(pair_id),[]).append(row)
+
+    valid_pair_count=0
+    pair_count_by_split=Counter()
+    for pair_id,pair in sorted(pair_groups.items()):
+        if len(pair)!=2:
+            errors.append(
+                f"{pair_id}: candidate-context swap pair must have exactly two rows"
+            )
+            continue
+        first,second=pair
+        if first.get("split") != second.get("split"):
+            errors.append(f"{pair_id}: candidate-context swap pair crosses split")
+        if {
+            first.get("candidate_context_swap_variant"),
+            second.get("candidate_context_swap_variant"),
+        } != {"first_source_stronger","second_source_stronger"}:
+            errors.append(f"{pair_id}: candidate-context swap variants incomplete")
+        if first.get("query") != second.get("query"):
+            errors.append(f"{pair_id}: candidate-context swap query changed")
+        if first.get("candidate_answers") != second.get("candidate_answers"):
+            errors.append(
+                f"{pair_id}: candidate-context swap answer set/order changed"
+            )
+        if int(first.get("public_target_index",-1)) == int(
+            second.get("public_target_index",-1)
+        ):
+            errors.append(f"{pair_id}: candidate-context swap target did not change")
+        if first.get("relation_sequence_target") != second.get(
+            "relation_sequence_target"
+        ):
+            errors.append(
+                f"{pair_id}: candidate-context swap relation program changed"
+            )
+        if first.get("factor_target_keys") != second.get("factor_target_keys"):
+            errors.append(
+                f"{pair_id}: candidate-context swap factor targets changed"
+            )
+        if first.get("fields") == second.get("fields"):
+            errors.append(
+                f"{pair_id}: candidate-context swap governing evidence did not change"
+            )
+        first_edges=list(first.get("edges") or [])
+        second_edges=list(second.get("edges") or [])
+        if len(first_edges)!=len(second_edges) or not any(
+            left.get("reliability") != right.get("reliability")
+            for left,right in zip(first_edges,second_edges)
+        ):
+            errors.append(
+                f"{pair_id}: candidate-context swap edge reliability did not change"
+            )
+        valid_pair_count += 1
+        pair_count_by_split[str(first.get("split"))] += 1
+
+    if shortcut_contract.get("matched_candidate_context_swap_required") is True:
+        if pair_count_by_split["train"] <= 0 or pair_count_by_split["dev"] <= 0:
+            errors.append(
+                "matched candidate-context swaps are required in both TRAIN and DEV"
+            )
+    if (
+        shortcut_contract.get(
+            "matched_candidate_context_swap_keeps_query_and_candidate_order_fixed"
+        )
+        is not True
+    ):
+        errors.append(
+            "contract must keep query and candidate set/order fixed in context swaps"
+        )
+    if (
+        shortcut_contract.get(
+            "matched_candidate_context_swap_changes_governing_evidence_and_target"
+        )
+        is not True
+    ):
+        errors.append(
+            "contract must change governing evidence and target in context swaps"
+        )
+
     answer_hist=Counter(int(x["public_target_index"]) for x in rows)
     max_answer_share=max(answer_hist.values())/len(rows)
     if max_answer_share>0.45:
@@ -544,6 +636,10 @@ def main() -> None:
         "public_target_position_histogram":dict(sorted(answer_hist.items())),
         "relation_target_position_histogram":dict(sorted(relation_target_positions.items())),
         "same_relation_irrelevant_hard_negative_rows":same_relation_irrelevant_hard_negative_rows,
+        "candidate_context_swap_pair_count":valid_pair_count,
+        "candidate_context_swap_pair_count_by_split":dict(
+            sorted(pair_count_by_split.items())
+        ),
         "train_dev_entity_overlap":entity_overlap,
         "train_dev_template_overlap":template_overlap,
         "train_dev_field_surface_overlap":field_surface_overlap,

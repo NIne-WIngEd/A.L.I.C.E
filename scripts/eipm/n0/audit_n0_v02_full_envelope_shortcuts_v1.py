@@ -479,6 +479,60 @@ def counterfactual_pair_probe(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def candidate_context_swap_probe(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    groups: dict[str, list[dict[str, Any]]] = collections.defaultdict(list)
+    for row in rows:
+        pair_id = row.get("candidate_context_swap_pair_id")
+        if pair_id is not None:
+            groups[str(pair_id)].append(row)
+    if not groups:
+        raise SystemExit("matched candidate-context swap requirement has no rows")
+
+    valid = 0
+    by_split: collections.Counter[str] = collections.Counter()
+    for pair_id, pair in groups.items():
+        if len(pair) != 2:
+            raise SystemExit(
+                f"{pair_id}: candidate-context swap pair must contain two rows"
+            )
+        first, second = pair
+        if first.get("split") != second.get("split"):
+            raise SystemExit(f"{pair_id}: candidate-context swap crosses split")
+        if first.get("query") != second.get("query"):
+            raise SystemExit(f"{pair_id}: candidate-context swap query changed")
+        if first.get("candidate_answers") != second.get("candidate_answers"):
+            raise SystemExit(
+                f"{pair_id}: candidate-context swap candidates/order changed"
+            )
+        if int(first["public_target_index"]) == int(second["public_target_index"]):
+            raise SystemExit(f"{pair_id}: candidate-context swap target did not change")
+        if first.get("relation_sequence_target") != second.get(
+            "relation_sequence_target"
+        ):
+            raise SystemExit(
+                f"{pair_id}: candidate-context swap relation program changed"
+            )
+        if first.get("factor_target_keys") != second.get("factor_target_keys"):
+            raise SystemExit(
+                f"{pair_id}: candidate-context swap factor target changed"
+            )
+        if first.get("fields") == second.get("fields"):
+            raise SystemExit(
+                f"{pair_id}: candidate-context swap evidence did not change"
+            )
+        valid += 1
+        by_split[str(first.get("split"))] += 1
+
+    if by_split["train"] <= 0 or by_split["dev"] <= 0:
+        raise SystemExit("candidate-context swap coverage missing TRAIN or DEV")
+    return {
+        "pair_count": valid,
+        "pair_count_by_split": dict(sorted(by_split.items())),
+        "query_and_candidate_set_order_fixed": True,
+        "public_target_changes_with_evidence": True,
+    }
+
+
 def behavioral_candidate_only_probe(
     train: list[dict[str, Any]],
     dev: list[dict[str, Any]],
@@ -648,6 +702,7 @@ def main() -> None:
     permutation = permutation_probe(dev, seed=20260922)
     hard_negative = hard_negative_probe(semantic_rows)
     counterfactual = counterfactual_pair_probe(semantic_rows)
+    candidate_context_swap = candidate_context_swap_probe(behavioral_rows)
 
     behavioral_gate = float(gate["behavioral_shortcut_clear_min"])
     behavioral = {
@@ -690,6 +745,7 @@ def main() -> None:
         "candidate_permutation": permutation,
         "hard_negative": hard_negative,
         "counterfactual": counterfactual,
+        "candidate_context_swap": candidate_context_swap,
         "behavioral_shortcuts": behavioral,
         "behavioral_shortcuts_clearing_gate": behavioral_cleared,
         "legacy_t2_shortcut_receipt_used_as_authority": False,

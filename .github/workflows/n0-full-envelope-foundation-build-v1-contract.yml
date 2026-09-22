@@ -245,6 +245,11 @@ jobs:
           assert r["candidate_permutation"]["semantic_target_invariant"] is True
           assert r["hard_negative"]["all_target_relations_have_hard_negative_coverage"] is True
           assert r["counterfactual"]["pair_count"] > 0
+          assert r["candidate_context_swap"]["pair_count"] > 0
+          assert r["candidate_context_swap"]["pair_count_by_split"]["train"] > 0
+          assert r["candidate_context_swap"]["pair_count_by_split"]["dev"] > 0
+          assert r["candidate_context_swap"]["query_and_candidate_set_order_fixed"] is True
+          assert r["candidate_context_swap"]["public_target_changes_with_evidence"] is True
           assert r["legacy_t2_shortcut_receipt_used_as_authority"] is False
           assert r["gradient"] is False
           assert r["optimizer"] is False
