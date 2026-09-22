@@ -608,3 +608,57 @@ def test_fusion_rejects_out_of_range_view_reliability() -> None:
         assert "[0,1]" in str(exc)
     else:
         raise AssertionError("out-of-range view reliability did not fail closed")
+
+
+def test_behavioral_causal_losses_ignore_padded_candidates() -> None:
+    from alice_personality.n0.full_envelope_behavioral_objectives_v1 import (
+        decisive_view_causal_margin_loss,
+        irrelevant_view_invariance_loss,
+    )
+    normal=torch.tensor([[2.0,1.0,-100.0,500.0]])
+    ablated=torch.tensor([[1.0,1.0,900.0,-700.0]])
+    irrelevant=torch.tensor([[2.001,0.999,800.0,-900.0]])
+    valid=torch.tensor([[True,True,False,False]])
+    masked_decisive=decisive_view_causal_margin_loss(
+        normal,
+        ablated,
+        torch.tensor([0]),
+        candidate_valid_mask=valid,
+    )
+    reference_decisive=decisive_view_causal_margin_loss(
+        normal[:,:2],
+        ablated[:,:2],
+        torch.tensor([0]),
+    )
+    assert torch.allclose(
+        masked_decisive,
+        reference_decisive,
+        atol=1e-7,
+        rtol=1e-7,
+    )
+    masked_invariance=irrelevant_view_invariance_loss(
+        normal,
+        irrelevant,
+        candidate_valid_mask=valid,
+    )
+    reference_invariance=irrelevant_view_invariance_loss(
+        normal[:,:2],
+        irrelevant[:,:2],
+    )
+    assert torch.allclose(
+        masked_invariance,
+        reference_invariance,
+        atol=1e-7,
+        rtol=1e-7,
+    )
+
+
+def test_latent_noncollapse_objective_does_not_create_runtime_slot_minimum() -> None:
+    from alice_personality.n0.full_envelope_behavioral_objectives_v1 import (
+        latent_noncollapse_loss,
+    )
+    slot=torch.randn(2,1,24,requires_grad=True)
+    loss=latent_noncollapse_loss(slot)
+    assert torch.equal(loss.detach(),torch.zeros_like(loss.detach()))
+    loss.backward()
+    assert slot.grad is not None
