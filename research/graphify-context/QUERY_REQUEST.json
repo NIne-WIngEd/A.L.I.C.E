@@ -1,7 +1,7 @@
 {
-  "request_id": "context-repair-verification-n0-current-boundary-20260922-032",
-  "question": "Verify the current A.L.I.C.E. N0 continuity boundary after the 2026-09-22 alice-context repair. The newest continuity authority should be docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md on alice-context, and the current N0 implementation frontier is alice-eipm-v1-n0-full-envelope-foundation-build-v1@6c4e3c02672b7a5415fb3407942d86cc9723b8d9. Confirm that older N0_FINAL_FULL_SCALE_FROZEN_AUTHORITY_READY Magnolia language is superseded by 575986/575990 and the current full-envelope handoff. Surface the current next action and authorization state. Also surface the accepted personal-development architecture branch alice-personal-development-architecture-v1 and the updated fable-builder-model personal-development trace. Do not infer readiness from green CI. Do not authorize Magnolia, training, FINAL, or N0 completion. Original branch-qualified sources are authority; Graphify is navigation only.",
-  "budget": 7000,
+  "request_id": "context-capsule-current-boundary-verification-20260922-033",
+  "question": "Verify the repaired current N0 continuity state after the context-capsule parser update. The current continuity authority is docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md. It declares current build head 6c4e3c02672b7a5415fb3407942d86cc9723b8d9, deep source audit incomplete, Magnolia CPU runtime not authorized, GPU/optimizer/gradient/final/N0 completion not authorized, and current next action is to continue the deep source-level audit. Show the stable-build latent-stage pointer only as historical/routing context, not current execution authority. Confirm continuity is not stale relative to the current full-envelope experiment frontier. Original branch-qualified source is authority; Graphify/catalog are navigation only.",
+  "budget": 5000,
   "traversal": "bfs",
   "contexts": [
     "call",
