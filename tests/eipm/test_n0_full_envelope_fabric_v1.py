@@ -583,3 +583,28 @@ def test_latent_streamed_competition_matches_dense_one_step_reference() -> None:
         atol=1e-5,
         rtol=1e-5,
     )
+
+
+def test_fusion_rejects_out_of_range_view_reliability() -> None:
+    model=DynamicCrossContextFusionV3(
+        DynamicCrossContextFusionConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_attention_heads=4,
+            recurrent_refinement_steps=1,
+            dropout=0.0,
+        )
+    )
+    try:
+        model(
+            source_view_summaries=torch.randn(1,3,24),
+            view_descriptor_states=torch.randn(1,3,24),
+            view_available=torch.ones(1,3,dtype=torch.bool),
+            query_state=torch.randn(1,24),
+            view_reliability=torch.tensor([[1.0,1.2,0.5]]),
+        )
+    except ValueError as exc:
+        assert "view_reliability" in str(exc)
+        assert "[0,1]" in str(exc)
+    else:
+        raise AssertionError("out-of-range view reliability did not fail closed")
