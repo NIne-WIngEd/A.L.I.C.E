@@ -376,6 +376,37 @@ class _ForcedModifierAdapter(torch.nn.Module):
         return result
 
 
+class _ForcedMixedStepModifierAdapter(torch.nn.Module):
+    """Force a program with reliability ON at step 0 and OFF at step 1."""
+    def __init__(self) -> None:
+        super().__init__()
+        self.base=SemanticOperatorQSREAdapter()
+
+    def forward(
+        self,
+        *,
+        semantic_operator,
+        relation_schema_states,
+        factor_opcodes,
+    ):
+        result=self.base(
+            semantic_operator=semantic_operator,
+            relation_schema_states=relation_schema_states,
+            factor_opcodes=factor_opcodes,
+        )
+        operator=result["operator"]
+        global_modifier=torch.zeros_like(operator.modifier_weight)
+        global_modifier[:,MOD_RELIABILITY]=1.0
+        step_modifier=torch.zeros_like(operator.step_modifier_weight)
+        step_modifier[:,0,MOD_RELIABILITY]=1.0
+        result["operator"]=replace(
+            operator,
+            modifier_weight=global_modifier,
+            step_modifier_weight=step_modifier,
+        )
+        return result
+
+
 def _schema_bank(count: int, seed: int) -> DynamicSemanticSchema:
     torch.manual_seed(seed)
     return DynamicSemanticSchema(
@@ -456,6 +487,58 @@ def _stack_inputs() -> dict[str, object]:
         "internal_view_descriptor_states": torch.randn(1, 6, DIM),
         "internal_view_reliability": torch.ones(1, 6),
     }
+
+
+def _capture_stack_inputs_with_adapter(
+    adapter: torch.nn.Module,
+) -> tuple[torch.Tensor, torch.Tensor]:
+    stack=N0FullEnvelopeStackV1(
+        N0FullEnvelopeStackConfig(
+            semantic_dim=DIM,
+            model_dim=DIM,
+            num_hidden_states=3,
+            num_attention_heads=4,
+            structured_layers=1,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    stack.operator_adapter=adapter
+    captured: dict[str,torch.Tensor]={}
+
+    def graph_hook(_module,_args,kwargs):
+        captured["edge_metadata"]=kwargs["edge_metadata"].detach().clone()
+
+    def evidence_hook(_module,_args,kwargs):
+        captured["field_reliability"]=kwargs["field_reliability"].detach().clone()
+
+    graph_handle=stack.evidence_graph.register_forward_pre_hook(
+        graph_hook,
+        with_kwargs=True,
+    )
+    evidence_handle=stack.evidence_view.register_forward_pre_hook(
+        evidence_hook,
+        with_kwargs=True,
+    )
+    factor_schemas,factor_opcodes=_factor_bundle()
+    try:
+        with torch.no_grad():
+            stack(
+                relation_schema=_relation_schema(),
+                factor_schemas=factor_schemas,
+                factor_opcodes=factor_opcodes,
+                max_reasoning_steps=2,
+                graph_message_steps=1,
+                fusion_refinement_steps=1,
+                latent_slot_count=2,
+                latent_refinement_steps=1,
+                **_stack_inputs(),
+            )
+    finally:
+        graph_handle.remove()
+        evidence_handle.remove()
+    return captured["edge_metadata"],captured["field_reliability"]
 
 
 def _capture_stack_modifier_inputs(
@@ -541,3 +624,26 @@ def test_full_stack_modifier_off_neutralizes_explicit_metadata_before_graph_and_
 
     edge_provenance, _ = _capture_stack_modifier_inputs(MOD_PROVENANCE_CONSTRAINT)
     assert torch.allclose(edge_provenance[..., 3], torch.tensor([[0.0]]))
+
+
+def test_global_graph_and_evidence_views_cannot_apply_mixed_step_reliability_globally() -> None:
+    """Global views cannot honor both ON and OFF step semantics at once.
+
+    Therefore explicit criterion scalars entering those global views must remain
+    criterion-neutral; step-local criterion use belongs to the Executor.
+    """
+    edge_metadata,field_reliability=_capture_stack_inputs_with_adapter(
+        _ForcedMixedStepModifierAdapter()
+    )
+    assert torch.allclose(
+        edge_metadata,
+        torch.tensor([[[0.5,0.5,1.0,1.0]]]),
+        atol=1.0e-7,
+        rtol=0.0,
+    )
+    assert torch.allclose(
+        field_reliability,
+        torch.full_like(field_reliability,0.5),
+        atol=1.0e-7,
+        rtol=0.0,
+    )
