@@ -10,6 +10,7 @@ from alice_personality.n0.chunked_late_interaction import (
 )
 from alice_personality.n0.full_envelope_behavioral_objectives_v1 import (
     full_envelope_behavioral_objective,
+    irrelevant_view_invariance_loss,
     latent_noncollapse_loss,
     support_selection_loss,
 )
@@ -828,3 +829,39 @@ def test_latent_noncollapse_penalizes_antipodal_rank_one_collapse() -> None:
     rank_one_loss.backward()
     assert rank_one.grad is not None
     assert bool(torch.isfinite(rank_one.grad).all())
+
+
+def test_irrelevant_view_invariance_gradient_is_finite_with_masked_candidates() -> None:
+    normal=torch.tensor(
+        [[4.0,1.0,-3.0,2.0],[0.5,-1.0,3.0,-2.0]],
+        requires_grad=True,
+    )
+    removed=torch.tensor(
+        [[3.5,1.2,-2.5,2.2],[0.4,-0.8,2.7,-1.5]],
+        requires_grad=True,
+    )
+    valid=torch.tensor(
+        [[True,True,False,False],[True,False,True,False]],
+        dtype=torch.bool,
+    )
+    active=torch.tensor([True,True],dtype=torch.bool)
+    loss=irrelevant_view_invariance_loss(
+        normal,
+        removed,
+        candidate_valid_mask=valid,
+        active_mask=active,
+    )
+    assert torch.isfinite(loss)
+    loss.backward()
+    assert normal.grad is not None
+    assert removed.grad is not None
+    assert bool(torch.isfinite(normal.grad).all())
+    assert bool(torch.isfinite(removed.grad).all())
+    assert torch.equal(
+        normal.grad.masked_select(~valid),
+        torch.zeros_like(normal.grad.masked_select(~valid)),
+    )
+    assert torch.equal(
+        removed.grad.masked_select(~valid),
+        torch.zeros_like(removed.grad.masked_select(~valid)),
+    )
