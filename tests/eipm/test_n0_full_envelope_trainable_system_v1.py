@@ -16,7 +16,7 @@ from alice_personality.n0.full_envelope_training_objective_v1 import (
 
 
 class TinyBackbone(nn.Module):
-    def __init__(self, *, vocab: int = 128, width: int = 24, hidden_states: int = 3) -> None:
+    def __init__(self, *, vocab: int = 512, width: int = 24, hidden_states: int = 3) -> None:
         super().__init__()
         self.embedding = nn.Embedding(vocab, width)
         self.layers = nn.ModuleList(
