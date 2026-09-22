@@ -37,6 +37,11 @@ CORPUS="$WORKDIR/tokenizer-corpus-v0.2.1-offline"
 SEMANTIC="$WORKDIR/targeted-repair-v0.1/checkpoints/step-00000080/alice_n0_v02.safetensors"
 RUN_ROOT="$WORKDIR/full-envelope-cpu-runtime-v1"
 RESULT="$RUN_ROOT/result.json"
+EVIDENCE_ROOT="$RUN_ROOT/operator-evidence-alignment"
+EVIDENCE_ROWS="$EVIDENCE_ROOT/rows.jsonl"
+EVIDENCE_MANIFEST="$EVIDENCE_ROOT/manifest.json"
+EVIDENCE_STATIC_AUDIT="$EVIDENCE_ROOT/static_audit.json"
+EVIDENCE_TOKEN_AUDIT="$EVIDENCE_ROOT/token_alignment.json"
 
 for required in   "$QUAL"   "$SEMANTIC_CONFIG"   "$SOURCE_CONFIG"   "$TOKENIZER/tokenizer.json"   "$TOKENIZER/tokenizer_receipt.json"   "$CORPUS/corpus_receipt.json"   "$SEMANTIC"
 do
@@ -58,9 +63,55 @@ if [[ "$OBSERVED_SEMANTIC_SHA" != "$EXPECTED_SEMANTIC_SHA" ]]; then
   exit 94
 fi
 
-python -m py_compile   "$ROOT/src/alice_personality/n0/semantic_backbone_interface_v1.py"   "$ROOT/src/alice_personality/n0/n0_full_envelope_stack_v1.py"   "$ROOT/scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"
+python -m py_compile \
+  "$ROOT/src/alice_personality/n0/semantic_backbone_interface_v1.py" \
+  "$ROOT/src/alice_personality/n0/semantic_operator_evidence_targets_v1.py" \
+  "$ROOT/src/alice_personality/n0/semantic_segment_context_bridge_v1.py" \
+  "$ROOT/src/alice_personality/n0/n0_full_envelope_stack_v1.py" \
+  "$ROOT/scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py" \
+  "$ROOT/scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py" \
+  "$ROOT/scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py" \
+  "$ROOT/scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"
 
-mkdir -p "$RUN_ROOT"
+mkdir -p "$RUN_ROOT" "$EVIDENCE_ROOT"
+
+python "$ROOT/scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py" \
+  --output "$EVIDENCE_ROWS" \
+  --manifest "$EVIDENCE_MANIFEST" \
+  --examples-per-relation 20 \
+  --candidate-counts 1,2,4,8,16
+
+python "$ROOT/scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py" \
+  --rows "$EVIDENCE_ROWS" \
+  --manifest "$EVIDENCE_MANIFEST" \
+  --contract "$ROOT/configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json" \
+  --output "$EVIDENCE_STATIC_AUDIT"
+
+python "$ROOT/scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py" \
+  --rows "$EVIDENCE_ROWS" \
+  --tokenizer-dir "$TOKENIZER" \
+  --max-length 512 \
+  --output "$EVIDENCE_TOKEN_AUDIT"
+
+python - "$EVIDENCE_STATIC_AUDIT" "$EVIDENCE_TOKEN_AUDIT" <<'PY'
+import json, sys
+static=json.load(open(sys.argv[1]))
+token=json.load(open(sys.argv[2]))
+assert static["status"]=="PASS_SEMANTIC_OPERATOR_CURRICULUM_AUDIT"
+assert static["query_relation_evidence_spans_required"] is True
+assert static["relation_schema_evidence_spans_required"] is True
+assert static["factor_schema_evidence_spans_required"] is True
+assert static["step_factor_schema_evidence_spans_required"] is True
+assert token["status"]=="PASS_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1"
+assert token["relation_steps"] > 0
+assert token["positive_query_tokens"] > 0
+assert token["positive_relation_schema_tokens"] > 0
+assert token["positive_factor_schema_tokens"] > 0
+assert token["positive_step_factor_schema_tokens"] > 0
+assert token["training_authorized_by_audit"] is False
+assert token["max_length_is_product_ceiling"] is False
+print("PASS_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1")
+PY
 
 echo "===== N0 FULL-ENVELOPE CPU RUNTIME QUALIFICATION V1 ====="
 date -Is
@@ -71,6 +122,7 @@ echo "optimizer=false"
 echo "model_training=false"
 echo "final_validation_opened=false"
 echo "semantic_checkpoint_sha256=$OBSERVED_SEMANTIC_SHA"
+echo "operator_evidence_token_alignment=$EVIDENCE_TOKEN_AUDIT"
 
 python "$ROOT/scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"   --qualification-config "$QUAL"   --semantic-config "$SEMANTIC_CONFIG"   --semantic-checkpoint "$SEMANTIC"   --tokenizer-dir "$TOKENIZER"   --corpus-dir "$CORPUS"   --source-config "$SOURCE_CONFIG"   --output "$RESULT"
 
@@ -114,3 +166,4 @@ PY
 echo "===== N0 FULL-ENVELOPE CPU RUNTIME QUALIFICATION V1 COMPLETE ====="
 date -Is
 echo "result=$RESULT"
+echo "operator_evidence_token_alignment=$EVIDENCE_TOKEN_AUDIT"
