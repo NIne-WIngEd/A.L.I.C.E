@@ -446,6 +446,13 @@
       ]
     ],
     "descriptor_banks": {
+      "type": [
+        "person or social actor",
+        "document report message or written record",
+        "claim proposition or asserted conclusion",
+        "event occurrence or state transition",
+        "general context item"
+      ],
       "provenance": [
         "primary direct record",
         "independent corroborating record",
@@ -460,6 +467,28 @@
       ]
     },
     "descriptor_indices": {
+      "type": [
+        [
+          1,
+          1,
+          2,
+          3,
+          0,
+          4,
+          1,
+          4
+        ],
+        [
+          2,
+          1,
+          1,
+          4,
+          4,
+          -1,
+          -1,
+          -1
+        ]
+      ],
       "provenance": [
         [
           2,
