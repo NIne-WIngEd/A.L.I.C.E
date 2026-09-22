@@ -417,14 +417,14 @@
       "stage": "full_640_runtime",
       "kind": "RUNTIME_REQUIRED",
       "status": "UNRESOLVED_BLOCKING",
-      "requirement": "Exact 640-wide full successor must construct and complete CPU/no-gradient forward/backward-graph build on representative variable-cardinality inputs with parameter and peak-memory receipt."
+      "requirement": "Exact 640-wide successor plus the ratified semantic initialization must construct and complete an end-to-end CPU inference-mode forward on representative variable-cardinality inputs, with exact parameter counts, finite-output checks, and peak-RSS receipt. Gradient connectivity is proven separately by exact static mechanics tests; this CPU gate performs no gradient."
     },
     {
       "id": "N0-P43",
       "stage": "gpu_memory",
       "kind": "RUNTIME_REQUIRED",
       "status": "UNRESOLVED_BLOCKING",
-      "requirement": "Exact training stack must pass GPU no-gradient and one-step memory topology dry run before optimizer authorization."
+      "requirement": "Exact full training topology must pass a GPU no-gradient memory dry run before any gradient or optimizer authorization. The dry run chooses a safe sharding/microbatch/accumulation route; it may not update weights."
     },
     {
       "id": "N0-P44",
