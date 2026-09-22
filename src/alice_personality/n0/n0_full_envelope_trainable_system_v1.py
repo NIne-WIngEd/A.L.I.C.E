@@ -14,6 +14,10 @@ from alice_personality.n0.n0_full_envelope_stack_v1 import (
     N0FullEnvelopeStackConfig,
     N0FullEnvelopeStackV1,
 )
+from alice_personality.n0.semantic_operator_foundation import (
+    DynamicRelationSchema,
+    DynamicSemanticSchema,
+)
 
 
 @dataclass(frozen=True)
@@ -113,52 +117,86 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
     def _encode_factor_schemas(
         self,
         batch: Mapping[str, Any],
-    ) -> dict[str, Any]:
+    ) -> tuple[dict[str, DynamicSemanticSchema], dict[str, dict[str, int | bool]]]:
         ids = batch["factor_input_ids"]
         masks = batch["factor_attention_mask"]
         if set(ids) != set(masks):
             raise ValueError("factor input/mask bank names must match")
-        return {
-            str(name): self.semantic_input.encode_semantic_bank(
+        schemas: dict[str, DynamicSemanticSchema] = {}
+        metadata: dict[str, dict[str, int | bool]] = {}
+        for raw_name in ids:
+            name = str(raw_name)
+            encoded = self.semantic_input.encode_items(
                 backbone=self.backbone,
-                input_ids=ids[name],
-                attention_mask=masks[name],
+                input_ids=ids[raw_name],
+                attention_mask=masks[raw_name],
             )
-            for name in ids
-        }
+            schema = DynamicSemanticSchema(
+                token_states=encoded["hidden_states"],
+                token_mask=encoded["content_mask"],
+            )
+            schema.validate(
+                num_hidden_states=self.config.num_hidden_states,
+                semantic_dim=self.config.semantic_dim,
+            )
+            schemas[name] = schema
+            metadata[name] = {
+                "used_virtualization": bool(encoded["used_virtualization"]),
+                "segment_count_max": int(encoded["segment_count_max"]),
+            }
+        return schemas, metadata
 
     def _encode_descriptor_banks(
         self,
         batch: Mapping[str, Any],
-    ) -> dict[str, Any]:
+    ) -> tuple[dict[str, DynamicSemanticSchema], dict[str, dict[str, int | bool]]]:
         ids = batch["descriptor_input_ids"]
         masks = batch["descriptor_attention_mask"]
         if set(ids) != set(masks):
             raise ValueError("descriptor input/mask bank names must match")
-        return {
-            str(name): self.semantic_input.encode_semantic_bank(
+        schemas: dict[str, DynamicSemanticSchema] = {}
+        metadata: dict[str, dict[str, int | bool]] = {}
+        for raw_name in ids:
+            name = str(raw_name)
+            encoded = self.semantic_input.encode_items(
                 backbone=self.backbone,
-                input_ids=ids[name],
-                attention_mask=masks[name],
+                input_ids=ids[raw_name],
+                attention_mask=masks[raw_name],
             )
-            for name in ids
-        }
+            schema = DynamicSemanticSchema(
+                token_states=encoded["hidden_states"],
+                token_mask=encoded["content_mask"],
+            )
+            schema.validate(
+                num_hidden_states=self.config.num_hidden_states,
+                semantic_dim=self.config.semantic_dim,
+            )
+            schemas[name] = schema
+            metadata[name] = {
+                "used_virtualization": bool(encoded["used_virtualization"]),
+                "segment_count_max": int(encoded["segment_count_max"]),
+            }
+        return schemas, metadata
 
     def _encode_view_descriptors(
         self,
         *,
         input_ids: Tensor,
         attention_mask: Tensor,
-    ) -> Tensor:
-        schema = self.semantic_input.encode_semantic_bank(
+    ) -> tuple[Tensor, dict[str, int | bool]]:
+        encoded = self.semantic_input.encode_items(
             backbone=self.backbone,
             input_ids=input_ids,
             attention_mask=attention_mask,
         )
-        return self.semantic_input.summarize_items(
-            hidden_states=schema.token_states,
-            token_mask=schema.token_mask,
+        summary = self.semantic_input.summarize_items(
+            hidden_states=encoded["hidden_states"],
+            token_mask=encoded["content_mask"],
         )
+        return summary, {
+            "used_virtualization": bool(encoded["used_virtualization"]),
+            "segment_count_max": int(encoded["segment_count_max"]),
+        }
 
     def _forward_full_envelope(
         self,
@@ -169,15 +207,23 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
             input_ids=batch["query_input_ids"],
             attention_mask=batch["query_attention_mask"],
         )
-        relation_schema = self.semantic_input.encode_relation_bank(
+        relation_encoded = self.semantic_input.encode_items(
             backbone=self.backbone,
             input_ids=batch["relation_input_ids"],
             attention_mask=batch["relation_attention_mask"],
+        )
+        relation_schema = DynamicRelationSchema(
+            token_states=relation_encoded["hidden_states"],
+            token_mask=relation_encoded["content_mask"],
             domain_type_mask=batch["relation_domain_type_mask"],
             range_type_mask=batch["relation_range_type_mask"],
             symmetric=batch["relation_symmetric"],
         )
-        factor_schemas = self._encode_factor_schemas(batch)
+        relation_schema.validate(
+            num_hidden_states=self.config.num_hidden_states,
+            semantic_dim=self.config.semantic_dim,
+        )
+        factor_schemas, factor_metadata = self._encode_factor_schemas(batch)
 
         field_encoded = self.semantic_input.encode_padded_items(
             backbone=self.backbone,
@@ -185,9 +231,9 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
             attention_mask=batch["field_attention_mask"],
             item_valid_mask=batch["field_valid_mask"],
         )
-        descriptor_banks = self._encode_descriptor_banks(batch)
+        descriptor_banks, descriptor_metadata = self._encode_descriptor_banks(batch)
 
-        internal_descriptor = self._encode_view_descriptors(
+        internal_descriptor, internal_descriptor_metadata = self._encode_view_descriptors(
             input_ids=batch["internal_view_descriptor_input_ids"],
             attention_mask=batch["internal_view_descriptor_attention_mask"],
         )
@@ -308,8 +354,41 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
             candidate_valid_mask=candidate_valid_mask,
         )
         outputs["semantic_input_metadata"] = {
-            "query_virtualized": bool(query["used_virtualization"]),
-            "query_segment_count_max": int(query["segment_count_max"]),
+            "query": {
+                "used_virtualization": bool(query["used_virtualization"]),
+                "segment_count_max": int(query["segment_count_max"]),
+            },
+            "relation_schema": {
+                "used_virtualization": bool(relation_encoded["used_virtualization"]),
+                "segment_count_max": int(relation_encoded["segment_count_max"]),
+            },
+            "factor_schema": factor_metadata,
+            "field_text": {
+                "used_virtualization": bool(field_encoded["used_virtualization"]),
+                "segment_count_max": int(field_encoded["segment_count_max"]),
+            },
+            "descriptor_text": descriptor_metadata,
+            "internal_view_descriptor": internal_descriptor_metadata,
+            "candidate_text": (
+                {
+                    "used_virtualization": bool(candidate["used_virtualization"]),
+                    "segment_count_max": int(candidate["segment_count_max"]),
+                }
+                if candidate_valid_mask is not None
+                else None
+            ),
+            "additional_view_descriptor": (
+                {
+                    "used_virtualization": bool(
+                        additional_descriptor_encoded["used_virtualization"]
+                    ),
+                    "segment_count_max": int(
+                        additional_descriptor_encoded["segment_count_max"]
+                    ),
+                }
+                if additional_source_views is not None
+                else None
+            ),
         }
         return outputs
 
