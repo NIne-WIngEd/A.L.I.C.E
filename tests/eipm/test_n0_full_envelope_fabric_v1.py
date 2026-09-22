@@ -711,3 +711,130 @@ def test_latent_view_activity_causally_changes_final_pooled_state() -> None:
     report=model.parameter_report()
     assert report["query_conditioned_view_activity_supported"] is True
     assert report["view_activity_causally_weights_item_contribution"] is True
+
+
+def test_semantic_operator_objective_macro_averages_query_and_schema_evidence_surfaces() -> None:
+    torch.manual_seed(841)
+    batch,steps,relations,tokens,schema_tokens=2,3,4,5,6
+    relation_logits=torch.randn(batch,steps,relations,requires_grad=True)
+    relation_targets=torch.tensor([[0,1,2],[2,1,0]])
+    step_mask=torch.ones(batch,steps,dtype=torch.bool)
+    factor_logits={"role":torch.randn(batch,3,requires_grad=True)}
+    factor_targets={"role":torch.tensor([0,2])}
+    event=torch.softmax(torch.randn(batch,steps,3),dim=-1)
+    event_targets=torch.tensor([[0,0,1],[0,0,1]])
+    query_evidence=torch.sigmoid(
+        torch.randn(batch,steps,relations,tokens,requires_grad=True)
+    )
+    query_evidence.retain_grad()
+    relation_schema_evidence=torch.sigmoid(
+        torch.randn(batch,steps,relations,schema_tokens,requires_grad=True)
+    )
+    relation_schema_evidence.retain_grad()
+    factor_evidence={
+        "role":torch.sigmoid(torch.randn(batch,3,4,requires_grad=True))
+    }
+    factor_evidence["role"].retain_grad()
+    step_factor_evidence={
+        "role":torch.sigmoid(torch.randn(batch,steps,3,4,requires_grad=True))
+    }
+    step_factor_evidence["role"].retain_grad()
+
+    result=semantic_operator_objective(
+        relation_logits=relation_logits,
+        relation_targets=relation_targets,
+        relation_step_mask=step_mask,
+        factor_logits=factor_logits,
+        factor_targets=factor_targets,
+        event_distribution=event,
+        event_targets=event_targets,
+        event_mask=step_mask,
+        applicability=torch.full((batch,),0.8,requires_grad=True),
+        applicability_target=torch.ones(batch),
+        relation_query_evidence=query_evidence,
+        query_evidence_target=torch.randint(
+            0,2,(batch,steps,relations,tokens)
+        ).float(),
+        query_evidence_valid_mask=torch.ones(
+            batch,steps,relations,tokens,dtype=torch.bool
+        ),
+        uncertainty=torch.full((batch,),0.2,requires_grad=True),
+        uncertainty_target=torch.zeros(batch),
+        correct_relation_score=torch.ones(batch),
+        counterfactual_relation_score=torch.zeros(batch),
+        correct_factor_score=torch.ones(batch),
+        counterfactual_factor_score=torch.zeros(batch),
+        relation_schema_evidence=relation_schema_evidence,
+        relation_schema_evidence_target=torch.randint(
+            0,2,(batch,steps,relations,schema_tokens)
+        ).float(),
+        relation_schema_evidence_valid_mask=torch.ones(
+            batch,steps,relations,schema_tokens,dtype=torch.bool
+        ),
+        factor_schema_evidence=factor_evidence,
+        factor_schema_evidence_target={
+            "role":torch.randint(0,2,(batch,3,4)).float()
+        },
+        factor_schema_evidence_valid_mask={
+            "role":torch.ones(batch,3,4,dtype=torch.bool)
+        },
+        step_factor_schema_evidence=step_factor_evidence,
+        step_factor_schema_evidence_target={
+            "role":torch.randint(0,2,(batch,steps,3,4)).float()
+        },
+        step_factor_schema_evidence_valid_mask={
+            "role":torch.ones(batch,steps,3,4,dtype=torch.bool)
+        },
+    )
+    expected=torch.stack(
+        [
+            result["query_evidence"],
+            result["relation_schema_evidence"],
+            result["factor_schema_evidence"],
+            result["step_factor_schema_evidence"],
+        ]
+    ).mean()
+    assert torch.allclose(
+        result["token_evidence"],
+        expected,
+        atol=1e-7,
+        rtol=1e-7,
+    )
+    result["loss"].backward()
+    assert relation_schema_evidence.grad is not None
+    assert float(relation_schema_evidence.grad.abs().sum()) > 0.0
+    assert factor_evidence["role"].grad is not None
+    assert float(factor_evidence["role"].grad.abs().sum()) > 0.0
+    assert step_factor_evidence["role"].grad is not None
+    assert float(step_factor_evidence["role"].grad.abs().sum()) > 0.0
+
+
+def test_semantic_operator_objective_rejects_partial_schema_evidence_contract() -> None:
+    try:
+        semantic_operator_objective(
+            relation_logits=torch.randn(1,1,2),
+            relation_targets=torch.zeros(1,1,dtype=torch.long),
+            relation_step_mask=torch.ones(1,1,dtype=torch.bool),
+            factor_logits={"role":torch.randn(1,2)},
+            factor_targets={"role":torch.zeros(1,dtype=torch.long)},
+            event_distribution=torch.tensor([[[0.8,0.1,0.1]]]),
+            event_targets=torch.zeros(1,1,dtype=torch.long),
+            event_mask=torch.ones(1,1,dtype=torch.bool),
+            applicability=torch.tensor([0.8]),
+            applicability_target=torch.ones(1),
+            relation_query_evidence=torch.full((1,1,2,3),0.5),
+            query_evidence_target=torch.zeros(1,1,2,3),
+            query_evidence_valid_mask=torch.ones(1,1,2,3,dtype=torch.bool),
+            uncertainty=torch.tensor([0.2]),
+            uncertainty_target=torch.zeros(1),
+            correct_relation_score=torch.ones(1),
+            counterfactual_relation_score=torch.zeros(1),
+            correct_factor_score=torch.ones(1),
+            counterfactual_factor_score=torch.zeros(1),
+            relation_schema_evidence=torch.full((1,1,2,4),0.5),
+        )
+    except ValueError as exc:
+        assert "relation schema evidence" in str(exc)
+        assert "supplied together" in str(exc)
+    else:
+        raise AssertionError("partial schema evidence contract did not fail closed")
