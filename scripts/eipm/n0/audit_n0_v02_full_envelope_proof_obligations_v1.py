@@ -177,6 +177,11 @@ def main() -> None:
         "production_core": "production_core_v1",
         "binder_v2": "binder_v2",
         "final_self_validation_v1": "final_validation_v1",
+        "tokenizer_v021": "tokenizer_v021",
+        "public_corpus_v021": "public_corpus_v021",
+        "governed_teacher_bank_v02": "governed_teacher_bank_v02",
+        "semantic_auxiliary_heads_v02": "semantic_auxiliary_heads_v02",
+        "fixed_readiness_suites_v02": "fixed_readiness_and_novel_cross_suites_v02",
     }
     for stage in sorted(retrospective_stages):
         mapped_key = aliases.get(stage)
