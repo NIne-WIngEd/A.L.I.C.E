@@ -662,3 +662,52 @@ def test_latent_noncollapse_objective_does_not_create_runtime_slot_minimum() -> 
     assert torch.equal(loss.detach(),torch.zeros_like(loss.detach()))
     loss.backward()
     assert slot.grad is not None
+
+
+def test_latent_view_activity_causally_changes_final_pooled_state() -> None:
+    torch.manual_seed(831)
+    model=DynamicCompetitiveLatentPoolV3(
+        DynamicLatentPoolConfig(
+            semantic_dim=24,
+            model_dim=24,
+            slot_chunk_size=2,
+            item_chunk_size=3,
+            dropout=0.0,
+        )
+    ).eval()
+    source=torch.randn(1,3,24)
+    context=torch.randn(1,3,24)
+    descriptor=torch.randn(1,3,24)
+    available=torch.ones(1,3,dtype=torch.bool)
+    query=torch.randn(1,24)
+    reliability=torch.ones(1,3)
+    with torch.no_grad():
+        first=model(
+            source_view_summaries=source,
+            contextualized_view_summaries=context,
+            view_descriptor_states=descriptor,
+            view_available=available,
+            query_state=query,
+            view_reliability=reliability,
+            view_activity=torch.tensor([[0.98,0.01,0.01]]),
+            slot_count=5,
+            refinement_steps=2,
+        )
+        second=model(
+            source_view_summaries=source,
+            contextualized_view_summaries=context,
+            view_descriptor_states=descriptor,
+            view_available=available,
+            query_state=query,
+            view_reliability=reliability,
+            view_activity=torch.tensor([[0.01,0.01,0.98]]),
+            slot_count=5,
+            refinement_steps=2,
+        )
+    assert not torch.allclose(
+        first["pooled_state"],
+        second["pooled_state"],
+    )
+    report=model.parameter_report()
+    assert report["query_conditioned_view_activity_supported"] is True
+    assert report["view_activity_causally_weights_item_contribution"] is True
