@@ -93,6 +93,51 @@ def main() -> None:
         for target in relation_targets:
             if int(target) < 0 or int(target) >= len(candidates):
                 errors.append(f"{rid}: relation target outside runtime candidate bank")
+
+        query_evidence_spans = list(
+            row.get("query_relation_evidence_char_spans") or []
+        )
+        schema_evidence_spans = list(
+            row.get("relation_schema_evidence_char_spans") or []
+        )
+        if len(query_evidence_spans) != len(relation_targets):
+            errors.append(
+                f"{rid}: query evidence span count does not match relation program"
+            )
+        if len(schema_evidence_spans) != len(relation_targets):
+            errors.append(
+                f"{rid}: schema evidence span count does not match relation program"
+            )
+        query_text = str(row.get("query",""))
+        for step, span in enumerate(query_evidence_spans):
+            start = int(span.get("start",-1))
+            end = int(span.get("end",-1))
+            evidence_text = str(span.get("text",""))
+            if int(span.get("step",-1)) != step:
+                errors.append(f"{rid}: query evidence step index drift")
+            if not (0 <= start < end <= len(query_text)):
+                errors.append(f"{rid}: query evidence span outside query")
+            elif query_text[start:end] != evidence_text or not evidence_text:
+                errors.append(f"{rid}: query evidence substring mismatch")
+        for step, span in enumerate(schema_evidence_spans):
+            start = int(span.get("start",-1))
+            end = int(span.get("end",-1))
+            evidence_text = str(span.get("text",""))
+            candidate_index = int(span.get("candidate_index",-1))
+            if int(span.get("step",-1)) != step:
+                errors.append(f"{rid}: schema evidence step index drift")
+            if step < len(relation_targets) and candidate_index != int(
+                relation_targets[step]
+            ):
+                errors.append(f"{rid}: schema evidence candidate target drift")
+            if not (0 <= candidate_index < len(candidates)):
+                errors.append(f"{rid}: schema evidence candidate outside bank")
+            else:
+                candidate_text = str(candidates[candidate_index].get("text",""))
+                if not (0 <= start < end <= len(candidate_text)):
+                    errors.append(f"{rid}: schema evidence span outside candidate text")
+                elif candidate_text[start:end] != evidence_text or not evidence_text:
+                    errors.append(f"{rid}: schema evidence substring mismatch")
         events = list(row.get("event_sequence_target") or [])
         expected_slots = int(row.get("runtime_operator_slots", -1))
         if len(events) != expected_slots:
@@ -125,6 +170,27 @@ def main() -> None:
             target = int(factor_targets[name])
             if target < 0 or target >= len(bank):
                 errors.append(f"{rid}: factor target outside {name} bank")
+
+        factor_evidence = row.get("factor_schema_evidence_char_spans") or {}
+        if set(factor_evidence) != set(factor_schemas):
+            errors.append(f"{rid}: factor schema evidence bank mismatch")
+        for name, bank in factor_schemas.items():
+            span = factor_evidence.get(name) or {}
+            candidate_index = int(span.get("candidate_index",-1))
+            target = int(factor_targets[name])
+            if candidate_index != target:
+                errors.append(f"{rid}: factor schema evidence target drift for {name}")
+                continue
+            if not (0 <= candidate_index < len(bank)):
+                continue
+            factor_text = str(bank[candidate_index].get("text",""))
+            start = int(span.get("start",-1))
+            end = int(span.get("end",-1))
+            evidence_text = str(span.get("text",""))
+            if not (0 <= start < end <= len(factor_text)):
+                errors.append(f"{rid}: factor evidence span outside {name} text")
+            elif factor_text[start:end] != evidence_text or not evidence_text:
+                errors.append(f"{rid}: factor evidence substring mismatch for {name}")
 
         step_targets = row.get("step_factor_targets") or {}
         required_step_factor_names = {
@@ -224,6 +290,9 @@ def main() -> None:
         "intervention_histogram": dict(sorted(interventions.items())),
         "step_conditioned_direction_present": interventions["mixed_direction_composition"] > 0,
         "step_conditioned_modifier_present": interventions["mixed_step_modifier_composition"] > 0,
+        "query_relation_evidence_spans_required": True,
+        "relation_schema_evidence_spans_required": True,
+        "factor_schema_evidence_spans_required": True,
         "private_identity_data": False,
         "gradient": False,
         "optimizer": False,
