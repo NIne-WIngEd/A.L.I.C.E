@@ -36,6 +36,26 @@ def main() -> None:
         if q.get("require_cpu_only") is not True or q.get("require_inference_mode") is not True:
             raise ValueError("CPU/inference-mode requirement missing")
 
+        long_cfg=o.get("long_context_bridge_runtime")
+        if not isinstance(long_cfg,dict):
+            raise ValueError("long_context_bridge_runtime missing")
+        if int(long_cfg.get("native_window_tokens",0)) <= 0:
+            raise ValueError("long-context native window must be positive")
+        if not 0 <= int(long_cfg.get("overlap_tokens",-1)) < int(long_cfg["native_window_tokens"]):
+            raise ValueError("long-context overlap geometry invalid")
+        if int(long_cfg.get("bridge_heads",0)) <= 0 or int(long_cfg.get("bridge_layers",0)) <= 0:
+            raise ValueError("long-context bridge depth/head geometry invalid")
+        if int(long_cfg.get("minimum_segments",0)) < 2:
+            raise ValueError("long-context runtime must require multiple native windows")
+        if int(long_cfg.get("max_reasoning_steps",0)) <= 0:
+            raise ValueError("long-context operator steps must be positive")
+        if not isinstance(long_cfg.get("text"),list) or len(long_cfg["text"]) < 3:
+            raise ValueError("long-context fixture must contain multiple separated passages")
+        if o["qualification"].get("cross_window_bridge_required") is not True:
+            raise ValueError("cross-window bridge must be required")
+        if o["qualification"].get("standalone_window_stitching_insufficient") is not True:
+            raise ValueError("standalone window stitching must not count as semantic completion")
+
         case=o["runtime_case"]
         b=int(case["batch_size"])
         if len(case["queries"])!=b:
