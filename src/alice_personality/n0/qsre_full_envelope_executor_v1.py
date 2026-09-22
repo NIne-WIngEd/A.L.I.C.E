@@ -543,13 +543,17 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             1.0 - operator.unknown_probability.sum(dim=1).clamp(max=1.0)
         ).clamp(0.0, 1.0)
         complete = (1.0 - operator.truncation_probability).clamp(0.0, 1.0)
-        program = operator.relation_step_mass.sum(dim=1).clamp(0.0, 1.0)
+        # Survival-weighted CONTINUE mass across slots estimates expected
+        # executed steps when summed. It is not a probability of having a
+        # relational program. Slot zero is exactly P(program starts), so path
+        # length cannot inflate confidence.
+        program_started = operator.relation_step_mass[:, 0].clamp(0.0, 1.0)
         execution_confidence = (
             operator.applicability
             * operator.control_distribution[:, CONTROL_RELATIONAL]
             * known
             * complete
-            * program
+            * program_started
             * support_available.clamp(0.0, 1.0)
         ).clamp(0.0, 1.0)
         probability = probability * execution_confidence[:, None]
@@ -607,6 +611,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "hard_traversal_threshold": False,
             "execution_confidence_requires_structural_support": True,
             "execution_confidence_requires_program_completion": True,
+            "execution_confidence_uses_program_start_probability_not_expected_step_count": True,
             "zero_execution_confidence_zeroes_relational_summary": True,
             "relation_count_ceiling": None,
             "hop_count_ceiling": None,
