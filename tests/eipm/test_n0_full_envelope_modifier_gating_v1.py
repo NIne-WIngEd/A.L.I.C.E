@@ -115,8 +115,8 @@ def _binder_inputs() -> dict[str, torch.Tensor]:
     }
 
 
-def test_binder_modifier_off_blocks_raw_reliability_and_recency_shortcuts() -> None:
-    """A disabled criterion may not remain directly readable by Binder."""
+def test_binder_support_remains_neutral_to_reliability_and_recency_criteria() -> None:
+    """Binder owns candidate support; step-local criterion arbitration is downstream."""
     base = _binder_inputs()
     off = _operator()
 
@@ -153,7 +153,7 @@ def test_binder_modifier_off_blocks_raw_reliability_and_recency_shortcuts() -> N
             atol=1.0e-7,
             rtol=0.0,
         )
-        assert not torch.allclose(
+        assert torch.allclose(
             enabled["support_logits"][:, 0],
             enabled["support_logits"][:, 1],
             atol=1.0e-7,
