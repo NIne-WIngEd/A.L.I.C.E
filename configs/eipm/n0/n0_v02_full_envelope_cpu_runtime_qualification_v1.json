@@ -855,7 +855,10 @@
     "finite_all_float_outputs_required": true,
     "runtime_axis_ceiling_fields_must_be_null": true,
     "cross_window_bridge_required": true,
-    "standalone_window_stitching_insufficient": true
+    "standalone_window_stitching_insufficient": true,
+    "exact_operator_evidence_token_alignment_required": true,
+    "operator_evidence_alignment_max_length_operating_point": 512,
+    "operator_evidence_alignment_max_length_is_product_ceiling": false
   },
   "long_context_bridge_runtime": {
     "native_window_tokens": 32,
