@@ -155,6 +155,14 @@ def main() -> None:
         FullEnvelopeSemanticBackboneInterfaceV1,
         SemanticBackboneInterfaceConfig,
     )
+    from alice_personality.n0.semantic_context_virtualizer_v1 import (
+        SemanticContextVirtualizerConfig,
+        SemanticContextVirtualizerV1,
+    )
+    from alice_personality.n0.semantic_segment_context_bridge_v1 import (
+        SemanticSegmentContextBridgeConfig,
+        SemanticSegmentContextBridgeV1,
+    )
     from alice_personality.n0.v02_model import AliceN0V02Model
     from alice_personality.n0.v02_training import (
         verify_public_corpus_v021,
@@ -227,6 +235,29 @@ def main() -> None:
         )
     )
 
+    long_cfg = cfg["long_context_bridge_runtime"]
+    virtualizer = SemanticContextVirtualizerV1(
+        SemanticContextVirtualizerConfig(
+            native_window_tokens=int(long_cfg["native_window_tokens"]),
+            overlap_tokens=int(long_cfg["overlap_tokens"]),
+            pad_token_id=int(semantic_cfg.pad_token_id),
+        )
+    )
+    segment_bridge = SemanticSegmentContextBridgeV1(
+        SemanticSegmentContextBridgeConfig(
+            semantic_dim=int(scfg["semantic_dim"]),
+            num_hidden_states=int(scfg["num_hidden_states"]),
+            num_attention_heads=int(long_cfg["bridge_heads"]),
+            num_layers=int(long_cfg["bridge_layers"]),
+            metadata_dim=3,
+            query_chunk_segments=int(long_cfg["query_chunk_segments"]),
+            key_chunk_segments=int(long_cfg["key_chunk_segments"]),
+            dropout=0.0,
+        )
+    ).eval()
+    bridge_report = segment_bridge.parameter_report()
+    memory["after_segment_bridge_construct_mb"] = rss_mb()
+
     case = cfg["runtime_case"]
     max_tokens = int(case["max_text_tokens"])
     batch = int(case["batch_size"])
@@ -274,6 +305,104 @@ def main() -> None:
                 input_ids=ids,
                 attention_mask=attn,
             )
+
+        # Exact 640-wide hierarchical long-context path. Native windows are
+        # locally encoded, globally contextualized by the trainable segment
+        # bridge, then stitched back to unique token order before semantic
+        # operator use.
+        long_text = " ".join(str(x) for x in long_cfg["text"])
+        long_encoded = tokenizer(
+            [long_text],
+            padding=True,
+            truncation=False,
+            return_tensors="pt",
+        )
+        long_ids = long_encoded["input_ids"]
+        long_attention = long_encoded["attention_mask"].bool()
+        segmented = virtualizer.segment(
+            input_ids=long_ids,
+            attention_mask=long_attention,
+        )
+        segment_count = int(segmented["segment_valid_mask"].sum().item())
+        if segment_count < int(long_cfg["minimum_segments"]):
+            raise ValueError(
+                f"long-context runtime fixture produced only {segment_count} segments"
+            )
+        _, segment_slots, window = segmented["segment_input_ids"].shape
+        segment_encoded = interface.encode_batch(
+            backbone=backbone,
+            input_ids=segmented["segment_input_ids"].reshape(
+                segment_slots,
+                window,
+            ),
+            attention_mask=segmented["segment_attention_mask"].reshape(
+                segment_slots,
+                window,
+            ),
+        )
+        segment_hidden = segment_encoded["hidden_states"].reshape(
+            1,
+            segment_slots,
+            int(scfg["num_hidden_states"]),
+            window,
+            int(scfg["semantic_dim"]),
+        )
+        bridged = segment_bridge(
+            segment_hidden_states=segment_hidden,
+            segment_attention_mask=segmented["segment_attention_mask"],
+            segment_valid_mask=segmented["segment_valid_mask"],
+            segment_metadata=segmented["field_metadata"],
+        )
+        stitched_long, stitched_long_mask = virtualizer.stitch_owned_content(
+            segment_hidden_states=bridged[
+                "contextualized_segment_hidden_states"
+            ],
+            segmented=segmented,
+        )
+        original_length = int(long_attention.sum().item())
+        if stitched_long.size(2) != original_length:
+            raise ValueError("stitched long-context token length drift")
+        if not bool(stitched_long_mask[:, :original_length].all()):
+            raise ValueError("stitched long-context mask lost owned tokens")
+
+        long_content_mask = long_attention.clone()
+        for token_id in (
+            semantic_cfg.pad_token_id,
+            semantic_cfg.unk_token_id,
+            semantic_cfg.cls_token_id,
+            semantic_cfg.sep_token_id,
+            semantic_cfg.mask_token_id,
+        ):
+            long_content_mask &= long_ids.ne(int(token_id))
+        if not bool(long_content_mask.any()):
+            raise ValueError("long-context runtime fixture has no content tokens")
+        long_operator = stack.semantic_operator(
+            query_hidden_states=stitched_long,
+            query_token_mask=long_content_mask,
+            relation_schema=relation_schema,
+            factor_schemas=factor_schemas,
+            max_steps=int(long_cfg["max_reasoning_steps"]),
+            relation_candidate_mask=torch.tensor(
+                [case["relation_candidate_masks"][0]],
+                dtype=torch.bool,
+            ),
+            factor_candidate_masks={
+                str(name): torch.tensor(
+                    [mask[0]],
+                    dtype=torch.bool,
+                )
+                for name, mask in case["factor_candidate_masks"].items()
+            },
+        )
+        for name, tensor in flatten_float_tensors(
+            long_operator,
+            "long_operator",
+        ):
+            if not bool(torch.isfinite(tensor).all()):
+                raise ValueError(
+                    f"non-finite cross-window semantic tensor: {name}"
+                )
+        memory["after_long_context_bridge_mb"] = rss_mb()
 
         field_texts = [[str(x) for x in row] for row in case["field_texts"]]
         field_count = len(field_texts[0])
@@ -498,6 +627,8 @@ def main() -> None:
         raise ValueError("semantic model gradient unexpectedly created")
     if any(parameter.grad is not None for parameter in stack.parameters()):
         raise ValueError("successor gradient unexpectedly created")
+    if any(parameter.grad is not None for parameter in segment_bridge.parameters()):
+        raise ValueError("segment bridge gradient unexpectedly created")
 
     memory["peak_rss_mb"] = rss_mb()
     result = {
@@ -513,14 +644,33 @@ def main() -> None:
         "semantic_checkpoint_sha256": observed_sha,
         "semantic_parameters": int(semantic_report["total_parameters"]),
         "successor_parameters": int(stack_report["total_parameters"]),
+        "segment_context_bridge_parameters": int(
+            bridge_report["total_parameters"]
+        ),
         "combined_parameters": int(
-            semantic_report["total_parameters"] + stack_report["total_parameters"]
+            semantic_report["total_parameters"]
+            + stack_report["total_parameters"]
+            + bridge_report["total_parameters"]
         ),
         "memory_mb": memory,
         "tokenizer_stress": tokenizer_result,
         "corpus_source_count": len(corpus_receipt.get("sources", [])),
         "corpus_shard_count": len(corpus_paths),
         "tokenizer_receipt_model_id": tokenizer_receipt.get("model_id"),
+        "long_context_bridge": {
+            "native_window_tokens": int(long_cfg["native_window_tokens"]),
+            "overlap_tokens": int(long_cfg["overlap_tokens"]),
+            "original_tokens": original_length,
+            "segments": segment_count,
+            "stitched_tokens": int(stitched_long.size(2)),
+            "bridge_report": bridge_report,
+            "operator_relation_distribution_shape": list(
+                long_operator["operator"].relation_distribution.shape
+            ),
+            "standalone_virtualizer_semantics_complete": virtualizer.parameter_report()[
+                "standalone_cross_window_semantics_complete"
+            ],
+        },
         "runtime_case": {
             "batch_size": batch,
             "relations": len(case["relations"]),
@@ -551,7 +701,7 @@ def main() -> None:
     )
     print(json.dumps(result, indent=2, sort_keys=True))
 
-    del outputs, stack, semantic_model
+    del outputs, long_operator, segment_bridge, stack, semantic_model
     gc.collect()
 
 
