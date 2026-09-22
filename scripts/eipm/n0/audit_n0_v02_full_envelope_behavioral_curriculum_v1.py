@@ -220,6 +220,27 @@ def audit_row(row: dict[str,Any], contract: dict[str,Any]) -> list[str]:
     if set(support)!=flagged:
         errors.append(prefix+"support edge list/flags disagree")
 
+    relation_sequence_targets=[
+        int(x) for x in row.get("relation_sequence_target") or []
+    ]
+    relation_candidates=list(row.get("relation_candidates") or [])
+    selected_relation_keys={
+        str(relation_candidates[index].get("key",""))
+        for index in relation_sequence_targets
+        if 0 <= index < len(relation_candidates)
+    }
+    structural_support={
+        i
+        for i,e in enumerate(edges)
+        if str(e.get("relation_key","")) in selected_relation_keys
+    }
+    if set(support)!=structural_support:
+        errors.append(
+            prefix
+            +"Binder support targets must equal structural relation candidates; "
+            +"quality modifiers belong to downstream step-local arbitration"
+        )
+
     endpoint=dict(row.get("endpoint_target") or {})
     endpoint_active=bool(endpoint.get("active",False))
     source=int(endpoint.get("source_field",-1)); target=int(endpoint.get("target_field",-1))
