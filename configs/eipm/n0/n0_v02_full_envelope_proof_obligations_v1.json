@@ -757,6 +757,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_executor_modifier_off_blocks_raw_edge_criterion_features",
       "requirement": "Reliability, recency, temporal, and provenance edge scalars must be neutralized before executor edge-state construction whenever the corresponding semantic modifier is OFF, while ON retains sensitivity."
+    },
+    {
+      "id": "N0-P24E",
+      "stage": "full_stack",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_stack_modifier_off_neutralizes_explicit_metadata_before_graph_and_evidence_view",
+      "requirement": "Explicit reliability, recency, temporal-match, and provenance-match metadata must be modifier-conditioned before pre-Binder graph/evidence paths so OFF criteria cannot bypass the semantic operator; enabling a criterion must preserve the corresponding evidence signal."
     }
   ],
   "closure_rule": {
