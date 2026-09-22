@@ -142,10 +142,14 @@
       "required": true,
       "supervision": [
         "query_evidence_spans",
-        "schema_evidence_spans",
+        "relation_schema_evidence_spans",
+        "factor_schema_evidence_spans",
+        "step_factor_schema_evidence_spans",
         "counterfactual_token_removal",
         "irrelevant_token_invariance"
-      ]
+      ],
+      "bidirectional_query_schema_grounding_required": true,
+      "tokenizer_alignment_required_before_gradient": true
     },
     {
       "name": "structured_context_semantics",
@@ -343,7 +347,12 @@
     "natural_relation_materialization_audit_required": true,
     "sealed_natural_final_relation_hash_required": false,
     "official_natural_final_benchmark_mechanics_audit_required": true,
-    "full_final_closure_corpus_remains_separate_and_unopened": true
+    "full_final_closure_corpus_remains_separate_and_unopened": true,
+    "query_evidence_char_spans_materialized_required": true,
+    "relation_schema_evidence_char_spans_materialized_required": true,
+    "factor_schema_evidence_char_spans_materialized_required": true,
+    "step_factor_schema_evidence_char_spans_materialized_required": true,
+    "evidence_char_to_token_alignment_audit_required": true
   },
   "scale_policy": {
     "full_capability_architecture": true,
