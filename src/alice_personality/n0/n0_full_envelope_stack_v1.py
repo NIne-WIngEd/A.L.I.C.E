@@ -36,10 +36,6 @@ from alice_personality.n0.qsre_full_envelope_executor_v1 import (
 )
 from alice_personality.n0.full_envelope_structural_types import (
     CONTROL_RELATIONAL,
-    MOD_PROVENANCE_CONSTRAINT,
-    MOD_RECENCY,
-    MOD_RELIABILITY,
-    MOD_TEMPORAL_CONSTRAINT,
     runtime_edge_type_compatibility,
 )
 from alice_personality.n0.public_judgment_probe_v1 import (
