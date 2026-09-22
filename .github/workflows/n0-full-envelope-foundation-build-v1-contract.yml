@@ -19,6 +19,7 @@ on:
       - "src/alice_personality/n0/full_envelope_loss_balancer_v1.py"
       - "src/alice_personality/n0/public_judgment_probe_v1.py"
       - "src/alice_personality/n0/semantic_context_virtualizer_v1.py"
+      - "src/alice_personality/n0/semantic_segment_context_bridge_v1.py"
       - "src/alice_personality/n0/chunked_late_interaction.py"
       - "src/alice_personality/n0/full_envelope_structural_types.py"
       - "src/alice_personality/n0/semantic_operator_qsre_adapter.py"
@@ -90,6 +91,7 @@ jobs:
             src/alice_personality/n0/full_envelope_loss_balancer_v1.py \
             src/alice_personality/n0/public_judgment_probe_v1.py \
             src/alice_personality/n0/semantic_context_virtualizer_v1.py \
+            src/alice_personality/n0/semantic_segment_context_bridge_v1.py \
             src/alice_personality/n0/chunked_late_interaction.py \
             src/alice_personality/n0/full_envelope_structural_types.py \
             src/alice_personality/n0/semantic_operator_qsre_adapter.py \
