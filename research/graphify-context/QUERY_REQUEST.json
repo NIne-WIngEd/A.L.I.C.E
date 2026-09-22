@@ -1,11 +1,12 @@
 {
-  "request_id": "context-capsule-current-boundary-verification-20260922-033",
-  "question": "Verify the repaired current N0 continuity state after the context-capsule parser update. The current continuity authority is docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md. It declares current build head 6c4e3c02672b7a5415fb3407942d86cc9723b8d9, deep source audit incomplete, Magnolia CPU runtime not authorized, GPU/optimizer/gradient/final/N0 completion not authorized, and current next action is to continue the deep source-level audit. Show the stable-build latent-stage pointer only as historical/routing context, not current execution authority. Confirm continuity is not stale relative to the current full-envelope experiment frontier. Original branch-qualified source is authority; Graphify/catalog are navigation only.",
-  "budget": 5000,
+  "request_id": "n0-full-envelope-deep-audit-current-head-20260922-034",
+  "question": "Continue the deep original-source audit of current N0 head alice-eipm-v1-n0-full-envelope-foundation-build-v1@6ee63bd39175e76fca702dd8e2493cb9abcf6e9a. This head follows the causal source-vs-target endpoint proof and the behavioral DEV leakage/governance repairs. Exact run 35690293060 passed 115 tests with 100 proof obligations / 86 static obligations. Do not infer Magnolia readiness from that green result. Verify original source and surface remaining statically discoverable defects or missing independent falsification around modifier semantics, support selection, multi-step factor semantics, fusion/latent/public judgment causality, additional runtime views, candidate masking, long-context semantics, curriculum shortcuts, CPU qualifier fidelity and final-validation independence. Preserve the anti-hotfix rule: distinguish concrete source defects from missing static evidence and from genuinely empirical runtime/training/final questions. Current continuity authority is docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md. Magnolia, GPU, optimizer, gradient, FINAL and N0 completion remain unauthorized. Original branch-qualified source is authority; Graphify is navigation only.",
+  "budget": 12000,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "graphify_mode": "auto"
+  "graphify_mode": "always",
+  "graph_source_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1"
 }
