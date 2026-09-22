@@ -568,6 +568,20 @@
       "requirement": "Irrelevant-view invariance must remain backward-finite when padded candidate probabilities underflow to exact zero."
     },
     {
+      "id": "N0-P39BG",
+      "stage": "optimization_numerics",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_macro_family_balancer_effective_batch_scaling_is_microbatch_partition_invariant",
+      "requirement": "Gradient accumulation topology must not change macro-family loss scaling within an effective optimizer step when EMA scales are frozen."
+    },
+    {
+      "id": "N0-P39BH",
+      "stage": "optimization_numerics",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_macro_family_balancer_effective_batch_observation_updates_ema_once",
+      "requirement": "Macro-family EMA scales must support one detached effective-batch update rather than one update per microbatch."
+    },
+    {
       "id": "N0-P40",
       "stage": "tokenizer",
       "kind": "RUNTIME_REQUIRED",
