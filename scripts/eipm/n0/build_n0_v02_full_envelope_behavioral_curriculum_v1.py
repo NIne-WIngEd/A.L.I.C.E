@@ -550,12 +550,14 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         fields=[
             field(f"Verified record {a} supports Claim {b}.","t_record",reliability=0.96),
             field(f"Claim {b}: the supported technical conclusion.","t_claim"),
-            field(f"Unrelated notice {c} is much newer but discusses cafeteria scheduling.","t_context",reliability=0.95,recency=1.0),
-            field(f"Context item {d} repeats the unrelated scheduling notice.","t_context",reliability=0.8,recency=1.0),
+            field(f"Unrelated record {c} supports an unrelated cafeteria scheduling claim.","t_record",reliability=0.95,recency=1.0),
+            field(f"Unrelated Claim {d}: the cafeteria schedule changed.","t_claim",reliability=0.8,recency=1.0),
         ]
         edges=[
             edge(0,1,"r_support",reliability=0.96,support=True,decisive=True),
-            edge(2,3,"r_context",reliability=0.9,recency=1.0,irrelevant=True),
+            # Same runtime relation, but query-irrelevant. Binder supervision
+            # must not collapse query relevance into relation-key equality.
+            edge(2,3,"r_support",reliability=0.9,recency=1.0,irrelevant=True),
         ]
         query="Which conclusion is supported by the relevant evidence, ignoring newer but unrelated context?"
         answers=[f"Claim {b} remains the supported conclusion.",f"Notice {c} should override the technical evidence because it is newer.",f"Context item {d} should decide the technical question.","All available text should influence the answer equally."]

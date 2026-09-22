@@ -646,6 +646,38 @@ def _behavioral_rows_for_compiler():
     return rows
 
 
+def test_behavioral_support_targets_do_not_promote_same_relation_distractors() -> None:
+    """Binder targets are query-relevant support, not relation-key membership.
+
+    The irrelevant-distractor family deliberately contains two structurally
+    valid r_support edges. Only the edge supporting the queried technical claim
+    is a Binder-positive target; the unrelated cafeteria support edge must stay
+    available as a hard negative.
+    """
+    from build_n0_v02_full_envelope_behavioral_curriculum_v1 import (
+        materialize_row,
+    )
+
+    row=materialize_row(
+        split="train",
+        example=11,
+        seed=20260922,
+        relation_count=4,
+        field_count=4,
+        answer_count=4,
+    )
+    support_relation_edges=[
+        i
+        for i,item in enumerate(row["edges"])
+        if item["relation_key"]=="r_support"
+    ]
+    assert len(support_relation_edges) >= 2
+    positives=set(int(x) for x in row["support_edge_indices"])
+    assert support_relation_edges[0] in positives
+    assert support_relation_edges[1] not in positives
+    assert bool(row["edges"][support_relation_edges[1]]["irrelevant"]) is True
+
+
 def test_behavioral_batch_compiler_builds_primary_and_causal_variants_without_key_leak() -> None:
     rows=_behavioral_rows_for_compiler()
     compiled=compile_behavioral_batch(
