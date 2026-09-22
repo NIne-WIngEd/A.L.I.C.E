@@ -591,7 +591,7 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         irrelevant_fields=[3]
         support_edges=[0,1]
         endpoint={"active":True,"source_field":0,"target_field":2}
-    else:
+    elif mode == 13:
         family="mixed_direction_composition"
         fields=[
             field(f"Event {a} causes Event {b}.","t_event"),
@@ -620,6 +620,77 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         decisive_fields=[1]
         irrelevant_fields=[3]
         support_edges=[0,1]
+    else:
+        family="causal_chain"
+        chain_steps=3 if example % 2 == 0 else 4
+        names=[a,b,c,d]
+        while len(names) < chain_steps + 1:
+            names.append(entities[(example*13+len(names)*5) % len(entities)])
+        fields=[
+            field(
+                f"Event {names[i]} is causal stage {i+1} in a verified multi-stage process.",
+                "t_event",
+                reliability=0.93 - 0.02*i,
+            )
+            for i in range(chain_steps + 1)
+        ]
+        fields.append(
+            field(
+                "A distant background context item is unrelated to the causal chain.",
+                "t_context",
+                reliability=0.25,
+            )
+        )
+        edges=[]
+        support_edges=[]
+        for i in range(chain_steps):
+            support_edges.append(len(edges))
+            edges.append(
+                edge(
+                    i,
+                    i+1,
+                    "r_cause",
+                    reliability=0.92 - 0.02*i,
+                    support=True,
+                    decisive=True,
+                )
+            )
+        irrelevant_index=len(fields)-1
+        edges.append(
+            edge(
+                irrelevant_index,
+                0,
+                "r_context",
+                reliability=0.2,
+                irrelevant=True,
+            )
+        )
+        query=(
+            f"Starting from Event {names[0]}, follow the causal relation exactly "
+            f"{chain_steps} times in order. Which event is the terminal result?"
+        )
+        answers=[
+            f"Event {names[chain_steps]} is the terminal result.",
+            f"Event {names[1]} is the terminal result.",
+            "The unrelated background context is the terminal result.",
+            "The chain order may be ignored.",
+        ]
+        correct=0
+        relation_sequence=["r_cause"] * chain_steps
+        relation_counterfactuals=["r_context"] * chain_steps
+        event_sequence=["CONTINUE"] * chain_steps + ["STOP"]
+        targets["traversal"]="TRAVERSAL_PATH"
+        step_targets=[
+            {**targets,"direction":"DIRECTION_FORWARD"}
+            for _ in range(chain_steps)
+        ]
+        endpoint={
+            "active":True,
+            "source_field":0,
+            "target_field":chain_steps,
+        }
+        decisive_fields=list(range(1,chain_steps))
+        irrelevant_fields=[irrelevant_index]
 
     if not step_targets and relation_sequence:
         step_targets=[dict(targets) for _ in relation_sequence]
@@ -662,6 +733,7 @@ DEV_QUERY_PARAPHRASES = {
     "irrelevant_distractor":"Newer contextual material is unrelated to the technical question. Identify the conclusion that remains supported when irrelevant context is ignored.",
     "multiple_co_valid_support":"Two independent reliable records converge on one conclusion. Choose the response that preserves both as co-valid supporting evidence.",
     "mixed_direction_composition":"Follow the first causal edge in its stored direction, then invert the second causal edge at the shared intermediate event. Identify the endpoint reached after both operations.",
+    "causal_chain":"Trace every causal stage in the stated order from the initial event to the terminal effect; intermediate stages and unrelated context are not the requested endpoint.",
 }
 
 
@@ -711,7 +783,7 @@ def materialize_row(
     answer_count: int,
 ) -> dict[str,Any]:
     entities=TRAIN_ENTITIES if split=="train" else DEV_ENTITIES
-    mode=example % 14
+    mode=example % 15
     base=scenario(mode,entities,example)
     if split=="dev":
         base["query"]=DEV_QUERY_PARAPHRASES[base["scenario_family"]]
