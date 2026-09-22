@@ -5,11 +5,11 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "e3a47eff748f9b93b425e15312c5ce60d066725d",
-      "head_committed_at": "2026-09-22T00:22:40-05:00",
-      "head_message": "context: point archive index to repaired current N0 head",
+      "head": "745079f43984ec3a6e705615ca22006e39ce3772",
+      "head_committed_at": "2026-09-22T02:02:44-05:00",
+      "head_message": "context: advance N0 archive index to structural-mask repair head",
       "status": "diverged",
-      "ahead": 246,
+      "ahead": 250,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
       "changed_file_count_vs_source_merge_base": 585,
@@ -137,14 +137,14 @@
     },
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "6ee63bd39175e76fca702dd8e2493cb9abcf6e9a",
-      "head_committed_at": "2026-09-22T00:20:02-05:00",
-      "head_message": "governance(n0): strengthen behavioral-fabric isolation proof",
+      "head": "edcfcb447fd9f7a47239827661cf31e678f8b249",
+      "head_committed_at": "2026-09-22T01:58:43-05:00",
+      "head_message": "test(n0): keep replay placeholders on structurally valid subsets",
       "status": "ahead",
-      "ahead": 1024,
+      "ahead": 1056,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 471,
+      "changed_file_count_vs_source_merge_base": 472,
       "knowledge_surface": true
     },
     {
@@ -400,6 +400,18 @@
       "knowledge_surface": true
     },
     {
+      "branch": "architecture/personal-development-canonical-main-20260922",
+      "head": "2351c646474e9c662ddd38810c95684a1cbdfb28",
+      "head_committed_at": "2026-09-22T00:45:36-05:00",
+      "head_message": "test(main): make Stage G architecture binding forward-compatible",
+      "status": "diverged",
+      "ahead": 11,
+      "behind": 459,
+      "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
+      "changed_file_count_vs_source_merge_base": 10,
+      "knowledge_surface": true
+    },
+    {
       "branch": "docs/memory-identity-host-learning-ratification-v2",
       "head": "c7e4e29079890674b420b16d5207157a798feb81",
       "head_committed_at": "2026-08-09T00:18:22-05:00",
@@ -641,14 +653,14 @@
     },
     {
       "branch": "main",
-      "head": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "head_committed_at": "2026-08-09T01:22:08-05:00",
-      "head_message": "Merge pull request #89 from NIne-WIngEd/docs/stage-g-candidate-qualification-matrix-v2",
-      "status": "behind",
-      "ahead": 0,
+      "head": "d77b990b76de37984c4fd1a523aeb628d5b84afa",
+      "head_committed_at": "2026-09-22T00:47:36-05:00",
+      "head_message": "Canonicalize personal development architecture",
+      "status": "diverged",
+      "ahead": 1,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 0,
+      "changed_file_count_vs_source_merge_base": 10,
       "knowledge_surface": true
     },
     {
