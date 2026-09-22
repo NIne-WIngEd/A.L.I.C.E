@@ -36,6 +36,10 @@ from alice_personality.n0.qsre_full_envelope_executor_v1 import (
 )
 from alice_personality.n0.full_envelope_structural_types import (
     CONTROL_RELATIONAL,
+    MOD_PROVENANCE_CONSTRAINT,
+    MOD_RECENCY,
+    MOD_RELIABILITY,
+    MOD_TEMPORAL_CONSTRAINT,
     runtime_edge_type_compatibility,
 )
 from alice_personality.n0.public_judgment_probe_v1 import (
@@ -384,6 +388,61 @@ class N0FullEnvelopeStackV1(nn.Module):
         operator = adapted["operator"]
         relation_state = adapted["relation_schema_state"]
 
+        # Explicit evidence-quality scalars are semantically conditional
+        # criteria. When a modifier is OFF, the raw scalar must not remain
+        # available through a different pre-Binder path and silently arbitrate
+        # anyway. Continuous modifier probability gives a smooth interpolation
+        # between a neutral feature and the observed criterion value.
+        reliability_weight = operator.modifier_weight[:, MOD_RELIABILITY][:, None]
+        recency_weight = operator.modifier_weight[:, MOD_RECENCY][:, None]
+        temporal_weight = operator.modifier_weight[
+            :, MOD_TEMPORAL_CONSTRAINT
+        ][:, None]
+        provenance_weight = operator.modifier_weight[
+            :, MOD_PROVENANCE_CONSTRAINT
+        ][:, None]
+
+        effective_field_reliability = (
+            0.5
+            + reliability_weight
+            * (field_reliability - 0.5)
+        )
+        effective_edge_reliability = (
+            0.5
+            + reliability_weight
+            * (edge_reliability - 0.5)
+        )
+        effective_edge_recency = (
+            0.5
+            + recency_weight
+            * (edge_recency - 0.5)
+        )
+        effective_edge_temporal_match = (
+            1.0
+            - temporal_weight
+            * (1.0 - edge_temporal_match)
+        )
+        effective_edge_provenance_match = (
+            1.0
+            - provenance_weight
+            * (1.0 - edge_provenance_match)
+        )
+
+        graph_edge_metadata = edge_metadata.clone()
+        explicit_graph_criteria = (
+            effective_edge_reliability,
+            effective_edge_recency,
+            effective_edge_temporal_match,
+            effective_edge_provenance_match,
+        )
+        # v1 public fabrics use the leading metadata channels for these four
+        # explicit criteria. Extra runtime metadata channels, when configured,
+        # remain untouched and therefore do not create a fixed metadata ceiling.
+        for index, criterion in enumerate(explicit_graph_criteria):
+            if index >= graph_edge_metadata.size(-1):
+                break
+            graph_edge_metadata[..., index] = criterion
+
         structured = self.structured(
             field_hidden_states=field_hidden_states,
             field_token_mask=field_token_mask,
@@ -423,7 +482,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             field_valid_mask=field_valid_mask,
             edge_index=edge_index,
             edge_relation_index=edge_relation_index,
-            edge_metadata=edge_metadata,
+            edge_metadata=graph_edge_metadata,
             edge_valid_mask=pregraph_type_compatible,
             relation_schema_state=relation_state,
             relation_mass=relation_mass,
@@ -482,7 +541,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             field_valid_mask=field_valid_mask,
             field_confidence=field_confidence,
             field_missing=field_missing,
-            field_reliability=field_reliability,
+            field_reliability=effective_field_reliability,
             relation_schema_state=relation_state,
             relation_mass=relation_mass,
             semantic_activity=semantic_activity,
@@ -658,6 +717,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "pre_binder_graph_soft_activity_gated": True,
             "pre_binder_graph_exact_type_schema_gated": True,
             "graph_and_executor_views_causally_availability_gated": True,
+            "modifier_off_blocks_explicit_metadata_prebinder_bypass": True,
             "graph_views_require_exact_binder_support": True,
             "fusion_route_weight_causally_controls_latent_contribution": True,
             "unavailable_internal_view_descriptor_cannot_create_signal": True,
