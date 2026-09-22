@@ -63,6 +63,45 @@ class MacroFamilyLossBalancer(nn.Module):
             persistent=True,
         )
 
+    def observe_detached_family_means(
+        self,
+        family_means: Mapping[str, Tensor],
+    ) -> None:
+        """Update EMA scales once from an effective-batch detached observation.
+
+        Gradient accumulation must not change optimization semantics merely by
+        changing the number of microbatches. Training code can therefore keep
+        update_ema=False on every differentiable microbatch, aggregate detached
+        raw family means over the effective batch, then call this method once
+        after the optimizer step boundary is fixed.
+        """
+        if set(family_means) != set(self.family_names):
+            raise ValueError(
+                "EMA observation families must exactly match precommitted names"
+            )
+        for index, name in enumerate(self.family_names):
+            value = family_means[name]
+            if value.ndim != 0:
+                raise ValueError(
+                    f"EMA observation {name!r} must be a scalar tensor"
+                )
+            detached = value.detach().abs().float()
+            if not bool(torch.isfinite(detached)):
+                raise ValueError(
+                    f"EMA observation {name!r} is non-finite"
+                )
+            detached = detached.clamp_min(self.config.minimum_scale)
+            if not bool(self._seen[index]):
+                self._ema_scale[index].copy_(detached)
+                self._seen[index] = True
+            else:
+                self._ema_scale[index].mul_(self.config.ema_decay).add_(
+                    detached * (1.0 - self.config.ema_decay)
+                )
+
+    def ema_scale_snapshot(self) -> Tensor:
+        return self._ema_scale.detach().clone()
+
     def forward(
         self,
         losses: Mapping[str, Mapping[str, Tensor]],
@@ -94,17 +133,22 @@ class MacroFamilyLossBalancer(nn.Module):
             family_raw = torch.stack(values).mean()
             raw_family[name] = family_raw
 
-            detached = family_raw.detach().abs().float().clamp_min(
-                self.config.minimum_scale
-            )
             if update_ema:
-                if not bool(self._seen[index]):
-                    self._ema_scale[index].copy_(detached)
-                    self._seen[index] = True
-                else:
-                    self._ema_scale[index].mul_(self.config.ema_decay).add_(
-                        detached * (1.0 - self.config.ema_decay)
-                    )
+                self.observe_detached_family_means(
+                    {
+                        family_name: (
+                            family_raw
+                            if family_name == name
+                            else torch.stack(
+                                list(losses[family_name].values())
+                            ).mean()
+                        )
+                        for family_name in self.family_names
+                    }
+                )
+                # The observer updates every family at once. Avoid repeating
+                # the same EMA update inside the family loop.
+                update_ema = False
             scale = self._ema_scale[index].clamp_min(
                 self.config.minimum_scale
             )
@@ -139,4 +183,7 @@ class MacroFamilyLossBalancer(nn.Module):
             "learned_family_weight_parameters": 0,
             "test_adaptive_weights": False,
             "ema_buffers_are_gradient_free": True,
+            "effective_batch_ema_observation_supported": True,
+            "microbatch_partition_invariant_with_frozen_ema": True,
+            "ema_update_once_per_effective_batch_required": True,
         }
