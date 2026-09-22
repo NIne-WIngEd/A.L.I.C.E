@@ -551,7 +551,7 @@
       "stage": "behavioral_curriculum",
       "kind": "CI_REQUIRED",
       "receipt": "PASS_N0_FULL_ENVELOPE_BEHAVIORAL_FABRIC_STATIC_AUDIT",
-      "requirement": "Generated public behavioral fabric passes split isolation, semantic-key leakage, support/endpoint consistency, intervention and runtime-axis audits before any gradient."
+      "requirement": "Generated public behavioral fabric passes entity/query/field/candidate surface isolation, semantic-key leakage, exact scenario-family contract coverage, support/endpoint consistency, intervention and runtime-axis audits before any gradient."
     },
     {
       "id": "N0-P39BE",
