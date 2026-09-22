@@ -189,7 +189,15 @@ class DynamicStructuredStateV2(nn.Module):
         safe_mask = field_token_mask.clone()
         invalid = ~field_valid_mask
         if bool(invalid.any()):
-            safe_mask[invalid, 0] = True
+            first_token = torch.zeros(
+                tokens,
+                device=field_token_mask.device,
+                dtype=torch.bool,
+            )
+            first_token[0] = True
+            safe_mask = safe_mask | (
+                invalid.unsqueeze(-1) & first_token.view(1, 1, tokens)
+            )
         content = self._summarize_tokens(field_hidden_states, safe_mask)
         content = self.content_projection(content)
 
