@@ -27,17 +27,18 @@ class SemanticContextVirtualizerConfig:
 
 
 class SemanticContextVirtualizerV1:
-    """Parameter-free lossless product-context virtualization.
+    """Parameter-free token-lossless native-window virtualization.
 
     A finite native encoder window is treated as an operating window, not a
-    product context ceiling. Arbitrarily long token sequences are partitioned
-    into as many overlapping encoder windows as required at runtime.
+    storage or routing ceiling. Arbitrarily long token sequences are
+    partitioned into as many overlapping encoder windows as required.
 
-    attention_mask exposes overlap to the semantic encoder for local boundary
-    continuity. content_mask assigns every original token to exactly one
-    downstream field, so overlap is never double-counted by structured/fusion
-    layers. Cross-window interaction then occurs through the variable-field N0
-    structured/evidence/fusion stack.
+    This class guarantees unique downstream token ownership and overlap-aware
+    local encoding. It does *not* by itself make independently encoded windows
+    semantically equivalent to one arbitrarily long native transformer pass.
+    Long query/schema semantics therefore require the trainable
+    SemanticSegmentContextBridgeV1 (or an explicit structured-field route)
+    before stitched token states are treated as globally contextualized.
     """
 
     def __init__(
@@ -314,8 +315,12 @@ class SemanticContextVirtualizerV1:
             "segment_count_dependent_parameters": 0,
             "segment_count_ceiling": None,
             "product_context_token_ceiling": None,
+            "token_ownership_lossless": True,
             "lossless_content_ownership": True,
             "long_query_stitching": True,
+            "standalone_cross_window_semantics_complete": False,
+            "segment_context_bridge_required_for_long_query_semantics": True,
+            "dense_unbounded_native_attention_equivalence_claimed": False,
             "overlap_midpoint_ownership": True,
             "boundary_context_bias_to_later_window": False,
         }
