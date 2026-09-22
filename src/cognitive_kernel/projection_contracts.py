@@ -97,6 +97,7 @@ PROJECTION_SUBJECT_TYPES = frozenset(
         "owner",
         "source_person",
         "alice_self",
+        "assistant_self",
         "relationship",
         "mission",
         "claim",

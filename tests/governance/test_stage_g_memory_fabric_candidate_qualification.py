@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -149,7 +150,12 @@ def test_candidate_matrix_is_bound_into_active_architecture_and_migration_gate()
     architecture = _text("docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md")
     migration = _text("docs/PHASE2_TO_KERNEL_MEMORY_MIGRATION_PLAN.md")
 
-    assert "**Version:** 2.1.0" in architecture
+    version_match = re.search(
+        r"\*\*Version:\*\* (\d+)\.(\d+)\.(\d+)",
+        architecture,
+    )
+    assert version_match is not None
+    assert tuple(map(int, version_match.groups())) >= (2, 1, 0)
     assert "STAGE_G_MEMORY_FABRIC_CANDIDATE_QUALIFICATION_MATRIX.md" in architecture
     assert "every concrete named candidate" in architecture
     assert "same-role all-pairs comparison" in architecture

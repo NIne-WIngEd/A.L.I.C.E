@@ -739,6 +739,8 @@ It receives generalizable capability.
 
 Each Friday installation must develop its own private identity, memory, judgment, and history with its own user.
 
+That development is a required capability, not an optional personality layer. The user/host model, assistant-self model, and relationship state remain distinct and revisable. Learned personal state must eventually influence native judgment causally; a fixed personality prompt or generic downstream-model behavior is not sufficient evidence that the system has learned or developed.
+
 A.L.I.C.E. is one specific intelligence.
 
 Friday is the path for other people to develop their own.
@@ -860,7 +862,8 @@ The repository currently contains working or released foundations for:
 - nonproduction Stage F controlled-mirroring receipts and Stage G graph/vector/workflow generation manifests with deletion watermarks.
 - persistent Stage F+G restart/replay durability receipts and a non-exclusive KurrentDB/Neo4j/Qdrant/Temporal backend-candidate registry, with SQLite retained only as a compatibility/reference oracle.
 - owner-ratified identity and host-learning separation: A.L.I.C.E. is an Elaina-derived clone; Rayan is its owner/host; ordinary Rayan learning may change host understanding, relationship state, shared history, habits, and interaction strategy but may not modify the core Elaina-derived identity anchor.
-- Stage G remains open for full cognitive-memory qualification: learned Memory Formation, Elaina identity modeling, Rayan host learning, synthetic Rayan-life stress, routing/authority, all memory layers, retrieval/context fusion, correction/deletion, failure/recovery, and scale.
+- owner-ratified continuing personal-development contract: user/host state, relationship state, and assistant-self state remain separate; all may develop through governed evidence and outcomes; the system must eventually prove that these versioned states causally alter native judgment rather than relying on a fixed prompt or replaceable downstream-model prior.
+- Stage G remains open for full cognitive-memory qualification: learned Memory Formation, Elaina identity modeling, Rayan host learning, A.L.I.C.E. continuity/self development, relationship-state development, synthetic Rayan-life stress, routing/authority, all memory layers, retrieval/context fusion, correction/deletion, failure/recovery, and scale.
 
 ### Still under development
 
@@ -1031,6 +1034,7 @@ The documents below define how it is being built.
 - [M2 Closeout and Shadow-Migration Admission](docs/MEMORY_M2_CLOSEOUT_AND_SHADOW_MIGRATION_ADMISSION.md)
 - [Phase 2 to Cognitive Fabric Migration Plan](docs/PHASE2_TO_KERNEL_MEMORY_MIGRATION_PLAN.md)
 - [Memory Identity, Formation, Host Learning, and Repository Lifecycle](docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md)
+- [Personal Development Architecture Audit](docs/research/PERSONAL_DEVELOPMENT_AUDIT_2026-09-22.md)
 - [Shadow Migration Stage A+B Implementation](docs/MEMORY_SHADOW_MIGRATION_STAGE_A_B_IMPLEMENTATION.md)
 - [Shadow Migration Stage C+E Implementation](docs/MEMORY_SHADOW_MIGRATION_STAGE_C_E_IMPLEMENTATION.md)
 - [Shadow Migration Stage D Implementation](docs/MEMORY_SHADOW_MIGRATION_STAGE_D_IMPLEMENTATION.md)
@@ -1057,6 +1061,7 @@ The documents below define how it is being built.
 - [Shared Kernel Extraction Standard](docs/SHARED_KERNEL_EXTRACTION_STANDARD.md)
 - [Product-Family Capability Parity](docs/PRODUCT_FAMILY_CAPABILITY_PARITY.md)
 - [Friday Production Governance](docs/FRIDAY_PRODUCTION_GOVERNANCE.md)
+- [Fable Personal Development Architecture](docs/FABLE_PERSONAL_DEVELOPMENT_ARCHITECTURE.md)
 
 ---
 

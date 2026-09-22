@@ -1,0 +1,51 @@
+name: personal-development-architecture-v1-contract
+
+on:
+  push:
+    branches:
+      - architecture/personal-development-canonical-main-20260922
+      - main
+    paths:
+      - "README.md"
+      - "docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md"
+      - "docs/FABLE_PERSONAL_DEVELOPMENT_ARCHITECTURE.md"
+      - "docs/research/PERSONAL_DEVELOPMENT_AUDIT_2026-09-22.md"
+      - "policies/memory_identity_host_learning_policy.json"
+      - "src/cognitive_kernel/projection_contracts.py"
+      - "tests/governance/test_memory_identity_host_learning_architecture.py"
+      - "tests/phase5/test_memory_m2_projection_contracts.py"
+      - ".github/workflows/personal-development-architecture-v1-contract.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "README.md"
+      - "docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md"
+      - "docs/FABLE_PERSONAL_DEVELOPMENT_ARCHITECTURE.md"
+      - "docs/research/PERSONAL_DEVELOPMENT_AUDIT_2026-09-22.md"
+      - "policies/memory_identity_host_learning_policy.json"
+      - "src/cognitive_kernel/projection_contracts.py"
+      - "tests/governance/test_memory_identity_host_learning_architecture.py"
+      - "tests/phase5/test_memory_m2_projection_contracts.py"
+      - ".github/workflows/personal-development-architecture-v1-contract.yml"
+  workflow_dispatch:
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test dependencies
+        run: python -m pip install -q pytest
+      - name: Validate policy JSON
+        run: python -m json.tool policies/memory_identity_host_learning_policy.json >/dev/null
+      - name: Run personal-development architecture regression tests
+        run: |
+          pytest -q \
+            tests/governance/test_memory_identity_host_learning_architecture.py \
+            tests/phase5/test_memory_m2_projection_contracts.py
