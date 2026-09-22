@@ -98,6 +98,11 @@ class FullEnvelopeSemanticInputV1(nn.Module):
                 pad_token_id=self.config.pad_token_id,
             )
         )
+        self.summary_layer_gate = nn.Sequential(
+            nn.Linear(self.config.semantic_dim + 1, self.config.semantic_dim),
+            nn.SiLU(),
+            nn.Linear(self.config.semantic_dim, 1),
+        )
         self.segment_bridge = SemanticSegmentContextBridgeV1(
             SemanticSegmentContextBridgeConfig(
                 semantic_dim=self.config.semantic_dim,
@@ -257,6 +262,40 @@ class FullEnvelopeSemanticInputV1(nn.Module):
             "original_lengths": lengths,
         }
 
+    def summarize_items(
+        self,
+        *,
+        hidden_states: Tensor,
+        token_mask: Tensor,
+    ) -> Tensor:
+        """Content-conditioned all-layer summary for semantic descriptor items."""
+        if hidden_states.ndim != 4:
+            raise ValueError("hidden_states must be [N,L,T,D]")
+        items, layers, tokens, width = hidden_states.shape
+        if layers != self.config.num_hidden_states or width != self.config.semantic_dim:
+            raise ValueError("semantic summary hidden-state geometry drift")
+        if token_mask.shape != (items, tokens) or token_mask.dtype != torch.bool:
+            raise ValueError("token_mask must be bool [N,T]")
+        if bool((token_mask.sum(dim=-1) == 0).any()):
+            raise ValueError("every summarized item requires content tokens")
+        weight = token_mask[:, None, :, None].to(hidden_states.dtype)
+        per_layer = (
+            (hidden_states * weight).sum(dim=2)
+            / weight.sum(dim=2).clamp_min(1.0)
+        ).float()
+        position = torch.linspace(
+            -1.0,
+            1.0,
+            layers,
+            device=per_layer.device,
+            dtype=per_layer.dtype,
+        ).view(1, layers, 1).expand(items, layers, 1)
+        logit = self.summary_layer_gate(
+            torch.cat([per_layer, position], dim=-1)
+        ).squeeze(-1)
+        layer_weight = torch.softmax(logit, dim=-1)
+        return torch.einsum("nl,nld->nd", layer_weight, per_layer)
+
     def encode_semantic_bank(
         self,
         *,
@@ -375,9 +414,11 @@ class FullEnvelopeSemanticInputV1(nn.Module):
 
     def parameter_report(self) -> dict[str, Any]:
         bridge = self.segment_bridge.parameter_report()
+        total = sum(p.numel() for p in self.parameters())
+        trainable = sum(p.numel() for p in self.parameters() if p.requires_grad)
         return {
-            "total_parameters": int(bridge["total_parameters"]),
-            "trainable_parameters": int(bridge["trainable_parameters"]),
+            "total_parameters": int(total),
+            "trainable_parameters": int(trainable),
             "shared_backbone_owned_parameters": 0,
             "single_shared_backbone_reference": True,
             "long_query_supported": True,
@@ -388,6 +429,8 @@ class FullEnvelopeSemanticInputV1(nn.Module):
             "long_descriptor_supported": True,
             "native_window_is_operating_point": True,
             "all_text_surfaces_share_virtualization_policy": True,
+            "descriptor_summary_content_conditioned_all_layers": True,
+            "descriptor_summary_global_static_layer_mixture": False,
             "cross_window_semantic_bridge_required_when_virtualized": True,
             "item_count_dependent_parameters": 0,
             "token_count_dependent_parameters": 0,
