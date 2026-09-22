@@ -82,10 +82,12 @@ def _factor_margin_scores(
             raise ValueError(f"factor logits {name!r} must be [B,C]")
         if correct.shape != (logits.size(0),) or counter.shape != correct.shape:
             raise ValueError(f"factor target geometry drift for {name!r}")
-        if bool((correct == counter).any()):
-            raise ValueError(
-                f"factor counterfactual must differ from correct target for {name!r}"
-            )
+        if bool((correct < 0).any()) or bool((correct >= logits.size(-1)).any()):
+            raise ValueError(f"factor correct target outside bank: {name!r}")
+        if bool((counter < -1).any()) or bool((counter >= logits.size(-1)).any()):
+            raise ValueError(f"factor counterfactual target outside bank: {name!r}")
+        valid = counter.ge(0) & counter.ne(correct)
+        safe_counter = torch.where(valid, counter, correct)
         correct_values.append(
             _gather_class_score(
                 logits,
@@ -96,11 +98,11 @@ def _factor_margin_scores(
         counter_values.append(
             _gather_class_score(
                 logits,
-                counter,
+                safe_counter,
                 name=f"factor/{name}/counterfactual",
             )
         )
-        valid_values.append(torch.ones_like(correct, dtype=torch.bool))
+        valid_values.append(valid)
     return (
         torch.stack(correct_values, dim=-1),
         torch.stack(counter_values, dim=-1),
@@ -124,6 +126,22 @@ def semantic_operator_supervision(
     counterfactual_relation_targets = targets[
         "counterfactual_relation_targets"
     ]
+    if counterfactual_relation_targets.shape != relation_targets.shape:
+        raise ValueError("counterfactual relation target geometry drift")
+    if bool((counterfactual_relation_targets < -1).any()) or bool(
+        (counterfactual_relation_targets >= relation_logits.size(-1)).any()
+    ):
+        raise ValueError("counterfactual relation target outside runtime bank")
+    relation_margin_mask = (
+        relation_step_mask
+        & counterfactual_relation_targets.ge(0)
+        & counterfactual_relation_targets.ne(relation_targets)
+    )
+    safe_counterfactual_relation_targets = torch.where(
+        relation_margin_mask,
+        counterfactual_relation_targets,
+        relation_targets,
+    )
     correct_relation_score = _gather_class_score(
         relation_logits,
         relation_targets,
@@ -131,18 +149,9 @@ def semantic_operator_supervision(
     )
     counterfactual_relation_score = _gather_class_score(
         relation_logits,
-        counterfactual_relation_targets,
+        safe_counterfactual_relation_targets,
         name="relation/counterfactual",
     )
-    if bool(
-        (
-            relation_step_mask
-            & relation_targets.eq(counterfactual_relation_targets)
-        ).any()
-    ):
-        raise ValueError(
-            "active relation counterfactual target must differ from correct target"
-        )
 
     (
         correct_factor_score,
@@ -215,7 +224,7 @@ def semantic_operator_supervision(
         uncertainty_target=targets["uncertainty_target"],
         correct_relation_score=correct_relation_score,
         counterfactual_relation_score=counterfactual_relation_score,
-        relation_margin_valid_mask=relation_step_mask,
+        relation_margin_valid_mask=relation_margin_mask,
         correct_factor_score=correct_factor_score,
         counterfactual_factor_score=counterfactual_factor_score,
         factor_margin_valid_mask=factor_margin_mask,
@@ -280,9 +289,15 @@ def behavioral_supervision(
         decisive_ablated_candidate_logits=decisive_judgment[
             "candidate_logits"
         ],
+        decisive_view_active_mask=targets[
+            "decisive_view_active_mask"
+        ].bool(),
         irrelevant_removed_candidate_logits=irrelevant_judgment[
             "candidate_logits"
         ],
+        irrelevant_view_active_mask=targets[
+            "irrelevant_view_active_mask"
+        ].bool(),
         latent_slots=latent["latent_slots"],
         source_views=primary_outputs["source_views"],
         view_available=primary_outputs["view_available"],
