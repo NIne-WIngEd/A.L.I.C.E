@@ -704,6 +704,24 @@ def test_behavioral_compiler_batches_execute_all_counterfactual_paths_and_joint_
         update_ema=True,
     )
     assert torch.isfinite(result["loss"])
+    embedding_parameter=system.semantic_model.backbone.embedding.weight
+    nonfinite_component_gradients=[]
+    for family_name,components in result["families"].items():
+        for component_name,component_loss in components.items():
+            gradient=torch.autograd.grad(
+                component_loss,
+                embedding_parameter,
+                retain_graph=True,
+                allow_unused=True,
+            )[0]
+            if gradient is not None and not bool(torch.isfinite(gradient).all()):
+                nonfinite_component_gradients.append(
+                    f"{family_name}/{component_name}"
+                )
+    assert not nonfinite_component_gradients, (
+        "non-finite component gradients into shared semantic backbone: "
+        + repr(nonfinite_component_gradients)
+    )
     result["loss"].backward()
     finite_gradient_names=[]
     nonfinite_gradient_names=[]
