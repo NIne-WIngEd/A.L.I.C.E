@@ -9,6 +9,7 @@ from alice_personality.n0.chunked_late_interaction import (
     chunked_batched_bidirectional_late_max,
 )
 from alice_personality.n0.full_envelope_behavioral_objectives_v1 import (
+    decisive_view_causal_margin_loss,
     full_envelope_behavioral_objective,
     public_judgment_loss,
     irrelevant_view_invariance_loss,
@@ -869,6 +870,54 @@ def test_irrelevant_view_invariance_gradient_is_finite_with_masked_candidates() 
     assert torch.equal(
         removed.grad.masked_select(~valid),
         torch.zeros_like(removed.grad.masked_select(~valid)),
+    )
+
+
+def test_inactive_behavioral_candidate_losses_stay_finite_with_structural_invalid_floor() -> None:
+    floor=torch.finfo(torch.float32).min
+    normal=torch.tensor(
+        [[2.0,floor,floor],[1.0,0.5,floor]],
+        requires_grad=True,
+    )
+    ablated=torch.tensor(
+        [[1.5,floor,floor],[0.8,0.4,floor]],
+        requires_grad=True,
+    )
+    valid=torch.tensor(
+        [[True,False,False],[True,True,False]],
+        dtype=torch.bool,
+    )
+    inactive=torch.zeros(2,dtype=torch.bool)
+
+    decisive=decisive_view_causal_margin_loss(
+        normal,
+        ablated,
+        torch.tensor([0,0]),
+        candidate_valid_mask=valid,
+        active_mask=inactive,
+    )
+    invariant=irrelevant_view_invariance_loss(
+        normal,
+        ablated,
+        candidate_valid_mask=valid,
+        active_mask=inactive,
+    )
+    total=decisive+invariant
+    assert torch.isfinite(decisive)
+    assert torch.isfinite(invariant)
+    assert torch.allclose(total,torch.zeros_like(total),atol=0.0,rtol=0.0)
+    total.backward()
+    assert normal.grad is not None
+    assert ablated.grad is not None
+    assert bool(torch.isfinite(normal.grad).all())
+    assert bool(torch.isfinite(ablated.grad).all())
+    assert torch.equal(
+        normal.grad.masked_select(~valid),
+        torch.zeros_like(normal.grad.masked_select(~valid)),
+    )
+    assert torch.equal(
+        ablated.grad.masked_select(~valid),
+        torch.zeros_like(ablated.grad.masked_select(~valid)),
     )
 
 
