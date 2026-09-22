@@ -52,7 +52,9 @@
     ],
     "registered_trainable_system": "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
     "one_shared_semantic_backbone_for_replay_and_full_envelope": true,
-    "detached_duplicate_backbones_forbidden": true
+    "detached_duplicate_backbones_forbidden": true,
+    "prebinder_graph_exact_runtime_type_gate": true,
+    "unsupported_graph_views_blocked_by_binder_null_support": true
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -199,7 +201,9 @@
       "exact_zero_support_with_compatible_distractors",
       "masked_runtime_relation_exclusion",
       "unsupported_relation_mass_cannot_activate_graph_views",
-      "long_field_and_descriptor_semantics"
+      "long_field_and_descriptor_semantics",
+      "prebinder_graph_type_invalid_edges_inert",
+      "binder_null_support_blocks_graph_views_from_fusion"
     ],
     "J3": [
       "J1_and_J2_gates_retained",
