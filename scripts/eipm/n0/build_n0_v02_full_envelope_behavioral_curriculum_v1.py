@@ -401,7 +401,7 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         targets["reliability"]="MOD_RELIABILITY_ON"
         decisive_fields=[0]
         irrelevant_fields=[4]
-        support_edges=[0]
+        support_edges=[0,1]
     elif mode == 5:
         family="recency_supersession"
         fields=[
@@ -447,7 +447,7 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         event_sequence=["CONTINUE","STOP"]
         targets["temporal"]="MOD_TEMPORAL_ON"
         decisive_fields=[0]
-        support_edges=[0]
+        support_edges=[0,1]
     elif mode == 7:
         family="provenance_constraint"
         fields=[
@@ -468,7 +468,7 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         event_sequence=["CONTINUE","STOP"]
         targets["provenance"]="MOD_PROVENANCE_ON"
         decisive_fields=[0]
-        support_edges=[0]
+        support_edges=[0,1]
     elif mode == 8:
         family="conflict_plurality"
         fields=[
