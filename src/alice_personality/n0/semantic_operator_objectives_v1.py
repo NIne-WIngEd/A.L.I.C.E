@@ -145,12 +145,23 @@ def pairwise_margin_loss(
     counterfactual_score: Tensor,
     *,
     margin: float = 0.20,
+    valid_mask: Tensor | None = None,
 ) -> Tensor:
     if correct_score.shape != counterfactual_score.shape:
         raise ValueError("causal margin tensors must have matching shapes")
     if margin < 0.0:
         raise ValueError("margin must be non-negative")
-    return F.relu(float(margin) - (correct_score - counterfactual_score)).mean()
+    raw = F.relu(float(margin) - (correct_score - counterfactual_score))
+    if valid_mask is None:
+        if raw.numel() == 0:
+            return (correct_score.sum() + counterfactual_score.sum()) * 0.0
+        return raw.mean()
+    if valid_mask.shape != raw.shape or valid_mask.dtype != torch.bool:
+        raise ValueError("causal margin valid_mask shape drift")
+    selected = raw.masked_select(valid_mask)
+    if selected.numel() == 0:
+        return (correct_score.sum() + counterfactual_score.sum()) * 0.0
+    return selected.mean()
 
 
 def uncertainty_supervision_loss(
@@ -184,6 +195,8 @@ def semantic_operator_objective(
     counterfactual_relation_score: Tensor,
     correct_factor_score: Tensor,
     counterfactual_factor_score: Tensor,
+    relation_margin_valid_mask: Tensor | None = None,
+    factor_margin_valid_mask: Tensor | None = None,
     step_factor_logits: Mapping[str, Tensor] | None = None,
     step_factor_targets: Mapping[str, Tensor] | None = None,
     step_factor_mask: Tensor | None = None,
@@ -342,10 +355,12 @@ def semantic_operator_objective(
     relation_margin = pairwise_margin_loss(
         correct_relation_score,
         counterfactual_relation_score,
+        valid_mask=relation_margin_valid_mask,
     )
     factor_margin = pairwise_margin_loss(
         correct_factor_score,
         counterfactual_factor_score,
+        valid_mask=factor_margin_valid_mask,
     )
     uncertainty_loss = uncertainty_supervision_loss(
         uncertainty,
