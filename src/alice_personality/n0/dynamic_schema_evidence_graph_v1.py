@@ -5,6 +5,7 @@ from typing import Any
 
 import torch
 from alice_personality.n0.numeric_contracts import (
+    exact_masked_softmax,
     require_finite,
     require_unit_interval,
 )
@@ -68,9 +69,7 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
 
     @staticmethod
     def _masked_softmax(logits: Tensor, mask: Tensor) -> Tensor:
-        value = torch.softmax(logits.masked_fill(~mask, -1.0e4), dim=-1)
-        value = value * mask.to(value.dtype)
-        return value / value.sum(dim=-1, keepdim=True).clamp_min(1.0e-12)
+        return exact_masked_softmax(logits, mask, dim=-1)
 
     def forward(
         self,
