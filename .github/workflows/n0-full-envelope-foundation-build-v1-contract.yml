@@ -8,6 +8,7 @@ on:
       - "src/alice_personality/n0/semantic_operator_foundation.py"
       - "src/alice_personality/n0/semantic_backbone_interface_v1.py"
       - "src/alice_personality/n0/dynamic_structured_state_v2.py"
+      - "src/alice_personality/n0/chunked_set_attention_v1.py"
       - "src/alice_personality/n0/dynamic_schema_evidence_graph_v1.py"
       - "src/alice_personality/n0/dynamic_evidence_view_v2.py"
       - "src/alice_personality/n0/dynamic_cross_context_fusion_v3.py"
@@ -25,6 +26,7 @@ on:
       - "src/alice_personality/n0/n0_full_envelope_stack_v1.py"
       - "tests/eipm/test_n0_semantic_operator_foundation_v1.py"
       - "tests/eipm/test_n0_full_envelope_backbone_interface_v1.py"
+      - "tests/eipm/test_n0_chunked_set_attention_v1.py"
       - "tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py"
       - "tests/eipm/test_n0_full_envelope_fabric_v1.py"
       - "tests/eipm/test_n0_full_envelope_stack_v1.py"
@@ -70,6 +72,7 @@ jobs:
             src/alice_personality/n0/semantic_operator_foundation.py \
             src/alice_personality/n0/semantic_backbone_interface_v1.py \
             src/alice_personality/n0/dynamic_structured_state_v2.py \
+            src/alice_personality/n0/chunked_set_attention_v1.py \
             src/alice_personality/n0/dynamic_schema_evidence_graph_v1.py \
             src/alice_personality/n0/dynamic_evidence_view_v2.py \
             src/alice_personality/n0/dynamic_cross_context_fusion_v3.py \
@@ -111,6 +114,7 @@ jobs:
           pytest -q \
             tests/eipm/test_n0_semantic_operator_foundation_v1.py \
             tests/eipm/test_n0_full_envelope_backbone_interface_v1.py \
+            tests/eipm/test_n0_chunked_set_attention_v1.py \
             tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py \
             tests/eipm/test_n0_full_envelope_fabric_v1.py \
             tests/eipm/test_n0_full_envelope_stack_v1.py \
