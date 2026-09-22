@@ -36,7 +36,10 @@
     "step_conditioned_relation_schema_execution": true,
     "program_averaged_relation_state_role": "whole-program support geometry only; not executable per-step edge meaning",
     "graph_view_activity_requires_supported_relation_mass": true,
-    "program_relation_state_aggregation": "survival-weighted relation assignment probability"
+    "program_relation_state_aggregation": "survival-weighted relation assignment probability",
+    "bidirectional_query_schema_token_evidence": true,
+    "inactive_candidate_token_evidence_zeroed": true,
+    "token_evidence_macro_budget": "existing token_evidence_grounding family; macro-average query, relation-schema, factor-schema, and step-factor-schema supervised surfaces"
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -169,7 +172,9 @@
       "program_truncation_fail_closed",
       "cross_window_semantic_causal_transfer",
       "step_relation_schema_causal_sensitivity",
-      "program_relation_state_assignment_weighting"
+      "program_relation_state_assignment_weighting",
+      "bidirectional_query_relation_schema_token_grounding",
+      "factor_and_step_factor_schema_token_grounding"
     ],
     "J2": [
       "J1_gates_retained",
@@ -237,6 +242,8 @@
     "PASS full-envelope CPU runtime contract static audit",
     "PASS cross-window semantic bridge permutation/causal-gradient mechanics",
     "CPU runtime qualification exercises exact 640-wide cross-window segment bridge",
+    "PASS synthetic intervention exact evidence-span audit",
+    "evidence char spans converted to tokenizer-aligned token targets with fail-closed audit",
     "full model parameter and memory report",
     "CPU no-gradient end-to-end forward",
     "GPU no-gradient memory dry run",
