@@ -27,8 +27,7 @@
     ".detach(",
     "nn.Embedding(",
     ".topk(",
-    "torch.topk(",
-    "fixed_top_k"
+    "torch.topk("
   ],
   "obligations": [
     {
