@@ -8,12 +8,12 @@ The active N0 implementation frontier is:
 
 ```text
 alice-eipm-v1-n0-full-envelope-foundation-build-v1
-2ab46d87ce254a3ca6cec0c95199d381c7c0058f
+116324b58ec62e85b1a4897dc33c26bdd6cade25
 ```
 
-The latest exact-head static receipt is green at 139 tests / 125 proof obligations / 110 static obligations, but **Magnolia is not yet authorized**. The deep original-source audit remains open. New chats must not convert a green static suite into CPU/GPU/training authorization without first reading the 2026-09-22 handoff.
+The latest exact-head static receipt is green at 142 tests / 129 proof obligations / 113 static obligations, but **Magnolia is not yet authorized**. The deep original-source audit remains open. New chats must not convert a green static suite into CPU/GPU/training authorization without first reading the 2026-09-22 handoff.
 
-The current deep audit has repeatedly justified this caution: after earlier green heads it exposed and repaired TRAIN/DEV surface leakage, modifier bypasses, finite-sentinel masking, a candidate-only public-judgment bypass, same-relation Binder support shortcuts, missing executable shortcut preflight, context-swapped candidate shortcut risk, marginal-product false program completion, incomplete-branch relation contamination, CPU qualifier long-text coverage gaps, and the absence of an executable sealed successor FINAL-v2 package. Those failures and exact repairs are preserved in the 2026-09-22 handoff.
+The current deep audit has repeatedly justified this caution: after earlier green heads it exposed and repaired TRAIN/DEV surface leakage, modifier bypasses, finite-sentinel masking, a candidate-only public-judgment bypass, same-relation Binder support shortcuts, missing executable shortcut preflight, context-swapped candidate shortcut risk, marginal-product false program completion, incomplete-branch relation contamination, CPU qualifier long-text coverage gaps, the absence of an executable sealed successor FINAL-v2 package, missing TRAIN/DEV long-context supervision across governed text surfaces, and a shared-object curriculum bug that let one relation-surface intervention contaminate later rows. Those failures and exact repairs are preserved in the 2026-09-22 handoff.
 
 The current method is failure-driven and anti-hotfix: try to expose structural defects cheaply, verify original source rather than report flags, repair one localized causal defect, preserve failure evidence, rerun affected exact-head evidence, and continue the broader audit.
 

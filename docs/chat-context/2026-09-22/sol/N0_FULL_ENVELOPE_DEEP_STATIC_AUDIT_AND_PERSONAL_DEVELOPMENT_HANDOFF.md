@@ -3,8 +3,8 @@
 **Date:** 2026-09-22  
 **Status:** active continuity authority for the current Sol handoff  
 **N0 branch:** `alice-eipm-v1-n0-full-envelope-foundation-build-v1`  
-**N0 head at handoff:** `2ab46d87ce254a3ca6cec0c95199d381c7c0058f`  
-Current build head: `2ab46d87ce254a3ca6cec0c95199d381c7c0058f`  
+**N0 head at handoff:** `116324b58ec62e85b1a4897dc33c26bdd6cade25`  
+Current build head: `116324b58ec62e85b1a4897dc33c26bdd6cade25`  
 **Magnolia authorization:** **NO — deep source-level audit remains open**  
 **N0 complete:** false
 
@@ -12,11 +12,11 @@ Current build head: `2ab46d87ce254a3ca6cec0c95199d381c7c0058f`
 
 ```text
 source_branch=alice-eipm-v1-n0-full-envelope-foundation-build-v1
-current_build_head=2ab46d87ce254a3ca6cec0c95199d381c7c0058f
+current_build_head=116324b58ec62e85b1a4897dc33c26bdd6cade25
 deep_source_audit_complete=false
-exact_head_static_suite=PASS_139
-proof_obligations_total=125
-proof_obligations_static=110
+exact_head_static_suite=PASS_142
+proof_obligations_total=129
+proof_obligations_static=113
 magnolia_cpu_runtime_authorized=false
 gpu_memory_dry_run_authorized=false
 optimizer_authorized=false
@@ -69,13 +69,14 @@ Do not revive a superseded narrow PASS merely because a later experiment becomes
 
 ## Current exact-head static evidence
 
-At `2ab46d87ce254a3ca6cec0c95199d381c7c0058f`, GitHub Actions run `35778942888` completed successfully.
+At `116324b58ec62e85b1a4897dc33c26bdd6cade25`, GitHub Actions run `35798607968` completed successfully.
 
 Observed receipt:
 
-- 139 tests passed;
-- 125 proof obligations registered;
-- 110 static obligations;
+- 142 tests passed;
+- 129 proof obligations registered;
+- 113 static obligations;
+- long-context TRAIN/DEV supplement audit passed across every governed text surface;
 - successor shortcut preflight passed;
 - successor FINAL-v2 package build/audit/freeze passed without opening model results;
 - synthetic operator curriculum audit passed;
@@ -358,6 +359,30 @@ At `2ab46d87ce254a3ca6cec0c95199d381c7c0058f`, run `35778942888` is green:
 
 The branch is substantially closer to the true N0 objective, but the source audit is still open.
 
+### Explicit TRAIN/DEV long-context supervision
+
+The long-context architecture and CPU qualifier were not enough by themselves. Source audit found that the joint plan required long-query/schema/field/candidate/descriptor capability, but the actual public TRAIN/DEV builders did not yet materialize examples that crossed the native-window operating point on those surfaces. FINAL-only long rows were deliberately ineligible to fill that training gap.
+
+A failing proof was added at `29b0e59404d6b4add3b8c0adec6a59841cedeae2`. The successor now has a separate public identity-neutral long-context supplement that:
+
+- covers query, relation schema, factor schema, type schema, field text, field descriptor, candidate text, and internal-view descriptor surfaces in both TRAIN and DEV;
+- moves the decisive original semantic content to the tail after more than one native-window operating point of neutral public context;
+- preserves the short base row's structural and behavioral targets exactly;
+- treats 4608 words as a stress operating point, not a product ceiling;
+- remains separate from FINAL and private identity data.
+
+The first implementation then exposed a deeper builder defect. Relation candidates from the base behavioral materializer were direct mutable aliases into the module-level canonical relation bank. Longifying one relation description could therefore mutate later rows and make materialization order-dependent. That was not patched as arithmetic. Row ownership was corrected at `116324b58ec62e85b1a4897dc33c26bdd6cade25` by deep-copying runtime relation candidates and locking the invariant with a dedicated test.
+
+Exact-head run `35798607968` is green:
+
+- 142 tests passed;
+- 129 proof obligations;
+- 113 static obligations;
+- `PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_CURRICULUM_AUDIT_V1`;
+- shortcut preflight, FewRel, sealed FINAL-v2 package, authority firewall, CPU contract and premature-training block all remain green.
+
+This closes the **missing long-context training coverage** defect and the associated **shared mutable relation-schema row** defect. It does not close the remaining source audit.
+
 ## Current architecture intent
 
 N0 is the public, identity-neutral semantic/judgment foundation for the EIPM.
@@ -499,7 +524,7 @@ Canonical corrections include:
 - explicit rule that prompts, storage schemas, or generic model behavior are insufficient proof;
 - regression tests for subject separation and the architecture contract.
 
-The Fable builder branch is now updated through `fable-builder-model@77517e759f01f6f936c7d5d07fcde9fee409441f`:
+The Fable builder branch is now updated through `fable-builder-model@c0bef8991b415c929806dd139e0303bb4a097262`:
 
 - `docs/fable-builder/README.md` now treats post-activation personal development/reflection as required rather than optional;
 - `docs/fable-builder/traces/FBM_TRACE_20260922_PERSONAL_DEVELOPMENT_ARCHITECTURE.jsonl` records the personal-development lessons;
@@ -511,7 +536,7 @@ The canonical main correction adds the product-neutral `assistant_self` projecti
 
 ## Current next action
 
-Continue the deep source-level N0 audit at exact head `2ab46d87ce254a3ca6cec0c95199d381c7c0058f`.
+Continue the deep source-level N0 audit at exact head `116324b58ec62e85b1a4897dc33c26bdd6cade25`.
 
 Do not ask the owner for a Magnolia run until that audit has either:
 
