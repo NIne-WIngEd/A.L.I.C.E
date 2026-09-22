@@ -118,6 +118,28 @@ def binary_token_evidence_loss(
     )
 
 
+def mapping_token_evidence_loss(
+    predicted: Mapping[str, Tensor],
+    target: Mapping[str, Tensor],
+    valid_mask: Mapping[str, Tensor],
+    *,
+    label: str,
+) -> Tensor:
+    if set(predicted) != set(target) or set(predicted) != set(valid_mask):
+        raise ValueError(f"{label} evidence bank names must match")
+    losses = [
+        binary_token_evidence_loss(
+            predicted[name],
+            target[name],
+            valid_mask[name].bool(),
+        )
+        for name in sorted(predicted)
+    ]
+    if not losses:
+        raise ValueError(f"{label} evidence requires at least one bank")
+    return torch.stack(losses).mean()
+
+
 def pairwise_margin_loss(
     correct_score: Tensor,
     counterfactual_score: Tensor,
@@ -165,6 +187,15 @@ def semantic_operator_objective(
     step_factor_logits: Mapping[str, Tensor] | None = None,
     step_factor_targets: Mapping[str, Tensor] | None = None,
     step_factor_mask: Tensor | None = None,
+    relation_schema_evidence: Tensor | None = None,
+    relation_schema_evidence_target: Tensor | None = None,
+    relation_schema_evidence_valid_mask: Tensor | None = None,
+    factor_schema_evidence: Mapping[str, Tensor] | None = None,
+    factor_schema_evidence_target: Mapping[str, Tensor] | None = None,
+    factor_schema_evidence_valid_mask: Mapping[str, Tensor] | None = None,
+    step_factor_schema_evidence: Mapping[str, Tensor] | None = None,
+    step_factor_schema_evidence_target: Mapping[str, Tensor] | None = None,
+    step_factor_schema_evidence_valid_mask: Mapping[str, Tensor] | None = None,
     weights: SemanticOperatorObjectiveWeights | None = None,
 ) -> dict[str, Tensor]:
     w = weights or SemanticOperatorObjectiveWeights()
@@ -224,11 +255,90 @@ def semantic_operator_objective(
         applicability_target.float(),
     )
 
-    evidence = binary_token_evidence_loss(
+    query_evidence_loss = binary_token_evidence_loss(
         relation_query_evidence,
         query_evidence_target,
         query_evidence_valid_mask.bool(),
     )
+    evidence_channels = [query_evidence_loss]
+
+    relation_schema_supplied = (
+        relation_schema_evidence is not None
+        or relation_schema_evidence_target is not None
+        or relation_schema_evidence_valid_mask is not None
+    )
+    if relation_schema_supplied:
+        if (
+            relation_schema_evidence is None
+            or relation_schema_evidence_target is None
+            or relation_schema_evidence_valid_mask is None
+        ):
+            raise ValueError(
+                "relation schema evidence, target and valid mask must be supplied together"
+            )
+        relation_schema_evidence_loss = binary_token_evidence_loss(
+            relation_schema_evidence,
+            relation_schema_evidence_target,
+            relation_schema_evidence_valid_mask.bool(),
+        )
+        evidence_channels.append(relation_schema_evidence_loss)
+    else:
+        relation_schema_evidence_loss = query_evidence_loss * 0.0
+
+    factor_schema_supplied = (
+        factor_schema_evidence is not None
+        or factor_schema_evidence_target is not None
+        or factor_schema_evidence_valid_mask is not None
+    )
+    if factor_schema_supplied:
+        if (
+            factor_schema_evidence is None
+            or factor_schema_evidence_target is None
+            or factor_schema_evidence_valid_mask is None
+        ):
+            raise ValueError(
+                "factor schema evidence mappings must be supplied together"
+            )
+        factor_schema_evidence_loss = mapping_token_evidence_loss(
+            factor_schema_evidence,
+            factor_schema_evidence_target,
+            factor_schema_evidence_valid_mask,
+            label="factor schema",
+        )
+        evidence_channels.append(factor_schema_evidence_loss)
+    else:
+        factor_schema_evidence_loss = query_evidence_loss * 0.0
+
+    step_factor_schema_supplied = (
+        step_factor_schema_evidence is not None
+        or step_factor_schema_evidence_target is not None
+        or step_factor_schema_evidence_valid_mask is not None
+    )
+    if step_factor_schema_supplied:
+        if (
+            step_factor_schema_evidence is None
+            or step_factor_schema_evidence_target is None
+            or step_factor_schema_evidence_valid_mask is None
+        ):
+            raise ValueError(
+                "step factor schema evidence mappings must be supplied together"
+            )
+        step_factor_schema_evidence_loss = mapping_token_evidence_loss(
+            step_factor_schema_evidence,
+            step_factor_schema_evidence_target,
+            step_factor_schema_evidence_valid_mask,
+            label="step factor schema",
+        )
+        evidence_channels.append(step_factor_schema_evidence_loss)
+    else:
+        step_factor_schema_evidence_loss = query_evidence_loss * 0.0
+
+    # Keep the precommitted 0.10 evidence-family macro weight unchanged.
+    # Multiple supervised evidence surfaces are macro-averaged inside the
+    # family so adding factor banks or token surfaces cannot silently increase
+    # their optimization weight.
+    evidence = torch.stack(evidence_channels).mean()
+
     relation_margin = pairwise_margin_loss(
         correct_relation_score,
         counterfactual_relation_score,
@@ -260,7 +370,11 @@ def semantic_operator_objective(
         "step_factor_semantics": step_factor,
         "event_control": event,
         "applicability": applicability_loss,
-        "query_evidence": evidence,
+        "token_evidence": evidence,
+        "query_evidence": query_evidence_loss,
+        "relation_schema_evidence": relation_schema_evidence_loss,
+        "factor_schema_evidence": factor_schema_evidence_loss,
+        "step_factor_schema_evidence": step_factor_schema_evidence_loss,
         "causal_relation_margin": relation_margin,
         "causal_factor_margin": factor_margin,
         "uncertainty": uncertainty_loss,
