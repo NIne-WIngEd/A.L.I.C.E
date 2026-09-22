@@ -41,8 +41,11 @@
     "natural_relation_source_manifest": "configs/eipm/n0/n0_v02_natural_relation_sources_v1.json",
     "natural_relation_builder": "scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py",
     "natural_relation_audit": "scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py",
-    "sealed_natural_final_relation_families_required": true,
-    "final_relation_descriptions_excluded_from_train_dev_bank": true
+    "sealed_natural_final_relation_families_required": false,
+    "final_relation_descriptions_excluded_from_train_dev_bank": true,
+    "official_validation_natural_final_relation_families_required": true,
+    "natural_final_is_public_benchmark_not_full_closure": true,
+    "full_final_closure_corpus_separate": true
   },
   "optimization_strategy": {
     "stages": [
@@ -202,7 +205,7 @@
   "prerequisites_before_gradient": [
     "materialized_full_public_mixture_manifest",
     "PASS FewRel natural relation materialization and leakage audit",
-    "sealed natural FINAL relation-family artifacts hashed and excluded from TRAIN/DEV bank",
+    "official FewRel validation relation families excluded from TRAIN/DEV bank; public benchmark results unobserved",
     "PASS semantic_operator_curriculum_audit",
     "PASS static semantic_operator mechanics",
     "PASS reopened interface mechanics",
