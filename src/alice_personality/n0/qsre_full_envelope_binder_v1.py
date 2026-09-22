@@ -18,6 +18,8 @@ from alice_personality.n0.numeric_contracts import (
 
 from alice_personality.n0.full_envelope_structural_types import (
     CONTROL_RELATIONAL,
+    MOD_RECENCY,
+    MOD_RELIABILITY,
     FullEnvelopeOperatorState,
     masked_sparsemax,
     runtime_edge_type_compatibility,
@@ -313,11 +315,19 @@ class FullEnvelopeQSREBinderV1(nn.Module):
 
         q = query_summary[:, None, :].expand(batch, edges, -1)
         op = self.operator_projection(operator.continuous_state)[:, None, :].expand(batch, edges, -1)
+        reliability_weight = operator.modifier_weight[:, MOD_RELIABILITY][:, None]
+        recency_weight = operator.modifier_weight[:, MOD_RECENCY][:, None]
+        effective_reliability = (
+            0.5 + reliability_weight * (edge_reliability - 0.5)
+        )
+        effective_recency = (
+            0.5 + recency_weight * (edge_recency - 0.5)
+        )
         scalar = torch.stack(
             [
                 edge_relation_mass,
-                edge_reliability,
-                edge_recency,
+                effective_reliability,
+                effective_recency,
                 operator.applicability[:, None].expand(batch, edges),
                 source_late,
                 target_late,
@@ -423,6 +433,7 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             "type_vocab_dependent_parameters": 0,
             "fixed_top_k": False,
             "exact_zero_sparse_support": True,
+            "modifier_off_neutralizes_explicit_reliability_recency_features": True,
             "explicit_null_support_option": True,
             "zero_support_possible_with_compatible_edges": True,
             "multilayer_query_field_interaction": True,
