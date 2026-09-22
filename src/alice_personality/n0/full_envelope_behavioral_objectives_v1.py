@@ -247,7 +247,10 @@ def decisive_view_causal_margin_loss(
         raise ValueError("decisive causal active_mask must be bool [B]")
     selected = raw.masked_select(active_mask)
     if selected.numel() == 0:
-        return (normal_candidate_logits.sum() + ablated_candidate_logits.sum()) * 0.0
+        return (
+            normal_candidate_logits.masked_select(valid).sum()
+            + ablated_candidate_logits.masked_select(valid).sum()
+        ) * 0.0
     return selected.mean()
 
 
@@ -307,8 +310,8 @@ def irrelevant_view_invariance_loss(
     selected = per_row.masked_select(active_mask)
     if selected.numel() == 0:
         return (
-            normal_candidate_logits.sum()
-            + irrelevant_removed_logits.sum()
+            normal_candidate_logits.masked_select(valid).sum()
+            + irrelevant_removed_logits.masked_select(valid).sum()
         ) * 0.0
     loss = selected.mean()
     if not bool(torch.isfinite(loss.detach())):
