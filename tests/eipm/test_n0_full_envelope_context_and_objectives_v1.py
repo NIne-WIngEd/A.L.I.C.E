@@ -509,3 +509,52 @@ def test_source_recoverability_mask_does_not_force_irrelevant_views_into_latent(
         views.grad[:,2:],
         torch.zeros_like(views.grad[:,2:]),
     )
+
+
+def test_segment_context_bridge_padded_segments_are_inert() -> None:
+    torch.manual_seed(251)
+    model=_tiny_segment_bridge()
+    states=torch.randn(2,4,3,6,24)
+    changed=states.clone()
+    changed[1,2:] = torch.randn_like(changed[1,2:]) * 100.0
+    attention=torch.ones(2,4,6,dtype=torch.bool)
+    attention[1,2:]=False
+    valid=torch.tensor(
+        [[True,True,True,True],[True,True,False,False]],
+        dtype=torch.bool,
+    )
+    metadata=torch.rand(2,4,3)
+    metadata[1,2:]=0.0
+    with torch.no_grad():
+        a=model(
+            segment_hidden_states=states,
+            segment_attention_mask=attention,
+            segment_valid_mask=valid,
+            segment_metadata=metadata,
+        )
+        b=model(
+            segment_hidden_states=changed,
+            segment_attention_mask=attention,
+            segment_valid_mask=valid,
+            segment_metadata=metadata,
+        )
+    assert torch.allclose(
+        a["segment_context_state"][1,:2],
+        b["segment_context_state"][1,:2],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.equal(
+        a["segment_context_state"][1,2:],
+        torch.zeros_like(a["segment_context_state"][1,2:]),
+    )
+    assert torch.allclose(
+        a["contextualized_segment_hidden_states"][1,:2],
+        b["contextualized_segment_hidden_states"][1,:2],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.equal(
+        a["contextualized_segment_hidden_states"][1,2:],
+        torch.zeros_like(a["contextualized_segment_hidden_states"][1,2:]),
+    )
