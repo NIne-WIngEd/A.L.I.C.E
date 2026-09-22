@@ -149,7 +149,14 @@
     "stop_rule": "continue until precommitted DEV capability saturates without broad-semantic regression; do not stop merely because an arbitrary step budget expires",
     "checkpoint_selection": "first checkpoint satisfying every active stage gate with no regression; otherwise keep failure evidence",
     "automatic_hyperparameter_search": false,
-    "automatic_rerun": false
+    "automatic_rerun": false,
+    "loss_family_ema_policy": {
+      "update_timing": "once_per_effective_batch_after_microbatch_raw_family_aggregation",
+      "differentiable_microbatches_use_update_ema": false,
+      "sample_weighted_effective_batch_observation_required": true,
+      "microbatch_partition_may_not_change_family_scales_within_optimizer_step": true,
+      "test_or_final_results_may_not_update_scales": true
+    }
   },
   "loss_balancing": {
     "method": "macro_family_balanced_with_per_objective_scale_normalization",
@@ -289,7 +296,8 @@
     "gpu_memory_dry_run_required_before_first_gradient": true,
     "cpu_runtime_must_instantiate_registered_trainable_system": true,
     "gpu_memory_dry_run_must_instantiate_same_registered_trainable_system": true,
-    "training_may_not_use_a_different_module_topology_than_qualified_runtime": true
+    "training_may_not_use_a_different_module_topology_than_qualified_runtime": true,
+    "gradient_accumulation_may_not_change_objective_family_scaling": true
   },
   "final_validation": {
     "contract": "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
@@ -317,6 +325,7 @@
     "PASS joint objective gradient reaches backbone/operator/Binder/fusion/judgment/long-context bridge",
     "PASS full-envelope behavioral fabric static audit",
     "PASS behavioral row-to-system batch compiler mechanics",
+    "PASS microbatch-partition-invariant macro-family scaling mechanics",
     "full model parameter and memory report",
     "CPU no-gradient end-to-end forward",
     "GPU no-gradient memory dry run",
