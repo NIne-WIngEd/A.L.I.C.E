@@ -764,6 +764,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_full_stack_modifier_off_neutralizes_explicit_metadata_before_graph_and_evidence_view",
       "requirement": "Explicit reliability, recency, temporal-match, and provenance-match metadata must be modifier-conditioned before pre-Binder graph/evidence paths so OFF criteria cannot bypass the semantic operator; enabling a criterion must preserve the corresponding evidence signal."
+    },
+    {
+      "id": "N0-P37A",
+      "stage": "public_judgment",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_public_judgment_probe_invalid_candidate_can_never_win_even_under_extreme_valid_logit",
+      "requirement": "A candidate marked invalid by candidate_valid_mask is structurally impossible and may never outrank a valid candidate regardless of learned logit magnitude."
+    },
+    {
+      "id": "N0-P37B",
+      "stage": "behavioral_objective",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_public_judgment_loss_with_one_valid_candidate_is_exactly_zero_under_extreme_logits",
+      "requirement": "Padded candidates must be exactly excluded from public-judgment normalization and gradients; with one valid candidate the classification loss is exactly zero regardless of padded logits."
     }
   ],
   "closure_rule": {
