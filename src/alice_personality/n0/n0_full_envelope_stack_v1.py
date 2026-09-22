@@ -34,7 +34,10 @@ from alice_personality.n0.qsre_full_envelope_executor_v1 import (
     FullEnvelopeExecutorConfig,
     FullEnvelopeQSREExecutorV1,
 )
-from alice_personality.n0.full_envelope_structural_types import CONTROL_RELATIONAL
+from alice_personality.n0.full_envelope_structural_types import (
+    CONTROL_RELATIONAL,
+    runtime_edge_type_compatibility,
+)
 from alice_personality.n0.public_judgment_probe_v1 import (
     PublicJudgmentProbeConfig,
     PublicJudgmentProbeV1,
@@ -396,6 +399,21 @@ class N0FullEnvelopeStackV1(nn.Module):
         relation_symmetric = relation_schema.symmetric[None, :].expand(
             batch, -1
         )
+        domain = relation_schema.domain_type_mask[None, :, :].expand(
+            batch, -1, -1
+        )
+        range_mask = relation_schema.range_type_mask[None, :, :].expand(
+            batch, -1, -1
+        )
+        pregraph_type_compatible = runtime_edge_type_compatibility(
+            relation_domain_type_mask=domain,
+            relation_range_type_mask=range_mask,
+            relation_symmetric=relation_symmetric,
+            edge_relation_index=edge_relation_index,
+            edge_index=edge_index,
+            field_type_index=field_type_index,
+            edge_valid_mask=pregraph_type_compatible,
+        )
         relation_mass, semantic_activity = self._relation_program_summary(
             operator
         )
@@ -415,12 +433,6 @@ class N0FullEnvelopeStackV1(nn.Module):
             message_steps=graph_message_steps,
         )
 
-        domain = relation_schema.domain_type_mask[None, :, :].expand(
-            batch, -1, -1
-        )
-        range_mask = relation_schema.range_type_mask[None, :, :].expand(
-            batch, -1, -1
-        )
         binder = self.binder(
             query_hidden_states=query_hidden_states,
             query_token_mask=query_token_mask,
@@ -619,6 +631,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "view_available": available,
             "view_reliability": reliability,
             "supported_graph_view_activity": supported_graph_view_activity,
+            "pregraph_type_compatible": pregraph_type_compatible,
         }
 
     def parameter_report(self) -> dict[str, Any]:
@@ -643,6 +656,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "raw_semantic_view_static_layer_mean": False,
             "raw_semantic_view_content_conditioned_layer_read": True,
             "pre_binder_graph_soft_activity_gated": True,
+            "pre_binder_graph_exact_type_schema_gated": True,
             "graph_and_executor_views_causally_availability_gated": True,
             "graph_views_require_exact_binder_support": True,
             "fusion_route_weight_causally_controls_latent_contribution": True,
