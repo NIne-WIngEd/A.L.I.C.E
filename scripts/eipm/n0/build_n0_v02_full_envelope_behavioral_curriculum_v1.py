@@ -916,12 +916,23 @@ def materialize_row(
     if any(key.lower() in semantic_text for key in opaque_keys):
         raise RuntimeError("opaque metadata key leaked into semantic text")
 
+    # Binder supervision represents query-relevant structural/semantic
+    # support before step-local evidence-quality arbitration. Relation-key
+    # membership is necessary but not sufficient: an unrelated edge can carry
+    # the same runtime relation and must remain a hard negative. Preserve the
+    # scenario's explicit support annotations rather than reconstructing them
+    # from relation identity.
     structural_relation_keys=set(base["relation_sequence_keys"])
-    support_set={
-        i
-        for i,e in enumerate(base["edges"])
-        if e["relation_key"] in structural_relation_keys
-    }
+    support_set={int(i) for i in base["support_edge_indices"]}
+    if any(i < 0 or i >= len(base["edges"]) for i in support_set):
+        raise RuntimeError("scenario support edge outside runtime edge bank")
+    if any(
+        base["edges"][i]["relation_key"] not in structural_relation_keys
+        for i in support_set
+    ):
+        raise RuntimeError(
+            "scenario support edge relation absent from selected relation program"
+        )
     base["support_edge_indices"]=sorted(support_set)
     decisive_set=set(base["decisive_field_indices"])
     irrelevant_set=set(base["irrelevant_field_indices"])

@@ -848,6 +848,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_public_judgment_cannot_rank_candidates_from_candidate_content_when_latent_signal_is_zero",
       "requirement": "Candidate text is comparison material rather than an independent policy: when the governed latent judgment signal is removed, distinct candidate content may not create candidate-specific ranking logits. Every candidate-specific final-readout feature must contain latent interaction."
+    },
+    {
+      "id": "N0-P24H",
+      "stage": "behavioral_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_behavioral_support_targets_do_not_promote_same_relation_distractors",
+      "requirement": "Binder supervision must encode query-relevant structural/semantic support, not relation-key equality. Same-relation irrelevant edges remain hard negatives, while query-relevant reliability/recency/temporal/provenance alternatives survive Binder for step-local Executor arbitration."
     }
   ],
   "closure_rule": {

@@ -229,16 +229,52 @@ def audit_row(row: dict[str,Any], contract: dict[str,Any]) -> list[str]:
         for index in relation_sequence_targets
         if 0 <= index < len(relation_candidates)
     }
-    structural_support={
+    relation_eligible_support={
         i
         for i,e in enumerate(edges)
         if str(e.get("relation_key","")) in selected_relation_keys
     }
-    if set(support)!=structural_support:
+    if not set(support) <= relation_eligible_support:
         errors.append(
             prefix
-            +"Binder support targets must equal structural relation candidates; "
-            +"quality modifiers belong to downstream step-local arbitration"
+            +"Binder positive support must use a relation selected by the "
+            +"operator program"
+        )
+
+    # Criterion-neutral does not mean relation-key-equal. Reliability,
+    # recency, temporal and provenance alternatives that are query-relevant
+    # must survive Binder so the step-local Executor can arbitrate them. But a
+    # query-irrelevant edge remains a negative even when it uses the exact same
+    # runtime relation.
+    criterion_neutral_families={
+        "reliability_arbitration",
+        "temporal_constraint",
+        "provenance_constraint",
+    }
+    scenario=str(row.get("scenario_family",""))
+    if scenario in criterion_neutral_families:
+        required_quality_alternatives={
+            i
+            for i in relation_eligible_support
+            if not bool(edges[i].get("irrelevant",False))
+        }
+        if set(support)!=required_quality_alternatives:
+            errors.append(
+                prefix
+                +"criterion-neutral Binder target dropped a query-relevant "
+                +"quality alternative before step-local arbitration"
+            )
+
+    same_relation_irrelevant={
+        i
+        for i in relation_eligible_support-set(support)
+        if bool(edges[i].get("irrelevant",False))
+    }
+    if scenario=="irrelevant_distractor" and not same_relation_irrelevant:
+        errors.append(
+            prefix
+            +"irrelevant-distractor row requires a same-relation hard negative "
+            +"to falsify relation-key-only Binder support"
         )
 
     endpoint=dict(row.get("endpoint_target") or {})
@@ -250,7 +286,6 @@ def audit_row(row: dict[str,Any], contract: dict[str,Any]) -> list[str]:
     elif source!=-1 or target!=-1:
         errors.append(prefix+"inactive endpoint target must use -1 sentinels")
 
-    scenario=str(row.get("scenario_family",""))
     if scenario=="unknown_defer" and support:
         errors.append(prefix+"unknown/defer row must have zero positive support edges")
 
@@ -429,6 +464,51 @@ def main() -> None:
     if len(answer_points)<3:
         errors.append("candidate-answer cardinality coverage too narrow")
 
+    same_relation_irrelevant_hard_negative_rows=0
+    for row in rows:
+        relation_candidates=list(row.get("relation_candidates") or [])
+        selected_keys={
+            str(relation_candidates[int(index)].get("key",""))
+            for index in row.get("relation_sequence_target") or []
+            if 0 <= int(index) < len(relation_candidates)
+        }
+        positives=set(int(x) for x in row.get("support_edge_indices") or [])
+        if any(
+            str(edge.get("relation_key","")) in selected_keys
+            and i not in positives
+            and bool(edge.get("irrelevant",False))
+            for i,edge in enumerate(row.get("edges") or [])
+        ):
+            same_relation_irrelevant_hard_negative_rows += 1
+
+    shortcut_contract=contract.get("shortcut_controls") or {}
+    if (
+        shortcut_contract.get("same_relation_irrelevant_hard_negative_required")
+        is True
+        and same_relation_irrelevant_hard_negative_rows <= 0
+    ):
+        errors.append(
+            "behavioral fabric lacks same-relation irrelevant hard negatives"
+        )
+    if (
+        shortcut_contract.get(
+            "support_target_must_be_query_relevant_not_relation_key_equality"
+        )
+        is not True
+    ):
+        errors.append(
+            "contract must forbid relation-key equality as Binder support target"
+        )
+    if (
+        shortcut_contract.get(
+            "criterion_neutral_support_preserves_relevant_quality_alternatives"
+        )
+        is not True
+    ):
+        errors.append(
+            "contract must preserve relevant quality alternatives through Binder"
+        )
+
     answer_hist=Counter(int(x["public_target_index"]) for x in rows)
     max_answer_share=max(answer_hist.values())/len(rows)
     if max_answer_share>0.45:
@@ -463,6 +543,7 @@ def main() -> None:
         "answer_count_points":answer_points,
         "public_target_position_histogram":dict(sorted(answer_hist.items())),
         "relation_target_position_histogram":dict(sorted(relation_target_positions.items())),
+        "same_relation_irrelevant_hard_negative_rows":same_relation_irrelevant_hard_negative_rows,
         "train_dev_entity_overlap":entity_overlap,
         "train_dev_template_overlap":template_overlap,
         "train_dev_field_surface_overlap":field_surface_overlap,

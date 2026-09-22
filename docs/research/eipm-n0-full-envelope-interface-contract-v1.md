@@ -53,6 +53,10 @@ Keep Binder v2 as the first exact structural sparsity boundary unless later evid
 
 Replace the final-layer-only query read with a multi-layer foundation state. Type masks remain exact structural constraints. Runtime type descriptions supply semantics upstream.
 
+Binder support means **query-relevant structural/semantic candidate support**. A matching relation key is necessary for a positive edge but is not sufficient by itself. Same-relation edges that are irrelevant to the current query must remain eligible hard negatives rather than being promoted because their relation label matches.
+
+Criterion neutrality has a narrower meaning: Binder must not use reliability, recency, temporal compatibility, or provenance constraints to prematurely choose among otherwise query-relevant alternatives. Those alternatives remain in the support domain so the step-local Executor can apply the active modifier at the correct program step. Query relevance and evidence-quality arbitration are separate responsibilities.
+
 ## Full-stack co-adaptation
 
 Temporary freezes may still be used for causal isolation. They are not permanent.

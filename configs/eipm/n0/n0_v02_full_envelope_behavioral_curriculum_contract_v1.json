@@ -78,7 +78,10 @@
     "irrelevant_removal_must_not_remove_target_support": true,
     "unknown_defer_rows_require_zero_positive_support_edges": true,
     "inactive_endpoint_rows_may_use_minus_one_sentinel": true,
-    "absent_counterfactual_may_use_minus_one_sentinel": true
+    "absent_counterfactual_may_use_minus_one_sentinel": true,
+    "support_target_must_be_query_relevant_not_relation_key_equality": true,
+    "same_relation_irrelevant_hard_negative_required": true,
+    "criterion_neutral_support_preserves_relevant_quality_alternatives": true
   },
   "runtime_coverage": {
     "relation_candidate_counts": {
@@ -144,7 +147,7 @@
     "operating_points_are_product_ceilings": false
   },
   "target_semantics": {
-    "support_target": "binary edge support target over the primary runtime edge bank; rows with no support use all-zero target plus Binder null-support supervision",
+    "support_target": "binary query-relevant structural/semantic edge support target over the primary runtime edge bank before step-local reliability/recency/temporal/provenance arbitration; same-relation query-irrelevant edges remain negatives; rows with no support use all-zero target plus Binder null-support supervision",
     "endpoint_target": "semantic source and semantic target field indices for supported relational execution; inactive rows use -1 with endpoint_active=false",
     "decisive_view_active": "true only when the row supplies a governed decisive evidence removal intervention",
     "irrelevant_view_active": "true only when the row supplies a governed irrelevant evidence removal intervention",
