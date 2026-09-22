@@ -369,11 +369,22 @@ class _SharedSchemaTokenInteraction(nn.Module):
         layer_weight = torch.softmax(layer_logits, dim=-1)
         score = (layer_weight * per_layer).sum(dim=-1)
 
-        # Preserve token-local evidence for ordered coverage.
+        # Preserve both sides of the bidirectional token interaction.
+        # Query evidence drives ordered coverage; schema evidence provides the
+        # symmetric grounding target promised by the full-envelope curriculum.
         query_evidence = torch.einsum("bcl,bclt->bct", layer_weight, q_weight)
         query_evidence = (
             query_evidence
             * query_token_mask[:, None, :].to(query_evidence.dtype)
+        )
+        schema_evidence = torch.einsum(
+            "bcl,bcls->bcs",
+            layer_weight,
+            s_weight,
+        )
+        schema_evidence = (
+            schema_evidence
+            * schema.token_mask[None, :, :].to(schema_evidence.dtype)
         )
 
         raw_schema = schema.token_states.float()
@@ -395,6 +406,7 @@ class _SharedSchemaTokenInteraction(nn.Module):
             "per_layer_score": per_layer,
             "layer_weight": layer_weight,
             "query_evidence": query_evidence,
+            "schema_evidence": schema_evidence,
             "schema_summary": schema_summary,
             "remaining_support": remaining_support,
         }
@@ -638,6 +650,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
         layer_weights: list[Tensor] = []
         relation_schema_states: list[Tensor] = []
         relation_query_evidence: list[Tensor] = []
+        relation_schema_evidence: list[Tensor] = []
         step_factor_scores: dict[str, list[Tensor]] = {
             str(name): [] for name in factor_schemas
         }
@@ -645,6 +658,9 @@ class SchemaConditionedSemanticOperator(nn.Module):
             str(name): [] for name in factor_schemas
         }
         step_factor_distributions_lists: dict[str, list[Tensor]] = {
+            str(name): [] for name in factor_schemas
+        }
+        step_factor_schema_evidence_lists: dict[str, list[Tensor]] = {
             str(name): [] for name in factor_schemas
         }
         step_factor_context_states: list[Tensor] = []
@@ -714,6 +730,9 @@ class SchemaConditionedSemanticOperator(nn.Module):
                     step_matched["layer_weight"]
                 )
                 step_factor_distributions_lists[name].append(step_probability)
+                step_factor_schema_evidence_lists[name].append(
+                    step_matched["schema_evidence"]
+                )
                 step_factor_expected_states.append(
                     torch.einsum(
                         "bc,bcd->bd",
@@ -772,6 +791,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             layer_weights.append(matched["layer_weight"])
             relation_schema_states.append(schema_summary)
             relation_query_evidence.append(matched["query_evidence"])
+            relation_schema_evidence.append(matched["schema_evidence"])
 
             evidence = torch.einsum(
                 "bc,bct->bt",
@@ -809,6 +829,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
         factor_distributions: dict[str, Tensor] = {}
         factor_scores: dict[str, Tensor] = {}
         factor_layer_weights: dict[str, Tensor] = {}
+        factor_schema_evidence: dict[str, Tensor] = {}
         global_factor_expected_states: list[Tensor] = []
         for name, schema in factor_schemas.items():
             schema.validate(
@@ -835,6 +856,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             factor_scores[name] = factor_logits
             factor_distributions[name] = factor_probability
             factor_layer_weights[name] = matched["layer_weight"]
+            factor_schema_evidence[name] = matched["schema_evidence"]
             global_factor_expected_states.append(
                 torch.einsum(
                     "bc,bcd->bd",
@@ -947,7 +969,9 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "relation_layer_weights": torch.stack(layer_weights, dim=1),
             "relation_schema_states": torch.stack(relation_schema_states, dim=1),
             "relation_query_evidence": torch.stack(relation_query_evidence, dim=1),
+            "relation_schema_evidence": torch.stack(relation_schema_evidence, dim=1),
             "factor_logits": factor_scores,
+            "factor_schema_evidence": factor_schema_evidence,
             "factor_layer_weights": factor_layer_weights,
             "relation_candidate_mask": relation_candidate_mask,
             "factor_candidate_masks": resolved_factor_masks,
@@ -958,6 +982,10 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "step_factor_layer_weights": {
                 name: torch.stack(values, dim=1)
                 for name, values in step_factor_layer_weights.items()
+            },
+            "step_factor_schema_evidence": {
+                name: torch.stack(values, dim=1)
+                for name, values in step_factor_schema_evidence_lists.items()
             },
             "factor_context_state": factor_context_state,
             "factor_bank_weight": factor_bank_weight,
@@ -1008,6 +1036,10 @@ class SchemaConditionedSemanticOperator(nn.Module):
             "semantic_factor_context_in_continuous_state": True,
             "semantic_factor_bank_count_ceiling": None,
             "step_conditioned_factor_semantics": True,
+            "bidirectional_token_evidence_exposed": True,
+            "relation_schema_token_evidence_exposed": True,
+            "factor_schema_token_evidence_exposed": True,
+            "step_factor_schema_token_evidence_exposed": True,
             "step_factor_uncertainty_supervised_in_state": True,
             "token_interaction_chunk_is_operating_point": True,
             "query_token_count_ceiling": None,
