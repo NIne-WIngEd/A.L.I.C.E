@@ -1,0 +1,37 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-final-v2-evaluator-contract.v1",
+  "status": "SEALED_EVALUATOR_CONTRACT_NO_RESULTS_OBSERVED",
+  "date": "2026-09-22",
+  "registered_system": "N0FullEnvelopeTrainableSystemV1",
+  "registered_system_path": "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
+  "final_contract": "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+  "required_freeze_status": "FROZEN_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_BEFORE_GRADIENT",
+  "required_gate_sections": [
+    "deterministic_behavior_gate",
+    "extrapolation_gate",
+    "invariance_gate",
+    "uncertainty_plurality_gate",
+    "evidence_causality_gate",
+    "general_semantic_regression_gate",
+    "structured_fabric_gate",
+    "fusion_latent_gate"
+  ],
+  "evaluation_rules": {
+    "all_gate_sections_must_pass": true,
+    "checkpoint_selection_performed": false,
+    "threshold_changes_after_results": false,
+    "automatic_repair_or_rerun": false,
+    "semantic_cosine_diagnostic_only": true,
+    "candidate_results_may_not_influence_training": true,
+    "candidate_results_may_not_influence_checkpoint_selection": true,
+    "final_rows_training_forbidden": true
+  },
+  "legacy_final_self_validation_v1_forbidden": true,
+  "legacy_final_self_validation_v3_forbidden": true,
+  "results_observed": false,
+  "final_opening_authorized": false,
+  "training_authorized": false,
+  "model_selection_authorized": false,
+  "private_identity_data": false,
+  "n0_complete": false
+}

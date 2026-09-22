@@ -178,5 +178,12 @@
     "n1_authorized_on_pass": true,
     "any_failed_gate_means_n0_complete_false": true,
     "automatic_repair_or_rerun": false
+  },
+  "package": {
+    "contract": "configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json",
+    "evaluator_contract": "configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json",
+    "build_audit_freeze_required_before_gradient": true,
+    "candidate_model_results_must_remain_unobserved_during_build_audit_freeze": true,
+    "legacy_final_v1_v3_cannot_satisfy_successor_package": true
   }
 }

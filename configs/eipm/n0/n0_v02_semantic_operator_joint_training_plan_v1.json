@@ -325,7 +325,11 @@
   "final_validation": {
     "contract": "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
     "may_open_during_training": false,
-    "thresholds_may_change_after_candidate_results": false
+    "thresholds_may_change_after_candidate_results": false,
+    "package_contract": "configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json",
+    "evaluator_contract": "configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json",
+    "package_must_be_built_audited_and_frozen_before_gradient": true,
+    "legacy_final_v1_v3_authority": false
   },
   "prerequisites_before_gradient": [
     "PASS historical N0 authority firewall with default-deny carry-forward policy",

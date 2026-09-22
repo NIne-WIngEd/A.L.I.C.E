@@ -1,0 +1,61 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-final-package.v1",
+  "status": "PRECOMMITTED_SEALED_FINAL_V2_PACKAGE_NO_MODEL_RESULTS",
+  "date": "2026-09-22",
+  "purpose": "Freeze an independent full-envelope final package before gradient without using final outcomes for training, checkpoint selection, architecture repair, or threshold changes.",
+  "final_contract": "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+  "registered_system": "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
+  "package_builder": "scripts/eipm/n0/build_n0_v02_full_envelope_final_v2_package.py",
+  "package_auditor": "scripts/eipm/n0/audit_n0_v02_full_envelope_final_v2_package.py",
+  "package_freezer": "scripts/eipm/n0/freeze_n0_v02_full_envelope_final_v2_package.py",
+  "evaluator_contract": "configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json",
+  "components": {
+    "natural_relation": {
+      "source": "thunlp_fewrel_1_0",
+      "rule": "all official val_wiki relation families",
+      "manifest_schema": "alice.eipm.n0.fewrel-natural-relation-manifest.v3",
+      "role": "sealed natural heldout relation-family benchmark component"
+    },
+    "adversarial_synthetic": {
+      "row_schema": "alice.eipm.n0.full-envelope-behavioral-row.v1",
+      "role": "sealed full-envelope behavioral and extrapolation component",
+      "required_final_only_scenarios": [
+        "long_causal_chain",
+        "heldout_recency_provenance_combo"
+      ],
+      "required_axis_extrapolation": [
+        "relation_cardinality",
+        "field_cardinality",
+        "candidate_cardinality",
+        "reasoning_steps",
+        "factor_cardinality",
+        "context_length"
+      ],
+      "required_holdouts": [
+        "template",
+        "entity",
+        "domain",
+        "type_schema",
+        "factor_combination"
+      ]
+    }
+  },
+  "independence": {
+    "no_training_row_or_template_hash_overlap": true,
+    "final_entities_disjoint_from_train_dev": true,
+    "final_domain_surface_disjoint_from_train_dev": true,
+    "final_type_schema_surface_disjoint_from_train_dev": true,
+    "final_factor_combination_heldout_from_train_dev": true,
+    "model_results_may_not_be_observed_during_build_audit_or_freeze": true,
+    "thresholds_may_not_change_after_results": true
+  },
+  "legacy_final_v1_authority": false,
+  "legacy_final_v3_evaluator_authority": false,
+  "legacy_artifacts_role": "historical regression evidence only; cannot satisfy successor final-v2 package",
+  "training_authorized": false,
+  "model_selection_authorized": false,
+  "final_opening_authorized": false,
+  "results_observed": false,
+  "private_identity_data": false,
+  "n0_complete": false
+}

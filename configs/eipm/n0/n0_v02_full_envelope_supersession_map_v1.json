@@ -139,7 +139,10 @@
       "successor": "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
       "historical_result_rewritten": false,
       "future_closure_authority": false,
-      "role": "historical regression evidence only"
+      "role": "historical regression evidence only",
+      "successor_package": "configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json",
+      "legacy_v3_evaluator_future_closure_authority": false,
+      "successor_registered_system": "N0FullEnvelopeTrainableSystemV1"
     },
     "tokenizer_v021": {
       "historical": "alice-n0-semantic-v0.2 tokenizer v0.2.1 / byte-fallback BPE 48k",

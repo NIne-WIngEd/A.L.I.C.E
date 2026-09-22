@@ -13,7 +13,8 @@
     "tests/eipm/test_n0_chunked_set_attention_v1.py",
     "tests/eipm/test_n0_full_envelope_trainable_system_v1.py",
     "tests/eipm/test_n0_full_envelope_modifier_gating_v1.py",
-    "tests/eipm/test_n0_full_envelope_shortcut_preflight_v1.py"
+    "tests/eipm/test_n0_full_envelope_shortcut_preflight_v1.py",
+    "tests/eipm/test_n0_full_envelope_final_v2_package_v1.py"
   ],
   "critical_source_files": [
     "src/alice_personality/n0/semantic_operator_foundation.py",
@@ -884,6 +885,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_successor_final_v2_package_exists_and_legacy_final_cannot_satisfy_it",
       "requirement": "Before gradient, the full-envelope successor must define its own sealed final-v2 package builder/auditor/freezer and evaluator contract targeting N0FullEnvelopeTrainableSystemV1. Legacy final-self-validation v1/v3 artifacts may not satisfy or be promoted into successor final-v2 authority."
+    },
+    {
+      "id": "N0-P39RG",
+      "stage": "final_v2_independence",
+      "kind": "CI_REQUIRED",
+      "receipt": "PASS_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_FROZEN_STATIC",
+      "requirement": "Before gradient, successor final-v2 natural and adversarial synthetic artifacts must be materialized, audited for TRAIN/DEV independence and extrapolation coverage, and hash-frozen without observing any candidate model result or authorizing final opening."
     }
   ],
   "closure_rule": {
