@@ -373,7 +373,10 @@
     "behavioral_row_to_system_batch_compiler_required": true,
     "long_context_train_dev_supplement_materialized_required": true,
     "long_context_surface_coverage_audit_required": true,
-    "long_context_base_target_equivalence_required": true
+    "long_context_base_target_equivalence_required": true,
+    "runtime_view_train_dev_supplement_materialized_required": true,
+    "runtime_view_relevance_vs_availability_audit_required": true,
+    "runtime_view_registered_system_compiler_required": true
   },
   "scale_policy": {
     "full_capability_architecture": true,
@@ -421,5 +424,17 @@
       "candidate_text",
       "internal_view_descriptor"
     ]
+  },
+  "runtime_view_training_supplement": {
+    "contract": "configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json",
+    "builder": "scripts/eipm/n0/build_n0_v02_full_envelope_runtime_view_curriculum_v1.py",
+    "audit": "scripts/eipm/n0/audit_n0_v02_full_envelope_runtime_view_curriculum_v1.py",
+    "required_before_gradient": true,
+    "public_identity_neutral_only": true,
+    "additional_source_text_uses_shared_semantic_input": true,
+    "precomputed_runtime_vector_interface_retained": true,
+    "final_rows_may_not_satisfy_training_coverage": true,
+    "fixed_view_taxonomy": false,
+    "view_count_ceiling": null
   }
 }

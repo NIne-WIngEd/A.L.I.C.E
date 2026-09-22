@@ -79,7 +79,9 @@
     "unsupported_graph_views_blocked_by_binder_null_support": true,
     "exact_joint_completed_program_mass": true,
     "completed_program_relation_summary_excludes_unknown_and_truncated_only_branches": true,
-    "executor_step_state_conditioned_on_future_stop_completion": true
+    "executor_step_state_conditioned_on_future_stop_completion": true,
+    "additional_runtime_view_source_text_training_adapter": true,
+    "precomputed_additional_runtime_views_retained": true
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -103,7 +105,12 @@
     "long_context_training_supplement_builder": "scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py",
     "long_context_training_supplement_audit": "scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py",
     "long_context_training_supplement_required_before_gradient": true,
-    "final_rows_do_not_satisfy_long_context_training_coverage": true
+    "final_rows_do_not_satisfy_long_context_training_coverage": true,
+    "runtime_view_training_supplement_contract": "configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json",
+    "runtime_view_training_supplement_builder": "scripts/eipm/n0/build_n0_v02_full_envelope_runtime_view_curriculum_v1.py",
+    "runtime_view_training_supplement_audit": "scripts/eipm/n0/audit_n0_v02_full_envelope_runtime_view_curriculum_v1.py",
+    "runtime_view_training_supplement_required_before_gradient": true,
+    "final_rows_do_not_satisfy_runtime_view_training_coverage": true
   },
   "optimization_strategy": {
     "stages": [

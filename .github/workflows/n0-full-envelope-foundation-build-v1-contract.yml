@@ -38,9 +38,12 @@ on:
       - "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py"
       - "scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py"
+      - "scripts/eipm/n0/audit_n0_v02_full_envelope_runtime_view_curriculum_v1.py"
+      - "scripts/eipm/n0/build_n0_v02_full_envelope_runtime_view_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py"
       - "scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py"
       - "configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json"
+      - "configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json"
       - "scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_shortcuts_v1.py"
@@ -130,6 +133,8 @@ jobs:
             scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py \
             scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py \
+            scripts/eipm/n0/build_n0_v02_full_envelope_runtime_view_curriculum_v1.py \
+            scripts/eipm/n0/audit_n0_v02_full_envelope_runtime_view_curriculum_v1.py \
             scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py \
             scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py \
@@ -145,6 +150,7 @@ jobs:
             configs/eipm/n0/n0_v02_natural_relation_sources_v1.json \
             configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json \
+            configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
@@ -238,6 +244,39 @@ jobs:
           assert r["gpu_training_authorized"] is False
           assert r["n0_complete"] is False
           print("PASS_N0_FULL_ENVELOPE_BEHAVIORAL_FABRIC_STATIC_AUDIT")
+          PY
+
+      - name: Materialize and audit additional runtime-view TRAIN DEV supplement
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/n0-runtime-views
+          mkdir -p /tmp/n0-runtime-views
+          python scripts/eipm/n0/build_n0_v02_full_envelope_runtime_view_curriculum_v1.py \
+            --output /tmp/n0-runtime-views/rows.jsonl \
+            --manifest /tmp/n0-runtime-views/manifest.json
+          python scripts/eipm/n0/audit_n0_v02_full_envelope_runtime_view_curriculum_v1.py \
+            --rows /tmp/n0-runtime-views/rows.jsonl \
+            --manifest /tmp/n0-runtime-views/manifest.json \
+            --contract configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json \
+            --output /tmp/n0-runtime-views/audit.json
+          python - <<'PY'
+          import json
+          r=json.load(open("/tmp/n0-runtime-views/audit.json"))
+          assert r["status"]=="PASS_N0_FULL_ENVELOPE_RUNTIME_VIEW_CURRICULUM_AUDIT_V1"
+          assert r["train_rows"]>0 and r["dev_rows"]>0
+          assert r["relevance_flip_verified"] is True
+          assert r["reliability_reversal_verified"] is True
+          assert r["recoverability_not_availability_verified"] is True
+          assert r["fixed_view_taxonomy"] is False
+          assert r["view_count_ceiling"] is None
+          assert r["final_rows"]==0
+          assert r["private_identity_data"] is False
+          assert r["gradient"] is False
+          assert r["optimizer"] is False
+          assert r["gpu_training_authorized"] is False
+          assert r["final_opening_authorized"] is False
+          assert r["n0_complete"] is False
+          print("PASS_N0_FULL_ENVELOPE_RUNTIME_VIEW_CURRICULUM_AUDIT_V1")
           PY
 
       - name: Materialize and audit long-context TRAIN DEV supplement

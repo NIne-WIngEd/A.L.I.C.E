@@ -957,6 +957,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_runtime_view_train_dev_curriculum_is_executable_and_not_internal_view_only",
       "requirement": "Before gradient, the full-envelope successor must have an executable public TRAIN/DEV supplement for genuinely additional runtime-described views. It must include relevant-versus-merely-available examples, constant-reliability source/relevance flips, unavailable-view masking, and relevance/recoverability targets wider than the six built-in internal views. Static additional-view mechanics or CPU smoke cannot substitute for optimizer-facing curriculum."
+    },
+    {
+      "id": "N0-P39RW",
+      "stage": "runtime_view_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_runtime_view_rows_compile_into_optimizer_facing_additional_views",
+      "requirement": "Runtime-view curriculum rows must compile to source-text and descriptor-text tensors consumed by the registered system, extend recoverability supervision beyond the six internal views, and make decisive/irrelevant additional-view counterfactual variants structural."
+    },
+    {
+      "id": "N0-P39RX",
+      "stage": "runtime_view_curriculum",
+      "kind": "CI_REQUIRED",
+      "receipt": "PASS_N0_FULL_ENVELOPE_RUNTIME_VIEW_CURRICULUM_AUDIT_V1",
+      "requirement": "Before gradient, materialize and audit public TRAIN/DEV heterogeneous runtime-view interventions proving relevance is not availability or raw reliability and preserving a ceiling-free runtime view axis."
     }
   ],
   "closure_rule": {

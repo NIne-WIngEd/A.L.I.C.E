@@ -28,3 +28,56 @@ def test_runtime_view_train_dev_curriculum_is_executable_and_not_internal_view_o
     assert contract["required_interventions"]["recoverability_not_equal_availability"] is True
     assert contract["validation_before_gradient"]["materialized_train_dev_rows_required"] is True
     assert contract["validation_before_gradient"]["row_to_registered_system_compiler_required"] is True
+
+
+def test_runtime_view_rows_compile_into_optimizer_facing_additional_views() -> None:
+    import importlib.util
+    import sys
+
+    scripts=ROOT/"scripts/eipm/n0"
+    sys.path.insert(0,str(scripts))
+    try:
+        spec=importlib.util.spec_from_file_location(
+            "runtime_view_builder",
+            scripts/"build_n0_v02_full_envelope_runtime_view_curriculum_v1.py",
+        )
+        assert spec is not None and spec.loader is not None
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        from alice_personality.n0.full_envelope_behavioral_batch_v1 import (
+            compile_behavioral_batch,
+        )
+        from test_n0_full_envelope_trainable_system_v1 import _TinyTokenizer
+
+        rows=module.materialize_rows("train")[:2]
+        compiled=compile_behavioral_batch(rows=rows,tokenizer=_TinyTokenizer())
+        primary=compiled["primary_batch"]
+        decisive=compiled["decisive_ablated_batch"]
+        irrelevant=compiled["irrelevant_removed_batch"]
+        targets=compiled["behavioral_targets"]
+
+        assert primary["additional_view_source_input_ids"].shape[:2] == (2,3)
+        assert primary["additional_view_descriptor_input_ids"].shape[:2] == (2,3)
+        assert primary["additional_view_available"].shape == (2,3)
+        assert primary["additional_view_reliability"].shape == (2,3)
+        assert targets["recoverable_view_mask"].shape == (2,9)
+        assert bool(primary["additional_view_available"][:,:2].all())
+        assert not bool(primary["additional_view_available"][:,2].any())
+        assert bool(targets["recoverable_view_mask"][:,6:].any())
+        assert bool(
+            (
+                primary["additional_view_available"]
+                & ~targets["recoverable_view_mask"][:,6:]
+            ).any()
+        )
+
+        for b,row in enumerate(rows):
+            for i,item in enumerate(row["additional_views"]):
+                if item["decisive"]:
+                    assert not bool(decisive["additional_view_available"][b,i])
+                if item["irrelevant"]:
+                    assert not bool(irrelevant["additional_view_available"][b,i])
+    finally:
+        if sys.path and sys.path[0]==str(scripts):
+            sys.path.pop(0)

@@ -1,0 +1,61 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-runtime-view-curriculum-contract.v1",
+  "status": "PRECOMMITTED_PUBLIC_RUNTIME_VIEW_TRAIN_DEV_NO_GRADIENT",
+  "date": "2026-09-22",
+  "purpose": "Train heterogeneous runtime-described view relevance in the registered full-envelope system so future public product-neutral views are routed by query/content/reliability semantics instead of availability, position, or a fixed built-in view taxonomy.",
+  "authority": {
+    "public_identity_neutral_only": true,
+    "private_identity_data": false,
+    "final_rows_training_allowed": false,
+    "final_rows_model_selection_allowed": false,
+    "gradient_authorized_by_contract": false,
+    "optimizer_authorized_by_contract": false
+  },
+  "runtime_views": {
+    "fixed_view_taxonomy": false,
+    "view_count_ceiling": null,
+    "view_identity_parameters_forbidden": true,
+    "source_text_training_adapter_required": true,
+    "precomputed_vector_runtime_interface_retained": true,
+    "descriptor_semantics_runtime_supplied": true,
+    "availability_is_not_relevance": true,
+    "reliability_is_quality_not_query_relevance": true
+  },
+  "required_interventions": {
+    "relevant_vs_merely_available": true,
+    "constant_reliability_relevance_flip": true,
+    "reliability_reversal_across_two_relevant_views": true,
+    "unavailable_view_exact_inertness": true,
+    "recoverability_not_equal_availability": true,
+    "high_reliability_irrelevant_view": true,
+    "decisive_additional_view_removal": true,
+    "irrelevant_additional_view_removal": true,
+    "candidate_target_flip_with_query_and_candidate_set_fixed": true
+  },
+  "split_isolation": {
+    "train_dev_entities_disjoint": true,
+    "train_dev_runtime_view_surface_paraphrase": true,
+    "pair_members_must_share_query_and_candidate_set_within_split": true,
+    "final_rows_excluded": true
+  },
+  "validation_before_gradient": {
+    "materialized_train_dev_rows_required": true,
+    "model_free_audit_required": true,
+    "row_to_registered_system_compiler_required": true,
+    "source_text_shared_semantic_input_required": true,
+    "descriptor_text_shared_semantic_input_required": true,
+    "recoverability_mask_must_include_additional_views": true,
+    "causal_variants_must_disable_flagged_additional_views": true,
+    "runtime_view_order_is_not_identity_axis": true,
+    "no_final_rows": true
+  },
+  "authorization": {
+    "materialization": true,
+    "audit": true,
+    "optimizer": false,
+    "gradient": false,
+    "gpu": false,
+    "final_opening": false,
+    "n0_complete": false
+  }
+}
