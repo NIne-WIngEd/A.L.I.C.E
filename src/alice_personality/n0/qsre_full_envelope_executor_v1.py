@@ -111,6 +111,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         edge_temporal_match: Tensor,
         edge_provenance_match: Tensor,
         relation_schema_state: Tensor,
+        step_relation_schema_state: Tensor,
         relation_symmetric: Tensor,
         operator: FullEnvelopeOperatorState,
         focus_field_weight: Tensor,
@@ -131,6 +132,16 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         relation_count = relation_schema_state.size(1)
         if relation_schema_state.size(-1) != self.config.model_dim:
             raise ValueError("relation schema width drift")
+        steps = operator.relation_distribution.size(1)
+        if step_relation_schema_state.shape != (
+            batch,
+            steps,
+            relation_count,
+            self.config.model_dim,
+        ):
+            raise ValueError(
+                "step_relation_schema_state must be [B,S,R,D]"
+            )
         if relation_symmetric.shape != (batch, relation_count) or relation_symmetric.dtype != torch.bool:
             raise ValueError("relation_symmetric must be bool [B,R]")
         operator.validate(relation_count=relation_count, model_dim=self.config.model_dim)
@@ -166,6 +177,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         require_finite("field_state", field_state)
         require_finite("field_metadata", field_metadata)
         require_finite("relation_schema_state", relation_schema_state)
+        require_finite("step_relation_schema_state", step_relation_schema_state)
         focus_total = (
             focus_field_weight
             * field_valid_mask.to(focus_field_weight.dtype)
@@ -202,13 +214,18 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         )
         node = node * field_valid_mask.unsqueeze(-1).to(node.dtype)
         relation_state = self.relation_projection(relation_schema_state.float())
+        step_relation_state = self.relation_projection(
+            step_relation_schema_state.float()
+        )
         operator_state = self.operator_projection(operator.continuous_state.float())
 
         source_index = edge_index[..., 0].clamp(min=0, max=fields - 1)
         target_index = edge_index[..., 1].clamp(min=0, max=fields - 1)
         relation_index = edge_relation_index.clamp(min=0, max=relation_count - 1)
         b = torch.arange(batch, device=edge_index.device)[:, None].expand(batch, edges)
-        edge_relation_state = relation_state[b, relation_index]
+        # Global relation state remains available for whole-program support
+        # geometry, but executable edge semantics are selected from the
+        # step-conditioned relation state below.
         edge_symmetric_mask = relation_symmetric[b, relation_index]
 
         origin_focus = focus_field_weight.clamp(min=0.0, max=1.0)
@@ -226,6 +243,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             relation_distribution = operator.relation_distribution[:, step]
             step_mass = operator.relation_step_mass[:, step]
             edge_relation_mass = relation_distribution.gather(1, relation_index)
+            edge_relation_state = step_relation_state[:, step][b, relation_index]
 
             source_frontier = frontier.gather(1, source_index)
             target_frontier = frontier.gather(1, target_index)
@@ -640,6 +658,8 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "structural_factor_probabilities": True,
             "continuous_traversal_mixture": True,
             "step_conditioned_direction": True,
+            "step_conditioned_relation_schema_state": True,
+            "global_relation_state_not_used_for_step_edge_features": True,
             "semantic_endpoint_tracking_is_step_conditioned": True,
             "global_direction_not_used_for_final_path_role": True,
             "step_conditioned_modifiers": True,
