@@ -740,6 +740,9 @@ DEV_QUERY_PARAPHRASES = {
 
 
 DEV_SURFACE_REWRITES = (
+    ("defer because the requested relation is absent from the supplied runtime schema.", "Abstain because no runtime relation description represents the requested relationship."),
+    ("force the evidential-support relation as a substitute.", "Do not substitute evidence-support semantics for a relationship absent from the schema."),
+    ("use contextual relatedness as if it meant licensing.", "Do not reinterpret generic contextual association as the missing licensing relationship."),
     ("the supported conclusion is", "the evidence-backed conclusion is"),
     ("the terminal result", "the endpoint after the full chain"),
     ("is reached last", "is the final endpoint"),
