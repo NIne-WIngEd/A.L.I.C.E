@@ -80,6 +80,21 @@ See:
 - `history/HISTORICAL_SYNTHETIC_AND_TEACHING_PIPELINE_v0.1.md`
 - `traces/FBM_TRACE_20260913.jsonl`
 
+## Latest A.L.I.C.E. process capture — 2026-09-22
+
+The active N0 full-envelope rebuild has continued to produce reusable builder lessons after earlier green static receipts. The latest captured boundary is A.L.I.C.E. branch `alice-eipm-v1-n0-full-envelope-foundation-build-v1@2ab46d87ce254a3ca6cec0c95199d381c7c0058f`.
+
+The new traces record six high-value construction lessons:
+
+- a candidate-answer path can silently become a second judgment policy unless candidate-specific scoring is forced to interact with the governed latent state;
+- Binder support must represent query-relevant structural support rather than relation-key equality, while remaining neutral to reliability/recency/temporal/provenance arbitration that belongs downstream;
+- shortcut auditing must be executable before gradient and should include matched context-swaps where the same candidate set changes target only because evidence changes;
+- program completion is a joint probability event, not a product of marginal start/non-truncation quantities; incomplete branches must not contaminate completed relational state;
+- runtime qualification must exercise every text-bearing semantic surface under the same long-context policy, and fixture sizes must remain operating points rather than hidden product ceilings;
+- the successor FINAL package must be built, independently audited, hash-frozen, and bound to the registered full-envelope system before gradient while keeping candidate results unopened.
+
+These are process seeds for FBM. They do not grant Fable/A.L.I.C.E. model authority and do not contain private identity payloads.
+
 ## Mainstreaming rule
 
 FBM development follows the corrected A.L.I.C.E. doctrine:
