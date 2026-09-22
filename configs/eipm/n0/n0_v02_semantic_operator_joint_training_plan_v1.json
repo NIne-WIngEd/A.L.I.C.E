@@ -27,7 +27,10 @@
     "explicit_null_support_at_binder": true,
     "program_truncation_exposed_and_fail_closed": true,
     "continuous_pre_binder_graph_and_executor_gates": true,
-    "historical_authority_firewall": "configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json"
+    "historical_authority_firewall": "configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json",
+    "long_context_virtualizer": "src/alice_personality/n0/semantic_context_virtualizer_v1.py",
+    "long_context_segment_bridge": "src/alice_personality/n0/semantic_segment_context_bridge_v1.py",
+    "long_context_claim": "native windows are token-lossless operating units; global cross-window semantics require the trainable segment bridge and no dense-unbounded-token-attention equivalence is claimed"
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -56,7 +59,8 @@
         "trainable": [
           "semantic_backbone_all_layers",
           "semantic_existing_heads_for_replay",
-          "schema_conditioned_semantic_operator"
+          "schema_conditioned_semantic_operator",
+          "long_context_segment_bridge"
         ],
         "permanently_frozen": [],
         "downstream_modules_updated": false,
@@ -70,7 +74,8 @@
           "schema_conditioned_semantic_operator",
           "structured_successor_interface",
           "evidence_successor_interface",
-          "dynamic_relation_graph_semantic_interface"
+          "dynamic_relation_graph_semantic_interface",
+          "long_context_segment_bridge"
         ],
         "permanently_frozen": [],
         "architecture_reduced": false
@@ -88,7 +93,8 @@
           "binder_successor",
           "public_judgment_probe",
           "dynamic_fusion_successor",
-          "dynamic_latent_successor"
+          "dynamic_latent_successor",
+          "long_context_segment_bridge"
         ],
         "permanently_frozen": [],
         "architecture_reduced": false
@@ -154,7 +160,8 @@
       "mixed_step_direction_composition",
       "mixed_step_modifier_composition",
       "runtime_relation_symmetry_causal_pairs",
-      "program_truncation_fail_closed"
+      "program_truncation_fail_closed",
+      "cross_window_semantic_causal_transfer"
     ],
     "J2": [
       "J1_gates_retained",
@@ -176,7 +183,8 @@
       "behaviorally_grounded_public_judgment",
       "no_support_zero_execution_confidence",
       "long_context_virtualized_query",
-      "per_example_candidate_subset_batching"
+      "per_example_candidate_subset_batching",
+      "distant_decisive_evidence_across_native_windows"
     ]
   },
   "scaling": {
@@ -189,7 +197,9 @@
     "hard_runtime_hop_ceiling": null,
     "hard_context_ceiling": null,
     "capacity_growth_authorized_only_after_objective_and_interface_validity": true,
-    "capacity_study_if_needed": "compare larger width/depth/heads only after a valid full-envelope DEV plateau localizes residual error to expressivity rather than data/objective/interface"
+    "capacity_study_if_needed": "compare larger width/depth/heads only after a valid full-envelope DEV plateau localizes residual error to expressivity rather than data/objective/interface",
+    "native_window_is_operating_point_not_semantic_completeness": true,
+    "cross_window_bridge_required_beyond_native_window": true
   },
   "compute": {
     "current_known_route": "Magnolia P100; architecture must not be constrained to that serving/training hardware",
@@ -213,6 +223,8 @@
     "PASS reopened interface mechanics",
     "successor structured/evidence/graph/fusion/latent implementation complete",
     "PASS full-envelope CPU runtime contract static audit",
+    "PASS cross-window semantic bridge permutation/causal-gradient mechanics",
+    "CPU runtime qualification exercises exact 640-wide cross-window segment bridge",
     "full model parameter and memory report",
     "CPU no-gradient end-to-end forward",
     "GPU no-gradient memory dry run",
