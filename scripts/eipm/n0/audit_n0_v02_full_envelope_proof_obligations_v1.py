@@ -139,6 +139,24 @@ def main() -> None:
                     f"critical successor source contains forbidden pattern {pattern!r}: {relative}"
                 )
 
+    for constraint in contract.get("targeted_source_constraints", []):
+        relative = str(constraint.get("path", ""))
+        path = root / relative
+        if not path.is_file():
+            errors.append(f"targeted constrained source missing: {relative}")
+            continue
+        content = path.read_text(encoding="utf-8")
+        for pattern in constraint.get("forbidden_patterns", []):
+            if str(pattern) in content:
+                errors.append(
+                    f"targeted source contains forbidden pattern {pattern!r}: {relative}"
+                )
+        for pattern in constraint.get("required_patterns", []):
+            if str(pattern) not in content:
+                errors.append(
+                    f"targeted source missing required pattern {pattern!r}: {relative}"
+                )
+
     retrospective_stages = set(
         str(x) for x in retrospective.get("stages", {}).keys()
     )
