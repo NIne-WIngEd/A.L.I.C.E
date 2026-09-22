@@ -17,6 +17,10 @@ from alice_personality.n0.semantic_context_virtualizer_v1 import (
     SemanticContextVirtualizerConfig,
     SemanticContextVirtualizerV1,
 )
+from alice_personality.n0.semantic_segment_context_bridge_v1 import (
+    SemanticSegmentContextBridgeConfig,
+    SemanticSegmentContextBridgeV1,
+)
 
 
 def test_chunked_late_interaction_matches_dense_reference() -> None:
@@ -354,3 +358,130 @@ def test_context_virtualizer_splits_overlap_at_midpoint_instead_of_later_window_
     report=virtualizer.parameter_report()
     assert report["overlap_midpoint_ownership"] is True
     assert report["boundary_context_bias_to_later_window"] is False
+
+
+def _tiny_segment_bridge() -> SemanticSegmentContextBridgeV1:
+    return SemanticSegmentContextBridgeV1(
+        SemanticSegmentContextBridgeConfig(
+            semantic_dim=24,
+            num_hidden_states=3,
+            num_attention_heads=4,
+            num_layers=1,
+            metadata_dim=3,
+            query_chunk_segments=2,
+            key_chunk_segments=2,
+            dropout=0.0,
+            initial_context_scale=1.0e-2,
+        )
+    ).eval()
+
+
+def test_segment_context_bridge_is_segment_permutation_equivariant() -> None:
+    torch.manual_seed(221)
+    model=_tiny_segment_bridge()
+    states=torch.randn(2,5,3,7,24)
+    attention=torch.ones(2,5,7,dtype=torch.bool)
+    valid=torch.ones(2,5,dtype=torch.bool)
+    metadata=torch.rand(2,5,3)
+    perm=torch.tensor([3,0,4,1,2])
+    inverse=torch.argsort(perm)
+    with torch.no_grad():
+        a=model(
+            segment_hidden_states=states,
+            segment_attention_mask=attention,
+            segment_valid_mask=valid,
+            segment_metadata=metadata,
+        )
+        b=model(
+            segment_hidden_states=states[:,perm],
+            segment_attention_mask=attention[:,perm],
+            segment_valid_mask=valid[:,perm],
+            segment_metadata=metadata[:,perm],
+        )
+    assert torch.allclose(
+        a["contextualized_segment_hidden_states"],
+        b["contextualized_segment_hidden_states"][:,inverse],
+        atol=1e-5,
+        rtol=1e-5,
+    )
+    assert torch.allclose(
+        a["segment_context_state"],
+        b["segment_context_state"][:,inverse],
+        atol=1e-5,
+        rtol=1e-5,
+    )
+
+
+def test_segment_context_bridge_allows_distant_segment_to_change_local_tokens() -> None:
+    torch.manual_seed(222)
+    model=_tiny_segment_bridge()
+    states=torch.randn(1,4,3,6,24)
+    attention=torch.ones(1,4,6,dtype=torch.bool)
+    valid=torch.ones(1,4,dtype=torch.bool)
+    metadata=torch.tensor(
+        [[[0.0,0.25,0.25],[0.25,0.50,0.25],[0.50,0.75,0.25],[0.75,1.0,0.25]]]
+    )
+    changed=states.clone()
+    changed[:,3] = changed[:,3] + 4.0
+    with torch.no_grad():
+        a=model(
+            segment_hidden_states=states,
+            segment_attention_mask=attention,
+            segment_valid_mask=valid,
+            segment_metadata=metadata,
+        )
+        b=model(
+            segment_hidden_states=changed,
+            segment_attention_mask=attention,
+            segment_valid_mask=valid,
+            segment_metadata=metadata,
+        )
+    delta=(
+        a["contextualized_segment_hidden_states"][:,0]
+        - b["contextualized_segment_hidden_states"][:,0]
+    ).abs().max()
+    assert float(delta) > 1.0e-8
+
+
+def test_segment_context_bridge_backpropagates_across_windows() -> None:
+    torch.manual_seed(223)
+    model=_tiny_segment_bridge().train()
+    states=torch.randn(1,4,3,6,24,requires_grad=True)
+    attention=torch.ones(1,4,6,dtype=torch.bool)
+    valid=torch.ones(1,4,dtype=torch.bool)
+    metadata=torch.tensor(
+        [[[0.0,0.25,0.25],[0.25,0.50,0.25],[0.50,0.75,0.25],[0.75,1.0,0.25]]]
+    )
+    out=model(
+        segment_hidden_states=states,
+        segment_attention_mask=attention,
+        segment_valid_mask=valid,
+        segment_metadata=metadata,
+    )
+    loss=out["contextualized_segment_hidden_states"][:,0].square().mean()
+    loss.backward()
+    assert states.grad is not None
+    assert float(states.grad[:,3].abs().sum()) > 0.0
+    assert model.context_scale.grad is not None
+    assert float(model.context_scale.grad.abs()) > 0.0
+
+
+def test_segment_context_bridge_has_no_segment_identity_or_count_ceiling() -> None:
+    model=_tiny_segment_bridge()
+    report=model.parameter_report()
+    assert report["segment_identity_parameters"] == 0
+    assert report["segment_count_dependent_parameters"] == 0
+    assert report["segment_count_ceiling"] is None
+    assert report["product_context_token_ceiling"] is None
+    assert report["cross_window_semantic_interaction"] is True
+    assert report["global_segment_attention_memory_bounded"] is True
+    assert report["full_segment_pair_matrix_materialized"] is False
+    assert report["dense_unbounded_token_attention_equivalence_claimed"] is False
+
+
+def test_virtualizer_report_requires_cross_window_bridge_for_long_query_semantics() -> None:
+    report=SemanticContextVirtualizerV1().parameter_report()
+    assert report["token_ownership_lossless"] is True
+    assert report["standalone_cross_window_semantics_complete"] is False
+    assert report["segment_context_bridge_required_for_long_query_semantics"] is True
+    assert report["dense_unbounded_native_attention_equivalence_claimed"] is False
