@@ -820,6 +820,9 @@ DEV_QUERY_PARAPHRASES = {
 
 
 DEV_SURFACE_REWRITES = (
+    ("provides measurement evidence for", "contains measured support for"),
+    ("the first candidate conclusion", "the first proposed conclusion"),
+    ("the second candidate conclusion", "the second proposed conclusion"),
     ("select proposition", "choose proposition"),
     ("as the better-supported conclusion.", "as the conclusion with stronger evidence."),
     ("treat both propositions as equally supported.", "regard both propositions as equally backed."),
