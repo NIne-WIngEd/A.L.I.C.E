@@ -174,7 +174,18 @@ class PublicJudgmentProbeV1(nn.Module):
             dim=-1,
         )
         logit = self.score(feature).squeeze(-1)
-        logit = logit.masked_fill(~candidate_valid_mask, -1.0e4)
+        valid_logit = logit.masked_select(candidate_valid_mask)
+        if not bool(torch.isfinite(valid_logit).all()):
+            raise ValueError("valid candidate logits must be finite")
+        invalid_floor = torch.finfo(logit.dtype).min
+        if bool((valid_logit <= invalid_floor).any()):
+            raise ValueError(
+                "valid candidate logit reached the reserved invalid floor"
+            )
+        logit = logit.masked_fill(
+            ~candidate_valid_mask,
+            invalid_floor,
+        )
         summary = summary * candidate_valid_mask.unsqueeze(-1).to(summary.dtype)
         return {
             "candidate_logits": logit,
@@ -191,6 +202,7 @@ class PublicJudgmentProbeV1(nn.Module):
             "candidate_count_dependent_parameters": 0,
             "per_example_candidate_subset_supported": True,
             "padded_candidate_batching_supported": True,
+            "invalid_candidate_structural_floor_exact_for_finite_logits": True,
             "candidate_count_ceiling": None,
             "multi_layer_candidate_read": True,
             "behavioral_supervision_required": True,
