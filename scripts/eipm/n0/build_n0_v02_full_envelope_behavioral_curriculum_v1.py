@@ -259,10 +259,12 @@ def factor_counterfactuals(targets: dict[str,str]) -> dict[str,str | None]:
 
 
 def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
-    a=entities[(example*3) % len(entities)]
-    b=entities[(example*5+1) % len(entities)]
-    c=entities[(example*7+2) % len(entities)]
-    d=entities[(example*11+3) % len(entities)]
+    pair_anchor=example-1 if mode==16 else example
+    entity_example=pair_anchor if mode in {15,16} else example
+    a=entities[(entity_example*3) % len(entities)]
+    b=entities[(entity_example*5+1) % len(entities)]
+    c=entities[(entity_example*7+2) % len(entities)]
+    d=entities[(entity_example*11+3) % len(entities)]
     entities_used=[a,b,c,d]
     targets=default_factor_targets()
     step_targets: list[dict[str,str]] = []
@@ -276,6 +278,8 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
     support_edges: list[int] = []
     recoverable=list(INTERNAL_VIEWS)
     family=""
+    candidate_context_swap_pair_anchor: int | None = None
+    candidate_context_swap_variant: str | None = None
 
     if mode == 0:
         family="source_target_role"
@@ -623,7 +627,7 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         decisive_fields=[1]
         irrelevant_fields=[3]
         support_edges=[0,1]
-    else:
+    elif mode == 14:
         family="causal_chain"
         chain_steps=3 if example % 2 == 0 else 4
         names=[a,b,c,d]
@@ -695,6 +699,70 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         }
         decisive_fields=list(range(1,chain_steps))
         irrelevant_fields=[irrelevant_index]
+    else:
+        family="candidate_context_swap"
+        first_is_stronger=mode==15
+        first_reliability=0.97 if first_is_stronger else 0.31
+        second_reliability=0.31 if first_is_stronger else 0.97
+        fields=[
+            field(
+                f"Source {a} provides measurement evidence for Proposition {b}.",
+                "t_record",
+                reliability=first_reliability,
+            ),
+            field(
+                f"Proposition {b}: the first candidate conclusion.",
+                "t_claim",
+            ),
+            field(
+                f"Source {c} provides measurement evidence for Proposition {d}.",
+                "t_record",
+                reliability=second_reliability,
+            ),
+            field(
+                f"Proposition {d}: the second candidate conclusion.",
+                "t_claim",
+            ),
+        ]
+        edges=[
+            edge(
+                0,1,"r_support",
+                reliability=first_reliability,
+                support=True,
+                decisive=first_is_stronger,
+            ),
+            edge(
+                2,3,"r_support",
+                reliability=second_reliability,
+                support=True,
+                decisive=not first_is_stronger,
+            ),
+        ]
+        query=(
+            "Two sources support different propositions. Which proposition is "
+            "better supported when source reliability is the active arbitration criterion?"
+        )
+        answers=[
+            f"Select Proposition {b} as the better-supported conclusion.",
+            f"Select Proposition {d} as the better-supported conclusion.",
+            "Treat both propositions as equally supported.",
+            "Defer even though the evidence clearly distinguishes their support.",
+        ]
+        correct=0 if first_is_stronger else 1
+        relation_sequence=["r_support"]
+        relation_counterfactuals=["r_context"]
+        event_sequence=["CONTINUE","STOP"]
+        targets["traversal"]="TRAVERSAL_AGGREGATE"
+        targets["reliability"]="MOD_RELIABILITY_ON"
+        endpoint={"active":False,"source_field":-1,"target_field":-1}
+        decisive_fields=[0] if first_is_stronger else [2]
+        support_edges=[0,1]
+        candidate_context_swap_pair_anchor=pair_anchor
+        candidate_context_swap_variant=(
+            "first_source_stronger"
+            if first_is_stronger
+            else "second_source_stronger"
+        )
 
     if not step_targets and relation_sequence:
         step_targets=[dict(targets) for _ in relation_sequence]
@@ -719,6 +787,8 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         "irrelevant_field_indices":irrelevant_fields,
         "support_edge_indices":support_edges,
         "recoverable_view_names":recoverable,
+        "candidate_context_swap_pair_anchor":candidate_context_swap_pair_anchor,
+        "candidate_context_swap_variant":candidate_context_swap_variant,
     }
 
 
@@ -738,10 +808,15 @@ DEV_QUERY_PARAPHRASES = {
     "multiple_co_valid_support":"Two independent reliable records converge on one conclusion. Choose the response that preserves both as co-valid supporting evidence.",
     "mixed_direction_composition":"Follow the first causal edge in its stored direction, then invert the second causal edge at the shared intermediate event. Identify the endpoint reached after both operations.",
     "causal_chain":"Trace every causal stage in the stated order from the initial event to the terminal effect; intermediate stages and unrelated context are not the requested endpoint.",
+    "candidate_context_swap":"Two evidence sources back different propositions. Select the proposition whose support is stronger under the active reliability criterion.",
 }
 
 
 DEV_SURFACE_REWRITES = (
+    ("select proposition", "choose proposition"),
+    ("as the better-supported conclusion.", "as the conclusion with stronger evidence."),
+    ("treat both propositions as equally supported.", "regard both propositions as equally backed."),
+    ("defer even though the evidence clearly distinguishes their support.", "abstain despite evidence that clearly separates their support."),
     ("defer because the requested relation is absent from the supplied runtime schema.", "Abstain because no runtime relation description represents the requested relationship."),
     ("force the evidential-support relation as a substitute.", "Do not substitute evidence-support semantics for a relationship absent from the schema."),
     ("use contextual relatedness as if it meant licensing.", "Do not reinterpret generic contextual association as the missing licensing relationship."),
@@ -859,7 +934,7 @@ def materialize_row(
     answer_count: int,
 ) -> dict[str,Any]:
     entities=TRAIN_ENTITIES if split=="train" else DEV_ENTITIES
-    mode=example % 15
+    mode=example % 17
     base=scenario(mode,entities,example)
     if split=="dev":
         base["query"]=DEV_QUERY_PARAPHRASES[base["scenario_family"]]
@@ -871,7 +946,12 @@ def materialize_row(
             dev_surface_paraphrase(text)
             for text in base["answers"]
         ]
-    rng=random.Random(seed + example*1009 + (0 if split=="train" else 10_000_000))
+    randomization_example=example-1 if mode==16 else example
+    rng=random.Random(
+        seed
+        + randomization_example*1009
+        + (0 if split=="train" else 10_000_000)
+    )
 
     required_relations=list(dict.fromkeys(
         base["relation_sequence_keys"]
@@ -962,6 +1042,14 @@ def materialize_row(
         "split":split,
         "lane":"full_envelope_behavioral_fabric",
         "scenario_family":base["scenario_family"],
+        "candidate_context_swap_pair_id":(
+            f"{split}:candidate-context-swap:{int(base['candidate_context_swap_pair_anchor']):06d}"
+            if base.get("candidate_context_swap_pair_anchor") is not None
+            else None
+        ),
+        "candidate_context_swap_variant":base.get(
+            "candidate_context_swap_variant"
+        ),
         "entities":base["entities_used"],
         "template_id":template_id,
         "template_signature_sha256":template_signature(
@@ -1028,14 +1116,20 @@ def main() -> None:
     rows=[]
     for split,count in (("train",args.train_rows),("dev",args.dev_rows)):
         for i in range(count):
+            mode=i % 17
+            axis_i=i-1 if mode==16 else i
             rows.append(
                 materialize_row(
                     split=split,
                     example=i,
                     seed=args.seed,
-                    relation_count=relation_points[i % len(relation_points)],
-                    field_count=field_points[(i//len(relation_points)) % len(field_points)],
-                    answer_count=answer_points[(i//3) % len(answer_points)],
+                    relation_count=relation_points[axis_i % len(relation_points)],
+                    field_count=field_points[
+                        (axis_i//len(relation_points)) % len(field_points)
+                    ],
+                    answer_count=answer_points[
+                        (axis_i//3) % len(answer_points)
+                    ],
                 )
             )
 

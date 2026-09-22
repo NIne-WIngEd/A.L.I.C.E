@@ -149,7 +149,9 @@
     "irrelevant_available_view_invariance_required": true,
     "program_averaged_relation_state_cannot_replace_step_execution_semantics": true,
     "candidate_only_public_judgment_bypass_forbidden": true,
-    "candidate_specific_logits_require_current_latent_interaction": true
+    "candidate_specific_logits_require_current_latent_interaction": true,
+    "matched_candidate_context_swap_required": true,
+    "candidate_surface_alone_may_not_identify_public_target": true
   },
   "scale_policy": {
     "final_candidate_may_exceed_training_runtime_axes": true,

@@ -54,7 +54,8 @@
     "irrelevant_distractor",
     "mixed_direction_composition",
     "causal_chain",
-    "multiple_co_valid_support"
+    "multiple_co_valid_support",
+    "candidate_context_swap"
   ],
   "split_isolation": {
     "train_dev_entity_overlap_forbidden": true,
@@ -155,7 +156,7 @@
     "decisive_view_active": "true only when the row supplies a governed decisive evidence removal intervention",
     "irrelevant_view_active": "true only when the row supplies a governed irrelevant evidence removal intervention",
     "recoverable_view_mask": "labels behaviorally relevant or explicitly information-preserving views; availability alone is not relevance",
-    "public_judgment_target": "index of a semantic answer candidate, never an opaque class ID",
+    "public_judgment_target": "index of a semantic answer candidate, never an opaque class ID; matched context-swap rows keep query and candidate set/order fixed while governing evidence changes which candidate is correct",
     "counterfactual_target": "valid alternate semantic candidate when available; -1 when no meaningful counterfactual exists"
   },
   "materialization": {
@@ -178,7 +179,8 @@
     "support_endpoint_consistency_audit_required": true,
     "counterfactual_validity_audit_required": true,
     "final_validation_remains_separate": true,
-    "field_and_candidate_surface_isolation_audit_required": true
+    "field_and_candidate_surface_isolation_audit_required": true,
+    "matched_candidate_context_swap_audit_required": true
   },
   "authorization": {
     "materialization": true,
