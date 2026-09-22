@@ -43,7 +43,15 @@ class PublicJudgmentProbeV1(nn.Module):
         self.config.validate()
         d = self.config.model_dim
 
-        self.latent_projection = nn.Linear(self.config.latent_dim, d)
+        # Candidate-specific judgment must come from the current latent state.
+        # A learned projection bias would provide a fixed pseudo-latent vector
+        # that could rank answer text even when the governed latent signal is
+        # absent, so the projection is deliberately bias-free.
+        self.latent_projection = nn.Linear(
+            self.config.latent_dim,
+            d,
+            bias=False,
+        )
         self.candidate_projection = nn.Linear(
             self.config.semantic_dim,
             d,
@@ -54,8 +62,12 @@ class PublicJudgmentProbeV1(nn.Module):
             nn.SiLU(),
             nn.Linear(32, 1),
         )
+        # Do not expose a standalone candidate-summary channel to the final
+        # scorer. Candidate content is comparison material; the governing
+        # judgment signal is the fused/latent state. Every candidate-specific
+        # scoring feature below therefore contains a latent interaction.
         self.score = nn.Sequential(
-            nn.Linear(4 * d, d),
+            nn.Linear(2 * d, d),
             nn.SiLU(),
             nn.Linear(d, 1),
         )
@@ -164,12 +176,16 @@ class PublicJudgmentProbeV1(nn.Module):
         )
 
         latent_expanded = latent[:, None, :].expand(batch, candidates, -1)
+        normalized_summary = F.normalize(summary, dim=-1)
+        normalized_latent_expanded = normalized_latent[:, None, :].expand(
+            batch,
+            candidates,
+            -1,
+        )
         feature = torch.cat(
             [
-                latent_expanded,
-                summary,
                 latent_expanded * summary,
-                (latent_expanded - summary).abs(),
+                normalized_latent_expanded * normalized_summary,
             ],
             dim=-1,
         )
@@ -205,5 +221,8 @@ class PublicJudgmentProbeV1(nn.Module):
             "invalid_candidate_structural_floor_exact_for_finite_logits": True,
             "candidate_count_ceiling": None,
             "multi_layer_candidate_read": True,
+            "latent_projection_bias": False,
+            "candidate_only_ranking_path": False,
+            "candidate_specific_logits_require_latent_interaction": True,
             "behavioral_supervision_required": True,
         }

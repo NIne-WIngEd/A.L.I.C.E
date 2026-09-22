@@ -841,6 +841,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_adapter_keeps_role_traversal_control_program_global_and_step_local_scope_explicit",
       "requirement": "Role, traversal and control remain deliberate whole-program executable semantics while direction and evidence modifiers are step-local. Step-factor semantic context may include every runtime bank, but copied role/traversal/control step labels must not silently create unsupported structural opcodes."
+    },
+    {
+      "id": "N0-P37E",
+      "stage": "public_judgment",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_public_judgment_cannot_rank_candidates_from_candidate_content_when_latent_signal_is_zero",
+      "requirement": "Candidate text is comparison material rather than an independent policy: when the governed latent judgment signal is removed, distinct candidate content may not create candidate-specific ranking logits. Every candidate-specific final-readout feature must contain latent interaction."
     }
   ],
   "closure_rule": {

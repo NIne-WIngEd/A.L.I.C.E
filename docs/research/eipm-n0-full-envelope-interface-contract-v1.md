@@ -58,3 +58,19 @@ Replace the final-layer-only query read with a multi-layer foundation state. Typ
 Temporary freezes may still be used for causal isolation. They are not permanent.
 
 The eventual public training workflow must contain a stage where all reopened semantic/structured/evidence/fusion/latent interfaces that require adaptation can co-adapt against the same full-envelope objective. A downstream module may remain frozen only when an explicit full-envelope sufficiency receipt justifies it.
+
+## Public judgment readout
+
+Candidate text is comparison material, not an independent judgment policy. The
+final behavioral readout may inspect runtime candidate semantics, but every
+candidate-specific scoring feature must interact with the current fused/latent
+judgment state. A fixed learned projection bias or a standalone candidate-only
+summary path may not rank candidates when the governed latent signal is absent.
+
+This preserves the intended causal chain:
+
+`source/evidence -> fusion relevance -> latent judgment state -> candidate comparison`
+
+Candidate masking and permutation remain runtime structural mechanics. They do
+not create candidate identity or a second hidden decision policy.
+
