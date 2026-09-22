@@ -767,3 +767,28 @@ def test_full_semantic_input_has_no_text_surface_native_window_product_ceiling()
     assert report["token_count_dependent_parameters"] == 0
     assert report["item_count_ceiling"] is None
     assert report["product_context_token_ceiling"] is None
+
+
+def test_full_semantic_input_allows_fully_unavailable_optional_bank() -> None:
+    torch.manual_seed(275)
+    backbone=_FakeSemanticBackbone()
+    encoder=_tiny_semantic_input().eval()
+    ids=torch.tensor(
+        [[[2,10,11,3,0,0],[2,20,21,3,0,0]]],
+        dtype=torch.long,
+    )
+    mask=ids.ne(0)
+    valid=torch.tensor([[False,False]])
+    with torch.no_grad():
+        out=encoder.encode_padded_items(
+            backbone=backbone,
+            input_ids=ids,
+            attention_mask=mask,
+            item_valid_mask=valid,
+        )
+    assert out["hidden_states"].shape == (1,2,3,6,24)
+    assert torch.equal(
+        out["hidden_states"],
+        torch.zeros_like(out["hidden_states"]),
+    )
+    assert not bool(out["token_mask"].any())
