@@ -161,6 +161,15 @@ def test_full_envelope_stack_forward_and_gradient_continuity() -> None:
     assert inputs["field_hidden_states"].grad is not None
     assert float(inputs["query_hidden_states"].grad.abs().sum()) > 0.0
     assert float(inputs["field_hidden_states"].grad.abs().sum()) > 0.0
+    raw_gate_grads = [
+        parameter.grad
+        for parameter in model.raw_semantic_layer_gate.parameters()
+    ]
+    assert all(grad is not None for grad in raw_gate_grads)
+    assert sum(float(grad.abs().sum()) for grad in raw_gate_grads if grad is not None) > 0.0
+    report = model.parameter_report()
+    assert report["raw_semantic_view_static_layer_mean"] is False
+    assert report["raw_semantic_view_content_conditioned_layer_read"] is True
 
 
 def test_full_envelope_stack_accepts_additional_runtime_views_and_runtime_slots() -> None:
