@@ -231,12 +231,17 @@ def make_row(
     rng: random.Random,
 ) -> dict[str, Any]:
     entities = TRAIN_ENTITIES if split == "train" else DEV_ENTITIES
-    left = entities[(example * 3) % len(entities)]
-    middle = entities[(example * 5 + 1) % len(entities)]
-    right = entities[(example * 7 + 2) % len(entities)]
+    mode = example % 12
+    # Modes 0/1 are an explicit source-vs-target role counterfactual pair.
+    # Hold entities, relation schema bank/order and candidate cardinality fixed
+    # so the requested endpoint role is the only governed semantic change.
+    pair_anchor = example - 1 if mode == 1 else example
+    entity_example = pair_anchor if mode in {0, 1} else example
+    left = entities[(entity_example * 3) % len(entities)]
+    middle = entities[(entity_example * 5 + 1) % len(entities)]
+    right = entities[(entity_example * 7 + 2) % len(entities)]
     phrase = relation["phrases"][example % len(relation["phrases"])]
     phrase2 = second["phrases"][(example + 1) % len(second["phrases"])]
-    mode = example % 12
 
     role = 1
     traversal = 0
@@ -486,6 +491,14 @@ def make_row(
     template_partition = "train_templates" if split == "train" else "dev_templates"
     relation_partition = "seen_relation_family" if split == "train" else "heldout_relation_family"
     row_id = f"so_{split}_{relation['key']}_{example:04d}_{intervention}"
+    counterfactual_pair_id = (
+        f"cf_role_{split}_{relation['key']}_{pair_anchor:04d}"
+        if mode in {0, 1}
+        else None
+    )
+    counterfactual_variant = (
+        "source" if mode == 0 else "target" if mode == 1 else None
+    )
     return {
         "schema": ROW_SCHEMA,
         "id": row_id,
@@ -513,6 +526,11 @@ def make_row(
         ),
         "target_entities": target_entities,
         "intervention": intervention,
+        "counterfactual_pair_id": counterfactual_pair_id,
+        "counterfactual_dimension": (
+            "requested_endpoint_role" if counterfactual_pair_id else None
+        ),
+        "counterfactual_variant": counterfactual_variant,
         "runtime_relation_count": len(bank),
         "runtime_reasoning_steps": len(target_sequence),
         "runtime_operator_slots": len(event_sequence_target),
@@ -550,8 +568,18 @@ def main() -> None:
             second_pool = TRAIN_RELATIONS if split == "train" else DEV_RELATIONS
             second = second_pool[(ri + 1) % len(second_pool)]
             for example in range(args.examples_per_relation):
-                rng = random.Random(args.seed + ri * 10007 + example * 97 + (0 if split == "train" else 1_000_000))
-                count = candidate_counts[example % len(candidate_counts)]
+                mode = example % 12
+                pair_anchor = example - 1 if mode == 1 else example
+                randomization_example = pair_anchor if mode in {0, 1} else example
+                rng = random.Random(
+                    args.seed
+                    + ri * 10007
+                    + randomization_example * 97
+                    + (0 if split == "train" else 1_000_000)
+                )
+                count = candidate_counts[
+                    randomization_example % len(candidate_counts)
+                ]
                 rows.append(
                     make_row(
                         split=split,
@@ -597,6 +625,14 @@ def main() -> None:
         "mixed_step_modifier_rows": sum(
             1 for x in rows if x["intervention"] == "mixed_step_modifier_composition"
         ),
+        "counterfactual_pair_count": len(
+            {
+                str(x["counterfactual_pair_id"])
+                for x in rows
+                if x.get("counterfactual_pair_id")
+            }
+        ),
+        "counterfactual_pair_dimension": "requested_endpoint_role",
         "template_partition_overlap": sorted(
             {x["template_id"] for x in train}
             & {x["template_id"] for x in dev}
