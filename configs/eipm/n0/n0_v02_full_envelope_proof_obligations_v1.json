@@ -30,7 +30,8 @@
     "src/alice_personality/n0/numeric_contracts.py",
     "src/alice_personality/n0/semantic_segment_context_bridge_v1.py",
     "src/alice_personality/n0/full_envelope_semantic_input_v1.py",
-    "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py"
+    "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
+    "src/alice_personality/n0/full_envelope_structural_types.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
@@ -640,6 +641,20 @@
       "kind": "CI_REQUIRED",
       "receipt": "PASS_N0_SYNTHETIC_INTERVENTION_STATIC_AUDIT",
       "requirement": "Synthetic operator rows must materialize exact query, relation-schema, factor-schema, and step-factor-schema evidence spans and pass split/leakage audit."
+    },
+    {
+      "id": "N0-P13A",
+      "stage": "evidence_graph",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_stack_pregraph_type_gate_matches_exact_binder_compatibility",
+      "requirement": "Type-incompatible relation edges are exactly excluded before continuous graph propagation and cannot contaminate structured/evidence state before Binder."
+    },
+    {
+      "id": "N0-P26C",
+      "stage": "fusion",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_graph_views_require_exact_binder_support_before_final_fusion",
+      "requirement": "Binder null support must prevent graph source/target summaries from entering final fusion even when a soft pre-Binder graph was active."
     }
   ],
   "closure_rule": {
