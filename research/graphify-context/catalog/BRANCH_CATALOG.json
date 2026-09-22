@@ -137,14 +137,14 @@
     },
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "2ab46d87ce254a3ca6cec0c95199d381c7c0058f",
-      "head_committed_at": "2026-09-22T15:12:39-05:00",
-      "head_message": "test(n0): align completion proofs with exact joint mass",
+      "head": "116324b58ec62e85b1a4897dc33c26bdd6cade25",
+      "head_committed_at": "2026-09-22T18:41:14-05:00",
+      "head_message": "fix(n0): isolate runtime relation schema rows",
       "status": "ahead",
-      "ahead": 1100,
+      "ahead": 1104,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 480,
+      "changed_file_count_vs_source_merge_base": 484,
       "knowledge_surface": true
     },
     {
