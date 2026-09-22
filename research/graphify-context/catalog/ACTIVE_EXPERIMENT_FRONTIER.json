@@ -7,10 +7,10 @@
   "maximal_heads": [
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "6c4e3c02672b7a5415fb3407942d86cc9723b8d9",
-      "head_committed_at": "2026-09-21T22:52:46-05:00",
-      "head_message": "governance(n0): require accumulation-invariant loss-family scaling",
-      "ahead": 1016,
+      "head": "6ee63bd39175e76fca702dd8e2493cb9abcf6e9a",
+      "head_committed_at": "2026-09-22T00:20:02-05:00",
+      "head_message": "governance(n0): strengthen behavioral-fabric isolation proof",
+      "ahead": 1024,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 471,
@@ -648,10 +648,10 @@
   "all_ahead_candidates": [
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "6c4e3c02672b7a5415fb3407942d86cc9723b8d9",
-      "head_committed_at": "2026-09-21T22:52:46-05:00",
-      "head_message": "governance(n0): require accumulation-invariant loss-family scaling",
-      "ahead": 1016,
+      "head": "6ee63bd39175e76fca702dd8e2493cb9abcf6e9a",
+      "head_committed_at": "2026-09-22T00:20:02-05:00",
+      "head_message": "governance(n0): strengthen behavioral-fabric isolation proof",
+      "ahead": 1024,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 471,
