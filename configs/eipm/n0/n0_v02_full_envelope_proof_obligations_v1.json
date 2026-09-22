@@ -552,7 +552,7 @@
       "stage": "behavioral_curriculum",
       "kind": "CI_REQUIRED",
       "receipt": "PASS_N0_FULL_ENVELOPE_BEHAVIORAL_FABRIC_STATIC_AUDIT",
-      "requirement": "Generated public behavioral fabric passes entity/query/field/candidate surface isolation, semantic-key leakage, exact scenario-family contract coverage, support/endpoint consistency, intervention and runtime-axis audits before any gradient."
+      "requirement": "Generated public behavioral fabric passes entity/query/field/candidate surface isolation, semantic-key leakage, exact scenario-family contract coverage, criterion-neutral structural Binder support targets, support/endpoint consistency, intervention and runtime-axis audits before any gradient."
     },
     {
       "id": "N0-P39BE",
@@ -820,6 +820,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_global_graph_and_evidence_views_cannot_apply_mixed_step_reliability_globally",
       "requirement": "A mixed-step program with reliability ON then OFF must not let a global graph/evidence view apply the global criterion to both steps; explicit global criterion channels remain neutral."
+    },
+    {
+      "id": "N0-P26D",
+      "stage": "full_stack",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_additional_runtime_view_order_has_no_hidden_identity_axis",
+      "requirement": "Additional runtime views, descriptors, availability, and reliability may be permuted together without changing fused state, latent pooled state, or public judgment; runtime view position is not a hidden semantic identity axis."
+    },
+    {
+      "id": "N0-P37D",
+      "stage": "public_judgment",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_public_judgment_candidate_permutation_has_no_hidden_position_identity",
+      "requirement": "Runtime candidate ordering is not semantic: jointly permuting candidate states and masks must only permute candidate logits, with no candidate-position identity parameter or bias."
     }
   ],
   "closure_rule": {
