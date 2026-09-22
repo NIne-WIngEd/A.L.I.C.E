@@ -715,6 +715,43 @@ def test_behavioral_candidate_answers_require_context_to_choose_between_identica
     assert first["fields"] != second["fields"]
 
 
+
+def test_behavioral_batch_compiler_accepts_internal_view_descriptor_override() -> None:
+    from build_n0_v02_full_envelope_behavioral_curriculum_v1 import (
+        materialize_row,
+    )
+    row=materialize_row(
+        split="train",
+        example=11,
+        seed=20260922,
+        relation_count=4,
+        field_count=4,
+        answer_count=4,
+    )
+    descriptions=[
+        "raw semantic field evidence",
+        "structured contextual field representation",
+        "query-conditioned evidence-specialist view",
+        "graph source-endpoint summary",
+        "graph target-endpoint summary",
+        (
+            "neutral descriptor context " * 96
+            + "relational executor summary"
+        ).strip(),
+    ]
+    row["internal_view_descriptions"]=descriptions
+    compiled=compile_behavioral_batch(
+        rows=[row],
+        tokenizer=_TinyTokenizer(),
+    )
+    ids=compiled["primary_batch"]["internal_view_descriptor_input_ids"]
+    assert ids.size(0)==6
+    assert ids.size(1)>96
+    assert int(ids[5].ne(_TinyTokenizer.pad_token_id).sum()) > int(
+        ids[0].ne(_TinyTokenizer.pad_token_id).sum()
+    )
+
+
 def test_behavioral_batch_compiler_builds_primary_and_causal_variants_without_key_leak() -> None:
     rows=_behavioral_rows_for_compiler()
     compiled=compile_behavioral_batch(

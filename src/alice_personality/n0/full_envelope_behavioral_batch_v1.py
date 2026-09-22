@@ -435,8 +435,29 @@ def compile_behavioral_batch(
         tokenizer, candidate_rows
     )
 
+    row_internal_descriptions=[
+        row.get("internal_view_descriptions")
+        for row in rows
+    ]
+    if any(value is not None for value in row_internal_descriptions):
+        if not all(value is not None for value in row_internal_descriptions):
+            raise ValueError(
+                "internal view descriptor override must be supplied for every row in the compiled batch"
+            )
+        internal_descriptions=[
+            str(x) for x in row_internal_descriptions[0]
+        ]
+        if len(internal_descriptions)!=len(INTERNAL_VIEW_NAMES):
+            raise ValueError("internal view descriptor override count drift")
+        for value in row_internal_descriptions[1:]:
+            if [str(x) for x in value] != internal_descriptions:
+                raise ValueError(
+                    "internal view descriptor overrides must be identical inside one compiled batch"
+                )
+    else:
+        internal_descriptions=list(INTERNAL_VIEW_DESCRIPTIONS)
     internal_ids, internal_attention = _tokenize(
-        tokenizer, INTERNAL_VIEW_DESCRIPTIONS
+        tokenizer, internal_descriptions
     )
 
     max_slots = max(len(row["event_sequence_target"]) for row in rows)

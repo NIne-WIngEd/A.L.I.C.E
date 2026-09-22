@@ -928,6 +928,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_long_context_train_dev_supplement_is_executable_and_covers_every_governed_text_surface",
       "requirement": "Before gradient, N0 must have an executable public TRAIN/DEV long-context supplement, separate from FINAL, that places decisive semantic content beyond the native-window operating point across query, relation schema, factor schema, type schema, field text, field descriptor, candidate text, and internal view descriptor surfaces. CPU smoke coverage or FINAL-only long rows cannot satisfy this training-curriculum obligation."
+    },
+    {
+      "id": "N0-P39LJ",
+      "stage": "long_context_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_behavioral_batch_compiler_accepts_internal_view_descriptor_override",
+      "requirement": "The behavioral row-to-system compiler must carry governed runtime internal-view descriptor text from curriculum rows instead of forcing only the short built-in descriptor wording."
+    },
+    {
+      "id": "N0-P39LI",
+      "stage": "long_context_curriculum",
+      "kind": "CI_REQUIRED",
+      "receipt": "PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_CURRICULUM_AUDIT_V1",
+      "requirement": "Before gradient, materialize and audit public TRAIN/DEV long-context rows covering every governed text surface with unchanged targets, decisive semantic content beyond the native-window operating point, no FINAL rows, and no private identity data."
     }
   ],
   "closure_rule": {

@@ -1,0 +1,66 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-long-context-curriculum-contract.v1",
+  "status": "PRECOMMITTED_PUBLIC_LONG_CONTEXT_TRAIN_DEV_NO_GRADIENT",
+  "date": "2026-09-22",
+  "purpose": "Provide explicit identity-neutral TRAIN/DEV supervision for cross-native-window semantic/judgment behavior on every governed text-bearing N0 surface instead of relying on architecture smoke tests or FINAL-only long rows.",
+  "authority": {
+    "public_identity_neutral_only": true,
+    "private_identity_data": false,
+    "final_rows_training_allowed": false,
+    "final_rows_model_selection_allowed": false,
+    "gradient_authorized_by_contract": false,
+    "optimizer_authorized_by_contract": false
+  },
+  "operating_point": {
+    "native_window_tokens": 4096,
+    "long_word_target": 4608,
+    "long_word_target_is_product_ceiling": false,
+    "product_context_ceiling": null,
+    "longer_contexts_allowed": true,
+    "reason": "The target is a deterministic stress operating point chosen to force at least one cross-window bridge. It is not a serving or capability limit."
+  },
+  "required_surfaces": [
+    "query",
+    "relation_schema",
+    "factor_schema",
+    "type_schema",
+    "field_text",
+    "field_descriptor",
+    "candidate_text",
+    "internal_view_descriptor"
+  ],
+  "semantics": {
+    "decisive_content_after_long_prefix_required": true,
+    "original_semantic_content_preserved_exactly_at_tail": true,
+    "structural_targets_must_match_short_base_row": true,
+    "long_prefix_is_public_nondecisive_context": true,
+    "one_surface_intervention_per_row": true,
+    "cross_window_bridge_is_trainable_not_diagnostic_only": true
+  },
+  "batching": {
+    "rows_groupable_by_long_context_surface": true,
+    "row_to_system_behavioral_compiler_required": true,
+    "internal_view_descriptor_override_supported": true,
+    "hard_batch_size": null,
+    "batch_size_is_capability_ceiling": false
+  },
+  "validation_before_gradient": {
+    "materialized_train_dev_rows_required": true,
+    "base_target_equivalence_audit_required": true,
+    "surface_coverage_receipt_required": true,
+    "every_required_surface_in_train_and_dev": true,
+    "no_final_rows": true,
+    "row_hash_manifest_required": true,
+    "long_content_tail_preservation_required": true,
+    "compiler_override_mechanics_test_required": true
+  },
+  "authorization": {
+    "materialization": true,
+    "audit": true,
+    "optimizer": false,
+    "gradient": false,
+    "gpu": false,
+    "final_opening": false,
+    "n0_complete": false
+  }
+}

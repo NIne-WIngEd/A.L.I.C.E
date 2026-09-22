@@ -98,7 +98,12 @@
     "final_relation_descriptions_excluded_from_train_dev_bank": true,
     "official_validation_natural_final_relation_families_required": true,
     "natural_final_is_public_benchmark_not_full_closure": true,
-    "full_final_closure_corpus_separate": true
+    "full_final_closure_corpus_separate": true,
+    "long_context_training_supplement_contract": "configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json",
+    "long_context_training_supplement_builder": "scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py",
+    "long_context_training_supplement_audit": "scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py",
+    "long_context_training_supplement_required_before_gradient": true,
+    "final_rows_do_not_satisfy_long_context_training_coverage": true
   },
   "optimization_strategy": {
     "stages": [

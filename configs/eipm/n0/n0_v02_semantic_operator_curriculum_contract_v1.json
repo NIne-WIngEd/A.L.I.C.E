@@ -370,7 +370,10 @@
     "full_envelope_behavioral_fabric_materialized_required": true,
     "behavioral_variant_reindex_audit_required": true,
     "behavioral_support_endpoint_consistency_audit_required": true,
-    "behavioral_row_to_system_batch_compiler_required": true
+    "behavioral_row_to_system_batch_compiler_required": true,
+    "long_context_train_dev_supplement_materialized_required": true,
+    "long_context_surface_coverage_audit_required": true,
+    "long_context_base_target_equivalence_required": true
   },
   "scale_policy": {
     "full_capability_architecture": true,
@@ -400,5 +403,23 @@
     "behavioral_shortcut_clear_min": 0.9,
     "threshold_source": "precommitted final-v2 deterministic gate where available; remaining shortcut thresholds frozen before first successor shortcut result",
     "results_observed": false
+  },
+  "long_context_training_supplement": {
+    "contract": "configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json",
+    "builder": "scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py",
+    "audit": "scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py",
+    "required_before_gradient": true,
+    "final_rows_may_not_satisfy_training_coverage": true,
+    "cpu_smoke_may_not_satisfy_training_coverage": true,
+    "required_surfaces": [
+      "query",
+      "relation_schema",
+      "factor_schema",
+      "type_schema",
+      "field_text",
+      "field_descriptor",
+      "candidate_text",
+      "internal_view_descriptor"
+    ]
   }
 }

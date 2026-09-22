@@ -38,6 +38,8 @@ on:
       - "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py"
       - "scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py"
+      - "scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py"
+      - "scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py"
       - "configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json"
       - "scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py"
@@ -56,6 +58,7 @@ on:
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_final_v2_package.py"
       - "scripts/eipm/n0/freeze_n0_v02_full_envelope_final_v2_package.py"
       - "tests/eipm/test_n0_full_envelope_final_v2_package_v1.py"
+      - "configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json"
       - "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json"
       - "configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json"
@@ -127,6 +130,8 @@ jobs:
             scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py \
             scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py \
+            scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py \
+            scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py \
             scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py \
             scripts/eipm/n0/build_n0_v02_full_envelope_final_v2_package.py \
@@ -145,6 +150,7 @@ jobs:
             configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
             configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json \
+            configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json \
             configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json \
             configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json \
@@ -232,6 +238,45 @@ jobs:
           assert r["gpu_training_authorized"] is False
           assert r["n0_complete"] is False
           print("PASS_N0_FULL_ENVELOPE_BEHAVIORAL_FABRIC_STATIC_AUDIT")
+          PY
+
+      - name: Materialize and audit long-context TRAIN DEV supplement
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/n0-long-context
+          mkdir -p /tmp/n0-long-context
+          python scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py \
+            --output /tmp/n0-long-context/rows.jsonl \
+            --manifest /tmp/n0-long-context/manifest.json \
+            --long-word-target 4608
+          python scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py \
+            --rows /tmp/n0-long-context/rows.jsonl \
+            --manifest /tmp/n0-long-context/manifest.json \
+            --contract configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json \
+            --output /tmp/n0-long-context/audit.json
+          python - <<'PY'
+          import json
+          r=json.load(open("/tmp/n0-long-context/audit.json"))
+          required={
+              "query","relation_schema","factor_schema","type_schema",
+              "field_text","field_descriptor","candidate_text",
+              "internal_view_descriptor",
+          }
+          assert r["status"]=="PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_CURRICULUM_AUDIT_V1"
+          assert set(r["surface_coverage"]["train"])==required
+          assert set(r["surface_coverage"]["dev"])==required
+          assert r["base_target_equivalence_rows"]==r["rows"]
+          assert r["tail_preservation_rows"]==r["rows"]
+          assert r["long_word_operating_point"]>4096
+          assert r["operating_point_is_product_ceiling"] is False
+          assert r["final_rows"]==0
+          assert r["private_identity_data"] is False
+          assert r["gradient"] is False
+          assert r["optimizer"] is False
+          assert r["gpu_training_authorized"] is False
+          assert r["final_opening_authorized"] is False
+          assert r["n0_complete"] is False
+          print("PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_CURRICULUM_AUDIT_V1")
           PY
 
       - name: Audit full-envelope shortcut preflight
