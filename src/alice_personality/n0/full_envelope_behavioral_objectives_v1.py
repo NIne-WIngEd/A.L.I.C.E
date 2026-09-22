@@ -153,11 +153,15 @@ def endpoint_role_loss(
         raise ValueError("source endpoint target outside field range")
     if int(target_target[active_mask].min()) < 0 or int(target_target[active_mask].max()) >= fields:
         raise ValueError("target endpoint target outside field range")
+    # Inactive rows may use -1 as an explicit no-endpoint sentinel. Clamp only
+    # for the mechanical gather; inactive rows are excluded from the loss.
+    safe_source_target = source_target.long().clamp(min=0, max=fields - 1)
+    safe_target_target = target_target.long().clamp(min=0, max=fields - 1)
     source_prob = source_weight.gather(
-        1, source_target.long()[:, None]
+        1, safe_source_target[:, None]
     ).squeeze(1).clamp_min(1.0e-8)
     target_prob = target_weight.gather(
-        1, target_target.long()[:, None]
+        1, safe_target_target[:, None]
     ).squeeze(1).clamp_min(1.0e-8)
     return -0.5 * (
         source_prob[active_mask].log().mean()
@@ -192,6 +196,7 @@ def decisive_view_causal_margin_loss(
     target_index: Tensor,
     *,
     candidate_valid_mask: Tensor | None = None,
+    active_mask: Tensor | None = None,
     margin: float = 0.15,
 ) -> Tensor:
     if normal_candidate_logits.shape != ablated_candidate_logits.shape:
@@ -217,7 +222,19 @@ def decisive_view_causal_margin_loss(
     ablated = torch.softmax(ablated_logits, dim=-1).gather(
         1, target_index.long()[:, None]
     ).squeeze(1)
-    return F.relu(float(margin) - (normal - ablated)).mean()
+    raw = F.relu(float(margin) - (normal - ablated))
+    if active_mask is None:
+        active_mask = torch.ones(
+            normal_logits.size(0),
+            device=normal_logits.device,
+            dtype=torch.bool,
+        )
+    if active_mask.shape != (normal_logits.size(0),) or active_mask.dtype != torch.bool:
+        raise ValueError("decisive causal active_mask must be bool [B]")
+    selected = raw.masked_select(active_mask)
+    if selected.numel() == 0:
+        return (normal_candidate_logits.sum() + ablated_candidate_logits.sum()) * 0.0
+    return selected.mean()
 
 
 def irrelevant_view_invariance_loss(
@@ -225,6 +242,7 @@ def irrelevant_view_invariance_loss(
     irrelevant_removed_logits: Tensor,
     *,
     candidate_valid_mask: Tensor | None = None,
+    active_mask: Tensor | None = None,
 ) -> Tensor:
     if normal_candidate_logits.shape != irrelevant_removed_logits.shape:
         raise ValueError("invariance candidate-logit shape drift")
@@ -242,10 +260,23 @@ def irrelevant_view_invariance_loss(
     q_prob = q.exp()
     midpoint = 0.5 * (p_prob + q_prob)
     log_mid = midpoint.clamp_min(1.0e-8).log()
-    return 0.5 * (
-        F.kl_div(log_mid, p_prob, reduction="batchmean")
-        + F.kl_div(log_mid, q_prob, reduction="batchmean")
+    per_candidate = 0.5 * (
+        F.kl_div(log_mid, p_prob, reduction="none")
+        + F.kl_div(log_mid, q_prob, reduction="none")
     )
+    per_row = per_candidate.sum(dim=-1)
+    if active_mask is None:
+        active_mask = torch.ones(
+            normal_logits.size(0),
+            device=normal_logits.device,
+            dtype=torch.bool,
+        )
+    if active_mask.shape != (normal_logits.size(0),) or active_mask.dtype != torch.bool:
+        raise ValueError("irrelevant invariance active_mask must be bool [B]")
+    selected = per_row.masked_select(active_mask)
+    if selected.numel() == 0:
+        return (normal_candidate_logits.sum() + irrelevant_removed_logits.sum()) * 0.0
+    return selected.mean()
 
 
 def latent_noncollapse_loss(
@@ -344,7 +375,9 @@ def full_envelope_behavioral_objective(
     target_target_index: Tensor,
     endpoint_active_mask: Tensor,
     decisive_ablated_candidate_logits: Tensor,
+    decisive_view_active_mask: Tensor | None = None,
     irrelevant_removed_candidate_logits: Tensor,
+    irrelevant_view_active_mask: Tensor | None = None,
     latent_slots: Tensor,
     source_views: Tensor,
     view_available: Tensor,
@@ -378,11 +411,13 @@ def full_envelope_behavioral_objective(
         decisive_ablated_candidate_logits,
         target_index,
         candidate_valid_mask=candidate_valid_mask,
+        active_mask=decisive_view_active_mask,
     )
     irrelevant = irrelevant_view_invariance_loss(
         candidate_logits,
         irrelevant_removed_candidate_logits,
         candidate_valid_mask=candidate_valid_mask,
+        active_mask=irrelevant_view_active_mask,
     )
     noncollapse = latent_noncollapse_loss(latent_slots)
     recoverability = source_view_recoverability_loss(
