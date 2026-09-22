@@ -364,8 +364,6 @@ class FullEnvelopeSemanticInputV1(nn.Module):
             raise ValueError("item_valid_mask must be [B,N]")
         if item_valid_mask.dtype != torch.bool:
             raise ValueError("item_valid_mask must be bool")
-        if bool((item_valid_mask.sum(dim=-1) == 0).any()):
-            raise ValueError("every example requires at least one valid semantic item")
 
         flat_valid = item_valid_mask.reshape(-1)
         flat_ids = input_ids.reshape(batch * items, -1)
@@ -375,28 +373,51 @@ class FullEnvelopeSemanticInputV1(nn.Module):
         if bool((selected_attention.sum(dim=-1) == 0).any()):
             raise ValueError("valid semantic item has no attended tokens")
 
-        encoded = self.encode_items(
-            backbone=backbone,
-            input_ids=selected_ids,
-            attention_mask=selected_attention,
-        )
-        hidden_valid = encoded["hidden_states"]
-        token_valid = encoded["content_mask"]
-        tokens = hidden_valid.size(2)
+        if bool(flat_valid.any()):
+            encoded = self.encode_items(
+                backbone=backbone,
+                input_ids=selected_ids,
+                attention_mask=selected_attention,
+            )
+            hidden_valid = encoded["hidden_states"]
+            token_valid = encoded["content_mask"]
+            tokens = hidden_valid.size(2)
+            dtype = hidden_valid.dtype
+            device = hidden_valid.device
+        else:
+            # Entire optional padded bank is absent. Preserve tensor geometry
+            # without creating fake semantic content or touching the backbone.
+            tokens = input_ids.size(-1)
+            dtype = next(backbone.parameters()).dtype
+            device = input_ids.device
+            hidden_valid = torch.zeros(
+                0,
+                self.config.num_hidden_states,
+                tokens,
+                self.config.semantic_dim,
+                dtype=dtype,
+                device=device,
+            )
+            token_valid = torch.zeros(
+                0,
+                tokens,
+                dtype=torch.bool,
+                device=device,
+            )
 
         hidden = torch.zeros(
             batch * items,
             self.config.num_hidden_states,
             tokens,
             self.config.semantic_dim,
-            dtype=hidden_valid.dtype,
-            device=hidden_valid.device,
+            dtype=dtype,
+            device=device,
         )
         token_mask = torch.zeros(
             batch * items,
             tokens,
             dtype=torch.bool,
-            device=hidden_valid.device,
+            device=device,
         )
         hidden[flat_valid] = hidden_valid
         token_mask[flat_valid] = token_valid
