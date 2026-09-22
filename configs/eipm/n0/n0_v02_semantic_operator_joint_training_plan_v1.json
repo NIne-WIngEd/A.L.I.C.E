@@ -212,6 +212,7 @@
     "PASS static semantic_operator mechanics",
     "PASS reopened interface mechanics",
     "successor structured/evidence/graph/fusion/latent implementation complete",
+    "PASS full-envelope CPU runtime contract static audit",
     "full model parameter and memory report",
     "CPU no-gradient end-to-end forward",
     "GPU no-gradient memory dry run",
