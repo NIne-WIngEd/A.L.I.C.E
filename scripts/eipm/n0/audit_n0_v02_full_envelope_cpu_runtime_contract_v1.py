@@ -66,6 +66,8 @@ def main() -> None:
             "field_text",
             "candidate_text",
             "descriptor_text",
+            "internal_view_descriptor",
+            "additional_view_descriptor",
         }
         if required_surfaces != expected_surfaces:
             raise ValueError("text-surface virtualization stress coverage drift")
@@ -95,6 +97,8 @@ def main() -> None:
             raise ValueError("cross-window bridge must be required")
         if o["qualification"].get("standalone_window_stitching_insufficient") is not True:
             raise ValueError("standalone window stitching must not count as semantic completion")
+        if o["qualification"].get("dedicated_long_context_fixture_must_drive_query") is not True:
+            raise ValueError("dedicated long-context fixture must drive the runtime query")
         if int(stress["native_window_tokens"]) != int(long_cfg["native_window_tokens"]):
             raise ValueError("text-surface stress/native-window contract drift")
 

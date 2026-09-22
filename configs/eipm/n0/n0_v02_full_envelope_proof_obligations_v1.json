@@ -476,7 +476,7 @@
       "stage": "runtime_contract",
       "kind": "CI_REQUIRED",
       "receipt": "PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_CONTRACT_STATIC",
-      "requirement": "The exact CPU runtime fixture and fail-closed runner must pass static shape, schema, padding, edge, factor, and no-gradient authorization checks before Magnolia execution."
+      "requirement": "The exact CPU runtime fixture and fail-closed runner must pass static shape, schema, padding, edge, factor, no-gradient authorization, dedicated long-context-fixture, and every text-bearing semantic-surface virtualization checks before Magnolia execution."
     },
     {
       "id": "N0-P39T",

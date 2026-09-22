@@ -284,7 +284,12 @@ def main() -> None:
         return text + suffix if surface in stressed_surfaces else text
 
     queries = [str(x) for x in case["queries"]]
-    queries[0] = longify("query", queries[0])
+    dedicated_long_context_text = "\n\n".join(
+        str(x) for x in long_cfg["text"]
+    )
+    if not dedicated_long_context_text.strip():
+        raise ValueError("dedicated long-context fixture is empty")
+    queries[0] = longify("query", dedicated_long_context_text)
     q_ids, q_mask = tokenize_texts(tokenizer, queries)
 
     relation_rows = [dict(x) for x in case["relations"]]
@@ -376,12 +381,23 @@ def main() -> None:
         dtype=torch.bool,
     )
 
+    internal_texts = [
+        str(x) for x in case["internal_view_descriptions"]
+    ]
+    internal_texts[0] = longify(
+        "internal_view_descriptor",
+        internal_texts[0],
+    )
     internal_ids, internal_attention = tokenize_texts(
         tokenizer,
-        [str(x) for x in case["internal_view_descriptions"]],
+        internal_texts,
     )
 
     additional_texts = [str(x) for x in case["additional_views"]]
+    additional_texts[0] = longify(
+        "additional_view_descriptor",
+        additional_texts[0],
+    )
     additional_ids_single, additional_attention_single = tokenize_texts(
         tokenizer,
         additional_texts,
@@ -624,6 +640,12 @@ def main() -> None:
             bool(row["used_virtualization"])
             for row in meta["descriptor_text"].values()
         ),
+        "internal_view_descriptor": bool(
+            meta["internal_view_descriptor"]["used_virtualization"]
+        ),
+        "additional_view_descriptor": bool(
+            meta["additional_view_descriptor"]["used_virtualization"]
+        ),
     }
     required_surfaces = set(
         str(x) for x in stress["minimum_virtualized_surfaces"]
@@ -731,6 +753,7 @@ def main() -> None:
         },
         "long_context_bridge": {
             "native_window_tokens": native_window,
+            "dedicated_fixture_used": True,
             "overlap_tokens": int(
                 long_cfg["overlap_tokens"]
             ),

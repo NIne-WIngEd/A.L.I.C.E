@@ -152,6 +152,7 @@ assert r["combined_parameters"] == (
 assert r["registered_trainable_system"]=="N0FullEnvelopeTrainableSystemV1"
 assert r["single_shared_backbone"] is True
 assert r["long_context_bridge"]["segments"] >= 3
+assert r["long_context_bridge"]["dedicated_fixture_used"] is True
 assert r["long_context_bridge"]["standalone_virtualizer_semantics_complete"] is False
 assert r["long_context_bridge"]["bridge_report"]["cross_window_semantic_interaction"] is True
 assert r["long_context_bridge"]["bridge_report"]["segment_count_ceiling"] is None
@@ -163,6 +164,8 @@ assert set(surface)=={
     "field_text",
     "candidate_text",
     "descriptor_text",
+    "internal_view_descriptor",
+    "additional_view_descriptor",
 }
 assert all(surface.values())
 assert r["system_report"]["semantic_replay_and_full_envelope_share_backbone"] is True
