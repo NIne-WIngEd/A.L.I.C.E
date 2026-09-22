@@ -241,3 +241,28 @@ def test_stack_semantic_activity_uses_program_start_not_expected_step_count() ->
         torch.tensor([[0.5,0.5]]),
         atol=1e-6,
     )
+
+
+def test_full_stack_disables_unavailable_graph_and_executor_views() -> None:
+    reliability=torch.tensor(
+        [
+            [1.0,0.9,0.8,0.7,0.6,0.5],
+            [1.0,0.9,0.8,0.7,0.6,0.5],
+        ]
+    )
+    available,effective=N0FullEnvelopeStackV1._internal_view_gates(
+        internal_view_reliability=reliability,
+        graph_support_activity=torch.tensor([0.0,0.4]),
+        execution_confidence=torch.tensor([0.0,0.25]),
+    )
+    assert available[0].tolist()==[True,True,True,False,False,False]
+    assert available[1].tolist()==[True,True,True,True,True,True]
+    assert torch.equal(
+        effective[0,3:],
+        torch.zeros_like(effective[0,3:]),
+    )
+    assert torch.allclose(
+        effective[1,3:],
+        torch.tensor([0.28,0.24,0.125]),
+        atol=1e-7,
+    )
