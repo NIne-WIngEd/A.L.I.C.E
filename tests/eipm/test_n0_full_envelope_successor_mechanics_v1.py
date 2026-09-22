@@ -1163,3 +1163,33 @@ def test_executor_confidence_uses_program_start_probability_not_expected_step_co
     assert executor.parameter_report()[
         "execution_confidence_uses_program_start_probability_not_expected_step_count"
     ] is True
+
+
+def test_structured_state_rejects_out_of_range_confidence_metadata() -> None:
+    model=DynamicStructuredStateV2(
+        DynamicStructuredStateConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            num_attention_heads=4,
+            num_layers=1,
+            continuous_metadata_dim=3,
+            dropout=0.0,
+        )
+    )
+    try:
+        model(
+            field_hidden_states=torch.randn(1,2,3,4,24),
+            field_token_mask=torch.ones(1,2,4,dtype=torch.bool),
+            field_valid_mask=torch.ones(1,2,dtype=torch.bool),
+            field_confidence=torch.tensor([[1.1,0.5]]),
+            field_missing=torch.zeros(1,2),
+            field_metadata=torch.zeros(1,2,3),
+            descriptor_banks={},
+            descriptor_indices={},
+        )
+    except ValueError as exc:
+        assert "field_confidence" in str(exc)
+        assert "[0,1]" in str(exc)
+    else:
+        raise AssertionError("out-of-range structured confidence did not fail closed")
