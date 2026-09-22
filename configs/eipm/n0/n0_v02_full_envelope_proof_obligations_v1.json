@@ -762,8 +762,8 @@
       "id": "N0-P24E",
       "stage": "full_stack",
       "kind": "STATIC_REQUIRED",
-      "test": "test_full_stack_modifier_off_neutralizes_explicit_metadata_before_graph_and_evidence_view",
-      "requirement": "Explicit reliability, recency, temporal-match, and provenance-match metadata must be modifier-conditioned before pre-Binder graph/evidence paths so OFF criteria cannot bypass the semantic operator; enabling a criterion must preserve the corresponding evidence signal."
+      "test": "test_global_graph_and_evidence_views_are_criterion_neutral",
+      "requirement": "Global graph and evidence-specialist views must keep explicit reliability/recency/temporal/provenance criterion channels neutral because one global view cannot represent conflicting step-local ON/OFF semantics; raw criterion values remain available to the step-conditioned Executor."
     },
     {
       "id": "N0-P37A",
@@ -813,6 +813,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_binder_global_support_cannot_apply_step0_reliability_to_step1_off_edge",
       "requirement": "When one relation is reused across steps and reliability is ON for an earlier step but OFF for a later step, Binder's global sparse support may not let the earlier criterion alter the later step's edge eligibility."
+    },
+    {
+      "id": "N0-P24G",
+      "stage": "full_stack",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_global_graph_and_evidence_views_cannot_apply_mixed_step_reliability_globally",
+      "requirement": "A mixed-step program with reliability ON then OFF must not let a global graph/evidence view apply the global criterion to both steps; explicit global criterion channels remain neutral."
     }
   ],
   "closure_rule": {
