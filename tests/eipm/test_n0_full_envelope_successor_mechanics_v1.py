@@ -1261,3 +1261,54 @@ def test_valid_edge_cannot_reference_padded_invalid_field() -> None:
         assert "padded invalid field" in str(exc)
     else:
         raise AssertionError("valid edge into padded field did not fail closed")
+
+
+def test_structured_padded_fields_are_inert_even_with_arbitrary_hidden_content() -> None:
+    torch.manual_seed(241)
+    model=DynamicStructuredStateV2(
+        DynamicStructuredStateConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            num_attention_heads=4,
+            num_layers=1,
+            continuous_metadata_dim=3,
+            dropout=0.0,
+        )
+    ).eval()
+    hidden=torch.randn(1,5,3,4,24)
+    changed=hidden.clone()
+    changed[:,3:] = torch.randn_like(changed[:,3:]) * 100.0
+    token_mask=torch.ones(1,5,4,dtype=torch.bool)
+    token_mask[:,3:]=False
+    valid=torch.tensor([[True,True,True,False,False]])
+    bank=factor_schema(3,242)
+    indices=torch.tensor([[0,1,2,-1,-1]])
+    common=dict(
+        field_token_mask=token_mask,
+        field_valid_mask=valid,
+        field_confidence=torch.tensor([[0.9,0.8,0.7,0.0,0.0]]),
+        field_missing=torch.tensor([[0.0,0.0,0.0,1.0,1.0]]),
+        field_metadata=torch.zeros(1,5,3),
+        descriptor_banks={"type":bank},
+        descriptor_indices={"type":indices},
+    )
+    with torch.no_grad():
+        a=model(field_hidden_states=hidden,**common)
+        b=model(field_hidden_states=changed,**common)
+    assert torch.allclose(
+        a["field_states"][:,:3],
+        b["field_states"][:,:3],
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.equal(
+        a["field_states"][:,3:],
+        torch.zeros_like(a["field_states"][:,3:]),
+    )
+    assert torch.allclose(
+        a["pooled_state"],
+        b["pooled_state"],
+        atol=1e-6,
+        rtol=1e-6,
+    )
