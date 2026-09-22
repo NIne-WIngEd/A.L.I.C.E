@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-fusion-latent-public-judgment-causal-audit-20260922-037
-- Question: Deep-audit exact N0 head alice-eipm-v1-n0-full-envelope-foundation-build-v1@d0b8d355e9c6e3c6f690b2e4a72ea065cb56979e for the full causal chain from runtime source/view relevance through fusion routing, latent allocation, and final public candidate judgment. Trace N0FullEnvelopeStackV1 -> dynamic source-anchored fusion -> runtime-slot latent fabric -> PublicJudgmentProbeV1 -> integrated behavioral/joint objectives and proof-obligation tests. Determine whether the final public judgment is causally controlled by source relevance and fusion route through the latent state, or whether a direct/raw semantic or candidate path can bypass fusion/latent causality, make route/slot tests shape-only, or let availability/reliability masquerade as relevance. Inspect gradient paths as well as no-gradient interventions: a decisive-view change should affect final judgment through the governed route; an irrelevant available view should not; jointly permuting runtime views should not create identity; suppressing or changing fusion/latent activity should measurably alter final judgment when behaviorally relevant. Distinguish genuinely causal tests from parameter-report assertions. Classify as (A) concrete architecture defect/capability bypass to fix before Magnolia, (B) missing causal falsification test required first, or (C) sufficiently closed for this audit axis. Preserve source anchoring, disagreement/missing-view safety, dynamic runtime views/slots, no capability ceilings, and anti-hotfix doctrine. Do not authorize Magnolia/GPU/optimizer/gradient/FINAL/N0 completion. Original exact source is authority; Graphify is navigation only.
+- Request: n0-binder-support-selection-shortcut-audit-20260922-038
+- Question: Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@faeb533c44bfd3087debc1c55e9079cc343f567e for Binder support-selection shortcuts. Trace the behavioral scenario generator -> materialize_row support_edge_indices/support_target derivation -> behavioral curriculum auditor -> batch compiler -> support_selection_loss -> FullEnvelopeQSREBinderV1 -> executor. Specifically determine whether support supervision accidentally labels every runtime edge whose relation key appears in the selected relation program, even when the edge is query-irrelevant, which would teach relation-key matching rather than query-conditioned structural support. Preserve the recent criterion-neutral Binder rule: reliability/recency/temporal/provenance arbitration must remain downstream step-local and must not prune structurally relevant alternatives. Distinguish query relevance from evidence-quality arbitration. Look for same-relation distractor coverage and whether explicit scenario support annotations are overwritten. Classify as (A) concrete curriculum/architecture defect to repair before Magnolia, (B) missing falsification coverage required first, or (C) sufficiently closed. Do not authorize Magnolia/GPU/optimizer/gradient/FINAL/N0 completion. Original exact source is authority; Graphify is navigation only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -46,49 +46,46 @@ The old stable-build latent-stage pointer is historical routing context, not the
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ d0b8d355e9c6e3c6f690b2e4a72ea065cb56979e — governance(n0): bind program-global versus step-local factor scope
+- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ faeb533c44bfd3087debc1c55e9079cc343f567e — fix(n0): remove candidate-only public judgment bypass
 - alice-eipm-v1-qsre-production-p2-ordered-evidence-v3 @ 342bdbbe8c5dfbe74ff3ab8210a30b1a456aa482 — state(n0): ratify P2 v3 static pass and authorize CPU qualification
 - alice-eipm-v1-qsre-production-p2-failure-localization @ c9b1d35823cb89245625bbc6afb05b0ef5fb69fb — fix(n0): emit strict JSON from P2 localization
 
 ## Source pointers
 
-- [156] alice-context:docs/chat-context/2026-09-21/sol/N0_FINAL_FULL_SCALE_FROZEN_AUTHORITY_READY.md — N0 final full-scale frozen-authority closure — ready for one owner Magnolia run
-  - status:  final pre-launch package completed; exact-head static/CPU qualification passed; exact-source Graphify passed; private operational history reconciled; Fable updated; one owner Magnolia run is the next scientific evidence
-- [149] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
-  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
-- [149] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
-  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
-- [149] alice-eipm-v1-n0-p2a-semantic-localization-v1:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
-  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
-- [149] alice-eipm-v1-n0-semantic-operator-foundation-v1:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
-  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
-- [149] alice-personal-development-architecture-v1:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
-  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
-- [144] alice-context:docs/chat-context/2026-09-16/sol/N0_FUSION_RATIFIED_AND_ADAPTIVE_LATENT_POOL_OPENED.md — N0 fusion ratified; adaptive multi-view latent pooling opened — 2026-09-16
-- [142] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
-- [142] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
-- [142] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
-- [142] alice-eipm-v1-missing-evidence-localization:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
-- [142] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
+- [102] alice-context:docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md — N0 Relation-Semantic Grounding Repair Handoff
+  - status:  missing-evidence failure localized to relation-semantic endpoint grounding; one bounded repair is CI-ready; no frozen-challenge rerun, threshold change, promotion, scaling, or N0 completion authorized
+- [101] alice-context:docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md — N0 Endpoint Repair and Downstream Arbitration Handoff
+  - status: `FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`.
+- [101] alice-eipm-v1-build:docs/PHASE_1_PRIVATE_CLAIM_SUPPORT_AUDIT.md — P1.11 — Private Claim-Support Auditor
+- [99] alice-context:docs/chat-context/2026-09-21/sol/N0_JOB575958_CLOSURE_PASS_READY.md — N0 job 575958 closure-pass — exact-head verified and ready for one Magnolia launch
+  - status:  closure package implemented, exact-head static/CPU qualification passed, Graphify exact-source topology verified, Fable failure/success seeds recorded, one owner Magnolia launch may proceed
+- [99] alice-eipm-v1-causal-arbitration-binding:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
+- [99] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
+- [99] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
+- [99] alice-eipm-v1-missing-evidence-localization:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
+- [99] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
+- [99] alice-eipm-v1-n0-closure-pass:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
+- [99] alice-eipm-v1-n0-closure-semantic-v2:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
+- [99] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md — N0 downstream causal arbitration — Magnolia execution contract
 
 ## Graphify navigation hints
 
-- test_latent_view_activity_causally_changes_final_pooled_state() -> tests/eipm/test_n0_full_envelope_fabric_v1.py:L668
-- audit_n0_v02_full_envelope_proof_obligations_v1.py -> scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py:L1
-- test_source_recoverability_mask_does_not_force_irrelevant_views_into_latent() -> tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py:L505
-- ._activity() -> src/alice_information/research_orchestration.py:L694
-- test_failed_target_marks_affected_cases() -> tests/phase3/test_conversation_release_evidence.py:L78
+- test_behavioral_compiler_support_targets_are_structurally_valid_and_unknown_rows_use_null_support() -> tests/eipm/test_n0_full_envelope_trainable_system_v1.py:L767
+- audit_n0_v02_full_envelope_behavioral_curriculum_v1.py -> scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py:L1
+- build_n0_v02_full_envelope_behavioral_curriculum_v1.py -> scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py:L1
 - AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
-- Multi-head Slot-Attention-style competitive evidence allocation. Standard… -> src/alice_personality/n0/adaptive_multi_view_latent_pool_v0_2.py:L73
-- alternate_query() -> scripts/eipm/n0/build_n0_v02_final_self_validation_v1.py:L135
-- SourceAnchoredCrossContextFusion -> src/alice_personality/n0/cross_context_fusion_anchored.py:L13
-- semantic_retrieval.py -> src/alice_vault/semantic_retrieval.py:L1
+- test_compile_identity_substrate_preserves_authority_and_unordered_alternatives() -> tests/eipm/test_n1_private_substrate_compiler.py:L15
+- test_specialization_pressure_disappears_for_semantic_consensus() -> tests/eipm/test_n0_adaptive_multi_view_latent_pool_objectives_v0_2.py:L94
+- ArbitrationV02Tests -> tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py:L12
 - test_memory_identity_host_learning_architecture.py -> tests/governance/test_memory_identity_host_learning_architecture.py:L1
 - audit() -> scripts/audit_capability_barriers.py:L521
+- .test_only_cited_evidence_is_exposed_to_auditor() -> tests/phase1/test_claim_support_audit.py:L51
 - authority() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L87
 - authorize_boolean_map() -> src/alice_capability_profiles.py:L88
-- test_unknown_mode_and_availability_fail_before_runner() -> tests/phase4/test_information_research_mode.py:L632
-- test_unavailable_preflight_forbids_execution_inputs() -> tests/phase4/test_information_research_execution.py:L472
+- batch_indices() -> scripts/eipm/n0/qsre_production_training_utils.py:L150
+- test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
+- BehavioralBatchCompileConfig -> src/alice_personality/n0/full_envelope_behavioral_batch_v1.py:L30
+- Binder owns candidate support; step-local criterion arbitration is downstream. -> tests/eipm/test_n0_full_envelope_modifier_gating_v1.py:L119
 
 ## External/private routing
 
