@@ -75,7 +75,21 @@
       "role": "learn role, traversal, direction, control, modifier and future operator factors as runtime semantic schemas",
       "required": true,
       "factor_banks_are_runtime_variable": true,
-      "opaque_fixed_class_semantics_forbidden": true
+      "opaque_fixed_class_semantics_forbidden": true,
+      "execution_scope": {
+        "program_global_opcode_families": [
+          "role",
+          "traversal",
+          "control"
+        ],
+        "step_local_opcode_families": [
+          "direction",
+          "modifier"
+        ],
+        "semantic_recurrent_step_context_may_include_all_runtime_factor_banks": true,
+        "program_global_step_labels_are_consistency_context_not_new_structural_opcodes": true,
+        "future_scope_expansion_requires_observed_full_envelope_failure": true
+      }
     },
     {
       "name": "ordered_composition",

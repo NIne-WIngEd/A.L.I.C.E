@@ -107,6 +107,101 @@ def operator_bundle(batch: int = 2, relations: int = 5):
     return q, qm, raw, adapted
 
 
+
+
+def test_adapter_keeps_role_traversal_control_program_global_and_step_local_scope_explicit() -> None:
+    """Only direction and evidence modifiers are executable per-step factors.
+
+    Role is the requested endpoint/readout policy, traversal is whole-program
+    geometry, and control is whole-program relational/fallback/defer routing.
+    The semantic recurrent state may still interpret every factor bank at every
+    slot, but changing only step-local copies of role/traversal/control must not
+    silently create structural opcodes the executor does not define.
+    """
+    _, _, raw, _ = operator_bundle(batch=1, relations=3)
+    base = raw["operator"]
+
+    def forced(value: torch.Tensor, index: int) -> torch.Tensor:
+        result = torch.zeros_like(value)
+        result[..., index] = 1.0
+        return result
+
+    first = {
+        name: value.clone()
+        for name, value in base.step_factor_distributions.items()
+    }
+    second = {
+        name: value.clone()
+        for name, value in base.step_factor_distributions.items()
+    }
+
+    first["role"] = forced(first["role"], 0)
+    second["role"] = forced(second["role"], 1)
+    first["traversal"] = forced(first["traversal"], 0)
+    second["traversal"] = forced(second["traversal"], 2)
+    first["control"] = forced(first["control"], 0)
+    second["control"] = forced(second["control"], 2)
+
+    first["direction"] = forced(first["direction"], 0)
+    second["direction"] = forced(second["direction"], 1)
+    first["reliability"] = forced(first["reliability"], 0)
+    second["reliability"] = forced(second["reliability"], 1)
+
+    adapter = SemanticOperatorQSREAdapter()
+    a = adapter(
+        semantic_operator=replace(
+            base,
+            step_factor_distributions=first,
+        ),
+        relation_schema_states=raw["relation_schema_states"],
+        factor_opcodes={
+            "role": ["ROLE_SOURCE","ROLE_TARGET","ROLE_SYMMETRIC","ROLE_NONE"],
+            "traversal": ["TRAVERSAL_LOCAL","TRAVERSAL_PATH","TRAVERSAL_AGGREGATE"],
+            "direction": ["DIRECTION_FORWARD","DIRECTION_REVERSE","DIRECTION_BIDIRECTIONAL"],
+            "control": ["CONTROL_FALLBACK","CONTROL_RELATIONAL","CONTROL_DEFER"],
+            "reliability": ["MOD_RELIABILITY_OFF","MOD_RELIABILITY_ON"],
+            "recency": ["MOD_RECENCY_OFF","MOD_RECENCY_ON"],
+            "temporal": ["MOD_TEMPORAL_OFF","MOD_TEMPORAL_ON"],
+            "provenance": ["MOD_PROVENANCE_OFF","MOD_PROVENANCE_ON"],
+        },
+    )["operator"]
+    b = adapter(
+        semantic_operator=replace(
+            base,
+            step_factor_distributions=second,
+        ),
+        relation_schema_states=raw["relation_schema_states"],
+        factor_opcodes={
+            "role": ["ROLE_SOURCE","ROLE_TARGET","ROLE_SYMMETRIC","ROLE_NONE"],
+            "traversal": ["TRAVERSAL_LOCAL","TRAVERSAL_PATH","TRAVERSAL_AGGREGATE"],
+            "direction": ["DIRECTION_FORWARD","DIRECTION_REVERSE","DIRECTION_BIDIRECTIONAL"],
+            "control": ["CONTROL_FALLBACK","CONTROL_RELATIONAL","CONTROL_DEFER"],
+            "reliability": ["MOD_RELIABILITY_OFF","MOD_RELIABILITY_ON"],
+            "recency": ["MOD_RECENCY_OFF","MOD_RECENCY_ON"],
+            "temporal": ["MOD_TEMPORAL_OFF","MOD_TEMPORAL_ON"],
+            "provenance": ["MOD_PROVENANCE_OFF","MOD_PROVENANCE_ON"],
+        },
+    )["operator"]
+
+    assert torch.allclose(a.role_distribution, b.role_distribution)
+    assert torch.allclose(a.traversal_distribution, b.traversal_distribution)
+    assert torch.allclose(a.control_distribution, b.control_distribution)
+    assert not torch.allclose(
+        a.step_direction_distribution,
+        b.step_direction_distribution,
+    )
+    assert not torch.allclose(
+        a.step_modifier_weight,
+        b.step_modifier_weight,
+    )
+
+    report = adapter.parameter_report()
+    assert report["program_global_role_semantics"] is True
+    assert report["program_global_traversal_semantics"] is True
+    assert report["program_global_control_semantics"] is True
+    assert report["step_local_structural_semantics_are_direction_and_modifiers"] is True
+
+
 def test_dynamic_structured_state_is_field_permutation_equivariant_and_descriptor_open() -> None:
     torch.manual_seed(21)
     model = DynamicStructuredStateV2(

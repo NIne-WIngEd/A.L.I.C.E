@@ -23,6 +23,26 @@
     "loss_balancer": "src/alice_personality/n0/full_envelope_loss_balancer_v1.py",
     "per_example_candidate_subsets": true,
     "step_conditioned_factor_semantics": true,
+    "factor_execution_scope": {
+      "program_global": [
+        "role",
+        "traversal",
+        "control"
+      ],
+      "step_local": [
+        "direction",
+        "reliability_modifier",
+        "recency_modifier",
+        "temporal_constraint_modifier",
+        "provenance_constraint_modifier"
+      ],
+      "role_semantics": "requested endpoint/readout intent over the relational program; per-edge orientation is owned by direction",
+      "traversal_semantics": "whole-program LOCAL/PATH/AGGREGATE geometry represented as a continuous mixture; relation slots execute inside that geometry",
+      "control_semantics": "whole-program fallback/relational/defer routing; per-slot continuation, stop and unknown are owned by event state",
+      "semantic_recurrent_step_context_may_include_all_runtime_factor_banks": true,
+      "copied_program_global_step_targets_are_consistency_context_only": true,
+      "scope_is_not_a_capability_ceiling": "reopen with a versioned interface if observed full-envelope evidence requires a genuinely step-varying role, traversal or control primitive"
+    },
     "runtime_relation_symmetry": true,
     "explicit_null_support_at_binder": true,
     "program_truncation_exposed_and_fail_closed": true,

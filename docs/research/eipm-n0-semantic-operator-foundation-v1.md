@@ -361,3 +361,48 @@ Not authorized yet:
 - N0 completion.
 
 The next GPU run must train the **joint semantic-operator foundation**, not another repair head.
+
+## Factor execution scope audit — 2026-09-22
+
+A deep source-level falsification audit asked whether the adapter was accidentally
+discarding a required capability because the semantic operator emits
+`step_factor_distributions` for every runtime factor bank while the executable
+full-envelope state carries step-local tensors only for direction and evidence
+modifiers.
+
+The current governed workload does **not** justify widening the executor here.
+The scopes are deliberate:
+
+- **role is program-global executable semantics.** It expresses the requested
+  endpoint/readout intent (SOURCE, TARGET, SYMMETRIC, NONE). Per-edge and
+  per-step orientation is already represented by the relation schema plus the
+  step-local direction distribution.
+- **traversal is program-global executable geometry.** LOCAL, PATH, and
+  AGGREGATE are a continuous whole-program mixture. A PATH program already
+  advances through recurrent relation slots; changing relation direction or
+  evidence arbitration at a slot does not require changing the traversal
+  family itself.
+- **control is program-global executable routing.** FALLBACK, RELATIONAL, and
+  DEFER decide whether the relational program is applicable. Per-slot
+  CONTINUE/STOP/UNKNOWN state and truncation carry internal program flow and
+  fail-closed termination.
+- **direction and evidence-quality modifiers are step-local executable
+  semantics.** The existing mixed-direction and mixed-step-modifier
+  interventions provide direct evidence for this scope.
+
+The semantic recurrent operator is still allowed to interpret every runtime
+factor bank at every slot. Those step-conditioned semantic states contribute to
+the recurrent operator context. For program-global factors, repeated step
+targets are consistency/context supervision; they are not a second set of
+structural opcodes that the adapter is expected to execute.
+
+This is therefore a **scope clarification, not an architecture repair**. No
+current full-envelope requirement or observed failure demonstrates a need for
+SOURCE→TARGET role switching, LOCAL→PATH/AGGREGATE switching, or
+RELATIONAL→FALLBACK/DEFER switching as separate executable slot primitives.
+Inventing those primitives now would be mechanism-first expansion. If later
+model evidence localizes a real workload that cannot be represented by the
+current program-global role/traversal/control plus step-local
+relation/direction/modifier/event state, this interface must be versioned and
+reopened from that evidence.
+

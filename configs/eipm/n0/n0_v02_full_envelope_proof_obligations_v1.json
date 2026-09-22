@@ -834,6 +834,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_public_judgment_candidate_permutation_has_no_hidden_position_identity",
       "requirement": "Runtime candidate ordering is not semantic: jointly permuting candidate states and masks must only permute candidate logits, with no candidate-position identity parameter or bias."
+    },
+    {
+      "id": "N0-P22D",
+      "stage": "semantic_operator_adapter",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_adapter_keeps_role_traversal_control_program_global_and_step_local_scope_explicit",
+      "requirement": "Role, traversal and control remain deliberate whole-program executable semantics while direction and evidence modifiers are step-local. Step-factor semantic context may include every runtime bank, but copied role/traversal/control step labels must not silently create unsupported structural opcodes."
     }
   ],
   "closure_rule": {
