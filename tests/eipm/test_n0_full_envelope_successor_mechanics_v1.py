@@ -1193,3 +1193,39 @@ def test_structured_state_rejects_out_of_range_confidence_metadata() -> None:
         assert "[0,1]" in str(exc)
     else:
         raise AssertionError("out-of-range structured confidence did not fail closed")
+
+
+def test_executor_rejects_out_of_range_support_metadata() -> None:
+    executor=FullEnvelopeQSREExecutorV1(
+        FullEnvelopeExecutorConfig(
+            field_dim=24,
+            model_dim=24,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    )
+    try:
+        executor(
+            field_state=torch.randn(1,2,24),
+            field_metadata=torch.zeros(1,2,3),
+            field_valid_mask=torch.ones(1,2,dtype=torch.bool),
+            edge_index=torch.tensor([[[0,1]]]),
+            edge_relation_index=torch.zeros(1,1,dtype=torch.long),
+            edge_valid_mask=torch.ones(1,1,dtype=torch.bool),
+            edge_support_weight=torch.tensor([[1.2]]),
+            support_available=torch.ones(1),
+            edge_reliability=torch.ones(1,1),
+            edge_recency=torch.ones(1,1),
+            edge_temporal_match=torch.ones(1,1),
+            edge_provenance_match=torch.ones(1,1),
+            relation_schema_state=torch.randn(1,1,24),
+            relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
+            operator=_manual_operator(TRAVERSAL_LOCAL),
+            focus_field_weight=torch.tensor([[1.0,0.0]]),
+        )
+    except ValueError as exc:
+        assert "edge_support_weight" in str(exc)
+        assert "[0,1]" in str(exc)
+    else:
+        raise AssertionError("out-of-range support weight did not fail closed")
