@@ -244,6 +244,17 @@ def irrelevant_view_invariance_loss(
     candidate_valid_mask: Tensor | None = None,
     active_mask: Tensor | None = None,
 ) -> Tensor:
+    """Jensen-Shannon invariance with finite gradients under masked candidates.
+
+    The previous implementation passed model-derived probabilities as the
+    differentiable target argument of F.kl_div. Masked logits can underflow
+    those probabilities to exact zero. KL's target-side derivative contains
+    log(target), so the forward value stayed finite while backward produced
+    NaNs across the shared backbone.
+
+    Compute JSD directly in log-space instead. Invalid candidates are excluded
+    explicitly, and no log is ever taken on a probability tensor.
+    """
     if normal_candidate_logits.shape != irrelevant_removed_logits.shape:
         raise ValueError("invariance candidate-logit shape drift")
     normal_logits, valid = _mask_candidate_logits(
@@ -254,16 +265,22 @@ def irrelevant_view_invariance_loss(
         irrelevant_removed_logits,
         valid,
     )
-    p = torch.log_softmax(normal_logits, dim=-1)
-    q = torch.log_softmax(removed_logits, dim=-1)
-    p_prob = p.exp()
-    q_prob = q.exp()
-    midpoint = 0.5 * (p_prob + q_prob)
-    log_mid = midpoint.clamp_min(1.0e-8).log()
-    per_candidate = 0.5 * (
-        F.kl_div(log_mid, p_prob, reduction="none")
-        + F.kl_div(log_mid, q_prob, reduction="none")
+    log_p = torch.log_softmax(normal_logits, dim=-1)
+    log_q = torch.log_softmax(removed_logits, dim=-1)
+    p_prob = log_p.exp()
+    q_prob = log_q.exp()
+    log_mid = torch.logaddexp(log_p, log_q) - torch.log(
+        torch.tensor(
+            2.0,
+            device=log_p.device,
+            dtype=log_p.dtype,
+        )
     )
+    per_candidate = 0.5 * (
+        p_prob * (log_p - log_mid)
+        + q_prob * (log_q - log_mid)
+    )
+    per_candidate = per_candidate.masked_fill(~valid, 0.0)
     per_row = per_candidate.sum(dim=-1)
     if active_mask is None:
         active_mask = torch.ones(
@@ -275,8 +292,14 @@ def irrelevant_view_invariance_loss(
         raise ValueError("irrelevant invariance active_mask must be bool [B]")
     selected = per_row.masked_select(active_mask)
     if selected.numel() == 0:
-        return (normal_candidate_logits.sum() + irrelevant_removed_logits.sum()) * 0.0
-    return selected.mean()
+        return (
+            normal_candidate_logits.sum()
+            + irrelevant_removed_logits.sum()
+        ) * 0.0
+    loss = selected.mean()
+    if not bool(torch.isfinite(loss.detach())):
+        raise ValueError("irrelevant-view invariance loss became non-finite")
+    return loss
 
 
 def latent_noncollapse_loss(
