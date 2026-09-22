@@ -914,7 +914,13 @@ def materialize_row(
     if any(key.lower() in semantic_text for key in opaque_keys):
         raise RuntimeError("opaque metadata key leaked into semantic text")
 
-    support_set=set(base["support_edge_indices"])
+    structural_relation_keys=set(base["relation_sequence_keys"])
+    support_set={
+        i
+        for i,e in enumerate(base["edges"])
+        if e["relation_key"] in structural_relation_keys
+    }
+    base["support_edge_indices"]=sorted(support_set)
     decisive_set=set(base["decisive_field_indices"])
     irrelevant_set=set(base["irrelevant_field_indices"])
     for i,e in enumerate(base["edges"]):
