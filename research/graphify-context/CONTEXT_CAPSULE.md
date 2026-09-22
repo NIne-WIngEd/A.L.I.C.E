@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-final-sealing-cpu-fidelity-static-audit-20260922-040
-- Question: Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@e93461aae33dc682d29b283e636dc08e8847878b for the remaining pre-Magnolia static frontier after the public-judgment, Binder-support and shortcut-preflight repairs. Focus on (1) full-envelope CPU qualification fixture fidelity: verify P42 uses the same registered trainable topology intended for optimization, includes every reopened semantic/structured/evidence/graph/Binder/executor/fusion/latent/public-judgment path, exercises all text virtualization surfaces and dynamic runtime axes without silently substituting legacy parents or a reduced pilot; (2) sealed final-v2 independence: trace n0_v02_full_envelope_final_validation_contract_v2.json, proof obligations and training authorization to actual build/freeze/eval tooling. Determine whether a current full-envelope final-v2 corpus can be built and hash-frozen unopened without relying on superseded final-v1/T1/T2 mechanics, and whether its absence is a concrete static/tooling defect that should be fixed before Magnolia CPU qualification or a later-but-blocking pre-gradient task. Also check whether old final-self-validation scripts could accidentally be treated as current authority. Classify each finding A concrete defect, B missing proof/test, or C closed. Do not authorize Magnolia/GPU/optimizer/gradient/FINAL/N0 completion. Graphify is navigation only; exact source remains authority.
+- Request: n0-totality-unknown-truncation-audit-20260922-040
+- Question: Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@e93461aae33dc682d29b283e636dc08e8847878b for totality, UNKNOWN/DEFER, truncation and terminal-control correctness before Magnolia. Trace SchemaConditionedSemanticOperator recurrent event semantics, adapter, FullEnvelopeOperatorState validation, Binder, Executor, behavioral compiler/objectives, final validation gates, CPU qualification and proof obligations. Look for cases where max_reasoning_steps truncates a still-active relation program but downstream code can nevertheless assert STOP/RELATIONAL completion, create support, activate graph/executor views, or rank a candidate as if the program completed. Check zero-step UNKNOWN rows, unsupported schema, all-masked/empty structural slices, per-example differing relation lengths, and whether truncation uncertainty is merely diagnostic or causally blocks false completion. Classify each issue A concrete defect / B missing falsification / C closed. Preserve full-envelope semantics and do not add hard hop ceilings. Do not authorize Magnolia/GPU/optimizer/gradient/FINAL/N0 completion. Original exact branch source is authority; Graphify is navigation only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -46,53 +46,46 @@ The old stable-build latent-stage pointer is historical routing context, not the
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ e93461aae33dc682d29b283e636dc08e8847878b — curriculum(n0): hold relation wording fixed in role counterfactual
+- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ b218a60eacc8fcdcdcd938e8411488eced42df4d — fix(n0): keep context-swap candidate entities distinct
 - alice-eipm-v1-qsre-production-p2-ordered-evidence-v3 @ 342bdbbe8c5dfbe74ff3ab8210a30b1a456aa482 — state(n0): ratify P2 v3 static pass and authorize CPU qualification
 - alice-eipm-v1-qsre-production-p2-failure-localization @ c9b1d35823cb89245625bbc6afb05b0ef5fb69fb — fix(n0): emit strict JSON from P2 localization
 
 ## Source pointers
 
-- [129] alice-eipm-v1-n0-full-envelope-foundation-build-v1:configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json — n0_v02_full_envelope_cpu_runtime_qualification_v1.json
-- [128] alice-context:docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md — N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff
-  - status:  active continuity authority for the current Sol handoff
-- [125] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [138] alice-eipm-v1-n0-full-envelope-foundation-build-v1:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [138] alice-eipm-v1-qsre-production-p2-failure-localization:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [138] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [119] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [125] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [119] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [125] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
+- [119] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
   - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [116] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md — N0 Full-Envelope Retrospective Architecture Audit v1
-  - status:  retrospective architecture authority; no gradient/GPU authorization
-- [108] alice-eipm-v1-n0-full-envelope-foundation-build-v1:configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json — n0_v02_successor_authority_firewall_v1.json
-- [108] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md — N0 CPU/GPU Reality Gap and Data Validity Audit v0.1
-  - status:  architecture/data audit authority; all new gradient/GPU work frozen
-- [108] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md — QSRE Static Tensor Interface and Mechanics Decision v0.1
-  - status:  authorizes CPU/no-gradient reference mechanics only
-- [108] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md — N0 CPU/GPU Reality Gap and Data Validity Audit v0.1
-  - status:  architecture/data audit authority; all new gradient/GPU work frozen
-- [108] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-qsre-static-mechanics-decision-v0.1.md — QSRE Static Tensor Interface and Mechanics Decision v0.1
-  - status:  authorizes CPU/no-gradient reference mechanics only
-- [108] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md — N0 CPU/GPU Reality Gap and Data Validity Audit v0.1
-  - status:  architecture/data audit authority; all new gradient/GPU work frozen
+- [113] alice-eipm-v1-n0-closure-pass:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [113] alice-eipm-v1-n0-closure-semantic-v2:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [113] alice-eipm-v1-n0-frozen-semantic-authority-v3:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [113] alice-eipm-v1-n0-p2a-semantic-localization-v1:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [113] alice-eipm-v1-n0-semantic-operator-foundation-v1:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
+- [113] alice-eipm-v1-qsre-production-core-v1:configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json — n0_v02_qsre_final_self_validation_relation_schema_v1.json
 
 ## Graphify navigation hints
 
 - audit_n0_v02_full_envelope_proof_obligations_v1.py -> scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py:L1
-- audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py -> scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py:L1
-- test_full_envelope_shortcut_preflight_is_current_successor_authority() -> tests/eipm/test_n0_full_envelope_shortcut_preflight_v1.py:L13
-- train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py -> scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py:L1
+- test_behavioral_compiler_support_targets_are_structurally_valid_and_unknown_rows_use_null_support() -> tests/eipm/test_n0_full_envelope_trainable_system_v1.py:L836
+- test_exact_masked_softmax_preserves_extreme_valid_logits_and_empty_rows() -> tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py:L1059
+- Activate named capability profiles inside a mission. Profiles can be added… -> src/alice_evolution/capability_runtime.py:L78
+- active_edge_logits() -> scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py:L67
+- adapter() -> tests/phase4/test_information_research_mode.py:L312
+- add() -> src/alice_conversation/response_validation.py:L241
 - AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
-- test_destroy_and_second_rebuild_preserve_deleted_memory_absence() -> tests/phase2/test_memory_deletion_indexes.py:L428
-- diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py -> scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py:L1
-- run_final_frozen_challenge_after_graph_arbitration_v0_1.py -> scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py:L1
-- ConstitutionalSourceSnapshot -> src/alice_conversation/constitutional_prompt.py:L50
+- assert_parent_parameters_unchanged() -> scripts/eipm/n0/train_n0_v02_relation_semantic_role_residual_v0_2.py:L142
 - audit() -> scripts/audit_capability_barriers.py:L521
 - authority() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L87
-- authorization() -> tests/phase3/test_conversation_memory_grounding_bridge.py:L50
 - authorize_boolean_map() -> src/alice_capability_profiles.py:L88
-- Shape contract for QSRE mechanics. Axes B/L/Tq/F/Tf/E and feature widths are… -> src/alice_personality/n0/qsre_mechanics.py:L17
 - test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
+- BehavioralBatchCompileConfig -> src/alice_personality/n0/full_envelope_behavioral_batch_v1.py:L30
 - Binder targets are query-relevant support, not relation-key membership. The… -> tests/eipm/test_n0_full_envelope_trainable_system_v1.py:L650
+- test_request_target_tampering_blocks_final_deletion() -> tests/phase2/test_memory_deletion_security_gates.py:L350
 
 ## External/private routing
 
