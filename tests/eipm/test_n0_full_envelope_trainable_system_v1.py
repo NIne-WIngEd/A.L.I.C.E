@@ -448,10 +448,24 @@ def _counterfactual_output_views(outputs):
     return decisive,irrelevant,permuted
 
 
+def _valid_public_replay_loss(outputs) -> torch.Tensor:
+    judgment=outputs["public_judgment"]
+    return judgment["candidate_logits"].masked_select(
+        judgment["candidate_valid_mask"]
+    ).square().mean()
+
+
+def _valid_relation_replay_loss(outputs, batch) -> torch.Tensor:
+    logits=outputs["semantic_operator"]["relation_logits"]
+    valid=batch["relation_candidate_mask"][:,None,:].expand_as(logits)
+    return logits.masked_select(valid).square().mean()
+
+
 def test_joint_training_objective_wires_every_macro_family_without_learned_task_weights() -> None:
     torch.manual_seed(284)
     system=_system().train()
-    outputs=system(task="full_envelope",batch=_full_batch())
+    batch=_full_batch()
+    outputs=system(task="full_envelope",batch=batch)
     operator_targets,behavioral_targets=_training_targets(outputs)
     decisive,irrelevant,permuted=_counterfactual_output_views(outputs)
     objective=FullEnvelopeJointTrainingObjectiveV1()
@@ -463,8 +477,8 @@ def test_joint_training_objective_wires_every_macro_family_without_learned_task_
         operator_targets=operator_targets,
         behavioral_targets=behavioral_targets,
         broad_semantic_replay_loss=outputs["latent"]["pooled_state"].square().mean(),
-        governed_judgment_replay_loss=outputs["public_judgment"]["candidate_logits"].square().mean(),
-        natural_relation_loss=outputs["semantic_operator"]["relation_logits"].square().mean(),
+        governed_judgment_replay_loss=_valid_public_replay_loss(outputs),
+        natural_relation_loss=_valid_relation_replay_loss(outputs,batch),
         update_ema=True,
     )
     assert torch.isfinite(result["loss"])
@@ -478,7 +492,8 @@ def test_joint_training_objective_wires_every_macro_family_without_learned_task_
 def test_joint_training_objective_gradient_reaches_backbone_operator_binder_fusion_and_judgment() -> None:
     torch.manual_seed(285)
     system=_system().train()
-    outputs=system(task="full_envelope",batch=_full_batch())
+    batch=_full_batch()
+    outputs=system(task="full_envelope",batch=batch)
     operator_targets,behavioral_targets=_training_targets(outputs)
     decisive,irrelevant,permuted=_counterfactual_output_views(outputs)
     objective=FullEnvelopeJointTrainingObjectiveV1()
@@ -490,8 +505,8 @@ def test_joint_training_objective_gradient_reaches_backbone_operator_binder_fusi
         operator_targets=operator_targets,
         behavioral_targets=behavioral_targets,
         broad_semantic_replay_loss=outputs["source_views"].square().mean(),
-        governed_judgment_replay_loss=outputs["public_judgment"]["candidate_logits"].square().mean(),
-        natural_relation_loss=outputs["semantic_operator"]["relation_logits"].square().mean(),
+        governed_judgment_replay_loss=_valid_public_replay_loss(outputs),
+        natural_relation_loss=_valid_relation_replay_loss(outputs,batch),
         update_ema=True,
     )
     result["loss"].backward()
@@ -512,7 +527,8 @@ def test_joint_training_objective_gradient_reaches_backbone_operator_binder_fusi
 def test_joint_training_objective_allows_zero_active_relation_margin_without_nan() -> None:
     torch.manual_seed(286)
     system=_system().train()
-    outputs=system(task="full_envelope",batch=_full_batch())
+    batch=_full_batch()
+    outputs=system(task="full_envelope",batch=batch)
     operator_targets,behavioral_targets=_training_targets(outputs)
     operator_targets["relation_step_mask"]=torch.zeros_like(
         operator_targets["relation_step_mask"]
@@ -527,8 +543,8 @@ def test_joint_training_objective_allows_zero_active_relation_margin_without_nan
         operator_targets=operator_targets,
         behavioral_targets=behavioral_targets,
         broad_semantic_replay_loss=outputs["latent"]["pooled_state"].square().mean(),
-        governed_judgment_replay_loss=outputs["public_judgment"]["candidate_logits"].square().mean(),
-        natural_relation_loss=outputs["semantic_operator"]["relation_logits"].square().mean(),
+        governed_judgment_replay_loss=_valid_public_replay_loss(outputs),
+        natural_relation_loss=_valid_relation_replay_loss(outputs,batch),
         update_ema=False,
     )
     assert torch.isfinite(result["loss"])
@@ -540,7 +556,8 @@ def test_joint_training_objective_allows_zero_active_relation_margin_without_nan
 def test_joint_training_objective_allows_absent_counterfactual_sentinel() -> None:
     torch.manual_seed(287)
     system=_system().train()
-    outputs=system(task="full_envelope",batch=_full_batch())
+    batch=_full_batch()
+    outputs=system(task="full_envelope",batch=batch)
     operator_targets,behavioral_targets=_training_targets(outputs)
     operator_targets["counterfactual_relation_targets"].fill_(-1)
     first_factor=next(iter(operator_targets["counterfactual_factor_targets"]))
@@ -560,8 +577,8 @@ def test_joint_training_objective_allows_absent_counterfactual_sentinel() -> Non
         operator_targets=operator_targets,
         behavioral_targets=behavioral_targets,
         broad_semantic_replay_loss=outputs["latent"]["pooled_state"].square().mean(),
-        governed_judgment_replay_loss=outputs["public_judgment"]["candidate_logits"].square().mean(),
-        natural_relation_loss=outputs["semantic_operator"]["relation_logits"].square().mean(),
+        governed_judgment_replay_loss=_valid_public_replay_loss(outputs),
+        natural_relation_loss=_valid_relation_replay_loss(outputs,batch),
         update_ema=False,
     )
     assert torch.isfinite(result["loss"])
@@ -699,12 +716,11 @@ def test_behavioral_compiler_batches_execute_all_counterfactual_paths_and_joint_
         operator_targets=compiled["operator_targets"],
         behavioral_targets=compiled["behavioral_targets"],
         broad_semantic_replay_loss=primary["latent"]["pooled_state"].square().mean(),
-        governed_judgment_replay_loss=primary["public_judgment"][
-            "candidate_logits"
-        ].masked_select(
-            primary["public_judgment"]["candidate_valid_mask"]
-        ).square().mean(),
-        natural_relation_loss=primary["semantic_operator"]["relation_logits"].square().mean(),
+        governed_judgment_replay_loss=_valid_public_replay_loss(primary),
+        natural_relation_loss=_valid_relation_replay_loss(
+            primary,
+            compiled["primary_batch"],
+        ),
         update_ema=True,
     )
     assert torch.isfinite(result["loss"])
