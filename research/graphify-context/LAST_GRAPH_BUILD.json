@@ -1,9 +1,9 @@
 {
   "source_work_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-  "source_work_commit": "edcfcb447fd9f7a47239827661cf31e678f8b249",
+  "source_work_commit": "073819f44ebb79c876140119bcc1e8ebd34b6a37",
   "research_branch": "research/graphify-context-substrate",
-  "research_commit": "5ae6d1a5853ccfcdaf38cb4c02e7df1ac5643c26",
-  "workflow_run_id": "35697674637",
+  "research_commit": "b41babaa8f0151878282d1a4bcdc0e813fbb38d9",
+  "workflow_run_id": "35701842821",
   "graph_mode": "code-only",
   "extraction_tree": "exact-source-worktree",
   "graphify_version": "0.9.63",

@@ -7,10 +7,10 @@
   "maximal_heads": [
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "edcfcb447fd9f7a47239827661cf31e678f8b249",
-      "head_committed_at": "2026-09-22T01:58:43-05:00",
-      "head_message": "test(n0): keep replay placeholders on structurally valid subsets",
-      "ahead": 1056,
+      "head": "073819f44ebb79c876140119bcc1e8ebd34b6a37",
+      "head_committed_at": "2026-09-22T02:49:12-05:00",
+      "head_message": "governance(n0): bind runtime view and candidate permutation invariants",
+      "ahead": 1072,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 472,
@@ -648,10 +648,10 @@
   "all_ahead_candidates": [
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "edcfcb447fd9f7a47239827661cf31e678f8b249",
-      "head_committed_at": "2026-09-22T01:58:43-05:00",
-      "head_message": "test(n0): keep replay placeholders on structurally valid subsets",
-      "ahead": 1056,
+      "head": "073819f44ebb79c876140119bcc1e8ebd34b6a37",
+      "head_committed_at": "2026-09-22T02:49:12-05:00",
+      "head_message": "governance(n0): bind runtime view and candidate permutation invariants",
+      "ahead": 1072,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
       "changed_file_count_vs_source_merge_base": 472,
