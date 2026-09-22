@@ -128,7 +128,11 @@
     "competitive_latent_noncollapse_required": true,
     "source_view_recoverability_required": true,
     "behaviorally_grounded_readout_required": true,
-    "parent_embedding_cosine_not_sufficient": true
+    "parent_embedding_cosine_not_sufficient": true,
+    "fusion_route_causally_controls_latent_contribution_required": true,
+    "final_judgment_gradient_to_fusion_router_required": true,
+    "recoverability_applies_to_labeled_relevant_views_not_all_available": true,
+    "irrelevant_available_view_invariance_required": true
   },
   "scale_policy": {
     "final_candidate_may_exceed_training_runtime_axes": true,
