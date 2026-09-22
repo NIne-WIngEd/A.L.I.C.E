@@ -53,11 +53,19 @@ source data -> FBM bootstrap mode -> personality substrate -> personality model
 post-activation
 FBM shared formation backbone
         |-> Memory Formation runtime head
-        |-> optional identity-maintenance / reflection head
+        |-> required personal-development / reflection capability
+        |      |-> evidence-linked user/host model revision
+        |      |-> assistant-self and relationship-state revision
+        |      |-> native judgment integration
+        |      |-> outcome-based revision
         |-> optional curriculum / repair mode, invoked only under governed update workflows
 ```
 
 This allows the expensive formation capability to remain useful after activation without giving ordinary runtime memory ingestion unrestricted authority to rewrite core personality.
+
+Continuing personal development is a **required destination capability**, not optional personality decoration. A Fable instance must keep its model of the user separate from its own developing self. It may revise both from authorized experience and outcomes under provenance and authority controls. A user's declaration of an ideal or "true" self is evidence, not identity authority.
+
+The capability is not complete merely because projections can be stored. The eventual runtime must demonstrate a causal loop from experience -> subject-bound user/self/relationship state -> native judgment -> outcome -> governed revision -> changed later judgment. A fixed prompt or generic downstream-model refusal does not count as evidence that Fable learned the judgment.
 
 ## Process capture rule
 
