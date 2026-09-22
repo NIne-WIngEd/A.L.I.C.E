@@ -26,7 +26,8 @@
     "runtime_relation_symmetry": true,
     "explicit_null_support_at_binder": true,
     "program_truncation_exposed_and_fail_closed": true,
-    "continuous_pre_binder_graph_and_executor_gates": true
+    "continuous_pre_binder_graph_and_executor_gates": true,
+    "historical_authority_firewall": "configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json"
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -203,6 +204,7 @@
     "thresholds_may_change_after_candidate_results": false
   },
   "prerequisites_before_gradient": [
+    "PASS historical N0 authority firewall with default-deny carry-forward policy",
     "materialized_full_public_mixture_manifest",
     "PASS FewRel natural relation materialization and leakage audit",
     "official FewRel validation relation families excluded from TRAIN/DEV bank; public benchmark results unobserved",
