@@ -170,6 +170,7 @@ def test_dynamic_latent_pool_supports_runtime_slot_and_view_counts_without_param
                 view_reliability=reliability,
                 slot_count=slots,
                 refinement_steps=3,
+                return_attention_diagnostics=True,
             )
 
     small = run(3, 4)
@@ -188,6 +189,9 @@ def test_dynamic_latent_pool_supports_runtime_slot_and_view_counts_without_param
     assert report["slot_count_ceiling"] is None
     assert report["view_count_ceiling"] is None
     assert report["competitive_item_ownership"] is True
+    assert report["view_reliability_causally_weights_item_contribution"] is True
+    assert report["reliability_softmax_constant_cancellation"] is False
+    assert report["full_slot_item_score_matrix_materialized"] is False
 
 
 def test_dynamic_latent_pool_is_view_permutation_invariant_at_pooled_output() -> None:
@@ -435,3 +439,147 @@ def test_evidence_view_inactive_relation_context_is_schema_invariant() -> None:
         rtol=1e-6,
     )
     assert model.parameter_report()["soft_relation_context_activity_gate"] is True
+
+
+def test_latent_view_reliability_changes_item_contribution() -> None:
+    torch.manual_seed(811)
+    model=DynamicCompetitiveLatentPoolV3(
+        DynamicLatentPoolConfig(
+            semantic_dim=24,
+            model_dim=24,
+            slot_chunk_size=2,
+            item_chunk_size=3,
+            dropout=0.0,
+        )
+    ).eval()
+    source=torch.randn(1,3,24)
+    context=torch.randn(1,3,24)
+    descriptor=torch.randn(1,3,24)
+    available=torch.ones(1,3,dtype=torch.bool)
+    query=torch.randn(1,24)
+    with torch.no_grad():
+        equal=model(
+            source_view_summaries=source,
+            contextualized_view_summaries=context,
+            view_descriptor_states=descriptor,
+            view_available=available,
+            query_state=query,
+            view_reliability=torch.ones(1,3),
+            slot_count=5,
+            refinement_steps=2,
+        )
+        suppressed=model(
+            source_view_summaries=source,
+            contextualized_view_summaries=context,
+            view_descriptor_states=descriptor,
+            view_available=available,
+            query_state=query,
+            view_reliability=torch.tensor([[1.0,0.0,1.0]]),
+            slot_count=5,
+            refinement_steps=2,
+        )
+    assert not torch.allclose(
+        equal["pooled_state"],
+        suppressed["pooled_state"],
+    )
+
+
+def test_latent_streamed_competition_matches_dense_one_step_reference() -> None:
+    torch.manual_seed(812)
+    model=DynamicCompetitiveLatentPoolV3(
+        DynamicLatentPoolConfig(
+            semantic_dim=24,
+            model_dim=24,
+            slot_chunk_size=2,
+            item_chunk_size=3,
+            dropout=0.0,
+        )
+    ).eval()
+    source=torch.randn(1,4,24)
+    context=torch.randn(1,4,24)
+    descriptor=torch.randn(1,4,24)
+    available=torch.tensor([[True,True,True,False]])
+    reliability=torch.tensor([[1.0,0.7,0.2,0.0]])
+    query_state=torch.randn(1,24)
+    slot_count=5
+
+    with torch.no_grad():
+        actual=model(
+            source_view_summaries=source,
+            contextualized_view_summaries=context,
+            view_descriptor_states=descriptor,
+            view_available=available,
+            query_state=query_state,
+            view_reliability=reliability,
+            slot_count=slot_count,
+            refinement_steps=1,
+        )
+
+        source_p=model.source_projection(source)
+        context_p=model.context_projection(context)
+        desc=model.descriptor_projection(descriptor)
+        query=model.query_projection(query_state)
+        item=torch.stack(
+            [
+                source_p+desc+model.channel_embedding[0],
+                context_p+desc+model.channel_embedding[1],
+            ],
+            dim=2,
+        ).reshape(1,8,24)
+        item_mask=available[:,:,None].expand(1,4,2).reshape(1,8)
+        item_reliability=reliability[:,:,None].expand(1,4,2).reshape(1,8)
+        coordinate=model._slot_coordinates(
+            slot_count,
+            device=item.device,
+            dtype=item.dtype,
+        )
+        slot=model.output_norm(
+            query[:,None,:]+model.slot_coordinate(coordinate)[None,:,:]
+        )
+        score=torch.einsum(
+            "bsd,bid->bsi",
+            model.slot_query(slot),
+            model.item_key(item),
+        )/(24.0**0.5)
+        score=score.masked_fill(~item_mask[:,None,:],-1.0e4)
+        ownership=torch.softmax(score,dim=1)
+        weighted=(
+            ownership
+            * item_mask[:,None,:].to(ownership.dtype)
+            * item_reliability[:,None,:]
+        )
+        attention=weighted/weighted.sum(dim=-1,keepdim=True).clamp_min(1.0e-12)
+        message=torch.einsum(
+            "bsi,bid->bsd",
+            attention,
+            model.slot_value(item),
+        )
+        q=query[:,None,:].expand(1,slot_count,-1)
+        slot_dense=model.slot_state(
+            torch.cat([message,q],dim=-1).reshape(slot_count,-1),
+            slot.reshape(slot_count,-1),
+        ).reshape(1,slot_count,-1)
+        slot_dense=model.output_norm(slot_dense)
+        pooled_score=torch.einsum(
+            "bsd,bd->bs",
+            slot_dense,
+            model.pooled_query(query),
+        )
+        pooled_weight=torch.softmax(pooled_score,dim=-1)
+        pooled_dense=torch.einsum(
+            "bs,bsd->bd",
+            pooled_weight,
+            slot_dense,
+        )
+    assert torch.allclose(
+        actual["latent_slots"],
+        slot_dense,
+        atol=1e-5,
+        rtol=1e-5,
+    )
+    assert torch.allclose(
+        actual["pooled_state"],
+        pooled_dense,
+        atol=1e-5,
+        rtol=1e-5,
+    )
