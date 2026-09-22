@@ -808,6 +808,94 @@ def test_executor_symmetric_relation_ignores_forward_reverse_storage_orientation
     assert report["symmetric_relation_endpoint_order_invariant"] is True
 
 
+def _disjoint_start_or_truncate_operator() -> FullEnvelopeOperatorState:
+    """Half the mass stops before any relation; the other half only truncates.
+
+    There is deliberately no branch that both starts relational execution and
+    reaches STOP completion. Multiplying marginal P(start) and P(not truncated)
+    would fabricate a 0.25 completed path even though the true intersection is
+    exactly empty.
+    """
+    batch,steps,relations,dim=1,3,1,24
+    role=torch.zeros(batch,4)
+    role[:,ROLE_TARGET]=1.0
+    traversal=torch.zeros(batch,3)
+    traversal[:,TRAVERSAL_PATH]=1.0
+    direction=torch.zeros(batch,3)
+    direction[:,DIRECTION_FORWARD]=1.0
+    control=torch.zeros(batch,3)
+    control[:,CONTROL_RELATIONAL]=1.0
+    operator=FullEnvelopeOperatorState(
+        relation_distribution=torch.ones(batch,steps,relations),
+        relation_step_mass=torch.tensor([[0.5,0.5,0.5]]),
+        stop_probability=torch.tensor([[0.5,0.0,0.0]]),
+        unknown_probability=torch.zeros(batch,steps),
+        truncation_probability=torch.tensor([0.5]),
+        role_distribution=role,
+        traversal_distribution=traversal,
+        direction_distribution=direction,
+        step_direction_distribution=direction[:,None,:].expand(batch,steps,3).clone(),
+        modifier_weight=torch.zeros(batch,4),
+        step_modifier_weight=torch.zeros(batch,steps,4),
+        applicability=torch.ones(batch),
+        control_distribution=control,
+        continuous_state=torch.zeros(batch,dim),
+        uncertainty=torch.full((batch,),0.5),
+    )
+    operator.validate(relation_count=relations,model_dim=dim)
+    return operator
+
+
+def test_disjoint_start_or_truncate_mass_cannot_fake_completed_relational_activity() -> None:
+    operator=_disjoint_start_or_truncate_operator()
+    _,semantic_activity=N0FullEnvelopeStackV1._relation_program_summary(operator)
+    assert torch.equal(
+        semantic_activity,
+        torch.zeros_like(semantic_activity),
+    )
+
+
+def test_disjoint_start_or_truncate_mass_cannot_fake_executor_completion() -> None:
+    operator=_disjoint_start_or_truncate_operator()
+    executor=FullEnvelopeQSREExecutorV1(
+        FullEnvelopeExecutorConfig(
+            field_dim=24,
+            model_dim=24,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    with torch.no_grad():
+        out=executor(
+            field_state=torch.randn(1,2,24),
+            field_metadata=torch.zeros(1,2,3),
+            field_valid_mask=torch.ones(1,2,dtype=torch.bool),
+            edge_index=torch.tensor([[[0,1]]]),
+            edge_relation_index=torch.zeros(1,1,dtype=torch.long),
+            edge_valid_mask=torch.ones(1,1,dtype=torch.bool),
+            edge_support_weight=torch.ones(1,1),
+            support_available=torch.ones(1),
+            edge_reliability=torch.ones(1,1),
+            edge_recency=torch.ones(1,1),
+            edge_temporal_match=torch.ones(1,1),
+            edge_provenance_match=torch.ones(1,1),
+            relation_schema_state=torch.randn(1,1,24),
+            step_relation_schema_state=torch.randn(1,3,1,24),
+            relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
+            operator=operator,
+            focus_field_weight=torch.tensor([[1.0,0.0]]),
+        )
+    assert torch.equal(
+        out["execution_confidence"],
+        torch.zeros_like(out["execution_confidence"]),
+    )
+    assert torch.equal(
+        out["relational_probability"],
+        torch.zeros_like(out["relational_probability"]),
+    )
+
+
 def test_executor_truncated_program_cannot_claim_relational_execution_confidence() -> None:
     executor=FullEnvelopeQSREExecutorV1(
         FullEnvelopeExecutorConfig(

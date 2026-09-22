@@ -892,6 +892,20 @@
       "kind": "CI_REQUIRED",
       "receipt": "PASS_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_FROZEN_STATIC",
       "requirement": "Before gradient, successor final-v2 natural and adversarial synthetic artifacts must be materialized, audited for TRAIN/DEV independence and extrapolation coverage, and hash-frozen without observing any candidate model result or authorizing final opening."
+    },
+    {
+      "id": "N0-P24J",
+      "stage": "program_completion",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_disjoint_start_or_truncate_mass_cannot_fake_completed_relational_activity",
+      "requirement": "Relational completion must use the exact joint survival/event mass. Marginal P(program starts) multiplied by marginal P(not truncated/unknown) may not fabricate graph/evidence activity when start and completion occur on disjoint branches."
+    },
+    {
+      "id": "N0-P24K",
+      "stage": "executor",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_disjoint_start_or_truncate_mass_cannot_fake_executor_completion",
+      "requirement": "Executor confidence must be zero when no probability mass both starts a relational program and subsequently reaches STOP, even if P(start)>0 and P(not truncated)>0 separately."
     }
   ],
   "closure_rule": {
