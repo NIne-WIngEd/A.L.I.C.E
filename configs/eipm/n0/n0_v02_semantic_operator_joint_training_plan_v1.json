@@ -315,6 +315,8 @@
     "PASS shared-backbone replay/full-envelope gradient continuity",
     "PASS integrated joint objective family assignment",
     "PASS joint objective gradient reaches backbone/operator/Binder/fusion/judgment/long-context bridge",
+    "PASS full-envelope behavioral fabric static audit",
+    "PASS behavioral row-to-system batch compiler mechanics",
     "full model parameter and memory report",
     "CPU no-gradient end-to-end forward",
     "GPU no-gradient memory dry run",
@@ -336,5 +338,25 @@
     "final_validation_opening": false,
     "private_identity_gradient": false,
     "n0_complete": false
+  },
+  "curriculum": {
+    "full_envelope_behavioral_fabric": {
+      "contract": "configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json",
+      "builder": "scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py",
+      "auditor": "scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py",
+      "batch_compiler": "src/alice_personality/n0/full_envelope_behavioral_batch_v1.py",
+      "required": true,
+      "identity_authority": false,
+      "owns": [
+        "support selection",
+        "endpoint roles",
+        "decisive evidence causality",
+        "irrelevant evidence invariance",
+        "field permutation invariance",
+        "public judgment",
+        "null support"
+      ],
+      "token_evidence_authority": false
+    }
   }
 }
