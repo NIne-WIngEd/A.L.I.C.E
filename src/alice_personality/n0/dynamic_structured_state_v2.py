@@ -8,6 +8,7 @@ from torch import Tensor, nn
 
 from alice_personality.n0.semantic_operator_foundation import DynamicSemanticSchema
 from alice_personality.n0.numeric_contracts import (
+    exact_masked_softmax,
     require_finite,
     require_unit_interval,
 )
@@ -245,9 +246,11 @@ class DynamicStructuredStateV2(nn.Module):
 
         query = self.pool_score(self.pool_query).view(1, 1, -1)
         logits = (encoded * query).sum(dim=-1)
-        logits = logits.masked_fill(~field_valid_mask, -1.0e4)
-        weight = torch.softmax(logits, dim=-1) * field_valid_mask.to(logits.dtype)
-        weight = weight / weight.sum(dim=-1, keepdim=True).clamp_min(1.0e-12)
+        weight = exact_masked_softmax(
+            logits,
+            field_valid_mask,
+            dim=-1,
+        )
         pooled = (encoded * weight.unsqueeze(-1)).sum(dim=1)
         pooled = self.output_norm(pooled)
 
