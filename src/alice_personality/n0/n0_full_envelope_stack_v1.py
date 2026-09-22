@@ -99,6 +99,11 @@ class N0FullEnvelopeStackV1(nn.Module):
         self.config.validate()
         d = self.config.model_dim
 
+        self.raw_semantic_layer_gate = nn.Sequential(
+            nn.Linear(d + 1, d),
+            nn.SiLU(),
+            nn.Linear(d, 1),
+        )
         self.semantic_operator = SchemaConditionedSemanticOperator(
             SemanticOperatorFoundationConfig(
                 semantic_dim=d,
@@ -191,8 +196,29 @@ class N0FullEnvelopeStackV1(nn.Module):
         per_layer_field = (
             (field_hidden_states * weight).sum(dim=3)
             / weight.sum(dim=3).clamp_min(1.0)
+        ).float()
+        layers = per_layer_field.size(2)
+        layer_position = torch.linspace(
+            -1.0,
+            1.0,
+            layers,
+            device=per_layer_field.device,
+            dtype=per_layer_field.dtype,
+        ).view(1,1,layers,1).expand(
+            per_layer_field.size(0),
+            per_layer_field.size(1),
+            layers,
+            1,
         )
-        field_summary = per_layer_field.mean(dim=2)
+        layer_logit = self.raw_semantic_layer_gate(
+            torch.cat([per_layer_field, layer_position], dim=-1)
+        ).squeeze(-1)
+        layer_weight = torch.softmax(layer_logit, dim=-1)
+        field_summary = torch.einsum(
+            "bfl,bfld->bfd",
+            layer_weight,
+            per_layer_field,
+        )
         field_weight = field_valid_mask.to(field_summary.dtype)
         return (
             (field_summary * field_weight.unsqueeze(-1)).sum(dim=1)
@@ -527,6 +553,8 @@ class N0FullEnvelopeStackV1(nn.Module):
             "semantic_backbone_included": False,
             "semantic_backbone_gradient_must_remain_connected": True,
             "continuous_graph_before_exact_binder_sparsity": True,
+            "raw_semantic_view_static_layer_mean": False,
+            "raw_semantic_view_content_conditioned_layer_read": True,
             "pre_binder_graph_soft_activity_gated": True,
             "runtime_relation_ceiling": None,
             "per_example_candidate_subset_supported": True,
