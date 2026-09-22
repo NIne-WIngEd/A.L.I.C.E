@@ -1,0 +1,393 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-proof-obligations.v1",
+  "status": "STATIC_AND_RUNTIME_PROOF_MATRIX_PRETRAINING",
+  "date": "2026-09-21",
+  "purpose": "Prevent narrow local PASS receipts from being mistaken for full N0 sufficiency. Every historical weakness must have an explicit successor proof, and unresolved runtime/behavioral proofs block gradient or closure.",
+  "static_test_files": [
+    "tests/eipm/test_n0_semantic_operator_foundation_v1.py",
+    "tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py",
+    "tests/eipm/test_n0_full_envelope_fabric_v1.py",
+    "tests/eipm/test_n0_full_envelope_stack_v1.py",
+    "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py"
+  ],
+  "critical_source_files": [
+    "src/alice_personality/n0/semantic_operator_foundation.py",
+    "src/alice_personality/n0/dynamic_structured_state_v2.py",
+    "src/alice_personality/n0/dynamic_schema_evidence_graph_v1.py",
+    "src/alice_personality/n0/dynamic_evidence_view_v2.py",
+    "src/alice_personality/n0/dynamic_cross_context_fusion_v3.py",
+    "src/alice_personality/n0/dynamic_competitive_latent_pool_v3.py",
+    "src/alice_personality/n0/semantic_operator_qsre_adapter.py",
+    "src/alice_personality/n0/qsre_full_envelope_binder_v1.py",
+    "src/alice_personality/n0/qsre_full_envelope_executor_v1.py",
+    "src/alice_personality/n0/public_judgment_probe_v1.py",
+    "src/alice_personality/n0/n0_full_envelope_stack_v1.py"
+  ],
+  "forbidden_critical_source_patterns": [
+    ".detach(",
+    "nn.Embedding(",
+    ".topk(",
+    "torch.topk(",
+    "fixed_top_k"
+  ],
+  "obligations": [
+    {
+      "id": "N0-P00",
+      "stage": "historical_authority",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_envelope_stack_forward_and_gradient_continuity",
+      "requirement": "New stack is independent successor wiring; historical PASS weights do not silently define runtime semantics.",
+      "runtime_followup": "exact successor lineage audit"
+    },
+    {
+      "id": "N0-P01",
+      "stage": "semantic_operator",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_runtime_relation_and_factor_cardinality_have_no_parameter_axis",
+      "requirement": "Relation/factor cardinality are runtime axes, not checkpoint semantic axes."
+    },
+    {
+      "id": "N0-P02",
+      "stage": "semantic_operator",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_relation_candidate_permutation_is_equivariant",
+      "requirement": "Relation candidate ordering cannot encode meaning."
+    },
+    {
+      "id": "N0-P03",
+      "stage": "semantic_operator",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_factor_candidate_permutation_is_equivariant",
+      "requirement": "Factor candidate ordering cannot encode meaning."
+    },
+    {
+      "id": "N0-P04",
+      "stage": "semantic_operator",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_per_example_candidate_masks_enable_variable_runtime_subsets_in_one_batch",
+      "requirement": "Variable runtime schema subsets work in one batch."
+    },
+    {
+      "id": "N0-P05",
+      "stage": "semantic_operator",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_masked_runtime_relation_padding_does_not_change_operator_uncertainty",
+      "requirement": "Padding inactive candidates cannot fake confidence or uncertainty."
+    },
+    {
+      "id": "N0-P06",
+      "stage": "semantic_operator",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_runtime_factor_bank_order_is_semantically_permutation_invariant",
+      "requirement": "Runtime factor-bank set order is not semantic."
+    },
+    {
+      "id": "N0-P07",
+      "stage": "semantic_operator",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_semantic_only_factor_bank_changes_continuous_operator_context",
+      "requirement": "Open semantic factors affect continuous semantics even when not mapped to fixed executor opcodes."
+    },
+    {
+      "id": "N0-P08",
+      "stage": "semantic_operator",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_residual_program_survival_is_exposed_as_truncation_and_uncertainty",
+      "requirement": "Finite runtime step budget cannot silently masquerade as completed reasoning."
+    },
+    {
+      "id": "N0-P09",
+      "stage": "semantic_operator",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_semantic_backbone_gradient_is_not_detached_by_operator",
+      "requirement": "Semantic backbone can co-adapt; temporary frozen parent is not permanent architecture."
+    },
+    {
+      "id": "N0-P10",
+      "stage": "structured_state",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dynamic_structured_state_is_field_permutation_equivariant_and_descriptor_open",
+      "requirement": "Structured fields are permutation-safe and use runtime semantic descriptors."
+    },
+    {
+      "id": "N0-P11",
+      "stage": "structured_state",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_structured_descriptor_bank_count_does_not_rescale_duplicate_semantics",
+      "requirement": "Adding descriptor banks cannot change representation merely by count scaling."
+    },
+    {
+      "id": "N0-P12",
+      "stage": "representation_layers",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_reopened_structured_evidence_and_binder_have_no_global_static_layer_logits",
+      "requirement": "No global task-agnostic layer mixture erases relation/query-specific intermediate-layer signal."
+    },
+    {
+      "id": "N0-P13",
+      "stage": "evidence_graph",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dynamic_evidence_graph_relation_permutation_is_equivariant",
+      "requirement": "Graph relation identity comes from runtime schema states, not fixed learned relation IDs."
+    },
+    {
+      "id": "N0-P14",
+      "stage": "evidence_graph",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dynamic_graph_symmetric_edge_reversal_is_invariant",
+      "requirement": "Symmetric relation storage orientation cannot change graph semantics."
+    },
+    {
+      "id": "N0-P15",
+      "stage": "evidence_graph",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dynamic_graph_zero_semantic_activity_cannot_inject_relation_messages",
+      "requirement": "Non-relational/deferred programs cannot contaminate graph views."
+    },
+    {
+      "id": "N0-P16",
+      "stage": "evidence_graph",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_empty_evidence_graph_produces_zero_graph_summaries",
+      "requirement": "Empty graphs cannot fabricate evidence summaries."
+    },
+    {
+      "id": "N0-P17",
+      "stage": "evidence_view",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dynamic_evidence_view_uses_multilayer_tokens_and_has_no_relation_axis_params",
+      "requirement": "Evidence specialization uses multilayer tokens and no relation-ID axis."
+    },
+    {
+      "id": "N0-P18",
+      "stage": "evidence_view",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_evidence_view_inactive_relation_context_is_schema_invariant",
+      "requirement": "Inactive relation schemas cannot steer evidence specialization."
+    },
+    {
+      "id": "N0-P19",
+      "stage": "binder",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_binder_can_choose_exact_no_support_even_with_type_compatible_edges",
+      "requirement": "Binder supports exact zero evidence even when distractor edges are structurally valid."
+    },
+    {
+      "id": "N0-P20",
+      "stage": "binder",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_binder_symmetric_relation_accepts_reversed_domain_range_types",
+      "requirement": "Runtime relation symmetry is respected by exact type compatibility."
+    },
+    {
+      "id": "N0-P21",
+      "stage": "executor",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_executor_local_path_aggregate_are_causally_distinct_without_hard_threshold",
+      "requirement": "LOCAL/PATH/AGGREGATE have distinct continuous execution semantics."
+    },
+    {
+      "id": "N0-P22",
+      "stage": "executor",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_executor_mixed_forward_then_reverse_tracks_final_semantic_source",
+      "requirement": "Mixed-step direction is noncommutative and step-local."
+    },
+    {
+      "id": "N0-P23",
+      "stage": "executor",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_executor_symmetric_relation_ignores_forward_reverse_storage_orientation",
+      "requirement": "Symmetric relation behavior is endpoint-storage invariant."
+    },
+    {
+      "id": "N0-P24",
+      "stage": "executor",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_executor_truncated_program_cannot_claim_relational_execution_confidence",
+      "requirement": "Truncated reasoning cannot claim completed relational confidence."
+    },
+    {
+      "id": "N0-P25",
+      "stage": "executor",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_executor_zero_support_forces_zero_relational_execution_confidence",
+      "requirement": "No-support means no relational execution result."
+    },
+    {
+      "id": "N0-P26",
+      "stage": "fusion",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dynamic_fusion_is_view_permutation_equivariant_and_source_exact",
+      "requirement": "Runtime view ordering is not semantic and exact source anchors survive contextualization."
+    },
+    {
+      "id": "N0-P27",
+      "stage": "latent_pool",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dynamic_latent_pool_supports_runtime_slot_and_view_counts_without_param_growth",
+      "requirement": "Slot/view counts are runtime axes, not checkpoint capability ceilings."
+    },
+    {
+      "id": "N0-P28",
+      "stage": "latent_pool",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dynamic_latent_pool_is_view_permutation_invariant_at_pooled_output",
+      "requirement": "Latent result is invariant to unordered runtime view permutation."
+    },
+    {
+      "id": "N0-P29",
+      "stage": "latent_pool",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_latent_slot_seed_coordinates_are_count_stable",
+      "requirement": "Changing requested slot count does not redefine existing slot coordinates arbitrarily."
+    },
+    {
+      "id": "N0-P30",
+      "stage": "full_stack",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_envelope_stack_accepts_additional_runtime_views_and_runtime_slots",
+      "requirement": "Full stack admits runtime expansion of views/slots/steps without new learned identities."
+    },
+    {
+      "id": "N0-P31",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_context_virtualizer_preserves_every_token_once_beyond_native_window",
+      "requirement": "Native encoder window is an operating window, not a product context ceiling."
+    },
+    {
+      "id": "N0-P32",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_context_virtualizer_stitches_long_query_content_without_overlap_duplication",
+      "requirement": "Long-query segmentation preserves unique token order without overlap duplication."
+    },
+    {
+      "id": "N0-P33",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_chunked_late_interaction_matches_dense_reference",
+      "requirement": "Memory-bounded token interaction is mathematically equivalent to dense interaction."
+    },
+    {
+      "id": "N0-P34",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_chunked_late_interaction_allows_empty_padded_items_without_signal",
+      "requirement": "Padded runtime fields are inert rather than errors or false evidence."
+    },
+    {
+      "id": "N0-P35",
+      "stage": "behavioral_objective",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_behavioral_objective_backpropagates_without_parent_embedding_target",
+      "requirement": "Full fabric can train against behavioral labels without self-referential parent-embedding reconstruction."
+    },
+    {
+      "id": "N0-P36",
+      "stage": "behavioral_objective",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_semantic_operator_objective_is_behavioral_and_finite",
+      "requirement": "Operator objective directly supervises behaviorally meaningful relation/factor/control/evidence states."
+    },
+    {
+      "id": "N0-P37",
+      "stage": "loss_governance",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_macro_family_balancer_has_no_learned_task_weights",
+      "requirement": "Large-magnitude losses cannot silently dominate and task authority is not learned from TEST results."
+    },
+    {
+      "id": "N0-P38",
+      "stage": "natural_data",
+      "kind": "CI_REQUIRED",
+      "receipt": "PASS_N0_NATURAL_RELATION_SEALED_FINAL_AUDIT",
+      "requirement": "Natural human-annotated relation families have sealed unseen FINAL families and no relation-description leakage."
+    },
+    {
+      "id": "N0-P39",
+      "stage": "synthetic_data",
+      "kind": "CI_REQUIRED",
+      "receipt": "PASS_N0_SYNTHETIC_INTERVENTION_STATIC_AUDIT",
+      "requirement": "Synthetic interventions supplement natural data and are leakage-audited."
+    },
+    {
+      "id": "N0-P40",
+      "stage": "tokenizer",
+      "kind": "RUNTIME_REQUIRED",
+      "status": "UNRESOLVED_BLOCKING",
+      "requirement": "Exact tokenizer must pass byte-fallback/OOV, Unicode normalization, heldout relation/factor description fragmentation, long entity, punctuation/code/math and multilingual tokenization stress; failure reopens tokenizer."
+    },
+    {
+      "id": "N0-P41",
+      "stage": "public_corpus",
+      "kind": "RUNTIME_REQUIRED",
+      "status": "UNRESOLVED_BLOCKING",
+      "requirement": "Materialized broad public replay corpus must reverify exact hashes/licenses/source balance and must not be treated as operator-complete without natural/intervention lanes."
+    },
+    {
+      "id": "N0-P42",
+      "stage": "full_640_runtime",
+      "kind": "RUNTIME_REQUIRED",
+      "status": "UNRESOLVED_BLOCKING",
+      "requirement": "Exact 640-wide full successor must construct and complete CPU/no-gradient forward/backward-graph build on representative variable-cardinality inputs with parameter and peak-memory receipt."
+    },
+    {
+      "id": "N0-P43",
+      "stage": "gpu_memory",
+      "kind": "RUNTIME_REQUIRED",
+      "status": "UNRESOLVED_BLOCKING",
+      "requirement": "Exact training stack must pass GPU no-gradient and one-step memory topology dry run before optimizer authorization."
+    },
+    {
+      "id": "N0-P44",
+      "stage": "optimization",
+      "kind": "TRAINING_REQUIRED",
+      "status": "UNRESOLVED_BLOCKING",
+      "requirement": "Joint training must fit behavioral objectives without broad semantic regression or shortcut leakage."
+    },
+    {
+      "id": "N0-P45",
+      "stage": "heldout_capability",
+      "kind": "TRAINING_REQUIRED",
+      "status": "UNRESOLVED_BLOCKING",
+      "requirement": "DEV must pass unseen relation families, factor combinations, compositions, cardinality extrapolation, long-context relevance and causal interventions."
+    },
+    {
+      "id": "N0-P46",
+      "stage": "final_closure",
+      "kind": "FINAL_REQUIRED",
+      "status": "SEALED_UNOPENED_BLOCKING",
+      "requirement": "Frozen final-v2 behavioral package must pass every gate; semantic cosine or historical PASS cannot independently authorize N0 closure."
+    }
+  ],
+  "closure_rule": {
+    "static_complete_requires": [
+      "all STATIC_REQUIRED tests exist and pass",
+      "all CI_REQUIRED receipts pass",
+      "critical source anti-pattern scan passes"
+    ],
+    "training_authorization_requires": [
+      "static_complete",
+      "N0-P40 PASS",
+      "N0-P41 PASS",
+      "N0-P42 PASS",
+      "N0-P43 PASS",
+      "final-v2 corpus built and hash frozen while unopened"
+    ],
+    "n0_complete_requires": [
+      "all obligations PASS including N0-P46",
+      "no threshold changes after candidate results",
+      "no automatic rerun or hotfix chain"
+    ],
+    "historical_pass_can_satisfy_unresolved_obligation": false
+  },
+  "authorization": {
+    "optimizer": false,
+    "gradient": false,
+    "gpu_training": false,
+    "final_opening": false,
+    "n0_complete": false
+  }
+}
