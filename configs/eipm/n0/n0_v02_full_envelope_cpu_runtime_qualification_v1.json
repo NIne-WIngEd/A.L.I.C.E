@@ -19,7 +19,9 @@
     "num_attention_heads": 10,
     "structured_layers": 2,
     "field_metadata_dim": 3,
-    "edge_metadata_dim": 4
+    "edge_metadata_dim": 4,
+    "trainable_system": "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
+    "semantic_input": "src/alice_personality/n0/full_envelope_semantic_input_v1.py"
   },
   "tokenizer_stress": {
     "unknown_token_count_max": 0,
@@ -858,7 +860,9 @@
     "standalone_window_stitching_insufficient": true,
     "exact_operator_evidence_token_alignment_required": true,
     "operator_evidence_alignment_max_length_operating_point": 512,
-    "operator_evidence_alignment_max_length_is_product_ceiling": false
+    "operator_evidence_alignment_max_length_is_product_ceiling": false,
+    "same_registered_trainable_topology_required": true,
+    "all_text_surfaces_share_virtualization_policy_required": true
   },
   "long_context_bridge_runtime": {
     "native_window_tokens": 32,
@@ -876,5 +880,19 @@
       "An independent lab note near the end corroborates the correction and says the failure followed a voltage transient instead.",
       "The query asks which account should control the conclusion, which evidence supports it, and whether the system should preserve uncertainty if the correction cannot be connected to the original report."
     ]
+  },
+  "text_surface_virtualization_stress": {
+    "native_window_tokens": 32,
+    "overlap_tokens": 8,
+    "minimum_virtualized_surfaces": [
+      "query",
+      "relation_schema",
+      "factor_schema",
+      "field_text",
+      "candidate_text",
+      "descriptor_text"
+    ],
+    "suffix_repeat_count": 10,
+    "suffix_text": "Additional governed context preserves provenance, direction, uncertainty, and semantic role while forcing this text surface beyond one native encoder window."
   }
 }
