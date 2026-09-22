@@ -68,7 +68,9 @@
       "factor_schema",
       "field_text",
       "candidate_text",
-      "descriptor_text"
+      "descriptor_text",
+      "internal_view_descriptor",
+      "additional_view_descriptor"
     ],
     "registered_trainable_system": "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
     "one_shared_semantic_backbone_for_replay_and_full_envelope": true,
@@ -272,7 +274,8 @@
       "unsupported_relation_mass_cannot_activate_graph_views",
       "long_field_and_descriptor_semantics",
       "prebinder_graph_type_invalid_edges_inert",
-      "binder_null_support_blocks_graph_views_from_fusion"
+      "binder_null_support_blocks_graph_views_from_fusion",
+      "long_internal_and_additional_view_descriptor_semantics"
     ],
     "J3": [
       "J1_and_J2_gates_retained",
@@ -306,7 +309,7 @@
     "capacity_study_if_needed": "compare larger width/depth/heads only after a valid full-envelope DEV plateau localizes residual error to expressivity rather than data/objective/interface",
     "native_window_is_operating_point_not_semantic_completeness": true,
     "cross_window_bridge_required_beyond_native_window": true,
-    "long_context_virtualization_scope": "all text-bearing N0 surfaces, not query-only"
+    "long_context_virtualization_scope": "all text-bearing N0 surfaces, including internal and additional runtime view descriptors, not query-only"
   },
   "compute": {
     "current_known_route": "Magnolia P100; architecture must not be constrained to that serving/training hardware",
