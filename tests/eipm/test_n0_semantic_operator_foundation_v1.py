@@ -513,3 +513,47 @@ def test_semantic_only_factor_bank_changes_continuous_operator_context() -> None
     report = model.parameter_report()
     assert report["semantic_factor_context_in_continuous_state"] is True
     assert report["semantic_factor_bank_count_ceiling"] is None
+
+
+def test_per_example_factor_candidate_masks_enable_variable_runtime_subsets() -> None:
+    torch.manual_seed(211)
+    model = SchemaConditionedSemanticOperator(config()).eval()
+    q, qm = hidden(batch=2)
+    role = factor(5, 212)
+    role_mask = torch.tensor(
+        [
+            [True, True, False, False, False],
+            [False, True, True, True, False],
+        ],
+        dtype=torch.bool,
+    )
+    with torch.no_grad():
+        out = model(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            relation_schema=schema(4),
+            factor_schemas={"role": role},
+            max_steps=3,
+            factor_candidate_masks={"role": role_mask},
+        )
+    global_probability = out["operator"].factor_distributions["role"]
+    step_probability = out["operator"].step_factor_distributions["role"]
+    assert torch.equal(
+        global_probability.masked_select(~role_mask),
+        torch.zeros_like(global_probability.masked_select(~role_mask)),
+    )
+    expanded = role_mask[:, None, :].expand_as(step_probability)
+    assert torch.equal(
+        step_probability.masked_select(~expanded),
+        torch.zeros_like(step_probability.masked_select(~expanded)),
+    )
+    assert torch.allclose(
+        global_probability.sum(dim=-1),
+        torch.ones(2),
+        atol=1e-6,
+    )
+    assert torch.allclose(
+        step_probability.sum(dim=-1),
+        torch.ones(2,3),
+        atol=1e-6,
+    )
