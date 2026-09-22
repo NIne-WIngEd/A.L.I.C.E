@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 import torch
 
 from alice_personality.n0.n0_full_envelope_stack_v1 import (
@@ -218,3 +220,24 @@ def test_full_envelope_stack_accepts_additional_runtime_views_and_runtime_slots(
     assert report["runtime_slot_ceiling"] is None
     assert report["runtime_reasoning_step_ceiling"] is None
     assert report["exact_structural_sparsity_boundary"] == "FullEnvelopeQSREBinderV1"
+
+
+def test_stack_semantic_activity_uses_program_start_not_expected_step_count() -> None:
+    operator=SimpleNamespace(
+        relation_distribution=torch.tensor(
+            [[[1.0,0.0],[0.0,1.0],[1.0,0.0]]]
+        ),
+        relation_step_mass=torch.tensor([[0.2,0.2,0.0]]),
+        unknown_probability=torch.zeros(1,3),
+        applicability=torch.ones(1),
+        control_distribution=torch.tensor([[0.0,1.0,0.0]]),
+    )
+    relation_mass,activity=N0FullEnvelopeStackV1._relation_program_summary(
+        operator
+    )
+    assert torch.allclose(activity,torch.tensor([0.2]),atol=1e-6)
+    assert torch.allclose(
+        relation_mass,
+        torch.tensor([[0.5,0.5]]),
+        atol=1e-6,
+    )
