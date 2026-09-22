@@ -145,6 +145,17 @@ def schema_text(row: dict[str, Any]) -> str:
     )
 
 
+def exact_char_span(text: str, needle: str) -> dict[str, Any]:
+    start = text.find(needle)
+    if start < 0:
+        raise ValueError(f"evidence substring not found: {needle!r}")
+    return {
+        "start": start,
+        "end": start + len(needle),
+        "text": needle,
+    }
+
+
 def factor_schema() -> dict[str, list[dict[str, Any]]]:
     return {
         name: [
@@ -233,6 +244,7 @@ def make_row(
     control = 1
     reliability = recency = temporal = provenance = 0
     sequence = [relation]
+    step_relation_phrases = [phrase]
     step_direction = [0]
     step_reliability = [0]
     step_recency = [0]
@@ -251,6 +263,7 @@ def make_row(
         intervention = "source_target_role"
     elif mode == 2:
         sequence = [relation, second]
+        step_relation_phrases = [phrase, phrase2]
         step_direction = [0, 0]
         step_reliability = [0, 0]
         step_recency = [0, 0]
@@ -265,6 +278,7 @@ def make_row(
         intervention = "ordered_composition"
     elif mode == 3:
         sequence = [second, relation]
+        step_relation_phrases = [phrase2, phrase]
         step_direction = [1, 1]
         step_reliability = [0, 0]
         step_recency = [0, 0]
@@ -313,6 +327,7 @@ def make_row(
             "Do not force a nearby relation; preserve uncertainty."
         )
         sequence = []
+        step_relation_phrases = []
         step_direction = []
         step_reliability = []
         step_recency = []
@@ -332,6 +347,7 @@ def make_row(
         intervention = "plurality"
     elif mode == 10:
         sequence = [relation, second]
+        step_relation_phrases = [phrase, phrase2]
         step_direction = [0, 1]
         step_reliability = [0, 0]
         step_recency = [0, 0]
@@ -350,6 +366,7 @@ def make_row(
         intervention = "mixed_direction_composition"
     else:
         sequence = [relation, second]
+        step_relation_phrases = [phrase, phrase2]
         step_direction = [0, 0]
         step_reliability = [1, 0]
         step_recency = [0, 0]
@@ -379,6 +396,57 @@ def make_row(
         rng=rng,
     )
     target_sequence = indices if sequence else []
+
+    if len(step_relation_phrases) != len(target_sequence):
+        raise RuntimeError("relation evidence phrase/program length drift")
+    query_relation_evidence_char_spans = [
+        {
+            "step": step,
+            **exact_char_span(query, evidence_phrase),
+        }
+        for step, evidence_phrase in enumerate(step_relation_phrases)
+    ]
+    relation_by_key = {
+        str(item["key"]): item
+        for item in (TRAIN_RELATIONS + DEV_RELATIONS)
+    }
+    relation_schema_evidence_char_spans = []
+    for step, candidate_index in enumerate(target_sequence):
+        candidate = bank[candidate_index]
+        source_relation = relation_by_key[str(candidate["key"])]
+        span = exact_char_span(
+            str(candidate["text"]),
+            str(source_relation["description"]),
+        )
+        relation_schema_evidence_char_spans.append(
+            {
+                "step": step,
+                "candidate_index": int(candidate_index),
+                **span,
+            }
+        )
+
+    factor_banks = factor_schema()
+    global_factor_targets = factor_targets(
+        role=role,
+        traversal=traversal,
+        direction=direction,
+        control=control,
+        reliability=reliability,
+        recency=recency,
+        temporal=temporal,
+        provenance=provenance,
+    )
+    factor_schema_evidence_char_spans = {}
+    for name, target_index in global_factor_targets.items():
+        factor_text = str(factor_banks[name][int(target_index)]["text"])
+        factor_schema_evidence_char_spans[name] = {
+            "candidate_index": int(target_index),
+            "start": 0,
+            "end": len(factor_text),
+            "text": factor_text,
+        }
+
     if intervention == "unknown_defer":
         event_sequence_target = ["UNKNOWN"]
         applicability_target = 0
@@ -410,17 +478,11 @@ def make_row(
         "relation_sequence_target": target_sequence,
         "event_sequence_target": event_sequence_target,
         "applicability_target": applicability_target,
-        "factor_schemas": factor_schema(),
-        "factor_targets": factor_targets(
-            role=role,
-            traversal=traversal,
-            direction=direction,
-            control=control,
-            reliability=reliability,
-            recency=recency,
-            temporal=temporal,
-            provenance=provenance,
-        ),
+        "factor_schemas": factor_banks,
+        "factor_targets": global_factor_targets,
+        "query_relation_evidence_char_spans": query_relation_evidence_char_spans,
+        "relation_schema_evidence_char_spans": relation_schema_evidence_char_spans,
+        "factor_schema_evidence_char_spans": factor_schema_evidence_char_spans,
         "step_factor_targets": {
             "direction": step_direction,
             "reliability_modifier": step_reliability,
