@@ -4,6 +4,10 @@ from dataclasses import dataclass
 from typing import Any
 
 import torch
+from alice_personality.n0.numeric_contracts import (
+    require_finite,
+    require_unit_interval,
+)
 from torch import Tensor, nn
 
 
@@ -113,6 +117,7 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             raise ValueError("runtime relation schema is empty")
         if relation_mass.shape != (batch, relations):
             raise ValueError("relation_mass must be [B,R]")
+        require_unit_interval("relation_mass", relation_mass)
         if relation_symmetric.shape != (batch, relations) or relation_symmetric.dtype != torch.bool:
             raise ValueError("relation_symmetric must be bool [B,R]")
         if semantic_activity.shape != (batch,):
@@ -126,6 +131,10 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
             raise ValueError("semantic_activity must stay inside [0,1]")
         if operator_state.shape != (batch, self.config.operator_dim):
             raise ValueError("operator_state shape drift")
+        require_finite("field_state", field_state)
+        require_finite("edge_metadata", edge_metadata)
+        require_finite("relation_schema_state", relation_schema_state)
+        require_finite("operator_state", operator_state)
 
         if bool(edge_valid_mask.any()):
             valid_edge = edge_index[edge_valid_mask]
