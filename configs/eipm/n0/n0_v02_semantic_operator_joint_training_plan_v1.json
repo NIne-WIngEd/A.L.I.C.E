@@ -30,7 +30,9 @@
     "historical_authority_firewall": "configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json",
     "long_context_virtualizer": "src/alice_personality/n0/semantic_context_virtualizer_v1.py",
     "long_context_segment_bridge": "src/alice_personality/n0/semantic_segment_context_bridge_v1.py",
-    "long_context_claim": "native windows are token-lossless operating units; global cross-window semantics require the trainable segment bridge and no dense-unbounded-token-attention equivalence is claimed"
+    "long_context_claim": "native windows are token-lossless operating units; global cross-window semantics require the trainable segment bridge and no dense-unbounded-token-attention equivalence is claimed",
+    "fusion_to_latent_route_activity": true,
+    "latent_recoverability_uses_labeled_relevance_not_availability": true
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -184,7 +186,9 @@
       "no_support_zero_execution_confidence",
       "long_context_virtualized_query",
       "per_example_candidate_subset_batching",
-      "distant_decisive_evidence_across_native_windows"
+      "distant_decisive_evidence_across_native_windows",
+      "fusion_route_gradient_reaches_final_judgment",
+      "irrelevant_available_view_not_forced_recoverable"
     ]
   },
   "scaling": {
