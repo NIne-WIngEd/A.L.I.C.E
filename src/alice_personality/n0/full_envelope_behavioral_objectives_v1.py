@@ -283,12 +283,35 @@ def latent_noncollapse_loss(
     latent_slots: Tensor,
     *,
     similarity_margin: float = 0.90,
+    minimum_directional_spread: float = 0.20,
 ) -> Tensor:
+    """Numerically stable anti-collapse objective for latent slots.
+
+    The earlier implementation differentiated through SVD singular values.
+    That gradient is undefined when singular values repeat, which is common
+    early in training and produced finite forward losses with NaN backbone
+    gradients. This version uses only smooth first/second-order geometry.
+
+    Pairwise absolute cosine catches both duplicate and anti-correlated
+    rank-one collapse. Directional spread catches the all-equal/all-zero case
+    without an eigendecomposition or SVD.
+    """
     if latent_slots.ndim != 3 or latent_slots.size(1) < 1:
         raise ValueError("latent_slots must be [B,S,D] with S>=1")
+    if not 0.0 <= float(similarity_margin) < 1.0:
+        raise ValueError("similarity_margin must be in [0,1)")
+    if not 0.0 <= float(minimum_directional_spread) <= 1.0:
+        raise ValueError("minimum_directional_spread must be in [0,1]")
     if latent_slots.size(1) == 1:
         return latent_slots.sum() * 0.0
-    normalized = F.normalize(latent_slots.float(), dim=-1)
+
+    # A larger epsilon avoids extreme derivatives for nearly-zero slots while
+    # preserving direction information at ordinary activation magnitudes.
+    normalized = F.normalize(
+        latent_slots.float(),
+        dim=-1,
+        eps=1.0e-4,
+    )
     cosine = torch.einsum("bsd,btd->bst", normalized, normalized)
     slots = latent_slots.size(1)
     offdiag = ~torch.eye(
@@ -297,20 +320,26 @@ def latent_noncollapse_loss(
         dtype=torch.bool,
     )[None, :, :]
     selected = cosine.masked_select(offdiag.expand_as(cosine))
-    redundancy = F.relu(selected - float(similarity_margin)).square().mean()
+    redundancy = F.relu(
+        selected.abs() - float(similarity_margin)
+    ).square().mean()
 
-    centered = latent_slots.float() - latent_slots.float().mean(
-        dim=1, keepdim=True
-    )
-    singular = torch.linalg.svdvals(centered)
-    energy = singular.square()
-    probability = energy / energy.sum(dim=-1, keepdim=True).clamp_min(1.0e-8)
-    entropy = -(probability * probability.clamp_min(1.0e-8).log()).sum(dim=-1)
-    effective_rank = entropy.exp()
-    maximum = float(min(slots - 1, latent_slots.size(-1)))
-    rank_fraction = effective_rank / max(maximum, 1.0)
-    rank_penalty = F.relu(0.50 - rank_fraction).square().mean()
-    return redundancy + rank_penalty
+    # For unit vectors this equals 1 - ||mean direction||^2. It is zero for
+    # duplicate directions (and for all-zero slots) and grows as slots occupy
+    # distinct directions. No spectral decomposition is required.
+    mean_direction = normalized.mean(dim=1, keepdim=True)
+    centered_direction = normalized - mean_direction
+    directional_spread = centered_direction.square().sum(
+        dim=-1
+    ).mean(dim=-1)
+    spread_penalty = F.relu(
+        float(minimum_directional_spread) - directional_spread
+    ).square().mean()
+
+    loss = redundancy + spread_penalty
+    if not bool(torch.isfinite(loss.detach())):
+        raise ValueError("latent noncollapse loss became non-finite")
+    return loss
 
 
 def source_view_recoverability_loss(
