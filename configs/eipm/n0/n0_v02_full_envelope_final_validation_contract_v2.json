@@ -64,7 +64,8 @@
     "mixed_step_modifier_sequence_exact_min": 0.9,
     "symmetric_relation_endpoint_reversal_consistency_min": 0.98,
     "directional_relation_endpoint_reversal_sensitivity_min": 0.9,
-    "step_conditioned_relation_semantic_sequence_exact_min": 0.9
+    "step_conditioned_relation_semantic_sequence_exact_min": 0.9,
+    "program_relation_state_assignment_weighting_required": true
   },
   "extrapolation_gate": {
     "unseen_relation_family_accuracy_min": 0.9,
@@ -105,7 +106,9 @@
     "source_anchor_exactness_required": true,
     "no_structural_support_execution_confidence_max": 0,
     "distant_cross_window_decisive_source_removal_behavior_change_min": 0.9,
-    "step_relation_semantic_counterfactual_sensitivity_min": 0.9
+    "step_relation_semantic_counterfactual_sensitivity_min": 0.9,
+    "unsupported_relation_graph_view_activation_rate_max": 0,
+    "duplicate_edge_graph_activity_inflation_max": 0
   },
   "general_semantic_regression_gate": {
     "historical_teacher_dev_top1_floor": 0.8736842105263158,
