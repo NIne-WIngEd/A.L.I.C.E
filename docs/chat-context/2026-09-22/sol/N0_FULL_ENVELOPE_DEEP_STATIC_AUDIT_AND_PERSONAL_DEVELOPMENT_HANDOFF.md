@@ -3,8 +3,8 @@
 **Date:** 2026-09-22  
 **Status:** active continuity authority for the current Sol handoff  
 **N0 branch:** `alice-eipm-v1-n0-full-envelope-foundation-build-v1`  
-**N0 head at handoff:** `6822626db833ded0575871f2126e5770d0072293`  
-Current build head: `6822626db833ded0575871f2126e5770d0072293`  
+**N0 head at handoff:** `edcfcb447fd9f7a47239827661cf31e678f8b249`  
+Current build head: `edcfcb447fd9f7a47239827661cf31e678f8b249`  
 **Magnolia authorization:** **NO — deep source-level audit remains open**  
 **N0 complete:** false
 
@@ -12,11 +12,11 @@ Current build head: `6822626db833ded0575871f2126e5770d0072293`
 
 ```text
 source_branch=alice-eipm-v1-n0-full-envelope-foundation-build-v1
-current_build_head=6822626db833ded0575871f2126e5770d0072293
+current_build_head=edcfcb447fd9f7a47239827661cf31e678f8b249
 deep_source_audit_complete=false
-exact_head_static_suite=PASS_118
-proof_obligations_total=103
-proof_obligations_static=89
+exact_head_static_suite=PASS_124
+proof_obligations_total=109
+proof_obligations_static=95
 magnolia_cpu_runtime_authorized=false
 gpu_memory_dry_run_authorized=false
 optimizer_authorized=false
@@ -69,13 +69,13 @@ Do not revive a superseded narrow PASS merely because a later experiment becomes
 
 ## Current exact-head static evidence
 
-At `6822626db833ded0575871f2126e5770d0072293`, GitHub Actions run `35693476513` completed successfully.
+At `edcfcb447fd9f7a47239827661cf31e678f8b249`, GitHub Actions run `35697317893` completed successfully.
 
 Observed receipt:
 
-- 118 tests passed;
-- 103 proof obligations registered;
-- 89 static obligations;
+- 124 tests passed;
+- 109 proof obligations registered;
+- 95 static obligations;
 - synthetic operator curriculum audit passed;
 - full-envelope behavioral-fabric static audit passed;
 - natural FewRel audit passed;
@@ -209,6 +209,57 @@ Exact-head workflow run `35693476513` is green:
 
 This is another concrete example of why Magnolia remains blocked while cheap source falsification continues: the previous 115-test green head still contained a semantic control bypass.
 
+### Structural masking defect class found and repaired
+
+The next audit target was candidate/view/runtime-axis masking. A finite constant such as `-1e4` is **not** a structural mask when valid learned logits are unbounded.
+
+Two independent falsifications were added before the repair:
+
+- semantic candidate mask commit `f182aa998721b35cab1547985f31fed8cde22e0e`, run `35696747308`;
+- fusion unavailable-view mask commit `d33d864351e28576247dfdba61d5e00590c2f07f`, run `35696753030`.
+
+The semantic test forced one valid candidate to `-20000` while an inactive candidate had a large raw logit. The old `-1e4` sentinel caused the valid candidate's probability to collapse to zero.
+
+The fusion test forced every learned route score to `-20000` with one available and one unavailable view. The unavailable view's `-1e4` sentinel became larger than the valid score and consumed the softmax normalization before post-mask zeroing.
+
+Those failures proved a general numeric defect rather than two unrelated local bugs.
+
+A shared exact structural masking primitive was introduced in `numeric_contracts.py`. It:
+
+- reserves `torch.finfo(dtype).min` for invalid positions;
+- assigns exact zero probability outside the valid set;
+- normalizes only valid mass;
+- validates finite active logits;
+- supports explicitly permitted empty slices as exact zeros.
+
+The same root correction was propagated through the unbounded learned masked-softmax paths in:
+
+- semantic candidate selection and query-token pooling;
+- structured field pooling;
+- Binder focus selection;
+- evidence-view field routing;
+- graph endpoint reads;
+- fusion view routing;
+- executor endpoint readout;
+- public-judgment candidate token pooling.
+
+Public candidate logits themselves now use a structural dtype floor for padded candidates. Follow-on failures also exposed places where diagnostic/replay losses were accidentally squaring the structural floor or multiplying it by zero. Those paths were repaired to operate only on structurally valid subsets.
+
+Failure evidence was preserved through the sequence rather than weakened:
+
+- initial candidate/fusion falsifications: `35696747308`, `35696753030`;
+- intermediate failures after structural candidate exclusion exposed non-finite replay/zero-loss assumptions;
+- inactive candidate causal losses now prove finite zero loss and exactly zero padded-candidate gradient.
+
+Current exact-head run `35697317893` at `edcfcb447fd9f7a47239827661cf31e678f8b249` is green:
+
+- 124 tests passed;
+- 109 proof obligations;
+- 95 static obligations;
+- all behavioral-fabric, FewRel, authority-firewall, CPU-contract, and training-block static gates remained green.
+
+This closes the finite-sentinel masking defect class for the audited unbounded N0 paths. It does **not** close the deep source audit.
+
 ## Current architecture intent
 
 N0 is the public, identity-neutral semantic/judgment foundation for the EIPM.
@@ -246,7 +297,7 @@ The prior Sol was explicitly continuing source-level falsification after green C
 
 Areas still requiring source-level scrutiny include:
 
-1. **Global versus step-conditioned factor semantics.** Relation semantic state, direction, and modifiers now have verified step-conditioned paths, and explicit modifier metadata bypasses are closed. Role/traversal/control ownership across multi-step programs still needs scrutiny for any whole-program shortcut that breaks valid compositions.
+1. **Global versus step-conditioned factor/support semantics.** Relation semantic state, direction, and executor modifier application have verified step-conditioned paths, but Binder exact support is still one global `[B,E]` support object. The audit must determine whether global Binder support/reliability conditioning can prune evidence needed by a later step whose local modifier is OFF, especially for mixed-step programs and repeated relation families. Do not patch this from shape suspicion alone; prove or falsify it causally.
 
 2. **Behavioral curriculum shortcut resistance.** TRAIN/DEV entity/query/field/candidate surface separation now exists, but scalar metadata patterns, scenario construction, answer construction, and deterministic label structure must still be audited for shortcuts that can satisfy DEV without learning the intended semantics.
 
@@ -363,7 +414,7 @@ The canonical main correction adds the product-neutral `assistant_self` projecti
 
 ## Current next action
 
-Continue the deep source-level N0 audit at exact head `6822626db833ded0575871f2126e5770d0072293`.
+Continue the deep source-level N0 audit at exact head `edcfcb447fd9f7a47239827661cf31e678f8b249`.
 
 Do not ask the owner for a Magnolia run until that audit has either:
 
