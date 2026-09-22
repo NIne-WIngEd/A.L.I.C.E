@@ -7,6 +7,7 @@ import torch
 from torch import Tensor, nn
 
 from alice_personality.n0.numeric_contracts import (
+    exact_masked_softmax,
     require_finite,
     require_unit_interval,
 )
@@ -614,9 +615,12 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             torch.cat([node, op_node, node * op_node, structural_node], dim=-1)
         ).squeeze(-1)
         readout_logit = readout_logit + torch.log(role_weight.clamp_min(1.0e-8))
-        probability = torch.softmax(readout_logit.masked_fill(~readout_mask, -1.0e4), dim=-1)
-        probability = probability * readout_mask.to(probability.dtype)
-        probability = probability / probability.sum(dim=-1, keepdim=True).clamp_min(1.0e-12)
+        probability = exact_masked_softmax(
+            readout_logit,
+            readout_mask,
+            dim=-1,
+            allow_empty=True,
+        )
 
         known = (
             1.0 - operator.unknown_probability.sum(dim=1).clamp(max=1.0)
