@@ -785,6 +785,27 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_inactive_behavioral_candidate_losses_stay_finite_with_structural_invalid_floor",
       "requirement": "When a causal behavioral lane is inactive, exact padded-candidate exclusion may not create -inf×0/NaN zero losses; zero-return paths must depend only on valid logits and padded candidates must receive exactly zero gradient."
+    },
+    {
+      "id": "N0-P38A",
+      "stage": "numeric_contract",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_exact_masked_softmax_preserves_extreme_valid_logits_and_empty_rows",
+      "requirement": "Structural masks must preserve probability mass on valid entries even when valid learned logits are far below legacy finite sentinels; explicitly permitted empty slices must return exact zero mass."
+    },
+    {
+      "id": "N0-P38B",
+      "stage": "semantic_operator",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_candidate_mask_extreme_invalid_logit_cannot_erase_valid_probability",
+      "requirement": "An inactive semantic relation/factor candidate may never receive probability or erase an active candidate merely because learned active logits cross a finite masking sentinel."
+    },
+    {
+      "id": "N0-P38C",
+      "stage": "fusion",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dynamic_fusion_unavailable_view_cannot_erase_valid_mass_under_extreme_route_logits",
+      "requirement": "An unavailable runtime view may never receive fusion mass or erase available-view mass when learned route logits take extreme finite values."
     }
   ],
   "closure_rule": {
