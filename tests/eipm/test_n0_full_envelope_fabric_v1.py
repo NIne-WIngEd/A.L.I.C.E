@@ -138,6 +138,8 @@ def test_dynamic_fusion_is_view_permutation_equivariant_and_source_exact() -> No
     assert report["view_identity_parameters"] == 0
     assert report["view_count_dependent_parameters"] == 0
     assert report["view_count_ceiling"] is None
+    assert report["full_view_pair_score_matrix_materialized"] is False
+    assert report["exact_dense_view_attention_semantics"] is True
 
 
 def test_dynamic_latent_pool_supports_runtime_slot_and_view_counts_without_param_growth() -> None:
