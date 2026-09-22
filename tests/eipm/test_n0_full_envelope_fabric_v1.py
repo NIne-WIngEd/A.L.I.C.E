@@ -839,3 +839,41 @@ def test_semantic_operator_objective_rejects_partial_schema_evidence_contract() 
         assert "supplied together" in str(exc)
     else:
         raise AssertionError("partial schema evidence contract did not fail closed")
+
+
+class _ExtremeNegativeRoute(torch.nn.Module):
+    def forward(self, value: torch.Tensor) -> torch.Tensor:
+        return torch.full(
+            (*value.shape[:-1],1),
+            -20000.0,
+            dtype=value.dtype,
+            device=value.device,
+        )
+
+
+def test_dynamic_fusion_unavailable_view_cannot_erase_valid_mass_under_extreme_route_logits() -> None:
+    model=DynamicCrossContextFusionV3(
+        DynamicCrossContextFusionConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_attention_heads=4,
+            recurrent_refinement_steps=1,
+            dropout=0.0,
+        )
+    ).eval()
+    model.route_score=_ExtremeNegativeRoute()
+    with torch.no_grad():
+        out=model(
+            source_view_summaries=torch.randn(1,2,24),
+            view_descriptor_states=torch.randn(1,2,24),
+            view_available=torch.tensor([[True,False]],dtype=torch.bool),
+            query_state=torch.randn(1,24),
+            view_reliability=torch.ones(1,2),
+            refinement_steps=1,
+        )
+    assert torch.allclose(
+        out["view_weight"],
+        torch.tensor([[1.0,0.0]]),
+        atol=0.0,
+        rtol=0.0,
+    )
