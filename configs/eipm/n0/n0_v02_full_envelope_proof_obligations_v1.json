@@ -25,9 +25,7 @@
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
-    "nn.Embedding(",
-    ".topk(",
-    "torch.topk("
+    "nn.Embedding("
   ],
   "obligations": [
     {
@@ -388,5 +386,24 @@
     "gpu_training": false,
     "final_opening": false,
     "n0_complete": false
-  }
+  },
+  "targeted_source_constraints": [
+    {
+      "path": "src/alice_personality/n0/qsre_full_envelope_binder_v1.py",
+      "forbidden_patterns": [
+        ".topk(",
+        "torch.topk("
+      ],
+      "reason": "Binder support cardinality must be adaptive exact sparse selection, never fixed top-k."
+    },
+    {
+      "path": "src/alice_personality/n0/semantic_operator_foundation.py",
+      "required_patterns": [
+        "factor_candidate_masks",
+        "relation_candidate_mask",
+        "runtime_factor_bank_set_aggregation"
+      ],
+      "reason": "Relation and factor schema subsets must remain runtime-variable per example."
+    }
+  ]
 }
