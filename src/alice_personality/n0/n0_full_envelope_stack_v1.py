@@ -412,7 +412,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             edge_relation_index=edge_relation_index,
             edge_index=edge_index,
             field_type_index=field_type_index,
-            edge_valid_mask=pregraph_type_compatible,
+            edge_valid_mask=edge_valid_mask,
         )
         relation_mass, semantic_activity = self._relation_program_summary(
             operator
@@ -424,7 +424,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             edge_index=edge_index,
             edge_relation_index=edge_relation_index,
             edge_metadata=edge_metadata,
-            edge_valid_mask=edge_valid_mask,
+            edge_valid_mask=pregraph_type_compatible,
             relation_schema_state=relation_state,
             relation_mass=relation_mass,
             relation_symmetric=relation_symmetric,
