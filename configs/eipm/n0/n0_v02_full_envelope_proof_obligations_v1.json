@@ -27,7 +27,8 @@
     "src/alice_personality/n0/semantic_backbone_interface_v1.py",
     "src/alice_personality/n0/chunked_set_attention_v1.py",
     "src/alice_personality/n0/numeric_contracts.py",
-    "src/alice_personality/n0/semantic_segment_context_bridge_v1.py"
+    "src/alice_personality/n0/semantic_segment_context_bridge_v1.py",
+    "src/alice_personality/n0/full_envelope_semantic_input_v1.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
@@ -377,6 +378,41 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_virtualizer_report_requires_cross_window_bridge_for_long_query_semantics",
       "requirement": "Token-lossless segmentation may not be misrepresented as standalone globally contextualized semantics."
+    },
+    {
+      "id": "N0-P32F",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_semantic_input_short_path_preserves_all_layers",
+      "requirement": "Short semantic items preserve all backbone hidden layers through the unified input path."
+    },
+    {
+      "id": "N0-P32G",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_semantic_input_virtualizes_long_relation_factor_and_descriptor_text",
+      "requirement": "Relation, factor, and descriptor semantics can exceed the native encoder window without introducing a product token ceiling."
+    },
+    {
+      "id": "N0-P32H",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_semantic_input_padded_items_keep_invalid_fields_and_candidates_inert",
+      "requirement": "Padded fields and candidates remain exactly inert under the universal semantic input path."
+    },
+    {
+      "id": "N0-P32I",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_semantic_input_long_path_gradient_reaches_backbone_and_segment_bridge",
+      "requirement": "Long semantic surfaces preserve joint gradient connectivity through the shared backbone and cross-window bridge."
+    },
+    {
+      "id": "N0-P32J",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_semantic_input_has_no_text_surface_native_window_product_ceiling",
+      "requirement": "No text-bearing N0 surface relies on the native encoder window as a declared product capability ceiling."
     },
     {
       "id": "N0-P33",
