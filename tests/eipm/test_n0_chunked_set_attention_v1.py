@@ -58,9 +58,22 @@ def test_chunked_set_attention_matches_dense_reference_and_gradient() -> None:
     actual=module(value,mask)
     expected=dense_reference(module,value,mask)
     assert torch.allclose(actual,expected,atol=1e-5,rtol=1e-5)
-    actual.square().mean().backward()
-    assert value.grad is not None
-    assert float(value.grad.abs().sum()) > 0.0
+    actual_grad=torch.autograd.grad(
+        actual.square().mean(),
+        value,
+        retain_graph=True,
+    )[0]
+    dense_grad=torch.autograd.grad(
+        expected.square().mean(),
+        value,
+    )[0]
+    assert float(actual_grad.abs().sum()) > 0.0
+    assert torch.allclose(
+        actual_grad,
+        dense_grad,
+        atol=2e-5,
+        rtol=2e-5,
+    )
 
 
 def test_chunked_set_attention_is_field_permutation_equivariant() -> None:
