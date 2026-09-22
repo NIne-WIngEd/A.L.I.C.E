@@ -36,3 +36,31 @@ def test_long_context_train_dev_supplement_is_executable_and_covers_every_govern
     assert contract["validation_before_gradient"]["materialized_train_dev_rows_required"] is True
     assert contract["validation_before_gradient"]["base_target_equivalence_audit_required"] is True
     assert contract["validation_before_gradient"]["surface_coverage_receipt_required"] is True
+
+
+def test_behavioral_materialization_owns_relation_candidate_objects() -> None:
+    import importlib.util
+
+    builder_path=ROOT/"scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py"
+    spec=importlib.util.spec_from_file_location("behavioral_builder_isolation",builder_path)
+    assert spec is not None and spec.loader is not None
+    module=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    kwargs=dict(
+        split="train",
+        seed=20260922,
+        relation_count=4,
+        field_count=6,
+        answer_count=4,
+    )
+    first=module.materialize_row(example=1,**kwargs)
+    key=str(first["relation_candidates"][0]["key"])
+    original=str(first["relation_candidates"][0]["text"])
+    first["relation_candidates"][0]["text"]="mutated downstream surface"
+
+    second=module.materialize_row(example=1,**kwargs)
+    by_key={str(item["key"]):str(item["text"]) for item in second["relation_candidates"]}
+    assert by_key[key] == original
+    canonical={str(item["key"]):str(item["text"]) for item in module.RELATIONS}
+    assert canonical[key] == original

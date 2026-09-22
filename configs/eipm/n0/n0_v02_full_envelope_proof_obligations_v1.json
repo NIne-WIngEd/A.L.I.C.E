@@ -942,6 +942,13 @@
       "kind": "CI_REQUIRED",
       "receipt": "PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_CURRICULUM_AUDIT_V1",
       "requirement": "Before gradient, materialize and audit public TRAIN/DEV long-context rows covering every governed text surface with unchanged targets, decisive semantic content beyond the native-window operating point, no FINAL rows, and no private identity data."
+    },
+    {
+      "id": "N0-P39LK",
+      "stage": "long_context_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_behavioral_materialization_owns_relation_candidate_objects",
+      "requirement": "Each behavioral row must own independent runtime relation-candidate objects so downstream surface interventions cannot mutate the canonical public relation bank or contaminate later TRAIN/DEV/FINAL materialization."
     }
   ],
   "closure_rule": {

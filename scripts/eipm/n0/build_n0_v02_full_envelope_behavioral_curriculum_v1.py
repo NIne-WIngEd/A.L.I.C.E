@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import random
@@ -1203,7 +1204,13 @@ def materialize_row(
     rng.shuffle(pool)
     relation_keys=required_relations + pool[:max(0,desired-len(required_relations))]
     rng.shuffle(relation_keys)
-    relation_candidates=[relation_by_key[key] for key in relation_keys]
+    # Runtime relation candidates belong to the row. Do not return aliases
+    # into the module-level public relation bank: downstream curriculum
+    # interventions may safely rewrite semantic surface text and must never
+    # contaminate later TRAIN/DEV/FINAL materialization.
+    relation_candidates=[
+        copy.deepcopy(relation_by_key[key]) for key in relation_keys
+    ]
 
     answers=list(base["answers"])
     while len(answers)<answer_count:
