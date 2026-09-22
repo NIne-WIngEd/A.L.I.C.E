@@ -1,0 +1,122 @@
+{
+  "schema": "alice.eipm.n0.successor-authority-firewall.v1",
+  "status": "ACTIVE_PRETRAINING_DEFAULT_DENY",
+  "date": "2026-09-21",
+  "purpose": "Make every historical N0 PASS/qualified artifact non-authoritative by default. Only explicitly scoped carry-forward artifacts may influence the successor, and none may independently authorize training or closure.",
+  "default_rule": {
+    "historical_n0_checkpoint_authority": "DENY",
+    "historical_n0_config_authority": "DENY",
+    "historical_n0_eval_authority": "DENY_FOR_SELECTION_OR_CLOSURE",
+    "historical_n0_source_import_authority": "DENY",
+    "implicit_parent_inheritance": false
+  },
+  "explicit_carry_forward": [
+    {
+      "id": "semantic_step80",
+      "artifact": "targeted-repair-v0.1/step-00000080",
+      "sha256": "6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43",
+      "allowed_role": [
+        "initialization",
+        "broad_semantic_regression_baseline"
+      ],
+      "forbidden_role": [
+        "frozen_semantic_authority",
+        "relation_schema_authority",
+        "final_judgment_authority",
+        "closure_authority"
+      ]
+    },
+    {
+      "id": "tokenizer_v021",
+      "artifact": "alice-n0-semantic-v0.2 tokenizer v0.2.1",
+      "allowed_role": [
+        "lexical_frontend_initialization"
+      ],
+      "forbidden_role": [
+        "proof_of_semantic_sufficiency",
+        "permanent_vocab_ceiling",
+        "closure_authority"
+      ],
+      "runtime_requalification_required": true
+    },
+    {
+      "id": "public_corpus_v021",
+      "artifact": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
+      "allowed_role": [
+        "broad_public_semantic_replay"
+      ],
+      "forbidden_role": [
+        "complete_operator_curriculum",
+        "full_workload_coverage_authority",
+        "closure_authority"
+      ],
+      "materialized_hash_reverification_required": true
+    },
+    {
+      "id": "governed_teacher_bank_v02",
+      "artifact": "1020-row / 51-competency public teacher bank",
+      "allowed_role": [
+        "judgment_regression_replay"
+      ],
+      "forbidden_role": [
+        "full_capability_taxonomy",
+        "final_model_selection",
+        "closure_authority"
+      ]
+    },
+    {
+      "id": "historical_eval_suites",
+      "artifact": "fixed readiness / voice / teacher DEV / novel cross / targeted repair suites",
+      "allowed_role": [
+        "regression_floor",
+        "known_failure_reproduction"
+      ],
+      "forbidden_role": [
+        "unseen_final",
+        "capacity_selection_after_repeated_exposure",
+        "closure_authority"
+      ]
+    },
+    {
+      "id": "causal_arbitration_method",
+      "artifact": "historical downstream causal arbitration methodology",
+      "allowed_role": [
+        "evaluation_methodology"
+      ],
+      "forbidden_role": [
+        "historical_model_selection_result"
+      ],
+      "new_successor_hash_binding_required": true
+    }
+  ],
+  "explicitly_forbidden_weight_parents": [
+    "structured_state_v01",
+    "evidence_view_adapter_v01",
+    "dual_endpoint_evidence_graph_checkpoint",
+    "cross_context_fusion_v02_checkpoint",
+    "adaptive_latent_pool_v02_checkpoint",
+    "qsre_t1_weights",
+    "qsre_t2_weights",
+    "production_core_weights",
+    "binder_v2_weights",
+    "query_edge_repair_chain_weights",
+    "p2s_weights",
+    "p2a_frozen_authority_surfaces_as_runtime_authority"
+  ],
+  "successor_requirements": {
+    "exact_branch_source_hash_required": true,
+    "training_lineage_manifest_required": true,
+    "every_historical_artifact_reference_requires_explicit_allowed_role": true,
+    "historical_pass_cannot_satisfy_new_proof_obligation": true,
+    "historical_threshold_cannot_replace_new_precommitted_threshold": true,
+    "final_v2_results_unopened_until_training_complete": true,
+    "private_identity_gradient": false
+  },
+  "authorization": {
+    "optimizer": false,
+    "gradient": false,
+    "gpu_training": false,
+    "final_opening": false,
+    "n0_complete": false
+  }
+}
