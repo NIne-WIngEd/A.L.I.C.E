@@ -165,21 +165,56 @@ def endpoint_role_loss(
     )
 
 
+def _mask_candidate_logits(
+    logits: Tensor,
+    candidate_valid_mask: Tensor | None,
+) -> tuple[Tensor, Tensor]:
+    if logits.ndim != 2:
+        raise ValueError("candidate logits must be [B,C]")
+    if candidate_valid_mask is None:
+        candidate_valid_mask = torch.ones_like(logits,dtype=torch.bool)
+    if (
+        candidate_valid_mask.shape != logits.shape
+        or candidate_valid_mask.dtype != torch.bool
+    ):
+        raise ValueError("candidate_valid_mask must be bool [B,C]")
+    if bool((candidate_valid_mask.sum(dim=-1) == 0).any()):
+        raise ValueError("every example requires at least one valid candidate")
+    return (
+        logits.masked_fill(~candidate_valid_mask,-1.0e4),
+        candidate_valid_mask,
+    )
+
+
 def decisive_view_causal_margin_loss(
     normal_candidate_logits: Tensor,
     ablated_candidate_logits: Tensor,
     target_index: Tensor,
     *,
+    candidate_valid_mask: Tensor | None = None,
     margin: float = 0.15,
 ) -> Tensor:
     if normal_candidate_logits.shape != ablated_candidate_logits.shape:
         raise ValueError("normal/ablated candidate-logit shape drift")
     if target_index.shape != (normal_candidate_logits.size(0),):
         raise ValueError("causal target_index shape drift")
-    normal = torch.softmax(normal_candidate_logits, dim=-1).gather(
+    normal_logits, valid = _mask_candidate_logits(
+        normal_candidate_logits,
+        candidate_valid_mask,
+    )
+    ablated_logits, _ = _mask_candidate_logits(
+        ablated_candidate_logits,
+        valid,
+    )
+    target_valid = valid.gather(
+        1,target_index.long()[:,None]
+    ).squeeze(1)
+    if not bool(target_valid.all()):
+        raise ValueError("causal target points to padded candidate")
+    normal = torch.softmax(normal_logits, dim=-1).gather(
         1, target_index.long()[:, None]
     ).squeeze(1)
-    ablated = torch.softmax(ablated_candidate_logits, dim=-1).gather(
+    ablated = torch.softmax(ablated_logits, dim=-1).gather(
         1, target_index.long()[:, None]
     ).squeeze(1)
     return F.relu(float(margin) - (normal - ablated)).mean()
@@ -188,11 +223,21 @@ def decisive_view_causal_margin_loss(
 def irrelevant_view_invariance_loss(
     normal_candidate_logits: Tensor,
     irrelevant_removed_logits: Tensor,
+    *,
+    candidate_valid_mask: Tensor | None = None,
 ) -> Tensor:
     if normal_candidate_logits.shape != irrelevant_removed_logits.shape:
         raise ValueError("invariance candidate-logit shape drift")
-    p = torch.log_softmax(normal_candidate_logits, dim=-1)
-    q = torch.log_softmax(irrelevant_removed_logits, dim=-1)
+    normal_logits, valid = _mask_candidate_logits(
+        normal_candidate_logits,
+        candidate_valid_mask,
+    )
+    removed_logits, _ = _mask_candidate_logits(
+        irrelevant_removed_logits,
+        valid,
+    )
+    p = torch.log_softmax(normal_logits, dim=-1)
+    q = torch.log_softmax(removed_logits, dim=-1)
     p_prob = p.exp()
     q_prob = q.exp()
     midpoint = 0.5 * (p_prob + q_prob)
@@ -208,8 +253,10 @@ def latent_noncollapse_loss(
     *,
     similarity_margin: float = 0.90,
 ) -> Tensor:
-    if latent_slots.ndim != 3 or latent_slots.size(1) < 2:
-        raise ValueError("latent_slots must be [B,S,D] with S>=2")
+    if latent_slots.ndim != 3 or latent_slots.size(1) < 1:
+        raise ValueError("latent_slots must be [B,S,D] with S>=1")
+    if latent_slots.size(1) == 1:
+        return latent_slots.sum() * 0.0
     normalized = F.normalize(latent_slots.float(), dim=-1)
     cosine = torch.einsum("bsd,btd->bst", normalized, normalized)
     slots = latent_slots.size(1)
@@ -318,10 +365,12 @@ def full_envelope_behavioral_objective(
         candidate_logits,
         decisive_ablated_candidate_logits,
         target_index,
+        candidate_valid_mask=candidate_valid_mask,
     )
     irrelevant = irrelevant_view_invariance_loss(
         candidate_logits,
         irrelevant_removed_candidate_logits,
+        candidate_valid_mask=candidate_valid_mask,
     )
     noncollapse = latent_noncollapse_loss(latent_slots)
     recoverability = source_view_recoverability_loss(
