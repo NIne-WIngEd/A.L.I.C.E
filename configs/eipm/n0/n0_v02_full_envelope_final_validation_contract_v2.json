@@ -78,7 +78,12 @@
     "runtime_relation_symmetry_transfer_min": 0.9,
     "long_context_distant_decisive_evidence_accuracy_min": 0.9,
     "cross_native_window_relation_composition_accuracy_min": 0.9,
-    "cross_native_window_conflict_resolution_accuracy_min": 0.9
+    "cross_native_window_conflict_resolution_accuracy_min": 0.9,
+    "long_relation_description_accuracy_min": 0.9,
+    "long_factor_description_accuracy_min": 0.9,
+    "long_field_sparse_relevance_accuracy_min": 0.9,
+    "long_candidate_comparison_accuracy_min": 0.9,
+    "long_descriptor_transfer_accuracy_min": 0.9
   },
   "invariance_gate": {
     "relation_candidate_permutation_max_delta": 0.000001,
@@ -154,7 +159,9 @@
     "cross_window_semantic_bridge_required_beyond_native_window": true,
     "standalone_segment_stitching_may_not_claim_global_semantic_completion": true,
     "dense_unbounded_native_attention_equivalence_required": false,
-    "reason": "Full product context may use hierarchical globally interacting windows; the architecture must preserve cross-window causal semantics without pretending finite native attention is literally unbounded dense attention."
+    "reason": "Full product context may use hierarchical globally interacting windows; the architecture must preserve cross-window causal semantics without pretending finite native attention is literally unbounded dense attention.",
+    "all_text_surfaces_share_virtualization_policy_required": true,
+    "query_only_long_context_virtualization_is_insufficient": true
   },
   "closure": {
     "status_on_pass": "PASS_N0_FULL_ENVELOPE_FINAL_SELF_VALIDATION",
