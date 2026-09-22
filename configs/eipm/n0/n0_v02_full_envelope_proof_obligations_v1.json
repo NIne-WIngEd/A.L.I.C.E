@@ -482,6 +482,27 @@
       "kind": "FINAL_REQUIRED",
       "status": "SEALED_UNOPENED_BLOCKING",
       "requirement": "Frozen final-v2 behavioral package must pass every gate; semantic cosine or historical PASS cannot independently authorize N0 closure."
+    },
+    {
+      "id": "N0-P26A",
+      "stage": "fusion_latent",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_latent_view_activity_causally_changes_final_pooled_state",
+      "requirement": "Query-conditioned fusion relevance must causally control how views contribute to the latent fabric; reliability alone is not relevance."
+    },
+    {
+      "id": "N0-P26B",
+      "stage": "full_stack",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_envelope_stack_forward_and_gradient_continuity",
+      "requirement": "Final public judgment gradient must reach the fusion route scorer through the latent path."
+    },
+    {
+      "id": "N0-P35A",
+      "stage": "behavioral_objective",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_source_recoverability_mask_does_not_force_irrelevant_views_into_latent",
+      "requirement": "Merely available irrelevant views are not compulsory latent recoverability targets."
     }
   ],
   "closure_rule": {
