@@ -44,7 +44,9 @@
       "natural_source_text_required": true,
       "relation_keys_metadata_only": true,
       "synthetic_replacement_forbidden": true,
-      "sealed_final_relation_families_required": true
+      "sealed_final_relation_families_required": false,
+      "official_validation_final_relation_families_required": true,
+      "final_relation_subset_selection_forbidden": true
     },
     {
       "name": "dynamic_relation_schema",
@@ -334,7 +336,9 @@
     "public_provenance_receipts_required": true,
     "final_validation_excluded_by_hash_required": true,
     "natural_relation_materialization_audit_required": true,
-    "sealed_natural_final_relation_hash_required": true
+    "sealed_natural_final_relation_hash_required": false,
+    "official_natural_final_benchmark_mechanics_audit_required": true,
+    "full_final_closure_corpus_remains_separate_and_unopened": true
   },
   "scale_policy": {
     "full_capability_architecture": true,
