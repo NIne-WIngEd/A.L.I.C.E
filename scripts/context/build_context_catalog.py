@@ -572,6 +572,19 @@ def main() -> None:
         magnolia_job_match = re.search(
             r"Magnolia job:\s*`?(\d+)`?", handoff_text, re.I
         )
+        status_match = re.search(
+            r"^\*\*Status:\*\*\s*(.+?)\s*$", handoff_text, re.I | re.M
+        )
+        magnolia_auth_match = re.search(
+            r"^\*\*Magnolia authorization:\*\*\s*(.+?)\s*$",
+            handoff_text,
+            re.I | re.M,
+        )
+        n0_complete_match = re.search(
+            r"^\*\*N0 complete:\*\*\s*(.+?)\s*$",
+            handoff_text,
+            re.I | re.M,
+        )
 
         def section_excerpt(name: str, limit: int = 2600) -> str | None:
             pattern = re.compile(
@@ -596,8 +609,20 @@ def main() -> None:
             "magnolia_job_observed": (
                 magnolia_job_match.group(1) if magnolia_job_match else None
             ),
+            "status_declared": (
+                status_match.group(1).strip() if status_match else None
+            ),
+            "magnolia_authorization_declared": (
+                magnolia_auth_match.group(1).strip()
+                if magnolia_auth_match else None
+            ),
+            "n0_complete_declared": (
+                n0_complete_match.group(1).strip()
+                if n0_complete_match else None
+            ),
             "authoritative_build_state_excerpt": section_excerpt("Authoritative build state"),
             "runtime_result_excerpt": section_excerpt("Magnolia runtime result"),
+            "next_action_excerpt": section_excerpt("Current next action"),
             "next_experiment_excerpt": section_excerpt("Next experiment: frozen downstream arbitration"),
             "authority": "branch-qualified-continuity-overlay",
         }
