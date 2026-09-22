@@ -58,6 +58,8 @@ on:
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py"
       - "scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh"
       - "scripts/eipm/n0/magnolia_cpu_n0_v02_full_envelope_runtime_v1.sbatch"
+      - "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py"
+      - "tests/eipm/test_n0_full_envelope_trainable_system_v1.py"
       - ".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml"
   workflow_dispatch:
 
@@ -97,6 +99,7 @@ jobs:
             src/alice_personality/n0/semantic_context_virtualizer_v1.py \
             src/alice_personality/n0/semantic_segment_context_bridge_v1.py \
             src/alice_personality/n0/full_envelope_semantic_input_v1.py \
+            src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py \
             src/alice_personality/n0/chunked_late_interaction.py \
             src/alice_personality/n0/full_envelope_structural_types.py \
             src/alice_personality/n0/semantic_operator_qsre_adapter.py \
