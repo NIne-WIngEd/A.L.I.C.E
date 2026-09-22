@@ -1,15 +1,15 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-totality-unknown-truncation-audit-20260922-040",
-  "question": "Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@e93461aae33dc682d29b283e636dc08e8847878b for totality, UNKNOWN/DEFER, truncation and terminal-control correctness before Magnolia. Trace SchemaConditionedSemanticOperator recurrent event semantics, adapter, FullEnvelopeOperatorState validation, Binder, Executor, behavioral compiler/objectives, final validation gates, CPU qualification and proof obligations. Look for cases where max_reasoning_steps truncates a still-active relation program but downstream code can nevertheless assert STOP/RELATIONAL completion, create support, activate graph/executor views, or rank a candidate as if the program completed. Check zero-step UNKNOWN rows, unsupported schema, all-masked/empty structural slices, per-example differing relation lengths, and whether truncation uncertainty is merely diagnostic or causally blocks false completion. Classify each issue A concrete defect / B missing falsification / C closed. Preserve full-envelope semantics and do not add hard hop ceilings. Do not authorize Magnolia/GPU/optimizer/gradient/FINAL/N0 completion. Original exact branch source is authority; Graphify is navigation only.",
-  "generated_at_utc": "2026-09-22T18:51:59.240717+00:00",
+  "request_id": "n0-cpu-runtime-preflight-architecture-audit-20260922-041",
+  "question": "Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@1608d35230c970ff2b56da62d2d1498b4b7739ba for the remaining pre-Magnolia CPU/runtime qualification path. Trace proof obligations N0-P40/P40A/P41/P42 into tokenizer config, evidence-alignment audit, public corpus materialization, full 640-wide construction, exact semantic initialization loading, variable-cardinality runtime inputs, long-context semantic input, finite-output checks, parameter accounting and peak-RSS receipt. Determine whether any statically discoverable gap means the current runtime scripts could pass while failing to exercise the actual full-envelope topology or newly added causal/curriculum mechanics. Distinguish A concrete pre-runtime defect, B missing falsification, C closed. Do not run GPU/optimizer/gradient, do not open final validation, and do not treat historical T1/T2 receipts as authority. Original exact branch source is authority; Graphify is navigation only.",
+  "generated_at_utc": "2026-09-22T19:25:04.120194+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "catalog_source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "graphify_used": true,
     "graph_source_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-    "graph_source_commit": "b218a60eacc8fcdcdcd938e8411488eced42df4d",
+    "graph_source_commit": "1608d35230c970ff2b56da62d2d1498b4b7739ba",
     "graph_extraction_tree": "exact-source-worktree",
     "continuity_branch_head": {
       "branch": "alice-context",
@@ -21,9 +21,9 @@
     "maximal_unmerged_experiment_heads": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "b218a60eacc8fcdcdcd938e8411488eced42df4d",
-        "head_committed_at": "2026-09-22T13:37:33-05:00",
-        "head_message": "fix(n0): keep context-swap candidate entities distinct"
+        "head": "1608d35230c970ff2b56da62d2d1498b4b7739ba",
+        "head_committed_at": "2026-09-22T13:55:44-05:00",
+        "head_message": "fix(n0): block truncated programs from global relational views"
       },
       {
         "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
@@ -44,7 +44,7 @@
     "graphify_used": true,
     "reason": "request forced Graphify",
     "graph_source_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-    "graph_source_commit": "b218a60eacc8fcdcdcd938e8411488eced42df4d",
+    "graph_source_commit": "1608d35230c970ff2b56da62d2d1498b4b7739ba",
     "graph_source_reason": "request explicitly selected graph source branch",
     "graph_rebuild_required": true,
     "private_external_route_recommended": true
@@ -136,10 +136,10 @@
       "maximal_heads": [
         {
           "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-          "head": "b218a60eacc8fcdcdcd938e8411488eced42df4d",
-          "head_committed_at": "2026-09-22T13:37:33-05:00",
-          "head_message": "fix(n0): keep context-swap candidate entities distinct",
-          "ahead": 1085,
+          "head": "1608d35230c970ff2b56da62d2d1498b4b7739ba",
+          "head_committed_at": "2026-09-22T13:55:44-05:00",
+          "head_message": "fix(n0): block truncated programs from global relational views",
+          "ahead": 1088,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
           "changed_file_count_vs_source_merge_base": 474,
@@ -777,10 +777,10 @@
       "all_ahead_candidates": [
         {
           "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-          "head": "b218a60eacc8fcdcdcd938e8411488eced42df4d",
-          "head_committed_at": "2026-09-22T13:37:33-05:00",
-          "head_message": "fix(n0): keep context-swap candidate entities distinct",
-          "ahead": 1085,
+          "head": "1608d35230c970ff2b56da62d2d1498b4b7739ba",
+          "head_committed_at": "2026-09-22T13:55:44-05:00",
+          "head_message": "fix(n0): block truncated programs from global relational views",
+          "ahead": 1088,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
           "changed_file_count_vs_source_merge_base": 474,
@@ -4859,7 +4859,7 @@
     },
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": true,
-      "newest_experiment_frontier_time": "2026-09-22T13:37:33-05:00",
+      "newest_experiment_frontier_time": "2026-09-22T13:55:44-05:00",
       "active_handoff_last_changed_at": "2026-09-22T02:02:32-05:00",
       "context_branch_head_time": "2026-09-22T02:02:44-05:00"
     },
@@ -4878,76 +4878,91 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 138,
+      "score": 135,
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "blob_sha": "2f78d0c63d0fd2c18c2e85a0eae6d4bc47792347",
-      "category": "configuration_state",
-      "title": "n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "declared": {},
-      "matched_terms": [
-        "error",
-        "repair"
+      "path": "docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md",
+      "blob_sha": "983b8a0dee77a7cb0fd7e7ffdf4383187128073a",
+      "category": "design_document",
+      "title": "N0 Full-Envelope Retrospective Architecture Audit v1",
+      "declared": {
+        "decision": " preserve step80 as an initialization and comparison baseline. Reopen public semantic representation learning jointly with the operator/schema objective. Do not treat the current semantic heads as universal frozen authority.",
+        "status": " retrospective architecture authority; no gradient/GPU authorization"
+      },
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 44,
+          "text": "| QSRE T2 v0.x | **SUPERSEDED_CAUSAL_SCAFFOLD** | Do not revive fixed slots/classes. Production Core design supersedes it. |"
+        },
+        {
+          "line": 47,
+          "text": "| Final self-validation v1 | **HISTORICALLY_VALID BUT INSUFFICIENT FULL-ENVELOPE GATE** | Preserve as historical frozen test. Supersede with a new broader final contract before N0 closure. |"
+        },
+        {
+          "line": 315,
+          "text": "## 12. Final self-validation v1 — preserve history, supersede before closure"
+        },
+        {
+          "line": 346,
+          "text": "Once job 575990 proved that geometry insufficient for the new open-schema semantic/operator requirement, those downstream preservation PASS results can no longer be interpreted as independent evidence that the representation is sufficient."
+        }
       ],
-      "supersession_hints": [],
       "catalogs": [
-        "failure",
-        "document",
         "supersession",
+        "document",
+        "failure",
+        "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 8,
+      "lexical_body_hits": 36,
       "currentness_adjustment": 25
     },
     {
-      "score": 138,
-      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+      "score": 128,
+      "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "blob_sha": "2f78d0c63d0fd2c18c2e85a0eae6d4bc47792347",
-      "category": "configuration_state",
-      "title": "n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "declared": {},
-      "matched_terms": [
-        "error",
-        "repair"
-      ],
+      "path": "docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md",
+      "blob_sha": "c253b117b72686b4cf440dad38e77e982eecbead",
+      "category": "working_context",
+      "title": "N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff",
+      "declared": {
+        "status": " active continuity authority for the current Sol handoff"
+      },
+      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
         "document",
+        "failure",
+        "frontier",
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 8,
-      "currentness_adjustment": 25
+      "lexical_body_hits": 45,
+      "currentness_adjustment": 30
     },
     {
-      "score": 138,
-      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+      "score": 123,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "blob_sha": "2f78d0c63d0fd2c18c2e85a0eae6d4bc47792347",
+      "path": "configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json",
+      "blob_sha": "d908298d8b279b33c72d388d023d7165da195a96",
       "category": "configuration_state",
-      "title": "n0_v02_qsre_final_self_validation_relation_schema_v1.json",
+      "title": "n0_v02_full_envelope_cpu_runtime_qualification_v1.json",
       "declared": {},
-      "matched_terms": [
-        "error",
-        "repair"
-      ],
+      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
         "document",
+        "failure",
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 8,
+      "lexical_body_hits": 13,
       "currentness_adjustment": 25
     },
     {
-      "score": 119,
+      "score": 122,
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
       "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
@@ -4957,25 +4972,20 @@
       "declared": {
         "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
       },
-      "matched_terms": [
-        "failure",
-        "hotfix",
-        "magnolia",
-        "udocker"
-      ],
+      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
         "document",
+        "failure",
         "frontier",
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 19,
+      "lexical_body_hits": 12,
       "currentness_adjustment": 25
     },
     {
-      "score": 119,
+      "score": 122,
       "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
       "branch_scope": "branch_specific",
       "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
@@ -4985,25 +4995,20 @@
       "declared": {
         "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
       },
-      "matched_terms": [
-        "failure",
-        "hotfix",
-        "magnolia",
-        "udocker"
-      ],
+      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
         "document",
+        "failure",
         "frontier",
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 19,
+      "lexical_body_hits": 12,
       "currentness_adjustment": 25
     },
     {
-      "score": 119,
+      "score": 122,
       "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
       "branch_scope": "branch_specific",
       "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
@@ -5013,154 +5018,179 @@
       "declared": {
         "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
       },
-      "matched_terms": [
-        "failure",
-        "hotfix",
-        "magnolia",
-        "udocker"
-      ],
+      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
         "document",
+        "failure",
         "frontier",
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 19,
+      "lexical_body_hits": 12,
       "currentness_adjustment": 25
     },
     {
-      "score": 113,
-      "branch": "alice-eipm-v1-n0-closure-pass",
+      "score": 119,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "blob_sha": "2f78d0c63d0fd2c18c2e85a0eae6d4bc47792347",
+      "path": "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
+      "blob_sha": "1fe303f978db81d8f6c4b20f6ea8c7ad61fe1156",
       "category": "configuration_state",
-      "title": "n0_v02_qsre_final_self_validation_relation_schema_v1.json",
+      "title": "n0_v02_full_envelope_proof_obligations_v1.json",
       "declared": {},
-      "matched_terms": [
-        "error",
-        "repair"
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 865,
+          "text": "\"requirement\": \"The current full-envelope successor must have an executable pre-gradient shortcut audit registered in CI for every shortcut probe declared by the semantic/operator curriculum contract. Superseded T2 shortcut receipts cannot satisfy this obligation.\""
+        }
       ],
-      "supersession_hints": [],
       "catalogs": [
-        "failure",
-        "document",
         "supersession",
+        "document",
+        "failure",
+        "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 8
+      "lexical_body_hits": 37,
+      "currentness_adjustment": 25
     },
     {
-      "score": 113,
-      "branch": "alice-eipm-v1-n0-closure-semantic-v2",
+      "score": 114,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "blob_sha": "2f78d0c63d0fd2c18c2e85a0eae6d4bc47792347",
-      "category": "configuration_state",
-      "title": "n0_v02_qsre_final_self_validation_relation_schema_v1.json",
+      "path": "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md",
+      "blob_sha": "9f07bc2ed47716788c0af7545e3c3cebda60b950",
+      "category": "design_document",
+      "title": "N0 job 575966 — frozen semantic authority v3",
       "declared": {},
-      "matched_terms": [
-        "error",
-        "repair"
-      ],
+      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
         "document",
+        "failure",
+        "frontier",
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 8
+      "lexical_body_hits": 17,
+      "currentness_adjustment": 25
     },
     {
-      "score": 113,
-      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
+      "score": 110,
+      "branch": "alice-personal-development-architecture-v1",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "blob_sha": "2f78d0c63d0fd2c18c2e85a0eae6d4bc47792347",
-      "category": "configuration_state",
-      "title": "n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "declared": {},
-      "matched_terms": [
-        "error",
-        "repair"
+      "path": "docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md",
+      "blob_sha": "983b8a0dee77a7cb0fd7e7ffdf4383187128073a",
+      "category": "design_document",
+      "title": "N0 Full-Envelope Retrospective Architecture Audit v1",
+      "declared": {
+        "decision": " preserve step80 as an initialization and comparison baseline. Reopen public semantic representation learning jointly with the operator/schema objective. Do not treat the current semantic heads as universal frozen authority.",
+        "status": " retrospective architecture authority; no gradient/GPU authorization"
+      },
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 44,
+          "text": "| QSRE T2 v0.x | **SUPERSEDED_CAUSAL_SCAFFOLD** | Do not revive fixed slots/classes. Production Core design supersedes it. |"
+        },
+        {
+          "line": 47,
+          "text": "| Final self-validation v1 | **HISTORICALLY_VALID BUT INSUFFICIENT FULL-ENVELOPE GATE** | Preserve as historical frozen test. Supersede with a new broader final contract before N0 closure. |"
+        },
+        {
+          "line": 315,
+          "text": "## 12. Final self-validation v1 — preserve history, supersede before closure"
+        },
+        {
+          "line": 346,
+          "text": "Once job 575990 proved that geometry insufficient for the new open-schema semantic/operator requirement, those downstream preservation PASS results can no longer be interpreted as independent evidence that the representation is sufficient."
+        }
       ],
-      "supersession_hints": [],
       "catalogs": [
-        "failure",
-        "document",
         "supersession",
+        "document",
+        "failure",
+        "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 8
+      "lexical_body_hits": 36
     },
     {
-      "score": 113,
-      "branch": "alice-eipm-v1-n0-p2a-semantic-localization-v1",
+      "score": 108,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "blob_sha": "2f78d0c63d0fd2c18c2e85a0eae6d4bc47792347",
-      "category": "configuration_state",
-      "title": "n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "declared": {},
-      "matched_terms": [
-        "error",
-        "repair"
+      "path": "docs/research/eipm-n0-semantic-operator-foundation-v1.md",
+      "blob_sha": "00236bdb42f6423741fe24e0843096ce9b98bea0",
+      "category": "design_document",
+      "title": "N0 Semantic-Operator Foundation v1 — architecture decision after job 575990",
+      "declared": {
+        "status": " architecture decision; no gradient or GPU authorization"
+      },
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 81,
+          "text": "Semantic-base ratification therefore remains valid **for the evidence on which it was ratified**, but it is no longer sufficient authority for the broader QSRE/N0 workload now exposed."
+        },
+        {
+          "line": 89,
+          "text": "Downstream work then tried to recover those missing capabilities with adapters, matchers, routers, and frozen-authority readouts around a semantic representation that could no longer co-adapt."
+        }
       ],
-      "supersession_hints": [],
       "catalogs": [
-        "failure",
-        "document",
         "supersession",
+        "document",
+        "failure",
+        "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 8
+      "lexical_body_hits": 30,
+      "currentness_adjustment": 25
     },
     {
-      "score": 113,
-      "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
+      "score": 104,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "blob_sha": "2f78d0c63d0fd2c18c2e85a0eae6d4bc47792347",
-      "category": "configuration_state",
-      "title": "n0_v02_qsre_final_self_validation_relation_schema_v1.json",
+      "path": ".github/workflows/n0-qsre-frozen-semantic-authority-v3-contract.yml",
+      "blob_sha": "688076e42aa92cb7aaf9fcc0ff3cf4058d54d8dd",
+      "category": "repository_file",
+      "title": "n0-qsre-frozen-semantic-authority-v3-contract.yml",
       "declared": {},
-      "matched_terms": [
-        "error",
-        "repair"
-      ],
+      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
         "document",
-        "supersession",
+        "failure",
+        "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 8
+      "lexical_body_hits": 10,
+      "currentness_adjustment": 25
     },
     {
-      "score": 113,
-      "branch": "alice-eipm-v1-qsre-production-core-v1",
+      "score": 104,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "blob_sha": "2f78d0c63d0fd2c18c2e85a0eae6d4bc47792347",
-      "category": "configuration_state",
-      "title": "n0_v02_qsre_final_self_validation_relation_schema_v1.json",
-      "declared": {},
-      "matched_terms": [
-        "error",
-        "repair"
-      ],
+      "path": "docs/research/eipm-n0-final-full-scale-capability-package-v1.md",
+      "blob_sha": "fb5e10c4f86c439d974f56ac4a52ba985cd0ef32",
+      "category": "design_document",
+      "title": "N0 final full-scale capability package v1",
+      "declared": {
+        "status": " precommitted package; N0 is not complete until the unchanged native frozen objective passes"
+      },
+      "matched_terms": [],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
         "document",
+        "failure",
+        "frontier",
         "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 8
+      "lexical_body_hits": 23,
+      "currentness_adjustment": 25
     }
   ],
   "graphify_navigation_hints": [
@@ -5168,145 +5198,145 @@
       "label": "audit_n0_v02_full_envelope_proof_obligations_v1.py",
       "source": "scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py",
       "location": "L1",
-      "community": "0"
+      "community": "1"
     },
     {
-      "label": "test_behavioral_compiler_support_targets_are_structurally_valid_and_unknown_rows_use_null_support()",
-      "source": "tests/eipm/test_n0_full_envelope_trainable_system_v1.py",
-      "location": "L836",
-      "community": "38"
+      "label": "audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py",
+      "source": "scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py",
+      "location": "L1",
+      "community": "1"
     },
     {
-      "label": "test_exact_masked_softmax_preserves_extreme_valid_logits_and_empty_rows()",
-      "source": "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py",
-      "location": "L1059",
-      "community": "34"
+      "label": "qualify_n0_v02_full_envelope_cpu_runtime_v1.py",
+      "source": "scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py",
+      "location": "L1",
+      "community": "18"
     },
     {
-      "label": "Activate named capability profiles inside a mission. Profiles can be added…",
-      "source": "src/alice_evolution/capability_runtime.py",
-      "location": "L78",
-      "community": "99"
+      "label": ".accounting()",
+      "source": "src/cognitive_kernel/payload_store.py",
+      "location": "L370",
+      "community": "63"
     },
     {
-      "label": "active_edge_logits()",
-      "source": "scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py",
-      "location": "L67",
-      "community": "210"
+      "label": "diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py",
+      "source": "scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py",
+      "location": "L1",
+      "community": "2"
     },
     {
-      "label": "adapter()",
-      "source": "tests/phase4/test_information_research_mode.py",
-      "location": "L312",
-      "community": "43"
-    },
-    {
-      "label": "add()",
-      "source": "src/alice_conversation/response_validation.py",
-      "location": "L241",
-      "community": "52"
+      "label": ".encode_padded_items()",
+      "source": "src/alice_personality/n0/full_envelope_semantic_input_v1.py",
+      "location": "L349",
+      "community": "259"
     },
     {
       "label": "AliceN0V02Model",
       "source": "src/alice_personality/n0/v02_model.py",
       "location": "L13",
-      "community": "161"
+      "community": "78"
     },
     {
-      "label": "assert_parent_parameters_unchanged()",
-      "source": "scripts/eipm/n0/train_n0_v02_relation_semantic_role_residual_v0_2.py",
-      "location": "L142",
-      "community": "148"
+      "label": "audit_n0_v02_operator_evidence_token_alignment_v1.py",
+      "source": "scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py",
+      "location": "L1",
+      "community": "1"
     },
     {
       "label": "audit()",
       "source": "scripts/audit_capability_barriers.py",
       "location": "L521",
-      "community": "145"
+      "community": "148"
     },
     {
       "label": "authority()",
       "source": "tests/eipm/test_n0_qsre_production_operator_v3.py",
       "location": "L87",
-      "community": "201"
-    },
-    {
-      "label": "authorize_boolean_map()",
-      "source": "src/alice_capability_profiles.py",
-      "location": "L88",
-      "community": "99"
-    },
-    {
-      "label": "test_candidates_never_enter_derived_indexes_before_promotion()",
-      "source": "tests/phase2/test_memory_candidate_security_gates.py",
-      "location": "L312",
-      "community": "114"
-    },
-    {
-      "label": "BehavioralBatchCompileConfig",
-      "source": "src/alice_personality/n0/full_envelope_behavioral_batch_v1.py",
-      "location": "L30",
-      "community": "38"
-    },
-    {
-      "label": "Binder targets are query-relevant support, not relation-key membership. The…",
-      "source": "tests/eipm/test_n0_full_envelope_trainable_system_v1.py",
-      "location": "L650",
-      "community": "38"
-    },
-    {
-      "label": "test_request_target_tampering_blocks_final_deletion()",
-      "source": "tests/phase2/test_memory_deletion_security_gates.py",
-      "location": "L350",
-      "community": "104"
+      "community": "214"
     },
     {
       "label": "branch_forward()",
       "source": "scripts/eipm/n0/train_n0_v02_structured_state_pilot.py",
       "location": "L287",
-      "community": "68"
+      "community": "182"
     },
     {
       "label": "_build()",
       "source": "tests/phase4/test_information_grounding.py",
       "location": "L154",
-      "community": "83"
+      "community": "69"
     },
     {
-      "label": "candidate()",
-      "source": "tests/phase5/test_memory_m2_adjudication_contracts.py",
-      "location": "L154",
-      "community": "15"
+      "label": "test_dynamic_relation_cardinality_has_no_parameter_axis()",
+      "source": "tests/eipm/test_n0_qsre_production_core_v1.py",
+      "location": "L157",
+      "community": "116"
     },
     {
-      "label": "test_nonanswer_cases_pass_only_without_claims()",
-      "source": "tests/phase2/test_memory_citation_evaluation.py",
-      "location": "L404",
-      "community": "156"
+      "label": "causal_specialist_probabilities()",
+      "source": "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py",
+      "location": "L83",
+      "community": "26"
     },
     {
-      "label": "test_executor_role_source_target_causally_switches_endpoint_readout()",
-      "source": "tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py",
-      "location": "L902",
-      "community": "44"
+      "label": "test_plane_result_checks_expected_generation()",
+      "source": "tests/phase5/test_deletion_prototype.py",
+      "location": "L279",
+      "community": "143"
     },
     {
-      "label": "test_n0_no_accidental_capability_ceilings.py",
-      "source": "tests/eipm/test_n0_no_accidental_capability_ceilings.py",
+      "label": "test_ordinary_plaintext_inspection_and_temporal_paths_fail_closed()",
+      "source": "tests/phase2/test_memory_sensitive_storage.py",
+      "location": "L202",
+      "community": "11"
+    },
+    {
+      "label": ".test_promotional_self_record_impact_is_rejected_but_concrete_action_kept()",
+      "source": "tests/phase1/test_personal_claim_validity_contract.py",
+      "location": "L80",
+      "community": "100"
+    },
+    {
+      "label": "config()",
+      "source": "tests/eipm/test_n0_semantic_operator_foundation_v1.py",
+      "location": "L16",
+      "community": "88"
+    },
+    {
+      "label": "test_generated_reconstruction_requires_sources_and_derivation()",
+      "source": "tests/phase5/test_cognitive_kernel_contracts.py",
+      "location": "L37",
+      "community": "33"
+    },
+    {
+      "label": "context()",
+      "source": "tests/phase1/test_claim_support_audit.py",
+      "location": "L17",
+      "community": "105"
+    },
+    {
+      "label": "corpus_receipt.py",
+      "source": "src/alice_personality/n0/corpus_receipt.py",
       "location": "L1",
-      "community": "14"
+      "community": "79"
     },
     {
-      "label": "checked_file()",
-      "source": "scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
-      "location": "L145",
-      "community": "182"
+      "label": "rayan_n0_kaggle_cpu_lineage_controller_v102.py",
+      "source": "scripts/eipm/n0/rayan_n0_kaggle_cpu_lineage_controller_v102.py",
+      "location": "L1",
+      "community": "181"
     },
     {
-      "label": "classify()",
-      "source": "scripts/audit_repository_phase_boundary.py",
-      "location": "L120",
-      "community": "102"
+      "label": "CurrentClaimProjection",
+      "source": "src/cognitive_kernel/claim_contracts.py",
+      "location": "L755",
+      "community": "16"
+    },
+    {
+      "label": "curriculum_data.py",
+      "source": "src/alice_personality/n0/curriculum_data.py",
+      "location": "L1",
+      "community": "12"
     }
   ],
   "private_external_route_recommended": true,
