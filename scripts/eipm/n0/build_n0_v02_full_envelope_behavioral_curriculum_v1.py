@@ -625,6 +625,7 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         step_targets=[dict(targets) for _ in relation_sequence]
     return {
         "scenario_family":family,
+        "entities_used":[a,b,c,d],
         "query":query,
         "fields":fields,
         "edges":edges,
@@ -761,6 +762,7 @@ def materialize_row(
         "split":split,
         "lane":"full_envelope_behavioral_fabric",
         "scenario_family":base["scenario_family"],
+        "entities":base["entities_used"],
         "template_id":template_id,
         "causal_group":causal_group,
         "query":base["query"],
