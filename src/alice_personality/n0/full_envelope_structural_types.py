@@ -128,6 +128,56 @@ class FullEnvelopeOperatorState:
     continuous_state: Tensor
     uncertainty: Tensor
 
+    def completed_relational_program_mass(self) -> Tensor:
+        """Exact mass that executes at least one relation and later reaches STOP.
+
+        STOP at slot zero is a non-relational branch. A relation executed at the
+        final available slot without a later STOP is truncation. Therefore the
+        exact successful relational-program mass is the survival-weighted STOP
+        mass from slots one onward, not a product of marginal start/completion
+        probabilities.
+        """
+        if self.stop_probability.ndim != 2:
+            raise ValueError("stop_probability must be [B,S]")
+        if self.stop_probability.size(1) <= 1:
+            return torch.zeros(
+                self.stop_probability.size(0),
+                device=self.stop_probability.device,
+                dtype=self.stop_probability.dtype,
+            )
+        return self.stop_probability[:,1:].sum(dim=1).clamp(0.0,1.0)
+
+    def completed_relational_step_mass(self) -> Tensor:
+        """Unconditional mass for each relation step that later reaches STOP."""
+        if self.stop_probability.ndim != 2:
+            raise ValueError("stop_probability must be [B,S]")
+        reverse_cumulative=torch.flip(
+            torch.cumsum(
+                torch.flip(self.stop_probability,dims=[1]),
+                dim=1,
+            ),
+            dims=[1],
+        )
+        return (
+            reverse_cumulative - self.stop_probability
+        ).clamp(0.0,1.0)
+
+    def completed_relational_step_weight(self) -> Tensor:
+        """P(step is executed | relational program eventually completes)."""
+        completed=self.completed_relational_program_mass()
+        step_mass=self.completed_relational_step_mass()
+        denominator=torch.where(
+            completed > 0.0,
+            completed,
+            torch.ones_like(completed),
+        )
+        weight=step_mass / denominator[:,None]
+        return torch.where(
+            completed[:,None] > 0.0,
+            weight,
+            torch.zeros_like(weight),
+        ).clamp(0.0,1.0)
+
     def validate(
         self,
         *,

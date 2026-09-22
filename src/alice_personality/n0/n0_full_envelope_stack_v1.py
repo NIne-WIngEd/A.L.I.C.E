@@ -232,34 +232,36 @@ class N0FullEnvelopeStackV1(nn.Module):
     def _relation_program_summary(
         operator: Any,
     ) -> tuple[Tensor, Tensor]:
+        completed_step_weight = (
+            operator.completed_relational_step_weight()
+        )
         raw_relation_mass = torch.einsum(
             "bsr,bs->br",
             operator.relation_distribution,
-            operator.relation_step_mass,
+            completed_step_weight,
         )
-        expected_executed_steps = operator.relation_step_mass.sum(
+        completed_step_count = completed_step_weight.sum(
             dim=1,
             keepdim=True,
         )
-        relation_mass = raw_relation_mass / expected_executed_steps.clamp_min(
-            1.0e-6
+        safe_step_count = torch.where(
+            completed_step_count > 0.0,
+            completed_step_count,
+            torch.ones_like(completed_step_count),
         )
-        known_mass = (
-            1.0 - operator.unknown_probability.sum(dim=1).clamp(max=1.0)
-        ).clamp(0.0, 1.0)
-        complete_mass = (
-            1.0 - operator.truncation_probability
-        ).clamp(0.0, 1.0)
-        # Slot zero CONTINUE mass is P(the relational program starts).
-        # Summing survival-weighted CONTINUE mass estimates expected path
-        # length and must not inflate graph/evidence activity.
-        program_started = operator.relation_step_mass[:, 0].clamp(0.0, 1.0)
+        relation_mass = raw_relation_mass / safe_step_count
+        relation_mass = torch.where(
+            completed_step_count > 0.0,
+            relation_mass,
+            torch.zeros_like(relation_mass),
+        )
+        completed_program_mass = (
+            operator.completed_relational_program_mass()
+        )
         semantic_activity = (
-            program_started
+            completed_program_mass
             * operator.applicability.clamp(0.0, 1.0)
             * operator.control_distribution[:, CONTROL_RELATIONAL]
-            * known_mass
-            * complete_mass
         ).clamp(0.0, 1.0)
         return relation_mass, semantic_activity
 
@@ -687,7 +689,9 @@ class N0FullEnvelopeStackV1(nn.Module):
             "graph_views_require_exact_binder_support": True,
             "fusion_route_weight_causally_controls_latent_contribution": True,
             "unavailable_internal_view_descriptor_cannot_create_signal": True,
-            "semantic_activity_uses_program_start_probability_not_expected_step_count": True,
+            "semantic_activity_uses_program_start_probability_not_expected_step_count": False,
+            "semantic_activity_uses_exact_joint_completed_program_mass": True,
+            "relation_summary_conditions_on_completed_program_steps": True,
             "semantic_activity_requires_program_completion": True,
             "truncated_program_cannot_activate_global_relational_views": True,
             "runtime_relation_ceiling": None,

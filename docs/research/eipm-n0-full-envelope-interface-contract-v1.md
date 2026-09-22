@@ -31,6 +31,8 @@ Edges may carry an integer index into the runtime relation schema. Meaning comes
 
 Residual CONTINUE survival at the final available reasoning slot is explicit truncation. It is not successful completion. Graph and evidence-specialist relational activity must be gated by program completion, so an unfinished relation program cannot enter fusion as if it were completed evidence. The non-relational semantic/structured path remains available for fallback or defer behavior.
 
+Program completion is a joint survival/event quantity, not a product of marginals. The exact completed relational mass is the survival-weighted STOP mass after at least one CONTINUE relation step. A branch that stops before relation execution and a disjoint branch that only truncates must not combine into fictitious completion. Relation summaries and Executor path state are conditioned on relation steps that belong to branches which later reach STOP, so UNKNOWN/truncated-only later semantics cannot contaminate a completed relational assertion.
+
 ## Fusion
 
 Keep source-anchored multi-stream fusion. Exact parent/source channels remain valuable.

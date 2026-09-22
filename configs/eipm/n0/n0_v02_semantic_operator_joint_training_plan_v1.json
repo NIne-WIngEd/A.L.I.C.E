@@ -76,7 +76,10 @@
     "one_shared_semantic_backbone_for_replay_and_full_envelope": true,
     "detached_duplicate_backbones_forbidden": true,
     "prebinder_graph_exact_runtime_type_gate": true,
-    "unsupported_graph_views_blocked_by_binder_null_support": true
+    "unsupported_graph_views_blocked_by_binder_null_support": true,
+    "exact_joint_completed_program_mass": true,
+    "completed_program_relation_summary_excludes_unknown_and_truncated_only_branches": true,
+    "executor_step_state_conditioned_on_future_stop_completion": true
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",

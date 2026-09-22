@@ -239,10 +239,20 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         last_edge_state = torch.zeros(
             batch, edges, self.config.model_dim, device=node.device, dtype=node.dtype
         )
+        completed_program_mass = (
+            operator.completed_relational_program_mass()
+        )
+        completed_step_weight = (
+            operator.completed_relational_step_weight()
+        )
 
         for step in range(operator.relation_distribution.size(1)):
             relation_distribution = operator.relation_distribution[:, step]
-            step_mass = operator.relation_step_mass[:, step]
+            # Execute the structural path conditional on successful future
+            # STOP completion. Incomplete UNKNOWN/truncated branches are not
+            # allowed to steer the state that will later be asserted as a
+            # completed relational result.
+            step_mass = completed_step_weight[:, step]
             edge_relation_mass = relation_distribution.gather(1, relation_index)
             edge_relation_state = step_relation_state[:, step][b, relation_index]
 
@@ -622,21 +632,15 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             allow_empty=True,
         )
 
-        known = (
-            1.0 - operator.unknown_probability.sum(dim=1).clamp(max=1.0)
-        ).clamp(0.0, 1.0)
-        complete = (1.0 - operator.truncation_probability).clamp(0.0, 1.0)
-        # Survival-weighted CONTINUE mass across slots estimates expected
-        # executed steps when summed. It is not a probability of having a
-        # relational program. Slot zero is exactly P(program starts), so path
-        # length cannot inflate confidence.
-        program_started = operator.relation_step_mass[:, 0].clamp(0.0, 1.0)
+        # completed_program_mass is the exact joint event mass for
+        # "at least one relation executed and a later STOP occurred". It
+        # already excludes pre-relation STOP/UNKNOWN and residual truncation;
+        # multiplying independent-looking marginals can fabricate completion
+        # on disjoint branches.
         execution_confidence = (
             operator.applicability
             * operator.control_distribution[:, CONTROL_RELATIONAL]
-            * known
-            * complete
-            * program_started
+            * completed_program_mass
             * support_available.clamp(0.0, 1.0)
         ).clamp(0.0, 1.0)
         probability = probability * execution_confidence[:, None]
@@ -697,7 +701,9 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "hard_traversal_threshold": False,
             "execution_confidence_requires_structural_support": True,
             "execution_confidence_requires_program_completion": True,
-            "execution_confidence_uses_program_start_probability_not_expected_step_count": True,
+            "execution_confidence_uses_program_start_probability_not_expected_step_count": False,
+            "execution_confidence_uses_exact_joint_completed_program_mass": True,
+            "execution_steps_conditioned_on_future_stop_completion": True,
             "zero_execution_confidence_zeroes_relational_summary": True,
             "relation_count_ceiling": None,
             "hop_count_ceiling": None,

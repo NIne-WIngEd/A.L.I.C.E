@@ -81,7 +81,9 @@
     "graph_depth_ceiling": null,
     "node_count_ceiling": null,
     "edge_count_ceiling": null,
-    "program_completion_required_for_relational_activity": true
+    "program_completion_required_for_relational_activity": true,
+    "exact_joint_completed_program_mass_required": true,
+    "incomplete_branch_relation_semantics_may_not_activate_completed_global_views": true
   },
   "fusion_successor": {
     "preserve": [
@@ -167,7 +169,9 @@
     "symmetric_relation_storage_orientation_invariant": true,
     "mixed_direction_programs_supported": true,
     "step_specific_modifiers_supported": true,
-    "no_truncated_program_global_relational_view_activation": true
+    "no_truncated_program_global_relational_view_activation": true,
+    "no_marginal_start_times_completion_product_for_relational_success": true,
+    "incomplete_only_relation_steps_cannot_steer_completed_output": true
   },
   "authorization": {
     "source_and_static_mechanics": true,
@@ -176,5 +180,9 @@
     "gpu": false,
     "test_opening": false,
     "private_identity_gradient": false
+  },
+  "executor_successor": {
+    "exact_joint_completed_program_mass_required": true,
+    "execution_step_state_conditioned_on_successful_future_stop": true
   }
 }
