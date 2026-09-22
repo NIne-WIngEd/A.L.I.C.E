@@ -54,11 +54,11 @@
   },
   "continuity_overlay": {
     "branch": "alice-context",
-    "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_CONDITIONED_MULTILAYER_INTERFACE_HANDOFF.md",
-    "blob_sha": "c20f2a28057015a3c7566da0d20895a6fa45a044",
-    "title": "N0 Relation-Conditioned Multi-Layer Query Interface Handoff",
-    "date": "2026-09-18",
-    "last_changed_at": "2026-09-18T15:43:05-05:00",
+    "path": "docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md",
+    "blob_sha": "5fc63c917130643945a7cad61f8789afc0828e39",
+    "title": "N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff",
+    "date": "2026-09-22",
+    "last_changed_at": "2026-09-22T00:04:58-05:00",
     "current_build_head_declared": null,
     "magnolia_job_observed": null,
     "authoritative_build_state_excerpt": null,
@@ -68,9 +68,9 @@
   },
   "continuity_branch_head": {
     "branch": "alice-context",
-    "head": "1e6788879f41c941f115c98e09518a295ebcf96b",
-    "head_committed_at": "2026-09-21T13:01:00-05:00",
-    "head_message": "context(n0): bind qualified foundation freeze correction"
+    "head": "952998856a337460f94746d40ef4261d7e040f49",
+    "head_committed_at": "2026-09-22T00:05:34-05:00",
+    "head_message": "context(n0): mark frozen-authority Magnolia handoff superseded"
   },
   "unmerged_experiment_frontier": {
     "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -4803,10 +4803,10 @@
     "authority": "routing-only; not canonical promotion"
   },
   "continuity_freshness": {
-    "stale_relative_to_unmerged_experiment_frontier": true,
+    "stale_relative_to_unmerged_experiment_frontier": false,
     "newest_experiment_frontier_time": "2026-09-21T22:52:46-05:00",
-    "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
-    "context_branch_head_time": "2026-09-21T13:01:00-05:00"
+    "active_handoff_last_changed_at": "2026-09-22T00:04:58-05:00",
+    "context_branch_head_time": "2026-09-22T00:05:34-05:00"
   },
   "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
   "authority": "routing-and-freshness-only"

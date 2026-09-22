@@ -5,14 +5,14 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "1e6788879f41c941f115c98e09518a295ebcf96b",
-      "head_committed_at": "2026-09-21T13:01:00-05:00",
-      "head_message": "context(n0): bind qualified foundation freeze correction",
+      "head": "952998856a337460f94746d40ef4261d7e040f49",
+      "head_committed_at": "2026-09-22T00:05:34-05:00",
+      "head_message": "context(n0): mark frozen-authority Magnolia handoff superseded",
       "status": "diverged",
-      "ahead": 238,
+      "ahead": 241,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
-      "changed_file_count_vs_source_merge_base": 584,
+      "changed_file_count_vs_source_merge_base": 585,
       "knowledge_surface": true
     },
     {
@@ -376,6 +376,18 @@
       "knowledge_surface": true
     },
     {
+      "branch": "alice-personal-development-architecture-v1",
+      "head": "88fbccd2e900569228e09a9b984a00dde16c7abc",
+      "head_committed_at": "2026-09-22T00:03:20-05:00",
+      "head_message": "architecture: make continuing personal development a required capability",
+      "status": "ahead",
+      "ahead": 1022,
+      "behind": 0,
+      "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
+      "changed_file_count_vs_source_merge_base": 477,
+      "knowledge_surface": true
+    },
+    {
       "branch": "alice-telemetry",
       "head": "fbb308577864481ea51ed9295aca7a5fc4e3aa7f",
       "head_committed_at": "2026-09-18T15:43:07-05:00",
@@ -425,14 +437,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "f8b4bbcf19ff609122441397bf1712f04b31c0c1",
-      "head_committed_at": "2026-09-21T23:09:07-05:00",
-      "head_message": "fable: record and correct parallel-capture lapse",
+      "head": "467fb30689500f30b0bf23d04c214362d63ff10d",
+      "head_committed_at": "2026-09-22T00:03:58-05:00",
+      "head_message": "trace(fable): capture personal development architecture correction",
       "status": "diverged",
-      "ahead": 114,
+      "ahead": 116,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 112,
+      "changed_file_count_vs_source_merge_base": 113,
       "knowledge_surface": true
     },
     {
