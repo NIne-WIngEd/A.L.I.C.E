@@ -319,3 +319,38 @@ def test_chunked_late_interaction_allows_empty_padded_items_without_signal() -> 
         i_to_q[1,2:],
         torch.zeros_like(i_to_q[1,2:]),
     )
+
+
+def test_context_virtualizer_splits_overlap_at_midpoint_instead_of_later_window_bias() -> None:
+    virtualizer = SemanticContextVirtualizerV1(
+        SemanticContextVirtualizerConfig(
+            native_window_tokens=10,
+            overlap_tokens=4,
+        )
+    )
+    ids = torch.arange(1, 23).view(1,22)
+    mask = torch.ones_like(ids,dtype=torch.bool)
+    segmented = virtualizer.segment(
+        input_ids=ids,
+        attention_mask=mask,
+    )
+    starts = segmented["segment_absolute_start"][0]
+    ends = segmented["segment_absolute_end"][0]
+    own_starts = segmented["content_absolute_start"][0]
+    own_ends = segmented["content_absolute_end"][0]
+    valid = segmented["segment_valid_mask"][0]
+    indices = torch.nonzero(valid,as_tuple=False).flatten().tolist()
+    assert len(indices) >= 2
+    for left,right in zip(indices,indices[1:]):
+        assert int(own_ends[left]) == int(own_starts[right])
+        overlap_start = int(starts[right])
+        overlap_end = int(ends[left])
+        assert overlap_end > overlap_start
+        midpoint = (overlap_start + overlap_end)//2
+        assert int(own_ends[left]) == midpoint
+        assert int(own_starts[right]) == midpoint
+        assert midpoint > overlap_start
+        assert midpoint < overlap_end
+    report=virtualizer.parameter_report()
+    assert report["overlap_midpoint_ownership"] is True
+    assert report["boundary_context_bias_to_later_window"] is False
