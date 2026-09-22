@@ -7,13 +7,13 @@
   "maximal_heads": [
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "4022aa570e5fbc129471f5d6143e4a4001c98369",
-      "head_committed_at": "2026-09-21T20:17:33-05:00",
-      "head_message": "test(n0): prove padded long-context segments are inert",
-      "ahead": 911,
+      "head": "88c702216b09ddf9c761f9a37666068c90e8c837",
+      "head_committed_at": "2026-09-21T21:42:27-05:00",
+      "head_message": "fix(n0): classify trainable-system tests as tests not critical source",
+      "ahead": 968,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 461,
+      "changed_file_count_vs_source_merge_base": 466,
       "changed_paths_vs_source_merge_base": [
         ".github/workflows/n0-arbitration-contract-check.yml",
         ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -648,13 +648,13 @@
   "all_ahead_candidates": [
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "4022aa570e5fbc129471f5d6143e4a4001c98369",
-      "head_committed_at": "2026-09-21T20:17:33-05:00",
-      "head_message": "test(n0): prove padded long-context segments are inert",
-      "ahead": 911,
+      "head": "88c702216b09ddf9c761f9a37666068c90e8c837",
+      "head_committed_at": "2026-09-21T21:42:27-05:00",
+      "head_message": "fix(n0): classify trainable-system tests as tests not critical source",
+      "ahead": 968,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 461,
+      "changed_file_count_vs_source_merge_base": 466,
       "changed_paths_vs_source_merge_base": [
         ".github/workflows/n0-arbitration-contract-check.yml",
         ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
