@@ -103,6 +103,12 @@ def main() -> None:
             raise ValueError("text-surface stress/native-window contract drift")
 
         case=o["runtime_case"]
+        if "max_text_tokens" in case:
+            raise ValueError("runtime fixture may not declare max_text_tokens as a capability limit")
+        if int(case.get("fixture_text_token_operating_point",0)) <= 0:
+            raise ValueError("runtime text-token operating point missing")
+        if case.get("fixture_text_token_operating_point_is_product_ceiling") is not False:
+            raise ValueError("runtime text-token operating point may not become a product ceiling")
         b=int(case["batch_size"])
         if len(case["queries"])!=b:
             raise ValueError("query batch drift")

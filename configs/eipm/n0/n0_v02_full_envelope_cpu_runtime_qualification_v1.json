@@ -47,7 +47,6 @@
   },
   "runtime_case": {
     "batch_size": 2,
-    "max_text_tokens": 48,
     "max_reasoning_steps": 4,
     "graph_message_steps": 3,
     "fusion_refinement_steps": 2,
@@ -841,7 +840,9 @@
     "additional_views": [
       "external retrieval summary from an independently governed public source",
       "future optional sensor or voice-derived public N0 observation"
-    ]
+    ],
+    "fixture_text_token_operating_point": 48,
+    "fixture_text_token_operating_point_is_product_ceiling": false
   },
   "qualification": {
     "require_cpu_only": true,
