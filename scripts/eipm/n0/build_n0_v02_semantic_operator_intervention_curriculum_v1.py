@@ -447,6 +447,30 @@ def make_row(
             "text": factor_text,
         }
 
+    step_factor_target_map = {
+        "direction": step_direction,
+        "reliability_modifier": step_reliability,
+        "recency_modifier": step_recency,
+        "temporal_constraint_modifier": step_temporal,
+        "provenance_constraint_modifier": step_provenance,
+    }
+    step_factor_schema_evidence_char_spans = {}
+    for name, targets in step_factor_target_map.items():
+        bank_values = factor_banks[name]
+        spans = []
+        for step, target_index in enumerate(targets):
+            factor_text = str(bank_values[int(target_index)]["text"])
+            spans.append(
+                {
+                    "step": step,
+                    "candidate_index": int(target_index),
+                    "start": 0,
+                    "end": len(factor_text),
+                    "text": factor_text,
+                }
+            )
+        step_factor_schema_evidence_char_spans[name] = spans
+
     if intervention == "unknown_defer":
         event_sequence_target = ["UNKNOWN"]
         applicability_target = 0
@@ -483,13 +507,10 @@ def make_row(
         "query_relation_evidence_char_spans": query_relation_evidence_char_spans,
         "relation_schema_evidence_char_spans": relation_schema_evidence_char_spans,
         "factor_schema_evidence_char_spans": factor_schema_evidence_char_spans,
-        "step_factor_targets": {
-            "direction": step_direction,
-            "reliability_modifier": step_reliability,
-            "recency_modifier": step_recency,
-            "temporal_constraint_modifier": step_temporal,
-            "provenance_constraint_modifier": step_provenance,
-        },
+        "step_factor_targets": step_factor_target_map,
+        "step_factor_schema_evidence_char_spans": (
+            step_factor_schema_evidence_char_spans
+        ),
         "target_entities": target_entities,
         "intervention": intervention,
         "runtime_relation_count": len(bank),
