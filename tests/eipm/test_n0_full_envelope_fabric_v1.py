@@ -877,3 +877,47 @@ def test_dynamic_fusion_unavailable_view_cannot_erase_valid_mass_under_extreme_r
         atol=0.0,
         rtol=0.0,
     )
+
+
+def test_public_judgment_candidate_permutation_has_no_hidden_position_identity() -> None:
+    from alice_personality.n0.public_judgment_probe_v1 import (
+        PublicJudgmentProbeConfig,
+        PublicJudgmentProbeV1,
+    )
+
+    torch.manual_seed(901)
+    probe=PublicJudgmentProbeV1(
+        PublicJudgmentProbeConfig(
+            model_dim=24,
+            semantic_dim=24,
+            num_hidden_states=3,
+            dropout=0.0,
+        )
+    ).eval()
+    pooled=torch.randn(2,24)
+    hidden=torch.randn(2,5,3,4,24)
+    token_mask=torch.ones(2,5,4,dtype=torch.bool)
+    valid=torch.tensor(
+        [[True,True,False,True,True],[True,False,True,True,False]],
+        dtype=torch.bool,
+    )
+    perm=torch.tensor([3,0,4,1,2])
+    with torch.no_grad():
+        original=probe(
+            pooled_state=pooled,
+            candidate_hidden_states=hidden,
+            candidate_token_mask=token_mask,
+            candidate_valid_mask=valid,
+        )
+        permuted=probe(
+            pooled_state=pooled,
+            candidate_hidden_states=hidden[:,perm],
+            candidate_token_mask=token_mask[:,perm],
+            candidate_valid_mask=valid[:,perm],
+        )
+    assert torch.allclose(
+        original["candidate_logits"][:,perm],
+        permuted["candidate_logits"],
+        atol=1.0e-7,
+        rtol=0.0,
+    )
