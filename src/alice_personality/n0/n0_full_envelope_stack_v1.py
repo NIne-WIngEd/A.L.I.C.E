@@ -487,10 +487,14 @@ class N0FullEnvelopeStackV1(nn.Module):
             self.INTERNAL_VIEW_COUNT,
         ):
             raise ValueError("internal_view_reliability must be [B,6]")
+        supported_graph_view_activity = (
+            graph["graph_support_activity"]
+            * binder["support_available"].clamp(0.0, 1.0)
+        ).clamp(0.0, 1.0)
         internal_available, effective_internal_reliability = (
             self._internal_view_gates(
                 internal_view_reliability=internal_view_reliability,
-                graph_support_activity=graph["graph_support_activity"],
+                graph_support_activity=supported_graph_view_activity,
                 execution_confidence=executor["execution_confidence"],
             )
         )
@@ -599,6 +603,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "view_descriptors": descriptors,
             "view_available": available,
             "view_reliability": reliability,
+            "supported_graph_view_activity": supported_graph_view_activity,
         }
 
     def parameter_report(self) -> dict[str, Any]:
@@ -624,6 +629,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "raw_semantic_view_content_conditioned_layer_read": True,
             "pre_binder_graph_soft_activity_gated": True,
             "graph_and_executor_views_causally_availability_gated": True,
+            "graph_views_require_exact_binder_support": True,
             "fusion_route_weight_causally_controls_latent_contribution": True,
             "unavailable_internal_view_descriptor_cannot_create_signal": True,
             "semantic_activity_uses_program_start_probability_not_expected_step_count": True,
