@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "context-repair-verification-n0-current-boundary-20260922-032",
-  "question": "Verify the current A.L.I.C.E. N0 continuity boundary after the 2026-09-22 alice-context repair. The newest continuity authority should be docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md on alice-context, and the current N0 implementation frontier is alice-eipm-v1-n0-full-envelope-foundation-build-v1@6c4e3c02672b7a5415fb3407942d86cc9723b8d9. Confirm that older N0_FINAL_FULL_SCALE_FROZEN_AUTHORITY_READY Magnolia language is superseded by 575986/575990 and the current full-envelope handoff. Surface the current next action and authorization state. Also surface the accepted personal-development architecture branch alice-personal-development-architecture-v1 and the updated fable-builder-model personal-development trace. Do not infer readiness from green CI. Do not authorize Magnolia, training, FINAL, or N0 completion. Original branch-qualified sources are authority; Graphify is navigation only.",
-  "generated_at_utc": "2026-09-22T05:07:47.996557+00:00",
+  "request_id": "context-capsule-current-boundary-verification-20260922-033",
+  "question": "Verify the repaired current N0 continuity state after the context-capsule parser update. The current continuity authority is docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md. It declares current build head 6c4e3c02672b7a5415fb3407942d86cc9723b8d9, deep source audit incomplete, Magnolia CPU runtime not authorized, GPU/optimizer/gradient/final/N0 completion not authorized, and current next action is to continue the deep source-level audit. Show the stable-build latent-stage pointer only as historical/routing context, not current execution authority. Confirm continuity is not stale relative to the current full-envelope experiment frontier. Original branch-qualified source is authority; Graphify/catalog are navigation only.",
+  "generated_at_utc": "2026-09-22T05:12:06.971688+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -13,9 +13,9 @@
     "graph_extraction_tree": null,
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "952998856a337460f94746d40ef4261d7e040f49",
-      "head_committed_at": "2026-09-22T00:05:34-05:00",
-      "head_message": "context(n0): mark frozen-authority Magnolia handoff superseded"
+      "head": "0387254ea5de43cdd8de058cd5861355257e53ad",
+      "head_committed_at": "2026-09-22T00:10:50-05:00",
+      "head_message": "context(n0): expose machine-readable current build authorization state"
     },
     "continuity_stale_relative_to_experiment_frontier": false,
     "maximal_unmerged_experiment_heads": [
@@ -106,22 +106,26 @@
     "continuity_overlay": {
       "branch": "alice-context",
       "path": "docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md",
-      "blob_sha": "5fc63c917130643945a7cad61f8789afc0828e39",
+      "blob_sha": "49c856274bd69f88bb5785684488b7c9bf77f201",
       "title": "N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff",
       "date": "2026-09-22",
-      "last_changed_at": "2026-09-22T00:04:58-05:00",
-      "current_build_head_declared": null,
+      "last_changed_at": "2026-09-22T00:10:50-05:00",
+      "current_build_head_declared": "6c4e3c02672b7a5415fb3407942d86cc9723b8d9",
       "magnolia_job_observed": null,
-      "authoritative_build_state_excerpt": null,
+      "status_declared": "active continuity authority for the current Sol handoff",
+      "magnolia_authorization_declared": "**NO — deep source-level audit remains open**",
+      "n0_complete_declared": "false",
+      "authoritative_build_state_excerpt": "```text\nsource_branch=alice-eipm-v1-n0-full-envelope-foundation-build-v1\ncurrent_build_head=6c4e3c02672b7a5415fb3407942d86cc9723b8d9\ndeep_source_audit_complete=false\nexact_head_static_suite=PASS_114\nproof_obligations_total=99\nproof_obligations_static=85\nmagnolia_cpu_runtime_authorized=false\ngpu_memory_dry_run_authorized=false\noptimizer_authorized=false\ngradient_training_authorized=false\nfinal_validation_open_authorized=false\nn0_complete=false\n```\n\nThe old stable-build latent-stage pointer is historical routing context, not the current implementation frontier. For execution decisions, this handoff plus the exact unmerged full-envelope branch source takes precedence over stale stable-branch stage-state language.",
       "runtime_result_excerpt": null,
+      "next_action_excerpt": "Continue the deep source-level N0 audit at exact head `6c4e3c02672b7a5415fb3407942d86cc9723b8d9`.\n\nDo not ask the owner for a Magnolia run until that audit has either:\n\n- found and repaired the remaining statically discoverable defects and reached a new exact-head green receipt; or\n- produced a reasoned source-level conclusion that the remaining unknowns are genuinely empirical and cannot be resolved cheaply before runtime.\n\nGraphify is navigation only. Original branch-qualified source remains authority.",
       "next_experiment_excerpt": null,
       "authority": "branch-qualified-continuity-overlay"
     },
     "continuity_branch_head": {
       "branch": "alice-context",
-      "head": "952998856a337460f94746d40ef4261d7e040f49",
-      "head_committed_at": "2026-09-22T00:05:34-05:00",
-      "head_message": "context(n0): mark frozen-authority Magnolia handoff superseded"
+      "head": "0387254ea5de43cdd8de058cd5861355257e53ad",
+      "head_committed_at": "2026-09-22T00:10:50-05:00",
+      "head_message": "context(n0): expose machine-readable current build authorization state"
     },
     "unmerged_experiment_frontier": {
       "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -4856,132 +4860,51 @@
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": false,
       "newest_experiment_frontier_time": "2026-09-21T22:52:46-05:00",
-      "active_handoff_last_changed_at": "2026-09-22T00:04:58-05:00",
-      "context_branch_head_time": "2026-09-22T00:05:34-05:00"
+      "active_handoff_last_changed_at": "2026-09-22T00:10:50-05:00",
+      "context_branch_head_time": "2026-09-22T00:10:50-05:00"
     },
     "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
     "authority": "routing-and-freshness-only"
   },
+  "current_continuity": {
+    "path": "docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md",
+    "title": "N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff",
+    "status": "active continuity authority for the current Sol handoff",
+    "current_build_head": "6c4e3c02672b7a5415fb3407942d86cc9723b8d9",
+    "magnolia_authorization": "**NO — deep source-level audit remains open**",
+    "n0_complete": "false",
+    "authoritative_build_state": "```text\nsource_branch=alice-eipm-v1-n0-full-envelope-foundation-build-v1\ncurrent_build_head=6c4e3c02672b7a5415fb3407942d86cc9723b8d9\ndeep_source_audit_complete=false\nexact_head_static_suite=PASS_114\nproof_obligations_total=99\nproof_obligations_static=85\nmagnolia_cpu_runtime_authorized=false\ngpu_memory_dry_run_authorized=false\noptimizer_authorized=false\ngradient_training_authorized=false\nfinal_validation_open_authorized=false\nn0_complete=false\n```\n\nThe old stable-build latent-stage pointer is historical routing context, not the current implementation frontier. For execution decisions, this handoff plus the exact unmerged full-envelope branch source takes precedence over stale stable-branch stage-state language.",
+    "next_action": "Continue the deep source-level N0 audit at exact head `6c4e3c02672b7a5415fb3407942d86cc9723b8d9`.\n\nDo not ask the owner for a Magnolia run until that audit has either:\n\n- found and repaired the remaining statically discoverable defects and reached a new exact-head green receipt; or\n- produced a reasoned source-level conclusion that the remaining unknowns are genuinely empirical and cannot be resolved cheaply before runtime.\n\nGraphify is navigation only. Original branch-qualified source remains authority."
+  },
   "authoritative_source_pointers": [
     {
-      "score": 162,
+      "score": 184,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md",
-      "blob_sha": "5fc63c917130643945a7cad61f8789afc0828e39",
+      "blob_sha": "49c856274bd69f88bb5785684488b7c9bf77f201",
       "category": "working_context",
       "title": "N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff",
       "declared": {
         "status": " active continuity authority for the current Sol handoff"
       },
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 14,
-          "text": "This document supersedes that inference."
-        },
-        {
-          "line": 48,
-          "text": "Do not revive a superseded narrow PASS merely because a later experiment becomes inconvenient."
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "failure",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 30,
-      "currentness_adjustment": 30
-    },
-    {
-      "score": 109,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-21/sol/N0_FINAL_FULL_SCALE_FROZEN_AUTHORITY_READY.md",
-      "blob_sha": "c9277726bd1e05cec39f9d8ae9f9f0286b667a68",
-      "category": "working_context",
-      "title": "N0 final full-scale frozen-authority closure — ready for one owner Magnolia run",
-      "declared": {
-        "status": " final pre-launch package completed; exact-head static/CPU qualification passed; exact-source Graphify passed; private operational history reconciled; Fable updated; one owner Magnolia run is the next scientific evidence"
-      },
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 1,
-          "text": "> **SUPERSEDED FOR CURRENT EXECUTION — 2026-09-22**"
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "frontier",
-        "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 25,
-      "currentness_adjustment": -15
-    },
-    {
-      "score": 108,
-      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-job-575958-closure-pass-v1.md",
-      "blob_sha": "1d7af6e6ed03b5f478f31107ee36165a95a845f2",
-      "category": "design_document",
-      "title": "N0 closure-pass architecture after Magnolia job 575958",
-      "declared": {
-        "status": " implementation and static qualification package; GPU remains closed until exact-head qualification passes"
-      },
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 22,
-          "text": "That pattern says the final-v3 *package abstraction* still behaved like a small closed classifier even though its source code no longer contained an explicit learned relation-ID table."
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "failure",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 11,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 107,
-      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-semantic-operator-foundation-v1.md",
-      "blob_sha": "31338ca72c39905d61f8487e3118ee016c4fbae1",
-      "category": "design_document",
-      "title": "N0 Semantic-Operator Foundation v1 — architecture decision after job 575990",
-      "declared": {
-        "status": " architecture decision; no gradient or GPU authorization"
-      },
       "matched_terms": [
-        "error",
-        "failed",
-        "failure",
-        "magnolia",
-        "repair"
+        "frontier",
+        "research"
       ],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
         "frontier",
+        "failure",
         "supersession",
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 16,
-      "currentness_adjustment": 25
+      "lexical_body_hits": 31,
+      "currentness_adjustment": 30
     },
     {
-      "score": 106,
+      "score": 125,
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
       "path": "docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md",
@@ -5002,197 +4925,278 @@
       "supersession_hints": [],
       "catalogs": [
         "failure",
-        "supersession",
         "frontier",
         "document",
+        "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 16,
+      "lexical_body_hits": 15,
       "currentness_adjustment": 25
     },
     {
-      "score": 100,
+      "score": 120,
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md",
-      "blob_sha": "9f07bc2ed47716788c0af7545e3c3cebda60b950",
-      "category": "design_document",
-      "title": "N0 job 575966 — frozen semantic authority v3",
+      "path": ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
+      "blob_sha": "1510c11266ca1272da38dfbd7a0987b516c55de3",
+      "category": "repository_file",
+      "title": "Only the gate is deliberately zero-initialized.  Do not create a",
       "declared": {},
       "matched_terms": [
         "failed",
         "failure",
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "frontier",
-        "supersession",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 12,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 100,
-      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md",
-      "blob_sha": "4c10911f3f711232d68373e8ccacde7431574629",
-      "category": "design_document",
-      "title": "N0 relation-conditioned multi-layer training decision v0.1",
-      "declared": {},
-      "matched_terms": [
-        "egress",
-        "failed",
-        "failure",
+        "hotfix",
         "magnolia"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
-        "frontier",
+        "supersession",
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 7,
+      "lexical_body_hits": 6,
       "currentness_adjustment": 25
     },
     {
-      "score": 100,
+      "score": 120,
       "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md",
-      "blob_sha": "4c10911f3f711232d68373e8ccacde7431574629",
-      "category": "design_document",
-      "title": "N0 relation-conditioned multi-layer training decision v0.1",
+      "path": ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
+      "blob_sha": "1510c11266ca1272da38dfbd7a0987b516c55de3",
+      "category": "repository_file",
+      "title": "Only the gate is deliberately zero-initialized.  Do not create a",
       "declared": {},
       "matched_terms": [
-        "egress",
         "failed",
         "failure",
+        "hotfix",
         "magnolia"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
-        "frontier",
+        "supersession",
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 7,
+      "lexical_body_hits": 6,
       "currentness_adjustment": 25
     },
     {
-      "score": 100,
+      "score": 120,
       "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md",
-      "blob_sha": "4c10911f3f711232d68373e8ccacde7431574629",
-      "category": "design_document",
-      "title": "N0 relation-conditioned multi-layer training decision v0.1",
+      "path": ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
+      "blob_sha": "1510c11266ca1272da38dfbd7a0987b516c55de3",
+      "category": "repository_file",
+      "title": "Only the gate is deliberately zero-initialized.  Do not create a",
       "declared": {},
       "matched_terms": [
-        "egress",
         "failed",
         "failure",
+        "hotfix",
         "magnolia"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
-        "frontier",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 7,
-      "currentness_adjustment": 25
-    },
-    {
-      "score": 97,
-      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json",
-      "blob_sha": "91e1f93d4e1fd376faac2973c3b6206ee7bbd6e0",
-      "category": "configuration_state",
-      "title": "n0_v02_qsre_n0_frozen_authority_training_plan_v2.json",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 342,
-          "text": "\"compatibility_name_note\": \"v3 filename/class retained for downstream checkpoint wiring; closure-pass implementation supersedes job-575958 behavior on this branch\","
-        }
-      ],
-      "catalogs": [
         "supersession",
-        "failure",
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 4,
+      "lexical_body_hits": 6,
       "currentness_adjustment": 25
     },
     {
-      "score": 95,
+      "score": 117,
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
-      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
+      "path": "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+      "blob_sha": "b768036497da7db21464b6959b46d86706353832",
       "category": "design_document",
-      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
+      "title": "N0 Clean-Sheet Relational Execution Architecture Audit v0.1",
       "declared": {
-        "status": " production-architecture authority; implementation/training remains closed"
+        "status": " architecture-review authority; implementation and gradient work frozen"
       },
       "matched_terms": [
-        "failed",
-        "failure",
-        "fallback",
-        "magnolia",
-        "udocker"
+        "frontier",
+        "research"
       ],
       "supersession_hints": [],
       "catalogs": [
-        "failure",
         "frontier",
-        "supersession",
+        "failure",
         "document",
+        "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 11,
+      "lexical_body_hits": 15,
       "currentness_adjustment": 25
     },
     {
-      "score": 95,
+      "score": 117,
       "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-qsre-production-architecture-closure-v1.md",
-      "blob_sha": "2ef9dfe055e9c07845ee88f81135a350c0ac41f2",
+      "path": "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+      "blob_sha": "b768036497da7db21464b6959b46d86706353832",
       "category": "design_document",
-      "title": "QSRE Production Core v1 — Architecture Closure Before Further GPU Work",
+      "title": "N0 Clean-Sheet Relational Execution Architecture Audit v0.1",
       "declared": {
-        "status": " production-architecture authority; implementation/training remains closed"
+        "status": " architecture-review authority; implementation and gradient work frozen"
+      },
+      "matched_terms": [
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "failure",
+        "document",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 15,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 117,
+      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-clean-sheet-relational-execution-audit-v0.1.md",
+      "blob_sha": "b768036497da7db21464b6959b46d86706353832",
+      "category": "design_document",
+      "title": "N0 Clean-Sheet Relational Execution Architecture Audit v0.1",
+      "declared": {
+        "status": " architecture-review authority; implementation and gradient work frozen"
+      },
+      "matched_terms": [
+        "frontier",
+        "research"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "failure",
+        "document",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 15,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 113,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+      "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
+      "category": "design_document",
+      "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
+      "declared": {
+        "status": " architecture/data audit authority; all new gradient/GPU work frozen"
       },
       "matched_terms": [
         "failed",
         "failure",
         "fallback",
-        "magnolia",
+        "recovery",
         "udocker"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
         "frontier",
-        "supersession",
         "document",
+        "supersession",
         "lexical"
       ],
       "lexical_body_hits": 11,
       "currentness_adjustment": 25
+    },
+    {
+      "score": 113,
+      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+      "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
+      "category": "design_document",
+      "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
+      "declared": {
+        "status": " architecture/data audit authority; all new gradient/GPU work frozen"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
+        "fallback",
+        "recovery",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 11,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 113,
+      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+      "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
+      "category": "design_document",
+      "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
+      "declared": {
+        "status": " architecture/data audit authority; all new gradient/GPU work frozen"
+      },
+      "matched_terms": [
+        "failed",
+        "failure",
+        "fallback",
+        "recovery",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 11,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 110,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-21/sol/N0_FINAL_FULL_SCALE_FROZEN_AUTHORITY_READY.md",
+      "blob_sha": "4670e1c6e79fee667a20d27cca4b545bc36a9bd0",
+      "category": "working_context",
+      "title": "N0 final full-scale frozen-authority closure — ready for one owner Magnolia run",
+      "declared": {
+        "status": " final pre-launch package completed; exact-head static/CPU qualification passed; exact-source Graphify passed; private operational history reconciled; Fable updated; one owner Magnolia run is the next scientific evidence"
+      },
+      "matched_terms": [
+        "frontier"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "frontier",
+        "failure",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 20,
+      "currentness_adjustment": -15
     }
   ],
   "graphify_navigation_hints": [],

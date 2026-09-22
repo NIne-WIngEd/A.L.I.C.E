@@ -55,22 +55,26 @@
   "continuity_overlay": {
     "branch": "alice-context",
     "path": "docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md",
-    "blob_sha": "5fc63c917130643945a7cad61f8789afc0828e39",
+    "blob_sha": "49c856274bd69f88bb5785684488b7c9bf77f201",
     "title": "N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff",
     "date": "2026-09-22",
-    "last_changed_at": "2026-09-22T00:04:58-05:00",
-    "current_build_head_declared": null,
+    "last_changed_at": "2026-09-22T00:10:50-05:00",
+    "current_build_head_declared": "6c4e3c02672b7a5415fb3407942d86cc9723b8d9",
     "magnolia_job_observed": null,
-    "authoritative_build_state_excerpt": null,
+    "status_declared": "active continuity authority for the current Sol handoff",
+    "magnolia_authorization_declared": "**NO — deep source-level audit remains open**",
+    "n0_complete_declared": "false",
+    "authoritative_build_state_excerpt": "```text\nsource_branch=alice-eipm-v1-n0-full-envelope-foundation-build-v1\ncurrent_build_head=6c4e3c02672b7a5415fb3407942d86cc9723b8d9\ndeep_source_audit_complete=false\nexact_head_static_suite=PASS_114\nproof_obligations_total=99\nproof_obligations_static=85\nmagnolia_cpu_runtime_authorized=false\ngpu_memory_dry_run_authorized=false\noptimizer_authorized=false\ngradient_training_authorized=false\nfinal_validation_open_authorized=false\nn0_complete=false\n```\n\nThe old stable-build latent-stage pointer is historical routing context, not the current implementation frontier. For execution decisions, this handoff plus the exact unmerged full-envelope branch source takes precedence over stale stable-branch stage-state language.",
     "runtime_result_excerpt": null,
+    "next_action_excerpt": "Continue the deep source-level N0 audit at exact head `6c4e3c02672b7a5415fb3407942d86cc9723b8d9`.\n\nDo not ask the owner for a Magnolia run until that audit has either:\n\n- found and repaired the remaining statically discoverable defects and reached a new exact-head green receipt; or\n- produced a reasoned source-level conclusion that the remaining unknowns are genuinely empirical and cannot be resolved cheaply before runtime.\n\nGraphify is navigation only. Original branch-qualified source remains authority.",
     "next_experiment_excerpt": null,
     "authority": "branch-qualified-continuity-overlay"
   },
   "continuity_branch_head": {
     "branch": "alice-context",
-    "head": "952998856a337460f94746d40ef4261d7e040f49",
-    "head_committed_at": "2026-09-22T00:05:34-05:00",
-    "head_message": "context(n0): mark frozen-authority Magnolia handoff superseded"
+    "head": "0387254ea5de43cdd8de058cd5861355257e53ad",
+    "head_committed_at": "2026-09-22T00:10:50-05:00",
+    "head_message": "context(n0): expose machine-readable current build authorization state"
   },
   "unmerged_experiment_frontier": {
     "schema": "alice-context-unmerged-experiment-frontier-v1",
@@ -4805,8 +4809,8 @@
   "continuity_freshness": {
     "stale_relative_to_unmerged_experiment_frontier": false,
     "newest_experiment_frontier_time": "2026-09-21T22:52:46-05:00",
-    "active_handoff_last_changed_at": "2026-09-22T00:04:58-05:00",
-    "context_branch_head_time": "2026-09-22T00:05:34-05:00"
+    "active_handoff_last_changed_at": "2026-09-22T00:10:50-05:00",
+    "context_branch_head_time": "2026-09-22T00:10:50-05:00"
   },
   "execution_rule": "The stable build base and continuity overlay are not sufficient when continuity_freshness is stale. Before issuing an execution command, inspect every maximal unmerged experiment head and its original receipts/docs. Unmerged experiment state remains non-canonical until explicitly promoted.",
   "authority": "routing-and-freshness-only"

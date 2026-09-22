@@ -5,11 +5,11 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "952998856a337460f94746d40ef4261d7e040f49",
-      "head_committed_at": "2026-09-22T00:05:34-05:00",
-      "head_message": "context(n0): mark frozen-authority Magnolia handoff superseded",
+      "head": "0387254ea5de43cdd8de058cd5861355257e53ad",
+      "head_committed_at": "2026-09-22T00:10:50-05:00",
+      "head_message": "context(n0): expose machine-readable current build authorization state",
       "status": "diverged",
-      "ahead": 241,
+      "ahead": 244,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
       "changed_file_count_vs_source_merge_base": 585,
