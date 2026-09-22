@@ -596,8 +596,8 @@ def _capture_stack_modifier_inputs(
     return captured["edge_metadata"], captured["field_reliability"]
 
 
-def test_full_stack_modifier_off_neutralizes_explicit_metadata_before_graph_and_evidence_view() -> None:
-    """Pre-Binder graph/evidence paths may not bypass OFF criterion semantics."""
+def test_global_graph_and_evidence_views_are_criterion_neutral() -> None:
+    """Global program views cannot safely own step-local evidence criteria."""
     edge_off, field_off = _capture_stack_modifier_inputs(None)
     assert torch.allclose(
         edge_off,
@@ -612,18 +612,25 @@ def test_full_stack_modifier_off_neutralizes_explicit_metadata_before_graph_and_
         rtol=0.0,
     )
 
-    edge_rel, field_rel = _capture_stack_modifier_inputs(MOD_RELIABILITY)
-    assert torch.allclose(edge_rel[..., 0], torch.tensor([[0.1]]))
-    assert torch.allclose(field_rel, torch.tensor([[0.1, 0.9]]))
-
-    edge_rec, _ = _capture_stack_modifier_inputs(MOD_RECENCY)
-    assert torch.allclose(edge_rec[..., 1], torch.tensor([[0.2]]))
-
-    edge_temporal, _ = _capture_stack_modifier_inputs(MOD_TEMPORAL_CONSTRAINT)
-    assert torch.allclose(edge_temporal[..., 2], torch.tensor([[0.0]]))
-
-    edge_provenance, _ = _capture_stack_modifier_inputs(MOD_PROVENANCE_CONSTRAINT)
-    assert torch.allclose(edge_provenance[..., 3], torch.tensor([[0.0]]))
+    for modifier_index in (
+        MOD_RELIABILITY,
+        MOD_RECENCY,
+        MOD_TEMPORAL_CONSTRAINT,
+        MOD_PROVENANCE_CONSTRAINT,
+    ):
+        edge_on,field_on=_capture_stack_modifier_inputs(modifier_index)
+        assert torch.allclose(
+            edge_on,
+            torch.tensor([[[0.5,0.5,1.0,1.0]]]),
+            atol=1.0e-7,
+            rtol=0.0,
+        )
+        assert torch.allclose(
+            field_on,
+            torch.full_like(field_on,0.5),
+            atol=1.0e-7,
+            rtol=0.0,
+        )
 
 
 def test_global_graph_and_evidence_views_cannot_apply_mixed_step_reliability_globally() -> None:
