@@ -10,6 +10,7 @@ from alice_personality.n0.chunked_set_attention_v1 import (
     ChunkedExactSetSelfAttention,
     ChunkedSetAttentionConfig,
 )
+from alice_personality.n0.numeric_contracts import require_unit_interval
 
 
 @dataclass(frozen=True)
@@ -109,6 +110,7 @@ class DynamicCrossContextFusionV3(nn.Module):
             raise ValueError("query_state shape drift")
         if view_reliability.shape != (batch, views):
             raise ValueError("view_reliability must be [B,V]")
+        require_unit_interval("view_reliability", view_reliability)
 
         steps = (
             self.config.recurrent_refinement_steps
