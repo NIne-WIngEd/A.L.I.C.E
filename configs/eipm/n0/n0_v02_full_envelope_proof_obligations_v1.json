@@ -517,6 +517,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_executor_uses_step_conditioned_relation_schema_state_for_ordered_execution",
       "requirement": "Ordered execution must consume the relation semantic state for the current operator step; averaging relation semantic states across the program may not own executable edge meaning."
+    },
+    {
+      "id": "N0-P18A",
+      "stage": "evidence_graph",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dynamic_graph_requires_relation_mass_supported_by_present_edges",
+      "requirement": "Graph source/target views can activate only from relation probability mass represented by valid runtime edges; duplicate edges may not inflate that mass."
+    },
+    {
+      "id": "N0-P23A",
+      "stage": "semantic_adapter",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_adapter_program_relation_state_is_weighted_by_step_assignment_mass",
+      "requirement": "Whole-program relation state must be aggregated using actual survival-weighted relation assignment mass, while exact step-conditioned relation states remain preserved."
     }
   ],
   "closure_rule": {
