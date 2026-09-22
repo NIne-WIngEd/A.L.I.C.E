@@ -50,20 +50,26 @@ def longify(text: str, *, surface: str, target_words: int) -> str:
     original=str(text).strip()
     if not original:
         raise ValueError("cannot longify empty semantic text")
-    unit=(
+    marker="decisive semantic content follows"
+    filler_unit=(
         f"public neutral {surface} background context marker "
-        "nondecisive archive note calibration detail "
+        "nondecisive archive note calibration detail"
+    ).split()
+    required_prefix=max(
+        0,
+        int(target_words)-word_count(marker)-word_count(original),
     )
-    need=max(0,int(target_words)-word_count(original)-5)
-    repeats=(need+word_count(unit)-1)//word_count(unit)
-    prefix=(unit*repeats).strip()
-    result=(
-        prefix
-        + " decisive semantic content follows "
-        + original
-    ).strip()
-    if word_count(result) < int(target_words):
-        raise RuntimeError("long-context operating point was not reached")
+    filler=(
+        filler_unit
+        * ((required_prefix+len(filler_unit)-1)//len(filler_unit))
+    )[:required_prefix]
+    pieces=filler+[marker,original]
+    result=" ".join(piece for piece in pieces if piece).strip()
+    if word_count(result) != int(target_words):
+        raise RuntimeError(
+            "long-context operating point construction drift: "
+            f"expected {int(target_words)} words got {word_count(result)}"
+        )
     if not result.endswith(original):
         raise RuntimeError("original semantic content not preserved at tail")
     return result
