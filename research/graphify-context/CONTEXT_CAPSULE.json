@@ -1,15 +1,15 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-binder-support-selection-shortcut-audit-20260922-038",
-  "question": "Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@faeb533c44bfd3087debc1c55e9079cc343f567e for Binder support-selection shortcuts. Trace the behavioral scenario generator -> materialize_row support_edge_indices/support_target derivation -> behavioral curriculum auditor -> batch compiler -> support_selection_loss -> FullEnvelopeQSREBinderV1 -> executor. Specifically determine whether support supervision accidentally labels every runtime edge whose relation key appears in the selected relation program, even when the edge is query-irrelevant, which would teach relation-key matching rather than query-conditioned structural support. Preserve the recent criterion-neutral Binder rule: reliability/recency/temporal/provenance arbitration must remain downstream step-local and must not prune structurally relevant alternatives. Distinguish query relevance from evidence-quality arbitration. Look for same-relation distractor coverage and whether explicit scenario support annotations are overwritten. Classify as (A) concrete curriculum/architecture defect to repair before Magnolia, (B) missing falsification coverage required first, or (C) sufficiently closed. Do not authorize Magnolia/GPU/optimizer/gradient/FINAL/N0 completion. Original exact source is authority; Graphify is navigation only.",
-  "generated_at_utc": "2026-09-22T17:38:35.501407+00:00",
+  "request_id": "n0-full-envelope-shortcut-probe-closure-audit-20260922-039",
+  "question": "Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@43c9da36c58e8c5ddcbecee34c9ab860e0316207 for shortcut-probe closure before Magnolia. Trace n0_v02_semantic_operator_curriculum_contract_v1.json shortcut_controls and validation_before_gradient requirements through materializers, auditors, trainable-system objective, training plan, proof obligations, CI workflow, and any current shortcut/baseline scripts. Determine whether required template-only, lexical-overlap, metadata-only, schema-only-without-query, query-only-without-schema, random candidate permutation and hard-negative/counterfactual probes are actually implemented for the current full-envelope successor, or whether the contract merely declares them while only legacy T2 shortcut tooling exists. Also inspect candidate-answer lexical/template shortcuts and relation/factor target frequency shortcuts in the behavioral lane. Classify each missing item as concrete pre-gradient qualification defect, runtime/training-only empirical obligation, or already closed by current exact source. Do not weaken gates or reuse superseded T1/T2 PASS as successor authority. Do not authorize Magnolia/GPU/optimizer/gradient/FINAL/N0 completion. Original exact source is authority; Graphify is navigation only.",
+  "generated_at_utc": "2026-09-22T17:47:05.798096+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "catalog_source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "graphify_used": true,
     "graph_source_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-    "graph_source_commit": "faeb533c44bfd3087debc1c55e9079cc343f567e",
+    "graph_source_commit": "43c9da36c58e8c5ddcbecee34c9ab860e0316207",
     "graph_extraction_tree": "exact-source-worktree",
     "continuity_branch_head": {
       "branch": "alice-context",
@@ -21,9 +21,9 @@
     "maximal_unmerged_experiment_heads": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "faeb533c44bfd3087debc1c55e9079cc343f567e",
-        "head_committed_at": "2026-09-22T12:35:42-05:00",
-        "head_message": "fix(n0): remove candidate-only public judgment bypass"
+        "head": "43c9da36c58e8c5ddcbecee34c9ab860e0316207",
+        "head_committed_at": "2026-09-22T12:45:00-05:00",
+        "head_message": "fix(n0): make Binder support query-relevant not relation-key-equal"
       },
       {
         "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
@@ -44,7 +44,7 @@
     "graphify_used": true,
     "reason": "request forced Graphify",
     "graph_source_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-    "graph_source_commit": "faeb533c44bfd3087debc1c55e9079cc343f567e",
+    "graph_source_commit": "43c9da36c58e8c5ddcbecee34c9ab860e0316207",
     "graph_source_reason": "request explicitly selected graph source branch",
     "graph_rebuild_required": true,
     "private_external_route_recommended": true
@@ -136,10 +136,10 @@
       "maximal_heads": [
         {
           "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-          "head": "faeb533c44bfd3087debc1c55e9079cc343f567e",
-          "head_committed_at": "2026-09-22T12:35:42-05:00",
-          "head_message": "fix(n0): remove candidate-only public judgment bypass",
-          "ahead": 1075,
+          "head": "43c9da36c58e8c5ddcbecee34c9ab860e0316207",
+          "head_committed_at": "2026-09-22T12:45:00-05:00",
+          "head_message": "fix(n0): make Binder support query-relevant not relation-key-equal",
+          "ahead": 1077,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
           "changed_file_count_vs_source_merge_base": 472,
@@ -777,10 +777,10 @@
       "all_ahead_candidates": [
         {
           "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-          "head": "faeb533c44bfd3087debc1c55e9079cc343f567e",
-          "head_committed_at": "2026-09-22T12:35:42-05:00",
-          "head_message": "fix(n0): remove candidate-only public judgment bypass",
-          "ahead": 1075,
+          "head": "43c9da36c58e8c5ddcbecee34c9ab860e0316207",
+          "head_committed_at": "2026-09-22T12:45:00-05:00",
+          "head_message": "fix(n0): make Binder support query-relevant not relation-key-equal",
+          "ahead": 1077,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
           "changed_file_count_vs_source_merge_base": 472,
@@ -4859,7 +4859,7 @@
     },
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": true,
-      "newest_experiment_frontier_time": "2026-09-22T12:35:42-05:00",
+      "newest_experiment_frontier_time": "2026-09-22T12:45:00-05:00",
       "active_handoff_last_changed_at": "2026-09-22T02:02:32-05:00",
       "context_branch_head_time": "2026-09-22T02:02:44-05:00"
     },
@@ -4878,84 +4878,135 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 102,
-      "branch": "alice-context",
+      "score": 120,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_RELATION_SEMANTIC_GROUNDING_REPAIR_HANDOFF.md",
-      "blob_sha": "9635954cb93dc3bf3e9c63de012dcca5d718ea9f",
-      "category": "working_context",
-      "title": "N0 Relation-Semantic Grounding Repair Handoff",
-      "declared": {
-        "status": " missing-evidence failure localized to relation-semantic endpoint grounding; one bounded repair is CI-ready; no frozen-challenge rerun, threshold change, promotion, scaling, or N0 completion authorized"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
-        "repair",
-        "udocker"
+      "path": "configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json",
+      "blob_sha": "91e1f93d4e1fd376faac2973c3b6206ee7bbd6e0",
+      "category": "configuration_state",
+      "title": "n0_v02_qsre_n0_frozen_authority_training_plan_v2.json",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 342,
+          "text": "\"compatibility_name_note\": \"v3 filename/class retained for downstream checkpoint wiring; closure-pass implementation supersedes job-575958 behavior on this branch\","
+        }
       ],
-      "supersession_hints": [],
       "catalogs": [
-        "failure",
-        "document",
-        "frontier",
         "supersession",
+        "failure",
+        "document",
         "lexical"
       ],
-      "lexical_body_hits": 24
+      "lexical_body_hits": 8,
+      "currentness_adjustment": 25
     },
     {
-      "score": 101,
-      "branch": "alice-context",
+      "score": 119,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-17/sol/N0_ENDPOINT_REPAIR_AND_DOWNSTREAM_ARBITRATION_HANDOFF.md",
-      "blob_sha": "c44ed89c28153b7496910f099851ddf576176574",
-      "category": "working_context",
-      "title": "N0 Endpoint Repair and Downstream Arbitration Handoff",
+      "path": "docs/research/eipm-n0-job-575958-closure-pass-v1.md",
+      "blob_sha": "1d7af6e6ed03b5f478f31107ee36165a95a845f2",
+      "category": "design_document",
+      "title": "N0 closure-pass architecture after Magnolia job 575958",
       "declared": {
-        "status": "`FAIL_SELECTOR_REPAIR_HELDOUT_STOP_AND_LOCALIZE_NO_AUTOMATIC_HOTFIX`."
+        "status": " implementation and static qualification package; GPU remains closed until exact-head qualification passes"
       },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
-        "repair"
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 22,
+          "text": "That pattern says the final-v3 *package abstraction* still behaved like a small closed classifier even though its source code no longer contained an explicit learned relation-ID table."
+        }
       ],
-      "supersession_hints": [],
       "catalogs": [
+        "supersession",
         "failure",
         "document",
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 20
+      "lexical_body_hits": 19,
+      "currentness_adjustment": 25
     },
     {
-      "score": 101,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/PHASE_1_PRIVATE_CLAIM_SUPPORT_AUDIT.md",
-      "blob_sha": "0c70e107d7ee1cc2aac0fe8b34eb2b87717cdccf",
-      "category": "design_document",
-      "title": "P1.11 — Private Claim-Support Auditor",
+      "score": 116,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
+      "blob_sha": "1510c11266ca1272da38dfbd7a0987b516c55de3",
+      "category": "repository_file",
+      "title": "Only the gate is deliberately zero-initialized.  Do not create a",
       "declared": {},
       "matched_terms": [
-        "powershell"
+        "failed",
+        "failure",
+        "hotfix",
+        "magnolia"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
+        "supersession",
         "document",
-        "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 10
+      "lexical_body_hits": 12,
+      "currentness_adjustment": 25
     },
     {
-      "score": 99,
+      "score": 116,
+      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
+      "blob_sha": "1510c11266ca1272da38dfbd7a0987b516c55de3",
+      "category": "repository_file",
+      "title": "Only the gate is deliberately zero-initialized.  Do not create a",
+      "declared": {},
+      "matched_terms": [
+        "failed",
+        "failure",
+        "hotfix",
+        "magnolia"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 12,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 116,
+      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
+      "blob_sha": "1510c11266ca1272da38dfbd7a0987b516c55de3",
+      "category": "repository_file",
+      "title": "Only the gate is deliberately zero-initialized.  Do not create a",
+      "declared": {},
+      "matched_terms": [
+        "failed",
+        "failure",
+        "hotfix",
+        "magnolia"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 12,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 115,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-21/sol/N0_JOB575958_CLOSURE_PASS_READY.md",
@@ -4974,22 +5025,98 @@
       "supersession_hints": [],
       "catalogs": [
         "failure",
-        "document",
         "supersession",
+        "document",
         "lexical"
       ],
-      "lexical_body_hits": 29
+      "lexical_body_hits": 25,
+      "currentness_adjustment": -15
     },
     {
-      "score": 99,
-      "branch": "alice-eipm-v1-causal-arbitration-binding",
+      "score": 113,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-      "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration — Magnolia execution contract",
+      "path": "configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json",
+      "blob_sha": "c08e65b69957f25c17cf8f9b01d2df98ba81c5d0",
+      "category": "configuration_state",
+      "title": "n0_v02_successor_authority_firewall_v1.json",
       "declared": {},
       "matched_terms": [
+        "egress",
+        "failure",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 3,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 109,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-09/sol/MC10D_MAGNOLIA_CLOSED_KAGGLE_DURABLE_SUCCESSOR.md",
+      "blob_sha": "2effe4f25010dc93510e5014372690426fc172ec",
+      "category": "working_context",
+      "title": "MC10D Magnolia closed — Kaggle durable simulation/falsification successor",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 26,
+          "text": "This supersedes the previous context note's provisional assumption that v1.0.2 was a pre-worker failure."
+        }
+      ],
+      "catalogs": [
+        "supersession",
+        "failure",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 8,
+      "currentness_adjustment": -15
+    },
+    {
+      "score": 108,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml",
+      "blob_sha": "a6774d150573e2bf075acb000aef401579200222",
+      "category": "repository_file",
+      "title": "n0-full-envelope-foundation-build-v1-contract.yml",
+      "declared": {},
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 271,
+          "text": "- name: Prove successor lineage cannot import superseded semantic authority"
+        }
+      ],
+      "catalogs": [
+        "supersession",
+        "failure",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 15,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 107,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-qsre-frozen-semantic-authority-v3-contract.yml",
+      "blob_sha": "688076e42aa92cb7aaf9fcc0ff3cf4058d54d8dd",
+      "category": "repository_file",
+      "title": "n0-qsre-frozen-semantic-authority-v3-contract.yml",
+      "declared": {},
+      "matched_terms": [
+        "failure",
         "magnolia",
         "repair"
       ],
@@ -5000,18 +5127,21 @@
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 11
+      "lexical_body_hits": 8,
+      "currentness_adjustment": 25
     },
     {
-      "score": 99,
-      "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
+      "score": 107,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-      "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration — Magnolia execution contract",
+      "path": ".github/workflows/n0-qsre-n0-closure-pass-contract.yml",
+      "blob_sha": "affb9f41cd7cea366ed1f1f0dbd0f44274cfd15a",
+      "category": "repository_file",
+      "title": "n0-qsre-n0-closure-pass-contract.yml",
       "declared": {},
       "matched_terms": [
+        "failed",
+        "failure",
         "magnolia",
         "repair"
       ],
@@ -5022,285 +5152,179 @@
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 11
+      "lexical_body_hits": 7,
+      "currentness_adjustment": 25
     },
     {
-      "score": 99,
-      "branch": "alice-eipm-v1-dual-view-specialist-failure-localization",
+      "score": 107,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-      "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration — Magnolia execution contract",
+      "path": "configs/eipm/n0/n0_v02_qsre_n0_closure_training_plan_v1.json",
+      "blob_sha": "92cc83ac14f6610aae057b89971959911e283a4b",
+      "category": "configuration_state",
+      "title": "n0_v02_qsre_n0_closure_training_plan_v1.json",
       "declared": {},
-      "matched_terms": [
-        "magnolia",
-        "repair"
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 331,
+          "text": "\"compatibility_name_note\": \"v3 filename/class retained for downstream checkpoint wiring; closure-pass implementation supersedes job-575958 behavior on this branch\","
+        }
       ],
-      "supersession_hints": [],
       "catalogs": [
+        "supersession",
         "failure",
         "document",
-        "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 11
-    },
-    {
-      "score": 99,
-      "branch": "alice-eipm-v1-missing-evidence-localization",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-      "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration — Magnolia execution contract",
-      "declared": {},
-      "matched_terms": [
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 11
-    },
-    {
-      "score": 99,
-      "branch": "alice-eipm-v1-n0-clean-sheet-relational-execution-review",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-      "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration — Magnolia execution contract",
-      "declared": {},
-      "matched_terms": [
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 11
-    },
-    {
-      "score": 99,
-      "branch": "alice-eipm-v1-n0-closure-pass",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-      "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration — Magnolia execution contract",
-      "declared": {},
-      "matched_terms": [
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 11
-    },
-    {
-      "score": 99,
-      "branch": "alice-eipm-v1-n0-closure-semantic-v2",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-      "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration — Magnolia execution contract",
-      "declared": {},
-      "matched_terms": [
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 11
-    },
-    {
-      "score": 99,
-      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-      "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
-      "category": "design_document",
-      "title": "N0 downstream causal arbitration — Magnolia execution contract",
-      "declared": {},
-      "matched_terms": [
-        "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 11
+      "lexical_body_hits": 6,
+      "currentness_adjustment": 25
     }
   ],
   "graphify_navigation_hints": [
     {
-      "label": "test_behavioral_compiler_support_targets_are_structurally_valid_and_unknown_rows_use_null_support()",
-      "source": "tests/eipm/test_n0_full_envelope_trainable_system_v1.py",
-      "location": "L767",
-      "community": "193"
+      "label": "audit_n0_v02_full_envelope_proof_obligations_v1.py",
+      "source": "scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py",
+      "location": "L1",
+      "community": "0"
     },
     {
       "label": "audit_n0_v02_full_envelope_behavioral_curriculum_v1.py",
       "source": "scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py",
       "location": "L1",
-      "community": "272"
+      "community": "284"
     },
     {
       "label": "build_n0_v02_full_envelope_behavioral_curriculum_v1.py",
       "source": "scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py",
       "location": "L1",
-      "community": "236"
+      "community": "223"
+    },
+    {
+      "label": "Estimate when view specialization is actually warranted. Near-consensus views…",
+      "source": "src/alice_personality/n0/adaptive_multi_view_latent_pool_objectives_v0_2.py",
+      "location": "L169",
+      "community": "96"
     },
     {
       "label": "AliceN0V02Model",
       "source": "src/alice_personality/n0/v02_model.py",
       "location": "L13",
-      "community": "61"
+      "community": "93"
     },
     {
-      "label": "test_compile_identity_substrate_preserves_authority_and_unordered_alternatives()",
-      "source": "tests/eipm/test_n1_private_substrate_compiler.py",
-      "location": "L15",
-      "community": "51"
+      "label": "MemoryAlreadyExistsError",
+      "source": "src/alice_memory/service.py",
+      "location": "L58",
+      "community": "2"
     },
     {
-      "label": "test_specialization_pressure_disappears_for_semantic_consensus()",
-      "source": "tests/eipm/test_n0_adaptive_multi_view_latent_pool_objectives_v0_2.py",
-      "location": "L94",
-      "community": "110"
+      "label": "ConstitutionalSourceSnapshot",
+      "source": "src/alice_conversation/constitutional_prompt.py",
+      "location": "L50",
+      "community": "145"
     },
     {
-      "label": "ArbitrationV02Tests",
-      "source": "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
-      "location": "L12",
-      "community": "200"
-    },
-    {
-      "label": "test_memory_identity_host_learning_architecture.py",
-      "source": "tests/governance/test_memory_identity_host_learning_architecture.py",
+      "label": "answer_grounded.py",
+      "source": "scripts/answer_grounded.py",
       "location": "L1",
-      "community": "261"
+      "community": "0"
     },
     {
       "label": "audit()",
       "source": "scripts/audit_capability_barriers.py",
       "location": "L521",
-      "community": "146"
-    },
-    {
-      "label": ".test_only_cited_evidence_is_exposed_to_auditor()",
-      "source": "tests/phase1/test_claim_support_audit.py",
-      "location": "L51",
-      "community": "108"
+      "community": "140"
     },
     {
       "label": "authority()",
       "source": "tests/eipm/test_n0_qsre_production_operator_v3.py",
       "location": "L87",
-      "community": "201"
+      "community": "106"
     },
     {
       "label": "authorize_boolean_map()",
       "source": "src/alice_capability_profiles.py",
       "location": "L88",
-      "community": "99"
+      "community": "105"
     },
     {
-      "label": "batch_indices()",
-      "source": "scripts/eipm/n0/qsre_production_training_utils.py",
-      "location": "L150",
-      "community": "10"
+      "label": "register_released_baseline_scopes.py",
+      "source": "scripts/register_released_baseline_scopes.py",
+      "location": "L1",
+      "community": "421"
     },
     {
       "label": "test_candidates_never_enter_derived_indexes_before_promotion()",
       "source": "tests/phase2/test_memory_candidate_security_gates.py",
       "location": "L312",
-      "community": "96"
+      "community": "113"
     },
     {
       "label": "BehavioralBatchCompileConfig",
       "source": "src/alice_personality/n0/full_envelope_behavioral_batch_v1.py",
       "location": "L30",
-      "community": "193"
-    },
-    {
-      "label": "Binder owns candidate support; step-local criterion arbitration is downstream.",
-      "source": "tests/eipm/test_n0_full_envelope_modifier_gating_v1.py",
-      "location": "L119",
-      "community": "144"
+      "community": "195"
     },
     {
       "label": "_build()",
       "source": "tests/phase4/test_information_grounding.py",
       "location": "L154",
-      "community": "81"
+      "community": "66"
+    },
+    {
+      "label": "candidate()",
+      "source": "tests/phase5/test_memory_m2_adjudication_contracts.py",
+      "location": "L154",
+      "community": "8"
     },
     {
       "label": "classify()",
       "source": "scripts/audit_repository_phase_boundary.py",
       "location": "L120",
-      "community": "263"
+      "community": "275"
     },
     {
       "label": "test_ordinary_plaintext_inspection_and_temporal_paths_fail_closed()",
       "source": "tests/phase2/test_memory_sensitive_storage.py",
       "location": "L202",
-      "community": "55"
+      "community": "161"
     },
     {
-      "label": "compiler.py",
-      "source": "src/alice_personality/n1/compiler.py",
+      "label": "train_n0_v02_qsre_closure_matcher_v2.py",
+      "source": "scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py",
       "location": "L1",
-      "community": "51"
+      "community": "190"
     },
     {
       "label": "test_tampered_request_or_completion_audit_fails_closed()",
       "source": "tests/phase2/test_memory_sensitive_deletion.py",
       "location": "L531",
-      "community": "43"
+      "community": "38"
     },
     {
       "label": ".test_promotional_self_record_impact_is_rejected_but_concrete_action_kept()",
       "source": "tests/phase1/test_personal_claim_validity_contract.py",
       "location": "L80",
-      "community": "107"
+      "community": "325"
     },
     {
-      "label": "train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py",
-      "source": "scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py",
-      "location": "L1",
-      "community": "21"
+      "label": "contract()",
+      "source": "tests/phase3/_repair_helpers.py",
+      "location": "L75",
+      "community": "77"
     },
     {
-      "label": "test_n0_curriculum_coverage.py",
-      "source": "tests/eipm/test_n0_curriculum_coverage.py",
-      "location": "L1",
-      "community": "3"
+      "label": "test_binder_v2_operator_relation_mass_controls_support_semantics()",
+      "source": "tests/eipm/test_n0_qsre_production_binder_v2.py",
+      "location": "L129",
+      "community": "175"
+    },
+    {
+      "label": "counterfactual_metrics()",
+      "source": "scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
+      "location": "L88",
+      "community": "12"
     }
   ],
   "private_external_route_recommended": true,

@@ -85,10 +85,10 @@
     "maximal_heads": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "faeb533c44bfd3087debc1c55e9079cc343f567e",
-        "head_committed_at": "2026-09-22T12:35:42-05:00",
-        "head_message": "fix(n0): remove candidate-only public judgment bypass",
-        "ahead": 1075,
+        "head": "43c9da36c58e8c5ddcbecee34c9ab860e0316207",
+        "head_committed_at": "2026-09-22T12:45:00-05:00",
+        "head_message": "fix(n0): make Binder support query-relevant not relation-key-equal",
+        "ahead": 1077,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
         "changed_file_count_vs_source_merge_base": 472,
@@ -726,10 +726,10 @@
     "all_ahead_candidates": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "faeb533c44bfd3087debc1c55e9079cc343f567e",
-        "head_committed_at": "2026-09-22T12:35:42-05:00",
-        "head_message": "fix(n0): remove candidate-only public judgment bypass",
-        "ahead": 1075,
+        "head": "43c9da36c58e8c5ddcbecee34c9ab860e0316207",
+        "head_committed_at": "2026-09-22T12:45:00-05:00",
+        "head_message": "fix(n0): make Binder support query-relevant not relation-key-equal",
+        "ahead": 1077,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
         "changed_file_count_vs_source_merge_base": 472,
@@ -4808,7 +4808,7 @@
   },
   "continuity_freshness": {
     "stale_relative_to_unmerged_experiment_frontier": true,
-    "newest_experiment_frontier_time": "2026-09-22T12:35:42-05:00",
+    "newest_experiment_frontier_time": "2026-09-22T12:45:00-05:00",
     "active_handoff_last_changed_at": "2026-09-22T02:02:32-05:00",
     "context_branch_head_time": "2026-09-22T02:02:44-05:00"
   },
