@@ -122,6 +122,8 @@ class SemanticContextVirtualizerV1:
             device=input_ids.device,
         )
         absolute_end = torch.zeros_like(absolute_start)
+        content_absolute_start = torch.zeros_like(absolute_start)
+        content_absolute_end = torch.zeros_like(absolute_start)
         metadata = torch.zeros(
             batch,
             segments,
@@ -141,18 +143,40 @@ class SemanticContextVirtualizerV1:
                 absolute_start[b, index] = start
                 absolute_end[b, index] = end
 
+                # Split every overlap at its midpoint. Earlier windows own
+                # the left half; later windows own the right half. This keeps
+                # unique ownership while avoiding the old defect where an
+                # overlap token was always retained from the later window and
+                # therefore could lose useful left context.
+                if index == 0:
+                    own_start = start
+                else:
+                    previous_start = starts[index - 1]
+                    previous_end = min(previous_start + window, length)
+                    own_start = (start + previous_end) // 2
+
                 if index + 1 < len(starts):
-                    own_end = starts[index + 1]
+                    next_start = starts[index + 1]
+                    own_end = (next_start + end) // 2
                 else:
                     own_end = end
-                own_start = start
-                own_count = max(0, own_end - own_start)
-                content_mask[b, index, :own_count] = True
+
+                if not (start <= own_start <= own_end <= end):
+                    raise RuntimeError("invalid overlap ownership partition")
+                local_own_start = own_start - start
+                local_own_end = own_end - start
+                content_mask[
+                    b,
+                    index,
+                    local_own_start:local_own_end,
+                ] = True
+                content_absolute_start[b, index] = own_start
+                content_absolute_end[b, index] = own_end
 
                 denom = max(float(length - 1), 1.0)
-                metadata[b, index, 0] = float(start) / denom
-                metadata[b, index, 1] = float(max(end - 1, start)) / denom
-                metadata[b, index, 2] = float(count) / max(float(length), 1.0)
+                metadata[b, index, 0] = float(own_start) / denom
+                metadata[b, index, 1] = float(max(own_end - 1, own_start)) / denom
+                metadata[b, index, 2] = float(own_end - own_start) / max(float(length), 1.0)
 
         ownership = torch.zeros(
             batch,
@@ -162,9 +186,13 @@ class SemanticContextVirtualizerV1:
         )
         for b, starts in enumerate(starts_by_row):
             for index, start in enumerate(starts):
-                owned = int(content_mask[b, index].sum().item())
-                if owned:
-                    ownership[b, start : start + owned] += 1
+                local = torch.nonzero(
+                    content_mask[b, index],
+                    as_tuple=False,
+                ).flatten()
+                if local.numel():
+                    absolute = local + int(start)
+                    ownership[b, absolute] += 1
         for b in range(batch):
             length = int(lengths[b].item())
             if not bool((ownership[b, :length] == 1).all()):
@@ -181,6 +209,8 @@ class SemanticContextVirtualizerV1:
             "segment_valid_mask": segment_valid,
             "segment_absolute_start": absolute_start,
             "segment_absolute_end": absolute_end,
+            "content_absolute_start": content_absolute_start,
+            "content_absolute_end": content_absolute_end,
             "field_metadata": metadata,
             "original_lengths": lengths,
         }
@@ -286,4 +316,6 @@ class SemanticContextVirtualizerV1:
             "product_context_token_ceiling": None,
             "lossless_content_ownership": True,
             "long_query_stitching": True,
+            "overlap_midpoint_ownership": True,
+            "boundary_context_bias_to_later_window": False,
         }
