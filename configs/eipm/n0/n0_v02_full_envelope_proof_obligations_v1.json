@@ -503,6 +503,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_source_recoverability_mask_does_not_force_irrelevant_views_into_latent",
       "requirement": "Merely available irrelevant views are not compulsory latent recoverability targets."
+    },
+    {
+      "id": "N0-P11A",
+      "stage": "structured_state",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_structured_padded_fields_are_inert_even_with_arbitrary_hidden_content",
+      "requirement": "Padded structured fields and arbitrary hidden values behind their masks cannot alter valid field states or pooled context."
     }
   ],
   "closure_rule": {
