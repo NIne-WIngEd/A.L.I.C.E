@@ -59,9 +59,17 @@ def public_judgment_loss(
     if not bool(target_valid.all()):
         raise ValueError("judgment target points to a padded candidate")
 
+    valid_logits = candidate_logits.masked_select(candidate_valid_mask)
+    if not bool(torch.isfinite(valid_logits).all()):
+        raise ValueError("valid judgment candidate logits must be finite")
+    invalid_floor = torch.finfo(candidate_logits.dtype).min
+    if bool((valid_logits <= invalid_floor).any()):
+        raise ValueError(
+            "valid judgment candidate logit reached reserved invalid floor"
+        )
     masked_logits = candidate_logits.masked_fill(
         ~candidate_valid_mask,
-        -1.0e4,
+        invalid_floor,
     )
     ce = F.cross_entropy(masked_logits, target_index.long())
     correct = masked_logits.gather(
@@ -74,7 +82,7 @@ def public_judgment_loss(
         return ce
     hardest = masked_logits.masked_fill(
         ~negative_mask,
-        -1.0e4,
+        invalid_floor,
     ).max(dim=-1).values
     margin = F.relu(
         float(hard_negative_margin) - (correct - hardest)
@@ -184,8 +192,14 @@ def _mask_candidate_logits(
         raise ValueError("candidate_valid_mask must be bool [B,C]")
     if bool((candidate_valid_mask.sum(dim=-1) == 0).any()):
         raise ValueError("every example requires at least one valid candidate")
+    valid_logits = logits.masked_select(candidate_valid_mask)
+    if not bool(torch.isfinite(valid_logits).all()):
+        raise ValueError("valid candidate logits must be finite")
+    invalid_floor = torch.finfo(logits.dtype).min
+    if bool((valid_logits <= invalid_floor).any()):
+        raise ValueError("valid candidate logit reached reserved invalid floor")
     return (
-        logits.masked_fill(~candidate_valid_mask,-1.0e4),
+        logits.masked_fill(~candidate_valid_mask, invalid_floor),
         candidate_valid_mask,
     )
 
