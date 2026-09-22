@@ -6,6 +6,7 @@ on:
       - alice-eipm-v1-n0-full-envelope-foundation-build-v1
     paths:
       - "src/alice_personality/n0/semantic_operator_foundation.py"
+      - "src/alice_personality/n0/semantic_operator_evidence_targets_v1.py"
       - "src/alice_personality/n0/numeric_contracts.py"
       - "src/alice_personality/n0/semantic_backbone_interface_v1.py"
       - "src/alice_personality/n0/dynamic_structured_state_v2.py"
@@ -35,6 +36,7 @@ on:
       - "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py"
       - "scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py"
+      - "scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py"
       - "scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py"
       - "configs/eipm/n0/n0_v02_natural_relation_sources_v1.json"
@@ -78,6 +80,7 @@ jobs:
           set -euo pipefail
           python -m py_compile \
             src/alice_personality/n0/semantic_operator_foundation.py \
+            src/alice_personality/n0/semantic_operator_evidence_targets_v1.py \
             src/alice_personality/n0/numeric_contracts.py \
             src/alice_personality/n0/semantic_backbone_interface_v1.py \
             src/alice_personality/n0/dynamic_structured_state_v2.py \
@@ -100,6 +103,7 @@ jobs:
             src/alice_personality/n0/n0_full_envelope_stack_v1.py \
             scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py \
+            scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py \
             scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py \
@@ -158,6 +162,10 @@ jobs:
           assert r["private_identity_data"] is False
           assert r["training_authorized_by_audit"] is False
           assert r["natural_public_replay_still_required"] is True
+          assert r["query_relation_evidence_spans_required"] is True
+          assert r["relation_schema_evidence_spans_required"] is True
+          assert r["factor_schema_evidence_spans_required"] is True
+          assert r["step_factor_schema_evidence_spans_required"] is True
           print("PASS_N0_SYNTHETIC_INTERVENTION_STATIC_AUDIT")
           PY
 
