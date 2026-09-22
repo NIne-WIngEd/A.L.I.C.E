@@ -1,5 +1,5 @@
 > **SUPERSEDED FOR CURRENT EXECUTION — 2026-09-22**  
-> This document is preserved as historical evidence. Its “ready for one owner Magnolia run” state was invalidated by the later 575986 capability failure, 575990 semantic-localization decision, and the full-envelope rebuild. It must not authorize Magnolia or training. See `../2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md` via the chat-context README for the current boundary.
+> This document is preserved as historical evidence. Its “ready for one owner Magnolia run” state was invalidated by the later 575986 capability failure, 575990 semantic-localization decision, and the full-envelope rebuild. It must not authorize Magnolia or training. See `../../2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md` via the chat-context README for the current boundary.
 
 # N0 final full-scale frozen-authority closure — ready for one owner Magnolia run
 
