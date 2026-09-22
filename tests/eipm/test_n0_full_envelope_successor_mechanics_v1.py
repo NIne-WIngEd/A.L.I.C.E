@@ -1229,3 +1229,35 @@ def test_executor_rejects_out_of_range_support_metadata() -> None:
         assert "[0,1]" in str(exc)
     else:
         raise AssertionError("out-of-range support weight did not fail closed")
+
+
+def test_valid_edge_cannot_reference_padded_invalid_field() -> None:
+    graph=DynamicSchemaEvidenceGraphV1(
+        DynamicSchemaEvidenceGraphConfig(
+            field_dim=24,
+            relation_dim=24,
+            operator_dim=24,
+            model_dim=24,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    )
+    try:
+        graph(
+            field_state=torch.randn(1,3,24),
+            field_valid_mask=torch.tensor([[True,True,False]]),
+            edge_index=torch.tensor([[[1,2]]]),
+            edge_relation_index=torch.zeros(1,1,dtype=torch.long),
+            edge_metadata=torch.zeros(1,1,4),
+            edge_valid_mask=torch.ones(1,1,dtype=torch.bool),
+            relation_schema_state=torch.randn(1,1,24),
+            relation_mass=torch.ones(1,1),
+            relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
+            semantic_activity=torch.ones(1),
+            operator_state=torch.randn(1,24),
+            message_steps=1,
+        )
+    except ValueError as exc:
+        assert "padded invalid field" in str(exc)
+    else:
+        raise AssertionError("valid edge into padded field did not fail closed")
