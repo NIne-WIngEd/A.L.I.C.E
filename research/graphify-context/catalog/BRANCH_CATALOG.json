@@ -137,14 +137,14 @@
     },
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "43c9da36c58e8c5ddcbecee34c9ab860e0316207",
-      "head_committed_at": "2026-09-22T12:45:00-05:00",
-      "head_message": "fix(n0): make Binder support query-relevant not relation-key-equal",
+      "head": "e93461aae33dc682d29b283e636dc08e8847878b",
+      "head_committed_at": "2026-09-22T13:24:21-05:00",
+      "head_message": "curriculum(n0): hold relation wording fixed in role counterfactual",
       "status": "ahead",
-      "ahead": 1077,
+      "ahead": 1081,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 472,
+      "changed_file_count_vs_source_merge_base": 474,
       "knowledge_surface": true
     },
     {
