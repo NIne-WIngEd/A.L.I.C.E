@@ -557,3 +557,102 @@ def test_per_example_factor_candidate_masks_enable_variable_runtime_subsets() ->
         torch.ones(2,3),
         atol=1e-6,
     )
+
+
+def test_bidirectional_token_evidence_is_exposed_for_relations_and_factors() -> None:
+    torch.manual_seed(301)
+    model=SchemaConditionedSemanticOperator(config()).eval()
+    q,qm=hidden(batch=2)
+    relation_mask=torch.tensor(
+        [
+            [True,True,False,False,False],
+            [False,True,True,True,False],
+        ],
+        dtype=torch.bool,
+    )
+    factor_mask=torch.tensor(
+        [
+            [True,True,False,False],
+            [False,True,True,True],
+        ],
+        dtype=torch.bool,
+    )
+    with torch.no_grad():
+        out=model(
+            query_hidden_states=q,
+            query_token_mask=qm,
+            relation_schema=schema(5,tokens=6),
+            factor_schemas={"role":factor(4,302)},
+            max_steps=3,
+            relation_candidate_mask=relation_mask,
+            factor_candidate_masks={"role":factor_mask},
+        )
+    assert out["relation_query_evidence"].shape==(2,3,5,7)
+    assert out["relation_schema_evidence"].shape==(2,3,5,6)
+    assert out["factor_schema_evidence"]["role"].shape==(2,4,4)
+    assert out["step_factor_schema_evidence"]["role"].shape==(2,3,4,4)
+
+    inactive_relation=(~relation_mask)[:,None,:,None]
+    assert torch.equal(
+        out["relation_schema_evidence"].masked_select(
+            inactive_relation.expand_as(out["relation_schema_evidence"])
+        ),
+        torch.zeros_like(
+            out["relation_schema_evidence"].masked_select(
+                inactive_relation.expand_as(out["relation_schema_evidence"])
+            )
+        ),
+    )
+    inactive_factor=(~factor_mask)[:,:,None]
+    assert torch.equal(
+        out["factor_schema_evidence"]["role"].masked_select(
+            inactive_factor.expand_as(out["factor_schema_evidence"]["role"])
+        ),
+        torch.zeros_like(
+            out["factor_schema_evidence"]["role"].masked_select(
+                inactive_factor.expand_as(out["factor_schema_evidence"]["role"])
+            )
+        ),
+    )
+    active_relation_mass=out["relation_schema_evidence"].sum(dim=-1)
+    assert torch.allclose(
+        active_relation_mass.masked_select(
+            relation_mask[:,None,:].expand_as(active_relation_mass)
+        ),
+        torch.ones_like(
+            active_relation_mass.masked_select(
+                relation_mask[:,None,:].expand_as(active_relation_mass)
+            )
+        ),
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    report=model.parameter_report()
+    assert report["bidirectional_token_evidence_exposed"] is True
+    assert report["relation_schema_token_evidence_exposed"] is True
+    assert report["factor_schema_token_evidence_exposed"] is True
+    assert report["step_factor_schema_token_evidence_exposed"] is True
+    assert report["inactive_candidate_token_evidence_zeroed"] is True
+
+
+def test_schema_token_evidence_keeps_gradient_path_to_query_semantics() -> None:
+    torch.manual_seed(303)
+    model=SchemaConditionedSemanticOperator(config())
+    q,qm=hidden(batch=1)
+    q.requires_grad_(True)
+    out=model(
+        query_hidden_states=q,
+        query_token_mask=qm,
+        relation_schema=schema(4,tokens=6),
+        factor_schemas={"role":factor(4,304)},
+        max_steps=2,
+    )
+    loss=(
+        out["relation_schema_evidence"][...,0].square().mean()
+        + out["factor_schema_evidence"]["role"][...,0].square().mean()
+        + out["step_factor_schema_evidence"]["role"][...,0].square().mean()
+    )
+    loss.backward()
+    assert q.grad is not None
+    assert bool(torch.isfinite(q.grad).all())
+    assert float(q.grad.abs().sum()) > 0.0
