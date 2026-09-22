@@ -1320,3 +1320,47 @@ def test_structured_padded_fields_are_inert_even_with_arbitrary_hidden_content()
         atol=1e-6,
         rtol=1e-6,
     )
+
+
+def test_executor_uses_step_conditioned_relation_schema_state_for_ordered_execution() -> None:
+    torch.manual_seed(261)
+    executor=FullEnvelopeQSREExecutorV1(
+        FullEnvelopeExecutorConfig(
+            field_dim=24,
+            model_dim=24,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    operator=_manual_operator(TRAVERSAL_PATH,DIRECTION_FORWARD)
+    global_relation=torch.randn(1,1,24)
+    step_a=global_relation[:,None,:,:].expand(1,3,1,24).clone()
+    step_b=step_a.clone()
+    step_b[:,1] = step_b[:,1] + 3.0 * torch.randn_like(step_b[:,1])
+    common=dict(
+        field_state=torch.randn(1,3,24),
+        field_metadata=torch.zeros(1,3,3),
+        field_valid_mask=torch.ones(1,3,dtype=torch.bool),
+        edge_index=torch.tensor([[[0,1],[1,2]]]),
+        edge_relation_index=torch.zeros(1,2,dtype=torch.long),
+        edge_valid_mask=torch.ones(1,2,dtype=torch.bool),
+        edge_support_weight=torch.ones(1,2),
+        support_available=torch.ones(1),
+        edge_reliability=torch.ones(1,2),
+        edge_recency=torch.ones(1,2),
+        edge_temporal_match=torch.ones(1,2),
+        edge_provenance_match=torch.ones(1,2),
+        relation_schema_state=global_relation,
+        relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
+        operator=operator,
+        focus_field_weight=torch.tensor([[1.0,0.0,0.0]]),
+    )
+    with torch.no_grad():
+        a=executor(step_relation_schema_state=step_a,**common)
+        b=executor(step_relation_schema_state=step_b,**common)
+    assert not torch.allclose(a["node_state"],b["node_state"])
+    assert not torch.allclose(a["relational_summary"],b["relational_summary"])
+    report=executor.parameter_report()
+    assert report["step_conditioned_relation_schema_state"] is True
+    assert report["global_relation_state_not_used_for_step_edge_features"] is True
