@@ -739,6 +739,75 @@ DEV_QUERY_PARAPHRASES = {
 }
 
 
+DEV_SURFACE_REWRITES = (
+    ("the supported conclusion is", "the evidence-backed conclusion is"),
+    ("the terminal result", "the endpoint after the full chain"),
+    ("is reached last", "is the final endpoint"),
+    ("is reached", "is the endpoint obtained"),
+    ("mutually corroborates", "independently confirms"),
+    ("corroborates it", "confirms the same observation"),
+    ("verified high-reliability source", "validated source with stronger reliability"),
+    ("weak unverified source", "lower-confidence unverified source"),
+    ("signed later correction", "later signed correction"),
+    ("supersedes the older record", "replaces the earlier document as controlling evidence"),
+    ("older version", "earlier version"),
+    ("newer than", "more recent than"),
+    ("verified measurement", "validated measurement"),
+    ("verified report", "validated report"),
+    ("verified source", "validated source"),
+    ("verified record", "validated record"),
+    ("verified decisive primary record", "validated decisive primary document"),
+    ("authorized record", "record from the allowed provenance class"),
+    ("unverified record", "record outside the verified provenance class"),
+    ("independent record", "separate record"),
+    ("independent reliable records", "separate reliable records"),
+    ("supports claim", "provides evidence for proposition"),
+    ("supports a competing claim", "provides evidence for a competing proposition"),
+    ("supports an ordinary claim", "provides evidence for an ordinary proposition"),
+    ("supports the same conclusion", "provides separate evidence for the same conclusion"),
+    ("supports", "provides evidence for"),
+    ("supported", "backed by the evidence"),
+    ("claim", "proposition"),
+    ("record", "document"),
+    ("context item", "background item"),
+    ("context note", "background note"),
+    ("unrelated", "not pertinent"),
+    ("causal relation", "cause-and-effect link"),
+    ("causal sequence", "ordered cause-and-effect sequence"),
+    ("causal stage", "cause-and-effect stage"),
+    ("causal chain", "ordered cause-and-effect chain"),
+    ("authored-by relation", "authorship link"),
+    ("actor", "person"),
+    ("event", "process event"),
+    ("use unrelated option", "select irrelevant alternative"),
+    ("candidate position", "answer position"),
+)
+
+
+def dev_surface_paraphrase(text: str) -> str:
+    """Deterministic DEV-only lexical variant for fields and answer candidates."""
+    value=str(text)
+    lower=value.lower()
+    # Rewrite longest semantic phrases first while preserving entity tokens and
+    # punctuation. This is deliberately lexical only: graph/schema semantics
+    # remain identical so DEV isolates transfer across surface wording.
+    for source,replacement in DEV_SURFACE_REWRITES:
+        start=0
+        source_lower=source.lower()
+        while True:
+            index=lower.find(source_lower,start)
+            if index < 0:
+                break
+            value=(
+                value[:index]
+                + replacement
+                + value[index+len(source):]
+            )
+            lower=value.lower()
+            start=index+len(replacement)
+    return value
+
+
 def template_signature(query: str, entities: list[str]) -> str:
     normalized=query.lower()
     for entity in sorted(entities,key=len,reverse=True):
@@ -790,6 +859,13 @@ def materialize_row(
     if split=="dev":
         base["query"]=DEV_QUERY_PARAPHRASES[base["scenario_family"]]
     add_distractors(base,max(field_count,len(base["fields"])),entities)
+    if split=="dev":
+        for item in base["fields"]:
+            item["text"]=dev_surface_paraphrase(item["text"])
+        base["answers"]=[
+            dev_surface_paraphrase(text)
+            for text in base["answers"]
+        ]
     rng=random.Random(seed + example*1009 + (0 if split=="train" else 10_000_000))
 
     required_relations=list(dict.fromkeys(
