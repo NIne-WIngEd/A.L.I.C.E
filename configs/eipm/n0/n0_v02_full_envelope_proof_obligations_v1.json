@@ -37,6 +37,13 @@
       "runtime_followup": "exact successor lineage audit"
     },
     {
+      "id": "N0-P00A",
+      "stage": "historical_authority",
+      "kind": "CI_REQUIRED",
+      "receipt": "PASS_N0_HISTORICAL_AUTHORITY_FIREWALL",
+      "requirement": "All historical N0 PASS/qualified artifacts are non-authoritative by default; only explicitly scoped initialization/regression/data carry-forwards may enter the successor."
+    },
+    {
       "id": "N0-P01",
       "stage": "semantic_operator",
       "kind": "STATIC_REQUIRED",
@@ -433,5 +440,8 @@
       ],
       "reason": "Relation and factor schema subsets must remain runtime-variable per example."
     }
+  ],
+  "critical_governance_files": [
+    "configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json"
   ]
 }
