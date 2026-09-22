@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-full-envelope-current-head-plus-personal-development-boundary-audit-20260922-029
-- Question: Audit exact source authority alice-eipm-v1-n0-full-envelope-foundation-build-v1@6c4e3c02672b7a5415fb3407942d86cc9723b8d9 after the completed static contract run 35684768608 and before any Magnolia CPU/no-gradient full-envelope runtime qualification. Reconstruct what changed since 196fc644885d031fbd26952732443bb699837e7a, including universal semantic input virtualization, registered end-to-end trainable topology, optional-bank inertness, exact runtime-system qualification, structural graph/type/null-support gates, integrated behavioral objective, executable behavioral curriculum, finite-gradient repairs, and accumulation-invariant macro-family loss scaling. Use historical failure lessons, especially 575986/575990 and the MC10D anti-hotfix rule, to distinguish a real source defect from an item that must remain runtime/training/final evidence. Inspect the exact current source, tests, proof obligations, joint training plan, final validation contract, CPU runtime config/audit/qualifier/runner/sbatch, and all currently connected gradient paths. Search for any remaining disconnected gradient path, train/runtime topology mismatch, hidden identity/cardinality axis, partial-context ceiling, optional-bank or mask leak, graph contamination, step/global semantic mismatch, impossible factor/operator supervision, loss normalization or gradient-accumulation dependence, self-referential target, stale authority, invalid parameter or memory accounting, or CPU fixture that does not instantiate the same governed topology intended for training. A separate architecture review also established a downstream requirement for subject-bound user/self/source state, native decision attribution, and outcome-based revision. Determine only whether current N0 contracts accidentally block or conflate those future interfaces; do not turn N0 into the user model, self model, memory authority, or lifelong-learning loop. Do not patch merely to satisfy another static validator. If no concrete source defect remains, identify the next valid empirical boundary and the exact files/receipts that authorize it. Do not authorize optimizer steps, GPU training, FINAL opening, N0 completion, or publication of private identity material. Original repository source is authority; Graphify is navigation only.
+- Request: n0-personal-state-boundary-trace-20260922-030
+- Question: On exact active source alice-eipm-v1-n0-full-envelope-foundation-build-v1@6c4e3c02672b7a5415fb3407942d86cc9723b8d9, trace the implementation boundary for future subject-separated personal state. Locate the exact code and contracts for cognitive projections, conversation/context assembly, the EIPM ACFP/IDP role, N0 full-envelope fields/additional source views/view descriptors, public judgment, and downstream runtime consumption. Determine from source topology whether there is already a complete path from versioned user/self/source/relationship state into a native decision packet and later outcome-driven revision, or whether that path is still missing. Separate what is intentionally outside N0 from any concrete N0 interface defect: N0 must remain identity-neutral semantic/evidential/relational/candidate-comparison foundation, not become memory authority, user model, self model, or continual learner. Check whether arbitrary additional source views plus descriptors can carry future subject-bound state without hard-coded personality IDs or cardinality ceilings, while noting that equal tensor shapes are not subject binding. Return source pointers for the smallest authoritative files to inspect, and surface prior failure/supersession lessons that forbid solving the gap with a static prompt, fixed identity embedding, or another hotfix. Do not authorize training, deployment, final opening, or publication of private identity material. Original source is authority; Graphify is navigation only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -24,48 +24,39 @@
 
 ## Source pointers
 
-- [216] alice-context:docs/chat-context/2026-09-21/sol/N0_FINAL_FULL_SCALE_FROZEN_AUTHORITY_READY.md — N0 final full-scale frozen-authority closure — ready for one owner Magnolia run
-  - status:  final pre-launch package completed; exact-head static/CPU qualification passed; exact-source Graphify passed; private operational history reconciled; Fable updated; one owner Magnolia run is the next scientific evidence
-- [205] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md — N0 CPU/GPU Reality Gap and Data Validity Audit v0.1
-  - status:  architecture/data audit authority; all new gradient/GPU work frozen
-- [205] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md — N0 CPU/GPU Reality Gap and Data Validity Audit v0.1
-  - status:  architecture/data audit authority; all new gradient/GPU work frozen
-- [205] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md — N0 CPU/GPU Reality Gap and Data Validity Audit v0.1
-  - status:  architecture/data audit authority; all new gradient/GPU work frozen
-- [196] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [196] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [196] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md — N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1
-  - status:  exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action
-- [192] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md — N0 Full-Envelope Retrospective Architecture Audit v1
-  - status:  retrospective architecture authority; no gradient/GPU authorization
-- [192] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-semantic-operator-foundation-v1.md — N0 Semantic-Operator Foundation v1 — architecture decision after job 575990
-  - status:  architecture decision; no gradient or GPU authorization
-- [187] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md — N0 job 575966 — frozen semantic authority v3
-- [181] alice-context:docs/chat-context/2026-09-21/sol/N0_JOB575986_P2A_FROZEN_AUTHORITY_VALID_FAIL.md — N0 job 575986 — P2A frozen semantic authority valid FAIL
-  - status:  valid model/capability failure at P2A; Production P2 remained closed; no rerun/tuning authorized
-- [180] alice-eipm-v1-n0-closure-pass:docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md — N0 CPU/GPU Reality Gap and Data Validity Audit v0.1
-  - status:  architecture/data audit authority; all new gradient/GPU work frozen
+- [150] alice-context:docs/chat-context/2026-09-13/sol/CURATED_FRONTIER_V2_PRIVATE_SOURCE_RECEIPT.md — Curated Frontier v2 — Private Source Receipt — 2026-09-13
+- [149] alice-context:docs/chat-context/2026-09-05/MC10D_PUBLIC_JUDGE_SOURCE_TARGET_CLARIFICATION.md — MC10D Public Judge Source→Target Clarification Boundary — 2026-09-05
+- [148] alice-eipm-v1-build:docs/eipm/n0/N0_V02_SOURCE_SELECTION_REVIEW_20260914.md — N0 v0.2 Public Source Selection Review — 2026-09-14
+  - status: source mixture refined; exact source activation still pending runtime probe.
+- [142] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260916_FUSION_SOURCE_ANCHOR_REPAIR.jsonl — FBM_TRACE_20260916_FUSION_SOURCE_ANCHOR_REPAIR.jsonl
+- [142] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl — FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl
+- [139] alice-eipm-v1-build:docs/eipm/n0/runtime-results/N0_V02_SOURCE_PROBE_20260914.md — N0 v0.2 Source Probe — 2026-09-14
+  - status: PASS — source activation completed for bounded public N0 v0.2 corpus construction.
+- [134] alice-context:docs/chat-context/2026-09-06/astra/tools/qwen-origin-v103/package/ALICE_MC10D_QWEN_ORIGIN_REVISION_v1.0.3/authority/source_binding_policy.json — source_binding_policy.json
+- [134] alice-context:docs/chat-context/2026-09-06/astra/tools/qwen-provider-v104/package/ALICE_MC10D_QWEN_PROVIDER_REVISION_v1.0.4/authority/source_binding_policy.json — source_binding_policy.json
+- [134] alice-context:docs/chat-context/2026-09-06/astra/tools/qwen-public-v1/package/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/authority/source_binding_policy.json — source_binding_policy.json
+- [134] alice-context:docs/chat-context/2026-09-06/astra/tools/qwen-runtime-v102/package/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/authority/source_binding_policy.json — source_binding_policy.json
+- [133] alice-context:docs/chat-context/2026-09-14/sol/N0_V02_PREFLIGHT_PASS_AND_SOURCE_ACTIVATION_NEXT.md — N0 v0.2 Preflight PASS and Source Activation Next
+- [132] alice-eipm-v1-build:docs/eipm/n0/public_source_manifest_v0.1.json — public_source_manifest_v0.1.json
 
 ## Graphify navigation hints
 
-- test_behavioral_compiler_support_targets_are_structurally_valid_and_unknown_rows_use_null_support() -> tests/eipm/test_n0_full_envelope_trainable_system_v1.py:L747
-- audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py -> scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py:L1
-- test_full_trainable_system_replay_and_full_envelope_share_same_backbone_parameters() -> tests/eipm/test_n0_full_envelope_trainable_system_v1.py:L294
-- .accounting() -> src/cognitive_kernel/payload_store.py:L370
-- run_final_frozen_challenge_after_graph_arbitration_v0_1.py -> scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py:L1
+- First exact sparse boundary for the full-envelope N0 successor. Unlike Binder… -> src/alice_personality/n0/qsre_full_envelope_binder_v1.py:L48
+- test_full_envelope_stack_accepts_additional_runtime_views_and_runtime_slots() -> tests/eipm/test_n0_full_envelope_stack_v1.py:L191
+- Encode typed ACFP-like state without private identity supervision. Inputs are… -> src/alice_personality/n0/structured_state.py:L53
+- active_edge_logits() -> scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py:L67
+- additionalProperties -> policies/friday_release_attestation_schema.json:L122
 - AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
-- ConstitutionalSourceSnapshot -> src/alice_conversation/constitutional_prompt.py:L50
+- MemoryAlreadyExistsError -> src/alice_memory/service.py:L58
 - test_event_from_another_host_is_rejected() -> tests/phase5/test_experience_ledger_isolation.py:L18
-- semantic_retrieval.py -> src/alice_vault/semantic_retrieval.py:L1
-- test_memory_identity_host_learning_architecture.py -> tests/governance/test_memory_identity_host_learning_architecture.py:L1
-- owner_attribution.py -> src/alice_vault/owner_attribution.py:L1
-- audit() -> scripts/audit_capability_barriers.py:L521
+- test_source_cannot_imitate_arbitrary_web_citation_token() -> tests/phase4/test_information_grounding.py:L596
+- context_assembly.py -> src/alice_conversation/context_assembly.py:L1
+- authoritative_retrieval_digest() -> src/alice_memory/lexical_index.py:L118
 - authority() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L87
 - authorize_boolean_map() -> src/alice_capability_profiles.py:L88
-- test_dynamic_relation_cardinality_has_no_parameter_axis() -> tests/eipm/test_n0_qsre_production_core_v1.py:L157
-- bank() -> tests/eipm/test_n0_full_envelope_stack_v1.py:L28
+- test_verified_deterministic_import_can_become_eligible() -> tests/phase2/test_memory_candidate_assessment.py:L237
+- binding() -> tests/phase5/test_memory_m2_foundation_contracts.py:L99
+- bounded_serving_prototype.py -> src/cognitive_kernel/bounded_serving_prototype.py:L1
 
 ## External/private routing
 
