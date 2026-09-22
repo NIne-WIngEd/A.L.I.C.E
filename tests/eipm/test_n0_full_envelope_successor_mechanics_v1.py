@@ -846,6 +846,116 @@ def _disjoint_start_or_truncate_operator() -> FullEnvelopeOperatorState:
     return operator
 
 
+def _mixed_complete_and_truncated_operator(
+    *,
+    incomplete_relation_index: int,
+) -> FullEnvelopeOperatorState:
+    """One half completes after step 0; one half continues only to truncation."""
+    batch,steps,relations,dim=1,3,2,24
+    relation_distribution=torch.zeros(batch,steps,relations)
+    relation_distribution[:,0,0]=1.0
+    relation_distribution[:,1:,incomplete_relation_index]=1.0
+    role=torch.zeros(batch,4)
+    role[:,ROLE_TARGET]=1.0
+    traversal=torch.zeros(batch,3)
+    traversal[:,TRAVERSAL_PATH]=1.0
+    direction=torch.zeros(batch,3)
+    direction[:,DIRECTION_FORWARD]=1.0
+    control=torch.zeros(batch,3)
+    control[:,CONTROL_RELATIONAL]=1.0
+    operator=FullEnvelopeOperatorState(
+        relation_distribution=relation_distribution,
+        relation_step_mass=torch.tensor([[1.0,0.5,0.5]]),
+        stop_probability=torch.tensor([[0.0,0.5,0.0]]),
+        unknown_probability=torch.zeros(batch,steps),
+        truncation_probability=torch.tensor([0.5]),
+        role_distribution=role,
+        traversal_distribution=traversal,
+        direction_distribution=direction,
+        step_direction_distribution=direction[:,None,:].expand(batch,steps,3).clone(),
+        modifier_weight=torch.zeros(batch,4),
+        step_modifier_weight=torch.zeros(batch,steps,4),
+        applicability=torch.ones(batch),
+        control_distribution=control,
+        continuous_state=torch.zeros(batch,dim),
+        uncertainty=torch.full((batch,),0.5),
+    )
+    operator.validate(relation_count=relations,model_dim=dim)
+    return operator
+
+
+def test_incomplete_only_later_relations_do_not_change_completed_program_relation_summary() -> None:
+    first=_mixed_complete_and_truncated_operator(incomplete_relation_index=0)
+    second=_mixed_complete_and_truncated_operator(incomplete_relation_index=1)
+    relation_a,activity_a=N0FullEnvelopeStackV1._relation_program_summary(first)
+    relation_b,activity_b=N0FullEnvelopeStackV1._relation_program_summary(second)
+    assert torch.allclose(
+        relation_a,
+        torch.tensor([[1.0,0.0]]),
+        atol=1.0e-7,
+        rtol=0.0,
+    )
+    assert torch.allclose(relation_b,relation_a,atol=1.0e-7,rtol=0.0)
+    assert torch.allclose(activity_a,torch.tensor([0.5]),atol=1.0e-7,rtol=0.0)
+    assert torch.allclose(activity_b,activity_a,atol=1.0e-7,rtol=0.0)
+
+
+def test_incomplete_only_later_relation_steps_do_not_move_completed_path_frontier() -> None:
+    torch.manual_seed(413)
+    executor=FullEnvelopeQSREExecutorV1(
+        FullEnvelopeExecutorConfig(
+            field_dim=24,
+            model_dim=24,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    common=dict(
+        field_state=torch.randn(1,3,24),
+        field_metadata=torch.zeros(1,3,3),
+        field_valid_mask=torch.ones(1,3,dtype=torch.bool),
+        edge_index=torch.tensor([[[0,1],[1,2]]]),
+        edge_relation_index=torch.tensor([[0,1]]),
+        edge_valid_mask=torch.ones(1,2,dtype=torch.bool),
+        edge_support_weight=torch.ones(1,2),
+        support_available=torch.ones(1),
+        edge_reliability=torch.ones(1,2),
+        edge_recency=torch.ones(1,2),
+        edge_temporal_match=torch.ones(1,2),
+        edge_provenance_match=torch.ones(1,2),
+        relation_schema_state=torch.randn(1,2,24),
+        step_relation_schema_state=torch.randn(1,3,2,24),
+        relation_symmetric=torch.zeros(1,2,dtype=torch.bool),
+        focus_field_weight=torch.tensor([[1.0,0.0,0.0]]),
+    )
+    with torch.no_grad():
+        first=executor(
+            operator=_mixed_complete_and_truncated_operator(
+                incomplete_relation_index=0,
+            ),
+            **common,
+        )
+        second=executor(
+            operator=_mixed_complete_and_truncated_operator(
+                incomplete_relation_index=1,
+            ),
+            **common,
+        )
+    assert torch.allclose(
+        first["path_frontier"],
+        torch.tensor([[0.0,1.0,0.0]]),
+        atol=1.0e-7,
+        rtol=0.0,
+    )
+    assert torch.allclose(
+        second["path_frontier"],
+        first["path_frontier"],
+        atol=1.0e-7,
+        rtol=0.0,
+    )
+
+
 def test_disjoint_start_or_truncate_mass_cannot_fake_completed_relational_activity() -> None:
     operator=_disjoint_start_or_truncate_operator()
     _,semantic_activity=N0FullEnvelopeStackV1._relation_program_summary(operator)

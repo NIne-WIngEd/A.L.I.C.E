@@ -906,6 +906,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_disjoint_start_or_truncate_mass_cannot_fake_executor_completion",
       "requirement": "Executor confidence must be zero when no probability mass both starts a relational program and subsequently reaches STOP, even if P(start)>0 and P(not truncated)>0 separately."
+    },
+    {
+      "id": "N0-P24L",
+      "stage": "program_completion",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_incomplete_only_later_relations_do_not_change_completed_program_relation_summary",
+      "requirement": "Global relation semantics for an asserted completed program must be conditioned on branches that later reach STOP. Relation distributions from branches that only continue to UNKNOWN/truncation may not contaminate the completed graph/evidence program summary."
+    },
+    {
+      "id": "N0-P24M",
+      "stage": "executor",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_incomplete_only_later_relation_steps_do_not_move_completed_path_frontier",
+      "requirement": "Executor path state used for completed relational output must be conditioned on successful future STOP completion. Relation steps that exist only on branches ending in truncation/UNKNOWN may not move the completed-program frontier."
     }
   ],
   "closure_rule": {
