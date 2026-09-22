@@ -261,10 +261,17 @@ def factor_counterfactuals(targets: dict[str,str]) -> dict[str,str | None]:
 def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
     pair_anchor=example-1 if mode==16 else example
     entity_example=pair_anchor if mode in {15,16} else example
-    a=entities[(entity_example*3) % len(entities)]
-    b=entities[(entity_example*5+1) % len(entities)]
-    c=entities[(entity_example*7+2) % len(entities)]
-    d=entities[(entity_example*11+3) % len(entities)]
+    if mode in {15,16}:
+        base=entity_example % len(entities)
+        a=entities[base]
+        b=entities[(base+1) % len(entities)]
+        c=entities[(base+2) % len(entities)]
+        d=entities[(base+3) % len(entities)]
+    else:
+        a=entities[(entity_example*3) % len(entities)]
+        b=entities[(entity_example*5+1) % len(entities)]
+        c=entities[(entity_example*7+2) % len(entities)]
+        d=entities[(entity_example*11+3) % len(entities)]
     entities_used=[a,b,c,d]
     targets=default_factor_targets()
     step_targets: list[dict[str,str]] = []
