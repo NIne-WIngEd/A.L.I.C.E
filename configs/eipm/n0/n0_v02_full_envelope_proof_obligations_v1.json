@@ -26,7 +26,8 @@
     "src/alice_personality/n0/n0_full_envelope_stack_v1.py",
     "src/alice_personality/n0/semantic_backbone_interface_v1.py",
     "src/alice_personality/n0/chunked_set_attention_v1.py",
-    "src/alice_personality/n0/numeric_contracts.py"
+    "src/alice_personality/n0/numeric_contracts.py",
+    "src/alice_personality/n0/semantic_segment_context_bridge_v1.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
@@ -348,6 +349,34 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_context_virtualizer_splits_overlap_at_midpoint_instead_of_later_window_bias",
       "requirement": "Overlapping long-context windows use balanced ownership rather than systematically retaining boundary tokens from the context-poor later window."
+    },
+    {
+      "id": "N0-P32A",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_segment_context_bridge_is_segment_permutation_equivariant",
+      "requirement": "Global cross-window semantic interaction cannot depend on arbitrary segment enumeration when continuous position metadata moves with the segment."
+    },
+    {
+      "id": "N0-P32C",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_segment_context_bridge_backpropagates_across_windows",
+      "requirement": "Training signal from one native window can reach semantic states in another window through the bridge."
+    },
+    {
+      "id": "N0-P32D",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_segment_context_bridge_has_no_segment_identity_or_count_ceiling",
+      "requirement": "Cross-window bridge has no learned segment identity or segment-count parameter axis and uses memory-bounded global segment attention."
+    },
+    {
+      "id": "N0-P32E",
+      "stage": "context",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_virtualizer_report_requires_cross_window_bridge_for_long_query_semantics",
+      "requirement": "Token-lossless segmentation may not be misrepresented as standalone globally contextualized semantics."
     },
     {
       "id": "N0-P33",
