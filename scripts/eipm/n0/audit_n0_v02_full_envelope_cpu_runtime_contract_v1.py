@@ -45,6 +45,37 @@ def main() -> None:
         if q.get("operator_evidence_alignment_max_length_is_product_ceiling") is not False:
             raise ValueError("operator evidence audit length may not become a product ceiling")
 
+        successor=o.get("successor",{})
+        if successor.get("trainable_system")!="src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py":
+            raise ValueError("CPU runtime must target the registered trainable system")
+        if successor.get("semantic_input")!="src/alice_personality/n0/full_envelope_semantic_input_v1.py":
+            raise ValueError("CPU runtime must target the unified semantic input path")
+        if q.get("same_registered_trainable_topology_required") is not True:
+            raise ValueError("same registered trainable topology must be required")
+        if q.get("all_text_surfaces_share_virtualization_policy_required") is not True:
+            raise ValueError("all text surfaces must share virtualization policy")
+
+        stress=o.get("text_surface_virtualization_stress")
+        if not isinstance(stress,dict):
+            raise ValueError("text_surface_virtualization_stress missing")
+        required_surfaces=set(map(str,stress.get("minimum_virtualized_surfaces",[])))
+        expected_surfaces={
+            "query",
+            "relation_schema",
+            "factor_schema",
+            "field_text",
+            "candidate_text",
+            "descriptor_text",
+        }
+        if required_surfaces != expected_surfaces:
+            raise ValueError("text-surface virtualization stress coverage drift")
+        if int(stress.get("native_window_tokens",0)) <= 0:
+            raise ValueError("text-surface stress native window missing")
+        if int(stress.get("suffix_repeat_count",0)) <= 0:
+            raise ValueError("text-surface stress suffix repeat count missing")
+        if not str(stress.get("suffix_text","")).strip():
+            raise ValueError("text-surface stress suffix text missing")
+
         long_cfg=o.get("long_context_bridge_runtime")
         if not isinstance(long_cfg,dict):
             raise ValueError("long_context_bridge_runtime missing")
@@ -64,6 +95,8 @@ def main() -> None:
             raise ValueError("cross-window bridge must be required")
         if o["qualification"].get("standalone_window_stitching_insufficient") is not True:
             raise ValueError("standalone window stitching must not count as semantic completion")
+        if int(stress["native_window_tokens"]) != int(long_cfg["native_window_tokens"]):
+            raise ValueError("text-surface stress/native-window contract drift")
 
         case=o["runtime_case"]
         b=int(case["batch_size"])
