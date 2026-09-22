@@ -219,7 +219,7 @@ Continuing user learning and assistant self-development are required destination
 
 A bounded architecture branch was created from the exact current N0 head:
 
-`alice-personal-development-architecture-v1`
+`alice-personal-development-architecture-v1@88fbccd2e900569228e09a9b984a00dde16c7abc`
 
 Current corrections there include:
 
@@ -230,7 +230,7 @@ Current corrections there include:
 - explicit rule that prompts, storage schemas, or generic model behavior are insufficient proof;
 - regression tests for subject separation and the architecture contract.
 
-The Fable builder branch was also updated:
+The Fable builder branch was also updated at `fable-builder-model@467fb30689500f30b0bf23d04c214362d63ff10d`:
 
 - `docs/fable-builder/README.md` now treats post-activation personal development/reflection as required rather than optional;
 - `docs/fable-builder/traces/FBM_TRACE_20260922_PERSONAL_DEVELOPMENT_ARCHITECTURE.jsonl` records the transferable lessons.
