@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-personal-state-boundary-trace-20260922-030
-- Question: On exact active source alice-eipm-v1-n0-full-envelope-foundation-build-v1@6c4e3c02672b7a5415fb3407942d86cc9723b8d9, trace the implementation boundary for future subject-separated personal state. Locate the exact code and contracts for cognitive projections, conversation/context assembly, the EIPM ACFP/IDP role, N0 full-envelope fields/additional source views/view descriptors, public judgment, and downstream runtime consumption. Determine from source topology whether there is already a complete path from versioned user/self/source/relationship state into a native decision packet and later outcome-driven revision, or whether that path is still missing. Separate what is intentionally outside N0 from any concrete N0 interface defect: N0 must remain identity-neutral semantic/evidential/relational/candidate-comparison foundation, not become memory authority, user model, self model, or continual learner. Check whether arbitrary additional source views plus descriptors can carry future subject-bound state without hard-coded personality IDs or cardinality ceilings, while noting that equal tensor shapes are not subject binding. Return source pointers for the smallest authoritative files to inspect, and surface prior failure/supersession lessons that forbid solving the gap with a static prompt, fixed identity embedding, or another hotfix. Do not authorize training, deployment, final opening, or publication of private identity material. Original source is authority; Graphify is navigation only.
+- Request: n0-full-envelope-unfinished-deep-static-audit-20260922-031
+- Question: Continue the unfinished deep source-level audit of exact head alice-eipm-v1-n0-full-envelope-foundation-build-v1@6c4e3c02672b7a5415fb3407942d86cc9723b8d9. Do NOT assume the 114/114 green static suite means the architecture is ready for Magnolia. The prior Sol approach was explicitly to keep trying to make the architecture fail cheaply before external compute, because several earlier narrowly green N0 heads concealed structural defects. Reconstruct all changes after the earlier 90-test head 196fc644885d031fbd26952732443bb699837e7a and inspect the exact original source, not test names or summaries. Audit for remaining capability-breaking defects or self-fulfilling tests across: semantic input virtualization and cross-window interaction; semantic operator/query/schema interactions; step-conditioned relation state; factor semantics and open factor banks; structured state; graph message passing and type compatibility; Binder exact null support; executor semantics; evidence view; fusion relevance routing; additional runtime views; latent competition/recoverability/noncollapse; public judgment; candidate masking/cardinality; behavioral curriculum and compiler; full-envelope objective and loss balancing; gradient connectivity/numerical stability; CPU runtime qualifier fidelity; parameter/memory accounting; and final-validation independence. Specifically search for places where a target/label is derived from the same mechanism being tested, semantic meaning is secretly encoded in position/index/opcode/fixture order, a mask/availability/reliability signal leaks the answer, gradients cannot reach a required module despite a superficial connectivity test, an optional branch becomes semantically mandatory, a test only proves shape/permutation instead of behavior, the CPU fixture uses easier semantics than training, or a static proof asserts a report flag rather than exercising the claimed property. Cross-check historical failures 575956/575957/575958/575962/575966/575986/575990 and the MC10D anti-hotfix lesson so old mistakes cannot re-enter under a new name. Distinguish: (A) concrete source defects to fix now, (B) insufficient static evidence requiring a new independent static/CPU-local test before Magnolia, and (C) genuinely empirical items that must wait for runtime/training/final evidence. Do not authorize Magnolia, GPU, optimizer, gradient training, FINAL opening, or N0 completion in this query. Original repository source is authority; Graphify is navigation only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -24,44 +24,42 @@
 
 ## Source pointers
 
-- [150] alice-context:docs/chat-context/2026-09-13/sol/CURATED_FRONTIER_V2_PRIVATE_SOURCE_RECEIPT.md — Curated Frontier v2 — Private Source Receipt — 2026-09-13
-- [149] alice-context:docs/chat-context/2026-09-05/MC10D_PUBLIC_JUDGE_SOURCE_TARGET_CLARIFICATION.md — MC10D Public Judge Source→Target Clarification Boundary — 2026-09-05
-- [148] alice-eipm-v1-build:docs/eipm/n0/N0_V02_SOURCE_SELECTION_REVIEW_20260914.md — N0 v0.2 Public Source Selection Review — 2026-09-14
-  - status: source mixture refined; exact source activation still pending runtime probe.
-- [142] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260916_FUSION_SOURCE_ANCHOR_REPAIR.jsonl — FBM_TRACE_20260916_FUSION_SOURCE_ANCHOR_REPAIR.jsonl
-- [142] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl — FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl
-- [139] alice-eipm-v1-build:docs/eipm/n0/runtime-results/N0_V02_SOURCE_PROBE_20260914.md — N0 v0.2 Source Probe — 2026-09-14
-  - status: PASS — source activation completed for bounded public N0 v0.2 corpus construction.
-- [134] alice-context:docs/chat-context/2026-09-06/astra/tools/qwen-origin-v103/package/ALICE_MC10D_QWEN_ORIGIN_REVISION_v1.0.3/authority/source_binding_policy.json — source_binding_policy.json
-- [134] alice-context:docs/chat-context/2026-09-06/astra/tools/qwen-provider-v104/package/ALICE_MC10D_QWEN_PROVIDER_REVISION_v1.0.4/authority/source_binding_policy.json — source_binding_policy.json
-- [134] alice-context:docs/chat-context/2026-09-06/astra/tools/qwen-public-v1/package/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/authority/source_binding_policy.json — source_binding_policy.json
-- [134] alice-context:docs/chat-context/2026-09-06/astra/tools/qwen-runtime-v102/package/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/authority/source_binding_policy.json — source_binding_policy.json
-- [133] alice-context:docs/chat-context/2026-09-14/sol/N0_V02_PREFLIGHT_PASS_AND_SOURCE_ACTIVATION_NEXT.md — N0 v0.2 Preflight PASS and Source Activation Next
-- [132] alice-eipm-v1-build:docs/eipm/n0/public_source_manifest_v0.1.json — public_source_manifest_v0.1.json
+- [265] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [265] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [265] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [240] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [240] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [240] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [240] alice-eipm-v1-n0-closure-pass:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [240] alice-eipm-v1-n0-closure-semantic-v2:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [240] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [240] alice-eipm-v1-n0-p2a-semantic-localization-v1:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [240] alice-eipm-v1-n0-semantic-operator-foundation-v1:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
+- [240] alice-eipm-v1-qsre-production-core-v1:docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md — N0 Query-Semantics Architecture Audit v0.1
 
 ## Graphify navigation hints
 
-- First exact sparse boundary for the full-envelope N0 successor. Unlike Binder… -> src/alice_personality/n0/qsre_full_envelope_binder_v1.py:L48
-- test_full_envelope_stack_accepts_additional_runtime_views_and_runtime_slots() -> tests/eipm/test_n0_full_envelope_stack_v1.py:L191
-- Encode typed ACFP-like state without private identity supervision. Inputs are… -> src/alice_personality/n0/structured_state.py:L53
-- active_edge_logits() -> scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py:L67
+- test_behavioral_compiler_support_targets_are_structurally_valid_and_unknown_rows_use_null_support() -> tests/eipm/test_n0_full_envelope_trainable_system_v1.py:L747
+- test_joint_training_objective_gradient_reaches_backbone_operator_binder_fusion_and_judgment() -> tests/eipm/test_n0_full_envelope_trainable_system_v1.py:L478
+- audit_n0_v02_full_envelope_behavioral_curriculum_v1.py -> scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py:L1
+- .accounting() -> src/cognitive_kernel/payload_store.py:L370
+- test_response_wrapper_rejects_split_verified_source_set_across_sentences() -> tests/phase4/test_information_conversation_bridge.py:L628
 - additionalProperties -> policies/friday_release_attestation_schema.json:L122
+- run_final_frozen_challenge_after_graph_arbitration_v0_1.py -> scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py:L1
 - AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
-- MemoryAlreadyExistsError -> src/alice_memory/service.py:L58
-- test_event_from_another_host_is_rejected() -> tests/phase5/test_experience_ledger_isolation.py:L18
-- test_source_cannot_imitate_arbitrary_web_citation_token() -> tests/phase4/test_information_grounding.py:L596
-- context_assembly.py -> src/alice_conversation/context_assembly.py:L1
-- authoritative_retrieval_digest() -> src/alice_memory/lexical_index.py:L118
+- answer_grounded.py -> scripts/answer_grounded.py:L1
+- semantic_retrieval.py -> src/alice_vault/semantic_retrieval.py:L1
+- test_memory_identity_host_learning_architecture.py -> tests/governance/test_memory_identity_host_learning_architecture.py:L1
+- audit() -> scripts/audit_capability_barriers.py:L521
 - authority() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L87
 - authorize_boolean_map() -> src/alice_capability_profiles.py:L88
-- test_verified_deterministic_import_can_become_eligible() -> tests/phase2/test_memory_candidate_assessment.py:L237
-- binding() -> tests/phase5/test_memory_m2_foundation_contracts.py:L99
-- bounded_serving_prototype.py -> src/cognitive_kernel/bounded_serving_prototype.py:L1
+- test_unknown_mode_and_availability_fail_before_runner() -> tests/phase4/test_information_research_mode.py:L632
+- test_adapter_allows_semantic_only_factor_banks_without_structural_opcode_mapping() -> tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py:L872
 
 ## External/private routing
 
 - Recommended: True
-- Reason: question references a private/external source class
+- Reason: host-specific operational history may contain newer failure lessons than public receipts
 
 ## Trust contract
 

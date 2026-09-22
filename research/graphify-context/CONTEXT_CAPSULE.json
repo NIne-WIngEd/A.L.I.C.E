@@ -1,8 +1,8 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-personal-state-boundary-trace-20260922-030",
-  "question": "On exact active source alice-eipm-v1-n0-full-envelope-foundation-build-v1@6c4e3c02672b7a5415fb3407942d86cc9723b8d9, trace the implementation boundary for future subject-separated personal state. Locate the exact code and contracts for cognitive projections, conversation/context assembly, the EIPM ACFP/IDP role, N0 full-envelope fields/additional source views/view descriptors, public judgment, and downstream runtime consumption. Determine from source topology whether there is already a complete path from versioned user/self/source/relationship state into a native decision packet and later outcome-driven revision, or whether that path is still missing. Separate what is intentionally outside N0 from any concrete N0 interface defect: N0 must remain identity-neutral semantic/evidential/relational/candidate-comparison foundation, not become memory authority, user model, self model, or continual learner. Check whether arbitrary additional source views plus descriptors can carry future subject-bound state without hard-coded personality IDs or cardinality ceilings, while noting that equal tensor shapes are not subject binding. Return source pointers for the smallest authoritative files to inspect, and surface prior failure/supersession lessons that forbid solving the gap with a static prompt, fixed identity embedding, or another hotfix. Do not authorize training, deployment, final opening, or publication of private identity material. Original source is authority; Graphify is navigation only.",
-  "generated_at_utc": "2026-09-22T04:42:40.890439+00:00",
+  "request_id": "n0-full-envelope-unfinished-deep-static-audit-20260922-031",
+  "question": "Continue the unfinished deep source-level audit of exact head alice-eipm-v1-n0-full-envelope-foundation-build-v1@6c4e3c02672b7a5415fb3407942d86cc9723b8d9. Do NOT assume the 114/114 green static suite means the architecture is ready for Magnolia. The prior Sol approach was explicitly to keep trying to make the architecture fail cheaply before external compute, because several earlier narrowly green N0 heads concealed structural defects. Reconstruct all changes after the earlier 90-test head 196fc644885d031fbd26952732443bb699837e7a and inspect the exact original source, not test names or summaries. Audit for remaining capability-breaking defects or self-fulfilling tests across: semantic input virtualization and cross-window interaction; semantic operator/query/schema interactions; step-conditioned relation state; factor semantics and open factor banks; structured state; graph message passing and type compatibility; Binder exact null support; executor semantics; evidence view; fusion relevance routing; additional runtime views; latent competition/recoverability/noncollapse; public judgment; candidate masking/cardinality; behavioral curriculum and compiler; full-envelope objective and loss balancing; gradient connectivity/numerical stability; CPU runtime qualifier fidelity; parameter/memory accounting; and final-validation independence. Specifically search for places where a target/label is derived from the same mechanism being tested, semantic meaning is secretly encoded in position/index/opcode/fixture order, a mask/availability/reliability signal leaks the answer, gradients cannot reach a required module despite a superficial connectivity test, an optional branch becomes semantically mandatory, a test only proves shape/permutation instead of behavior, the CPU fixture uses easier semantics than training, or a static proof asserts a report flag rather than exercising the claimed property. Cross-check historical failures 575956/575957/575958/575962/575966/575986/575990 and the MC10D anti-hotfix lesson so old mistakes cannot re-enter under a new name. Distinguish: (A) concrete source defects to fix now, (B) insufficient static evidence requiring a new independent static/CPU-local test before Magnolia, and (C) genuinely empirical items that must wait for runtime/training/final evidence. Do not authorize Magnolia, GPU, optimizer, gradient training, FINAL opening, or N0 completion in this query. Original repository source is authority; Graphify is navigation only.",
+  "generated_at_utc": "2026-09-22T04:57:38.761223+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
@@ -4864,288 +4864,315 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 150,
-      "branch": "alice-context",
+      "score": 265,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-13/sol/CURATED_FRONTIER_V2_PRIVATE_SOURCE_RECEIPT.md",
-      "blob_sha": "4b1d62e7baa7d081eeebab2c182f52627c9b350a",
-      "category": "runtime_receipt",
-      "title": "Curated Frontier v2 — Private Source Receipt — 2026-09-13",
-      "declared": {},
-      "matched_terms": [
-        "competitor",
-        "frontier"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 15
-    },
-    {
-      "score": 149,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-05/MC10D_PUBLIC_JUDGE_SOURCE_TARGET_CLARIFICATION.md",
-      "blob_sha": "83bd97ff0c314c2e73dcb801a33086c9eb736e94",
-      "category": "working_context",
-      "title": "MC10D Public Judge Source→Target Clarification Boundary — 2026-09-05",
-      "declared": {},
-      "matched_terms": [
-        "benchmark"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 13
-    },
-    {
-      "score": 148,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/n0/N0_V02_SOURCE_SELECTION_REVIEW_20260914.md",
-      "blob_sha": "0f53cb8334b2e9ea266bcfa2262472c6abf748ad",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
       "category": "design_document",
-      "title": "N0 v0.2 Public Source Selection Review — 2026-09-14",
-      "declared": {
-        "status": "source mixture refined; exact source activation still pending runtime probe."
-      },
-      "matched_terms": [
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "frontier",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 12
-    },
-    {
-      "score": 142,
-      "branch": "fable-builder-model",
-      "branch_scope": "branch_specific",
-      "path": "docs/fable-builder/traces/FBM_TRACE_20260916_FUSION_SOURCE_ANCHOR_REPAIR.jsonl",
-      "blob_sha": "ea9d4021998c51c7439e69386412bebf3b969511",
-      "category": "design_document",
-      "title": "FBM_TRACE_20260916_FUSION_SOURCE_ANCHOR_REPAIR.jsonl",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
       "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 2,
-          "text": "{\"trace_id\":\"FBM-20260916-FUSION-SOURCE-ANCHOR-02\",\"date\":\"2026-09-16\",\"category\":\"evaluation_integrity\",\"trigger\":\"A frozen challenge exposed failures that informed architecture and curriculum repair.\",\"lesson\":\"Once an untouched challenge informs repair decisions, it is no longer untouched for the repaired model and must be retired from ratification use. It may remain diagnostic evidence only.\",\"general_rule\":\"Never train on frozen challenge rows. After failure-driven repair, author a new inde"
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 8
-    },
-    {
-      "score": 142,
-      "branch": "fable-builder-model",
-      "branch_scope": "branch_specific",
-      "path": "docs/fable-builder/traces/FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl",
-      "blob_sha": "c7472bb1d6a8cbb6614b9fba665e6b3c80efbe92",
-      "category": "design_document",
-      "title": "FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 3,
-          "text": "{\"trace_id\":\"FBM-20260916-FUSION-HISTORY-03\",\"date\":\"2026-09-16\",\"category\":\"temporal_reasoning\",\"trigger\":\"Confirmatory coverage expanded to historical queries over superseded and temporal-successor records.\",\"lesson\":\"Superseded is not forgotten and newer is not always the answer. Query scope must control whether current or historical state is selected from the same evidence graph.\",\"general_rule\":\"Always include both latest-state and prior-state queries when validating temporal memory/evidenc"
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 10
-    },
-    {
-      "score": 139,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/n0/runtime-results/N0_V02_SOURCE_PROBE_20260914.md",
-      "blob_sha": "1ad7d9a3803ed49a4b3c36812682bdd18fd41e4e",
-      "category": "runtime_receipt",
-      "title": "N0 v0.2 Source Probe — 2026-09-14",
-      "declared": {
-        "status": "PASS — source activation completed for bounded public N0 v0.2 corpus construction."
-      },
       "matched_terms": [
-        "failure",
         "magnolia",
-        "runtime-results"
+        "repair"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
-        "document",
-        "lexical"
-      ],
-      "lexical_body_hits": 14
-    },
-    {
-      "score": 134,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-06/astra/tools/qwen-origin-v103/package/ALICE_MC10D_QWEN_ORIGIN_REVISION_v1.0.3/authority/source_binding_policy.json",
-      "blob_sha": "8c1bcdde5ea45d43860d3359f2eccfe64591bf5c",
-      "category": "working_context",
-      "title": "source_binding_policy.json",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 6
-    },
-    {
-      "score": 134,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-06/astra/tools/qwen-provider-v104/package/ALICE_MC10D_QWEN_PROVIDER_REVISION_v1.0.4/authority/source_binding_policy.json",
-      "blob_sha": "8c1bcdde5ea45d43860d3359f2eccfe64591bf5c",
-      "category": "working_context",
-      "title": "source_binding_policy.json",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 6
-    },
-    {
-      "score": 134,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-06/astra/tools/qwen-public-v1/package/ALICE_MC10D_QWEN_PUBLIC_QUALIFICATION_v1.0.0/authority/source_binding_policy.json",
-      "blob_sha": "8c1bcdde5ea45d43860d3359f2eccfe64591bf5c",
-      "category": "working_context",
-      "title": "source_binding_policy.json",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 6
-    },
-    {
-      "score": 134,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-06/astra/tools/qwen-runtime-v102/package/ALICE_MC10D_QWEN_RUNTIME_SUCCESSOR_v1.0.2/authority/source_binding_policy.json",
-      "blob_sha": "8c1bcdde5ea45d43860d3359f2eccfe64591bf5c",
-      "category": "working_context",
-      "title": "source_binding_policy.json",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 6
-    },
-    {
-      "score": 133,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-14/sol/N0_V02_PREFLIGHT_PASS_AND_SOURCE_ACTIVATION_NEXT.md",
-      "blob_sha": "66f140b442f251dfe9dbc454d694f1f0198adbcd",
-      "category": "working_context",
-      "title": "N0 v0.2 Preflight PASS and Source Activation Next",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [
-        {
-          "line": 42,
-          "text": "Run the source schema probe from Magnolia login node after pulling `alice-eipm-v1-build`. Do not use `sbatch` and do not allocate a GPU."
-        }
-      ],
-      "catalogs": [
-        "supersession",
-        "document",
-        "failure",
-        "lexical"
-      ],
-      "lexical_body_hits": 9
-    },
-    {
-      "score": 132,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/eipm/n0/public_source_manifest_v0.1.json",
-      "blob_sha": "2ae30886f4778ff13e7af3e2f63a958d77d3b66f",
-      "category": "design_document",
-      "title": "public_source_manifest_v0.1.json",
-      "declared": {},
-      "matched_terms": [
-        "benchmark",
-        "research"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
         "frontier",
         "supersession",
         "document",
-        "failure",
         "lexical"
       ],
-      "lexical_body_hits": 25
+      "lexical_body_hits": 33,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 265,
+      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 33,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 265,
+      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 33,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 240,
+      "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 33
+    },
+    {
+      "score": 240,
+      "branch": "alice-eipm-v1-dual-view-specialist-failure-localization",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 33
+    },
+    {
+      "score": 240,
+      "branch": "alice-eipm-v1-n0-clean-sheet-relational-execution-review",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 33
+    },
+    {
+      "score": 240,
+      "branch": "alice-eipm-v1-n0-closure-pass",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 33
+    },
+    {
+      "score": 240,
+      "branch": "alice-eipm-v1-n0-closure-semantic-v2",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 33
+    },
+    {
+      "score": 240,
+      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 33
+    },
+    {
+      "score": 240,
+      "branch": "alice-eipm-v1-n0-p2a-semantic-localization-v1",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 33
+    },
+    {
+      "score": 240,
+      "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 33
+    },
+    {
+      "score": 240,
+      "branch": "alice-eipm-v1-qsre-production-core-v1",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
+      "blob_sha": "53bb1b570eb00a73453da7ac2f4232228dcaea3e",
+      "category": "design_document",
+      "title": "N0 Query-Semantics Architecture Audit v0.1",
+      "declared": {},
+      "matched_terms": [
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 33
     }
   ],
   "graphify_navigation_hints": [
     {
-      "label": "First exact sparse boundary for the full-envelope N0 successor. Unlike Binder…",
-      "source": "src/alice_personality/n0/qsre_full_envelope_binder_v1.py",
-      "location": "L48",
-      "community": "22"
+      "label": "test_behavioral_compiler_support_targets_are_structurally_valid_and_unknown_rows_use_null_support()",
+      "source": "tests/eipm/test_n0_full_envelope_trainable_system_v1.py",
+      "location": "L747",
+      "community": "83"
     },
     {
-      "label": "test_full_envelope_stack_accepts_additional_runtime_views_and_runtime_slots()",
-      "source": "tests/eipm/test_n0_full_envelope_stack_v1.py",
-      "location": "L191",
-      "community": "179"
+      "label": "test_joint_training_objective_gradient_reaches_backbone_operator_binder_fusion_and_judgment()",
+      "source": "tests/eipm/test_n0_full_envelope_trainable_system_v1.py",
+      "location": "L478",
+      "community": "83"
     },
     {
-      "label": "Encode typed ACFP-like state without private identity supervision. Inputs are…",
-      "source": "src/alice_personality/n0/structured_state.py",
-      "location": "L53",
-      "community": "47"
+      "label": "audit_n0_v02_full_envelope_behavioral_curriculum_v1.py",
+      "source": "scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py",
+      "location": "L1",
+      "community": "0"
     },
     {
-      "label": "active_edge_logits()",
-      "source": "scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py",
-      "location": "L67",
-      "community": "7"
+      "label": ".accounting()",
+      "source": "src/cognitive_kernel/payload_store.py",
+      "location": "L370",
+      "community": "62"
+    },
+    {
+      "label": "test_response_wrapper_rejects_split_verified_source_set_across_sentences()",
+      "source": "tests/phase4/test_information_conversation_bridge.py",
+      "location": "L628",
+      "community": "64"
     },
     {
       "label": "additionalProperties",
@@ -5154,40 +5181,40 @@
       "community": "255"
     },
     {
+      "label": "run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
+      "source": "scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
+      "location": "L1",
+      "community": "183"
+    },
+    {
       "label": "AliceN0V02Model",
       "source": "src/alice_personality/n0/v02_model.py",
       "location": "L13",
       "community": "69"
     },
     {
-      "label": "MemoryAlreadyExistsError",
-      "source": "src/alice_memory/service.py",
-      "location": "L58",
-      "community": "18"
-    },
-    {
-      "label": "test_event_from_another_host_is_rejected()",
-      "source": "tests/phase5/test_experience_ledger_isolation.py",
-      "location": "L18",
-      "community": "174"
-    },
-    {
-      "label": "test_source_cannot_imitate_arbitrary_web_citation_token()",
-      "source": "tests/phase4/test_information_grounding.py",
-      "location": "L596",
-      "community": "76"
-    },
-    {
-      "label": "context_assembly.py",
-      "source": "src/alice_conversation/context_assembly.py",
+      "label": "answer_grounded.py",
+      "source": "scripts/answer_grounded.py",
       "location": "L1",
-      "community": "25"
+      "community": "0"
     },
     {
-      "label": "authoritative_retrieval_digest()",
-      "source": "src/alice_memory/lexical_index.py",
-      "location": "L118",
-      "community": "6"
+      "label": "semantic_retrieval.py",
+      "source": "src/alice_vault/semantic_retrieval.py",
+      "location": "L1",
+      "community": "63"
+    },
+    {
+      "label": "test_memory_identity_host_learning_architecture.py",
+      "source": "tests/governance/test_memory_identity_host_learning_architecture.py",
+      "location": "L1",
+      "community": "263"
+    },
+    {
+      "label": "audit()",
+      "source": "scripts/audit_capability_barriers.py",
+      "location": "L521",
+      "community": "145"
     },
     {
       "label": "authority()",
@@ -5202,28 +5229,46 @@
       "community": "99"
     },
     {
-      "label": "test_verified_deterministic_import_can_become_eligible()",
+      "label": "test_unknown_mode_and_availability_fail_before_runner()",
+      "source": "tests/phase4/test_information_research_mode.py",
+      "location": "L632",
+      "community": "43"
+    },
+    {
+      "label": "test_adapter_allows_semantic_only_factor_banks_without_structural_opcode_mapping()",
+      "source": "tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py",
+      "location": "L872",
+      "community": "22"
+    },
+    {
+      "label": "test_confirmed_explicit_user_candidate_becomes_promotion_eligible()",
       "source": "tests/phase2/test_memory_candidate_assessment.py",
-      "location": "L237",
+      "location": "L167",
       "community": "159"
     },
     {
-      "label": "binding()",
-      "source": "tests/phase5/test_memory_m2_foundation_contracts.py",
-      "location": "L99",
-      "community": "233"
+      "label": "test_candidates_never_enter_derived_indexes_before_promotion()",
+      "source": "tests/phase2/test_memory_candidate_security_gates.py",
+      "location": "L312",
+      "community": "33"
     },
     {
-      "label": "bounded_serving_prototype.py",
-      "source": "src/cognitive_kernel/bounded_serving_prototype.py",
-      "location": "L1",
-      "community": "19"
+      "label": "BehavioralBatchCompileConfig",
+      "source": "src/alice_personality/n0/full_envelope_behavioral_batch_v1.py",
+      "location": "L30",
+      "community": "83"
     },
     {
-      "label": ".boundary()",
-      "source": "src/alice_conversation/cli_policy.py",
-      "location": "L67",
-      "community": "80"
+      "label": "QSREProductionBinderV2",
+      "source": "src/alice_personality/n0/qsre_production_binder_v2.py",
+      "location": "L16",
+      "community": "180"
+    },
+    {
+      "label": "branch_forward()",
+      "source": "scripts/eipm/n0/train_n0_v02_structured_state_pilot.py",
+      "location": "L287",
+      "community": "47"
     },
     {
       "label": "_build()",
@@ -5238,38 +5283,14 @@
       "community": "2"
     },
     {
-      "label": "test_dynamic_relation_cardinality_has_no_parameter_axis()",
-      "source": "tests/eipm/test_n0_qsre_production_core_v1.py",
-      "location": "L157",
-      "community": "38"
-    },
-    {
-      "label": "test_multiple_speakers_carry_no_authority()",
-      "source": "tests/phase5/test_speaker_context.py",
-      "location": "L33",
-      "community": "122"
-    },
-    {
-      "label": "test_n0_no_accidental_capability_ceilings.py",
-      "source": "tests/eipm/test_n0_no_accidental_capability_ceilings.py",
-      "location": "L1",
-      "community": "8"
-    },
-    {
-      "label": "checked_file()",
-      "source": "scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py",
-      "location": "L145",
-      "community": "183"
-    },
-    {
-      "label": "codes()",
-      "source": "tests/phase3/test_conversation_response_validation_adversarial.py",
-      "location": "L18",
-      "community": "35"
+      "label": "test_duplicate_resolution_cannot_be_rebound_to_second_target()",
+      "source": "tests/phase2/test_memory_candidate_security_gates.py",
+      "location": "L499",
+      "community": "33"
     }
   ],
   "private_external_route_recommended": true,
-  "private_external_route_reason": "question references a private/external source class",
+  "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
   "trust_contract": [
     "This capsule routes retrieval; it is not canonical A.L.I.C.E. truth.",
     "Open consequential claims in the original branch/path source before acting.",
