@@ -282,6 +282,7 @@ class SemanticOperatorQSREAdapter(nn.Module):
         return {
             "operator": operator,
             "relation_schema_state": relation_schema_state,
+            "step_relation_schema_state": relation_schema_states,
         }
 
     def parameter_report(self) -> dict[str, int | bool | None]:
