@@ -32,6 +32,7 @@ on:
       - "tests/eipm/test_n0_full_envelope_backbone_interface_v1.py"
       - "tests/eipm/test_n0_chunked_set_attention_v1.py"
       - "tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py"
+      - "tests/eipm/test_n0_full_envelope_modifier_gating_v1.py"
       - "tests/eipm/test_n0_full_envelope_fabric_v1.py"
       - "tests/eipm/test_n0_full_envelope_stack_v1.py"
       - "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py"
