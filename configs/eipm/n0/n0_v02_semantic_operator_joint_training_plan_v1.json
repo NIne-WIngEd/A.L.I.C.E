@@ -39,7 +39,17 @@
     "program_relation_state_aggregation": "survival-weighted relation assignment probability",
     "bidirectional_query_schema_token_evidence": true,
     "inactive_candidate_token_evidence_zeroed": true,
-    "token_evidence_macro_budget": "existing token_evidence_grounding family; macro-average query, relation-schema, factor-schema, and step-factor-schema supervised surfaces"
+    "token_evidence_macro_budget": "existing token_evidence_grounding family; macro-average query, relation-schema, factor-schema, and step-factor-schema supervised surfaces",
+    "semantic_input_virtualizer": "src/alice_personality/n0/full_envelope_semantic_input_v1.py",
+    "all_text_surfaces_share_long_context_policy": true,
+    "native_window_may_not_be_a_product_ceiling_for": [
+      "query",
+      "relation_schema",
+      "factor_schema",
+      "field_text",
+      "candidate_text",
+      "descriptor_text"
+    ]
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -174,7 +184,8 @@
       "step_relation_schema_causal_sensitivity",
       "program_relation_state_assignment_weighting",
       "bidirectional_query_relation_schema_token_grounding",
-      "factor_and_step_factor_schema_token_grounding"
+      "factor_and_step_factor_schema_token_grounding",
+      "long_relation_and_factor_schema_semantics"
     ],
     "J2": [
       "J1_gates_retained",
@@ -184,7 +195,8 @@
       "no_relation_id_semantic_authority",
       "exact_zero_support_with_compatible_distractors",
       "masked_runtime_relation_exclusion",
-      "unsupported_relation_mass_cannot_activate_graph_views"
+      "unsupported_relation_mass_cannot_activate_graph_views",
+      "long_field_and_descriptor_semantics"
     ],
     "J3": [
       "J1_and_J2_gates_retained",
@@ -201,7 +213,8 @@
       "distant_decisive_evidence_across_native_windows",
       "fusion_route_gradient_reaches_final_judgment",
       "irrelevant_available_view_not_forced_recoverable",
-      "ordered_relation_semantics_remain_step_conditioned_through_executor"
+      "ordered_relation_semantics_remain_step_conditioned_through_executor",
+      "long_candidate_judgment_semantics"
     ]
   },
   "scaling": {
@@ -216,7 +229,8 @@
     "capacity_growth_authorized_only_after_objective_and_interface_validity": true,
     "capacity_study_if_needed": "compare larger width/depth/heads only after a valid full-envelope DEV plateau localizes residual error to expressivity rather than data/objective/interface",
     "native_window_is_operating_point_not_semantic_completeness": true,
-    "cross_window_bridge_required_beyond_native_window": true
+    "cross_window_bridge_required_beyond_native_window": true,
+    "long_context_virtualization_scope": "all text-bearing N0 surfaces, not query-only"
   },
   "compute": {
     "current_known_route": "Magnolia P100; architecture must not be constrained to that serving/training hardware",
@@ -241,6 +255,7 @@
     "successor structured/evidence/graph/fusion/latent implementation complete",
     "PASS full-envelope CPU runtime contract static audit",
     "PASS cross-window semantic bridge permutation/causal-gradient mechanics",
+    "PASS universal text-surface semantic virtualization mechanics",
     "CPU runtime qualification exercises exact 640-wide cross-window segment bridge",
     "PASS synthetic intervention exact evidence-span audit",
     "evidence char spans converted to tokenizer-aligned token targets with fail-closed audit",
