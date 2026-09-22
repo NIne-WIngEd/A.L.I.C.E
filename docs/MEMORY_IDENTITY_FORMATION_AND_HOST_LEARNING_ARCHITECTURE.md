@@ -1,6 +1,6 @@
 # A.L.I.C.E. Memory Identity, Formation, Host Learning, and Repository Lifecycle
 
-**Version:** 2.1.0
+**Version:** 2.2.0
 **Status:** Owner-ratified architecture decision
 **Applies to:** A.L.I.C.E. identity, memory formation, host learning, Stage G qualification, Friday separation, and repository lifecycle
 
@@ -42,6 +42,49 @@ Rayan's ordinary data may not silently:
 - retrain or promote a material core Elaina-identity change without a separate owner-authorized identity-training decision.
 
 Relationship-specific adaptation is expected. Identity substitution is not.
+
+## 2.1 Continuing personal development is required
+
+The destination architecture requires **continuing development of both the host model and the assistant/entity self model**. This is not an optional personality-maintenance feature.
+
+For A.L.I.C.E., three subject roles remain distinct:
+
+- Rayan — owner/host;
+- Mehejabin Elaina — source person and reconstructed identity foundation;
+- A.L.I.C.E. — current assistant/entity self and post-activation continuity.
+
+For a general Fable instance, two personal roles remain distinct:
+
+- that installation's user/host;
+- that Fable instance's own developing self.
+
+A general Fable must not require the user to declare an ideal or "true" self and then treat that declaration as authority. User statements are evidence. They may conflict with later statements, behavior, outcomes, or other authorized evidence and must remain revisable with provenance and uncertainty.
+
+The required destination loop is:
+
+```text
+authorized experience / observation
+        ↓
+subject-bound user / source-person / relationship / assistant-self state
+        ↓
+native personal or identity judgment
+        ↓
+action / response / decision
+        ↓
+observed outcome and later evidence
+        ↓
+governed revision of user / relationship / assistant-self state
+        ↓
+changed future judgment when the revised state is relevant
+```
+
+A memory projection is not by itself evidence that this learning loop works. A fixed constitutional prompt that instructs the system to challenge or refuse is not evidence that the challenge came from learned personal judgment. Behavior inherited from a replaceable downstream foundation model is also not enough.
+
+Personal-development qualification therefore requires behavioral interventions that hold the task constant while changing only versioned user state, relationship state, or assistant-self state and demonstrate the predicted causal effect on judgment. It also requires outcome-driven revision tests and downstream-model replacement tests.
+
+Protecting Elaina's source-person foundation must not be interpreted as freezing A.L.I.C.E.'s post-activation self-development. A.L.I.C.E.'s later self may change through governed experience while remaining distinct from both Elaina history and Rayan's host model.
+
+The shared projection vocabulary uses `assistant_self` as the product-neutral subject type. `alice_self` remains a compatibility subject for A.L.I.C.E.-specific records.
 
 ## 3. A.L.I.C.E. is not one model
 
