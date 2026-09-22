@@ -399,6 +399,13 @@
       "requirement": "Synthetic interventions supplement natural data and are leakage-audited."
     },
     {
+      "id": "N0-P39R",
+      "stage": "runtime_contract",
+      "kind": "CI_REQUIRED",
+      "receipt": "PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_CONTRACT_STATIC",
+      "requirement": "The exact CPU runtime fixture and fail-closed runner must pass static shape, schema, padding, edge, factor, and no-gradient authorization checks before Magnolia execution."
+    },
+    {
       "id": "N0-P40",
       "stage": "tokenizer",
       "kind": "RUNTIME_REQUIRED",
