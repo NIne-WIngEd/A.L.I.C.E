@@ -39,6 +39,8 @@ on:
       - "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json"
       - "configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json"
+      - "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json"
+      - "scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py"
       - "docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md"
       - "docs/research/eipm-n0-full-envelope-interface-contract-v1.md"
       - ".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml"
@@ -83,7 +85,8 @@ jobs:
             scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py \
             scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py \
-            scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py
+            scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py \
+            scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py
 
           for f in \
             configs/eipm/n0/n0_v02_natural_relation_sources_v1.json \
@@ -93,7 +96,8 @@ jobs:
             configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
             configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json \
-            configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json
+            configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json \
+            configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json
           do
             python -m json.tool "$f" >/dev/null
           done
@@ -409,6 +413,30 @@ jobs:
           assert c["authorization"]["gradient"] is False
           assert c["authorization"]["gpu_training"] is False
           print("PASS_N0_CAPACITY_CEILING_FREE_EVIDENCE_GATED")
+          PY
+
+      - name: Audit complete historical-to-successor proof matrix
+        run: |
+          set -euo pipefail
+          rm -f /tmp/n0-proof-obligations-audit.json
+          python scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py \
+            --contract configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json \
+            --supersession configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json \
+            --retrospective configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json \
+            --repo-root . \
+            --output /tmp/n0-proof-obligations-audit.json
+          python - <<'PY'
+          import json
+          r=json.load(open("/tmp/n0-proof-obligations-audit.json"))
+          assert r["status"]=="PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1"
+          assert r["historical_pass_can_close_unresolved_obligation"] is False
+          assert r["runtime_blocking"]
+          assert r["training_blocking"]
+          assert r["final_blocking"]
+          assert r["optimizer_authorized"] is False
+          assert r["gradient_authorized"] is False
+          assert r["n0_complete"] is False
+          print("PASS_N0_FULL_PROOF_MATRIX_STATIC_AUDIT")
           PY
 
       - name: Prove training remains blocked until runtime qualification
