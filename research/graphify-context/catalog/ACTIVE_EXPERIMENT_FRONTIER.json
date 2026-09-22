@@ -7,13 +7,13 @@
   "maximal_heads": [
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "2ddae9439f5bc8f41ca2956e786f4f63289e3dd4",
-      "head_committed_at": "2026-09-22T14:27:55-05:00",
-      "head_message": "governance(n0): remove misleading runtime text cap",
-      "ahead": 1091,
+      "head": "2ab46d87ce254a3ca6cec0c95199d381c7c0058f",
+      "head_committed_at": "2026-09-22T15:12:39-05:00",
+      "head_message": "test(n0): align completion proofs with exact joint mass",
+      "ahead": 1100,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 474,
+      "changed_file_count_vs_source_merge_base": 480,
       "changed_paths_vs_source_merge_base": [
         ".github/workflows/n0-arbitration-contract-check.yml",
         ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -126,6 +126,8 @@
         "configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json",
+        "configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json",
+        "configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
         "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
@@ -212,9 +214,7 @@
         "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
         "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
         "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-        "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
-        "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
-        "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md"
+        "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md"
       ],
       "authority": "unmerged-experiment-pointer"
     },
@@ -648,13 +648,13 @@
   "all_ahead_candidates": [
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "2ddae9439f5bc8f41ca2956e786f4f63289e3dd4",
-      "head_committed_at": "2026-09-22T14:27:55-05:00",
-      "head_message": "governance(n0): remove misleading runtime text cap",
-      "ahead": 1091,
+      "head": "2ab46d87ce254a3ca6cec0c95199d381c7c0058f",
+      "head_committed_at": "2026-09-22T15:12:39-05:00",
+      "head_message": "test(n0): align completion proofs with exact joint mass",
+      "ahead": 1100,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 474,
+      "changed_file_count_vs_source_merge_base": 480,
       "changed_paths_vs_source_merge_base": [
         ".github/workflows/n0-arbitration-contract-check.yml",
         ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -767,6 +767,8 @@
         "configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json",
+        "configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json",
+        "configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
         "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
@@ -853,9 +855,7 @@
         "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
         "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
         "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-        "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
-        "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
-        "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md"
+        "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md"
       ],
       "authority": "unmerged-experiment-pointer"
     },
