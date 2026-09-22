@@ -31,7 +31,9 @@
     "src/alice_personality/n0/semantic_segment_context_bridge_v1.py",
     "src/alice_personality/n0/full_envelope_semantic_input_v1.py",
     "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
-    "src/alice_personality/n0/full_envelope_structural_types.py"
+    "src/alice_personality/n0/full_envelope_structural_types.py",
+    "src/alice_personality/n0/full_envelope_training_objective_v1.py",
+    "src/alice_personality/n0/semantic_operator_objectives_v1.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
@@ -500,6 +502,27 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_full_semantic_input_allows_fully_unavailable_optional_bank",
       "requirement": "Optional additional semantic banks may be entirely unavailable without inventing fake semantic content or making valid examples fail."
+    },
+    {
+      "id": "N0-P39X",
+      "stage": "training_objective",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_joint_training_objective_wires_every_macro_family_without_learned_task_weights",
+      "requirement": "Every public-N0 optimization component is assigned once to a precommitted macro family with no learned or TEST-adaptive task weighting."
+    },
+    {
+      "id": "N0-P39Y",
+      "stage": "training_objective",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_joint_training_objective_gradient_reaches_backbone_operator_binder_fusion_and_judgment",
+      "requirement": "The integrated joint objective propagates gradient through the shared backbone, semantic operator, Binder null-support boundary, fusion router, public judgment probe, and long-context bridge."
+    },
+    {
+      "id": "N0-P39Z",
+      "stage": "training_objective",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_joint_training_objective_allows_zero_active_relation_margin_without_nan",
+      "requirement": "UNKNOWN/DEFER or other rows with no active relational comparison cannot create NaN causal-margin losses."
     },
     {
       "id": "N0-P40",
