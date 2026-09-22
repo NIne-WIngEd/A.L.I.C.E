@@ -531,6 +531,41 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_adapter_program_relation_state_is_weighted_by_step_assignment_mass",
       "requirement": "Whole-program relation state must be aggregated using actual survival-weighted relation assignment mass, while exact step-conditioned relation states remain preserved."
+    },
+    {
+      "id": "N0-P7A",
+      "stage": "semantic_operator",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_bidirectional_token_evidence_is_exposed_for_relations_and_factors",
+      "requirement": "Shared query/schema interaction must expose masked token-local evidence on both query and schema sides for relations, global factors, and step-conditioned factors."
+    },
+    {
+      "id": "N0-P7B",
+      "stage": "semantic_operator",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_schema_token_evidence_keeps_gradient_path_to_query_semantics",
+      "requirement": "Schema-token grounding loss must keep a live gradient path into shared query/backbone semantics."
+    },
+    {
+      "id": "N0-P7C",
+      "stage": "semantic_operator_objective",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_semantic_operator_objective_macro_averages_query_and_schema_evidence_surfaces",
+      "requirement": "Query/schema evidence surfaces share the existing token-grounding macro budget so adding banks cannot silently dominate optimization."
+    },
+    {
+      "id": "N0-P7D",
+      "stage": "semantic_operator_objective",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_semantic_operator_objective_rejects_partial_schema_evidence_contract",
+      "requirement": "Partial schema-evidence supervision inputs fail closed."
+    },
+    {
+      "id": "N0-P39S",
+      "stage": "curriculum",
+      "kind": "CI_REQUIRED",
+      "receipt": "PASS_N0_SYNTHETIC_INTERVENTION_STATIC_AUDIT",
+      "requirement": "Synthetic operator rows must materialize exact query, relation-schema, factor-schema, and step-factor-schema evidence spans and pass split/leakage audit."
     }
   ],
   "closure_rule": {
