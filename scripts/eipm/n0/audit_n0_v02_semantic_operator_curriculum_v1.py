@@ -206,22 +206,58 @@ def main() -> None:
         if step_count < 0:
             errors.append(f"{rid}: invalid runtime_reasoning_steps")
             step_count = 0
+        step_factor_evidence = (
+            row.get("step_factor_schema_evidence_char_spans") or {}
+        )
+        if set(step_factor_evidence) != required_step_factor_names:
+            errors.append(f"{rid}: step factor schema evidence bank mismatch")
         for name in required_step_factor_names:
             values = list(step_targets.get(name) or [])
+            evidence_spans = list(step_factor_evidence.get(name) or [])
             if len(values) != step_count:
                 errors.append(
                     f"{rid}: step factor {name} length {len(values)} != reasoning steps {step_count}"
                 )
                 continue
+            if len(evidence_spans) != step_count:
+                errors.append(
+                    f"{rid}: step factor evidence {name} length {len(evidence_spans)} != reasoning steps {step_count}"
+                )
             bank = factor_schemas.get(name)
             if bank is None:
                 errors.append(f"{rid}: step factor {name} has no semantic bank")
                 continue
-            for target in values:
+            for step, target in enumerate(values):
                 target = int(target)
                 if target < 0 or target >= len(bank):
                     errors.append(
                         f"{rid}: step factor target outside {name} bank"
+                    )
+                    continue
+                if step >= len(evidence_spans):
+                    continue
+                span = evidence_spans[step]
+                candidate_index = int(span.get("candidate_index",-1))
+                if int(span.get("step",-1)) != step:
+                    errors.append(
+                        f"{rid}: step factor evidence step index drift for {name}"
+                    )
+                if candidate_index != target:
+                    errors.append(
+                        f"{rid}: step factor evidence target drift for {name}"
+                    )
+                    continue
+                factor_text = str(bank[candidate_index].get("text",""))
+                start = int(span.get("start",-1))
+                end = int(span.get("end",-1))
+                evidence_text = str(span.get("text",""))
+                if not (0 <= start < end <= len(factor_text)):
+                    errors.append(
+                        f"{rid}: step factor evidence span outside {name} text"
+                    )
+                elif factor_text[start:end] != evidence_text or not evidence_text:
+                    errors.append(
+                        f"{rid}: step factor evidence substring mismatch for {name}"
                     )
         counts[int(row.get("runtime_relation_count", -1))] += 1
         interventions[str(row.get("intervention"))] += 1
@@ -293,6 +329,7 @@ def main() -> None:
         "query_relation_evidence_spans_required": True,
         "relation_schema_evidence_spans_required": True,
         "factor_schema_evidence_spans_required": True,
+        "step_factor_schema_evidence_spans_required": True,
         "private_identity_data": False,
         "gradient": False,
         "optimizer": False,
