@@ -1,0 +1,183 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-behavioral-curriculum-contract.v1",
+  "status": "PRECOMMITTED_PUBLIC_BEHAVIORAL_FABRIC_NO_GRADIENT",
+  "date": "2026-09-22",
+  "purpose": "Provide explicit public behavioral supervision for the full-envelope fabric so structural support, endpoint roles, causal evidence use, irrelevant-view invariance, uncertainty/defer, public judgment, and permutation behavior are trained rather than inferred from narrow semantic gates.",
+  "authority": {
+    "public_identity_neutral_only": true,
+    "private_identity_data": false,
+    "private_identity_gradient": false,
+    "relation_keys_semantic_tokens": false,
+    "type_keys_semantic_tokens": false,
+    "field_ids_semantic_tokens": false,
+    "final_rows_training_allowed": false,
+    "diagnostic_rows_training_allowed": false
+  },
+  "row_schema": "alice.eipm.n0.full-envelope-behavioral-row.v1",
+  "required_semantic_surfaces": [
+    "query",
+    "runtime type descriptions",
+    "runtime relation descriptions",
+    "runtime factor descriptions",
+    "field texts",
+    "field descriptor texts",
+    "candidate answer texts"
+  ],
+  "required_structural_targets": [
+    "relation sequence",
+    "event sequence",
+    "factor targets",
+    "step factor targets",
+    "support edge set or explicit null support",
+    "source endpoint",
+    "target endpoint",
+    "public judgment candidate",
+    "recoverable view labels"
+  ],
+  "required_causal_variants": [
+    "decisive evidence removal when a decisive source exists",
+    "irrelevant evidence removal when an irrelevant source exists",
+    "field permutation with exact edge and target reindexing"
+  ],
+  "scenario_families": [
+    "source_target_role",
+    "ordered_composition",
+    "reverse_traversal",
+    "symmetric_relation",
+    "reliability_arbitration",
+    "recency_supersession",
+    "temporal_constraint",
+    "provenance_constraint",
+    "conflict_plurality",
+    "unknown_defer",
+    "decisive_source",
+    "irrelevant_distractor",
+    "causal_chain",
+    "multiple_co_valid_support"
+  ],
+  "split_isolation": {
+    "train_dev_entity_overlap_forbidden": true,
+    "train_dev_template_id_overlap_forbidden": true,
+    "train_dev_causal_group_overlap_forbidden": true,
+    "relation_family_holdout_authority": "natural FewRel and semantic-operator intervention lanes",
+    "behavioral_lane_relation_family_overlap_allowed": true,
+    "reason": "The behavioral lane isolates structural/causal templates and entities while separate natural/operator lanes own relation-family extrapolation. Requiring every relation family to be held out in every lane would remove needed structural training rather than improve leakage control."
+  },
+  "shortcut_controls": {
+    "candidate_answer_order_permutation_required": true,
+    "field_order_permutation_variant_required": true,
+    "relation_candidate_order_permutation_required": true,
+    "target_entity_position_balance_required": true,
+    "opaque_relation_keys_in_semantic_text_forbidden": true,
+    "opaque_type_keys_in_semantic_text_forbidden": true,
+    "public_answer_may_not_be_recoverable_from_candidate_position": true,
+    "decisive_removal_must_change_governed_evidence_not_only_metadata": true,
+    "irrelevant_removal_must_not_remove_target_support": true,
+    "unknown_defer_rows_require_zero_positive_support_edges": true,
+    "inactive_endpoint_rows_may_use_minus_one_sentinel": true,
+    "absent_counterfactual_may_use_minus_one_sentinel": true
+  },
+  "runtime_coverage": {
+    "relation_candidate_counts": {
+      "points": [
+        1,
+        2,
+        4,
+        6,
+        8
+      ],
+      "ceiling": null
+    },
+    "field_counts": {
+      "points": [
+        4,
+        6,
+        8,
+        12,
+        16
+      ],
+      "ceiling": null
+    },
+    "edge_counts": {
+      "points": [
+        0,
+        2,
+        4,
+        8,
+        16,
+        24
+      ],
+      "ceiling": null
+    },
+    "reasoning_steps": {
+      "points": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "ceiling": null
+    },
+    "candidate_answer_counts": {
+      "points": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "ceiling": null
+    },
+    "distractor_field_counts": {
+      "points": [
+        0,
+        1,
+        2,
+        4,
+        8
+      ],
+      "ceiling": null
+    },
+    "operating_points_are_product_ceilings": false
+  },
+  "target_semantics": {
+    "support_target": "binary edge support target over the primary runtime edge bank; rows with no support use all-zero target plus Binder null-support supervision",
+    "endpoint_target": "semantic source and semantic target field indices for supported relational execution; inactive rows use -1 with endpoint_active=false",
+    "decisive_view_active": "true only when the row supplies a governed decisive evidence removal intervention",
+    "irrelevant_view_active": "true only when the row supplies a governed irrelevant evidence removal intervention",
+    "recoverable_view_mask": "labels behaviorally relevant or explicitly information-preserving views; availability alone is not relevance",
+    "public_judgment_target": "index of a semantic answer candidate, never an opaque class ID",
+    "counterfactual_target": "valid alternate semantic candidate when available; -1 when no meaningful counterfactual exists"
+  },
+  "materialization": {
+    "hard_row_target": null,
+    "generated_public_examples_require_provenance": true,
+    "row_hash_manifest_required": true,
+    "exact_split_histograms_required": true,
+    "exact_scenario_histograms_required": true,
+    "exact_runtime_axis_histograms_required": true,
+    "deterministic_seed_required": true,
+    "source_is_complete_training_corpus": false,
+    "role": "behavioral and causal full-envelope supplement mixed with broad semantic replay, governed judgment replay, natural relation data, and semantic-operator interventions"
+  },
+  "validation_before_gradient": {
+    "materialized_rows_required": true,
+    "model_free_audit_required": true,
+    "variant_reindex_audit_required": true,
+    "semantic_key_leak_audit_required": true,
+    "split_isolation_audit_required": true,
+    "support_endpoint_consistency_audit_required": true,
+    "counterfactual_validity_audit_required": true,
+    "final_validation_remains_separate": true
+  },
+  "authorization": {
+    "materialization": true,
+    "audit": true,
+    "optimizer": false,
+    "gradient": false,
+    "gpu": false,
+    "final_opening": false,
+    "private_identity_gradient": false,
+    "n0_complete": false
+  }
+}
