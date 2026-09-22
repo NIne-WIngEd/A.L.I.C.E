@@ -705,8 +705,23 @@ def test_behavioral_compiler_batches_execute_all_counterfactual_paths_and_joint_
     )
     assert torch.isfinite(result["loss"])
     result["loss"].backward()
-    assert system.semantic_model.backbone.embedding.weight.grad is not None
-    assert float(system.semantic_model.backbone.embedding.weight.grad.abs().sum()) > 0.0
+    finite_gradient_names=[]
+    nonfinite_gradient_names=[]
+    for name,parameter in system.named_parameters():
+        if parameter.grad is None:
+            continue
+        if bool(torch.isfinite(parameter.grad).all()):
+            finite_gradient_names.append(name)
+        else:
+            nonfinite_gradient_names.append(name)
+    assert not nonfinite_gradient_names, (
+        "non-finite full-envelope gradients: "
+        + repr(nonfinite_gradient_names)
+    )
+    assert finite_gradient_names
+    embedding_grad=system.semantic_model.backbone.embedding.weight.grad
+    assert embedding_grad is not None
+    assert float(embedding_grad.abs().sum()) > 0.0
     assert next(system.stack.binder.null_support_score.parameters()).grad is not None
     assert next(system.stack.public_judgment_probe.score.parameters()).grad is not None
 
