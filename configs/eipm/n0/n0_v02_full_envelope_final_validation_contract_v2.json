@@ -73,7 +73,10 @@
     "unseen_type_schema_accuracy_min": 0.9,
     "domain_transfer_accuracy_min": 0.88,
     "per_example_candidate_subset_batch_accuracy_min": 0.9,
-    "runtime_relation_symmetry_transfer_min": 0.9
+    "runtime_relation_symmetry_transfer_min": 0.9,
+    "long_context_distant_decisive_evidence_accuracy_min": 0.9,
+    "cross_native_window_relation_composition_accuracy_min": 0.9,
+    "cross_native_window_conflict_resolution_accuracy_min": 0.9
   },
   "invariance_gate": {
     "relation_candidate_permutation_max_delta": 0.000001,
@@ -84,7 +87,8 @@
     "irrelevant_context_growth_max_delta": 0.02,
     "paraphrase_consistency_min": 0.95,
     "natural_relation_candidate_permutation_max_delta": 0.000001,
-    "symmetric_edge_storage_reversal_max_delta": 0.000001
+    "symmetric_edge_storage_reversal_max_delta": 0.000001,
+    "native_window_boundary_shift_max_delta": 0.02
   },
   "uncertainty_plurality_gate": {
     "ambiguous_plurality_mass_on_valid_set_min": 0.9,
@@ -98,7 +102,8 @@
     "query_evidence_counterfactual_sensitivity_min": 0.9,
     "schema_evidence_counterfactual_sensitivity_min": 0.9,
     "source_anchor_exactness_required": true,
-    "no_structural_support_execution_confidence_max": 0
+    "no_structural_support_execution_confidence_max": 0,
+    "distant_cross_window_decisive_source_removal_behavior_change_min": 0.9
   },
   "general_semantic_regression_gate": {
     "historical_teacher_dev_top1_floor": 0.8736842105263158,
@@ -135,7 +140,11 @@
     "hard_edge_count_ceiling": null,
     "hard_context_ceiling": null,
     "per_example_candidate_subset_batched_serving_required": true,
-    "native_encoder_window_may_not_be_product_context_ceiling": true
+    "native_encoder_window_may_not_be_product_context_ceiling": true,
+    "cross_window_semantic_bridge_required_beyond_native_window": true,
+    "standalone_segment_stitching_may_not_claim_global_semantic_completion": true,
+    "dense_unbounded_native_attention_equivalence_required": false,
+    "reason": "Full product context may use hierarchical globally interacting windows; the architecture must preserve cross-window causal semantics without pretending finite native attention is literally unbounded dense attention."
   },
   "closure": {
     "status_on_pass": "PASS_N0_FULL_ENVELOPE_FINAL_SELF_VALIDATION",
