@@ -1427,3 +1427,30 @@ def test_dynamic_graph_requires_relation_mass_supported_by_present_edges() -> No
     report=graph.parameter_report()
     assert report["unsupported_relation_mass_cannot_activate_graph_views"] is True
     assert report["duplicate_edges_do_not_inflate_supported_relation_mass"] is True
+
+
+def test_adapter_program_relation_state_is_weighted_by_step_assignment_mass() -> None:
+    torch.manual_seed(281)
+    _,_,raw,adapted=operator_bundle(batch=2,relations=4)
+    operator=raw["operator"]
+    states=raw["relation_schema_states"]
+    weight=(
+        operator.relation_step_mass[:,:,None]
+        * operator.relation_distribution
+    )
+    expected=(
+        states * weight[:,:,:,None].to(states.dtype)
+    ).sum(dim=1) / weight.sum(dim=1).clamp_min(1.0e-6)[:,:,None].to(states.dtype)
+    assert torch.allclose(
+        adapted["relation_schema_state"],
+        expected,
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.equal(
+        adapted["step_relation_schema_state"],
+        states,
+    )
+    report=SemanticOperatorQSREAdapter().parameter_report()
+    assert report["program_relation_state_probability_weighted"] is True
+    assert report["step_conditioned_relation_schema_state_preserved"] is True
