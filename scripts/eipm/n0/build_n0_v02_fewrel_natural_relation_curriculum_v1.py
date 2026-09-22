@@ -294,7 +294,7 @@ def main() -> None:
     p.add_argument("--final-bank-output", required=True)
     p.add_argument("--manifest-output", required=True)
     p.add_argument("--train-candidate-counts", default="4,8,16,32,56")
-    p.add_argument("--dev-candidate-counts", default="3,7,12,24,48,72")
+    p.add_argument("--dev-candidate-counts", default="3,7,12,24,48,64")
     p.add_argument("--final-candidate-counts", default="5,9,20,40,73,80")
     p.add_argument(
         "--max-per-relation",
