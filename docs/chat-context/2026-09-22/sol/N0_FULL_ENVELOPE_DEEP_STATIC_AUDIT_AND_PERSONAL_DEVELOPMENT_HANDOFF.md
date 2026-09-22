@@ -3,8 +3,8 @@
 **Date:** 2026-09-22  
 **Status:** active continuity authority for the current Sol handoff  
 **N0 branch:** `alice-eipm-v1-n0-full-envelope-foundation-build-v1`  
-**N0 head at handoff:** `edcfcb447fd9f7a47239827661cf31e678f8b249`  
-Current build head: `edcfcb447fd9f7a47239827661cf31e678f8b249`  
+**N0 head at handoff:** `2ab46d87ce254a3ca6cec0c95199d381c7c0058f`  
+Current build head: `2ab46d87ce254a3ca6cec0c95199d381c7c0058f`  
 **Magnolia authorization:** **NO — deep source-level audit remains open**  
 **N0 complete:** false
 
@@ -12,11 +12,11 @@ Current build head: `edcfcb447fd9f7a47239827661cf31e678f8b249`
 
 ```text
 source_branch=alice-eipm-v1-n0-full-envelope-foundation-build-v1
-current_build_head=edcfcb447fd9f7a47239827661cf31e678f8b249
+current_build_head=2ab46d87ce254a3ca6cec0c95199d381c7c0058f
 deep_source_audit_complete=false
-exact_head_static_suite=PASS_124
-proof_obligations_total=109
-proof_obligations_static=95
+exact_head_static_suite=PASS_139
+proof_obligations_total=125
+proof_obligations_static=110
 magnolia_cpu_runtime_authorized=false
 gpu_memory_dry_run_authorized=false
 optimizer_authorized=false
@@ -69,13 +69,15 @@ Do not revive a superseded narrow PASS merely because a later experiment becomes
 
 ## Current exact-head static evidence
 
-At `edcfcb447fd9f7a47239827661cf31e678f8b249`, GitHub Actions run `35697317893` completed successfully.
+At `2ab46d87ce254a3ca6cec0c95199d381c7c0058f`, GitHub Actions run `35778942888` completed successfully.
 
 Observed receipt:
 
-- 124 tests passed;
-- 109 proof obligations registered;
-- 95 static obligations;
+- 139 tests passed;
+- 125 proof obligations registered;
+- 110 static obligations;
+- successor shortcut preflight passed;
+- successor FINAL-v2 package build/audit/freeze passed without opening model results;
 - synthetic operator curriculum audit passed;
 - full-envelope behavioral-fabric static audit passed;
 - natural FewRel audit passed;
@@ -251,7 +253,7 @@ Failure evidence was preserved through the sequence rather than weakened:
 - intermediate failures after structural candidate exclusion exposed non-finite replay/zero-loss assumptions;
 - inactive candidate causal losses now prove finite zero loss and exactly zero padded-candidate gradient.
 
-Current exact-head run `35697317893` at `edcfcb447fd9f7a47239827661cf31e678f8b249` is green:
+Current exact-head run `35697317893` at `2ab46d87ce254a3ca6cec0c95199d381c7c0058f` is green:
 
 - 124 tests passed;
 - 109 proof obligations;
@@ -259,6 +261,102 @@ Current exact-head run `35697317893` at `edcfcb447fd9f7a47239827661cf31e678f8b24
 - all behavioral-fabric, FewRel, authority-firewall, CPU-contract, and training-block static gates remained green.
 
 This closes the finite-sentinel masking defect class for the audited unbounded N0 paths. It does **not** close the deep source audit.
+
+## Deep-audit progress after the structural-mask repair
+
+The audit continued instead of treating the 124-test head as external-compute authorization. That found several additional defects that matter directly to the N0 objective.
+
+### Candidate-only public-judgment bypass
+
+A falsification removed the latent signal while leaving distinct candidate semantics available. The old readout could still rank candidates because it contained a standalone candidate-summary path and a learned latent-projection bias.
+
+The repair at `faeb533c44bfd3087debc1c55e9079cc343f567e` makes candidate text comparison material rather than a second judgment policy:
+
+- the latent projection is bias-free;
+- candidate-specific scoring features all contain current-latent interaction;
+- zero latent signal cannot create a candidate ranking from answer text alone.
+
+This preserves the intended chain:
+
+`source/evidence -> fusion/latent judgment state -> candidate comparison`.
+
+### Binder support shortcut
+
+A same-relation distractor falsification showed that the behavioral compiler could supervise every edge whose relation key appeared in the selected program, even when one such edge was irrelevant to the current query.
+
+The repair at `43c9da36c58e8c5ddcbecee34c9ab860e0316207` preserves explicit query-relevant support annotations. Relation-key equality is necessary but no longer sufficient for positive Binder supervision.
+
+The responsibility boundary remains:
+
+- Binder: query-relevant structural/semantic support;
+- Executor: step-local reliability, recency, temporal, provenance and direction arbitration.
+
+Do not reintroduce evidence-quality pruning into Binder while fixing relevance.
+
+### Executable shortcut preflight and context-swap judgments
+
+The curriculum contract named shortcut controls that were not yet executed by the successor lane. A failing proof was added first, then a no-gradient preflight was implemented.
+
+The current preflight checks template-only, lexical-overlap, metadata-only, schema-only, query-only, candidate permutation, hard negatives, factor-majority behavior, and explicit counterfactual pairs.
+
+A separate candidate-answer lexical shortcut was then exposed. Matched context-swapped judgment pairs were added so the query and candidate set/order stay fixed while evidence quality changes and the correct public target flips. DEV surface isolation was strengthened so the pair does not collapse into wording leakage.
+
+`PASS_N0_FULL_ENVELOPE_SHORTCUT_PREFLIGHT_V1` is now required before gradient.
+
+### Exact joint relational completion
+
+The first truncation repair blocked fully truncated programs from activating graph/evidence views. A deeper falsification then showed that multiplying marginal `P(program starts)` by marginal `P(not truncated)` can fabricate completion when those events occur on disjoint probability branches.
+
+That is now repaired at `f42fb3c7051b0f4c39443b27b1244cdbf4ef3541` and proof-aligned at current head `2ab46d87ce254a3ca6cec0c95199d381c7c0058f`.
+
+The successor now uses exact joint completed relational-program mass:
+
+- STOP at slot zero is non-relational;
+- relation steps count toward completed semantics only when their branch later reaches STOP;
+- UNKNOWN/truncated-only later relations cannot contaminate the completed global relation summary;
+- incomplete-only relation steps cannot move the completed Executor path frontier;
+- path length cannot inflate execution confidence.
+
+### CPU qualifier fidelity and all-text long-context coverage
+
+The CPU/no-gradient qualification source was strengthened before any Magnolia submission:
+
+- the dedicated long-context fixture now actually drives the query;
+- internal view descriptors and additional runtime-view descriptors now share the same virtualization policy as query/relation/factor/field/candidate text;
+- every text-bearing surface must emit a virtualization receipt;
+- `max_text_tokens` was removed as misleading capability language and replaced by a fixture operating point explicitly forbidden from becoming a product ceiling.
+
+This improves qualifier fidelity but does **not** authorize Magnolia yet.
+
+### Successor FINAL-v2 package is now sealed before gradient
+
+A static falsification showed that the full-envelope final-v2 contract existed without an executable successor package/evaluator/freeze boundary. Legacy final-self-validation artifacts could not be allowed to fill that gap.
+
+The successor package now has:
+
+- a final-only adversarial public synthetic component with held-out extrapolation axes;
+- the sealed FewRel natural-final component;
+- overlap audits against TRAIN/DEV for entity, template, field, candidate, domain and type-schema surfaces;
+- a held-out recency+provenance factor-combination check;
+- an evaluator contract bound to `N0FullEnvelopeTrainableSystemV1`;
+- a hash-bound freeze receipt created before gradient with `results_observed=false`.
+
+Exact-head CI emits `PASS_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_FROZEN_STATIC`. This seals independence. It does **not** open FINAL.
+
+### Current exact-head receipt
+
+At `2ab46d87ce254a3ca6cec0c95199d381c7c0058f`, run `35778942888` is green:
+
+- 139 tests passed;
+- 125 proof obligations;
+- 110 static obligations;
+- shortcut preflight passed;
+- FewRel natural-final separation passed;
+- successor FINAL-v2 package build/audit/freeze passed;
+- historical-authority firewall and CPU-runtime static contract passed;
+- premature gradient/GPU/FINAL/N0 closure remains blocked.
+
+The branch is substantially closer to the true N0 objective, but the source audit is still open.
 
 ## Current architecture intent
 
@@ -297,21 +395,19 @@ The prior Sol was explicitly continuing source-level falsification after green C
 
 Areas still requiring source-level scrutiny include:
 
-1. **Global versus step-conditioned factor/support semantics.** Relation semantic state, direction, and executor modifier application have verified step-conditioned paths, but Binder exact support is still one global `[B,E]` support object. The audit must determine whether global Binder support/reliability conditioning can prune evidence needed by a later step whose local modifier is OFF, especially for mixed-step programs and repeated relation families. Do not patch this from shape suspicion alone; prove or falsify it causally.
+1. **Global Binder support versus step execution.** Binder is intentionally criterion-neutral and now query-relevant rather than relation-key-equal. Still verify that one global `[B,E]` support object preserves every edge needed by later steps in mixed/repeated programs instead of silently pruning a step-relevant alternative. Do not change the interface without a causal failure.
 
-2. **Behavioral curriculum shortcut resistance.** TRAIN/DEV entity/query/field/candidate surface separation now exists, but scalar metadata patterns, scenario construction, answer construction, and deterministic label structure must still be audited for shortcuts that can satisfy DEV without learning the intended semantics.
+2. **Additional runtime views.** Arbitrary extra views are supported, but availability, reliability, descriptor geometry, or a precomputed view vector must not become a target label or hidden identity axis. This matters directly for later personal-state/user/self/relationship views.
 
-3. **Causal behavioral tests versus shape tests.** A test that proves geometry, nonzero gradient, a parameter-report flag, or permutation wiring does not by itself prove the claimed behavior. Every critical claim should be traced to an independent intervention where possible.
+3. **Fusion/latent/public-judgment relevance causality.** The candidate-only bypass is closed and route gradients exist. Continue falsifying whether query-conditioned relevance, decisive-view removal, irrelevant-view invariance, recoverability and latent allocation affect final judgment in the intended direction rather than through availability/reliability shortcuts.
 
-4. **Additional runtime views.** Arbitrary extra views are supported, but future personal-state views must not turn precomputed vectors, availability, reliability, or descriptor geometry into a label leak or hidden identity axis.
+4. **Long-context semantic fidelity.** Every known text-bearing surface now uses the shared virtualization/bridge policy. Continue with boundary-shift and distant-evidence interventions so equivalent content crossing a native-window boundary cannot change judgment merely because segmentation changed.
 
-5. **Fusion/latent/public-judgment causal chain.** Continue checking that relevance, decisive evidence, irrelevant evidence, recoverability, noncollapse, candidate judgment, and candidate masking are causally connected in the intended direction rather than merely jointly differentiable.
+5. **CPU qualifier semantic fidelity.** Static source coverage is stronger, but before Magnolia verify that the exact 640-wide no-gradient fixture drives the registered topology and all newly repaired causal paths rather than only satisfying shape/report assertions.
 
-6. **Long-context semantic fidelity.** Virtualization and the trainable segment bridge remove isolated-window behavior, but source-level scrutiny must continue for boundary shifts, long candidate/schema/descriptor paths, and whether every long-text surface actually uses the same governed bridge.
+6. **FINAL leakage guard.** The successor final-v2 package is now built, audited and hash-frozen before gradient. From here the requirement is preservation: do not inspect candidate results, derive training targets/templates/thresholds from FINAL, or use FINAL for checkpoint selection.
 
-7. **CPU qualifier fidelity.** Before external execution, verify from source that the CPU fixture is neither easier nor structurally different from the governed training topology and does not prove behavior by reading report booleans.
-
-8. **Final-validation independence.** Keep final-v2 sealed. Training/DEV construction must not derive targets, templates, thresholds, or repair choices from final outcomes.
+7. **Remaining source scan.** Keep testing architecture claims against the actual N0 objective. Geometry, nonzero gradient, parameter-report booleans and green CI are supporting evidence, not substitutes for causal behavior.
 
 These are audit questions, not authorization for speculative fixes. A concern becomes a code change only after its causal defect is established.
 
@@ -403,10 +499,11 @@ Canonical corrections include:
 - explicit rule that prompts, storage schemas, or generic model behavior are insufficient proof;
 - regression tests for subject separation and the architecture contract.
 
-The Fable builder branch was also updated at `fable-builder-model@467fb30689500f30b0bf23d04c214362d63ff10d`:
+The Fable builder branch is now updated through `fable-builder-model@77517e759f01f6f936c7d5d07fcde9fee409441f`:
 
 - `docs/fable-builder/README.md` now treats post-activation personal development/reflection as required rather than optional;
-- `docs/fable-builder/traces/FBM_TRACE_20260922_PERSONAL_DEVELOPMENT_ARCHITECTURE.jsonl` records the transferable lessons.
+- `docs/fable-builder/traces/FBM_TRACE_20260922_PERSONAL_DEVELOPMENT_ARCHITECTURE.jsonl` records the personal-development lessons;
+- `docs/fable-builder/traces/FBM_TRACE_20260922_N0_DEEP_AUDIT_CATCHUP.jsonl` captures the candidate-bypass, Binder relevance, shortcut-preflight, exact-completion, qualifier-fidelity and sealed-final lessons.
 
 These architecture changes do **not** claim the learned personal-development loop is implemented.
 
@@ -414,7 +511,7 @@ The canonical main correction adds the product-neutral `assistant_self` projecti
 
 ## Current next action
 
-Continue the deep source-level N0 audit at exact head `edcfcb447fd9f7a47239827661cf31e678f8b249`.
+Continue the deep source-level N0 audit at exact head `2ab46d87ce254a3ca6cec0c95199d381c7c0058f`.
 
 Do not ask the owner for a Magnolia run until that audit has either:
 
