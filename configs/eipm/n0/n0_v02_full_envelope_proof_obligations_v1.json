@@ -442,6 +442,14 @@
       "requirement": "Exact tokenizer must pass byte-fallback/OOV, Unicode normalization, heldout relation/factor description fragmentation, long entity, punctuation/code/math and multilingual tokenization stress; failure reopens tokenizer."
     },
     {
+      "id": "N0-P40A",
+      "stage": "tokenizer_evidence_alignment",
+      "kind": "RUNTIME_REQUIRED",
+      "status": "UNRESOLVED_BLOCKING",
+      "receipt": "PASS_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1",
+      "requirement": "Exact v0.2.1 tokenizer must convert every governed synthetic query/relation/factor/step-factor evidence char span into nonempty token targets without truncation loss; the 512-token audit length is an operating point, not a product ceiling."
+    },
+    {
       "id": "N0-P41",
       "stage": "public_corpus",
       "kind": "RUNTIME_REQUIRED",
