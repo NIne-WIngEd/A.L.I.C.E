@@ -225,6 +225,37 @@ class N0FullEnvelopeStackV1(nn.Module):
             / field_weight.sum(dim=1, keepdim=True).clamp_min(1.0)
         )
 
+    @staticmethod
+    def _relation_program_summary(
+        operator: Any,
+    ) -> tuple[Tensor, Tensor]:
+        raw_relation_mass = torch.einsum(
+            "bsr,bs->br",
+            operator.relation_distribution,
+            operator.relation_step_mass,
+        )
+        expected_executed_steps = operator.relation_step_mass.sum(
+            dim=1,
+            keepdim=True,
+        )
+        relation_mass = raw_relation_mass / expected_executed_steps.clamp_min(
+            1.0e-6
+        )
+        known_mass = (
+            1.0 - operator.unknown_probability.sum(dim=1).clamp(max=1.0)
+        ).clamp(0.0, 1.0)
+        # Slot zero CONTINUE mass is P(the relational program starts).
+        # Summing survival-weighted CONTINUE mass estimates expected path
+        # length and must not inflate graph/evidence activity.
+        program_started = operator.relation_step_mass[:, 0].clamp(0.0, 1.0)
+        semantic_activity = (
+            program_started
+            * operator.applicability.clamp(0.0, 1.0)
+            * operator.control_distribution[:, CONTROL_RELATIONAL]
+            * known_mass
+        ).clamp(0.0, 1.0)
+        return relation_mass, semantic_activity
+
     def forward(
         self,
         *,
@@ -300,27 +331,9 @@ class N0FullEnvelopeStackV1(nn.Module):
         relation_symmetric = relation_schema.symmetric[None, :].expand(
             batch, -1
         )
-        raw_relation_mass = torch.einsum(
-            "bsr,bs->br",
-            operator.relation_distribution,
-            operator.relation_step_mass,
+        relation_mass, semantic_activity = self._relation_program_summary(
+            operator
         )
-        relation_program_mass = operator.relation_step_mass.sum(
-            dim=1,
-            keepdim=True,
-        )
-        relation_mass = raw_relation_mass / relation_program_mass.clamp_min(
-            1.0e-6
-        )
-        known_mass = (
-            1.0 - operator.unknown_probability.sum(dim=1).clamp(max=1.0)
-        ).clamp(0.0, 1.0)
-        semantic_activity = (
-            relation_program_mass.squeeze(1).clamp(0.0, 1.0)
-            * operator.applicability.clamp(0.0, 1.0)
-            * operator.control_distribution[:, CONTROL_RELATIONAL]
-            * known_mass
-        ).clamp(0.0, 1.0)
 
         graph = self.evidence_graph(
             field_state=structured["field_states"],
@@ -556,6 +569,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             "raw_semantic_view_static_layer_mean": False,
             "raw_semantic_view_content_conditioned_layer_read": True,
             "pre_binder_graph_soft_activity_gated": True,
+            "semantic_activity_uses_program_start_probability_not_expected_step_count": True,
             "runtime_relation_ceiling": None,
             "per_example_candidate_subset_supported": True,
             "runtime_factor_ceiling": None,
