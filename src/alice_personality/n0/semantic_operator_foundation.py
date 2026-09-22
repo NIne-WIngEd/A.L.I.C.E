@@ -10,6 +10,10 @@ from torch import Tensor, nn
 from alice_personality.n0.chunked_late_interaction import (
     chunked_schema_bidirectional_late_max,
 )
+from alice_personality.n0.numeric_contracts import (
+    exact_masked_logits,
+    exact_masked_softmax,
+)
 
 
 EVENT_CONTINUE = 0
@@ -288,9 +292,7 @@ class _SharedSchemaTokenInteraction(nn.Module):
 
     @staticmethod
     def _masked_softmax(logits: Tensor, mask: Tensor, dim: int) -> Tensor:
-        masked = logits.masked_fill(~mask, -1.0e4)
-        value = torch.softmax(masked, dim=dim) * mask.to(logits.dtype)
-        return value / value.sum(dim=dim, keepdim=True).clamp_min(1.0e-12)
+        return exact_masked_softmax(logits, mask, dim=dim)
 
     def forward(
         self,
@@ -460,19 +462,12 @@ class SchemaConditionedSemanticOperator(nn.Module):
     ) -> Tensor:
         projected = self.query_state_projection(query_hidden_states.float())
         token_logit = self.query_token_gate(torch.tanh(projected)).squeeze(-1)
-        token_logit = token_logit.masked_fill(
-            ~query_token_mask[:, None, :],
-            -1.0e4,
-        )
-        token_weight = torch.softmax(token_logit, dim=-1)
-        token_weight = (
-            token_weight
-            * query_token_mask[:, None, :].to(token_weight.dtype)
-        )
-        token_weight = token_weight / token_weight.sum(
+        token_mask = query_token_mask[:, None, :].expand_as(token_logit)
+        token_weight = exact_masked_softmax(
+            token_logit,
+            token_mask,
             dim=-1,
-            keepdim=True,
-        ).clamp_min(1.0e-12)
+        )
         per_layer = torch.einsum(
             "blt,bltd->bld",
             token_weight,
@@ -555,13 +550,12 @@ class SchemaConditionedSemanticOperator(nn.Module):
             raise ValueError("candidate logits/mask geometry drift")
         if bool((mask.sum(dim=-1) == 0).any()):
             raise ValueError("every example requires at least one active candidate")
-        masked_logits = logits.masked_fill(~mask, -1.0e4)
-        probability = torch.softmax(masked_logits, dim=-1)
-        probability = probability * mask.to(probability.dtype)
-        probability = probability / probability.sum(
+        masked_logits = exact_masked_logits(logits, mask)
+        probability = exact_masked_softmax(
+            logits,
+            mask,
             dim=-1,
-            keepdim=True,
-        ).clamp_min(1.0e-12)
+        )
         return masked_logits, probability
 
     def forward(
