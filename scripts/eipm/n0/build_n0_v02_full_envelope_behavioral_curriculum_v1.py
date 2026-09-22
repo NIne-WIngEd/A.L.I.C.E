@@ -647,6 +647,32 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
     }
 
 
+DEV_QUERY_PARAPHRASES = {
+    "source_target_role":"Using the verified evidence relation in the records, identify the conclusion that receives direct support.",
+    "ordered_composition":"Trace the two causal links from the stated starting event in sequence and report the terminal event rather than the intermediate one.",
+    "reverse_traversal":"Begin with the named author, invert the authorship relation, and identify the document at the opposite endpoint.",
+    "symmetric_relation":"Identify the other record joined by mutual corroboration; stored endpoint order must not decide the answer.",
+    "reliability_arbitration":"Competing conclusions have supporting sources of different verification quality. Select the conclusion backed by the stronger reliable evidence.",
+    "recency_supersession":"A later signed correction replaces an earlier version. Identify the record that has controlling status after that replacement.",
+    "temporal_constraint":"Only causal evidence inside the required temporal scope is admissible. Identify the effect supported by an in-scope link.",
+    "provenance_constraint":"Only evidence from the authorized provenance class is admissible. Identify the conclusion supported under that restriction.",
+    "conflict_plurality":"Two independently supported propositions remain mutually inconsistent and no resolving evidence is present. State the appropriate unresolved interpretation.",
+    "unknown_defer":"The requested relationship has no matching description in the runtime schema. Choose the response that avoids substituting a merely similar relation.",
+    "decisive_source":"One verified measurement is the sole evidence that establishes the requested conclusion. Identify the conclusion that depends on that decisive source.",
+    "irrelevant_distractor":"Newer contextual material is unrelated to the technical question. Identify the conclusion that remains supported when irrelevant context is ignored.",
+    "multiple_co_valid_support":"Two independent reliable records converge on one conclusion. Choose the response that preserves both as co-valid supporting evidence.",
+    "mixed_direction_composition":"Follow the first causal edge in its stored direction, then invert the second causal edge at the shared intermediate event. Identify the endpoint reached after both operations.",
+}
+
+
+def template_signature(query: str, entities: list[str]) -> str:
+    normalized=query.lower()
+    for entity in sorted(entities,key=len,reverse=True):
+        normalized=normalized.replace(entity.lower(),"<entity>")
+    normalized=" ".join(normalized.split())
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+
 def add_distractors(row: dict[str,Any], desired_fields: int, entities: list[str]) -> None:
     while len(row["fields"]) < desired_fields:
         index=len(row["fields"])
@@ -687,6 +713,8 @@ def materialize_row(
     entities=TRAIN_ENTITIES if split=="train" else DEV_ENTITIES
     mode=example % 14
     base=scenario(mode,entities,example)
+    if split=="dev":
+        base["query"]=DEV_QUERY_PARAPHRASES[base["scenario_family"]]
     add_distractors(base,max(field_count,len(base["fields"])),entities)
     rng=random.Random(seed + example*1009 + (0 if split=="train" else 10_000_000))
 
@@ -764,6 +792,10 @@ def materialize_row(
         "scenario_family":base["scenario_family"],
         "entities":base["entities_used"],
         "template_id":template_id,
+        "template_signature_sha256":template_signature(
+            base["query"],
+            base["entities_used"],
+        ),
         "causal_group":causal_group,
         "query":base["query"],
         "type_schema":TYPE_SCHEMA,
