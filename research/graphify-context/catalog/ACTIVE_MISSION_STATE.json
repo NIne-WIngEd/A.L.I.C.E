@@ -81,13 +81,13 @@
     "maximal_heads": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "88c702216b09ddf9c761f9a37666068c90e8c837",
-        "head_committed_at": "2026-09-21T21:42:27-05:00",
-        "head_message": "fix(n0): classify trainable-system tests as tests not critical source",
-        "ahead": 968,
+        "head": "6c4e3c02672b7a5415fb3407942d86cc9723b8d9",
+        "head_committed_at": "2026-09-21T22:52:46-05:00",
+        "head_message": "governance(n0): require accumulation-invariant loss-family scaling",
+        "ahead": 1016,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 466,
+        "changed_file_count_vs_source_merge_base": 471,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -198,6 +198,7 @@
           "configs/eipm/n0/n0_v02_dual_view_training_decision_v0_1.json",
           "configs/eipm/n0/n0_v02_final_full_scale_capability_package_v1.json",
           "configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json",
+          "configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
           "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json",
@@ -287,8 +288,7 @@
           "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
           "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
           "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
-          "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md",
-          "docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md"
+          "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md"
         ],
         "authority": "unmerged-experiment-pointer"
       },
@@ -722,13 +722,13 @@
     "all_ahead_candidates": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "88c702216b09ddf9c761f9a37666068c90e8c837",
-        "head_committed_at": "2026-09-21T21:42:27-05:00",
-        "head_message": "fix(n0): classify trainable-system tests as tests not critical source",
-        "ahead": 968,
+        "head": "6c4e3c02672b7a5415fb3407942d86cc9723b8d9",
+        "head_committed_at": "2026-09-21T22:52:46-05:00",
+        "head_message": "governance(n0): require accumulation-invariant loss-family scaling",
+        "ahead": 1016,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 466,
+        "changed_file_count_vs_source_merge_base": 471,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -839,6 +839,7 @@
           "configs/eipm/n0/n0_v02_dual_view_training_decision_v0_1.json",
           "configs/eipm/n0/n0_v02_final_full_scale_capability_package_v1.json",
           "configs/eipm/n0/n0_v02_final_self_validation_contract_v1.json",
+          "configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
           "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json",
@@ -928,8 +929,7 @@
           "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
           "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
           "docs/research/eipm-n0-relation-conditioned-multilayer-query-interface-v0.1.md",
-          "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md",
-          "docs/research/eipm-n0-relational-execution-family-comparison-v0.1.md"
+          "docs/research/eipm-n0-relation-conditioned-multilayer-training-decision-v0.1.md"
         ],
         "authority": "unmerged-experiment-pointer"
       },
@@ -4804,7 +4804,7 @@
   },
   "continuity_freshness": {
     "stale_relative_to_unmerged_experiment_frontier": true,
-    "newest_experiment_frontier_time": "2026-09-21T21:42:27-05:00",
+    "newest_experiment_frontier_time": "2026-09-21T22:52:46-05:00",
     "active_handoff_last_changed_at": "2026-09-18T15:43:05-05:00",
     "context_branch_head_time": "2026-09-21T13:01:00-05:00"
   },
