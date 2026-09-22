@@ -23,6 +23,17 @@ from alice_personality.n0.qsre_full_envelope_executor_v1 import (
     FullEnvelopeExecutorConfig,
     FullEnvelopeQSREExecutorV1,
 )
+from alice_personality.n0.n0_full_envelope_stack_v1 import (
+    N0FullEnvelopeStackConfig,
+    N0FullEnvelopeStackV1,
+)
+from alice_personality.n0.semantic_operator_foundation import (
+    DynamicRelationSchema,
+    DynamicSemanticSchema,
+)
+from alice_personality.n0.semantic_operator_qsre_adapter import (
+    SemanticOperatorQSREAdapter,
+)
 
 
 DIM = 24
@@ -239,3 +250,202 @@ def test_executor_modifier_off_blocks_raw_edge_criterion_features() -> None:
             atol=1.0e-7,
             rtol=0.0,
         )
+
+
+class _ForcedModifierAdapter(torch.nn.Module):
+    def __init__(self, modifier_index: int | None) -> None:
+        super().__init__()
+        self.base = SemanticOperatorQSREAdapter()
+        self.modifier_index = modifier_index
+
+    def forward(
+        self,
+        *,
+        semantic_operator,
+        relation_schema_states,
+        factor_opcodes,
+    ):
+        result = self.base(
+            semantic_operator=semantic_operator,
+            relation_schema_states=relation_schema_states,
+            factor_opcodes=factor_opcodes,
+        )
+        operator = result["operator"]
+        global_modifier = torch.zeros_like(operator.modifier_weight)
+        step_modifier = torch.zeros_like(operator.step_modifier_weight)
+        if self.modifier_index is not None:
+            global_modifier[:, self.modifier_index] = 1.0
+            step_modifier[:, :, self.modifier_index] = 1.0
+        result["operator"] = replace(
+            operator,
+            modifier_weight=global_modifier,
+            step_modifier_weight=step_modifier,
+        )
+        return result
+
+
+def _schema_bank(count: int, seed: int) -> DynamicSemanticSchema:
+    torch.manual_seed(seed)
+    return DynamicSemanticSchema(
+        token_states=torch.randn(count, 3, 4, DIM),
+        token_mask=torch.ones(count, 4, dtype=torch.bool),
+    )
+
+
+def _relation_schema() -> DynamicRelationSchema:
+    torch.manual_seed(610)
+    return DynamicRelationSchema(
+        token_states=torch.randn(1, 3, 4, DIM),
+        token_mask=torch.ones(1, 4, dtype=torch.bool),
+        domain_type_mask=torch.ones(1, 1, dtype=torch.bool),
+        range_type_mask=torch.ones(1, 1, dtype=torch.bool),
+        symmetric=torch.zeros(1, dtype=torch.bool),
+    )
+
+
+def _factor_bundle():
+    schemas = {
+        "role": _schema_bank(4, 611),
+        "traversal": _schema_bank(3, 612),
+        "direction": _schema_bank(3, 613),
+        "control": _schema_bank(3, 614),
+        "reliability": _schema_bank(2, 615),
+        "recency": _schema_bank(2, 616),
+        "temporal": _schema_bank(2, 617),
+        "provenance": _schema_bank(2, 618),
+    }
+    opcodes = {
+        "role": ["ROLE_SOURCE", "ROLE_TARGET", "ROLE_SYMMETRIC", "ROLE_NONE"],
+        "traversal": ["TRAVERSAL_LOCAL", "TRAVERSAL_PATH", "TRAVERSAL_AGGREGATE"],
+        "direction": ["DIRECTION_FORWARD", "DIRECTION_REVERSE", "DIRECTION_BIDIRECTIONAL"],
+        "control": ["CONTROL_FALLBACK", "CONTROL_RELATIONAL", "CONTROL_DEFER"],
+        "reliability": ["MOD_RELIABILITY_OFF", "MOD_RELIABILITY_ON"],
+        "recency": ["MOD_RECENCY_OFF", "MOD_RECENCY_ON"],
+        "temporal": ["MOD_TEMPORAL_OFF", "MOD_TEMPORAL_ON"],
+        "provenance": ["MOD_PROVENANCE_OFF", "MOD_PROVENANCE_ON"],
+    }
+    return schemas, opcodes
+
+
+def _stack_inputs() -> dict[str, object]:
+    torch.manual_seed(619)
+    fields = 2
+    edges = 1
+    descriptor_banks = {
+        "type": _schema_bank(1, 620),
+        "provenance": _schema_bank(1, 621),
+        "temporal": _schema_bank(1, 622),
+    }
+    return {
+        "query_hidden_states": torch.randn(1, 3, 5, DIM),
+        "query_token_mask": torch.ones(1, 5, dtype=torch.bool),
+        "field_hidden_states": torch.randn(1, fields, 3, 4, DIM),
+        "field_token_mask": torch.ones(1, fields, 4, dtype=torch.bool),
+        "field_valid_mask": torch.ones(1, fields, dtype=torch.bool),
+        "field_confidence": torch.ones(1, fields) * 0.8,
+        "field_missing": torch.zeros(1, fields),
+        "field_reliability": torch.tensor([[0.1, 0.9]]),
+        "descriptor_banks": descriptor_banks,
+        "descriptor_indices": {
+            "type": torch.zeros(1, fields, dtype=torch.long),
+            "provenance": torch.zeros(1, fields, dtype=torch.long),
+            "temporal": torch.zeros(1, fields, dtype=torch.long),
+        },
+        "field_type_index": torch.zeros(1, fields, dtype=torch.long),
+        "field_metadata": torch.zeros(1, fields, 3),
+        "edge_index": torch.tensor([[[0, 1]]]),
+        "edge_relation_index": torch.zeros(1, edges, dtype=torch.long),
+        "edge_valid_mask": torch.ones(1, edges, dtype=torch.bool),
+        "edge_metadata": torch.tensor([[[0.1, 0.2, 0.0, 0.0]]]),
+        "edge_reliability": torch.tensor([[0.1]]),
+        "edge_recency": torch.tensor([[0.2]]),
+        "edge_temporal_match": torch.tensor([[0.0]]),
+        "edge_provenance_match": torch.tensor([[0.0]]),
+        "internal_view_descriptor_states": torch.randn(1, 6, DIM),
+        "internal_view_reliability": torch.ones(1, 6),
+    }
+
+
+def _capture_stack_modifier_inputs(
+    modifier_index: int | None,
+) -> tuple[torch.Tensor, torch.Tensor]:
+    stack = N0FullEnvelopeStackV1(
+        N0FullEnvelopeStackConfig(
+            semantic_dim=DIM,
+            model_dim=DIM,
+            num_hidden_states=3,
+            num_attention_heads=4,
+            structured_layers=1,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    stack.operator_adapter = _ForcedModifierAdapter(modifier_index)
+
+    captured: dict[str, torch.Tensor] = {}
+
+    def graph_hook(_module, _args, kwargs):
+        captured["edge_metadata"] = kwargs["edge_metadata"].detach().clone()
+
+    def evidence_hook(_module, _args, kwargs):
+        captured["field_reliability"] = (
+            kwargs["field_reliability"].detach().clone()
+        )
+
+    graph_handle = stack.evidence_graph.register_forward_pre_hook(
+        graph_hook,
+        with_kwargs=True,
+    )
+    evidence_handle = stack.evidence_view.register_forward_pre_hook(
+        evidence_hook,
+        with_kwargs=True,
+    )
+    factor_schemas, factor_opcodes = _factor_bundle()
+    try:
+        with torch.no_grad():
+            stack(
+                relation_schema=_relation_schema(),
+                factor_schemas=factor_schemas,
+                factor_opcodes=factor_opcodes,
+                max_reasoning_steps=2,
+                graph_message_steps=1,
+                fusion_refinement_steps=1,
+                latent_slot_count=2,
+                latent_refinement_steps=1,
+                **_stack_inputs(),
+            )
+    finally:
+        graph_handle.remove()
+        evidence_handle.remove()
+    return captured["edge_metadata"], captured["field_reliability"]
+
+
+def test_full_stack_modifier_off_neutralizes_explicit_metadata_before_graph_and_evidence_view() -> None:
+    """Pre-Binder graph/evidence paths may not bypass OFF criterion semantics."""
+    edge_off, field_off = _capture_stack_modifier_inputs(None)
+    assert torch.allclose(
+        edge_off,
+        torch.tensor([[[0.5, 0.5, 1.0, 1.0]]]),
+        atol=1.0e-7,
+        rtol=0.0,
+    )
+    assert torch.allclose(
+        field_off,
+        torch.full_like(field_off, 0.5),
+        atol=1.0e-7,
+        rtol=0.0,
+    )
+
+    edge_rel, field_rel = _capture_stack_modifier_inputs(MOD_RELIABILITY)
+    assert torch.allclose(edge_rel[..., 0], torch.tensor([[0.1]]))
+    assert torch.allclose(field_rel, torch.tensor([[0.1, 0.9]]))
+
+    edge_rec, _ = _capture_stack_modifier_inputs(MOD_RECENCY)
+    assert torch.allclose(edge_rec[..., 1], torch.tensor([[0.2]]))
+
+    edge_temporal, _ = _capture_stack_modifier_inputs(MOD_TEMPORAL_CONSTRAINT)
+    assert torch.allclose(edge_temporal[..., 2], torch.tensor([[0.0]]))
+
+    edge_provenance, _ = _capture_stack_modifier_inputs(MOD_PROVENANCE_CONSTRAINT)
+    assert torch.allclose(edge_provenance[..., 3], torch.tensor([[0.0]]))
