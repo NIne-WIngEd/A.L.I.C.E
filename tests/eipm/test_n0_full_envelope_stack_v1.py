@@ -169,9 +169,23 @@ def test_full_envelope_stack_forward_and_gradient_continuity() -> None:
     ]
     assert all(grad is not None for grad in raw_gate_grads)
     assert sum(float(grad.abs().sum()) for grad in raw_gate_grads if grad is not None) > 0.0
+    fusion_route_grads = [
+        parameter.grad
+        for parameter in model.fusion.route_score.parameters()
+    ]
+    assert all(grad is not None for grad in fusion_route_grads)
+    assert (
+        sum(
+            float(grad.abs().sum())
+            for grad in fusion_route_grads
+            if grad is not None
+        )
+        > 0.0
+    )
     report = model.parameter_report()
     assert report["raw_semantic_view_static_layer_mean"] is False
     assert report["raw_semantic_view_content_conditioned_layer_read"] is True
+    assert report["fusion_route_weight_causally_controls_latent_contribution"] is True
 
 
 def test_full_envelope_stack_accepts_additional_runtime_views_and_runtime_slots() -> None:
