@@ -10,6 +10,7 @@ from alice_personality.n0.chunked_late_interaction import (
 )
 from alice_personality.n0.full_envelope_behavioral_objectives_v1 import (
     full_envelope_behavioral_objective,
+    public_judgment_loss,
     irrelevant_view_invariance_loss,
     latent_noncollapse_loss,
     support_selection_loss,
@@ -28,6 +29,10 @@ from alice_personality.n0.semantic_segment_context_bridge_v1 import (
 from alice_personality.n0.full_envelope_semantic_input_v1 import (
     FullEnvelopeSemanticInputConfig,
     FullEnvelopeSemanticInputV1,
+)
+from alice_personality.n0.public_judgment_probe_v1 import (
+    PublicJudgmentProbeConfig,
+    PublicJudgmentProbeV1,
 )
 
 
@@ -946,3 +951,56 @@ def test_macro_family_balancer_effective_batch_observation_updates_ema_once() ->
     after=balancer.ema_scale_snapshot()
     expected=before*0.98+torch.tensor([8.0,6.0])*0.02
     assert torch.allclose(after,expected,atol=1e-7,rtol=1e-7)
+
+
+class _ConstantCandidateScore(torch.nn.Module):
+    def __init__(self, value: float) -> None:
+        super().__init__()
+        self.value = float(value)
+
+    def forward(self, feature: torch.Tensor) -> torch.Tensor:
+        return torch.full(
+            (*feature.shape[:-1], 1),
+            self.value,
+            device=feature.device,
+            dtype=feature.dtype,
+        )
+
+
+def test_public_judgment_probe_invalid_candidate_can_never_win_even_under_extreme_valid_logit() -> None:
+    probe = PublicJudgmentProbeV1(
+        PublicJudgmentProbeConfig(
+            semantic_dim=8,
+            latent_dim=8,
+            model_dim=8,
+            num_hidden_states=2,
+        )
+    ).eval()
+    probe.score = _ConstantCandidateScore(-20000.0)
+    with torch.no_grad():
+        out = probe(
+            pooled_state=torch.randn(1, 8),
+            candidate_hidden_states=torch.randn(1, 2, 2, 3, 8),
+            candidate_token_mask=torch.ones(1, 2, 3, dtype=torch.bool),
+            candidate_valid_mask=torch.tensor([[True, False]]),
+        )
+    assert int(out["candidate_logits"].argmax(dim=-1).item()) == 0
+
+
+def test_public_judgment_loss_with_one_valid_candidate_is_exactly_zero_under_extreme_logits() -> None:
+    logits = torch.tensor(
+        [[-20000.0, 5000.0, 9000.0]],
+        requires_grad=True,
+    )
+    valid = torch.tensor([[True, False, False]])
+    loss = public_judgment_loss(
+        logits,
+        torch.tensor([0]),
+        candidate_valid_mask=valid,
+    )
+    assert torch.allclose(loss, torch.zeros_like(loss), atol=0.0, rtol=0.0)
+    loss.backward()
+    assert torch.equal(
+        logits.grad.masked_select(~valid),
+        torch.zeros_like(logits.grad.masked_select(~valid)),
+    )
