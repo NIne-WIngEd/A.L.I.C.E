@@ -30,7 +30,7 @@ DIM = 24
 
 def _operator(*, modifier_index: int | None = None) -> FullEnvelopeOperatorState:
     modifier = torch.zeros(1, 4)
-    step_modifier = torch.zeros(1, 1, 4)
+    step_modifier = torch.zeros(1, 2, 4)
     if modifier_index is not None:
         modifier[:, modifier_index] = 1.0
         step_modifier[:, :, modifier_index] = 1.0
@@ -45,15 +45,15 @@ def _operator(*, modifier_index: int | None = None) -> FullEnvelopeOperatorState
     control[:, CONTROL_RELATIONAL] = 1.0
 
     return FullEnvelopeOperatorState(
-        relation_distribution=torch.ones(1, 1, 1),
-        relation_step_mass=torch.ones(1, 1),
-        stop_probability=torch.zeros(1, 1),
-        unknown_probability=torch.zeros(1, 1),
+        relation_distribution=torch.ones(1, 2, 1),
+        relation_step_mass=torch.tensor([[1.0, 0.0]]),
+        stop_probability=torch.tensor([[0.0, 1.0]]),
+        unknown_probability=torch.zeros(1, 2),
         truncation_probability=torch.zeros(1),
         role_distribution=role,
         traversal_distribution=traversal,
         direction_distribution=direction,
-        step_direction_distribution=direction[:, None, :],
+        step_direction_distribution=direction[:, None, :].expand(1, 2, 3).clone(),
         modifier_weight=modifier,
         step_modifier_weight=step_modifier,
         applicability=torch.ones(1),
@@ -161,7 +161,7 @@ def _executor_common() -> dict[str, torch.Tensor]:
         "edge_support_weight": torch.ones(1, 1),
         "support_available": torch.ones(1),
         "relation_schema_state": torch.randn(1, 1, DIM),
-        "step_relation_schema_state": torch.randn(1, 1, 1, DIM),
+        "step_relation_schema_state": torch.randn(1, 2, 1, DIM),
         "relation_symmetric": torch.zeros(1, 1, dtype=torch.bool),
         "focus_field_weight": torch.tensor([[1.0, 0.0]]),
     }
@@ -228,14 +228,14 @@ def test_executor_modifier_off_blocks_raw_edge_criterion_features() -> None:
             )
 
         assert torch.allclose(
-            off_low["last_edge_state"],
-            off_high["last_edge_state"],
+            off_low["node_state"],
+            off_high["node_state"],
             atol=1.0e-7,
             rtol=0.0,
         )
         assert not torch.allclose(
-            on_low["last_edge_state"],
-            on_high["last_edge_state"],
+            on_low["node_state"],
+            on_high["node_state"],
             atol=1.0e-7,
             rtol=0.0,
         )
