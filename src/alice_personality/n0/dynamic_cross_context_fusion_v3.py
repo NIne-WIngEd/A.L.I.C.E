@@ -10,7 +10,11 @@ from alice_personality.n0.chunked_set_attention_v1 import (
     ChunkedExactSetSelfAttention,
     ChunkedSetAttentionConfig,
 )
-from alice_personality.n0.numeric_contracts import require_unit_interval
+from alice_personality.n0.numeric_contracts import (
+    exact_masked_logits,
+    exact_masked_softmax,
+    require_unit_interval,
+)
 
 
 @dataclass(frozen=True)
@@ -171,12 +175,15 @@ class DynamicCrossContextFusionV3(nn.Module):
                 dim=-1,
             )
         ).squeeze(-1)
-        route_logit = route_logit.masked_fill(~view_available, -1.0e4)
-        view_weight = torch.softmax(route_logit, dim=-1)
-        view_weight = view_weight * view_available.to(view_weight.dtype)
-        view_weight = view_weight / view_weight.sum(
-            dim=-1, keepdim=True
-        ).clamp_min(1.0e-12)
+        route_logit = exact_masked_logits(
+            route_logit,
+            view_available,
+        )
+        view_weight = exact_masked_softmax(
+            route_logit,
+            view_available,
+            dim=-1,
+        )
 
         contextualized_summary = state
         weighted_context = torch.einsum(
