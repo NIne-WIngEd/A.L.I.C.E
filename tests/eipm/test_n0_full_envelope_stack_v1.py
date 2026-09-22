@@ -280,3 +280,27 @@ def test_full_stack_disables_unavailable_graph_and_executor_views() -> None:
         torch.tensor([0.28,0.24,0.125]),
         atol=1e-7,
     )
+
+
+def test_graph_views_require_exact_binder_support_before_final_fusion() -> None:
+    graph_activity=torch.tensor([0.9,0.7,0.4])
+    binder_support=torch.tensor([0.0,0.5,1.0])
+    supported=N0FullEnvelopeStackV1._supported_graph_view_activity(
+        graph_support_activity=graph_activity,
+        binder_support_available=binder_support,
+    )
+    assert torch.allclose(
+        supported,
+        torch.tensor([0.0,0.35,0.4]),
+        atol=1e-7,
+    )
+    availability,reliability=N0FullEnvelopeStackV1._internal_view_gates(
+        internal_view_reliability=torch.ones(3,6),
+        graph_support_activity=supported,
+        execution_confidence=torch.tensor([0.0,0.2,0.3]),
+    )
+    assert availability[0].tolist()==[True,True,True,False,False,False]
+    assert torch.equal(
+        reliability[0,3:],
+        torch.zeros_like(reliability[0,3:]),
+    )
