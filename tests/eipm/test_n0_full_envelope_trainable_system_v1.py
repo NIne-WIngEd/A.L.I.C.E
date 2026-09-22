@@ -412,6 +412,8 @@ def _training_targets(outputs):
             dtype=torch.long,
         ),
         "endpoint_active_mask":torch.ones(batch,dtype=torch.bool),
+        "decisive_view_active_mask":torch.ones(batch,dtype=torch.bool),
+        "irrelevant_view_active_mask":torch.ones(batch,dtype=torch.bool),
         "recoverable_view_mask":outputs["view_available"].detach().clone(),
     }
     return operator_targets,behavioral_targets
@@ -530,3 +532,37 @@ def test_joint_training_objective_allows_zero_active_relation_margin_without_nan
     assert torch.isfinite(
         result["semantic_operator"]["causal_relation_margin"]
     )
+
+
+def test_joint_training_objective_allows_absent_counterfactual_sentinel() -> None:
+    torch.manual_seed(287)
+    system=_system().train()
+    outputs=system(task="full_envelope",batch=_full_batch())
+    operator_targets,behavioral_targets=_training_targets(outputs)
+    operator_targets["counterfactual_relation_targets"].fill_(-1)
+    first_factor=next(iter(operator_targets["counterfactual_factor_targets"]))
+    operator_targets["counterfactual_factor_targets"][first_factor].fill_(-1)
+    behavioral_targets["decisive_view_active_mask"].zero_()
+    behavioral_targets["irrelevant_view_active_mask"].zero_()
+    behavioral_targets["endpoint_active_mask"].zero_()
+    behavioral_targets["source_target_index"].fill_(-1)
+    behavioral_targets["target_target_index"].fill_(-1)
+    decisive,irrelevant,permuted=_counterfactual_output_views(outputs)
+    objective=FullEnvelopeJointTrainingObjectiveV1()
+    result=objective(
+        primary_outputs=outputs,
+        decisive_ablated_outputs=decisive,
+        irrelevant_removed_outputs=irrelevant,
+        permuted_outputs=permuted,
+        operator_targets=operator_targets,
+        behavioral_targets=behavioral_targets,
+        broad_semantic_replay_loss=outputs["latent"]["pooled_state"].square().mean(),
+        governed_judgment_replay_loss=outputs["public_judgment"]["candidate_logits"].square().mean(),
+        natural_relation_loss=outputs["semantic_operator"]["relation_logits"].square().mean(),
+        update_ema=False,
+    )
+    assert torch.isfinite(result["loss"])
+    assert float(result["semantic_operator"]["causal_relation_margin"]) == 0.0
+    assert float(result["behavioral"]["decisive_view_causality"]) == 0.0
+    assert float(result["behavioral"]["irrelevant_view_invariance"]) == 0.0
+    assert float(result["behavioral"]["endpoint_roles"]) == 0.0
