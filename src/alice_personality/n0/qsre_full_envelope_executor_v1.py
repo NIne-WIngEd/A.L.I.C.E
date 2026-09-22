@@ -187,6 +187,14 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             valid_relation = edge_relation_index[edge_valid_mask]
             if int(valid_relation.min()) < 0 or int(valid_relation.max()) >= relation_count:
                 raise ValueError("edge relation outside runtime schema")
+            source_index_valid = edge_index[...,0].clamp(min=0,max=fields-1)
+            target_index_valid = edge_index[...,1].clamp(min=0,max=fields-1)
+            endpoint_field_valid = (
+                field_valid_mask.gather(1,source_index_valid)
+                & field_valid_mask.gather(1,target_index_valid)
+            )
+            if bool((edge_valid_mask & ~endpoint_field_valid).any()):
+                raise ValueError("valid edge references padded invalid field")
 
         node = (
             self.node_projection(field_state.float())
