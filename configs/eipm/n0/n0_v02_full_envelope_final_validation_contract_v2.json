@@ -63,7 +63,8 @@
     "mixed_step_direction_sequence_exact_min": 0.9,
     "mixed_step_modifier_sequence_exact_min": 0.9,
     "symmetric_relation_endpoint_reversal_consistency_min": 0.98,
-    "directional_relation_endpoint_reversal_sensitivity_min": 0.9
+    "directional_relation_endpoint_reversal_sensitivity_min": 0.9,
+    "step_conditioned_relation_semantic_sequence_exact_min": 0.9
   },
   "extrapolation_gate": {
     "unseen_relation_family_accuracy_min": 0.9,
@@ -103,7 +104,8 @@
     "schema_evidence_counterfactual_sensitivity_min": 0.9,
     "source_anchor_exactness_required": true,
     "no_structural_support_execution_confidence_max": 0,
-    "distant_cross_window_decisive_source_removal_behavior_change_min": 0.9
+    "distant_cross_window_decisive_source_removal_behavior_change_min": 0.9,
+    "step_relation_semantic_counterfactual_sensitivity_min": 0.9
   },
   "general_semantic_regression_gate": {
     "historical_teacher_dev_top1_floor": 0.8736842105263158,
@@ -132,7 +134,8 @@
     "fusion_route_causally_controls_latent_contribution_required": true,
     "final_judgment_gradient_to_fusion_router_required": true,
     "recoverability_applies_to_labeled_relevant_views_not_all_available": true,
-    "irrelevant_available_view_invariance_required": true
+    "irrelevant_available_view_invariance_required": true,
+    "program_averaged_relation_state_cannot_replace_step_execution_semantics": true
   },
   "scale_policy": {
     "final_candidate_may_exceed_training_runtime_axes": true,
