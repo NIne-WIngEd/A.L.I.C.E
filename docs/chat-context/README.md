@@ -1,19 +1,80 @@
 # A.L.I.C.E. Chat Context Archive
 
-**Newest continuity boundary:** [2026-09-13 Sol N0 frontier research decision](2026-09-13/sol/N0_FRONTIER_RESEARCH_DECISION.md).
+**Newest continuity boundary:** [2026-09-22 N0 full-envelope deep static audit + personal-development architecture handoff](2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md).
 
-The 2026-09-13 N0 boundary carries forward the completed Curated Frontier v2/private-learning-structure handoff and the owner's sizing clarification: **there is no fixed EIPM parameter target or ceiling.** The prior ~100M–400M / ~400M range is a superseded working estimate. Scale is selected from measured competency, architecture/data scaling, generalization, and owner-evaluated identity fidelity.
+## Current personality-model boundary
 
-The active path is now: canonical E0 + curated E-INF + curated A-SYN + provenance/clone-awareness -> model-agnostic identity substrate -> private ACFP/graph/concept/preference/IDP structures -> **N0 qualification tooling** -> N0 native semantic bootstrap -> N1 identity representation -> N2 identity judgment/preference -> N3 calibration -> first A.L.I.C.E.-native EIPM candidate.
+The active N0 implementation frontier is:
 
-The implementation-facing research plan is on `alice-eipm-v1-build` at commit `ed9ad923b4b19e6fb913ee4bf216fb28bccd4d2d`, file `docs/eipm/EIPM_N0_FRONTIER_RESEARCH_AND_BOOTSTRAP_PLAN_2026-09-13.md`. N0-R1 is now complete at `docs/eipm/n0/competency_registry_v0.1.tsv` and `COMPETENCY_REGISTRY_POLICY_v0.1.md`.
+```text
+alice-eipm-v1-n0-full-envelope-foundation-build-v1
+6c4e3c02672b7a5415fb3407942d86cc9723b8d9
+```
 
-The private Curated Frontier v2 ZIP is not committed to this public repository branch. Its exact SHA-256 and a sanitized integrity/count receipt are recorded at [CURATED_FRONTIER_V2_PRIVATE_SOURCE_RECEIPT.md](2026-09-13/sol/CURATED_FRONTIER_V2_PRIVATE_SOURCE_RECEIPT.md).
+The latest exact-head static receipt is green, but **Magnolia is not yet authorized**. The deep original-source audit remains open. New chats must not convert a green static suite into CPU/GPU/training authorization without first reading the 2026-09-22 handoff.
 
-The [2026-09-13 current-state handoff](2026-09-13/sol/CURRENT_STATE_AND_HANDOFF.md), [2026-09-10 Sol owner override](2026-09-10/sol/OWNER_OVERRIDE_PERSONALITY_MODEL_MAINSTREAMING.md), [2026-09-10 native EIPM frontier research](2026-09-10/sol/EIPM_NATIVE_FRONTIER_ARCHITECTURE_RESEARCH.md), [2026-09-06 Astra master handoff](2026-09-06/astra/ASTRA_MASTER_CONTINUATION_HANDOFF.md), and earlier continuity material remain mandatory context where they do not conflict with newer observed evidence or explicit owner decisions.
+The current method is failure-driven and anti-hotfix: try to expose structural defects cheaply, verify original source rather than report flags, repair one localized causal defect, preserve failure evidence, rerun affected exact-head evidence, and continue the broader audit.
 
-The validation-heavy MC10D continuation remains historical evidence rather than the active personality-model path. Its engineering lessons on provenance, deterministic packaging, root-cause analysis, technical-vs-semantic failure, provider/runtime separation, durable checkpoints, and GPU-budget protection remain active lessons.
+The next external boundary, once the deep source audit genuinely closes, is the exact full 640-wide CPU/no-gradient full-envelope construction/forward plus parameter/memory receipt. A same-topology GPU no-gradient memory dry run comes after that. No optimizer, gradient training, FINAL opening, or N0 completion is currently authorized.
 
-Current next action: **N0-R2 public data/license manifest builder and exact source review**. No target-scale/private identity-gradient run is authorized before the N0 design, data, tokenizer, teacher, scaling, and final pre-weight review gates are complete.
+## Historical N0 decision lineage
 
-Canonical `main` remains frozen at `0abaed85873c3f8de04765847eb7700b0e20433f`.
+The 2026-09-21 continuity records remain important because they explain why the old frozen-authority line was abandoned:
+
+- [N0 job 575986 — P2A frozen semantic authority valid FAIL](2026-09-21/sol/N0_JOB575986_P2A_FROZEN_AUTHORITY_VALID_FAIL.md)
+- [N0 job 575986 — semantic localization package ready](2026-09-21/sol/N0_JOB575986_SEMANTIC_LOCALIZATION_V1_READY.md)
+- [N0 job 575990 — semantic/operator architecture decision](2026-09-21/sol/N0_JOB575990_SEMANTIC_OPERATOR_DECISION.md)
+
+Older documents describing a frozen semantic-authority package as “ready for Magnolia” are historical/superseded and must not override the 575986/575990 evidence or the current full-envelope handoff.
+
+The earlier 2026-09-13, 2026-09-10, and 2026-09-06 handoffs remain useful background where they do not conflict with newer observed evidence or explicit owner decisions.
+
+## Capability and scaling doctrine
+
+There is no fixed EIPM parameter target or ceiling. Scale is selected from measured competency, architecture/data scaling, generalization, and identity fidelity. Current width/depth/runtime cardinalities are operating points, not permanent capability limits.
+
+N0 is the identity-neutral semantic/judgment foundation. It is not the Rayan host model, A.L.I.C.E. self model, relationship authority, Memory Formation Model, canonical Elaina source archive, or the whole assistant.
+
+## Personal-development architecture update
+
+A 2026-09-22 architecture audit established a real broader-system gap: persisted host/self projections plus a fixed constitutional prompt do not yet form a demonstrated learned personal-development loop.
+
+The accepted destination requires:
+
+```text
+experience / observation
+    -> subject-bound user / source / relationship / assistant-self state
+    -> native personal judgment
+    -> action / response
+    -> outcome
+    -> governed revision
+    -> changed future judgment
+```
+
+A.L.I.C.E. keeps Rayan host state, Mehejabin Elaina source-person identity, and A.L.I.C.E. current self distinct. A general Fable keeps user/host state and Fable current self distinct.
+
+The bounded architecture correction lives on:
+
+`alice-personal-development-architecture-v1`
+
+The Fable process-capture branch has also been updated so continuing user learning and assistant self-development are required destination capabilities rather than optional identity-maintenance decoration.
+
+These corrections do not claim the learned loop is implemented. They define what later implementation and behavioral evidence must prove.
+
+## MC10D lessons
+
+The validation-heavy MC10D continuation remains historical evidence rather than the active personality-model build path. Its engineering lessons remain active:
+
+- provenance and deterministic packaging;
+- root-cause analysis before patching;
+- technical-vs-semantic failure separation;
+- provider/runtime separation;
+- durable checkpoints and failure evidence;
+- GPU-budget protection;
+- no patch/validator treadmill.
+
+## Private evidence custody
+
+Private Elaina, Rayan, and owner-specific payloads remain outside the public repository unless separately authorized. Architecture may name roles where needed for continuity, but raw private corpora, secrets, credentials, and private evidence do not belong in Git.
+
+Canonical `main` remains separate from these active research/build branches.
