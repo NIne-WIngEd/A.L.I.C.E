@@ -3,8 +3,8 @@
 **Date:** 2026-09-22  
 **Status:** active continuity authority for the current Sol handoff  
 **N0 branch:** `alice-eipm-v1-n0-full-envelope-foundation-build-v1`  
-**N0 head at handoff:** `6c4e3c02672b7a5415fb3407942d86cc9723b8d9`  
-Current build head: `6c4e3c02672b7a5415fb3407942d86cc9723b8d9`  
+**N0 head at handoff:** `6ee63bd39175e76fca702dd8e2493cb9abcf6e9a`  
+Current build head: `6ee63bd39175e76fca702dd8e2493cb9abcf6e9a`  
 **Magnolia authorization:** **NO — deep source-level audit remains open**  
 **N0 complete:** false
 
@@ -12,11 +12,11 @@ Current build head: `6c4e3c02672b7a5415fb3407942d86cc9723b8d9`
 
 ```text
 source_branch=alice-eipm-v1-n0-full-envelope-foundation-build-v1
-current_build_head=6c4e3c02672b7a5415fb3407942d86cc9723b8d9
+current_build_head=6ee63bd39175e76fca702dd8e2493cb9abcf6e9a
 deep_source_audit_complete=false
-exact_head_static_suite=PASS_114
-proof_obligations_total=99
-proof_obligations_static=85
+exact_head_static_suite=PASS_115
+proof_obligations_total=100
+proof_obligations_static=86
 magnolia_cpu_runtime_authorized=false
 gpu_memory_dry_run_authorized=false
 optimizer_authorized=false
@@ -69,13 +69,13 @@ Do not revive a superseded narrow PASS merely because a later experiment becomes
 
 ## Current exact-head static evidence
 
-At `6c4e3c02672b7a5415fb3407942d86cc9723b8d9`, GitHub Actions run `35684768608` completed successfully.
+At `6ee63bd39175e76fca702dd8e2493cb9abcf6e9a`, GitHub Actions run `35684768608` completed successfully.
 
 Observed receipt:
 
-- 114 tests passed;
-- 99 proof obligations registered;
-- 85 static obligations;
+- 115 tests passed;
+- 100 proof obligations registered;
+- 86 static obligations;
 - synthetic operator curriculum audit passed;
 - full-envelope behavioral-fabric static audit passed;
 - natural FewRel audit passed;
@@ -108,6 +108,57 @@ The full-envelope rebuild continued to uncover real defects after prior green re
 - macro-family scaling made invariant to gradient-accumulation partitioning.
 
 Earlier parts of the same rebuild also corrected weak survival/truncation semantics, symmetry handling, exact null support, inactive relational-path contamination, fixed/global hidden-layer mixtures, open semantic factor handling, padded-item behavior, fusion relevance routing, recoverability semantics, long-context isolation, and step-conditioned relation semantic state.
+
+## Audit progress after the first 114-test green head
+
+The deep audit continued after `6c4e3c02672b7a5415fb3407942d86cc9723b8d9` instead of treating that green receipt as Magnolia authorization. That immediately paid off.
+
+### Endpoint-role causal falsification
+
+Historical endpoint-role failures made the current source/target path a high-risk place to re-check. A new independent static intervention was added that holds evidence, direction, traversal, and learned readout preference fixed while changing only `ROLE_SOURCE` versus `ROLE_TARGET`.
+
+The executor's structural endpoint readout and final relational probability switch to the corresponding endpoint. The exact-head proof was added as `N0-P24B`. The resulting head passed the complete static suite with 115 tests.
+
+This closes the specific concern that source/target role semantics were only labels or support-localization proxies. It does **not** close the broader audit.
+
+### Behavioral DEV leakage found and repaired
+
+The behavioral curriculum's old TRAIN/DEV isolation looked stronger than it was.
+
+The previous audit checked query-template, entity, and causal-group isolation, but DEV reused normalized TRAIN **field wording and answer-candidate wording** for the same scenario families. That could allow model-selection DEV to reward surface-template recognition instead of the intended semantic/causal transfer.
+
+A model-free audit was added first. It failed exactly as expected at commit `f9adf24f5abbeec0002ce6695350ad62bb7d0fdd`, workflow run `35690014546`, with both:
+
+- `TRAIN/DEV normalized field-surface overlap`;
+- `TRAIN/DEV normalized candidate-surface overlap`.
+
+The first semantic-preserving DEV rewrite removed field-surface overlap but intentionally preserved the failure evidence when two UNKNOWN/DEFER answer templates still overlapped. Commit `10336cdb09edec76dc1a415e64e10f69ada0ca0e`, run `35690063445`, failed only on the remaining candidate overlap.
+
+Commit `7686f2d23befa3fc753b47c65cd31259ed19b3f7` repaired those remaining UNKNOWN/DEFER candidate surfaces. Its full contract run passed.
+
+### Behavioral governance drift found and repaired
+
+The strengthened auditor then exposed a separate contract defect:
+
+- the builder generated `mixed_direction_composition` rows but the behavioral curriculum contract did not declare that scenario family;
+- the contract did not explicitly require field-surface or candidate-surface TRAIN/DEV isolation.
+
+The fail-closed auditor commit `9913f51eec53268b7624a2ff9db12fa307116455`, run `35690272668`, failed on exactly those three governance mismatches.
+
+The contract was repaired at `74a7fd15b30d6af3d365be8f7aca5d7b6898252b`, and the proof requirement was strengthened at the current head:
+
+`6ee63bd39175e76fca702dd8e2493cb9abcf6e9a`
+
+Exact-head workflow run `35690293060` is green:
+
+- 115 tests passed;
+- 100 proof obligations;
+- 86 static obligations;
+- behavioral field/candidate surface isolation passed;
+- exact scenario-family contract coverage passed;
+- all previous static gates remained green.
+
+This sequence is important evidence for the current method: **a green suite was not enough; continuing the cheap source/data audit found real defects before Magnolia.**
 
 ## Current architecture intent
 
@@ -239,7 +290,7 @@ Continuing user learning and assistant self-development are required destination
 
 A bounded architecture branch was created from the exact current N0 head:
 
-`alice-personal-development-architecture-v1@88fbccd2e900569228e09a9b984a00dde16c7abc`
+`alice-personal-development-architecture-v1@716ef6044b75c4dfee6e32b918f57f8ee9689449`
 
 Current corrections there include:
 
@@ -257,9 +308,11 @@ The Fable builder branch was also updated at `fable-builder-model@467fb30689500f
 
 These architecture changes do **not** claim the learned personal-development loop is implemented.
 
+The dedicated personal-development architecture branch now has its own contract workflow. Exact head `716ef6044b75c4dfee6e32b918f57f8ee9689449` passed 30 targeted governance/projection tests in workflow run `35690101717`.
+
 ## Current next action
 
-Continue the deep source-level N0 audit at exact head `6c4e3c02672b7a5415fb3407942d86cc9723b8d9`.
+Continue the deep source-level N0 audit at exact head `6ee63bd39175e76fca702dd8e2493cb9abcf6e9a`.
 
 Do not ask the owner for a Magnolia run until that audit has either:
 
