@@ -112,10 +112,9 @@ class MacroFamilyLossBalancer(nn.Module):
             raise ValueError(
                 "loss families must exactly match precommitted family names"
             )
-        normalized_family: dict[str, Tensor] = {}
-        raw_family: dict[str, Tensor] = {}
 
-        for index, name in enumerate(self.family_names):
+        raw_family: dict[str, Tensor] = {}
+        for name in self.family_names:
             objectives = losses[name]
             if not objectives:
                 raise ValueError(f"family {name!r} has no objectives")
@@ -130,25 +129,18 @@ class MacroFamilyLossBalancer(nn.Module):
                         f"{name}/{objective_name} is non-finite"
                     )
                 values.append(value)
-            family_raw = torch.stack(values).mean()
-            raw_family[name] = family_raw
+            raw_family[name] = torch.stack(values).mean()
 
-            if update_ema:
-                self.observe_detached_family_means(
-                    {
-                        family_name: (
-                            family_raw
-                            if family_name == name
-                            else torch.stack(
-                                list(losses[family_name].values())
-                            ).mean()
-                        )
-                        for family_name in self.family_names
-                    }
-                )
-                # The observer updates every family at once. Avoid repeating
-                # the same EMA update inside the family loop.
-                update_ema = False
+        # Update scales exactly once from the complete family observation. A
+        # training driver that uses gradient accumulation should keep this
+        # False for every microbatch and call observe_detached_family_means()
+        # once with sample-weighted effective-batch raw family means.
+        if update_ema:
+            self.observe_detached_family_means(raw_family)
+
+        normalized_family: dict[str, Tensor] = {}
+        for index, name in enumerate(self.family_names):
+            family_raw = raw_family[name]
             scale = self._ema_scale[index].clamp_min(
                 self.config.minimum_scale
             )
