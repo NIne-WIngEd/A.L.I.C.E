@@ -20,6 +20,7 @@ from alice_personality.n0.full_envelope_structural_types import (
     CONTROL_RELATIONAL,
     FullEnvelopeOperatorState,
     masked_sparsemax,
+    runtime_edge_type_compatibility,
 )
 
 
@@ -163,36 +164,15 @@ class FullEnvelopeQSREBinderV1(nn.Module):
         field_type_index: Tensor,
         edge_valid_mask: Tensor,
     ) -> Tensor:
-        if relation_domain_type_mask.ndim != 3:
-            raise ValueError("relation domain mask must be [B,R,K]")
-        if relation_range_type_mask.shape != relation_domain_type_mask.shape:
-            raise ValueError("domain/range type-mask drift")
-        batch, relations, type_count = relation_domain_type_mask.shape
-        if relation_symmetric.shape != (batch, relations) or relation_symmetric.dtype != torch.bool:
-            raise ValueError("relation_symmetric must be bool [B,R]")
-        if field_type_index.ndim != 2 or field_type_index.size(0) != batch:
-            raise ValueError("field_type_index must be [B,F]")
-        if bool((field_type_index < -1).any()) or bool((field_type_index >= type_count).any()):
-            raise ValueError("field type index outside runtime type schema")
-        source_index = edge_index[..., 0].clamp(min=0, max=field_type_index.size(1) - 1)
-        target_index = edge_index[..., 1].clamp(min=0, max=field_type_index.size(1) - 1)
-        relation_index = edge_relation_index.clamp(min=0, max=relations - 1)
-        b = torch.arange(batch, device=edge_index.device)[:, None].expand_as(edge_relation_index)
-        source_type_raw = field_type_index.gather(1, source_index)
-        target_type_raw = field_type_index.gather(1, target_index)
-        endpoint_type_valid = (source_type_raw >= 0) & (target_type_raw >= 0)
-        if bool((edge_valid_mask & ~endpoint_type_valid).any()):
-            raise ValueError("valid edge references a field without a runtime type")
-        source_type = source_type_raw.clamp_min(0)
-        target_type = target_type_raw.clamp_min(0)
-        domain = relation_domain_type_mask[b, relation_index, source_type]
-        range_ok = relation_range_type_mask[b, relation_index, target_type]
-        forward_ok = domain & range_ok
-        symmetric = relation_symmetric[b, relation_index]
-        reverse_domain = relation_domain_type_mask[b, relation_index, target_type]
-        reverse_range = relation_range_type_mask[b, relation_index, source_type]
-        reverse_ok = reverse_domain & reverse_range
-        return edge_valid_mask & (forward_ok | (symmetric & reverse_ok))
+        return runtime_edge_type_compatibility(
+            relation_domain_type_mask=relation_domain_type_mask,
+            relation_range_type_mask=relation_range_type_mask,
+            relation_symmetric=relation_symmetric,
+            edge_relation_index=edge_relation_index,
+            edge_index=edge_index,
+            field_type_index=field_type_index,
+            edge_valid_mask=edge_valid_mask,
+        )
 
     def forward(
         self,
