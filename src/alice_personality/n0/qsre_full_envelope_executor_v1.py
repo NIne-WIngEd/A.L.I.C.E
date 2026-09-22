@@ -396,8 +396,33 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
                 position_delta,
                 target_pos,
             )
+            effective_edge_reliability = (
+                0.5
+                + step_modifier[:, MOD_RELIABILITY][:, None]
+                * (edge_reliability - 0.5)
+            )
+            effective_edge_recency = (
+                0.5
+                + step_modifier[:, MOD_RECENCY][:, None]
+                * (edge_recency - 0.5)
+            )
+            effective_edge_temporal_match = (
+                1.0
+                - step_modifier[:, MOD_TEMPORAL_CONSTRAINT][:, None]
+                * (1.0 - edge_temporal_match)
+            )
+            effective_edge_provenance_match = (
+                1.0
+                - step_modifier[:, MOD_PROVENANCE_CONSTRAINT][:, None]
+                * (1.0 - edge_provenance_match)
+            )
             edge_scalar = torch.stack(
-                [edge_reliability, edge_recency, edge_temporal_match, edge_provenance_match],
+                [
+                    effective_edge_reliability,
+                    effective_edge_recency,
+                    effective_edge_temporal_match,
+                    effective_edge_provenance_match,
+                ],
                 dim=-1,
             )
             effective_direction = torch.stack(
@@ -663,6 +688,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             "semantic_endpoint_tracking_is_step_conditioned": True,
             "global_direction_not_used_for_final_path_role": True,
             "step_conditioned_modifiers": True,
+            "modifier_off_neutralizes_explicit_edge_criterion_features": True,
             "local_path_aggregate_distinct": True,
             "hard_traversal_threshold": False,
             "execution_confidence_requires_structural_support": True,
