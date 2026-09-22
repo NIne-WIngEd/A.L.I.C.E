@@ -12,6 +12,7 @@ from alice_personality.n0.chunked_late_interaction import (
 )
 
 from alice_personality.n0.numeric_contracts import (
+    exact_masked_softmax,
     require_finite,
     require_unit_interval,
 )
@@ -284,12 +285,11 @@ class FullEnvelopeQSREBinderV1(nn.Module):
             dim=-1,
         )
         focus_logits = self.focus_score(focus_feature).squeeze(-1)
-        focus_logits = focus_logits.masked_fill(~field_valid_mask, -1.0e4)
-        focus_field_weight = torch.softmax(focus_logits, dim=-1)
-        focus_field_weight = focus_field_weight * field_valid_mask.to(focus_field_weight.dtype)
-        focus_field_weight = focus_field_weight / focus_field_weight.sum(
-            dim=-1, keepdim=True
-        ).clamp_min(1.0e-12)
+        focus_field_weight = exact_masked_softmax(
+            focus_logits,
+            field_valid_mask,
+            dim=-1,
+        )
 
         source_index = edge_index[..., 0].clamp(min=0, max=fields - 1)
         target_index = edge_index[..., 1].clamp(min=0, max=fields - 1)
