@@ -49,6 +49,11 @@ on:
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py"
       - "docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md"
       - "docs/research/eipm-n0-full-envelope-interface-contract-v1.md"
+      - "configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json"
+      - "scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"
+      - "scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py"
+      - "scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh"
+      - "scripts/eipm/n0/magnolia_cpu_n0_v02_full_envelope_runtime_v1.sbatch"
       - ".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml"
   workflow_dispatch:
 
@@ -95,7 +100,9 @@ jobs:
             scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py \
             scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py \
-            scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py
+            scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py \
+            scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py \
+            scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py
 
           for f in \
             configs/eipm/n0/n0_v02_natural_relation_sources_v1.json \
@@ -474,6 +481,24 @@ jobs:
           assert r["gradient_authorized"] is False
           assert r["n0_complete"] is False
           print("PASS_N0_FULL_PROOF_MATRIX_STATIC_AUDIT")
+          PY
+
+      - name: Audit full-envelope CPU runtime contract before Magnolia
+        run: |
+          set -euo pipefail
+          rm -f /tmp/n0-full-envelope-cpu-contract-audit.json
+          python scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py \
+            --config configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json \
+            --output /tmp/n0-full-envelope-cpu-contract-audit.json
+          python - <<'PY'
+          import json
+          r=json.load(open("/tmp/n0-full-envelope-cpu-contract-audit.json"))
+          assert r["status"]=="PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_CONTRACT_AUDIT_V1"
+          assert r["optimizer"] is False
+          assert r["gradient"] is False
+          assert r["gpu_training"] is False
+          assert r["n0_complete"] is False
+          print("PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_CONTRACT_STATIC")
           PY
 
       - name: Prove training remains blocked until runtime qualification
