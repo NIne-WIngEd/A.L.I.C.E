@@ -6,6 +6,7 @@ on:
       - alice-eipm-v1-n0-full-envelope-foundation-build-v1
     paths:
       - "src/alice_personality/n0/semantic_operator_foundation.py"
+      - "src/alice_personality/n0/numeric_contracts.py"
       - "src/alice_personality/n0/semantic_backbone_interface_v1.py"
       - "src/alice_personality/n0/dynamic_structured_state_v2.py"
       - "src/alice_personality/n0/chunked_set_attention_v1.py"
@@ -71,6 +72,7 @@ jobs:
           set -euo pipefail
           python -m py_compile \
             src/alice_personality/n0/semantic_operator_foundation.py \
+            src/alice_personality/n0/numeric_contracts.py \
             src/alice_personality/n0/semantic_backbone_interface_v1.py \
             src/alice_personality/n0/dynamic_structured_state_v2.py \
             src/alice_personality/n0/chunked_set_attention_v1.py \
