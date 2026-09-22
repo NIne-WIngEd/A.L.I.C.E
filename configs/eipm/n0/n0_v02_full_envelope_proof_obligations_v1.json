@@ -877,6 +877,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_truncated_program_cannot_activate_global_relational_views",
       "requirement": "Residual CONTINUE survival after the final available reasoning slot is truncation, not successful relational completion. A truncated program may not activate graph/evidence relational views; global semantic relational activity must require completion just as Executor confidence does."
+    },
+    {
+      "id": "N0-P39RF",
+      "stage": "final_v2_independence",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_successor_final_v2_package_exists_and_legacy_final_cannot_satisfy_it",
+      "requirement": "Before gradient, the full-envelope successor must define its own sealed final-v2 package builder/auditor/freezer and evaluator contract targeting N0FullEnvelopeTrainableSystemV1. Legacy final-self-validation v1/v3 artifacts may not satisfy or be promoted into successor final-v2 authority."
     }
   ],
   "closure_rule": {
