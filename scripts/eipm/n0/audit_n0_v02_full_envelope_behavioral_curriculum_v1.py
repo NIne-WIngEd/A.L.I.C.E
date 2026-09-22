@@ -34,6 +34,31 @@ def load_jsonl(path: Path) -> list[dict[str,Any]]:
     return rows
 
 
+def normalized_surface(text: str, entities: list[str]) -> str:
+    value=str(text).lower()
+    for entity in sorted((str(x) for x in entities),key=len,reverse=True):
+        value=value.replace(entity.lower(),"<entity>")
+    return " ".join(value.split())
+
+
+def field_surface_signature(row: dict[str,Any]) -> str:
+    entities=list(row.get("entities") or [])
+    normalized=" || ".join(
+        normalized_surface(str(item.get("text","")),entities)
+        for item in list(row.get("fields") or [])
+    )
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+
+def candidate_surface_signature(row: dict[str,Any]) -> str:
+    entities=list(row.get("entities") or [])
+    normalized=sorted(
+        normalized_surface(str(text),entities)
+        for text in list(row.get("candidate_answers") or [])
+    )
+    return hashlib.sha256(" || ".join(normalized).encode("utf-8")).hexdigest()
+
+
 def semantic_text(row: dict[str,Any]) -> str:
     pieces=[str(row["query"])]
     pieces.extend(str(x["text"]) for x in row["type_schema"])
@@ -316,6 +341,26 @@ def main() -> None:
     if template_overlap:
         errors.append("TRAIN/DEV normalized query-template overlap")
 
+    train_field_surfaces={field_surface_signature(x) for x in train}
+    dev_field_surfaces={field_surface_signature(x) for x in dev}
+    field_surface_overlap=sorted(train_field_surfaces & dev_field_surfaces)
+    if field_surface_overlap:
+        errors.append(
+            "TRAIN/DEV normalized field-surface overlap; DEV may reuse TRAIN "
+            "scenario wording outside the query"
+        )
+
+    train_candidate_surfaces={candidate_surface_signature(x) for x in train}
+    dev_candidate_surfaces={candidate_surface_signature(x) for x in dev}
+    candidate_surface_overlap=sorted(
+        train_candidate_surfaces & dev_candidate_surfaces
+    )
+    if candidate_surface_overlap:
+        errors.append(
+            "TRAIN/DEV normalized candidate-surface overlap; DEV may reuse "
+            "TRAIN answer templates"
+        )
+
     train_causal={str(x.get("causal_group","")) for x in train}
     dev_causal={str(x.get("causal_group","")) for x in dev}
     if train_causal & dev_causal:
@@ -382,6 +427,8 @@ def main() -> None:
         "relation_target_position_histogram":dict(sorted(relation_target_positions.items())),
         "train_dev_entity_overlap":entity_overlap,
         "train_dev_template_overlap":template_overlap,
+        "train_dev_field_surface_overlap":field_surface_overlap,
+        "train_dev_candidate_surface_overlap":candidate_surface_overlap,
         "private_identity_data":False,
         "gradient":False,
         "optimizer":False,
