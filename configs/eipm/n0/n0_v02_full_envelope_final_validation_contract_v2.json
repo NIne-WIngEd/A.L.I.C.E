@@ -14,7 +14,10 @@
     "semantic_cosine_alone_can_authorize_n0": false,
     "all_gate_sections_must_pass": true,
     "sealed_natural_final_rows_may_influence_training": false,
-    "sealed_natural_final_rows_may_influence_checkpoint_selection": false
+    "sealed_natural_final_rows_may_influence_checkpoint_selection": false,
+    "public_natural_benchmark_structure_may_be_known": true,
+    "public_natural_benchmark_results_may_influence_training": false,
+    "public_natural_benchmark_results_may_influence_checkpoint_selection": false
   },
   "corpus": {
     "natural_public_language_required": true,
@@ -32,9 +35,13 @@
     "hard_total_row_count": null,
     "row_count_selected_by_coverage_not_quota": true,
     "sealed_natural_relation_family_source": "thunlp_fewrel_1_0",
-    "sealed_natural_relation_family_manifest_schema": "alice.eipm.n0.fewrel-natural-relation-manifest.v2",
+    "sealed_natural_relation_family_manifest_schema": "alice.eipm.n0.fewrel-natural-relation-manifest.v3",
     "final_relation_descriptions_absent_from_train_dev_inputs_required": true,
-    "final_rows_separate_hashed_artifact_required": true
+    "final_rows_separate_hashed_artifact_required": true,
+    "natural_relation_final_rule": "all official FewRel val_wiki relation families; no observed subset selection",
+    "natural_relation_final_is_public_benchmark_component": true,
+    "natural_relation_final_is_not_entire_n0_final_corpus": true,
+    "full_final_corpus_build_and_hash_freeze_required": true
   },
   "deterministic_behavior_gate": {
     "relation_semantics_top1_min": 0.95,
