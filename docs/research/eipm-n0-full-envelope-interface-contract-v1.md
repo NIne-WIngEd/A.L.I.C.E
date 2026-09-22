@@ -29,6 +29,8 @@ Remove the old dependency on one pooled frozen query vector and remove relation-
 
 Edges may carry an integer index into the runtime relation schema. Meaning comes from the supplied runtime schema state and operator state.
 
+Residual CONTINUE survival at the final available reasoning slot is explicit truncation. It is not successful completion. Graph and evidence-specialist relational activity must be gated by program completion, so an unfinished relation program cannot enter fusion as if it were completed evidence. The non-relational semantic/structured path remains available for fallback or defer behavior.
+
 ## Fusion
 
 Keep source-anchored multi-stream fusion. Exact parent/source channels remain valuable.

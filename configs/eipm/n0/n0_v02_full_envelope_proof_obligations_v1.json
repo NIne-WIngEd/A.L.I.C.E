@@ -870,6 +870,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_behavioral_candidate_answers_require_context_to_choose_between_identical_options",
       "requirement": "The behavioral curriculum must include matched rows with identical query and candidate-answer set/order but different evidence-conditioned public targets, so candidate wording cannot be a stable shortcut for final judgment."
+    },
+    {
+      "id": "N0-P24I",
+      "stage": "full_stack",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_truncated_program_cannot_activate_global_relational_views",
+      "requirement": "Residual CONTINUE survival after the final available reasoning slot is truncation, not successful relational completion. A truncated program may not activate graph/evidence relational views; global semantic relational activity must require completion just as Executor confidence does."
     }
   ],
   "closure_rule": {

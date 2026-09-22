@@ -247,6 +247,9 @@ class N0FullEnvelopeStackV1(nn.Module):
         known_mass = (
             1.0 - operator.unknown_probability.sum(dim=1).clamp(max=1.0)
         ).clamp(0.0, 1.0)
+        complete_mass = (
+            1.0 - operator.truncation_probability
+        ).clamp(0.0, 1.0)
         # Slot zero CONTINUE mass is P(the relational program starts).
         # Summing survival-weighted CONTINUE mass estimates expected path
         # length and must not inflate graph/evidence activity.
@@ -256,6 +259,7 @@ class N0FullEnvelopeStackV1(nn.Module):
             * operator.applicability.clamp(0.0, 1.0)
             * operator.control_distribution[:, CONTROL_RELATIONAL]
             * known_mass
+            * complete_mass
         ).clamp(0.0, 1.0)
         return relation_mass, semantic_activity
 
@@ -684,6 +688,8 @@ class N0FullEnvelopeStackV1(nn.Module):
             "fusion_route_weight_causally_controls_latent_contribution": True,
             "unavailable_internal_view_descriptor_cannot_create_signal": True,
             "semantic_activity_uses_program_start_probability_not_expected_step_count": True,
+            "semantic_activity_requires_program_completion": True,
+            "truncated_program_cannot_activate_global_relational_views": True,
             "runtime_relation_ceiling": None,
             "per_example_candidate_subset_supported": True,
             "runtime_factor_ceiling": None,

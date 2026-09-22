@@ -117,7 +117,8 @@
     "type_incompatible_edge_intervention_invariance_required": true,
     "binder_null_support_blocks_graph_view_effect_required": true,
     "same_relation_irrelevant_support_false_positive_rate_max": 0,
-    "criterion_neutral_binder_preserves_query_relevant_quality_alternatives_required": true
+    "criterion_neutral_binder_preserves_query_relevant_quality_alternatives_required": true,
+    "truncated_program_blocks_global_relational_view_activation_required": true
   },
   "general_semantic_regression_gate": {
     "historical_teacher_dev_top1_floor": 0.8736842105263158,

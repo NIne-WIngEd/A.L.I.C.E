@@ -63,7 +63,8 @@
       "edge_metadata"
     ],
     "field_count_ceiling": null,
-    "edge_count_ceiling": null
+    "edge_count_ceiling": null,
+    "truncated_program_relational_activity": "blocked continuously by residual program survival; incomplete execution cannot be presented as completed graph/evidence support"
   },
   "evidence_graph_successor": {
     "preserve": [
@@ -79,7 +80,8 @@
     "edge_relation_index_role": "runtime indexing into supplied schema only",
     "graph_depth_ceiling": null,
     "node_count_ceiling": null,
-    "edge_count_ceiling": null
+    "edge_count_ceiling": null,
+    "program_completion_required_for_relational_activity": true
   },
   "fusion_successor": {
     "preserve": [
@@ -164,7 +166,8 @@
     "no_hard_touched_edge_update_threshold": true,
     "symmetric_relation_storage_orientation_invariant": true,
     "mixed_direction_programs_supported": true,
-    "step_specific_modifiers_supported": true
+    "step_specific_modifiers_supported": true,
+    "no_truncated_program_global_relational_view_activation": true
   },
   "authorization": {
     "source_and_static_mechanics": true,
