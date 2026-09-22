@@ -10,6 +10,7 @@ from alice_personality.n0.chunked_late_interaction import (
 )
 from alice_personality.n0.full_envelope_behavioral_objectives_v1 import (
     full_envelope_behavioral_objective,
+    latent_noncollapse_loss,
     support_selection_loss,
 )
 from alice_personality.n0.full_envelope_loss_balancer_v1 import (
@@ -792,3 +793,38 @@ def test_full_semantic_input_allows_fully_unavailable_optional_bank() -> None:
         torch.zeros_like(out["hidden_states"]),
     )
     assert not bool(out["token_mask"].any())
+
+
+def test_latent_noncollapse_gradient_is_finite_on_repeated_and_degenerate_slots() -> None:
+    torch.manual_seed(291)
+    base=torch.randn(2,1,16)
+    repeated=base.expand(2,6,16).clone().requires_grad_(True)
+    loss=latent_noncollapse_loss(repeated)
+    assert torch.isfinite(loss)
+    loss.backward()
+    assert repeated.grad is not None
+    assert bool(torch.isfinite(repeated.grad).all())
+    assert float(repeated.grad.abs().sum()) > 0.0
+
+    zero=torch.zeros(2,6,16,requires_grad=True)
+    zero_loss=latent_noncollapse_loss(zero)
+    assert torch.isfinite(zero_loss)
+    zero_loss.backward()
+    assert zero.grad is not None
+    assert bool(torch.isfinite(zero.grad).all())
+
+
+def test_latent_noncollapse_penalizes_antipodal_rank_one_collapse() -> None:
+    torch.manual_seed(292)
+    direction=F.normalize(torch.randn(1,1,24),dim=-1)
+    signs=torch.tensor([1.0,-1.0,1.0,-1.0,1.0,-1.0]).view(1,6,1)
+    rank_one=(direction*signs).requires_grad_(True)
+    diverse=F.normalize(torch.randn(1,6,24),dim=-1)
+    rank_one_loss=latent_noncollapse_loss(rank_one)
+    diverse_loss=latent_noncollapse_loss(diverse)
+    assert torch.isfinite(rank_one_loss)
+    assert torch.isfinite(diverse_loss)
+    assert float(rank_one_loss) > float(diverse_loss)
+    rank_one_loss.backward()
+    assert rank_one.grad is not None
+    assert bool(torch.isfinite(rank_one.grad).all())
