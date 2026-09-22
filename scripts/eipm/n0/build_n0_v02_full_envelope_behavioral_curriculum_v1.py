@@ -263,6 +263,7 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
     b=entities[(example*5+1) % len(entities)]
     c=entities[(example*7+2) % len(entities)]
     d=entities[(example*11+3) % len(entities)]
+    entities_used=[a,b,c,d]
     targets=default_factor_targets()
     step_targets: list[dict[str,str]] = []
     relation_sequence: list[str] = []
@@ -626,6 +627,7 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         names=[a,b,c,d]
         while len(names) < chain_steps + 1:
             names.append(entities[(example*13+len(names)*5) % len(entities)])
+        entities_used=list(dict.fromkeys(names))
         fields=[
             field(
                 f"Event {names[i]} is causal stage {i+1} in a verified multi-stage process.",
@@ -696,7 +698,7 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         step_targets=[dict(targets) for _ in relation_sequence]
     return {
         "scenario_family":family,
-        "entities_used":[a,b,c,d],
+        "entities_used":entities_used,
         "query":query,
         "fields":fields,
         "edges":edges,
