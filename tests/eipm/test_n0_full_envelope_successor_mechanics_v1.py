@@ -1095,3 +1095,71 @@ def test_empty_evidence_graph_produces_zero_graph_summaries() -> None:
         torch.zeros_like(out["graph_support_activity"]),
     )
     assert graph.parameter_report()["zero_edge_graph_summary_is_zero"] is True
+
+
+def test_executor_confidence_uses_program_start_probability_not_expected_step_count() -> None:
+    torch.manual_seed(221)
+    batch,steps,relations,dim=1,3,1,24
+    role=torch.zeros(batch,4)
+    role[:,ROLE_TARGET]=1.0
+    traversal=torch.zeros(batch,3)
+    traversal[:,TRAVERSAL_LOCAL]=1.0
+    direction=torch.zeros(batch,steps,3)
+    direction[:,:,DIRECTION_FORWARD]=1.0
+    control=torch.zeros(batch,3)
+    control[:,CONTROL_RELATIONAL]=1.0
+    operator=FullEnvelopeOperatorState(
+        relation_distribution=torch.ones(batch,steps,relations),
+        relation_step_mass=torch.tensor([[0.2,0.2,0.0]]),
+        stop_probability=torch.tensor([[0.8,0.0,0.2]]),
+        unknown_probability=torch.zeros(batch,steps),
+        truncation_probability=torch.zeros(batch),
+        role_distribution=role,
+        traversal_distribution=traversal,
+        direction_distribution=direction[:,0],
+        step_direction_distribution=direction,
+        modifier_weight=torch.zeros(batch,4),
+        step_modifier_weight=torch.zeros(batch,steps,4),
+        applicability=torch.ones(batch),
+        control_distribution=control,
+        continuous_state=torch.zeros(batch,dim),
+        uncertainty=torch.zeros(batch),
+    )
+    operator.validate(relation_count=relations,model_dim=dim)
+    executor=FullEnvelopeQSREExecutorV1(
+        FullEnvelopeExecutorConfig(
+            field_dim=24,
+            model_dim=24,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    with torch.no_grad():
+        out=executor(
+            field_state=torch.randn(1,2,24),
+            field_metadata=torch.zeros(1,2,3),
+            field_valid_mask=torch.ones(1,2,dtype=torch.bool),
+            edge_index=torch.tensor([[[0,1]]]),
+            edge_relation_index=torch.zeros(1,1,dtype=torch.long),
+            edge_valid_mask=torch.ones(1,1,dtype=torch.bool),
+            edge_support_weight=torch.ones(1,1),
+            support_available=torch.ones(1),
+            edge_reliability=torch.ones(1,1),
+            edge_recency=torch.ones(1,1),
+            edge_temporal_match=torch.ones(1,1),
+            edge_provenance_match=torch.ones(1,1),
+            relation_schema_state=torch.randn(1,1,24),
+            relation_symmetric=torch.zeros(1,1,dtype=torch.bool),
+            operator=operator,
+            focus_field_weight=torch.tensor([[1.0,0.0]]),
+        )
+    assert torch.allclose(
+        out["execution_confidence"],
+        torch.tensor([0.2]),
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert executor.parameter_report()[
+        "execution_confidence_uses_program_start_probability_not_expected_step_count"
+    ] is True
