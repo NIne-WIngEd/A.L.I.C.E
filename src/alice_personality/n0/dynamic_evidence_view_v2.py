@@ -10,6 +10,10 @@ from torch import Tensor, nn
 from alice_personality.n0.chunked_late_interaction import (
     chunked_batched_bidirectional_late_max,
 )
+from alice_personality.n0.numeric_contracts import (
+    require_finite,
+    require_unit_interval,
+)
 
 
 @dataclass(frozen=True)
@@ -188,6 +192,7 @@ class DynamicEvidenceViewV2(nn.Module):
         ):
             if value.shape != (batch, fields):
                 raise ValueError(f"{name} must be [B,F]")
+            require_unit_interval(name, value)
 
         if relation_schema_state.ndim != 3 or relation_schema_state.size(0) != batch:
             raise ValueError("relation_schema_state must be [B,R,D]")
@@ -196,6 +201,7 @@ class DynamicEvidenceViewV2(nn.Module):
         relations = relation_schema_state.size(1)
         if relation_mass.shape != (batch, relations):
             raise ValueError("relation_mass shape drift")
+        require_unit_interval("relation_mass", relation_mass)
         if semantic_activity.shape != (batch,):
             raise ValueError("semantic_activity must be [B]")
         if bool(
