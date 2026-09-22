@@ -265,6 +265,7 @@ class DynamicCompetitiveLatentPoolV3(nn.Module):
         view_available: Tensor,
         query_state: Tensor,
         view_reliability: Tensor,
+        view_activity: Tensor | None = None,
         slot_count: int,
         refinement_steps: int,
         return_attention_diagnostics: bool = False,
@@ -296,6 +297,20 @@ class DynamicCompetitiveLatentPoolV3(nn.Module):
             raise ValueError("view_reliability must be [B,V]")
         if not bool(torch.isfinite(view_reliability).all()):
             raise ValueError("view_reliability contains non-finite values")
+        if view_activity is None:
+            view_activity = view_available.to(view_reliability.dtype)
+        if view_activity.shape != (batch, views):
+            raise ValueError("view_activity must be [B,V]")
+        if not bool(torch.isfinite(view_activity).all()):
+            raise ValueError("view_activity contains non-finite values")
+        if bool(
+            ((view_activity < 0.0) | (view_activity > 1.0)).any()
+        ):
+            raise ValueError("view_activity must stay inside [0,1]")
+        view_activity = (
+            view_activity.float()
+            * view_available.to(view_activity.dtype)
+        )
         if bool(
             (
                 (view_reliability < 0.0)
@@ -303,14 +318,17 @@ class DynamicCompetitiveLatentPoolV3(nn.Module):
             ).any()
         ):
             raise ValueError("view_reliability must stay inside [0,1]")
+        effective_view_strength = (
+            view_reliability.float() * view_activity.float()
+        )
         if bool(
             (
                 view_available
-                & view_reliability.le(0.0)
+                & effective_view_strength.le(0.0)
             ).all(dim=-1).any()
         ):
             raise ValueError(
-                "every example requires positive reliability on at least one available view"
+                "every example requires positive reliability/activity on at least one available view"
             )
         if refinement_steps <= 0:
             raise ValueError("refinement_steps must be positive")
@@ -330,7 +348,7 @@ class DynamicCompetitiveLatentPoolV3(nn.Module):
             .reshape(batch, views * 2)
         )
         item_reliability = (
-            view_reliability[:, :, None]
+            effective_view_strength[:, :, None]
             .expand(batch, views, 2)
             .reshape(batch, views * 2)
             .float()
@@ -405,6 +423,8 @@ class DynamicCompetitiveLatentPoolV3(nn.Module):
             "competitive_item_ownership": True,
             "source_and_contextualized_channels": True,
             "view_reliability_causally_weights_item_contribution": True,
+            "query_conditioned_view_activity_supported": True,
+            "view_activity_causally_weights_item_contribution": True,
             "reliability_softmax_constant_cancellation": False,
             "full_slot_item_score_matrix_materialized": False,
             "attention_diagnostics_optional": True,
