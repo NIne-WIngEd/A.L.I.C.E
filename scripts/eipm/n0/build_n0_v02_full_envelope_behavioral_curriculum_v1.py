@@ -150,6 +150,15 @@ FACTOR_BANKS = {
     ],
 }
 
+for _bank_name, _items in FACTOR_BANKS.items():
+    for _index, _item in enumerate(_items):
+        _item["key"] = (
+            str(_item["opcode"])
+            if _item["opcode"] is not None
+            else f"OPEN_{_index}"
+        )
+
+
 TRAIN_ENTITIES = [
     "Aster","Beryl","Cinder","Dorian","Elio","Fenn","Galen","Hera",
     "Ivo","Juno","Kora","Lyra","Miro","Nola","Orin","Pia",
@@ -236,18 +245,15 @@ def default_factor_targets() -> dict[str,str]:
         "recency":"MOD_RECENCY_OFF",
         "temporal":"MOD_TEMPORAL_OFF",
         "provenance":"MOD_PROVENANCE_OFF",
-        "open_semantic_factor":"NO_ADDITIONAL_QUALIFIER",
+        "open_semantic_factor":"OPEN_3",
     }
 
 
 def factor_counterfactuals(targets: dict[str,str]) -> dict[str,str | None]:
     result: dict[str,str | None] = {}
     for name, target in targets.items():
-        options = [x["opcode"] for x in FACTOR_BANKS[name] if x["opcode"] is not None]
-        if name == "open_semantic_factor":
-            result[name] = None
-            continue
-        alternatives = [str(x) for x in options if x != target]
+        options = [str(x["key"]) for x in FACTOR_BANKS[name]]
+        alternatives = [x for x in options if x != target]
         result[name] = alternatives[0] if alternatives else None
     return result
 
@@ -485,7 +491,7 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         targets["role"]="ROLE_SYMMETRIC"
         targets["traversal"]="TRAVERSAL_AGGREGATE"
         targets["direction"]="DIRECTION_BIDIRECTIONAL"
-        targets["open_semantic_factor"]="PRESERVE_UNRESOLVED_CONFLICT"
+        targets["open_semantic_factor"]="OPEN_2"
         uncertainty=0.85
         endpoint={"active":True,"source_field":0,"target_field":1}
         decisive_fields=[0,1]
@@ -511,7 +517,7 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         event_sequence=["UNKNOWN"]
         targets["role"]="ROLE_NONE"
         targets["control"]="CONTROL_DEFER"
-        targets["open_semantic_factor"]="NO_ADDITIONAL_QUALIFIER"
+        targets["open_semantic_factor"]="OPEN_3"
         endpoint={"active":False,"source_field":-1,"target_field":-1}
         uncertainty=1.0
         irrelevant_fields=[2,3]
@@ -580,10 +586,10 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         relation_counterfactuals=["r_context"]
         event_sequence=["CONTINUE","STOP"]
         targets["traversal"]="TRAVERSAL_AGGREGATE"
-        targets["open_semantic_factor"]="PRESERVE_MULTIPLE_CO_VALID"
+        targets["open_semantic_factor"]="OPEN_1"
         decisive_fields=[0,1]
         irrelevant_fields=[3]
-        support_edges=[0,1,2]
+        support_edges=[0,1]
         endpoint={"active":True,"source_field":0,"target_field":2}
     else:
         family="mixed_direction_composition"
@@ -768,9 +774,9 @@ def materialize_row(
         "relation_sequence_target":relation_targets,
         "counterfactual_relation_sequence_target":relation_counter_targets,
         "event_sequence_target":base["event_sequence_target"],
-        "factor_target_opcodes":base["factor_target_opcodes"],
-        "counterfactual_factor_opcodes":base["counterfactual_factor_opcodes"],
-        "step_factor_target_opcodes":base["step_factor_target_opcodes"],
+        "factor_target_keys":base["factor_target_opcodes"],
+        "counterfactual_factor_keys":base["counterfactual_factor_opcodes"],
+        "step_factor_target_keys":base["step_factor_target_opcodes"],
         "applicability_target":base["applicability_target"],
         "uncertainty_target":base["uncertainty_target"],
         "support_edge_indices":[
