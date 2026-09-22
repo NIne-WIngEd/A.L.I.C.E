@@ -485,3 +485,27 @@ def test_virtualizer_report_requires_cross_window_bridge_for_long_query_semantic
     assert report["standalone_cross_window_semantics_complete"] is False
     assert report["segment_context_bridge_required_for_long_query_semantics"] is True
     assert report["dense_unbounded_native_attention_equivalence_claimed"] is False
+
+
+def test_source_recoverability_mask_does_not_force_irrelevant_views_into_latent() -> None:
+    from alice_personality.n0.full_envelope_behavioral_objectives_v1 import (
+        source_view_recoverability_loss,
+    )
+    torch.manual_seed(232)
+    latent=torch.randn(1,3,12,requires_grad=True)
+    views=torch.randn(1,4,12,requires_grad=True)
+    available=torch.ones(1,4,dtype=torch.bool)
+    recoverable=torch.tensor([[True,True,False,False]])
+    loss=source_view_recoverability_loss(
+        latent,
+        views,
+        available,
+        recoverable,
+    )
+    loss.backward()
+    assert views.grad is not None
+    assert float(views.grad[:,:2].abs().sum()) > 0.0
+    assert torch.equal(
+        views.grad[:,2:],
+        torch.zeros_like(views.grad[:,2:]),
+    )
