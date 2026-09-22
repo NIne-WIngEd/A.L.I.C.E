@@ -9,6 +9,10 @@ from alice_personality.n0.n0_full_envelope_trainable_system_v1 import (
     N0FullEnvelopeTrainableSystemConfig,
     N0FullEnvelopeTrainableSystemV1,
 )
+from alice_personality.n0.full_envelope_training_objective_v1 import (
+    DEFAULT_FAMILY_WEIGHTS,
+    FullEnvelopeJointTrainingObjectiveV1,
+)
 
 
 class TinyBackbone(nn.Module):
@@ -326,3 +330,203 @@ def test_full_trainable_system_parameter_report_is_exact_and_ceiling_free() -> N
     assert report["runtime_slot_ceiling"] is None
     assert report["runtime_reasoning_step_ceiling"] is None
     assert report["product_context_token_ceiling"] is None
+
+
+def _training_targets(outputs):
+    semantic=outputs["semantic_operator"]
+    operator=outputs["operator"]
+    relation_logits=semantic["relation_logits"]
+    batch,steps,relations=relation_logits.shape
+    assert relations >= 2
+    relation_targets=torch.zeros(batch,steps,dtype=torch.long)
+    counterfactual_relation_targets=torch.ones(batch,steps,dtype=torch.long)
+    relation_step_mask=torch.ones(batch,steps,dtype=torch.bool)
+
+    factor_targets={}
+    counterfactual_factor_targets={}
+    step_factor_targets={}
+    for name,logits in semantic["factor_logits"].items():
+        assert logits.size(-1) >= 2
+        factor_targets[name]=torch.zeros(batch,dtype=torch.long)
+        counterfactual_factor_targets[name]=torch.ones(batch,dtype=torch.long)
+        step_factor_targets[name]=torch.zeros(batch,steps,dtype=torch.long)
+
+    operator_targets={
+        "relation_targets":relation_targets,
+        "counterfactual_relation_targets":counterfactual_relation_targets,
+        "relation_step_mask":relation_step_mask,
+        "factor_targets":factor_targets,
+        "counterfactual_factor_targets":counterfactual_factor_targets,
+        "step_factor_targets":step_factor_targets,
+        "step_factor_mask":torch.ones(batch,steps,dtype=torch.bool),
+        "event_targets":torch.zeros(batch,steps,dtype=torch.long),
+        "event_mask":torch.ones(batch,steps,dtype=torch.bool),
+        "applicability_target":torch.ones(batch),
+        "query_evidence_target":torch.zeros_like(
+            semantic["relation_query_evidence"]
+        ),
+        "query_evidence_valid_mask":torch.ones_like(
+            semantic["relation_query_evidence"],
+            dtype=torch.bool,
+        ),
+        "relation_schema_evidence_target":torch.zeros_like(
+            semantic["relation_schema_evidence"]
+        ),
+        "relation_schema_evidence_valid_mask":torch.ones_like(
+            semantic["relation_schema_evidence"],
+            dtype=torch.bool,
+        ),
+        "factor_schema_evidence_target":{
+            name:torch.zeros_like(value)
+            for name,value in semantic["factor_schema_evidence"].items()
+        },
+        "factor_schema_evidence_valid_mask":{
+            name:torch.ones_like(value,dtype=torch.bool)
+            for name,value in semantic["factor_schema_evidence"].items()
+        },
+        "step_factor_schema_evidence_target":{
+            name:torch.zeros_like(value)
+            for name,value in semantic["step_factor_schema_evidence"].items()
+        },
+        "step_factor_schema_evidence_valid_mask":{
+            name:torch.ones_like(value,dtype=torch.bool)
+            for name,value in semantic["step_factor_schema_evidence"].items()
+        },
+        "uncertainty_target":torch.zeros_like(operator.uncertainty),
+    }
+
+    support_valid=outputs["binder"]["support_compatible"].detach().clone()
+    support_target=torch.zeros_like(
+        outputs["binder"]["support_logits"]
+    )
+    candidate_logits=outputs["public_judgment"]["candidate_logits"]
+    fields=outputs["executor"]["source_support_weight"].size(1)
+    behavioral_targets={
+        "public_target_index":torch.zeros(batch,dtype=torch.long),
+        "support_target":support_target,
+        "support_valid_mask":support_valid,
+        "source_target_index":torch.zeros(batch,dtype=torch.long),
+        "target_target_index":torch.full(
+            (batch,),
+            1 if fields > 1 else 0,
+            dtype=torch.long,
+        ),
+        "endpoint_active_mask":torch.ones(batch,dtype=torch.bool),
+        "recoverable_view_mask":outputs["view_available"].detach().clone(),
+    }
+    return operator_targets,behavioral_targets
+
+
+def _counterfactual_output_views(outputs):
+    primary_logits=outputs["public_judgment"]["candidate_logits"]
+    decisive=dict(outputs)
+    decisive_judgment=dict(outputs["public_judgment"])
+    decisive_judgment["candidate_logits"]=primary_logits - torch.nn.functional.one_hot(
+        torch.zeros(
+            primary_logits.size(0),
+            dtype=torch.long,
+            device=primary_logits.device,
+        ),
+        num_classes=primary_logits.size(1),
+    ).to(primary_logits.dtype) * 0.5
+    decisive["public_judgment"]=decisive_judgment
+
+    irrelevant=dict(outputs)
+    irrelevant_judgment=dict(outputs["public_judgment"])
+    irrelevant_judgment["candidate_logits"]=primary_logits + 1.0e-3
+    irrelevant["public_judgment"]=irrelevant_judgment
+
+    permuted=dict(outputs)
+    permuted_latent=dict(outputs["latent"])
+    permuted_latent["pooled_state"]=outputs["latent"]["pooled_state"] + 1.0e-3
+    permuted["latent"]=permuted_latent
+    return decisive,irrelevant,permuted
+
+
+def test_joint_training_objective_wires_every_macro_family_without_learned_task_weights() -> None:
+    torch.manual_seed(284)
+    system=_system().train()
+    outputs=system(task="full_envelope",batch=_full_batch())
+    operator_targets,behavioral_targets=_training_targets(outputs)
+    decisive,irrelevant,permuted=_counterfactual_output_views(outputs)
+    objective=FullEnvelopeJointTrainingObjectiveV1()
+    result=objective(
+        primary_outputs=outputs,
+        decisive_ablated_outputs=decisive,
+        irrelevant_removed_outputs=irrelevant,
+        permuted_outputs=permuted,
+        operator_targets=operator_targets,
+        behavioral_targets=behavioral_targets,
+        broad_semantic_replay_loss=outputs["latent"]["pooled_state"].square().mean(),
+        governed_judgment_replay_loss=outputs["public_judgment"]["candidate_logits"].square().mean(),
+        natural_relation_loss=outputs["semantic_operator"]["relation_logits"].square().mean(),
+        update_ema=True,
+    )
+    assert torch.isfinite(result["loss"])
+    assert set(result["families"]) == set(DEFAULT_FAMILY_WEIGHTS)
+    report=objective.parameter_report()
+    assert report["learned_family_weight_parameters"] == 0
+    assert report["test_adaptive_weights"] is False
+    assert report["component_double_counting"] is False
+
+
+def test_joint_training_objective_gradient_reaches_backbone_operator_binder_fusion_and_judgment() -> None:
+    torch.manual_seed(285)
+    system=_system().train()
+    outputs=system(task="full_envelope",batch=_full_batch())
+    operator_targets,behavioral_targets=_training_targets(outputs)
+    decisive,irrelevant,permuted=_counterfactual_output_views(outputs)
+    objective=FullEnvelopeJointTrainingObjectiveV1()
+    result=objective(
+        primary_outputs=outputs,
+        decisive_ablated_outputs=decisive,
+        irrelevant_removed_outputs=irrelevant,
+        permuted_outputs=permuted,
+        operator_targets=operator_targets,
+        behavioral_targets=behavioral_targets,
+        broad_semantic_replay_loss=outputs["source_views"].square().mean(),
+        governed_judgment_replay_loss=outputs["public_judgment"]["candidate_logits"].square().mean(),
+        natural_relation_loss=outputs["semantic_operator"]["relation_logits"].square().mean(),
+        update_ema=True,
+    )
+    result["loss"].backward()
+
+    checks={
+        "backbone":system.semantic_model.backbone.embedding.weight.grad,
+        "operator":next(system.stack.semantic_operator.parameters()).grad,
+        "binder_null_support":next(system.stack.binder.null_support_score.parameters()).grad,
+        "fusion_router":next(system.stack.fusion.route_score.parameters()).grad,
+        "judgment":next(system.stack.public_judgment_probe.score.parameters()).grad,
+        "long_context_bridge":system.semantic_input.segment_bridge.context_scale.grad,
+    }
+    for name,grad in checks.items():
+        assert grad is not None, name
+        assert float(grad.abs().sum()) > 0.0, name
+
+
+def test_joint_training_objective_allows_zero_active_relation_margin_without_nan() -> None:
+    torch.manual_seed(286)
+    system=_system().train()
+    outputs=system(task="full_envelope",batch=_full_batch())
+    operator_targets,behavioral_targets=_training_targets(outputs)
+    operator_targets["relation_step_mask"]=torch.zeros_like(
+        operator_targets["relation_step_mask"]
+    )
+    decisive,irrelevant,permuted=_counterfactual_output_views(outputs)
+    objective=FullEnvelopeJointTrainingObjectiveV1()
+    result=objective(
+        primary_outputs=outputs,
+        decisive_ablated_outputs=decisive,
+        irrelevant_removed_outputs=irrelevant,
+        permuted_outputs=permuted,
+        operator_targets=operator_targets,
+        behavioral_targets=behavioral_targets,
+        broad_semantic_replay_loss=outputs["latent"]["pooled_state"].square().mean(),
+        governed_judgment_replay_loss=outputs["public_judgment"]["candidate_logits"].square().mean(),
+        natural_relation_loss=outputs["semantic_operator"]["relation_logits"].square().mean(),
+        update_ema=False,
+    )
+    assert torch.isfinite(result["loss"])
+    assert torch.isfinite(
+        result["semantic_operator"]["causal_relation_margin"]
+    )
