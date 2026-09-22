@@ -328,7 +328,7 @@
       "stage": "natural_data",
       "kind": "CI_REQUIRED",
       "receipt": "PASS_N0_NATURAL_RELATION_SEALED_FINAL_AUDIT",
-      "requirement": "Natural human-annotated relation families have sealed unseen FINAL families and no relation-description leakage."
+      "requirement": "Natural human-annotated relation families use 56 TRAIN / 8 DEV from official train_wiki and all 16 official val_wiki relation families as the untouched public natural final benchmark, with final descriptions absent from TRAIN/DEV."
     },
     {
       "id": "N0-P39",
