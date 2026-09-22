@@ -890,8 +890,8 @@ def test_public_judgment_candidate_permutation_has_no_hidden_position_identity()
         PublicJudgmentProbeConfig(
             model_dim=24,
             semantic_dim=24,
+            latent_dim=24,
             num_hidden_states=3,
-            dropout=0.0,
         )
     ).eval()
     pooled=torch.randn(2,24)
