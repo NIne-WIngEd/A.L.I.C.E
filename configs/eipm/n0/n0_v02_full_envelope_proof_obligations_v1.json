@@ -12,7 +12,8 @@
     "tests/eipm/test_n0_full_envelope_backbone_interface_v1.py",
     "tests/eipm/test_n0_chunked_set_attention_v1.py",
     "tests/eipm/test_n0_full_envelope_trainable_system_v1.py",
-    "tests/eipm/test_n0_full_envelope_modifier_gating_v1.py"
+    "tests/eipm/test_n0_full_envelope_modifier_gating_v1.py",
+    "tests/eipm/test_n0_full_envelope_shortcut_preflight_v1.py"
   ],
   "critical_source_files": [
     "src/alice_personality/n0/semantic_operator_foundation.py",
@@ -855,6 +856,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_behavioral_support_targets_do_not_promote_same_relation_distractors",
       "requirement": "Binder supervision must encode query-relevant structural/semantic support, not relation-key equality. Same-relation irrelevant edges remain hard negatives, while query-relevant reliability/recency/temporal/provenance alternatives survive Binder for step-local Executor arbitration."
+    },
+    {
+      "id": "N0-P39BJ",
+      "stage": "shortcut_preflight",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_envelope_shortcut_preflight_is_current_successor_authority",
+      "requirement": "The current full-envelope successor must have an executable pre-gradient shortcut audit registered in CI for every shortcut probe declared by the semantic/operator curriculum contract. Superseded T2 shortcut receipts cannot satisfy this obligation."
     }
   ],
   "closure_rule": {
