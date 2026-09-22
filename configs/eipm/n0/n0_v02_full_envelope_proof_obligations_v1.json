@@ -28,7 +28,9 @@
     "src/alice_personality/n0/chunked_set_attention_v1.py",
     "src/alice_personality/n0/numeric_contracts.py",
     "src/alice_personality/n0/semantic_segment_context_bridge_v1.py",
-    "src/alice_personality/n0/full_envelope_semantic_input_v1.py"
+    "src/alice_personality/n0/full_envelope_semantic_input_v1.py",
+    "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
+    "tests/eipm/test_n0_full_envelope_trainable_system_v1.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
@@ -469,6 +471,34 @@
       "kind": "CI_REQUIRED",
       "receipt": "PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_CONTRACT_STATIC",
       "requirement": "The exact CPU runtime fixture and fail-closed runner must pass static shape, schema, padding, edge, factor, and no-gradient authorization checks before Magnolia execution."
+    },
+    {
+      "id": "N0-P39T",
+      "stage": "trainable_system",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_trainable_system_final_judgment_gradient_reaches_shared_backbone_and_long_bridge",
+      "requirement": "Final public judgment gradient must reach the shared semantic backbone and trainable cross-window bridge through the same topology intended for optimization."
+    },
+    {
+      "id": "N0-P39U",
+      "stage": "trainable_system",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_trainable_system_replay_and_full_envelope_share_same_backbone_parameters",
+      "requirement": "Historical public semantic replay and full-envelope behavioral training must co-adapt the same registered semantic backbone parameters rather than detached copies."
+    },
+    {
+      "id": "N0-P39V",
+      "stage": "trainable_system",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_trainable_system_parameter_report_is_exact_and_ceiling_free",
+      "requirement": "Exact registered training topology must have closed parameter accounting and no learned runtime-cardinality or product-context ceiling."
+    },
+    {
+      "id": "N0-P39W",
+      "stage": "semantic_input",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_semantic_input_allows_fully_unavailable_optional_bank",
+      "requirement": "Optional additional semantic banks may be entirely unavailable without inventing fake semantic content or making valid examples fail."
     },
     {
       "id": "N0-P40",
