@@ -393,6 +393,70 @@ def test_public_judgment_probe_supports_padded_candidate_subsets() -> None:
     assert probe.parameter_report()["padded_candidate_batching_supported"] is True
 
 
+
+def test_public_judgment_cannot_rank_candidates_from_candidate_content_when_latent_signal_is_zero() -> None:
+    """Candidate text is comparison material, not an independent judgment policy.
+
+    If the latent judgment signal is removed, distinct candidate surfaces may
+    still produce distinct summaries, but they must not produce a candidate
+    ranking on their own. Otherwise the final readout can learn an answer-text
+    shortcut that bypasses the governed fusion/latent state entirely.
+    """
+    from alice_personality.n0.public_judgment_probe_v1 import (
+        PublicJudgmentProbeConfig,
+        PublicJudgmentProbeV1,
+    )
+
+    torch.manual_seed(709)
+    probe=PublicJudgmentProbeV1(
+        PublicJudgmentProbeConfig(
+            semantic_dim=24,
+            latent_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+        )
+    ).eval()
+
+    # Remove the only allowed current-judgment signal. A safe readout may emit
+    # one shared baseline logit, but candidate content alone may not rank.
+    with torch.no_grad():
+        probe.latent_projection.weight.zero_()
+        if probe.latent_projection.bias is not None:
+            probe.latent_projection.bias.zero_()
+
+        # Make any standalone candidate-summary path maximally visible. This
+        # must still be unable to create a ranking once the architecture closes
+        # the bypass.
+        first_linear=probe.score[0]
+        first_linear.weight.zero_()
+        first_linear.bias.zero_()
+        width=probe.config.model_dim
+        if first_linear.in_features >= 2*width:
+            first_linear.weight[:,width:2*width].copy_(torch.eye(width))
+        probe.score[-1].weight.fill_(1.0)
+        probe.score[-1].bias.zero_()
+
+    hidden=torch.randn(1,4,3,5,24)
+    hidden[:,1] += 3.0
+    hidden[:,2] -= 2.0
+    hidden[:,3] *= 4.0
+    token_mask=torch.ones(1,4,5,dtype=torch.bool)
+    with torch.no_grad():
+        out=probe(
+            pooled_state=torch.zeros(1,24),
+            candidate_hidden_states=hidden,
+            candidate_token_mask=token_mask,
+        )
+
+    logits=out["candidate_logits"]
+    assert torch.allclose(
+        logits,
+        logits[:,:1].expand_as(logits),
+        atol=1.0e-7,
+        rtol=1.0e-7,
+    )
+
+
 def test_evidence_view_inactive_relation_context_is_schema_invariant() -> None:
     torch.manual_seed(181)
     model = DynamicEvidenceViewV2(
