@@ -35,6 +35,15 @@ def main() -> None:
                 raise ValueError(f"{key} must remain false")
         if q.get("require_cpu_only") is not True or q.get("require_inference_mode") is not True:
             raise ValueError("CPU/inference-mode requirement missing")
+        if q.get("exact_operator_evidence_token_alignment_required") is not True:
+            raise ValueError("exact operator evidence token alignment must be required")
+        evidence_max_length = int(
+            q.get("operator_evidence_alignment_max_length_operating_point", 0)
+        )
+        if evidence_max_length <= 0:
+            raise ValueError("operator evidence alignment max-length operating point missing")
+        if q.get("operator_evidence_alignment_max_length_is_product_ceiling") is not False:
+            raise ValueError("operator evidence audit length may not become a product ceiling")
 
         long_cfg=o.get("long_context_bridge_runtime")
         if not isinstance(long_cfg,dict):
