@@ -87,7 +87,13 @@ assert r["private_identity_data"] is False
 assert r["final_validation_opened"] is False
 assert r["semantic_parameters"]==136594435
 assert r["successor_parameters"] > 0
-assert r["combined_parameters"] > r["semantic_parameters"]
+assert r["segment_context_bridge_parameters"] > 0
+assert r["combined_parameters"] > r["semantic_parameters"] + r["successor_parameters"]
+assert r["long_context_bridge"]["segments"] >= 3
+assert r["long_context_bridge"]["stitched_tokens"] == r["long_context_bridge"]["original_tokens"]
+assert r["long_context_bridge"]["standalone_virtualizer_semantics_complete"] is False
+assert r["long_context_bridge"]["bridge_report"]["cross_window_semantic_interaction"] is True
+assert r["long_context_bridge"]["bridge_report"]["segment_count_ceiling"] is None
 assert r["runtime_case"]["relations"] >= 8
 assert r["runtime_case"]["factor_banks"] >= 9
 assert r["runtime_case"]["fields"] >= 8
@@ -99,7 +105,9 @@ assert r["n0_complete"] is False
 print("PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1")
 print("combined_parameters="+str(r["combined_parameters"]))
 print("successor_parameters="+str(r["successor_parameters"]))
+print("segment_context_bridge_parameters="+str(r["segment_context_bridge_parameters"]))
 print("peak_rss_mb="+str(r["memory_mb"]["peak_rss_mb"]))
+print("long_context_bridge="+json.dumps(r["long_context_bridge"],sort_keys=True))
 print("runtime_case="+json.dumps(r["runtime_case"],sort_keys=True))
 PY
 
