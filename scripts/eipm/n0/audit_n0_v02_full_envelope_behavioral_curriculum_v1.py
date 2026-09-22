@@ -366,15 +366,31 @@ def main() -> None:
     if train_causal & dev_causal:
         errors.append("TRAIN/DEV causal-group overlap")
 
+    split_contract=contract.get("split_isolation") or {}
+    if split_contract.get("train_dev_field_surface_overlap_forbidden") is not True:
+        errors.append(
+            "contract must forbid TRAIN/DEV normalized field-surface overlap"
+        )
+    if split_contract.get("train_dev_candidate_surface_overlap_forbidden") is not True:
+        errors.append(
+            "contract must forbid TRAIN/DEV normalized candidate-surface overlap"
+        )
+
     required=set(contract["scenario_families"])
     train_scenarios={str(x.get("scenario_family","")) for x in train}
     dev_scenarios={str(x.get("scenario_family","")) for x in dev}
     missing_train=sorted(required-train_scenarios)
     missing_dev=sorted(required-dev_scenarios)
+    unexpected=sorted((train_scenarios | dev_scenarios)-required)
     if missing_train:
         errors.append("TRAIN missing scenario families: "+repr(missing_train))
     if missing_dev:
         errors.append("DEV missing scenario families: "+repr(missing_dev))
+    if unexpected:
+        errors.append(
+            "behavioral rows contain scenario families absent from contract: "
+            + repr(unexpected)
+        )
 
     relation_points=sorted({int(x["runtime_relation_count"]) for x in rows})
     field_points=sorted({int(x["runtime_field_count"]) for x in rows})
@@ -418,6 +434,7 @@ def main() -> None:
         "train_rows":len(train),
         "dev_rows":len(dev),
         "scenario_histogram":dict(sorted(Counter(str(x["scenario_family"]) for x in rows).items())),
+        "unexpected_scenario_families":unexpected,
         "relation_count_points":relation_points,
         "field_count_points":field_points,
         "edge_count_points":edge_points,
