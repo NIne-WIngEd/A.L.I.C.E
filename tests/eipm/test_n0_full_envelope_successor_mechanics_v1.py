@@ -1364,3 +1364,66 @@ def test_executor_uses_step_conditioned_relation_schema_state_for_ordered_execut
     report=executor.parameter_report()
     assert report["step_conditioned_relation_schema_state"] is True
     assert report["global_relation_state_not_used_for_step_edge_features"] is True
+
+
+def test_dynamic_graph_requires_relation_mass_supported_by_present_edges() -> None:
+    torch.manual_seed(271)
+    graph=DynamicSchemaEvidenceGraphV1(
+        DynamicSchemaEvidenceGraphConfig(
+            field_dim=24,
+            relation_dim=24,
+            operator_dim=24,
+            model_dim=24,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    common=dict(
+        field_state=torch.randn(1,3,24),
+        field_valid_mask=torch.ones(1,3,dtype=torch.bool),
+        edge_index=torch.tensor([[[0,1],[1,2]]]),
+        edge_relation_index=torch.zeros(1,2,dtype=torch.long),
+        edge_metadata=torch.zeros(1,2,4),
+        edge_valid_mask=torch.ones(1,2,dtype=torch.bool),
+        relation_schema_state=torch.randn(1,2,24),
+        relation_symmetric=torch.zeros(1,2,dtype=torch.bool),
+        semantic_activity=torch.ones(1),
+        operator_state=torch.randn(1,24),
+        message_steps=2,
+    )
+    with torch.no_grad():
+        unsupported=graph(
+            relation_mass=torch.tensor([[0.0,1.0]]),
+            **common,
+        )
+        supported=graph(
+            relation_mass=torch.tensor([[0.65,0.35]]),
+            **common,
+        )
+    assert torch.equal(
+        unsupported["graph_support_activity"],
+        torch.zeros_like(unsupported["graph_support_activity"]),
+    )
+    assert torch.equal(
+        unsupported["source_summary"],
+        torch.zeros_like(unsupported["source_summary"]),
+    )
+    assert torch.equal(
+        unsupported["target_summary"],
+        torch.zeros_like(unsupported["target_summary"]),
+    )
+    assert torch.allclose(
+        supported["supported_relation_mass"],
+        torch.tensor([0.65]),
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    assert torch.allclose(
+        supported["graph_support_activity"],
+        torch.tensor([0.65]),
+        atol=1e-6,
+        rtol=1e-6,
+    )
+    report=graph.parameter_report()
+    assert report["unsupported_relation_mass_cannot_activate_graph_views"] is True
+    assert report["duplicate_edges_do_not_inflate_supported_relation_mass"] is True
