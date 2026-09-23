@@ -70,6 +70,29 @@ def read_json(path: str | Path) -> dict[str,Any]:
     return value
 
 
+def sha256_tree(path: str | Path) -> str:
+    root=Path(path)
+    if not root.is_dir():
+        raise SystemExit(f"checkpoint state directory missing: {root}")
+    files=sorted(
+        (item for item in root.rglob("*") if item.is_file()),
+        key=lambda item:item.relative_to(root).as_posix(),
+    )
+    if not files:
+        raise SystemExit(f"checkpoint state directory empty: {root}")
+    digest=hashlib.sha256()
+    for item in files:
+        relative=item.relative_to(root).as_posix().encode("utf-8")
+        digest.update(len(relative).to_bytes(8,"big"))
+        digest.update(relative)
+        size=item.stat().st_size
+        digest.update(int(size).to_bytes(8,"big"))
+        with item.open("rb") as handle:
+            for chunk in iter(lambda:handle.read(1024*1024),b""):
+                digest.update(chunk)
+    return digest.hexdigest()
+
+
 def read_jsonl(path: str | Path, *, split: str) -> list[dict[str,Any]]:
     rows=[
         json.loads(line)
@@ -364,6 +387,7 @@ def save_checkpoint(
     checkpoint=output_root/f"{stage}-step-{step:08d}"
     accelerator.wait_for_everyone()
     accelerator.save_state(str(checkpoint/"accelerator_state"))
+    accelerator.wait_for_everyone()
     if accelerator.is_main_process:
         checkpoint.mkdir(parents=True,exist_ok=True)
         unwrapped=accelerator.unwrap_model(system)
@@ -429,6 +453,9 @@ def save_checkpoint(
             ),
             "optimizer_step":int(step),
             "gradient_accumulation_steps":int(gradient_accumulation_steps),
+            "accelerator_state_tree_sha256":sha256_tree(
+                checkpoint/"accelerator_state"
+            ),
             "full_system_sha256":sha256_file(system_path),
             "objective_state_sha256":sha256_file(objective_path),
             "checkpoint_selection_performed":False,
@@ -596,6 +623,27 @@ def main() -> None:
             raise SystemExit("predecessor DEV stage gates did not pass")
         if dev.get("final_results_observed") is not False:
             raise SystemExit("predecessor DEV receipt observed FINAL")
+        if sha256_file(args.resume_receipt)!=dev.get(
+            "candidate_checkpoint_receipt_sha256"
+        ):
+            raise SystemExit(
+                "predecessor DEV receipt/checkpoint receipt hash drift"
+            )
+        if prior.get("full_system_sha256")!=dev.get("candidate_system_sha256"):
+            raise SystemExit("predecessor DEV receipt/system hash drift")
+        if sha256_tree(args.resume_accelerator_state)!=prior.get(
+            "accelerator_state_tree_sha256"
+        ):
+            raise SystemExit("predecessor accelerator-state hash drift")
+        if sha256_file(args.resume_objective_state)!=prior.get(
+            "objective_state_sha256"
+        ):
+            raise SystemExit("predecessor objective-state hash drift")
+        if (
+            prior.get("source_revision")!=mixture.get("source_revision")
+            or dev.get("source_revision")!=mixture.get("source_revision")
+        ):
+            raise SystemExit("predecessor source revision drift")
 
     try:
         from accelerate import Accelerator, DistributedDataParallelKwargs
