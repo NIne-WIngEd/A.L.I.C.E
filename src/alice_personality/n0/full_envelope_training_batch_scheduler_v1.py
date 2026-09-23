@@ -102,6 +102,30 @@ class FullEnvelopeTrainingBatchSchedulerV1:
                 raise ValueError(f"private identity row in public lane: {name}")
             if any(row.get("final_validation_only") is True for row in rows):
                 raise ValueError(f"FINAL row in optimizer-facing lane: {name}")
+            if name=="long_context_semantic":
+                if any(
+                    row.get("lane")!="semantic_operator_long_context"
+                    for row in rows
+                ):
+                    raise ValueError(
+                        "semantic long-context row authority drift: "
+                        "J1 requires the dedicated semantic_operator_long_context lane"
+                    )
+                surfaces={
+                    str(row.get("long_context_surface",""))
+                    for row in rows
+                }
+                if not set(LONG_SEMANTIC_SURFACES)<=surfaces:
+                    raise ValueError(
+                        "semantic long-context lane lacks required J1 surfaces"
+                    )
+            if name=="long_context_fabric" and any(
+                row.get("lane")!="full_envelope_long_context_supplement"
+                for row in rows
+            ):
+                raise ValueError(
+                    "full-fabric long-context row authority drift"
+                )
 
         self._lane_cursor=defaultdict(int)
         self._row_cursor=defaultdict(int)
@@ -136,6 +160,13 @@ class FullEnvelopeTrainingBatchSchedulerV1:
             for row in fabric
         ):
             raise ValueError("semantic-operator long rows cannot masquerade as fabric")
+        if any(
+            row.get("lane")!="full_envelope_long_context_supplement"
+            for row in fabric
+        ):
+            raise ValueError(
+                "full-fabric long rows must come from full_envelope_long_context_supplement"
+            )
         return semantic,fabric
 
     def active_semantic_lanes(self, *, stage: str) -> tuple[str,...]:
