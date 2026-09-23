@@ -38,6 +38,17 @@
         "type_schema",
         "factor_combination"
       ]
+    },
+    "synthetic_semantic_operator": {
+      "row_schema": "alice.eipm.n0.semantic-operator-intervention-row.v1",
+      "role": "sealed synthetic semantic-operator challenge for heldout runtime-schema reasoning and plurality",
+      "relation_families_heldout_from_train_dev": true,
+      "plurality_rows_required": true,
+      "source_target_pairs_required": true,
+      "ordered_composition_required": true,
+      "mixed_step_direction_required": true,
+      "mixed_step_modifier_required": true,
+      "unknown_defer_required": true
     }
   },
   "independence": {

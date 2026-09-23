@@ -493,6 +493,7 @@ jobs:
             --fewrel-manifest /tmp/n0-fewrel/manifest.json \
             --final-contract configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
             --synthetic-output /tmp/n0-final-v2/synthetic_final_rows.jsonl \
+            --semantic-final-output /tmp/n0-final-v2/semantic_final_rows.jsonl \
             --manifest-output /tmp/n0-final-v2/package_manifest.json
 
           python scripts/eipm/n0/audit_n0_v02_full_envelope_final_v2_package.py \
@@ -502,6 +503,7 @@ jobs:
             --behavioral-train-dev-rows /tmp/n0-behavioral/rows.jsonl \
             --semantic-train-dev-rows /tmp/n0-so/rows.jsonl \
             --synthetic-final-rows /tmp/n0-final-v2/synthetic_final_rows.jsonl \
+            --semantic-final-rows /tmp/n0-final-v2/semantic_final_rows.jsonl \
             --package-manifest /tmp/n0-final-v2/package_manifest.json \
             --fewrel-final-rows /tmp/n0-fewrel/final_rows.jsonl \
             --fewrel-final-bank /tmp/n0-fewrel/final_bank.json \
@@ -514,6 +516,7 @@ jobs:
             --evaluator-contract configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json \
             --final-contract configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
             --synthetic-final-rows /tmp/n0-final-v2/synthetic_final_rows.jsonl \
+            --semantic-final-rows /tmp/n0-final-v2/semantic_final_rows.jsonl \
             --package-manifest /tmp/n0-final-v2/package_manifest.json \
             --fewrel-final-rows /tmp/n0-fewrel/final_rows.jsonl \
             --fewrel-final-bank /tmp/n0-fewrel/final_bank.json \
@@ -533,6 +536,11 @@ jobs:
           assert audit["candidate_surface_overlap"]==[]
           assert audit["domain_overlap"]==[]
           assert audit["type_schema_overlap"]==[]
+          assert audit["semantic_final_relation_family_overlap"]==[]
+          assert audit["semantic_final_entity_overlap"]==[]
+          assert audit["semantic_final_relation_surface_overlap"]==[]
+          assert audit["semantic_final_plurality_rows"]>0
+          assert audit["semantic_final_source_target_pair_count"]>0
           assert audit["heldout_recency_provenance_combo_present"] is True
           assert audit["heldout_recency_provenance_combo_seen_in_behavioral_train_dev"] is False
           assert audit["heldout_recency_provenance_combo_seen_in_semantic_train_dev"] is False

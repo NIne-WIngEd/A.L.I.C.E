@@ -72,6 +72,7 @@ def main() -> None:
     p.add_argument("--behavioral-train-dev-rows",required=True)
     p.add_argument("--semantic-train-dev-rows",required=True)
     p.add_argument("--synthetic-final-rows",required=True)
+    p.add_argument("--semantic-final-rows",required=True)
     p.add_argument("--package-manifest",required=True)
     p.add_argument("--fewrel-final-rows",required=True)
     p.add_argument("--fewrel-final-bank",required=True)
@@ -82,7 +83,7 @@ def main() -> None:
 
     paths={name:Path(getattr(args,name)) for name in (
         "package_config","evaluator_contract","final_contract","behavioral_train_dev_rows",
-        "semantic_train_dev_rows","synthetic_final_rows","package_manifest",
+        "semantic_train_dev_rows","synthetic_final_rows","semantic_final_rows","package_manifest",
         "fewrel_final_rows","fewrel_final_bank","fewrel_manifest","fewrel_audit","output"
     )}
     if paths["output"].exists():
@@ -97,6 +98,7 @@ def main() -> None:
     behavioral=read_jsonl(paths["behavioral_train_dev_rows"])
     semantic=read_jsonl(paths["semantic_train_dev_rows"])
     final_rows=read_jsonl(paths["synthetic_final_rows"])
+    semantic_final=read_jsonl(paths["semantic_final_rows"])
     natural_final=read_jsonl(paths["fewrel_final_rows"])
     errors=[]
 
@@ -127,6 +129,7 @@ def main() -> None:
 
     expected_hashes={
         "synthetic_final_rows_sha256":paths["synthetic_final_rows"],
+        "semantic_final_rows_sha256":paths["semantic_final_rows"],
         "fewrel_final_rows_sha256":paths["fewrel_final_rows"],
         "fewrel_final_bank_sha256":paths["fewrel_final_bank"],
         "fewrel_manifest_sha256":paths["fewrel_manifest"],
@@ -234,6 +237,111 @@ def main() -> None:
     if not final_combo:
         errors.append("heldout FINAL recency+provenance factor combination absent")
 
+
+    if not semantic_final:
+        errors.append("synthetic semantic-operator FINAL component empty")
+    for row in semantic_final:
+        rid=str(row.get("id","<missing>"))
+        if row.get("split")!="final":
+            errors.append(f"{rid}: semantic FINAL row not final")
+        if row.get("training_authorized") is not False:
+            errors.append(f"{rid}: semantic FINAL training-authorized")
+        if row.get("model_selection_authorized") is not False:
+            errors.append(f"{rid}: semantic FINAL model-selection-authorized")
+        if row.get("final_validation_only") is not True:
+            errors.append(f"{rid}: semantic FINAL lacks final-only marker")
+        if row.get("private_identity_data") is not False:
+            errors.append(f"{rid}: private identity data in semantic FINAL")
+        if row.get("relation_partition")!="sealed_final_relation_family":
+            errors.append(f"{rid}: semantic FINAL relation partition drift")
+        if row.get("template_partition")!="sealed_final_templates":
+            errors.append(f"{rid}: semantic FINAL template partition drift")
+
+    semantic_train_dev_families={
+        str(x.get("relation_family","")) for x in semantic
+    }
+    semantic_final_families={
+        str(x.get("relation_family","")) for x in semantic_final
+    }
+    semantic_relation_family_overlap=sorted(
+        (semantic_train_dev_families & semantic_final_families)-{""}
+    )
+    if semantic_relation_family_overlap:
+        errors.append(
+            "semantic FINAL relation-family overlap with TRAIN/DEV: "
+            +repr(semantic_relation_family_overlap)
+        )
+
+    semantic_train_dev_entities={
+        str(e) for x in semantic for e in x.get("entities") or []
+    }
+    semantic_final_entities={
+        str(e) for x in semantic_final for e in x.get("entities") or []
+    }
+    semantic_entity_overlap=sorted(
+        semantic_train_dev_entities & semantic_final_entities
+    )
+    if semantic_entity_overlap:
+        errors.append(
+            "semantic FINAL entity overlap with TRAIN/DEV: "
+            +repr(semantic_entity_overlap)
+        )
+
+    train_dev_relation_text={
+        str(item.get("text","")).strip().lower()
+        for row in semantic
+        for item in row.get("relation_candidates") or []
+    }
+    final_relation_text={
+        str(item.get("text","")).strip().lower()
+        for row in semantic_final
+        for item in row.get("relation_candidates") or []
+    }
+    semantic_relation_surface_overlap=sorted(
+        train_dev_relation_text & final_relation_text
+    )
+    if semantic_relation_surface_overlap:
+        errors.append("semantic FINAL relation descriptions overlap TRAIN/DEV")
+
+    semantic_interventions={
+        str(x.get("intervention","")) for x in semantic_final
+    }
+    required_semantic_interventions={
+        "source_target_role","ordered_composition",
+        "reverse_ordered_composition","reliability_modifier",
+        "recency_modifier","temporal_constraint","provenance_constraint",
+        "unknown_defer","plurality","mixed_direction_composition",
+        "mixed_step_modifier_composition",
+    }
+    missing_semantic_interventions=sorted(
+        required_semantic_interventions-semantic_interventions
+    )
+    if missing_semantic_interventions:
+        errors.append(
+            "semantic FINAL missing interventions: "
+            +repr(missing_semantic_interventions)
+        )
+    plurality_rows=[
+        row for row in semantic_final
+        if bool(row.get("plurality_supervision_required"))
+    ]
+    if not plurality_rows or any(
+        len(row.get("relation_plurality_target_indices") or [])<2
+        for row in plurality_rows
+    ):
+        errors.append("semantic FINAL lacks true multi-hypothesis plurality")
+    pair_groups={}
+    for row in semantic_final:
+        pair=row.get("counterfactual_pair_id")
+        if pair:
+            pair_groups.setdefault(str(pair),set()).add(
+                str(row.get("counterfactual_variant"))
+            )
+    if not pair_groups or any(
+        variants!={"source","target"} for variants in pair_groups.values()
+    ):
+        errors.append("semantic FINAL source/target causal pairs incomplete")
+
     natural_relation_overlap={
         "train_final":fewrel_audit.get("relation_overlap",{}).get("train_final"),
         "dev_final":fewrel_audit.get("relation_overlap",{}).get("dev_final"),
@@ -248,6 +356,13 @@ def main() -> None:
         "status":PASS if not errors else FAIL,
         "errors":errors,
         "synthetic_rows":len(final_rows),
+        "semantic_final_rows":len(semantic_final),
+        "semantic_final_relation_family_overlap":semantic_relation_family_overlap,
+        "semantic_final_entity_overlap":semantic_entity_overlap,
+        "semantic_final_relation_surface_overlap":semantic_relation_surface_overlap,
+        "semantic_final_interventions":sorted(semantic_interventions),
+        "semantic_final_plurality_rows":len(plurality_rows),
+        "semantic_final_source_target_pair_count":len(pair_groups),
         "natural_rows":len(natural_final),
         "entity_overlap":entity_overlap,
         "template_overlap":template_overlap,
