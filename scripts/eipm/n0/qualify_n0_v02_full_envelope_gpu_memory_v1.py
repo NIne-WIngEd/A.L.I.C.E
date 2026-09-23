@@ -44,6 +44,7 @@ from alice_personality.n0.semantic_operator_batch_v1 import (
 )
 from alice_personality.n0.v02_training import (
     TeacherMultitaskCollator,
+    sha256_file,
     verify_public_corpus_v021,
     verify_teacher_registry,
     verify_tokenizer_v021,
@@ -204,6 +205,10 @@ def main() -> None:
         raise SystemExit("full public mixture manifest not materialized")
     if mixture_audit.get("status")!="PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1":
         raise SystemExit("full public mixture audit not PASS")
+    if mixture_audit.get("manifest_sha256")!=sha256_file(
+        args.mixture_manifest
+    ):
+        raise SystemExit("full public mixture audit/manifest hash drift")
     if mixture.get("final_results_observed") is not False:
         raise SystemExit("FINAL results observed before GPU dry run")
     if int(mixture.get("final_rows_in_training",-1))!=0:
