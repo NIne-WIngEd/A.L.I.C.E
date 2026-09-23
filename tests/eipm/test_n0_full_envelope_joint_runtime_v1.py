@@ -410,17 +410,25 @@ def test_stage_training_scheduler_routes_long_semantics_into_j1_without_downstre
         FullEnvelopeTrainingBatchSchedulerV1,
     )
 
+    def public(row):
+        return {
+            **row,
+            "private_identity_data":False,
+            "final_validation_only":False,
+        }
     lanes={
-        "semantic_operator_intervention":[{"id":"semantic-a"}],
+        "semantic_operator_intervention":[public({"id":"semantic-a"})],
         "long_context_semantic":[
-            {"id":"long-query","long_context_surface":"query"},
-            {"id":"long-relation","long_context_surface":"relation_schema"},
-            {"id":"long-factor","long_context_surface":"factor_schema"},
+            public({"id":"long-query","long_context_surface":"query"}),
+            public({"id":"long-relation","long_context_surface":"relation_schema"}),
+            public({"id":"long-factor","long_context_surface":"factor_schema"}),
         ],
-        "full_envelope_behavioral":[{"id":"behavior-a"}],
-        "runtime_view_supplement":[{"id":"runtime-a"}],
-        "long_context_fabric":[{"id":"long-field","long_context_surface":"field_text"}],
-        "natural_relation":[{"id":"natural-a"}],
+        "full_envelope_behavioral":[public({"id":"behavior-a"})],
+        "runtime_view_supplement":[public({"id":"runtime-a"})],
+        "long_context_fabric":[
+            public({"id":"long-field","long_context_surface":"field_text"})
+        ],
+        "natural_relation":[public({"id":"natural-a"})],
     }
     scheduler=FullEnvelopeTrainingBatchSchedulerV1(lanes=lanes,seed=20260922)
 
