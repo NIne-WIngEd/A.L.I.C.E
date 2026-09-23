@@ -544,7 +544,7 @@ def test_j1_long_semantic_rows_compile_through_registered_semantic_operator_task
         from alice_personality.n0.semantic_operator_batch_v1 import (
             compile_semantic_operator_batch,
         )
-        from test_n0_full_envelope_trainable_system_v1 import _TinyTokenizer
+        from test_n0_semantic_operator_foundation_v1 import _OffsetTokenizer
 
         for surface in ("query","relation_schema","factor_schema"):
             row=module.materialize(
@@ -564,7 +564,7 @@ def test_j1_long_semantic_rows_compile_through_registered_semantic_operator_task
             assert "factor_schema_evidence_char_spans" in row
             compiled=compile_semantic_operator_batch(
                 rows=[row],
-                tokenizer=_TinyTokenizer(),
+                tokenizer=_OffsetTokenizer(),
             )
             assert compiled["metadata"]["batch_size"]==1
             assert compiled["metadata"]["fabricated_downstream_labels"] is False
