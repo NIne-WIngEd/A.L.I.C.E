@@ -1580,6 +1580,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_first_passing_dev_selection_uses_precommitted_checkpoint_cadence",
       "requirement": "First-passing DEV selection must operate on a checkpoint cadence frozen before gradient. Trainer invocations must end on that cadence and may not create ad-hoc terminal checkpoints, so changing save frequency or invocation length cannot hide an earlier passing checkpoint or cherry-pick a later one."
+    },
+    {
+      "id": "N0-P44C",
+      "stage": "dev_validation",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dev_checkpoint_selection_enforces_first_passing_chain_member",
+      "requirement": "The DEV checkpoint selector must independently load the exact precommitted training plan and reject checkpoint receipts or optimizer steps that do not lie on the frozen DEV evaluation cadence. Trainer-side cadence enforcement alone cannot authorize first-pass selection."
     }
   ],
   "closure_rule": {
