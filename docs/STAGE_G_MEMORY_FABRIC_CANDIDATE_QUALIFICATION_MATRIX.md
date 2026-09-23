@@ -262,6 +262,63 @@ Experience feedback and revision
 
 Learned components interpret and propose. Deterministic policy still controls authority.
 
+### Q5.1 - Evidence-consumption / citation-lock invariant
+
+Reasoning-time retrieval must distinguish candidate discovery from evidence actually consumed by the invocation that produces an answer or action.
+
+For every applicable retrieval/context path:
+
+- issue an invocation-scoped receipt for evidence, claims, source spans, graph paths, episodes, and other context objects actually materialized or opened;
+- let the final support set be a subset of that consumed/opened set;
+- prohibit index metadata, vector scores, graph reachability, summaries, latent retrieval scores, or unopened source references from masquerading as consumed source evidence;
+- require every material externally asserted factual claim to resolve to consumed authoritative evidence or to an explicitly typed non-evidential operation;
+- when evidence is insufficient, expand retrieval, ask, defer, abstain, or expose uncertainty rather than fabricate support;
+- preserve the invariant across iterative retrieval, source expansion, graph traversal, vector retrieval, episode retrieval, claim retrieval, and exact-source inspection;
+- propagate correction, deletion, revocation, and source-generation changes to all active consumption receipts and derivative contexts.
+
+A candidate cannot pass because the correct source existed somewhere in the store. It must demonstrate that the source actually entered the governed reasoning context that supported the result.
+
+### Q5.2 - Consolidation path-dependence qualification
+
+The same authorized evidence set must be evaluated under materially different formation/consolidation schedules so order and grouping cannot silently determine authoritative memory.
+
+Required schedules include:
+
+- one-shot/static formation;
+- chronological streaming;
+- shuffled streaming;
+- entity-, episode-, and task-grouped batching;
+- adversarial mixtures of unrelated evidence;
+- near-duplicate-heavy streams.
+
+Keep the underlying evidence byte-identical and compare MemoryProposalBundles, claim scope/applicability, adjudicated claims, episodes/projections, retrieval behavior, and downstream decisions.
+
+Qualification must detect:
+
+- loss of applicability conditions;
+- overgeneralization;
+- schedule-dependent claim promotion;
+- silent semantic drift;
+- duplicated evidence creating false confidence;
+- a consolidation result that cannot be reconstructed from its contributing evidence.
+
+`RETAIN_RAW / NO_CONSOLIDATION` remains a valid proposal/action. Large unexplained divergence across schedules fails or quarantines the candidate rather than becoming authority. Correction/deletion/revocation tests must be repeated across abstractions created under each schedule.
+
+### Q5.3 - Usage-aware retrieval projection challenger
+
+Stage G may shadow-evaluate a usage-aware retrieval projection that learns how memories have proved useful together across prior retrieval episodes.
+
+Such a projection:
+
+- is versioned, rebuildable, rollback-safe, and derived from retrieval/outcome receipts;
+- may add, strengthen, weaken, or estimate explicitly typed retrieval-accessibility associations;
+- never turns co-retrieval, popularity, or repeated access into factual, causal, identity, or claim authority;
+- must preserve stable source/evidence identities and deletion/correction lineage;
+- must be tested against cold start, query-order shuffles, repeated/adversarial queries, popularity feedback loops, rare-but-critical evidence, contradictory evidence, distribution shift, and stale/deleted influence;
+- must be compared with static graph, vector, lexical, symbolic, and existing adaptive-context baselines on evidence recall, authority correctness, latency, token/resource cost, and calibration.
+
+Retrieval success alone cannot promote a claim, relationship, personality trait, or causal edge.
+
 ## 4. Complex synthetic Rayan-life workload
 
 The candidate matrix uses the complex synthetic continuation of Rayan's life required by the Stage G architecture.
@@ -341,7 +398,10 @@ A Stage G candidate or combination cannot pass while any of these critical cases
 - cross-host or A.L.I.C.E./Friday private-data leakage;
 - unauthorized model/dataset contamination;
 - an aggregate score hiding a critical failure;
-- backend-specific behavior silently changing the logical authority contract.
+- backend-specific behavior silently changing the logical authority contract;
+- a final factual claim citing or depending on evidence that was never consumed/opened by the producing invocation;
+- consolidation order or grouping silently changing authoritative truth without explicit conflict/quarantine;
+- a learned retrieval/accessibility association overriding Claim authority or surviving a correction, deletion, or revocation it depended on.
 
 ## 7. README and governance promise coverage
 
@@ -381,11 +441,14 @@ Stage G cannot close until all of the following are true:
 6. Multi-plane combination coverage is documented and passes.
 7. Full-fabric end-to-end runs pass on the complex synthetic Rayan-life workload.
 8. Correction, deletion, revocation, restore, concurrency, failure, replay, rebuild, rollback, and product-isolation tests pass.
-9. Scale and stress evidence is recorded for every applicable candidate.
-10. README/governance promise coverage is complete.
-11. No zero-tolerance failure remains unresolved.
-12. The evidence package records exact versions, hashes, configurations, benchmark generations, failures, limitations, and unresolved research questions.
-13. Rayan explicitly accepts the integrated Stage G result.
+9. Evidence-consumption/citation-lock qualification passes across every active retrieval/context path.
+10. Consolidation path-dependence qualification passes without unexplained authority divergence.
+11. Any usage-aware retrieval projection remains projection-only and passes feedback-loop, deletion/correction, and rollback qualification before influencing serving.
+12. Scale and stress evidence is recorded for every applicable candidate.
+13. README/governance promise coverage is complete.
+14. No zero-tolerance failure remains unresolved.
+15. The evidence package records exact versions, hashes, configurations, benchmark generations, failures, limitations, and unresolved research questions.
+16. Rayan explicitly accepts the integrated Stage G result.
 
 Stage G acceptance selects evidence-backed roles for later migration stages. It does not create a permanent technology ceiling.
 
