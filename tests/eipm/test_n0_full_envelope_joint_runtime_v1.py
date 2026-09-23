@@ -1203,3 +1203,24 @@ def test_j3_dev_gate_measures_positive_source_view_recoverability() -> None:
     ).read_text()
     assert "source_view_recoverability_success" in evaluator
     assert "source_view_recoverability_success_rate" in evaluator
+
+
+def test_j3_dev_gate_measures_irrelevant_source_removal_invariance() -> None:
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    registry=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json").read_text()
+    )
+    assert "irrelevant_source_removal_invariance" in plan["stage_gates"]["J3"]
+    gate=registry["stages"]["J3_full_public_n0_coadaptation"]["gates"][
+        "irrelevant_source_removal_invariance"
+    ]
+    assert gate["kind"]=="composite"
+    expected={
+        "full_fabric.full_envelope_behavioral.irrelevant_source_removal_invariance",
+        "full_fabric.runtime_view_supplement.irrelevant_source_removal_invariance",
+        "full_fabric.long_context_supplement.irrelevant_source_removal_invariance",
+    }
+    assert {item["metric"] for item in gate["all"]}==expected
+    assert all(item["comparison"]==">=" and item["threshold"]==0.95 for item in gate["all"])

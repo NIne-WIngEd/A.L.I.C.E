@@ -1307,6 +1307,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_j3_dev_gate_measures_positive_source_view_recoverability",
       "requirement": "J3 DEV must explicitly measure that labeled relevant/recoverable source views are represented by at least one latent slot across the base behavioral fabric, heterogeneous runtime-view supplement, and long-context supplement. Negative proof that irrelevant available views are not forced recoverable does not satisfy the positive recoverability gate required by final-v2."
+    },
+    {
+      "id": "N0-P45I",
+      "stage": "dev_capability_gate",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_j3_dev_gate_measures_irrelevant_source_removal_invariance",
+      "requirement": "J3 DEV checkpoint selection must explicitly gate candidate-dependent invariance to removal of labeled irrelevant evidence across base behavioral, heterogeneous runtime-view, and long-context lanes. Static proof that irrelevant available views are not recoverability targets does not establish learned judgment invariance."
     }
   ],
   "closure_rule": {
