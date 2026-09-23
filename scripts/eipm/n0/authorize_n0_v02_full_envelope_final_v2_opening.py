@@ -38,11 +38,11 @@ def current_git_revision() -> str:
 
 def require_clean_tracked_worktree() -> None:
     status=subprocess.check_output(
-        ["git","status","--porcelain","--untracked-files=no"],text=True
+        ["git","status","--porcelain"],text=True
     )
     if status.strip():
         raise SystemExit(
-            "FINAL opening authorizer requires a clean tracked-source worktree"
+            "FINAL opening authorizer requires a clean exact-source worktree"
         )
 
 
