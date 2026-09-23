@@ -1977,3 +1977,25 @@ def test_n0_contract_ci_watches_shared_runtime_data_and_verifier_dependencies() 
         assert f'- "{path}"' in workflow
         assert path+" \\" in workflow
 
+
+
+def test_stage_transition_restarts_optimizer_scheduler_without_losing_selected_model_state() -> None:
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert 'if resume_kind=="same_stage":' in trainer
+    assert 'elif resume_kind=="stage_transition":' in trainer
+    assert 'predecessor_system_path=Path(args.resume_receipt).parent/"full_system.safetensors"' in trainer
+    assert "stage-transition predecessor system hash drift" in trainer
+    assert "system.load_state_dict(predecessor_system_state,strict=True)" in trainer
+    assert 'accelerator.load_state(args.resume_accelerator_state)' in trainer
+    assert 'if resume_kind=="same_stage":\n        accelerator.load_state' in trainer
+    assert 'stage_transition_optimizer_state_restored":False' in trainer
+    assert 'stage_transition_scheduler_state_restored":False' in trainer
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    policy=plan["optimization_strategy"]["stage_transition_optimizer_policy"]
+    assert policy["model_weights"]=="selected_predecessor_checkpoint"
+    assert policy["objective_balancer_state"]=="preserve"
+    assert policy["optimizer_state"]=="restart"
+    assert policy["scheduler_state"]=="restart_with_stage_local_warmup"
+
