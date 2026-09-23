@@ -305,7 +305,8 @@ jobs:
           assert set(r["surface_coverage"]["train"])==required
           assert set(r["surface_coverage"]["dev"])==required
           assert r["base_target_equivalence_rows"]==r["rows"]
-          assert r["tail_preservation_rows"]==r["rows"]
+          assert r["tail_preservation_rows"]==16
+          assert r["boundary_shift_pairs_verified"]==r["expected_boundary_shift_pairs"]==16
           assert r["long_word_operating_point"]>4096
           assert r["operating_point_is_product_ceiling"] is False
           assert r["final_rows"]==0
@@ -316,6 +317,7 @@ jobs:
           assert r["final_opening_authorized"] is False
           assert r["n0_complete"] is False
           print("PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_CURRICULUM_AUDIT_V1")
+          print("PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_BOUNDARY_SHIFT_AUDIT_V1")
           PY
 
       - name: Audit full-envelope shortcut preflight

@@ -978,6 +978,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_long_context_curriculum_precommits_boundary_shift_counterfactuals",
       "requirement": "Before gradient, long-context TRAIN/DEV must include paired examples with identical decisive semantics, total length, and targets but different placement relative to virtualized segment ownership boundaries. The requirement is robustness supervision, not exact equality of untrained contextual activations."
+    },
+    {
+      "id": "N0-P39LN",
+      "stage": "long_context_curriculum",
+      "kind": "CI_REQUIRED",
+      "receipt": "PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_BOUNDARY_SHIFT_AUDIT_V1",
+      "requirement": "The materialized public TRAIN/DEV long-context curriculum must contain complete early/late boundary-shift pairs on every governed text surface with identical decisive semantics, equal total length, and identical structural/behavioral targets. Exact tokenizer placement remains a separate pre-gradient receipt."
     }
   ],
   "closure_rule": {

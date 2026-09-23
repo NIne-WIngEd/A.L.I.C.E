@@ -75,6 +75,58 @@ def longify(text: str, *, surface: str, target_words: int) -> str:
     return result
 
 
+def boundary_shift_text(
+    text: str,
+    *,
+    surface: str,
+    total_words: int,
+    decisive_start_word: int,
+) -> tuple[str,int,int]:
+    """Place identical decisive semantics at a chosen word-space position.
+
+    This is a tokenizer-agnostic curriculum construction probe. Exact token
+    boundary placement is verified later with the real tokenizer before
+    gradient. Here we guarantee equal total length, equal decisive text, and a
+    large enough early/late displacement to exercise different virtualized
+    ownership regions under ordinary tokenizer behavior.
+    """
+    original=str(text).strip()
+    if not original:
+        raise ValueError("cannot boundary-shift empty semantic text")
+    marker="decisive semantic content follows"
+    marker_words=marker.split()
+    original_words=original.split()
+    start=int(decisive_start_word)
+    if start <= len(marker_words):
+        raise ValueError("decisive start must leave room for marker context")
+    prefix_count=start-len(marker_words)
+    suffix_count=int(total_words)-start-len(original_words)
+    if suffix_count < 0:
+        raise ValueError("boundary-shift total_words too small")
+
+    filler_unit=(
+        f"public neutral {surface} background context marker "
+        "nondecisive archive note calibration detail"
+    ).split()
+    def fill(count: int) -> list[str]:
+        if count <= 0:
+            return []
+        return (
+            filler_unit
+            * ((count+len(filler_unit)-1)//len(filler_unit))
+        )[:count]
+
+    pieces=fill(prefix_count)+marker_words+original_words+fill(suffix_count)
+    result=" ".join(pieces)
+    if word_count(result) != int(total_words):
+        raise RuntimeError("boundary-shift total length drift")
+    actual_start=prefix_count+len(marker_words)
+    actual_end=actual_start+len(original_words)
+    if actual_start != start:
+        raise RuntimeError("boundary-shift decisive start drift")
+    return result,actual_start,actual_end
+
+
 def target_locator(row: dict[str,Any], surface: str) -> dict[str,Any]:
     if surface=="query":
         return {"kind":"query"}
@@ -169,6 +221,7 @@ def materialize(
     split: str,
     surface: str,
     target_words: int,
+    placement_variant: str = "tail",
 ) -> dict[str,Any]:
     if split not in {"train","dev"}:
         raise ValueError("long-context supplement is TRAIN/DEV only")
@@ -185,23 +238,47 @@ def materialize(
     row["internal_view_descriptions"]=list(INTERNAL_VIEW_DESCRIPTIONS)
     locator=target_locator(row,surface)
     original=get_text(row,locator)
-    set_text(
-        row,
-        locator,
-        longify(original,surface=surface,target_words=target_words),
-    )
+    boundary_pair_id=None
+    decisive_start_word=None
+    decisive_end_word=None
+    if placement_variant=="tail":
+        transformed=longify(
+            original,
+            surface=surface,
+            target_words=target_words,
+        )
+    elif placement_variant in {"boundary_early","boundary_late"}:
+        boundary_pair_id=f"{split}:long-context-boundary:{surface}"
+        # Keep total length constant while moving the identical decisive text
+        # from well before to well after the first overlap-ownership boundary.
+        requested_start=3600 if placement_variant=="boundary_early" else 4100
+        transformed,decisive_start_word,decisive_end_word=boundary_shift_text(
+            original,
+            surface=surface,
+            total_words=target_words,
+            decisive_start_word=requested_start,
+        )
+    else:
+        raise ValueError(f"unknown placement_variant: {placement_variant}")
+    set_text(row,locator,transformed)
     row["schema"]=ROW_SCHEMA
     row["lane"]="full_envelope_long_context_supplement"
-    row["id"]=f"felc_{split}_{surface}_{example:04d}"
-    row["template_id"]=f"{split}:long-context:{surface}:{row['scenario_family']}"
+    row["id"]=f"felc_{split}_{surface}_{placement_variant}_{example:04d}"
+    row["template_id"]=(
+        f"{split}:long-context:{surface}:{placement_variant}:{row['scenario_family']}"
+    )
     row["template_signature_sha256"]=base.template_signature(
         str(row["query"]),
         list(row["entities"]),
     )
-    row["causal_group"]=f"{split}:long-context:{surface}:{example:04d}"
+    row["causal_group"]=f"{split}:long-context:{surface}:{placement_variant}:{example:04d}"
     row["data_origin"]="deterministic_public_full_envelope_long_context_supplement_v1"
     row["long_context_surface"]=surface
     row["long_context_locator"]=locator
+    row["long_context_placement_variant"]=placement_variant
+    row["boundary_shift_pair_id"]=boundary_pair_id
+    row["decisive_start_word"]=decisive_start_word
+    row["decisive_end_word"]=decisive_end_word
     row["long_context_word_operating_point"]=int(target_words)
     row["long_context_word_operating_point_is_product_ceiling"]=False
     row["base_materialization"]=params
@@ -222,9 +299,15 @@ def main() -> None:
         raise SystemExit("refusing to overwrite long-context curriculum artifacts")
 
     rows=[
-        materialize(split=split,surface=surface,target_words=args.long_word_target)
+        materialize(
+            split=split,
+            surface=surface,
+            target_words=args.long_word_target,
+            placement_variant=variant,
+        )
         for split in ("train","dev")
         for surface in SURFACES
+        for variant in ("tail","boundary_early","boundary_late")
     ]
     output.parent.mkdir(parents=True,exist_ok=True)
     output.write_text(
@@ -239,6 +322,10 @@ def main() -> None:
         "train_rows":sum(1 for x in rows if x["split"]=="train"),
         "dev_rows":sum(1 for x in rows if x["split"]=="dev"),
         "surface_histogram":dict(sorted(Counter(x["long_context_surface"] for x in rows).items())),
+        "placement_histogram":dict(sorted(Counter(x["long_context_placement_variant"] for x in rows).items())),
+        "boundary_shift_pair_count":sum(
+            1 for split in ("train","dev") for surface in SURFACES
+        ),
         "surfaces_by_split":{
             split:sorted(x["long_context_surface"] for x in rows if x["split"]==split)
             for split in ("train","dev")

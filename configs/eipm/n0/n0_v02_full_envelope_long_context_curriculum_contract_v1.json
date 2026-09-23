@@ -52,7 +52,9 @@
     "no_final_rows": true,
     "row_hash_manifest_required": true,
     "long_content_tail_preservation_required": true,
-    "compiler_override_mechanics_test_required": true
+    "compiler_override_mechanics_test_required": true,
+    "boundary_shift_pair_audit_required": true,
+    "real_tokenizer_boundary_position_receipt_required": true
   },
   "authorization": {
     "materialization": true,
@@ -62,5 +64,24 @@
     "gpu": false,
     "final_opening": false,
     "n0_complete": false
+  },
+  "boundary_shift_robustness": {
+    "required_before_gradient": true,
+    "same_total_length_pair_required": true,
+    "same_decisive_semantics_required": true,
+    "same_structural_behavioral_targets_required": true,
+    "different_segment_ownership_position_required": true,
+    "exact_untrained_output_equality_required": false,
+    "real_tokenizer_position_receipt_required_before_gradient": true,
+    "surfaces": [
+      "query",
+      "relation_schema",
+      "factor_schema",
+      "type_schema",
+      "field_text",
+      "field_descriptor",
+      "candidate_text",
+      "internal_view_descriptor"
+    ]
   }
 }

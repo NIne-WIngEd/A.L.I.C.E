@@ -97,6 +97,8 @@ def main() -> None:
     by_split={split:set() for split in ("train","dev")}
     target_equivalence=0
     tail_preservation=0
+    boundary_rows={}
+    boundary_shift_pairs_verified=0
     for row in rows:
         rid=str(row.get("id","<missing>"))
         split=str(row.get("split",""))
@@ -136,14 +138,55 @@ def main() -> None:
             continue
         if long_builder.word_count(current) < target_words:
             errors.append(f"{rid}: long surface below operating point")
-        if not current.endswith(original):
-            errors.append(f"{rid}: original decisive semantic content not preserved at tail")
+        variant=str(row.get("long_context_placement_variant","tail"))
+        if variant=="tail":
+            if not current.endswith(original):
+                errors.append(f"{rid}: original decisive semantic content not preserved at tail")
+            else:
+                tail_preservation+=1
+        elif variant in {"boundary_early","boundary_late"}:
+            pair_id=str(row.get("boundary_shift_pair_id") or "")
+            if not pair_id:
+                errors.append(f"{rid}: boundary row missing pair id")
+            key=(split,surface,pair_id)
+            boundary_rows.setdefault(key,{})[variant]=(row,current,original)
+            start=row.get("decisive_start_word")
+            end=row.get("decisive_end_word")
+            if not isinstance(start,int) or not isinstance(end,int) or not (0 <= start < end):
+                errors.append(f"{rid}: invalid decisive word placement receipt")
+            else:
+                words=current.split()
+                original_words=original.split()
+                if words[start:end] != original_words:
+                    errors.append(f"{rid}: decisive semantics not preserved at declared position")
         else:
-            tail_preservation+=1
+            errors.append(f"{rid}: unknown long-context placement variant {variant}")
 
         descriptions=row.get("internal_view_descriptions")
         if descriptions is not None and len(descriptions)!=len(INTERNAL_VIEW_DESCRIPTIONS):
             errors.append(f"{rid}: internal view descriptor count drift")
+
+    for (split,surface,pair_id),variants in sorted(boundary_rows.items()):
+        if set(variants)!={"boundary_early","boundary_late"}:
+            errors.append(f"{pair_id}: incomplete boundary-shift pair")
+            continue
+        early,late=variants["boundary_early"],variants["boundary_late"]
+        early_row,early_text,early_original=early
+        late_row,late_text,late_original=late
+        if early_original != late_original:
+            errors.append(f"{pair_id}: decisive semantics differ across boundary pair")
+        if long_builder.word_count(early_text) != long_builder.word_count(late_text):
+            errors.append(f"{pair_id}: total length differs across boundary pair")
+        if structural_target_view(early_row) != structural_target_view(late_row):
+            errors.append(f"{pair_id}: structural/behavioral targets differ across boundary pair")
+        early_start=int(early_row.get("decisive_start_word",-1))
+        late_start=int(late_row.get("decisive_start_word",-1))
+        if not (early_start < 3840 and late_start > 4096):
+            errors.append(
+                f"{pair_id}: decisive text did not move across the first virtualized boundary region"
+            )
+        if not errors or not any(pair_id in e for e in errors):
+            boundary_shift_pairs_verified+=1
 
     for split in ("train","dev"):
         missing=sorted(required-by_split[split])
@@ -164,6 +207,8 @@ def main() -> None:
         },
         "base_target_equivalence_rows":target_equivalence,
         "tail_preservation_rows":tail_preservation,
+        "boundary_shift_pairs_verified":boundary_shift_pairs_verified,
+        "expected_boundary_shift_pairs":2*len(required),
         "long_word_operating_point":target_words,
         "operating_point_is_product_ceiling":False,
         "final_rows":0,
