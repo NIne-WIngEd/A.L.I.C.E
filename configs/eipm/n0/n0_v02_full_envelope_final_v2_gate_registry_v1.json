@@ -112,8 +112,8 @@
       },
       "directional_relation_endpoint_reversal_sensitivity_min": {
         "kind": "metric",
-        "path": "semantic_final.reverse_ordered_accuracy",
-        "coverage_path": "semantic_final.reverse_ordered_count"
+        "path": "fabric.scenario_public_accuracy.reverse_traversal",
+        "coverage_path": "fabric.scenario_public_count.reverse_traversal"
       },
       "step_conditioned_relation_semantic_sequence_exact_min": {
         "kind": "metric",
