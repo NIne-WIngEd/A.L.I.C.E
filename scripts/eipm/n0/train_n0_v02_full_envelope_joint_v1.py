@@ -880,64 +880,94 @@ def main() -> None:
         return
 
     predecessor=PREDECESSOR[args.stage]
-    if predecessor is None:
-        if any((
-            args.resume_accelerator_state,
-            args.resume_objective_state,
-            args.resume_receipt,
-            args.predecessor_dev_receipt,
-        )):
-            raise SystemExit("J1 starts from registered semantic initialization only")
-    else:
-        required_paths=(
-            args.resume_accelerator_state,
-            args.resume_objective_state,
-            args.resume_receipt,
-            args.predecessor_dev_receipt,
+    resume_kind=None
+    prior=None
+    dev=None
+    start_optimizer_step=1
+    resume_state_paths=(
+        args.resume_accelerator_state,
+        args.resume_objective_state,
+        args.resume_receipt,
+    )
+    any_resume=any(resume_state_paths)
+    all_resume=all(resume_state_paths)
+    if any_resume and not all_resume:
+        raise SystemExit(
+            "resume requires accelerator state, objective state, and checkpoint receipt together"
         )
-        if not all(required_paths):
-            raise SystemExit(
-                f"{args.stage} requires predecessor checkpoint and DEV receipt"
-            )
+    if all_resume:
         prior=read_json(args.resume_receipt)
-        dev=read_json(args.predecessor_dev_receipt)
-        if prior.get("stage")!=predecessor:
-            raise SystemExit("resume checkpoint stage is not the required predecessor")
+        prior_stage=str(prior.get("stage",""))
         if prior.get("final_results_observed") is not False:
             raise SystemExit("resume checkpoint has observed FINAL")
-        if dev.get("stage")!=predecessor:
-            raise SystemExit("predecessor DEV receipt stage drift")
-        if dev.get("checkpoint_selection_surface")!="DEV_ONLY":
-            raise SystemExit("predecessor selection did not use DEV-only surface")
-        if dev.get("stage_gate_pass") is not True:
-            raise SystemExit("predecessor DEV stage gates did not pass")
-        if dev.get("final_results_observed") is not False:
-            raise SystemExit("predecessor DEV receipt observed FINAL")
-        if sha256_file(args.resume_receipt)!=dev.get(
-            "candidate_checkpoint_receipt_sha256"
-        ):
-            raise SystemExit(
-                "predecessor DEV receipt/checkpoint receipt hash drift"
-            )
-        if prior.get("full_system_sha256")!=dev.get("candidate_system_sha256"):
-            raise SystemExit("predecessor DEV receipt/system hash drift")
-        if sha256_tree(args.resume_accelerator_state)!=prior.get(
-            "accelerator_state_tree_sha256"
-        ):
-            raise SystemExit("predecessor accelerator-state hash drift")
-        if sha256_file(args.resume_objective_state)!=prior.get(
-            "objective_state_sha256"
-        ):
-            raise SystemExit("predecessor objective-state hash drift")
-        if (
-            prior.get("source_revision")!=mixture.get("source_revision")
-            or dev.get("source_revision")!=mixture.get("source_revision")
-        ):
-            raise SystemExit("predecessor source revision drift")
+        if prior.get("source_revision")!=mixture.get("source_revision"):
+            raise SystemExit("resume checkpoint source revision drift")
         if prior.get("training_authorization_sha256")!=sha256_file(
             args.training_authorization
         ):
-            raise SystemExit("predecessor training authorization hash drift")
+            raise SystemExit("resume training authorization hash drift")
+        if sha256_tree(args.resume_accelerator_state)!=prior.get(
+            "accelerator_state_tree_sha256"
+        ):
+            raise SystemExit("resume accelerator-state hash drift")
+        if sha256_file(args.resume_objective_state)!=prior.get(
+            "objective_state_sha256"
+        ):
+            raise SystemExit("resume objective-state hash drift")
+
+        if prior_stage==args.stage:
+            resume_kind="same_stage"
+            if args.predecessor_dev_receipt:
+                raise SystemExit(
+                    "same-stage resume must not supply predecessor DEV receipt"
+                )
+            if prior.get("stage")!=args.stage:
+                raise SystemExit("same-stage resume checkpoint stage drift")
+            start_optimizer_step=int(prior.get("optimizer_step",0))+1
+            if start_optimizer_step>args.max_optimizer_steps:
+                raise SystemExit(
+                    "same-stage resume already reached requested optimizer-step operating point"
+                )
+        elif predecessor is not None and prior_stage==predecessor:
+            resume_kind="stage_transition"
+            if not args.predecessor_dev_receipt:
+                raise SystemExit(
+                    f"{args.stage} requires predecessor DEV receipt for stage transition"
+                )
+            dev=read_json(args.predecessor_dev_receipt)
+            if dev.get("stage")!=predecessor:
+                raise SystemExit("predecessor DEV receipt stage drift")
+            if dev.get("checkpoint_selection_surface")!="DEV_ONLY":
+                raise SystemExit("predecessor selection did not use DEV-only surface")
+            if dev.get("stage_gate_pass") is not True:
+                raise SystemExit("predecessor DEV stage gates did not pass")
+            if dev.get("final_results_observed") is not False:
+                raise SystemExit("predecessor DEV receipt observed FINAL")
+            if sha256_file(args.resume_receipt)!=dev.get(
+                "candidate_checkpoint_receipt_sha256"
+            ):
+                raise SystemExit(
+                    "predecessor DEV receipt/checkpoint receipt hash drift"
+                )
+            if prior.get("full_system_sha256")!=dev.get("candidate_system_sha256"):
+                raise SystemExit("predecessor DEV receipt/system hash drift")
+            if dev.get("source_revision")!=mixture.get("source_revision"):
+                raise SystemExit("predecessor source revision drift")
+            start_optimizer_step=1
+        else:
+            if prior_stage==args.stage:
+                raise SystemExit("same-stage resume checkpoint stage drift")
+            raise SystemExit(
+                "resume checkpoint stage is neither requested stage nor required predecessor"
+            )
+    else:
+        if args.predecessor_dev_receipt:
+            raise SystemExit("predecessor DEV receipt requires resume checkpoint state")
+        if predecessor is not None:
+            raise SystemExit(
+                f"{args.stage} requires predecessor checkpoint and DEV receipt"
+            )
+
 
     try:
         from accelerate import Accelerator, DistributedDataParallelKwargs
