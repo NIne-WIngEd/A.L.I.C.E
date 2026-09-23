@@ -7,12 +7,46 @@ is claimed.
 
 ## What is underway
 
-The MFM is a host-neutral learned interpreter of experiences. It proposes claims,
+The MFM is a learned interpreter of experiences with a reusable, host-neutral
+formation capability and an instance-specific adaptation path. It proposes claims,
 episodes, preferences, goals, corrections, deletions, contradictions, temporal
 scope, and uncertainty. It cannot grant a claim authority, accept a deletion,
 rewrite source-person history, or choose a database. The deterministic memory
 gate performs those decisions. This work is separate from N0/N1 personality
 training and from the existing Phase 2 candidate-staging implementation.
+
+## FBM builds the personal entity, including MFM
+
+The Fable Builder Model (FBM) is the shipped construction capability, not just a
+personality-model trainer. Starting with a user's authorized corpus, FBM must
+interpret and attribute sources, preserve provenance and unknowns, plan coverage,
+generate and critique appropriate synthetic training cases, construct and
+evaluate the instance's personality/identity, user/host, memory-formation,
+assistant-self and relationship capabilities, connect them to the governed memory
+fabric and native judgment path, and continue the governed development loop after
+activation. The components can have different weights, representations and
+stores; FBM must make their interfaces and version lineage coherent rather than
+requiring a user to hand-build or hand-label each component. Where a host has no
+separate source-person corpus, FBM must not invent one. A.L.I.C.E. has the extra
+Elaina source-person axis; ordinary Fable has a user and a developing Fable self.
+
+The user-facing installation flow is authorization of personal data followed by
+FBM construction and evaluation of the personal entity. The product must supply
+the host-neutral builder competence, training/update machinery, deterministic
+authority, storage/retrieval and serving interfaces. A particular person's raw
+data and adapted weights stay within that person's authorized custody. The
+builder cannot assume an external teacher, paid API, manually curated gold
+corpus, or ideal-self questionnaire at deployment. Sparse or contradictory data
+remains uncertain; construction must not fabricate a lived history to claim full
+personal fidelity. Normal experiences and their observed outcomes feed subsequent
+governed updates to the appropriate model or projection. MFM may reuse learned
+representations from FBM, but FBM's build orchestration, MFM's runtime proposals,
+the independent authority gate, and model promotion have distinct responsibilities.
+
+The existing `fable-builder-model` branch describes a **working** personality-
+focused architecture, not a finalized limit on FBM's duties. This section records
+the required MFM integration boundary; it does not implement FBM or take over
+the parallel builder/personality work.
 
 `src/cognitive_kernel/formation_contracts.py` establishes a backend-neutral
 `FormationContextPacket` and `MemoryProposalBundle`. They bind product and host
@@ -69,6 +103,25 @@ assistant experience. Preserve source linkage, dataset lineage, exact
 exclusions, temporal splits, model/checkpoint hashes, and deletion influence.
 Synthetic continuation can stress the system; it cannot be relabeled as
 Elaina's or Rayan's actual history. Private data stays in authorized custody.
+
+### Synthetic data and gold evidence
+
+| Origin | MFM/FBM use | Provenance and evaluation boundary |
+|---|---|---|
+| Licensed or permissioned host-neutral material and fabricated fictional users | Train source attribution, temporal revision, contradiction handling, outcomes, abstention, cross-modal grounding and proposal formation; cover rare and adversarial cases | Mark as third-party or fictional; never identify a fictional case as an actual user's past |
+| Procedurally generated sequences and controlled counterfactuals | Vary speakers, times, evidence quality, decisions, corrections, relationships and outcomes; train contrasts and stress-test the complete formation-to-judgment loop | Retain generation recipe, seed, parent case and label rationale; split held-out evaluations by underlying source and generator family |
+| Private Elaina evidence (E0) and evidence-constrained E-INF/A-SYN completion | Train and evaluate A.L.I.C.E. identity distinctions and, where authorized, source-person versus host formation | E0 is attested source; E-INF and A-SYN are inferred/synthetic and never become Elaina historical evidence; no private identity bytes or weights ship in Fable |
+| Private Rayan corpus and synthetic Rayan-life sequences | Train and evaluate A.L.I.C.E. host, relationship and memory formation, plus simulated long-lived outcomes | Keep actual Rayan observations distinct from fictional continuations; never transfer his data or derived private weights to another user |
+| Later per-user authorized evidence and outcomes | FBM creates an instance-specific training/evaluation substrate and revises its stack under governance | Record consent, subject, source, time and derivative lineage; use held-out real evidence and feedback to assess personal fidelity |
+
+Synthetic examples teach general formation operations and probe failure modes;
+they cannot certify that a specific personal claim is true or that a model knows
+a real person. Gold for personal fidelity is adjudicated from independent actual
+evidence, corrections and observed outcomes. Do not grade a generator only on
+its own invented answers or allow variants of a source case to cross into the
+held-out set. Preserve all generated-source lineage for later correction and
+deletion propagation. User review is useful for disputed personal interpretations
+but is not a required manual annotation workload for every Fable installation.
 
 Frozen behavioral qualification must include extraction, multi-session
 reasoning, temporal updates, supported abstention, long-running decision and
