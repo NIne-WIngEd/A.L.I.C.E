@@ -40,7 +40,8 @@
     "j1_stage_gate_can_pass_only_if_every_registered_gate_passes": true,
     "j2_j3_remain_blocked_until_mapping_complete": true,
     "all_stage_gate_mappings_precommitted_before_gradient": true,
-    "retained_prior_stage_gates_re_evaluated_on_current_checkpoint": true
+    "retained_prior_stage_gates_re_evaluated_on_current_checkpoint": true,
+    "candidate_training_authorization_lineage_required": true
   },
   "authority": {
     "private_identity_data": false,
@@ -56,5 +57,7 @@
     "core_fixed": "evaluation/eipm/n0/n0_v02_fixed_readiness_base_v0.1.jsonl",
     "voice_fixed": "evaluation/eipm/n0/n0_v02_voice_readiness_base_v0.1.jsonl",
     "novel_cross": "evaluation/eipm/n0/n0_v02_novel_cross_competency_base_v0.1.jsonl"
-  }
+  },
+  "runtime_training_authorization_required": true,
+  "runtime_training_authorization_schema": "alice.eipm.n0.full-envelope-training-authorization.v1"
 }
