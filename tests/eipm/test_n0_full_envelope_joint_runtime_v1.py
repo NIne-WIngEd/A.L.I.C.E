@@ -743,3 +743,21 @@ def test_dev_evaluator_is_dev_only_and_cannot_open_final() -> None:
     assert "final_opening_authorized" in evaluator
     assert "checkpoint_selection_performed" in evaluator
     assert "N0FullEnvelopeTrainableSystemV1" in evaluator
+
+
+def test_successor_trainer_cannot_bypass_explicit_training_plan_authority() -> None:
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    assert plan["authorization"]["optimizer"] is False
+    assert plan["authorization"]["gradient"] is False
+    assert plan["authorization"]["gpu_training"] is False
+
+    trainer=(
+        ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py"
+    ).read_text()
+    assert 'parser.add_argument("--training-plan",required=True)' in trainer
+    assert 'if args.execute_gradient:' in trainer
+    assert 'required_authority=("optimizer","gradient","gpu_training")' in trainer
+    assert 'authority.get(name) is not True' in trainer
+    assert "successor optimization remains governance-blocked" in trainer

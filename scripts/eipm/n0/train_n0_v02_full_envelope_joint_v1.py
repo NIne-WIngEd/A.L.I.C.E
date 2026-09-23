@@ -441,6 +441,7 @@ def main() -> None:
         )
     )
     parser.add_argument("--stage",choices=STAGES,required=True)
+    parser.add_argument("--training-plan",required=True)
     parser.add_argument("--topology-config",required=True)
     parser.add_argument("--semantic-config",required=True)
     parser.add_argument("--semantic-checkpoint",required=True)
@@ -502,6 +503,22 @@ def main() -> None:
         raise SystemExit("scheduler horizon must exceed warmup")
 
     require_clean_worktree()
+    training_plan=read_json(args.training_plan)
+    if training_plan.get("schema")!="alice.eipm.n0.semantic-operator-joint-training-plan.v1":
+        raise SystemExit("successor training-plan schema drift")
+    authority=dict(training_plan.get("authorization") or {})
+    if args.execute_gradient:
+        required_authority=("optimizer","gradient","gpu_training")
+        blocked=[
+            name for name in required_authority
+            if authority.get(name) is not True
+        ]
+        if blocked:
+            raise SystemExit(
+                "successor optimization remains governance-blocked; "
+                "explicit training-plan authority is false for "
+                + repr(blocked)
+            )
     mixture,mixture_audit=verify_pre_gradient_runtime(
         mixture_manifest_path=args.mixture_manifest,
         mixture_audit_path=args.mixture_audit,
@@ -516,6 +533,11 @@ def main() -> None:
             "status":"PREGRADIENT_GATES_PASS_GRADIENT_NOT_EXECUTED",
             "stage":args.stage,
             "source_revision":mixture["source_revision"],
+            "training_plan_authorization":{
+                "optimizer":authority.get("optimizer"),
+                "gradient":authority.get("gradient"),
+                "gpu_training":authority.get("gpu_training"),
+            },
             "optimizer_created":False,
             "gradient":False,
             "weight_update":False,

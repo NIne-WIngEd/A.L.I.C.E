@@ -1237,6 +1237,13 @@
       "kind": "RUNTIME_REQUIRED",
       "status": "UNRESOLVED_BLOCKING",
       "requirement": "Before J1->J2, J2->J3, or J3 candidate selection, the DEV-only successor evaluator must have complete precommitted metric mappings for every named active stage gate. Missing mappings are blocking and may not be filled from FINAL outcomes."
+    },
+    {
+      "id": "N0-P43F",
+      "stage": "joint_training_authority",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_successor_trainer_cannot_bypass_explicit_training_plan_authority",
+      "requirement": "The successor trainer must fail closed on optimizer, gradient, and GPU-training authority from the exact joint-training plan. A command-line execute-gradient flag or passed runtime qualifier may not override a still-false governance authorization."
     }
   ],
   "closure_rule": {
