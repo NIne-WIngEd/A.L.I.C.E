@@ -547,6 +547,31 @@ def test_j1_long_semantic_rows_compile_through_registered_semantic_operator_task
         )
         from test_n0_semantic_operator_foundation_v1 import _OffsetTokenizer
 
+        class _SemanticLongTokenizer(_OffsetTokenizer):
+            def __call__(
+                self,
+                texts,
+                *,
+                padding=True,
+                truncation=False,
+                return_tensors="pt",
+                return_offsets_mapping=False,
+                return_special_tokens_mask=False,
+                max_length=None,
+            ):
+                # The registered semantic compiler first requests ordinary
+                # token tensors and then exact evidence-offset tensors. One
+                # test tokenizer must faithfully support both interfaces.
+                return super().__call__(
+                    texts,
+                    padding=padding,
+                    truncation=truncation,
+                    return_tensors=return_tensors,
+                    return_offsets_mapping=True,
+                    return_special_tokens_mask=True,
+                    max_length=max_length,
+                )
+
         for surface in ("query","relation_schema","factor_schema"):
             row=module.materialize(
                 split="train",
@@ -565,7 +590,7 @@ def test_j1_long_semantic_rows_compile_through_registered_semantic_operator_task
             assert "factor_schema_evidence_char_spans" in row
             compiled=compile_semantic_operator_batch(
                 rows=[row],
-                tokenizer=_OffsetTokenizer(),
+                tokenizer=_SemanticLongTokenizer(),
             )
             assert compiled["metadata"]["batch_size"]==1
             assert compiled["metadata"]["fabricated_downstream_labels"] is False
