@@ -293,3 +293,169 @@ def mean(values: list[float]) -> float:
     if not values:
         return 1.0
     return float(sum(float(x) for x in values)/len(values))
+
+def support_edge_f1(
+    *,
+    edge_support_weight: Tensor,
+    support_target: Tensor,
+    valid_mask: Tensor,
+    positive_epsilon: float = 0.0,
+) -> float:
+    if edge_support_weight.shape!=support_target.shape:
+        raise ValueError("support-edge target geometry drift")
+    if valid_mask.shape!=support_target.shape or valid_mask.dtype!=torch.bool:
+        raise ValueError("support-edge valid mask geometry drift")
+    valid=valid_mask.bool()
+    pred=edge_support_weight.gt(float(positive_epsilon)) & valid
+    gold=support_target.float().ge(0.5) & valid
+    tp=int((pred & gold).sum().item())
+    fp=int((pred & ~gold & valid).sum().item())
+    fn=int((~pred & gold & valid).sum().item())
+    if tp==0 and fp==0 and fn==0:
+        return 1.0
+    precision=tp/max(tp+fp,1)
+    recall=tp/max(tp+fn,1)
+    return float(2.0*precision*recall/max(precision+recall,1.0e-12))
+
+
+def endpoint_pair_correct(
+    *,
+    source_weight: Tensor,
+    target_weight: Tensor,
+    source_target: Tensor,
+    target_target: Tensor,
+    active_mask: Tensor,
+) -> Tensor:
+    if source_weight.shape!=target_weight.shape or source_weight.ndim!=2:
+        raise ValueError("endpoint weight geometry drift")
+    batch,fields=source_weight.shape
+    if source_target.shape!=(batch,) or target_target.shape!=(batch,):
+        raise ValueError("endpoint target geometry drift")
+    if active_mask.shape!=(batch,) or active_mask.dtype!=torch.bool:
+        raise ValueError("endpoint active-mask geometry drift")
+    if bool(active_mask.any()):
+        if int(source_target[active_mask].min())<0 or int(source_target[active_mask].max())>=fields:
+            raise ValueError("source endpoint target outside field range")
+        if int(target_target[active_mask].min())<0 or int(target_target[active_mask].max())>=fields:
+            raise ValueError("target endpoint target outside field range")
+    correct=(
+        source_weight.argmax(dim=-1).eq(source_target.long().clamp_min(0))
+        & target_weight.argmax(dim=-1).eq(target_target.long().clamp_min(0))
+    )
+    return correct.masked_select(active_mask)
+
+
+def _masked_candidate_probabilities(
+    *,
+    logits: Tensor,
+    valid_mask: Tensor,
+) -> Tensor:
+    if logits.ndim!=2 or valid_mask.shape!=logits.shape or valid_mask.dtype!=torch.bool:
+        raise ValueError("candidate probability geometry drift")
+    if bool((valid_mask.sum(dim=-1)==0).any()):
+        raise ValueError("candidate probability requires one valid candidate per row")
+    valid_logits=logits.masked_select(valid_mask)
+    if not bool(torch.isfinite(valid_logits).all()):
+        raise ValueError("valid candidate logits must be finite")
+    floor=torch.finfo(logits.dtype).min
+    masked=logits.masked_fill(~valid_mask,floor)
+    probability=torch.softmax(masked.float(),dim=-1)
+    return probability.masked_fill(~valid_mask,0.0)
+
+
+def public_judgment_correct(
+    *,
+    candidate_logits: Tensor,
+    target_index: Tensor,
+    candidate_valid_mask: Tensor,
+) -> Tensor:
+    if target_index.shape!=(candidate_logits.size(0),):
+        raise ValueError("public target geometry drift")
+    probability=_masked_candidate_probabilities(
+        logits=candidate_logits,
+        valid_mask=candidate_valid_mask,
+    )
+    return probability.argmax(dim=-1).eq(target_index.long())
+
+
+def decisive_removal_success(
+    *,
+    normal_logits: Tensor,
+    ablated_logits: Tensor,
+    target_index: Tensor,
+    candidate_valid_mask: Tensor,
+    active_mask: Tensor,
+    probability_margin: float = 0.15,
+) -> Tensor:
+    if normal_logits.shape!=ablated_logits.shape:
+        raise ValueError("decisive-removal logit geometry drift")
+    if active_mask.shape!=(normal_logits.size(0),) or active_mask.dtype!=torch.bool:
+        raise ValueError("decisive-removal active-mask geometry drift")
+    normal=_masked_candidate_probabilities(
+        logits=normal_logits,valid_mask=candidate_valid_mask
+    )
+    ablated=_masked_candidate_probabilities(
+        logits=ablated_logits,valid_mask=candidate_valid_mask
+    )
+    target=target_index.long()[:,None]
+    normal_target=normal.gather(1,target).squeeze(1)
+    ablated_target=ablated.gather(1,target).squeeze(1)
+    success=(normal_target-ablated_target).ge(float(probability_margin))
+    return success.masked_select(active_mask)
+
+
+def irrelevant_removal_invariance_success(
+    *,
+    normal_logits: Tensor,
+    removed_logits: Tensor,
+    candidate_valid_mask: Tensor,
+    active_mask: Tensor,
+    max_probability_delta: float = 0.02,
+) -> Tensor:
+    if normal_logits.shape!=removed_logits.shape:
+        raise ValueError("irrelevant-removal logit geometry drift")
+    if active_mask.shape!=(normal_logits.size(0),) or active_mask.dtype!=torch.bool:
+        raise ValueError("irrelevant-removal active-mask geometry drift")
+    normal=_masked_candidate_probabilities(
+        logits=normal_logits,valid_mask=candidate_valid_mask
+    )
+    removed=_masked_candidate_probabilities(
+        logits=removed_logits,valid_mask=candidate_valid_mask
+    )
+    delta=(normal-removed).abs().masked_fill(~candidate_valid_mask,0.0).max(dim=-1).values
+    same_top1=normal.argmax(dim=-1).eq(removed.argmax(dim=-1))
+    success=same_top1 & delta.le(float(max_probability_delta))
+    return success.masked_select(active_mask)
+
+
+def latent_noncollapse_success(
+    *,
+    latent_slots: Tensor,
+    similarity_margin: float = 0.90,
+    minimum_directional_spread: float = 0.20,
+) -> Tensor:
+    if latent_slots.ndim!=3 or latent_slots.size(1)<1:
+        raise ValueError("latent slots must be [B,S,D]")
+    if latent_slots.size(1)==1:
+        return torch.ones(
+            latent_slots.size(0),
+            device=latent_slots.device,
+            dtype=torch.bool,
+        )
+    normalized=torch.nn.functional.normalize(
+        latent_slots.float(),dim=-1,eps=1.0e-4
+    )
+    cosine=torch.einsum("bsd,btd->bst",normalized,normalized)
+    slots=latent_slots.size(1)
+    offdiag=~torch.eye(
+        slots,device=latent_slots.device,dtype=torch.bool
+    )[None,:,:]
+    max_abs=cosine.abs().masked_fill(~offdiag,0.0).amax(dim=(1,2))
+    mean_direction=normalized.mean(dim=1,keepdim=True)
+    centered=normalized-mean_direction
+    spread=centered.square().sum(dim=-1).mean(dim=-1)
+    return (
+        max_abs.le(float(similarity_margin))
+        & spread.ge(float(minimum_directional_spread))
+    )
+
