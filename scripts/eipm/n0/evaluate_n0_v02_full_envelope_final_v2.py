@@ -675,6 +675,7 @@ def main() -> None:
     p.add_argument("--execute-final-evaluation",action="store_true")
     p.add_argument("--final-opening-authorization",required=True)
     p.add_argument("--freeze-receipt",required=True)
+    p.add_argument("--package-config",required=True)
     p.add_argument("--package-manifest",required=True)
     p.add_argument("--package-audit",required=True)
     p.add_argument("--final-contract",required=True)
@@ -694,6 +695,7 @@ def main() -> None:
     p.add_argument("--long-context-final-rows",required=True)
     p.add_argument("--fewrel-final-rows",required=True)
     p.add_argument("--fewrel-final-bank",required=True)
+    p.add_argument("--fewrel-manifest",required=True)
     p.add_argument("--teacher-registry",required=True)
     p.add_argument("--teacher-audit",required=True)
     p.add_argument("--output",required=True)
@@ -716,12 +718,31 @@ def main() -> None:
         raise SystemExit("FINAL-v2 package freeze receipt not valid")
     if freeze.get("results_observed") is not False:
         raise SystemExit("freeze receipt says FINAL results were already observed")
-    expected_impl=freeze.get("hashes",{}).get("evaluator_implementation")
-    expected_registry=freeze.get("hashes",{}).get("gate_registry")
-    if expected_impl!=sha256_file(this_source):
-        raise SystemExit("frozen FINAL evaluator implementation hash drift")
-    if expected_registry!=sha256_file(args.gate_registry):
-        raise SystemExit("frozen FINAL gate registry hash drift")
+    frozen_inputs={
+        "package_config":args.package_config,
+        "evaluator_contract":args.evaluator_contract,
+        "evaluator_implementation":this_source,
+        "gate_registry":args.gate_registry,
+        "final_contract":args.final_contract,
+        "synthetic_final_rows":args.synthetic_final_rows,
+        "semantic_final_rows":args.semantic_final_rows,
+        "runtime_view_final_rows":args.runtime_view_final_rows,
+        "long_context_final_rows":args.long_context_final_rows,
+        "package_manifest":args.package_manifest,
+        "fewrel_final_rows":args.fewrel_final_rows,
+        "fewrel_final_bank":args.fewrel_final_bank,
+        "fewrel_manifest":args.fewrel_manifest,
+        "audit":args.package_audit,
+    }
+    frozen_hashes=dict(freeze.get("hashes") or {})
+    for name,path in frozen_inputs.items():
+        observed=sha256_file(path)
+        expected=frozen_hashes.get(name)
+        if observed!=expected:
+            raise SystemExit(
+                "frozen FINAL package artifact hash drift: "
+                f"{name} expected={expected!r} observed={observed!r}"
+            )
 
     opening=read_json(args.final_opening_authorization)
     if opening.get("schema")!="alice.eipm.n0.full-envelope-final-opening-authorization.v1":
