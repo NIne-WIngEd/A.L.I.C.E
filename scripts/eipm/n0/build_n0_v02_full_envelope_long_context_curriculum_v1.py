@@ -248,10 +248,15 @@ def materialize(
     surface: str,
     target_words: int,
     placement_variant: str = "tail",
+    example_override: int | None = None,
 ) -> dict[str,Any]:
     if split not in {"train","dev","final"}:
         raise ValueError("long-context split must be train/dev/final")
-    example=int(SURFACE_EXAMPLE[surface])
+    example=(
+        int(example_override)
+        if example_override is not None
+        else int(SURFACE_EXAMPLE[surface])
+    )
     if surface in {"additional_view_descriptor","additional_view_source"}:
         candidates=[
             copy.deepcopy(item)

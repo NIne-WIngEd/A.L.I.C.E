@@ -37,7 +37,8 @@
         "domain",
         "type_schema",
         "factor_combination"
-      ]
+      ],
+      "paraphrase_pair_required": true
     },
     "synthetic_semantic_operator": {
       "row_schema": "alice.eipm.n0.semantic-operator-intervention-row.v1",
@@ -75,7 +76,8 @@
       ],
       "boundary_shift_pairs_required": true,
       "distant_decisive_semantics_required": true,
-      "product_context_ceiling": null
+      "product_context_ceiling": null,
+      "cross_window_conflict_required": true
     }
   },
   "independence": {

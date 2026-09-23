@@ -1082,6 +1082,44 @@ FINAL_QUERY_PARAPHRASES = {
     "heldout_recency_provenance_combo":"First enforce the authorized-provenance requirement, then use recency among the remaining eligible sources to select the controlling proposition.",
 }
 
+FINAL_QUERY_SECONDARY_REWRITES = (
+    ("determine", "identify"),
+    ("execute", "carry out"),
+    ("find", "locate"),
+    ("choose", "select"),
+    ("apply", "enforce"),
+    ("preserve", "retain"),
+    ("separate", "distinguish"),
+    ("follow", "trace"),
+    ("starting from", "beginning at"),
+    ("starting at", "beginning at"),
+    ("within this held-out public case", "for this independent public evaluation"),
+    ("when competing propositions", "when the candidate propositions conflict"),
+    ("first enforce", "begin by enforcing"),
+    ("then use", "afterward use"),
+    ("identify", "name"),
+    ("which", "what"),
+)
+
+
+def final_query_secondary_paraphrase(text: str) -> str:
+    """Second frozen FINAL-only query wording for paired paraphrase evaluation."""
+    value=str(text)
+    lower=value.lower()
+    changed=False
+    for source,replacement in FINAL_QUERY_SECONDARY_REWRITES:
+        source_lower=source.lower()
+        index=lower.find(source_lower)
+        if index < 0:
+            continue
+        value=value[:index]+replacement+value[index+len(source):]
+        lower=value.lower()
+        changed=True
+    if not changed or value==text:
+        value="Answer the same held-out semantic task in equivalent wording: "+str(text)
+    return value
+
+
 FINAL_SURFACE_REWRITES = (
     ("provides evidence for", "supplies documented support for"),
     ("supports", "backs with evidence"),
@@ -1259,6 +1297,7 @@ def materialize_row(
         base["query"]=DEV_QUERY_PARAPHRASES[base["scenario_family"]]
     elif split=="final":
         base["query"]=FINAL_QUERY_PARAPHRASES[base["scenario_family"]]
+        base["final_paraphrase_query"]=final_query_secondary_paraphrase(base["query"])
     add_distractors(base,max(field_count,len(base["fields"])),entities)
     if split=="dev":
         for item in base["fields"]:
@@ -1446,6 +1485,7 @@ def materialize_row(
         ),
         "causal_group":causal_group,
         "query":base["query"],
+        "final_paraphrase_query":base.get("final_paraphrase_query"),
         "type_schema":type_schema,
         "relation_candidates":relation_candidates,
         "factor_schemas":factor_schemas,

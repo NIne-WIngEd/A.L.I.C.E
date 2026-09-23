@@ -186,6 +186,15 @@ def main() -> None:
         for surface in long_context.SURFACES
         for variant in ("tail","boundary_early","boundary_late")
     ]
+    long_context_rows.append(
+        long_context.materialize(
+            split="final",
+            surface="field_text",
+            target_words=4608,
+            placement_variant="tail",
+            example_override=8,
+        )
+    )
     long_context_path.parent.mkdir(parents=True,exist_ok=True)
     long_context_path.write_text(
         "".join(json.dumps(row,sort_keys=True)+"\n" for row in long_context_rows),
@@ -224,6 +233,7 @@ def main() -> None:
         "long_context_final_rows":len(long_context_rows),
         "long_context_final_surfaces":sorted({str(x["long_context_surface"]) for x in long_context_rows}),
         "long_context_final_placements":sorted({str(x["long_context_placement_variant"]) for x in long_context_rows}),
+        "long_context_final_conflict_rows":sum(1 for x in long_context_rows if x.get("scenario_family")=="conflict_plurality"),
         "natural_final_rows":int(fewrel_manifest.get("final_rows",0)),
         "scenario_histogram":dict(sorted(Counter(str(x["scenario_family"]) for x in rows).items())),
         "relation_count_points":sorted({int(x["runtime_relation_count"]) for x in rows}),
