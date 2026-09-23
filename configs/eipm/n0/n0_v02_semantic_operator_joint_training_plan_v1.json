@@ -362,7 +362,11 @@
     "j3_dev_gate_mapping_complete": true,
     "all_stage_dev_gate_mappings_precommitted_before_gradient": true,
     "training_authorizer": "scripts/eipm/n0/authorize_n0_v02_full_envelope_training_v1.py",
-    "runtime_training_authorization_receipt": "alice.eipm.n0.full-envelope-training-authorization.v1"
+    "runtime_training_authorization_receipt": "alice.eipm.n0.full-envelope-training-authorization.v1",
+    "same_stage_resume_required": true,
+    "max_optimizer_steps_role": "runtime operating endpoint per invocation; not stage completion and extendable by exact-state same-stage resume",
+    "same_stage_resume_may_not_require_dev_pass": true,
+    "stage_transition_resume_requires_predecessor_dev_pass": true
   },
   "loss_balancing": {
     "method": "macro_family_balanced_with_per_objective_scale_normalization",
