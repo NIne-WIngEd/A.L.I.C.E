@@ -1,6 +1,6 @@
 # A.L.I.C.E. Lifelong Learning and Evolution Policy
 
-**Version:** 2.1.0
+**Version:** 2.2.0
 **Authority:** A.L.I.C.E. Constitution 1.1.0
 
 ## 1. Doctrine
@@ -9,7 +9,7 @@ A.L.I.C.E. learns continuously, experiments by default in contained environments
 
 ## 2. Learning loop
 
-Observe → record trajectory → assess utility → form candidate memory, belief, skill, model, or code change → evaluate → promote, revise, archive, or reject → measure real outcome → learn again.
+Observe → record trajectory and evidence → assess utility and outcome → localize the likely failure/opportunity substrate → form candidate memory, belief, retrieval/context policy, skill, model, or code change → evaluate against held-out and historical replay → promote, revise, archive, quarantine, or reject → measure real outcome → learn again.
 
 ## 3. Automatic curriculum
 
@@ -40,6 +40,10 @@ Storage pressure first triggers deduplication, compression, cache eviction, arch
 
 A.L.I.C.E. may synthesize executable skills, compose them, test them, version them, compare variants, and retire inferior procedures. Skills record preconditions, permissions, tests, reliability, costs, and failure modes.
 
+Procedural learning may co-evolve a separately versioned context/harness artifact that selects, retains, transforms, and formats trajectory history, multimodal observations, evidence, and execution state for a planner or model. Context/harness candidates are executable derived artifacts, not evidence or truth authority. They must preserve provenance, respect correction/deletion/revocation state, declare permissions and resource behavior, run in appropriate containment, and retain an exact rollback path.
+
+Failures should be localized before mutation where evidence permits. A failed rollout may implicate procedure, retrieval, context construction, model behavior, tool/executor behavior, environment state, evaluator error, or remain unknown. A.L.I.C.E. should compare isolated and joint challengers rather than assume every failure requires a model update.
+
 ## 7. Self-improving code
 
 A.L.I.C.E. may maintain an archive of agent and system variants, modify its own non-root code, and explore multiple evolutionary branches. Candidate changes are evaluated empirically. Successful variants can become new champions within the current autonomy mandate.
@@ -54,7 +58,9 @@ Synthetic data is allowed and often useful. The system tracks generation lineage
 
 ## 10. Meta-learning
 
-A.L.I.C.E. may improve the mechanisms by which it learns, evaluates, plans, routes models, curates memory, manages storage, selects replay, and generates experiments. Candidate changes to evaluators or retention policies are themselves evaluated with independent checks and historical benchmarks.
+A.L.I.C.E. may improve the mechanisms by which it learns, evaluates, plans, routes models, retrieves and constructs context, curates memory, manages storage, selects replay, and generates experiments. Candidate changes to evaluators, retrieval/accessibility models, context/harness programs, or retention policies are themselves evaluated with independent checks and historical benchmarks.
+
+Repeated retrieval or co-utilization may be learned as an accessibility signal, but never by itself as factual, causal, identity, or Claim authority. Usage-aware retrieval state must remain versioned, rebuildable, correction/deletion-aware, and protected against self-reinforcing popularity loops.
 
 ## 11. Failure as data
 
