@@ -689,6 +689,10 @@ def test_successor_trainer_dev_evaluator_and_checkpoint_contract_exist_before_gr
         "public_corpus_receipt_sha256",
         "teacher_audit_sha256",
         "static_proof_receipt_sha256",
+        "operator_evidence_token_receipt_sha256",
+        "accelerator_state_tree_sha256",
+        "full_system_sha256",
+        "objective_state_sha256",
     ]
     assert checkpoint["authority"]["final_results_observed"] is False
     assert checkpoint["authority"]["final_checkpoint_selection_allowed"] is False
