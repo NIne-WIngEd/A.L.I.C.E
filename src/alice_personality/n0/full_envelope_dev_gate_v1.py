@@ -106,12 +106,18 @@ def evaluate_stage_gate_registry(
     metrics: Mapping[str,Any],
     proof_contract: Mapping[str,Any],
     static_receipt: Mapping[str,Any],
+    _stage_stack: tuple[str,...] = (),
 ) -> dict[str,Any]:
     if registry.get("schema")!="alice.eipm.n0.full-envelope-dev-gate-registry.v1":
         raise ValueError("DEV gate registry schema drift")
     stages=registry.get("stages") or {}
     if stage not in stages:
         raise ValueError(f"DEV gate stage not registered: {stage}")
+    if stage in _stage_stack:
+        raise ValueError(
+            "cyclic retained DEV stage mapping: "
+            + " -> ".join((*_stage_stack,stage))
+        )
     stage_spec=stages[stage]
     gates=stage_spec.get("gates") or {}
     results={}
@@ -129,6 +135,30 @@ def evaluate_stage_gate_registry(
                     proof_contract=proof_contract,
                     static_receipt=static_receipt,
                 )
+            elif kind=="retained_stage_gates":
+                retained=list(map(str,spec.get("stages") or []))
+                if not retained:
+                    raise ValueError("retained-stage DEV gate has no stages")
+                retained_results=[
+                    evaluate_stage_gate_registry(
+                        registry=registry,
+                        stage=retained_stage,
+                        metrics=metrics,
+                        proof_contract=proof_contract,
+                        static_receipt=static_receipt,
+                        _stage_stack=(*_stage_stack,stage),
+                    )
+                    for retained_stage in retained
+                ]
+                value={
+                    "kind":"retained_stage_gates",
+                    "stages":retained,
+                    "stage_results":retained_results,
+                    "passed":all(
+                        bool(item.get("stage_gate_pass"))
+                        for item in retained_results
+                    ),
+                }
             else:
                 raise ValueError(f"unsupported DEV gate kind: {kind!r}")
             results[str(name)]=value
