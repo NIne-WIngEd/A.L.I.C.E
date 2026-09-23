@@ -219,3 +219,25 @@ def test_final_v2_contains_heterogeneous_runtime_view_and_long_context_challenge
     for flag in ("--runtime-view-final-rows","--long-context-final-rows"):
         assert flag in auditor
         assert flag in freezer
+
+
+def test_final_v2_precommits_paraphrase_pairs_and_cross_window_conflict_probe() -> None:
+    package=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json").read_text()
+    )
+    assert package["components"]["adversarial_synthetic"]["paraphrase_pair_required"] is True
+    assert package["components"]["long_context"]["cross_window_conflict_required"] is True
+
+    behavioral=(
+        ROOT/"scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py"
+    ).read_text()
+    final_builder=(
+        ROOT/"scripts/eipm/n0/build_n0_v02_full_envelope_final_v2_package.py"
+    ).read_text()
+    auditor=(
+        ROOT/"scripts/eipm/n0/audit_n0_v02_full_envelope_final_v2_package.py"
+    ).read_text()
+    assert "final_paraphrase_query" in behavioral
+    assert "example_override=8" in final_builder
+    assert "conflict_plurality" in auditor
+    assert "final_paraphrase_query" in auditor

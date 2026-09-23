@@ -1426,6 +1426,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_final_v2_contains_heterogeneous_runtime_view_and_long_context_challenges",
       "requirement": "FINAL runtime-view and long-context generators reuse the registered runtime-shaped interfaces in sealed FINAL authority mode rather than substituting TRAIN/DEV rows or a fixed view/context taxonomy."
+    },
+    {
+      "id": "N0-P46F",
+      "stage": "final_closure",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_final_v2_precommits_paraphrase_pairs_and_cross_window_conflict_probe",
+      "requirement": "Before gradient, FINAL-v2 must freeze a second semantic-preserving query wording for behavioral paraphrase consistency and a distant cross-window conflict/plurality case. The evaluator may not invent these challenge surfaces after seeing candidate results."
     }
   ],
   "closure_rule": {
