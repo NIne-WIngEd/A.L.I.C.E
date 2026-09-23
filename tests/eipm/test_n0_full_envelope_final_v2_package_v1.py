@@ -266,9 +266,10 @@ def test_final_v2_evaluator_requires_exact_candidate_source_checkout() -> None:
         ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py"
     ).read_text()
     assert 'subprocess.check_output(["git","rev-parse","HEAD"]' in source
-    assert 'subprocess.check_output(["git","status","--porcelain","--untracked-files=no"]' in source
+    assert 'subprocess.check_output(["git","status","--porcelain"]' in source
+    assert "--untracked-files=no" not in source
     assert "FINAL evaluator source revision does not match candidate" in source
-    assert "FINAL evaluator requires a clean tracked-source worktree" in source
+    assert "FINAL evaluator requires a clean exact-source worktree" in source
 
 
 
