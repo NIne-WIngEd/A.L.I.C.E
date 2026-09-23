@@ -24,6 +24,9 @@
     "training_authorization_sha256",
     "optimizer_step",
     "stage_checkpoint_parent_receipt_sha256",
+    "stage_transition_predecessor_checkpoint_receipt_sha256",
+    "stage_transition_predecessor_dev_receipt_sha256",
+    "stage_transition_predecessor_selection_receipt_sha256",
     "accelerator_state_tree_sha256",
     "full_system_sha256",
     "objective_state_sha256"
@@ -57,7 +60,8 @@
     "dev_selector": "scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py",
     "every_chain_member_through_selected_candidate_requires_dev_evaluation": true,
     "stage_transition_model_weights": "selected_predecessor_checkpoint",
-    "stage_transition_objective_balancer_state": "preserve"
+    "stage_transition_objective_balancer_state": "preserve",
+    "stage_transition_authority_lineage_preserved_in_all_descendant_stage_checkpoints": true
   },
   "optimizer_contract": {
     "name": "AdamW",
