@@ -1746,3 +1746,17 @@ def test_dev_evaluator_requires_exact_candidate_source_checkout() -> None:
     assert "DEV evaluator source revision does not match candidate" in source
     assert "DEV evaluator requires a clean tracked-source worktree" in source
 
+
+
+def test_successor_trainer_requires_exact_short_operator_evidence_token_receipt() -> None:
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    audit=(ROOT/"scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py").read_text()
+    assert '--operator-evidence-token-receipt' in trainer
+    assert 'PASS_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1' in trainer
+    assert 'operator evidence token alignment source revision drift' in trainer
+    assert 'operator evidence token alignment row hash drift' in trainer
+    assert 'operator evidence token alignment tokenizer hash drift' in trainer
+    assert 'rows_sha256' in audit
+    assert 'tokenizer_json_sha256' in audit
+    assert 'source_revision' in audit
+
