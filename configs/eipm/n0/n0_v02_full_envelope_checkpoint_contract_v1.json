@@ -65,7 +65,9 @@
     "stage_transition_authority_lineage_preserved_in_all_descendant_stage_checkpoints": true,
     "checkpoint_evaluation_cadence_steps": 25,
     "checkpoint_cadence_fixed_before_gradient": true,
-    "invocation_must_end_on_checkpoint_cadence": true
+    "invocation_must_end_on_checkpoint_cadence": true,
+    "training_route_bound_to_p43_receipt": true,
+    "runtime_cli_retuning_after_gradient_forbidden": true
   },
   "optimizer_contract": {
     "name": "AdamW",
@@ -77,7 +79,9 @@
     "gradient_clip_norm": 1,
     "macro_family_ema_updated_once_per_effective_batch": true,
     "family_ema_reduced_across_all_distributed_ranks": true,
-    "stage_transition_optimizer_state": "restart"
+    "stage_transition_optimizer_state": "restart",
+    "gradient_checkpointing": true,
+    "hyperparameters_fixed_before_gradient": true
   },
   "scheduler_contract": {
     "family": "linear_warmup_cosine_decay_to_nonzero_floor",
@@ -88,7 +92,9 @@
     "stage_transition_scheduler_state": "restart_with_stage_local_warmup",
     "same_stage_resume_scheduler_state": "preserve_exactly",
     "minimum_lr_scale": 0.1,
-    "post_horizon_behavior": "hold_precommitted_nonzero_floor_until_dev_decision"
+    "post_horizon_behavior": "hold_precommitted_nonzero_floor_until_dev_decision",
+    "operating_horizon_steps": 1000,
+    "warmup_fraction": 0.05
   },
   "authority": {
     "private_identity_data": false,
