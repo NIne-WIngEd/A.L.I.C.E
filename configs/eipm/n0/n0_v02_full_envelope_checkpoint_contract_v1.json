@@ -21,6 +21,7 @@
     "teacher_audit_sha256",
     "static_proof_receipt_sha256",
     "operator_evidence_token_receipt_sha256",
+    "training_authorization_sha256",
     "accelerator_state_tree_sha256",
     "full_system_sha256",
     "objective_state_sha256"
@@ -44,7 +45,9 @@
     "optimizer_parameter_groups_keep_full_topology_stable": true,
     "frozen_parameters_remain_in_optimizer_groups_without_updates": true,
     "no_historical_model_constructor_authority": true,
-    "exact_head_static_proof_receipt_required": true
+    "exact_head_static_proof_receipt_required": true,
+    "runtime_training_authorization_receipt_required": true,
+    "source_mutation_to_enable_gradient_forbidden": true
   },
   "optimizer_contract": {
     "name": "AdamW",
@@ -69,6 +72,7 @@
     "final_results_observed": false,
     "final_checkpoint_selection_allowed": false,
     "final_opening_authorized": false,
-    "checkpoint_receipt_is_n0_completion": false
+    "checkpoint_receipt_is_n0_completion": false,
+    "runtime_training_authorization_receipt_required": true
   }
 }
