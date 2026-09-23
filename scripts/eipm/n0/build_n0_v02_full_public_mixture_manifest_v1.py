@@ -15,6 +15,10 @@ EXPECTED={
         "manifest_schema":"alice.eipm.n0.semantic-operator-intervention-manifest.v1",
         "audit_status":"PASS_SEMANTIC_OPERATOR_CURRICULUM_AUDIT",
     },
+    "semantic_long":{
+        "manifest_schema":"alice.eipm.n0.semantic-operator-long-context-manifest.v1",
+        "audit_status":"PASS_N0_SEMANTIC_OPERATOR_LONG_CONTEXT_CURRICULUM_AUDIT_V1",
+    },
     "behavioral":{
         "manifest_schema":"alice.eipm.n0.full-envelope-behavioral-manifest.v1",
         "audit_status":"PASS_N0_FULL_ENVELOPE_BEHAVIORAL_CURRICULUM_AUDIT_V1",
@@ -119,6 +123,9 @@ def main() -> None:
     p.add_argument("--semantic-rows",required=True)
     p.add_argument("--semantic-manifest",required=True)
     p.add_argument("--semantic-audit",required=True)
+    p.add_argument("--semantic-long-rows",required=True)
+    p.add_argument("--semantic-long-manifest",required=True)
+    p.add_argument("--semantic-long-audit",required=True)
     p.add_argument("--behavioral-rows",required=True)
     p.add_argument("--behavioral-manifest",required=True)
     p.add_argument("--behavioral-audit",required=True)
@@ -193,6 +200,12 @@ def main() -> None:
             rows_path=Path(args.semantic_rows),
             manifest_path=Path(args.semantic_manifest),
             audit_path=Path(args.semantic_audit),
+        ),
+        "semantic_operator_long_context":validate_lane(
+            name="semantic_long",
+            rows_path=Path(args.semantic_long_rows),
+            manifest_path=Path(args.semantic_long_manifest),
+            audit_path=Path(args.semantic_long_audit),
         ),
         "full_envelope_behavioral":validate_lane(
             name="behavioral",
