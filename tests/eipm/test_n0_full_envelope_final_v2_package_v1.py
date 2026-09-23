@@ -350,3 +350,19 @@ def test_final_opening_authorizer_is_pregradient_freeze_bound() -> None:
     assert "frozen FINAL opening authorizer hash drift" in auth_source
     assert "opening authorizer/freeze hash drift" in evaluator
 
+
+
+def test_final_v2_freeze_is_bound_to_exact_source_revision() -> None:
+    freezer=(ROOT/"scripts/eipm/n0/freeze_n0_v02_full_envelope_final_v2_package.py").read_text()
+    assert 'p.add_argument("--source-revision",required=True)' in freezer
+    assert '["git","status","--porcelain"]' in freezer
+    assert '["git","rev-parse","HEAD"]' in freezer
+    assert "FINAL-v2 freeze source revision drift" in freezer
+    assert '"source_revision":source_revision' in freezer
+    evaluator=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py").read_text()
+    assert "FINAL freeze source revision drift" in evaluator
+    mixture=(ROOT/"scripts/eipm/n0/build_n0_v02_full_public_mixture_manifest_v1.py").read_text()
+    assert "FINAL freeze/source revision drift" in mixture
+    opener=(ROOT/"scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py").read_text()
+    assert "FINAL opening freeze source revision drift" in opener
+
