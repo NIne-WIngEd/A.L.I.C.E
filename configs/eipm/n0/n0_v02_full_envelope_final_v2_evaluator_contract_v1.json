@@ -29,7 +29,9 @@
     "evaluator_implementation_hash_frozen_before_gradient": true,
     "gate_registry_hash_frozen_before_gradient": true,
     "empty_empirical_gate_coverage_fails_closed": true,
-    "all_frozen_package_input_hashes_verified_at_execution": true
+    "all_frozen_package_input_hashes_verified_at_execution": true,
+    "final_opening_requires_exact_dev_selected_j3_receipt": true,
+    "opening_authorizer_hash_frozen_before_gradient": true
   },
   "legacy_final_self_validation_v1_forbidden": true,
   "legacy_final_self_validation_v3_forbidden": true,
@@ -41,5 +43,6 @@
   "n0_complete": false,
   "evaluator_implementation": "scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py",
   "gate_registry": "configs/eipm/n0/n0_v02_full_envelope_final_v2_gate_registry_v1.json",
-  "opening_authorization_schema": "alice.eipm.n0.full-envelope-final-opening-authorization.v1"
+  "opening_authorization_schema": "alice.eipm.n0.full-envelope-final-opening-authorization.v1",
+  "opening_authorizer": "scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py"
 }
