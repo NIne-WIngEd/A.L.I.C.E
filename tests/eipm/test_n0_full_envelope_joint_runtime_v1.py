@@ -1897,3 +1897,23 @@ def test_runtime_training_authorization_breaks_no_gradient_source_mutation_cycle
     assert "training authorization/GPU receipt hash drift" in trainer
     assert "training authorization authorizer hash drift" in trainer
 
+
+
+def test_stage_training_can_resume_same_stage_without_treating_step_budget_as_completion() -> None:
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert 'resume_kind="same_stage"' in trainer
+    assert 'resume_kind="stage_transition"' in trainer
+    assert 'start_optimizer_step=int(prior.get("optimizer_step",0))+1' in trainer
+    assert 'range(start_optimizer_step,args.max_optimizer_steps+1)' in trainer
+    assert "same-stage resume must not supply predecessor DEV receipt" in trainer
+    assert "same-stage resume checkpoint stage drift" in trainer
+    assert "same-stage resume already reached requested optimizer-step operating point" in trainer
+    assert 'if resume_kind is not None:' in trainer
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    assert plan["optimization_strategy"]["fixed_total_steps"] is None
+    assert "do not stop merely because an arbitrary step budget expires" in plan[
+        "optimization_strategy"
+    ]["stop_rule"]
+
