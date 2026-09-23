@@ -770,6 +770,7 @@ def main() -> None:
     parser.add_argument("--resume-objective-state")
     parser.add_argument("--resume-receipt")
     parser.add_argument("--predecessor-dev-receipt")
+    parser.add_argument("--predecessor-selection-receipt")
     parser.add_argument("--training-authorization")
     parser.add_argument("--execute-gradient",action="store_true")
     parser.add_argument("--max-optimizer-steps",type=int,default=100)
@@ -920,9 +921,9 @@ def main() -> None:
 
         if prior_stage==args.stage:
             resume_kind="same_stage"
-            if args.predecessor_dev_receipt:
+            if args.predecessor_dev_receipt or args.predecessor_selection_receipt:
                 raise SystemExit(
-                    "same-stage resume must not supply predecessor DEV receipt"
+                    "same-stage resume must not supply predecessor DEV receipt or selection receipt"
                 )
             if prior.get("stage")!=args.stage:
                 raise SystemExit("same-stage resume checkpoint stage drift")
@@ -933,11 +934,12 @@ def main() -> None:
                 )
         elif predecessor is not None and prior_stage==predecessor:
             resume_kind="stage_transition"
-            if not args.predecessor_dev_receipt:
+            if not args.predecessor_dev_receipt or not args.predecessor_selection_receipt:
                 raise SystemExit(
-                    f"{args.stage} requires predecessor DEV receipt for stage transition"
+                    f"{args.stage} requires predecessor DEV and selection receipts for stage transition"
                 )
             dev=read_json(args.predecessor_dev_receipt)
+            selection=read_json(args.predecessor_selection_receipt)
             if dev.get("stage")!=predecessor:
                 raise SystemExit("predecessor DEV receipt stage drift")
             if dev.get("checkpoint_selection_surface")!="DEV_ONLY":
@@ -956,6 +958,29 @@ def main() -> None:
                 raise SystemExit("predecessor DEV receipt/system hash drift")
             if dev.get("source_revision")!=mixture.get("source_revision"):
                 raise SystemExit("predecessor source revision drift")
+            if selection.get("schema")!="alice.eipm.n0.full-envelope-dev-checkpoint-selection.v1":
+                raise SystemExit("predecessor selection receipt schema drift")
+            if selection.get("status")!="SELECTED_FIRST_PASSING_N0_DEV_CHECKPOINT":
+                raise SystemExit("predecessor selection receipt not PASS")
+            if selection.get("source_revision")!=mixture.get("source_revision"):
+                raise SystemExit("predecessor selection source revision drift")
+            if selection.get("stage")!=predecessor:
+                raise SystemExit("predecessor selection stage drift")
+            if selection.get("first_passing_checkpoint") is not True:
+                raise SystemExit("predecessor selection is not first passing checkpoint")
+            if selection.get("selected_checkpoint_receipt_sha256")!=sha256_file(
+                args.resume_receipt
+            ):
+                raise SystemExit("predecessor selection/checkpoint receipt drift")
+            if selection.get("selected_dev_receipt_sha256")!=sha256_file(
+                args.predecessor_dev_receipt
+            ):
+                raise SystemExit("predecessor selection/DEV receipt drift")
+            selector=Path(__file__).resolve().with_name(
+                "select_n0_v02_full_envelope_dev_checkpoint_v1.py"
+            )
+            if selection.get("selection_authorizer_sha256")!=sha256_file(selector):
+                raise SystemExit("predecessor selection authorizer hash drift")
             start_optimizer_step=1
         else:
             if prior_stage==args.stage:
@@ -964,8 +989,10 @@ def main() -> None:
                 "resume checkpoint stage is neither requested stage nor required predecessor"
             )
     else:
-        if args.predecessor_dev_receipt:
-            raise SystemExit("predecessor DEV receipt requires resume checkpoint state")
+        if args.predecessor_dev_receipt or args.predecessor_selection_receipt:
+            raise SystemExit(
+                "predecessor DEV/selection receipt requires resume checkpoint state"
+            )
         if predecessor is not None:
             raise SystemExit(
                 f"{args.stage} requires predecessor checkpoint and DEV receipt"
