@@ -1209,6 +1209,27 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_gpu_memory_dry_run_covers_both_semantic_cardinality_and_long_semantic_lanes",
       "requirement": "The exact-topology GPU no-gradient memory qualification must exercise both a maximum-runtime-axis semantic-operator case and a dedicated long-context semantic-operator case. A single short high-cardinality row cannot stand in for the optimizer-facing long semantic lane."
+    },
+    {
+      "id": "N0-P43B",
+      "stage": "joint_training_orchestration",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_successor_trainer_dev_evaluator_and_checkpoint_contract_exist_before_gradient",
+      "requirement": "Before gradient authorization, the successor needs an actual staged J1/J2/J3 trainer, DEV-only evaluator, and checkpoint provenance contract bound to the registered topology and exact public mixture. Historical trainers/evaluators cannot supply successor semantic authority."
+    },
+    {
+      "id": "N0-P43C",
+      "stage": "joint_training_orchestration",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_successor_trainer_reuses_registered_stage_and_joint_step_without_historical_model_authority",
+      "requirement": "The successor trainer must load the one registered full topology and route optimization through the governed stage policy, scheduler, compilers, joint step and objective rather than rebuilding historical frozen/pilot model paths."
+    },
+    {
+      "id": "N0-P43D",
+      "stage": "dev_validation",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dev_evaluator_is_dev_only_and_cannot_open_final",
+      "requirement": "Checkpoint selection must use DEV-only successor evaluation. The evaluator must reject FINAL rows/results and cannot authorize FINAL opening or N0 completion."
     }
   ],
   "closure_rule": {
