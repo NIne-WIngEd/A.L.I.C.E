@@ -6,6 +6,7 @@ import gc
 import hashlib
 import json
 import resource
+import subprocess
 import unicodedata
 from pathlib import Path
 from typing import Any
@@ -152,6 +153,8 @@ def tokenizer_stress(tokenizer: Any, cfg: dict[str, Any]) -> dict[str, Any]:
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--qualification-config", required=True)
+    p.add_argument("--topology-config", required=True)
+    p.add_argument("--source-revision", required=True)
     p.add_argument("--semantic-config", required=True)
     p.add_argument("--semantic-checkpoint", required=True)
     p.add_argument("--tokenizer-dir", required=True)
@@ -161,6 +164,7 @@ def main() -> None:
     args = p.parse_args()
 
     qualification_path = Path(args.qualification_config).resolve()
+    topology_path = Path(args.topology_config).resolve()
     semantic_config_path = Path(args.semantic_config).resolve()
     checkpoint_path = Path(args.semantic_checkpoint).resolve()
     tokenizer_dir = Path(args.tokenizer_dir).resolve()
@@ -170,7 +174,21 @@ def main() -> None:
     if output_path.exists():
         raise SystemExit(f"refusing to overwrite {output_path}")
 
+    source_revision=str(args.source_revision).strip().lower()
+    if len(source_revision)!=40 or any(
+        ch not in "0123456789abcdef" for ch in source_revision
+    ):
+        raise SystemExit("source revision must be exact 40-hex git commit")
+    current_revision=subprocess.check_output(
+        ["git","rev-parse","HEAD"],text=True
+    ).strip().lower()
+    if current_revision!=source_revision:
+        raise SystemExit("CPU runtime source revision drift")
+
     cfg = json.loads(qualification_path.read_text(encoding="utf-8"))
+    topology=json.loads(topology_path.read_text(encoding="utf-8"))
+    if topology.get("schema")!="alice.eipm.n0.full-envelope-registered-topology.v1":
+        raise SystemExit("registered topology schema drift")
     if (
         cfg.get("schema")
         != "alice.eipm.n0.full-envelope-cpu-runtime-qualification.v1"
@@ -235,6 +253,29 @@ def main() -> None:
         raise SystemExit("semantic parameter count drift")
 
     scfg = cfg["successor"]
+    registered=dict(topology["registered_system"])
+    learned_pairs={
+        "semantic_dim":"semantic_dim",
+        "model_dim":"model_dim",
+        "num_hidden_states":"num_hidden_states",
+        "num_attention_heads":"num_attention_heads",
+        "structured_layers":"structured_layers",
+        "field_metadata_dim":"field_metadata_dim",
+        "edge_metadata_dim":"edge_metadata_dim",
+    }
+    for qualification_key,registered_key in learned_pairs.items():
+        if int(scfg[qualification_key])!=int(registered[registered_key]):
+            raise SystemExit(
+                f"CPU qualification learned-topology drift: {qualification_key}"
+            )
+    if int(cfg["long_context_bridge_runtime"]["bridge_layers"])!=int(
+        registered["segment_bridge_layers"]
+    ):
+        raise SystemExit("CPU qualification segment-bridge topology drift")
+    if topology["semantic_initialization"].get("checkpoint_sha256")!=expected[
+        "checkpoint_sha256"
+    ]:
+        raise SystemExit("CPU qualification semantic initialization contract drift")
     long_cfg = cfg["long_context_bridge_runtime"]
     system = N0FullEnvelopeTrainableSystemV1(
         semantic_model=semantic_model,
@@ -710,6 +751,13 @@ def main() -> None:
             "alice.eipm.n0.full-envelope-cpu-runtime-result.v1"
         ),
         "status": PASS,
+        "source_revision":source_revision,
+        "registered_topology_sha256":sha256(topology_path),
+        "qualification_config_sha256":sha256(qualification_path),
+        "semantic_config_sha256":sha256(semantic_config_path),
+        "tokenizer_json_sha256":sha256(tokenizer_dir/"tokenizer.json"),
+        "source_config_sha256":sha256(source_config_path),
+        "corpus_receipt_sha256":sha256(corpus_dir/"corpus_receipt.json"),
         "cpu_only": True,
         "inference_mode": True,
         "gradient": False,
