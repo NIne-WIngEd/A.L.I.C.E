@@ -92,6 +92,7 @@ on:
       - "src/alice_personality/n0/full_envelope_stage_policy_v1.py"
       - "src/alice_personality/n0/full_envelope_runtime_factory_v1.py"
       - "tests/eipm/test_n0_full_envelope_trainable_system_v1.py"
+      - "tests/eipm/test_n0_full_envelope_joint_runtime_v1.py"
       - ".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml"
   workflow_dispatch:
 
