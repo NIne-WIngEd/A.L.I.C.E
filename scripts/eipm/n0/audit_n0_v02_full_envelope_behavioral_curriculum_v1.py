@@ -463,6 +463,10 @@ def main() -> None:
     edge_points=sorted({int(x["runtime_edge_count"]) for x in rows})
     step_points=sorted({int(x["runtime_reasoning_steps"]) for x in rows})
     answer_points=sorted({int(x["runtime_candidate_answer_count"]) for x in rows})
+    train_step_points=sorted({int(x["runtime_reasoning_steps"]) for x in train})
+    dev_step_points=sorted({int(x["runtime_reasoning_steps"]) for x in dev})
+    train_answer_points=sorted({int(x["runtime_candidate_answer_count"]) for x in train})
+    dev_answer_points=sorted({int(x["runtime_candidate_answer_count"]) for x in dev})
     if len(relation_points)<4:
         errors.append("relation-cardinality coverage too narrow")
     if len(field_points)<4:
@@ -473,6 +477,19 @@ def main() -> None:
         errors.append("reasoning-step coverage must include 0,1,2")
     if len(answer_points)<3:
         errors.append("candidate-answer cardinality coverage too narrow")
+    split_contract=contract.get("split_isolation") or {}
+    if split_contract.get("dev_candidate_answer_cardinality_extrapolation_required") is True:
+        if not train_answer_points or not dev_answer_points or max(dev_answer_points)<=max(train_answer_points):
+            errors.append(
+                "DEV candidate-answer cardinality must exceed every TRAIN operating point"
+            )
+    if split_contract.get("dev_reasoning_depth_extrapolation_required") is True:
+        if not train_step_points or not dev_step_points or max(dev_step_points)<=max(train_step_points):
+            errors.append(
+                "DEV reasoning depth must exceed every TRAIN operating point"
+            )
+    if split_contract.get("dev_extrapolation_is_operating_point_not_capability_ceiling") is not True:
+        errors.append("DEV extrapolation operating points may not become capability ceilings")
 
     same_relation_irrelevant_hard_negative_rows=0
     for row in rows:
@@ -633,6 +650,10 @@ def main() -> None:
         "edge_count_points":edge_points,
         "reasoning_step_points":step_points,
         "answer_count_points":answer_points,
+        "train_reasoning_step_points":train_step_points,
+        "dev_reasoning_step_points":dev_step_points,
+        "train_answer_count_points":train_answer_points,
+        "dev_answer_count_points":dev_answer_points,
         "public_target_position_histogram":dict(sorted(answer_hist.items())),
         "relation_target_position_histogram":dict(sorted(relation_target_positions.items())),
         "same_relation_irrelevant_hard_negative_rows":same_relation_irrelevant_hard_negative_rows,

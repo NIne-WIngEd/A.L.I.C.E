@@ -1279,6 +1279,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_successor_dev_evaluator_executes_j1_gate_registry_and_fixed_regression_suites",
       "requirement": "The successor DEV evaluator must compute J1 relation/factor/control/counterfactual/token-grounding metrics and frozen historical teacher/novel/voice regression surfaces, then evaluate the precommitted J1 registry fail-closed. It may not hard-code stage failure or use FINAL to fill missing evidence."
+    },
+    {
+      "id": "N0-P39BX",
+      "stage": "behavioral_curriculum",
+      "kind": "CI_REQUIRED",
+      "receipt": "PASS_N0_FULL_ENVELOPE_BEHAVIORAL_FABRIC_STATIC_AUDIT",
+      "requirement": "Before gradient, public behavioral DEV must contain candidate-answer cardinality and reasoning-depth operating points strictly beyond TRAIN, while FINAL remains separate. Candidate-cardinality and composition extrapolation cannot be named J3 stage gates if DEV only repeats TRAIN geometry."
     }
   ],
   "closure_rule": {

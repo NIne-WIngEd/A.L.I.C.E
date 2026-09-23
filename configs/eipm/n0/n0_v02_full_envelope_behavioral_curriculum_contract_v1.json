@@ -65,7 +65,10 @@
     "behavioral_lane_relation_family_overlap_allowed": true,
     "reason": "The behavioral lane isolates structural/causal templates and entities while separate natural/operator lanes own relation-family extrapolation. Requiring every relation family to be held out in every lane would remove needed structural training rather than improve leakage control.",
     "train_dev_field_surface_overlap_forbidden": true,
-    "train_dev_candidate_surface_overlap_forbidden": true
+    "train_dev_candidate_surface_overlap_forbidden": true,
+    "dev_candidate_answer_cardinality_extrapolation_required": true,
+    "dev_reasoning_depth_extrapolation_required": true,
+    "dev_extrapolation_is_operating_point_not_capability_ceiling": true
   },
   "shortcut_controls": {
     "candidate_answer_order_permutation_required": true,
@@ -180,7 +183,9 @@
     "counterfactual_validity_audit_required": true,
     "final_validation_remains_separate": true,
     "field_and_candidate_surface_isolation_audit_required": true,
-    "matched_candidate_context_swap_audit_required": true
+    "matched_candidate_context_swap_audit_required": true,
+    "dev_candidate_cardinality_extrapolation_audit_required": true,
+    "dev_reasoning_depth_extrapolation_audit_required": true
   },
   "authorization": {
     "materialization": true,
