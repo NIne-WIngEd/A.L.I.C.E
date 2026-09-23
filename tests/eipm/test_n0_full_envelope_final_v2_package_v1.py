@@ -259,3 +259,14 @@ def test_final_directional_endpoint_reversal_gate_uses_end_to_end_behavior() -> 
         "fabric.scenario_public_count.reverse_traversal"
     )
 
+
+
+def test_final_v2_evaluator_requires_exact_candidate_source_checkout() -> None:
+    source=(
+        ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py"
+    ).read_text()
+    assert 'subprocess.check_output(["git","rev-parse","HEAD"]' in source
+    assert 'subprocess.check_output(["git","status","--porcelain","--untracked-files=no"]' in source
+    assert "FINAL evaluator source revision does not match candidate" in source
+    assert "FINAL evaluator requires a clean tracked-source worktree" in source
+
