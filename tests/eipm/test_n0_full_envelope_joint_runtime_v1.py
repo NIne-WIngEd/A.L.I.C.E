@@ -606,8 +606,13 @@ def test_runtime_qualification_token_aligns_dedicated_J1_long_semantic_evidence(
     assert "build_n0_v02_semantic_operator_long_context_curriculum_v1.py" in runner
     assert "audit_n0_v02_semantic_operator_long_context_curriculum_v1.py" in runner
     assert "SEMANTIC_LONG_TOKEN_AUDIT" in runner
-    assert "audit_n0_v02_operator_evidence_token_alignment_v1.py" in runner
-    assert "--max-length 8192" in runner
+    assert "audit_n0_v02_semantic_operator_long_token_alignment_v1.py" in runner
+    long_audit=(
+        ROOT/"scripts/eipm/n0/audit_n0_v02_semantic_operator_long_token_alignment_v1.py"
+    ).read_text()
+    assert "max_length=None" in long_audit
+    assert "first_positive_evidence_token" in long_audit
+    assert "native_window_tokens" in long_audit
     assert "PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1" in runner
 
 
