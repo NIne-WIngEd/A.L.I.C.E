@@ -200,3 +200,21 @@ Useful negative evidence: a simple extracted graph underperformed a matched flat
 - Do not force consolidation or reconsolidation.
 - Do not replace the current EIPM multi-view/structured design with a generic reward model.
 - Do not change canonical plans until these deltas are reviewed and accepted through the existing governance process.
+
+
+---
+
+## Promotion status — 2026-09-23
+
+The research intake is no longer only archival. Findings with direct current architectural impact were promoted to canonical `main` through PR #91, merge commit `d2a828281e0747046554331071b3fd5912cb4a6b`.
+
+Promoted now:
+
+- evidence-consumption / citation-lock qualification in Stage G;
+- consolidation path-dependence qualification in Stage G;
+- projection-only usage-aware retrieval challenger requirements;
+- adaptive Context Planner support for evidence-aware retention and versioned context/harness challengers;
+- failure-localized multi-substrate learning;
+- explicit rule that external skill/harness evolution and parametric learning are complementary rather than mutually exclusive.
+
+Research-only / future design seeds remain research notes until their implementation stage is active or stronger evidence requires earlier promotion. Current EIPM N0 received no architecture mutation from these papers because none of the reviewed findings changes N0's identity-neutral semantic/judgment objective.
