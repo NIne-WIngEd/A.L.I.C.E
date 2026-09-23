@@ -369,7 +369,14 @@
     "stage_transition_resume_requires_predecessor_dev_pass": true,
     "dev_checkpoint_selector": "scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py",
     "first_passing_checkpoint_selection_enforced_by_chained_receipts": true,
-    "every_checkpoint_chain_member_before_selection_requires_dev_receipt": true
+    "every_checkpoint_chain_member_before_selection_requires_dev_receipt": true,
+    "stage_transition_optimizer_policy": {
+      "model_weights": "selected_predecessor_checkpoint",
+      "objective_balancer_state": "preserve",
+      "optimizer_state": "restart",
+      "scheduler_state": "restart_with_stage_local_warmup",
+      "reason": "Newly activated stage owners must not inherit a predecessor scheduler that may already be deeply decayed or at zero learning rate; model capability and public-loss calibration carry forward while optimizer dynamics restart for the new causal owner set."
+    }
   },
   "loss_balancing": {
     "method": "macro_family_balanced_with_per_objective_scale_normalization",
