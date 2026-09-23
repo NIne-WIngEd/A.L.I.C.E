@@ -1,0 +1,573 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-final-v2-gate-registry.v1",
+  "status": "PRECOMMITTED_COMPLETE_GATE_MAPPING_NO_RESULTS_OBSERVED",
+  "date": "2026-09-23",
+  "final_contract": "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+  "evaluator_implementation": "scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py",
+  "measurement_policy": {
+    "empty_empirical_coverage_fails_closed": true,
+    "threshold_source": "final contract only",
+    "threshold_changes_after_results": false,
+    "automatic_repair_or_rerun": false,
+    "static_proof_requires_exact_source_revision": true,
+    "semantic_cosine_diagnostic_only": true
+  },
+  "sections": {
+    "deterministic_behavior_gate": {
+      "relation_semantics_top1_min": {
+        "kind": "metric",
+        "path": "semantic.relation_sequence_exact"
+      },
+      "heldout_relation_family_top1_min": {
+        "kind": "metric",
+        "path": "semantic.relation_sequence_exact"
+      },
+      "factor_macro_accuracy_min": {
+        "kind": "metric",
+        "path": "semantic.dynamic_factor_macro_accuracy"
+      },
+      "heldout_factor_combination_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.heldout_factor_combination_accuracy",
+        "coverage_path": "extrapolation.heldout_factor_combination_count"
+      },
+      "ordered_relation_sequence_exact_min": {
+        "kind": "metric",
+        "path": "semantic.ordered_relation_sequence_exact",
+        "coverage_path": "semantic.ordered_relation_count"
+      },
+      "ordered_family_min_success_min": {
+        "kind": "metric",
+        "path": "semantic_final.ordered_family_min_success",
+        "coverage_path": "semantic_final.ordered_family_count"
+      },
+      "source_target_causal_pair_completion_min": {
+        "kind": "metric",
+        "path": "semantic.source_target_pair_completion",
+        "coverage_path": "semantic.source_target_pair_count"
+      },
+      "relation_order_causal_pair_completion_min": {
+        "kind": "metric",
+        "path": "semantic_final.relation_order_pair_completion",
+        "coverage_path": "semantic_final.relation_order_pair_count"
+      },
+      "support_edge_f1_min": {
+        "kind": "metric",
+        "path": "fabric.support_edge_f1"
+      },
+      "path_focus_top1_min": {
+        "kind": "metric",
+        "path": "fabric.ordered_executor_endpoint_accuracy"
+      },
+      "unknown_defer_accuracy_min": {
+        "kind": "metric",
+        "path": "semantic.unknown_defer_accuracy",
+        "coverage_path": "semantic.unknown_defer_count"
+      },
+      "nonrelational_false_assertion_rate_max": {
+        "kind": "metric",
+        "path": "semantic_final.nonrelational_false_assertion_rate",
+        "coverage_path": "semantic.unknown_defer_count"
+      },
+      "structural_type_violation_rate_max": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P13A"
+        ]
+      },
+      "natural_heldout_relation_family_top1_min": {
+        "kind": "metric",
+        "path": "natural.top1",
+        "coverage_path": "natural.rows"
+      },
+      "exact_null_support_on_no_evidence_min": {
+        "kind": "metric",
+        "path": "fabric.null_support_exact_rate",
+        "coverage_path": "fabric.null_support_count"
+      },
+      "truncated_program_false_completion_rate_max": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P24",
+          "N0-P24I"
+        ]
+      },
+      "mixed_step_direction_sequence_exact_min": {
+        "kind": "metric",
+        "path": "semantic.mixed_step_direction_sequence_exact",
+        "coverage_path": "semantic.mixed_step_direction_count"
+      },
+      "mixed_step_modifier_sequence_exact_min": {
+        "kind": "metric",
+        "path": "semantic.mixed_step_modifier_sequence_exact",
+        "coverage_path": "semantic.mixed_step_modifier_count"
+      },
+      "symmetric_relation_endpoint_reversal_consistency_min": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P14",
+          "N0-P20",
+          "N0-P23"
+        ]
+      },
+      "directional_relation_endpoint_reversal_sensitivity_min": {
+        "kind": "metric",
+        "path": "semantic_final.reverse_ordered_accuracy",
+        "coverage_path": "semantic_final.reverse_ordered_count"
+      },
+      "step_conditioned_relation_semantic_sequence_exact_min": {
+        "kind": "metric",
+        "path": "semantic_final.multi_step_relation_exact",
+        "coverage_path": "semantic_final.multi_step_relation_count"
+      },
+      "program_relation_state_assignment_weighting_required": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P23A"
+        ]
+      },
+      "exact_joint_program_completion_required": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P24J",
+          "N0-P24K",
+          "N0-P24L",
+          "N0-P24M"
+        ]
+      }
+    },
+    "extrapolation_gate": {
+      "unseen_relation_family_accuracy_min": {
+        "kind": "metric",
+        "path": "semantic.relation_sequence_exact"
+      },
+      "unseen_candidate_cardinality_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.candidate_cardinality_accuracy",
+        "coverage_path": "extrapolation.candidate_cardinality_count"
+      },
+      "unseen_factor_cardinality_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.factor_cardinality_accuracy",
+        "coverage_path": "extrapolation.factor_cardinality_count"
+      },
+      "longer_composition_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.longer_composition_accuracy",
+        "coverage_path": "extrapolation.longer_composition_count"
+      },
+      "unseen_type_schema_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.type_schema_accuracy",
+        "coverage_path": "extrapolation.type_schema_count"
+      },
+      "domain_transfer_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.domain_transfer_accuracy",
+        "coverage_path": "extrapolation.domain_transfer_count"
+      },
+      "per_example_candidate_subset_batch_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.candidate_subset_batch_accuracy"
+      },
+      "runtime_relation_symmetry_transfer_min": {
+        "kind": "metric",
+        "path": "extrapolation.symmetric_relation_accuracy",
+        "coverage_path": "extrapolation.symmetric_relation_count"
+      },
+      "long_context_distant_decisive_evidence_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.long_distant_accuracy",
+        "coverage_path": "extrapolation.long_distant_count"
+      },
+      "cross_native_window_relation_composition_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.cross_window_relation_accuracy",
+        "coverage_path": "extrapolation.cross_window_relation_count"
+      },
+      "cross_native_window_conflict_resolution_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.cross_window_conflict_accuracy",
+        "coverage_path": "extrapolation.cross_window_conflict_count"
+      },
+      "long_relation_description_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.long_relation_accuracy",
+        "coverage_path": "extrapolation.long_relation_count"
+      },
+      "long_factor_description_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.long_factor_accuracy",
+        "coverage_path": "extrapolation.long_factor_count"
+      },
+      "long_field_sparse_relevance_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.long_field_accuracy",
+        "coverage_path": "extrapolation.long_field_count"
+      },
+      "long_candidate_comparison_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.long_candidate_accuracy",
+        "coverage_path": "extrapolation.long_candidate_count"
+      },
+      "long_descriptor_transfer_accuracy_min": {
+        "kind": "metric",
+        "path": "extrapolation.long_descriptor_accuracy",
+        "coverage_path": "extrapolation.long_descriptor_count"
+      }
+    },
+    "invariance_gate": {
+      "relation_candidate_permutation_max_delta": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P02"
+        ]
+      },
+      "factor_candidate_permutation_max_delta": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P03"
+        ]
+      },
+      "field_permutation_max_delta": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P10",
+          "N0-P39BA"
+        ]
+      },
+      "edge_permutation_max_delta": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P13",
+          "N0-P39BA"
+        ]
+      },
+      "opaque_key_rename_max_delta": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P39BA",
+          "N0-P39PT"
+        ]
+      },
+      "irrelevant_context_growth_max_delta": {
+        "kind": "metric",
+        "path": "invariance.irrelevant_context_growth_max_delta",
+        "coverage_path": "invariance.irrelevant_context_growth_count"
+      },
+      "paraphrase_consistency_min": {
+        "kind": "metric",
+        "path": "invariance.paraphrase_consistency",
+        "coverage_path": "invariance.paraphrase_count"
+      },
+      "natural_relation_candidate_permutation_max_delta": {
+        "kind": "metric",
+        "path": "invariance.natural_relation_candidate_permutation_max_delta",
+        "coverage_path": "invariance.natural_relation_candidate_permutation_count"
+      },
+      "symmetric_edge_storage_reversal_max_delta": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P14",
+          "N0-P23"
+        ]
+      },
+      "native_window_boundary_shift_max_delta": {
+        "kind": "metric",
+        "path": "invariance.native_window_boundary_shift_max_delta",
+        "coverage_path": "invariance.native_window_boundary_shift_count"
+      }
+    },
+    "uncertainty_plurality_gate": {
+      "ambiguous_plurality_mass_on_valid_set_min": {
+        "kind": "metric",
+        "path": "semantic.plurality_valid_mass_mean",
+        "coverage_path": "semantic.plurality_count"
+      },
+      "unsupported_schema_defer_min": {
+        "kind": "metric",
+        "path": "semantic.unknown_defer_accuracy",
+        "coverage_path": "semantic.unknown_defer_count"
+      },
+      "uncertainty_increase_on_evidence_removal_min": {
+        "kind": "metric",
+        "path": "fabric.evidence_removal_uncertainty_increase",
+        "coverage_path": "fabric.evidence_removal_uncertainty_count"
+      },
+      "forced_top1_on_co_valid_cases_max": {
+        "kind": "metric",
+        "path": "semantic.plurality_forced_top1_rate",
+        "coverage_path": "semantic.plurality_count"
+      },
+      "uncertainty_increase_measurement": {
+        "kind": "declaration",
+        "expected": "normalized entropy over valid public-judgment candidates after decisive evidence removal"
+      },
+      "confidently_wrong_after_evidence_removal_is_not_sufficient": {
+        "kind": "declaration",
+        "expected": true
+      }
+    },
+    "evidence_causality_gate": {
+      "decisive_source_removal_behavior_change_min": {
+        "kind": "metric",
+        "path": "fabric.decisive_source_removal_success",
+        "coverage_path": "fabric.decisive_source_removal_count"
+      },
+      "irrelevant_source_removal_invariance_min": {
+        "kind": "metric",
+        "path": "fabric.irrelevant_source_removal_invariance",
+        "coverage_path": "fabric.irrelevant_source_removal_count"
+      },
+      "query_evidence_counterfactual_sensitivity_min": {
+        "kind": "metric",
+        "path": "semantic_final.query_evidence_counterfactual_sensitivity",
+        "coverage_path": "semantic_final.query_evidence_counterfactual_count"
+      },
+      "schema_evidence_counterfactual_sensitivity_min": {
+        "kind": "metric",
+        "path": "semantic_final.schema_evidence_counterfactual_sensitivity",
+        "coverage_path": "semantic_final.schema_evidence_counterfactual_count"
+      },
+      "source_anchor_exactness_required": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P26"
+        ]
+      },
+      "no_structural_support_execution_confidence_max": {
+        "kind": "metric",
+        "path": "fabric.no_support_execution_confidence_max",
+        "coverage_path": "fabric.null_support_count"
+      },
+      "distant_cross_window_decisive_source_removal_behavior_change_min": {
+        "kind": "metric",
+        "path": "fabric.distant_decisive_removal_success",
+        "coverage_path": "fabric.distant_decisive_removal_count"
+      },
+      "step_relation_semantic_counterfactual_sensitivity_min": {
+        "kind": "metric",
+        "path": "semantic.relation_counterfactual_margin_success",
+        "coverage_path": "semantic.relation_counterfactual_margin_count"
+      },
+      "unsupported_relation_graph_view_activation_rate_max": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P26C"
+        ]
+      },
+      "duplicate_edge_graph_activity_inflation_max": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P18A"
+        ]
+      },
+      "type_incompatible_edge_intervention_invariance_required": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P13A"
+        ]
+      },
+      "binder_null_support_blocks_graph_view_effect_required": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P26C"
+        ]
+      },
+      "same_relation_irrelevant_support_false_positive_rate_max": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P24H"
+        ]
+      },
+      "criterion_neutral_binder_preserves_query_relevant_quality_alternatives_required": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P24C",
+          "N0-P24F",
+          "N0-P24H"
+        ]
+      },
+      "truncated_program_blocks_global_relational_view_activation_required": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P24I"
+        ]
+      },
+      "incomplete_only_relation_step_intervention_invariance_required": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P24L",
+          "N0-P24M"
+        ]
+      },
+      "disjoint_start_and_completion_false_positive_rate_max": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P24J",
+          "N0-P24K"
+        ]
+      }
+    },
+    "general_semantic_regression_gate": {
+      "historical_teacher_dev_top1_floor": {
+        "kind": "metric",
+        "path": "regression.teacher_dev_top1",
+        "coverage_path": "regression.teacher_dev_rows"
+      },
+      "historical_novel_cross_top1_floor": {
+        "kind": "metric",
+        "path": "regression.novel_cross_top1",
+        "coverage_path": "regression.novel_cross_rows"
+      },
+      "historical_voice_top1_floor": {
+        "kind": "metric",
+        "path": "regression.voice_fixed_top1",
+        "coverage_path": "regression.voice_fixed_rows"
+      },
+      "role": {
+        "kind": "declaration",
+        "expected": "minimum regression floors only; not sufficient for N0 closure"
+      },
+      "new_natural_public_challenge_required": {
+        "kind": "metric",
+        "path": "natural.rows",
+        "comparison": "positive"
+      },
+      "new_natural_public_thresholds_frozen_before_candidate_results": {
+        "kind": "declaration",
+        "expected": true
+      }
+    },
+    "structured_fabric_gate": {
+      "semantic_cosine_metrics_diagnostic_only": {
+        "kind": "declaration",
+        "expected": true
+      },
+      "permutation_equivariance_required": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P10",
+          "N0-P13"
+        ]
+      },
+      "runtime_type_descriptor_transfer_required": {
+        "kind": "metric",
+        "path": "extrapolation.type_schema_accuracy",
+        "coverage_path": "extrapolation.type_schema_count"
+      },
+      "unseen_provenance_descriptor_transfer_required": {
+        "kind": "metric",
+        "path": "extrapolation.long_descriptor_accuracy",
+        "coverage_path": "extrapolation.long_descriptor_count"
+      },
+      "missingness_behavior_required": {
+        "kind": "metric",
+        "path": "runtime_view.unavailable_view_accuracy",
+        "coverage_path": "runtime_view.unavailable_view_count"
+      }
+    },
+    "fusion_latent_gate": {
+      "exact_source_anchor_required": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P26"
+        ]
+      },
+      "missing_view_safety_required": {
+        "kind": "metric",
+        "path": "runtime_view.unavailable_view_accuracy",
+        "coverage_path": "runtime_view.unavailable_view_count"
+      },
+      "decisive_view_causal_use_required": {
+        "kind": "metric",
+        "path": "fabric.decisive_source_removal_success",
+        "coverage_path": "fabric.decisive_source_removal_count"
+      },
+      "disagreement_preservation_required": {
+        "kind": "metric",
+        "path": "runtime_view.reliability_reversal_accuracy",
+        "coverage_path": "runtime_view.reliability_reversal_count"
+      },
+      "competitive_latent_noncollapse_required": {
+        "kind": "metric",
+        "path": "fabric.latent_noncollapse_success_rate",
+        "coverage_path": "fabric.latent_noncollapse_count"
+      },
+      "source_view_recoverability_required": {
+        "kind": "metric",
+        "path": "fabric.source_view_recoverability_success_rate",
+        "coverage_path": "fabric.source_view_recoverability_count"
+      },
+      "behaviorally_grounded_readout_required": {
+        "kind": "metric",
+        "path": "fabric.public_judgment_top1",
+        "coverage_path": "fabric.public_judgment_count"
+      },
+      "parent_embedding_cosine_not_sufficient": {
+        "kind": "declaration",
+        "expected": true
+      },
+      "fusion_route_causally_controls_latent_contribution_required": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P26A"
+        ]
+      },
+      "final_judgment_gradient_to_fusion_router_required": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P26B",
+          "N0-P39Y"
+        ]
+      },
+      "recoverability_applies_to_labeled_relevant_views_not_all_available": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P35A",
+          "N0-P45R"
+        ]
+      },
+      "irrelevant_available_view_invariance_required": {
+        "kind": "metric",
+        "path": "fabric.irrelevant_source_removal_invariance",
+        "coverage_path": "fabric.irrelevant_source_removal_count"
+      },
+      "program_averaged_relation_state_cannot_replace_step_execution_semantics": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P23A",
+          "N0-P24M"
+        ]
+      },
+      "candidate_only_public_judgment_bypass_forbidden": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P37E"
+        ]
+      },
+      "candidate_specific_logits_require_current_latent_interaction": {
+        "kind": "static_proof",
+        "obligation_ids": [
+          "N0-P37E"
+        ]
+      },
+      "matched_candidate_context_swap_required": {
+        "kind": "metric",
+        "path": "semantic_final.candidate_context_swap_accuracy",
+        "coverage_path": "semantic_final.candidate_context_swap_count"
+      },
+      "candidate_surface_alone_may_not_identify_public_target": {
+        "kind": "metric",
+        "path": "semantic_final.candidate_context_swap_accuracy",
+        "coverage_path": "semantic_final.candidate_context_swap_count"
+      }
+    }
+  },
+  "results_observed": false,
+  "final_opening_authorized": false,
+  "training_authorized": false,
+  "model_selection_authorized": false,
+  "private_identity_data": false,
+  "n0_complete": false
+}
