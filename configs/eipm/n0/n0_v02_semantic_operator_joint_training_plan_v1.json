@@ -70,7 +70,8 @@
       "candidate_text",
       "descriptor_text",
       "internal_view_descriptor",
-      "additional_view_descriptor"
+      "additional_view_descriptor",
+      "additional_view_source"
     ],
     "registered_trainable_system": "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
     "one_shared_semantic_backbone_for_replay_and_full_envelope": true,
@@ -81,7 +82,9 @@
     "completed_program_relation_summary_excludes_unknown_and_truncated_only_branches": true,
     "executor_step_state_conditioned_on_future_stop_completion": true,
     "additional_runtime_view_source_text_training_adapter": true,
-    "precomputed_additional_runtime_views_retained": true
+    "precomputed_additional_runtime_views_retained": true,
+    "additional_runtime_view_source_text_adapter": "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
+    "additional_runtime_view_source_text_shares_semantic_input": true
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
