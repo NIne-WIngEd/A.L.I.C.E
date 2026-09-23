@@ -71,8 +71,12 @@ def main() -> None:
     p.add_argument("--final-contract",required=True)
     p.add_argument("--behavioral-train-dev-rows",required=True)
     p.add_argument("--semantic-train-dev-rows",required=True)
+    p.add_argument("--runtime-view-train-dev-rows",required=True)
+    p.add_argument("--long-context-train-dev-rows",required=True)
     p.add_argument("--synthetic-final-rows",required=True)
     p.add_argument("--semantic-final-rows",required=True)
+    p.add_argument("--runtime-view-final-rows",required=True)
+    p.add_argument("--long-context-final-rows",required=True)
     p.add_argument("--package-manifest",required=True)
     p.add_argument("--fewrel-final-rows",required=True)
     p.add_argument("--fewrel-final-bank",required=True)
@@ -83,7 +87,8 @@ def main() -> None:
 
     paths={name:Path(getattr(args,name)) for name in (
         "package_config","evaluator_contract","final_contract","behavioral_train_dev_rows",
-        "semantic_train_dev_rows","synthetic_final_rows","semantic_final_rows","package_manifest",
+        "semantic_train_dev_rows","runtime_view_train_dev_rows","long_context_train_dev_rows",
+        "synthetic_final_rows","semantic_final_rows","runtime_view_final_rows","long_context_final_rows","package_manifest",
         "fewrel_final_rows","fewrel_final_bank","fewrel_manifest","fewrel_audit","output"
     )}
     if paths["output"].exists():
@@ -97,8 +102,12 @@ def main() -> None:
     fewrel_audit=json.loads(paths["fewrel_audit"].read_text(encoding="utf-8"))
     behavioral=read_jsonl(paths["behavioral_train_dev_rows"])
     semantic=read_jsonl(paths["semantic_train_dev_rows"])
+    runtime_train_dev=read_jsonl(paths["runtime_view_train_dev_rows"])
+    long_train_dev=read_jsonl(paths["long_context_train_dev_rows"])
     final_rows=read_jsonl(paths["synthetic_final_rows"])
     semantic_final=read_jsonl(paths["semantic_final_rows"])
+    runtime_final=read_jsonl(paths["runtime_view_final_rows"])
+    long_final=read_jsonl(paths["long_context_final_rows"])
     natural_final=read_jsonl(paths["fewrel_final_rows"])
     errors=[]
 
@@ -130,6 +139,8 @@ def main() -> None:
     expected_hashes={
         "synthetic_final_rows_sha256":paths["synthetic_final_rows"],
         "semantic_final_rows_sha256":paths["semantic_final_rows"],
+        "runtime_view_final_rows_sha256":paths["runtime_view_final_rows"],
+        "long_context_final_rows_sha256":paths["long_context_final_rows"],
         "fewrel_final_rows_sha256":paths["fewrel_final_rows"],
         "fewrel_final_bank_sha256":paths["fewrel_final_bank"],
         "fewrel_manifest_sha256":paths["fewrel_manifest"],
@@ -342,6 +353,128 @@ def main() -> None:
     ):
         errors.append("semantic FINAL source/target causal pairs incomplete")
 
+
+    for label,rows in (
+        ("runtime-view",runtime_final),
+        ("long-context",long_final),
+    ):
+        if not rows:
+            errors.append(f"{label} FINAL component empty")
+        for row in rows:
+            rid=str(row.get("id","<missing>"))
+            if row.get("split")!="final":
+                errors.append(f"{rid}: {label} row not FINAL")
+            if row.get("training_authorized") is not False:
+                errors.append(f"{rid}: {label} FINAL training-authorized")
+            if row.get("model_selection_authorized") is not False:
+                errors.append(f"{rid}: {label} FINAL model-selection-authorized")
+            if row.get("final_validation_only") is not True:
+                errors.append(f"{rid}: {label} FINAL lacks final-only marker")
+            if row.get("private_identity_data") is not False:
+                errors.append(f"{rid}: private identity data in {label} FINAL")
+
+    runtime_scenarios={str(x.get("scenario_family","")) for x in runtime_final}
+    required_runtime_scenarios={
+        "runtime_view_relevance_flip",
+        "runtime_view_reliability_reversal",
+    }
+    if not required_runtime_scenarios<=runtime_scenarios:
+        errors.append(
+            "runtime-view FINAL scenario coverage incomplete: "
+            +repr(sorted(required_runtime_scenarios-runtime_scenarios))
+        )
+    if not any(
+        any(not bool(v.get("available",True)) for v in row.get("additional_views") or [])
+        for row in runtime_final
+    ):
+        errors.append("runtime-view FINAL lacks unavailable-view challenge")
+    if not any(
+        any(
+            bool(v.get("irrelevant"))
+            and float(v.get("reliability",0.0))>=0.9
+            for v in row.get("additional_views") or []
+        )
+        for row in runtime_final
+    ):
+        errors.append("runtime-view FINAL lacks high-reliability irrelevant view")
+
+    required_long_surfaces={
+        "query","relation_schema","factor_schema","type_schema",
+        "field_text","field_descriptor","candidate_text",
+        "internal_view_descriptor","additional_view_descriptor",
+        "additional_view_source",
+    }
+    long_surfaces={str(x.get("long_context_surface","")) for x in long_final}
+    if long_surfaces!=required_long_surfaces:
+        errors.append(
+            "long-context FINAL surface coverage drift: "
+            +repr(sorted(required_long_surfaces-long_surfaces))
+        )
+    placements={str(x.get("long_context_placement_variant","")) for x in long_final}
+    if placements!={"tail","boundary_early","boundary_late"}:
+        errors.append("long-context FINAL placement coverage drift")
+    boundary_groups={}
+    for row in long_final:
+        pair=row.get("boundary_shift_pair_id")
+        if pair:
+            boundary_groups.setdefault(str(pair),set()).add(
+                str(row.get("long_context_placement_variant"))
+            )
+    if len(boundary_groups)!=len(required_long_surfaces) or any(
+        values!={"boundary_early","boundary_late"}
+        for values in boundary_groups.values()
+    ):
+        errors.append("long-context FINAL boundary-shift pairs incomplete")
+
+    def runtime_surface_signature(row: dict[str,Any]) -> str:
+        payload={
+            "query":row.get("query"),
+            "candidates":row.get("candidate_answers"),
+            "views":[
+                {
+                    "source":v.get("source_text"),
+                    "descriptor":v.get("descriptor_text"),
+                    "available":v.get("available"),
+                    "reliability":v.get("reliability"),
+                }
+                for v in row.get("additional_views") or []
+            ],
+        }
+        return hashlib.sha256(
+            json.dumps(payload,sort_keys=True).encode("utf-8")
+        ).hexdigest()
+
+    runtime_surface_overlap=sorted(
+        {runtime_surface_signature(x) for x in runtime_train_dev}
+        & {runtime_surface_signature(x) for x in runtime_final}
+    )
+    if runtime_surface_overlap:
+        errors.append("runtime-view FINAL surface overlaps TRAIN/DEV")
+
+    def long_surface_signature(row: dict[str,Any]) -> str:
+        payload={
+            "surface":row.get("long_context_surface"),
+            "placement":row.get("long_context_placement_variant"),
+            "query":row.get("query"),
+            "relation_candidates":row.get("relation_candidates"),
+            "factor_schemas":row.get("factor_schemas"),
+            "type_schema":row.get("type_schema"),
+            "fields":row.get("fields"),
+            "candidate_answers":row.get("candidate_answers"),
+            "additional_views":row.get("additional_views"),
+            "locator":row.get("long_context_locator"),
+        }
+        return hashlib.sha256(
+            json.dumps(payload,sort_keys=True).encode("utf-8")
+        ).hexdigest()
+
+    long_surface_overlap=sorted(
+        {long_surface_signature(x) for x in long_train_dev}
+        & {long_surface_signature(x) for x in long_final}
+    )
+    if long_surface_overlap:
+        errors.append("long-context FINAL surface overlaps TRAIN/DEV")
+
     natural_relation_overlap={
         "train_final":fewrel_audit.get("relation_overlap",{}).get("train_final"),
         "dev_final":fewrel_audit.get("relation_overlap",{}).get("dev_final"),
@@ -363,6 +496,14 @@ def main() -> None:
         "semantic_final_interventions":sorted(semantic_interventions),
         "semantic_final_plurality_rows":len(plurality_rows),
         "semantic_final_source_target_pair_count":len(pair_groups),
+        "runtime_view_final_rows":len(runtime_final),
+        "runtime_view_final_scenarios":sorted(runtime_scenarios),
+        "runtime_view_surface_overlap":runtime_surface_overlap,
+        "long_context_final_rows":len(long_final),
+        "long_context_final_surfaces":sorted(long_surfaces),
+        "long_context_final_placements":sorted(placements),
+        "long_context_boundary_pair_count":len(boundary_groups),
+        "long_context_surface_overlap":long_surface_overlap,
         "natural_rows":len(natural_final),
         "entity_overlap":entity_overlap,
         "template_overlap":template_overlap,

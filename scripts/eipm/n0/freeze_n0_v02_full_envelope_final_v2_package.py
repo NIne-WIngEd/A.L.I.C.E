@@ -21,6 +21,8 @@ def main() -> None:
     p.add_argument("--final-contract",required=True)
     p.add_argument("--synthetic-final-rows",required=True)
     p.add_argument("--semantic-final-rows",required=True)
+    p.add_argument("--runtime-view-final-rows",required=True)
+    p.add_argument("--long-context-final-rows",required=True)
     p.add_argument("--package-manifest",required=True)
     p.add_argument("--fewrel-final-rows",required=True)
     p.add_argument("--fewrel-final-bank",required=True)
@@ -31,6 +33,7 @@ def main() -> None:
 
     paths={name:Path(getattr(args,name)) for name in (
         "package_config","evaluator_contract","final_contract","synthetic_final_rows","semantic_final_rows",
+        "runtime_view_final_rows","long_context_final_rows",
         "package_manifest","fewrel_final_rows","fewrel_final_bank","fewrel_manifest","audit","output"
     )}
     if paths["output"].exists():

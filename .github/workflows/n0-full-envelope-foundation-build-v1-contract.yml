@@ -494,6 +494,8 @@ jobs:
             --final-contract configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
             --synthetic-output /tmp/n0-final-v2/synthetic_final_rows.jsonl \
             --semantic-final-output /tmp/n0-final-v2/semantic_final_rows.jsonl \
+            --runtime-view-final-output /tmp/n0-final-v2/runtime_view_final_rows.jsonl \
+            --long-context-final-output /tmp/n0-final-v2/long_context_final_rows.jsonl \
             --manifest-output /tmp/n0-final-v2/package_manifest.json
 
           python scripts/eipm/n0/audit_n0_v02_full_envelope_final_v2_package.py \
@@ -502,8 +504,12 @@ jobs:
             --final-contract configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
             --behavioral-train-dev-rows /tmp/n0-behavioral/rows.jsonl \
             --semantic-train-dev-rows /tmp/n0-so/rows.jsonl \
+            --runtime-view-train-dev-rows /tmp/n0-runtime-views/rows.jsonl \
+            --long-context-train-dev-rows /tmp/n0-long-context/rows.jsonl \
             --synthetic-final-rows /tmp/n0-final-v2/synthetic_final_rows.jsonl \
             --semantic-final-rows /tmp/n0-final-v2/semantic_final_rows.jsonl \
+            --runtime-view-final-rows /tmp/n0-final-v2/runtime_view_final_rows.jsonl \
+            --long-context-final-rows /tmp/n0-final-v2/long_context_final_rows.jsonl \
             --package-manifest /tmp/n0-final-v2/package_manifest.json \
             --fewrel-final-rows /tmp/n0-fewrel/final_rows.jsonl \
             --fewrel-final-bank /tmp/n0-fewrel/final_bank.json \
@@ -517,6 +523,8 @@ jobs:
             --final-contract configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
             --synthetic-final-rows /tmp/n0-final-v2/synthetic_final_rows.jsonl \
             --semantic-final-rows /tmp/n0-final-v2/semantic_final_rows.jsonl \
+            --runtime-view-final-rows /tmp/n0-final-v2/runtime_view_final_rows.jsonl \
+            --long-context-final-rows /tmp/n0-final-v2/long_context_final_rows.jsonl \
             --package-manifest /tmp/n0-final-v2/package_manifest.json \
             --fewrel-final-rows /tmp/n0-fewrel/final_rows.jsonl \
             --fewrel-final-bank /tmp/n0-fewrel/final_bank.json \
@@ -541,6 +549,19 @@ jobs:
           assert audit["semantic_final_relation_surface_overlap"]==[]
           assert audit["semantic_final_plurality_rows"]>0
           assert audit["semantic_final_source_target_pair_count"]>0
+          assert audit["runtime_view_surface_overlap"]==[]
+          assert audit["runtime_view_final_rows"]>0
+          assert audit["long_context_surface_overlap"]==[]
+          assert set(audit["long_context_final_surfaces"])=={
+              "query","relation_schema","factor_schema","type_schema",
+              "field_text","field_descriptor","candidate_text",
+              "internal_view_descriptor","additional_view_descriptor",
+              "additional_view_source",
+          }
+          assert set(audit["long_context_final_placements"])=={
+              "tail","boundary_early","boundary_late"
+          }
+          assert audit["long_context_boundary_pair_count"]==10
           assert audit["heldout_recency_provenance_combo_present"] is True
           assert audit["heldout_recency_provenance_combo_seen_in_behavioral_train_dev"] is False
           assert audit["heldout_recency_provenance_combo_seen_in_semantic_train_dev"] is False

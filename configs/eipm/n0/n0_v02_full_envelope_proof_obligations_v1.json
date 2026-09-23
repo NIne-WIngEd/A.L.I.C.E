@@ -1419,6 +1419,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_final_v2_contains_heterogeneous_runtime_view_and_long_context_challenges",
       "requirement": "The sealed FINAL-v2 package must include heterogeneous runtime-described view challenges and cross-native-window long-context challenges on every governed text surface. TRAIN/DEV runtime-view/long-context coverage or short behavioral FINAL rows cannot satisfy these FINAL closure gates."
+    },
+    {
+      "id": "N0-P46E",
+      "stage": "final_closure",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_final_v2_contains_heterogeneous_runtime_view_and_long_context_challenges",
+      "requirement": "FINAL runtime-view and long-context generators reuse the registered runtime-shaped interfaces in sealed FINAL authority mode rather than substituting TRAIN/DEV rows or a fixed view/context taxonomy."
     }
   ],
   "closure_rule": {
