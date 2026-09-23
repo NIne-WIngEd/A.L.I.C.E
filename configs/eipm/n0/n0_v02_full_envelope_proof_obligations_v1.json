@@ -1075,6 +1075,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_natural_relation_optimizer_compiler_is_registered",
       "requirement": "The FewRel natural-relation lane must have an optimizer-facing compiler and loss that keep opaque relation keys metadata-only and expose no fixed relation identity parameter axis."
+    },
+    {
+      "id": "N0-P39PU",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_registered_joint_step_executes_all_public_training_lanes_without_placeholder_losses",
+      "requirement": "The successor must expose one registered differentiable joint-step runtime that executes broad semantic replay, governed judgment replay, dedicated semantic-operator supervision, full-fabric behavioral counterfactuals, and natural-relation supervision through the same N0FullEnvelopeTrainableSystemV1 and FullEnvelopeJointTrainingObjectiveV1. Placeholder or proxy losses are forbidden."
     }
   ],
   "closure_rule": {

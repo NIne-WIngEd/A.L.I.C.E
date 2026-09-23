@@ -102,3 +102,19 @@ def test_natural_relation_optimizer_compiler_is_registered() -> None:
     assert "relation_keys_model_visible" in source
     assert "factor_labels_fabricated" in source
     assert "downstream_fabric_labels_fabricated" in source
+
+
+def test_registered_joint_step_executes_all_public_training_lanes_without_placeholder_losses() -> None:
+    path=ROOT/"src/alice_personality/n0/full_envelope_joint_step_v1.py"
+    assert path.is_file(), "registered all-lane joint-step runtime missing"
+    source=path.read_text()
+    assert "execute_full_envelope_joint_step" in source
+    assert "broad_semantic_replay_loss" in source
+    assert "governed_judgment_replay_loss" in source
+    assert "natural_relation_semantic_loss" in source
+    assert 'task="semantic_operator"' in source
+    assert 'task="full_envelope"' in source
+    assert 'task="natural_relation"' in source
+    assert 'task="mlm"' in source
+    assert 'task="teacher"' in source
+    assert "placeholder" not in source.lower()
