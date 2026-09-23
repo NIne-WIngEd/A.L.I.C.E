@@ -180,6 +180,17 @@ def verify_pre_gradient_runtime(
     tokenizer=require_status(
         tokenizer_audit_path,"PASS",label="exact tokenizer stress"
     )
+    if tokenizer.get("tokenizer_sha256")!=sha256_file(
+        Path(tokenizer_dir_path)/"tokenizer.json"
+    ):
+        raise SystemExit("tokenizer stress tokenizer hash drift")
+    broad_lane=(mixture.get("training_lanes") or {}).get(
+        "broad_semantic_replay"
+    ) or {}
+    if tokenizer.get("corpus_receipt_sha256")!=broad_lane.get(
+        "corpus_receipt_sha256"
+    ):
+        raise SystemExit("tokenizer stress corpus-receipt hash drift")
     operator_token=require_status(
         operator_evidence_token_receipt_path,PASS_OPERATOR_TOKEN,
         label="operator evidence token alignment"
@@ -209,6 +220,38 @@ def verify_pre_gradient_runtime(
         semantic_long_token_receipt_path,PASS_SEMANTIC_LONG_TOKEN,
         label="semantic long-context token evidence"
     )
+    lanes=mixture.get("training_lanes") or {}
+    long_lane=lanes.get("long_context_supplement") or {}
+    if boundary.get("source_revision")!=source_revision:
+        raise SystemExit("long-context boundary source revision drift")
+    if boundary.get("rows_sha256")!=long_lane.get("rows_sha256"):
+        raise SystemExit("long-context boundary row hash drift")
+    if boundary.get("manifest_sha256")!=long_lane.get("manifest_sha256"):
+        raise SystemExit("long-context boundary manifest hash drift")
+    if boundary.get("tokenizer_json_sha256")!=sha256_file(
+        Path(tokenizer_dir_path)/"tokenizer.json"
+    ):
+        raise SystemExit("long-context boundary tokenizer hash drift")
+    semantic_long_lane=lanes.get("semantic_operator_long_context") or {}
+    if semantic_long.get("source_revision")!=source_revision:
+        raise SystemExit("semantic long-context token source revision drift")
+    if semantic_long.get("rows_sha256")!=semantic_long_lane.get("rows_sha256"):
+        raise SystemExit("semantic long-context token row hash drift")
+    if semantic_long.get("manifest_sha256")!=semantic_long_lane.get("manifest_sha256"):
+        raise SystemExit("semantic long-context token manifest hash drift")
+    if semantic_long.get("tokenizer_json_sha256")!=sha256_file(
+        Path(tokenizer_dir_path)/"tokenizer.json"
+    ):
+        raise SystemExit("semantic long-context token tokenizer hash drift")
+    repo_root=Path(__file__).resolve().parents[3]
+    if boundary.get("contract_sha256")!=sha256_file(
+        repo_root/"configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json"
+    ):
+        raise SystemExit("long-context boundary contract hash drift")
+    if semantic_long.get("contract_sha256")!=sha256_file(
+        repo_root/"configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json"
+    ):
+        raise SystemExit("semantic long-context token contract hash drift")
     static_proof=require_status(
         static_proof_receipt_path,
         "PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1",
