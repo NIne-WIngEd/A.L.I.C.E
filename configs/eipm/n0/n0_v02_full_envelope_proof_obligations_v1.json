@@ -17,7 +17,8 @@
     "tests/eipm/test_n0_full_envelope_final_v2_package_v1.py",
     "tests/eipm/test_n0_full_envelope_long_context_curriculum_v1.py",
     "tests/eipm/test_n0_full_envelope_runtime_view_curriculum_v1.py",
-    "tests/eipm/test_n0_full_envelope_cpu_runtime_source_view_v1.py"
+    "tests/eipm/test_n0_full_envelope_cpu_runtime_source_view_v1.py",
+    "tests/eipm/test_n0_full_envelope_joint_runtime_v1.py"
   ],
   "critical_source_files": [
     "src/alice_personality/n0/semantic_operator_foundation.py",
@@ -1015,6 +1016,13 @@
       "status": "UNRESOLVED_BLOCKING",
       "receipt": "PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1",
       "requirement": "Before gradient, the exact governed v0.2.1 tokenizer must verify that every TRAIN/DEV boundary-shift pair moves identical decisive semantics from wholly before to wholly after the first virtualized ownership boundary on every governed long-text surface. This is robustness qualification, not an exact-untrained-output-equality claim."
+    },
+    {
+      "id": "N0-P39PM",
+      "stage": "full_public_mixture",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_public_mixture_manifest_is_executable_before_gradient",
+      "requirement": "Before gradient, N0 must have an executable full public-mixture manifest contract, builder, and auditor that bind every optimizer-facing public lane and all ten macro loss families while excluding FINAL rows and private identity data. A textual training-plan prerequisite without a materialization path is insufficient."
     }
   ],
   "closure_rule": {
