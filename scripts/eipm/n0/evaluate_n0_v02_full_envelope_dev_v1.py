@@ -60,6 +60,7 @@ from alice_personality.n0.v02_training import (
 
 
 STAGES=(J1,J2,J3)
+PASS_TRAIN_AUTH="AUTHORIZED_N0_FULL_ENVELOPE_TRAINING_FROM_EXACT_RUNTIME_RECEIPTS"
 
 
 def read_json(path: str | Path) -> dict[str,Any]:
@@ -1043,6 +1044,7 @@ def main() -> None:
     p.add_argument("--tokenizer-dir",required=True)
     p.add_argument("--candidate-system",required=True)
     p.add_argument("--candidate-receipt",required=True)
+    p.add_argument("--training-authorization",required=True)
     p.add_argument("--mixture-manifest",required=True)
     p.add_argument("--mixture-audit",required=True)
     p.add_argument("--teacher-registry",required=True)
@@ -1075,6 +1077,7 @@ def main() -> None:
         raise SystemExit("DEV contract unexpectedly allows FINAL results")
 
     candidate=read_json(args.candidate_receipt)
+    training_authorization=read_json(args.training_authorization)
     tracked_status=subprocess.check_output(["git","status","--porcelain"],text=True)
     if tracked_status.strip():
         raise SystemExit("DEV evaluator requires a clean exact-source worktree")
@@ -1083,6 +1086,21 @@ def main() -> None:
         raise SystemExit(
             "DEV evaluator source revision does not match candidate"
         )
+    if training_authorization.get("status")!=PASS_TRAIN_AUTH:
+        raise SystemExit("training authorization not PASS")
+    if training_authorization.get("source_revision")!=current_revision:
+        raise SystemExit("training authorization source revision drift")
+    if candidate.get("training_authorization_sha256")!=sha256_file(
+        args.training_authorization
+    ):
+        raise SystemExit("candidate/training authorization receipt hash drift")
+    for key in ("optimizer","gradient","gpu_training"):
+        if training_authorization.get(key) is not True:
+            raise SystemExit(f"training authorization does not enable {key}")
+    if training_authorization.get("final_results_observed") is not False:
+        raise SystemExit("training authorization observed FINAL")
+    if training_authorization.get("final_opening_authorized") is not False:
+        raise SystemExit("training authorization unexpectedly opens FINAL")
     if candidate.get("stage")!=args.stage:
         raise SystemExit("candidate checkpoint stage drift")
     if candidate.get("final_results_observed") is not False:
@@ -1124,6 +1142,23 @@ def main() -> None:
         args.mixture_audit
     ):
         raise SystemExit("candidate/mixture audit lineage drift")
+    if training_authorization.get("mixture_manifest_sha256")!=sha256_file(
+        args.mixture_manifest
+    ):
+        raise SystemExit("training authorization/mixture manifest drift")
+    if training_authorization.get("mixture_audit_sha256")!=sha256_file(
+        args.mixture_audit
+    ):
+        raise SystemExit("training authorization/mixture audit drift")
+    if candidate.get("operator_evidence_token_receipt_sha256")!=training_authorization.get(
+        "operator_evidence_token_receipt_sha256"
+    ):
+        raise SystemExit("candidate/operator-token authorization lineage drift")
+    if candidate.get("teacher_audit_sha256")!=sha256_file(args.teacher_audit):
+        raise SystemExit("candidate/teacher-audit lineage drift")
+    broad=(mixture.get("training_lanes") or {}).get("broad_semantic_replay") or {}
+    if candidate.get("public_corpus_receipt_sha256")!=broad.get("corpus_receipt_sha256"):
+        raise SystemExit("candidate/public-corpus lineage drift")
 
     if mixture.get("source_revision")!=candidate.get("source_revision"):
         raise SystemExit("candidate/mixture source revision drift")
@@ -1294,6 +1329,7 @@ def main() -> None:
         "checkpoint_selection_surface":"DEV_ONLY",
         "candidate_checkpoint_receipt_sha256":sha256_file(args.candidate_receipt),
         "candidate_system_sha256":sha256_file(args.candidate_system),
+        "training_authorization_sha256":sha256_file(args.training_authorization),
         "static_proof_receipt_sha256":sha256_file(args.static_proof_receipt),
         "dev_lane_binding_receipt":dev_lane_binding_receipt,
         "teacher_registered_rows":int(teacher_report["registered_rows"]),
