@@ -542,6 +542,38 @@
               "minimum_coverage": 1
             }
           ]
+        },
+        "factor_cardinality_extrapolation": {
+          "kind": "empirical",
+          "metric": "full_fabric.full_envelope_behavioral.factor_cardinality_extrapolation_accuracy",
+          "comparison": ">=",
+          "threshold": 0.9,
+          "coverage_metric": "full_fabric.full_envelope_behavioral.factor_cardinality_extrapolation_count",
+          "minimum_coverage": 1
+        },
+        "heldout_factor_combination_transfer": {
+          "kind": "empirical",
+          "metric": "full_fabric.full_envelope_behavioral.factor_combination_transfer_accuracy",
+          "comparison": ">=",
+          "threshold": 0.9,
+          "coverage_metric": "full_fabric.full_envelope_behavioral.factor_combination_transfer_count",
+          "minimum_coverage": 1
+        },
+        "unseen_type_schema_transfer": {
+          "kind": "empirical",
+          "metric": "full_fabric.full_envelope_behavioral.unseen_type_schema_accuracy",
+          "comparison": ">=",
+          "threshold": 0.9,
+          "coverage_metric": "full_fabric.full_envelope_behavioral.unseen_type_schema_count",
+          "minimum_coverage": 1
+        },
+        "domain_transfer": {
+          "kind": "empirical",
+          "metric": "full_fabric.full_envelope_behavioral.domain_transfer_accuracy",
+          "comparison": ">=",
+          "threshold": 0.88,
+          "coverage_metric": "full_fabric.full_envelope_behavioral.domain_transfer_count",
+          "minimum_coverage": 1
         }
       }
     }
