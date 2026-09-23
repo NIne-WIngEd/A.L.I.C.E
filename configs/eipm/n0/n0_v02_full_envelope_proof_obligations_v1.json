@@ -1328,6 +1328,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_dev_empirical_gate_can_require_nonempty_coverage",
       "requirement": "Subset-derived DEV metrics may not pass vacuously when their evaluated subset is empty. Empirical gate specs can bind an explicit coverage metric and minimum count, and all registered subset gates must use it."
+    },
+    {
+      "id": "N0-P22P",
+      "stage": "semantic_operator_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_semantic_plurality_intervention_is_not_a_single_target_known_case",
+      "requirement": "The required plurality intervention must supervise at least two co-valid runtime relation hypotheses and nonzero calibrated uncertainty. A row that says 'preserve both' in text while still training one hard relation target with zero uncertainty is not plurality supervision."
     }
   ],
   "closure_rule": {

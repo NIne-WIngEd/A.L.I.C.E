@@ -1285,3 +1285,42 @@ def test_dev_empirical_gate_can_require_nonempty_coverage() -> None:
         proof_contract=proof,static_receipt=receipt,
     )
     assert covered["stage_gate_pass"] is True
+
+
+def test_semantic_plurality_intervention_is_not_a_single_target_known_case() -> None:
+    import importlib.util
+    import random
+
+    builder_path=ROOT/"scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py"
+    spec=importlib.util.spec_from_file_location(
+        "semantic_intervention_builder_plurality",
+        builder_path,
+    )
+    assert spec is not None and spec.loader is not None
+    module=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    row=module.make_row(
+        split="train",
+        relation=module.TRAIN_RELATIONS[0],
+        second=module.TRAIN_RELATIONS[1],
+        example=9,
+        candidates=4,
+        rng=random.Random(20260931),
+    )
+    assert row["intervention"]=="plurality"
+    valid=list(row["relation_plurality_target_indices"])
+    assert len(valid)>=2
+    assert len(valid)==len(set(valid))
+    assert all(0 <= int(index) < len(row["relation_candidates"]) for index in valid)
+    assert float(row["uncertainty_target"]) > 0.0
+    assert row["plurality_supervision_required"] is True
+
+    source=(
+        ROOT/"src/alice_personality/n0/semantic_operator_batch_v1.py"
+    ).read_text()
+    objective=(
+        ROOT/"src/alice_personality/n0/semantic_operator_objectives_v1.py"
+    ).read_text()
+    assert "relation_plurality_target_distribution" in source
+    assert "relation_plurality_target_distribution" in objective
