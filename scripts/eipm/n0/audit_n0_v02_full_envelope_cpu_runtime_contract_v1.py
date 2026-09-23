@@ -225,6 +225,8 @@ def main() -> None:
             raise ValueError("registered additional-view source-text adapter must be required")
         if q.get("exact_long_context_token_boundary_alignment_required") is not True:
             raise ValueError("exact governed-tokenizer boundary alignment must be required before gradient")
+        if q.get("semantic_operator_long_token_alignment_required") is not True:
+            raise ValueError("semantic-operator long token alignment must be required before gradient")
         if int(case["latent_slot_count"])<2:
             raise ValueError("runtime qualification must exercise multi-slot latent fabric")
         if int(case["max_reasoning_steps"])<2:
