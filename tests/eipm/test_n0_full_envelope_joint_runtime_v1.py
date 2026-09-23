@@ -2157,3 +2157,18 @@ def test_trainer_binds_optimizer_and_runtime_route_to_plan_and_p43_receipt() -> 
     ):
         assert message in trainer
 
+
+
+def test_p42_p43_require_canonical_clean_exact_source_configs() -> None:
+    for relative in (
+        "scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py",
+        "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py",
+    ):
+        source=(ROOT/relative).read_text()
+        assert "require_canonical_source_file" in source
+        assert '["git","status","--porcelain"]' in source
+        assert "clean exact-source worktree" in source
+        assert "registered topology config" in source
+        assert "semantic config" in source
+        assert "public source config" in source
+
