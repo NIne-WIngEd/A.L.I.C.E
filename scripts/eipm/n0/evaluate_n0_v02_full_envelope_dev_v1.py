@@ -52,6 +52,7 @@ from alice_personality.n0.natural_relation_batch_v1 import (
 from alice_personality.n0.semantic_operator_batch_v1 import (
     compile_semantic_operator_batch,
 )
+from alice_personality.n0.source_authority_v1 import require_canonical_source_file
 from alice_personality.n0.v02_training import (
     TeacherMultitaskCollator,
     sha256_file,
@@ -1064,11 +1065,44 @@ def main() -> None:
     p.add_argument("--teacher-batch-size",type=int,default=8)
     args=p.parse_args()
 
+    require_canonical_source_file(
+        args.dev_contract,
+        "configs/eipm/n0/n0_v02_full_envelope_dev_validation_contract_v1.json",
+        label="DEV validation contract",
+    )
+    require_canonical_source_file(
+        args.gate_registry,
+        "configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json",
+        label="DEV gate registry",
+    )
+    require_canonical_source_file(
+        args.proof_contract,
+        "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
+        label="proof obligation contract",
+    )
+    require_canonical_source_file(
+        args.topology_config,
+        "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json",
+        label="registered topology config",
+    )
+    require_canonical_source_file(
+        args.semantic_config,
+        "configs/eipm/n0/alice_n0_semantic_v0.2.json",
+        label="semantic config",
+    )
+
     if args.teacher_batch_size<=0:
         raise SystemExit("teacher DEV batch size must be positive")
     contract=read_json(args.dev_contract)
     if contract.get("schema")!="alice.eipm.n0.full-envelope-dev-validation-contract.v1":
         raise SystemExit("DEV validation contract schema drift")
+    if contract.get("stage_gate_source")!="configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json":
+        raise SystemExit("DEV stage-gate source drift")
+    require_canonical_source_file(
+        contract["stage_gate_source"],
+        "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json",
+        label="joint training plan",
+    )
     if contract.get("checkpoint_selection_surface")!="DEV_ONLY":
         raise SystemExit("DEV evaluator contract lost DEV-only authority")
     if contract.get("final_rows_allowed") is not False:
