@@ -41,6 +41,7 @@ on:
       - "scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py"
       - "scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py"
       - "scripts/eipm/n0/authorize_n0_v02_full_envelope_training_v1.py"
+      - "scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py"
       - "scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py"
       - "scripts/eipm/n0/magnolia_p100x2_n0_v02_full_envelope_gpu_memory_v1.sbatch"
@@ -174,6 +175,7 @@ jobs:
             scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py \
             scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py \
             scripts/eipm/n0/authorize_n0_v02_full_envelope_training_v1.py \
+            scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py \
             scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py \
             scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py \
             scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py \
