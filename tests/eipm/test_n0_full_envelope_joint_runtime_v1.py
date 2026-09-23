@@ -118,3 +118,49 @@ def test_registered_joint_step_executes_all_public_training_lanes_without_placeh
     assert 'task="mlm"' in source
     assert 'task="teacher"' in source
     assert "\"placeholder_losses_used\":False" in source.replace(" ","")
+
+
+def test_joint_training_stages_have_explicit_causal_loss_family_activation() -> None:
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    stages={
+        row["name"]:row
+        for row in plan["optimization_strategy"]["stages"]
+    }
+    all_families=set(plan["loss_balancing"]["families"])
+    j1={
+        "broad_semantic_replay",
+        "governed_judgment_replay",
+        "relation_program_semantics",
+        "dynamic_factor_semantics",
+        "uncertainty_and_control",
+        "token_evidence_grounding",
+        "natural_relation_semantics",
+    }
+    j2=j1|{"structural_support_and_roles"}
+    j3=set(all_families)
+    assert set(stages["J1_joint_semantic_operator"]["active_macro_families"])==j1
+    assert set(stages["J2_reopened_representation_interfaces"]["active_macro_families"])==j2
+    assert set(stages["J3_full_public_n0_coadaptation"]["active_macro_families"])==j3
+
+    j2_trainable=set(stages["J2_reopened_representation_interfaces"]["trainable"])
+    assert "binder_successor" in j2_trainable
+    assert "production_executor_successor" in j2_trainable
+    assert "dynamic_fusion_successor" not in j2_trainable
+    assert "dynamic_latent_successor" not in j2_trainable
+    assert "public_judgment_probe" not in j2_trainable
+
+    j2_gates=set(plan["stage_gates"]["J2"])
+    j3_gates=set(plan["stage_gates"]["J3"])
+    assert "long_internal_and_additional_view_descriptor_semantics" not in j2_gates
+    assert "long_additional_runtime_view_source_and_descriptor_semantics" not in j2_gates
+    assert "long_internal_and_additional_view_descriptor_semantics" in j3_gates
+    assert "long_additional_runtime_view_source_and_descriptor_semantics" in j3_gates
+
+    assert stages["J1_joint_semantic_operator"]["architecture_reduced"] is False
+    assert stages["J2_reopened_representation_interfaces"]["architecture_reduced"] is False
+    assert stages["J3_full_public_n0_coadaptation"]["architecture_reduced"] is False
+    assert plan["optimization_strategy"]["stage_family_policy"]["inactive_family_loss_computed"] is False
+    assert plan["optimization_strategy"]["stage_family_policy"]["inactive_modules_removed_from_topology"] is False
+    assert plan["optimization_strategy"]["stage_family_policy"]["newly_activated_family_owners_train_together"] is True

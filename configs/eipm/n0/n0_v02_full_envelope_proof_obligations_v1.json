@@ -1090,6 +1090,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_registered_joint_step_runs_real_replay_operator_fabric_and_natural_relation_losses",
       "requirement": "One executable successor joint step must obtain broad semantic replay, governed teacher replay, semantic/operator supervision, full-fabric behavioral counterfactual supervision, and natural-relation supervision from their actual registered paths, then backpropagate the integrated objective through the shared backbone and successor."
+    },
+    {
+      "id": "N0-P39PW",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_joint_training_stages_have_explicit_causal_loss_family_activation",
+      "requirement": "J1/J2/J3 must explicitly bind active macro loss families to the modules each stage is allowed to update. J1 trains replay and semantic/operator/natural-relation semantics; J2 adds structural support/execution with Binder and Executor co-trainable; J3 activates fusion/latent/public-judgment causal families. Inactive families are not computed through random frozen downstream modules, and the full topology remains instantiated rather than reduced."
     }
   ],
   "closure_rule": {
