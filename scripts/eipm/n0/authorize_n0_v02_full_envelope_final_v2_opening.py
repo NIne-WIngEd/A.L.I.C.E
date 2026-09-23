@@ -124,6 +124,11 @@ def main() -> None:
     if freeze.get("final_opening_authorized") is not False:
         raise SystemExit("freeze receipt unexpectedly authorizes FINAL")
 
+    opening_authorizer_sha256=sha256_file(Path(__file__).resolve())
+    expected_authorizer_sha256=freeze.get("hashes",{}).get("opening_authorizer")
+    if opening_authorizer_sha256!=expected_authorizer_sha256:
+        raise SystemExit("frozen FINAL opening authorizer hash drift")
+
     result={
         "schema":"alice.eipm.n0.full-envelope-final-opening-authorization.v1",
         "status":STATUS,
@@ -139,6 +144,7 @@ def main() -> None:
         "candidate_checkpoint_receipt_sha256":candidate_receipt_sha256,
         "dev_receipt_sha256":dev_receipt_sha256,
         "freeze_receipt_sha256":freeze_receipt_sha256,
+        "opening_authorizer_sha256":opening_authorizer_sha256,
         "automatic_checkpoint_selection":False,
         "automatic_stage_transition":False,
         "automatic_repair_or_rerun":False,
