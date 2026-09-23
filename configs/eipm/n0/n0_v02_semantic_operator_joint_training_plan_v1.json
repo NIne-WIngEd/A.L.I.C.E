@@ -269,7 +269,7 @@
     "warmup_fraction": 0.05,
     "fixed_total_steps": null,
     "stop_rule": "continue until precommitted DEV capability saturates without broad-semantic regression; do not stop merely because an arbitrary step budget expires",
-    "checkpoint_selection": "first checkpoint satisfying every active stage gate with no regression; otherwise keep failure evidence",
+    "checkpoint_selection": "first checkpoint on the precommitted 25-step DEV evaluation cadence satisfying every active stage gate with no regression; otherwise keep failure evidence",
     "automatic_hyperparameter_search": false,
     "automatic_rerun": false,
     "loss_family_ema_policy": {
@@ -383,7 +383,9 @@
       "horizon_is_stage_completion": false,
       "post_horizon_behavior": "hold_precommitted_nonzero_floor_until_dev_decision",
       "fixed_before_gradient": true
-    }
+    },
+    "checkpoint_evaluation_cadence_steps": 25,
+    "checkpoint_cadence_fixed_before_gradient": true
   },
   "loss_balancing": {
     "method": "macro_family_balanced_with_per_objective_scale_normalization",
