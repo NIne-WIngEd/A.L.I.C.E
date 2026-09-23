@@ -2047,3 +2047,22 @@ def test_stage_scheduler_horizon_cannot_zero_learning_rate_before_dev_completion
     )
     assert checkpoint["scheduler_contract"]["minimum_lr_scale"]==scheduler["minimum_lr_scale"]
 
+
+
+def test_first_passing_dev_selection_uses_precommitted_checkpoint_cadence() -> None:
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "checkpoint_evaluation_cadence_steps" in trainer
+    assert "save cadence must match precommitted DEV selection cadence" in trainer
+    assert '"checkpoint_evaluation_cadence_steps":int(save_every)' in trainer
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    cadence=int(plan["optimization_strategy"]["checkpoint_evaluation_cadence_steps"])
+    assert cadence>0
+    assert plan["optimization_strategy"]["checkpoint_cadence_fixed_before_gradient"] is True
+    checkpoint=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_checkpoint_contract_v1.json").read_text()
+    )
+    assert checkpoint["stage_policy"]["checkpoint_evaluation_cadence_steps"]==cadence
+    assert checkpoint["stage_policy"]["checkpoint_cadence_fixed_before_gradient"] is True
+
