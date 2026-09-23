@@ -1735,3 +1735,14 @@ def test_full_public_mixture_audit_is_bound_to_exact_manifest_consumed_by_runtim
     assert "full public mixture audit/manifest hash drift" in trainer
     assert "full public mixture audit/manifest hash drift" in gpu
 
+
+
+def test_dev_evaluator_requires_exact_candidate_source_checkout() -> None:
+    source=(
+        ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py"
+    ).read_text()
+    assert 'subprocess.check_output(["git","rev-parse","HEAD"]' in source
+    assert 'subprocess.check_output(["git","status","--porcelain","--untracked-files=no"]' in source
+    assert "DEV evaluator source revision does not match candidate" in source
+    assert "DEV evaluator requires a clean tracked-source worktree" in source
+
