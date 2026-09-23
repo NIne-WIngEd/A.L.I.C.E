@@ -769,6 +769,18 @@ def fabric_lane_metrics(
             "composition_extrapolation":bool(
                 row.get("composition_extrapolation",False)
             ),
+            "factor_cardinality_extrapolation":bool(
+                row.get("factor_cardinality_extrapolation",False)
+            ),
+            "factor_combination_transfer":bool(
+                row.get("factor_combination_transfer",False)
+            ),
+            "type_schema_transfer":bool(
+                row.get("type_schema_transfer",False)
+            ),
+            "domain_transfer":bool(
+                row.get("domain_transfer",False)
+            ),
             "support_edge_f1":support_f1,
             "endpoint_pair_correct":endpoint_ok,
             "structural_success":structural_ok,
@@ -929,6 +941,38 @@ def fabric_lane_metrics(
             "composition_extrapolation_count":count(
                 "public_judgment_correct",
                 where=lambda item: item["composition_extrapolation"],
+            ),
+            "factor_cardinality_extrapolation_accuracy":rate(
+                "public_judgment_correct",
+                where=lambda item: item["factor_cardinality_extrapolation"],
+            ),
+            "factor_cardinality_extrapolation_count":count(
+                "public_judgment_correct",
+                where=lambda item: item["factor_cardinality_extrapolation"],
+            ),
+            "factor_combination_transfer_accuracy":rate(
+                "public_judgment_correct",
+                where=lambda item: item["factor_combination_transfer"],
+            ),
+            "factor_combination_transfer_count":count(
+                "public_judgment_correct",
+                where=lambda item: item["factor_combination_transfer"],
+            ),
+            "unseen_type_schema_accuracy":rate(
+                "public_judgment_correct",
+                where=lambda item: item["type_schema_transfer"],
+            ),
+            "unseen_type_schema_count":count(
+                "public_judgment_correct",
+                where=lambda item: item["type_schema_transfer"],
+            ),
+            "domain_transfer_accuracy":rate(
+                "public_judgment_correct",
+                where=lambda item: item["domain_transfer"],
+            ),
+            "domain_transfer_count":count(
+                "public_judgment_correct",
+                where=lambda item: item["domain_transfer"],
             ),
             "latent_noncollapse_success_rate":rate(
                 "latent_noncollapse_success"
