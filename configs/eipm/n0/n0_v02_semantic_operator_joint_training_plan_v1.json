@@ -498,6 +498,7 @@
       "J1_and_J2_gates_retained",
       "full_stack_support",
       "fusion_decisive_source_causality",
+      "irrelevant_source_removal_invariance",
       "latent_noncollapse",
       "source_view_recoverability",
       "missing_view_safety",

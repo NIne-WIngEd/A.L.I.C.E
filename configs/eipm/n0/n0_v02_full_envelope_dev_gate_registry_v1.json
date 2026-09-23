@@ -258,6 +258,26 @@
             }
           ]
         },
+        "irrelevant_source_removal_invariance": {
+          "kind": "composite",
+          "all": [
+            {
+              "metric": "full_fabric.full_envelope_behavioral.irrelevant_source_removal_invariance",
+              "comparison": ">=",
+              "threshold": 0.95
+            },
+            {
+              "metric": "full_fabric.runtime_view_supplement.irrelevant_source_removal_invariance",
+              "comparison": ">=",
+              "threshold": 0.95
+            },
+            {
+              "metric": "full_fabric.long_context_supplement.irrelevant_source_removal_invariance",
+              "comparison": ">=",
+              "threshold": 0.95
+            }
+          ]
+        },
         "latent_noncollapse": {
           "kind": "composite",
           "all": [
