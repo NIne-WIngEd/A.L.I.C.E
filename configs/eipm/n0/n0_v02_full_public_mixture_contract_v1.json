@@ -16,6 +16,7 @@
     "broad_semantic_replay",
     "governed_judgment_replay",
     "semantic_operator_intervention",
+    "semantic_operator_long_context",
     "full_envelope_behavioral",
     "runtime_view_supplement",
     "long_context_supplement",
@@ -64,6 +65,12 @@
     ],
     "natural_relation": [
       "natural_relation_semantics"
+    ],
+    "semantic_operator_long_context": [
+      "relation_program_semantics",
+      "dynamic_factor_semantics",
+      "uncertainty_and_control",
+      "token_evidence_grounding"
     ]
   },
   "lane_authority": {
@@ -73,7 +80,8 @@
     "full_envelope_behavioral": "deterministic TRAIN/DEV full-envelope behavioral fabric",
     "runtime_view_supplement": "deterministic TRAIN/DEV heterogeneous runtime-view supplement",
     "long_context_supplement": "deterministic TRAIN/DEV long-context supplement",
-    "natural_relation": "FewRel TRAIN/DEV natural relation families; official validation families remain FINAL"
+    "natural_relation": "FewRel TRAIN/DEV natural relation families; official validation families remain FINAL",
+    "semantic_operator_long_context": "dedicated evidence-owned TRAIN/DEV semantic-operator long-context supplement; full-fabric long rows cannot substitute"
   },
   "mixture": {
     "row_count_is_capability_ceiling": false,
@@ -99,7 +107,9 @@
     "public_corpus_receipt_reverified_required": true,
     "teacher_bank_audit_pass_required": true,
     "final_freeze_hash_bound_but_final_rows_excluded": true,
-    "exact_source_revision_bound_required": true
+    "exact_source_revision_bound_required": true,
+    "semantic_operator_long_context_hash_bound_required": true,
+    "semantic_operator_long_context_audit_pass_required": true
   },
   "authorization": {
     "materialization": true,
