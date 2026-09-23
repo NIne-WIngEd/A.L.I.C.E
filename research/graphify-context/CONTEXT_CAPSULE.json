@@ -1,15 +1,15 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-binder-global-support-step-execution-audit-20260922-047",
-  "question": "Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@c870dfde4dae0d4d02ba7165d5e350f863c3f37b for the remaining Binder global-support versus step-execution risk, staying strictly aligned with N0's identity-neutral semantic/judgment goal. Trace behavioral support targets -> FullEnvelopeQSREBinderV1 global [B,E] sparse support -> FullEnvelopeQSREExecutorV1 step-conditioned relation program, especially repeated relation families, multi-step paths, mixed directions, and mixed step-local reliability/recency/temporal/provenance modifiers. Determine whether one query-relevant global support mask can wrongly zero an edge needed only by a later step, or whether Binder is intentionally the union of all query-relevant structural support while Executor selects per-step semantics. Look for causal tests where two edges share a relation key but belong to different program steps, later-step-only support is required, and step-local modifiers differ. Classify A concrete architecture/supervision defect, B missing falsification coverage, C closed. Do not move evidence-quality arbitration into Binder, do not add fixed hop/relation ceilings, and do not authorize Magnolia/GPU/gradient/optimizer/FINAL/N0 completion. Original exact branch source is authority; Graphify navigation only.",
-  "generated_at_utc": "2026-09-23T00:29:35.912305+00:00",
+  "request_id": "n0-long-runtime-view-training-coverage-audit-20260922-048",
+  "question": "Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@6735279271b8ae42be77c98062a5b65bb9663c5e for one specific pre-gradient question: the long-context TRAIN/DEV supplement covers query/relation/factor/type/field/descriptor/candidate/internal-view descriptor, and the heterogeneous runtime-view supplement covers additional view source+descriptor semantics but with short text. Does optimizer-facing TRAIN/DEV ever exercise additional runtime-view source text and additional runtime-view descriptor text beyond the native-window operating point through the registered shared semantic input? CPU qualification now does, but CPU smoke is not training coverage. Trace both builders, compiler, N0FullEnvelopeTrainableSystemV1, long-context contract, runtime-view contract and joint training plan. Classify A concrete curriculum gap before gradient, B only missing proof, C already covered. If A/B, propose the smallest identity-neutral, no-fixed-taxonomy repair that composes the existing long-context and runtime-view lanes rather than inventing a new architecture. No FINAL, private identity data, Magnolia/GPU/gradient/optimizer/N0 closure. Exact branch source is authority; Graphify navigation only.",
+  "generated_at_utc": "2026-09-23T00:36:47.316602+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "catalog_source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "graphify_used": true,
     "graph_source_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-    "graph_source_commit": "c870dfde4dae0d4d02ba7165d5e350f863c3f37b",
+    "graph_source_commit": "6735279271b8ae42be77c98062a5b65bb9663c5e",
     "graph_extraction_tree": "exact-source-worktree",
     "continuity_branch_head": {
       "branch": "alice-context",
@@ -21,9 +21,9 @@
     "maximal_unmerged_experiment_heads": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "c870dfde4dae0d4d02ba7165d5e350f863c3f37b",
-        "head_committed_at": "2026-09-22T19:27:01-05:00",
-        "head_message": "curriculum(n0): add long-context boundary-shift pairs"
+        "head": "6735279271b8ae42be77c98062a5b65bb9663c5e",
+        "head_committed_at": "2026-09-22T19:32:55-05:00",
+        "head_message": "governance(n0): bind additional-view source text to shared semantics"
       },
       {
         "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
@@ -44,7 +44,7 @@
     "graphify_used": true,
     "reason": "request forced Graphify",
     "graph_source_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-    "graph_source_commit": "c870dfde4dae0d4d02ba7165d5e350f863c3f37b",
+    "graph_source_commit": "6735279271b8ae42be77c98062a5b65bb9663c5e",
     "graph_source_reason": "request explicitly selected graph source branch",
     "graph_rebuild_required": true,
     "private_external_route_recommended": true
@@ -136,13 +136,13 @@
       "maximal_heads": [
         {
           "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-          "head": "c870dfde4dae0d4d02ba7165d5e350f863c3f37b",
-          "head_committed_at": "2026-09-22T19:27:01-05:00",
-          "head_message": "curriculum(n0): add long-context boundary-shift pairs",
-          "ahead": 1110,
+          "head": "6735279271b8ae42be77c98062a5b65bb9663c5e",
+          "head_committed_at": "2026-09-22T19:32:55-05:00",
+          "head_message": "governance(n0): bind additional-view source text to shared semantics",
+          "ahead": 1115,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-          "changed_file_count_vs_source_merge_base": 488,
+          "changed_file_count_vs_source_merge_base": 489,
           "changed_paths_vs_source_merge_base": [
             ".github/workflows/n0-arbitration-contract-check.yml",
             ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -777,13 +777,13 @@
       "all_ahead_candidates": [
         {
           "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-          "head": "c870dfde4dae0d4d02ba7165d5e350f863c3f37b",
-          "head_committed_at": "2026-09-22T19:27:01-05:00",
-          "head_message": "curriculum(n0): add long-context boundary-shift pairs",
-          "ahead": 1110,
+          "head": "6735279271b8ae42be77c98062a5b65bb9663c5e",
+          "head_committed_at": "2026-09-22T19:32:55-05:00",
+          "head_message": "governance(n0): bind additional-view source text to shared semantics",
+          "ahead": 1115,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-          "changed_file_count_vs_source_merge_base": 488,
+          "changed_file_count_vs_source_merge_base": 489,
           "changed_paths_vs_source_merge_base": [
             ".github/workflows/n0-arbitration-contract-check.yml",
             ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -4859,7 +4859,7 @@
     },
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": true,
-      "newest_experiment_frontier_time": "2026-09-22T19:27:01-05:00",
+      "newest_experiment_frontier_time": "2026-09-22T19:32:55-05:00",
       "active_handoff_last_changed_at": "2026-09-22T18:45:52-05:00",
       "context_branch_head_time": "2026-09-22T18:45:52-05:00"
     },
@@ -4878,309 +4878,340 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 112,
-      "branch": "alice-eipm-v1-build",
-      "branch_scope": "current_source",
-      "path": "docs/PHASE_1_PRIVATE_CLAIM_SUPPORT_AUDIT.md",
-      "blob_sha": "0c70e107d7ee1cc2aac0fe8b34eb2b87717cdccf",
-      "category": "design_document",
-      "title": "P1.11 — Private Claim-Support Auditor",
-      "declared": {},
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 6
-    },
-    {
-      "score": 108,
-      "branch": "alice-eipm-v1-dual-view-late-interaction-binding",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
-      "category": "design_document",
-      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
-      "declared": {
-        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
-      },
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 23
-    },
-    {
-      "score": 108,
-      "branch": "alice-eipm-v1-dual-view-specialist-failure-localization",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
-      "category": "design_document",
-      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
-      "declared": {
-        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
-      },
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 23
-    },
-    {
-      "score": 108,
-      "branch": "alice-eipm-v1-n0-clean-sheet-relational-execution-review",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
-      "category": "design_document",
-      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
-      "declared": {
-        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
-      },
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 23
-    },
-    {
-      "score": 108,
-      "branch": "alice-eipm-v1-n0-closure-pass",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
-      "category": "design_document",
-      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
-      "declared": {
-        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
-      },
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 23
-    },
-    {
-      "score": 108,
-      "branch": "alice-eipm-v1-n0-closure-semantic-v2",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
-      "category": "design_document",
-      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
-      "declared": {
-        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
-      },
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 23
-    },
-    {
-      "score": 108,
-      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
-      "category": "design_document",
-      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
-      "declared": {
-        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
-      },
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 23
-    },
-    {
-      "score": 108,
+      "score": 140,
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
-      "category": "design_document",
-      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
-      "declared": {
-        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
-      },
-      "matched_terms": [],
+      "path": "configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json",
+      "blob_sha": "308f35b1943ea8d00d0cccf0a6ecc7c664ea85df",
+      "category": "configuration_state",
+      "title": "n0_v02_full_envelope_long_context_curriculum_contract_v1.json",
+      "declared": {},
+      "matched_terms": [
+        "smoke"
+      ],
       "supersession_hints": [],
       "catalogs": [
-        "document",
         "failure",
-        "frontier",
-        "supersession",
+        "document",
         "lexical"
       ],
-      "lexical_body_hits": 23
+      "lexical_body_hits": 9,
+      "currentness_adjustment": 25
     },
     {
-      "score": 108,
-      "branch": "alice-eipm-v1-n0-p2a-semantic-localization-v1",
+      "score": 138,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
+      "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+      "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
       "category": "design_document",
-      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
+      "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
       "declared": {
-        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
+        "status": " architecture/data audit authority; all new gradient/GPU work frozen"
       },
       "matched_terms": [],
-      "supersession_hints": [],
+      "supersession_hints": [
+        {
+          "line": 162,
+          "text": "Relation identity is also encoded through small synonym banks for SUPPORTS, CORRECTS, SUPERSEDES, DERIVED_FROM, CAUSES, and TEMPORAL_SUCCESSOR."
+        }
+      ],
       "catalogs": [
-        "document",
+        "supersession",
         "failure",
         "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 23
-    },
-    {
-      "score": 108,
-      "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
-      "category": "design_document",
-      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
-      "declared": {
-        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
-      },
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
         "document",
-        "failure",
-        "frontier",
-        "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 23
+      "lexical_body_hits": 25,
+      "currentness_adjustment": 25
     },
     {
-      "score": 108,
-      "branch": "alice-eipm-v1-qsre-production-core-v1",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
-      "category": "design_document",
-      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
-      "declared": {
-        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
-      },
-      "matched_terms": [],
-      "supersession_hints": [],
-      "catalogs": [
-        "document",
-        "failure",
-        "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 23
-    },
-    {
-      "score": 108,
+      "score": 138,
       "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md",
-      "blob_sha": "95a95592b0990db9ad4e8ece49894e771b33f005",
+      "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+      "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
       "category": "design_document",
-      "title": "N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1",
+      "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
       "declared": {
-        "status": " fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized"
+        "status": " architecture/data audit authority; all new gradient/GPU work frozen"
       },
       "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 162,
+          "text": "Relation identity is also encoded through small synonym banks for SUPPORTS, CORRECTS, SUPERSEDES, DERIVED_FROM, CAUSES, and TEMPORAL_SUCCESSOR."
+        }
+      ],
+      "catalogs": [
+        "supersession",
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 25,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 138,
+      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+      "branch_scope": "branch_specific",
+      "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+      "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
+      "category": "design_document",
+      "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
+      "declared": {
+        "status": " architecture/data audit authority; all new gradient/GPU work frozen"
+      },
+      "matched_terms": [],
+      "supersession_hints": [
+        {
+          "line": 162,
+          "text": "Relation identity is also encoded through small synonym banks for SUPPORTS, CORRECTS, SUPERSEDES, DERIVED_FROM, CAUSES, and TEMPORAL_SUCCESSOR."
+        }
+      ],
+      "catalogs": [
+        "supersession",
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 25,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 130,
+      "branch": "fable-builder-model",
+      "branch_scope": "branch_specific",
+      "path": "docs/fable-builder/traces/FBM_TRACE_20260922_N0_LONG_CONTEXT_TRAINING_COVERAGE.jsonl",
+      "blob_sha": "975dbc9649cc1786ba6cfcdec523ba2865087981",
+      "category": "design_document",
+      "title": "FBM_TRACE_20260922_N0_LONG_CONTEXT_TRAINING_COVERAGE.jsonl",
+      "declared": {},
+      "matched_terms": [
+        "failure",
+        "repair",
+        "smoke"
+      ],
       "supersession_hints": [],
       "catalogs": [
+        "failure",
         "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 37
+    },
+    {
+      "score": 127,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+      "branch_scope": "branch_specific",
+      "path": "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json",
+      "blob_sha": "11dfa5770d7b73f6e2ce2ab157676ed6516dcbd5",
+      "category": "configuration_state",
+      "title": "n0_v02_semantic_operator_joint_training_plan_v1.json",
+      "declared": {},
+      "matched_terms": [
+        "egress",
+        "error",
+        "failure",
+        "fallback",
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 26,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 125,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-dual-view-specialist-training-contract-check.yml",
+      "blob_sha": "d0325f4aa5d5f7a0dbc52a425085e9160578366c",
+      "category": "repository_file",
+      "title": "n0-dual-view-specialist-training-contract-check.yml",
+      "declared": {},
+      "matched_terms": [
+        "hotfix",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 7,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 125,
+      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-query-semantics-architecture-audit-contract-check.yml",
+      "blob_sha": "9b1f85a38e87a5339f65957072d670235d0a06f1",
+      "category": "repository_file",
+      "title": "n0-query-semantics-architecture-audit-contract-check.yml",
+      "declared": {},
+      "matched_terms": [
+        "failure",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
         "failure",
         "frontier",
         "supersession",
+        "document",
         "lexical"
       ],
-      "lexical_body_hits": 23
+      "lexical_body_hits": 6,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 125,
+      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-dual-view-specialist-training-contract-check.yml",
+      "blob_sha": "d0325f4aa5d5f7a0dbc52a425085e9160578366c",
+      "category": "repository_file",
+      "title": "n0-dual-view-specialist-training-contract-check.yml",
+      "declared": {},
+      "matched_terms": [
+        "hotfix",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 7,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 125,
+      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-query-semantics-architecture-audit-contract-check.yml",
+      "blob_sha": "9b1f85a38e87a5339f65957072d670235d0a06f1",
+      "category": "repository_file",
+      "title": "n0-query-semantics-architecture-audit-contract-check.yml",
+      "declared": {},
+      "matched_terms": [
+        "failure",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 6,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 125,
+      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-dual-view-specialist-training-contract-check.yml",
+      "blob_sha": "d0325f4aa5d5f7a0dbc52a425085e9160578366c",
+      "category": "repository_file",
+      "title": "n0-dual-view-specialist-training-contract-check.yml",
+      "declared": {},
+      "matched_terms": [
+        "hotfix",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 7,
+      "currentness_adjustment": 25
+    },
+    {
+      "score": 125,
+      "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-query-semantics-architecture-audit-contract-check.yml",
+      "blob_sha": "9b1f85a38e87a5339f65957072d670235d0a06f1",
+      "category": "repository_file",
+      "title": "n0-query-semantics-architecture-audit-contract-check.yml",
+      "declared": {},
+      "matched_terms": [
+        "failure",
+        "magnolia",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "frontier",
+        "supersession",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 6,
+      "currentness_adjustment": 25
     }
   ],
   "graphify_navigation_hints": [
     {
-      "label": "test_incomplete_only_later_relation_steps_do_not_move_completed_path_frontier()",
-      "source": "tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py",
-      "location": "L904",
-      "community": "57"
+      "label": "test_long_context_train_dev_supplement_is_executable_and_covers_every_governed_text_surface()",
+      "source": "tests/eipm/test_n0_full_envelope_long_context_curriculum_v1.py",
+      "location": "L10",
+      "community": "2"
     },
     {
-      "label": "First exact sparse boundary for the full-envelope N0 successor. Unlike Binder…",
-      "source": "src/alice_personality/n0/qsre_full_envelope_binder_v1.py",
-      "location": "L51",
-      "community": "73"
+      "label": "test_cpu_runtime_qualifier_exercises_registered_additional_view_source_text_adapter()",
+      "source": "tests/eipm/test_n0_full_envelope_cpu_runtime_source_view_v1.py",
+      "location": "L10",
+      "community": "2"
     },
     {
-      "label": "test_binder_global_support_cannot_apply_step0_reliability_to_step1_off_edge()",
-      "source": "tests/eipm/test_n0_full_envelope_modifier_gating_v1.py",
-      "location": "L199",
-      "community": "106"
+      "label": "audit_n0_v02_full_envelope_long_context_curriculum_v1.py",
+      "source": "scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py",
+      "location": "L1",
+      "community": "182"
     },
     {
-      "label": "add()",
-      "source": "src/alice_conversation/response_validation.py",
-      "location": "L241",
-      "community": "43"
+      "label": "additionalProperties",
+      "source": "policies/friday_release_attestation_schema.json",
+      "location": "L122",
+      "community": "242"
     },
     {
       "label": "AliceN0V02Model",
       "source": "src/alice_personality/n0/v02_model.py",
       "location": "L13",
-      "community": "87"
+      "community": "74"
     },
     {
-      "label": "consensus_all_aligned()",
-      "source": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py",
-      "location": "L327",
-      "community": "95"
-    },
-    {
-      "label": "ArbitrationV02Tests",
-      "source": "tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py",
-      "location": "L12",
-      "community": "192"
+      "label": "MemoryAlreadyExistsError",
+      "source": "src/alice_memory/service.py",
+      "location": "L58",
+      "community": "21"
     },
     {
       "label": "test_memory_identity_host_learning_architecture.py",
@@ -5192,79 +5223,73 @@
       "label": "audit()",
       "source": "scripts/audit_capability_barriers.py",
       "location": "L521",
-      "community": "143"
+      "community": "153"
     },
     {
       "label": "authority()",
       "source": "tests/eipm/test_n0_qsre_production_operator_v3.py",
       "location": "L87",
-      "community": "194"
+      "community": "108"
     },
     {
-      "label": "authorize_boolean_map()",
-      "source": "src/alice_capability_profiles.py",
-      "location": "L88",
-      "community": "104"
+      "label": "test_candidates_never_enter_derived_indexes_before_promotion()",
+      "source": "tests/phase2/test_memory_candidate_security_gates.py",
+      "location": "L312",
+      "community": "96"
     },
     {
-      "label": "BehavioralBatchCompileConfig",
-      "source": "src/alice_personality/n0/full_envelope_behavioral_batch_v1.py",
-      "location": "L30",
-      "community": "219"
+      "label": "test_source_time_beyond_clock_skew_is_rejected()",
+      "source": "tests/phase4/test_information_freshness.py",
+      "location": "L158",
+      "community": "58"
     },
     {
-      "label": "Raised when deletion state belongs to another scope.",
-      "source": "src/cognitive_kernel/deletion_prototype.py",
-      "location": "L47",
-      "community": "31"
-    },
-    {
-      "label": "Binder targets are query-relevant support, not relation-key membership. The…",
-      "source": "tests/eipm/test_n0_full_envelope_trainable_system_v1.py",
-      "location": "L678",
-      "community": "184"
+      "label": "test_hybrid_conflict_expansion_surfaces_both_records()",
+      "source": "tests/phase2/test_memory_hybrid_retrieval.py",
+      "location": "L314",
+      "community": "14"
     },
     {
       "label": "branch_forward()",
       "source": "scripts/eipm/n0/train_n0_v02_structured_state_pilot.py",
       "location": "L287",
-      "community": "69"
+      "community": "64"
     },
     {
       "label": "_build()",
       "source": "tests/phase4/test_information_grounding.py",
       "location": "L154",
-      "community": "61"
+      "community": "88"
     },
     {
-      "label": "causal_specialist_probabilities()",
-      "source": "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py",
-      "location": "L83",
-      "community": "5"
-    },
-    {
-      "label": "test_n0_no_accidental_capability_ceilings.py",
-      "source": "tests/eipm/test_n0_no_accidental_capability_ceilings.py",
-      "location": "L1",
-      "community": "67"
+      "label": "candidate()",
+      "source": "tests/phase5/test_memory_m2_adjudication_contracts.py",
+      "location": "L154",
+      "community": "15"
     },
     {
       "label": "classify()",
       "source": "scripts/audit_repository_phase_boundary.py",
       "location": "L120",
-      "community": "260"
+      "community": "259"
     },
     {
-      "label": "test_ordinary_plaintext_inspection_and_temporal_paths_fail_closed()",
-      "source": "tests/phase2/test_memory_sensitive_storage.py",
-      "location": "L202",
-      "community": "28"
+      "label": "train_n0_v02_qsre_closure_matcher_v2.py",
+      "source": "scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py",
+      "location": "L1",
+      "community": "40"
     },
     {
-      "label": "test_tampered_request_or_completion_audit_fails_closed()",
-      "source": "tests/phase2/test_memory_sensitive_deletion.py",
-      "location": "L531",
-      "community": "28"
+      "label": "compiler.py",
+      "source": "src/alice_personality/n1/compiler.py",
+      "location": "L1",
+      "community": "208"
+    },
+    {
+      "label": "test_completed_execution_composes_all_boundaries()",
+      "source": "tests/phase4/test_information_research_execution.py",
+      "location": "L319",
+      "community": "75"
     },
     {
       "label": ".test_promotional_self_record_impact_is_rejected_but_concrete_action_kept()",
@@ -5273,20 +5298,32 @@
       "community": "105"
     },
     {
-      "label": "train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py",
-      "source": "scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py",
-      "location": "L1",
-      "community": "5"
+      "label": "context()",
+      "source": "tests/phase1/test_claim_support_audit.py",
+      "location": "L17",
+      "community": "106"
+    },
+    {
+      "label": "contract()",
+      "source": "tests/phase3/_repair_helpers.py",
+      "location": "L75",
+      "community": "56"
     },
     {
       "label": "test_n0_curriculum_coverage.py",
       "source": "tests/eipm/test_n0_curriculum_coverage.py",
       "location": "L1",
-      "community": "8"
+      "community": "34"
+    },
+    {
+      "label": "test_prepared_published_object_recovers_after_reopen()",
+      "source": "tests/phase5/test_tier_transition_recovery.py",
+      "location": "L21",
+      "community": "112"
     }
   ],
   "private_external_route_recommended": true,
-  "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
+  "private_external_route_reason": "question references a private/external source class",
   "trust_contract": [
     "This capsule routes retrieval; it is not canonical A.L.I.C.E. truth.",
     "Open consequential claims in the original branch/path source before acting.",

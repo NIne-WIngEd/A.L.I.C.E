@@ -7,13 +7,13 @@
   "maximal_heads": [
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "c870dfde4dae0d4d02ba7165d5e350f863c3f37b",
-      "head_committed_at": "2026-09-22T19:27:01-05:00",
-      "head_message": "curriculum(n0): add long-context boundary-shift pairs",
-      "ahead": 1110,
+      "head": "6735279271b8ae42be77c98062a5b65bb9663c5e",
+      "head_committed_at": "2026-09-22T19:32:55-05:00",
+      "head_message": "governance(n0): bind additional-view source text to shared semantics",
+      "ahead": 1115,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 488,
+      "changed_file_count_vs_source_merge_base": 489,
       "changed_paths_vs_source_merge_base": [
         ".github/workflows/n0-arbitration-contract-check.yml",
         ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -648,13 +648,13 @@
   "all_ahead_candidates": [
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "c870dfde4dae0d4d02ba7165d5e350f863c3f37b",
-      "head_committed_at": "2026-09-22T19:27:01-05:00",
-      "head_message": "curriculum(n0): add long-context boundary-shift pairs",
-      "ahead": 1110,
+      "head": "6735279271b8ae42be77c98062a5b65bb9663c5e",
+      "head_committed_at": "2026-09-22T19:32:55-05:00",
+      "head_message": "governance(n0): bind additional-view source text to shared semantics",
+      "ahead": 1115,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 488,
+      "changed_file_count_vs_source_merge_base": 489,
       "changed_paths_vs_source_merge_base": [
         ".github/workflows/n0-arbitration-contract-check.yml",
         ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
