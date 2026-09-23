@@ -2112,3 +2112,47 @@ def test_joint_trainer_enables_precommitted_backbone_gradient_checkpointing() ->
     assert "precommitted backbone gradient checkpointing unavailable" in trainer
     assert '"gradient_checkpointing_enabled":True' in trainer
 
+
+
+def test_trainer_binds_optimizer_and_runtime_route_to_plan_and_p43_receipt() -> None:
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    strategy=plan["optimization_strategy"]
+    assert strategy["runtime_hyperparameters_fixed_before_gradient"] is True
+    assert strategy["training_seed"]==20260922
+    assert strategy["scheduler_policy"]["operating_horizon_steps"]==1000
+    assert strategy["warmup_fraction"]==0.05
+    gpu_cfg=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json").read_text()
+    )
+    route=gpu_cfg["route"]
+    assert route["microbatch_size"]==1
+    assert route["teacher_batch_size"]==2
+    assert route["replay_sequence_length"]==512
+    assert route["training_mixed_precision"]=="fp16"
+    qualifier=(ROOT/"scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py").read_text()
+    for field in (
+        "teacher_batch_size","replay_sequence_length","training_mixed_precision",
+    ):
+        assert f'"{field}"' in qualifier
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    for message in (
+        "backbone learning rate drift from precommitted plan",
+        "interface learning rate drift from precommitted plan",
+        "backbone weight decay drift from precommitted plan",
+        "interface weight decay drift from precommitted plan",
+        "gradient clip drift from precommitted plan",
+        "training seed drift from precommitted plan",
+        "scheduler horizon drift from precommitted plan",
+        "warmup steps drift from precommitted plan",
+        "P43 lane microbatch drift",
+        "P43 MLM microbatch drift",
+        "P43 teacher batch drift",
+        "P43 replay sequence length drift",
+        "P43 gradient accumulation drift",
+        "P43 mixed precision drift",
+        "P43 world-size drift",
+    ):
+        assert message in trainer
+
