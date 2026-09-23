@@ -971,6 +971,13 @@
       "kind": "CI_REQUIRED",
       "receipt": "PASS_N0_FULL_ENVELOPE_RUNTIME_VIEW_CURRICULUM_AUDIT_V1",
       "requirement": "Before gradient, materialize and audit public TRAIN/DEV heterogeneous runtime-view interventions proving relevance is not availability or raw reliability and preserving a ceiling-free runtime view axis."
+    },
+    {
+      "id": "N0-P39LM",
+      "stage": "long_context_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_long_context_curriculum_precommits_boundary_shift_counterfactuals",
+      "requirement": "Before gradient, long-context TRAIN/DEV must include paired examples with identical decisive semantics, total length, and targets but different placement relative to virtualized segment ownership boundaries. The requirement is robustness supervision, not exact equality of untrained contextual activations."
     }
   ],
   "closure_rule": {

@@ -64,3 +64,17 @@ def test_behavioral_materialization_owns_relation_candidate_objects() -> None:
     assert by_key[key] == original
     canonical={str(item["key"]):str(item["text"]) for item in module.RELATIONS}
     assert canonical[key] == original
+
+
+def test_long_context_curriculum_precommits_boundary_shift_counterfactuals() -> None:
+    contract=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json").read_text()
+    )
+    boundary=contract["boundary_shift_robustness"]
+    assert boundary["required_before_gradient"] is True
+    assert boundary["same_total_length_pair_required"] is True
+    assert boundary["same_decisive_semantics_required"] is True
+    assert boundary["same_structural_behavioral_targets_required"] is True
+    assert boundary["different_segment_ownership_position_required"] is True
+    assert boundary["exact_untrained_output_equality_required"] is False
+    assert boundary["surfaces"] == contract["required_surfaces"]
