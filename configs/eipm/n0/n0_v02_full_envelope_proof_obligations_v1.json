@@ -1454,6 +1454,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_full_public_mixture_audit_is_bound_to_exact_manifest_consumed_by_runtime",
       "requirement": "The passed full public-mixture audit must hash-bind the exact manifest later consumed by the GPU dry run and staged trainer. A PASS receipt for a different same-revision manifest may not authorize runtime qualification or gradient."
+    },
+    {
+      "id": "N0-P43M",
+      "stage": "dev_validation",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dev_evaluator_requires_exact_candidate_source_checkout",
+      "requirement": "DEV checkpoint-selection evaluation must execute from the exact clean tracked-source revision recorded by the candidate checkpoint. A later or dirty source checkout may not evaluate an older candidate while emitting the older source revision."
+    },
+    {
+      "id": "N0-P46H",
+      "stage": "final_closure",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_final_v2_evaluator_requires_exact_candidate_source_checkout",
+      "requirement": "Sealed FINAL-v2 evaluation must execute from the exact clean tracked-source revision recorded by the selected J3 candidate. A hash-frozen evaluator script is insufficient if imported runtime/compiler dependencies come from another source revision."
     }
   ],
   "closure_rule": {
