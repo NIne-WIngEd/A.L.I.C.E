@@ -38,7 +38,9 @@
     "final_opening_authorized": false,
     "n0_complete": false,
     "j1_stage_gate_can_pass_only_if_every_registered_gate_passes": true,
-    "j2_j3_remain_blocked_until_mapping_complete": true
+    "j2_j3_remain_blocked_until_mapping_complete": true,
+    "all_stage_gate_mappings_precommitted_before_gradient": true,
+    "retained_prior_stage_gates_re_evaluated_on_current_checkpoint": true
   },
   "authority": {
     "private_identity_data": false,
