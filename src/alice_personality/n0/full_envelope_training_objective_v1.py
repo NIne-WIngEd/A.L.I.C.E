@@ -409,9 +409,15 @@ class FullEnvelopeJointTrainingObjectiveV1(nn.Module):
         governed_judgment_replay_loss: Tensor,
         natural_relation_loss: Tensor,
         update_ema: bool,
+        semantic_operator_outputs: Mapping[str, Any] | None = None,
     ) -> dict[str, Any]:
+        semantic_source = (
+            primary_outputs
+            if semantic_operator_outputs is None
+            else semantic_operator_outputs
+        )
         semantic_losses = semantic_operator_supervision(
-            outputs=primary_outputs,
+            outputs=semantic_source,
             targets=operator_targets,
         )
         behavioral_losses = behavioral_supervision(
@@ -436,6 +442,11 @@ class FullEnvelopeJointTrainingObjectiveV1(nn.Module):
             "loss": balanced["loss"],
             "balanced": balanced,
             "semantic_operator": semantic_losses,
+            "semantic_operator_source": (
+                "full_fabric_primary_lane"
+                if semantic_operator_outputs is None
+                else "dedicated_semantic_operator_lane"
+            ),
             "behavioral": behavioral_losses,
             "families": families,
         }
@@ -455,5 +466,7 @@ class FullEnvelopeJointTrainingObjectiveV1(nn.Module):
             "test_adaptive_weights": report["test_adaptive_weights"],
             "component_double_counting": False,
             "replay_lanes_separate_from_full_envelope_behavior": True,
+            "semantic_operator_lane_may_be_separate_from_full_fabric": True,
+            "semantic_operator_lane_requires_fake_downstream_labels": False,
             "natural_relation_lane_separate": True,
         }

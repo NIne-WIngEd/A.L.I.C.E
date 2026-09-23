@@ -88,7 +88,10 @@
     "semantic_operator_task_registered": true,
     "semantic_operator_task": "N0FullEnvelopeTrainableSystemV1(task='semantic_operator')",
     "semantic_operator_task_uses_shared_backbone": true,
-    "semantic_operator_task_fabricates_downstream_labels": false
+    "semantic_operator_task_fabricates_downstream_labels": false,
+    "separate_semantic_operator_and_full_fabric_batches": true,
+    "semantic_operator_rows_do_not_require_downstream_fabric_labels": true,
+    "joint_objective_accepts_dedicated_semantic_operator_outputs": true
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
