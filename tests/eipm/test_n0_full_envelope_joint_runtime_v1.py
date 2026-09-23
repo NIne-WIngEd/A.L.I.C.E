@@ -420,14 +420,14 @@ def test_stage_training_scheduler_routes_long_semantics_into_j1_without_downstre
     lanes={
         "semantic_operator_intervention":[public({"id":"semantic-a"})],
         "long_context_semantic":[
-            public({"id":"long-query","long_context_surface":"query"}),
-            public({"id":"long-relation","long_context_surface":"relation_schema"}),
-            public({"id":"long-factor","long_context_surface":"factor_schema"}),
+            public({"id":"long-query","lane":"semantic_operator_long_context","long_context_surface":"query"}),
+            public({"id":"long-relation","lane":"semantic_operator_long_context","long_context_surface":"relation_schema"}),
+            public({"id":"long-factor","lane":"semantic_operator_long_context","long_context_surface":"factor_schema"}),
         ],
         "full_envelope_behavioral":[public({"id":"behavior-a"})],
         "runtime_view_supplement":[public({"id":"runtime-a"})],
         "long_context_fabric":[
-            public({"id":"long-field","long_context_surface":"field_text"})
+            public({"id":"long-field","lane":"full_envelope_long_context_supplement","long_context_surface":"field_text"})
         ],
         "natural_relation":[public({"id":"natural-a"})],
     }
@@ -584,3 +584,37 @@ def test_runtime_qualification_token_aligns_dedicated_J1_long_semantic_evidence(
     assert "audit_n0_v02_operator_evidence_token_alignment_v1.py" in runner
     assert "--max-length 8192" in runner
     assert "PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1" in runner
+
+
+def test_stage_scheduler_rejects_behavioral_long_rows_as_J1_semantic_authority() -> None:
+    import pytest
+    from alice_personality.n0.full_envelope_training_batch_scheduler_v1 import (
+        FullEnvelopeTrainingBatchSchedulerV1,
+    )
+
+    def row(identifier, **extra):
+        return {
+            "id":identifier,
+            "private_identity_data":False,
+            "final_validation_only":False,
+            **extra,
+        }
+
+    with pytest.raises(ValueError,match="semantic long-context row authority drift"):
+        FullEnvelopeTrainingBatchSchedulerV1(
+            lanes={
+                "semantic_operator_intervention":[row("semantic")],
+                "long_context_semantic":[
+                    row("wrong-query",lane="full_envelope_long_context_supplement",long_context_surface="query"),
+                    row("wrong-relation",lane="full_envelope_long_context_supplement",long_context_surface="relation_schema"),
+                    row("wrong-factor",lane="full_envelope_long_context_supplement",long_context_surface="factor_schema"),
+                ],
+                "full_envelope_behavioral":[row("behavior")],
+                "runtime_view_supplement":[row("runtime")],
+                "long_context_fabric":[
+                    row("fabric",lane="full_envelope_long_context_supplement",long_context_surface="field_text")
+                ],
+                "natural_relation":[row("natural")],
+            },
+            seed=1,
+        )
