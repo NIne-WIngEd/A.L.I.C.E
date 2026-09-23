@@ -162,6 +162,19 @@ def main() -> None:
                 )
             if int(row.get("applicability_target", -1)) != 1:
                 errors.append(f"{rid}: relational applicability target must be 1")
+        uncertainty_target = row.get("uncertainty_target")
+        if not isinstance(uncertainty_target,(int,float)) or not (
+            0.0 <= float(uncertainty_target) <= 1.0
+        ):
+            errors.append(f"{rid}: explicit uncertainty_target must be inside [0,1]")
+        elif row.get("intervention")=="unknown_defer":
+            if float(uncertainty_target) != 1.0:
+                errors.append(f"{rid}: unknown/defer uncertainty target must be 1")
+        elif float(uncertainty_target) != 0.0:
+            errors.append(
+                f"{rid}: deterministic intervention uncertainty target must be 0"
+            )
+
         factor_schemas = row.get("factor_schemas") or {}
         factor_targets = row.get("factor_targets") or {}
         if set(factor_schemas) != set(factor_targets):
@@ -170,6 +183,23 @@ def main() -> None:
             target = int(factor_targets[name])
             if target < 0 or target >= len(bank):
                 errors.append(f"{rid}: factor target outside {name} bank")
+
+        factor_counter = row.get("counterfactual_factor_targets") or {}
+        if set(factor_counter) != set(factor_schemas):
+            errors.append(f"{rid}: counterfactual factor bank mismatch")
+        else:
+            for name,value in factor_counter.items():
+                if value is None:
+                    continue
+                index=int(value)
+                if not 0 <= index < len(factor_schemas[name]):
+                    errors.append(
+                        f"{rid}: counterfactual factor target outside {name} bank"
+                    )
+                elif index == int(factor_targets[name]):
+                    errors.append(
+                        f"{rid}: counterfactual factor target equals correct target for {name}"
+                    )
 
         factor_evidence = row.get("factor_schema_evidence_char_spans") or {}
         if set(factor_evidence) != set(factor_schemas):

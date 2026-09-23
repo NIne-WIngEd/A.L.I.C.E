@@ -41,7 +41,8 @@
     "src/alice_personality/n0/full_envelope_structural_types.py",
     "src/alice_personality/n0/full_envelope_training_objective_v1.py",
     "src/alice_personality/n0/semantic_operator_objectives_v1.py",
-    "src/alice_personality/n0/full_envelope_behavioral_batch_v1.py"
+    "src/alice_personality/n0/full_envelope_behavioral_batch_v1.py",
+    "src/alice_personality/n0/semantic_operator_batch_v1.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",

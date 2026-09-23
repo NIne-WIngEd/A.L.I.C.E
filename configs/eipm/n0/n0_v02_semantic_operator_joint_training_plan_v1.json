@@ -120,7 +120,11 @@
     "final_rows_do_not_satisfy_runtime_view_training_coverage": true,
     "full_public_mixture_contract": "configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json",
     "full_public_mixture_builder": "scripts/eipm/n0/build_n0_v02_full_public_mixture_manifest_v1.py",
-    "full_public_mixture_audit": "scripts/eipm/n0/audit_n0_v02_full_public_mixture_manifest_v1.py"
+    "full_public_mixture_audit": "scripts/eipm/n0/audit_n0_v02_full_public_mixture_manifest_v1.py",
+    "semantic_operator_batch_compiler": "src/alice_personality/n0/semantic_operator_batch_v1.py",
+    "semantic_operator_rows_require_explicit_uncertainty_target": true,
+    "semantic_operator_compiler_may_not_infer_uncertainty_from_scenario_name": true,
+    "semantic_operator_compiler_fabricated_downstream_labels": false
   },
   "optimization_strategy": {
     "stages": [

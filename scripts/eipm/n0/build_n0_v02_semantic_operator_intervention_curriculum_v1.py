@@ -480,9 +480,23 @@ def make_row(
     if intervention == "unknown_defer":
         event_sequence_target = ["UNKNOWN"]
         applicability_target = 0
+        uncertainty_target = 1.0
     else:
         event_sequence_target = ["CONTINUE"] * len(target_sequence) + ["STOP"]
         applicability_target = 1
+        # These deterministic intervention rows currently supervise a known
+        # relation program. Plural support is taught as co-valid support rather
+        # than epistemic ignorance; unresolved/low-evidence uncertainty requires
+        # its own explicit intervention rows rather than compiler inference.
+        uncertainty_target = 0.0
+
+    counterfactual_factor_targets = {
+        name: None for name in factor_banks
+    }
+    if intervention == "source_target_role":
+        current_role = int(global_factor_targets["role"])
+        if current_role in {0,1}:
+            counterfactual_factor_targets["role"] = 1-current_role
 
     semantic_text = " ".join([query] + [x["text"] for x in bank])
     for item in bank:
@@ -516,8 +530,10 @@ def make_row(
         "relation_sequence_target": target_sequence,
         "event_sequence_target": event_sequence_target,
         "applicability_target": applicability_target,
+        "uncertainty_target": uncertainty_target,
         "factor_schemas": factor_banks,
         "factor_targets": global_factor_targets,
+        "counterfactual_factor_targets": counterfactual_factor_targets,
         "query_relation_evidence_char_spans": query_relation_evidence_char_spans,
         "relation_schema_evidence_char_spans": relation_schema_evidence_char_spans,
         "factor_schema_evidence_char_spans": factor_schema_evidence_char_spans,
