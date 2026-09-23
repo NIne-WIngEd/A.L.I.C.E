@@ -2098,3 +2098,17 @@ def test_dev_evaluator_binds_candidate_to_runtime_training_authorization() -> No
     assert "candidate/teacher-audit lineage drift" in source
     assert "candidate/public-corpus lineage drift" in source
 
+
+
+def test_joint_trainer_enables_precommitted_backbone_gradient_checkpointing() -> None:
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    assert plan["optimization_strategy"]["gradient_checkpointing"] is True
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "def enable_precommitted_gradient_checkpointing" in trainer
+    assert "gradient_checkpointing_enable" in trainer
+    assert "is_gradient_checkpointing" in trainer
+    assert "precommitted backbone gradient checkpointing unavailable" in trainer
+    assert '"gradient_checkpointing_enabled":True' in trainer
+
