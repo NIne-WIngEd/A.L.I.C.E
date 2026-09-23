@@ -302,6 +302,7 @@ jobs:
               "query","relation_schema","factor_schema","type_schema",
               "field_text","field_descriptor","candidate_text",
               "internal_view_descriptor",
+              "additional_view_descriptor","additional_view_source",
           }
           assert r["status"]=="PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_CURRICULUM_AUDIT_V1"
           assert set(r["surface_coverage"]["train"])==required
