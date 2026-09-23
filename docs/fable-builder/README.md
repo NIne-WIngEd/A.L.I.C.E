@@ -82,7 +82,7 @@ See:
 
 ## Latest A.L.I.C.E. process capture — 2026-09-22
 
-The active N0 full-envelope rebuild has continued to produce reusable builder lessons after earlier green static receipts. The latest captured boundary is A.L.I.C.E. branch `alice-eipm-v1-n0-full-envelope-foundation-build-v1@116324b58ec62e85b1a4897dc33c26bdd6cade25`.
+The active N0 full-envelope rebuild has continued to produce reusable builder lessons after earlier green static receipts. The latest captured boundary is A.L.I.C.E. branch `alice-eipm-v1-n0-full-envelope-foundation-build-v1@ac0defbc67f260d77d0d7cd664209e247f457867`.
 
 The new traces record six high-value construction lessons:
 
@@ -93,7 +93,12 @@ The new traces record six high-value construction lessons:
 - runtime qualification must exercise every text-bearing semantic surface under the same long-context policy, and fixture sizes must remain operating points rather than hidden product ceilings;
 - the successor FINAL package must be built, independently audited, hash-frozen, and bound to the registered full-envelope system before gradient while keeping candidate results unopened;
 - architecture support for long context is not training coverage: every governed text surface needs explicit TRAIN/DEV examples that actually cross the native-window operating point while preserving the same causal targets;
-- curriculum builders must return row-owned runtime schema objects. Shared aliases into canonical schema banks can let one downstream intervention silently mutate later TRAIN/DEV/FINAL materialization.
+- curriculum builders must return row-owned runtime schema objects. Shared aliases into canonical schema banks can let one downstream intervention silently mutate later TRAIN/DEV/FINAL materialization;
+- stage ownership is semantic, not cosmetic: J1 long semantic supervision must come from rows that actually own semantic-operator program/factor/token-evidence targets rather than borrowing superficially similar full-fabric rows;
+- staged optimization can keep one full topology instantiated while refusing meaningless losses through random downstream arbiters; activating a family and all of its causal owners together is different from shrinking the architecture;
+- a public-mixture manifest should hash-bind every optimizer-facing lane separately, including supplemental lanes, so a declared capability cannot disappear between curriculum construction and the trainer;
+- qualification fixtures must preserve real objective prerequisites. For example, a contrastive teacher objective needs enough groups to exercise the actual loss instead of weakening the loss for a smoke test;
+- GPU memory qualification must cover structurally different expensive cases such as high runtime cardinality and long semantic context, rather than treating one convenient row as representative.
 
 These are process seeds for FBM. They do not grant Fable/A.L.I.C.E. model authority and do not contain private identity payloads.
 
