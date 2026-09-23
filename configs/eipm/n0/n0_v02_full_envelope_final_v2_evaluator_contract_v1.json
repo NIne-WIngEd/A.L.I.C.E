@@ -28,7 +28,8 @@
     "final_opening_requires_explicit_authorization_receipt": true,
     "evaluator_implementation_hash_frozen_before_gradient": true,
     "gate_registry_hash_frozen_before_gradient": true,
-    "empty_empirical_gate_coverage_fails_closed": true
+    "empty_empirical_gate_coverage_fails_closed": true,
+    "all_frozen_package_input_hashes_verified_at_execution": true
   },
   "legacy_final_self_validation_v1_forbidden": true,
   "legacy_final_self_validation_v3_forbidden": true,
