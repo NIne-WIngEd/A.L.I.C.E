@@ -68,7 +68,12 @@
     "train_dev_candidate_surface_overlap_forbidden": true,
     "dev_candidate_answer_cardinality_extrapolation_required": true,
     "dev_reasoning_depth_extrapolation_required": true,
-    "dev_extrapolation_is_operating_point_not_capability_ceiling": true
+    "dev_extrapolation_is_operating_point_not_capability_ceiling": true,
+    "dev_factor_cardinality_extrapolation_required": true,
+    "dev_type_schema_surface_holdout_required": true,
+    "dev_domain_transfer_required": true,
+    "dev_nonfinal_factor_combination_transfer_required": true,
+    "sealed_final_recency_provenance_combination_must_remain_absent_from_train_dev": true
   },
   "shortcut_controls": {
     "candidate_answer_order_permutation_required": true,
@@ -185,7 +190,11 @@
     "field_and_candidate_surface_isolation_audit_required": true,
     "matched_candidate_context_swap_audit_required": true,
     "dev_candidate_cardinality_extrapolation_audit_required": true,
-    "dev_reasoning_depth_extrapolation_audit_required": true
+    "dev_reasoning_depth_extrapolation_audit_required": true,
+    "dev_factor_cardinality_extrapolation_audit_required": true,
+    "dev_type_schema_holdout_audit_required": true,
+    "dev_domain_transfer_audit_required": true,
+    "dev_nonfinal_factor_combination_audit_required": true
   },
   "authorization": {
     "materialization": true,
@@ -196,5 +205,8 @@
     "final_opening": false,
     "private_identity_gradient": false,
     "n0_complete": false
-  }
+  },
+  "dev_only_scenario_families": [
+    "heldout_reliability_temporal_combo"
+  ]
 }
