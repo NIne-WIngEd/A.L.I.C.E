@@ -320,3 +320,26 @@ def test_final_opening_is_bound_to_exact_dev_selected_j3_candidate() -> None:
     assert "DEV-selected candidate system drift" in evaluator
     assert "FINAL opening DEV stage gate not passed" in evaluator
 
+
+
+def test_final_opening_authorizer_is_pregradient_freeze_bound() -> None:
+    package=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json").read_text()
+    )
+    authorizer=ROOT/"scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py"
+    assert package["opening_authorizer"]==str(authorizer.relative_to(ROOT))
+    freezer=(
+        ROOT/"scripts/eipm/n0/freeze_n0_v02_full_envelope_final_v2_package.py"
+    ).read_text()
+    assert 'p.add_argument("--opening-authorizer",required=True)' in freezer
+    evaluator=(
+        ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py"
+    ).read_text()
+    auth_source=authorizer.read_text()
+    assert '"opening_authorizer":args.opening_authorizer' in evaluator
+    assert 'p.add_argument("--opening-authorizer",required=True)' in evaluator
+    assert '"opening_authorizer_sha256"' in auth_source
+    assert 'freeze.get("hashes",{}).get("opening_authorizer")' in auth_source
+    assert "frozen FINAL opening authorizer hash drift" in auth_source
+    assert "opening authorizer/freeze hash drift" in evaluator
+
