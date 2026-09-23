@@ -631,7 +631,8 @@ def save_checkpoint(
     scheduler_horizon_steps: int,
     warmup_steps: int,
     gradient_accumulation_steps: int,
-) -> None:
+    stage_checkpoint_parent_receipt_sha256: str | None,
+) -> str:
     from safetensors.torch import save_file
 
     checkpoint=output_root/f"{stage}-step-{step:08d}"
@@ -708,6 +709,7 @@ def save_checkpoint(
                 static_proof_receipt_path
             ),
             "optimizer_step":int(step),
+            "stage_checkpoint_parent_receipt_sha256":stage_checkpoint_parent_receipt_sha256,
             "gradient_accumulation_steps":int(gradient_accumulation_steps),
             "accelerator_state_tree_sha256":sha256_tree(
                 checkpoint/"accelerator_state"
@@ -727,6 +729,7 @@ def save_checkpoint(
             encoding="utf-8",
         )
     accelerator.wait_for_everyone()
+    return sha256_file(checkpoint/"receipt.json")
 
 
 def main() -> None:
@@ -1133,6 +1136,11 @@ def main() -> None:
 
     system.train()
     objective.train()
+    stage_checkpoint_parent_receipt_sha256=(
+        sha256_file(args.resume_receipt)
+        if resume_kind=="same_stage"
+        else None
+    )
     for step in range(start_optimizer_step,args.max_optimizer_steps+1):
         optimizer.zero_grad(set_to_none=True)
         numerators={
@@ -1246,7 +1254,7 @@ def main() -> None:
             },sort_keys=True))
 
         if step%args.save_every==0 or step==args.max_optimizer_steps:
-            save_checkpoint(
+            stage_checkpoint_parent_receipt_sha256=save_checkpoint(
                 accelerator=accelerator,
                 system=system,
                 objective=objective,
@@ -1270,6 +1278,9 @@ def main() -> None:
                 scheduler_horizon_steps=args.scheduler_horizon_steps,
                 warmup_steps=args.warmup_steps,
                 gradient_accumulation_steps=args.gradient_accumulation_steps,
+                stage_checkpoint_parent_receipt_sha256=(
+                    stage_checkpoint_parent_receipt_sha256
+                ),
             )
 
     accelerator.wait_for_everyone()
