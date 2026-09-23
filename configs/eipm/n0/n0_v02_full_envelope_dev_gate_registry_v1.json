@@ -152,10 +152,11 @@
           ]
         },
         "runtime_type_descriptor_transfer": {
-          "kind": "empirical",
-          "metric": "full_fabric.long_context_supplement.surface_structural_accuracy.type_schema",
-          "comparison": ">=",
-          "threshold": 0.9
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P10",
+            "N0-P11"
+          ]
         },
         "evidence_endpoint_causality": {
           "kind": "empirical",
