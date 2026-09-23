@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-final-to-dev-capability-gap-audit-20260923-060
-- Question: Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@d42d79467349936efc8f9bb4660900c5ba4760a3 for remaining FINAL-v2 capability gates that lack a legitimate TRAIN/DEV precursor or precommitted DEV checkpoint-selection metric. Compare n0_v02_full_envelope_final_validation_contract_v2.json with the complete J1/J2/J3 DEV gate registry, all public TRAIN/DEV builders, the staged successor trainer, and the DEV evaluator. Focus only on capabilities that could make FINAL fail despite every DEV stage gate passing: heldout factor combination transfer while preserving FINAL recency+provenance secrecy, unseen factor cardinality, unseen type-schema/domain transfer, cross-window conflict/composition, paraphrase and irrelevant-context-growth invariance, provenance descriptor transfer, disagreement preservation, and any other final-v2 gate without a non-FINAL analogue. The evidence-removal uncertainty gap and true semantic plurality have already been repaired at this exact head; verify those rather than re-proposing them. Classify each remaining item as (A) concrete pre-gradient curriculum/DEV-gate gap, (B) exact-source/static invariant already proven, or (C) legitimately FINAL-only independent challenge whose underlying capability is trained and proxied on DEV. Also flag if the successor has only an evaluator contract but no executable final-v2 evaluator implementation, because metric logic must be precommitted before candidate results. Do not weaken FINAL independence, do not use the final recency+provenance combination in TRAIN/DEV, do not add private identity data, and do not authorize Magnolia/GPU/gradient/optimizer/FINAL opening/N0 completion. Keep N0 identity-neutral and full-envelope. Original exact branch source is authority; Graphify is navigation only.
+- Request: n0-remaining-static-gap-audit-20260923-061
+- Question: Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@f357a767ca1542a4043944b380663f27b50c33ec for any remaining STATIC/source-level defect before CPU/GPU runtime qualification. Stay strictly aligned with N0's identity-neutral full-envelope semantic/judgment goal and do not add N1 identity mechanisms. Compare the implemented training lanes, joint objective, staged J1/J2/J3 optimizer, DEV gate registry/evaluator, runtime type/factor/relation/view/candidate interfaces, long-context virtualization, uncertainty/plurality, causal interventions, replay preservation, and sealed FINAL-v2 boundary against the full-envelope workload intent. Look specifically for declarations that lack executable optimizer-facing data, active objective paths, or non-vacuous DEV gates; hidden geometry/ID ceilings; FINAL-only capabilities that still lack non-FINAL DEV proxies; and stage-policy contradictions. Classify each candidate as A concrete defect needing repair before Magnolia, B missing falsification/proof, C already closed, or D genuinely runtime/empirical only. Do not authorize Magnolia, gradient, optimizer, FINAL opening, or N0 completion. Original exact branch source is authority; Graphify is navigation only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -46,56 +46,49 @@ The old stable-build latent-stage pointer is historical routing context, not the
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ d42d79467349936efc8f9bb4660900c5ba4760a3 — fix(n0): train evidence-removal uncertainty increase
+- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ f357a767ca1542a4043944b380663f27b50c33ec — fix(n0): preserve DEV context-swap pair geometry
 - alice-eipm-v1-qsre-production-p2-ordered-evidence-v3 @ 342bdbbe8c5dfbe74ff3ab8210a30b1a456aa482 — state(n0): ratify P2 v3 static pass and authorize CPU qualification
 - alice-eipm-v1-qsre-production-p2-failure-localization @ c9b1d35823cb89245625bbc6afb05b0ef5fb69fb — fix(n0): emit strict JSON from P2 localization
 
 ## Source pointers
 
-- [180] alice-context:docs/chat-context/2026-09-15/sol/N0_V02_CONTINUATION_RECOVERY_AND_DEV_GATE.md — N0 v0.2 Continuation Recovery and Teacher-Dev Gate
-- [174] alice-context:docs/chat-context/2026-09-15/sol/N0_V02_HELDOUT_PASS_AND_NOVEL_CHALLENGE_GATE.md — N0 v0.2 held-out teacher-dev pass and novel challenge gate
-- [165] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
-  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
-- [165] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
-  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
-- [165] alice-eipm-v1-n0-p2a-semantic-localization-v1:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
-  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
-- [165] alice-eipm-v1-n0-semantic-operator-foundation-v1:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
-  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
-- [165] alice-personal-development-architecture-v1:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
-  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
-- [165] review/n0-qualification-integrity-20260923:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
-  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
-- [159] alice-context:docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md — N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff
+- [132] alice-context:docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md — N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff
   - status:  active continuity authority for the current Sol handoff
-- [158] alice-context:docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md — N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization
-  - status:  final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged
-- [155] alice-context:docs/chat-context/2026-09-15/sol/N0_V02_DEV_CHALLENGE_STALE_NAMESPACE_COLLISION.md — N0 v0.2 Teacher-Dev Challenge — Stale Namespace Collision
-- [154] alice-eipm-v1-n0-full-envelope-foundation-build-v1:configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json — n0_v02_full_envelope_dev_gate_registry_v1.json
+- [122] alice-context:docs/chat-context/2026-09-15/sol/N0_V02_CONTINUATION_RECOVERY_AND_DEV_GATE.md — N0 v0.2 Continuation Recovery and Teacher-Dev Gate
+- [118] alice-context:docs/chat-context/2026-09-09/sol/MC10D_MAGNOLIA_P100X2_ROUTE_QUALIFIED_NEXT_RUNTIME_GATE.md — MC10D Magnolia 2xP100 route qualified — next runtime gate
+- [108] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260914_MAGNOLIA_RUNTIME_BOUNDARY_AND_PRIVATE_NAMESPACE.jsonl — FBM_TRACE_20260914_MAGNOLIA_RUNTIME_BOUNDARY_AND_PRIVATE_NAMESPACE.jsonl
+- [106] alice-eipm-v1-n0-closure-pass:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [106] alice-eipm-v1-n0-closure-semantic-v2:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [106] alice-eipm-v1-n0-frozen-semantic-authority-v3:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [106] alice-eipm-v1-n0-full-envelope-foundation-build-v1:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [106] alice-eipm-v1-n0-p2a-semantic-localization-v1:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [106] alice-eipm-v1-n0-semantic-operator-foundation-v1:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [106] alice-eipm-v1-qsre-production-core-v1:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
+- [106] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
 
 ## Graphify navigation hints
 
 - test_j2_j3_dev_gate_registry_precommits_every_declared_gate_before_gradient() -> tests/eipm/test_n0_full_envelope_joint_runtime_v1.py:L1108
-- test_successor_trainer_dev_evaluator_and_checkpoint_contract_exist_before_gradient() -> tests/eipm/test_n0_full_envelope_joint_runtime_v1.py:L663
-- test_j3_dev_gate_measures_irrelevant_source_removal_invariance() -> tests/eipm/test_n0_full_envelope_joint_runtime_v1.py:L1208
+- test_successor_training_and_dev_selection_bind_exact_head_static_proof_receipt() -> tests/eipm/test_n0_full_envelope_joint_runtime_v1.py:L909
+- test_long_additional_runtime_view_surfaces_reach_optimizer_facing_batch() -> tests/eipm/test_n0_full_envelope_long_context_curriculum_v1.py:L85
+- active_edge_logits() -> scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py:L67
 - add() -> src/alice_conversation/response_validation.py:L241
+- verify_result_against_preflight() -> scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py:L146
 - AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
+- consensus_all_aligned() -> scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py:L327
 - MemoryAlreadyExistsError -> src/alice_memory/service.py:L58
-- ConstitutionalSourceSnapshot -> src/alice_conversation/constitutional_prompt.py:L50
 - audit() -> scripts/audit_capability_barriers.py:L521
 - authority() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L87
 - authorize_boolean_map() -> src/alice_capability_profiles.py:L88
 - test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
+- .boundary() -> src/alice_conversation/cli_policy.py:L67
 - branch_forward() -> scripts/eipm/n0/train_n0_v02_structured_state_pilot.py:L287
 - _build() -> tests/phase4/test_information_grounding.py:L154
-- candidate() -> tests/phase5/test_memory_m2_adjudication_contracts.py:L154
-- ConversationCapabilities -> src/alice_conversation/contracts.py:L106
-- CapabilityRuntime -> src/alice_evolution/capability_runtime.py:L77
 
 ## External/private routing
 
 - Recommended: True
-- Reason: question references a private/external source class
+- Reason: host-specific operational history may contain newer failure lessons than public receipts
 
 ## Trust contract
 

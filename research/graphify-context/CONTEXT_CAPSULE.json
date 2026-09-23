@@ -1,15 +1,15 @@
 {
   "schema": "alice-sol-context-capsule-v2",
-  "request_id": "n0-final-to-dev-capability-gap-audit-20260923-060",
-  "question": "Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@d42d79467349936efc8f9bb4660900c5ba4760a3 for remaining FINAL-v2 capability gates that lack a legitimate TRAIN/DEV precursor or precommitted DEV checkpoint-selection metric. Compare n0_v02_full_envelope_final_validation_contract_v2.json with the complete J1/J2/J3 DEV gate registry, all public TRAIN/DEV builders, the staged successor trainer, and the DEV evaluator. Focus only on capabilities that could make FINAL fail despite every DEV stage gate passing: heldout factor combination transfer while preserving FINAL recency+provenance secrecy, unseen factor cardinality, unseen type-schema/domain transfer, cross-window conflict/composition, paraphrase and irrelevant-context-growth invariance, provenance descriptor transfer, disagreement preservation, and any other final-v2 gate without a non-FINAL analogue. The evidence-removal uncertainty gap and true semantic plurality have already been repaired at this exact head; verify those rather than re-proposing them. Classify each remaining item as (A) concrete pre-gradient curriculum/DEV-gate gap, (B) exact-source/static invariant already proven, or (C) legitimately FINAL-only independent challenge whose underlying capability is trained and proxied on DEV. Also flag if the successor has only an evaluator contract but no executable final-v2 evaluator implementation, because metric logic must be precommitted before candidate results. Do not weaken FINAL independence, do not use the final recency+provenance combination in TRAIN/DEV, do not add private identity data, and do not authorize Magnolia/GPU/gradient/optimizer/FINAL opening/N0 completion. Keep N0 identity-neutral and full-envelope. Original exact branch source is authority; Graphify is navigation only.",
-  "generated_at_utc": "2026-09-23T06:44:39.297919+00:00",
+  "request_id": "n0-remaining-static-gap-audit-20260923-061",
+  "question": "Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@f357a767ca1542a4043944b380663f27b50c33ec for any remaining STATIC/source-level defect before CPU/GPU runtime qualification. Stay strictly aligned with N0's identity-neutral full-envelope semantic/judgment goal and do not add N1 identity mechanisms. Compare the implemented training lanes, joint objective, staged J1/J2/J3 optimizer, DEV gate registry/evaluator, runtime type/factor/relation/view/candidate interfaces, long-context virtualization, uncertainty/plurality, causal interventions, replay preservation, and sealed FINAL-v2 boundary against the full-envelope workload intent. Look specifically for declarations that lack executable optimizer-facing data, active objective paths, or non-vacuous DEV gates; hidden geometry/ID ceilings; FINAL-only capabilities that still lack non-FINAL DEV proxies; and stage-policy contradictions. Classify each candidate as A concrete defect needing repair before Magnolia, B missing falsification/proof, C already closed, or D genuinely runtime/empirical only. Do not authorize Magnolia, gradient, optimizer, FINAL opening, or N0 completion. Original exact branch source is authority; Graphify is navigation only.",
+  "generated_at_utc": "2026-09-23T07:17:51.536039+00:00",
   "source_freshness": {
     "stable_build_branch": "alice-eipm-v1-build",
     "stable_build_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "catalog_source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
     "graphify_used": true,
     "graph_source_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-    "graph_source_commit": "d42d79467349936efc8f9bb4660900c5ba4760a3",
+    "graph_source_commit": "f357a767ca1542a4043944b380663f27b50c33ec",
     "graph_extraction_tree": "exact-source-worktree",
     "continuity_branch_head": {
       "branch": "alice-context",
@@ -21,9 +21,9 @@
     "maximal_unmerged_experiment_heads": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "d42d79467349936efc8f9bb4660900c5ba4760a3",
-        "head_committed_at": "2026-09-23T01:40:18-05:00",
-        "head_message": "fix(n0): train evidence-removal uncertainty increase"
+        "head": "f357a767ca1542a4043944b380663f27b50c33ec",
+        "head_committed_at": "2026-09-23T02:15:02-05:00",
+        "head_message": "fix(n0): preserve DEV context-swap pair geometry"
       },
       {
         "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
@@ -44,7 +44,7 @@
     "graphify_used": true,
     "reason": "request forced Graphify",
     "graph_source_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-    "graph_source_commit": "d42d79467349936efc8f9bb4660900c5ba4760a3",
+    "graph_source_commit": "f357a767ca1542a4043944b380663f27b50c33ec",
     "graph_source_reason": "request explicitly selected graph source branch",
     "graph_rebuild_required": true,
     "private_external_route_recommended": true
@@ -136,10 +136,10 @@
       "maximal_heads": [
         {
           "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-          "head": "d42d79467349936efc8f9bb4660900c5ba4760a3",
-          "head_committed_at": "2026-09-23T01:40:18-05:00",
-          "head_message": "fix(n0): train evidence-removal uncertainty increase",
-          "ahead": 1210,
+          "head": "f357a767ca1542a4043944b380663f27b50c33ec",
+          "head_committed_at": "2026-09-23T02:15:02-05:00",
+          "head_message": "fix(n0): preserve DEV context-swap pair geometry",
+          "ahead": 1219,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
           "changed_file_count_vs_source_merge_base": 514,
@@ -777,10 +777,10 @@
       "all_ahead_candidates": [
         {
           "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-          "head": "d42d79467349936efc8f9bb4660900c5ba4760a3",
-          "head_committed_at": "2026-09-23T01:40:18-05:00",
-          "head_message": "fix(n0): train evidence-removal uncertainty increase",
-          "ahead": 1210,
+          "head": "f357a767ca1542a4043944b380663f27b50c33ec",
+          "head_committed_at": "2026-09-23T02:15:02-05:00",
+          "head_message": "fix(n0): preserve DEV context-swap pair geometry",
+          "ahead": 1219,
           "behind": 0,
           "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
           "changed_file_count_vs_source_merge_base": 514,
@@ -4859,7 +4859,7 @@
     },
     "continuity_freshness": {
       "stale_relative_to_unmerged_experiment_frontier": true,
-      "newest_experiment_frontier_time": "2026-09-23T01:40:18-05:00",
+      "newest_experiment_frontier_time": "2026-09-23T02:15:02-05:00",
       "active_handoff_last_changed_at": "2026-09-23T00:27:21-05:00",
       "context_branch_head_time": "2026-09-23T00:27:21-05:00"
     },
@@ -4878,7 +4878,36 @@
   },
   "authoritative_source_pointers": [
     {
-      "score": 180,
+      "score": 132,
+      "branch": "alice-context",
+      "branch_scope": "branch_specific",
+      "path": "docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md",
+      "blob_sha": "8218273229cdb4812561bc90febace3f21cdeec8",
+      "category": "working_context",
+      "title": "N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff",
+      "declared": {
+        "status": " active continuity authority for the current Sol handoff"
+      },
+      "matched_terms": [
+        "egress",
+        "failed",
+        "failure",
+        "hotfix",
+        "magnolia",
+        "repair"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "frontier",
+        "supersession",
+        "lexical"
+      ],
+      "lexical_body_hits": 66
+    },
+    {
+      "score": 122,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
       "path": "docs/chat-context/2026-09-15/sol/N0_V02_CONTINUATION_RECOVERY_AND_DEV_GATE.md",
@@ -4907,240 +4936,71 @@
         "document",
         "lexical"
       ],
-      "lexical_body_hits": 30
+      "lexical_body_hits": 26
     },
     {
-      "score": 174,
+      "score": 118,
       "branch": "alice-context",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-15/sol/N0_V02_HELDOUT_PASS_AND_NOVEL_CHALLENGE_GATE.md",
-      "blob_sha": "5d5dfa894a9c51538c489658b27c751674668ebc",
+      "path": "docs/chat-context/2026-09-09/sol/MC10D_MAGNOLIA_P100X2_ROUTE_QUALIFIED_NEXT_RUNTIME_GATE.md",
+      "blob_sha": "973ec51441d8c119caeebe2304b0f413ed94a351",
       "category": "working_context",
-      "title": "N0 v0.2 held-out teacher-dev pass and novel challenge gate",
+      "title": "MC10D Magnolia 2xP100 route qualified — next runtime gate",
+      "declared": {},
+      "matched_terms": [
+        "failed",
+        "fallback",
+        "hotfix",
+        "kaggle",
+        "magnolia"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "lexical"
+      ],
+      "lexical_body_hits": 11
+    },
+    {
+      "score": 108,
+      "branch": "fable-builder-model",
+      "branch_scope": "branch_specific",
+      "path": "docs/fable-builder/traces/FBM_TRACE_20260914_MAGNOLIA_RUNTIME_BOUNDARY_AND_PRIVATE_NAMESPACE.jsonl",
+      "blob_sha": "4b28f483487150d94ef6cf6249c99fad3522fd2f",
+      "category": "design_document",
+      "title": "FBM_TRACE_20260914_MAGNOLIA_RUNTIME_BOUNDARY_AND_PRIVATE_NAMESPACE.jsonl",
       "declared": {},
       "matched_terms": [
         "failed",
         "failure",
         "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 17
-    },
-    {
-      "score": 165,
-      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-final-full-scale-capability-package-v1.md",
-      "blob_sha": "fb5e10c4f86c439d974f56ac4a52ba985cd0ef32",
-      "category": "design_document",
-      "title": "N0 final full-scale capability package v1",
-      "declared": {
-        "status": " precommitted package; N0 is not complete until the unchanged native frozen objective passes"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
         "recovery",
-        "repair"
+        "runtime-results",
+        "smoke",
+        "udocker"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
         "document",
-        "frontier",
-        "supersession",
         "lexical"
       ],
-      "lexical_body_hits": 33
+      "lexical_body_hits": 10
     },
     {
-      "score": 165,
-      "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+      "score": 106,
+      "branch": "alice-eipm-v1-n0-closure-pass",
       "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-final-full-scale-capability-package-v1.md",
-      "blob_sha": "fb5e10c4f86c439d974f56ac4a52ba985cd0ef32",
-      "category": "design_document",
-      "title": "N0 final full-scale capability package v1",
-      "declared": {
-        "status": " precommitted package; N0 is not complete until the unchanged native frozen objective passes"
-      },
+      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
+      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
+      "category": "repository_file",
+      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
+      "declared": {},
       "matched_terms": [
-        "failed",
-        "failure",
-        "recovery",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 33
-    },
-    {
-      "score": 165,
-      "branch": "alice-eipm-v1-n0-p2a-semantic-localization-v1",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-final-full-scale-capability-package-v1.md",
-      "blob_sha": "fb5e10c4f86c439d974f56ac4a52ba985cd0ef32",
-      "category": "design_document",
-      "title": "N0 final full-scale capability package v1",
-      "declared": {
-        "status": " precommitted package; N0 is not complete until the unchanged native frozen objective passes"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "recovery",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 33
-    },
-    {
-      "score": 165,
-      "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-final-full-scale-capability-package-v1.md",
-      "blob_sha": "fb5e10c4f86c439d974f56ac4a52ba985cd0ef32",
-      "category": "design_document",
-      "title": "N0 final full-scale capability package v1",
-      "declared": {
-        "status": " precommitted package; N0 is not complete until the unchanged native frozen objective passes"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "recovery",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 33
-    },
-    {
-      "score": 165,
-      "branch": "alice-personal-development-architecture-v1",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-final-full-scale-capability-package-v1.md",
-      "blob_sha": "fb5e10c4f86c439d974f56ac4a52ba985cd0ef32",
-      "category": "design_document",
-      "title": "N0 final full-scale capability package v1",
-      "declared": {
-        "status": " precommitted package; N0 is not complete until the unchanged native frozen objective passes"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "recovery",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 33
-    },
-    {
-      "score": 165,
-      "branch": "review/n0-qualification-integrity-20260923",
-      "branch_scope": "branch_specific",
-      "path": "docs/research/eipm-n0-final-full-scale-capability-package-v1.md",
-      "blob_sha": "fb5e10c4f86c439d974f56ac4a52ba985cd0ef32",
-      "category": "design_document",
-      "title": "N0 final full-scale capability package v1",
-      "declared": {
-        "status": " precommitted package; N0 is not complete until the unchanged native frozen objective passes"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "recovery",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "document",
-        "frontier",
-        "supersession",
-        "lexical"
-      ],
-      "lexical_body_hits": 33
-    },
-    {
-      "score": 159,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md",
-      "blob_sha": "8218273229cdb4812561bc90febace3f21cdeec8",
-      "category": "working_context",
-      "title": "N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff",
-      "declared": {
-        "status": " active continuity authority for the current Sol handoff"
-      },
-      "matched_terms": [
-        "egress",
-        "failed",
-        "failure",
         "hotfix",
         "magnolia",
-        "repair"
-      ],
-      "supersession_hints": [],
-      "catalogs": [
-        "failure",
-        "supersession",
-        "document",
-        "frontier",
-        "lexical"
-      ],
-      "lexical_body_hits": 71
-    },
-    {
-      "score": 158,
-      "branch": "alice-context",
-      "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-18/sol/N0_FINAL_FROZEN_FAIL_AND_MISSING_EVIDENCE_LOCALIZATION.md",
-      "blob_sha": "00e639bed1b0f0ca42f128a266345be54f9541ee",
-      "category": "working_context",
-      "title": "N0 Final Frozen Challenge Valid FAIL + Fresh Missing-Evidence Localization",
-      "declared": {
-        "status": " final frozen challenge completed; valid single-gate failure; do not rerun or change thresholds; fresh non-challenge causal-path localization staged"
-      },
-      "matched_terms": [
-        "failed",
-        "failure",
-        "hotfix",
-        "magnolia",
-        "repair",
+        "recovery",
         "udocker"
       ],
       "supersession_hints": [],
@@ -5150,48 +5010,175 @@
         "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 27
+      "lexical_body_hits": 14
     },
     {
-      "score": 155,
-      "branch": "alice-context",
+      "score": 106,
+      "branch": "alice-eipm-v1-n0-closure-semantic-v2",
       "branch_scope": "branch_specific",
-      "path": "docs/chat-context/2026-09-15/sol/N0_V02_DEV_CHALLENGE_STALE_NAMESPACE_COLLISION.md",
-      "blob_sha": "d400027566487982dfec5241291f9bbd1ce9f3d7",
-      "category": "working_context",
-      "title": "N0 v0.2 Teacher-Dev Challenge — Stale Namespace Collision",
+      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
+      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
+      "category": "repository_file",
+      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
       "declared": {},
       "matched_terms": [
-        "failure",
-        "magnolia"
+        "hotfix",
+        "magnolia",
+        "recovery",
+        "udocker"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
         "document",
+        "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 6
+      "lexical_body_hits": 14
     },
     {
-      "score": 154,
+      "score": 106,
+      "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
+      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
+      "category": "repository_file",
+      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
+      "declared": {},
+      "matched_terms": [
+        "hotfix",
+        "magnolia",
+        "recovery",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 14
+    },
+    {
+      "score": 106,
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
       "branch_scope": "branch_specific",
-      "path": "configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json",
-      "blob_sha": "f5da5139d1056d87b54e099cd890f991618971a6",
-      "category": "configuration_state",
-      "title": "n0_v02_full_envelope_dev_gate_registry_v1.json",
+      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
+      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
+      "category": "repository_file",
+      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
       "declared": {},
       "matched_terms": [
-        "egress"
+        "hotfix",
+        "magnolia",
+        "recovery",
+        "udocker"
       ],
       "supersession_hints": [],
       "catalogs": [
         "failure",
         "document",
+        "frontier",
         "lexical"
       ],
-      "lexical_body_hits": 7
+      "lexical_body_hits": 14
+    },
+    {
+      "score": 106,
+      "branch": "alice-eipm-v1-n0-p2a-semantic-localization-v1",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
+      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
+      "category": "repository_file",
+      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
+      "declared": {},
+      "matched_terms": [
+        "hotfix",
+        "magnolia",
+        "recovery",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 14
+    },
+    {
+      "score": 106,
+      "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
+      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
+      "category": "repository_file",
+      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
+      "declared": {},
+      "matched_terms": [
+        "hotfix",
+        "magnolia",
+        "recovery",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 14
+    },
+    {
+      "score": 106,
+      "branch": "alice-eipm-v1-qsre-production-core-v1",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
+      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
+      "category": "repository_file",
+      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
+      "declared": {},
+      "matched_terms": [
+        "hotfix",
+        "magnolia",
+        "recovery",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 14
+    },
+    {
+      "score": 106,
+      "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+      "branch_scope": "branch_specific",
+      "path": ".github/workflows/n0-production-core-v1-preflight.yml",
+      "blob_sha": "fb2978563d01667cc6cbba2076d51bc11eb10b0d",
+      "category": "repository_file",
+      "title": "Final-only artifacts may be built/cached/frozen before gradient,",
+      "declared": {},
+      "matched_terms": [
+        "hotfix",
+        "magnolia",
+        "recovery",
+        "udocker"
+      ],
+      "supersession_hints": [],
+      "catalogs": [
+        "failure",
+        "document",
+        "frontier",
+        "lexical"
+      ],
+      "lexical_body_hits": 14
     }
   ],
   "graphify_navigation_hints": [
@@ -5199,149 +5186,149 @@
       "label": "test_j2_j3_dev_gate_registry_precommits_every_declared_gate_before_gradient()",
       "source": "tests/eipm/test_n0_full_envelope_joint_runtime_v1.py",
       "location": "L1108",
-      "community": "88"
+      "community": "77"
     },
     {
-      "label": "test_successor_trainer_dev_evaluator_and_checkpoint_contract_exist_before_gradient()",
+      "label": "test_successor_training_and_dev_selection_bind_exact_head_static_proof_receipt()",
       "source": "tests/eipm/test_n0_full_envelope_joint_runtime_v1.py",
-      "location": "L663",
-      "community": "88"
+      "location": "L909",
+      "community": "77"
     },
     {
-      "label": "test_j3_dev_gate_measures_irrelevant_source_removal_invariance()",
-      "source": "tests/eipm/test_n0_full_envelope_joint_runtime_v1.py",
-      "location": "L1208",
-      "community": "88"
+      "label": "test_long_additional_runtime_view_surfaces_reach_optimizer_facing_batch()",
+      "source": "tests/eipm/test_n0_full_envelope_long_context_curriculum_v1.py",
+      "location": "L85",
+      "community": "142"
+    },
+    {
+      "label": "active_edge_logits()",
+      "source": "scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py",
+      "location": "L67",
+      "community": "219"
     },
     {
       "label": "add()",
       "source": "src/alice_conversation/response_validation.py",
       "location": "L241",
-      "community": "11"
+      "community": "9"
+    },
+    {
+      "label": "verify_result_against_preflight()",
+      "source": "scripts/eipm/n0/finalize_downstream_causal_arbitration_v0_1.py",
+      "location": "L146",
+      "community": "216"
     },
     {
       "label": "AliceN0V02Model",
       "source": "src/alice_personality/n0/v02_model.py",
       "location": "L13",
-      "community": "56"
+      "community": "79"
+    },
+    {
+      "label": "consensus_all_aligned()",
+      "source": "scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py",
+      "location": "L327",
+      "community": "93"
     },
     {
       "label": "MemoryAlreadyExistsError",
       "source": "src/alice_memory/service.py",
       "location": "L58",
-      "community": "15"
-    },
-    {
-      "label": "ConstitutionalSourceSnapshot",
-      "source": "src/alice_conversation/constitutional_prompt.py",
-      "location": "L50",
-      "community": "145"
+      "community": "11"
     },
     {
       "label": "audit()",
       "source": "scripts/audit_capability_barriers.py",
       "location": "L521",
-      "community": "148"
+      "community": "158"
     },
     {
       "label": "authority()",
       "source": "tests/eipm/test_n0_qsre_production_operator_v3.py",
       "location": "L87",
-      "community": "104"
+      "community": "211"
     },
     {
       "label": "authorize_boolean_map()",
       "source": "src/alice_capability_profiles.py",
       "location": "L88",
-      "community": "98"
+      "community": "105"
     },
     {
       "label": "test_candidates_never_enter_derived_indexes_before_promotion()",
       "source": "tests/phase2/test_memory_candidate_security_gates.py",
       "location": "L312",
-      "community": "100"
+      "community": "57"
+    },
+    {
+      "label": ".boundary()",
+      "source": "src/alice_conversation/cli_policy.py",
+      "location": "L67",
+      "community": "190"
     },
     {
       "label": "branch_forward()",
       "source": "scripts/eipm/n0/train_n0_v02_structured_state_pilot.py",
       "location": "L287",
-      "community": "59"
+      "community": "172"
     },
     {
       "label": "_build()",
       "source": "tests/phase4/test_information_grounding.py",
       "location": "L154",
-      "community": "63"
+      "community": "50"
     },
     {
       "label": "candidate()",
       "source": "tests/phase5/test_memory_m2_adjudication_contracts.py",
       "location": "L154",
-      "community": "5"
+      "community": "16"
     },
     {
       "label": "ConversationCapabilities",
       "source": "src/alice_conversation/contracts.py",
       "location": "L106",
-      "community": "11"
+      "community": "24"
     },
     {
-      "label": "CapabilityRuntime",
-      "source": "src/alice_evolution/capability_runtime.py",
-      "location": "L77",
-      "community": "98"
+      "label": "causal_specialist_probabilities()",
+      "source": "scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py",
+      "location": "L83",
+      "community": "33"
     },
     {
-      "label": "test_dynamic_relation_cardinality_has_no_parameter_axis()",
-      "source": "tests/eipm/test_n0_qsre_production_core_v1.py",
-      "location": "L157",
-      "community": "53"
-    },
-    {
-      "label": "eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
-      "source": "scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py",
+      "label": "test_n0_no_accidental_capability_ceilings.py",
+      "source": "tests/eipm/test_n0_no_accidental_capability_ceilings.py",
       "location": "L1",
-      "community": "4"
-    },
-    {
-      "label": "checkpoint_capability_tuple()",
-      "source": "scripts/eipm/n0/train_n0_v02_evidence_graph_pilot.py",
-      "location": "L669",
-      "community": "37"
+      "community": "81"
     },
     {
       "label": "classify()",
       "source": "scripts/audit_repository_phase_boundary.py",
       "location": "L120",
-      "community": "268"
+      "community": "275"
+    },
+    {
+      "label": "test_ordinary_plaintext_inspection_and_temporal_paths_fail_closed()",
+      "source": "tests/phase2/test_memory_sensitive_storage.py",
+      "location": "L202",
+      "community": "5"
     },
     {
       "label": "compare()",
       "source": "src/alice_personality/n0/full_envelope_dev_gate_v1.py",
       "location": "L23",
-      "community": "88"
-    },
-    {
-      "label": "CompletedProcess",
-      "source": "",
-      "location": "",
-      "community": "61"
+      "community": "77"
     },
     {
       "label": "test_tampered_request_or_completion_audit_fails_closed()",
       "source": "tests/phase2/test_memory_sensitive_deletion.py",
       "location": "L531",
-      "community": "18"
-    },
-    {
-      "label": "atomic_claim_decomposition.py",
-      "source": "src/alice_vault/atomic_claim_decomposition.py",
-      "location": "L1",
-      "community": "179"
+      "community": "5"
     }
   ],
   "private_external_route_recommended": true,
-  "private_external_route_reason": "question references a private/external source class",
+  "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
   "trust_contract": [
     "This capsule routes retrieval; it is not canonical A.L.I.C.E. truth.",
     "Open consequential claims in the original branch/path source before acting.",
