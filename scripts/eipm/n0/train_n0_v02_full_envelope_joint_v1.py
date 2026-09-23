@@ -815,7 +815,7 @@ def main() -> None:
     parser.add_argument("--mlm-micro-batch-size",type=int,default=1)
     parser.add_argument("--teacher-batch-size",type=int,default=2)
     parser.add_argument("--replay-sequence-length",type=int,default=512)
-    parser.add_argument("--warmup-steps",type=int,default=20)
+    parser.add_argument("--warmup-steps",type=int,default=50)
     parser.add_argument("--scheduler-horizon-steps",type=int,default=1000)
     parser.add_argument("--backbone-learning-rate",type=float,default=1e-5)
     parser.add_argument("--interface-learning-rate",type=float,default=5e-5)
@@ -846,6 +846,23 @@ def main() -> None:
         raise SystemExit("successor training-plan schema drift")
     authority=dict(training_plan.get("authorization") or {})
     optimization_strategy=dict(training_plan.get("optimization_strategy") or {})
+    if optimization_strategy.get("runtime_hyperparameters_fixed_before_gradient") is not True:
+        raise SystemExit("training plan runtime hyperparameters are not frozen")
+    optimizer_policy=dict(optimization_strategy.get("optimizer_parameter_groups") or {})
+    backbone_policy=dict(optimizer_policy.get("pretrained_semantic_backbone") or {})
+    interface_policy=dict(optimizer_policy.get("new_or_reopened_interfaces") or {})
+    if not math.isclose(args.backbone_learning_rate,float(backbone_policy.get("learning_rate",-1.0)),rel_tol=0.0,abs_tol=1e-12):
+        raise SystemExit("backbone learning rate drift from precommitted plan")
+    if not math.isclose(args.interface_learning_rate,float(interface_policy.get("learning_rate",-1.0)),rel_tol=0.0,abs_tol=1e-12):
+        raise SystemExit("interface learning rate drift from precommitted plan")
+    if not math.isclose(args.backbone_weight_decay,float(backbone_policy.get("weight_decay",-1.0)),rel_tol=0.0,abs_tol=1e-12):
+        raise SystemExit("backbone weight decay drift from precommitted plan")
+    if not math.isclose(args.interface_weight_decay,float(interface_policy.get("weight_decay",-1.0)),rel_tol=0.0,abs_tol=1e-12):
+        raise SystemExit("interface weight decay drift from precommitted plan")
+    if not math.isclose(args.gradient_clip_norm,float(optimization_strategy.get("gradient_clip_norm",-1.0)),rel_tol=0.0,abs_tol=1e-12):
+        raise SystemExit("gradient clip drift from precommitted plan")
+    if int(args.seed)!=int(optimization_strategy.get("training_seed",-1)):
+        raise SystemExit("training seed drift from precommitted plan")
     checkpoint_evaluation_cadence_steps=int(
         optimization_strategy.get("checkpoint_evaluation_cadence_steps",0)
     )
@@ -861,6 +878,13 @@ def main() -> None:
     if scheduler_policy.get("family")!="linear_warmup_cosine_decay_to_nonzero_floor":
         raise SystemExit("training plan scheduler policy drift")
     minimum_lr_scale=float(scheduler_policy.get("minimum_lr_scale",-1.0))
+    expected_horizon=int(scheduler_policy.get("operating_horizon_steps",0))
+    if args.scheduler_horizon_steps!=expected_horizon:
+        raise SystemExit("scheduler horizon drift from precommitted plan")
+    warmup_fraction=float(optimization_strategy.get("warmup_fraction",-1.0))
+    expected_warmup=int(round(expected_horizon*warmup_fraction))
+    if args.warmup_steps!=expected_warmup:
+        raise SystemExit("warmup steps drift from precommitted plan")
     if not (0.0<minimum_lr_scale<1.0):
         raise SystemExit("post-horizon scheduler floor must be strictly positive")
     if scheduler_policy.get("horizon_is_stage_completion") is not False:
@@ -896,6 +920,24 @@ def main() -> None:
         semantic_long_token_receipt_path=args.semantic_long_token_receipt,
         static_proof_receipt_path=args.static_proof_receipt,
     )
+    gpu_route_receipt=read_json(args.gpu_memory_receipt)
+    p43_microbatch=int(gpu_route_receipt.get("microbatch_size",0))
+    if args.lane_batch_size!=p43_microbatch:
+        raise SystemExit("P43 lane microbatch drift")
+    if args.mlm_micro_batch_size!=p43_microbatch:
+        raise SystemExit("P43 MLM microbatch drift")
+    if args.teacher_batch_size!=int(gpu_route_receipt.get("teacher_batch_size",0)):
+        raise SystemExit("P43 teacher batch drift")
+    if args.replay_sequence_length!=int(gpu_route_receipt.get("replay_sequence_length",0)):
+        raise SystemExit("P43 replay sequence length drift")
+    if args.gradient_accumulation_steps!=int(gpu_route_receipt.get("candidate_gradient_accumulation",0)):
+        raise SystemExit("P43 gradient accumulation drift")
+    if args.mixed_precision!=str(gpu_route_receipt.get("training_mixed_precision","")):
+        raise SystemExit("P43 mixed precision drift")
+    training_operating_points=dict(optimization_strategy.get("training_operating_points") or {})
+    if args.replay_sequence_length!=int(training_operating_points.get("replay_sequence_length",0)):
+        raise SystemExit("replay sequence length drift from precommitted plan")
+
     training_authorization=None
     if args.execute_gradient:
         training_authorization=verify_runtime_training_authorization(
@@ -1102,6 +1144,8 @@ def main() -> None:
         ],
     )
     device=accelerator.device
+    if int(accelerator.num_processes)!=int(gpu_route_receipt.get("world_size",0)):
+        raise SystemExit("P43 world-size drift")
 
     system,load_receipt=load_registered_full_envelope_system(
         topology_path=args.topology_config,
