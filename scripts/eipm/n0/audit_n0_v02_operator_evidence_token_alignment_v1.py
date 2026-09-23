@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -17,6 +18,10 @@ PASS = "PASS_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1"
 FAIL = "FAIL_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1"
 
 
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
     return [
         json.loads(line)
@@ -29,9 +34,16 @@ def main() -> None:
     p=argparse.ArgumentParser()
     p.add_argument("--rows",required=True)
     p.add_argument("--tokenizer-dir",required=True)
+    p.add_argument("--source-revision",required=True)
     p.add_argument("--output",required=True)
     p.add_argument("--max-length",type=int,default=512)
     args=p.parse_args()
+
+    source_revision=str(args.source_revision).strip().lower()
+    if len(source_revision)!=40 or any(
+        ch not in "0123456789abcdef" for ch in source_revision
+    ):
+        raise SystemExit("source revision must be exact 40-hex git commit")
 
     rows_path=Path(args.rows).resolve()
     tokenizer_dir=Path(args.tokenizer_dir).resolve()
@@ -118,6 +130,9 @@ def main() -> None:
     result={
         "schema":"alice.eipm.n0.operator-evidence-token-alignment-audit.v1",
         "status":PASS if not errors else FAIL,
+        "source_revision":source_revision,
+        "rows_sha256":sha256(rows_path),
+        "tokenizer_json_sha256":sha256(tokenizer_dir/"tokenizer.json"),
         "rows":len(rows),
         "relation_steps":relation_steps,
         "positive_query_tokens":positive_query_tokens,
