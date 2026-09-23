@@ -578,3 +578,32 @@ Do not ask the owner for a Magnolia run until that audit has either:
 - produced a reasoned source-level conclusion that the remaining unknowns are genuinely empirical and cannot be resolved cheaply before runtime.
 
 Graphify is navigation only. Original branch-qualified source remains authority.
+
+
+## Frontier-research architecture sync — 2026-09-23
+
+A dedicated research intake lane is now active for A.L.I.C.E. frontier papers. The current rule is to admit only work that creates a concrete architectural, validation, or model-design delta after comparison against the live repository.
+
+Research findings promoted to canonical `main` in merge commit `d2a828281e0747046554331071b3fd5912cb4a6b`:
+
+1. **Evidence-consumption / citation-lock invariant.**
+   Stage G now requires invocation-scoped proof that factual outputs are supported by evidence actually opened/materialized in the producing reasoning context. Candidate existence in a store, vector hit, graph reachability, summary, or latent score is not sufficient by itself.
+
+2. **Consolidation path-dependence qualification.**
+   Stage G now requires the same authorized evidence to be tested under one-shot, chronological, shuffled, grouped, adversarially mixed, and near-duplicate-heavy formation schedules. Unexplained schedule-dependent authority drift fails/quarantines the candidate. `RETAIN_RAW / NO_CONSOLIDATION` remains valid.
+
+3. **Usage-aware retrieval projection challenger.**
+   A future/shadow retrieval projection may learn which memories have repeatedly been useful together, but those associations remain derived, versioned, rebuildable, deletion/correction-aware retrieval state. They cannot become factual, causal, identity, relationship, or Claim authority.
+
+4. **Failure-localized multi-substrate learning.**
+   Canonical lifelong-learning policy now requires locating the likely failure/opportunity substrate before mutation where evidence permits. Candidate causes include skill, context/harness, retrieval, model, tool/executor, environment, evaluator, or unknown. A.L.I.C.E. should compare isolated and joint challengers instead of assuming every failure needs a model-weight update.
+
+5. **Context/harness co-evolution.**
+   Track F/H now permit separately versioned, sandboxed context-construction programs to co-evolve with procedural skills. These artifacts may learn evidence-aware retention and context assembly from rollout outcomes, but remain derived executable artifacts with provenance, permissions, rollback, correction/deletion handling, and no truth authority.
+
+6. **External artifact evolution and parametric learning are complementary.**
+   SHAPER-like train-free evolution is useful as a challenger pattern, not a permanent frozen-model doctrine. A.L.I.C.E. keeps procedural, retrieval/context, code, adapter, specialist-model, and later weight-learning substrates available.
+
+Current N0 consequence: **no topology or training-objective change is required from these findings.** N0 remains the identity-neutral semantic/judgment foundation and should not be diverted into agent-harness or long-term-memory optimization. The active N0 source branch remains authoritative for N0-specific progress.
+
+Primary research notes live on `research/frontier-watch`, including the first-watch review and the SHAPER intake. Future frontier findings that directly invalidate or strengthen current/completed work should be promoted into the affected canonical contracts promptly rather than left only in research notes.
