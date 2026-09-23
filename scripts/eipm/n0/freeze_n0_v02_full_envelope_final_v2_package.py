@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 
@@ -16,6 +17,7 @@ def sha256(path: Path) -> str:
 
 def main() -> None:
     p=argparse.ArgumentParser()
+    p.add_argument("--source-revision",required=True)
     p.add_argument("--package-config",required=True)
     p.add_argument("--evaluator-contract",required=True)
     p.add_argument("--evaluator-implementation",required=True)
@@ -33,6 +35,16 @@ def main() -> None:
     p.add_argument("--audit",required=True)
     p.add_argument("--output",required=True)
     args=p.parse_args()
+
+    source_revision=str(args.source_revision).strip().lower()
+    if len(source_revision)!=40 or any(ch not in "0123456789abcdef" for ch in source_revision):
+        raise SystemExit("FINAL-v2 freeze source revision must be exact 40-hex")
+    status=subprocess.check_output(["git","status","--porcelain"],text=True)
+    if status.strip():
+        raise SystemExit("FINAL-v2 freeze requires a clean exact-source worktree")
+    current_revision=subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip().lower()
+    if current_revision!=source_revision:
+        raise SystemExit("FINAL-v2 freeze source revision drift")
 
     paths={name:Path(getattr(args,name)) for name in (
         "package_config","evaluator_contract","evaluator_implementation","gate_registry","opening_authorizer","final_contract","synthetic_final_rows","semantic_final_rows",
@@ -76,6 +88,7 @@ def main() -> None:
     receipt={
         "schema":"alice.eipm.n0.full-envelope-final-v2-freeze-receipt.v1",
         "status":STATUS,
+        "source_revision":source_revision,
         "hashes":{
             name:sha256(path)
             for name,path in paths.items()
