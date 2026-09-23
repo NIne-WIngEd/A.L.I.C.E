@@ -57,6 +57,7 @@ def main() -> None:
     p.add_argument("--candidate-system",required=True)
     p.add_argument("--candidate-receipt",required=True)
     p.add_argument("--dev-receipt",required=True)
+    p.add_argument("--selection-receipt",required=True)
     p.add_argument("--freeze-receipt",required=True)
     p.add_argument("--output",required=True)
     args=p.parse_args()
@@ -70,11 +71,13 @@ def main() -> None:
 
     candidate=read_json(args.candidate_receipt)
     dev=read_json(args.dev_receipt)
+    selection=read_json(args.selection_receipt)
     freeze=read_json(args.freeze_receipt)
 
     candidate_system_sha256=sha256_file(args.candidate_system)
     candidate_receipt_sha256=sha256_file(args.candidate_receipt)
     dev_receipt_sha256=sha256_file(args.dev_receipt)
+    selection_receipt_sha256=sha256_file(args.selection_receipt)
     freeze_receipt_sha256=sha256_file(args.freeze_receipt)
 
     if candidate.get("stage")!=J3:
@@ -115,6 +118,26 @@ def main() -> None:
     if dev.get("candidate_system_sha256")!=candidate_system_sha256:
         raise SystemExit("DEV selection/candidate system drift")
 
+    if selection.get("schema")!="alice.eipm.n0.full-envelope-dev-checkpoint-selection.v1":
+        raise SystemExit("FINAL opening selection receipt drift: schema")
+    if selection.get("status")!="SELECTED_FIRST_PASSING_N0_DEV_CHECKPOINT":
+        raise SystemExit("FINAL opening selection receipt drift: status")
+    if selection.get("source_revision")!=revision or selection.get("stage")!=J3:
+        raise SystemExit("FINAL opening selection receipt drift: source/stage")
+    if selection.get("first_passing_checkpoint") is not True:
+        raise SystemExit("FINAL opening selection receipt drift: not first passing")
+    if selection.get("selected_checkpoint_receipt_sha256")!=candidate_receipt_sha256:
+        raise SystemExit("FINAL opening selection receipt drift: checkpoint")
+    if selection.get("selected_system_sha256")!=candidate_system_sha256:
+        raise SystemExit("FINAL opening selection receipt drift: system")
+    if selection.get("selected_dev_receipt_sha256")!=dev_receipt_sha256:
+        raise SystemExit("FINAL opening selection receipt drift: DEV")
+    selector=Path(__file__).resolve().with_name(
+        "select_n0_v02_full_envelope_dev_checkpoint_v1.py"
+    )
+    if selection.get("selection_authorizer_sha256")!=sha256_file(selector):
+        raise SystemExit("FINAL opening selection receipt drift: selector")
+
     if freeze.get("schema")!="alice.eipm.n0.full-envelope-final-v2-freeze-receipt.v1":
         raise SystemExit("FINAL opening freeze receipt schema drift")
     if freeze.get("status")!=PASS_FREEZE:
@@ -143,6 +166,7 @@ def main() -> None:
         "candidate_system_sha256":candidate_system_sha256,
         "candidate_checkpoint_receipt_sha256":candidate_receipt_sha256,
         "dev_receipt_sha256":dev_receipt_sha256,
+        "selection_receipt_sha256":selection_receipt_sha256,
         "freeze_receipt_sha256":freeze_receipt_sha256,
         "opening_authorizer_sha256":opening_authorizer_sha256,
         "automatic_checkpoint_selection":False,
