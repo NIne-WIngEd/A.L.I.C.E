@@ -290,9 +290,9 @@ def test_j1_joint_step_does_not_require_or_execute_full_fabric() -> None:
             if task=="natural_relation":
                 logits=self.anchor.repeat(1,2)
                 return {
-                    "relation_logits":logits[:,None,:],
-                    "relation_step_mass":torch.ones(1,1),
-                    "relation_candidate_mask":torch.ones(1,2,dtype=torch.bool),
+                    "semantic_operator":{
+                        "relation_logits":logits[:,None,:],
+                    },
                 }
             if task=="full_envelope":
                 raise AssertionError("J1 must not execute full-envelope fabric")
