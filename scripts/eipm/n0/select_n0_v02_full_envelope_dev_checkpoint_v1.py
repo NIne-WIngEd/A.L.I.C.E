@@ -123,6 +123,12 @@ def main() -> None:
         parent=receipt.get("stage_checkpoint_parent_receipt_sha256")
         current=str(parent) if parent else None
     chain.reverse()
+    off_chain=sorted(set(checkpoints)-set(seen))
+    if off_chain:
+        raise SystemExit(
+            "off-chain stage checkpoint exists in checkpoint root; "
+            "selection requires one linear complete stage history"
+        )
 
     last_step=0
     evaluated=[]
