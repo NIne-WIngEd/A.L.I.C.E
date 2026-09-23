@@ -1702,3 +1702,18 @@ def test_behavioral_dev_context_swap_pairs_keep_runtime_geometry_after_transfer_
     finally:
         if sys.path and sys.path[0]==str(scripts):
             sys.path.pop(0)
+
+
+def test_successor_stage_transition_binds_dev_receipt_to_exact_checkpoint_state() -> None:
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "accelerator_state_tree_sha256" in trainer
+    assert "candidate_checkpoint_receipt_sha256" in trainer
+    assert "candidate_system_sha256" in trainer
+    assert "sha256_tree(args.resume_accelerator_state)" in trainer
+    assert "sha256_file(args.resume_objective_state)" in trainer
+    assert "predecessor DEV receipt/checkpoint receipt hash drift" in trainer
+    assert "predecessor DEV receipt/system hash drift" in trainer
+    assert "predecessor accelerator-state hash drift" in trainer
+    assert "predecessor objective-state hash drift" in trainer
+    assert "predecessor source revision drift" in trainer
+
