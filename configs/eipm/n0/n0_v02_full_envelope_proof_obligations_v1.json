@@ -1151,6 +1151,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_gpu_memory_dry_run_is_exact_topology_no_gradient_and_not_training_authority",
       "requirement": "P43 must have an executable no-gradient, no-backward, no-optimizer GPU qualifier that loads the exact registered production topology, exercises the real J3 optimizer-facing public lanes and counterfactual path, measures every rank, and produces only a memory-route receipt—not training authority."
+    },
+    {
+      "id": "N0-P39QE",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_stage_training_scheduler_routes_long_semantics_into_j1_without_downstream_fabric",
+      "requirement": "J1's declared long-query/relation/factor semantic gates must be supplied by optimizer-facing long-context semantic rows through the semantic-operator task, not deferred until downstream full-fabric activation. J1 must still avoid full-fabric losses; J2 and J3 add only the stage-owned full-fabric lanes."
     }
   ],
   "closure_rule": {

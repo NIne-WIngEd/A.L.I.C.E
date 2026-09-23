@@ -391,3 +391,46 @@ def test_gpu_memory_dry_run_is_exact_topology_no_gradient_and_not_training_autho
     assert "execute_full_envelope_joint_step" in source
     assert "optimizer_object_created" in source
     assert "torch.optim" not in source
+
+
+def test_stage_training_scheduler_routes_long_semantics_into_j1_without_downstream_fabric() -> None:
+    path=ROOT/"src/alice_personality/n0/full_envelope_training_batch_scheduler_v1.py"
+    assert path.is_file(), "stage-aware full-envelope training batch scheduler missing"
+    source=path.read_text()
+    assert "FullEnvelopeTrainingBatchSchedulerV1" in source
+    assert "semantic_operator_intervention" in source
+    assert "long_context_semantic" in source
+    assert "full_envelope_behavioral" in source
+    assert "runtime_view_supplement" in source
+    assert "long_context_fabric" in source
+    assert "natural_relation" in source
+
+    from alice_personality.n0.full_envelope_stage_policy_v1 import J1,J2,J3
+    from alice_personality.n0.full_envelope_training_batch_scheduler_v1 import (
+        FullEnvelopeTrainingBatchSchedulerV1,
+    )
+
+    lanes={
+        "semantic_operator_intervention":[{"id":"semantic-a"}],
+        "long_context_semantic":[
+            {"id":"long-query","long_context_surface":"query"},
+            {"id":"long-relation","long_context_surface":"relation_schema"},
+            {"id":"long-factor","long_context_surface":"factor_schema"},
+        ],
+        "full_envelope_behavioral":[{"id":"behavior-a"}],
+        "runtime_view_supplement":[{"id":"runtime-a"}],
+        "long_context_fabric":[{"id":"long-field","long_context_surface":"field_text"}],
+        "natural_relation":[{"id":"natural-a"}],
+    }
+    scheduler=FullEnvelopeTrainingBatchSchedulerV1(lanes=lanes,seed=20260922)
+
+    seen_j1={scheduler.next_lane(stage=J1,kind="semantic") for _ in range(8)}
+    assert seen_j1=={"semantic_operator_intervention","long_context_semantic"}
+    assert scheduler.active_full_fabric_lanes(stage=J1)==()
+    assert scheduler.active_full_fabric_lanes(stage=J2)==(
+        "full_envelope_behavioral","long_context_fabric",
+    )
+    assert scheduler.active_full_fabric_lanes(stage=J3)==(
+        "full_envelope_behavioral","runtime_view_supplement","long_context_fabric",
+    )
+    assert scheduler.active_natural_lanes(stage=J1)==("natural_relation",)
