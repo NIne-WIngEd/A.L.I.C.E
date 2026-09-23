@@ -761,3 +761,88 @@ def test_successor_trainer_cannot_bypass_explicit_training_plan_authority() -> N
     assert 'required_authority=("optimizer","gradient","gpu_training")' in trainer
     assert 'authority.get(name) is not True' in trainer
     assert "successor optimization remains governance-blocked" in trainer
+
+
+def test_j1_dev_gate_registry_covers_every_declared_gate_without_final_authority() -> None:
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    registry=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json").read_text()
+    )
+    assert registry["schema"]=="alice.eipm.n0.full-envelope-dev-gate-registry.v1"
+    assert registry["authority"]["checkpoint_selection_surface"]=="DEV_ONLY"
+    assert registry["authority"]["final_rows_allowed"] is False
+    assert registry["authority"]["final_results_allowed"] is False
+    j1=registry["stages"]["J1_joint_semantic_operator"]
+    assert j1["mapping_complete"] is True
+    assert set(j1["gates"])==set(plan["stage_gates"]["J1"])
+    allowed={"empirical","composite","static_source_proof"}
+    assert {value["kind"] for value in j1["gates"].values()} <= allowed
+    for name,value in j1["gates"].items():
+        if value["kind"]=="static_source_proof":
+            assert value["obligation_ids"], name
+        elif value["kind"]=="empirical":
+            assert value["metric"] and "threshold" in value, name
+        else:
+            assert value["all"], name
+
+
+def test_successor_dev_metric_primitives_measure_program_factor_margin_and_token_grounding() -> None:
+    import torch
+    from alice_personality.n0.full_envelope_dev_metrics_v1 import (
+        relation_program_exact,
+        event_program_exact,
+        global_factor_correct,
+        step_factor_exact,
+        margin_success,
+        token_evidence_f1,
+    )
+    relation_logits=torch.tensor([[
+        [4.0,0.0],
+        [0.0,5.0],
+        [1.0,1.0],
+    ]])
+    mass=torch.tensor([[0.9,0.8,0.0]])
+    target=torch.tensor([[0,1,0]])
+    mask=torch.tensor([[True,True,False]])
+    assert bool(relation_program_exact(
+        relation_logits=relation_logits,
+        relation_step_mass=mass,
+        relation_targets=target,
+        relation_step_mask=mask,
+    )[0])
+    events=torch.tensor([[
+        [0.9,0.05,0.05],
+        [0.8,0.1,0.1],
+        [0.05,0.9,0.05],
+    ]])
+    event_target=torch.tensor([[0,0,1]])
+    event_mask=torch.tensor([[True,True,True]])
+    assert bool(event_program_exact(
+        event_distribution=events,event_targets=event_target,event_mask=event_mask
+    )[0])
+    factors=global_factor_correct(
+        factor_logits={"direction":torch.tensor([[0.0,4.0]])},
+        factor_targets={"direction":torch.tensor([1])},
+    )
+    assert bool(factors["direction"][0])
+    steps=step_factor_exact(
+        step_factor_logits={"direction":torch.tensor([[[4.0,0.0],[0.0,4.0],[1.0,1.0]]])},
+        step_factor_targets={"direction":torch.tensor([[0,1,0]])},
+        step_factor_mask=mask,
+    )
+    assert bool(steps["direction"][0])
+    margin=margin_success(
+        logits=relation_logits,
+        targets=target,
+        counterfactual_targets=torch.tensor([[1,0,-1]]),
+        valid_mask=mask,
+        margin=0.2,
+    )
+    assert bool(margin.all())
+    assert token_evidence_f1(
+        predicted=torch.tensor([[0.9,0.1,0.8,0.2]]),
+        target=torch.tensor([[1.0,0.0,1.0,0.0]]),
+        valid_mask=torch.tensor([[True,True,True,True]]),
+    )==1.0

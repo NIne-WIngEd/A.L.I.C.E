@@ -354,7 +354,11 @@
       "PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1",
       "PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1",
       "PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1"
-    ]
+    ],
+    "dev_gate_registry": "configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json",
+    "j1_dev_gate_mapping_complete": true,
+    "j2_dev_gate_mapping_complete": false,
+    "j3_dev_gate_mapping_complete": false
   },
   "loss_balancing": {
     "method": "macro_family_balanced_with_per_objective_scale_normalization",

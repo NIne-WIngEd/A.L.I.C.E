@@ -1244,6 +1244,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_successor_trainer_cannot_bypass_explicit_training_plan_authority",
       "requirement": "The successor trainer must fail closed on optimizer, gradient, and GPU-training authority from the exact joint-training plan. A command-line execute-gradient flag or passed runtime qualifier may not override a still-false governance authorization."
+    },
+    {
+      "id": "N0-P43G",
+      "stage": "dev_validation",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_j1_dev_gate_registry_covers_every_declared_gate_without_final_authority",
+      "requirement": "Every named J1 gate must be precommitted to an executable candidate-dependent DEV metric, composite public regression metric, or exact-source structural proof before J1 candidate results exist. FINAL may not supply missing stage-gate semantics."
+    },
+    {
+      "id": "N0-P43H",
+      "stage": "dev_validation",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_successor_dev_metric_primitives_measure_program_factor_margin_and_token_grounding",
+      "requirement": "Successor DEV metrics must measure exact relation/event programs, dynamic factor semantics, causal correct-vs-counterfactual margins, and token-grounding behavior directly from current successor outputs rather than historical model structures."
     }
   ],
   "closure_rule": {

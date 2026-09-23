@@ -1,0 +1,154 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-dev-gate-registry.v1",
+  "status": "PRECOMMITTED_SUCCESSOR_DEV_GATE_MAPPING",
+  "date": "2026-09-22",
+  "purpose": "Map each named stage gate to either a candidate-dependent DEV metric or an exact-source structural proof. FINAL rows/results cannot supply a missing mapping.",
+  "authority": {
+    "checkpoint_selection_surface": "DEV_ONLY",
+    "final_rows_allowed": false,
+    "final_results_allowed": false,
+    "private_identity_data": false,
+    "thresholds_frozen_before_candidate_results": true
+  },
+  "static_proof_source": "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
+  "final_threshold_reference": "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+  "stages": {
+    "J1_joint_semantic_operator": {
+      "mapping_complete": true,
+      "gates": {
+        "natural_heldout_relation_family_semantics": {
+          "kind": "empirical",
+          "metric": "natural_relation.top1",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "heldout_relation_family_semantics": {
+          "kind": "empirical",
+          "metric": "semantic_operator.relation_sequence_exact",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "dynamic_factor_semantics": {
+          "kind": "empirical",
+          "metric": "semantic_operator.dynamic_factor_macro_accuracy",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "source_target_intervention": {
+          "kind": "empirical",
+          "metric": "semantic_operator.source_target_pair_completion",
+          "comparison": ">=",
+          "threshold": 1
+        },
+        "ordered_relation_intervention": {
+          "kind": "empirical",
+          "metric": "semantic_operator.ordered_relation_sequence_exact",
+          "comparison": ">=",
+          "threshold": 0.95
+        },
+        "unknown_defer": {
+          "kind": "empirical",
+          "metric": "semantic_operator.unknown_defer_accuracy",
+          "comparison": ">=",
+          "threshold": 0.95
+        },
+        "historical_semantic_regression": {
+          "kind": "composite",
+          "all": [
+            {
+              "metric": "historical_regression.teacher_dev_top1",
+              "comparison": ">=",
+              "threshold": 0.8736842105263158
+            },
+            {
+              "metric": "historical_regression.novel_cross_top1",
+              "comparison": ">=",
+              "threshold": 0.875
+            },
+            {
+              "metric": "historical_regression.voice_fixed_top1",
+              "comparison": ">=",
+              "threshold": 1
+            }
+          ]
+        },
+        "mixed_step_direction_composition": {
+          "kind": "empirical",
+          "metric": "semantic_operator.mixed_step_direction_sequence_exact",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "mixed_step_modifier_composition": {
+          "kind": "empirical",
+          "metric": "semantic_operator.mixed_step_modifier_sequence_exact",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "runtime_relation_symmetry_causal_pairs": {
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P14",
+            "N0-P20",
+            "N0-P23"
+          ]
+        },
+        "program_truncation_fail_closed": {
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P08",
+            "N0-P24",
+            "N0-P24I",
+            "N0-P24J",
+            "N0-P24K",
+            "N0-P24L",
+            "N0-P24M"
+          ]
+        },
+        "cross_window_semantic_causal_transfer": {
+          "kind": "empirical",
+          "metric": "semantic_operator_long_context.relation_sequence_exact",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "step_relation_schema_causal_sensitivity": {
+          "kind": "empirical",
+          "metric": "semantic_operator.relation_counterfactual_margin_success",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "program_relation_state_assignment_weighting": {
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P23A"
+          ]
+        },
+        "bidirectional_query_relation_schema_token_grounding": {
+          "kind": "empirical",
+          "metric": "semantic_operator.bidirectional_relation_token_grounding_min_f1",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "factor_and_step_factor_schema_token_grounding": {
+          "kind": "empirical",
+          "metric": "semantic_operator.factor_token_grounding_min_f1",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "long_relation_and_factor_schema_semantics": {
+          "kind": "empirical",
+          "metric": "semantic_operator_long_context.long_relation_factor_semantics_min",
+          "comparison": ">=",
+          "threshold": 0.9
+        }
+      }
+    },
+    "J2_reopened_representation_interfaces": {
+      "mapping_complete": false,
+      "gates": {}
+    },
+    "J3_full_public_n0_coadaptation": {
+      "mapping_complete": false,
+      "gates": {}
+    }
+  }
+}

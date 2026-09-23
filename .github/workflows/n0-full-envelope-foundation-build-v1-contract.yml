@@ -75,6 +75,7 @@ on:
       - "configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_checkpoint_contract_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_dev_validation_contract_v1.json"
+      - "configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json"
       - "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json"
@@ -91,6 +92,7 @@ on:
       - "scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh"
       - "scripts/eipm/n0/magnolia_cpu_n0_v02_full_envelope_runtime_v1.sbatch"
       - "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py"
+      - "src/alice_personality/n0/full_envelope_dev_metrics_v1.py"
       - "src/alice_personality/n0/full_envelope_training_objective_v1.py"
       - "src/alice_personality/n0/full_envelope_behavioral_batch_v1.py"
       - "src/alice_personality/n0/semantic_operator_batch_v1.py"
@@ -141,6 +143,7 @@ jobs:
             src/alice_personality/n0/semantic_segment_context_bridge_v1.py \
             src/alice_personality/n0/full_envelope_semantic_input_v1.py \
             src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py \
+            src/alice_personality/n0/full_envelope_dev_metrics_v1.py \
             src/alice_personality/n0/full_envelope_training_objective_v1.py \
             src/alice_personality/n0/full_envelope_behavioral_batch_v1.py \
             src/alice_personality/n0/semantic_operator_batch_v1.py \
@@ -198,6 +201,7 @@ jobs:
             configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_checkpoint_contract_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_dev_validation_contract_v1.json \
+            configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json \
             configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json \
             configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json \
