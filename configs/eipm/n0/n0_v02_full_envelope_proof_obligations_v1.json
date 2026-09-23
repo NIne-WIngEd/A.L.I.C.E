@@ -1180,6 +1180,21 @@
       "kind": "CI_REQUIRED",
       "receipt": "PASS_N0_SEMANTIC_OPERATOR_LONG_CONTEXT_CURRICULUM_AUDIT_V1",
       "requirement": "Before gradient, materialize and audit dedicated TRAIN/DEV long query/relation/factor semantic-operator rows with preserved program/factor targets and exact char-span evidence ownership; full-fabric behavioral rows cannot satisfy this obligation."
+    },
+    {
+      "id": "N0-P40C",
+      "stage": "tokenizer_evidence_alignment",
+      "kind": "RUNTIME_REQUIRED",
+      "status": "UNRESOLVED_BLOCKING",
+      "receipt": "PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1",
+      "requirement": "Before gradient, the exact governed tokenizer must preserve nonempty query/relation/factor/step-factor evidence targets for the dedicated J1 semantic-operator long-context TRAIN/DEV supplement without truncating the decisive tail. This runtime receipt is distinct from short 512-token operator evidence alignment."
+    },
+    {
+      "id": "N0-P39PI",
+      "stage": "full_public_mixture",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_public_mixture_manifest_is_executable_before_gradient",
+      "requirement": "The exact full public-mixture contract must bind the dedicated semantic_operator_long_context optimizer lane separately from full-envelope long-context fabric so J1 long semantic supervision cannot be omitted or substituted by behavioral rows."
     }
   ],
   "closure_rule": {

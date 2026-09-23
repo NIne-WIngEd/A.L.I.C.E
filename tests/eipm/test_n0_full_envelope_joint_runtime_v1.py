@@ -25,6 +25,7 @@ def test_full_public_mixture_manifest_is_executable_before_gradient() -> None:
         "broad_semantic_replay",
         "governed_judgment_replay",
         "semantic_operator_intervention",
+        "semantic_operator_long_context",
         "full_envelope_behavioral",
         "runtime_view_supplement",
         "long_context_supplement",
@@ -571,3 +572,15 @@ def test_j1_long_semantic_rows_compile_through_registered_semantic_operator_task
     finally:
         if sys.path and sys.path[0]==str(scripts):
             sys.path.pop(0)
+
+
+def test_runtime_qualification_token_aligns_dedicated_J1_long_semantic_evidence() -> None:
+    runner=(
+        ROOT/"scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh"
+    ).read_text()
+    assert "build_n0_v02_semantic_operator_long_context_curriculum_v1.py" in runner
+    assert "audit_n0_v02_semantic_operator_long_context_curriculum_v1.py" in runner
+    assert "SEMANTIC_LONG_TOKEN_AUDIT" in runner
+    assert "audit_n0_v02_operator_evidence_token_alignment_v1.py" in runner
+    assert "--max-length 8192" in runner
+    assert "PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1" in runner
