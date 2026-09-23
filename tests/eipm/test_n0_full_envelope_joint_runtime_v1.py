@@ -767,10 +767,11 @@ def test_successor_trainer_cannot_bypass_explicit_training_plan_authority() -> N
         ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py"
     ).read_text()
     assert 'parser.add_argument("--training-plan",required=True)' in trainer
+    assert 'parser.add_argument("--training-authorization")' in trainer
     assert 'if args.execute_gradient:' in trainer
-    assert 'required_authority=("optimizer","gradient","gpu_training")' in trainer
-    assert 'authority.get(name) is not True' in trainer
-    assert "successor optimization remains governance-blocked" in trainer
+    assert 'authority.get(name) is not False' in trainer
+    assert "source training authority must remain false" in trainer
+    assert "runtime training authorization required for gradient" in trainer
 
 
 def test_j1_dev_gate_registry_covers_every_declared_gate_without_final_authority() -> None:
