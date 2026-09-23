@@ -887,6 +887,7 @@ def main() -> None:
     resume_kind=None
     prior=None
     dev=None
+    predecessor_system_path=None
     start_optimizer_step=1
     resume_state_paths=(
         args.resume_accelerator_state,
@@ -981,6 +982,12 @@ def main() -> None:
             )
             if selection.get("selection_authorizer_sha256")!=sha256_file(selector):
                 raise SystemExit("predecessor selection authorizer hash drift")
+            predecessor_system_path=Path(args.resume_receipt).parent/"full_system.safetensors"
+            if (
+                not predecessor_system_path.is_file()
+                or sha256_file(predecessor_system_path)!=prior.get("full_system_sha256")
+            ):
+                raise SystemExit("stage-transition predecessor system hash drift")
             start_optimizer_step=1
         else:
             if prior_stage==args.stage:
@@ -1025,9 +1032,18 @@ def main() -> None:
         device="cpu",
         runtime_profile=None,
     )
+    if resume_kind=="stage_transition":
+        assert predecessor_system_path is not None
+        predecessor_system_state=load_file(
+            str(predecessor_system_path),device="cpu"
+        )
+        system.load_state_dict(predecessor_system_state,strict=True)
     stage_report=apply_stage_trainability(system,stage=args.stage)
     policy=resolve_stage_policy(args.stage)
     objective=FullEnvelopeJointTrainingObjectiveV1()
+    if resume_kind=="stage_transition":
+        objective_state=load_file(args.resume_objective_state,device="cpu")
+        objective.load_state_dict(objective_state,strict=True)
 
     tokenizer_dir=Path(args.tokenizer_dir).resolve()
     tokenizer=load_tokenizer(tokenizer_dir)
@@ -1132,14 +1148,20 @@ def main() -> None:
     )
     objective=objective.to(device)
 
-    if resume_kind is not None:
+    if resume_kind=="same_stage":
         accelerator.load_state(args.resume_accelerator_state)
         objective_state=load_file(args.resume_objective_state,device="cpu")
         objective.load_state_dict(objective_state,strict=True)
-        # Re-apply successor stage authority after restoring the predecessor.
+        # Same-stage continuation preserves optimizer/scheduler state exactly.
         stage_report=apply_stage_trainability(
             accelerator.unwrap_model(system),stage=args.stage
         )
+    elif resume_kind=="stage_transition":
+        # The selected predecessor model and loss-balancer state carry forward,
+        # but the newly activated stage starts with fresh AdamW moments and a
+        # stage-local warmup/cosine schedule. Restoring predecessor scheduler
+        # state could otherwise begin J2/J3 at a decayed or zero learning rate.
+        pass
 
     if accelerator.is_main_process:
         print(json.dumps({
@@ -1153,6 +1175,11 @@ def main() -> None:
             "private_identity_data":False,
             "final_results_observed":False,
             "automatic_stage_transition":False,
+            "stage_transition_optimizer_state_restored":False,
+            "stage_transition_scheduler_state_restored":False,
+            "same_stage_optimizer_scheduler_state_preserved":(
+                resume_kind=="same_stage"
+            ),
             "max_optimizer_steps_is_stage_completion":False,
         },sort_keys=True))
 
