@@ -1717,3 +1717,21 @@ def test_successor_stage_transition_binds_dev_receipt_to_exact_checkpoint_state(
     assert "predecessor objective-state hash drift" in trainer
     assert "predecessor source revision drift" in trainer
 
+
+
+def test_full_public_mixture_audit_is_bound_to_exact_manifest_consumed_by_runtime() -> None:
+    auditor=(
+        ROOT/"scripts/eipm/n0/audit_n0_v02_full_public_mixture_manifest_v1.py"
+    ).read_text()
+    trainer=(
+        ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py"
+    ).read_text()
+    gpu=(
+        ROOT/"scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py"
+    ).read_text()
+    assert '"manifest_sha256":sha256(Path(args.manifest))' in auditor
+    assert 'mixture_audit.get("manifest_sha256")!=sha256_file(' in trainer
+    assert 'mixture_audit.get("manifest_sha256")!=sha256_file(' in gpu
+    assert "full public mixture audit/manifest hash drift" in trainer
+    assert "full public mixture audit/manifest hash drift" in gpu
+
