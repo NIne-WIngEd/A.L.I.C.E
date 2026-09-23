@@ -270,3 +270,21 @@ def test_final_v2_evaluator_requires_exact_candidate_source_checkout() -> None:
     assert "FINAL evaluator source revision does not match candidate" in source
     assert "FINAL evaluator requires a clean tracked-source worktree" in source
 
+
+
+def test_final_v2_evaluator_verifies_every_frozen_package_input_hash() -> None:
+    source=(
+        ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py"
+    ).read_text()
+    assert 'p.add_argument("--package-config",required=True)' in source
+    assert 'p.add_argument("--fewrel-manifest",required=True)' in source
+    for name in (
+        "package_config","evaluator_contract","evaluator_implementation",
+        "gate_registry","final_contract","synthetic_final_rows",
+        "semantic_final_rows","runtime_view_final_rows",
+        "long_context_final_rows","package_manifest","fewrel_final_rows",
+        "fewrel_final_bank","fewrel_manifest","audit",
+    ):
+        assert f'"{name}"' in source
+    assert "frozen FINAL package artifact hash drift" in source
+
