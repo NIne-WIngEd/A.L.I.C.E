@@ -99,7 +99,12 @@
     "registered_joint_step": "src/alice_personality/n0/full_envelope_joint_step_v1.py",
     "joint_step_uses_real_lane_losses_only": true,
     "teacher_replay_subobjectives_equal_inside_macro_family": true,
-    "placeholder_joint_losses_forbidden": true
+    "placeholder_joint_losses_forbidden": true,
+    "registered_topology_contract": "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json",
+    "registered_topology_factory": "src/alice_personality/n0/full_envelope_runtime_factory_v1.py",
+    "production_native_window_tokens": 4096,
+    "production_overlap_tokens": 256,
+    "qualification_runtime_profile_may_not_change_learned_topology": true
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",

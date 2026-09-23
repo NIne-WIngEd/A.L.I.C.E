@@ -45,7 +45,8 @@
     "src/alice_personality/n0/semantic_operator_batch_v1.py",
     "src/alice_personality/n0/natural_relation_batch_v1.py",
     "src/alice_personality/n0/full_envelope_joint_step_v1.py",
-    "src/alice_personality/n0/full_envelope_stage_policy_v1.py"
+    "src/alice_personality/n0/full_envelope_stage_policy_v1.py",
+    "src/alice_personality/n0/full_envelope_runtime_factory_v1.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
@@ -1133,6 +1134,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_j1_joint_step_does_not_require_or_execute_full_fabric",
       "requirement": "J1 executable runtime must complete its active replay/operator/natural-relation step without constructing or forwarding the downstream full-fabric lane. This prevents inactive random downstream arbiters from being mistaken for J1 supervision while keeping the full topology instantiated in the registered system."
+    },
+    {
+      "id": "N0-P39QC",
+      "stage": "registered_topology",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_registered_production_topology_has_one_source_of_truth_and_no_hidden_ceiling",
+      "requirement": "CPU qualification, GPU memory qualification, joint training and evaluation must share one registered 640-wide production topology contract and constructor. Qualification may change only declared runtime operating points; it may not create a reduced architecture or hidden serving ceiling."
     }
   ],
   "closure_rule": {

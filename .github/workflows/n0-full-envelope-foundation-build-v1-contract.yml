@@ -67,6 +67,7 @@ on:
       - "configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json"
       - "configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json"
       - "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"
+      - "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json"
       - "configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json"
@@ -86,6 +87,7 @@ on:
       - "src/alice_personality/n0/natural_relation_batch_v1.py"
       - "src/alice_personality/n0/full_envelope_joint_step_v1.py"
       - "src/alice_personality/n0/full_envelope_stage_policy_v1.py"
+      - "src/alice_personality/n0/full_envelope_runtime_factory_v1.py"
       - "tests/eipm/test_n0_full_envelope_trainable_system_v1.py"
       - ".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml"
   workflow_dispatch:
@@ -133,6 +135,7 @@ jobs:
             src/alice_personality/n0/natural_relation_batch_v1.py \
             src/alice_personality/n0/full_envelope_joint_step_v1.py \
             src/alice_personality/n0/full_envelope_stage_policy_v1.py \
+            src/alice_personality/n0/full_envelope_runtime_factory_v1.py \
             src/alice_personality/n0/chunked_late_interaction.py \
             src/alice_personality/n0/full_envelope_structural_types.py \
             src/alice_personality/n0/semantic_operator_qsre_adapter.py \
@@ -173,6 +176,7 @@ jobs:
             configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json \
             configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json \
+            configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json \
             configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json \
             configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json \

@@ -1,0 +1,65 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-registered-topology.v1",
+  "status": "REGISTERED_FULL_PUBLIC_N0_SUCCESSOR_TOPOLOGY",
+  "date": "2026-09-22",
+  "purpose": "Single production-shape constructor contract for CPU qualification, GPU memory qualification, joint training, DEV evaluation, and eventual sealed FINAL evaluation.",
+  "semantic_initialization": {
+    "config": "configs/eipm/n0/alice_n0_semantic_v0.2.json",
+    "checkpoint_role": "targeted-repair-v0.1/step-00000080 initialization and regression baseline only; not frozen semantic authority",
+    "checkpoint_sha256": "6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43",
+    "exact_model_parameters": 136594435,
+    "tokenizer_version": "v0.2.1",
+    "tokenizer_vocab_size": 48000
+  },
+  "registered_system": {
+    "class": "N0FullEnvelopeTrainableSystemV1",
+    "implementation": "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
+    "factory": "src/alice_personality/n0/full_envelope_runtime_factory_v1.py",
+    "semantic_dim": 640,
+    "model_dim": 640,
+    "num_hidden_states": 17,
+    "num_attention_heads": 10,
+    "structured_layers": 2,
+    "field_metadata_dim": 3,
+    "edge_metadata_dim": 4,
+    "native_window_tokens": 4096,
+    "overlap_tokens": 256,
+    "segment_bridge_layers": 2,
+    "segment_query_chunk": 32,
+    "segment_key_chunk": 64,
+    "dropout": 0
+  },
+  "topology_invariants": {
+    "full_architecture": true,
+    "reduced_pilot": false,
+    "one_shared_semantic_backbone": true,
+    "detached_duplicate_backbone": false,
+    "runtime_relation_ceiling": null,
+    "runtime_factor_ceiling": null,
+    "runtime_field_ceiling": null,
+    "runtime_edge_ceiling": null,
+    "runtime_view_ceiling": null,
+    "runtime_slot_ceiling": null,
+    "runtime_reasoning_step_ceiling": null,
+    "product_context_token_ceiling": null,
+    "native_window_is_operating_point_not_capability_ceiling": true,
+    "identity_specific_parameters": false,
+    "private_identity_data": false
+  },
+  "runtime_profile_policy": {
+    "production_profile_uses_registered_values": true,
+    "qualification_override_allowed": true,
+    "qualification_override_must_be_operating_point_only": true,
+    "qualification_override_may_not_change_learned_topology": true,
+    "qualification_override_may_not_become_product_ceiling": true
+  },
+  "authorization": {
+    "construction": true,
+    "no_gradient_qualification": true,
+    "optimizer": false,
+    "gradient": false,
+    "gpu_training": false,
+    "final_opening": false,
+    "n0_complete": false
+  }
+}

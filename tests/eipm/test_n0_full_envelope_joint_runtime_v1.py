@@ -323,3 +323,33 @@ def test_j1_joint_step_does_not_require_or_execute_full_fabric() -> None:
     assert "full_envelope" not in system.tasks
     assert result["requires_full_fabric_primary"] is False
     assert result["requires_full_fabric_counterfactuals"] is False
+
+
+def test_registered_production_topology_has_one_source_of_truth_and_no_hidden_ceiling() -> None:
+    topology_path=ROOT/"configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json"
+    factory_path=ROOT/"src/alice_personality/n0/full_envelope_runtime_factory_v1.py"
+    assert topology_path.is_file()
+    assert factory_path.is_file()
+    topology=json.loads(topology_path.read_text())
+    assert topology["schema"]=="alice.eipm.n0.full-envelope-registered-topology.v1"
+    system=topology["registered_system"]
+    invariants=topology["topology_invariants"]
+    assert system["semantic_dim"]==system["model_dim"]==640
+    assert system["num_hidden_states"]==17
+    assert system["num_attention_heads"]==10
+    assert system["native_window_tokens"]==4096
+    assert system["overlap_tokens"]==256
+    assert system["segment_bridge_layers"]==2
+    assert topology["topology_invariants"]["full_architecture"] is True
+    assert topology["topology_invariants"]["reduced_pilot"] is False
+    for key in (
+        "runtime_relation_ceiling","runtime_factor_ceiling",
+        "runtime_field_ceiling","runtime_edge_ceiling",
+        "runtime_view_ceiling","runtime_slot_ceiling",
+        "runtime_reasoning_step_ceiling","product_context_token_ceiling",
+    ):
+        assert invariants[key] is None
+    source=factory_path.read_text()
+    assert "load_registered_full_envelope_system" in source
+    assert "semantic initialization checkpoint hash drift" in source
+    assert "runtime profile attempted to change learned topology" in source
