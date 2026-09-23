@@ -1008,3 +1008,41 @@ def test_behavioral_dev_geometry_extrapolates_beyond_train_without_becoming_ceil
     finally:
         if sys.path and sys.path[0]==str(scripts):
             sys.path.pop(0)
+
+
+def test_deep_chain_curriculum_keeps_entities_and_candidate_answers_distinct() -> None:
+    import importlib.util
+    import sys
+
+    scripts=ROOT/"scripts/eipm/n0"
+    sys.path.insert(0,str(scripts))
+    try:
+        spec=importlib.util.spec_from_file_location(
+            "behavioral_builder_deep_chain_uniqueness",
+            scripts/"build_n0_v02_full_envelope_behavioral_curriculum_v1.py",
+        )
+        assert spec is not None and spec.loader is not None
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        for split,examples,answer_count in (
+            ("train",range(14,14+17*4,17),6),
+            ("dev",range(14,14+17*4,17),7),
+            ("final",(17,36),8),
+        ):
+            for example in examples:
+                row=module.materialize_row(
+                    split=split,
+                    example=example,
+                    seed=20260922,
+                    relation_count=9 if split=="final" else 8,
+                    field_count=18 if split=="final" else 16,
+                    answer_count=answer_count,
+                )
+                if row["scenario_family"] not in {"causal_chain","long_causal_chain"}:
+                    continue
+                assert len(row["entities"])==len(set(row["entities"]))
+                assert len(row["candidate_answers"])==len(set(row["candidate_answers"]))
+    finally:
+        if sys.path and sys.path[0]==str(scripts):
+            sys.path.pop(0)

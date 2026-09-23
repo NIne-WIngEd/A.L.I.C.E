@@ -272,6 +272,43 @@ def factor_counterfactuals(targets: dict[str,str]) -> dict[str,str | None]:
     return result
 
 
+def unique_entity_sequence(
+    entities: list[str],
+    *,
+    example: int,
+    count: int,
+    stride: int,
+) -> list[str]:
+    if count <= 0:
+        raise ValueError("unique entity sequence count must be positive")
+    unique=list(dict.fromkeys(str(x) for x in entities))
+    if len(unique) < count:
+        raise ValueError(
+            f"entity pool has {len(unique)} unique values but {count} are required"
+        )
+    # Pick a deterministic coprime-ish walk, then fall back to the remaining
+    # pool if a stride aliases modulo the current entity count. The result is
+    # row-local and contains no learned identity or cardinality parameter.
+    start=(int(example)*7 + count*3) % len(unique)
+    selected=[]
+    seen=set()
+    for offset in range(len(unique)*2):
+        value=unique[(start + offset*int(stride)) % len(unique)]
+        if value in seen:
+            continue
+        selected.append(value)
+        seen.add(value)
+        if len(selected)==count:
+            return selected
+    for value in unique:
+        if value not in seen:
+            selected.append(value)
+            seen.add(value)
+            if len(selected)==count:
+                return selected
+    raise RuntimeError("unable to construct deterministic unique entity sequence")
+
+
 def scenario(mode: int, entities: list[str], example: int, *, split: str) -> dict[str,Any]:
     pair_anchor=example-1 if mode==16 else example
     entity_example=pair_anchor if mode in {15,16} else example
@@ -659,10 +696,13 @@ def scenario(mode: int, entities: list[str], example: int, *, split: str) -> dic
             if split=="dev"
             else (3 if example % 2 == 0 else 4)
         )
-        names=[a,b,c,d]
-        while len(names) < chain_steps + 1:
-            names.append(entities[(example*13+len(names)*5) % len(entities)])
-        entities_used=list(dict.fromkeys(names))
+        names=unique_entity_sequence(
+            entities,
+            example=example,
+            count=chain_steps+1,
+            stride=5,
+        )
+        entities_used=list(names)
         fields=[
             field(
                 f"Event {names[i]} is causal stage {i+1} in a verified multi-stage process.",
@@ -798,11 +838,13 @@ def scenario(mode: int, entities: list[str], example: int, *, split: str) -> dic
         # five-step operating point. Seven is a sealed evaluation operating
         # point only, never a model or serving ceiling.
         chain_steps=7
-        names=[
-            entities[(example*5+i*3) % len(entities)]
-            for i in range(chain_steps+1)
-        ]
-        entities_used=list(dict.fromkeys(names))
+        names=unique_entity_sequence(
+            entities,
+            example=example,
+            count=chain_steps+1,
+            stride=3,
+        )
+        entities_used=list(names)
         fields=[
             field(
                 f"Process observation {names[i]} records verified stage {i+1} of a five-link public causal sequence.",

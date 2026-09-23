@@ -1293,6 +1293,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_behavioral_dev_geometry_extrapolates_beyond_train_without_becoming_ceiling",
       "requirement": "Behavioral DEV must actually instantiate candidate-answer cardinality and reasoning-depth points beyond TRAIN while the sealed FINAL remains beyond DEV. These are evaluation operating points only; runtime candidate count and reasoning depth remain unbounded by learned identity tables or fixed serving ceilings."
+    },
+    {
+      "id": "N0-P39BZ",
+      "stage": "behavioral_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_deep_chain_curriculum_keeps_entities_and_candidate_answers_distinct",
+      "requirement": "Reasoning-depth extrapolation rows must use distinct chain entities and distinct public answer candidates. Increasing DEV/FINAL path length may not create label ambiguity through deterministic entity-index aliasing."
     }
   ],
   "closure_rule": {
