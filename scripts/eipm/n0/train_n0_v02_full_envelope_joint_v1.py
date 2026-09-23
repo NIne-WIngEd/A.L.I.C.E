@@ -1094,7 +1094,7 @@ def main() -> None:
     )
     objective=objective.to(device)
 
-    if predecessor is not None:
+    if resume_kind is not None:
         accelerator.load_state(args.resume_accelerator_state)
         objective_state=load_file(args.resume_objective_state,device="cpu")
         objective.load_state_dict(objective_state,strict=True)
@@ -1125,7 +1125,7 @@ def main() -> None:
 
     system.train()
     objective.train()
-    for step in range(1,args.max_optimizer_steps+1):
+    for step in range(start_optimizer_step,args.max_optimizer_steps+1):
         optimizer.zero_grad(set_to_none=True)
         numerators={
             family:torch.zeros((),device=device,dtype=torch.float32)
