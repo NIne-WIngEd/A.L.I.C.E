@@ -1403,6 +1403,13 @@ def materialize_row(
         "runtime_edge_count":len(base["edges"]),
         "runtime_reasoning_steps":len(relation_targets),
         "runtime_candidate_answer_count":len(answers),
+        "candidate_cardinality_extrapolation":(
+            split=="dev" and len(answers)>6
+        ),
+        "composition_extrapolation":(
+            split=="dev" and len(relation_targets)>4
+        ),
+        "dev_extrapolation_operating_point_is_capability_ceiling":False,
         "generated_text":True,
         "data_origin":("deterministic_public_full_envelope_final_v2" if split=="final" else "deterministic_public_full_envelope_behavioral_fabric_v1"),
         "private_identity_data":False,
