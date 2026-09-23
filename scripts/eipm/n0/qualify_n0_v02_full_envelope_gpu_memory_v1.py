@@ -43,6 +43,7 @@ from alice_personality.n0.natural_relation_batch_v1 import (
 from alice_personality.n0.semantic_operator_batch_v1 import (
     compile_semantic_operator_batch,
 )
+from alice_personality.n0.source_authority_v1 import require_canonical_source_file
 from alice_personality.n0.v02_training import (
     TeacherMultitaskCollator,
     sha256_file,
@@ -193,6 +194,30 @@ def main() -> None:
     p.add_argument("--mixture-audit",required=True)
     p.add_argument("--output",required=True)
     args=p.parse_args()
+
+    status=subprocess.check_output(["git","status","--porcelain"],text=True)
+    if status.strip():
+        raise SystemExit("GPU memory qualification requires a clean exact-source worktree")
+    require_canonical_source_file(
+        args.qualification_config,
+        "configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json",
+        label="GPU qualification config",
+    )
+    require_canonical_source_file(
+        args.topology_config,
+        "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json",
+        label="registered topology config",
+    )
+    require_canonical_source_file(
+        args.semantic_config,
+        "configs/eipm/n0/alice_n0_semantic_v0.2.json",
+        label="semantic config",
+    )
+    require_canonical_source_file(
+        args.source_config,
+        "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
+        label="public source config",
+    )
 
     cfg=read_json(args.qualification_config)
     if cfg.get("schema")!="alice.eipm.n0.full-envelope-gpu-memory-dry-run.v1":
