@@ -689,6 +689,7 @@ def main() -> None:
     p.add_argument("--tokenizer-dir",required=True)
     p.add_argument("--candidate-system",required=True)
     p.add_argument("--candidate-receipt",required=True)
+    p.add_argument("--dev-selection-receipt",required=True)
     p.add_argument("--synthetic-final-rows",required=True)
     p.add_argument("--semantic-final-rows",required=True)
     p.add_argument("--runtime-view-final-rows",required=True)
@@ -745,6 +746,7 @@ def main() -> None:
             )
 
     opening=read_json(args.final_opening_authorization)
+    dev_selection=read_json(args.dev_selection_receipt)
     if opening.get("schema")!="alice.eipm.n0.full-envelope-final-opening-authorization.v1":
         raise SystemExit("FINAL opening authorization schema drift")
     if opening.get("final_opening_authorized") is not True:
@@ -759,6 +761,20 @@ def main() -> None:
         raise SystemExit("FINAL opening/freeze lineage drift")
     if opening.get("candidate_checkpoint_sha256")!=sha256_file(args.candidate_system):
         raise SystemExit("FINAL opening/candidate checkpoint drift")
+    if opening.get("dev_receipt_sha256")!=sha256_file(args.dev_selection_receipt):
+        raise SystemExit("opening/DEV selection receipt drift")
+    if opening.get("candidate_checkpoint_receipt_sha256")!=sha256_file(
+        args.candidate_receipt
+    ):
+        raise SystemExit("opening/candidate checkpoint receipt drift")
+    if opening.get("automatic_checkpoint_selection") is not False:
+        raise SystemExit("FINAL opening may not perform automatic checkpoint selection")
+    if opening.get("checkpoint_selection_surface")!="DEV_ONLY":
+        raise SystemExit("FINAL opening checkpoint selection surface drift")
+    if opening.get("selected_stage")!="J3_full_public_n0_coadaptation":
+        raise SystemExit("FINAL opening selected stage drift")
+    if opening.get("final_results_observed") is not False:
+        raise SystemExit("FINAL opening receipt already observed FINAL")
 
     final_contract=read_json(args.final_contract)
     evaluator_contract=read_json(args.evaluator_contract)
@@ -781,6 +797,11 @@ def main() -> None:
             "FINAL evaluator source revision does not match candidate"
         )
 
+    if opening.get("source_revision")!=current_revision:
+        raise SystemExit("FINAL opening source revision drift")
+    if dev_selection.get("source_revision")!=current_revision:
+        raise SystemExit("FINAL DEV selection source revision drift")
+
     if final_contract.get("schema")!="alice.eipm.n0.full-envelope-final-validation-contract.v2":
         raise SystemExit("FINAL contract schema drift")
     if evaluator_contract.get("registered_system")!="N0FullEnvelopeTrainableSystemV1":
@@ -791,6 +812,32 @@ def main() -> None:
         raise SystemExit("FINAL package audit not PASS")
     if package_manifest.get("results_observed") is not False:
         raise SystemExit("FINAL package manifest already observed results")
+    if dev_selection.get("schema")!="alice.eipm.n0.full-envelope-dev-evaluation.v1":
+        raise SystemExit("FINAL DEV selection receipt schema drift")
+    if dev_selection.get("status")!="PASS_DEV_STAGE_GATE":
+        raise SystemExit("FINAL opening DEV stage gate not passed")
+    if dev_selection.get("stage")!="J3_full_public_n0_coadaptation":
+        raise SystemExit("FINAL DEV selection stage drift")
+    if dev_selection.get("checkpoint_selection_surface")!="DEV_ONLY":
+        raise SystemExit("FINAL DEV selection surface drift")
+    if dev_selection.get("stage_gate_pass") is not True:
+        raise SystemExit("FINAL opening DEV stage gate not passed")
+    if dev_selection.get("stage_gate_coverage_complete") is not True:
+        raise SystemExit("FINAL opening DEV gate coverage incomplete")
+    if dev_selection.get("registry_matches_declared_stage_gates") is not True:
+        raise SystemExit("FINAL opening DEV gate mapping incomplete")
+    if dev_selection.get("final_results_observed") is not False:
+        raise SystemExit("FINAL DEV selection receipt observed FINAL")
+    if dev_selection.get("final_opening_authorized") is not False:
+        raise SystemExit("DEV selection receipt may not itself authorize FINAL")
+    if dev_selection.get("candidate_checkpoint_receipt_sha256")!=sha256_file(
+        args.candidate_receipt
+    ):
+        raise SystemExit("opening/candidate checkpoint receipt drift")
+    if dev_selection.get("candidate_system_sha256")!=sha256_file(
+        args.candidate_system
+    ):
+        raise SystemExit("DEV-selected candidate system drift")
     if candidate.get("stage")!="J3_full_public_n0_coadaptation":
         raise SystemExit("FINAL may evaluate only selected J3 candidate")
     if candidate.get("final_results_observed") is not False:
