@@ -1023,6 +1023,14 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_full_public_mixture_manifest_is_executable_before_gradient",
       "requirement": "Before gradient, N0 must have an executable full public-mixture manifest contract, builder, and auditor that bind every optimizer-facing public lane and all ten macro loss families while excluding FINAL rows and private identity data. A textual training-plan prerequisite without a materialization path is insufficient."
+    },
+    {
+      "id": "N0-P39PN",
+      "stage": "full_public_mixture",
+      "kind": "RUNTIME_REQUIRED",
+      "status": "UNRESOLVED_BLOCKING",
+      "receipt": "PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1",
+      "requirement": "Before any gradient, materialize and audit the exact public mixture manifest against the runtime v0.2.1 corpus receipt, passed runtime teacher-bank audit, all successor TRAIN/DEV supplements, natural-relation lane, exact source revision, and sealed unopened FINAL-v2 freeze receipt."
     }
   ],
   "closure_rule": {

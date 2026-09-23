@@ -113,7 +113,10 @@
     "runtime_view_training_supplement_builder": "scripts/eipm/n0/build_n0_v02_full_envelope_runtime_view_curriculum_v1.py",
     "runtime_view_training_supplement_audit": "scripts/eipm/n0/audit_n0_v02_full_envelope_runtime_view_curriculum_v1.py",
     "runtime_view_training_supplement_required_before_gradient": true,
-    "final_rows_do_not_satisfy_runtime_view_training_coverage": true
+    "final_rows_do_not_satisfy_runtime_view_training_coverage": true,
+    "full_public_mixture_contract": "configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json",
+    "full_public_mixture_builder": "scripts/eipm/n0/build_n0_v02_full_public_mixture_manifest_v1.py",
+    "full_public_mixture_audit": "scripts/eipm/n0/audit_n0_v02_full_public_mixture_manifest_v1.py"
   },
   "optimization_strategy": {
     "stages": [
@@ -380,7 +383,8 @@
     "PASS mixed-direction and mixed-step-modifier curriculum audit",
     "PASS exact null-support and program-truncation fail-closed mechanics",
     "PASS symmetric relation endpoint-storage invariance",
-    "PASS batched per-example candidate-subset mechanics"
+    "PASS batched per-example candidate-subset mechanics",
+    "PASS full public-mixture manifest audit bound to exact source revision and sealed unopened FINAL"
   ],
   "authorization": {
     "architecture_closed_for_implementation": true,

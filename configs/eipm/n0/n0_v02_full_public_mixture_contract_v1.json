@@ -1,0 +1,113 @@
+{
+  "schema": "alice.eipm.n0.full-public-mixture-contract.v1",
+  "status": "PRECOMMITTED_PUBLIC_MIXTURE_NO_GRADIENT",
+  "date": "2026-09-22",
+  "purpose": "Bind every optimizer-facing public N0 lane and every macro loss family before gradient without using FINAL rows, private identity data, or post-result mixture tuning.",
+  "authority": {
+    "public_identity_neutral_only": true,
+    "private_identity_data": false,
+    "final_rows_training_allowed": false,
+    "final_rows_model_selection_allowed": false,
+    "final_results_may_be_observed": false,
+    "gradient_authorized_by_contract": false,
+    "optimizer_authorized_by_contract": false
+  },
+  "required_training_lanes": [
+    "broad_semantic_replay",
+    "governed_judgment_replay",
+    "semantic_operator_intervention",
+    "full_envelope_behavioral",
+    "runtime_view_supplement",
+    "long_context_supplement",
+    "natural_relation"
+  ],
+  "required_macro_families": [
+    "broad_semantic_replay",
+    "governed_judgment_replay",
+    "relation_program_semantics",
+    "dynamic_factor_semantics",
+    "uncertainty_and_control",
+    "token_evidence_grounding",
+    "structural_support_and_roles",
+    "multi_view_causal_preservation",
+    "latent_judgment_and_noncollapse",
+    "natural_relation_semantics"
+  ],
+  "lane_macro_families": {
+    "broad_semantic_replay": [
+      "broad_semantic_replay"
+    ],
+    "governed_judgment_replay": [
+      "governed_judgment_replay"
+    ],
+    "semantic_operator_intervention": [
+      "relation_program_semantics",
+      "dynamic_factor_semantics",
+      "uncertainty_and_control",
+      "token_evidence_grounding"
+    ],
+    "full_envelope_behavioral": [
+      "structural_support_and_roles",
+      "multi_view_causal_preservation",
+      "latent_judgment_and_noncollapse"
+    ],
+    "runtime_view_supplement": [
+      "multi_view_causal_preservation",
+      "latent_judgment_and_noncollapse"
+    ],
+    "long_context_supplement": [
+      "relation_program_semantics",
+      "dynamic_factor_semantics",
+      "structural_support_and_roles",
+      "multi_view_causal_preservation",
+      "latent_judgment_and_noncollapse"
+    ],
+    "natural_relation": [
+      "natural_relation_semantics"
+    ]
+  },
+  "lane_authority": {
+    "broad_semantic_replay": "passed materialized v0.2.1 public corpus receipt and exact activated source config",
+    "governed_judgment_replay": "passed runtime public teacher-bank registry and audit",
+    "semantic_operator_intervention": "deterministic TRAIN/DEV semantic-operator intervention supplement",
+    "full_envelope_behavioral": "deterministic TRAIN/DEV full-envelope behavioral fabric",
+    "runtime_view_supplement": "deterministic TRAIN/DEV heterogeneous runtime-view supplement",
+    "long_context_supplement": "deterministic TRAIN/DEV long-context supplement",
+    "natural_relation": "FewRel TRAIN/DEV natural relation families; official validation families remain FINAL"
+  },
+  "mixture": {
+    "row_count_is_capability_ceiling": false,
+    "fixed_lane_sampling_ratio_as_capability_definition": false,
+    "lane_sampling_may_be_resource_scheduled": true,
+    "macro_family_scaling_owned_by": "src/alice_personality/n0/full_envelope_loss_balancer_v1.py",
+    "family_weights_precommitted_equal_before_results": true,
+    "post_result_lane_weight_search_forbidden": true,
+    "final_rows_in_training": 0
+  },
+  "final_boundary": {
+    "final_freeze_receipt_hash_bound_required": true,
+    "final_package_rows_must_not_enter_mixture": true,
+    "final_results_observed_must_remain_false": true,
+    "final_opening_authorized_must_remain_false": true
+  },
+  "validation_before_gradient": {
+    "materialized_manifest_required": true,
+    "all_lane_hashes_bound_required": true,
+    "all_lane_audits_pass_required": true,
+    "full_macro_family_coverage_required": true,
+    "training_and_dev_authority_checked_required": true,
+    "public_corpus_receipt_reverified_required": true,
+    "teacher_bank_audit_pass_required": true,
+    "final_freeze_hash_bound_but_final_rows_excluded": true,
+    "exact_source_revision_bound_required": true
+  },
+  "authorization": {
+    "materialization": true,
+    "audit": true,
+    "optimizer": false,
+    "gradient": false,
+    "gpu_training": false,
+    "final_opening": false,
+    "n0_complete": false
+  }
+}
