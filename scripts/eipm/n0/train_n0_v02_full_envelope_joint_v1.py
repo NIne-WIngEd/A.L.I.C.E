@@ -163,6 +163,10 @@ def verify_pre_gradient_runtime(
         )
     if mixture_audit.get("source_revision")!=source_revision:
         raise SystemExit("mixture audit source revision drift")
+    if mixture_audit.get("manifest_sha256")!=sha256_file(
+        mixture_manifest_path
+    ):
+        raise SystemExit("full public mixture audit/manifest hash drift")
     if mixture.get("final_results_observed") is not False:
         raise SystemExit("FINAL results were observed before gradient")
     if int(mixture.get("final_rows_in_training",-1))!=0:
