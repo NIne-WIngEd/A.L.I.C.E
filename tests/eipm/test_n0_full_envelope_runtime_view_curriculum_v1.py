@@ -81,3 +81,50 @@ def test_runtime_view_rows_compile_into_optimizer_facing_additional_views() -> N
     finally:
         if sys.path and sys.path[0]==str(scripts):
             sys.path.pop(0)
+
+
+def test_runtime_view_reliability_reversal_changes_only_reliability_and_target() -> None:
+    import importlib.util
+    import sys
+
+    scripts=ROOT/"scripts/eipm/n0"
+    sys.path.insert(0,str(scripts))
+    try:
+        spec=importlib.util.spec_from_file_location(
+            "runtime_view_builder_reliability",
+            scripts/"build_n0_v02_full_envelope_runtime_view_curriculum_v1.py",
+        )
+        assert spec is not None and spec.loader is not None
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        rows=[
+            row for row in module.materialize_rows("train")
+            if row["scenario_family"]=="runtime_view_reliability_reversal"
+        ]
+        assert len(rows)==2
+        first,second=rows
+        assert first["query"]==second["query"]
+        assert first["candidate_answers"]==second["candidate_answers"]
+        assert [
+            x["source_text"] for x in first["additional_views"]
+        ] == [
+            x["source_text"] for x in second["additional_views"]
+        ]
+        assert [
+            x["descriptor_text"] for x in first["additional_views"]
+        ] == [
+            x["descriptor_text"] for x in second["additional_views"]
+        ]
+        assert [
+            x["available"] for x in first["additional_views"]
+        ] == [
+            x["available"] for x in second["additional_views"]
+        ]
+        r1=[x["reliability"] for x in first["additional_views"]]
+        r2=[x["reliability"] for x in second["additional_views"]]
+        assert r1[0]==r2[1] and r1[1]==r2[0]
+        assert r1[2]==r2[2]==0.95
+        assert first["public_target_index"] != second["public_target_index"]
+    finally:
+        if sys.path and sys.path[0]==str(scripts):
+            sys.path.pop(0)

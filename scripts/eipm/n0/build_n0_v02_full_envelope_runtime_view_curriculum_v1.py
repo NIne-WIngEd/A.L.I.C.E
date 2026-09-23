@@ -220,7 +220,10 @@ def materialize_rows(split: str) -> list[dict[str,Any]]:
                 "irrelevant":False,
             },
             {
-                "source_text":_irrelevant_text(split,candidates[target]),
+                # Keep this high-reliability irrelevant control semantically
+                # identical across the pair. The only pair intervention is the
+                # reliability reversal between the two query-relevant views.
+                "source_text":_irrelevant_text(split,candidates[0]),
                 "descriptor_text":descriptor,
                 "available":True,
                 "reliability":0.95,
