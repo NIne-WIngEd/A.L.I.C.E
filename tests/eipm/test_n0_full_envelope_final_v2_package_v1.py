@@ -241,3 +241,21 @@ def test_final_v2_precommits_paraphrase_pairs_and_cross_window_conflict_probe() 
     assert "example_override=8" in final_builder
     assert "conflict_plurality" in auditor
     assert "final_paraphrase_query" in auditor
+
+
+def test_final_directional_endpoint_reversal_gate_uses_end_to_end_behavior() -> None:
+    """A semantic reverse-program score cannot stand in for endpoint behavior."""
+    registry=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_final_v2_gate_registry_v1.json").read_text()
+    )
+    gate=registry["sections"]["deterministic_behavior_gate"][
+        "directional_relation_endpoint_reversal_sensitivity_min"
+    ]
+    assert gate["kind"]=="metric"
+    assert gate["path"]==(
+        "fabric.scenario_public_accuracy.reverse_traversal"
+    )
+    assert gate["coverage_path"]==(
+        "fabric.scenario_public_count.reverse_traversal"
+    )
+
