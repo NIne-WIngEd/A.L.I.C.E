@@ -1587,6 +1587,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_dev_checkpoint_selection_enforces_first_passing_chain_member",
       "requirement": "The DEV checkpoint selector must independently load the exact precommitted training plan and reject checkpoint receipts or optimizer steps that do not lie on the frozen DEV evaluation cadence. Trainer-side cadence enforcement alone cannot authorize first-pass selection."
+    },
+    {
+      "id": "N0-P44D",
+      "stage": "joint_training",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_joint_trainer_enables_precommitted_backbone_gradient_checkpointing",
+      "requirement": "The joint trainer must actually enable the precommitted ModernBERT backbone gradient-checkpointing path before optimizer execution. Declaring gradient_checkpointing=true in the plan without activating it is insufficient and can invalidate the qualified memory route."
+    },
+    {
+      "id": "N0-P44E",
+      "stage": "joint_training",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_trainer_binds_optimizer_and_runtime_route_to_plan_and_p43_receipt",
+      "requirement": "Optimizer learning rates, weight decays, clipping, seed, scheduler horizon/warmup, replay length, mixed precision, world size, microbatch sizes, teacher batch size, and gradient accumulation must be frozen before gradient or selected by the exact P43 memory receipt. Runtime CLI overrides may not silently retune the model after DEV observations."
     }
   ],
   "closure_rule": {
