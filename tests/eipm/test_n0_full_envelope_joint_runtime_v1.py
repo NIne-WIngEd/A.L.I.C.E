@@ -1910,6 +1910,8 @@ def test_stage_training_can_resume_same_stage_without_treating_step_budget_as_co
     assert "same-stage resume checkpoint stage drift" in trainer
     assert "same-stage resume already reached requested optimizer-step operating point" in trainer
     assert 'if resume_kind is not None:' in trainer
+    assert 'resume_data_seed_offset=(start_optimizer_step-1 if resume_kind=="same_stage" else 0)' in trainer
+    assert 'segment_seed=args.seed+resume_data_seed_offset*100003' in trainer
     plan=json.loads(
         (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
     )
