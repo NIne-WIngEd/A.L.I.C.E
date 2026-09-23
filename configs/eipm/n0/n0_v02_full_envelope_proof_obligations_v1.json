@@ -1391,6 +1391,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_j3_dev_gates_precommit_transfer_axes_needed_by_final_v2",
       "requirement": "J3 checkpoint selection must empirically gate factor-cardinality extrapolation, non-FINAL factor-combination transfer, unseen type-schema transfer, and public domain transfer with nonempty coverage before FINAL remains sealed."
+    },
+    {
+      "id": "N0-P46A",
+      "stage": "final_closure",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_final_v2_evaluator_is_executable_precommitted_and_freeze_bound",
+      "requirement": "Before gradient, FINAL-v2 must have an executable evaluator and complete gate registry for every precommitted final-contract gate. Both implementation and gate mapping must be hash-bound into the frozen package so they cannot be authored or changed after candidate FINAL results are observed."
     }
   ],
   "closure_rule": {

@@ -41,3 +41,61 @@ def test_successor_final_v2_package_exists_and_legacy_final_cannot_satisfy_it() 
     assert evaluator["legacy_final_self_validation_v3_forbidden"] is True
     assert evaluator["results_observed"] is False
     assert evaluator["final_opening_authorized"] is False
+
+
+def test_final_v2_evaluator_is_executable_precommitted_and_freeze_bound() -> None:
+    package=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json").read_text()
+    )
+    evaluator=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json").read_text()
+    )
+    final_contract=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json").read_text()
+    )
+    implementation=ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py"
+    gate_registry=ROOT/"configs/eipm/n0/n0_v02_full_envelope_final_v2_gate_registry_v1.json"
+    freezer=(
+        ROOT/"scripts/eipm/n0/freeze_n0_v02_full_envelope_final_v2_package.py"
+    ).read_text()
+
+    assert implementation.is_file(), "successor FINAL-v2 evaluator implementation missing"
+    assert gate_registry.is_file(), "successor FINAL-v2 gate registry missing"
+    assert package["evaluator_implementation"] == str(
+        implementation.relative_to(ROOT)
+    )
+    assert package["evaluator_gate_registry"] == str(
+        gate_registry.relative_to(ROOT)
+    )
+    assert evaluator["evaluator_implementation"] == str(
+        implementation.relative_to(ROOT)
+    )
+    assert evaluator["gate_registry"] == str(gate_registry.relative_to(ROOT))
+
+    registry=json.loads(gate_registry.read_text())
+    assert registry["schema"]=="alice.eipm.n0.full-envelope-final-v2-gate-registry.v1"
+    required_sections=set(evaluator["required_gate_sections"])
+    assert set(registry["sections"])==required_sections
+    for section in sorted(required_sections):
+        expected_keys=set(final_contract[section])
+        mapped_keys=set(registry["sections"][section])
+        assert mapped_keys==expected_keys, (
+            section,
+            sorted(expected_keys-mapped_keys),
+            sorted(mapped_keys-expected_keys),
+        )
+
+    source=implementation.read_text()
+    assert "FINAL_V2_EVALUATION_COMPLETE" in source
+    assert "checkpoint_selection_performed" in source
+    assert "automatic_repair_or_rerun" in source
+    assert "threshold_changes_after_results" in source
+    assert "final_results_observed" in source
+    assert "N0FullEnvelopeTrainableSystemV1" in source
+
+    # The evaluator and exact gate mapping are part of the frozen package,
+    # not mutable post-result implementation details.
+    assert "--evaluator-implementation" in freezer
+    assert "--gate-registry" in freezer
+    assert '"evaluator_implementation"' in freezer
+    assert '"gate_registry"' in freezer
