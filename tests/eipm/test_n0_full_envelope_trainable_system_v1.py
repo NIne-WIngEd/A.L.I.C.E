@@ -913,3 +913,39 @@ def test_behavioral_compiler_support_targets_are_structurally_valid_and_unknown_
             assert compiled["behavioral_targets"]["endpoint_active_mask"][b] == False
             assert int(compiled["behavioral_targets"]["source_target_index"][b]) == -1
             assert int(compiled["behavioral_targets"]["target_target_index"][b]) == -1
+
+
+def test_registered_semantic_operator_task_uses_shared_backbone_without_fake_downstream_fields() -> None:
+    torch.manual_seed(291)
+    system=_system().train()
+    full=_full_batch()
+    semantic_batch={
+        "query_input_ids":full["query_input_ids"],
+        "query_attention_mask":full["query_attention_mask"],
+        "relation_input_ids":full["relation_input_ids"],
+        "relation_attention_mask":full["relation_attention_mask"],
+        "relation_domain_type_mask":full["relation_domain_type_mask"],
+        "relation_range_type_mask":full["relation_range_type_mask"],
+        "relation_symmetric":full["relation_symmetric"],
+        "relation_candidate_mask":full["relation_candidate_mask"],
+        "factor_input_ids":full["factor_input_ids"],
+        "factor_attention_mask":full["factor_attention_mask"],
+        "factor_candidate_masks":full["factor_candidate_masks"],
+        "factor_opcodes":full["factor_opcodes"],
+        "max_reasoning_steps":full["max_reasoning_steps"],
+    }
+    outputs=system(task="semantic_operator",batch=semantic_batch)
+    assert "semantic_operator" in outputs
+    assert "operator" in outputs
+    assert "public_judgment" not in outputs
+    assert "binder" not in outputs
+    assert outputs["semantic_operator"]["relation_logits"].shape[:2] == (
+        1,
+        full["max_reasoning_steps"],
+    )
+    loss=outputs["semantic_operator"]["relation_logits"].square().mean()
+    loss.backward()
+    backbone_grad=system.semantic_model.backbone.embedding.weight.grad
+    operator_grad=next(system.stack.semantic_operator.parameters()).grad
+    assert backbone_grad is not None and float(backbone_grad.abs().sum()) > 0.0
+    assert operator_grad is not None and float(operator_grad.abs().sum()) > 0.0

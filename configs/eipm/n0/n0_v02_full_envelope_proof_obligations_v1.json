@@ -1031,6 +1031,13 @@
       "status": "UNRESOLVED_BLOCKING",
       "receipt": "PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1",
       "requirement": "Before any gradient, materialize and audit the exact public mixture manifest against the runtime v0.2.1 corpus receipt, passed runtime teacher-bank audit, all successor TRAIN/DEV supplements, natural-relation lane, exact source revision, and sealed unopened FINAL-v2 freeze receipt."
+    },
+    {
+      "id": "N0-P39PO",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_registered_semantic_operator_task_uses_shared_backbone_without_fake_downstream_fields",
+      "requirement": "The registered N0FullEnvelopeTrainableSystemV1 must expose a shared-backbone semantic-operator task for operator-intervention and natural-relation supervision without fabricating graph fields, edges, candidates, or downstream judgment labels merely to access the operator."
     }
   ],
   "closure_rule": {
