@@ -1963,3 +1963,17 @@ def test_p41_public_corpus_runtime_revalidation_checks_license_and_source_balanc
     assert "verify_public_corpus_v021" in authorizer
     assert '"public_corpus_runtime_revalidated":True' in authorizer
 
+
+
+def test_n0_contract_ci_watches_shared_runtime_data_and_verifier_dependencies() -> None:
+    workflow=(
+        ROOT/".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml"
+    ).read_text()
+    for path in (
+        "src/alice_personality/n0/v02_training.py",
+        "src/alice_personality/n0/data.py",
+        "src/alice_personality/n0/curriculum_data.py",
+    ):
+        assert f'- "{path}"' in workflow
+        assert path+" \\" in workflow
+
