@@ -1942,6 +1942,10 @@ def test_dev_checkpoint_selection_enforces_first_passing_chain_member() -> None:
     selector=ROOT/"scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py"
     assert selector.is_file()
     source=selector.read_text()
+    assert 'p.add_argument("--training-plan",required=True)' in source
+    assert "checkpoint_evaluation_cadence_steps" in source
+    assert "checkpoint receipt cadence drift" in source
+    assert "checkpoint step violates precommitted DEV cadence" in source
     assert "SELECTED_FIRST_PASSING_N0_DEV_CHECKPOINT" in source
     assert "stage_checkpoint_parent_receipt_sha256" in source
     assert "candidate_checkpoint_receipt_sha256" in source
