@@ -697,6 +697,7 @@ def test_successor_trainer_dev_evaluator_and_checkpoint_contract_exist_before_gr
         "operator_evidence_token_receipt_sha256",
         "training_authorization_sha256",
         "optimizer_step",
+        "checkpoint_evaluation_cadence_steps",
         "stage_checkpoint_parent_receipt_sha256",
         "stage_transition_predecessor_checkpoint_receipt_sha256",
         "stage_transition_predecessor_dev_receipt_sha256",
@@ -1933,7 +1934,7 @@ def test_dev_checkpoint_selection_enforces_first_passing_chain_member() -> None:
         (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
     )
     assert plan["optimization_strategy"]["checkpoint_selection"].startswith(
-        "first checkpoint satisfying"
+        "first checkpoint on the precommitted"
     )
     trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
     assert "stage_checkpoint_parent_receipt_sha256" in trainer
