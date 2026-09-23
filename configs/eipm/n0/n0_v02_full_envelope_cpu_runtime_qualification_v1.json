@@ -842,7 +842,11 @@
       "future optional sensor or voice-derived public N0 observation"
     ],
     "fixture_text_token_operating_point": 48,
-    "fixture_text_token_operating_point_is_product_ceiling": false
+    "fixture_text_token_operating_point_is_product_ceiling": false,
+    "additional_view_sources": [
+      "Independent governed retrieval evidence directly supports the first public candidate under the active query.",
+      "A second runtime-provided public evidence stream describes another observation that may or may not be relevant to the current query."
+    ]
   },
   "qualification": {
     "require_cpu_only": true,
@@ -864,7 +868,8 @@
     "operator_evidence_alignment_max_length_is_product_ceiling": false,
     "same_registered_trainable_topology_required": true,
     "all_text_surfaces_share_virtualization_policy_required": true,
-    "dedicated_long_context_fixture_must_drive_query": true
+    "dedicated_long_context_fixture_must_drive_query": true,
+    "additional_view_source_text_adapter_required": true
   },
   "long_context_bridge_runtime": {
     "native_window_tokens": 32,
@@ -894,7 +899,8 @@
       "candidate_text",
       "descriptor_text",
       "internal_view_descriptor",
-      "additional_view_descriptor"
+      "additional_view_descriptor",
+      "additional_view_source"
     ],
     "suffix_repeat_count": 10,
     "suffix_text": "Additional governed context preserves provenance, direction, uncertainty, and semantic role while forcing this text surface beyond one native encoder window."
