@@ -5,6 +5,9 @@ on:
     branches:
       - alice-eipm-v1-n0-full-envelope-foundation-build-v1
     paths:
+      - "src/alice_personality/n0/v02_training.py"
+      - "src/alice_personality/n0/data.py"
+      - "src/alice_personality/n0/curriculum_data.py"
       - "src/alice_personality/n0/semantic_operator_foundation.py"
       - "src/alice_personality/n0/semantic_operator_evidence_targets_v1.py"
       - "src/alice_personality/n0/numeric_contracts.py"
@@ -132,6 +135,9 @@ jobs:
         run: |
           set -euo pipefail
           python -m py_compile \
+            src/alice_personality/n0/v02_training.py \
+            src/alice_personality/n0/data.py \
+            src/alice_personality/n0/curriculum_data.py \
             src/alice_personality/n0/semantic_operator_foundation.py \
             src/alice_personality/n0/semantic_operator_evidence_targets_v1.py \
             src/alice_personality/n0/numeric_contracts.py \
