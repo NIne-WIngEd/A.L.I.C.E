@@ -4,8 +4,11 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 from typing import Any
+
+from alice_personality.n0.source_authority_v1 import require_canonical_source_file
 
 MANIFEST_SCHEMA="alice.eipm.n0.full-public-mixture-manifest.v1"
 PASS_STATUS="MATERIALIZED_N0_FULL_PUBLIC_MIXTURE_NO_GRADIENT"
@@ -146,7 +149,21 @@ def main() -> None:
     output=Path(args.output)
     if output.exists():
         raise SystemExit("refusing to overwrite full public-mixture manifest")
+    status=subprocess.check_output(["git","status","--porcelain"],text=True)
+    if status.strip():
+        raise SystemExit("public-mixture builder requires a clean exact-source worktree")
+    current_revision=subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip().lower()
     contract_path=Path(args.contract)
+    require_canonical_source_file(
+        contract_path,
+        "configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json",
+        label="full public-mixture contract",
+    )
+    require_canonical_source_file(
+        args.source_config,
+        "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
+        label="public source config",
+    )
     contract=load_json(contract_path)
     if contract.get("schema")!="alice.eipm.n0.full-public-mixture-contract.v1":
         raise SystemExit("full public-mixture contract schema drift")
@@ -154,6 +171,8 @@ def main() -> None:
     source_revision=str(args.source_revision).strip()
     if len(source_revision)!=40 or any(ch not in "0123456789abcdef" for ch in source_revision.lower()):
         raise SystemExit("source revision must be exact 40-hex git commit")
+    if source_revision.lower()!=current_revision:
+        raise SystemExit("public-mixture builder source revision drift")
 
     source_config_path=Path(args.source_config)
     corpus_receipt_path=Path(args.corpus_receipt)
