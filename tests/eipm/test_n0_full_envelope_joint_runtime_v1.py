@@ -1480,3 +1480,69 @@ def test_semantic_plurality_row_compiles_into_optimizer_facing_multi_positive_ta
     finally:
         if sys.path and sys.path[0]==str(scripts):
             sys.path.pop(0)
+
+
+def test_decisive_evidence_removal_must_increase_public_judgment_uncertainty() -> None:
+    import torch
+    from alice_personality.n0.full_envelope_behavioral_objectives_v1 import (
+        evidence_removal_uncertainty_margin_loss,
+    )
+
+    valid=torch.tensor([[True,True]])
+    normal=torch.tensor([[4.0,0.0]],requires_grad=True)
+    diffuse=torch.tensor([[0.0,0.0]],requires_grad=True)
+    confidently_wrong=torch.tensor([[0.0,4.0]],requires_grad=True)
+
+    good=evidence_removal_uncertainty_margin_loss(
+        normal,
+        diffuse,
+        candidate_valid_mask=valid,
+        active_mask=torch.tensor([True]),
+        minimum_entropy_increase=0.05,
+    )
+    bad=evidence_removal_uncertainty_margin_loss(
+        normal,
+        confidently_wrong,
+        candidate_valid_mask=valid,
+        active_mask=torch.tensor([True]),
+        minimum_entropy_increase=0.05,
+    )
+    assert float(good.detach())==0.0
+    assert float(bad.detach())>0.0
+    (good+bad).backward()
+    assert normal.grad is not None
+    assert torch.isfinite(normal.grad).all()
+
+
+def test_j3_dev_gate_measures_uncertainty_increase_after_decisive_evidence_removal() -> None:
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    registry=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json").read_text()
+    )
+    assert "evidence_removal_uncertainty_increase" in plan["stage_gates"]["J3"]
+    gate=registry["stages"]["J3_full_public_n0_coadaptation"]["gates"][
+        "evidence_removal_uncertainty_increase"
+    ]
+    assert gate["kind"]=="composite"
+    expected={
+        "full_fabric.full_envelope_behavioral.evidence_removal_uncertainty_increase",
+        "full_fabric.runtime_view_supplement.evidence_removal_uncertainty_increase",
+        "full_fabric.long_context_supplement.evidence_removal_uncertainty_increase",
+    }
+    assert {item["metric"] for item in gate["all"]}==expected
+    assert all(
+        item["comparison"]==">="
+        and item["threshold"]==0.05
+        and item["coverage_metric"].endswith(
+            ".evidence_removal_uncertainty_count"
+        )
+        and item["minimum_coverage"]>=1
+        for item in gate["all"]
+    )
+    evaluator=(
+        ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py"
+    ).read_text()
+    assert "evidence_removal_uncertainty_increase" in evaluator
+    assert "evidence_removal_uncertainty_count" in evaluator

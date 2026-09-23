@@ -1363,6 +1363,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_semantic_plurality_row_compiles_into_optimizer_facing_multi_positive_targets",
       "requirement": "A plurality curriculum row must survive the real semantic-operator batch compiler and reach optimizer-facing multi-positive relation targets. Builder-only plurality fields do not count if batch compilation crashes or drops them."
+    },
+    {
+      "id": "N0-P45M",
+      "stage": "uncertainty_plurality",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_decisive_evidence_removal_must_increase_public_judgment_uncertainty",
+      "requirement": "The decisive-evidence counterfactual must supervise an increase in normalized public-judgment uncertainty, not merely a decrease in target probability. Becoming confidently wrong after removing decisive evidence cannot satisfy the uncertainty gate."
+    },
+    {
+      "id": "N0-P45N",
+      "stage": "dev_capability_gate",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_j3_dev_gate_measures_uncertainty_increase_after_decisive_evidence_removal",
+      "requirement": "J3 DEV checkpoint selection must measure at least 0.05 normalized public-judgment entropy increase after decisive evidence removal across base behavioral, heterogeneous runtime-view, and long-context lanes, with nonempty coverage."
     }
   ],
   "closure_rule": {
