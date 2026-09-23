@@ -861,3 +861,49 @@ def test_successor_training_and_dev_selection_bind_exact_head_static_proof_recei
     assert '"PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1"' in trainer
     assert "static proof receipt source revision drift" in trainer
     assert '"static_proof_receipt_sha256"' in trainer
+
+
+def test_dev_gate_evaluator_fails_closed_on_missing_metrics_and_uses_static_receipt() -> None:
+    from alice_personality.n0.full_envelope_dev_gate_v1 import (
+        evaluate_stage_gate_registry,
+    )
+    registry={
+        "schema":"alice.eipm.n0.full-envelope-dev-gate-registry.v1",
+        "stages":{
+            "J1_joint_semantic_operator":{
+                "mapping_complete":True,
+                "gates":{
+                    "empirical":{
+                        "kind":"empirical","metric":"semantic.score",
+                        "comparison":">=","threshold":0.9,
+                    },
+                    "static":{
+                        "kind":"static_source_proof",
+                        "obligation_ids":["N0-X"],
+                    },
+                },
+            },
+        },
+    }
+    proof={"obligations":[{"id":"N0-X","kind":"STATIC_REQUIRED"}]}
+    receipt={"status":"PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1"}
+    good=evaluate_stage_gate_registry(
+        registry=registry,
+        stage="J1_joint_semantic_operator",
+        metrics={"semantic":{"score":0.95}},
+        proof_contract=proof,
+        static_receipt=receipt,
+    )
+    assert good["stage_gate_coverage_complete"] is True
+    assert good["stage_gate_pass"] is True
+
+    missing=evaluate_stage_gate_registry(
+        registry=registry,
+        stage="J1_joint_semantic_operator",
+        metrics={"semantic":{}},
+        proof_contract=proof,
+        static_receipt=receipt,
+    )
+    assert missing["stage_gate_coverage_complete"] is False
+    assert missing["stage_gate_pass"] is False
+    assert missing["mapping_errors"]

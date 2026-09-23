@@ -1265,6 +1265,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_successor_training_and_dev_selection_bind_exact_head_static_proof_receipt",
       "requirement": "Training/checkpoint lineage must bind a passed full static proof-matrix receipt to the exact source revision. Merely having proof tests in source cannot substitute for an executed exact-head receipt."
+    },
+    {
+      "id": "N0-P43J",
+      "stage": "dev_validation",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dev_gate_evaluator_fails_closed_on_missing_metrics_and_uses_static_receipt",
+      "requirement": "The DEV stage-gate evaluator must fail closed on missing scalar metrics, require exact-source static proof obligations for source-invariant gates, and never infer a pass from an incomplete registry."
     }
   ],
   "closure_rule": {
