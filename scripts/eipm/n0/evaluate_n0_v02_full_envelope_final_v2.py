@@ -691,6 +691,7 @@ def main() -> None:
     p.add_argument("--candidate-system",required=True)
     p.add_argument("--candidate-receipt",required=True)
     p.add_argument("--dev-selection-receipt",required=True)
+    p.add_argument("--dev-evaluation-receipt",required=True)
     p.add_argument("--synthetic-final-rows",required=True)
     p.add_argument("--semantic-final-rows",required=True)
     p.add_argument("--runtime-view-final-rows",required=True)
@@ -748,7 +749,8 @@ def main() -> None:
             )
 
     opening=read_json(args.final_opening_authorization)
-    dev_selection=read_json(args.dev_selection_receipt)
+    selection=read_json(args.dev_selection_receipt)
+    dev_selection=read_json(args.dev_evaluation_receipt)
     if opening.get("schema")!="alice.eipm.n0.full-envelope-final-opening-authorization.v1":
         raise SystemExit("FINAL opening authorization schema drift")
     if opening.get("final_opening_authorized") is not True:
@@ -767,8 +769,10 @@ def main() -> None:
         raise SystemExit("opening authorizer/freeze hash drift")
     if opening.get("candidate_checkpoint_sha256")!=sha256_file(args.candidate_system):
         raise SystemExit("FINAL opening/candidate checkpoint drift")
-    if opening.get("dev_receipt_sha256")!=sha256_file(args.dev_selection_receipt):
+    if opening.get("selection_receipt_sha256")!=sha256_file(args.dev_selection_receipt):
         raise SystemExit("opening/DEV selection receipt drift")
+    if opening.get("dev_receipt_sha256")!=sha256_file(args.dev_evaluation_receipt):
+        raise SystemExit("opening/DEV evaluation receipt drift")
     if opening.get("candidate_checkpoint_receipt_sha256")!=sha256_file(
         args.candidate_receipt
     ):
@@ -801,8 +805,10 @@ def main() -> None:
 
     if opening.get("source_revision")!=current_revision:
         raise SystemExit("FINAL opening source revision drift")
-    if dev_selection.get("source_revision")!=current_revision:
+    if selection.get("source_revision")!=current_revision:
         raise SystemExit("FINAL DEV selection source revision drift")
+    if dev_selection.get("source_revision")!=current_revision:
+        raise SystemExit("FINAL DEV evaluation source revision drift")
 
     if final_contract.get("schema")!="alice.eipm.n0.full-envelope-final-validation-contract.v2":
         raise SystemExit("FINAL contract schema drift")
@@ -814,6 +820,33 @@ def main() -> None:
         raise SystemExit("FINAL package audit not PASS")
     if package_manifest.get("results_observed") is not False:
         raise SystemExit("FINAL package manifest already observed results")
+    if selection.get("schema")!="alice.eipm.n0.full-envelope-dev-checkpoint-selection.v1":
+        raise SystemExit("FINAL DEV selection receipt schema drift")
+    if selection.get("status")!="SELECTED_FIRST_PASSING_N0_DEV_CHECKPOINT":
+        raise SystemExit("FINAL DEV selection receipt status drift")
+    if selection.get("stage")!="J3_full_public_n0_coadaptation":
+        raise SystemExit("FINAL DEV selection stage drift")
+    if selection.get("checkpoint_selection_surface")!="DEV_ONLY":
+        raise SystemExit("FINAL DEV selection surface drift")
+    if selection.get("first_passing_checkpoint") is not True:
+        raise SystemExit("FINAL DEV selection is not first passing checkpoint")
+    if selection.get("selected_checkpoint_receipt_sha256")!=sha256_file(
+        args.candidate_receipt
+    ):
+        raise SystemExit("FINAL DEV selection/candidate receipt drift")
+    if selection.get("selected_system_sha256")!=sha256_file(
+        args.candidate_system
+    ):
+        raise SystemExit("FINAL DEV selection/candidate system drift")
+    if selection.get("selected_dev_receipt_sha256")!=sha256_file(
+        args.dev_evaluation_receipt
+    ):
+        raise SystemExit("FINAL DEV selection/evaluation receipt drift")
+    selector=Path(__file__).resolve().with_name(
+        "select_n0_v02_full_envelope_dev_checkpoint_v1.py"
+    )
+    if selection.get("selection_authorizer_sha256")!=sha256_file(selector):
+        raise SystemExit("FINAL DEV selection authorizer hash drift")
     if dev_selection.get("schema")!="alice.eipm.n0.full-envelope-dev-evaluation.v1":
         raise SystemExit("FINAL DEV selection receipt schema drift")
     if dev_selection.get("status")!="PASS_DEV_STAGE_GATE":
