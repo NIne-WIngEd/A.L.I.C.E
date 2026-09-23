@@ -234,6 +234,8 @@ def semantic_operator_objective(
     relation_logits: Tensor,
     relation_targets: Tensor,
     relation_step_mask: Tensor,
+    relation_plurality_target_distribution: Tensor | None = None,
+    relation_plurality_mask: Tensor | None = None,
     factor_logits: Mapping[str, Tensor],
     factor_targets: Mapping[str, Tensor],
     event_distribution: Tensor,
