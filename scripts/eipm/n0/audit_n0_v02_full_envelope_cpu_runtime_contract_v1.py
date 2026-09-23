@@ -68,6 +68,7 @@ def main() -> None:
             "descriptor_text",
             "internal_view_descriptor",
             "additional_view_descriptor",
+            "additional_view_source",
         }
         if required_surfaces != expected_surfaces:
             raise ValueError("text-surface virtualization stress coverage drift")
@@ -216,6 +217,12 @@ def main() -> None:
             raise ValueError("internal view descriptor count must remain six for v1")
         if len(case["additional_views"])<1:
             raise ValueError("runtime qualification must exercise dynamic additional views")
+        if len(case.get("additional_view_sources",[])) != len(case["additional_views"]):
+            raise ValueError("runtime qualification additional source/descriptor count drift")
+        if any(not str(x).strip() for x in case["additional_view_sources"]):
+            raise ValueError("runtime qualification additional view source text missing")
+        if q.get("additional_view_source_text_adapter_required") is not True:
+            raise ValueError("registered additional-view source-text adapter must be required")
         if int(case["latent_slot_count"])<2:
             raise ValueError("runtime qualification must exercise multi-slot latent fabric")
         if int(case["max_reasoning_steps"])<2:
