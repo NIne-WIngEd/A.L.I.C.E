@@ -1813,3 +1813,33 @@ def test_tokenizer_stress_receipt_is_bound_to_exact_tokenizer_and_corpus() -> No
     assert "tokenizer stress tokenizer hash drift" in trainer
     assert "tokenizer stress corpus-receipt hash drift" in trainer
 
+
+
+def test_cpu_and_gpu_runtime_receipts_bind_exact_registered_artifacts() -> None:
+    cpu=(ROOT/"scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py").read_text()
+    gpu=(ROOT/"scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py").read_text()
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert '--topology-config' in cpu
+    assert '--source-revision' in cpu
+    for key in (
+        "source_revision","registered_topology_sha256","qualification_config_sha256",
+        "semantic_config_sha256","semantic_checkpoint_sha256","tokenizer_json_sha256",
+        "source_config_sha256","corpus_receipt_sha256",
+    ):
+        assert key in cpu
+    for key in (
+        "registered_topology_sha256","qualification_config_sha256",
+        "semantic_config_sha256","semantic_checkpoint_sha256","tokenizer_json_sha256",
+        "source_config_sha256","corpus_receipt_sha256","mixture_manifest_sha256",
+        "mixture_audit_sha256","teacher_registry_sha256","teacher_audit_sha256",
+    ):
+        assert key in gpu
+    assert "CPU runtime topology hash drift" in trainer
+    assert "CPU runtime semantic checkpoint hash drift" in trainer
+    assert "CPU runtime tokenizer hash drift" in trainer
+    assert "GPU memory topology hash drift" in trainer
+    assert "GPU memory semantic checkpoint hash drift" in trainer
+    assert "GPU memory tokenizer hash drift" in trainer
+    assert "GPU memory mixture manifest hash drift" in trainer
+    assert "GPU memory mixture audit hash drift" in trainer
+
