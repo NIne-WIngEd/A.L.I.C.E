@@ -230,8 +230,24 @@ def make_row(
     example: int,
     candidates: int,
     rng: random.Random,
+    entity_pool: list[str] | None = None,
+    candidate_pool: list[dict[str, Any]] | None = None,
+    relation_partition: str | None = None,
+    template_partition: str | None = None,
+    data_origin: str | None = None,
 ) -> dict[str, Any]:
-    entities = TRAIN_ENTITIES if split == "train" else DEV_ENTITIES
+    if split not in {"train","dev","final"}:
+        raise ValueError("semantic-operator split must be train/dev/final")
+    entities=(
+        list(entity_pool)
+        if entity_pool is not None
+        else TRAIN_ENTITIES if split=="train" else DEV_ENTITIES
+    )
+    runtime_pool=(
+        list(candidate_pool)
+        if candidate_pool is not None
+        else TRAIN_RELATIONS if split=="train" else TRAIN_RELATIONS+DEV_RELATIONS
+    )
     mode = example % 12
     # Modes 0/1 are an explicit source-vs-target role counterfactual pair.
     # Hold entities, relation schema bank/order and candidate cardinality fixed
@@ -412,7 +428,7 @@ def make_row(
         target_entities = [right]
         intervention = "mixed_step_modifier_composition"
 
-    pool = TRAIN_RELATIONS if split == "train" else TRAIN_RELATIONS + DEV_RELATIONS
+    pool = runtime_pool
     if plurality_alias is not None:
         required=[relation,plurality_alias]
         effective_count=max(int(candidates),len(required))
@@ -449,8 +465,10 @@ def make_row(
     ]
     relation_by_key = {
         str(item["key"]): item
-        for item in (TRAIN_RELATIONS + DEV_RELATIONS)
+        for item in list(runtime_pool)+[relation,second]
     }
+    if plurality_alias is not None:
+        relation_by_key[str(plurality_alias["key"])]=plurality_alias
     relation_schema_evidence_char_spans = []
     for step, candidate_index in enumerate(target_sequence):
         candidate = bank[candidate_index]
@@ -543,8 +561,19 @@ def make_row(
         if item["key"].lower() in semantic_text.lower():
             raise RuntimeError("opaque relation key leaked into semantic text")
 
-    template_partition = "train_templates" if split == "train" else "dev_templates"
-    relation_partition = "seen_relation_family" if split == "train" else "heldout_relation_family"
+    resolved_template_partition=(
+        str(template_partition)
+        if template_partition is not None
+        else "train_templates" if split=="train" else "dev_templates"
+        if split=="dev" else "final_templates"
+    )
+    resolved_relation_partition=(
+        str(relation_partition)
+        if relation_partition is not None
+        else "seen_relation_family" if split=="train"
+        else "heldout_relation_family" if split=="dev"
+        else "sealed_final_relation_family"
+    )
     row_id = f"so_{split}_{relation['key']}_{example:04d}_{intervention}"
     counterfactual_pair_id = (
         f"cf_role_{split}_{relation['key']}_{pair_anchor:04d}"
@@ -559,11 +588,15 @@ def make_row(
         "id": row_id,
         "split": split,
         "lane": "schema_operator_intervention",
-        "relation_partition": relation_partition,
+        "relation_partition": resolved_relation_partition,
         "relation_family": relation["family"],
-        "template_partition": template_partition,
-        "template_id": f"{template_partition}:{intervention}",
-        "domain": "public_synthetic_relational_reasoning",
+        "template_partition": resolved_template_partition,
+        "template_id": f"{resolved_template_partition}:{intervention}",
+        "domain": (
+            "public_synthetic_relational_reasoning"
+            if split!="final"
+            else "heldout_public_semantic_operator_reasoning"
+        ),
         "entities": [left, middle, right],
         "query": query,
         "relation_candidates": bank,
@@ -597,8 +630,14 @@ def make_row(
         "runtime_operator_slots": len(event_sequence_target),
         "private_identity_data": False,
         "training_authorized": split == "train",
+        "model_selection_authorized": split == "dev",
+        "final_validation_only": split == "final",
         "generated_text": True,
-        "data_origin": "deterministic_public_semantic_operator_intervention_v1",
+        "data_origin": (
+            str(data_origin)
+            if data_origin is not None
+            else "deterministic_public_semantic_operator_intervention_v1"
+        ),
         "relation_keys_are_metadata_only": True,
     }
 

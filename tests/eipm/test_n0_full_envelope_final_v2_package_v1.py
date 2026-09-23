@@ -133,3 +133,49 @@ def test_final_v2_has_independent_synthetic_semantic_operator_component() -> Non
     assert "--semantic-final-rows" in auditor
     assert "--semantic-final-rows" in freezer
     assert "FINAL_SEMANTIC_RELATIONS" in builder
+
+
+def test_semantic_operator_row_builder_supports_sealed_final_authority_without_changing_train_dev_defaults() -> None:
+    import importlib.util
+    import random
+
+    builder_path=ROOT/"scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py"
+    spec=importlib.util.spec_from_file_location("semantic_builder_final_authority",builder_path)
+    assert spec is not None and spec.loader is not None
+    module=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    final_relations=[
+        module.rel(
+            "z001","final_attestation",
+            "The source artifact receives an attestation from the target authority.",
+            "artifact receiving attestation","attesting authority",
+            ["receives attestation from","is attested by"],
+        ),
+        module.rel(
+            "z002","final_reservation",
+            "The source resource is reserved for the target activity.",
+            "reserved resource","activity holding the reservation",
+            ["is reserved for","is held for"],
+        ),
+    ]
+    row=module.make_row(
+        split="final",
+        relation=final_relations[0],
+        second=final_relations[1],
+        example=0,
+        candidates=2,
+        rng=random.Random(7),
+        entity_pool=["FinalA","FinalB","FinalC","FinalD"],
+        candidate_pool=final_relations,
+        relation_partition="sealed_final_relation_family",
+        template_partition="sealed_final_templates",
+        data_origin="sealed_final_test",
+    )
+    assert row["split"]=="final"
+    assert row["training_authorized"] is False
+    assert row["model_selection_authorized"] is False
+    assert row["final_validation_only"] is True
+    assert row["relation_partition"]=="sealed_final_relation_family"
+    assert row["template_partition"]=="sealed_final_templates"
+    assert row["data_origin"]=="sealed_final_test"

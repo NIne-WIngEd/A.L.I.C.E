@@ -1405,6 +1405,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_final_v2_has_independent_synthetic_semantic_operator_component",
       "requirement": "The sealed successor FINAL-v2 package must contain an independent synthetic semantic-operator component with relation families absent from TRAIN/DEV and explicit plurality, source/target, ordered, mixed-step, unknown/defer, and evidence-grounding cases. Behavioral FINAL plus natural FewRel alone cannot satisfy the separate synthetic heldout-operator gates."
+    },
+    {
+      "id": "N0-P46C",
+      "stage": "final_closure",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_semantic_operator_row_builder_supports_sealed_final_authority_without_changing_train_dev_defaults",
+      "requirement": "The public semantic-operator row builder must support a sealed FINAL authority mode with caller-owned heldout relation/entity pools while preserving TRAIN/DEV defaults. FINAL rows must be training- and model-selection-ineligible and explicitly final-only."
     }
   ],
   "closure_rule": {
