@@ -1468,6 +1468,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_final_v2_evaluator_requires_exact_candidate_source_checkout",
       "requirement": "Sealed FINAL-v2 evaluation must execute from the exact clean tracked-source revision recorded by the selected J3 candidate. A hash-frozen evaluator script is insufficient if imported runtime/compiler dependencies come from another source revision."
+    },
+    {
+      "id": "N0-P46I",
+      "stage": "final_closure",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_final_v2_evaluator_verifies_every_frozen_package_input_hash",
+      "requirement": "At FINAL-v2 execution, every package artifact frozen before gradient—including the evaluator contract/implementation, gate registry, final contract, all synthetic/runtime/long/natural FINAL corpora and banks, package manifest/config, FewRel manifest, and package audit—must be hash-verified against the exact freeze receipt. Verifying only the evaluator script and gate registry is insufficient."
     }
   ],
   "closure_rule": {
