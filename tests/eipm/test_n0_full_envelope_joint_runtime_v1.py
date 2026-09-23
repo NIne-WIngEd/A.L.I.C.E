@@ -778,7 +778,7 @@ def test_j1_dev_gate_registry_covers_every_declared_gate_without_final_authority
     j1=registry["stages"]["J1_joint_semantic_operator"]
     assert j1["mapping_complete"] is True
     assert set(j1["gates"])==set(plan["stage_gates"]["J1"])
-    allowed={"empirical","composite","static_source_proof"}
+    allowed={"empirical","composite","static_source_proof","retained_stage_gates"}
     assert {value["kind"] for value in j1["gates"].values()} <= allowed
     for name,value in j1["gates"].items():
         if value["kind"]=="static_source_proof":
@@ -798,6 +798,12 @@ def test_successor_dev_metric_primitives_measure_program_factor_margin_and_token
         step_factor_exact,
         margin_success,
         token_evidence_f1,
+        support_edge_f1,
+        endpoint_pair_correct,
+        public_judgment_correct,
+        decisive_removal_success,
+        irrelevant_removal_invariance_success,
+        latent_noncollapse_success,
     )
     relation_logits=torch.tensor([[
         [4.0,0.0],
@@ -847,6 +853,48 @@ def test_successor_dev_metric_primitives_measure_program_factor_margin_and_token
         target=torch.tensor([[1.0,0.0,1.0,0.0]]),
         valid_mask=torch.tensor([[True,True,True,True]]),
     )==1.0
+
+    support_weight=torch.tensor([[0.8,0.0,0.0]])
+    support_target=torch.tensor([[1.0,0.0,0.0]])
+    support_valid=torch.tensor([[True,True,True]])
+    assert support_edge_f1(
+        edge_support_weight=support_weight,
+        support_target=support_target,
+        valid_mask=support_valid,
+    )==1.0
+    endpoint_ok=endpoint_pair_correct(
+        source_weight=torch.tensor([[0.9,0.1,0.0]]),
+        target_weight=torch.tensor([[0.0,0.2,0.8]]),
+        source_target=torch.tensor([0]),
+        target_target=torch.tensor([2]),
+        active_mask=torch.tensor([True]),
+    )
+    assert bool(endpoint_ok[0])
+    logits=torch.tensor([[3.0,1.0,-2.0]])
+    valid=torch.tensor([[True,True,True]])
+    target=torch.tensor([0])
+    assert bool(public_judgment_correct(
+        candidate_logits=logits,
+        target_index=target,
+        candidate_valid_mask=valid,
+    )[0])
+    decisive_ok=decisive_removal_success(
+        normal_logits=logits,
+        ablated_logits=torch.tensor([[1.0,1.0,-2.0]]),
+        target_index=target,
+        candidate_valid_mask=valid,
+        active_mask=torch.tensor([True]),
+    )
+    assert bool(decisive_ok[0])
+    invariant_ok=irrelevant_removal_invariance_success(
+        normal_logits=logits,
+        removed_logits=logits.clone(),
+        candidate_valid_mask=valid,
+        active_mask=torch.tensor([True]),
+    )
+    assert bool(invariant_ok[0])
+    slots=torch.tensor([[[1.0,0.0],[0.0,1.0]]])
+    assert bool(latent_noncollapse_success(latent_slots=slots)[0])
 
 
 def test_successor_training_and_dev_selection_bind_exact_head_static_proof_receipt() -> None:
@@ -1074,3 +1122,48 @@ def test_j2_j3_dev_gate_registry_precommits_every_declared_gate_before_gradient(
                 assert value["all"], (stage_key,name)
             else:
                 assert value["stages"], (stage_key,name)
+
+
+def test_dev_gate_evaluator_rechecks_retained_prior_stage_gates() -> None:
+    from alice_personality.n0.full_envelope_dev_gate_v1 import (
+        evaluate_stage_gate_registry,
+    )
+    registry={
+        "schema":"alice.eipm.n0.full-envelope-dev-gate-registry.v1",
+        "stages":{
+            "J1":{
+                "mapping_complete":True,
+                "gates":{
+                    "score":{
+                        "kind":"empirical",
+                        "metric":"semantic.score",
+                        "comparison":">=",
+                        "threshold":0.9,
+                    }
+                },
+            },
+            "J2":{
+                "mapping_complete":True,
+                "gates":{
+                    "J1_gates_retained":{
+                        "kind":"retained_stage_gates",
+                        "stages":["J1"],
+                    }
+                },
+            },
+        },
+    }
+    proof={"obligations":[]}
+    receipt={"status":"PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1"}
+    passed=evaluate_stage_gate_registry(
+        registry=registry,stage="J2",
+        metrics={"semantic":{"score":0.95}},
+        proof_contract=proof,static_receipt=receipt,
+    )
+    assert passed["stage_gate_pass"] is True
+    failed=evaluate_stage_gate_registry(
+        registry=registry,stage="J2",
+        metrics={"semantic":{"score":0.85}},
+        proof_contract=proof,static_receipt=receipt,
+    )
+    assert failed["stage_gate_pass"] is False
