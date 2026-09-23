@@ -53,6 +53,9 @@ def verify_public_corpus_v021(
         raise ValueError("corpus source-config hash mismatch")
 
     active = {str(row["source_id"]): row for row in source_config.get("sources", [])}
+    target_share_total=sum(float(row.get("target_share",0.0)) for row in active.values())
+    if abs(target_share_total-1.0)>1.0e-12:
+        raise ValueError("activated source target shares must sum to one")
     observed = receipt.get("sources")
     if len(active) != 21 or not isinstance(observed, list) or len(observed) != 21:
         raise ValueError("v0.2.1 public corpus must contain all 21 activated sources")
@@ -65,6 +68,14 @@ def verify_public_corpus_v021(
             raise ValueError(f"receipt source absent from active manifest: {source_id}")
         if str(source.get("revision")) != str(spec.get("revision")):
             raise ValueError(f"source revision mismatch: {source_id}")
+        if source.get("repo_id") != spec.get("repo_id"):
+            raise ValueError(f"source repo mismatch: {source_id}")
+        if source.get("category") != spec.get("category"):
+            raise ValueError(f"source category mismatch: {source_id}")
+        observed_licenses=sorted(map(str,source.get("allowed_license_values") or []))
+        expected_licenses=sorted(map(str,spec.get("allowed_license_values") or []))
+        if not expected_licenses or observed_licenses!=expected_licenses:
+            raise ValueError(f"source allowed-license set mismatch: {source_id}")
         if abs(float(source.get("target_share", 0.0)) - float(spec.get("target_share", 0.0))) > 1e-12:
             raise ValueError(f"source mixture-share mismatch: {source_id}")
         if float(source.get("fill_ratio", 0.0)) < 0.999:
