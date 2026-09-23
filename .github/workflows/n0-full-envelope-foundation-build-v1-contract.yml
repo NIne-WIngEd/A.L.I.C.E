@@ -50,6 +50,7 @@ on:
       - "scripts/eipm/n0/build_n0_v02_full_envelope_runtime_view_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_token_boundaries_v1.py"
+      - "scripts/eipm/n0/audit_n0_v02_semantic_operator_long_token_alignment_v1.py"
       - "scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py"
       - "configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json"
@@ -181,6 +182,7 @@ jobs:
             scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_token_boundaries_v1.py \
+            scripts/eipm/n0/audit_n0_v02_semantic_operator_long_token_alignment_v1.py \
             scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py \
             scripts/eipm/n0/build_n0_v02_full_envelope_final_v2_package.py \
