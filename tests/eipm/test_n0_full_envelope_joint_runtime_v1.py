@@ -1947,3 +1947,19 @@ def test_dev_checkpoint_selection_enforces_first_passing_chain_member() -> None:
     assert 'p.add_argument("--selection-receipt",required=True)' in final_open
     assert "FINAL opening selection receipt drift" in final_open
 
+
+
+def test_p41_public_corpus_runtime_revalidation_checks_license_and_source_balance_metadata() -> None:
+    source=(ROOT/"src/alice_personality/n0/v02_training.py").read_text()
+    assert 'source.get("repo_id") != spec.get("repo_id")' in source
+    assert 'source.get("category") != spec.get("category")' in source
+    assert 'source.get("allowed_license_values")' in source
+    assert 'spec.get("allowed_license_values")' in source
+    assert "source allowed-license set mismatch" in source
+    assert "activated source target shares must sum to one" in source
+    authorizer=(
+        ROOT/"scripts/eipm/n0/authorize_n0_v02_full_envelope_training_v1.py"
+    ).read_text()
+    assert "verify_public_corpus_v021" in authorizer
+    assert '"public_corpus_runtime_revalidated":True' in authorizer
+
