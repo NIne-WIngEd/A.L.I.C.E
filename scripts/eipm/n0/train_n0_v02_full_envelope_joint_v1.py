@@ -785,7 +785,7 @@ def main() -> None:
                 natural_compiled=natural_compiled,
             )
             for family in policy.active_macro_families:
-                raw=result[f"raw/{family}"].detach().float()
+                raw=result["balanced"][f"raw/{family}"].detach().float()
                 weight=float(weights[family])
                 numerators[family].add_(raw*weight)
                 denominators[family].add_(weight)
