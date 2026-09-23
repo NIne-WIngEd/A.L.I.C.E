@@ -613,10 +613,19 @@ def fabric_lane_metrics(
                 == expected_readout
             )
 
-        structural_ok=(support_f1>=0.95 and endpoint_ok)
+        # SOURCE/TARGET endpoint supervision is directional. SYMMETRIC
+        # relations intentionally give both endpoints equivalent structural
+        # support, so an argmax tie is not a meaningful endpoint-pair failure.
+        directional_endpoint_ok=(
+            endpoint_ok
+            if role in {"ROLE_SOURCE","ROLE_TARGET"}
+            else True
+        )
+        structural_ok=(support_f1>=0.95 and directional_endpoint_ok)
         records.append({
             "id":str(row.get("id")),
             "scenario_family":str(row.get("scenario_family","")),
+            "role_target":role,
             "long_context_surface":row.get("long_context_surface"),
             "long_context_placement_variant":row.get(
                 "long_context_placement_variant"
@@ -687,7 +696,12 @@ def fabric_lane_metrics(
         "support_edge_f1":mean([
             float(item["support_edge_f1"]) for item in records
         ]),
-        "endpoint_pair_accuracy":rate("endpoint_pair_correct"),
+        "endpoint_pair_accuracy":rate(
+            "endpoint_pair_correct",
+            where=lambda item: item.get("role_target") in {
+                "ROLE_SOURCE","ROLE_TARGET"
+            },
+        ),
         "null_support_exact_rate":(
             boolean_rate([
                 bool(item["null_support_exact"]) for item in null_records
