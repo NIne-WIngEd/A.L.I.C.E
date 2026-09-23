@@ -462,6 +462,17 @@ def verify_runtime_training_authorization(
     return receipt
 
 
+def enable_precommitted_gradient_checkpointing(system: torch.nn.Module) -> None:
+    semantic_model=getattr(system,"semantic_model",None)
+    mlm=getattr(semantic_model,"mlm",None)
+    enable=getattr(mlm,"gradient_checkpointing_enable",None)
+    if not callable(enable):
+        raise SystemExit("precommitted backbone gradient checkpointing unavailable")
+    enable()
+    if getattr(mlm,"is_gradient_checkpointing",False) is not True:
+        raise SystemExit("precommitted backbone gradient checkpointing unavailable")
+
+
 def recursive_to_device(value: Any, device: torch.device) -> Any:
     if isinstance(value,torch.Tensor):
         return value.to(device,non_blocking=True)
@@ -633,6 +644,7 @@ def save_checkpoint(
     teacher_audit_path: Path,
     static_proof_receipt_path: Path,
     stage_report: Mapping[str,Any],
+    gradient_checkpointing_enabled: bool,
     scheduler_horizon_steps: int,
     warmup_steps: int,
     minimum_lr_scale: float,
@@ -697,6 +709,7 @@ def save_checkpoint(
             },
             "optimizer_contract":{
                 "name":"AdamW",
+                "gradient_checkpointing_enabled":bool(gradient_checkpointing_enabled),
                 "full_topology_parameter_groups":True,
                 "frozen_parameters_receive_updates":False,
                 "macro_family_ema_once_per_effective_batch":True,
@@ -1104,6 +1117,9 @@ def main() -> None:
         )
         system.load_state_dict(predecessor_system_state,strict=True)
     stage_report=apply_stage_trainability(system,stage=args.stage)
+    if training_plan.get("optimization_strategy",{}).get("gradient_checkpointing") is not True:
+        raise SystemExit("training plan lost precommitted gradient checkpointing")
+    enable_precommitted_gradient_checkpointing(system)
     policy=resolve_stage_policy(args.stage)
     objective=FullEnvelopeJointTrainingObjectiveV1()
     if resume_kind=="stage_transition":
@@ -1395,6 +1411,7 @@ def main() -> None:
                 teacher_audit_path=Path(args.teacher_audit),
                 static_proof_receipt_path=Path(args.static_proof_receipt),
                 stage_report=stage_report,
+                gradient_checkpointing_enabled=True,
                 scheduler_horizon_steps=args.scheduler_horizon_steps,
                 warmup_steps=args.warmup_steps,
                 minimum_lr_scale=minimum_lr_scale,
