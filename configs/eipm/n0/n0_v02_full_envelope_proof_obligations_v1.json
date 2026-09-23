@@ -1475,6 +1475,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_final_v2_evaluator_verifies_every_frozen_package_input_hash",
       "requirement": "At FINAL-v2 execution, every package artifact frozen before gradient—including the evaluator contract/implementation, gate registry, final contract, all synthetic/runtime/long/natural FINAL corpora and banks, package manifest/config, FewRel manifest, and package audit—must be hash-verified against the exact freeze receipt. Verifying only the evaluator script and gate registry is insufficient."
+    },
+    {
+      "id": "N0-P46J",
+      "stage": "final_closure",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_final_opening_is_bound_to_exact_dev_selected_j3_candidate",
+      "requirement": "Before sealed FINAL-v2 can open, an executable non-ranking authorizer must bind the exact clean-source J3 candidate, its checkpoint receipt, the passing complete DEV-only gate receipt, and the pre-gradient FINAL freeze receipt. A hand-authored boolean opening JSON or a DEV receipt from another candidate may not authorize FINAL."
+    },
+    {
+      "id": "N0-P46K",
+      "stage": "final_closure",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_final_opening_authorizer_is_pregradient_freeze_bound",
+      "requirement": "The FINAL-v2 opening authorizer itself must be registered and hash-frozen before gradient. The authorizer must self-verify against the freeze receipt, and FINAL evaluation must verify that the opening receipt came from the frozen authorizer lineage."
     }
   ],
   "closure_rule": {
