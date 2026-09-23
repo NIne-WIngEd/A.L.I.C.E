@@ -47,6 +47,7 @@
     "gradient": false,
     "training": false,
     "final_opening": false,
-    "n0_complete": false
+    "n0_complete": false,
+    "gpu_training": false
   }
 }
