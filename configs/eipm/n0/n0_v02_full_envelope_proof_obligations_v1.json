@@ -1230,6 +1230,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_dev_evaluator_is_dev_only_and_cannot_open_final",
       "requirement": "Checkpoint selection must use DEV-only successor evaluation. The evaluator must reject FINAL rows/results and cannot authorize FINAL opening or N0 completion."
+    },
+    {
+      "id": "N0-P43E",
+      "stage": "dev_validation",
+      "kind": "RUNTIME_REQUIRED",
+      "status": "UNRESOLVED_BLOCKING",
+      "requirement": "Before J1->J2, J2->J3, or J3 candidate selection, the DEV-only successor evaluator must have complete precommitted metric mappings for every named active stage gate. Missing mappings are blocking and may not be filled from FINAL outcomes."
     }
   ],
   "closure_rule": {

@@ -1,0 +1,48 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-dev-validation-contract.v1",
+  "status": "PRECOMMITTED_SUCCESSOR_DEV_ONLY_VALIDATION",
+  "date": "2026-09-22",
+  "registered_system": "N0FullEnvelopeTrainableSystemV1",
+  "evaluator": "scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py",
+  "checkpoint_selection_surface": "DEV_ONLY",
+  "final_rows_allowed": false,
+  "final_results_allowed": false,
+  "shortcut_preflight_must_remain_passed": true,
+  "stage_sections": [
+    "J1_joint_semantic_operator",
+    "J2_reopened_representation_interfaces",
+    "J3_full_public_n0_coadaptation"
+  ],
+  "stage_gate_source": "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json",
+  "frozen_threshold_reference": "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+  "evaluation_lanes": [
+    "governed_judgment_replay",
+    "semantic_operator_intervention",
+    "semantic_operator_long_context",
+    "full_envelope_behavioral",
+    "runtime_view_supplement",
+    "long_context_supplement",
+    "natural_relation"
+  ],
+  "broad_semantic_regression": {
+    "training_corpus_may_not_be_used_for_checkpoint_selection": true,
+    "fixed_public_readiness_suites_required": true,
+    "historical_regression_floors_are_minimum_only": true
+  },
+  "output_policy": {
+    "raw_dev_metrics_required": true,
+    "named_stage_gate_coverage_required": true,
+    "missing_gate_metric_is_blocking": true,
+    "checkpoint_selection_performed_by_evaluator": false,
+    "automatic_stage_transition": false,
+    "final_opening_authorized": false,
+    "n0_complete": false
+  },
+  "authority": {
+    "private_identity_data": false,
+    "final_validation_only_rows_forbidden": true,
+    "final_results_observed": false,
+    "final_opening_authorized": false,
+    "final_checkpoint_selection_allowed": false
+  }
+}

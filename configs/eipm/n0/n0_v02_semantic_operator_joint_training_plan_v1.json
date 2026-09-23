@@ -340,7 +340,21 @@
       ],
       "natural_relation": "active in J1/J2/J3",
       "fixed_lane_sampling_ratio_as_capability_definition": false
-    }
+    },
+    "trainer": "scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py",
+    "checkpoint_contract": "configs/eipm/n0/n0_v02_full_envelope_checkpoint_contract_v1.json",
+    "dev_evaluator": "scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py",
+    "dev_validation_contract": "configs/eipm/n0/n0_v02_full_envelope_dev_validation_contract_v1.json",
+    "automatic_stage_transition": false,
+    "stage_transition_requires_complete_dev_gate_mapping": true,
+    "trainer_requires_runtime_receipts_before_gradient": [
+      "PASS tokenizer stress",
+      "PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1",
+      "PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1",
+      "PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1",
+      "PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1",
+      "PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1"
+    ]
   },
   "loss_balancing": {
     "method": "macro_family_balanced_with_per_objective_scale_normalization",

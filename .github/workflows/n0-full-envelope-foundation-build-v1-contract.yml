@@ -38,6 +38,8 @@ on:
       - "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py"
       - "scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py"
+      - "scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py"
+      - "scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py"
       - "scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py"
       - "scripts/eipm/n0/magnolia_p100x2_n0_v02_full_envelope_gpu_memory_v1.sbatch"
@@ -71,6 +73,8 @@ on:
       - "tests/eipm/test_n0_full_envelope_final_v2_package_v1.py"
       - "configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json"
       - "configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json"
+      - "configs/eipm/n0/n0_v02_full_envelope_checkpoint_contract_v1.json"
+      - "configs/eipm/n0/n0_v02_full_envelope_dev_validation_contract_v1.json"
       - "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json"
@@ -157,6 +161,8 @@ jobs:
             scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py \
             scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py \
+            scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py \
+            scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py \
             scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py \
             scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py \
             scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py \
@@ -190,6 +196,8 @@ jobs:
             configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json \
             configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json \
+            configs/eipm/n0/n0_v02_full_envelope_checkpoint_contract_v1.json \
+            configs/eipm/n0/n0_v02_full_envelope_dev_validation_contract_v1.json \
             configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json \
             configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json \
