@@ -198,6 +198,15 @@ def main() -> None:
     if cfg.get("schema")!="alice.eipm.n0.full-envelope-gpu-memory-dry-run.v1":
         raise SystemExit("GPU memory qualification config schema drift")
     q=dict(cfg["qualification"])
+    route=dict(cfg["route"])
+    microbatch_size=int(route["microbatch_size"])
+    teacher_batch_size=int(route["teacher_batch_size"])
+    replay_sequence_length=int(route["replay_sequence_length"])
+    training_mixed_precision=str(route["training_mixed_precision"])
+    if min(microbatch_size,teacher_batch_size,replay_sequence_length)<=0:
+        raise SystemExit("P43 route batch/sequence operating points must be positive")
+    if training_mixed_precision!="fp16":
+        raise SystemExit("P43 qualifier currently requires fp16 training route")
     if q.get("no_gradient") is not True or q.get("no_optimizer_object") is not True:
         raise SystemExit("GPU dry run must forbid gradient and optimizer")
     mixture=read_json(args.mixture_manifest)
@@ -276,13 +285,13 @@ def main() -> None:
     mlm_dataset=PackedJSONLIterableDataset(
         paths=corpus_paths,
         tokenizer=tokenizer,
-        sequence_length=512,
+        sequence_length=replay_sequence_length,
         split="train",
         shuffle_seed=20260922+rank,
     )
     mlm_loader=DataLoader(
         mlm_dataset,
-        batch_size=1,
+        batch_size=microbatch_size,
         collate_fn=SpanMLMCollator(
             tokenizer=tokenizer,
             mlm_probability=0.30,
@@ -295,7 +304,7 @@ def main() -> None:
     teacher_dataset=CurriculumDataset(curriculum_paths,"train")
     teacher_loader=DataLoader(
         teacher_dataset,
-        batch_size=2,
+        batch_size=teacher_batch_size,
         shuffle=False,
         collate_fn=TeacherMultitaskCollator(tokenizer,256),
         num_workers=0,
@@ -305,24 +314,23 @@ def main() -> None:
 
     semantic_compiled_cases={
         "max_runtime_axes":compile_semantic_operator_batch(
-            rows=[choose_semantic(semantic_rows)],
+            rows=[choose_semantic(semantic_rows) for _ in range(microbatch_size)],
             tokenizer=tokenizer,
         ),
         "long_context_semantic":compile_semantic_operator_batch(
-            rows=[choose_long_semantic(semantic_long_rows)],
+            rows=[choose_long_semantic(semantic_long_rows) for _ in range(microbatch_size)],
             tokenizer=tokenizer,
         ),
     }
     full_compiled=compile_behavioral_batch(
-        rows=[choose_full_fabric(
-            behavioral_rows,
-            runtime_rows,
-            long_rows,
-        )],
+        rows=[
+            choose_full_fabric(behavioral_rows,runtime_rows,long_rows)
+            for _ in range(microbatch_size)
+        ],
         tokenizer=tokenizer,
     )
     natural_compiled=compile_natural_relation_batch(
-        rows=[choose_natural(natural_rows)],
+        rows=[choose_natural(natural_rows) for _ in range(microbatch_size)],
         relation_bank=relation_bank,
         tokenizer=tokenizer,
     )
@@ -477,10 +485,13 @@ def main() -> None:
             "world_size":world_size,
             "preferred_world_size":preferred,
             "preferred_world_size_is_capability_ceiling":False,
-            "microbatch_size":int(cfg["route"]["microbatch_size"]),
+            "microbatch_size":microbatch_size,
+            "teacher_batch_size":teacher_batch_size,
+            "replay_sequence_length":replay_sequence_length,
+            "training_mixed_precision":training_mixed_precision,
             "microbatch_size_is_capability_ceiling":False,
             "candidate_gradient_accumulation":int(
-                cfg["route"]["initial_gradient_accumulation_operating_point"]
+                route["initial_gradient_accumulation_operating_point"]
             ),
             "ranks":gathered,
             "public_corpus_sources":len(corpus_receipt.get("sources") or []),
