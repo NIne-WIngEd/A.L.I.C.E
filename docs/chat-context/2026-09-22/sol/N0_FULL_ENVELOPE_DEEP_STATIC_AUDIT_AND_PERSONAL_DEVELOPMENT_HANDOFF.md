@@ -3,8 +3,8 @@
 **Date:** 2026-09-22  
 **Status:** active continuity authority for the current Sol handoff  
 **N0 branch:** `alice-eipm-v1-n0-full-envelope-foundation-build-v1`  
-**N0 head at handoff:** `116324b58ec62e85b1a4897dc33c26bdd6cade25`  
-Current build head: `116324b58ec62e85b1a4897dc33c26bdd6cade25`  
+**N0 head at handoff:** `ac0defbc67f260d77d0d7cd664209e247f457867`  
+Current build head: `ac0defbc67f260d77d0d7cd664209e247f457867`  
 **Magnolia authorization:** **NO — deep source-level audit remains open**  
 **N0 complete:** false
 
@@ -12,7 +12,7 @@ Current build head: `116324b58ec62e85b1a4897dc33c26bdd6cade25`
 
 ```text
 source_branch=alice-eipm-v1-n0-full-envelope-foundation-build-v1
-current_build_head=116324b58ec62e85b1a4897dc33c26bdd6cade25
+current_build_head=ac0defbc67f260d77d0d7cd664209e247f457867
 deep_source_audit_complete=false
 exact_head_static_suite=PASS_142
 proof_obligations_total=129
@@ -69,13 +69,13 @@ Do not revive a superseded narrow PASS merely because a later experiment becomes
 
 ## Current exact-head static evidence
 
-At `116324b58ec62e85b1a4897dc33c26bdd6cade25`, GitHub Actions run `35798607968` completed successfully.
+At `ac0defbc67f260d77d0d7cd664209e247f457867`, GitHub Actions run `35798607968` completed successfully.
 
 Observed receipt:
 
-- 142 tests passed;
-- 129 proof obligations registered;
-- 113 static obligations;
+- 174 tests passed;
+- 164 proof obligations registered;
+- 142 static obligations;
 - long-context TRAIN/DEV supplement audit passed across every governed text surface;
 - successor shortcut preflight passed;
 - successor FINAL-v2 package build/audit/freeze passed without opening model results;
@@ -371,17 +371,51 @@ A failing proof was added at `29b0e59404d6b4add3b8c0adec6a59841cedeae2`. The suc
 - treats 4608 words as a stress operating point, not a product ceiling;
 - remains separate from FINAL and private identity data.
 
-The first implementation then exposed a deeper builder defect. Relation candidates from the base behavioral materializer were direct mutable aliases into the module-level canonical relation bank. Longifying one relation description could therefore mutate later rows and make materialization order-dependent. That was not patched as arithmetic. Row ownership was corrected at `116324b58ec62e85b1a4897dc33c26bdd6cade25` by deep-copying runtime relation candidates and locking the invariant with a dedicated test.
+The first implementation then exposed a deeper builder defect. Relation candidates from the base behavioral materializer were direct mutable aliases into the module-level canonical relation bank. Longifying one relation description could therefore mutate later rows and make materialization order-dependent. That was not patched as arithmetic. Row ownership was corrected at `ac0defbc67f260d77d0d7cd664209e247f457867` by deep-copying runtime relation candidates and locking the invariant with a dedicated test.
 
 Exact-head run `35798607968` is green:
 
-- 142 tests passed;
-- 129 proof obligations;
-- 113 static obligations;
+- 174 tests passed;
+- 164 proof obligations;
+- 142 static obligations;
 - `PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_CURRICULUM_AUDIT_V1`;
 - shortcut preflight, FewRel, sealed FINAL-v2 package, authority firewall, CPU contract and premature-training block all remain green.
 
 This closes the **missing long-context training coverage** defect and the associated **shared mutable relation-schema row** defect. It does not close the remaining source audit.
+
+### Registered staged-training runtime and J1 long-semantic ownership — 2026-09-23
+
+The deep audit continued past long-context data construction and found another important boundary: **supporting a capability in the architecture is not enough; the optimizer-facing lane must own the right targets and compiler.**
+
+The successor now has one registered full topology and a staged family policy:
+
+- J1 activates semantic replay, governed teacher replay, relation-program semantics, dynamic factors, uncertainty/control, token evidence, and natural relation semantics;
+- J2 retains J1 and adds structural support/endpoint roles with Binder/Executor and related interfaces open;
+- J3 activates all ten public N0 macro families, including multi-view causality and latent/public judgment.
+
+Inactive stage families are not evaluated through random downstream arbiters. Their modules remain instantiated, so this is staged optimization of one full architecture rather than a reduced pilot.
+
+A source audit then caught that the scheduler originally treated query/relation/factor rows from the **full-fabric long-context supplement** as J1 semantic rows. That was invalid because those behavioral rows intentionally do not own semantic-operator token-evidence targets. The correction added a dedicated evidence-owned lane:
+
+`semantic_operator_long_context`
+
+Its TRAIN/DEV rows preserve the actual semantic-operator relation program, factor targets, step targets, events, uncertainty and exact query/relation/factor evidence spans while moving decisive text beyond the native-window operating point. The public-mixture contract now binds this lane separately. The scheduler rejects full-fabric long rows if supplied as J1 semantic authority.
+
+The CPU qualification source also now requires exact governed-tokenizer evidence survival for this long semantic lane. The GPU no-gradient qualifier is required to cover both a high-runtime-cardinality semantic case and a dedicated long-semantic case rather than using one convenient row as a stand-in.
+
+At exact head `ac0defbc67f260d77d0d7cd664209e247f457867`, workflow `35816521310` is green:
+
+- 174 tests passed;
+- 164 proof obligations;
+- 142 static obligations;
+- semantic-operator long-context static audit passed;
+- runtime-view and full-fabric long-context audits remained green;
+- proof-matrix static audit passed;
+- premature optimizer/gradient/GPU-training/FINAL/N0 closure remains blocked.
+
+Graphify query `n0-successor-trainer-dev-evaluator-gap-audit-20260922-054` ran against this exact head and completed successfully. Graphify is still navigation only; branch-qualified source remains the authority.
+
+The source tree still has **no successor full-envelope trainer script, no successor full-envelope DEV evaluator, and no successor full-envelope checkpoint contract**. Historical trainers/evaluators remain mechanics references only and cannot regain semantic authority. Those missing successor orchestration pieces are now the immediate implementation frontier before any Magnolia authorization.
 
 ## Current architecture intent
 
@@ -460,7 +494,7 @@ When a valid failure or source defect is found:
 
 ## Magnolia boundary
 
-Do **not** submit `magnolia_cpu_n0_v02_full_envelope_runtime_v1.sbatch` yet merely because the current static suite is green.
+Do **not** submit `magnolia_cpu_n0_v02_full_envelope_runtime_v1.sbatch` yet merely because the current static suite is green. The successor staged trainer, DEV gate evaluator, and checkpoint/receipt provenance path must first exist and pass source/static audit.
 
 The intended next external boundary remains an exact 640-wide CPU/no-gradient full-envelope construction/forward + parameter/memory receipt, but only **after the unfinished source audit closes without another statically discoverable defect**.
 
@@ -536,7 +570,7 @@ The canonical main correction adds the product-neutral `assistant_self` projecti
 
 ## Current next action
 
-Continue the deep source-level N0 audit at exact head `116324b58ec62e85b1a4897dc33c26bdd6cade25`.
+Continue the deep source-level N0 audit at exact head `ac0defbc67f260d77d0d7cd664209e247f457867`.
 
 Do not ask the owner for a Magnolia run until that audit has either:
 
