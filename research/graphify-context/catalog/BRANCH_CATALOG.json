@@ -5,11 +5,11 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "1d47f4659302c3d7eba107580d3195831e65b179",
-      "head_committed_at": "2026-09-22T18:45:52-05:00",
-      "head_message": "context(n0): record long-context training closure",
+      "head": "c0663b4377ad13d7e7c5387895286d527040a703",
+      "head_committed_at": "2026-09-22T23:05:02-05:00",
+      "head_message": "context(n0): record J1 long semantic ownership and trainer frontier",
       "status": "diverged",
-      "ahead": 252,
+      "ahead": 254,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
       "changed_file_count_vs_source_merge_base": 585,
@@ -137,14 +137,14 @@
     },
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "ac0defbc67f260d77d0d7cd664209e247f457867",
-      "head_committed_at": "2026-09-22T22:59:53-05:00",
-      "head_message": "test(n0): support both semantic tokenization interfaces",
+      "head": "77cdac65d68634d3aae58e499179d85eba11ec62",
+      "head_committed_at": "2026-09-22T23:27:12-05:00",
+      "head_message": "fix(n0): read effective-batch family means from balancer",
       "status": "ahead",
-      "ahead": 1167,
+      "ahead": 1171,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 507,
+      "changed_file_count_vs_source_merge_base": 511,
       "knowledge_surface": true
     },
     {
@@ -449,14 +449,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "c0bef8991b415c929806dd139e0303bb4a097262",
-      "head_committed_at": "2026-09-22T18:45:37-05:00",
-      "head_message": "trace(fable): capture N0 long-context training repair",
+      "head": "70d31d6271d8228cad7f1bdb721297403bee81e3",
+      "head_committed_at": "2026-09-22T23:04:21-05:00",
+      "head_message": "docs(fable): catch up N0 stage ownership lessons",
       "status": "diverged",
-      "ahead": 118,
+      "ahead": 120,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 115,
+      "changed_file_count_vs_source_merge_base": 116,
       "knowledge_surface": true
     },
     {
