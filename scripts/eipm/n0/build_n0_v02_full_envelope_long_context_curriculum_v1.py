@@ -297,7 +297,12 @@ def materialize(
         boundary_pair_id=f"{split}:long-context-boundary:{surface}"
         # Keep total length constant while moving the identical decisive text
         # from well before to well after the first overlap-ownership boundary.
-        requested_start=3600 if placement_variant=="boundary_early" else 4100
+        # Use a very wide tokenizer-agnostic separation. The exact governed
+        # tokenizer must still verify token-space placement before gradient,
+        # but the early case is intentionally far from the first ownership
+        # boundary while the late case is guaranteed to occur after at least
+        # 4096 word tokens.
+        requested_start=512 if placement_variant=="boundary_early" else 4300
         transformed,decisive_start_word,decisive_end_word=boundary_shift_text(
             original,
             surface=surface,

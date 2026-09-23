@@ -166,6 +166,7 @@ assert set(surface)=={
     "descriptor_text",
     "internal_view_descriptor",
     "additional_view_descriptor",
+    "additional_view_source",
 }
 assert all(surface.values())
 assert r["system_report"]["semantic_replay_and_full_envelope_share_backbone"] is True

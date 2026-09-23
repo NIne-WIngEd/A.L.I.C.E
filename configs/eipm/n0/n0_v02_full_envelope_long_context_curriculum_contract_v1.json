@@ -86,7 +86,9 @@
       "field_text",
       "field_descriptor",
       "candidate_text",
-      "internal_view_descriptor"
+      "internal_view_descriptor",
+      "additional_view_descriptor",
+      "additional_view_source"
     ]
   }
 }

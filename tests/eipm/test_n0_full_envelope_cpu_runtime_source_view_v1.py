@@ -27,3 +27,11 @@ def test_cpu_runtime_qualifier_exercises_registered_additional_view_source_text_
     assert '"additional_view_source_attention_mask"' in source
     assert '"additional_source_views": additional_source_views' not in source
     assert '"additional_view_source": bool(' in source
+
+
+def test_cpu_runtime_result_assertion_keeps_additional_view_source_surface() -> None:
+    runner=(
+        ROOT/"scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh"
+    ).read_text()
+    assert '"additional_view_source",' in runner
+    assert '"additional_view_descriptor",' in runner
