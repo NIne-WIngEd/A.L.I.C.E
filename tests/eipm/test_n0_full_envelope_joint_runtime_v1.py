@@ -1724,8 +1724,8 @@ def test_successor_stage_transition_binds_dev_receipt_to_exact_checkpoint_state(
     assert "sha256_file(args.resume_objective_state)" in trainer
     assert "predecessor DEV receipt/checkpoint receipt hash drift" in trainer
     assert "predecessor DEV receipt/system hash drift" in trainer
-    assert "predecessor accelerator-state hash drift" in trainer
-    assert "predecessor objective-state hash drift" in trainer
+    assert "resume accelerator-state hash drift" in trainer
+    assert "resume objective-state hash drift" in trainer
     assert "predecessor source revision drift" in trainer
 
 
