@@ -798,6 +798,8 @@ def main() -> None:
     if tracked_status.strip():
         raise SystemExit("FINAL evaluator requires a clean exact-source worktree")
     current_revision=subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()
+    if freeze.get("source_revision")!=current_revision:
+        raise SystemExit("FINAL freeze source revision drift")
     if candidate.get("source_revision")!=current_revision:
         raise SystemExit(
             "FINAL evaluator source revision does not match candidate"
