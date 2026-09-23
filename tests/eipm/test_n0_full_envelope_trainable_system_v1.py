@@ -20,6 +20,9 @@ from alice_personality.n0.natural_relation_batch_v1 import (
     compile_natural_relation_batch,
     natural_relation_semantic_loss,
 )
+from alice_personality.n0.full_envelope_joint_step_v1 import (
+    execute_full_envelope_joint_step,
+)
 
 
 class TinyBackbone(nn.Module):
@@ -73,13 +76,29 @@ class TinySemanticModel(nn.Module):
             pooled=out.last_hidden_state.mean(dim=1)
             return {"loss":self.replay_head(pooled).square().mean()}
         if task == "teacher":
-            out=self.backbone(
+            candidate=self.backbone(
                 input_ids=batch["candidate_input_ids"],
                 attention_mask=batch["candidate_attention_mask"],
                 output_hidden_states=True,
                 return_dict=True,
             )
-            return {"scores":self.preference(out.last_hidden_state.mean(dim=1)).squeeze(-1)}
+            rationale=self.backbone(
+                input_ids=batch["rationale_input_ids"],
+                attention_mask=batch["rationale_attention_mask"],
+                output_hidden_states=True,
+                return_dict=True,
+            )
+            candidate_pooled=candidate.last_hidden_state.mean(dim=1)
+            rationale_pooled=rationale.last_hidden_state.mean(dim=1)
+            semantic=torch.nn.functional.normalize(candidate_pooled,dim=-1)
+            rationale_semantic=torch.nn.functional.normalize(rationale_pooled,dim=-1)
+            mapped=rationale_semantic[batch["candidate_rationale_index"]]
+            return {
+                "scores":self.preference(candidate_pooled).squeeze(-1),
+                "semantic":semantic,
+                "rationale":rationale_semantic,
+                "alignment_logits":(semantic*mapped).sum(dim=-1),
+            }
         raise ValueError(task)
 
     def parameter_report(self):
@@ -1072,3 +1091,104 @@ def test_natural_relation_lane_uses_shared_operator_without_fake_factor_or_downs
     operator_grad=next(system.stack.semantic_operator.parameters()).grad
     assert backbone_grad is not None and float(backbone_grad.abs().sum()) > 0.0
     assert operator_grad is not None and float(operator_grad.abs().sum()) > 0.0
+
+
+def test_registered_joint_step_runs_real_replay_operator_fabric_and_natural_relation_losses() -> None:
+    torch.manual_seed(294)
+    system=_system().train()
+    full_batch=_full_batch()
+
+    with torch.no_grad():
+        shape_probe=system(task="full_envelope",batch=full_batch)
+    operator_targets,behavioral_targets=_training_targets(shape_probe)
+
+    semantic_batch={
+        "query_input_ids":full_batch["query_input_ids"],
+        "query_attention_mask":full_batch["query_attention_mask"],
+        "relation_input_ids":full_batch["relation_input_ids"],
+        "relation_attention_mask":full_batch["relation_attention_mask"],
+        "relation_domain_type_mask":full_batch["relation_domain_type_mask"],
+        "relation_range_type_mask":full_batch["relation_range_type_mask"],
+        "relation_symmetric":full_batch["relation_symmetric"],
+        "relation_candidate_mask":full_batch["relation_candidate_mask"],
+        "factor_input_ids":full_batch["factor_input_ids"],
+        "factor_attention_mask":full_batch["factor_attention_mask"],
+        "factor_candidate_masks":full_batch["factor_candidate_masks"],
+        "factor_opcodes":full_batch["factor_opcodes"],
+        "max_reasoning_steps":full_batch["max_reasoning_steps"],
+    }
+    full_compiled={
+        "primary_batch":full_batch,
+        "decisive_ablated_batch":full_batch,
+        "irrelevant_removed_batch":full_batch,
+        "permuted_batch":full_batch,
+        "behavioral_targets":behavioral_targets,
+    }
+    natural_batch={
+        "query_input_ids":full_batch["query_input_ids"],
+        "query_attention_mask":full_batch["query_attention_mask"],
+        "relation_input_ids":full_batch["relation_input_ids"],
+        "relation_attention_mask":full_batch["relation_attention_mask"],
+        "relation_domain_type_mask":full_batch["relation_domain_type_mask"],
+        "relation_range_type_mask":full_batch["relation_range_type_mask"],
+        "relation_symmetric":full_batch["relation_symmetric"],
+        "relation_candidate_mask":full_batch["relation_candidate_mask"],
+        "max_reasoning_steps":1,
+    }
+
+    mlm_ids,mlm_mask=_tokens(1,length=6,offset=73)
+    teacher_candidate_ids,teacher_candidate_mask=_tokens(4,length=7,offset=90)
+    teacher_rationale_ids,teacher_rationale_mask=_tokens(2,length=7,offset=120)
+    teacher_batch={
+        "candidate_input_ids":teacher_candidate_ids,
+        "candidate_attention_mask":teacher_candidate_mask,
+        "rationale_input_ids":teacher_rationale_ids,
+        "rationale_attention_mask":teacher_rationale_mask,
+        "candidate_rationale_index":torch.tensor([0,0,1,1],dtype=torch.long),
+        "group_sizes":[2,2],
+        "preferred_masks":[
+            torch.tensor([True,False]),
+            torch.tensor([False,True]),
+        ],
+        "principle_tags":["principle-a","principle-b"],
+        "ids":["teacher-a","teacher-b"],
+    }
+
+    objective=FullEnvelopeJointTrainingObjectiveV1()
+    result=execute_full_envelope_joint_step(
+        system=system,
+        objective=objective,
+        mlm_batch={
+            "input_ids":mlm_ids,
+            "attention_mask":mlm_mask,
+            "labels":mlm_ids.clone(),
+        },
+        teacher_batch=teacher_batch,
+        semantic_operator_compiled={
+            "batch":semantic_batch,
+            "operator_targets":operator_targets,
+        },
+        full_fabric_compiled=full_compiled,
+        natural_relation_compiled={
+            "batch":natural_batch,
+            "target_relation_index":torch.zeros(1,dtype=torch.long),
+        },
+        update_ema=False,
+    )
+    assert result["all_public_training_lanes_executed"] is True
+    assert result["placeholder_losses_used"] is False
+    assert set(result["lane_losses"]) == {
+        "broad_semantic_replay",
+        "governed_judgment_replay",
+        "natural_relation_semantics",
+    }
+    assert set(result["governed_judgment_replay_components"]) == {
+        "candidate_preference",
+        "principle_rationale_alignment",
+        "semantic_contrastive",
+    }
+    assert torch.isfinite(result["loss"])
+    result["loss"].backward()
+    assert system.semantic_model.backbone.embedding.weight.grad is not None
+    assert next(system.stack.semantic_operator.parameters()).grad is not None
+    assert next(system.stack.public_judgment_probe.score.parameters()).grad is not None

@@ -43,7 +43,8 @@
     "src/alice_personality/n0/semantic_operator_objectives_v1.py",
     "src/alice_personality/n0/full_envelope_behavioral_batch_v1.py",
     "src/alice_personality/n0/semantic_operator_batch_v1.py",
-    "src/alice_personality/n0/natural_relation_batch_v1.py"
+    "src/alice_personality/n0/natural_relation_batch_v1.py",
+    "src/alice_personality/n0/full_envelope_joint_step_v1.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
@@ -1082,6 +1083,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_registered_joint_step_executes_all_public_training_lanes_without_placeholder_losses",
       "requirement": "The successor must expose one registered differentiable joint-step runtime that executes broad semantic replay, governed judgment replay, dedicated semantic-operator supervision, full-fabric behavioral counterfactuals, and natural-relation supervision through the same N0FullEnvelopeTrainableSystemV1 and FullEnvelopeJointTrainingObjectiveV1. Placeholder or proxy losses are forbidden."
+    },
+    {
+      "id": "N0-P39PV",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_registered_joint_step_runs_real_replay_operator_fabric_and_natural_relation_losses",
+      "requirement": "One executable successor joint step must obtain broad semantic replay, governed teacher replay, semantic/operator supervision, full-fabric behavioral counterfactual supervision, and natural-relation supervision from their actual registered paths, then backpropagate the integrated objective through the shared backbone and successor."
     }
   ],
   "closure_rule": {

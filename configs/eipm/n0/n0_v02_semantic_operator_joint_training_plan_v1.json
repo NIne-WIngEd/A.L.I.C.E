@@ -95,7 +95,11 @@
     "natural_relation_task_registered": true,
     "natural_relation_task": "N0FullEnvelopeTrainableSystemV1(task='natural_relation')",
     "natural_relation_task_uses_shared_backbone_and_operator": true,
-    "natural_relation_task_fabricates_factor_or_downstream_labels": false
+    "natural_relation_task_fabricates_factor_or_downstream_labels": false,
+    "registered_joint_step": "src/alice_personality/n0/full_envelope_joint_step_v1.py",
+    "joint_step_uses_real_lane_losses_only": true,
+    "teacher_replay_subobjectives_equal_inside_macro_family": true,
+    "placeholder_joint_losses_forbidden": true
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -403,7 +407,8 @@
     "PASS batched per-example candidate-subset mechanics",
     "PASS full public-mixture manifest audit bound to exact source revision and sealed unopened FINAL",
     "PASS registered shared-backbone semantic-operator task mechanics",
-    "PASS registered natural-relation shared-operator task and compiler mechanics"
+    "PASS registered natural-relation shared-operator task and compiler mechanics",
+    "PASS executable all-lane registered joint-step gradient mechanics"
   ],
   "authorization": {
     "architecture_closed_for_implementation": true,

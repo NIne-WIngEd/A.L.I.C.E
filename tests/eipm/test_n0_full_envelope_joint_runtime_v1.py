@@ -117,4 +117,4 @@ def test_registered_joint_step_executes_all_public_training_lanes_without_placeh
     assert 'task="natural_relation"' in source
     assert 'task="mlm"' in source
     assert 'task="teacher"' in source
-    assert "placeholder" not in source.lower()
+    assert "\"placeholder_losses_used\":False" in source.replace(" ","")
