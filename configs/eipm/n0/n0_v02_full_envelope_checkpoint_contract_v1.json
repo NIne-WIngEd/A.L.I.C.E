@@ -23,6 +23,7 @@
     "operator_evidence_token_receipt_sha256",
     "training_authorization_sha256",
     "optimizer_step",
+    "checkpoint_evaluation_cadence_steps",
     "stage_checkpoint_parent_receipt_sha256",
     "stage_transition_predecessor_checkpoint_receipt_sha256",
     "stage_transition_predecessor_dev_receipt_sha256",
@@ -61,7 +62,10 @@
     "every_chain_member_through_selected_candidate_requires_dev_evaluation": true,
     "stage_transition_model_weights": "selected_predecessor_checkpoint",
     "stage_transition_objective_balancer_state": "preserve",
-    "stage_transition_authority_lineage_preserved_in_all_descendant_stage_checkpoints": true
+    "stage_transition_authority_lineage_preserved_in_all_descendant_stage_checkpoints": true,
+    "checkpoint_evaluation_cadence_steps": 25,
+    "checkpoint_cadence_fixed_before_gradient": true,
+    "invocation_must_end_on_checkpoint_cadence": true
   },
   "optimizer_contract": {
     "name": "AdamW",
