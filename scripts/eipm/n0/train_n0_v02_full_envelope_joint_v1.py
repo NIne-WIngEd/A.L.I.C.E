@@ -636,6 +636,7 @@ def save_checkpoint(
     scheduler_horizon_steps: int,
     warmup_steps: int,
     minimum_lr_scale: float,
+    save_every: int,
     gradient_accumulation_steps: int,
     stage_checkpoint_parent_receipt_sha256: str | None,
     stage_transition_predecessor_checkpoint_receipt_sha256: str | None,
@@ -720,6 +721,7 @@ def save_checkpoint(
                 static_proof_receipt_path
             ),
             "optimizer_step":int(step),
+            "checkpoint_evaluation_cadence_steps":int(save_every),
             "stage_checkpoint_parent_receipt_sha256":stage_checkpoint_parent_receipt_sha256,
             "stage_transition_predecessor_checkpoint_receipt_sha256":(
                 stage_transition_predecessor_checkpoint_receipt_sha256
@@ -830,7 +832,19 @@ def main() -> None:
     if training_plan.get("schema")!="alice.eipm.n0.semantic-operator-joint-training-plan.v1":
         raise SystemExit("successor training-plan schema drift")
     authority=dict(training_plan.get("authorization") or {})
-    scheduler_policy=dict(training_plan.get("optimization_strategy",{}).get("scheduler_policy") or {})
+    optimization_strategy=dict(training_plan.get("optimization_strategy") or {})
+    checkpoint_evaluation_cadence_steps=int(
+        optimization_strategy.get("checkpoint_evaluation_cadence_steps",0)
+    )
+    if checkpoint_evaluation_cadence_steps<=0:
+        raise SystemExit("training plan checkpoint evaluation cadence missing")
+    if optimization_strategy.get("checkpoint_cadence_fixed_before_gradient") is not True:
+        raise SystemExit("training plan checkpoint cadence is not frozen before gradient")
+    if args.save_every!=checkpoint_evaluation_cadence_steps:
+        raise SystemExit("save cadence must match precommitted DEV selection cadence")
+    if args.max_optimizer_steps%checkpoint_evaluation_cadence_steps!=0:
+        raise SystemExit("max optimizer steps must end on precommitted checkpoint cadence")
+    scheduler_policy=dict(optimization_strategy.get("scheduler_policy") or {})
     if scheduler_policy.get("family")!="linear_warmup_cosine_decay_to_nonzero_floor":
         raise SystemExit("training plan scheduler policy drift")
     minimum_lr_scale=float(scheduler_policy.get("minimum_lr_scale",-1.0))
@@ -1359,7 +1373,7 @@ def main() -> None:
                 "final_results_observed":False,
             },sort_keys=True))
 
-        if step%args.save_every==0 or step==args.max_optimizer_steps:
+        if step%args.save_every==0:
             stage_checkpoint_parent_receipt_sha256=save_checkpoint(
                 accelerator=accelerator,
                 system=system,
@@ -1384,6 +1398,7 @@ def main() -> None:
                 scheduler_horizon_steps=args.scheduler_horizon_steps,
                 warmup_steps=args.warmup_steps,
                 minimum_lr_scale=minimum_lr_scale,
+                save_every=args.save_every,
                 gradient_accumulation_steps=args.gradient_accumulation_steps,
                 stage_checkpoint_parent_receipt_sha256=(
                     stage_checkpoint_parent_receipt_sha256
