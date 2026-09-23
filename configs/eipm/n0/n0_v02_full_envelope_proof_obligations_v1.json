@@ -1447,6 +1447,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_successor_stage_transition_binds_dev_receipt_to_exact_checkpoint_state",
       "requirement": "J2/J3 stage transitions must bind the passing predecessor DEV receipt to the exact predecessor checkpoint receipt, full-system identity, objective state, accelerator-state tree, and source revision. A passing DEV receipt from another checkpoint of the same stage may not authorize progression."
+    },
+    {
+      "id": "N0-P39PMB",
+      "stage": "full_public_mixture",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_public_mixture_audit_is_bound_to_exact_manifest_consumed_by_runtime",
+      "requirement": "The passed full public-mixture audit must hash-bind the exact manifest later consumed by the GPU dry run and staged trainer. A PASS receipt for a different same-revision manifest may not authorize runtime qualification or gradient."
     }
   ],
   "closure_rule": {
