@@ -1224,3 +1224,64 @@ def test_j3_dev_gate_measures_irrelevant_source_removal_invariance() -> None:
     }
     assert {item["metric"] for item in gate["all"]}==expected
     assert all(item["comparison"]==">=" and item["threshold"]==0.95 for item in gate["all"])
+
+
+def test_dev_evaluator_binds_every_dev_lane_to_exact_public_mixture_hashes() -> None:
+    evaluator=(
+        ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py"
+    ).read_text()
+    assert "verify_dev_lane_bindings" in evaluator
+    required={
+        "semantic_operator_intervention":"semantic_rows",
+        "semantic_operator_long_context":"semantic_long_rows",
+        "full_envelope_behavioral":"behavioral_rows",
+        "runtime_view_supplement":"runtime_view_rows",
+        "long_context_supplement":"long_context_rows",
+        "natural_relation":"natural_rows",
+    }
+    for lane,arg_name in required.items():
+        assert lane in evaluator
+        assert arg_name in evaluator
+    assert "natural_bank" in evaluator
+    assert "rows_sha256" in evaluator
+    assert "bank_sha256" in evaluator
+    assert "DEV lane/mixture hash drift" in evaluator
+
+
+def test_dev_empirical_gate_can_require_nonempty_coverage() -> None:
+    from alice_personality.n0.full_envelope_dev_gate_v1 import (
+        evaluate_stage_gate_registry,
+    )
+
+    registry={
+        "schema":"alice.eipm.n0.full-envelope-dev-gate-registry.v1",
+        "stages":{
+            "J3":{
+                "mapping_complete":True,
+                "gates":{
+                    "subset":{
+                        "kind":"empirical",
+                        "metric":"fabric.accuracy",
+                        "comparison":">=",
+                        "threshold":0.9,
+                        "coverage_metric":"fabric.count",
+                        "minimum_coverage":1,
+                    }
+                },
+            }
+        },
+    }
+    proof={"obligations":[]}
+    receipt={"status":"PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1"}
+    empty=evaluate_stage_gate_registry(
+        registry=registry,stage="J3",
+        metrics={"fabric":{"accuracy":1.0,"count":0}},
+        proof_contract=proof,static_receipt=receipt,
+    )
+    assert empty["stage_gate_pass"] is False
+    covered=evaluate_stage_gate_registry(
+        registry=registry,stage="J3",
+        metrics={"fabric":{"accuracy":0.95,"count":2}},
+        proof_contract=proof,static_receipt=receipt,
+    )
+    assert covered["stage_gate_pass"] is True
