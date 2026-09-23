@@ -1335,6 +1335,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_semantic_plurality_intervention_is_not_a_single_target_known_case",
       "requirement": "The required plurality intervention must supervise at least two co-valid runtime relation hypotheses and nonzero calibrated uncertainty. A row that says 'preserve both' in text while still training one hard relation target with zero uncertainty is not plurality supervision."
+    },
+    {
+      "id": "N0-P22Q",
+      "stage": "semantic_operator_objective",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_relation_plurality_soft_target_loss_does_not_force_representative_top1",
+      "requirement": "Multi-positive relation supervision must optimize a normalized soft target over all co-valid runtime hypotheses rather than combining it with hard representative cross-entropy that would reintroduce forced top-1 semantics."
     }
   ],
   "closure_rule": {

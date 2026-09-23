@@ -1324,3 +1324,27 @@ def test_semantic_plurality_intervention_is_not_a_single_target_known_case() -> 
     ).read_text()
     assert "relation_plurality_target_distribution" in source
     assert "relation_plurality_target_distribution" in objective
+
+
+def test_relation_plurality_soft_target_loss_does_not_force_representative_top1() -> None:
+    import torch
+    from alice_personality.n0.semantic_operator_objectives_v1 import (
+        relation_semantic_supervision_loss,
+    )
+
+    logits=torch.tensor([[[0.0,0.0,-8.0,-8.0]]],requires_grad=True)
+    representative=torch.tensor([[0]])
+    active=torch.tensor([[True]])
+    target=torch.tensor([[[0.5,0.5,0.0,0.0]]])
+    plural=torch.tensor([[True]])
+    loss=relation_semantic_supervision_loss(
+        logits,
+        representative,
+        active,
+        relation_plurality_target_distribution=target,
+        relation_plurality_mask=plural,
+    )
+    loss.backward()
+    assert float(loss.detach()) < 0.71
+    assert logits.grad is not None
+    assert abs(float(logits.grad[0,0,0]-logits.grad[0,0,1])) < 1.0e-6

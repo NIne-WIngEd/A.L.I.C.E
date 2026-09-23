@@ -170,6 +170,21 @@ def main() -> None:
         elif row.get("intervention")=="unknown_defer":
             if float(uncertainty_target) != 1.0:
                 errors.append(f"{rid}: unknown/defer uncertainty target must be 1")
+        elif row.get("intervention")=="plurality":
+            plural=[
+                int(x)
+                for x in (row.get("relation_plurality_target_indices") or [])
+            ]
+            if len(plural)<2 or len(plural)!=len(set(plural)):
+                errors.append(
+                    f"{rid}: plurality requires at least two unique valid relations"
+                )
+            elif any(x<0 or x>=len(candidates) for x in plural):
+                errors.append(f"{rid}: plurality target outside relation bank")
+            if row.get("plurality_supervision_required") is not True:
+                errors.append(f"{rid}: plurality supervision marker missing")
+            if float(uncertainty_target) <= 0.0:
+                errors.append(f"{rid}: plurality uncertainty must be nonzero")
         elif float(uncertainty_target) != 0.0:
             errors.append(
                 f"{rid}: deterministic intervention uncertainty target must be 0"

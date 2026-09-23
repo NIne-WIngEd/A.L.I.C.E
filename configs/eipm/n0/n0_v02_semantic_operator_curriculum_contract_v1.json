@@ -445,5 +445,17 @@
     "audit": "scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py",
     "required_before_gradient": true,
     "behavioral_long_context_rows_may_substitute": false
+  },
+  "plurality_supervision": {
+    "runtime_relation_distribution_target": true,
+    "minimum_co_valid_hypotheses": 2,
+    "hard_representative_cross_entropy_on_plurality_steps": false,
+    "uncertainty_target": "normalized entropy of the precommitted co-valid target distribution at the row runtime candidate cardinality",
+    "dev_gates": {
+      "valid_mass_min": 0.9,
+      "forced_top1_rate_max": 0.1,
+      "uncertainty_mae_max": 0.15
+    },
+    "private_identity_data": false
   }
 }
