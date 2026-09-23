@@ -76,13 +76,15 @@
     "stage_transition_optimizer_state": "restart"
   },
   "scheduler_contract": {
-    "family": "linear_warmup_cosine_decay",
+    "family": "linear_warmup_cosine_decay_to_nonzero_floor",
     "horizon_is_runtime_operating_point_not_stage_completion": true,
     "fixed_total_steps_as_capability_definition": false,
     "stage_completion_requires_dev_gate_not_step_budget": true,
     "max_optimizer_steps_is_invocation_operating_point_not_stage_completion": true,
     "stage_transition_scheduler_state": "restart_with_stage_local_warmup",
-    "same_stage_resume_scheduler_state": "preserve_exactly"
+    "same_stage_resume_scheduler_state": "preserve_exactly",
+    "minimum_lr_scale": 0.1,
+    "post_horizon_behavior": "hold_precommitted_nonzero_floor_until_dev_decision"
   },
   "authority": {
     "private_identity_data": false,
