@@ -45,6 +45,9 @@ from alice_personality.n0.natural_relation_batch_v1 import (
 from alice_personality.n0.semantic_operator_batch_v1 import (
     compile_semantic_operator_batch,
 )
+from alice_personality.n0.source_authority_v1 import (
+    require_canonical_source_file,
+)
 from alice_personality.n0.v02_training import (
     TeacherMultitaskCollator,
     sha256_file,
@@ -159,6 +162,21 @@ def verify_pre_gradient_runtime(
     semantic_long_token_receipt_path: str | Path,
     static_proof_receipt_path: str | Path,
 ) -> tuple[dict[str,Any],dict[str,Any]]:
+    require_canonical_source_file(
+        topology_config_path,
+        "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json",
+        label="registered topology config",
+    )
+    require_canonical_source_file(
+        semantic_config_path,
+        "configs/eipm/n0/alice_n0_semantic_v0.2.json",
+        label="semantic config",
+    )
+    require_canonical_source_file(
+        source_config_path,
+        "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
+        label="public source config",
+    )
     mixture=read_json(mixture_manifest_path)
     mixture_audit=require_status(
         mixture_audit_path,PASS_MIXTURE,label="full public mixture"
@@ -841,6 +859,11 @@ def main() -> None:
         raise SystemExit("scheduler horizon must exceed warmup")
 
     require_clean_worktree()
+    require_canonical_source_file(
+        args.training_plan,
+        "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json",
+        label="joint training plan",
+    )
     training_plan=read_json(args.training_plan)
     if training_plan.get("schema")!="alice.eipm.n0.semantic-operator-joint-training-plan.v1":
         raise SystemExit("successor training-plan schema drift")
