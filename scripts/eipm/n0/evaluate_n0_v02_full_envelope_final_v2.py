@@ -675,6 +675,7 @@ def main() -> None:
     p.add_argument("--execute-final-evaluation",action="store_true")
     p.add_argument("--final-opening-authorization",required=True)
     p.add_argument("--freeze-receipt",required=True)
+    p.add_argument("--opening-authorizer",required=True)
     p.add_argument("--package-config",required=True)
     p.add_argument("--package-manifest",required=True)
     p.add_argument("--package-audit",required=True)
@@ -724,6 +725,7 @@ def main() -> None:
         "evaluator_contract":args.evaluator_contract,
         "evaluator_implementation":this_source,
         "gate_registry":args.gate_registry,
+        "opening_authorizer":args.opening_authorizer,
         "final_contract":args.final_contract,
         "synthetic_final_rows":args.synthetic_final_rows,
         "semantic_final_rows":args.semantic_final_rows,
@@ -759,6 +761,10 @@ def main() -> None:
         raise SystemExit("FINAL thresholds may not change after results")
     if opening.get("freeze_receipt_sha256")!=sha256_file(args.freeze_receipt):
         raise SystemExit("FINAL opening/freeze lineage drift")
+    if opening.get("opening_authorizer_sha256")!=frozen_hashes.get(
+        "opening_authorizer"
+    ):
+        raise SystemExit("opening authorizer/freeze hash drift")
     if opening.get("candidate_checkpoint_sha256")!=sha256_file(args.candidate_system):
         raise SystemExit("FINAL opening/candidate checkpoint drift")
     if opening.get("dev_receipt_sha256")!=sha256_file(args.dev_selection_receipt):
