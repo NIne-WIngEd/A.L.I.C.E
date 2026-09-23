@@ -59,6 +59,7 @@ PASS_GPU="PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1"
 PASS_LONG_BOUNDARY="PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1"
 PASS_SEMANTIC_LONG_TOKEN="PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1"
 PASS_OPERATOR_TOKEN="PASS_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1"
+PASS_TRAIN_AUTH="AUTHORIZED_N0_FULL_ENVELOPE_TRAINING_FROM_EXACT_RUNTIME_RECEIPTS"
 
 STAGES=(J1,J2,J3)
 PREDECESSOR={J1:None,J2:J1,J3:J2}
@@ -384,6 +385,83 @@ def verify_optimizer_lane_bindings(
         )
 
 
+def verify_runtime_training_authorization(
+    path: str | Path,
+    *,
+    source_revision: str,
+    stage: str,
+    training_plan: str | Path,
+    topology_config: str | Path,
+    semantic_config: str | Path,
+    semantic_checkpoint: str | Path,
+    tokenizer_dir: str | Path,
+    source_config: str | Path,
+    corpus_receipt: str | Path,
+    teacher_registry: str | Path,
+    teacher_audit: str | Path,
+    mixture_manifest: str | Path,
+    mixture_audit: str | Path,
+    tokenizer_audit: str | Path,
+    operator_evidence_token_receipt: str | Path,
+    cpu_runtime_receipt: str | Path,
+    gpu_memory_receipt: str | Path,
+    long_boundary_receipt: str | Path,
+    semantic_long_token_receipt: str | Path,
+    static_proof_receipt: str | Path,
+) -> dict[str,Any]:
+    receipt=require_status(path,PASS_TRAIN_AUTH,label="runtime training authorization")
+    if receipt.get("schema")!="alice.eipm.n0.full-envelope-training-authorization.v1":
+        raise SystemExit("training authorization schema drift")
+    if receipt.get("source_revision")!=source_revision:
+        raise SystemExit("training authorization source revision drift")
+    if stage not in list(receipt.get("authorized_stages") or []):
+        raise SystemExit("training authorization does not cover requested stage")
+    for key in ("optimizer","gradient","gpu_training"):
+        if receipt.get(key) is not True:
+            raise SystemExit(f"training authorization does not enable {key}")
+    if receipt.get("final_results_observed") is not False:
+        raise SystemExit("training authorization observed FINAL")
+    if receipt.get("final_opening_authorized") is not False:
+        raise SystemExit("training authorization unexpectedly opens FINAL")
+    if receipt.get("private_identity_data") is not False:
+        raise SystemExit("training authorization contains private identity data")
+    if receipt.get("private_identity_gradient") is not False:
+        raise SystemExit("training authorization enables private identity gradient")
+    expected={
+        "training_plan_sha256":sha256_file(training_plan),
+        "topology_config_sha256":sha256_file(topology_config),
+        "semantic_config_sha256":sha256_file(semantic_config),
+        "semantic_checkpoint_sha256":sha256_file(semantic_checkpoint),
+        "tokenizer_json_sha256":sha256_file(Path(tokenizer_dir)/"tokenizer.json"),
+        "source_config_sha256":sha256_file(source_config),
+        "corpus_receipt_sha256":sha256_file(corpus_receipt),
+        "teacher_registry_sha256":sha256_file(teacher_registry),
+        "teacher_audit_sha256":sha256_file(teacher_audit),
+        "mixture_manifest_sha256":sha256_file(mixture_manifest),
+        "mixture_audit_sha256":sha256_file(mixture_audit),
+        "tokenizer_audit_sha256":sha256_file(tokenizer_audit),
+        "operator_evidence_token_receipt_sha256":sha256_file(operator_evidence_token_receipt),
+        "cpu_runtime_receipt_sha256":sha256_file(cpu_runtime_receipt),
+        "gpu_memory_receipt_sha256":sha256_file(gpu_memory_receipt),
+        "long_boundary_receipt_sha256":sha256_file(long_boundary_receipt),
+        "semantic_long_token_receipt_sha256":sha256_file(semantic_long_token_receipt),
+        "static_proof_receipt_sha256":sha256_file(static_proof_receipt),
+    }
+    labels={
+        "mixture_manifest_sha256":"training authorization/mixture manifest hash drift",
+        "gpu_memory_receipt_sha256":"training authorization/GPU receipt hash drift",
+    }
+    for key,value in expected.items():
+        if receipt.get(key)!=value:
+            raise SystemExit(labels.get(key,f"training authorization/{key} drift"))
+    authorizer=Path(__file__).resolve().with_name(
+        "authorize_n0_v02_full_envelope_training_v1.py"
+    )
+    if receipt.get("training_authorizer_sha256")!=sha256_file(authorizer):
+        raise SystemExit("training authorization authorizer hash drift")
+    return receipt
+
+
 def recursive_to_device(value: Any, device: torch.device) -> Any:
     if isinstance(value,torch.Tensor):
         return value.to(device,non_blocking=True)
@@ -544,6 +622,7 @@ def save_checkpoint(
     mixture_manifest_path: Path,
     mixture_audit_path: Path,
     operator_evidence_token_receipt_path: Path,
+    training_authorization_path: Path,
     tokenizer_dir: Path,
     corpus_receipt_path: Path,
     teacher_audit_path: Path,
@@ -594,6 +673,9 @@ def save_checkpoint(
             ),
             "operator_evidence_token_receipt_sha256":sha256_file(
                 operator_evidence_token_receipt_path
+            ),
+            "training_authorization_sha256":sha256_file(
+                training_authorization_path
             ),
             "stage":stage,
             "stage_policy":{
@@ -685,6 +767,7 @@ def main() -> None:
     parser.add_argument("--resume-objective-state")
     parser.add_argument("--resume-receipt")
     parser.add_argument("--predecessor-dev-receipt")
+    parser.add_argument("--training-authorization")
     parser.add_argument("--execute-gradient",action="store_true")
     parser.add_argument("--max-optimizer-steps",type=int,default=100)
     parser.add_argument("--save-every",type=int,default=25)
@@ -724,17 +807,17 @@ def main() -> None:
         raise SystemExit("successor training-plan schema drift")
     authority=dict(training_plan.get("authorization") or {})
     if args.execute_gradient:
-        required_authority=("optimizer","gradient","gpu_training")
-        blocked=[
-            name for name in required_authority
-            if authority.get(name) is not True
-        ]
-        if blocked:
+        if any(
+            authority.get(name) is not False
+            for name in ("optimizer","gradient","gpu_training")
+        ):
             raise SystemExit(
-                "successor optimization remains governance-blocked; "
-                "explicit training-plan authority is false for "
-                + repr(blocked)
+                "source training authority must remain false; runtime receipt owns gradient authorization"
             )
+        if authority.get("runtime_training_authorization_receipt_required") is not True:
+            raise SystemExit("training plan lost runtime authorization requirement")
+        if not args.training_authorization:
+            raise SystemExit("runtime training authorization required for gradient")
     mixture,mixture_audit=verify_pre_gradient_runtime(
         mixture_manifest_path=args.mixture_manifest,
         mixture_audit_path=args.mixture_audit,
@@ -752,6 +835,31 @@ def main() -> None:
         semantic_long_token_receipt_path=args.semantic_long_token_receipt,
         static_proof_receipt_path=args.static_proof_receipt,
     )
+    training_authorization=None
+    if args.execute_gradient:
+        training_authorization=verify_runtime_training_authorization(
+            args.training_authorization,
+            source_revision=str(mixture["source_revision"]),
+            stage=args.stage,
+            training_plan=args.training_plan,
+            topology_config=args.topology_config,
+            semantic_config=args.semantic_config,
+            semantic_checkpoint=args.semantic_checkpoint,
+            tokenizer_dir=args.tokenizer_dir,
+            source_config=args.source_config,
+            corpus_receipt=Path(args.corpus_dir)/"corpus_receipt.json",
+            teacher_registry=args.teacher_registry,
+            teacher_audit=args.teacher_audit,
+            mixture_manifest=args.mixture_manifest,
+            mixture_audit=args.mixture_audit,
+            tokenizer_audit=args.tokenizer_audit,
+            operator_evidence_token_receipt=args.operator_evidence_token_receipt,
+            cpu_runtime_receipt=args.cpu_runtime_receipt,
+            gpu_memory_receipt=args.gpu_memory_receipt,
+            long_boundary_receipt=args.long_boundary_receipt,
+            semantic_long_token_receipt=args.semantic_long_token_receipt,
+            static_proof_receipt=args.static_proof_receipt,
+        )
     if not args.execute_gradient:
         print(json.dumps({
             "status":"PREGRADIENT_GATES_PASS_GRADIENT_NOT_EXECUTED",
@@ -826,6 +934,10 @@ def main() -> None:
             or dev.get("source_revision")!=mixture.get("source_revision")
         ):
             raise SystemExit("predecessor source revision drift")
+        if prior.get("training_authorization_sha256")!=sha256_file(
+            args.training_authorization
+        ):
+            raise SystemExit("predecessor training authorization hash drift")
 
     try:
         from accelerate import Accelerator, DistributedDataParallelKwargs
@@ -1111,6 +1223,7 @@ def main() -> None:
                 operator_evidence_token_receipt_path=Path(
                     args.operator_evidence_token_receipt
                 ),
+                training_authorization_path=Path(args.training_authorization),
                 tokenizer_dir=tokenizer_dir,
                 corpus_receipt_path=corpus_dir/"corpus_receipt.json",
                 teacher_audit_path=Path(args.teacher_audit),
