@@ -71,6 +71,7 @@ on:
       - "scripts/eipm/n0/build_n0_v02_full_envelope_final_v2_package.py"
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_final_v2_package.py"
       - "scripts/eipm/n0/freeze_n0_v02_full_envelope_final_v2_package.py"
+      - "scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py"
       - "scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py"
       - "tests/eipm/test_n0_full_envelope_final_v2_package_v1.py"
       - "configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json"
@@ -185,6 +186,7 @@ jobs:
             scripts/eipm/n0/build_n0_v02_full_envelope_final_v2_package.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_final_v2_package.py \
             scripts/eipm/n0/freeze_n0_v02_full_envelope_final_v2_package.py \
+            scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py \
             scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py \
@@ -526,6 +528,7 @@ jobs:
             --evaluator-contract configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json \
             --evaluator-implementation scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py \
             --gate-registry configs/eipm/n0/n0_v02_full_envelope_final_v2_gate_registry_v1.json \
+            --opening-authorizer scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py \
             --final-contract configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
             --synthetic-final-rows /tmp/n0-final-v2/synthetic_final_rows.jsonl \
             --semantic-final-rows /tmp/n0-final-v2/semantic_final_rows.jsonl \
