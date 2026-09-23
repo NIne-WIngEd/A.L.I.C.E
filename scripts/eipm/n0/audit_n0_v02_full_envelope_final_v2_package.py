@@ -475,6 +475,28 @@ def main() -> None:
     if long_surface_overlap:
         errors.append("long-context FINAL surface overlaps TRAIN/DEV")
 
+    if any(
+        not isinstance(row.get("final_paraphrase_query"),str)
+        or not str(row.get("final_paraphrase_query")).strip()
+        or str(row.get("final_paraphrase_query"))==str(row.get("query"))
+        for row in final_rows
+    ):
+        errors.append("behavioral FINAL lacks frozen non-identical paraphrase query")
+    final_paraphrase_query_count=sum(
+        1 for row in final_rows
+        if isinstance(row.get("final_paraphrase_query"),str)
+        and str(row.get("final_paraphrase_query")).strip()
+        and str(row.get("final_paraphrase_query"))!=str(row.get("query"))
+    )
+
+    long_conflict_rows=[
+        row for row in long_final
+        if row.get("scenario_family")=="conflict_plurality"
+        and row.get("long_context_placement_variant") in {"tail","boundary_late"}
+    ]
+    if not long_conflict_rows:
+        errors.append("long-context FINAL lacks distant conflict_plurality probe")
+
     natural_relation_overlap={
         "train_final":fewrel_audit.get("relation_overlap",{}).get("train_final"),
         "dev_final":fewrel_audit.get("relation_overlap",{}).get("dev_final"),
@@ -504,6 +526,8 @@ def main() -> None:
         "long_context_final_placements":sorted(placements),
         "long_context_boundary_pair_count":len(boundary_groups),
         "long_context_surface_overlap":long_surface_overlap,
+        "final_paraphrase_query_count":final_paraphrase_query_count,
+        "long_context_conflict_row_count":len(long_conflict_rows),
         "natural_rows":len(natural_final),
         "entity_overlap":entity_overlap,
         "template_overlap":template_overlap,
