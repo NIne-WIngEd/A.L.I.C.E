@@ -1433,6 +1433,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_final_v2_precommits_paraphrase_pairs_and_cross_window_conflict_probe",
       "requirement": "Before gradient, FINAL-v2 must freeze a second semantic-preserving query wording for behavioral paraphrase consistency and a distant cross-window conflict/plurality case. The evaluator may not invent these challenge surfaces after seeing candidate results."
+    },
+    {
+      "id": "N0-P46G",
+      "stage": "final_closure",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_final_directional_endpoint_reversal_gate_uses_end_to_end_behavior",
+      "requirement": "Before gradient, the sealed FINAL-v2 directional endpoint-reversal sensitivity gate must be bound to candidate-dependent end-to-end full-envelope reverse-traversal behavior with nonempty coverage. Semantic-operator reverse-program correctness alone cannot satisfy endpoint-reversal sensitivity."
     }
   ],
   "closure_rule": {
