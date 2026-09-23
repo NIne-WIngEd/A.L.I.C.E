@@ -35,3 +35,15 @@ def test_cpu_runtime_result_assertion_keeps_additional_view_source_surface() -> 
     ).read_text()
     assert '"additional_view_source",' in runner
     assert '"additional_view_descriptor",' in runner
+
+
+def test_cpu_runtime_requires_exact_governed_tokenizer_boundary_receipt() -> None:
+    config=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json").read_text()
+    )
+    assert config["qualification"]["exact_long_context_token_boundary_alignment_required"] is True
+    runner=(
+        ROOT/"scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh"
+    ).read_text()
+    assert "audit_n0_v02_full_envelope_long_context_token_boundaries_v1.py" in runner
+    assert "PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1" in runner

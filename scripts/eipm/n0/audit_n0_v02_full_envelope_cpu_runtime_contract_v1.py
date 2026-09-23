@@ -223,6 +223,8 @@ def main() -> None:
             raise ValueError("runtime qualification additional view source text missing")
         if q.get("additional_view_source_text_adapter_required") is not True:
             raise ValueError("registered additional-view source-text adapter must be required")
+        if q.get("exact_long_context_token_boundary_alignment_required") is not True:
+            raise ValueError("exact governed-tokenizer boundary alignment must be required before gradient")
         if int(case["latent_slot_count"])<2:
             raise ValueError("runtime qualification must exercise multi-slot latent fabric")
         if int(case["max_reasoning_steps"])<2:

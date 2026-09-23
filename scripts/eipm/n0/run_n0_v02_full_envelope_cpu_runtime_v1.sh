@@ -42,6 +42,11 @@ EVIDENCE_ROWS="$EVIDENCE_ROOT/rows.jsonl"
 EVIDENCE_MANIFEST="$EVIDENCE_ROOT/manifest.json"
 EVIDENCE_STATIC_AUDIT="$EVIDENCE_ROOT/static_audit.json"
 EVIDENCE_TOKEN_AUDIT="$EVIDENCE_ROOT/token_alignment.json"
+LONG_CONTEXT_ROOT="$RUN_ROOT/long-context"
+LONG_CONTEXT_ROWS="$LONG_CONTEXT_ROOT/rows.jsonl"
+LONG_CONTEXT_MANIFEST="$LONG_CONTEXT_ROOT/manifest.json"
+LONG_CONTEXT_STATIC_AUDIT="$LONG_CONTEXT_ROOT/static_audit.json"
+LONG_CONTEXT_TOKEN_BOUNDARY_AUDIT="$LONG_CONTEXT_ROOT/token_boundary_alignment.json"
 
 for required in   "$QUAL"   "$SEMANTIC_CONFIG"   "$SOURCE_CONFIG"   "$TOKENIZER/tokenizer.json"   "$TOKENIZER/tokenizer_receipt.json"   "$CORPUS/corpus_receipt.json"   "$SEMANTIC"
 do
@@ -74,9 +79,12 @@ python -m py_compile \
   "$ROOT/scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py" \
   "$ROOT/scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py" \
   "$ROOT/scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py" \
+  "$ROOT/scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py" \
+  "$ROOT/scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py" \
+  "$ROOT/scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_token_boundaries_v1.py" \
   "$ROOT/scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"
 
-mkdir -p "$RUN_ROOT" "$EVIDENCE_ROOT"
+mkdir -p "$RUN_ROOT" "$EVIDENCE_ROOT" "$LONG_CONTEXT_ROOT"
 
 python "$ROOT/scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py" \
   --output "$EVIDENCE_ROWS" \
@@ -116,6 +124,42 @@ assert token["max_length_is_product_ceiling"] is False
 print("PASS_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1")
 PY
 
+python "$ROOT/scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py" \
+  --output "$LONG_CONTEXT_ROWS" \
+  --manifest "$LONG_CONTEXT_MANIFEST" \
+  --long-word-target 4608
+
+python "$ROOT/scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py" \
+  --rows "$LONG_CONTEXT_ROWS" \
+  --manifest "$LONG_CONTEXT_MANIFEST" \
+  --contract "$ROOT/configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json" \
+  --output "$LONG_CONTEXT_STATIC_AUDIT"
+
+python "$ROOT/scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_token_boundaries_v1.py" \
+  --rows "$LONG_CONTEXT_ROWS" \
+  --manifest "$LONG_CONTEXT_MANIFEST" \
+  --contract "$ROOT/configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json" \
+  --tokenizer-dir "$TOKENIZER" \
+  --output "$LONG_CONTEXT_TOKEN_BOUNDARY_AUDIT"
+
+python - "$LONG_CONTEXT_STATIC_AUDIT" "$LONG_CONTEXT_TOKEN_BOUNDARY_AUDIT" <<'PY'
+import json, sys
+static=json.load(open(sys.argv[1]))
+token=json.load(open(sys.argv[2]))
+assert static["status"]=="PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_CURRICULUM_AUDIT_V1"
+assert token["status"]=="PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1"
+assert token["verified_pairs"]==token["expected_pairs"]
+assert token["expected_pairs"]>0
+assert token["exact_untrained_output_equality_claimed"] is False
+assert token["training_authorized_by_audit"] is False
+assert token["gradient"] is False
+assert token["optimizer"] is False
+assert token["gpu_training_authorized"] is False
+assert token["final_opening_authorized"] is False
+assert token["n0_complete"] is False
+print("PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1")
+PY
+
 echo "===== N0 FULL-ENVELOPE CPU RUNTIME QUALIFICATION V1 ====="
 date -Is
 echo "source_revision=$HEAD"
@@ -126,6 +170,7 @@ echo "model_training=false"
 echo "final_validation_opened=false"
 echo "semantic_checkpoint_sha256=$OBSERVED_SEMANTIC_SHA"
 echo "operator_evidence_token_alignment=$EVIDENCE_TOKEN_AUDIT"
+echo "long_context_token_boundary_alignment=$LONG_CONTEXT_TOKEN_BOUNDARY_AUDIT"
 
 python "$ROOT/scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"   --qualification-config "$QUAL"   --semantic-config "$SEMANTIC_CONFIG"   --semantic-checkpoint "$SEMANTIC"   --tokenizer-dir "$TOKENIZER"   --corpus-dir "$CORPUS"   --source-config "$SOURCE_CONFIG"   --output "$RESULT"
 

@@ -17,7 +17,8 @@
     "long_word_target_is_product_ceiling": false,
     "product_context_ceiling": null,
     "longer_contexts_allowed": true,
-    "reason": "The target is a deterministic stress operating point chosen to force at least one cross-window bridge. It is not a serving or capability limit."
+    "reason": "The target is a deterministic stress operating point chosen to force at least one cross-window bridge. It is not a serving or capability limit.",
+    "overlap_tokens": 256
   },
   "required_surfaces": [
     "query",
@@ -89,6 +90,8 @@
       "internal_view_descriptor",
       "additional_view_descriptor",
       "additional_view_source"
-    ]
+    ],
+    "exact_tokenizer_audit": "scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_token_boundaries_v1.py",
+    "exact_tokenizer_receipt": "PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1"
   }
 }

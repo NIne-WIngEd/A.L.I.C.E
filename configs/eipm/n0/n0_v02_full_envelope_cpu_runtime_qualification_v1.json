@@ -869,7 +869,8 @@
     "same_registered_trainable_topology_required": true,
     "all_text_surfaces_share_virtualization_policy_required": true,
     "dedicated_long_context_fixture_must_drive_query": true,
-    "additional_view_source_text_adapter_required": true
+    "additional_view_source_text_adapter_required": true,
+    "exact_long_context_token_boundary_alignment_required": true
   },
   "long_context_bridge_runtime": {
     "native_window_tokens": 32,

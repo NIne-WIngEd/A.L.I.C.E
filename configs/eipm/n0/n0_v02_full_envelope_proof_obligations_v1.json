@@ -1007,6 +1007,14 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_long_additional_runtime_view_surfaces_reach_optimizer_facing_batch",
       "requirement": "Long additional runtime-view source and descriptor text must compile into the same optimizer-facing source-text and descriptor-text inputs consumed by N0FullEnvelopeTrainableSystemV1, crossing the native-window operating point without a fixed view taxonomy."
+    },
+    {
+      "id": "N0-P40B",
+      "stage": "tokenizer_boundary_alignment",
+      "kind": "RUNTIME_REQUIRED",
+      "status": "UNRESOLVED_BLOCKING",
+      "receipt": "PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1",
+      "requirement": "Before gradient, the exact governed v0.2.1 tokenizer must verify that every TRAIN/DEV boundary-shift pair moves identical decisive semantics from wholly before to wholly after the first virtualized ownership boundary on every governed long-text surface. This is robustness qualification, not an exact-untrained-output-equality claim."
     }
   ],
   "closure_rule": {
