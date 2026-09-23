@@ -1046,3 +1046,31 @@ def test_deep_chain_curriculum_keeps_entities_and_candidate_answers_distinct() -
     finally:
         if sys.path and sys.path[0]==str(scripts):
             sys.path.pop(0)
+
+
+def test_j2_j3_dev_gate_registry_precommits_every_declared_gate_before_gradient() -> None:
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    registry=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json").read_text()
+    )
+    allowed={"empirical","composite","static_source_proof","retained_stage_gates"}
+    for stage_key,plan_key in (
+        ("J2_reopened_representation_interfaces","J2"),
+        ("J3_full_public_n0_coadaptation","J3"),
+    ):
+        stage=registry["stages"][stage_key]
+        assert stage["mapping_complete"] is True, stage_key
+        assert set(stage["gates"])==set(plan["stage_gates"][plan_key]), stage_key
+        assert {value["kind"] for value in stage["gates"].values()} <= allowed
+        for name,value in stage["gates"].items():
+            kind=value["kind"]
+            if kind=="static_source_proof":
+                assert value["obligation_ids"], (stage_key,name)
+            elif kind=="empirical":
+                assert value["metric"] and "threshold" in value, (stage_key,name)
+            elif kind=="composite":
+                assert value["all"], (stage_key,name)
+            else:
+                assert value["stages"], (stage_key,name)
