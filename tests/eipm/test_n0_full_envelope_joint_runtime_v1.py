@@ -1779,3 +1779,33 @@ def test_successor_trainer_binds_every_optimizer_lane_to_exact_public_mixture() 
     assert "optimizer teacher replay/mixture registry hash drift" in trainer
     assert "optimizer teacher replay/mixture audit hash drift" in trainer
 
+
+
+def test_pregradient_long_token_receipts_are_exact_artifact_bound() -> None:
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    boundary=(
+        ROOT/"scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_token_boundaries_v1.py"
+    ).read_text()
+    semantic_long_path=(
+        ROOT/"scripts/eipm/n0/audit_n0_v02_semantic_operator_long_token_alignment_v1.py"
+    )
+    assert semantic_long_path.is_file(), "P40C runtime audit implementation missing"
+    semantic_long=semantic_long_path.read_text()
+    for source in (boundary,semantic_long):
+        assert 'source_revision' in source
+        assert 'rows_sha256' in source
+        assert 'manifest_sha256' in source
+        assert 'tokenizer_json_sha256' in source
+    assert "long-context boundary row hash drift" in trainer
+    assert "long-context boundary manifest hash drift" in trainer
+    assert "long-context boundary tokenizer hash drift" in trainer
+    assert "semantic long-context token row hash drift" in trainer
+    assert "semantic long-context token manifest hash drift" in trainer
+    assert "semantic long-context token tokenizer hash drift" in trainer
+
+
+def test_tokenizer_stress_receipt_is_bound_to_exact_tokenizer_and_corpus() -> None:
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "tokenizer stress tokenizer hash drift" in trainer
+    assert "tokenizer stress corpus-receipt hash drift" in trainer
+
