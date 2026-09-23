@@ -1167,3 +1167,30 @@ def test_dev_gate_evaluator_rechecks_retained_prior_stage_gates() -> None:
         proof_contract=proof,static_receipt=receipt,
     )
     assert failed["stage_gate_pass"] is False
+
+
+def test_j3_dev_gate_measures_positive_source_view_recoverability() -> None:
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    registry=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json").read_text()
+    )
+    assert "source_view_recoverability" in plan["stage_gates"]["J3"]
+    gate=registry["stages"]["J3_full_public_n0_coadaptation"]["gates"][
+        "source_view_recoverability"
+    ]
+    assert gate["kind"]=="composite"
+    expected={
+        "full_fabric.full_envelope_behavioral.source_view_recoverability_success_rate",
+        "full_fabric.runtime_view_supplement.source_view_recoverability_success_rate",
+        "full_fabric.long_context_supplement.source_view_recoverability_success_rate",
+    }
+    assert {item["metric"] for item in gate["all"]}==expected
+    assert all(item["comparison"]==">=" and item["threshold"]==0.9 for item in gate["all"])
+
+    evaluator=(
+        ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py"
+    ).read_text()
+    assert "source_view_recoverability_success" in evaluator
+    assert "source_view_recoverability_success_rate" in evaluator

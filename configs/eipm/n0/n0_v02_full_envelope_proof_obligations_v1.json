@@ -1300,6 +1300,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_deep_chain_curriculum_keeps_entities_and_candidate_answers_distinct",
       "requirement": "Reasoning-depth extrapolation rows must use distinct chain entities and distinct public answer candidates. Increasing DEV/FINAL path length may not create label ambiguity through deterministic entity-index aliasing."
+    },
+    {
+      "id": "N0-P45R",
+      "stage": "dev_capability_gate",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_j3_dev_gate_measures_positive_source_view_recoverability",
+      "requirement": "J3 DEV must explicitly measure that labeled relevant/recoverable source views are represented by at least one latent slot across the base behavioral fabric, heterogeneous runtime-view supplement, and long-context supplement. Negative proof that irrelevant available views are not forced recoverable does not satisfy the positive recoverability gate required by final-v2."
     }
   ],
   "closure_rule": {
