@@ -1843,3 +1843,22 @@ def test_cpu_and_gpu_runtime_receipts_bind_exact_registered_artifacts() -> None:
     assert "GPU memory mixture manifest hash drift" in trainer
     assert "GPU memory mixture audit hash drift" in trainer
 
+
+
+def test_gpu_memory_dry_run_binds_exact_optimizer_facing_mixture_lanes() -> None:
+    source=(ROOT/"scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py").read_text()
+    for lane in (
+        "semantic_operator_intervention","semantic_operator_long_context",
+        "full_envelope_behavioral","runtime_view_supplement",
+        "long_context_supplement","natural_relation",
+        "broad_semantic_replay","governed_judgment_replay",
+    ):
+        assert lane in source
+    assert "GPU memory lane/mixture row hash drift" in source
+    assert "GPU memory lane/mixture bank hash drift" in source
+    assert "GPU memory broad replay source-config hash drift" in source
+    assert "GPU memory broad replay corpus-receipt hash drift" in source
+    assert "GPU memory teacher registry hash drift" in source
+    assert "GPU memory teacher audit hash drift" in source
+    assert "GPU memory qualification source revision drift" in source
+
