@@ -1412,6 +1412,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_semantic_operator_row_builder_supports_sealed_final_authority_without_changing_train_dev_defaults",
       "requirement": "The public semantic-operator row builder must support a sealed FINAL authority mode with caller-owned heldout relation/entity pools while preserving TRAIN/DEV defaults. FINAL rows must be training- and model-selection-ineligible and explicitly final-only."
+    },
+    {
+      "id": "N0-P46D",
+      "stage": "final_closure",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_final_v2_contains_heterogeneous_runtime_view_and_long_context_challenges",
+      "requirement": "The sealed FINAL-v2 package must include heterogeneous runtime-described view challenges and cross-native-window long-context challenges on every governed text surface. TRAIN/DEV runtime-view/long-context coverage or short behavioral FINAL rows cannot satisfy these FINAL closure gates."
     }
   ],
   "closure_rule": {

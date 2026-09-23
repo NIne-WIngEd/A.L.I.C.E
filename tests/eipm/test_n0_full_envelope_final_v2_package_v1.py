@@ -179,3 +179,43 @@ def test_semantic_operator_row_builder_supports_sealed_final_authority_without_c
     assert row["relation_partition"]=="sealed_final_relation_family"
     assert row["template_partition"]=="sealed_final_templates"
     assert row["data_origin"]=="sealed_final_test"
+
+
+def test_final_v2_contains_heterogeneous_runtime_view_and_long_context_challenges() -> None:
+    package=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json").read_text()
+    )
+    runtime=package["components"].get("heterogeneous_runtime_views")
+    long_context=package["components"].get("long_context")
+    assert isinstance(runtime,dict), (
+        "FINAL-v2 has runtime-view gates but no sealed additional-view challenge"
+    )
+    assert runtime["fixed_view_taxonomy"] is False
+    assert runtime["relevance_not_availability_required"] is True
+    assert runtime["reliability_reversal_required"] is True
+    assert runtime["unavailable_view_required"] is True
+    assert isinstance(long_context,dict), (
+        "FINAL-v2 has long/cross-window gates but no sealed long-text component"
+    )
+    assert set(long_context["required_surfaces"]) == {
+        "query","relation_schema","factor_schema","type_schema",
+        "field_text","field_descriptor","candidate_text",
+        "internal_view_descriptor","additional_view_descriptor",
+        "additional_view_source",
+    }
+    assert long_context["boundary_shift_pairs_required"] is True
+    assert long_context["distant_decisive_semantics_required"] is True
+    builder=(
+        ROOT/"scripts/eipm/n0/build_n0_v02_full_envelope_final_v2_package.py"
+    ).read_text()
+    auditor=(
+        ROOT/"scripts/eipm/n0/audit_n0_v02_full_envelope_final_v2_package.py"
+    ).read_text()
+    freezer=(
+        ROOT/"scripts/eipm/n0/freeze_n0_v02_full_envelope_final_v2_package.py"
+    ).read_text()
+    for flag in ("--runtime-view-final-output","--long-context-final-output"):
+        assert flag in builder
+    for flag in ("--runtime-view-final-rows","--long-context-final-rows"):
+        assert flag in auditor
+        assert flag in freezer
