@@ -146,7 +146,9 @@
     "semantic_operator_long_context_contract": "configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json",
     "semantic_operator_long_context_builder": "scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py",
     "semantic_operator_long_context_audit": "scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py",
-    "semantic_operator_long_context_required_before_gradient": true
+    "semantic_operator_long_context_required_before_gradient": true,
+    "semantic_operator_long_context_mixture_lane": "semantic_operator_long_context",
+    "semantic_operator_long_context_token_alignment_receipt": "PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1"
   },
   "optimization_strategy": {
     "stages": [
@@ -562,7 +564,8 @@
     "PASS full public-mixture manifest audit bound to exact source revision and sealed unopened FINAL",
     "PASS registered shared-backbone semantic-operator task mechanics",
     "PASS registered natural-relation shared-operator task and compiler mechanics",
-    "PASS executable all-lane registered joint-step gradient mechanics"
+    "PASS executable all-lane registered joint-step gradient mechanics",
+    "PASS dedicated semantic-operator long-context governed-tokenizer evidence alignment"
   ],
   "authorization": {
     "architecture_closed_for_implementation": true,
