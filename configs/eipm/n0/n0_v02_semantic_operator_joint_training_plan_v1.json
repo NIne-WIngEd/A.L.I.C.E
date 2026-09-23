@@ -348,6 +348,7 @@
     "automatic_stage_transition": false,
     "stage_transition_requires_complete_dev_gate_mapping": true,
     "trainer_requires_runtime_receipts_before_gradient": [
+      "PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1 exact-head receipt",
       "PASS tokenizer stress",
       "PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1",
       "PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1",

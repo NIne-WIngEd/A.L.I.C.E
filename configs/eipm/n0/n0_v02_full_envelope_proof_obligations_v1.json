@@ -1258,6 +1258,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_successor_dev_metric_primitives_measure_program_factor_margin_and_token_grounding",
       "requirement": "Successor DEV metrics must measure exact relation/event programs, dynamic factor semantics, causal correct-vs-counterfactual margins, and token-grounding behavior directly from current successor outputs rather than historical model structures."
+    },
+    {
+      "id": "N0-P43I",
+      "stage": "joint_training_authority",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_successor_training_and_dev_selection_bind_exact_head_static_proof_receipt",
+      "requirement": "Training/checkpoint lineage must bind a passed full static proof-matrix receipt to the exact source revision. Merely having proof tests in source cannot substitute for an executed exact-head receipt."
     }
   ],
   "closure_rule": {

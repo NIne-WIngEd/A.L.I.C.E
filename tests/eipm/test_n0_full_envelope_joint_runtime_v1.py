@@ -688,6 +688,7 @@ def test_successor_trainer_dev_evaluator_and_checkpoint_contract_exist_before_gr
         "tokenizer_sha256",
         "public_corpus_receipt_sha256",
         "teacher_audit_sha256",
+        "static_proof_receipt_sha256",
     ]
     assert checkpoint["authority"]["final_results_observed"] is False
     assert checkpoint["authority"]["final_checkpoint_selection_allowed"] is False
@@ -846,3 +847,17 @@ def test_successor_dev_metric_primitives_measure_program_factor_margin_and_token
         target=torch.tensor([[1.0,0.0,1.0,0.0]]),
         valid_mask=torch.tensor([[True,True,True,True]]),
     )==1.0
+
+
+def test_successor_training_and_dev_selection_bind_exact_head_static_proof_receipt() -> None:
+    audit=(
+        ROOT/"scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py"
+    ).read_text()
+    trainer=(
+        ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py"
+    ).read_text()
+    assert '"source_revision": source_revision' in audit
+    assert 'parser.add_argument("--static-proof-receipt",required=True)' in trainer
+    assert '"PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1"' in trainer
+    assert "static proof receipt source revision drift" in trainer
+    assert '"static_proof_receipt_sha256"' in trainer

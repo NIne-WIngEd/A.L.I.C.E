@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -206,8 +207,18 @@ def main() -> None:
             + repr(missing_residual)
         )
 
+    try:
+        source_revision=subprocess.check_output(
+            ["git","-C",str(root),"rev-parse","HEAD"],
+            text=True,
+        ).strip()
+    except Exception as exc:
+        errors.append(f"unable to bind static proof receipt to git revision: {exc}")
+        source_revision=None
+
     result: dict[str, Any] = {
         "schema": "alice.eipm.n0.full-envelope-proof-obligations-static-audit.v1",
+        "source_revision": source_revision,
         "status": PASS if not errors else FAIL,
         "errors": errors,
         "obligation_count": len(ids),

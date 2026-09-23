@@ -125,6 +125,7 @@ def verify_pre_gradient_runtime(
     gpu_memory_receipt_path: str | Path,
     long_boundary_receipt_path: str | Path,
     semantic_long_token_receipt_path: str | Path,
+    static_proof_receipt_path: str | Path,
 ) -> tuple[dict[str,Any],dict[str,Any]]:
     mixture=read_json(mixture_manifest_path)
     mixture_audit=require_status(
@@ -163,8 +164,16 @@ def verify_pre_gradient_runtime(
         semantic_long_token_receipt_path,PASS_SEMANTIC_LONG_TOKEN,
         label="semantic long-context token evidence"
     )
+    static_proof=require_status(
+        static_proof_receipt_path,
+        "PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1",
+        label="exact-head static proof matrix",
+    )
+    if static_proof.get("source_revision")!=source_revision:
+        raise SystemExit("static proof receipt source revision drift")
     for label,receipt in (
-        ("CPU",cpu),("GPU",gpu),("boundary",boundary),("semantic-long",semantic_long)
+        ("CPU",cpu),("GPU",gpu),("boundary",boundary),("semantic-long",semantic_long),
+        ("static-proof",static_proof)
     ):
         observed=receipt.get("source_revision")
         if observed is not None and observed!=source_revision:
@@ -344,6 +353,7 @@ def save_checkpoint(
     tokenizer_dir: Path,
     corpus_receipt_path: Path,
     teacher_audit_path: Path,
+    static_proof_receipt_path: Path,
     stage_report: Mapping[str,Any],
     scheduler_horizon_steps: int,
     warmup_steps: int,
@@ -414,6 +424,9 @@ def save_checkpoint(
             "tokenizer_sha256":sha256_file(tokenizer_dir/"tokenizer.json"),
             "public_corpus_receipt_sha256":sha256_file(corpus_receipt_path),
             "teacher_audit_sha256":sha256_file(teacher_audit_path),
+            "static_proof_receipt_sha256":sha256_file(
+                static_proof_receipt_path
+            ),
             "optimizer_step":int(step),
             "gradient_accumulation_steps":int(gradient_accumulation_steps),
             "full_system_sha256":sha256_file(system_path),
@@ -457,6 +470,7 @@ def main() -> None:
     parser.add_argument("--gpu-memory-receipt",required=True)
     parser.add_argument("--long-boundary-receipt",required=True)
     parser.add_argument("--semantic-long-token-receipt",required=True)
+    parser.add_argument("--static-proof-receipt",required=True)
     parser.add_argument("--semantic-rows",required=True)
     parser.add_argument("--semantic-long-rows",required=True)
     parser.add_argument("--behavioral-rows",required=True)
@@ -527,6 +541,7 @@ def main() -> None:
         gpu_memory_receipt_path=args.gpu_memory_receipt,
         long_boundary_receipt_path=args.long_boundary_receipt,
         semantic_long_token_receipt_path=args.semantic_long_token_receipt,
+        static_proof_receipt_path=args.static_proof_receipt,
     )
     if not args.execute_gradient:
         print(json.dumps({
@@ -852,6 +867,7 @@ def main() -> None:
                 tokenizer_dir=tokenizer_dir,
                 corpus_receipt_path=corpus_dir/"corpus_receipt.json",
                 teacher_audit_path=Path(args.teacher_audit),
+                static_proof_receipt_path=Path(args.static_proof_receipt),
                 stage_report=stage_report,
                 scheduler_horizon_steps=args.scheduler_horizon_steps,
                 warmup_steps=args.warmup_steps,
