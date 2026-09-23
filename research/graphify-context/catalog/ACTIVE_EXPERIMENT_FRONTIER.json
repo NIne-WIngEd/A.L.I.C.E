@@ -7,13 +7,13 @@
   "maximal_heads": [
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "116324b58ec62e85b1a4897dc33c26bdd6cade25",
-      "head_committed_at": "2026-09-22T18:41:14-05:00",
-      "head_message": "fix(n0): isolate runtime relation schema rows",
-      "ahead": 1104,
+      "head": "1da822b82ab36f817323b812dcfa849d0319a271",
+      "head_committed_at": "2026-09-22T19:20:06-05:00",
+      "head_message": "fix(n0): isolate runtime-view reliability reversal",
+      "ahead": 1108,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 484,
+      "changed_file_count_vs_source_merge_base": 488,
       "changed_paths_vs_source_merge_base": [
         ".github/workflows/n0-arbitration-contract-check.yml",
         ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -133,6 +133,7 @@
         "configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json",
+        "configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json",
         "configs/eipm/n0/n0_v02_natural_relation_sources_v1.json",
         "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
@@ -213,8 +214,7 @@
         "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
         "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
         "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
-        "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
-        "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md"
+        "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md"
       ],
       "authority": "unmerged-experiment-pointer"
     },
@@ -648,13 +648,13 @@
   "all_ahead_candidates": [
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "116324b58ec62e85b1a4897dc33c26bdd6cade25",
-      "head_committed_at": "2026-09-22T18:41:14-05:00",
-      "head_message": "fix(n0): isolate runtime relation schema rows",
-      "ahead": 1104,
+      "head": "1da822b82ab36f817323b812dcfa849d0319a271",
+      "head_committed_at": "2026-09-22T19:20:06-05:00",
+      "head_message": "fix(n0): isolate runtime-view reliability reversal",
+      "ahead": 1108,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 484,
+      "changed_file_count_vs_source_merge_base": 488,
       "changed_paths_vs_source_merge_base": [
         ".github/workflows/n0-arbitration-contract-check.yml",
         ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -774,6 +774,7 @@
         "configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json",
+        "configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json",
         "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json",
         "configs/eipm/n0/n0_v02_natural_relation_sources_v1.json",
         "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
@@ -854,8 +855,7 @@
         "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
         "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
         "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
-        "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md",
-        "docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md"
+        "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md"
       ],
       "authority": "unmerged-experiment-pointer"
     },

@@ -5,11 +5,11 @@
   "branches": [
     {
       "branch": "alice-context",
-      "head": "e403b3ee0e4a9dd4ab5ebe5380c0e0d26194ae7d",
-      "head_committed_at": "2026-09-22T15:33:05-05:00",
-      "head_message": "context(n0): catch up deep audit through exact completion",
+      "head": "1d47f4659302c3d7eba107580d3195831e65b179",
+      "head_committed_at": "2026-09-22T18:45:52-05:00",
+      "head_message": "context(n0): record long-context training closure",
       "status": "diverged",
-      "ahead": 251,
+      "ahead": 252,
       "behind": 459,
       "merge_base": "0abaed85873c3f8de04765847eb7700b0e20433f",
       "changed_file_count_vs_source_merge_base": 585,
@@ -137,14 +137,14 @@
     },
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "116324b58ec62e85b1a4897dc33c26bdd6cade25",
-      "head_committed_at": "2026-09-22T18:41:14-05:00",
-      "head_message": "fix(n0): isolate runtime relation schema rows",
+      "head": "1da822b82ab36f817323b812dcfa849d0319a271",
+      "head_committed_at": "2026-09-22T19:20:06-05:00",
+      "head_message": "fix(n0): isolate runtime-view reliability reversal",
       "status": "ahead",
-      "ahead": 1104,
+      "ahead": 1108,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 484,
+      "changed_file_count_vs_source_merge_base": 488,
       "knowledge_surface": true
     },
     {
@@ -449,14 +449,14 @@
     },
     {
       "branch": "fable-builder-model",
-      "head": "77517e759f01f6f936c7d5d07fcde9fee409441f",
-      "head_committed_at": "2026-09-22T15:31:18-05:00",
-      "head_message": "trace(fable): capture N0 deep-audit repairs and sealing",
+      "head": "c0bef8991b415c929806dd139e0303bb4a097262",
+      "head_committed_at": "2026-09-22T18:45:37-05:00",
+      "head_message": "trace(fable): capture N0 long-context training repair",
       "status": "diverged",
-      "ahead": 117,
+      "ahead": 118,
       "behind": 446,
       "merge_base": "9797ec42178e3df0d5c2dced669bf7e63cd4c326",
-      "changed_file_count_vs_source_merge_base": 114,
+      "changed_file_count_vs_source_merge_base": 115,
       "knowledge_surface": true
     },
     {
