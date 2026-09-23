@@ -305,8 +305,8 @@ jobs:
           assert set(r["surface_coverage"]["train"])==required
           assert set(r["surface_coverage"]["dev"])==required
           assert r["base_target_equivalence_rows"]==r["rows"]
-          assert r["tail_preservation_rows"]==16
-          assert r["boundary_shift_pairs_verified"]==r["expected_boundary_shift_pairs"]==16
+          assert r["tail_preservation_rows"]==2*len(required)
+          assert r["boundary_shift_pairs_verified"]==r["expected_boundary_shift_pairs"]==2*len(required)
           assert r["long_word_operating_point"]>4096
           assert r["operating_point_is_product_ceiling"] is False
           assert r["final_rows"]==0

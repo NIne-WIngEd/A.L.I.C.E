@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 from collections import Counter
@@ -9,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 import build_n0_v02_full_envelope_behavioral_curriculum_v1 as base
+import build_n0_v02_full_envelope_runtime_view_curriculum_v1 as runtime_views
 from alice_personality.n0.full_envelope_behavioral_batch_v1 import (
     INTERNAL_VIEW_DESCRIPTIONS,
 )
@@ -24,6 +26,8 @@ SURFACES=(
     "field_descriptor",
     "candidate_text",
     "internal_view_descriptor",
+    "additional_view_descriptor",
+    "additional_view_source",
 )
 SURFACE_EXAMPLE={
     "query":1,
@@ -34,6 +38,8 @@ SURFACE_EXAMPLE={
     "field_descriptor":7,
     "candidate_text":15,
     "internal_view_descriptor":11,
+    "additional_view_descriptor":15,
+    "additional_view_source":15,
 }
 BASE_SEED=20260922
 
@@ -158,6 +164,18 @@ def target_locator(row: dict[str,Any], surface: str) -> dict[str,Any]:
             "kind":"internal_view_descriptor",
             "index":len(INTERNAL_VIEW_DESCRIPTIONS)-1,
         }
+    if surface in {"additional_view_descriptor","additional_view_source"}:
+        views=list(row.get("additional_views") or [])
+        if not views:
+            raise ValueError("additional-view long-context surface requires runtime views")
+        index=next(
+            (
+                i for i,item in enumerate(views)
+                if bool(item.get("decisive")) and bool(item.get("available",True))
+            ),
+            0,
+        )
+        return {"kind":surface,"index":index}
     raise ValueError(f"unknown long-context surface: {surface}")
 
 
@@ -185,6 +203,10 @@ def get_text(row: dict[str,Any], locator: dict[str,Any]) -> str:
         return str(row["candidate_answers"][int(locator["index"])])
     if kind=="internal_view_descriptor":
         return str(row["internal_view_descriptions"][int(locator["index"])])
+    if kind=="additional_view_descriptor":
+        return str(row["additional_views"][int(locator["index"])]["descriptor_text"])
+    if kind=="additional_view_source":
+        return str(row["additional_views"][int(locator["index"])]["source_text"])
     raise ValueError(f"unknown locator kind: {kind}")
 
 
@@ -212,6 +234,10 @@ def set_text(
         row["candidate_answers"][int(locator["index"])]=value
     elif kind=="internal_view_descriptor":
         row["internal_view_descriptions"][int(locator["index"])]=value
+    elif kind=="additional_view_descriptor":
+        row["additional_views"][int(locator["index"])]["descriptor_text"]=value
+    elif kind=="additional_view_source":
+        row["additional_views"][int(locator["index"])]["source_text"]=value
     else:
         raise ValueError(f"unknown locator kind: {kind}")
 
@@ -226,15 +252,35 @@ def materialize(
     if split not in {"train","dev"}:
         raise ValueError("long-context supplement is TRAIN/DEV only")
     example=int(SURFACE_EXAMPLE[surface])
-    params={
-        "split":split,
-        "example":example,
-        "seed":BASE_SEED,
-        "relation_count":4,
-        "field_count":6,
-        "answer_count":4,
-    }
-    row=base.materialize_row(**params)
+    if surface in {"additional_view_descriptor","additional_view_source"}:
+        candidates=[
+            copy.deepcopy(item)
+            for item in runtime_views.materialize_rows(split)
+            if item["scenario_family"]=="runtime_view_relevance_flip"
+            and item["id"].endswith("_a")
+        ]
+        if len(candidates)!=1:
+            raise RuntimeError("unable to resolve one base runtime-view row")
+        row=candidates[0]
+        base_materialization={
+            "kind":"runtime_view",
+            "split":split,
+            "row_id":str(row["id"]),
+        }
+    else:
+        params={
+            "split":split,
+            "example":example,
+            "seed":BASE_SEED,
+            "relation_count":4,
+            "field_count":6,
+            "answer_count":4,
+        }
+        row=base.materialize_row(**params)
+        base_materialization={
+            "kind":"behavioral",
+            "params":params,
+        }
     row["internal_view_descriptions"]=list(INTERNAL_VIEW_DESCRIPTIONS)
     locator=target_locator(row,surface)
     original=get_text(row,locator)
@@ -281,7 +327,7 @@ def materialize(
     row["decisive_end_word"]=decisive_end_word
     row["long_context_word_operating_point"]=int(target_words)
     row["long_context_word_operating_point_is_product_ceiling"]=False
-    row["base_materialization"]=params
+    row["base_materialization"]=base_materialization
     return row
 
 

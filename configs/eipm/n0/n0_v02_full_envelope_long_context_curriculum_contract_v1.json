@@ -27,7 +27,9 @@
     "field_text",
     "field_descriptor",
     "candidate_text",
-    "internal_view_descriptor"
+    "internal_view_descriptor",
+    "additional_view_descriptor",
+    "additional_view_source"
   ],
   "semantics": {
     "decisive_content_after_long_prefix_required": true,
@@ -35,14 +37,16 @@
     "structural_targets_must_match_short_base_row": true,
     "long_prefix_is_public_nondecisive_context": true,
     "one_surface_intervention_per_row": true,
-    "cross_window_bridge_is_trainable_not_diagnostic_only": true
+    "cross_window_bridge_is_trainable_not_diagnostic_only": true,
+    "additional_runtime_view_source_and_descriptor_long_training_required": true
   },
   "batching": {
     "rows_groupable_by_long_context_surface": true,
     "row_to_system_behavioral_compiler_required": true,
     "internal_view_descriptor_override_supported": true,
     "hard_batch_size": null,
-    "batch_size_is_capability_ceiling": false
+    "batch_size_is_capability_ceiling": false,
+    "runtime_view_row_to_system_compiler_required": true
   },
   "validation_before_gradient": {
     "materialized_train_dev_rows_required": true,
@@ -54,7 +58,8 @@
     "long_content_tail_preservation_required": true,
     "compiler_override_mechanics_test_required": true,
     "boundary_shift_pair_audit_required": true,
-    "real_tokenizer_boundary_position_receipt_required": true
+    "real_tokenizer_boundary_position_receipt_required": true,
+    "additional_runtime_view_long_surface_coverage_required": true
   },
   "authorization": {
     "materialization": true,

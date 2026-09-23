@@ -80,3 +80,52 @@ def test_long_context_curriculum_precommits_boundary_shift_counterfactuals() -> 
     assert boundary["different_segment_ownership_position_required"] is True
     assert boundary["exact_untrained_output_equality_required"] is False
     assert boundary["surfaces"] == contract["required_surfaces"]
+
+
+def test_long_additional_runtime_view_surfaces_reach_optimizer_facing_batch() -> None:
+    import importlib.util
+    import sys
+
+    scripts=ROOT/"scripts/eipm/n0"
+    sys.path.insert(0,str(scripts))
+    try:
+        spec=importlib.util.spec_from_file_location(
+            "long_context_builder_runtime_views",
+            scripts/"build_n0_v02_full_envelope_long_context_curriculum_v1.py",
+        )
+        assert spec is not None and spec.loader is not None
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        from alice_personality.n0.full_envelope_behavioral_batch_v1 import (
+            compile_behavioral_batch,
+        )
+        from test_n0_full_envelope_trainable_system_v1 import _TinyTokenizer
+
+        source_row=module.materialize(
+            split="train",
+            surface="additional_view_source",
+            target_words=4608,
+            placement_variant="tail",
+        )
+        descriptor_row=module.materialize(
+            split="train",
+            surface="additional_view_descriptor",
+            target_words=4608,
+            placement_variant="tail",
+        )
+        source_batch=compile_behavioral_batch(
+            rows=[source_row],
+            tokenizer=_TinyTokenizer(),
+        )["primary_batch"]
+        descriptor_batch=compile_behavioral_batch(
+            rows=[descriptor_row],
+            tokenizer=_TinyTokenizer(),
+        )["primary_batch"]
+        assert source_batch["additional_view_source_input_ids"].size(-1) > 4096
+        assert descriptor_batch["additional_view_descriptor_input_ids"].size(-1) > 4096
+        assert bool(source_batch["additional_view_available"].any())
+        assert bool(descriptor_batch["additional_view_available"].any())
+    finally:
+        if sys.path and sys.path[0]==str(scripts):
+            sys.path.pop(0)

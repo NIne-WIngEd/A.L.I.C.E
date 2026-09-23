@@ -9,6 +9,7 @@ from typing import Any
 
 import build_n0_v02_full_envelope_behavioral_curriculum_v1 as base
 import build_n0_v02_full_envelope_long_context_curriculum_v1 as long_builder
+import build_n0_v02_full_envelope_runtime_view_curriculum_v1 as runtime_views
 from alice_personality.n0.full_envelope_behavioral_batch_v1 import (
     INTERNAL_VIEW_DESCRIPTIONS,
 )
@@ -118,9 +119,22 @@ def main() -> None:
         if row.get("long_context_word_operating_point_is_product_ceiling") is not False:
             errors.append(f"{rid}: long operating point marked as ceiling")
 
-        params=dict(row.get("base_materialization") or {})
+        base_info=dict(row.get("base_materialization") or {})
         try:
-            base_row=base.materialize_row(**params)
+            kind=str(base_info.get("kind","behavioral"))
+            if kind=="behavioral":
+                params=dict(base_info.get("params") or base_info)
+                base_row=base.materialize_row(**params)
+            elif kind=="runtime_view":
+                candidates=[
+                    item for item in runtime_views.materialize_rows(split)
+                    if str(item["id"])==str(base_info.get("row_id"))
+                ]
+                if len(candidates)!=1:
+                    raise ValueError("runtime-view base row not uniquely recoverable")
+                base_row=candidates[0]
+            else:
+                raise ValueError(f"unknown base materialization kind: {kind}")
         except Exception as exc:
             errors.append(f"{rid}: unable to reconstruct base row: {exc}")
             continue

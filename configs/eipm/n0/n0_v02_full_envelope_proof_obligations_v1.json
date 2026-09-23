@@ -1000,6 +1000,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_long_context_train_dev_supplement_is_executable_and_covers_every_governed_text_surface",
       "requirement": "Long-context TRAIN/DEV supervision must include dynamic additional-view source text and dynamic additional-view descriptor text, not only the six built-in internal descriptors. CPU qualification alone cannot train these runtime-supplied semantic surfaces."
+    },
+    {
+      "id": "N0-P39LP",
+      "stage": "long_context_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_long_additional_runtime_view_surfaces_reach_optimizer_facing_batch",
+      "requirement": "Long additional runtime-view source and descriptor text must compile into the same optimizer-facing source-text and descriptor-text inputs consumed by N0FullEnvelopeTrainableSystemV1, crossing the native-window operating point without a fixed view taxonomy."
     }
   ],
   "closure_rule": {
