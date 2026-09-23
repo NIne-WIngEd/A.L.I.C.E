@@ -517,7 +517,11 @@
       "ordered_relation_semantics_remain_step_conditioned_through_executor",
       "long_candidate_judgment_semantics",
       "long_internal_and_additional_view_descriptor_semantics",
-      "long_additional_runtime_view_source_and_descriptor_semantics"
+      "long_additional_runtime_view_source_and_descriptor_semantics",
+      "factor_cardinality_extrapolation",
+      "heldout_factor_combination_transfer",
+      "unseen_type_schema_transfer",
+      "domain_transfer"
     ]
   },
   "scaling": {
