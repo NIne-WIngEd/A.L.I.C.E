@@ -108,23 +108,34 @@ class FullEnvelopeTrainingBatchSchedulerV1:
         self._orders: dict[tuple[str,int],list[int]]={}
 
     @classmethod
-    def split_long_context_rows(
+    def validate_long_context_lanes(
         cls,
-        rows: Sequence[Mapping[str,Any]],
+        *,
+        semantic_rows: Sequence[Mapping[str,Any]],
+        fabric_rows: Sequence[Mapping[str,Any]],
     ) -> tuple[list[dict[str,Any]],list[dict[str,Any]]]:
-        semantic=[]
-        fabric=[]
-        for raw in rows:
-            row=dict(raw)
-            surface=str(row.get("long_context_surface",""))
-            if surface in LONG_SEMANTIC_SURFACES:
-                semantic.append(row)
-            if surface in LONG_J3_FABRIC_SURFACES:
-                fabric.append(row)
-        if not semantic:
-            raise ValueError("long-context rows lack J1 semantic surfaces")
-        if not fabric:
-            raise ValueError("long-context rows lack full-fabric surfaces")
+        semantic=[dict(row) for row in semantic_rows]
+        fabric=[dict(row) for row in fabric_rows]
+        if not semantic or not fabric:
+            raise ValueError("long-context semantic and fabric lanes must both exist")
+        if any(
+            row.get("lane")!="semantic_operator_long_context"
+            for row in semantic
+        ):
+            raise ValueError(
+                "J1 long semantic rows must come from the dedicated "
+                "semantic_operator_long_context lane"
+            )
+        semantic_surfaces={
+            str(row.get("long_context_surface","")) for row in semantic
+        }
+        if not set(LONG_SEMANTIC_SURFACES)<=semantic_surfaces:
+            raise ValueError("J1 long semantic surface coverage incomplete")
+        if any(
+            row.get("lane")=="semantic_operator_long_context"
+            for row in fabric
+        ):
+            raise ValueError("semantic-operator long rows cannot masquerade as fabric")
         return semantic,fabric
 
     def active_semantic_lanes(self, *, stage: str) -> tuple[str,...]:

@@ -376,7 +376,9 @@
     "long_context_base_target_equivalence_required": true,
     "runtime_view_train_dev_supplement_materialized_required": true,
     "runtime_view_relevance_vs_availability_audit_required": true,
-    "runtime_view_registered_system_compiler_required": true
+    "runtime_view_registered_system_compiler_required": true,
+    "semantic_operator_long_context_materialized_required": true,
+    "semantic_operator_long_context_evidence_span_audit_required": true
   },
   "scale_policy": {
     "full_capability_architecture": true,
@@ -436,5 +438,12 @@
     "final_rows_may_not_satisfy_training_coverage": true,
     "fixed_view_taxonomy": false,
     "view_count_ceiling": null
+  },
+  "long_context_semantic_operator_supplement": {
+    "contract": "configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json",
+    "builder": "scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py",
+    "audit": "scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py",
+    "required_before_gradient": true,
+    "behavioral_long_context_rows_may_substitute": false
   }
 }

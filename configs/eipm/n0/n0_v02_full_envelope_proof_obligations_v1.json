@@ -1173,6 +1173,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_j1_long_semantic_rows_compile_through_registered_semantic_operator_task",
       "requirement": "J1 long query/relation/factor supervision must come from an explicit semantic-operator long-context TRAIN/DEV supplement whose rows compile through the registered semantic_operator task with real factor/program/token-evidence targets. Reusing full-fabric behavioral rows that lack semantic-operator evidence ownership is forbidden."
+    },
+    {
+      "id": "N0-P39QH",
+      "stage": "long_context_curriculum",
+      "kind": "CI_REQUIRED",
+      "receipt": "PASS_N0_SEMANTIC_OPERATOR_LONG_CONTEXT_CURRICULUM_AUDIT_V1",
+      "requirement": "Before gradient, materialize and audit dedicated TRAIN/DEV long query/relation/factor semantic-operator rows with preserved program/factor targets and exact char-span evidence ownership; full-fabric behavioral rows cannot satisfy this obligation."
     }
   ],
   "closure_rule": {

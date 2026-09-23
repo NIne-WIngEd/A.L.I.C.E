@@ -465,8 +465,23 @@ def test_stage_training_scheduler_filters_long_surfaces_by_owner_stage() -> None
         }
         for surface in surfaces
     ]
-    semantic,fabric=FullEnvelopeTrainingBatchSchedulerV1.split_long_context_rows(
-        long_rows
+    semantic=[
+        {
+            "id":f"semantic-long-{surface}",
+            "lane":"semantic_operator_long_context",
+            "long_context_surface":surface,
+            "private_identity_data":False,
+            "final_validation_only":False,
+        }
+        for surface in ("query","relation_schema","factor_schema")
+    ]
+    fabric=[
+        {**row,"lane":"full_envelope_long_context_supplement"}
+        for row in long_rows
+    ]
+    semantic,fabric=FullEnvelopeTrainingBatchSchedulerV1.validate_long_context_lanes(
+        semantic_rows=semantic,
+        fabric_rows=fabric,
     )
     scheduler=FullEnvelopeTrainingBatchSchedulerV1(
         lanes={

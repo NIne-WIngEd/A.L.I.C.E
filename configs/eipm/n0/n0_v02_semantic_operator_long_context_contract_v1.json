@@ -1,0 +1,52 @@
+{
+  "schema": "alice.eipm.n0.semantic-operator-long-context-contract.v1",
+  "status": "PRECOMMITTED_PUBLIC_J1_LONG_SEMANTIC_TRAIN_DEV_NO_GRADIENT",
+  "date": "2026-09-22",
+  "purpose": "Give J1 explicit cross-native-window semantic/operator supervision with real relation/factor/program and token-evidence ownership instead of borrowing behavioral rows whose evidence masks are intentionally absent.",
+  "authority": {
+    "public_identity_neutral_only": true,
+    "private_identity_data": false,
+    "final_rows_training_allowed": false,
+    "final_rows_model_selection_allowed": false,
+    "gradient_authorized_by_contract": false,
+    "optimizer_authorized_by_contract": false
+  },
+  "required_surfaces": [
+    "query",
+    "relation_schema",
+    "factor_schema"
+  ],
+  "operating_point": {
+    "native_window_tokens": 4096,
+    "long_word_target": 4608,
+    "long_word_target_is_product_ceiling": false,
+    "product_context_ceiling": null,
+    "longer_contexts_allowed": true
+  },
+  "semantics": {
+    "base_semantic_operator_targets_preserved": true,
+    "base_token_evidence_text_preserved": true,
+    "decisive_evidence_moved_after_long_public_neutral_prefix": true,
+    "relation_keys_model_visible": false,
+    "factor_keys_model_visible": false,
+    "fabricated_downstream_labels": false,
+    "full_fabric_behavioral_rows_may_not_substitute_for_this_lane": true
+  },
+  "validation_before_gradient": {
+    "materialized_train_dev_rows_required": true,
+    "every_required_surface_in_train_and_dev": true,
+    "char_span_text_exactness_required": true,
+    "registered_semantic_operator_compiler_required": true,
+    "evidence_token_alignment_required_on_governed_tokenizer": true,
+    "no_final_rows": true
+  },
+  "authorization": {
+    "materialization": true,
+    "audit": true,
+    "optimizer": false,
+    "gradient": false,
+    "gpu": false,
+    "final_opening": false,
+    "n0_complete": false
+  }
+}

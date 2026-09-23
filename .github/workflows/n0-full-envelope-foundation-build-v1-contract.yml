@@ -38,6 +38,8 @@ on:
       - "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py"
       - "scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py"
+      - "scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py"
+      - "scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py"
       - "scripts/eipm/n0/magnolia_p100x2_n0_v02_full_envelope_gpu_memory_v1.sbatch"
       - "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_public_mixture_manifest_v1.py"
@@ -57,6 +59,7 @@ on:
       - "scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py"
       - "configs/eipm/n0/n0_v02_natural_relation_sources_v1.json"
       - "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json"
+      - "configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json"
@@ -154,6 +157,8 @@ jobs:
             scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py \
             scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py \
+            scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py \
+            scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py \
             scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_public_mixture_manifest_v1.py \
             scripts/eipm/n0/build_n0_v02_full_public_mixture_manifest_v1.py \
@@ -174,6 +179,7 @@ jobs:
           for f in \
             configs/eipm/n0/n0_v02_natural_relation_sources_v1.json \
             configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json \
+            configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json \
             configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json \
@@ -304,6 +310,36 @@ jobs:
           assert r["final_opening_authorized"] is False
           assert r["n0_complete"] is False
           print("PASS_N0_FULL_ENVELOPE_RUNTIME_VIEW_CURRICULUM_AUDIT_V1")
+          PY
+
+      - name: Materialize and audit J1 semantic-operator long-context supplement
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/n0-semantic-long
+          mkdir -p /tmp/n0-semantic-long
+          python scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py \
+            --output /tmp/n0-semantic-long/rows.jsonl \
+            --manifest /tmp/n0-semantic-long/manifest.json \
+            --long-word-target 4608
+          python scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py \
+            --rows /tmp/n0-semantic-long/rows.jsonl \
+            --manifest /tmp/n0-semantic-long/manifest.json \
+            --contract configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json \
+            --output /tmp/n0-semantic-long/audit.json
+          python - <<'PY'
+          import json
+          r=json.load(open("/tmp/n0-semantic-long/audit.json"))
+          assert r["status"]=="PASS_N0_SEMANTIC_OPERATOR_LONG_CONTEXT_CURRICULUM_AUDIT_V1"
+          assert r["rows"]==6
+          assert r["base_target_equivalence_rows"]==6
+          assert r["exact_evidence_span_rows"]==6
+          assert r["final_rows"]==0
+          assert r["private_identity_data"] is False
+          assert r["gradient"] is False
+          assert r["optimizer"] is False
+          assert r["gpu_training_authorized"] is False
+          assert r["n0_complete"] is False
+          print("PASS_N0_SEMANTIC_OPERATOR_LONG_CONTEXT_CURRICULUM_AUDIT_V1")
           PY
 
       - name: Materialize and audit long-context TRAIN DEV supplement

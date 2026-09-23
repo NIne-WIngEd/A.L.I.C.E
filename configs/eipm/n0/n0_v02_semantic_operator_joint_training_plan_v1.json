@@ -142,7 +142,11 @@
     "semantic_operator_compiler_may_not_infer_uncertainty_from_scenario_name": true,
     "semantic_operator_compiler_fabricated_downstream_labels": false,
     "natural_relation_batch_compiler": "src/alice_personality/n0/natural_relation_batch_v1.py",
-    "natural_relation_loss": "natural_relation_semantic_loss"
+    "natural_relation_loss": "natural_relation_semantic_loss",
+    "semantic_operator_long_context_contract": "configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json",
+    "semantic_operator_long_context_builder": "scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py",
+    "semantic_operator_long_context_audit": "scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py",
+    "semantic_operator_long_context_required_before_gradient": true
   },
   "optimization_strategy": {
     "stages": [
@@ -320,7 +324,7 @@
     "stage_lane_routing": {
       "J1_semantic": [
         "semantic_operator_intervention",
-        "long_context_semantic(query/relation_schema/factor_schema)"
+        "semantic_operator_long_context(query/relation_schema/factor_schema)"
       ],
       "J1_full_fabric": [],
       "J2_full_fabric": [
