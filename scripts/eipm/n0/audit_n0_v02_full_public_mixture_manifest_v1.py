@@ -174,6 +174,7 @@ def main() -> None:
         "status":PASS if not errors else "FAIL_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1",
         "errors":errors,
         "source_revision":str(args.source_revision),
+        "manifest_sha256":sha256(Path(args.manifest)),
         "training_lanes":required,
         "macro_families":sorted(required_families),
         "lane_count":len(required),
