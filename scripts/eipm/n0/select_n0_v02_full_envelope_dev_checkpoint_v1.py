@@ -50,6 +50,7 @@ def main() -> None:
         )
     )
     p.add_argument("--stage",required=True)
+    p.add_argument("--training-plan",required=True)
     p.add_argument("--checkpoint-root",required=True)
     p.add_argument("--candidate-receipt",required=True)
     p.add_argument("--dev-results-dir",required=True)
@@ -61,6 +62,14 @@ def main() -> None:
         raise SystemExit("refusing to overwrite DEV checkpoint selection receipt")
     require_clean_tracked_worktree()
     revision=current_git_revision()
+
+    training_plan=read_json(args.training_plan)
+    if training_plan.get("schema")!="alice.eipm.n0.semantic-operator-joint-training-plan.v1":
+        raise SystemExit("DEV selector training-plan schema drift")
+    strategy=dict(training_plan.get("optimization_strategy") or {})
+    cadence=int(strategy.get("checkpoint_evaluation_cadence_steps",0))
+    if cadence<=0 or strategy.get("checkpoint_cadence_fixed_before_gradient") is not True:
+        raise SystemExit("DEV selector checkpoint cadence is not frozen")
 
     checkpoint_root=Path(args.checkpoint_root).resolve()
     dev_root=Path(args.dev_results_dir).resolve()
@@ -134,6 +143,10 @@ def main() -> None:
     evaluated=[]
     for checkpoint_hash,path,receipt in chain:
         step=int(receipt.get("optimizer_step",0))
+        if int(receipt.get("checkpoint_evaluation_cadence_steps",0))!=cadence:
+            raise SystemExit("checkpoint receipt cadence drift")
+        if step<=0 or step%cadence!=0:
+            raise SystemExit("checkpoint step violates precommitted DEV cadence")
         if step<=last_step:
             raise SystemExit("checkpoint chain optimizer steps are not strictly increasing")
         last_step=step
@@ -190,6 +203,8 @@ def main() -> None:
         "selected_system_sha256":candidate_receipt["full_system_sha256"],
         "selected_dev_receipt_sha256":sha256_file(selected_dev[0]),
         "selected_optimizer_step":int(candidate_receipt["optimizer_step"]),
+        "checkpoint_evaluation_cadence_steps":cadence,
+        "training_plan_sha256":sha256_file(args.training_plan),
         "selection_authorizer_sha256":selector_sha256,
         "checkpoint_chain_length":len(evaluated),
         "checkpoint_chain_evaluated_completely":True,
