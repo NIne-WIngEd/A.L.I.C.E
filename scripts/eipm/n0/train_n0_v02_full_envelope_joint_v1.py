@@ -632,6 +632,9 @@ def save_checkpoint(
     warmup_steps: int,
     gradient_accumulation_steps: int,
     stage_checkpoint_parent_receipt_sha256: str | None,
+    stage_transition_predecessor_checkpoint_receipt_sha256: str | None,
+    stage_transition_predecessor_dev_receipt_sha256: str | None,
+    stage_transition_predecessor_selection_receipt_sha256: str | None,
 ) -> str:
     from safetensors.torch import save_file
 
@@ -710,6 +713,15 @@ def save_checkpoint(
             ),
             "optimizer_step":int(step),
             "stage_checkpoint_parent_receipt_sha256":stage_checkpoint_parent_receipt_sha256,
+            "stage_transition_predecessor_checkpoint_receipt_sha256":(
+                stage_transition_predecessor_checkpoint_receipt_sha256
+            ),
+            "stage_transition_predecessor_dev_receipt_sha256":(
+                stage_transition_predecessor_dev_receipt_sha256
+            ),
+            "stage_transition_predecessor_selection_receipt_sha256":(
+                stage_transition_predecessor_selection_receipt_sha256
+            ),
             "gradient_accumulation_steps":int(gradient_accumulation_steps),
             "accelerator_state_tree_sha256":sha256_tree(
                 checkpoint/"accelerator_state"
@@ -888,6 +900,9 @@ def main() -> None:
     prior=None
     dev=None
     predecessor_system_path=None
+    transition_predecessor_checkpoint_receipt_sha256=None
+    transition_predecessor_dev_receipt_sha256=None
+    transition_predecessor_selection_receipt_sha256=None
     start_optimizer_step=1
     resume_state_paths=(
         args.resume_accelerator_state,
@@ -922,6 +937,15 @@ def main() -> None:
 
         if prior_stage==args.stage:
             resume_kind="same_stage"
+            transition_predecessor_checkpoint_receipt_sha256=prior.get(
+                "stage_transition_predecessor_checkpoint_receipt_sha256"
+            )
+            transition_predecessor_dev_receipt_sha256=prior.get(
+                "stage_transition_predecessor_dev_receipt_sha256"
+            )
+            transition_predecessor_selection_receipt_sha256=prior.get(
+                "stage_transition_predecessor_selection_receipt_sha256"
+            )
             if args.predecessor_dev_receipt or args.predecessor_selection_receipt:
                 raise SystemExit(
                     "same-stage resume must not supply predecessor DEV receipt or selection receipt"
@@ -982,6 +1006,15 @@ def main() -> None:
             )
             if selection.get("selection_authorizer_sha256")!=sha256_file(selector):
                 raise SystemExit("predecessor selection authorizer hash drift")
+            transition_predecessor_checkpoint_receipt_sha256=sha256_file(
+                args.resume_receipt
+            )
+            transition_predecessor_dev_receipt_sha256=sha256_file(
+                args.predecessor_dev_receipt
+            )
+            transition_predecessor_selection_receipt_sha256=sha256_file(
+                args.predecessor_selection_receipt
+            )
             predecessor_system_path=Path(args.resume_receipt).parent/"full_system.safetensors"
             if (
                 not predecessor_system_path.is_file()
@@ -1334,6 +1367,15 @@ def main() -> None:
                 gradient_accumulation_steps=args.gradient_accumulation_steps,
                 stage_checkpoint_parent_receipt_sha256=(
                     stage_checkpoint_parent_receipt_sha256
+                ),
+                stage_transition_predecessor_checkpoint_receipt_sha256=(
+                    transition_predecessor_checkpoint_receipt_sha256
+                ),
+                stage_transition_predecessor_dev_receipt_sha256=(
+                    transition_predecessor_dev_receipt_sha256
+                ),
+                stage_transition_predecessor_selection_receipt_sha256=(
+                    transition_predecessor_selection_receipt_sha256
                 ),
             )
 
