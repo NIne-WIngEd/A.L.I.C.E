@@ -1943,6 +1943,7 @@ def test_dev_checkpoint_selection_enforces_first_passing_chain_member() -> None:
     assert "first_passing_checkpoint" in source
     assert "missing DEV receipt for checkpoint chain member" in source
     assert "earlier passing checkpoint exists" in source
+    assert "off-chain stage checkpoint exists in checkpoint root" in source
     final_open=(ROOT/"scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py").read_text()
     assert 'p.add_argument("--selection-receipt",required=True)' in final_open
     assert "FINAL opening selection receipt drift" in final_open
