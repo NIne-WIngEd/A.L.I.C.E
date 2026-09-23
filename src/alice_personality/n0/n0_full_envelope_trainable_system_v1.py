@@ -198,6 +198,78 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
             "segment_count_max": int(encoded["segment_count_max"]),
         }
 
+    def _forward_semantic_operator(
+        self,
+        batch: Mapping[str, Any],
+    ) -> dict[str, Any]:
+        """Run only the shared semantic/operator lane inside the registered system.
+
+        J1 operator-intervention and natural-relation supervision do not own
+        graph fields, evidence edges, public answer candidates, or latent
+        judgment labels. Forcing those lanes through fabricated downstream
+        tensors would create shortcut targets and make the data interface define
+        behavior it does not actually supervise. This task reuses the exact
+        shared semantic input, backbone, semantic operator, and structural
+        adapter from the full stack while leaving downstream fabric inactive.
+        """
+        query = self.semantic_input.encode_items(
+            backbone=self.backbone,
+            input_ids=batch["query_input_ids"],
+            attention_mask=batch["query_attention_mask"],
+        )
+        relation_encoded = self.semantic_input.encode_items(
+            backbone=self.backbone,
+            input_ids=batch["relation_input_ids"],
+            attention_mask=batch["relation_attention_mask"],
+        )
+        relation_schema = DynamicRelationSchema(
+            token_states=relation_encoded["hidden_states"],
+            token_mask=relation_encoded["content_mask"],
+            domain_type_mask=batch["relation_domain_type_mask"],
+            range_type_mask=batch["relation_range_type_mask"],
+            symmetric=batch["relation_symmetric"],
+        )
+        relation_schema.validate(
+            num_hidden_states=self.config.num_hidden_states,
+            semantic_dim=self.config.semantic_dim,
+        )
+        factor_schemas, factor_metadata = self._encode_factor_schemas(batch)
+        semantic = self.stack.semantic_operator(
+            query_hidden_states=query["hidden_states"],
+            query_token_mask=query["content_mask"],
+            relation_schema=relation_schema,
+            factor_schemas=factor_schemas,
+            max_steps=int(batch["max_reasoning_steps"]),
+            relation_candidate_mask=batch.get("relation_candidate_mask"),
+            factor_candidate_masks=batch.get("factor_candidate_masks"),
+        )
+        adapted = self.stack.operator_adapter(
+            semantic_operator=semantic["operator"],
+            relation_schema_states=semantic["relation_schema_states"],
+            factor_opcodes=batch.get("factor_opcodes", {}),
+        )
+        return {
+            "semantic_operator": semantic,
+            "operator": adapted["operator"],
+            "relation_schema_state": adapted["relation_schema_state"],
+            "step_relation_schema_state": adapted["step_relation_schema_state"],
+            "semantic_input_metadata": {
+                "query": {
+                    "used_virtualization": bool(query["used_virtualization"]),
+                    "segment_count_max": int(query["segment_count_max"]),
+                },
+                "relation_schema": {
+                    "used_virtualization": bool(
+                        relation_encoded["used_virtualization"]
+                    ),
+                    "segment_count_max": int(
+                        relation_encoded["segment_count_max"]
+                    ),
+                },
+                "factor_schema": factor_metadata,
+            },
+        }
+
     def _forward_full_envelope(
         self,
         batch: Mapping[str, Any],
@@ -475,6 +547,8 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
     ) -> Any:
         if task == "full_envelope":
             return self._forward_full_envelope(batch)
+        if task == "semantic_operator":
+            return self._forward_semantic_operator(batch)
         if task in {"mlm", "teacher"}:
             return self.semantic_model(task=task, **dict(batch))
         raise ValueError(f"unsupported full-envelope system task: {task!r}")
@@ -511,6 +585,9 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
             "single_shared_backbone": True,
             "semantic_replay_and_full_envelope_share_backbone": True,
             "full_envelope_gradient_path_registered": True,
+            "semantic_operator_task_registered": True,
+            "semantic_operator_task_uses_shared_backbone": True,
+            "semantic_operator_task_requires_fake_downstream_fabric": False,
             "all_text_surfaces_share_semantic_input": True,
             "additional_runtime_view_source_text_adapter": True,
             "precomputed_additional_runtime_views_still_supported": True,

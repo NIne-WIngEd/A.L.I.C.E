@@ -84,7 +84,11 @@
     "additional_runtime_view_source_text_training_adapter": true,
     "precomputed_additional_runtime_views_retained": true,
     "additional_runtime_view_source_text_adapter": "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py",
-    "additional_runtime_view_source_text_shares_semantic_input": true
+    "additional_runtime_view_source_text_shares_semantic_input": true,
+    "semantic_operator_task_registered": true,
+    "semantic_operator_task": "N0FullEnvelopeTrainableSystemV1(task='semantic_operator')",
+    "semantic_operator_task_uses_shared_backbone": true,
+    "semantic_operator_task_fabricates_downstream_labels": false
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -384,7 +388,8 @@
     "PASS exact null-support and program-truncation fail-closed mechanics",
     "PASS symmetric relation endpoint-storage invariance",
     "PASS batched per-example candidate-subset mechanics",
-    "PASS full public-mixture manifest audit bound to exact source revision and sealed unopened FINAL"
+    "PASS full public-mixture manifest audit bound to exact source revision and sealed unopened FINAL",
+    "PASS registered shared-backbone semantic-operator task mechanics"
   ],
   "authorization": {
     "architecture_closed_for_implementation": true,
