@@ -36,10 +36,10 @@ def current_git_revision() -> str:
 
 def require_clean_tracked_worktree() -> None:
     status=subprocess.check_output(
-        ["git","status","--porcelain","--untracked-files=no"],text=True
+        ["git","status","--porcelain"],text=True
     )
     if status.strip():
-        raise SystemExit("DEV selector requires a clean tracked-source worktree")
+        raise SystemExit("DEV selector requires a clean exact-source worktree")
 
 
 def main() -> None:
