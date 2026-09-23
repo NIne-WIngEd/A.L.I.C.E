@@ -496,3 +496,63 @@ def test_stage_training_scheduler_filters_long_surfaces_by_owner_stage() -> None
     j3=scheduler._eligible_rows(stage=J3,lane="long_context_fabric")
     assert {x["long_context_surface"] for x in j2}==set(LONG_J2_FABRIC_SURFACES)
     assert {x["long_context_surface"] for x in j3}==set(LONG_J3_FABRIC_SURFACES)
+
+
+def test_j1_long_semantic_rows_compile_through_registered_semantic_operator_task() -> None:
+    import importlib.util
+    import sys
+
+    contract_path=ROOT/"configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json"
+    builder_path=ROOT/"scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py"
+    audit_path=ROOT/"scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py"
+    assert contract_path.is_file(), "J1 semantic long-context contract missing"
+    assert builder_path.is_file(), "J1 semantic long-context builder missing"
+    assert audit_path.is_file(), "J1 semantic long-context audit missing"
+
+    contract=json.loads(contract_path.read_text())
+    assert contract["schema"]=="alice.eipm.n0.semantic-operator-long-context-contract.v1"
+    assert contract["required_surfaces"]==["query","relation_schema","factor_schema"]
+    assert contract["authority"]["private_identity_data"] is False
+    assert contract["authority"]["final_rows_training_allowed"] is False
+    assert contract["operating_point"]["native_window_tokens"]==4096
+    assert contract["operating_point"]["long_word_target"]>4096
+    assert contract["operating_point"]["long_word_target_is_product_ceiling"] is False
+
+    scripts=ROOT/"scripts/eipm/n0"
+    sys.path.insert(0,str(scripts))
+    try:
+        spec=importlib.util.spec_from_file_location("semantic_long_builder",builder_path)
+        assert spec is not None and spec.loader is not None
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        from alice_personality.n0.semantic_operator_batch_v1 import (
+            compile_semantic_operator_batch,
+        )
+        from test_n0_full_envelope_trainable_system_v1 import _TinyTokenizer
+
+        for surface in ("query","relation_schema","factor_schema"):
+            row=module.materialize(
+                split="train",
+                surface=surface,
+                target_words=256,
+                placement_variant="tail",
+            )
+            assert row["lane"]=="semantic_operator_long_context"
+            assert row["training_authorized"] is True
+            assert row["final_validation_only"] is False
+            assert "factor_targets" in row
+            assert "step_factor_targets" in row
+            assert "runtime_operator_slots" in row
+            assert "query_relation_evidence_char_spans" in row
+            assert "relation_schema_evidence_char_spans" in row
+            assert "factor_schema_evidence_char_spans" in row
+            compiled=compile_semantic_operator_batch(
+                rows=[row],
+                tokenizer=_TinyTokenizer(),
+            )
+            assert compiled["metadata"]["batch_size"]==1
+            assert compiled["metadata"]["fabricated_downstream_labels"] is False
+    finally:
+        if sys.path and sys.path[0]==str(scripts):
+            sys.path.pop(0)

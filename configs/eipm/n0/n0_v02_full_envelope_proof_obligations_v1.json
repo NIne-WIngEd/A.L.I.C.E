@@ -1166,6 +1166,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_stage_training_scheduler_filters_long_surfaces_by_owner_stage",
       "requirement": "Stage-aware lane scheduling must route long query/relation/factor surfaces into J1 semantic supervision, J2 only into its structural/type/field owners, and J3 into the complete long-context fabric. The schedule may not turn one arbitrary lane ratio or fixture count into a capability ceiling."
+    },
+    {
+      "id": "N0-P39QG",
+      "stage": "long_context_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_j1_long_semantic_rows_compile_through_registered_semantic_operator_task",
+      "requirement": "J1 long query/relation/factor supervision must come from an explicit semantic-operator long-context TRAIN/DEV supplement whose rows compile through the registered semantic_operator task with real factor/program/token-evidence targets. Reusing full-fabric behavioral rows that lack semantic-operator evidence ownership is forbidden."
     }
   ],
   "closure_rule": {
