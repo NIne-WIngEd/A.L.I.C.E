@@ -1075,9 +1075,9 @@ def main() -> None:
         raise SystemExit("DEV contract unexpectedly allows FINAL results")
 
     candidate=read_json(args.candidate_receipt)
-    tracked_status=subprocess.check_output(["git","status","--porcelain","--untracked-files=no"],text=True)
+    tracked_status=subprocess.check_output(["git","status","--porcelain"],text=True)
     if tracked_status.strip():
-        raise SystemExit("DEV evaluator requires a clean tracked-source worktree")
+        raise SystemExit("DEV evaluator requires a clean exact-source worktree")
     current_revision=subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()
     if candidate.get("source_revision")!=current_revision:
         raise SystemExit(
