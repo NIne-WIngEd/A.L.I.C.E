@@ -627,7 +627,10 @@
       "stage": "gpu_memory",
       "kind": "RUNTIME_REQUIRED",
       "status": "UNRESOLVED_BLOCKING",
-      "requirement": "Exact full training topology must pass a GPU no-gradient memory dry run before any gradient or optimizer authorization. The dry run chooses a safe sharding/microbatch/accumulation route; it may not update weights."
+      "requirement": "Exact full training topology must pass a GPU no-gradient memory dry run before any gradient or optimizer authorization. The dry run chooses a safe sharding/microbatch/accumulation route; it may not update weights.",
+      "receipt": "PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1",
+      "implementation": "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py",
+      "qualification_config": "configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json"
     },
     {
       "id": "N0-P44",
@@ -1141,6 +1144,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_registered_production_topology_has_one_source_of_truth_and_no_hidden_ceiling",
       "requirement": "CPU qualification, GPU memory qualification, joint training and evaluation must share one registered 640-wide production topology contract and constructor. Qualification may change only declared runtime operating points; it may not create a reduced architecture or hidden serving ceiling."
+    },
+    {
+      "id": "N0-P39QD",
+      "stage": "gpu_memory",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_gpu_memory_dry_run_is_exact_topology_no_gradient_and_not_training_authority",
+      "requirement": "P43 must have an executable no-gradient, no-backward, no-optimizer GPU qualifier that loads the exact registered production topology, exercises the real J3 optimizer-facing public lanes and counterfactual path, measures every rank, and produces only a memory-route receipt—not training authority."
     }
   ],
   "closure_rule": {

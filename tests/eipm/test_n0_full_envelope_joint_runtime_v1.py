@@ -353,3 +353,32 @@ def test_registered_production_topology_has_one_source_of_truth_and_no_hidden_ce
     assert "load_registered_full_envelope_system" in source
     assert "semantic initialization checkpoint hash drift" in source
     assert "runtime profile attempted to change learned topology" in source
+
+
+def test_gpu_memory_dry_run_is_exact_topology_no_gradient_and_not_training_authority() -> None:
+    cfg_path=ROOT/"configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json"
+    script_path=ROOT/"scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py"
+    sbatch_path=ROOT/"scripts/eipm/n0/magnolia_p100x2_n0_v02_full_envelope_gpu_memory_v1.sbatch"
+    assert cfg_path.is_file()
+    assert script_path.is_file()
+    assert sbatch_path.is_file()
+    cfg=json.loads(cfg_path.read_text())
+    assert cfg["schema"]=="alice.eipm.n0.full-envelope-gpu-memory-dry-run.v1"
+    assert cfg["registered_topology"]=="configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json"
+    assert cfg["stage"]=="J3_full_public_n0_coadaptation"
+    assert cfg["qualification"]["exact_registered_production_topology_required"] is True
+    assert cfg["qualification"]["real_optimizer_facing_public_lanes_required"] is True
+    assert cfg["qualification"]["full_j3_counterfactual_path_required"] is True
+    assert cfg["qualification"]["no_gradient"] is True
+    assert cfg["qualification"]["no_backward"] is True
+    assert cfg["qualification"]["no_optimizer_object"] is True
+    assert cfg["authorization"]["optimizer"] is False
+    assert cfg["authorization"]["gradient"] is False
+    assert cfg["authorization"]["gpu_training"] is False
+    assert cfg["route"]["microbatch_size_is_capability_ceiling"] is False
+    source=script_path.read_text()
+    assert "torch.inference_mode()" in source
+    assert "apply_stage_trainability(system,stage=J3)" in source.replace(" ","")
+    assert "execute_full_envelope_joint_step" in source
+    assert "optimizer_object_created" in source
+    assert "torch.optim" not in source

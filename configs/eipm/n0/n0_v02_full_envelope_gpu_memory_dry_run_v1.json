@@ -1,0 +1,52 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-gpu-memory-dry-run.v1",
+  "status": "PRECOMMITTED_NO_GRADIENT_GPU_MEMORY_QUALIFICATION",
+  "date": "2026-09-22",
+  "purpose": "Measure the exact registered production topology on the intended GPU route before any gradient or optimizer exists, using real optimizer-facing public lanes at J3 geometry.",
+  "registered_topology": "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json",
+  "stage": "J3_full_public_n0_coadaptation",
+  "precision": "fp16_autocast",
+  "route": {
+    "preferred_world_size": 2,
+    "preferred_world_size_is_capability_ceiling": false,
+    "microbatch_size": 1,
+    "microbatch_size_is_capability_ceiling": false,
+    "initial_gradient_accumulation_operating_point": 8,
+    "gradient_accumulation_is_capability_ceiling": false,
+    "ddp_replica_topology": true,
+    "model_sharding_required": false,
+    "sharding_may_be_reopened_if_memory_receipt_requires_it": true
+  },
+  "memory_projection": {
+    "parameter_dtype_bytes": 4,
+    "gradient_bytes_per_trainable_parameter": 4,
+    "adam_moment_bytes_per_trainable_parameter": 8,
+    "backward_activation_multiplier_over_no_grad_peak_delta": 4,
+    "allocator_safety_margin_bytes": 1073741824,
+    "projected_training_fraction_max": 0.85,
+    "projection_is_authorization": false
+  },
+  "qualification": {
+    "exact_registered_production_topology_required": true,
+    "real_optimizer_facing_public_lanes_required": true,
+    "full_j3_counterfactual_path_required": true,
+    "no_gradient": true,
+    "no_backward": true,
+    "no_optimizer_object": true,
+    "no_weight_update": true,
+    "no_checkpoint_selection": true,
+    "final_rows_forbidden": true,
+    "final_results_observed": false,
+    "private_identity_data": false,
+    "every_rank_must_fit": true,
+    "finite_joint_loss_required": true
+  },
+  "authorization": {
+    "gpu_memory_qualification": true,
+    "optimizer": false,
+    "gradient": false,
+    "training": false,
+    "final_opening": false,
+    "n0_complete": false
+  }
+}

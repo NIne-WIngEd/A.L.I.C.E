@@ -38,6 +38,8 @@ on:
       - "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py"
       - "scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py"
+      - "scripts/eipm/n0/magnolia_p100x2_n0_v02_full_envelope_gpu_memory_v1.sbatch"
+      - "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_public_mixture_manifest_v1.py"
       - "scripts/eipm/n0/build_n0_v02_full_public_mixture_manifest_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_runtime_view_curriculum_v1.py"
@@ -68,6 +70,7 @@ on:
       - "configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json"
       - "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json"
+      - "configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json"
       - "configs/eipm/n0/n0_v02_capacity_escalation_contract_v1.json"
       - "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json"
@@ -148,6 +151,7 @@ jobs:
             scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py \
             scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py \
+            scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_public_mixture_manifest_v1.py \
             scripts/eipm/n0/build_n0_v02_full_public_mixture_manifest_v1.py \
             scripts/eipm/n0/build_n0_v02_full_envelope_runtime_view_curriculum_v1.py \

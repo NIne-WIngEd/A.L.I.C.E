@@ -572,5 +572,12 @@
       ],
       "token_evidence_authority": false
     }
+  },
+  "runtime_qualification": {
+    "gpu_memory_config": "configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json",
+    "gpu_memory_qualifier": "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py",
+    "gpu_memory_sbatch": "scripts/eipm/n0/magnolia_p100x2_n0_v02_full_envelope_gpu_memory_v1.sbatch",
+    "gpu_memory_receipt": "PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1",
+    "gpu_memory_pass_is_training_authorization": false
   }
 }
