@@ -1552,6 +1552,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_dev_checkpoint_selection_enforces_first_passing_chain_member",
       "requirement": "The precommitted 'first checkpoint satisfying every active DEV gate' rule must be executable rather than advisory. Stage checkpoints must form a hash-linked same-stage chain, every chain member through the selected candidate must have an exact DEV receipt, earlier passing candidates must block later selection, and J2/J3 transition plus FINAL opening must consume the resulting first-pass selection receipt."
+    },
+    {
+      "id": "N0-P43R",
+      "stage": "stage_transition",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_stage_transition_restarts_optimizer_scheduler_without_losing_selected_model_state",
+      "requirement": "J1->J2 and J2->J3 must load the exact first-DEV-selected predecessor model plus preserved objective-balancer state, while restarting AdamW and the stage-local warmup/cosine scheduler. A predecessor scheduler that may already be deeply decayed or at zero learning rate may not silently govern newly activated stage owners."
     }
   ],
   "closure_rule": {
