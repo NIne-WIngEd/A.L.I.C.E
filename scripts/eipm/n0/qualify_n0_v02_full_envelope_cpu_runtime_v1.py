@@ -393,22 +393,47 @@ def main() -> None:
         internal_texts,
     )
 
-    additional_texts = [str(x) for x in case["additional_views"]]
-    additional_texts[0] = longify(
+    additional_descriptor_texts = [
+        str(x) for x in case["additional_views"]
+    ]
+    additional_descriptor_texts[0] = longify(
         "additional_view_descriptor",
-        additional_texts[0],
+        additional_descriptor_texts[0],
     )
     additional_ids_single, additional_attention_single = tokenize_texts(
         tokenizer,
-        additional_texts,
+        additional_descriptor_texts,
     )
-    additional_count = len(additional_texts)
+    additional_source_texts = [
+        str(x) for x in case["additional_view_sources"]
+    ]
+    additional_source_texts[0] = longify(
+        "additional_view_source",
+        additional_source_texts[0],
+    )
+    additional_source_ids_single, additional_source_attention_single = tokenize_texts(
+        tokenizer,
+        additional_source_texts,
+    )
+    additional_count = len(additional_descriptor_texts)
+    if len(additional_source_texts) != additional_count:
+        raise ValueError("additional source/descriptor count drift")
     additional_ids = additional_ids_single[None, :, :].expand(
         batch_size,
         -1,
         -1,
     ).contiguous()
     additional_attention = additional_attention_single[
+        None,
+        :,
+        :,
+    ].expand(batch_size, -1, -1).contiguous()
+    additional_source_ids = additional_source_ids_single[
+        None,
+        :,
+        :,
+    ].expand(batch_size, -1, -1).contiguous()
+    additional_source_attention = additional_source_attention_single[
         None,
         :,
         :,
@@ -486,27 +511,6 @@ def main() -> None:
     }
 
     with torch.inference_mode():
-        additional_encoded = system.semantic_input.encode_items(
-            backbone=system.backbone,
-            input_ids=additional_ids_single,
-            attention_mask=additional_attention_single,
-        )
-        additional_summary = system.semantic_input.summarize_items(
-            hidden_states=additional_encoded["hidden_states"],
-            token_mask=additional_encoded["content_mask"],
-        )
-        additional_source_views = additional_summary[
-            None,
-            :,
-            :,
-        ].expand(batch_size, -1, -1).contiguous()
-        additional_source_views = (
-            additional_source_views
-            * additional_available[:, :, None].to(
-                additional_source_views.dtype
-            )
-        )
-
         runtime_batch = {
             "query_input_ids": q_ids,
             "query_attention_mask": q_mask,
@@ -571,7 +575,8 @@ def main() -> None:
             "candidate_input_ids": candidate_ids,
             "candidate_attention_mask": candidate_attention,
             "candidate_valid_mask": candidate_valid,
-            "additional_source_views": additional_source_views,
+            "additional_view_source_input_ids": additional_source_ids,
+            "additional_view_source_attention_mask": additional_source_attention,
             "additional_view_descriptor_input_ids": additional_ids,
             "additional_view_descriptor_attention_mask": additional_attention,
             "additional_view_available": additional_available,
@@ -645,6 +650,9 @@ def main() -> None:
         ),
         "additional_view_descriptor": bool(
             meta["additional_view_descriptor"]["used_virtualization"]
+        ),
+        "additional_view_source": bool(
+            meta["additional_view_source"]["used_virtualization"]
         ),
     }
     required_surfaces = set(
