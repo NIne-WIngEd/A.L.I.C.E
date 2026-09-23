@@ -19,8 +19,14 @@ from alice_personality.n0.full_envelope_dev_gate_v1 import (
 )
 from alice_personality.n0.full_envelope_dev_metrics_v1 import (
     boolean_rate,
+    decisive_removal_success,
+    endpoint_pair_correct,
+    irrelevant_removal_invariance_success,
+    latent_noncollapse_success,
     mean,
+    public_judgment_correct,
     semantic_batch_record,
+    support_edge_f1,
 )
 from alice_personality.n0.full_envelope_joint_step_v1 import (
     governed_judgment_replay_loss,
@@ -451,6 +457,42 @@ def natural_lane_metrics(
     return {"loss":mean(losses),"top1":correct/max(total,1),"rows":float(total)}
 
 
+def _scalar_bool(value: torch.Tensor) -> bool:
+    flat=value.detach().bool().reshape(-1)
+    if flat.numel()!=1:
+        raise ValueError("expected one-row DEV boolean")
+    return bool(flat[0].item())
+
+
+def _candidate_subset_batch_accuracy(
+    *,
+    system: torch.nn.Module,
+    rows: list[dict[str,Any]],
+    tokenizer: Any,
+    device: torch.device,
+) -> float:
+    by_count={}
+    for row in rows:
+        count=int(row.get("runtime_candidate_answer_count",0))
+        if count>0 and count not in by_count:
+            by_count[count]=row
+    selected=[by_count[key] for key in sorted(by_count)]
+    if len(selected)<2:
+        raise ValueError(
+            "per-example candidate-subset DEV gate requires at least two candidate counts"
+        )
+    compiled=compile_behavioral_batch(rows=selected,tokenizer=tokenizer)
+    compiled=to_device(compiled,device)
+    outputs=system(task="full_envelope",batch=compiled["primary_batch"])
+    judgment=outputs["public_judgment"]
+    correct=public_judgment_correct(
+        candidate_logits=judgment["candidate_logits"],
+        target_index=compiled["behavioral_targets"]["public_target_index"],
+        candidate_valid_mask=judgment["candidate_valid_mask"],
+    )
+    return boolean_rate([bool(x) for x in correct.detach().cpu().tolist()])
+
+
 def fabric_lane_metrics(
     *,
     system: torch.nn.Module,
@@ -458,15 +500,19 @@ def fabric_lane_metrics(
     tokenizer: Any,
     device: torch.device,
     stage: str,
-) -> dict[str,float]:
+) -> dict[str,Any]:
     policy=resolve_stage_policy(stage)
     totals=defaultdict(list)
+    records=[]
     for row in rows:
         compiled=compile_behavioral_batch(rows=[row],tokenizer=tokenizer)
         compiled=to_device(compiled,device)
+        targets=compiled["behavioral_targets"]
         primary=system(task="full_envelope",batch=compiled["primary_batch"])
         decisive=irrelevant=permuted=None
-        if "multi_view_causal_preservation" in policy.active_macro_families:
+        causal_active="multi_view_causal_preservation" in policy.active_macro_families
+        judgment_active="latent_judgment_and_noncollapse" in policy.active_macro_families
+        if causal_active:
             decisive=system(
                 task="full_envelope",batch=compiled["decisive_ablated_batch"]
             )
@@ -481,13 +527,231 @@ def fabric_lane_metrics(
             decisive_ablated_outputs=decisive,
             irrelevant_removed_outputs=irrelevant,
             permuted_outputs=permuted,
-            targets=compiled["behavioral_targets"],
+            targets=targets,
             active_families=policy.active_macro_families,
         )
         for name,value in losses.items():
             if isinstance(value,torch.Tensor) and value.ndim==0:
                 totals[name].append(float(value.detach().cpu()))
-    return {name:mean(values) for name,values in sorted(totals.items())}
+
+        binder=primary["binder"]
+        executor=primary["executor"]
+        support_f1=support_edge_f1(
+            edge_support_weight=binder["edge_support_weight"],
+            support_target=targets["support_target"],
+            valid_mask=targets["support_valid_mask"].bool(),
+        )
+        endpoint_values=endpoint_pair_correct(
+            source_weight=executor["source_support_weight"],
+            target_weight=executor["target_support_weight"],
+            source_target=targets["source_target_index"],
+            target_target=targets["target_target_index"],
+            active_mask=targets["endpoint_active_mask"].bool(),
+        )
+        endpoint_ok=(
+            _scalar_bool(endpoint_values)
+            if endpoint_values.numel()
+            else True
+        )
+        no_support=not bool(targets["support_target"].bool().any().item())
+        null_exact=(
+            float(binder["edge_support_weight"].abs().max().item())==0.0
+            and float(binder["support_available"].abs().max().item())==0.0
+        ) if no_support else None
+        no_support_confidence=(
+            float(executor["execution_confidence"].abs().max().item())
+            if no_support else None
+        )
+
+        public_ok=None
+        decisive_ok=None
+        irrelevant_ok=None
+        noncollapse_ok=None
+        if judgment_active:
+            judgment=primary["public_judgment"]
+            public_ok=_scalar_bool(public_judgment_correct(
+                candidate_logits=judgment["candidate_logits"],
+                target_index=targets["public_target_index"],
+                candidate_valid_mask=judgment["candidate_valid_mask"],
+            ))
+            noncollapse_ok=_scalar_bool(latent_noncollapse_success(
+                latent_slots=primary["latent"]["latent_slots"],
+            ))
+        if causal_active:
+            assert decisive is not None and irrelevant is not None
+            judgment=primary["public_judgment"]
+            decisive_values=decisive_removal_success(
+                normal_logits=judgment["candidate_logits"],
+                ablated_logits=decisive["public_judgment"]["candidate_logits"],
+                target_index=targets["public_target_index"],
+                candidate_valid_mask=judgment["candidate_valid_mask"],
+                active_mask=targets["decisive_view_active_mask"].bool(),
+            )
+            if decisive_values.numel():
+                decisive_ok=_scalar_bool(decisive_values)
+            irrelevant_values=irrelevant_removal_invariance_success(
+                normal_logits=judgment["candidate_logits"],
+                removed_logits=irrelevant["public_judgment"]["candidate_logits"],
+                candidate_valid_mask=judgment["candidate_valid_mask"],
+                active_mask=targets["irrelevant_view_active_mask"].bool(),
+            )
+            if irrelevant_values.numel():
+                irrelevant_ok=_scalar_bool(irrelevant_values)
+
+        role=str((row.get("factor_target_keys") or {}).get("role",""))
+        expected_readout=None
+        endpoint=row.get("endpoint_target") or {}
+        if bool(endpoint.get("active")):
+            if role=="ROLE_SOURCE":
+                expected_readout=int(endpoint["source_field"])
+            elif role=="ROLE_TARGET":
+                expected_readout=int(endpoint["target_field"])
+        executor_readout_ok=None
+        if expected_readout is not None:
+            executor_readout_ok=(
+                int(executor["relational_probability"].argmax(dim=-1)[0].item())
+                == expected_readout
+            )
+
+        structural_ok=(support_f1>=0.95 and endpoint_ok)
+        records.append({
+            "id":str(row.get("id")),
+            "scenario_family":str(row.get("scenario_family","")),
+            "long_context_surface":row.get("long_context_surface"),
+            "long_context_placement_variant":row.get(
+                "long_context_placement_variant"
+            ),
+            "candidate_cardinality_extrapolation":bool(
+                row.get("candidate_cardinality_extrapolation",False)
+            ),
+            "composition_extrapolation":bool(
+                row.get("composition_extrapolation",False)
+            ),
+            "support_edge_f1":support_f1,
+            "endpoint_pair_correct":endpoint_ok,
+            "structural_success":structural_ok,
+            "null_support_exact":null_exact,
+            "no_support_execution_confidence":no_support_confidence,
+            "public_judgment_correct":public_ok,
+            "decisive_removal_success":decisive_ok,
+            "irrelevant_removal_invariance":irrelevant_ok,
+            "latent_noncollapse_success":noncollapse_ok,
+            "executor_readout_correct":executor_readout_ok,
+        })
+
+    def rate(key: str, *, where=lambda _: True) -> float:
+        values=[
+            bool(item[key])
+            for item in records
+            if where(item) and item.get(key) is not None
+        ]
+        return boolean_rate(values)
+
+    def surface_rates(key: str) -> dict[str,float]:
+        surfaces=sorted({
+            str(item["long_context_surface"])
+            for item in records
+            if item.get("long_context_surface")
+        })
+        return {
+            surface:rate(
+                key,
+                where=lambda item,surface=surface: (
+                    item.get("long_context_surface")==surface
+                ),
+            )
+            for surface in surfaces
+        }
+
+    null_records=[
+        item for item in records if item["null_support_exact"] is not None
+    ]
+    confidence_values=[
+        float(item["no_support_execution_confidence"])
+        for item in records
+        if item["no_support_execution_confidence"] is not None
+    ]
+    ordered_families={
+        "ordered_composition","reverse_traversal",
+        "mixed_direction_composition","causal_chain",
+    }
+    scenario_names=sorted({
+        str(item["scenario_family"]) for item in records
+    })
+    result={
+        "rows":len(records),
+        "losses":{
+            name:mean(values)
+            for name,values in sorted(totals.items())
+        },
+        "support_edge_f1":mean([
+            float(item["support_edge_f1"]) for item in records
+        ]),
+        "endpoint_pair_accuracy":rate("endpoint_pair_correct"),
+        "null_support_exact_rate":(
+            boolean_rate([
+                bool(item["null_support_exact"]) for item in null_records
+            ])
+            if null_records else 1.0
+        ),
+        "no_support_execution_confidence_max":(
+            max(confidence_values) if confidence_values else 0.0
+        ),
+        "surface_structural_accuracy":surface_rates("structural_success"),
+        "ordered_executor_endpoint_accuracy":rate(
+            "executor_readout_correct",
+            where=lambda item: item["scenario_family"] in ordered_families,
+        ),
+        "records":records,
+    }
+    if judgment_active:
+        result.update({
+            "public_judgment_top1":rate("public_judgment_correct"),
+            "scenario_public_accuracy":{
+                scenario:rate(
+                    "public_judgment_correct",
+                    where=lambda item,scenario=scenario: (
+                        item["scenario_family"]==scenario
+                    ),
+                )
+                for scenario in scenario_names
+            },
+            "surface_public_accuracy":surface_rates(
+                "public_judgment_correct"
+            ),
+            "candidate_cardinality_extrapolation_accuracy":rate(
+                "public_judgment_correct",
+                where=lambda item: item[
+                    "candidate_cardinality_extrapolation"
+                ],
+            ),
+            "composition_extrapolation_accuracy":rate(
+                "public_judgment_correct",
+                where=lambda item: item["composition_extrapolation"],
+            ),
+            "latent_noncollapse_success_rate":rate(
+                "latent_noncollapse_success"
+            ),
+        })
+    if causal_active:
+        distant_surfaces={"field_text","additional_view_source"}
+        result.update({
+            "decisive_source_removal_success":rate(
+                "decisive_removal_success"
+            ),
+            "irrelevant_source_removal_invariance":rate(
+                "irrelevant_removal_invariance"
+            ),
+            "distant_decisive_removal_success":rate(
+                "decisive_removal_success",
+                where=lambda item: (
+                    item.get("long_context_surface") in distant_surfaces
+                    and item.get("long_context_placement_variant")
+                    in {"tail","boundary_late"}
+                ),
+            ),
+        })
+    return result
 
 
 def main() -> None:
@@ -665,6 +929,14 @@ def main() -> None:
             fabric_metrics["runtime_view_supplement"]=fabric_lane_metrics(
                 system=system,rows=runtime_view,tokenizer=tokenizer,
                 device=device,stage=args.stage
+            )
+            fabric_metrics["full_envelope_behavioral"][
+                "per_example_candidate_subset_batch_accuracy"
+            ]=_candidate_subset_batch_accuracy(
+                system=system,
+                rows=behavioral,
+                tokenizer=tokenizer,
+                device=device,
             )
 
     metrics={
