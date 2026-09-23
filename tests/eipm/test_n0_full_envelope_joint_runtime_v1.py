@@ -618,3 +618,18 @@ def test_stage_scheduler_rejects_behavioral_long_rows_as_J1_semantic_authority()
             },
             seed=1,
         )
+
+
+def test_gpu_memory_dry_run_covers_both_semantic_cardinality_and_long_semantic_lanes() -> None:
+    qualifier=(
+        ROOT/"scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py"
+    ).read_text()
+    sbatch=(
+        ROOT/"scripts/eipm/n0/magnolia_p100x2_n0_v02_full_envelope_gpu_memory_v1.sbatch"
+    ).read_text()
+    assert "--semantic-long-rows" in qualifier
+    assert "semantic_long_rows=train_rows(args.semantic_long_rows)" in qualifier.replace(" ","")
+    assert '"max_runtime_axes"' in qualifier
+    assert '"long_context_semantic"' in qualifier
+    assert "semantic_case_receipts" in qualifier
+    assert "--semantic-long-rows '$MIXTURE_ROOT/semantic-long/rows.jsonl'" in sbatch
