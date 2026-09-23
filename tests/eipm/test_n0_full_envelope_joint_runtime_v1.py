@@ -1546,3 +1546,86 @@ def test_j3_dev_gate_measures_uncertainty_increase_after_decisive_evidence_remov
     ).read_text()
     assert "evidence_removal_uncertainty_increase" in evaluator
     assert "evidence_removal_uncertainty_count" in evaluator
+
+
+def test_behavioral_dev_precommits_transfer_axes_below_sealed_final() -> None:
+    import importlib.util
+    import sys
+
+    scripts=ROOT/"scripts/eipm/n0"
+    sys.path.insert(0,str(scripts))
+    try:
+        spec=importlib.util.spec_from_file_location(
+            "behavioral_builder_transfer_axes",
+            scripts/"build_n0_v02_full_envelope_behavioral_curriculum_v1.py",
+        )
+        assert spec is not None and spec.loader is not None
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        train=module.materialize_row(
+            split="train",example=4,seed=20260922,
+            relation_count=4,field_count=6,answer_count=4,
+        )
+        dev=module.materialize_row(
+            split="dev",example=4,seed=20260922,
+            relation_count=4,field_count=6,answer_count=4,
+        )
+        final=module.materialize_row(
+            split="final",example=4,seed=20260922,
+            relation_count=4,field_count=6,answer_count=4,
+        )
+        open_name="open_semantic_factor"
+        assert len(train["factor_schemas"][open_name]) < len(dev["factor_schemas"][open_name])
+        assert len(dev["factor_schemas"][open_name]) < len(final["factor_schemas"][open_name])
+        assert train["type_schema"] != dev["type_schema"]
+        assert dev["type_schema"] != final["type_schema"]
+        assert train["domain_family"] != dev["domain_family"]
+        assert dev["domain_family"] != final["domain_family"]
+
+        dev_combo=module.materialize_row(
+            split="dev",example=17,seed=20260922,
+            relation_count=4,field_count=6,answer_count=4,
+        )
+        assert dev_combo["scenario_family"]=="heldout_reliability_temporal_combo"
+        assert dev_combo["factor_target_keys"]["reliability"]=="MOD_RELIABILITY_ON"
+        assert dev_combo["factor_target_keys"]["temporal"]=="MOD_TEMPORAL_ON"
+        assert dev_combo["factor_target_keys"]["recency"]=="MOD_RECENCY_OFF"
+        assert dev_combo["factor_target_keys"]["provenance"]=="MOD_PROVENANCE_OFF"
+
+        final_combo=module.materialize_row(
+            split="final",example=18,seed=20260922,
+            relation_count=4,field_count=6,answer_count=4,
+        )
+        assert final_combo["scenario_family"]=="heldout_recency_provenance_combo"
+        assert final_combo["factor_target_keys"]["recency"]=="MOD_RECENCY_ON"
+        assert final_combo["factor_target_keys"]["provenance"]=="MOD_PROVENANCE_ON"
+        assert final_combo["factor_target_keys"]["reliability"]=="MOD_RELIABILITY_OFF"
+        assert final_combo["factor_target_keys"]["temporal"]=="MOD_TEMPORAL_OFF"
+    finally:
+        if sys.path and sys.path[0]==str(scripts):
+            sys.path.pop(0)
+
+
+def test_j3_dev_gates_precommit_transfer_axes_needed_by_final_v2() -> None:
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    registry=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json").read_text()
+    )
+    required={
+        "factor_cardinality_extrapolation",
+        "heldout_factor_combination_transfer",
+        "unseen_type_schema_transfer",
+        "domain_transfer",
+    }
+    assert required <= set(plan["stage_gates"]["J3"])
+    gates=registry["stages"]["J3_full_public_n0_coadaptation"]["gates"]
+    for name in required:
+        assert name in gates
+        gate=gates[name]
+        assert gate["kind"]=="empirical"
+        assert gate["comparison"]==">="
+        assert gate["coverage_metric"].endswith("_count")
+        assert gate["minimum_coverage"]>=1
