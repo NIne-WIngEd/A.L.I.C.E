@@ -236,7 +236,10 @@ def test_joint_step_stage_policy_prevents_inactive_downstream_loss_execution() -
     ).read_text()
     assert "stage:" in source
     assert "resolve_stage_policy" in source
-    assert "active_families=policy.active_macro_families" in source.replace(" ","")
+    # Lock the causal ownership source, not one formatting of the ternary.
+    # The executable J1 test below proves that inactive full-fabric paths are
+    # actually skipped; this static assertion only verifies policy wiring.
+    assert "policy.active_macro_families" in source
     assert "requires_full_fabric_primary" in source
     assert "requires_full_fabric_counterfactuals" in source
     assert "active_families:" in objective
