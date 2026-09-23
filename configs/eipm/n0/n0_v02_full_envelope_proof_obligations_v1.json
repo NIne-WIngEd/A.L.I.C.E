@@ -1517,6 +1517,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_tokenizer_stress_receipt_is_bound_to_exact_tokenizer_and_corpus",
       "requirement": "The staged trainer must bind the passed tokenizer stress receipt to the exact tokenizer.json and public corpus receipt registered by the audited public mixture. A generic PASS tokenizer audit cannot authorize a different tokenizer or corpus."
+    },
+    {
+      "id": "N0-P42A",
+      "stage": "cpu_runtime_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_cpu_and_gpu_runtime_receipts_bind_exact_registered_artifacts",
+      "requirement": "P42 CPU and P43 GPU receipts must hash-bind the exact registered topology, qualification contract, semantic config/checkpoint, governed tokenizer, public source/corpus receipt, and for GPU the exact audited mixture. Same-status receipts from other artifacts cannot authorize gradient."
+    },
+    {
+      "id": "N0-P43N",
+      "stage": "gpu_memory_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_gpu_memory_dry_run_binds_exact_optimizer_facing_mixture_lanes",
+      "requirement": "The P43 GPU no-gradient memory dry run must exercise row/bank artifacts that hash-match every optimizer-facing lane in the audited full public mixture, including broad replay and governed teacher provenance. Memory routing may not be chosen from substituted easier data."
     }
   ],
   "closure_rule": {
