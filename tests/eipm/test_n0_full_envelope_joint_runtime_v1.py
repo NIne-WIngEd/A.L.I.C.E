@@ -2084,3 +2084,17 @@ def test_n0_authority_scripts_reject_untracked_source_shadowing() -> None:
         assert "--untracked-files=no" not in source
         assert "clean exact-source worktree" in source
 
+
+
+def test_dev_evaluator_binds_candidate_to_runtime_training_authorization() -> None:
+    source=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py").read_text()
+    assert 'p.add_argument("--training-authorization",required=True)' in source
+    assert "AUTHORIZED_N0_FULL_ENVELOPE_TRAINING_FROM_EXACT_RUNTIME_RECEIPTS" in source
+    assert "candidate/training authorization receipt hash drift" in source
+    assert "training authorization source revision drift" in source
+    assert "training authorization/mixture manifest drift" in source
+    assert "training authorization/mixture audit drift" in source
+    assert "candidate/operator-token authorization lineage drift" in source
+    assert "candidate/teacher-audit lineage drift" in source
+    assert "candidate/public-corpus lineage drift" in source
+
