@@ -1038,6 +1038,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_registered_semantic_operator_task_uses_shared_backbone_without_fake_downstream_fields",
       "requirement": "The registered N0FullEnvelopeTrainableSystemV1 must expose a shared-backbone semantic-operator task for operator-intervention and natural-relation supervision without fabricating graph fields, edges, candidates, or downstream judgment labels merely to access the operator."
+    },
+    {
+      "id": "N0-P39PP",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_semantic_operator_intervention_rows_own_explicit_uncertainty_targets",
+      "requirement": "Semantic-operator TRAIN/DEV rows must carry explicit audited uncertainty targets. The optimizer-facing compiler may not infer uncertainty labels from scenario names."
+    },
+    {
+      "id": "N0-P39PQ",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_semantic_operator_batch_compiler_is_registered",
+      "requirement": "The semantic-operator intervention lane must have a real optimizer-facing batch compiler using governed tokenizer evidence alignment, explicit counterfactual sentinels, all-bank step targets, and no fabricated downstream full-envelope labels."
     }
   ],
   "closure_rule": {
