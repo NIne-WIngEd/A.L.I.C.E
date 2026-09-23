@@ -459,3 +459,27 @@ def latent_noncollapse_success(
         & spread.ge(float(minimum_directional_spread))
     )
 
+def source_view_recoverability_success(
+    *,
+    latent_slots: Tensor,
+    source_views: Tensor,
+    view_available: Tensor,
+    recoverable_view_mask: Tensor,
+    cosine_threshold: float = 0.80,
+) -> Tensor:
+    if latent_slots.ndim!=3 or source_views.ndim!=3:
+        raise ValueError("latent/source views must be [B,S,D]/[B,V,D]")
+    if latent_slots.size(0)!=source_views.size(0) or latent_slots.size(-1)!=source_views.size(-1):
+        raise ValueError("latent/source recoverability geometry drift")
+    if view_available.shape!=source_views.shape[:2] or view_available.dtype!=torch.bool:
+        raise ValueError("view availability geometry drift")
+    if recoverable_view_mask.shape!=view_available.shape or recoverable_view_mask.dtype!=torch.bool:
+        raise ValueError("recoverable view-mask geometry drift")
+    selected=recoverable_view_mask & view_available
+    if not bool(selected.any()):
+        return torch.empty(0,dtype=torch.bool,device=latent_slots.device)
+    slots=torch.nn.functional.normalize(latent_slots.float(),dim=-1,eps=1.0e-4)
+    views=torch.nn.functional.normalize(source_views.float(),dim=-1,eps=1.0e-4)
+    best=torch.einsum("bsd,bvd->bsv",slots,views).max(dim=1).values
+    return best.masked_select(selected).ge(float(cosine_threshold))
+
