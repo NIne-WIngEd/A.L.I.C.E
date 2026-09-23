@@ -1057,6 +1057,7 @@ DEV_QUERY_PARAPHRASES = {
     "mixed_direction_composition":"Follow the first causal edge in its stored direction, then invert the second causal edge at the shared intermediate event. Identify the endpoint reached after both operations.",
     "causal_chain":"Trace every causal stage in the stated order from the initial event to the terminal effect; intermediate stages and unrelated context are not the requested endpoint.",
     "candidate_context_swap":"Two evidence sources back different propositions. Select the proposition whose support is stronger under the active reliability criterion.",
+    "heldout_reliability_temporal_combo":"Apply the review-window requirement, then compare reliability among the remaining admissible evidence and select the controlling finding.",
 }
 
 FINAL_QUERY_PARAPHRASES = {
