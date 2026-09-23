@@ -8,16 +8,16 @@ The active N0 implementation frontier is:
 
 ```text
 alice-eipm-v1-n0-full-envelope-foundation-build-v1
-116324b58ec62e85b1a4897dc33c26bdd6cade25
+ac0defbc67f260d77d0d7cd664209e247f457867
 ```
 
-The latest exact-head static receipt is green at 142 tests / 129 proof obligations / 113 static obligations, but **Magnolia is not yet authorized**. The deep original-source audit remains open. New chats must not convert a green static suite into CPU/GPU/training authorization without first reading the 2026-09-22 handoff.
+The latest exact-head static receipt is green at 174 tests / 164 proof obligations / 142 static obligations, but **Magnolia is not yet authorized**. The deep original-source audit remains open. New chats must not convert a green static suite into CPU/GPU/training authorization without first reading the 2026-09-22 handoff.
 
 The current deep audit has repeatedly justified this caution: after earlier green heads it exposed and repaired TRAIN/DEV surface leakage, modifier bypasses, finite-sentinel masking, a candidate-only public-judgment bypass, same-relation Binder support shortcuts, missing executable shortcut preflight, context-swapped candidate shortcut risk, marginal-product false program completion, incomplete-branch relation contamination, CPU qualifier long-text coverage gaps, the absence of an executable sealed successor FINAL-v2 package, missing TRAIN/DEV long-context supervision across governed text surfaces, and a shared-object curriculum bug that let one relation-surface intervention contaminate later rows. Those failures and exact repairs are preserved in the 2026-09-22 handoff.
 
 The current method is failure-driven and anti-hotfix: try to expose structural defects cheaply, verify original source rather than report flags, repair one localized causal defect, preserve failure evidence, rerun affected exact-head evidence, and continue the broader audit.
 
-The successor FINAL-v2 package is now built, independently audited and hash-frozen before gradient with model results unopened. The next external boundary, once the remaining deep source audit genuinely closes, is the exact full 640-wide CPU/no-gradient full-envelope construction/forward plus parameter/memory receipt. A same-topology GPU no-gradient memory dry run comes after that. No optimizer, gradient training, FINAL opening, or N0 completion is currently authorized.
+The successor FINAL-v2 package is built, independently audited and hash-frozen before gradient with model results unopened. The registered 640-wide successor topology, stage-family policy, real joint-step path, public-mixture contract, runtime-view/long-context supplements, and CPU/GPU no-gradient qualifier sources are now explicit. The latest audit also split J1 long semantic supervision into its own evidence-owned semantic-operator lane instead of borrowing full-fabric behavioral rows. The next source frontier is the actual staged J1/J2/J3 trainer, DEV gate evaluator, and checkpoint/receipt provenance path. External CPU/GPU execution remains blocked until that source work is closed. No optimizer, gradient training, FINAL opening, or N0 completion is currently authorized.
 
 ## Historical N0 decision lineage
 
