@@ -1573,6 +1573,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_stage_scheduler_horizon_cannot_zero_learning_rate_before_dev_completion",
       "requirement": "The precommitted scheduler horizon is an optimization operating point, not stage completion. Its decay must retain a strictly positive precommitted learning-rate floor so same-stage continuation after the nominal horizon can still update weights until DEV determines saturation; a zero-LR tail may not silently convert the horizon into a capability ceiling."
+    },
+    {
+      "id": "N0-P44B",
+      "stage": "joint_training",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_first_passing_dev_selection_uses_precommitted_checkpoint_cadence",
+      "requirement": "First-passing DEV selection must operate on a checkpoint cadence frozen before gradient. Trainer invocations must end on that cadence and may not create ad-hoc terminal checkpoints, so changing save frequency or invocation length cannot hide an earlier passing checkpoint or cherry-pick a later one."
     }
   ],
   "closure_rule": {
