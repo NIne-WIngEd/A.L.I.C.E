@@ -696,6 +696,8 @@ def test_successor_trainer_dev_evaluator_and_checkpoint_contract_exist_before_gr
         "static_proof_receipt_sha256",
         "operator_evidence_token_receipt_sha256",
         "training_authorization_sha256",
+        "optimizer_step",
+        "stage_checkpoint_parent_receipt_sha256",
         "accelerator_state_tree_sha256",
         "full_system_sha256",
         "objective_state_sha256",
