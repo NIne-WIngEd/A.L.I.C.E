@@ -1202,6 +1202,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_stage_scheduler_rejects_behavioral_long_rows_as_J1_semantic_authority",
       "requirement": "The stage scheduler must reject full-fabric behavioral long-context rows when supplied as J1 semantic authority; only dedicated evidence-owned semantic_operator_long_context rows may enter the J1 long semantic lane."
+    },
+    {
+      "id": "N0-P43A",
+      "stage": "gpu_memory_dry_run",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_gpu_memory_dry_run_covers_both_semantic_cardinality_and_long_semantic_lanes",
+      "requirement": "The exact-topology GPU no-gradient memory qualification must exercise both a maximum-runtime-axis semantic-operator case and a dedicated long-context semantic-operator case. A single short high-cardinality row cannot stand in for the optimizer-facing long semantic lane."
     }
   ],
   "closure_rule": {
