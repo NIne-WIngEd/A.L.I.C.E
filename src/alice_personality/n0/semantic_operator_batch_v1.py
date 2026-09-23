@@ -237,6 +237,7 @@ def compile_semantic_operator_batch(
         local_relations=list(row["relation_candidates"])
         local_keys=[str(item["key"]) for item in local_relations]
         local_targets=[int(value) for value in row["relation_sequence_target"]]
+        relation_steps=len(local_targets)
         if len(local_targets)>max_slots:
             raise ValueError("relation program exceeds compiled slot axis")
         for step,local_index in enumerate(local_targets):
@@ -324,7 +325,6 @@ def compile_semantic_operator_batch(
                 factor_counter[name][b]=index
 
         local_step=dict(row.get("step_factor_targets") or {})
-        relation_steps=len(local_targets)
         for name in factor_banks:
             if name in local_step:
                 values=[int(value) for value in local_step[name]]
