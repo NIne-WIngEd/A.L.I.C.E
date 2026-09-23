@@ -293,6 +293,8 @@ def main() -> None:
     freeze=load_json(freeze_path)
     if freeze.get("status")!="FROZEN_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_BEFORE_GRADIENT":
         raise SystemExit("successor FINAL-v2 freeze receipt not valid")
+    if freeze.get("source_revision")!=source_revision:
+        raise SystemExit("FINAL freeze/source revision drift")
     if freeze.get("results_observed") is not False:
         raise SystemExit("FINAL results already observed")
     if freeze.get("final_opening_authorized") is not False:
