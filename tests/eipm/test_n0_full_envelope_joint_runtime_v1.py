@@ -2000,3 +2000,24 @@ def test_stage_transition_restarts_optimizer_scheduler_without_losing_selected_m
     assert policy["optimizer_state"]=="restart"
     assert policy["scheduler_state"]=="restart_with_stage_local_warmup"
 
+
+
+def test_stage_transition_checkpoint_receipt_preserves_dev_selection_authority_lineage() -> None:
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    for field in (
+        "stage_transition_predecessor_checkpoint_receipt_sha256",
+        "stage_transition_predecessor_dev_receipt_sha256",
+        "stage_transition_predecessor_selection_receipt_sha256",
+    ):
+        assert field in trainer
+    assert 'if resume_kind=="same_stage":\n        transition_predecessor_checkpoint_receipt_sha256=prior.get(' in trainer
+    checkpoint=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_checkpoint_contract_v1.json").read_text()
+    )
+    for field in (
+        "stage_transition_predecessor_checkpoint_receipt_sha256",
+        "stage_transition_predecessor_dev_receipt_sha256",
+        "stage_transition_predecessor_selection_receipt_sha256",
+    ):
+        assert field in checkpoint["required_lineage"]
+
