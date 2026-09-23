@@ -20,6 +20,7 @@ def main() -> None:
     p.add_argument("--evaluator-contract",required=True)
     p.add_argument("--evaluator-implementation",required=True)
     p.add_argument("--gate-registry",required=True)
+    p.add_argument("--opening-authorizer",required=True)
     p.add_argument("--final-contract",required=True)
     p.add_argument("--synthetic-final-rows",required=True)
     p.add_argument("--semantic-final-rows",required=True)
@@ -34,7 +35,7 @@ def main() -> None:
     args=p.parse_args()
 
     paths={name:Path(getattr(args,name)) for name in (
-        "package_config","evaluator_contract","evaluator_implementation","gate_registry","final_contract","synthetic_final_rows","semantic_final_rows",
+        "package_config","evaluator_contract","evaluator_implementation","gate_registry","opening_authorizer","final_contract","synthetic_final_rows","semantic_final_rows",
         "runtime_view_final_rows","long_context_final_rows",
         "package_manifest","fewrel_final_rows","fewrel_final_bank","fewrel_manifest","audit","output"
     )}
@@ -49,6 +50,8 @@ def main() -> None:
         raise SystemExit("package evaluator implementation binding drift")
     if package.get("evaluator_gate_registry")!="configs/eipm/n0/n0_v02_full_envelope_final_v2_gate_registry_v1.json":
         raise SystemExit("package evaluator gate-registry binding drift")
+    if package.get("opening_authorizer")!="scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py":
+        raise SystemExit("package opening-authorizer binding drift")
     if evaluator.get("evaluator_implementation")!=package.get("evaluator_implementation"):
         raise SystemExit("package/evaluator implementation binding mismatch")
     if evaluator.get("gate_registry")!=package.get("evaluator_gate_registry"):
