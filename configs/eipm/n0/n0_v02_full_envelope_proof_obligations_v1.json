@@ -1195,6 +1195,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_full_public_mixture_manifest_is_executable_before_gradient",
       "requirement": "The exact full public-mixture contract must bind the dedicated semantic_operator_long_context optimizer lane separately from full-envelope long-context fabric so J1 long semantic supervision cannot be omitted or substituted by behavioral rows."
+    },
+    {
+      "id": "N0-P39QJ",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_stage_scheduler_rejects_behavioral_long_rows_as_J1_semantic_authority",
+      "requirement": "The stage scheduler must reject full-fabric behavioral long-context rows when supplied as J1 semantic authority; only dedicated evidence-owned semantic_operator_long_context rows may enter the J1 long semantic lane."
     }
   ],
   "closure_rule": {
