@@ -33,6 +33,9 @@ def main() -> None:
     p.add_argument("--semantic-rows",required=True)
     p.add_argument("--semantic-manifest",required=True)
     p.add_argument("--semantic-audit",required=True)
+    p.add_argument("--semantic-long-rows",required=True)
+    p.add_argument("--semantic-long-manifest",required=True)
+    p.add_argument("--semantic-long-audit",required=True)
     p.add_argument("--behavioral-rows",required=True)
     p.add_argument("--behavioral-manifest",required=True)
     p.add_argument("--behavioral-audit",required=True)
@@ -88,6 +91,11 @@ def main() -> None:
             "rows_sha256":sha256(Path(args.semantic_rows)),
             "manifest_sha256":sha256(Path(args.semantic_manifest)),
             "audit_sha256":sha256(Path(args.semantic_audit)),
+        },
+        "semantic_operator_long_context":{
+            "rows_sha256":sha256(Path(args.semantic_long_rows)),
+            "manifest_sha256":sha256(Path(args.semantic_long_manifest)),
+            "audit_sha256":sha256(Path(args.semantic_long_audit)),
         },
         "full_envelope_behavioral":{
             "rows_sha256":sha256(Path(args.behavioral_rows)),
