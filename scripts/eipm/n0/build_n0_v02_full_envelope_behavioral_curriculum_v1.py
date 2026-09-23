@@ -1535,7 +1535,15 @@ def main() -> None:
             train_answer_points if split=="train" else dev_answer_points
         )
         for i in range(count):
-            mode=i % 17
+            # Candidate-context-swap pairs live at modes 15/16 inside the
+            # split's actual scenario cycle. DEV has one extra transfer-only
+            # mode, so using the historical 17-mode cycle here silently gave
+            # later DEV pair members different relation/field/answer geometry.
+            # Anchor operating-point selection to the same split-aware cycle
+            # used by materialize_row so each causal pair differs only in the
+            # intended governing evidence/reliability state.
+            cycle=18 if split=="dev" else 17
+            mode=i % cycle
             axis_i=i-1 if mode==16 else i
             rows.append(
                 materialize_row(

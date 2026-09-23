@@ -1629,3 +1629,76 @@ def test_j3_dev_gates_precommit_transfer_axes_needed_by_final_v2() -> None:
         assert gate["comparison"]==">="
         assert gate["coverage_metric"].endswith("_count")
         assert gate["minimum_coverage"]>=1
+
+
+def test_behavioral_dev_context_swap_pairs_keep_runtime_geometry_after_transfer_mode_added() -> None:
+    import importlib.util
+    import sys
+
+    scripts=ROOT/"scripts/eipm/n0"
+    sys.path.insert(0,str(scripts))
+    try:
+        spec=importlib.util.spec_from_file_location(
+            "behavioral_builder_dev_pair_geometry",
+            scripts/"build_n0_v02_full_envelope_behavioral_curriculum_v1.py",
+        )
+        assert spec is not None and spec.loader is not None
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        relation_points=[1,2,4,6,8]
+        field_points=[4,6,8,12,16]
+        answer_points=[3,4,5,7]
+        for first_example in (15,33,51,69,87):
+            second_example=first_example+1
+            first_axis=first_example
+            second_axis=first_example
+            first=module.materialize_row(
+                split="dev",
+                example=first_example,
+                seed=20260922,
+                relation_count=relation_points[first_axis % len(relation_points)],
+                field_count=field_points[
+                    (first_axis//len(relation_points)) % len(field_points)
+                ],
+                answer_count=answer_points[
+                    (first_axis//3) % len(answer_points)
+                ],
+            )
+            second=module.materialize_row(
+                split="dev",
+                example=second_example,
+                seed=20260922,
+                relation_count=relation_points[second_axis % len(relation_points)],
+                field_count=field_points[
+                    (second_axis//len(relation_points)) % len(field_points)
+                ],
+                answer_count=answer_points[
+                    (second_axis//3) % len(answer_points)
+                ],
+            )
+            assert first["candidate_context_swap_pair_id"] == second[
+                "candidate_context_swap_pair_id"
+            ]
+            assert first["candidate_answers"] == second["candidate_answers"]
+            assert first["relation_sequence_target"] == second[
+                "relation_sequence_target"
+            ]
+            assert first["runtime_relation_count"] == second[
+                "runtime_relation_count"
+            ]
+            assert first["runtime_field_count"] == second[
+                "runtime_field_count"
+            ]
+            assert first["runtime_candidate_answer_count"] == second[
+                "runtime_candidate_answer_count"
+            ]
+            assert first["public_target_index"] != second["public_target_index"]
+            assert [
+                edge["reliability"] for edge in first["edges"][:2]
+            ] != [
+                edge["reliability"] for edge in second["edges"][:2]
+            ]
+    finally:
+        if sys.path and sys.path[0]==str(scripts):
+            sys.path.pop(0)
