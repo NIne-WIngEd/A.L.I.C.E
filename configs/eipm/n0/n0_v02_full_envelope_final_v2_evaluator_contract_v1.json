@@ -24,7 +24,11 @@
     "semantic_cosine_diagnostic_only": true,
     "candidate_results_may_not_influence_training": true,
     "candidate_results_may_not_influence_checkpoint_selection": true,
-    "final_rows_training_forbidden": true
+    "final_rows_training_forbidden": true,
+    "final_opening_requires_explicit_authorization_receipt": true,
+    "evaluator_implementation_hash_frozen_before_gradient": true,
+    "gate_registry_hash_frozen_before_gradient": true,
+    "empty_empirical_gate_coverage_fails_closed": true
   },
   "legacy_final_self_validation_v1_forbidden": true,
   "legacy_final_self_validation_v3_forbidden": true,
@@ -33,5 +37,8 @@
   "training_authorized": false,
   "model_selection_authorized": false,
   "private_identity_data": false,
-  "n0_complete": false
+  "n0_complete": false,
+  "evaluator_implementation": "scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py",
+  "gate_registry": "configs/eipm/n0/n0_v02_full_envelope_final_v2_gate_registry_v1.json",
+  "opening_authorization_schema": "alice.eipm.n0.full-envelope-final-opening-authorization.v1"
 }

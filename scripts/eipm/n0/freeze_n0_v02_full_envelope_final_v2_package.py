@@ -18,6 +18,8 @@ def main() -> None:
     p=argparse.ArgumentParser()
     p.add_argument("--package-config",required=True)
     p.add_argument("--evaluator-contract",required=True)
+    p.add_argument("--evaluator-implementation",required=True)
+    p.add_argument("--gate-registry",required=True)
     p.add_argument("--final-contract",required=True)
     p.add_argument("--synthetic-final-rows",required=True)
     p.add_argument("--semantic-final-rows",required=True)
@@ -32,7 +34,7 @@ def main() -> None:
     args=p.parse_args()
 
     paths={name:Path(getattr(args,name)) for name in (
-        "package_config","evaluator_contract","final_contract","synthetic_final_rows","semantic_final_rows",
+        "package_config","evaluator_contract","evaluator_implementation","gate_registry","final_contract","synthetic_final_rows","semantic_final_rows",
         "runtime_view_final_rows","long_context_final_rows",
         "package_manifest","fewrel_final_rows","fewrel_final_bank","fewrel_manifest","audit","output"
     )}
@@ -42,6 +44,20 @@ def main() -> None:
     package=json.loads(paths["package_config"].read_text(encoding="utf-8"))
     evaluator=json.loads(paths["evaluator_contract"].read_text(encoding="utf-8"))
     manifest=json.loads(paths["package_manifest"].read_text(encoding="utf-8"))
+    package=json.loads(paths["package_config"].read_text(encoding="utf-8"))
+    if package.get("evaluator_implementation")!="scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py":
+        raise SystemExit("package evaluator implementation binding drift")
+    if package.get("evaluator_gate_registry")!="configs/eipm/n0/n0_v02_full_envelope_final_v2_gate_registry_v1.json":
+        raise SystemExit("package evaluator gate-registry binding drift")
+    if evaluator.get("evaluator_implementation")!=package.get("evaluator_implementation"):
+        raise SystemExit("package/evaluator implementation binding mismatch")
+    if evaluator.get("gate_registry")!=package.get("evaluator_gate_registry"):
+        raise SystemExit("package/evaluator gate-registry binding mismatch")
+    gate_registry=json.loads(paths["gate_registry"].read_text(encoding="utf-8"))
+    if gate_registry.get("schema")!="alice.eipm.n0.full-envelope-final-v2-gate-registry.v1":
+        raise SystemExit("FINAL-v2 gate registry schema drift")
+    if gate_registry.get("results_observed") is not False:
+        raise SystemExit("FINAL-v2 gate registry already observed results")
     if audit.get("status")!="PASS_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_AUDIT_V1":
         raise SystemExit("cannot freeze final-v2 package without audit PASS")
     if any([
