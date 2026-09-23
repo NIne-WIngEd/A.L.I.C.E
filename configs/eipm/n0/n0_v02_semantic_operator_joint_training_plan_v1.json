@@ -469,6 +469,7 @@
       "source_target_intervention",
       "ordered_relation_intervention",
       "unknown_defer",
+      "semantic_plurality",
       "historical_semantic_regression",
       "mixed_step_direction_composition",
       "mixed_step_modifier_composition",

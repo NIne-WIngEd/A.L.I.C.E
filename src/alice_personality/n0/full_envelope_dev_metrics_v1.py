@@ -125,6 +125,70 @@ def uncertainty_correct(
     return uncertainty.ge(0.5).eq(target.float().ge(0.5))
 
 
+def relation_plurality_metrics(
+    *,
+    relation_distribution: Tensor,
+    plurality_target_distribution: Tensor,
+    plurality_mask: Tensor,
+    uncertainty: Tensor,
+    uncertainty_target: Tensor,
+    forced_top1_share: float = 0.90,
+) -> dict[str,Tensor]:
+    if relation_distribution.ndim!=3:
+        raise ValueError("plurality relation distribution must be [B,S,R]")
+    if plurality_target_distribution.shape!=relation_distribution.shape:
+        raise ValueError("plurality target distribution geometry drift")
+    if plurality_mask.shape!=relation_distribution.shape[:2]:
+        raise ValueError("plurality mask geometry drift")
+    if plurality_mask.dtype!=torch.bool:
+        raise ValueError("plurality mask must be boolean")
+    batch=relation_distribution.size(0)
+    if uncertainty.shape!=(batch,) or uncertainty_target.shape!=(batch,):
+        raise ValueError("plurality uncertainty geometry drift")
+    if not bool(plurality_mask.any()):
+        empty_float=torch.empty(
+            0,device=relation_distribution.device,dtype=torch.float32
+        )
+        empty_bool=torch.empty(
+            0,device=relation_distribution.device,dtype=torch.bool
+        )
+        return {
+            "valid_mass":empty_float,
+            "forced_top1":empty_bool,
+            "uncertainty_abs_error":empty_float,
+        }
+
+    selected_target=plurality_target_distribution[plurality_mask].float()
+    if bool((selected_target<0.0).any()):
+        raise ValueError("plurality target probabilities must be non-negative")
+    totals=selected_target.sum(dim=-1)
+    if not torch.allclose(
+        totals,torch.ones_like(totals),atol=1.0e-6,rtol=1.0e-6
+    ):
+        raise ValueError("plurality target distributions must sum to one")
+    valid=selected_target.gt(0.0)
+    if bool((valid.sum(dim=-1)<2).any()):
+        raise ValueError("plurality target requires at least two valid hypotheses")
+
+    selected_probability=relation_distribution[plurality_mask].float()
+    valid_mass=(selected_probability*valid.to(selected_probability.dtype)).sum(
+        dim=-1
+    )
+    max_valid=selected_probability.masked_fill(~valid,0.0).max(dim=-1).values
+    valid_share=max_valid/valid_mass.clamp_min(1.0e-8)
+    forced_top1=valid_share.ge(float(forced_top1_share))
+
+    row_mask=plurality_mask.any(dim=-1)
+    uncertainty_abs_error=(
+        uncertainty.float()-uncertainty_target.float()
+    ).abs().masked_select(row_mask)
+    return {
+        "valid_mass":valid_mass,
+        "forced_top1":forced_top1,
+        "uncertainty_abs_error":uncertainty_abs_error,
+    }
+
+
 def margin_success(
     *,
     logits: Tensor,

@@ -25,6 +25,7 @@ from alice_personality.n0.full_envelope_dev_metrics_v1 import (
     latent_noncollapse_success,
     mean,
     public_judgment_correct,
+    relation_plurality_metrics,
     semantic_batch_record,
     source_view_recoverability_success,
     support_edge_f1,
@@ -285,6 +286,9 @@ def semantic_lane_metrics(
     relation_evidence=[]
     factor_evidence=[]
     step_factor_evidence=[]
+    plurality_valid_mass=[]
+    plurality_forced_top1=[]
+    plurality_uncertainty_error=[]
 
     for row in rows:
         compiled=compile_semantic_operator_batch(rows=[row],tokenizer=tokenizer)
@@ -298,6 +302,27 @@ def semantic_lane_metrics(
                 loss_totals[name].append(float(value.detach().cpu()))
 
         measured=semantic_batch_record(semantic=semantic,targets=targets)
+        plurality=relation_plurality_metrics(
+            relation_distribution=semantic["operator"].relation_distribution,
+            plurality_target_distribution=targets[
+                "relation_plurality_target_distribution"
+            ],
+            plurality_mask=targets["relation_plurality_mask"].bool(),
+            uncertainty=semantic["operator"].uncertainty,
+            uncertainty_target=targets["uncertainty_target"],
+        )
+        plurality_valid_mass.extend(
+            float(x)
+            for x in plurality["valid_mass"].detach().cpu().reshape(-1).tolist()
+        )
+        plurality_forced_top1.extend(
+            bool(x)
+            for x in plurality["forced_top1"].detach().cpu().reshape(-1).tolist()
+        )
+        plurality_uncertainty_error.extend(
+            float(x)
+            for x in plurality["uncertainty_abs_error"].detach().cpu().reshape(-1).tolist()
+        )
         global_correct={
             name:_tensor_bool(value)
             for name,value in measured["global_factor_correct"].items()
@@ -351,8 +376,11 @@ def semantic_lane_metrics(
             ),
         })
 
-    nonunknown=[x for x in records if x["intervention"]!="unknown_defer"]
-    relation_exact=boolean_rate([x["relation_exact"] for x in nonunknown])
+    hard_known=[
+        x for x in records
+        if x["intervention"] not in {"unknown_defer","plurality"}
+    ]
+    relation_exact=boolean_rate([x["relation_exact"] for x in hard_known])
 
     all_factor_rates=[
         boolean_rate(values)
@@ -471,6 +499,10 @@ def semantic_lane_metrics(
         "ordered_relation_count":len(ordered_success),
         "unknown_defer_accuracy":boolean_rate(unknown_success),
         "unknown_defer_count":len(unknown_success),
+        "plurality_valid_mass_mean":mean(plurality_valid_mass),
+        "plurality_forced_top1_rate":boolean_rate(plurality_forced_top1),
+        "plurality_uncertainty_mae":mean(plurality_uncertainty_error),
+        "plurality_count":len(plurality_valid_mass),
         "mixed_step_direction_sequence_exact":boolean_rate(
             mixed_direction_success
         ),

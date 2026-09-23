@@ -153,6 +153,32 @@
           "threshold": 0.9,
           "coverage_metric": "semantic_operator_long_context.long_relation_factor_surface_count",
           "minimum_coverage": 2
+        },
+        "semantic_plurality": {
+          "kind": "composite",
+          "all": [
+            {
+              "metric": "semantic_operator.plurality_valid_mass_mean",
+              "comparison": ">=",
+              "threshold": 0.9,
+              "coverage_metric": "semantic_operator.plurality_count",
+              "minimum_coverage": 1
+            },
+            {
+              "metric": "semantic_operator.plurality_forced_top1_rate",
+              "comparison": "<=",
+              "threshold": 0.1,
+              "coverage_metric": "semantic_operator.plurality_count",
+              "minimum_coverage": 1
+            },
+            {
+              "metric": "semantic_operator.plurality_uncertainty_mae",
+              "comparison": "<=",
+              "threshold": 0.15,
+              "coverage_metric": "semantic_operator.plurality_count",
+              "minimum_coverage": 1
+            }
+          ]
         }
       }
     },
