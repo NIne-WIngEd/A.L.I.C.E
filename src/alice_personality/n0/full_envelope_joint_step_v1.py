@@ -22,7 +22,7 @@ def _scalar_loss(value: Any, *, label: str) -> Tensor:
         loss=getattr(value,"loss",None)
     if not isinstance(loss,Tensor) or loss.ndim!=0:
         raise ValueError(f"{label} task must expose one scalar loss")
-    if not bool(torch.isfinite(loss.detach())):
+    if not bool(torch.isfinite(loss)):
         raise ValueError(f"{label} loss is non-finite")
     return loss
 
@@ -129,7 +129,7 @@ def governed_judgment_replay_loss(
         "semantic_contrastive":contrastive,
     }
     for name,value in components.items():
-        if value.ndim!=0 or not bool(torch.isfinite(value.detach())):
+        if value.ndim!=0 or not bool(torch.isfinite(value)):
             raise ValueError(f"teacher replay component is non-finite: {name}")
     return torch.stack(list(components.values())).mean(),components
 
