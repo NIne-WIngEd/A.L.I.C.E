@@ -516,6 +516,32 @@
               "minimum_coverage": 1
             }
           ]
+        },
+        "evidence_removal_uncertainty_increase": {
+          "kind": "composite",
+          "all": [
+            {
+              "metric": "full_fabric.full_envelope_behavioral.evidence_removal_uncertainty_increase",
+              "comparison": ">=",
+              "threshold": 0.05,
+              "coverage_metric": "full_fabric.full_envelope_behavioral.evidence_removal_uncertainty_count",
+              "minimum_coverage": 1
+            },
+            {
+              "metric": "full_fabric.runtime_view_supplement.evidence_removal_uncertainty_increase",
+              "comparison": ">=",
+              "threshold": 0.05,
+              "coverage_metric": "full_fabric.runtime_view_supplement.evidence_removal_uncertainty_count",
+              "minimum_coverage": 1
+            },
+            {
+              "metric": "full_fabric.long_context_supplement.evidence_removal_uncertainty_increase",
+              "comparison": ">=",
+              "threshold": 0.05,
+              "coverage_metric": "full_fabric.long_context_supplement.evidence_removal_uncertainty_count",
+              "minimum_coverage": 1
+            }
+          ]
         }
       }
     }

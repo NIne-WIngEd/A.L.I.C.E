@@ -409,6 +409,7 @@
       ],
       "multi_view_causal_preservation": [
         "decisive_view_causality",
+        "evidence_removal_uncertainty",
         "irrelevant_view_invariance",
         "source_view_recoverability",
         "permutation_consistency"
@@ -499,6 +500,7 @@
       "J1_and_J2_gates_retained",
       "full_stack_support",
       "fusion_decisive_source_causality",
+      "evidence_removal_uncertainty_increase",
       "irrelevant_source_removal_invariance",
       "latent_noncollapse",
       "source_view_recoverability",

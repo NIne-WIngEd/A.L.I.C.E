@@ -102,7 +102,9 @@
     "ambiguous_plurality_mass_on_valid_set_min": 0.9,
     "unsupported_schema_defer_min": 0.95,
     "uncertainty_increase_on_evidence_removal_min": 0.05,
-    "forced_top1_on_co_valid_cases_max": 0.1
+    "forced_top1_on_co_valid_cases_max": 0.1,
+    "uncertainty_increase_measurement": "normalized entropy over valid public-judgment candidates after decisive evidence removal",
+    "confidently_wrong_after_evidence_removal_is_not_sufficient": true
   },
   "evidence_causality_gate": {
     "decisive_source_removal_behavior_change_min": 0.9,

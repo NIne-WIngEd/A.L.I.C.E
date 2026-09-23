@@ -21,6 +21,7 @@ from alice_personality.n0.full_envelope_dev_metrics_v1 import (
     boolean_rate,
     decisive_removal_success,
     endpoint_pair_correct,
+    evidence_removal_uncertainty_increase,
     irrelevant_removal_invariance_success,
     latent_noncollapse_success,
     mean,
@@ -616,6 +617,7 @@ def fabric_lane_metrics(
     totals=defaultdict(list)
     records=[]
     recoverability_values_all=[]
+    evidence_uncertainty_values=[]
     for row in rows:
         compiled=compile_behavioral_batch(rows=[row],tokenizer=tokenizer)
         compiled=to_device(compiled,device)
@@ -710,6 +712,16 @@ def fabric_lane_metrics(
             )
             if decisive_values.numel():
                 decisive_ok=_scalar_bool(decisive_values)
+            uncertainty_values=evidence_removal_uncertainty_increase(
+                normal_logits=judgment["candidate_logits"],
+                ablated_logits=decisive["public_judgment"]["candidate_logits"],
+                candidate_valid_mask=judgment["candidate_valid_mask"],
+                active_mask=targets["decisive_view_active_mask"].bool(),
+            )
+            evidence_uncertainty_values.extend(
+                float(x)
+                for x in uncertainty_values.detach().cpu().reshape(-1).tolist()
+            )
             irrelevant_values=irrelevant_removal_invariance_success(
                 normal_logits=judgment["candidate_logits"],
                 removed_logits=irrelevant["public_judgment"]["candidate_logits"],
@@ -933,6 +945,12 @@ def fabric_lane_metrics(
             ),
             "decisive_source_removal_count":count(
                 "decisive_removal_success"
+            ),
+            "evidence_removal_uncertainty_increase":mean(
+                evidence_uncertainty_values
+            ),
+            "evidence_removal_uncertainty_count":len(
+                evidence_uncertainty_values
             ),
             "irrelevant_source_removal_invariance":rate(
                 "irrelevant_removal_invariance"

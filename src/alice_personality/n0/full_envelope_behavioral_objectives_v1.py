@@ -204,6 +204,77 @@ def _mask_candidate_logits(
     )
 
 
+def _normalized_candidate_entropy(
+    logits: Tensor,
+    candidate_valid_mask: Tensor | None,
+) -> Tensor:
+    masked,valid=_mask_candidate_logits(logits,candidate_valid_mask)
+    log_probability=torch.log_softmax(masked.float(),dim=-1)
+    probability=log_probability.exp()
+    contribution=-(probability*log_probability).masked_fill(~valid,0.0)
+    raw=contribution.sum(dim=-1)
+    count=valid.sum(dim=-1)
+    denom=count.clamp_min(2).float().log()
+    return torch.where(
+        count>1,
+        raw/denom,
+        torch.zeros_like(raw),
+    )
+
+
+def evidence_removal_uncertainty_margin_loss(
+    normal_candidate_logits: Tensor,
+    ablated_candidate_logits: Tensor,
+    *,
+    candidate_valid_mask: Tensor | None = None,
+    active_mask: Tensor | None = None,
+    minimum_entropy_increase: float = 0.05,
+) -> Tensor:
+    """Require decisive-evidence removal to increase judgment uncertainty.
+
+    A target-probability drop alone can be satisfied by switching to a different
+    answer with high confidence. N0's uncertainty contract instead requires the
+    governed public judgment distribution to become less certain when decisive
+    evidence is removed.
+    """
+    if normal_candidate_logits.shape!=ablated_candidate_logits.shape:
+        raise ValueError("evidence-removal uncertainty logit geometry drift")
+    if float(minimum_entropy_increase)<0.0:
+        raise ValueError("minimum_entropy_increase must be non-negative")
+    normal_entropy=_normalized_candidate_entropy(
+        normal_candidate_logits,candidate_valid_mask
+    )
+    ablated_entropy=_normalized_candidate_entropy(
+        ablated_candidate_logits,candidate_valid_mask
+    )
+    batch=normal_candidate_logits.size(0)
+    if active_mask is None:
+        active_mask=torch.ones(
+            batch,device=normal_candidate_logits.device,dtype=torch.bool
+        )
+    if active_mask.shape!=(batch,) or active_mask.dtype!=torch.bool:
+        raise ValueError("evidence-removal uncertainty active_mask must be bool [B]")
+    raw=F.relu(
+        float(minimum_entropy_increase)
+        -(ablated_entropy-normal_entropy)
+    )
+    selected=raw.masked_select(active_mask)
+    if selected.numel()==0:
+        valid=(
+            torch.ones_like(normal_candidate_logits,dtype=torch.bool)
+            if candidate_valid_mask is None
+            else candidate_valid_mask
+        )
+        return (
+            normal_candidate_logits.masked_select(valid).sum()
+            + ablated_candidate_logits.masked_select(valid).sum()
+        )*0.0
+    loss=selected.mean()
+    if not bool(torch.isfinite(loss.detach())):
+        raise ValueError("evidence-removal uncertainty loss became non-finite")
+    return loss
+
+
 def decisive_view_causal_margin_loss(
     normal_candidate_logits: Tensor,
     ablated_candidate_logits: Tensor,

@@ -442,6 +442,52 @@ def public_judgment_correct(
     return probability.argmax(dim=-1).eq(target_index.long())
 
 
+def normalized_candidate_entropy(
+    *,
+    candidate_logits: Tensor,
+    candidate_valid_mask: Tensor,
+) -> Tensor:
+    probability=_masked_candidate_probabilities(
+        logits=candidate_logits,
+        valid_mask=candidate_valid_mask,
+    )
+    log_probability=torch.where(
+        probability.gt(0.0),
+        probability.clamp_min(1.0e-30).log(),
+        torch.zeros_like(probability),
+    )
+    raw=-(probability*log_probability).sum(dim=-1)
+    count=candidate_valid_mask.sum(dim=-1)
+    denom=count.clamp_min(2).float().log()
+    return torch.where(
+        count>1,
+        raw/denom,
+        torch.zeros_like(raw),
+    )
+
+
+def evidence_removal_uncertainty_increase(
+    *,
+    normal_logits: Tensor,
+    ablated_logits: Tensor,
+    candidate_valid_mask: Tensor,
+    active_mask: Tensor,
+) -> Tensor:
+    if normal_logits.shape!=ablated_logits.shape:
+        raise ValueError("evidence-removal uncertainty geometry drift")
+    if active_mask.shape!=(normal_logits.size(0),) or active_mask.dtype!=torch.bool:
+        raise ValueError("evidence-removal uncertainty active-mask geometry drift")
+    normal=normalized_candidate_entropy(
+        candidate_logits=normal_logits,
+        candidate_valid_mask=candidate_valid_mask,
+    )
+    ablated=normalized_candidate_entropy(
+        candidate_logits=ablated_logits,
+        candidate_valid_mask=candidate_valid_mask,
+    )
+    return (ablated-normal).masked_select(active_mask)
+
+
 def decisive_removal_success(
     *,
     normal_logits: Tensor,

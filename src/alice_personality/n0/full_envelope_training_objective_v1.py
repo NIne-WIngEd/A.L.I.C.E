@@ -8,6 +8,7 @@ from torch import Tensor, nn
 from alice_personality.n0.full_envelope_behavioral_objectives_v1 import (
     decisive_view_causal_margin_loss,
     endpoint_role_loss,
+    evidence_removal_uncertainty_margin_loss,
     irrelevant_view_invariance_loss,
     latent_noncollapse_loss,
     permutation_consistency_loss,
@@ -370,6 +371,17 @@ def behavioral_supervision(
             ],
             active_mask=targets["decisive_view_active_mask"].bool(),
         )
+        losses["evidence_removal_uncertainty"]=(
+            evidence_removal_uncertainty_margin_loss(
+                primary_judgment["candidate_logits"],
+                decisive_judgment["candidate_logits"],
+                candidate_valid_mask=primary_judgment[
+                    "candidate_valid_mask"
+                ],
+                active_mask=targets["decisive_view_active_mask"].bool(),
+                minimum_entropy_increase=0.05,
+            )
+        )
         losses["irrelevant_view_invariance"]=irrelevant_view_invariance_loss(
             primary_judgment["candidate_logits"],
             irrelevant_judgment["candidate_logits"],
@@ -456,6 +468,9 @@ def full_envelope_family_losses(
         families["multi_view_causal_preservation"]={
             "decisive_view_causality":behavioral_losses[
                 "decisive_view_causality"
+            ],
+            "evidence_removal_uncertainty":behavioral_losses[
+                "evidence_removal_uncertainty"
             ],
             "irrelevant_view_invariance":behavioral_losses[
                 "irrelevant_view_invariance"
