@@ -15,7 +15,10 @@
     "gradient_accumulation_is_capability_ceiling": false,
     "ddp_replica_topology": true,
     "model_sharding_required": false,
-    "sharding_may_be_reopened_if_memory_receipt_requires_it": true
+    "sharding_may_be_reopened_if_memory_receipt_requires_it": true,
+    "teacher_batch_size": 2,
+    "replay_sequence_length": 512,
+    "training_mixed_precision": "fp16"
   },
   "memory_projection": {
     "parameter_dtype_bytes": 4,
