@@ -907,3 +907,34 @@ def test_dev_gate_evaluator_fails_closed_on_missing_metrics_and_uses_static_rece
     assert missing["stage_gate_coverage_complete"] is False
     assert missing["stage_gate_pass"] is False
     assert missing["mapping_errors"]
+
+
+def test_successor_dev_evaluator_executes_j1_gate_registry_and_fixed_regression_suites() -> None:
+    dev=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_dev_validation_contract_v1.json").read_text()
+    )
+    evaluator=(
+        ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py"
+    ).read_text()
+    assert dev["dev_gate_registry"]=="configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json"
+    assert dev["static_proof_receipt_required"] is True
+    assert dev["fixed_regression_suites"]=={
+        "core_fixed":"evaluation/eipm/n0/n0_v02_fixed_readiness_base_v0.1.jsonl",
+        "voice_fixed":"evaluation/eipm/n0/n0_v02_voice_readiness_base_v0.1.jsonl",
+        "novel_cross":"evaluation/eipm/n0/n0_v02_novel_cross_competency_base_v0.1.jsonl",
+    }
+    for symbol in (
+        "semantic_batch_record",
+        "evaluate_stage_gate_registry",
+        "fixed_preference_top1",
+        "source_target_pair_completion",
+        "mixed_step_direction_sequence_exact",
+        "bidirectional_relation_token_grounding_min_f1",
+        "relation_counterfactual_margin_success",
+        "PASS_DEV_STAGE_GATE",
+    ):
+        assert symbol in evaluator
+    assert 'parser.add_argument("--static-proof-receipt",required=True)' in evaluator
+    assert "FINAL rows are forbidden in successor DEV evaluator" in evaluator
+    assert "stage_gate_pass" in evaluator
+    assert "stage_gate_pass=False" not in evaluator.replace(" ","")

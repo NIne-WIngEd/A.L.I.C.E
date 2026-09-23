@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from collections import defaultdict
 from pathlib import Path
@@ -14,6 +13,14 @@ from torch.utils.data import DataLoader
 from alice_personality.n0.curriculum_data import CurriculumDataset, load_tokenizer
 from alice_personality.n0.full_envelope_behavioral_batch_v1 import (
     compile_behavioral_batch,
+)
+from alice_personality.n0.full_envelope_dev_gate_v1 import (
+    evaluate_stage_gate_registry,
+)
+from alice_personality.n0.full_envelope_dev_metrics_v1 import (
+    boolean_rate,
+    mean,
+    semantic_batch_record,
 )
 from alice_personality.n0.full_envelope_joint_step_v1 import (
     governed_judgment_replay_loss,
@@ -75,6 +82,22 @@ def read_dev_rows(path: str | Path) -> list[dict[str,Any]]:
     return selected
 
 
+def read_fixed_eval_rows(path: Path) -> list[dict[str,Any]]:
+    rows=[
+        json.loads(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    if not rows:
+        raise SystemExit(f"fixed regression suite empty: {path}")
+    for row in rows:
+        if row.get("eval_only") is not True:
+            raise SystemExit(f"fixed regression row lacks eval_only: {row.get('id')}")
+        if row.get("training_authorized") is not False:
+            raise SystemExit(f"fixed regression row training-authorized: {row.get('id')}")
+    return rows
+
+
 def to_device(value: Any,device: torch.device) -> Any:
     if isinstance(value,torch.Tensor):
         return value.to(device)
@@ -85,12 +108,6 @@ def to_device(value: Any,device: torch.device) -> Any:
     if isinstance(value,tuple):
         return tuple(to_device(v,device) for v in value)
     return value
-
-
-def mean(values: list[float]) -> float:
-    if not values:
-        raise ValueError("cannot average empty DEV metric")
-    return sum(values)/len(values)
 
 
 def teacher_top1_rate(
@@ -104,16 +121,12 @@ def teacher_top1_rate(
     losses=[]
     for batch in loader:
         batch=to_device(batch,device)
-        loss,_=governed_judgment_replay_loss(
-            system=system,batch=batch
-        )
+        loss,_=governed_judgment_replay_loss(system=system,batch=batch)
         losses.append(float(loss.detach().cpu()))
         outputs=system(task="teacher",batch=batch)
         scores=outputs["scores"]
         offset=0
-        for size,preferred in zip(
-            batch["group_sizes"],batch["preferred_masks"]
-        ):
+        for size,preferred in zip(batch["group_sizes"],batch["preferred_masks"]):
             local=scores[offset:offset+int(size)]
             prediction=int(local.argmax().item())
             mask=preferred.to(device=local.device,dtype=torch.bool)
@@ -125,31 +138,288 @@ def teacher_top1_rate(
     return correct/total,mean(losses)
 
 
+def fixed_preference_top1(
+    *,
+    system: torch.nn.Module,
+    rows: list[dict[str,Any]],
+    tokenizer: Any,
+    device: torch.device,
+    max_length: int=512,
+) -> dict[str,float]:
+    correct=0
+    total=0
+    paraphrase_correct=0
+    paraphrase_total=0
+    for row in rows:
+        candidates=[str(x) for x in row["candidates"]]
+        preferred={int(x) for x in row["preferred_indices"]}
+        prompts=[("prompt",str(row["prompt"]))]
+        if str(row.get("prompt_paraphrase","")).strip():
+            prompts.append(("paraphrase",str(row["prompt_paraphrase"])))
+        for kind,prompt in prompts:
+            encoded=tokenizer(
+                [prompt]*len(candidates),
+                candidates,
+                padding=True,
+                truncation=True,
+                max_length=max_length,
+                return_tensors="pt",
+            )
+            scores=system.semantic_model.score_candidates(
+                encoded["input_ids"].to(device),
+                encoded["attention_mask"].to(device),
+            )
+            ok=int(int(scores.argmax().item()) in preferred)
+            correct+=ok
+            total+=1
+            if kind=="paraphrase":
+                paraphrase_correct+=ok
+                paraphrase_total+=1
+    return {
+        "top1":correct/max(total,1),
+        "paraphrase_top1":paraphrase_correct/max(paraphrase_total,1),
+        "evaluated_prompt_variants":float(total),
+    }
+
+
+def _tensor_bool(value: torch.Tensor) -> bool:
+    if value.numel()!=1:
+        raise ValueError("expected one-row DEV tensor")
+    return bool(value.reshape(-1)[0].item())
+
+
+def _tensor_bool_values(value: torch.Tensor) -> list[bool]:
+    return [bool(x) for x in value.detach().cpu().reshape(-1).tolist()]
+
+
 def semantic_lane_metrics(
     *,
     system: torch.nn.Module,
     rows: list[dict[str,Any]],
     tokenizer: Any,
     device: torch.device,
-) -> dict[str,float]:
-    totals=defaultdict(list)
+) -> dict[str,Any]:
+    loss_totals=defaultdict(list)
+    records=[]
+    global_bank=defaultdict(list)
+    step_bank=defaultdict(list)
+    relation_margin_values=[]
+    factor_margin_values=[]
+    query_evidence=[]
+    relation_evidence=[]
+    factor_evidence=[]
+    step_factor_evidence=[]
+
     for row in rows:
-        compiled=compile_semantic_operator_batch(
-            rows=[row],tokenizer=tokenizer
-        )
+        compiled=compile_semantic_operator_batch(rows=[row],tokenizer=tokenizer)
         compiled=to_device(compiled,device)
-        outputs=system(
-            task="semantic_operator",
-            batch=compiled["batch"],
-        )
-        losses=semantic_operator_supervision(
-            outputs=outputs,
-            targets=compiled["operator_targets"],
-        )
+        outputs=system(task="semantic_operator",batch=compiled["batch"])
+        semantic=outputs["semantic_operator"]
+        targets=compiled["operator_targets"]
+        losses=semantic_operator_supervision(outputs=outputs,targets=targets)
         for name,value in losses.items():
             if isinstance(value,torch.Tensor) and value.ndim==0:
-                totals[name].append(float(value.detach().cpu()))
-    return {name:mean(values) for name,values in sorted(totals.items())}
+                loss_totals[name].append(float(value.detach().cpu()))
+
+        measured=semantic_batch_record(semantic=semantic,targets=targets)
+        global_correct={
+            name:_tensor_bool(value)
+            for name,value in measured["global_factor_correct"].items()
+        }
+        step_correct={
+            name:_tensor_bool(value)
+            for name,value in measured["step_factor_exact"].items()
+        }
+        for name,value in global_correct.items():
+            global_bank[name].append(value)
+        if bool(targets["step_factor_mask"].any()):
+            for name,value in step_correct.items():
+                step_bank[name].append(value)
+
+        relation_margin_values.extend(
+            _tensor_bool_values(measured["relation_margin_success"])
+        )
+        factor_margin_values.extend(
+            _tensor_bool_values(measured["factor_margin_success"])
+        )
+        query_evidence.append(float(measured["query_evidence_f1"]))
+        relation_evidence.append(float(measured["relation_schema_evidence_f1"]))
+        factor_evidence.append(float(measured["factor_schema_evidence_f1"]))
+        step_factor_evidence.append(
+            float(measured["step_factor_schema_evidence_f1"])
+        )
+        records.append({
+            "id":str(row.get("id")),
+            "intervention":str(row.get("intervention","")),
+            "counterfactual_pair_id":row.get("counterfactual_pair_id"),
+            "long_context_surface":row.get("long_context_surface"),
+            "relation_exact":_tensor_bool(measured["relation_exact"]),
+            "event_exact":_tensor_bool(measured["event_exact"]),
+            "applicability_correct":_tensor_bool(
+                measured["applicability_correct"]
+            ),
+            "uncertainty_correct":_tensor_bool(
+                measured["uncertainty_correct"]
+            ),
+            "global_factor_correct":global_correct,
+            "step_factor_exact":step_correct,
+            "query_evidence_f1":float(measured["query_evidence_f1"]),
+            "relation_schema_evidence_f1":float(
+                measured["relation_schema_evidence_f1"]
+            ),
+            "factor_schema_evidence_f1":float(
+                measured["factor_schema_evidence_f1"]
+            ),
+            "step_factor_schema_evidence_f1":float(
+                measured["step_factor_schema_evidence_f1"]
+            ),
+        })
+
+    nonunknown=[x for x in records if x["intervention"]!="unknown_defer"]
+    relation_exact=boolean_rate([x["relation_exact"] for x in nonunknown])
+
+    all_factor_rates=[
+        boolean_rate(values)
+        for values in global_bank.values()
+    ] + [
+        boolean_rate(values)
+        for values in step_bank.values()
+    ]
+    dynamic_factor_macro=mean(all_factor_rates)
+
+    pairs=defaultdict(list)
+    for record in records:
+        pair=record.get("counterfactual_pair_id")
+        if pair:
+            role_ok=bool(record["global_factor_correct"].get("role",False))
+            pairs[str(pair)].append(
+                bool(record["relation_exact"])
+                and bool(record["event_exact"])
+                and role_ok
+            )
+    pair_success=[
+        len(values)>=2 and all(values)
+        for values in pairs.values()
+    ]
+
+    ordered=[
+        x for x in records
+        if x["intervention"] in {
+            "ordered_composition","reverse_ordered_composition"
+        }
+    ]
+    ordered_success=[
+        bool(x["relation_exact"])
+        and bool(x["event_exact"])
+        and bool(x["global_factor_correct"].get("traversal",False))
+        for x in ordered
+    ]
+
+    unknown=[x for x in records if x["intervention"]=="unknown_defer"]
+    unknown_success=[
+        bool(x["relation_exact"])
+        and bool(x["event_exact"])
+        and bool(x["global_factor_correct"].get("control",False))
+        and bool(x["applicability_correct"])
+        and bool(x["uncertainty_correct"])
+        for x in unknown
+    ]
+
+    mixed_direction=[
+        x for x in records
+        if x["intervention"]=="mixed_direction_composition"
+    ]
+    mixed_direction_success=[
+        bool(x["relation_exact"])
+        and bool(x["event_exact"])
+        and bool(x["step_factor_exact"].get("direction",False))
+        for x in mixed_direction
+    ]
+
+    modifier_names=(
+        "reliability_modifier","recency_modifier",
+        "temporal_constraint_modifier","provenance_constraint_modifier",
+    )
+    mixed_modifier=[
+        x for x in records
+        if x["intervention"]=="mixed_step_modifier_composition"
+    ]
+    mixed_modifier_success=[
+        bool(x["relation_exact"])
+        and bool(x["event_exact"])
+        and all(bool(x["step_factor_exact"].get(name,False)) for name in modifier_names)
+        for x in mixed_modifier
+    ]
+
+    long_relation_rows=[
+        x for x in records
+        if x.get("long_context_surface")=="relation_schema"
+    ]
+    long_factor_rows=[
+        x for x in records
+        if x.get("long_context_surface")=="factor_schema"
+    ]
+    long_relation_factor_values=[]
+    if long_relation_rows:
+        long_relation_factor_values.append(
+            boolean_rate([bool(x["relation_exact"]) for x in long_relation_rows])
+        )
+    if long_factor_rows:
+        long_relation_factor_values.append(
+            boolean_rate([
+                bool(x["relation_exact"])
+                and bool(x["global_factor_correct"].get("direction",False))
+                for x in long_factor_rows
+            ])
+        )
+
+    return {
+        "rows":len(records),
+        "losses":{
+            name:mean(values)
+            for name,values in sorted(loss_totals.items())
+        },
+        "relation_sequence_exact":relation_exact,
+        "dynamic_factor_macro_accuracy":dynamic_factor_macro,
+        "global_factor_bank_accuracy":{
+            name:boolean_rate(values)
+            for name,values in sorted(global_bank.items())
+        },
+        "step_factor_bank_sequence_exact":{
+            name:boolean_rate(values)
+            for name,values in sorted(step_bank.items())
+        },
+        "source_target_pair_completion":boolean_rate(pair_success),
+        "ordered_relation_sequence_exact":boolean_rate(ordered_success),
+        "unknown_defer_accuracy":boolean_rate(unknown_success),
+        "mixed_step_direction_sequence_exact":boolean_rate(
+            mixed_direction_success
+        ),
+        "mixed_step_modifier_sequence_exact":boolean_rate(
+            mixed_modifier_success
+        ),
+        "relation_counterfactual_margin_success":boolean_rate(
+            relation_margin_values
+        ),
+        "factor_counterfactual_margin_success":boolean_rate(
+            factor_margin_values
+        ),
+        "query_token_grounding_f1":mean(query_evidence),
+        "relation_schema_token_grounding_f1":mean(relation_evidence),
+        "factor_schema_token_grounding_f1":mean(factor_evidence),
+        "step_factor_schema_token_grounding_f1":mean(step_factor_evidence),
+        "bidirectional_relation_token_grounding_min_f1":min(
+            mean(query_evidence),mean(relation_evidence)
+        ),
+        "factor_token_grounding_min_f1":min(
+            mean(factor_evidence),mean(step_factor_evidence)
+        ),
+        "long_relation_factor_semantics_min":(
+            min(long_relation_factor_values)
+            if long_relation_factor_values else relation_exact
+        ),
+        "records":records,
+    }
 
 
 def natural_lane_metrics(
@@ -168,10 +438,7 @@ def natural_lane_metrics(
             rows=[row],relation_bank=bank,tokenizer=tokenizer
         )
         compiled=to_device(compiled,device)
-        outputs=system(
-            task="natural_relation",
-            batch=compiled["batch"],
-        )
+        outputs=system(task="natural_relation",batch=compiled["batch"])
         loss=natural_relation_semantic_loss(
             outputs=outputs,
             target_relation_index=compiled["target_relation_index"],
@@ -181,11 +448,7 @@ def natural_lane_metrics(
         target=compiled["target_relation_index"]
         correct+=int((logits.argmax(dim=-1)==target).sum().item())
         total+=int(target.numel())
-    return {
-        "loss":mean(losses),
-        "top1":correct/max(total,1),
-        "rows":float(total),
-    }
+    return {"loss":mean(losses),"top1":correct/max(total,1),"rows":float(total)}
 
 
 def fabric_lane_metrics(
@@ -199,27 +462,19 @@ def fabric_lane_metrics(
     policy=resolve_stage_policy(stage)
     totals=defaultdict(list)
     for row in rows:
-        compiled=compile_behavioral_batch(
-            rows=[row],tokenizer=tokenizer
-        )
+        compiled=compile_behavioral_batch(rows=[row],tokenizer=tokenizer)
         compiled=to_device(compiled,device)
-        primary=system(
-            task="full_envelope",
-            batch=compiled["primary_batch"],
-        )
+        primary=system(task="full_envelope",batch=compiled["primary_batch"])
         decisive=irrelevant=permuted=None
         if "multi_view_causal_preservation" in policy.active_macro_families:
             decisive=system(
-                task="full_envelope",
-                batch=compiled["decisive_ablated_batch"],
+                task="full_envelope",batch=compiled["decisive_ablated_batch"]
             )
             irrelevant=system(
-                task="full_envelope",
-                batch=compiled["irrelevant_removed_batch"],
+                task="full_envelope",batch=compiled["irrelevant_removed_batch"]
             )
             permuted=system(
-                task="full_envelope",
-                batch=compiled["permuted_batch"],
+                task="full_envelope",batch=compiled["permuted_batch"]
             )
         losses=behavioral_supervision(
             primary_outputs=primary,
@@ -261,6 +516,9 @@ def main() -> None:
     p.add_argument("--natural-rows",required=True)
     p.add_argument("--natural-bank",required=True)
     p.add_argument("--dev-contract",required=True)
+    p.add_argument("--gate-registry",required=True)
+    p.add_argument("--proof-contract",required=True)
+    p.add_argument("--static-proof-receipt",required=True)
     p.add_argument("--output",required=True)
     p.add_argument("--teacher-batch-size",type=int,default=8)
     args=p.parse_args()
@@ -284,6 +542,26 @@ def main() -> None:
         raise SystemExit("candidate checkpoint has observed FINAL")
     if candidate.get("private_identity_data") is not False:
         raise SystemExit("candidate checkpoint contains private identity data")
+    if candidate.get("full_system_sha256")!=sha256_file(args.candidate_system):
+        raise SystemExit("candidate full-system hash drift")
+    if candidate.get("registered_topology_sha256")!=sha256_file(
+        args.topology_config
+    ):
+        raise SystemExit("candidate topology lineage drift")
+    if candidate.get("semantic_initialization_sha256")!=sha256_file(
+        args.semantic_checkpoint
+    ):
+        raise SystemExit("candidate semantic initialization lineage drift")
+    if candidate.get("static_proof_receipt_sha256")!=sha256_file(
+        args.static_proof_receipt
+    ):
+        raise SystemExit("candidate static-proof lineage drift")
+
+    static_receipt=read_json(args.static_proof_receipt)
+    if static_receipt.get("status")!="PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1":
+        raise SystemExit("static proof receipt not PASS")
+    if static_receipt.get("source_revision")!=candidate.get("source_revision"):
+        raise SystemExit("candidate/static-proof source revision drift")
 
     mixture=read_json(args.mixture_manifest)
     mixture_audit=read_json(args.mixture_audit)
@@ -319,6 +597,11 @@ def main() -> None:
     system.eval()
 
     tokenizer=load_tokenizer(args.tokenizer_dir)
+    if candidate.get("tokenizer_sha256")!=sha256_file(
+        Path(args.tokenizer_dir)/"tokenizer.json"
+    ):
+        raise SystemExit("candidate/tokenizer lineage drift")
+
     repo_root=Path(__file__).resolve().parents[3]
     curriculum_paths,teacher_report=verify_teacher_registry(
         repo_root,args.teacher_registry,args.teacher_audit
@@ -340,9 +623,23 @@ def main() -> None:
     natural=read_dev_rows(args.natural_rows)
     natural_bank=read_json(args.natural_bank)
 
+    fixed=contract["fixed_regression_suites"]
+    core_rows=read_fixed_eval_rows(repo_root/str(fixed["core_fixed"]))
+    voice_rows=read_fixed_eval_rows(repo_root/str(fixed["voice_fixed"]))
+    novel_rows=read_fixed_eval_rows(repo_root/str(fixed["novel_cross"]))
+
     with torch.inference_mode():
         teacher_top1,teacher_loss=teacher_top1_rate(
             system=system,loader=teacher_loader,device=device
+        )
+        core_fixed=fixed_preference_top1(
+            system=system,rows=core_rows,tokenizer=tokenizer,device=device
+        )
+        voice_fixed=fixed_preference_top1(
+            system=system,rows=voice_rows,tokenizer=tokenizer,device=device
+        )
+        novel_cross=fixed_preference_top1(
+            system=system,rows=novel_rows,tokenizer=tokenizer,device=device
         )
         semantic_metrics=semantic_lane_metrics(
             system=system,rows=semantic,tokenizer=tokenizer,device=device
@@ -370,49 +667,70 @@ def main() -> None:
                 device=device,stage=args.stage
             )
 
-    stage_plan=read_json(contract["stage_gate_source"])
-    declared=list(stage_plan["stage_gates"][
+    metrics={
+        "historical_regression":{
+            "teacher_dev_top1":teacher_top1,
+            "teacher_dev_loss":teacher_loss,
+            "core_fixed_top1":core_fixed["top1"],
+            "voice_fixed_top1":voice_fixed["top1"],
+            "novel_cross_top1":novel_cross["top1"],
+            "core_fixed":core_fixed,
+            "voice_fixed":voice_fixed,
+            "novel_cross":novel_cross,
+        },
+        "semantic_operator":semantic_metrics,
+        "semantic_operator_long_context":semantic_long_metrics,
+        "natural_relation":natural_metrics,
+        "full_fabric":fabric_metrics,
+    }
+
+    registry=read_json(args.gate_registry)
+    proof_contract=read_json(args.proof_contract)
+    plan=read_json(contract["stage_gate_source"])
+    declared=list(plan["stage_gates"][
         "J1" if args.stage==J1 else "J2" if args.stage==J2 else "J3"
     ])
-    # This evaluator deliberately does not pretend that a finite aggregate
-    # loss proves every named capability gate. It emits real DEV measurements
-    # and blocks stage selection until every declared gate has an explicit
-    # metric mapping. FINAL data may never be used to fill that gap.
-    mapped={
-        "historical_semantic_regression":{
-            "metric":"teacher_dev_top1",
-            "value":teacher_top1,
-        },
-        "natural_heldout_relation_family_semantics":{
-            "metric":"natural_relation_top1",
-            "value":natural_metrics["top1"],
-        },
-    }
-    unmapped=[name for name in declared if name not in mapped]
-    gate_coverage_complete=not unmapped
-    stage_gate_pass=False
+    stage_registry=registry["stages"].get(args.stage) or {}
+    registered=list((stage_registry.get("gates") or {}).keys())
+    registry_matches_declared=set(registered)==set(declared)
+    if bool(stage_registry.get("mapping_complete")) and not registry_matches_declared:
+        raise SystemExit(
+            "DEV gate registry claims completeness but does not match declared stage gates"
+        )
+
+    gate_result=evaluate_stage_gate_registry(
+        registry=registry,
+        stage=args.stage,
+        metrics=metrics,
+        proof_contract=proof_contract,
+        static_receipt=static_receipt,
+    )
+    if not registry_matches_declared:
+        gate_result["stage_gate_coverage_complete"]=False
+        gate_result["stage_gate_pass"]=False
+        gate_result["mapping_errors"].append(
+            "registered gate set does not match joint training plan"
+        )
 
     result={
         "schema":"alice.eipm.n0.full-envelope-dev-evaluation.v1",
-        "status":"DEV_METRICS_RECORDED_GATE_MAPPING_INCOMPLETE" if unmapped else "DEV_METRICS_RECORDED",
+        "status":(
+            "PASS_DEV_STAGE_GATE"
+            if gate_result["stage_gate_pass"]
+            else "DEV_METRICS_RECORDED_STAGE_BLOCKED"
+        ),
         "stage":args.stage,
+        "source_revision":candidate.get("source_revision"),
         "checkpoint_selection_surface":"DEV_ONLY",
         "candidate_checkpoint_receipt_sha256":sha256_file(args.candidate_receipt),
         "candidate_system_sha256":sha256_file(args.candidate_system),
+        "static_proof_receipt_sha256":sha256_file(args.static_proof_receipt),
         "teacher_registered_rows":int(teacher_report["registered_rows"]),
-        "metrics":{
-            "teacher_dev_top1":teacher_top1,
-            "teacher_dev_loss":teacher_loss,
-            "semantic_operator":semantic_metrics,
-            "semantic_operator_long_context":semantic_long_metrics,
-            "natural_relation":natural_metrics,
-            "full_fabric":fabric_metrics,
-        },
+        "metrics":metrics,
         "declared_stage_gates":declared,
-        "mapped_stage_gates":mapped,
-        "unmapped_stage_gates":unmapped,
-        "stage_gate_coverage_complete":gate_coverage_complete,
-        "stage_gate_pass":stage_gate_pass,
+        "registered_stage_gates":registered,
+        "registry_matches_declared_stage_gates":registry_matches_declared,
+        **gate_result,
         "checkpoint_selection_performed":False,
         "automatic_stage_transition":False,
         "final_validation_only":False,

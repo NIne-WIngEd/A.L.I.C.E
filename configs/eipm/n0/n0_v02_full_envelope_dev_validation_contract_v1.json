@@ -36,7 +36,9 @@
     "checkpoint_selection_performed_by_evaluator": false,
     "automatic_stage_transition": false,
     "final_opening_authorized": false,
-    "n0_complete": false
+    "n0_complete": false,
+    "j1_stage_gate_can_pass_only_if_every_registered_gate_passes": true,
+    "j2_j3_remain_blocked_until_mapping_complete": true
   },
   "authority": {
     "private_identity_data": false,
@@ -44,5 +46,13 @@
     "final_results_observed": false,
     "final_opening_authorized": false,
     "final_checkpoint_selection_allowed": false
+  },
+  "dev_gate_registry": "configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json",
+  "static_proof_contract": "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
+  "static_proof_receipt_required": true,
+  "fixed_regression_suites": {
+    "core_fixed": "evaluation/eipm/n0/n0_v02_fixed_readiness_base_v0.1.jsonl",
+    "voice_fixed": "evaluation/eipm/n0/n0_v02_voice_readiness_base_v0.1.jsonl",
+    "novel_cross": "evaluation/eipm/n0/n0_v02_novel_cross_competency_base_v0.1.jsonl"
   }
 }

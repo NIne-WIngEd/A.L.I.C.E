@@ -1272,6 +1272,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_dev_gate_evaluator_fails_closed_on_missing_metrics_and_uses_static_receipt",
       "requirement": "The DEV stage-gate evaluator must fail closed on missing scalar metrics, require exact-source static proof obligations for source-invariant gates, and never infer a pass from an incomplete registry."
+    },
+    {
+      "id": "N0-P43K",
+      "stage": "dev_validation",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_successor_dev_evaluator_executes_j1_gate_registry_and_fixed_regression_suites",
+      "requirement": "The successor DEV evaluator must compute J1 relation/factor/control/counterfactual/token-grounding metrics and frozen historical teacher/novel/voice regression surfaces, then evaluate the precommitted J1 registry fail-closed. It may not hard-code stage failure or use FINAL to fill missing evidence."
     }
   ],
   "closure_rule": {
