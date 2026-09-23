@@ -13,6 +13,8 @@ from typing import Any
 
 import torch
 
+from alice_personality.n0.source_authority_v1 import require_canonical_source_file
+
 
 PASS = "PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1"
 
@@ -173,6 +175,30 @@ def main() -> None:
     output_path = Path(args.output).resolve()
     if output_path.exists():
         raise SystemExit(f"refusing to overwrite {output_path}")
+
+    status=subprocess.check_output(["git","status","--porcelain"],text=True)
+    if status.strip():
+        raise SystemExit("CPU runtime qualification requires a clean exact-source worktree")
+    require_canonical_source_file(
+        qualification_path,
+        "configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json",
+        label="CPU qualification config",
+    )
+    require_canonical_source_file(
+        topology_path,
+        "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json",
+        label="registered topology config",
+    )
+    require_canonical_source_file(
+        semantic_config_path,
+        "configs/eipm/n0/alice_n0_semantic_v0.2.json",
+        label="semantic config",
+    )
+    require_canonical_source_file(
+        source_config_path,
+        "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
+        label="public source config",
+    )
 
     source_revision=str(args.source_revision).strip().lower()
     if len(source_revision)!=40 or any(
