@@ -42,6 +42,11 @@ EVIDENCE_ROWS="$EVIDENCE_ROOT/rows.jsonl"
 EVIDENCE_MANIFEST="$EVIDENCE_ROOT/manifest.json"
 EVIDENCE_STATIC_AUDIT="$EVIDENCE_ROOT/static_audit.json"
 EVIDENCE_TOKEN_AUDIT="$EVIDENCE_ROOT/token_alignment.json"
+SEMANTIC_LONG_ROOT="$RUN_ROOT/semantic-operator-long-context"
+SEMANTIC_LONG_ROWS="$SEMANTIC_LONG_ROOT/rows.jsonl"
+SEMANTIC_LONG_MANIFEST="$SEMANTIC_LONG_ROOT/manifest.json"
+SEMANTIC_LONG_STATIC_AUDIT="$SEMANTIC_LONG_ROOT/static_audit.json"
+SEMANTIC_LONG_TOKEN_AUDIT="$SEMANTIC_LONG_ROOT/token_alignment.json"
 LONG_CONTEXT_ROOT="$RUN_ROOT/long-context"
 LONG_CONTEXT_ROWS="$LONG_CONTEXT_ROOT/rows.jsonl"
 LONG_CONTEXT_MANIFEST="$LONG_CONTEXT_ROOT/manifest.json"
@@ -79,12 +84,14 @@ python -m py_compile \
   "$ROOT/scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py" \
   "$ROOT/scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py" \
   "$ROOT/scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py" \
+  "$ROOT/scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py" \
+  "$ROOT/scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py" \
   "$ROOT/scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py" \
   "$ROOT/scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py" \
   "$ROOT/scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_token_boundaries_v1.py" \
   "$ROOT/scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"
 
-mkdir -p "$RUN_ROOT" "$EVIDENCE_ROOT" "$LONG_CONTEXT_ROOT"
+mkdir -p "$RUN_ROOT" "$EVIDENCE_ROOT" "$SEMANTIC_LONG_ROOT" "$LONG_CONTEXT_ROOT"
 
 python "$ROOT/scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py" \
   --output "$EVIDENCE_ROWS" \
@@ -122,6 +129,42 @@ assert token["positive_step_factor_schema_tokens"] > 0
 assert token["training_authorized_by_audit"] is False
 assert token["max_length_is_product_ceiling"] is False
 print("PASS_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1")
+PY
+
+python "$ROOT/scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py" \
+  --output "$SEMANTIC_LONG_ROWS" \
+  --manifest "$SEMANTIC_LONG_MANIFEST" \
+  --long-word-target 4608
+
+python "$ROOT/scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py" \
+  --rows "$SEMANTIC_LONG_ROWS" \
+  --manifest "$SEMANTIC_LONG_MANIFEST" \
+  --contract "$ROOT/configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json" \
+  --output "$SEMANTIC_LONG_STATIC_AUDIT"
+
+python "$ROOT/scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py" \
+  --rows "$SEMANTIC_LONG_ROWS" \
+  --tokenizer-dir "$TOKENIZER" \
+  --max-length 8192 \
+  --output "$SEMANTIC_LONG_TOKEN_AUDIT"
+
+python - "$SEMANTIC_LONG_STATIC_AUDIT" "$SEMANTIC_LONG_TOKEN_AUDIT" <<'PY'
+import json,sys
+static=json.load(open(sys.argv[1]))
+token=json.load(open(sys.argv[2]))
+assert static["status"]=="PASS_N0_SEMANTIC_OPERATOR_LONG_CONTEXT_CURRICULUM_AUDIT_V1"
+assert token["status"]=="PASS_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1"
+assert token["positive_query_tokens"]>0
+assert token["positive_relation_schema_tokens"]>0
+assert token["positive_factor_schema_tokens"]>0
+assert token["positive_step_factor_schema_tokens"]>0
+assert token["max_query_tokens"]>4096
+assert token["max_relation_schema_tokens"]>4096
+assert token["max_factor_schema_tokens"]>4096
+assert token["max_length_operating_point"]==8192
+assert token["max_length_is_product_ceiling"] is False
+assert token["training_authorized_by_audit"] is False
+print("PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1")
 PY
 
 python "$ROOT/scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py" \
@@ -170,6 +213,7 @@ echo "model_training=false"
 echo "final_validation_opened=false"
 echo "semantic_checkpoint_sha256=$OBSERVED_SEMANTIC_SHA"
 echo "operator_evidence_token_alignment=$EVIDENCE_TOKEN_AUDIT"
+echo "semantic_operator_long_token_alignment=$SEMANTIC_LONG_TOKEN_AUDIT"
 echo "long_context_token_boundary_alignment=$LONG_CONTEXT_TOKEN_BOUNDARY_AUDIT"
 
 python "$ROOT/scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"   --qualification-config "$QUAL"   --semantic-config "$SEMANTIC_CONFIG"   --semantic-checkpoint "$SEMANTIC"   --tokenizer-dir "$TOKENIZER"   --corpus-dir "$CORPUS"   --source-config "$SOURCE_CONFIG"   --output "$RESULT"
