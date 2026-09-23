@@ -1356,6 +1356,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_plurality_dev_metric_rewards_valid_set_mass_without_hard_top1",
       "requirement": "The DEV plurality primitive must score probability mass over all co-valid hypotheses and distinguish collapse onto one valid hypothesis from genuine multi-hypothesis preservation."
+    },
+    {
+      "id": "N0-P22R",
+      "stage": "semantic_operator_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_semantic_plurality_row_compiles_into_optimizer_facing_multi_positive_targets",
+      "requirement": "A plurality curriculum row must survive the real semantic-operator batch compiler and reach optimizer-facing multi-positive relation targets. Builder-only plurality fields do not count if batch compilation crashes or drops them."
     }
   ],
   "closure_rule": {

@@ -1411,3 +1411,49 @@ def test_plurality_dev_metric_rewards_valid_set_mass_without_hard_top1() -> None
     assert torch.allclose(result["valid_mass"],torch.tensor([0.98]))
     assert result["forced_top1"].tolist()==[False]
     assert torch.allclose(result["uncertainty_abs_error"],torch.tensor([0.0]))
+
+
+def test_semantic_plurality_row_compiles_into_optimizer_facing_multi_positive_targets() -> None:
+    import importlib.util
+    import random
+    import sys
+
+    scripts=ROOT/"scripts/eipm/n0"
+    sys.path.insert(0,str(scripts))
+    try:
+        spec=importlib.util.spec_from_file_location(
+            "semantic_intervention_builder_plurality_compile",
+            scripts/"build_n0_v02_semantic_operator_intervention_curriculum_v1.py",
+        )
+        assert spec is not None and spec.loader is not None
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        from alice_personality.n0.semantic_operator_batch_v1 import (
+            compile_semantic_operator_batch,
+        )
+        from test_n0_semantic_operator_foundation_v1 import _OffsetTokenizer
+
+        row=module.make_row(
+            split="train",
+            relation=module.TRAIN_RELATIONS[0],
+            second=module.TRAIN_RELATIONS[1],
+            example=9,
+            candidates=4,
+            rng=random.Random(20260932),
+        )
+        compiled=compile_semantic_operator_batch(
+            rows=[row],
+            tokenizer=_OffsetTokenizer(),
+        )
+        targets=compiled["operator_targets"]
+        plural=targets["relation_plurality_mask"]
+        assert plural.shape[0]==1
+        assert bool(plural[0,0])
+        distribution=targets["relation_plurality_target_distribution"][0,0]
+        assert int(distribution.gt(0.0).sum())>=2
+        assert torch.allclose(distribution.sum(),torch.tensor(1.0))
+        assert compiled["metadata"]["plurality_supervision_rows"]==1
+    finally:
+        if sys.path and sys.path[0]==str(scripts):
+            sys.path.pop(0)
