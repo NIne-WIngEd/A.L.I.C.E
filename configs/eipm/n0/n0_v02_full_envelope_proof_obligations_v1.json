@@ -1053,6 +1053,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_semantic_operator_batch_compiler_is_registered",
       "requirement": "The semantic-operator intervention lane must have a real optimizer-facing batch compiler using governed tokenizer evidence alignment, explicit counterfactual sentinels, all-bank step targets, and no fabricated downstream full-envelope labels."
+    },
+    {
+      "id": "N0-P39PR",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_joint_objective_accepts_distinct_semantic_operator_and_full_fabric_batches",
+      "requirement": "The joint objective must accept semantic/operator supervision from the registered semantic-only lane while behavioral support/fusion/judgment supervision comes from the full fabric. Optimizer code may not fabricate downstream fields merely to train semantic intervention rows."
     }
   ],
   "closure_rule": {

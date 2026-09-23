@@ -949,3 +949,48 @@ def test_registered_semantic_operator_task_uses_shared_backbone_without_fake_dow
     operator_grad=next(system.stack.semantic_operator.parameters()).grad
     assert backbone_grad is not None and float(backbone_grad.abs().sum()) > 0.0
     assert operator_grad is not None and float(operator_grad.abs().sum()) > 0.0
+
+
+def test_joint_objective_accepts_distinct_semantic_operator_and_full_fabric_batches() -> None:
+    torch.manual_seed(292)
+    system=_system().train()
+    full_batch=_full_batch()
+    primary=system(task="full_envelope",batch=full_batch)
+    operator_targets,behavioral_targets=_training_targets(primary)
+    semantic_batch={
+        "query_input_ids":full_batch["query_input_ids"],
+        "query_attention_mask":full_batch["query_attention_mask"],
+        "relation_input_ids":full_batch["relation_input_ids"],
+        "relation_attention_mask":full_batch["relation_attention_mask"],
+        "relation_domain_type_mask":full_batch["relation_domain_type_mask"],
+        "relation_range_type_mask":full_batch["relation_range_type_mask"],
+        "relation_symmetric":full_batch["relation_symmetric"],
+        "relation_candidate_mask":full_batch["relation_candidate_mask"],
+        "factor_input_ids":full_batch["factor_input_ids"],
+        "factor_attention_mask":full_batch["factor_attention_mask"],
+        "factor_candidate_masks":full_batch["factor_candidate_masks"],
+        "factor_opcodes":full_batch["factor_opcodes"],
+        "max_reasoning_steps":full_batch["max_reasoning_steps"],
+    }
+    semantic=system(task="semantic_operator",batch=semantic_batch)
+    decisive,irrelevant,permuted=_counterfactual_output_views(primary)
+    objective=FullEnvelopeJointTrainingObjectiveV1()
+    result=objective(
+        primary_outputs=primary,
+        decisive_ablated_outputs=decisive,
+        irrelevant_removed_outputs=irrelevant,
+        permuted_outputs=permuted,
+        operator_targets=operator_targets,
+        behavioral_targets=behavioral_targets,
+        broad_semantic_replay_loss=primary["source_views"].square().mean(),
+        governed_judgment_replay_loss=_valid_public_replay_loss(primary),
+        natural_relation_loss=_valid_relation_replay_loss(primary,full_batch),
+        semantic_operator_outputs=semantic,
+        update_ema=False,
+    )
+    assert torch.isfinite(result["loss"])
+    assert result["semantic_operator_source"]=="dedicated_semantic_operator_lane"
+    result["loss"].backward()
+    assert system.semantic_model.backbone.embedding.weight.grad is not None
+    assert next(system.stack.semantic_operator.parameters()).grad is not None
+    assert next(system.stack.public_judgment_probe.score.parameters()).grad is not None
