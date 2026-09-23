@@ -184,6 +184,10 @@ def semantic_operator_supervision(
         relation_targets=relation_targets,
         relation_step_mask=relation_step_mask,
         factor_logits=semantic["factor_logits"],
+        relation_plurality_target_distribution=targets.get(
+            "relation_plurality_target_distribution"
+        ),
+        relation_plurality_mask=targets.get("relation_plurality_mask"),
         factor_targets=targets["factor_targets"],
         step_factor_logits=semantic["step_factor_logits"],
         step_factor_targets=targets["step_factor_targets"],

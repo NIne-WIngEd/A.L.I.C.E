@@ -166,6 +166,12 @@ def compile_semantic_operator_batch(
     if max_slots<=0:
         raise ValueError("semantic-operator rows require runtime slots")
     relation_targets=torch.zeros(batch_size,max_slots,dtype=torch.long)
+    relation_plurality_target_distribution=torch.zeros(
+        batch_size,max_slots,len(relation_items),dtype=torch.float32
+    )
+    relation_plurality_mask=torch.zeros(
+        batch_size,max_slots,dtype=torch.bool
+    )
     relation_counter=torch.full(
         (batch_size,max_slots),-1,dtype=torch.long
     )
@@ -239,6 +245,33 @@ def compile_semantic_operator_batch(
             relation_targets[b,step]=relation_index[local_keys[local_index]]
             relation_step_mask[b,step]=True
             step_factor_mask[b,step]=True
+
+        plurality_local=[
+            int(value)
+            for value in (row.get("relation_plurality_target_indices") or [])
+        ]
+        if plurality_local:
+            if not relation_steps:
+                raise ValueError(
+                    "plurality supervision requires an executable relation step"
+                )
+            if len(plurality_local)<2 or len(plurality_local)!=len(set(plurality_local)):
+                raise ValueError(
+                    "plurality supervision requires at least two unique candidates"
+                )
+            if any(value<0 or value>=len(local_keys) for value in plurality_local):
+                raise ValueError("plurality target outside local relation bank")
+            representative=int(local_targets[0])
+            if representative not in plurality_local:
+                raise ValueError(
+                    "representative relation target must belong to plurality set"
+                )
+            mass=1.0/float(len(plurality_local))
+            for local_index in plurality_local:
+                relation_plurality_target_distribution[
+                    b,0,relation_index[local_keys[local_index]]
+                ]=mass
+            relation_plurality_mask[b,0]=True
 
         explicit_relation_counter=list(
             row.get("counterfactual_relation_sequence_target") or []
@@ -386,6 +419,8 @@ def compile_semantic_operator_batch(
     }
     targets={
         "relation_targets":relation_targets,
+        "relation_plurality_target_distribution":relation_plurality_target_distribution,
+        "relation_plurality_mask":relation_plurality_mask,
         "counterfactual_relation_targets":relation_counter,
         "relation_step_mask":relation_step_mask,
         "factor_targets":factor_targets,
@@ -418,5 +453,8 @@ def compile_semantic_operator_batch(
             "relation_count_is_capability_ceiling":False,
             "factor_count_is_capability_ceiling":False,
             "reasoning_step_count_is_capability_ceiling":False,
+            "plurality_supervision_rows":int(
+                relation_plurality_mask.any(dim=1).sum().item()
+            ),
         },
     }

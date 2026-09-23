@@ -53,6 +53,61 @@ def masked_cross_entropy(
     return F.cross_entropy(flat_logits[flat_mask], flat_target[flat_mask])
 
 
+def relation_semantic_supervision_loss(
+    logits: Tensor,
+    target: Tensor,
+    mask: Tensor,
+    *,
+    relation_plurality_target_distribution: Tensor | None = None,
+    relation_plurality_mask: Tensor | None = None,
+) -> Tensor:
+    if logits.ndim != target.ndim + 1:
+        raise ValueError("relation logits/target rank mismatch")
+    if target.shape != mask.shape or mask.dtype != torch.bool:
+        raise ValueError("relation target/mask geometry drift")
+    if relation_plurality_target_distribution is None:
+        if relation_plurality_mask is not None:
+            raise ValueError("plurality mask supplied without target distribution")
+        return masked_cross_entropy(logits,target,mask)
+    if relation_plurality_mask is None:
+        raise ValueError("plurality target distribution supplied without mask")
+    if relation_plurality_target_distribution.shape != logits.shape:
+        raise ValueError("plurality target distribution geometry drift")
+    if relation_plurality_mask.shape != target.shape or relation_plurality_mask.dtype != torch.bool:
+        raise ValueError("plurality mask geometry drift")
+    if bool((relation_plurality_mask & ~mask).any()):
+        raise ValueError("plurality supervision must be an active relation step")
+
+    if bool(relation_plurality_mask.any()):
+        selected=relation_plurality_target_distribution[
+            relation_plurality_mask
+        ]
+        if bool((selected < 0.0).any()):
+            raise ValueError("plurality target probability must be non-negative")
+        total=selected.sum(dim=-1)
+        if not torch.allclose(
+            total,torch.ones_like(total),atol=1.0e-6,rtol=1.0e-6
+        ):
+            raise ValueError("plurality target distribution must sum to one")
+        if bool((selected.gt(0.0).sum(dim=-1) < 2).any()):
+            raise ValueError(
+                "plurality target needs at least two positive hypotheses"
+            )
+
+    if not bool(mask.any()):
+        return logits.sum()*0.0
+    log_probability=F.log_softmax(logits.float(),dim=-1)
+    hard=-log_probability.gather(
+        -1,target.long().unsqueeze(-1)
+    ).squeeze(-1)
+    soft=-(
+        relation_plurality_target_distribution.to(log_probability.dtype)
+        * log_probability
+    ).sum(dim=-1)
+    per_step=torch.where(relation_plurality_mask,soft,hard)
+    return per_step.masked_select(mask).mean()
+
+
 def factor_semantic_loss(
     factor_logits: Mapping[str, Tensor],
     factor_targets: Mapping[str, Tensor],
@@ -222,10 +277,14 @@ def semantic_operator_objective(
     if relation_step_mask.shape != (batch, steps):
         raise ValueError("relation_step_mask shape drift")
 
-    relation = masked_cross_entropy(
+    relation = relation_semantic_supervision_loss(
         relation_logits,
         relation_targets.long(),
         relation_step_mask.bool(),
+        relation_plurality_target_distribution=(
+            relation_plurality_target_distribution
+        ),
+        relation_plurality_mask=relation_plurality_mask,
     )
     global_factor = factor_semantic_loss(factor_logits, factor_targets)
     supplied_step = (

@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import random
 from pathlib import Path
 from typing import Any
@@ -258,6 +259,7 @@ def make_row(
     step_provenance = [0]
     target_entities = [right]
     intervention = "single_target"
+    plurality_alias: dict[str, Any] | None = None
 
     if mode == 0:
         query = f"{left} {phrase} {right}. Which participant is doing the relational work?"
@@ -344,12 +346,30 @@ def make_row(
         target_entities = []
         intervention = "unknown_defer"
     elif mode == 9:
+        # The semantic operator never receives downstream field IDs, so
+        # plurality must be expressed on an interface it actually sees.
+        # Supply two independently worded runtime relation descriptions that
+        # are both correct for the same requested relation.
+        plurality_alias=rel(
+            f"co_valid_{relation['key']}",
+            relation["family"],
+            (
+                "An independently worded schema expresses the same relation: "
+                + str(relation["description"]).rstrip(".").lower()
+                + "."
+            ),
+            relation["source_argument"],
+            relation["target_argument"],
+            list(relation["phrases"]),
+            symmetric=bool(relation["symmetric"]),
+        )
         query = (
-            f"{left} {phrase} {right}. Another independent record expresses the same relationship. "
-            "Preserve both co-valid receiving endpoints rather than forcing one winner."
+            f"{left} {phrase} {right}. Two supplied runtime relation descriptions "
+            "both correctly express this same relationship. Preserve probability "
+            "mass on both co-valid schema hypotheses instead of forcing one label."
         )
         traversal = 2
-        target_entities = [right, middle]
+        target_entities = [right]
         intervention = "plurality"
     elif mode == 10:
         sequence = [relation, second]
@@ -393,15 +413,30 @@ def make_row(
         intervention = "mixed_step_modifier_composition"
 
     pool = TRAIN_RELATIONS if split == "train" else TRAIN_RELATIONS + DEV_RELATIONS
-    required = sequence if sequence else [relation]
-    effective_count = max(int(candidates), len(required))
-    bank, indices = candidate_bank(
-        correct=required,
-        pool=pool,
-        count=effective_count,
-        rng=rng,
-    )
-    target_sequence = indices if sequence else []
+    if plurality_alias is not None:
+        required=[relation,plurality_alias]
+        effective_count=max(int(candidates),len(required))
+        bank,plurality_indices=candidate_bank(
+            correct=required,
+            pool=pool,
+            count=effective_count,
+            rng=rng,
+        )
+        # Keep one representative index only for execution/evidence geometry.
+        # The optimizer-facing relation loss replaces hard CE with the explicit
+        # multi-positive target on this plurality step.
+        target_sequence=[int(plurality_indices[0])]
+    else:
+        required=sequence if sequence else [relation]
+        effective_count=max(int(candidates),len(required))
+        bank,indices=candidate_bank(
+            correct=required,
+            pool=pool,
+            count=effective_count,
+            rng=rng,
+        )
+        target_sequence=indices if sequence else []
+        plurality_indices=[]
 
     if len(step_relation_phrases) != len(target_sequence):
         raise RuntimeError("relation evidence phrase/program length drift")
@@ -484,11 +519,16 @@ def make_row(
     else:
         event_sequence_target = ["CONTINUE"] * len(target_sequence) + ["STOP"]
         applicability_target = 1
-        # These deterministic intervention rows currently supervise a known
-        # relation program. Plural support is taught as co-valid support rather
-        # than epistemic ignorance; unresolved/low-evidence uncertainty requires
-        # its own explicit intervention rows rather than compiler inference.
-        uncertainty_target = 0.0
+        if intervention=="plurality":
+            # SchemaConditionedSemanticOperator normalizes relation entropy by
+            # log(active candidate count). Match that contract exactly for a
+            # uniform target over the precommitted co-valid hypotheses.
+            uncertainty_target=(
+                math.log(float(len(plurality_indices)))
+                / math.log(float(len(bank)))
+            )
+        else:
+            uncertainty_target = 0.0
 
     counterfactual_factor_targets = {
         name: None for name in factor_banks
@@ -528,6 +568,10 @@ def make_row(
         "query": query,
         "relation_candidates": bank,
         "relation_sequence_target": target_sequence,
+        "relation_plurality_target_indices":[
+            int(x) for x in plurality_indices
+        ],
+        "plurality_supervision_required":bool(plurality_indices),
         "event_sequence_target": event_sequence_target,
         "applicability_target": applicability_target,
         "uncertainty_target": uncertainty_target,
