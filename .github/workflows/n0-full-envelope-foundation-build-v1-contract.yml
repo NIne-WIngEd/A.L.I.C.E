@@ -83,6 +83,7 @@ on:
       - "src/alice_personality/n0/full_envelope_training_objective_v1.py"
       - "src/alice_personality/n0/full_envelope_behavioral_batch_v1.py"
       - "src/alice_personality/n0/semantic_operator_batch_v1.py"
+      - "src/alice_personality/n0/natural_relation_batch_v1.py"
       - "tests/eipm/test_n0_full_envelope_trainable_system_v1.py"
       - ".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml"
   workflow_dispatch:
@@ -127,6 +128,7 @@ jobs:
             src/alice_personality/n0/full_envelope_training_objective_v1.py \
             src/alice_personality/n0/full_envelope_behavioral_batch_v1.py \
             src/alice_personality/n0/semantic_operator_batch_v1.py \
+            src/alice_personality/n0/natural_relation_batch_v1.py \
             src/alice_personality/n0/chunked_late_interaction.py \
             src/alice_personality/n0/full_envelope_structural_types.py \
             src/alice_personality/n0/semantic_operator_qsre_adapter.py \

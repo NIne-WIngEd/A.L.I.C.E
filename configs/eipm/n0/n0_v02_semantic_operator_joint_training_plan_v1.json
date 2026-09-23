@@ -91,7 +91,11 @@
     "semantic_operator_task_fabricates_downstream_labels": false,
     "separate_semantic_operator_and_full_fabric_batches": true,
     "semantic_operator_rows_do_not_require_downstream_fabric_labels": true,
-    "joint_objective_accepts_dedicated_semantic_operator_outputs": true
+    "joint_objective_accepts_dedicated_semantic_operator_outputs": true,
+    "natural_relation_task_registered": true,
+    "natural_relation_task": "N0FullEnvelopeTrainableSystemV1(task='natural_relation')",
+    "natural_relation_task_uses_shared_backbone_and_operator": true,
+    "natural_relation_task_fabricates_factor_or_downstream_labels": false
   },
   "data": {
     "public_corpus_manifest": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
@@ -127,7 +131,9 @@
     "semantic_operator_batch_compiler": "src/alice_personality/n0/semantic_operator_batch_v1.py",
     "semantic_operator_rows_require_explicit_uncertainty_target": true,
     "semantic_operator_compiler_may_not_infer_uncertainty_from_scenario_name": true,
-    "semantic_operator_compiler_fabricated_downstream_labels": false
+    "semantic_operator_compiler_fabricated_downstream_labels": false,
+    "natural_relation_batch_compiler": "src/alice_personality/n0/natural_relation_batch_v1.py",
+    "natural_relation_loss": "natural_relation_semantic_loss"
   },
   "optimization_strategy": {
     "stages": [
@@ -396,7 +402,8 @@
     "PASS symmetric relation endpoint-storage invariance",
     "PASS batched per-example candidate-subset mechanics",
     "PASS full public-mixture manifest audit bound to exact source revision and sealed unopened FINAL",
-    "PASS registered shared-backbone semantic-operator task mechanics"
+    "PASS registered shared-backbone semantic-operator task mechanics",
+    "PASS registered natural-relation shared-operator task and compiler mechanics"
   ],
   "authorization": {
     "architecture_closed_for_implementation": true,

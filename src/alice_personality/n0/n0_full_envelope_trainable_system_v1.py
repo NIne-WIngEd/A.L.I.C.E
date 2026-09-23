@@ -270,6 +270,65 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
             },
         }
 
+    def _forward_natural_relation(
+        self,
+        batch: Mapping[str, Any],
+    ) -> dict[str, Any]:
+        """Run natural relation-family semantics through the shared operator.
+
+        This lane intentionally supplies no factor banks and no downstream
+        evidence/judgment fabric. Its only supervision is which runtime
+        relation description fits the natural sentence and ordered head/tail
+        entities.
+        """
+        query=self.semantic_input.encode_items(
+            backbone=self.backbone,
+            input_ids=batch["query_input_ids"],
+            attention_mask=batch["query_attention_mask"],
+        )
+        relation_encoded=self.semantic_input.encode_items(
+            backbone=self.backbone,
+            input_ids=batch["relation_input_ids"],
+            attention_mask=batch["relation_attention_mask"],
+        )
+        relation_schema=DynamicRelationSchema(
+            token_states=relation_encoded["hidden_states"],
+            token_mask=relation_encoded["content_mask"],
+            domain_type_mask=batch["relation_domain_type_mask"],
+            range_type_mask=batch["relation_range_type_mask"],
+            symmetric=batch["relation_symmetric"],
+        )
+        relation_schema.validate(
+            num_hidden_states=self.config.num_hidden_states,
+            semantic_dim=self.config.semantic_dim,
+        )
+        semantic=self.stack.semantic_operator(
+            query_hidden_states=query["hidden_states"],
+            query_token_mask=query["content_mask"],
+            relation_schema=relation_schema,
+            factor_schemas={},
+            max_steps=int(batch.get("max_reasoning_steps",1)),
+            relation_candidate_mask=batch.get("relation_candidate_mask"),
+            factor_candidate_masks={},
+        )
+        return {
+            "semantic_operator":semantic,
+            "semantic_input_metadata":{
+                "query":{
+                    "used_virtualization":bool(query["used_virtualization"]),
+                    "segment_count_max":int(query["segment_count_max"]),
+                },
+                "relation_schema":{
+                    "used_virtualization":bool(
+                        relation_encoded["used_virtualization"]
+                    ),
+                    "segment_count_max":int(
+                        relation_encoded["segment_count_max"]
+                    ),
+                },
+            },
+        }
+
     def _forward_full_envelope(
         self,
         batch: Mapping[str, Any],
@@ -549,6 +608,8 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
             return self._forward_full_envelope(batch)
         if task == "semantic_operator":
             return self._forward_semantic_operator(batch)
+        if task == "natural_relation":
+            return self._forward_natural_relation(batch)
         if task in {"mlm", "teacher"}:
             return self.semantic_model(task=task, **dict(batch))
         raise ValueError(f"unsupported full-envelope system task: {task!r}")
@@ -588,6 +649,10 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
             "semantic_operator_task_registered": True,
             "semantic_operator_task_uses_shared_backbone": True,
             "semantic_operator_task_requires_fake_downstream_fabric": False,
+            "natural_relation_task_registered": True,
+            "natural_relation_task_uses_shared_backbone_and_operator": True,
+            "natural_relation_task_requires_factor_labels": False,
+            "natural_relation_task_requires_downstream_fabric": False,
             "all_text_surfaces_share_semantic_input": True,
             "additional_runtime_view_source_text_adapter": True,
             "precomputed_additional_runtime_views_still_supported": True,

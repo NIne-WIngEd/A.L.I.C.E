@@ -42,7 +42,8 @@
     "src/alice_personality/n0/full_envelope_training_objective_v1.py",
     "src/alice_personality/n0/semantic_operator_objectives_v1.py",
     "src/alice_personality/n0/full_envelope_behavioral_batch_v1.py",
-    "src/alice_personality/n0/semantic_operator_batch_v1.py"
+    "src/alice_personality/n0/semantic_operator_batch_v1.py",
+    "src/alice_personality/n0/natural_relation_batch_v1.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
@@ -1060,6 +1061,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_joint_objective_accepts_distinct_semantic_operator_and_full_fabric_batches",
       "requirement": "The joint objective must accept semantic/operator supervision from the registered semantic-only lane while behavioral support/fusion/judgment supervision comes from the full fabric. Optimizer code may not fabricate downstream fields merely to train semantic intervention rows."
+    },
+    {
+      "id": "N0-P39PS",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_natural_relation_lane_uses_shared_operator_without_fake_factor_or_downstream_labels",
+      "requirement": "Natural relation-family TRAIN/DEV supervision must use the registered shared semantic backbone and relation operator directly, with runtime semantic descriptions and candidate masks, without fabricating factor labels, graph/evidence fields, answer candidates, or downstream judgment targets."
+    },
+    {
+      "id": "N0-P39PT",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_natural_relation_optimizer_compiler_is_registered",
+      "requirement": "The FewRel natural-relation lane must have an optimizer-facing compiler and loss that keep opaque relation keys metadata-only and expose no fixed relation identity parameter axis."
     }
   ],
   "closure_rule": {

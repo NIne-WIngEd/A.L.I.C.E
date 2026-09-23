@@ -91,3 +91,14 @@ def test_semantic_operator_batch_compiler_is_registered() -> None:
     assert "compile_operator_evidence_targets" in source
     assert "counterfactual_factor_targets" in source
     assert "step_factor_schema_evidence_valid_mask" in source
+
+
+def test_natural_relation_optimizer_compiler_is_registered() -> None:
+    path=ROOT/"src/alice_personality/n0/natural_relation_batch_v1.py"
+    assert path.is_file(), "natural-relation optimizer-facing compiler missing"
+    source=path.read_text()
+    assert "compile_natural_relation_batch" in source
+    assert "natural_relation_semantic_loss" in source
+    assert "relation_keys_model_visible" in source
+    assert "factor_labels_fabricated" in source
+    assert "downstream_fabric_labels_fabricated" in source

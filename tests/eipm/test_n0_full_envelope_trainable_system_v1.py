@@ -16,6 +16,10 @@ from alice_personality.n0.full_envelope_training_objective_v1 import (
 from alice_personality.n0.full_envelope_behavioral_batch_v1 import (
     compile_behavioral_batch,
 )
+from alice_personality.n0.natural_relation_batch_v1 import (
+    compile_natural_relation_batch,
+    natural_relation_semantic_loss,
+)
 
 
 class TinyBackbone(nn.Module):
@@ -994,3 +998,77 @@ def test_joint_objective_accepts_distinct_semantic_operator_and_full_fabric_batc
     assert system.semantic_model.backbone.embedding.weight.grad is not None
     assert next(system.stack.semantic_operator.parameters()).grad is not None
     assert next(system.stack.public_judgment_probe.score.parameters()).grad is not None
+
+
+def test_natural_relation_lane_uses_shared_operator_without_fake_factor_or_downstream_labels() -> None:
+    torch.manual_seed(293)
+    rows=[
+        {
+            "id":"fewrel:train:a",
+            "split":"train",
+            "instruction":"Select the relation description that matches the ordered head and tail entities.",
+            "sentence":"Ada wrote the report for Meridian.",
+            "head":{"text":"Ada"},
+            "tail":{"text":"the report"},
+            "candidate_relation_keys":["r_author","r_location"],
+            "target_relation_key":"r_author",
+            "target_candidate_index":0,
+            "training_authorized":True,
+            "model_selection_authorized":False,
+            "final_validation_only":False,
+            "private_identity_data":False,
+        },
+        {
+            "id":"fewrel:train:b",
+            "split":"train",
+            "instruction":"Select the relation description that matches the ordered head and tail entities.",
+            "sentence":"The sensor is installed in Lab Seven.",
+            "head":{"text":"the sensor"},
+            "tail":{"text":"Lab Seven"},
+            "candidate_relation_keys":["r_location","r_author"],
+            "target_relation_key":"r_location",
+            "target_candidate_index":0,
+            "training_authorized":True,
+            "model_selection_authorized":False,
+            "final_validation_only":False,
+            "private_identity_data":False,
+        },
+    ]
+    bank={
+        "schema":"alice.eipm.n0.fewrel-runtime-relation-bank.v1",
+        "relations":{
+            "r_author":{
+                "semantic_text":"Relation meaning: the head entity created or authored the tail work."
+            },
+            "r_location":{
+                "semantic_text":"Relation meaning: the head entity is located in the tail place."
+            },
+        },
+        "relation_keys_are_metadata_only":True,
+        "private_identity_data":False,
+    }
+    compiled=compile_natural_relation_batch(
+        rows=rows,
+        relation_bank=bank,
+        tokenizer=_TinyTokenizer(),
+    )
+    assert compiled["metadata"]["factor_labels_fabricated"] is False
+    assert compiled["metadata"]["downstream_fabric_labels_fabricated"] is False
+    assert compiled["metadata"]["relation_keys_model_visible"] is False
+
+    system=_system().train()
+    outputs=system(task="natural_relation",batch=compiled["batch"])
+    assert "semantic_operator" in outputs
+    assert "public_judgment" not in outputs
+    assert "binder" not in outputs
+    assert outputs["semantic_operator"]["factor_logits"] == {}
+    loss=natural_relation_semantic_loss(
+        outputs=outputs,
+        target_relation_index=compiled["target_relation_index"],
+    )
+    assert torch.isfinite(loss)
+    loss.backward()
+    backbone_grad=system.semantic_model.backbone.embedding.weight.grad
+    operator_grad=next(system.stack.semantic_operator.parameters()).grad
+    assert backbone_grad is not None and float(backbone_grad.abs().sum()) > 0.0
+    assert operator_grad is not None and float(operator_grad.abs().sum()) > 0.0
