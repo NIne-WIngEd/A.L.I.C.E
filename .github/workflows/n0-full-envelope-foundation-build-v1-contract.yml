@@ -536,6 +536,7 @@ jobs:
             --output /tmp/n0-final-v2/audit.json
 
           python scripts/eipm/n0/freeze_n0_v02_full_envelope_final_v2_package.py \
+            --source-revision "$(git rev-parse HEAD)" \
             --package-config configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json \
             --evaluator-contract configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json \
             --evaluator-implementation scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py \
@@ -591,6 +592,7 @@ jobs:
           assert audit["model_selection_authorized"] is False
           assert audit["final_opening_authorized"] is False
           assert freeze["status"]=="FROZEN_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_BEFORE_GRADIENT"
+          assert freeze["source_revision"]
           assert freeze["registered_system"]=="N0FullEnvelopeTrainableSystemV1"
           assert "evaluator_implementation" in freeze["hashes"]
           assert "gate_registry" in freeze["hashes"]
