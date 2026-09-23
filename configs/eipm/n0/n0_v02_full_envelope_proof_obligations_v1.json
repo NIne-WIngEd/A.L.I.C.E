@@ -1342,6 +1342,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_relation_plurality_soft_target_loss_does_not_force_representative_top1",
       "requirement": "Multi-positive relation supervision must optimize a normalized soft target over all co-valid runtime hypotheses rather than combining it with hard representative cross-entropy that would reintroduce forced top-1 semantics."
+    },
+    {
+      "id": "N0-P45J",
+      "stage": "dev_capability_gate",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_j1_dev_gate_measures_true_semantic_plurality_without_representative_top1_pressure",
+      "requirement": "J1 DEV checkpoint selection must measure mass preserved on the co-valid relation set, forced-top1 collapse rate, and calibrated plurality uncertainty. Plurality rows must not be included in the hard representative relation-sequence exact gate, because that would select checkpoints that undo the multi-hypothesis training objective."
+    },
+    {
+      "id": "N0-P45K",
+      "stage": "dev_capability_gate",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_plurality_dev_metric_rewards_valid_set_mass_without_hard_top1",
+      "requirement": "The DEV plurality primitive must score probability mass over all co-valid hypotheses and distinguish collapse onto one valid hypothesis from genuine multi-hypothesis preservation."
     }
   ],
   "closure_rule": {

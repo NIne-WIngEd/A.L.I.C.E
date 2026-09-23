@@ -1348,3 +1348,66 @@ def test_relation_plurality_soft_target_loss_does_not_force_representative_top1(
     assert float(loss.detach()) < 0.71
     assert logits.grad is not None
     assert abs(float(logits.grad[0,0,0]-logits.grad[0,0,1])) < 1.0e-6
+
+
+def test_j1_dev_gate_measures_true_semantic_plurality_without_representative_top1_pressure() -> None:
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    registry=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json").read_text()
+    )
+    assert "semantic_plurality" in plan["stage_gates"]["J1"]
+    gate=registry["stages"]["J1_joint_semantic_operator"]["gates"]["semantic_plurality"]
+    assert gate["kind"]=="composite"
+    expected={
+        "semantic_operator.plurality_valid_mass_mean":(">=",0.9),
+        "semantic_operator.plurality_forced_top1_rate":("<=",0.1),
+        "semantic_operator.plurality_uncertainty_mae":("<=",0.15),
+    }
+    assert {
+        item["metric"]:(item["comparison"],item["threshold"])
+        for item in gate["all"]
+    }==expected
+    assert all(
+        item["coverage_metric"]=="semantic_operator.plurality_count"
+        and item["minimum_coverage"]>=1
+        for item in gate["all"]
+    )
+
+    evaluator=(
+        ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py"
+    ).read_text()
+    assert "relation_plurality_metrics" in evaluator
+    assert "plurality_valid_mass_mean" in evaluator
+    assert "plurality_forced_top1_rate" in evaluator
+    assert "plurality_uncertainty_mae" in evaluator
+    assert '"plurality"' in evaluator
+    assert 'not in {"unknown_defer","plurality"}' in evaluator
+
+
+def test_plurality_dev_metric_rewards_valid_set_mass_without_hard_top1() -> None:
+    import torch
+    from alice_personality.n0.full_envelope_dev_metrics_v1 import (
+        relation_plurality_metrics,
+    )
+
+    distribution=torch.tensor([[
+        [0.49,0.49,0.01,0.01],
+        [0.25,0.25,0.25,0.25],
+    ]])
+    target=torch.tensor([[
+        [0.50,0.50,0.00,0.00],
+        [0.00,0.00,0.00,0.00],
+    ]])
+    mask=torch.tensor([[True,False]])
+    result=relation_plurality_metrics(
+        relation_distribution=distribution,
+        plurality_target_distribution=target,
+        plurality_mask=mask,
+        uncertainty=torch.tensor([0.50]),
+        uncertainty_target=torch.tensor([0.50]),
+    )
+    assert torch.allclose(result["valid_mass"],torch.tensor([0.98]))
+    assert result["forced_top1"].tolist()==[False]
+    assert torch.allclose(result["uncertainty_abs_error"],torch.tensor([0.0]))
