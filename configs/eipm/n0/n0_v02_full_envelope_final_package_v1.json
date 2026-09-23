@@ -99,5 +99,6 @@
   "private_identity_data": false,
   "n0_complete": false,
   "evaluator_implementation": "scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py",
-  "evaluator_gate_registry": "configs/eipm/n0/n0_v02_full_envelope_final_v2_gate_registry_v1.json"
+  "evaluator_gate_registry": "configs/eipm/n0/n0_v02_full_envelope_final_v2_gate_registry_v1.json",
+  "opening_authorizer": "scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py"
 }
