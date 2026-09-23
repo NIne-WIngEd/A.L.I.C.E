@@ -31,6 +31,8 @@ def test_long_context_train_dev_supplement_is_executable_and_covers_every_govern
         "field_descriptor",
         "candidate_text",
         "internal_view_descriptor",
+        "additional_view_descriptor",
+        "additional_view_source",
     }
     assert contract["semantics"]["decisive_content_after_long_prefix_required"] is True
     assert contract["validation_before_gradient"]["materialized_train_dev_rows_required"] is True

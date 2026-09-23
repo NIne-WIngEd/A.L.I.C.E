@@ -993,6 +993,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_cpu_runtime_qualifier_exercises_registered_additional_view_source_text_adapter",
       "requirement": "The exact CPU/no-gradient qualifier must exercise the same registered additional-runtime-view source-text adapter used by optimizer-facing TRAIN/DEV, including long-context virtualization of that source surface. Precomputing source vectors outside N0FullEnvelopeTrainableSystemV1 cannot satisfy runtime-fidelity qualification."
+    },
+    {
+      "id": "N0-P39LO",
+      "stage": "long_context_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_long_context_train_dev_supplement_is_executable_and_covers_every_governed_text_surface",
+      "requirement": "Long-context TRAIN/DEV supervision must include dynamic additional-view source text and dynamic additional-view descriptor text, not only the six built-in internal descriptors. CPU qualification alone cannot train these runtime-supplied semantic surfaces."
     }
   ],
   "closure_rule": {
