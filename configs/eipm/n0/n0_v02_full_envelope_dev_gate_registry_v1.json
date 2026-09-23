@@ -273,6 +273,26 @@
             }
           ]
         },
+        "source_view_recoverability": {
+          "kind": "composite",
+          "all": [
+            {
+              "metric": "full_fabric.full_envelope_behavioral.source_view_recoverability_success_rate",
+              "comparison": ">=",
+              "threshold": 0.9
+            },
+            {
+              "metric": "full_fabric.runtime_view_supplement.source_view_recoverability_success_rate",
+              "comparison": ">=",
+              "threshold": 0.9
+            },
+            {
+              "metric": "full_fabric.long_context_supplement.source_view_recoverability_success_rate",
+              "comparison": ">=",
+              "threshold": 0.9
+            }
+          ]
+        },
         "missing_view_safety": {
           "kind": "static_source_proof",
           "obligation_ids": [

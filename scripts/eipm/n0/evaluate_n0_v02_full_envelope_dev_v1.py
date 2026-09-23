@@ -26,6 +26,7 @@ from alice_personality.n0.full_envelope_dev_metrics_v1 import (
     mean,
     public_judgment_correct,
     semantic_batch_record,
+    source_view_recoverability_success,
     support_edge_f1,
 )
 from alice_personality.n0.full_envelope_joint_step_v1 import (
@@ -504,6 +505,7 @@ def fabric_lane_metrics(
     policy=resolve_stage_policy(stage)
     totals=defaultdict(list)
     records=[]
+    recoverability_values_all=[]
     for row in rows:
         compiled=compile_behavioral_batch(rows=[row],tokenizer=tokenizer)
         compiled=to_device(compiled,device)
@@ -578,6 +580,15 @@ def fabric_lane_metrics(
                 latent_slots=primary["latent"]["latent_slots"],
             ))
         if causal_active:
+            recoverability_values=source_view_recoverability_success(
+                latent_slots=primary["latent"]["latent_slots"],
+                source_views=primary["source_views"],
+                view_available=primary["view_available"].bool(),
+                recoverable_view_mask=targets["recoverable_view_mask"].bool(),
+            )
+            recoverability_values_all.extend(
+                _tensor_bool_values(recoverability_values)
+            )
             assert decisive is not None and irrelevant is not None
             judgment=primary["public_judgment"]
             decisive_values=decisive_removal_success(
@@ -755,6 +766,9 @@ def fabric_lane_metrics(
             ),
             "irrelevant_source_removal_invariance":rate(
                 "irrelevant_removal_invariance"
+            ),
+            "source_view_recoverability_success_rate":boolean_rate(
+                recoverability_values_all
             ),
             "distant_decisive_removal_success":rate(
                 "decisive_removal_success",

@@ -499,6 +499,7 @@
       "full_stack_support",
       "fusion_decisive_source_causality",
       "latent_noncollapse",
+      "source_view_recoverability",
       "missing_view_safety",
       "candidate_cardinality_extrapolation",
       "composition_extrapolation",

@@ -804,6 +804,7 @@ def test_successor_dev_metric_primitives_measure_program_factor_margin_and_token
         decisive_removal_success,
         irrelevant_removal_invariance_success,
         latent_noncollapse_success,
+        source_view_recoverability_success,
     )
     relation_logits=torch.tensor([[
         [4.0,0.0],
@@ -895,6 +896,14 @@ def test_successor_dev_metric_primitives_measure_program_factor_margin_and_token
     assert bool(invariant_ok[0])
     slots=torch.tensor([[[1.0,0.0],[0.0,1.0]]])
     assert bool(latent_noncollapse_success(latent_slots=slots)[0])
+    recoverable=source_view_recoverability_success(
+        latent_slots=slots,
+        source_views=torch.tensor([[[1.0,0.0],[0.0,1.0],[1.0,1.0]]]),
+        view_available=torch.tensor([[True,True,True]]),
+        recoverable_view_mask=torch.tensor([[True,True,False]]),
+        cosine_threshold=0.95,
+    )
+    assert recoverable.tolist()==[True,True]
 
 
 def test_successor_training_and_dev_selection_bind_exact_head_static_proof_receipt() -> None:
