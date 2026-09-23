@@ -7,6 +7,8 @@ import json
 import subprocess
 from pathlib import Path
 
+from alice_personality.n0.source_authority_v1 import require_canonical_source_file
+
 
 STATUS="FROZEN_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_BEFORE_GRADIENT"
 
@@ -51,6 +53,16 @@ def main() -> None:
         "runtime_view_final_rows","long_context_final_rows",
         "package_manifest","fewrel_final_rows","fewrel_final_bank","fewrel_manifest","audit","output"
     )}
+    canonical_source_inputs={
+        "package_config":"configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json",
+        "evaluator_contract":"configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json",
+        "evaluator_implementation":"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py",
+        "gate_registry":"configs/eipm/n0/n0_v02_full_envelope_final_v2_gate_registry_v1.json",
+        "opening_authorizer":"scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py",
+        "final_contract":"configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+    }
+    for name,relative in canonical_source_inputs.items():
+        require_canonical_source_file(paths[name],relative,label=f"FINAL-v2 {name}")
     if paths["output"].exists():
         raise SystemExit("refusing to overwrite final-v2 freeze receipt")
     audit=json.loads(paths["audit"].read_text(encoding="utf-8"))
