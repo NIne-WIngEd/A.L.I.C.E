@@ -85,13 +85,13 @@
     "maximal_heads": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "1eeff40ad07f8a60ded92113f1ecb3755e0c67a7",
-        "head_committed_at": "2026-09-22T22:15:02-05:00",
-        "head_message": "build(n0): enforce staged causal family ownership",
-        "ahead": 1135,
+        "head": "ac0defbc67f260d77d0d7cd664209e247f457867",
+        "head_committed_at": "2026-09-22T22:59:53-05:00",
+        "head_message": "test(n0): support both semantic tokenization interfaces",
+        "ahead": 1167,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 498,
+        "changed_file_count_vs_source_merge_base": 507,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -207,9 +207,11 @@
           "configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+          "configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
+          "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json",
@@ -259,6 +261,7 @@
           "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json",
           "configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json",
           "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json",
+          "configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json",
           "configs/eipm/n0/n0_v02_setwise_edge_router_training_decision_v0_1.json",
           "configs/eipm/n0/n0_v02_setwise_training_boundary_recovery_v0_1.json",
           "configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json",
@@ -289,10 +292,7 @@
           "docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md",
           "docs/research/eipm-n0-qsre-t1-pretraining-validity-correction-v0.1.md",
           "docs/research/eipm-n0-qsre-t2-v02-failure-localization-v03-decision.md",
-          "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md",
-          "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
-          "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
-          "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md"
+          "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md"
         ],
         "authority": "unmerged-experiment-pointer"
       },
@@ -726,13 +726,13 @@
     "all_ahead_candidates": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "1eeff40ad07f8a60ded92113f1ecb3755e0c67a7",
-        "head_committed_at": "2026-09-22T22:15:02-05:00",
-        "head_message": "build(n0): enforce staged causal family ownership",
-        "ahead": 1135,
+        "head": "ac0defbc67f260d77d0d7cd664209e247f457867",
+        "head_committed_at": "2026-09-22T22:59:53-05:00",
+        "head_message": "test(n0): support both semantic tokenization interfaces",
+        "ahead": 1167,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 498,
+        "changed_file_count_vs_source_merge_base": 507,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -848,9 +848,11 @@
           "configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+          "configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
+          "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json",
@@ -900,6 +902,7 @@
           "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json",
           "configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json",
           "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json",
+          "configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json",
           "configs/eipm/n0/n0_v02_setwise_edge_router_training_decision_v0_1.json",
           "configs/eipm/n0/n0_v02_setwise_training_boundary_recovery_v0_1.json",
           "configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json",
@@ -930,10 +933,7 @@
           "docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md",
           "docs/research/eipm-n0-qsre-t1-pretraining-validity-correction-v0.1.md",
           "docs/research/eipm-n0-qsre-t2-v02-failure-localization-v03-decision.md",
-          "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md",
-          "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
-          "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
-          "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md"
+          "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md"
         ],
         "authority": "unmerged-experiment-pointer"
       },
@@ -4808,7 +4808,7 @@
   },
   "continuity_freshness": {
     "stale_relative_to_unmerged_experiment_frontier": true,
-    "newest_experiment_frontier_time": "2026-09-22T22:15:02-05:00",
+    "newest_experiment_frontier_time": "2026-09-22T22:59:53-05:00",
     "active_handoff_last_changed_at": "2026-09-22T18:45:52-05:00",
     "context_branch_head_time": "2026-09-22T18:45:52-05:00"
   },

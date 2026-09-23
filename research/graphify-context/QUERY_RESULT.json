@@ -1,20 +1,20 @@
 {
-  "request_id": "n0-runtime-orchestration-and-gpu-dryrun-audit-20260922-051",
-  "question": "Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@1eeff40ad07f8a60ded92113f1ecb3755e0c67a7 for the remaining pre-Magnolia implementation boundary. Stay strictly aligned with N0's identity-neutral full-envelope semantic/judgment goal, no pilot/no-hotfix doctrine, and current J1/J2/J3 staged causal family ownership. Trace N0FullEnvelopeTrainableSystemV1, full_envelope_joint_step_v1, full_envelope_stage_policy_v1, FullEnvelopeJointTrainingObjectiveV1, all successor batch compilers and public-mixture contract, plus historical DDP/Accelerate scripts only for reusable mechanics. Identify concrete missing implementation needed before external execution: exact 640-wide registered-system constructor from ratified semantic initialization, full public-mixture materialization/scheduling, stage-aware optimizer/DDP/checkpoint/resume trainer, DEV evaluator/gate logic, and exact-topology GPU no-gradient memory dry-run. Distinguish source implementation gaps from runtime receipts that necessarily require Magnolia. Do not authorize GPU/gradient/optimizer/FINAL/N0 completion and do not restore superseded fixed architectures, fixed counts, or historical semantic authority. Original exact branch source is authority; Graphify navigation only.",
+  "request_id": "n0-successor-trainer-dev-evaluator-gap-audit-20260922-054",
+  "question": "Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@ac0defbc67f260d77d0d7cd664209e247f457867 for the remaining source gap between the registered full topology/joint step/public lane scheduler and an authorized full-scale optimization run. Trace n0_v02_semantic_operator_joint_training_plan_v1.json, full_envelope_runtime_factory_v1.py, full_envelope_stage_policy_v1.py, full_envelope_training_batch_scheduler_v1.py, full_envelope_joint_step_v1.py, FullEnvelopeJointTrainingObjectiveV1, full-public-mixture contract/builder/audit, CPU/GPU qualifiers, FINAL-v2 evaluator contract, and historical train/eval scripts only for reusable DDP/optimizer/checkpoint mechanics. Determine whether the successor lacks: (1) a staged J1/J2/J3 trainer consuming real public mixture lanes with exact stage trainability and no reduced topology, (2) a DEV evaluator implementing precommitted stage gates and broad-semantic regression/shortcut checks, (3) checkpoint/receipt provenance binding source/topology/mixture/stage/optimizer/scheduler and forbidding FINAL/model-selection misuse, or (4) any remaining qualifier-to-training interface mismatch. Classify each A concrete source gap before Magnolia, B runtime-only unknown, C already covered. Preserve no-pilot/no-hotfix/no-capability-ceiling doctrine. Do not authorize gradient/GPU training/FINAL/N0 completion. Original exact branch source is authority; Graphify is navigation only.",
   "budget": 12000,
   "traversal": "bfs",
   "contexts": [
     "call",
     "import"
   ],
-  "generated_at_utc": "2026-09-23T03:24:01.647830+00:00",
+  "generated_at_utc": "2026-09-23T04:02:03.729107+00:00",
   "authority": "navigation-only",
   "routing_decision": {
     "graphify_mode": "always",
     "graphify_used": true,
     "reason": "request forced Graphify",
     "graph_source_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-    "graph_source_commit": "1eeff40ad07f8a60ded92113f1ecb3755e0c67a7",
+    "graph_source_commit": "ac0defbc67f260d77d0d7cd664209e247f457867",
     "graph_source_reason": "request explicitly selected graph source branch",
     "graph_rebuild_required": true,
     "private_external_route_recommended": true
@@ -22,10 +22,10 @@
   "graphify_used": true,
   "graph_build": {
     "source_work_branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-    "source_work_commit": "1eeff40ad07f8a60ded92113f1ecb3755e0c67a7",
+    "source_work_commit": "ac0defbc67f260d77d0d7cd664209e247f457867",
     "research_branch": "research/graphify-context-substrate",
-    "research_commit": "d6182a236a86ed9678e41a2c23cf35f4d56cdd44",
-    "workflow_run_id": "35814064064",
+    "research_commit": "8a7bbcc31cf344ab9ae7d753ced5110ebed24b78",
+    "workflow_run_id": "35816561376",
     "graph_mode": "code-only",
     "extraction_tree": "exact-source-worktree",
     "graphify_version": "0.9.63",
@@ -33,102 +33,106 @@
   },
   "catalog_result": {
     "schema": "alice-context-catalog-query-v1",
-    "question": "Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@1eeff40ad07f8a60ded92113f1ecb3755e0c67a7 for the remaining pre-Magnolia implementation boundary. Stay strictly aligned with N0's identity-neutral full-envelope semantic/judgment goal, no pilot/no-hotfix doctrine, and current J1/J2/J3 staged causal family ownership. Trace N0FullEnvelopeTrainableSystemV1, full_envelope_joint_step_v1, full_envelope_stage_policy_v1, FullEnvelopeJointTrainingObjectiveV1, all successor batch compilers and public-mixture contract, plus historical DDP/Accelerate scripts only for reusable mechanics. Identify concrete missing implementation needed before external execution: exact 640-wide registered-system constructor from ratified semantic initialization, full public-mixture materialization/scheduling, stage-aware optimizer/DDP/checkpoint/resume trainer, DEV evaluator/gate logic, and exact-topology GPU no-gradient memory dry-run. Distinguish source implementation gaps from runtime receipts that necessarily require Magnolia. Do not authorize GPU/gradient/optimizer/FINAL/N0 completion and do not restore superseded fixed architectures, fixed counts, or historical semantic authority. Original exact branch source is authority; Graphify navigation only.",
+    "question": "Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@ac0defbc67f260d77d0d7cd664209e247f457867 for the remaining source gap between the registered full topology/joint step/public lane scheduler and an authorized full-scale optimization run. Trace n0_v02_semantic_operator_joint_training_plan_v1.json, full_envelope_runtime_factory_v1.py, full_envelope_stage_policy_v1.py, full_envelope_training_batch_scheduler_v1.py, full_envelope_joint_step_v1.py, FullEnvelopeJointTrainingObjectiveV1, full-public-mixture contract/builder/audit, CPU/GPU qualifiers, FINAL-v2 evaluator contract, and historical train/eval scripts only for reusable DDP/optimizer/checkpoint mechanics. Determine whether the successor lacks: (1) a staged J1/J2/J3 trainer consuming real public mixture lanes with exact stage trainability and no reduced topology, (2) a DEV evaluator implementing precommitted stage gates and broad-semantic regression/shortcut checks, (3) checkpoint/receipt provenance binding source/topology/mixture/stage/optimizer/scheduler and forbidding FINAL/model-selection misuse, or (4) any remaining qualifier-to-training interface mismatch. Classify each A concrete source gap before Magnolia, B runtime-only unknown, C already covered. Preserve no-pilot/no-hotfix/no-capability-ceiling doctrine. Do not authorize gradient/GPU training/FINAL/N0 completion. Original exact branch source is authority; Graphify is navigation only.",
     "query_tokens": [
       "deep-audit",
       "exact",
       "successor",
       "head",
       "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "1eeff40ad07f8a60ded92113f1ecb3755e0c67a7",
+      "ac0defbc67f260d77d0d7cd664209e247f457867",
       "remaining",
-      "pre-magnolia",
-      "implementation",
-      "boundary",
-      "stay",
-      "strictly",
-      "aligned",
-      "identity-neutral",
-      "full-envelope",
-      "semantic/judgment",
-      "goal",
-      "pilot/no-hotfix",
-      "doctrine",
-      "j1/j2/j3",
-      "staged",
-      "causal",
-      "family",
-      "ownership",
+      "source",
+      "gap",
+      "between",
+      "registered",
+      "full",
+      "topology/joint",
+      "step/public",
+      "lane",
+      "scheduler",
+      "authorized",
+      "full-scale",
+      "optimization",
+      "run",
       "trace",
-      "n0fullenvelopetrainablesystemv1",
-      "full_envelope_joint_step_v1",
-      "full_envelope_stage_policy_v1",
+      "n0_v02_semantic_operator_joint_training_plan_v1.json",
+      "full_envelope_runtime_factory_v1.py",
+      "full_envelope_stage_policy_v1.py",
+      "full_envelope_training_batch_scheduler_v1.py",
+      "full_envelope_joint_step_v1.py",
       "fullenvelopejointtrainingobjectivev1",
-      "all",
-      "successor",
-      "batch",
-      "compilers",
-      "public-mixture",
+      "full-public-mixture",
+      "contract/builder/audit",
+      "cpu/gpu",
+      "qualifiers",
+      "final-v2",
+      "evaluator",
       "contract",
-      "plus",
       "historical",
-      "ddp/accelerate",
+      "train/eval",
       "scripts",
       "only",
       "reusable",
+      "ddp/optimizer/checkpoint",
       "mechanics",
-      "identify",
-      "concrete",
-      "missing",
-      "implementation",
-      "needed",
-      "before",
-      "external",
-      "execution",
-      "exact",
-      "640-wide",
-      "registered-system",
-      "constructor",
-      "ratified",
-      "semantic",
-      "initialization",
-      "full",
-      "public-mixture",
-      "materialization/scheduling",
-      "stage-aware",
-      "optimizer/ddp/checkpoint/resume",
+      "determine",
+      "whether",
+      "successor",
+      "lacks",
+      "staged",
+      "j1/j2/j3",
       "trainer",
+      "consuming",
+      "real",
+      "public",
+      "mixture",
+      "lanes",
+      "exact",
+      "stage",
+      "trainability",
+      "reduced",
+      "topology",
       "dev",
-      "evaluator/gate",
-      "logic",
-      "exact-topology",
-      "gpu",
-      "no-gradient",
-      "memory",
-      "dry-run",
-      "distinguish",
+      "evaluator",
+      "implementing",
+      "precommitted",
+      "stage",
+      "gates",
+      "broad-semantic",
+      "regression/shortcut",
+      "checks",
+      "checkpoint/receipt",
+      "provenance",
+      "binding",
+      "source/topology/mixture/stage/optimizer/scheduler",
+      "forbidding",
+      "final/model-selection",
+      "misuse",
+      "any",
+      "remaining",
+      "qualifier-to-training",
+      "interface",
+      "mismatch",
+      "classify",
+      "each",
+      "concrete",
       "source",
-      "implementation",
-      "gaps",
-      "runtime",
-      "receipts",
-      "necessarily",
-      "require",
+      "gap",
+      "before",
       "magnolia",
+      "runtime-only",
+      "unknown",
+      "already",
+      "covered",
+      "preserve",
+      "no-pilot/no-hotfix/no-capability-ceiling",
+      "doctrine",
       "not",
       "authorize",
-      "gpu/gradient/optimizer/final/n0",
+      "gradient/gpu",
+      "training/final/n0",
       "completion",
-      "not",
-      "restore",
-      "superseded",
-      "fixed",
-      "architectures",
-      "fixed",
-      "counts",
-      "historical",
-      "semantic",
-      "authority",
       "original",
       "exact",
       "branch",
@@ -142,8 +146,8 @@
       "schema": "alice-context-catalog-status-v1",
       "source_branch": "alice-eipm-v1-build",
       "source_commit": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "branch_count": 57,
-      "knowledge_branch_count": 57,
+      "branch_count": 58,
+      "knowledge_branch_count": 58,
       "source_file_count": 1238,
       "active_n0_state_present": true,
       "active_mission_state_present": true,
@@ -151,10 +155,10 @@
       "unmerged_experiment_frontier_present": true,
       "unmerged_experiment_maximal_head_count": 3,
       "continuity_stale_relative_to_experiment_frontier": true,
-      "document_pointer_count": 4956,
-      "failure_lesson_pointer_count": 3554,
-      "frontier_research_pointer_count": 1803,
-      "supersession_pointer_count": 1424,
+      "document_pointer_count": 5171,
+      "failure_lesson_pointer_count": 3752,
+      "frontier_research_pointer_count": 1904,
+      "supersession_pointer_count": 1509,
       "authority": "routing-only",
       "notes": [
         "Catalog entries are source pointers, not truth promotions.",
@@ -250,13 +254,13 @@
         "maximal_heads": [
           {
             "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-            "head": "1eeff40ad07f8a60ded92113f1ecb3755e0c67a7",
-            "head_committed_at": "2026-09-22T22:15:02-05:00",
-            "head_message": "build(n0): enforce staged causal family ownership",
-            "ahead": 1135,
+            "head": "ac0defbc67f260d77d0d7cd664209e247f457867",
+            "head_committed_at": "2026-09-22T22:59:53-05:00",
+            "head_message": "test(n0): support both semantic tokenization interfaces",
+            "ahead": 1167,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-            "changed_file_count_vs_source_merge_base": 498,
+            "changed_file_count_vs_source_merge_base": 507,
             "changed_paths_vs_source_merge_base": [
               ".github/workflows/n0-arbitration-contract-check.yml",
               ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -372,9 +376,11 @@
               "configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+              "configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
+              "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json",
@@ -424,6 +430,7 @@
               "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json",
               "configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json",
               "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json",
+              "configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json",
               "configs/eipm/n0/n0_v02_setwise_edge_router_training_decision_v0_1.json",
               "configs/eipm/n0/n0_v02_setwise_training_boundary_recovery_v0_1.json",
               "configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json",
@@ -454,10 +461,7 @@
               "docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md",
               "docs/research/eipm-n0-qsre-t1-pretraining-validity-correction-v0.1.md",
               "docs/research/eipm-n0-qsre-t2-v02-failure-localization-v03-decision.md",
-              "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md",
-              "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
-              "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
-              "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md"
+              "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md"
             ],
             "authority": "unmerged-experiment-pointer"
           },
@@ -891,13 +895,13 @@
         "all_ahead_candidates": [
           {
             "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-            "head": "1eeff40ad07f8a60ded92113f1ecb3755e0c67a7",
-            "head_committed_at": "2026-09-22T22:15:02-05:00",
-            "head_message": "build(n0): enforce staged causal family ownership",
-            "ahead": 1135,
+            "head": "ac0defbc67f260d77d0d7cd664209e247f457867",
+            "head_committed_at": "2026-09-22T22:59:53-05:00",
+            "head_message": "test(n0): support both semantic tokenization interfaces",
+            "ahead": 1167,
             "behind": 0,
             "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-            "changed_file_count_vs_source_merge_base": 498,
+            "changed_file_count_vs_source_merge_base": 507,
             "changed_paths_vs_source_merge_base": [
               ".github/workflows/n0-arbitration-contract-check.yml",
               ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -1013,9 +1017,11 @@
               "configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_final_v2_evaluator_contract_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json",
+              "configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_interface_contract_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
+              "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json",
               "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json",
@@ -1065,6 +1071,7 @@
               "configs/eipm/n0/n0_v02_semantic_operator_curriculum_contract_v1.json",
               "configs/eipm/n0/n0_v02_semantic_operator_foundation_v1.json",
               "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json",
+              "configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json",
               "configs/eipm/n0/n0_v02_setwise_edge_router_training_decision_v0_1.json",
               "configs/eipm/n0/n0_v02_setwise_training_boundary_recovery_v0_1.json",
               "configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json",
@@ -1095,10 +1102,7 @@
               "docs/research/eipm-n0-qsre-t1-pass-t2-operator-decision-v0.1.md",
               "docs/research/eipm-n0-qsre-t1-pretraining-validity-correction-v0.1.md",
               "docs/research/eipm-n0-qsre-t2-v02-failure-localization-v03-decision.md",
-              "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md",
-              "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
-              "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
-              "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md"
+              "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md"
             ],
             "authority": "unmerged-experiment-pointer"
           },
@@ -4973,7 +4977,7 @@
       },
       "continuity_freshness": {
         "stale_relative_to_unmerged_experiment_frontier": true,
-        "newest_experiment_frontier_time": "2026-09-22T22:15:02-05:00",
+        "newest_experiment_frontier_time": "2026-09-22T22:59:53-05:00",
         "active_handoff_last_changed_at": "2026-09-22T18:45:52-05:00",
         "context_branch_head_time": "2026-09-22T18:45:52-05:00"
       },
@@ -5029,7 +5033,94 @@
     },
     "hits": [
       {
-        "score": 136,
+        "score": 126,
+        "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+        "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
+        "category": "design_document",
+        "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
+        "declared": {
+          "status": " architecture/data audit authority; all new gradient/GPU work frozen"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "fallback",
+          "recovery",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "frontier",
+          "lexical"
+        ],
+        "lexical_body_hits": 26,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 126,
+        "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+        "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
+        "category": "design_document",
+        "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
+        "declared": {
+          "status": " architecture/data audit authority; all new gradient/GPU work frozen"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "fallback",
+          "recovery",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "frontier",
+          "lexical"
+        ],
+        "lexical_body_hits": 26,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 126,
+        "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+        "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
+        "category": "design_document",
+        "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
+        "declared": {
+          "status": " architecture/data audit authority; all new gradient/GPU work frozen"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "fallback",
+          "recovery",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "frontier",
+          "lexical"
+        ],
+        "lexical_body_hits": 26,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 117,
         "branch": "alice-context",
         "branch_scope": "branch_specific",
         "path": "docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md",
@@ -5055,347 +5146,95 @@
           "frontier",
           "lexical"
         ],
-        "lexical_body_hits": 48,
+        "lexical_body_hits": 38,
         "currentness_adjustment": 30
       },
       {
-        "score": 134,
+        "score": 112,
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
         "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md",
-        "blob_sha": "983b8a0dee77a7cb0fd7e7ffdf4383187128073a",
+        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+        "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
         "category": "design_document",
-        "title": "N0 Full-Envelope Retrospective Architecture Audit v1",
+        "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
         "declared": {
-          "decision": " preserve step80 as an initialization and comparison baseline. Reopen public semantic representation learning jointly with the operator/schema objective. Do not treat the current semantic heads as universal frozen authority.",
-          "status": " retrospective architecture authority; no gradient/GPU authorization"
+          "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
         },
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 44,
-            "text": "| QSRE T2 v0.x | **SUPERSEDED_CAUSAL_SCAFFOLD** | Do not revive fixed slots/classes. Production Core design supersedes it. |"
-          },
-          {
-            "line": 47,
-            "text": "| Final self-validation v1 | **HISTORICALLY_VALID BUT INSUFFICIENT FULL-ENVELOPE GATE** | Preserve as historical frozen test. Supersede with a new broader final contract before N0 closure. |"
-          },
-          {
-            "line": 315,
-            "text": "## 12. Final self-validation v1 — preserve history, supersede before closure"
-          },
-          {
-            "line": 346,
-            "text": "Once job 575990 proved that geometry insufficient for the new open-schema semantic/operator requirement, those downstream preservation PASS results can no longer be interpreted as independent evidence that the representation is sufficient."
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "failure",
-          "document",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 30,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 130,
-        "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md",
-        "blob_sha": "9f07bc2ed47716788c0af7545e3c3cebda60b950",
-        "category": "design_document",
-        "title": "N0 job 575966 — frozen semantic authority v3",
-        "declared": {},
         "matched_terms": [
-          "failed",
           "failure",
+          "hotfix",
           "magnolia",
-          "repair"
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
           "failure",
+          "document",
+          "frontier",
           "supersession",
-          "document",
-          "frontier",
           "lexical"
         ],
-        "lexical_body_hits": 21,
+        "lexical_body_hits": 17,
         "currentness_adjustment": 25
       },
       {
-        "score": 127,
-        "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "branch_scope": "branch_specific",
-        "path": ".github/workflows/n0-qsre-frozen-semantic-authority-v3-contract.yml",
-        "blob_sha": "688076e42aa92cb7aaf9fcc0ff3cf4058d54d8dd",
-        "category": "repository_file",
-        "title": "n0-qsre-frozen-semantic-authority-v3-contract.yml",
-        "declared": {},
-        "matched_terms": [
-          "failure",
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 8,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 126,
-        "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-qsre-preimplementation-contract-result-v0.1.md",
-        "blob_sha": "9b3a0a2ce5c682c1f65e91750a5c8bd7c93cf010",
-        "category": "design_document",
-        "title": "QSRE Deterministic Preimplementation Contract Result v0.1",
-        "declared": {},
-        "matched_terms": [
-          "failure",
-          "fallback"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 10,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 126,
+        "score": 112,
         "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
         "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-qsre-preimplementation-contract-result-v0.1.md",
-        "blob_sha": "9b3a0a2ce5c682c1f65e91750a5c8bd7c93cf010",
+        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+        "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
         "category": "design_document",
-        "title": "QSRE Deterministic Preimplementation Contract Result v0.1",
-        "declared": {},
-        "matched_terms": [
-          "failure",
-          "fallback"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 10,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 126,
-        "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-qsre-preimplementation-contract-result-v0.1.md",
-        "blob_sha": "9b3a0a2ce5c682c1f65e91750a5c8bd7c93cf010",
-        "category": "design_document",
-        "title": "QSRE Deterministic Preimplementation Contract Result v0.1",
-        "declared": {},
-        "matched_terms": [
-          "failure",
-          "fallback"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 10,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 125,
-        "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "branch_scope": "branch_specific",
-        "path": "configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json",
-        "blob_sha": "c08e65b69957f25c17cf8f9b01d2df98ba81c5d0",
-        "category": "configuration_state",
-        "title": "n0_v02_successor_authority_firewall_v1.json",
-        "declared": {},
-        "matched_terms": [
-          "egress",
-          "failure",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "lexical"
-        ],
-        "lexical_body_hits": 7,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 120,
-        "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-        "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
-        "category": "design_document",
-        "title": "N0 downstream causal arbitration — Magnolia execution contract",
-        "declared": {},
-        "matched_terms": [
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 10,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 120,
-        "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-        "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
-        "category": "design_document",
-        "title": "N0 downstream causal arbitration — Magnolia execution contract",
-        "declared": {},
-        "matched_terms": [
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 10,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 120,
-        "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-downstream-causal-arbitration-magnolia-execution-v0.1.md",
-        "blob_sha": "11d2c3e5899851b55a5bee6ec2341c02d2bc2ce9",
-        "category": "design_document",
-        "title": "N0 downstream causal arbitration — Magnolia execution contract",
-        "declared": {},
-        "matched_terms": [
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 10,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 119,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/MEMORY_SHADOW_MIGRATION_STAGE_C_E_IMPLEMENTATION.md",
-        "blob_sha": "80edc2333206ca4c609226997b9fa4ebff368f04",
-        "category": "design_document",
-        "title": "Memory Shadow Migration Stage C+E Implementation",
+        "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
         "declared": {
-          "status": " prototype operational; Stage D successor admitted"
-        },
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 70,
-            "text": "3. delete external synthetic reports from the selected vault report directory if no longer needed;"
-          }
-        ],
-        "catalogs": [
-          "supersession",
-          "failure",
-          "document",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 16,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 118,
-        "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-semantic-operator-foundation-v1.md",
-        "blob_sha": "00236bdb42f6423741fe24e0843096ce9b98bea0",
-        "category": "design_document",
-        "title": "N0 Semantic-Operator Foundation v1 — architecture decision after job 575990",
-        "declared": {
-          "status": " architecture decision; no gradient or GPU authorization"
+          "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
         },
         "matched_terms": [
-          "error",
-          "failed",
           "failure",
-          "fallback",
+          "hotfix",
           "magnolia",
-          "repair"
+          "udocker"
         ],
         "supersession_hints": [],
         "catalogs": [
           "failure",
-          "supersession",
           "document",
           "frontier",
+          "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 32,
+        "lexical_body_hits": 17,
         "currentness_adjustment": 25
       },
       {
-        "score": 117,
-        "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+        "score": 112,
+        "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
         "branch_scope": "branch_specific",
-        "path": ".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml",
-        "blob_sha": "0bf6d47d2af42ca2e2ba87217df11ede22412f0e",
-        "category": "repository_file",
-        "title": "n0-full-envelope-foundation-build-v1-contract.yml",
-        "declared": {},
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 496,
-            "text": "- name: Prove successor lineage cannot import superseded semantic authority"
-          }
+        "path": "docs/research/eipm-n0-relation-conditioned-multilayer-interface-runtime-qualification-v0.1.md",
+        "blob_sha": "1d062a129610443308dd5188db97111357d6c811",
+        "category": "design_document",
+        "title": "N0 Relation-Conditioned Multi-Layer Interface Runtime Qualification v0.1",
+        "declared": {
+          "status": " exact 575804-derived layer map compiled on Magnolia; one CPU-only no-gradient runtime contract qualification is the next authorized action"
+        },
+        "matched_terms": [
+          "failure",
+          "hotfix",
+          "magnolia",
+          "udocker"
         ],
+        "supersession_hints": [],
         "catalogs": [
-          "supersession",
           "failure",
           "document",
           "frontier",
+          "supersession",
           "lexical"
         ],
-        "lexical_body_hits": 16,
+        "lexical_body_hits": 17,
         "currentness_adjustment": 25
       },
       {
-        "score": 117,
+        "score": 111,
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
         "branch_scope": "branch_specific",
         "path": "docs/research/eipm-n0-full-envelope-interface-contract-v1.md",
@@ -5416,148 +5255,328 @@
           "frontier",
           "lexical"
         ],
-        "lexical_body_hits": 19,
+        "lexical_body_hits": 12,
         "currentness_adjustment": 25
       },
       {
-        "score": 113,
+        "score": 109,
+        "branch": "alice-eipm-v1-build",
+        "branch_scope": "current_source",
+        "path": "docs/eipm/n0/N0_V02_SOURCE_SELECTION_REVIEW_20260914.md",
+        "blob_sha": "0f53cb8334b2e9ea266bcfa2262472c6abf748ad",
+        "category": "design_document",
+        "title": "N0 v0.2 Public Source Selection Review — 2026-09-14",
+        "declared": {
+          "status": "source mixture refined; exact source activation still pending runtime probe."
+        },
+        "matched_terms": [
+          "error",
+          "magnolia"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "document",
+          "frontier",
+          "lexical"
+        ],
+        "lexical_body_hits": 7,
+        "currentness_adjustment": 4
+      },
+      {
+        "score": 104,
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
         "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-job-575962-semantic-matcher-v2.md",
-        "blob_sha": "74d01ced2d7610d5454610686989699fc9c401a6",
-        "category": "design_document",
-        "title": "N0 job 575962 — semantic matcher v2 causal repair",
+        "path": "configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json",
+        "blob_sha": "731d83769d06ab1e320d934a19474f1ca723c7ee",
+        "category": "configuration_state",
+        "title": "n0_v02_full_public_mixture_contract_v1.json",
         "declared": {},
-        "matched_terms": [
-          "failed",
-          "failure",
-          "magnolia",
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 21,
-        "currentness_adjustment": 25
-      },
-      {
-        "score": 111,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/MEMORY_SHADOW_MIGRATION_STAGE_F_G_IMPLEMENTATION.md",
-        "blob_sha": "34eae8c07bec01fd9355af3dd2fc99294a4f71ed",
-        "category": "design_document",
-        "title": "Memory Shadow Migration Stage F+G Implementation",
-        "declared": {
-          "status": " nonproduction successor prototypes operational; persistent integration successor admitted"
-        },
-        "matched_terms": [
-          "repair"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 13,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 109,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/MEMORY_SHADOW_MIGRATION_STAGE_A_B_IMPLEMENTATION.md",
-        "blob_sha": "f2979f0955b4fffe9573ecac4400e0e817c85ea5",
-        "category": "design_document",
-        "title": "Memory Shadow Migration Stage A+B Implementation",
-        "declared": {
-          "status": " prototype operational"
-        },
-        "matched_terms": [
-          "fallback"
-        ],
-        "supersession_hints": [],
-        "catalogs": [
-          "failure",
-          "document",
-          "frontier",
-          "lexical"
-        ],
-        "lexical_body_hits": 14,
-        "currentness_adjustment": 4
-      },
-      {
-        "score": 109,
-        "branch": "alice-eipm-v1-build",
-        "branch_scope": "current_source",
-        "path": "docs/MEMORY_SHADOW_MIGRATION_STAGE_D_IMPLEMENTATION.md",
-        "blob_sha": "0c28d3031dadc09a56cc8d6f7772070ed0b37edc",
-        "category": "design_document",
-        "title": "Memory Shadow Migration Stage D Implementation",
-        "declared": {
-          "status": " deterministic historical-backfill prototype operational; Stage F+G successor research admitted"
-        },
         "matched_terms": [],
         "supersession_hints": [],
         "catalogs": [
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 6,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 102,
+        "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-final-full-scale-capability-package-v1.md",
+        "blob_sha": "fb5e10c4f86c439d974f56ac4a52ba985cd0ef32",
+        "category": "design_document",
+        "title": "N0 final full-scale capability package v1",
+        "declared": {
+          "status": " precommitted package; N0 is not complete until the unchanged native frozen objective passes"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "recovery",
+          "repair"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
           "document",
           "frontier",
           "lexical"
         ],
         "lexical_body_hits": 18,
-        "currentness_adjustment": 4
+        "currentness_adjustment": 25
       },
       {
-        "score": 109,
-        "branch": "alice-personal-development-architecture-v1",
+        "score": 101,
+        "branch": "alice-eipm-v1-n0-closure-pass",
         "branch_scope": "branch_specific",
-        "path": "docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md",
-        "blob_sha": "983b8a0dee77a7cb0fd7e7ffdf4383187128073a",
+        "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+        "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
         "category": "design_document",
-        "title": "N0 Full-Envelope Retrospective Architecture Audit v1",
+        "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
         "declared": {
-          "decision": " preserve step80 as an initialization and comparison baseline. Reopen public semantic representation learning jointly with the operator/schema objective. Do not treat the current semantic heads as universal frozen authority.",
-          "status": " retrospective architecture authority; no gradient/GPU authorization"
+          "status": " architecture/data audit authority; all new gradient/GPU work frozen"
         },
-        "matched_terms": [],
-        "supersession_hints": [
-          {
-            "line": 44,
-            "text": "| QSRE T2 v0.x | **SUPERSEDED_CAUSAL_SCAFFOLD** | Do not revive fixed slots/classes. Production Core design supersedes it. |"
-          },
-          {
-            "line": 47,
-            "text": "| Final self-validation v1 | **HISTORICALLY_VALID BUT INSUFFICIENT FULL-ENVELOPE GATE** | Preserve as historical frozen test. Supersede with a new broader final contract before N0 closure. |"
-          },
-          {
-            "line": 315,
-            "text": "## 12. Final self-validation v1 — preserve history, supersede before closure"
-          },
-          {
-            "line": 346,
-            "text": "Once job 575990 proved that geometry insufficient for the new open-schema semantic/operator requirement, those downstream preservation PASS results can no longer be interpreted as independent evidence that the representation is sufficient."
-          }
-        ],
-        "catalogs": [
-          "supersession",
+        "matched_terms": [
+          "failed",
           "failure",
+          "fallback",
+          "recovery",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
           "document",
           "frontier",
           "lexical"
         ],
-        "lexical_body_hits": 30
+        "lexical_body_hits": 26
+      },
+      {
+        "score": 101,
+        "branch": "alice-eipm-v1-n0-closure-semantic-v2",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+        "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
+        "category": "design_document",
+        "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
+        "declared": {
+          "status": " architecture/data audit authority; all new gradient/GPU work frozen"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "fallback",
+          "recovery",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "frontier",
+          "lexical"
+        ],
+        "lexical_body_hits": 26
+      },
+      {
+        "score": 101,
+        "branch": "alice-eipm-v1-n0-frozen-semantic-authority-v3",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+        "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
+        "category": "design_document",
+        "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
+        "declared": {
+          "status": " architecture/data audit authority; all new gradient/GPU work frozen"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "fallback",
+          "recovery",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "frontier",
+          "lexical"
+        ],
+        "lexical_body_hits": 26
+      },
+      {
+        "score": 101,
+        "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
+        "branch_scope": "branch_specific",
+        "path": ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
+        "blob_sha": "1510c11266ca1272da38dfbd7a0987b516c55de3",
+        "category": "repository_file",
+        "title": "Only the gate is deliberately zero-initialized.  Do not create a",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 8,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 101,
+        "branch": "alice-eipm-v1-n0-p2a-semantic-localization-v1",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+        "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
+        "category": "design_document",
+        "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
+        "declared": {
+          "status": " architecture/data audit authority; all new gradient/GPU work frozen"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "fallback",
+          "recovery",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "frontier",
+          "lexical"
+        ],
+        "lexical_body_hits": 26
+      },
+      {
+        "score": 101,
+        "branch": "alice-eipm-v1-n0-semantic-operator-foundation-v1",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+        "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
+        "category": "design_document",
+        "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
+        "declared": {
+          "status": " architecture/data audit authority; all new gradient/GPU work frozen"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "fallback",
+          "recovery",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "frontier",
+          "lexical"
+        ],
+        "lexical_body_hits": 26
+      },
+      {
+        "score": 101,
+        "branch": "alice-eipm-v1-qsre-production-core-v1",
+        "branch_scope": "branch_specific",
+        "path": "docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md",
+        "blob_sha": "579c52e5e462bb49201c143898de3407347350c0",
+        "category": "design_document",
+        "title": "N0 CPU/GPU Reality Gap and Data Validity Audit v0.1",
+        "declared": {
+          "status": " architecture/data audit authority; all new gradient/GPU work frozen"
+        },
+        "matched_terms": [
+          "failed",
+          "failure",
+          "fallback",
+          "recovery",
+          "udocker"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "frontier",
+          "lexical"
+        ],
+        "lexical_body_hits": 26
+      },
+      {
+        "score": 101,
+        "branch": "alice-eipm-v1-qsre-production-p2-failure-localization",
+        "branch_scope": "branch_specific",
+        "path": ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
+        "blob_sha": "1510c11266ca1272da38dfbd7a0987b516c55de3",
+        "category": "repository_file",
+        "title": "Only the gate is deliberately zero-initialized.  Do not create a",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 8,
+        "currentness_adjustment": 25
+      },
+      {
+        "score": 101,
+        "branch": "alice-eipm-v1-qsre-production-p2-ordered-evidence-v3",
+        "branch_scope": "branch_specific",
+        "path": ".github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml",
+        "blob_sha": "1510c11266ca1272da38dfbd7a0987b516c55de3",
+        "category": "repository_file",
+        "title": "Only the gate is deliberately zero-initialized.  Do not create a",
+        "declared": {},
+        "matched_terms": [
+          "failed",
+          "failure",
+          "hotfix",
+          "magnolia"
+        ],
+        "supersession_hints": [],
+        "catalogs": [
+          "failure",
+          "supersession",
+          "document",
+          "lexical"
+        ],
+        "lexical_body_hits": 8,
+        "currentness_adjustment": 25
       }
     ],
     "private_external_route_recommended": true,
     "private_external_route_reason": "host-specific operational history may contain newer failure lessons than public receipts",
     "authority": "routing-only"
   },
-  "graphify_result_text": "Graph: graphify-out/graph.json (13883 nodes) | Traversal: BFS depth=2 | Start: ['N0FullEnvelopeTrainableSystemV1', 'audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py', 'test_n0_full_envelope_joint_runtime_v1.py', 'accelerated_scheduler_steps()', 'AliceN0V02Model', 'consensus_all_aligned()', 'audit()', 'authority()', 'authorize_boolean_map()', 'test_same_key_memory_requires_later_transition_aware_promotion()', 'batch_indices()', 'test_candidates_never_enter_derived_indexes_before_promotion()', '.boundary()', 'branch_forward()', '_build()', 'causal_specialist_probabilities()', 'checkpoint_capability_tuple()', 'test_tampered_request_or_completion_audit_fails_closed()', '.test_promotional_self_record_impact_is_rejected_but_concrete_action_kept()', 'test_constructor_requires_each_boundary()', 'contract()', '_counts()', 'CurrentClaimProjection', 'DDP-safe forward entry point for both public N0 v0.2 paths.', 'Header-oriented signature detection with puremagic deep scan disabled.', 'device', 'test_operator_metrics_distinguish_stop_and_unknown()', 'test_storage_doctrine_is_aggressive_capture_selective_retention()', 'sha256()', 'envelope()', 'downstream_full_stack_graph_evaluator_v0_1.py', 'exact_masked_softmax()', 'ExecutionFreezeError', 'import_external_public_lineage.py', 'family_splits()', 'final_evaluation_runtime.py', 'FixedRows', 'test_n0_semantic_operator_foundation_v1.py', 'FullEnvelopeQSREExecutorV1', 'FullEnvelopeJointTrainingObjectiveV1', 'gate()', 'N0_DDP_GPU0', 'Gradient-preserving adapter from the shared backbone to full N0 tensors. It…', '_historical()', 'Candidate wording alone may not identify the governed public answer. This pair…', 'identity()', 'test_component_false_implementation_states_are_registered_without_contract_mutation()', '.test_private_identity_initialization_and_annotation()', 'Run only the shared semantic/operator lane inside the registered system. J1…', 'joint_preference_scores()', 'PublicJudgmentProbeV1', 'Logical reference to one host-sealed payload in a durable tier.', 'magnolia_cpu_n0_v02_tokenizer.sh', 'test_behavioral_materialization_owns_relation_candidate_objects()', 'test_n0_full_envelope_successor_mechanics_v1.py', 'MemoryUnitEnvelope', 'missing_semantic()', 'build_n0_v02_full_public_mixture_manifest_v1.py', 'N0FullEnvelopeStackV1', 'test_binder_support_remains_neutral_to_reliability_and_recency_criteria()', 'Only source wrapper eligible for future model-facing web grounding.', 'test_runtime_view_rows_compile_into_optimizer_facing_additional_views()', 'test_interrupted_grounded_turn_requires_exact_original_packet()', 'pilot_review.py', 'test_seed_plus_coverage_has_train_and_dev_for_every_registry_competency()', 'policy()', 'prepare_n0_v02_qsre_frozen_authority_cache_v3.py', 'load_ratified_fusion()', '.from_receipts()', 'test_registered_joint_step_runs_real_replay_operator_fabric_and_natural_relation_losses()', 'remaining()', 'require()', 'RestoreFilterDecision', '.resume()', 'run()', 'runtime()', 'semantic()', '_source()', 'StagePolicy', 'test_model_proposal_with_complete_metadata_is_staged()', 'test_inactive_behavioral_candidate_losses_stay_finite_with_structural_invalid_floor()', 'step()', 'test_past_temporal_search_returns_historical_superseded_memory()', '_system()', 'topology_signature()', 'trace()', '_v1_connection()', 'test_rejects_overwide_phase1_source_limit()'] | Context: call, import (explicit) | 1779 nodes found\n\n[!] TRUNCATED: showing 336 of 1779 nodes (~12000-token budget). The answer may be among the 1443 cut nodes — raise the token budget (CLI: --budget) or narrow the query (e.g. context_filter=['call'], or get_node for a specific symbol).\n\nNODE N0FullEnvelopeTrainableSystemV1 [src=src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py loc=L58 community=74]\nNODE audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py [src=scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py loc=L1 community=1]\nNODE test_n0_full_envelope_joint_runtime_v1.py [src=tests/eipm/test_n0_full_envelope_joint_runtime_v1.py loc=L1 community=204]\nNODE accelerated_scheduler_steps() [src=src/alice_personality/n0/training_schedule.py loc=L4 community=5]\nNODE AliceN0V02Model [src=src/alice_personality/n0/v02_model.py loc=L13 community=88]\nNODE consensus_all_aligned() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py loc=L327 community=101]\nNODE audit() [src=scripts/audit_capability_barriers.py loc=L521 community=200]\nNODE authority() [src=tests/eipm/test_n0_qsre_production_operator_v3.py loc=L87 community=114]\nNODE authorize_boolean_map() [src=src/alice_capability_profiles.py loc=L88 community=109]\nNODE test_same_key_memory_requires_later_transition_aware_promotion() [src=tests/phase2/test_memory_candidate_promotion.py loc=L322 community=162]\nNODE batch_indices() [src=scripts/eipm/n0/qsre_production_training_utils.py loc=L150 community=12]\nNODE test_candidates_never_enter_derived_indexes_before_promotion() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L312 community=126]\nNODE .boundary() [src=src/alice_conversation/cli_policy.py loc=L67 community=9]\nNODE branch_forward() [src=scripts/eipm/n0/train_n0_v02_structured_state_pilot.py loc=L287 community=173]\nNODE _build() [src=tests/phase4/test_information_grounding.py loc=L154 community=63]\nNODE causal_specialist_probabilities() [src=scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py loc=L83 community=15]\nNODE checkpoint_capability_tuple() [src=scripts/eipm/n0/train_n0_v02_evidence_graph_pilot.py loc=L669 community=89]\nNODE test_tampered_request_or_completion_audit_fails_closed() [src=tests/phase2/test_memory_sensitive_deletion.py loc=L531 community=30]\nNODE .test_promotional_self_record_impact_is_rejected_but_concrete_action_kept() [src=tests/phase1/test_personal_claim_validity_contract.py loc=L80 community=316]\nNODE test_constructor_requires_each_boundary() [src=tests/phase4/test_information_research_execution.py loc=L507 community=79]\nNODE contract() [src=tests/phase3/_repair_helpers.py loc=L75 community=44]\nNODE _counts() [src=src/alice_vault/privacy_scan.py loc=L151 community=279]\nNODE CurrentClaimProjection [src=src/cognitive_kernel/claim_contracts.py loc=L755 community=16]\nNODE DDP-safe forward entry point for both public N0 v0.2 paths. [src=src/alice_personality/n0/v02_model.py loc=L145 community=88]\nNODE Header-oriented signature detection with puremagic deep scan disabled. [src=src/alice_vault/analysis.py loc=L124 community=96]\nNODE device [src= loc= community=60]\nNODE test_operator_metrics_distinguish_stop_and_unknown() [src=tests/eipm/test_n0_qsre_production_training_utils.py loc=L65 community=12]\nNODE test_storage_doctrine_is_aggressive_capture_selective_retention() [src=tests/governance/test_storage_lifecycle_policy.py loc=L13 community=278]\nNODE sha256() [src=scripts/eipm/n0/qsre_production_runtime.py loc=L16 community=12]\nNODE envelope() [src=tests/phase5/test_memory_m2_adjudication_contracts.py loc=L47 community=16]\nNODE downstream_full_stack_graph_evaluator_v0_1.py [src=scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py loc=L1 community=203]\nNODE exact_masked_softmax() [src=src/alice_personality/n0/numeric_contracts.py loc=L48 community=33]\nNODE ExecutionFreezeError [src=scripts/eipm/n0/execute_frozen_downstream_causal_arbitration_v0_1.py loc=L15 community=249]\nNODE import_external_public_lineage.py [src=scripts/eipm/n0/import_external_public_lineage.py loc=L1 community=1]\nNODE family_splits() [src=src/alice_personality/n1/compiler.py loc=L167 community=218]\nNODE final_evaluation_runtime.py [src=src/alice_information/final_evaluation_runtime.py loc=L1 community=62]\nNODE FixedRows [src=scripts/eipm/n0/evaluate_n0_v02_fixed.py loc=L26 community=5]\nNODE test_n0_semantic_operator_foundation_v1.py [src=tests/eipm/test_n0_semantic_operator_foundation_v1.py loc=L1 community=95]\nNODE FullEnvelopeQSREExecutorV1 [src=src/alice_personality/n0/qsre_full_envelope_executor_v1.py loc=L56 community=47]\nNODE FullEnvelopeJointTrainingObjectiveV1 [src=src/alice_personality/n0/full_envelope_training_objective_v1.py loc=L375 community=161]\nNODE gate() [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L155 community=6]\nNODE N0_DDP_GPU0 [src=scripts/eipm/n0/train_mlm_p100x2_ddp_mechanics.sh loc=L135 community=288]\nNODE Gradient-preserving adapter from the shared backbone to full N0 tensors. It… [src=src/alice_personality/n0/semantic_backbone_interface_v1.py loc=L33 community=74]\nNODE _historical() [src=scripts/audit_capability_barriers.py loc=L460 community=200]\nNODE Candidate wording alone may not identify the governed public answer. This pair… [src=tests/eipm/test_n0_full_envelope_trainable_system_v1.py loc=L734 community=438]\nNODE identity() [src=tests/phase5/test_memory_m2_claim_contracts.py loc=L98 community=16]\nNODE test_component_false_implementation_states_are_registered_without_contract_mutation() [src=tests/governance/test_memory_capability_ceiling.py loc=L235 community=231]\nNODE .test_private_identity_initialization_and_annotation() [src=tests/phase1/test_owner_attribution.py loc=L75 community=3]\nNODE Run only the shared semantic/operator lane inside the registered system. J1… [src=src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py loc=L205 community=74]\nNODE joint_preference_scores() [src=scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py loc=L158 community=23]\nNODE PublicJudgmentProbeV1 [src=src/alice_personality/n0/public_judgment_probe_v1.py loc=L31 community=255]\nNODE Logical reference to one host-sealed payload in a durable tier. [src=src/cognitive_kernel/tier_transition.py loc=L46 community=4]\nNODE magnolia_cpu_n0_v02_tokenizer.sh [src=scripts/eipm/n0/magnolia_cpu_n0_v02_tokenizer.sh loc=L1 community=323]\nNODE test_behavioral_materialization_owns_relation_candidate_objects() [src=tests/eipm/test_n0_full_envelope_long_context_curriculum_v1.py loc=L43 community=266]\nNODE test_n0_full_envelope_successor_mechanics_v1.py [src=tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py loc=L1 community=47]\nNODE MemoryUnitEnvelope [src=src/cognitive_kernel/memory_contracts.py loc=L377 community=0]\nNODE missing_semantic() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_curriculum.py loc=L254 community=18]\nNODE build_n0_v02_full_public_mixture_manifest_v1.py [src=scripts/eipm/n0/build_n0_v02_full_public_mixture_manifest_v1.py loc=L1 community=295]\nNODE N0FullEnvelopeStackV1 [src=src/alice_personality/n0/n0_full_envelope_stack_v1.py loc=L88 community=139]\nNODE test_binder_support_remains_neutral_to_reliability_and_recency_criteria() [src=tests/eipm/test_n0_full_envelope_modifier_gating_v1.py loc=L118 community=33]\nNODE Only source wrapper eligible for future model-facing web grounding. [src=src/alice_information/injection_firewall.py loc=L146 community=77]\nNODE test_runtime_view_rows_compile_into_optimizer_facing_additional_views() [src=tests/eipm/test_n0_full_envelope_runtime_view_curriculum_v1.py loc=L33 community=266]\nNODE test_interrupted_grounded_turn_requires_exact_original_packet() [src=tests/phase3/test_conversation_orchestration_resume.py loc=L129 community=41]\nNODE pilot_review.py [src=src/alice_vault/pilot_review.py loc=L1 community=166]\nNODE test_seed_plus_coverage_has_train_and_dev_for_every_registry_competency() [src=tests/eipm/test_n0_curriculum_coverage.py loc=L49 community=5]\nNODE policy() [src=tests/phase4/_information_final_evaluation_helpers.py loc=L16 community=97]\nNODE prepare_n0_v02_qsre_frozen_authority_cache_v3.py [src=scripts/eipm/n0/prepare_n0_v02_qsre_frozen_authority_cache_v3.py loc=L1 community=23]\nNODE load_ratified_fusion() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L66 community=6]\nNODE .from_receipts() [src=src/cognitive_kernel/shadow_migration_stage_d.py loc=L592 community=61]\nNODE test_registered_joint_step_runs_real_replay_operator_fabric_and_natural_relation_losses() [src=tests/eipm/test_n0_full_envelope_trainable_system_v1.py loc=L1096 community=161]\nNODE remaining() [src=src/alice_information/live_http.py loc=L359 community=25]\nNODE require() [src=scripts/eipm/n0/preflight_n0_v02_teacher_dev_challenge.py loc=L36 community=5]\nNODE RestoreFilterDecision [src=src/cognitive_kernel/deletion_contracts.py loc=L393 community=26]\nNODE .resume() [src=src/alice_conversation/cli_runtime.py loc=L235 community=9]\nNODE run() [src=tests/phase4/test_information_final_evaluation_runtime.py loc=L47 community=62]\nNODE runtime() [src=tests/phase3/test_conversation_context_cli.py loc=L46 community=24]\nNODE semantic() [src=tests/phase1/test_policy_calibration.py loc=L42 community=229]\nNODE _source() [src=tests/phase4/test_information_freshness.py loc=L43 community=34]\nNODE StagePolicy [src=src/alice_personality/n0/full_envelope_stage_policy_v1.py loc=L84 community=204]\nNODE test_model_proposal_with_complete_metadata_is_staged() [src=tests/phase2/test_memory_candidates.py loc=L278 community=36]\nNODE test_inactive_behavioral_candidate_losses_stay_finite_with_structural_invalid_floor() [src=tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py loc=L877 community=170]\nNODE step() [src=tests/phase5/test_memory_m2_serving_contracts.py loc=L86 community=195]\nNODE test_past_temporal_search_returns_historical_superseded_memory() [src=tests/phase2/test_memory_retrieval.py loc=L281 community=20]\nNODE _system() [src=tests/eipm/test_n0_full_envelope_trainable_system_v1.py loc=L251 community=161]\nNODE topology_signature() [src=scripts/eipm/n0/evaluate_n0_v02_qsre_t1_curriculum_v0_2.py loc=L34 community=322]\nNODE trace() [src=tests/phase5/test_memory_m2_serving_contracts.py loc=L105 community=195]\nNODE _v1_connection() [src=tests/phase2/test_memory_migrations_v2.py loc=L22 community=53]\nNODE test_rejects_overwide_phase1_source_limit() [src=tests/phase3/test_conversation_grounding_policy.py loc=L56 community=191]\nNODE pathlib [src= loc= community=1]\nNODE json [src= loc= community=1]\nNODE CognitiveKernelContractError [src=src/cognitive_kernel/canonical.py loc=L18 community=0]\nNODE canonical_sha256() [src=src/cognitive_kernel/canonical.py loc=L39 community=0]\nNODE cognitive_kernel/__init__.py [src=src/cognitive_kernel/__init__.py loc=L1 community=14]\nNODE typing [src= loc= community=10]\nNODE dataclasses [src= loc= community=33]\nNODE argparse [src= loc= community=1]\nNODE hashlib [src= loc= community=10]\nNODE torch [src= loc= community=10]\nNODE sys [src= loc= community=1]\nNODE open_memory_store() [src=src/alice_memory/store.py loc=L107 community=38]\nNODE collections [src= loc= community=10]\nNODE create_memory() [src=src/alice_memory/service.py loc=L541 community=70]\nNODE sqlite3 [src= loc= community=1]\nNODE re [src= loc= community=2]\nNODE inspect_conversation_session() [src=src/alice_conversation/state_inspection.py loc=L91 community=41]\nNODE tempfile [src= loc= community=1]\nNODE subprocess [src= loc= community=10]\nNODE load_semantic_policy() [src=src/alice_vault/semantic_retrieval.py loc=L116 community=75]\nNODE m2_closeout_evaluation.py [src=src/cognitive_kernel/m2_closeout_evaluation.py loc=L1 community=54]\nNODE uuid [src= loc= community=3]\nNODE datetime [src= loc= community=129]\nNODE eval_n0_v02_final_self_validation_v3.py [src=scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py loc=L1 community=6]\nNODE eval_n0_v02_final_self_validation_v2.py [src=scripts/eipm/n0/eval_n0_v02_final_self_validation_v2.py loc=L1 community=6]\nNODE eval_n0_v02_final_self_validation_v1.py [src=scripts/eipm/n0/eval_n0_v02_final_self_validation_v1.py loc=L1 community=12]\nNODE eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L1 community=6]\nNODE os [src= loc= community=1]\nNODE make_orchestrator() [src=tests/phase3/_orchestration_helpers.py loc=L75 community=41]\nNODE n0_full_envelope_stack_v1.py [src=src/alice_personality/n0/n0_full_envelope_stack_v1.py loc=L1 community=33]\nNODE make_executor() [src=tests/phase4/test_information_research_execution.py loc=L245 community=79]\nNODE sha256_file() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L43 community=6]\nNODE build_parent_cache() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L188 community=6]\nNODE make_orchestrator() [src=tests/phase3/_context_helpers.py loc=L258 community=24]\nNODE sha256_text() [src=src/alice_conversation/contracts.py loc=L60 community=13]\nNODE build_runtime() [src=tests/phase3/_repair_helpers.py loc=L100 community=44]\nNODE benchmark() [src=tests/phase4/_information_final_evaluation_helpers.py loc=L22 community=97]\nNODE http_failure() [src=src/alice_information/http_transport.py loc=L85 community=25]\nNODE eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py loc=L1 community=6]\nNODE qsre_production_runtime.py [src=scripts/eipm/n0/qsre_production_runtime.py loc=L1 community=72]\nNODE delete_sensitive_memory() [src=src/alice_memory/sensitive_deletion.py loc=L738 community=30]\nNODE propose_memory_candidate() [src=src/alice_memory/formation.py loc=L423 community=36]\nNODE _qualified() [src=tests/phase4/test_information_grounding.py loc=L86 community=63]\nNODE search_memories() [src=src/alice_memory/retrieval.py loc=L237 community=20]\nNODE diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py loc=L1 community=6]\nNODE bounded_serving_prototype.py [src=src/cognitive_kernel/bounded_serving_prototype.py loc=L1 community=32]\nNODE claim_authority_prototype.py [src=src/cognitive_kernel/claim_authority_prototype.py loc=L1 community=48]\nNODE diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py loc=L1 community=6]\nNODE diagnose_n0_v02_missing_evidence_path_v0_1.py [src=scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py loc=L1 community=179]\nNODE read_jsonl() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L67 community=6]\nNODE train_n0_v02_qsre_production_p3_v3.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py loc=L1 community=12]\nNODE run_information_final_evaluation() [src=src/alice_information/final_evaluation.py loc=L390 community=97]\nNODE shadow_adjudication_prototype.py [src=src/cognitive_kernel/shadow_adjudication_prototype.py loc=L1 community=28]\nNODE train_n0_v02_qsre_production_p3_v2.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v2.py loc=L1 community=12]\nNODE load_information_final_evaluation_policy() [src=src/alice_information/final_evaluation_contract.py loc=L315 community=119]\nNODE supersede_memory() [src=src/alice_memory/temporal.py loc=L400 community=7]\nNODE claim_contracts.py [src=src/cognitive_kernel/claim_contracts.py loc=L1 community=16]\nNODE .create() [src=src/cognitive_kernel/memory_contracts.py loc=L411 community=0]\nNODE .create() [src=src/alice_information/contracts.py loc=L414 community=63]\nNODE make_row() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py loc=L110 community=101]\nNODE main() [src=scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py loc=L334 community=179]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py loc=L387 community=6]\nNODE eval_n0_v02_qsre_production_p4_v1.py [src=scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v1.py loc=L1 community=12]\nNODE eval_n0_v02_qsre_production_p4_v2.py [src=scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v2.py loc=L1 community=12]\nNODE eval_n0_v02_qsre_production_p4_v3.py [src=scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py loc=L1 community=12]\nNODE load_tokenizer() [src=scripts/eipm/n0/qsre_production_runtime.py loc=L65 community=72]\nNODE precompute_fusion_cache() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L87 community=6]\nNODE train_n0_v02_qsre_production_p2_v3.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py loc=L1 community=80]\nNODE train_n0_v02_qsre_production_p3_v1.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v1.py loc=L1 community=12]\nNODE adjudication_contracts.py [src=src/cognitive_kernel/adjudication_contracts.py loc=L1 community=16]\nNODE durable_workflow_prototype.py [src=src/cognitive_kernel/durable_workflow_prototype.py loc=L1 community=35]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_final_self_validation_v1.py loc=L383 community=12]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_final_self_validation_v2.py loc=L383 community=6]\nNODE operator_metrics() [src=scripts/eipm/n0/qsre_production_training_utils.py loc=L352 community=12]\nNODE LatentPoolDataset [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L142 community=6]\nNODE train_n0_v02_qsre_production_p2_v2.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p2_v2.py loc=L1 community=158]\nNODE load_information_final_evaluation_benchmark() [src=src/alice_information/final_evaluation_contract.py loc=L537 community=119]\nNODE deletion_prototype.py [src=src/cognitive_kernel/deletion_prototype.py loc=L1 community=26]\nNODE field() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py loc=L41 community=101]\nNODE parts() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py loc=L74 community=101]\nNODE train_n0_v02_qsre_production_p2_v1.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p2_v1.py loc=L1 community=12]\nNODE load_memory_candidate() [src=src/alice_memory/formation.py loc=L391 community=78]\nNODE .__init__() [src=src/alice_personality/n0/n0_full_envelope_stack_v1.py loc=L99 community=47]\nNODE load_public_parents() [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L44 community=6]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L416 community=6]\nNODE corrected_evaluate() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py loc=L74 community=6]\nNODE load_config() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py loc=L36 community=6]\nNODE train_n0_v02_qsre_closure_matcher_v2.py [src=scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py loc=L1 community=23]\nNODE semantic_operator_foundation.py [src=src/alice_personality/n0/semantic_operator_foundation.py loc=L1 community=33]\nNODE encode_texts() [src=scripts/eipm/n0/prepare_n0_v02_qsre_production_cache_v1.py loc=L29 community=72]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py loc=L608 community=23]\nNODE train_n0_v02_qsre_production_p1_v1.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p1_v1.py loc=L1 community=12]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py loc=L762 community=80]\nNODE alice_information/release_audit.py [src=src/alice_information/release_audit.py loc=L1 community=64]\nNODE hybrid_search_memories() [src=src/alice_memory/hybrid_retrieval.py loc=L211 community=20]\nNODE projection_contracts.py [src=src/cognitive_kernel/projection_contracts.py loc=L1 community=0]\nNODE _boundaries() [src=tests/phase4/test_information_grounding.py loc=L46 community=63]\nNODE edge() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py loc=L64 community=101]\nNODE run_evaluation() [src=scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py loc=L326 community=203]\nNODE qualify_n0_v02_qsre_frozen_semantic_authority_v3.py [src=scripts/eipm/n0/qualify_n0_v02_qsre_frozen_semantic_authority_v3.py loc=L1 community=23]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p2_v1.py loc=L407 community=12]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py loc=L334 community=12]\nNODE qsre_full_envelope_binder_v1.py [src=src/alice_personality/n0/qsre_full_envelope_binder_v1.py loc=L1 community=33]\nNODE _candidate_request() [src=tests/phase2/test_memory_candidate_promotion.py loc=L62 community=162]\nNODE _open() [src=tests/phase2/test_memory_candidate_promotion.py loc=L41 community=162]\nNODE _promote() [src=tests/phase2/test_memory_candidate_promotion.py loc=L144 community=162]\nNODE _propose() [src=tests/phase2/test_memory_candidate_promotion.py loc=L100 community=162]\nNODE _draft() [src=tests/phase4/test_information_grounding.py loc=L137 community=63]\nNODE main() [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py loc=L73 community=6]\nNODE prepare_n0_v02_qsre_production_cache_v1.py [src=scripts/eipm/n0/prepare_n0_v02_qsre_production_cache_v1.py loc=L1 community=72]\nNODE load_frozen_semantic_model() [src=scripts/eipm/n0/qsre_production_runtime.py loc=L38 community=72]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p2_v2.py loc=L677 community=158]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v1.py loc=L242 community=12]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v2.py loc=L268 community=12]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_structured_state_pilot.py loc=L472 community=173]\nNODE compile_behavioral_batch() [src=src/alice_personality/n0/full_envelope_behavioral_batch_v1.py loc=L314 community=235]\nNODE .create() [src=src/cognitive_kernel/claim_contracts.py loc=L208 community=16]\nNODE curation_contracts.py [src=src/cognitive_kernel/curation_contracts.py loc=L1 community=0]\nNODE serving_contracts.py [src=src/cognitive_kernel/serving_contracts.py loc=L1 community=0]\nNODE _assess() [src=tests/phase2/test_memory_candidate_promotion.py loc=L113 community=162]\nNODE main() [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py loc=L46 community=6]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v1.py loc=L30 community=12]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v2.py loc=L32 community=12]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py loc=L32 community=12]\nNODE requalify_n0_v02_qsre_production_p1_stop_tail_v1.py [src=scripts/eipm/n0/requalify_n0_v02_qsre_production_p1_stop_tail_v1.py loc=L1 community=12]\nNODE train_n0_v02_qsre_closure_matcher_v1.py [src=scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v1.py loc=L1 community=72]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v1.py loc=L500 community=72]\nNODE .create() [src=src/cognitive_kernel/claim_contracts.py loc=L361 community=16]\nNODE deletion_contracts.py [src=src/cognitive_kernel/deletion_contracts.py loc=L1 community=0]\nNODE m2_closeout.py [src=src/cognitive_kernel/m2_closeout.py loc=L1 community=0]\nNODE csv [src= loc= community=1]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py loc=L127 community=6]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_targeted_repair.py loc=L291 community=5]\nNODE alice_information/final_evaluation.py [src=src/alice_information/final_evaluation.py loc=L1 community=97]\nNODE alice_information/final_evaluation_contract.py [src=src/alice_information/final_evaluation_contract.py loc=L1 community=119]\nNODE search_memories_semantic() [src=src/alice_memory/hybrid_retrieval.py loc=L126 community=20]\nNODE dynamic_structured_state_v2.py [src=src/alice_personality/n0/dynamic_structured_state_v2.py loc=L1 community=33]\nNODE _setup() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L87 community=126]\nNODE _create_sensitive() [src=tests/phase2/test_memory_sensitive_deletion.py loc=L136 community=30]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L174 community=6]\nNODE main() [src=scripts/eipm/n0/qualify_n0_v02_qsre_frozen_semantic_authority_v3.py loc=L202 community=23]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p1_v1.py loc=L185 community=12]\nNODE shutil [src= loc= community=1]\nNODE verify_information_final_report() [src=src/alice_information/final_evaluation.py loc=L293 community=97]\nNODE n0_full_envelope_trainable_system_v1.py [src=src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py loc=L1 community=74]\nNODE annotate_context_owner_relation() [src=src/alice_vault/owner_attribution.py loc=L273 community=3]\nNODE _full_batch() [src=tests/eipm/test_n0_full_envelope_trainable_system_v1.py loc=L122 community=161]\nNODE _open() [src=tests/phase2/test_memory_candidates.py loc=L33 community=36]\nNODE _request() [src=tests/phase2/test_memory_candidates.py loc=L64 community=36]\nNODE _setup() [src=tests/phase2/test_memory_sensitive_deletion.py loc=L85 community=30]\nNODE audit_n0_v02_qsre_production_p0_v1.py [src=scripts/eipm/n0/audit_n0_v02_qsre_production_p0_v1.py loc=L1 community=12]\nNODE prepare_n0_v02_final_self_validation_cache_v1.py [src=scripts/eipm/n0/prepare_n0_v02_final_self_validation_cache_v1.py loc=L1 community=72]\nNODE socket [src= loc= community=66]\nNODE dynamic_cross_context_fusion_v3.py [src=src/alice_personality/n0/dynamic_cross_context_fusion_v3.py loc=L1 community=33]\nNODE dynamic_evidence_view_v2.py [src=src/alice_personality/n0/dynamic_evidence_view_v2.py loc=L1 community=33]\nNODE qsre_full_envelope_executor_v1.py [src=src/alice_personality/n0/qsre_full_envelope_executor_v1.py loc=L1 community=33]\nNODE _candidate_request() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L143 community=126]\nNODE _propose() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L193 community=126]\nNODE _authorization() [src=tests/phase2/test_memory_candidates.py loc=L44 community=36]\nNODE _request_delete() [src=tests/phase2/test_memory_sensitive_deletion.py loc=L211 community=30]\nNODE _query() [src=tests/phase4/test_information_grounding.py loc=L33 community=63]\nNODE main() [src=scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py loc=L121 community=15]\nNODE main() [src=scripts/eipm/n0/prepare_n0_v02_qsre_frozen_authority_cache_v3.py loc=L216 community=23]\nNODE main() [src=scripts/eipm/n0/train_mlm.py loc=L68 community=10]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_evidence_graph_pilot.py loc=L684 community=89]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_multitask.py loc=L214 community=5]\nNODE parse_conversation_grounding_policy() [src=src/alice_conversation/grounding_policy.py loc=L58 community=191]\nNODE sha256_canonical() [src=src/alice_information/final_evaluation_contract.py loc=L155 community=62]\nNODE compile_identity_substrate() [src=src/alice_personality/n1/compiler.py loc=L209 community=218]\nNODE field() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_curriculum.py loc=L44 community=18]\nNODE make_row() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_curriculum.py loc=L83 community=18]\nNODE parts() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_curriculum.py loc=L77 community=18]\nNODE load_fusion_config() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L89 community=6]\nNODE candidate_forward() [src=scripts/eipm/n0/train_n0_v02_dual_view_specialist_v0_1.py loc=L340 community=15]\nNODE .create() [src=src/cognitive_kernel/serving_contracts.py loc=L283 community=0]\nNODE _assess() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L212 community=126]\nNODE test_runtime_evidence_and_outer_report_tamper_are_rejected() [src=tests/phase4/test_information_final_evaluation_runtime.py loc=L159 community=62]\nNODE test_information_release_audit.py [src=tests/phase4/test_information_release_audit.py loc=L1 community=169]\nNODE candidate() [src=tests/phase5/test_memory_m2_adjudication_contracts.py loc=L154 community=16]\nNODE qsre_frozen_semantic_authority_runtime.py [src=scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py loc=L1 community=23]\nNODE frozen_authority_scores() [src=scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py loc=L271 community=23]\nNODE relation_schema_text() [src=scripts/eipm/n0/qsre_production_runtime.py loc=L71 community=23]\nNODE to_device() [src=scripts/eipm/n0/train_n0_v02_dual_view_specialist_v0_1.py loc=L333 community=15]\nNODE canonical_json() [src=src/alice_information/final_evaluation_contract.py loc=L146 community=62]\nNODE information_evaluation_observation_digest() [src=src/alice_information/final_evaluation_contract.py loc=L159 community=97]\nNODE dynamic_schema_evidence_graph_v1.py [src=src/alice_personality/n0/dynamic_schema_evidence_graph_v1.py loc=L1 community=33]\nNODE semantic_operator_qsre_adapter.py [src=src/alice_personality/n0/semantic_operator_qsre_adapter.py loc=L1 community=33]\nNODE scan_privacy() [src=src/alice_vault/privacy_scan.py loc=L219 community=279]\nNODE build_synthetic_stage_d_report() [src=src/cognitive_kernel/shadow_migration_stage_d_evaluation.py loc=L61 community=61]\nNODE _TinyTokenizer [src=tests/eipm/test_n0_full_envelope_trainable_system_v1.py loc=L642 community=266]\nNODE load_json() [src=tests/governance/test_storage_lifecycle_policy.py loc=L9 community=278]\nNODE test_pilot_review.py [src=tests/phase1/test_pilot_review.py loc=L1 community=1]\nNODE _promotion_authorization() [src=tests/phase2/test_memory_candidate_promotion.py loc=L126 community=162]\nNODE _create_memory() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L108 community=126]\nNODE migrate_capability_barriers.py [src=scripts/migrate_capability_barriers.py loc=L1 community=129]\nNODE run_phase4_information_release_audit.py [src=scripts/run_phase4_information_release_audit.py loc=L1 community=284]\nNODE configure_connection() [src=src/alice_memory/schema.py loc=L429 community=53]\nNODE load_sensitive_memory_deletion() [src=src/alice_memory/sensitive_deletion.py loc=L635 community=30]\nNODE full_envelope_structural_types.py [src=src/alice_personality/n0/full_envelope_structural_types.py loc=L1 community=33]\nNODE public_judgment_probe_v1.py [src=src/alice_personality/n0/public_judgment_probe_v1.py loc=L1 community=33]\nNODE .create() [src=src/cognitive_kernel/serving_contracts.py loc=L447 community=0]\nNODE _delete_auth() [src=tests/phase2/test_memory_sensitive_deletion.py loc=L182 community=30]\nNODE _information_release_audit_helpers.py [src=tests/phase4/_information_release_audit_helpers.py loc=L1 community=169]\nNODE test_information_final_evaluation.py [src=tests/phase4/test_information_final_evaluation.py loc=L1 community=97]\nNODE test_information_final_evaluation_runtime.py [src=tests/phase4/test_information_final_evaluation_runtime.py loc=L1 community=62]\nNODE test_unused_support_span_is_rejected_even_with_new_digest() [src=tests/phase4/test_information_grounding.py loc=L547 community=63]\nNODE identity() [src=tests/phase5/test_memory_m2_adjudication_contracts.py loc=L99 community=16]\nNODE relation() [src=tests/phase5/test_memory_m2_adjudication_contracts.py loc=L124 community=16]\nNODE envelope() [src=tests/phase5/test_memory_m2_claim_contracts.py loc=L45 community=16]\nNODE edge() [src=scripts/eipm/n0/build_n0_v02_cross_context_fusion_curriculum.py loc=L67 community=18]\nNODE main() [src=scripts/eipm/n0/evaluate_n0_v02_fixed.py loc=L46 community=5]\nNODE materialize_dynamic_relation_schema() [src=scripts/eipm/n0/qsre_production_runtime.py loc=L89 community=72]\nNODE factor_schema_text() [src=scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py loc=L53 community=23]\nNODE load_parents() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py loc=L99 community=12]\nNODE ConversationCliError [src=src/alice_conversation/cli_runtime.py loc=L41 community=9]\nNODE .forward() [src=src/alice_personality/n0/qsre_full_envelope_binder_v1.py loc=L180 community=33]\nNODE run() [src=tests/eipm/test_n0_qsre_production_operator_v3.py loc=L117 community=114]\nNODE _build() [src=tests/phase2/test_memory_retrieval.py loc=L87 community=20]\nNODE _request() [src=tests/phase2/test_memory_retrieval.py loc=L64 community=20]\nNODE RecordingModel [src=tests/phase3/_context_helpers.py loc=L230 community=24]\nNODE test_information_final_evaluation_adversarial.py [src=tests/phase4/test_information_final_evaluation_adversarial.py loc=L1 community=97]\nNODE test_runtime_backed_evaluation_binds_real_test_evidence() [src=tests/phase4/test_information_final_evaluation_runtime.py loc=L88 community=62]\nNODE test_inconsistent_pass_decision_is_rejected() [src=tests/phase4/test_information_final_evaluation.py loc=L109 community=97]\nNODE test_recomputed_metric_tamper_is_rejected() [src=tests/phase4/test_information_final_evaluation.py loc=L122 community=97]\nNODE test_report_binds_observation_digest() [src=tests/phase4/test_information_final_evaluation.py loc=L158 community=97]\nNODE test_packet_source_substitution_is_rejected_even_with_new_digest() [src=tests/phase4/test_information_grounding.py loc=L628 community=63]\nNODE text() [src=tests/phase5/test_memory_m2_claim_contracts.py loc=L90 community=16]\nNODE freeze_n0_v02_final_self_validation_v1.py [src=scripts/eipm/n0/freeze_n0_v02_final_self_validation_v1.py loc=L1 community=72]\nNODE main() [src=scripts/eipm/n0/prepare_n0_v02_final_self_validation_cache_v1.py loc=L25 community=72]\nNODE main() [src=scripts/eipm/n0/prepare_n0_v02_qsre_production_cache_v1.py loc=L247 community=72]\nNODE main() [src=scripts/eipm/n0/requalify_n0_v02_qsre_production_p1_stop_tail_v1.py loc=L26 community=12]\nNODE flatten_quad_batch() [src=scripts/eipm/n0/train_n0_v02_dual_view_specialist_v0_1.py loc=L324 community=15]\nNODE load_selected() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v1.py loc=L43 community=12]\nNODE load_selected() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v2.py loc=L68 community=12]\nNODE load_selected() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py loc=L88 community=12]\nNODE evaluate() [src=scripts/eipm/n0/train_n0_v02_structured_state_pilot.py loc=L328 community=173]\nNODE run_phase4_information_evaluation.py [src=scripts/run_phase4_information_evaluation.py loc=L1 community=1]\nNODE CapabilityProfileError [src=src/alice_capability_profiles.py loc=L20 community=109]\nNODE ._require_session() [src=src/alice_conversation/cli_runtime.py loc=L458 community=9]\nNODE CancellationToken [src=src/alice_conversation/model.py loc=L76 community=13]\nNODE initialize_owner_identity() [src=src/alice_vault/owner_attribution.py loc=L64 community=3]\nNODE _envelope_from_record() [src=src/cognitive_kernel/durable_workflow_prototype.py loc=L245 community=35]\nNODE test_behavioral_compiler_batches_execute_all_counterfactual_paths_and_joint_objective() [src=tests/eipm/test_n0_full_envelope_trainable_system_v1.py loc=L843 community=161]\nNODE test_joint_objective_accepts_distinct_semantic_operator_and_full_fabric_batches() [src=tests/eipm/test_n0_full_envelope_trainable_system_v1.py loc=L977 community=161]\nNODE test_joint_training_objective_allows_absent_counterfactual_sentinel() [src=tests/eipm/test_n0_full_envelope_trainable_system_v1.py loc=L607 community=161]\nNODE test_joint_training_objective_allows_zero_active_relation_margin_without_nan() [src=tests/eipm/test_n0_full_envelope_trainable_system_v1.py loc=L578 community=161]\nNODE test_joint_training_objective_gradient_reaches_backbone_operator_binder_fusion_and_judgment() [src=tests/eipm/test_n0_full_envelope_trainable_system_v1.py loc=L543 community=161]\nNODE test_joint_training_objective_wires_every_macro_family_without_learned_task_weights() [src=tests/eipm/test_n0_full_envelope_trainable_system_v1.py loc=L515 community=161]\n... (truncated — 1443 more nodes cut by ~12000-token budget. Narrow with context_filter=['call'] or use get_node for a specific symbol)\n",
+  "graphify_result_text": "Graph: graphify-out/graph.json (13961 nodes) | Traversal: BFS depth=2 | Start: ['FullEnvelopeJointTrainingObjectiveV1', 'audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py', 'qualify_n0_v02_full_envelope_cpu_runtime_v1.py', 'train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py', 'AliceN0V02Model', 'eval_n0_v02_final_self_validation_v3.py', 'eval_n0_v02_qsre_production_p4_v1.py', 'MemoryAlreadyExistsError', 'audit()', 'authority()', 'authorize_boolean_map()', '_authorized()', 'batch_indices()', 'test_candidates_never_enter_derived_indexes_before_promotion()', 'test_reliability_prior_can_route_between_equivalent_views()', 'binding()', 'branch_forward()', 'broad_semantic_replay_loss()', '_build()', 'DeterministicInformationGroundingBuilder', 'CapabilityRuntime', 'test_memory_capability_ceiling.py', 'checkpoint_capability_tuple()', 'test_plane_result_checks_expected_generation()', 'classify()', 'test_tampered_request_or_completion_audit_fails_closed()', '.test_promotional_self_record_impact_is_rejected_but_concrete_action_kept()', 'contract()', 'rayan_n0_kaggle_cpu_lineage_controller_v102.py', 'DDP-safe forward entry point for both public N0 v0.2 paths.', 'Header-oriented signature detection with puremagic deep scan disabled.', 'device', 'test_storage_doctrine_is_aggressive_capture_selective_retention()', 'evaluate_n0_v02_teacher_dev.py', 'sha256()', 'envelope()', 'downstream_full_stack_graph_evaluator_v0_1.py', 'exact_masked_softmax()', 'full_envelope_runtime_factory_v1.py', 'final_evaluation_runtime.py', 'test_n0_semantic_operator_foundation_v1.py', 'full_envelope_training_objective_v1.py', 'test_memory_deletion_security_gates.py', 'qualify_n0_v02_full_envelope_gpu_memory_v1.py', 'Gradient-preserving adapter from the shared backbone to full N0 tensors. It…', '_historical()', 'interface()', 'test_j1_joint_step_does_not_require_or_execute_full_fabric()', 'joint_preference_scores()', 'json', 'Raised when assessment lacks explicit authorization.', 'DeletionPlaneReceipt', 'test_stage_g_requires_graph_vector_workflow_planes()', 'magnolia_cpu_n0_v02_tokenizer.sh', 'test_n0_full_envelope_successor_mechanics_v1.py', 'MismatchedFetch', 'build_n0_v02_full_public_mixture_manifest_v1.py', '_model()', 'N0FullEnvelopeStackV1', 'Only source wrapper eligible for future model-facing web grounding.', 'operator()', 'test_contract_requires_support_before_optimization()', 'test_runtime_view_rows_compile_into_optimizer_facing_additional_views()', 'test_interrupted_grounded_turn_requires_exact_original_packet()', 'pilot_review.py', '.plan()', 'policy()', 'Apply the precommitted stage policy without changing module topology.', 'preserve()', 'provenance()', 'public()', 'qualifier()', 'normalize_claim_qualifiers()', 'probe_n0_v02_qsre_semantic_reality_v0_1.py', 'receipt()', '.architecture_reduced()', 'registered_system_config()', 'Regression for Magnolia job 575673 mixed-autocast evaluation failure.', 'remaining()', 'run()', 'runtime()', 'scaled_quotas()', 'FullEnvelopeTrainingBatchSchedulerV1', 'selection()', 'semantic()', 'audit_n0_v02_full_envelope_shortcuts_v1.py', '_source()', 'StagePolicy', 'test_model_proposal_with_complete_metadata_is_staged()', 'step()', 'topology_signature()', 'trace()', 'train_n0_v02_relation_repair.py', 'apply_stage_trainability()', 'training_schedule.py', 'test_response_wrapper_preserves_p36_unknown_token_rejection()', 'v02_model.py', '_v1_connection()', '_v2_connection()', 'Return whether one exact provider and operation is approved.'] | Context: call, import (explicit) | 2742 nodes found\n\n[!] TRUNCATED: showing 343 of 2742 nodes (~12000-token budget). The answer may be among the 2399 cut nodes — raise the token budget (CLI: --budget) or narrow the query (e.g. context_filter=['call'], or get_node for a specific symbol).\n\nNODE FullEnvelopeJointTrainingObjectiveV1 [src=src/alice_personality/n0/full_envelope_training_objective_v1.py loc=L479 community=167]\nNODE audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py [src=scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py loc=L1 community=0]\nNODE qualify_n0_v02_full_envelope_cpu_runtime_v1.py [src=scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py loc=L1 community=9]\nNODE train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py [src=scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py loc=L1 community=2]\nNODE AliceN0V02Model [src=src/alice_personality/n0/v02_model.py loc=L13 community=12]\nNODE eval_n0_v02_final_self_validation_v3.py [src=scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py loc=L1 community=15]\nNODE eval_n0_v02_qsre_production_p4_v1.py [src=scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v1.py loc=L1 community=6]\nNODE MemoryAlreadyExistsError [src=src/alice_memory/service.py loc=L58 community=10]\nNODE audit() [src=scripts/audit_capability_barriers.py loc=L521 community=150]\nNODE authority() [src=tests/eipm/test_n0_qsre_production_operator_v3.py loc=L87 community=202]\nNODE authorize_boolean_map() [src=src/alice_capability_profiles.py loc=L88 community=106]\nNODE _authorized() [src=tests/phase2/test_memory_service.py loc=L66 community=49]\nNODE batch_indices() [src=scripts/eipm/n0/qsre_production_training_utils.py loc=L150 community=6]\nNODE test_candidates_never_enter_derived_indexes_before_promotion() [src=tests/phase2/test_memory_candidate_security_gates.py loc=L312 community=109]\nNODE test_reliability_prior_can_route_between_equivalent_views() [src=tests/eipm/test_n0_cross_context_fusion.py loc=L79 community=78]\nNODE binding() [src=tests/phase5/test_memory_m2_foundation_contracts.py loc=L99 community=232]\nNODE branch_forward() [src=scripts/eipm/n0/train_n0_v02_structured_state_pilot.py loc=L287 community=33]\nNODE broad_semantic_replay_loss() [src=src/alice_personality/n0/full_envelope_joint_step_v1.py loc=L34 community=262]\nNODE _build() [src=tests/phase4/test_information_grounding.py loc=L154 community=98]\nNODE DeterministicInformationGroundingBuilder [src=src/alice_information/grounding.py loc=L667 community=14]\nNODE CapabilityRuntime [src=src/alice_evolution/capability_runtime.py loc=L77 community=106]\nNODE test_memory_capability_ceiling.py [src=tests/governance/test_memory_capability_ceiling.py loc=L1 community=220]\nNODE checkpoint_capability_tuple() [src=scripts/eipm/n0/train_n0_v02_evidence_graph_pilot.py loc=L669 community=33]\nNODE test_plane_result_checks_expected_generation() [src=tests/phase5/test_deletion_prototype.py loc=L279 community=142]\nNODE classify() [src=scripts/audit_repository_phase_boundary.py loc=L120 community=265]\nNODE test_tampered_request_or_completion_audit_fails_closed() [src=tests/phase2/test_memory_sensitive_deletion.py loc=L531 community=54]\nNODE .test_promotional_self_record_impact_is_rejected_but_concrete_action_kept() [src=tests/phase1/test_personal_claim_validity_contract.py loc=L80 community=110]\nNODE contract() [src=tests/phase3/_repair_helpers.py loc=L75 community=19]\nNODE rayan_n0_kaggle_cpu_lineage_controller_v102.py [src=scripts/eipm/n0/rayan_n0_kaggle_cpu_lineage_controller_v102.py loc=L1 community=175]\nNODE DDP-safe forward entry point for both public N0 v0.2 paths. [src=src/alice_personality/n0/v02_model.py loc=L145 community=12]\nNODE Header-oriented signature detection with puremagic deep scan disabled. [src=src/alice_vault/analysis.py loc=L124 community=122]\nNODE device [src= loc= community=2]\nNODE test_storage_doctrine_is_aggressive_capture_selective_retention() [src=tests/governance/test_storage_lifecycle_policy.py loc=L13 community=271]\nNODE evaluate_n0_v02_teacher_dev.py [src=scripts/eipm/n0/evaluate_n0_v02_teacher_dev.py loc=L1 community=35]\nNODE sha256() [src=scripts/eipm/n0/qsre_production_runtime.py loc=L16 community=6]\nNODE envelope() [src=tests/phase5/test_memory_m2_adjudication_contracts.py loc=L47 community=17]\nNODE downstream_full_stack_graph_evaluator_v0_1.py [src=scripts/eipm/n0/downstream_full_stack_graph_evaluator_v0_1.py loc=L1 community=197]\nNODE exact_masked_softmax() [src=src/alice_personality/n0/numeric_contracts.py loc=L48 community=99]\nNODE full_envelope_runtime_factory_v1.py [src=src/alice_personality/n0/full_envelope_runtime_factory_v1.py loc=L1 community=12]\nNODE final_evaluation_runtime.py [src=src/alice_information/final_evaluation_runtime.py loc=L1 community=66]\nNODE test_n0_semantic_operator_foundation_v1.py [src=tests/eipm/test_n0_semantic_operator_foundation_v1.py loc=L1 community=88]\nNODE full_envelope_training_objective_v1.py [src=src/alice_personality/n0/full_envelope_training_objective_v1.py loc=L1 community=124]\nNODE test_memory_deletion_security_gates.py [src=tests/phase2/test_memory_deletion_security_gates.py loc=L1 community=39]\nNODE qualify_n0_v02_full_envelope_gpu_memory_v1.py [src=scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py loc=L1 community=9]\nNODE Gradient-preserving adapter from the shared backbone to full N0 tensors. It… [src=src/alice_personality/n0/semantic_backbone_interface_v1.py loc=L33 community=74]\nNODE _historical() [src=scripts/audit_capability_barriers.py loc=L460 community=150]\nNODE interface() [src=tests/eipm/test_n0_full_envelope_backbone_interface_v1.py loc=L40 community=284]\nNODE test_j1_joint_step_does_not_require_or_execute_full_fabric() [src=tests/eipm/test_n0_full_envelope_joint_runtime_v1.py loc=L252 community=262]\nNODE joint_preference_scores() [src=scripts/eipm/n0/qsre_frozen_semantic_authority_runtime.py loc=L158 community=247]\nNODE json [src= loc= community=0]\nNODE Raised when assessment lacks explicit authorization. [src=src/alice_memory/candidate_assessment.py loc=L41 community=10]\nNODE DeletionPlaneReceipt [src=src/cognitive_kernel/deletion_contracts.py loc=L170 community=31]\nNODE test_stage_g_requires_graph_vector_workflow_planes() [src=tests/phase5/test_memory_shadow_migration_stage_f_g.py loc=L108 community=18]\nNODE magnolia_cpu_n0_v02_tokenizer.sh [src=scripts/eipm/n0/magnolia_cpu_n0_v02_tokenizer.sh loc=L1 community=309]\nNODE test_n0_full_envelope_successor_mechanics_v1.py [src=tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py loc=L1 community=59]\nNODE MismatchedFetch [src=tests/phase4/test_information_research_orchestration.py loc=L553 community=75]\nNODE build_n0_v02_full_public_mixture_manifest_v1.py [src=scripts/eipm/n0/build_n0_v02_full_public_mixture_manifest_v1.py loc=L1 community=287]\nNODE _model() [src=tests/phase2/test_memory_deletion_indexes.py loc=L156 community=7]\nNODE N0FullEnvelopeStackV1 [src=src/alice_personality/n0/n0_full_envelope_stack_v1.py loc=L88 community=147]\nNODE Only source wrapper eligible for future model-facing web grounding. [src=src/alice_information/injection_firewall.py loc=L146 community=14]\nNODE operator() [src=tests/eipm/test_n0_qsre_production_binder_v2.py loc=L48 community=178]\nNODE test_contract_requires_support_before_optimization() [src=tests/phase3/test_conversation_constitutional_prompt.py loc=L110 community=155]\nNODE test_runtime_view_rows_compile_into_optimizer_facing_additional_views() [src=tests/eipm/test_n0_full_envelope_runtime_view_curriculum_v1.py loc=L33 community=231]\nNODE test_interrupted_grounded_turn_requires_exact_original_packet() [src=tests/phase3/test_conversation_orchestration_resume.py loc=L129 community=19]\nNODE pilot_review.py [src=src/alice_vault/pilot_review.py loc=L1 community=157]\nNODE .plan() [src=src/alice_information/live_claims.py loc=L74 community=14]\nNODE policy() [src=tests/phase4/_information_final_evaluation_helpers.py loc=L16 community=95]\nNODE Apply the precommitted stage policy without changing module topology. [src=src/alice_personality/n0/full_envelope_stage_policy_v1.py loc=L159 community=160]\nNODE preserve() [src=scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py loc=L277 community=4]\nNODE provenance() [src=tests/phase5/mission_graph_helpers.py loc=L6 community=170]\nNODE public() [src=tests/eipm/test_n0_full_envelope_joint_runtime_v1.py loc=L414 community=160]\nNODE qualifier() [src=tests/phase5/test_memory_m2_claim_contracts.py loc=L94 community=17]\nNODE normalize_claim_qualifiers() [src=src/cognitive_kernel/claim_contracts.py loc=L320 community=17]\nNODE probe_n0_v02_qsre_semantic_reality_v0_1.py [src=scripts/eipm/n0/probe_n0_v02_qsre_semantic_reality_v0_1.py loc=L1 community=193]\nNODE receipt() [src=tests/phase4/_information_live_research_helpers.py loc=L47 community=36]\nNODE .architecture_reduced() [src=src/alice_personality/n0/full_envelope_stage_policy_v1.py loc=L90 community=9]\nNODE registered_system_config() [src=src/alice_personality/n0/full_envelope_runtime_factory_v1.py loc=L118 community=12]\nNODE Regression for Magnolia job 575673 mixed-autocast evaluation failure. [src=tests/eipm/test_n0_adaptive_multi_view_latent_pool_objectives_v0_2.py loc=L65 community=94]\nNODE remaining() [src=src/alice_information/live_http.py loc=L359 community=25]\nNODE run() [src=tests/phase4/test_information_final_evaluation_runtime.py loc=L47 community=66]\nNODE runtime() [src=tests/phase3/test_conversation_context_cli.py loc=L46 community=27]\nNODE scaled_quotas() [src=src/alice_vault/pilot.py loc=L135 community=143]\nNODE FullEnvelopeTrainingBatchSchedulerV1 [src=src/alice_personality/n0/full_envelope_training_batch_scheduler_v1.py loc=L51 community=236]\nNODE selection() [src=tests/phase5/test_memory_m2_serving_contracts.py loc=L71 community=21]\nNODE semantic() [src=tests/phase1/test_policy_calibration.py loc=L42 community=278]\nNODE audit_n0_v02_full_envelope_shortcuts_v1.py [src=scripts/eipm/n0/audit_n0_v02_full_envelope_shortcuts_v1.py loc=L1 community=126]\nNODE _source() [src=tests/phase4/test_information_freshness.py loc=L43 community=61]\nNODE StagePolicy [src=src/alice_personality/n0/full_envelope_stage_policy_v1.py loc=L84 community=9]\nNODE test_model_proposal_with_complete_metadata_is_staged() [src=tests/phase2/test_memory_candidates.py loc=L278 community=13]\nNODE step() [src=tests/phase5/test_memory_m2_serving_contracts.py loc=L86 community=21]\nNODE topology_signature() [src=scripts/eipm/n0/evaluate_n0_v02_qsre_t1_curriculum_v0_2.py loc=L34 community=30]\nNODE trace() [src=tests/phase5/test_memory_m2_serving_contracts.py loc=L105 community=21]\nNODE train_n0_v02_relation_repair.py [src=scripts/eipm/n0/train_n0_v02_relation_repair.py loc=L1 community=4]\nNODE apply_stage_trainability() [src=src/alice_personality/n0/full_envelope_stage_policy_v1.py loc=L154 community=160]\nNODE training_schedule.py [src=src/alice_personality/n0/training_schedule.py loc=L1 community=9]\nNODE test_response_wrapper_preserves_p36_unknown_token_rejection() [src=tests/phase4/test_information_conversation_bridge.py loc=L465 community=76]\nNODE v02_model.py [src=src/alice_personality/n0/v02_model.py loc=L1 community=12]\nNODE _v1_connection() [src=tests/phase2/test_memory_migrations_v2.py loc=L22 community=62]\nNODE _v2_connection() [src=tests/phase2/test_memory_migrations_v3.py loc=L22 community=62]\nNODE Return whether one exact provider and operation is approved. [src=src/alice_information/provider_policy.py loc=L126 community=5]\nNODE pathlib [src= loc= community=0]\nNODE CognitiveKernelContractError [src=src/cognitive_kernel/canonical.py loc=L18 community=1]\nNODE typing [src= loc= community=3]\nNODE canonical_sha256() [src=src/cognitive_kernel/canonical.py loc=L39 community=18]\nNODE cognitive_kernel/__init__.py [src=src/cognitive_kernel/__init__.py loc=L1 community=8]\nNODE dataclasses [src= loc= community=5]\nNODE argparse [src= loc= community=0]\nNODE hashlib [src= loc= community=0]\nNODE torch [src= loc= community=3]\nNODE pytest [src= loc= community=140]\nNODE sys [src= loc= community=0]\nNODE open_memory_store() [src=src/alice_memory/store.py loc=L107 community=39]\nNODE collections [src= loc= community=30]\nNODE sqlite3 [src= loc= community=13]\nNODE re [src= loc= community=14]\nNODE canonical.py [src=src/cognitive_kernel/canonical.py loc=L1 community=1]\nNODE torch_nn_functional [src= loc= community=3]\nNODE live_research.py [src=src/alice_information/live_research.py loc=L1 community=14]\nNODE math [src= loc= community=3]\nNODE inspect_conversation_session() [src=src/alice_conversation/state_inspection.py loc=L91 community=19]\nNODE tempfile [src= loc= community=0]\nNODE subprocess [src= loc= community=111]\nNODE service.py [src=src/alice_memory/service.py loc=L1 community=13]\nNODE store.py [src=src/alice_memory/store.py loc=L1 community=37]\nNODE load_n0_config() [src=src/alice_personality/n0/config.py loc=L112 community=12]\nNODE curriculum_data.py [src=src/alice_personality/n0/curriculum_data.py loc=L1 community=2]\nNODE load_semantic_policy() [src=src/alice_vault/semantic_retrieval.py loc=L116 community=77]\nNODE config.py [src=src/alice_personality/n0/config.py loc=L1 community=12]\nNODE evidence_graph.py [src=src/alice_personality/n0/evidence_graph.py loc=L1 community=3]\nNODE m2_closeout_evaluation.py [src=src/cognitive_kernel/m2_closeout_evaluation.py loc=L1 community=65]\nNODE uuid [src= loc= community=10]\nNODE datetime [src= loc= community=215]\nNODE grounded_response.py [src=src/alice_vault/grounded_response.py loc=L1 community=0]\nNODE eval_n0_v02_final_self_validation_v2.py [src=scripts/eipm/n0/eval_n0_v02_final_self_validation_v2.py loc=L1 community=6]\nNODE eval_n0_v02_final_self_validation_v1.py [src=scripts/eipm/n0/eval_n0_v02_final_self_validation_v1.py loc=L1 community=15]\nNODE torch_utils_data [src= loc= community=2]\nNODE os [src= loc= community=123]\nNODE eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L1 community=15]\nNODE train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L1 community=15]\nNODE conversation_bridge.py [src=src/alice_information/conversation_bridge.py loc=L1 community=14]\nNODE alice_information/policy.py [src=src/alice_information/policy.py loc=L1 community=71]\nNODE evaluation_fixtures.py [src=src/alice_memory/evaluation_fixtures.py loc=L1 community=13]\nNODE transition_promotion.py [src=src/alice_memory/transition_promotion.py loc=L1 community=10]\nNODE sensitive_deletion.py [src=src/alice_memory/sensitive_deletion.py loc=L1 community=11]\nNODE make_orchestrator() [src=tests/phase3/_orchestration_helpers.py loc=L75 community=19]\nNODE random [src= loc= community=3]\nNODE n0_full_envelope_stack_v1.py [src=src/alice_personality/n0/n0_full_envelope_stack_v1.py loc=L1 community=79]\nNODE semantic_retrieval.py [src=src/alice_vault/semantic_retrieval.py loc=L1 community=77]\nNODE evidence_graph_dual_endpoint.py [src=src/alice_personality/n0/evidence_graph_dual_endpoint.py loc=L1 community=3]\nNODE train_n0_v02_cross_context_fusion_full_scale.py [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L1 community=64]\nNODE research_evidence.py [src=src/alice_information/research_evidence.py loc=L1 community=97]\nNODE sources.py [src=src/alice_memory/sources.py loc=L1 community=13]\nNODE safetensors_torch [src= loc= community=2]\nNODE build_parent_cache() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L188 community=15]\nNODE lexical_index.py [src=src/alice_memory/lexical_index.py loc=L1 community=7]\nNODE semantic_index.py [src=src/alice_memory/semantic_index.py loc=L1 community=7]\nNODE make_orchestrator() [src=tests/phase3/_context_helpers.py loc=L258 community=27]\nNODE train_n0_v02_cross_context_fusion_repair_full_scale.py [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_repair_full_scale.py loc=L1 community=64]\nNODE sha256_text() [src=src/alice_conversation/contracts.py loc=L60 community=47]\nNODE live_acceptance.py [src=src/alice_information/live_acceptance.py loc=L1 community=46]\nNODE deletion.py [src=src/alice_memory/deletion.py loc=L1 community=11]\nNODE promotion.py [src=src/alice_memory/promotion.py loc=L1 community=10]\nNODE sensitive_storage.py [src=src/alice_memory/sensitive_storage.py loc=L1 community=54]\nNODE evidence_view_adapter.py [src=src/alice_personality/n0/evidence_view_adapter.py loc=L1 community=2]\nNODE build_runtime() [src=tests/phase3/_repair_helpers.py loc=L100 community=19]\nNODE benchmark() [src=tests/phase4/_information_final_evaluation_helpers.py loc=L22 community=95]\nNODE eval_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py [src=scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py loc=L1 community=64]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py loc=L132 community=4]\nNODE brave_search.py [src=src/alice_information/brave_search.py loc=L1 community=48]\nNODE http_failure() [src=src/alice_information/http_transport.py loc=L85 community=25]\nNODE deletion_indexes.py [src=src/alice_memory/deletion_indexes.py loc=L1 community=7]\nNODE qsre_production_core.py [src=src/alice_personality/n0/qsre_production_core.py loc=L1 community=3]\nNODE eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_2.py loc=L1 community=15]\nNODE qsre_production_runtime.py [src=scripts/eipm/n0/qsre_production_runtime.py loc=L1 community=3]\nNODE load_dynamic_schema_cache() [src=scripts/eipm/n0/qsre_production_runtime.py loc=L245 community=6]\nNODE config_from_plan() [src=scripts/eipm/n0/qsre_production_training_utils.py loc=L37 community=6]\nNODE load_plan() [src=scripts/eipm/n0/qsre_production_training_utils.py loc=L24 community=6]\nNODE train_n0_v02_query_edge_cross_attention_bridge_v0_1.py [src=scripts/eipm/n0/train_n0_v02_query_edge_cross_attention_bridge_v0_1.py loc=L1 community=2]\nNODE formation.py [src=src/alice_memory/formation.py loc=L1 community=13]\nNODE delete_sensitive_memory() [src=src/alice_memory/sensitive_deletion.py loc=L738 community=11]\nNODE copy [src= loc= community=15]\nNODE train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py loc=L1 community=15]\nNODE research_mode.py [src=src/alice_information/research_mode.py loc=L1 community=45]\nNODE propose_memory_candidate() [src=src/alice_memory/formation.py loc=L423 community=13]\nNODE auto_review.py [src=src/alice_vault/auto_review.py loc=L1 community=174]\nNODE tier_transition_store.py [src=src/cognitive_kernel/tier_transition_store.py loc=L1 community=29]\nNODE _qualified() [src=tests/phase4/test_information_grounding.py loc=L86 community=98]\nNODE summarize_downstream() [src=scripts/eipm/n0/qsre_production_training_utils.py loc=L247 community=6]\nNODE freshness_policy.py [src=src/alice_information/freshness_policy.py loc=L1 community=162]\nNODE research_orchestration.py [src=src/alice_information/research_orchestration.py loc=L1 community=5]\nNODE search_memories() [src=src/alice_memory/retrieval.py loc=L237 community=23]\nNODE temporal.py [src=src/alice_memory/temporal.py loc=L1 community=10]\nNODE structured_state.py [src=src/alice_personality/n0/structured_state.py loc=L1 community=33]\nNODE diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_1.py loc=L1 community=15]\nNODE eval_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py [src=scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge_v0_2.py loc=L1 community=64]\nNODE grounding_bridge.py [src=src/alice_conversation/grounding_bridge.py loc=L1 community=47]\nNODE response_validation_policy.py [src=src/alice_conversation/response_validation_policy.py loc=L1 community=138]\nNODE alice_information/grounding_policy.py [src=src/alice_information/grounding_policy.py loc=L1 community=73]\nNODE injection_policy.py [src=src/alice_information/injection_policy.py loc=L1 community=73]\nNODE sensitive_crypto.py [src=src/alice_memory/sensitive_crypto.py loc=L1 community=37]\nNODE bounded_serving_prototype.py [src=src/cognitive_kernel/bounded_serving_prototype.py loc=L1 community=38]\nNODE claim_authority_prototype.py [src=src/cognitive_kernel/claim_authority_prototype.py loc=L1 community=50]\nNODE diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py [src=scripts/eipm/n0/diagnose_n0_v02_latent_pool_counterfactual_value_contrast_v0_2.py loc=L1 community=15]\nNODE diagnose_n0_v02_missing_evidence_path_v0_1.py [src=scripts/eipm/n0/diagnose_n0_v02_missing_evidence_path_v0_1.py loc=L1 community=15]\nNODE eval_n0_v02_cross_context_fusion_frozen_challenge.py [src=scripts/eipm/n0/eval_n0_v02_cross_context_fusion_frozen_challenge.py loc=L1 community=64]\nNODE qsre_production_training_utils.py [src=scripts/eipm/n0/qsre_production_training_utils.py loc=L1 community=3]\nNODE read_jsonl() [src=scripts/eipm/n0/train_n0_v02_cross_context_fusion_full_scale.py loc=L67 community=64]\nNODE train_n0_v02_dual_view_specialist_v0_1.py [src=scripts/eipm/n0/train_n0_v02_dual_view_specialist_v0_1.py loc=L1 community=2]\nNODE train_n0_v02_qsre_production_p3_v3.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py loc=L1 community=6]\nNODE run_information_final_evaluation() [src=src/alice_information/final_evaluation.py loc=L390 community=95]\nNODE .run_turn() [src=src/alice_information/live_research.py loc=L691 community=36]\nNODE judge_calibration.py [src=src/alice_vault/judge_calibration.py loc=L1 community=127]\nNODE alice_vault/retrieval.py [src=src/alice_vault/retrieval.py loc=L1 community=60]\nNODE shadow_adjudication_prototype.py [src=src/cognitive_kernel/shadow_adjudication_prototype.py loc=L1 community=34]\nNODE train_n0_v02_qsre_production_p3_v2.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v2.py loc=L1 community=6]\nNODE load_information_final_evaluation_policy() [src=src/alice_information/final_evaluation_contract.py loc=L315 community=114]\nNODE review_calibration.py [src=src/alice_vault/review_calibration.py loc=L1 community=250]\nNODE claim_contracts.py [src=src/cognitive_kernel/claim_contracts.py loc=L1 community=17]\nNODE lifecycle_store.py [src=src/cognitive_kernel/lifecycle_store.py loc=L1 community=8]\nNODE .create() [src=src/cognitive_kernel/memory_contracts.py loc=L411 community=1]\nNODE importlib_util [src= loc= community=0]\nNODE audit_n0_v02_dual_view_specialist_failure_localization_v0_1.py [src=scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_1.py loc=L1 community=2]\nNODE context_assembly.py [src=src/alice_conversation/context_assembly.py loc=L1 community=27]\nNODE .create() [src=src/alice_information/contracts.py loc=L414 community=75]\nNODE v02_training.py [src=src/alice_personality/n0/v02_training.py loc=L1 community=9]\nNODE chunk_catalog.py [src=src/alice_vault/chunk_catalog.py loc=L1 community=103]\nNODE audit_n0_v02_qsre_p2a_semantic_localization_v1.py [src=scripts/eipm/n0/audit_n0_v02_qsre_p2a_semantic_localization_v1.py loc=L1 community=3]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py loc=L387 community=15]\nNODE eval_n0_v02_qsre_production_p4_v2.py [src=scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v2.py loc=L1 community=6]\nNODE eval_n0_v02_qsre_production_p4_v3.py [src=scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py loc=L1 community=6]\nNODE precompute_fusion_cache() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L87 community=15]\nNODE train_n0_v02_evidence_selector_repair_v0_1.py [src=scripts/eipm/n0/train_n0_v02_evidence_selector_repair_v0_1.py loc=L1 community=4]\nNODE train_n0_v02_qsre_production_p2_v3.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py loc=L1 community=3]\nNODE train_n0_v02_qsre_production_p3_v1.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v1.py loc=L1 community=6]\nNODE train_n0_v02_query_relation_role_router_v0_3.py [src=scripts/eipm/n0/train_n0_v02_query_relation_role_router_v0_3.py loc=L1 community=4]\nNODE claim_support_audit.py [src=src/alice_vault/claim_support_audit.py loc=L1 community=115]\nNODE hhem_holdout.py [src=src/alice_vault/hhem_holdout.py loc=L1 community=55]\nNODE adjudication_contracts.py [src=src/cognitive_kernel/adjudication_contracts.py loc=L1 community=17]\nNODE durable_workflow_prototype.py [src=src/cognitive_kernel/durable_workflow_prototype.py loc=L1 community=16]\nNODE ledger_store.py [src=src/cognitive_kernel/ledger_store.py loc=L1 community=8]\nNODE shadow_migration_stage_f_g_persistent.py [src=src/cognitive_kernel/shadow_migration_stage_f_g_persistent.py loc=L1 community=18]\nNODE types [src= loc= community=36]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_final_self_validation_v1.py loc=L383 community=15]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_final_self_validation_v2.py loc=L383 community=6]\nNODE operator_metrics() [src=scripts/eipm/n0/qsre_production_training_utils.py loc=L352 community=6]\nNODE LatentPoolDataset [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L142 community=15]\nNODE load_ratified_fusion() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L66 community=15]\nNODE train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py loc=L1 community=15]\nNODE train_n0_v02_qsre_production_p2_v2.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p2_v2.py loc=L1 community=6]\nNODE train_n0_v02_query_edge_competitive_router_v0_1.py [src=scripts/eipm/n0/train_n0_v02_query_edge_competitive_router_v0_1.py loc=L1 community=2]\nNODE train_n0_v02_query_edge_setwise_router_v0_1.py [src=scripts/eipm/n0/train_n0_v02_query_edge_setwise_router_v0_1.py loc=L1 community=2]\nNODE constitutional_prompt.py [src=src/alice_conversation/constitutional_prompt.py loc=L1 community=107]\nNODE response_validation.py [src=src/alice_conversation/response_validation.py loc=L1 community=40]\nNODE load_information_final_evaluation_benchmark() [src=src/alice_information/final_evaluation_contract.py loc=L537 community=114]\nNODE research_evidence_policy.py [src=src/alice_information/research_evidence_policy.py loc=L1 community=56]\nNODE grounded_response_evaluation.py [src=src/alice_vault/grounded_response_evaluation.py loc=L1 community=0]\nNODE deletion_prototype.py [src=src/cognitive_kernel/deletion_prototype.py loc=L1 community=31]\nNODE projection_prototype.py [src=src/cognitive_kernel/projection_prototype.py loc=L1 community=28]\nNODE qualify_n0_v02_dual_view_late_interaction_v0_1.py [src=scripts/eipm/n0/qualify_n0_v02_dual_view_late_interaction_v0_1.py loc=L1 community=152]\nNODE train_n0_v02_qsre_production_p2_v1.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p2_v1.py loc=L1 community=6]\nNODE train_n0_v02_relation_endpoint_repair_v0_2.py [src=scripts/eipm/n0/train_n0_v02_relation_endpoint_repair_v0_2.py loc=L1 community=4]\nNODE train_n0_v02_relation_semantic_role_residual_v0_2.py [src=scripts/eipm/n0/train_n0_v02_relation_semantic_role_residual_v0_2.py loc=L1 community=4]\nNODE load_information_conversation_bridge_policy() [src=src/alice_information/conversation_bridge_policy.py loc=L443 community=76]\nNODE candidate_assessment.py [src=src/alice_memory/candidate_assessment.py loc=L1 community=10]\nNODE grounded_context.py [src=src/alice_vault/grounded_context.py loc=L1 community=164]\nNODE _compile() [src=tests/phase3/test_conversation_constitutional_prompt.py loc=L27 community=155]\nNODE load_public_parents() [src=scripts/eipm/n0/eval_n0_v02_adaptive_multi_view_latent_pool_frozen_challenge_v0_1.py loc=L44 community=15]\nNODE focus_metrics() [src=scripts/eipm/n0/qsre_production_training_utils.py loc=L505 community=6]\nNODE support_metrics() [src=scripts/eipm/n0/qsre_production_training_utils.py loc=L479 community=6]\nNODE corrected_evaluate() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_2_full_scale.py loc=L74 community=15]\nNODE load_config() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_v0_2_full_scale.py loc=L36 community=15]\nNODE train_n0_v02_evidence_graph_pilot.py [src=scripts/eipm/n0/train_n0_v02_evidence_graph_pilot.py loc=L1 community=33]\nNODE train_n0_v02_qsre_closure_matcher_v2.py [src=scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py loc=L1 community=187]\nNODE train_n0_v02_relation_semantic_grounding_v0_1.py [src=scripts/eipm/n0/train_n0_v02_relation_semantic_grounding_v0_1.py loc=L1 community=4]\nNODE conversation_bridge_policy.py [src=src/alice_information/conversation_bridge_policy.py loc=L1 community=76]\nNODE evaluation_contract.py [src=src/alice_memory/evaluation_contract.py loc=L1 community=90]\nNODE semantic_operator_foundation.py [src=src/alice_personality/n0/semantic_operator_foundation.py loc=L1 community=74]\nNODE safe_extraction.py [src=src/alice_vault/safe_extraction.py loc=L1 community=0]\nNODE semantic_evaluation.py [src=src/alice_vault/semantic_evaluation.py loc=L1 community=60]\nNODE shadow_migration_stage_f_g_persistent_evaluation.py [src=src/cognitive_kernel/shadow_migration_stage_f_g_persistent_evaluation.py loc=L1 community=18]\nNODE _project() [src=tests/phase4/test_information_conversation_bridge.py loc=L257 community=76]\nNODE eval_n0_v02_relation_repair_frozen.py [src=scripts/eipm/n0/eval_n0_v02_relation_repair_frozen.py loc=L1 community=12]\nNODE paired_view_consistency() [src=scripts/eipm/n0/qsre_production_training_utils.py loc=L441 community=6]\nNODE main() [src=scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py loc=L172 community=9]\nNODE latent_forward() [src=scripts/eipm/n0/train_n0_v02_adaptive_multi_view_latent_pool_full_scale.py loc=L173 community=15]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v2.py loc=L608 community=187]\nNODE train_n0_v02_qsre_production_p1_v1.py [src=scripts/eipm/n0/train_n0_v02_qsre_production_p1_v1.py loc=L1 community=3]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p2_v3.py loc=L762 community=6]\nNODE alice_conversation/release_audit.py [src=src/alice_conversation/release_audit.py loc=L1 community=84]\nNODE alice_information/release_audit.py [src=src/alice_information/release_audit.py loc=L1 community=68]\nNODE hybrid_search_memories() [src=src/alice_memory/hybrid_retrieval.py loc=L211 community=23]\nNODE query_claim_relevance_calibration.py [src=src/alice_vault/query_claim_relevance_calibration.py loc=L1 community=200]\nNODE payload_store.py [src=src/cognitive_kernel/payload_store.py loc=L1 community=80]\nNODE _boundaries() [src=tests/phase4/test_information_grounding.py loc=L46 community=98]\nNODE audit_n0_v02_query_edge_binding_identifiability_v0_1.py [src=scripts/eipm/n0/audit_n0_v02_query_edge_binding_identifiability_v0_1.py loc=L1 community=185]\nNODE prepare_n0_v02_qsre_frozen_authority_cache_v3.py [src=scripts/eipm/n0/prepare_n0_v02_qsre_frozen_authority_cache_v3.py loc=L1 community=246]\nNODE qualify_n0_v02_qsre_frozen_semantic_authority_v3.py [src=scripts/eipm/n0/qualify_n0_v02_qsre_frozen_semantic_authority_v3.py loc=L1 community=195]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p2_v1.py loc=L407 community=6]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v3.py loc=L334 community=6]\nNODE train_n0_v02_structured_state_pilot.py [src=scripts/eipm/n0/train_n0_v02_structured_state_pilot.py loc=L1 community=33]\nNODE response_repair.py [src=src/alice_conversation/response_repair.py loc=L1 community=52]\nNODE state_policy.py [src=src/alice_conversation/state_policy.py loc=L1 community=51]\nNODE live_provider_contracts.py [src=src/alice_information/live_provider_contracts.py loc=L1 community=48]\nNODE deletion_evaluation.py [src=src/alice_memory/deletion_evaluation.py loc=L1 community=7]\nNODE adaptive_multi_view_latent_pool_v0_2.py [src=src/alice_personality/n0/adaptive_multi_view_latent_pool_v0_2.py loc=L1 community=15]\nNODE curriculum.py [src=src/alice_personality/n0/curriculum.py loc=L1 community=35]\nNODE compile_behavioral_batch() [src=src/alice_personality/n0/full_envelope_behavioral_batch_v1.py loc=L314 community=226]\nNODE qsre_full_envelope_binder_v1.py [src=src/alice_personality/n0/qsre_full_envelope_binder_v1.py loc=L1 community=63]\nNODE test_memory_candidate_security_gates.py [src=tests/phase2/test_memory_candidate_security_gates.py loc=L1 community=109]\nNODE _draft() [src=tests/phase4/test_information_grounding.py loc=L137 community=98]\nNODE open_store() [src=tests/phase5/test_deletion_prototype.py loc=L49 community=142]\nNODE prepare_n0_v02_qsre_production_cache_v1.py [src=scripts/eipm/n0/prepare_n0_v02_qsre_production_cache_v1.py loc=L1 community=3]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p2_v2.py loc=L677 community=6]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v1.py loc=L242 community=6]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_production_p3_v2.py loc=L268 community=6]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_structured_state_pilot.py loc=L472 community=33]\nNODE train_n0_v02_targeted_repair.py [src=scripts/eipm/n0/train_n0_v02_targeted_repair.py loc=L1 community=9]\nNODE release_evidence.py [src=src/alice_conversation/release_evidence.py loc=L1 community=121]\nNODE live_provider_policy.py [src=src/alice_information/live_provider_policy.py loc=L1 community=81]\nNODE retrieval_policy.py [src=src/alice_information/retrieval_policy.py loc=L1 community=190]\nNODE inventory.py [src=src/alice_vault/inventory.py loc=L1 community=0]\nNODE attention_policy.py [src=src/cognitive_kernel/attention_policy.py loc=L1 community=1]\nNODE mission_policy.py [src=src/cognitive_kernel/mission_policy.py loc=L1 community=1]\nNODE test_memory_deletion_indexes.py [src=tests/phase2/test_memory_deletion_indexes.py loc=L1 community=7]\nNODE test_memory_deletion_integrity.py [src=tests/phase2/test_memory_deletion_integrity.py loc=L1 community=39]\nNODE test_memory_sensitive_deletion.py [src=tests/phase2/test_memory_sensitive_deletion.py loc=L1 community=54]\nNODE diagnose_n0_v02_parent_value_path_v0_1.py [src=scripts/eipm/n0/diagnose_n0_v02_parent_value_path_v0_1.py loc=L1 community=206]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v1.py loc=L30 community=6]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v2.py loc=L32 community=6]\nNODE main() [src=scripts/eipm/n0/eval_n0_v02_qsre_production_p4_v3.py loc=L32 community=6]\nNODE requalify_n0_v02_qsre_production_p1_stop_tail_v1.py [src=scripts/eipm/n0/requalify_n0_v02_qsre_production_p1_stop_tail_v1.py loc=L1 community=3]\nNODE train_n0_v02_evidence_graph_specialized.py [src=scripts/eipm/n0/train_n0_v02_evidence_graph_specialized.py loc=L1 community=67]\nNODE train_n0_v02_multitask.py [src=scripts/eipm/n0/train_n0_v02_multitask.py loc=L1 community=9]\nNODE train_n0_v02_qsre_closure_matcher_v1.py [src=scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v1.py loc=L1 community=198]\nNODE main() [src=scripts/eipm/n0/train_n0_v02_qsre_closure_matcher_v1.py loc=L500 community=198]\nNODE constitutional_policy.py [src=src/alice_conversation/constitutional_policy.py loc=L1 community=251]\nNODE alice_conversation/final_evaluation_contract.py [src=src/alice_conversation/final_evaluation_contract.py loc=L1 community=116]\nNODE validate_information_conversation_response() [src=src/alice_information/conversation_bridge.py loc=L710 community=14]\nNODE live_provider_config.py [src=src/alice_information/live_provider_config.py loc=L1 community=81]\nNODE research_mode_policy.py [src=src/alice_information/research_mode_policy.py loc=L1 community=56]\nNODE temporal_metadata_policy.py [src=src/alice_information/temporal_metadata_policy.py loc=L1 community=71]\nNODE _insert_memory_in_transaction() [src=src/alice_memory/service.py loc=L406 community=10]\nNODE qsre_production_binder_v2.py [src=src/alice_personality/n0/qsre_production_binder_v2.py loc=L1 community=3]\n... (truncated — 2399 more nodes cut by ~12000-token budget. Narrow with context_filter=['call'] or use get_node for a specific symbol)\n",
   "graphify_stderr": ""
 }
