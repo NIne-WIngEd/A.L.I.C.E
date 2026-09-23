@@ -30,6 +30,7 @@ export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=true
 
 QUAL="$ROOT/configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json"
+TOPOLOGY="$ROOT/configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json"
 SEMANTIC_CONFIG="$ROOT/configs/eipm/n0/alice_n0_semantic_v0.2.json"
 SOURCE_CONFIG="$ROOT/configs/eipm/n0/public_corpus_v0.2.1.activated.json"
 TOKENIZER="$WORKDIR/tokenizer-v0.2.1"
@@ -53,7 +54,7 @@ LONG_CONTEXT_MANIFEST="$LONG_CONTEXT_ROOT/manifest.json"
 LONG_CONTEXT_STATIC_AUDIT="$LONG_CONTEXT_ROOT/static_audit.json"
 LONG_CONTEXT_TOKEN_BOUNDARY_AUDIT="$LONG_CONTEXT_ROOT/token_boundary_alignment.json"
 
-for required in   "$QUAL"   "$SEMANTIC_CONFIG"   "$SOURCE_CONFIG"   "$TOKENIZER/tokenizer.json"   "$TOKENIZER/tokenizer_receipt.json"   "$CORPUS/corpus_receipt.json"   "$SEMANTIC"
+for required in   "$QUAL"   "$TOPOLOGY"   "$SEMANTIC_CONFIG"   "$SOURCE_CONFIG"   "$TOKENIZER/tokenizer.json"   "$TOKENIZER/tokenizer_receipt.json"   "$CORPUS/corpus_receipt.json"   "$SEMANTIC"
 do
   if [[ ! -e "$required" ]]; then
     echo "STOP: missing full-envelope CPU prerequisite: $required" >&2
@@ -86,6 +87,7 @@ python -m py_compile \
   "$ROOT/scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py" \
   "$ROOT/scripts/eipm/n0/build_n0_v02_semantic_operator_long_context_curriculum_v1.py" \
   "$ROOT/scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py" \
+  "$ROOT/scripts/eipm/n0/audit_n0_v02_semantic_operator_long_token_alignment_v1.py" \
   "$ROOT/scripts/eipm/n0/build_n0_v02_full_envelope_long_context_curriculum_v1.py" \
   "$ROOT/scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py" \
   "$ROOT/scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_token_boundaries_v1.py" \
@@ -108,6 +110,7 @@ python "$ROOT/scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py" \
 python "$ROOT/scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py" \
   --rows "$EVIDENCE_ROWS" \
   --tokenizer-dir "$TOKENIZER" \
+  --source-revision "$HEAD" \
   --max-length 512 \
   --output "$EVIDENCE_TOKEN_AUDIT"
 
@@ -142,10 +145,12 @@ python "$ROOT/scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curric
   --contract "$ROOT/configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json" \
   --output "$SEMANTIC_LONG_STATIC_AUDIT"
 
-python "$ROOT/scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py" \
+python "$ROOT/scripts/eipm/n0/audit_n0_v02_semantic_operator_long_token_alignment_v1.py" \
   --rows "$SEMANTIC_LONG_ROWS" \
+  --manifest "$SEMANTIC_LONG_MANIFEST" \
+  --contract "$ROOT/configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json" \
   --tokenizer-dir "$TOKENIZER" \
-  --max-length 8192 \
+  --source-revision "$HEAD" \
   --output "$SEMANTIC_LONG_TOKEN_AUDIT"
 
 python - "$SEMANTIC_LONG_STATIC_AUDIT" "$SEMANTIC_LONG_TOKEN_AUDIT" <<'PY'
@@ -153,16 +158,13 @@ import json,sys
 static=json.load(open(sys.argv[1]))
 token=json.load(open(sys.argv[2]))
 assert static["status"]=="PASS_N0_SEMANTIC_OPERATOR_LONG_CONTEXT_CURRICULUM_AUDIT_V1"
-assert token["status"]=="PASS_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1"
-assert token["positive_query_tokens"]>0
-assert token["positive_relation_schema_tokens"]>0
-assert token["positive_factor_schema_tokens"]>0
-assert token["positive_step_factor_schema_tokens"]>0
-assert token["max_query_tokens"]>4096
-assert token["max_relation_schema_tokens"]>4096
-assert token["max_factor_schema_tokens"]>4096
-assert token["max_length_operating_point"]==8192
-assert token["max_length_is_product_ceiling"] is False
+assert token["status"]=="PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1"
+assert token["source_revision"]
+assert token["row_receipts"]
+assert set(token["surface_coverage"]["train"])=={"query","relation_schema","factor_schema"}
+assert set(token["surface_coverage"]["dev"])=={"query","relation_schema","factor_schema"}
+assert all(x["total_tokens"]>x["native_window_tokens"] for x in token["row_receipts"])
+assert all(x["first_positive_evidence_token"]>x["native_window_tokens"] for x in token["row_receipts"])
 assert token["training_authorized_by_audit"] is False
 print("PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1")
 PY
@@ -183,6 +185,7 @@ python "$ROOT/scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_token_boun
   --manifest "$LONG_CONTEXT_MANIFEST" \
   --contract "$ROOT/configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json" \
   --tokenizer-dir "$TOKENIZER" \
+  --source-revision "$HEAD" \
   --output "$LONG_CONTEXT_TOKEN_BOUNDARY_AUDIT"
 
 python - "$LONG_CONTEXT_STATIC_AUDIT" "$LONG_CONTEXT_TOKEN_BOUNDARY_AUDIT" <<'PY'
@@ -216,12 +219,17 @@ echo "operator_evidence_token_alignment=$EVIDENCE_TOKEN_AUDIT"
 echo "semantic_operator_long_token_alignment=$SEMANTIC_LONG_TOKEN_AUDIT"
 echo "long_context_token_boundary_alignment=$LONG_CONTEXT_TOKEN_BOUNDARY_AUDIT"
 
-python "$ROOT/scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"   --qualification-config "$QUAL"   --semantic-config "$SEMANTIC_CONFIG"   --semantic-checkpoint "$SEMANTIC"   --tokenizer-dir "$TOKENIZER"   --corpus-dir "$CORPUS"   --source-config "$SOURCE_CONFIG"   --output "$RESULT"
+python "$ROOT/scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"   --qualification-config "$QUAL"   --topology-config "$TOPOLOGY"   --source-revision "$HEAD"   --semantic-config "$SEMANTIC_CONFIG"   --semantic-checkpoint "$SEMANTIC"   --tokenizer-dir "$TOKENIZER"   --corpus-dir "$CORPUS"   --source-config "$SOURCE_CONFIG"   --output "$RESULT"
 
 python - "$RESULT" <<'PY'
 import json, sys
 r=json.load(open(sys.argv[1]))
 assert r["status"]=="PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1"
+assert r["source_revision"]
+assert r["registered_topology_sha256"]
+assert r["qualification_config_sha256"]
+assert r["tokenizer_json_sha256"]
+assert r["corpus_receipt_sha256"]
 assert r["cpu_only"] is True
 assert r["inference_mode"] is True
 assert r["gradient"] is False
