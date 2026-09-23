@@ -143,12 +143,250 @@
       }
     },
     "J2_reopened_representation_interfaces": {
-      "mapping_complete": false,
-      "gates": {}
+      "mapping_complete": true,
+      "gates": {
+        "J1_gates_retained": {
+          "kind": "retained_stage_gates",
+          "stages": [
+            "J1_joint_semantic_operator"
+          ]
+        },
+        "runtime_type_descriptor_transfer": {
+          "kind": "empirical",
+          "metric": "full_fabric.long_context_supplement.surface_structural_accuracy.type_schema",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "evidence_endpoint_causality": {
+          "kind": "empirical",
+          "metric": "full_fabric.full_envelope_behavioral.endpoint_pair_accuracy",
+          "comparison": ">=",
+          "threshold": 0.95
+        },
+        "field_permutation": {
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P10",
+            "N0-P39BA"
+          ]
+        },
+        "no_relation_id_semantic_authority": {
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P13",
+            "N0-P39PT"
+          ]
+        },
+        "exact_zero_support_with_compatible_distractors": {
+          "kind": "empirical",
+          "metric": "full_fabric.full_envelope_behavioral.null_support_exact_rate",
+          "comparison": ">=",
+          "threshold": 0.98
+        },
+        "masked_runtime_relation_exclusion": {
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P05",
+            "N0-P38B"
+          ]
+        },
+        "unsupported_relation_mass_cannot_activate_graph_views": {
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P18A",
+            "N0-P15"
+          ]
+        },
+        "long_field_and_descriptor_semantics": {
+          "kind": "composite",
+          "all": [
+            {
+              "metric": "full_fabric.long_context_supplement.surface_structural_accuracy.field_text",
+              "comparison": ">=",
+              "threshold": 0.9
+            },
+            {
+              "metric": "full_fabric.long_context_supplement.surface_structural_accuracy.field_descriptor",
+              "comparison": ">=",
+              "threshold": 0.9
+            }
+          ]
+        },
+        "prebinder_graph_type_invalid_edges_inert": {
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P13A"
+          ]
+        },
+        "binder_null_support_blocks_graph_views_from_fusion": {
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P26C"
+          ]
+        }
+      }
     },
     "J3_full_public_n0_coadaptation": {
-      "mapping_complete": false,
-      "gates": {}
+      "mapping_complete": true,
+      "gates": {
+        "J1_and_J2_gates_retained": {
+          "kind": "retained_stage_gates",
+          "stages": [
+            "J1_joint_semantic_operator",
+            "J2_reopened_representation_interfaces"
+          ]
+        },
+        "full_stack_support": {
+          "kind": "empirical",
+          "metric": "full_fabric.full_envelope_behavioral.support_edge_f1",
+          "comparison": ">=",
+          "threshold": 0.95
+        },
+        "fusion_decisive_source_causality": {
+          "kind": "composite",
+          "all": [
+            {
+              "metric": "full_fabric.full_envelope_behavioral.decisive_source_removal_success",
+              "comparison": ">=",
+              "threshold": 0.9
+            },
+            {
+              "metric": "full_fabric.runtime_view_supplement.decisive_source_removal_success",
+              "comparison": ">=",
+              "threshold": 0.9
+            }
+          ]
+        },
+        "latent_noncollapse": {
+          "kind": "composite",
+          "all": [
+            {
+              "metric": "full_fabric.full_envelope_behavioral.latent_noncollapse_success_rate",
+              "comparison": ">=",
+              "threshold": 0.9
+            },
+            {
+              "metric": "full_fabric.runtime_view_supplement.latent_noncollapse_success_rate",
+              "comparison": ">=",
+              "threshold": 0.9
+            }
+          ]
+        },
+        "missing_view_safety": {
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P38C"
+          ]
+        },
+        "candidate_cardinality_extrapolation": {
+          "kind": "empirical",
+          "metric": "full_fabric.full_envelope_behavioral.candidate_cardinality_extrapolation_accuracy",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "composition_extrapolation": {
+          "kind": "empirical",
+          "metric": "full_fabric.full_envelope_behavioral.composition_extrapolation_accuracy",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "behaviorally_grounded_public_judgment": {
+          "kind": "composite",
+          "all": [
+            {
+              "metric": "full_fabric.full_envelope_behavioral.public_judgment_top1",
+              "comparison": ">=",
+              "threshold": 0.9
+            },
+            {
+              "metric": "full_fabric.full_envelope_behavioral.scenario_public_accuracy.candidate_context_swap",
+              "comparison": ">=",
+              "threshold": 0.9
+            }
+          ]
+        },
+        "no_support_zero_execution_confidence": {
+          "kind": "empirical",
+          "metric": "full_fabric.full_envelope_behavioral.no_support_execution_confidence_max",
+          "comparison": "<=",
+          "threshold": 0
+        },
+        "long_context_virtualized_query": {
+          "kind": "empirical",
+          "metric": "full_fabric.long_context_supplement.surface_public_accuracy.query",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "per_example_candidate_subset_batching": {
+          "kind": "empirical",
+          "metric": "full_fabric.full_envelope_behavioral.per_example_candidate_subset_batch_accuracy",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "distant_decisive_evidence_across_native_windows": {
+          "kind": "empirical",
+          "metric": "full_fabric.long_context_supplement.distant_decisive_removal_success",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "fusion_route_gradient_reaches_final_judgment": {
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P26B",
+            "N0-P39Y"
+          ]
+        },
+        "irrelevant_available_view_not_forced_recoverable": {
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P35A",
+            "N0-P39RW"
+          ]
+        },
+        "ordered_relation_semantics_remain_step_conditioned_through_executor": {
+          "kind": "static_source_proof",
+          "obligation_ids": [
+            "N0-P24A",
+            "N0-P23A"
+          ]
+        },
+        "long_candidate_judgment_semantics": {
+          "kind": "empirical",
+          "metric": "full_fabric.long_context_supplement.surface_public_accuracy.candidate_text",
+          "comparison": ">=",
+          "threshold": 0.9
+        },
+        "long_internal_and_additional_view_descriptor_semantics": {
+          "kind": "composite",
+          "all": [
+            {
+              "metric": "full_fabric.long_context_supplement.surface_public_accuracy.internal_view_descriptor",
+              "comparison": ">=",
+              "threshold": 0.9
+            },
+            {
+              "metric": "full_fabric.long_context_supplement.surface_public_accuracy.additional_view_descriptor",
+              "comparison": ">=",
+              "threshold": 0.9
+            }
+          ]
+        },
+        "long_additional_runtime_view_source_and_descriptor_semantics": {
+          "kind": "composite",
+          "all": [
+            {
+              "metric": "full_fabric.long_context_supplement.surface_public_accuracy.additional_view_source",
+              "comparison": ">=",
+              "threshold": 0.9
+            },
+            {
+              "metric": "full_fabric.long_context_supplement.surface_public_accuracy.additional_view_descriptor",
+              "comparison": ">=",
+              "threshold": 0.9
+            }
+          ]
+        }
+      }
     }
   }
 }
