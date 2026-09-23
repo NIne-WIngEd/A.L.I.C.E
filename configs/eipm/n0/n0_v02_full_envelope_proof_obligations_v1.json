@@ -1545,6 +1545,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_stage_training_can_resume_same_stage_without_treating_step_budget_as_completion",
       "requirement": "The staged trainer must support exact-state same-stage continuation beyond an invocation's optimizer-step operating point. J1 may not become non-resumable, J2/J3 continuation may not be confused with a predecessor stage transition, and an arbitrary max-optimizer-steps value may not become an implicit stage-completion or capability ceiling."
+    },
+    {
+      "id": "N0-P43Q",
+      "stage": "dev_checkpoint_selection",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dev_checkpoint_selection_enforces_first_passing_chain_member",
+      "requirement": "The precommitted 'first checkpoint satisfying every active DEV gate' rule must be executable rather than advisory. Stage checkpoints must form a hash-linked same-stage chain, every chain member through the selected candidate must have an exact DEV receipt, earlier passing candidates must block later selection, and J2/J3 transition plus FINAL opening must consume the resulting first-pass selection receipt."
     }
   ],
   "closure_rule": {
