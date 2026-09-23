@@ -8,6 +8,8 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
+from alice_personality.n0.source_authority_v1 import require_canonical_source_file
+
 
 PASS_DEV="PASS_DEV_STAGE_GATE"
 STATUS="SELECTED_FIRST_PASSING_N0_DEV_CHECKPOINT"
@@ -63,6 +65,11 @@ def main() -> None:
     require_clean_tracked_worktree()
     revision=current_git_revision()
 
+    require_canonical_source_file(
+        args.training_plan,
+        "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json",
+        label="joint training plan",
+    )
     training_plan=read_json(args.training_plan)
     if training_plan.get("schema")!="alice.eipm.n0.semantic-operator-joint-training-plan.v1":
         raise SystemExit("DEV selector training-plan schema drift")
