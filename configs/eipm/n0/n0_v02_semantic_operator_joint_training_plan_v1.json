@@ -366,7 +366,10 @@
     "same_stage_resume_required": true,
     "max_optimizer_steps_role": "runtime operating endpoint per invocation; not stage completion and extendable by exact-state same-stage resume",
     "same_stage_resume_may_not_require_dev_pass": true,
-    "stage_transition_resume_requires_predecessor_dev_pass": true
+    "stage_transition_resume_requires_predecessor_dev_pass": true,
+    "dev_checkpoint_selector": "scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py",
+    "first_passing_checkpoint_selection_enforced_by_chained_receipts": true,
+    "every_checkpoint_chain_member_before_selection_requires_dev_receipt": true
   },
   "loss_balancing": {
     "method": "macro_family_balanced_with_per_objective_scale_normalization",
