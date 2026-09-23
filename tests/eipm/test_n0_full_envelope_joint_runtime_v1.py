@@ -1760,3 +1760,22 @@ def test_successor_trainer_requires_exact_short_operator_evidence_token_receipt(
     assert 'tokenizer_json_sha256' in audit
     assert 'source_revision' in audit
 
+
+
+def test_successor_trainer_binds_every_optimizer_lane_to_exact_public_mixture() -> None:
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "verify_optimizer_lane_bindings" in trainer
+    for lane in (
+        "semantic_operator_intervention","semantic_operator_long_context",
+        "full_envelope_behavioral","runtime_view_supplement",
+        "long_context_supplement","natural_relation",
+        "broad_semantic_replay","governed_judgment_replay",
+    ):
+        assert lane in trainer
+    assert "optimizer lane/mixture row hash drift" in trainer
+    assert "optimizer lane/mixture bank hash drift" in trainer
+    assert "optimizer broad replay/mixture source-config hash drift" in trainer
+    assert "optimizer broad replay/mixture corpus-receipt hash drift" in trainer
+    assert "optimizer teacher replay/mixture registry hash drift" in trainer
+    assert "optimizer teacher replay/mixture audit hash drift" in trainer
+
