@@ -2110,7 +2110,8 @@ def test_joint_trainer_enables_precommitted_backbone_gradient_checkpointing() ->
     assert "gradient_checkpointing_enable" in trainer
     assert "is_gradient_checkpointing" in trainer
     assert "precommitted backbone gradient checkpointing unavailable" in trainer
-    assert '"gradient_checkpointing_enabled":True' in trainer
+    assert '"gradient_checkpointing_enabled":bool(gradient_checkpointing_enabled)' in trainer
+    assert "gradient_checkpointing_enabled=True" in trainer
 
 
 
