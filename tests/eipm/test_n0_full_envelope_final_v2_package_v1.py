@@ -315,7 +315,13 @@ def test_final_opening_is_bound_to_exact_dev_selected_j3_candidate() -> None:
         ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py"
     ).read_text()
     assert 'p.add_argument("--dev-selection-receipt",required=True)' in evaluator
+    assert 'p.add_argument("--dev-evaluation-receipt",required=True)' in evaluator
+    assert "alice.eipm.n0.full-envelope-dev-checkpoint-selection.v1" in evaluator
+    assert "SELECTED_FIRST_PASSING_N0_DEV_CHECKPOINT" in evaluator
+    assert "first_passing_checkpoint" in evaluator
     assert "opening/DEV selection receipt drift" in evaluator
+    assert "opening/DEV evaluation receipt drift" in evaluator
+    assert "FINAL DEV selection/evaluation receipt drift" in evaluator
     assert "opening/candidate checkpoint receipt drift" in evaluator
     assert "DEV-selected candidate system drift" in evaluator
     assert "FINAL opening DEV stage gate not passed" in evaluator
