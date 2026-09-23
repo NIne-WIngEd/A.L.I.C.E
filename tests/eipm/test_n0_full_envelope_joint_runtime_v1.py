@@ -2027,3 +2027,23 @@ def test_stage_transition_checkpoint_receipt_preserves_dev_selection_authority_l
     ):
         assert field in checkpoint["required_lineage"]
 
+
+
+def test_stage_scheduler_horizon_cannot_zero_learning_rate_before_dev_completion() -> None:
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "minimum_lr_scale" in trainer
+    assert "post-horizon scheduler floor must be strictly positive" in trainer
+    assert "minimum_lr_scale+(1.0-minimum_lr_scale)" in trainer
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    scheduler=plan["optimization_strategy"]["scheduler_policy"]
+    assert scheduler["family"]=="linear_warmup_cosine_decay_to_nonzero_floor"
+    assert 0.0 < float(scheduler["minimum_lr_scale"]) < 1.0
+    assert scheduler["horizon_is_stage_completion"] is False
+    assert scheduler["post_horizon_behavior"]=="hold_precommitted_nonzero_floor_until_dev_decision"
+    checkpoint=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_checkpoint_contract_v1.json").read_text()
+    )
+    assert checkpoint["scheduler_contract"]["minimum_lr_scale"]==scheduler["minimum_lr_scale"]
+
