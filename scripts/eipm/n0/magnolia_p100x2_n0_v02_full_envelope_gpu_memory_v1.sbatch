@@ -56,7 +56,7 @@ echo "training=false"
 echo "final_opening=false"
 
 bash "$ROOT/scripts/eipm/n0/magnolia_udocker_exec.sh" -lc "
-  torchrun --standalone --nproc_per_node=2     scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py     --qualification-config configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json     --topology-config configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json     --semantic-config configs/eipm/n0/alice_n0_semantic_v0.2.json     --semantic-checkpoint '$SEMANTIC'     --tokenizer-dir '$TOKENIZER'     --corpus-dir '$CORPUS'     --source-config configs/eipm/n0/public_corpus_v0.2.1.activated.json     --teacher-registry '$TEACHER_REGISTRY'     --teacher-audit '$TEACHER_AUDIT'     --semantic-rows '$MIXTURE_ROOT/semantic/rows.jsonl'     --behavioral-rows '$MIXTURE_ROOT/behavioral/rows.jsonl'     --runtime-view-rows '$MIXTURE_ROOT/runtime-view/rows.jsonl'     --long-context-rows '$MIXTURE_ROOT/long-context/rows.jsonl'     --fewrel-rows '$MIXTURE_ROOT/fewrel/train_dev_rows.jsonl'     --fewrel-bank '$MIXTURE_ROOT/fewrel/train_dev_bank.json'     --mixture-manifest '$MIXTURE_ROOT/full_public_mixture_manifest.json'     --mixture-audit '$MIXTURE_ROOT/full_public_mixture_audit.json'     --output '$RESULT'
+  torchrun --standalone --nproc_per_node=2     scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py     --qualification-config configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json     --topology-config configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json     --semantic-config configs/eipm/n0/alice_n0_semantic_v0.2.json     --semantic-checkpoint '$SEMANTIC'     --tokenizer-dir '$TOKENIZER'     --corpus-dir '$CORPUS'     --source-config configs/eipm/n0/public_corpus_v0.2.1.activated.json     --teacher-registry '$TEACHER_REGISTRY'     --teacher-audit '$TEACHER_AUDIT'     --semantic-rows '$MIXTURE_ROOT/semantic/rows.jsonl'     --semantic-long-rows '$MIXTURE_ROOT/semantic-long/rows.jsonl'     --behavioral-rows '$MIXTURE_ROOT/behavioral/rows.jsonl'     --runtime-view-rows '$MIXTURE_ROOT/runtime-view/rows.jsonl'     --long-context-rows '$MIXTURE_ROOT/long-context/rows.jsonl'     --fewrel-rows '$MIXTURE_ROOT/fewrel/train_dev_rows.jsonl'     --fewrel-bank '$MIXTURE_ROOT/fewrel/train_dev_bank.json'     --mixture-manifest '$MIXTURE_ROOT/full_public_mixture_manifest.json'     --mixture-audit '$MIXTURE_ROOT/full_public_mixture_audit.json'     --output '$RESULT'
 "
 
 python - "$RESULT" <<'PY'
@@ -75,6 +75,8 @@ assert r["final_results_observed"] is False
 assert r["final_opening_authorized"] is False
 assert r["n0_complete"] is False
 assert r["real_optimizer_facing_public_lanes"] is True
+assert set(r["semantic_case_receipts"])=={"max_runtime_axes","long_context_semantic"}
+assert all(x["finite_joint_loss"] for x in r["semantic_case_receipts"].values())
 assert r["full_j3_counterfactual_path"] is True
 assert all(x["projection_pass"] for x in r["ranks"])
 print("PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1")
