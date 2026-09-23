@@ -5,6 +5,7 @@ import argparse
 import json
 import math
 import os
+import subprocess
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -213,6 +214,39 @@ def main() -> None:
         raise SystemExit("FINAL results observed before GPU dry run")
     if int(mixture.get("final_rows_in_training",-1))!=0:
         raise SystemExit("FINAL rows entered public mixture")
+    source_revision=str(mixture.get("source_revision","")).lower()
+    current_revision=subprocess.check_output(
+        ["git","rev-parse","HEAD"],text=True
+    ).strip().lower()
+    if source_revision!=current_revision:
+        raise SystemExit("GPU memory qualification source revision drift")
+    lanes=mixture.get("training_lanes") or {}
+    row_paths={
+        "semantic_operator_intervention":args.semantic_rows,
+        "semantic_operator_long_context":args.semantic_long_rows,
+        "full_envelope_behavioral":args.behavioral_rows,
+        "runtime_view_supplement":args.runtime_view_rows,
+        "long_context_supplement":args.long_context_rows,
+        "natural_relation":args.fewrel_rows,
+    }
+    for lane,path in row_paths.items():
+        spec=lanes.get(lane) or {}
+        if spec.get("rows_sha256")!=sha256_file(path):
+            raise SystemExit(f"GPU memory lane/mixture row hash drift: {lane}")
+    natural=lanes.get("natural_relation") or {}
+    if natural.get("bank_sha256")!=sha256_file(args.fewrel_bank):
+        raise SystemExit("GPU memory lane/mixture bank hash drift: natural_relation")
+    broad=lanes.get("broad_semantic_replay") or {}
+    corpus_receipt_path=Path(args.corpus_dir)/"corpus_receipt.json"
+    if broad.get("source_config_sha256")!=sha256_file(args.source_config):
+        raise SystemExit("GPU memory broad replay source-config hash drift")
+    if broad.get("corpus_receipt_sha256")!=sha256_file(corpus_receipt_path):
+        raise SystemExit("GPU memory broad replay corpus-receipt hash drift")
+    teacher=lanes.get("governed_judgment_replay") or {}
+    if teacher.get("teacher_registry_sha256")!=sha256_file(args.teacher_registry):
+        raise SystemExit("GPU memory teacher registry hash drift")
+    if teacher.get("teacher_audit_sha256")!=sha256_file(args.teacher_audit):
+        raise SystemExit("GPU memory teacher audit hash drift")
 
     rank,world_size,local_rank,device=init_distributed()
     preferred=int(cfg["route"]["preferred_world_size"])
@@ -419,7 +453,18 @@ def main() -> None:
         result_json={
             "schema":"alice.eipm.n0.full-envelope-gpu-memory-result.v1",
             "status":PASS if every_rank else "FAIL_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1",
-            "source_revision":mixture.get("source_revision"),
+            "source_revision":source_revision,
+            "registered_topology_sha256":sha256_file(args.topology_config),
+            "qualification_config_sha256":sha256_file(args.qualification_config),
+            "semantic_config_sha256":sha256_file(args.semantic_config),
+            "semantic_checkpoint_sha256":sha256_file(args.semantic_checkpoint),
+            "tokenizer_json_sha256":sha256_file(Path(args.tokenizer_dir)/"tokenizer.json"),
+            "source_config_sha256":sha256_file(args.source_config),
+            "corpus_receipt_sha256":sha256_file(corpus_receipt_path),
+            "mixture_manifest_sha256":sha256_file(args.mixture_manifest),
+            "mixture_audit_sha256":sha256_file(args.mixture_audit),
+            "teacher_registry_sha256":sha256_file(args.teacher_registry),
+            "teacher_audit_sha256":sha256_file(args.teacher_audit),
             "registered_system":"N0FullEnvelopeTrainableSystemV1",
             "registered_topology_load_receipt":load_receipt,
             "stage":J3,
