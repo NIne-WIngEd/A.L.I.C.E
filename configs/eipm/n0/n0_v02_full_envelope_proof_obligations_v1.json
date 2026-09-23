@@ -16,7 +16,8 @@
     "tests/eipm/test_n0_full_envelope_shortcut_preflight_v1.py",
     "tests/eipm/test_n0_full_envelope_final_v2_package_v1.py",
     "tests/eipm/test_n0_full_envelope_long_context_curriculum_v1.py",
-    "tests/eipm/test_n0_full_envelope_runtime_view_curriculum_v1.py"
+    "tests/eipm/test_n0_full_envelope_runtime_view_curriculum_v1.py",
+    "tests/eipm/test_n0_full_envelope_cpu_runtime_source_view_v1.py"
   ],
   "critical_source_files": [
     "src/alice_personality/n0/semantic_operator_foundation.py",
@@ -985,6 +986,13 @@
       "kind": "CI_REQUIRED",
       "receipt": "PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_BOUNDARY_SHIFT_AUDIT_V1",
       "requirement": "The materialized public TRAIN/DEV long-context curriculum must contain complete early/late boundary-shift pairs on every governed text surface with identical decisive semantics, equal total length, and identical structural/behavioral targets. Exact tokenizer placement remains a separate pre-gradient receipt."
+    },
+    {
+      "id": "N0-P39RT",
+      "stage": "cpu_runtime_preflight",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_cpu_runtime_qualifier_exercises_registered_additional_view_source_text_adapter",
+      "requirement": "The exact CPU/no-gradient qualifier must exercise the same registered additional-runtime-view source-text adapter used by optimizer-facing TRAIN/DEV, including long-context virtualization of that source surface. Precomputing source vectors outside N0FullEnvelopeTrainableSystemV1 cannot satisfy runtime-fidelity qualification."
     }
   ],
   "closure_rule": {
