@@ -527,9 +527,13 @@ def cosine_with_warmup(
     *,
     warmup_steps: int,
     horizon_steps: int,
+    minimum_lr_scale: float,
 ) -> torch.optim.lr_scheduler.LambdaLR:
     if warmup_steps<0 or horizon_steps<=max(warmup_steps,0):
         raise ValueError("invalid scheduler operating horizon")
+    if not (0.0<float(minimum_lr_scale)<1.0):
+        raise ValueError("post-horizon scheduler floor must be strictly positive")
+    minimum_lr_scale=float(minimum_lr_scale)
     def scale(step: int) -> float:
         if warmup_steps and step<warmup_steps:
             return float(step+1)/float(warmup_steps)
@@ -538,7 +542,8 @@ def cosine_with_warmup(
             / float(max(1,horizon_steps-warmup_steps))
         )
         progress=min(max(progress,0.0),1.0)
-        return 0.5*(1.0+math.cos(math.pi*progress))
+        cosine=0.5*(1.0+math.cos(math.pi*progress))
+        return minimum_lr_scale+(1.0-minimum_lr_scale)*cosine
     return torch.optim.lr_scheduler.LambdaLR(optimizer,scale)
 
 
@@ -630,6 +635,7 @@ def save_checkpoint(
     stage_report: Mapping[str,Any],
     scheduler_horizon_steps: int,
     warmup_steps: int,
+    minimum_lr_scale: float,
     gradient_accumulation_steps: int,
     stage_checkpoint_parent_receipt_sha256: str | None,
     stage_transition_predecessor_checkpoint_receipt_sha256: str | None,
@@ -695,9 +701,11 @@ def save_checkpoint(
                 "macro_family_ema_once_per_effective_batch":True,
             },
             "scheduler_contract":{
-                "family":"linear_warmup_cosine_decay",
+                "family":"linear_warmup_cosine_decay_to_nonzero_floor",
                 "warmup_steps":int(warmup_steps),
                 "operating_horizon_steps":int(scheduler_horizon_steps),
+                "minimum_lr_scale":float(minimum_lr_scale),
+                "post_horizon_behavior":"hold_precommitted_nonzero_floor_until_dev_decision",
                 "horizon_is_stage_completion":False,
             },
             "objective_contract":{
@@ -822,6 +830,16 @@ def main() -> None:
     if training_plan.get("schema")!="alice.eipm.n0.semantic-operator-joint-training-plan.v1":
         raise SystemExit("successor training-plan schema drift")
     authority=dict(training_plan.get("authorization") or {})
+    scheduler_policy=dict(training_plan.get("optimization_strategy",{}).get("scheduler_policy") or {})
+    if scheduler_policy.get("family")!="linear_warmup_cosine_decay_to_nonzero_floor":
+        raise SystemExit("training plan scheduler policy drift")
+    minimum_lr_scale=float(scheduler_policy.get("minimum_lr_scale",-1.0))
+    if not (0.0<minimum_lr_scale<1.0):
+        raise SystemExit("post-horizon scheduler floor must be strictly positive")
+    if scheduler_policy.get("horizon_is_stage_completion") is not False:
+        raise SystemExit("scheduler horizon may not define stage completion")
+    if scheduler_policy.get("post_horizon_behavior")!="hold_precommitted_nonzero_floor_until_dev_decision":
+        raise SystemExit("training plan post-horizon scheduler behavior drift")
     if args.execute_gradient:
         if any(
             authority.get(name) is not False
@@ -1174,6 +1192,7 @@ def main() -> None:
         optimizer,
         warmup_steps=args.warmup_steps,
         horizon_steps=args.scheduler_horizon_steps,
+        minimum_lr_scale=minimum_lr_scale,
     )
 
     system,optimizer,mlm_loader,teacher_loader,lr_scheduler=accelerator.prepare(
@@ -1364,6 +1383,7 @@ def main() -> None:
                 stage_report=stage_report,
                 scheduler_horizon_steps=args.scheduler_horizon_steps,
                 warmup_steps=args.warmup_steps,
+                minimum_lr_scale=minimum_lr_scale,
                 gradient_accumulation_steps=args.gradient_accumulation_steps,
                 stage_checkpoint_parent_receipt_sha256=(
                     stage_checkpoint_parent_receipt_sha256
