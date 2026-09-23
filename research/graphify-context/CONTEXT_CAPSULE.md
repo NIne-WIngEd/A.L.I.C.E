@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-long-context-boundary-shift-causality-audit-20260922-046
-- Question: Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@1da822b82ab36f817323b812dcfa849d0319a271 for long-context boundary-shift fidelity, staying strictly aligned with N0's identity-neutral semantic/judgment foundation. Trace SemanticContextVirtualizerV1 -> SemanticSegmentContextBridgeV1 -> FullEnvelopeSemanticInputV1 -> N0FullEnvelopeTrainableSystemV1 and the new long-context TRAIN/DEV supplement. Determine whether semantically equivalent content can change the final semantic/judgment state solely because decisive tokens move across native-window segment boundaries or overlap ownership boundaries. Check exact token preservation, overlap ownership, segment metadata, bridge position dependence, boundary shifts, distant decisive evidence, and whether current tests only prove reconstruction/gradient rather than semantic/judgment invariance. Classify A concrete architecture/data defect, B missing causal falsification, C adequately governed. Do not demand impossible exact equality from a trainable contextual model unless the contract claims it; distinguish desired robustness from mathematical invariance. No FINAL use, no private identity data, no Magnolia/GPU/gradient/optimizer/N0 completion authorization. Original exact branch source is authority; Graphify navigation only.
+- Request: n0-binder-global-support-step-execution-audit-20260922-047
+- Question: Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@c870dfde4dae0d4d02ba7165d5e350f863c3f37b for the remaining Binder global-support versus step-execution risk, staying strictly aligned with N0's identity-neutral semantic/judgment goal. Trace behavioral support targets -> FullEnvelopeQSREBinderV1 global [B,E] sparse support -> FullEnvelopeQSREExecutorV1 step-conditioned relation program, especially repeated relation families, multi-step paths, mixed directions, and mixed step-local reliability/recency/temporal/provenance modifiers. Determine whether one query-relevant global support mask can wrongly zero an edge needed only by a later step, or whether Binder is intentionally the union of all query-relevant structural support while Executor selects per-step semantics. Look for causal tests where two edges share a relation key but belong to different program steps, later-step-only support is required, and step-local modifiers differ. Classify A concrete architecture/supervision defect, B missing falsification coverage, C closed. Do not move evidence-quality arbitration into Binder, do not add fixed hop/relation ceilings, and do not authorize Magnolia/GPU/gradient/optimizer/FINAL/N0 completion. Original exact branch source is authority; Graphify navigation only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -46,50 +46,59 @@ The old stable-build latent-stage pointer is historical routing context, not the
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ 1da822b82ab36f817323b812dcfa849d0319a271 — fix(n0): isolate runtime-view reliability reversal
+- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ c870dfde4dae0d4d02ba7165d5e350f863c3f37b — curriculum(n0): add long-context boundary-shift pairs
 - alice-eipm-v1-qsre-production-p2-ordered-evidence-v3 @ 342bdbbe8c5dfbe74ff3ab8210a30b1a456aa482 — state(n0): ratify P2 v3 static pass and authorize CPU qualification
 - alice-eipm-v1-qsre-production-p2-failure-localization @ c9b1d35823cb89245625bbc6afb05b0ef5fb69fb — fix(n0): emit strict JSON from P2 localization
 
 ## Source pointers
 
-- [111] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
-- [111] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
-- [111] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-downstream-causal-arbitration-finalization-v0.1.md — N0 downstream causal arbitration finalization v0.1
-- [104] alice-eipm-v1-n0-full-envelope-foundation-build-v1:.github/workflows/n0-missing-evidence-localization-contract-check.yml — n0-missing-evidence-localization-contract-check.yml
-- [104] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-final-full-scale-capability-package-v1.md — N0 final full-scale capability package v1
-  - status:  precommitted package; N0 is not complete until the unchanged native frozen objective passes
-- [104] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-missing-evidence-localization-contract-check.yml — n0-missing-evidence-localization-contract-check.yml
-- [104] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-missing-evidence-localization-contract-check.yml — n0-missing-evidence-localization-contract-check.yml
-- [100] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260918_N0_EXACT_CALIBRATION_ONE_RUN_GATE.jsonl — FBM_TRACE_20260918_N0_EXACT_CALIBRATION_ONE_RUN_GATE.jsonl
-- [99] alice-context:docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md — N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff
-  - status:  active continuity authority for the current Sol handoff
-- [99] alice-eipm-v1-n0-full-envelope-foundation-build-v1:.github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml — Only the gate is deliberately zero-initialized.  Do not create a
-- [99] alice-eipm-v1-n0-full-envelope-foundation-build-v1:configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json — n0_v02_full_envelope_final_validation_contract_v2.json
-- [99] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml — Only the gate is deliberately zero-initialized.  Do not create a
+- [112] alice-eipm-v1-build:docs/PHASE_1_PRIVATE_CLAIM_SUPPORT_AUDIT.md — P1.11 — Private Claim-Support Auditor
+- [108] alice-eipm-v1-dual-view-late-interaction-binding:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [108] alice-eipm-v1-dual-view-specialist-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [108] alice-eipm-v1-n0-clean-sheet-relational-execution-review:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [108] alice-eipm-v1-n0-closure-pass:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [108] alice-eipm-v1-n0-closure-semantic-v2:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [108] alice-eipm-v1-n0-frozen-semantic-authority-v3:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [108] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [108] alice-eipm-v1-n0-p2a-semantic-localization-v1:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [108] alice-eipm-v1-n0-semantic-operator-foundation-v1:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [108] alice-eipm-v1-qsre-production-core-v1:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
+- [108] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-relation-conditioned-multilayer-causal-interface-study-v0.1.md — N0 Relation-Conditioned Multi-Layer Causal Interface Study v0.1
+  - status:  fresh causal curriculum and preservation contract defined; CPU-only preparation authorized; interface training remains unauthorized
 
 ## Graphify navigation hints
 
-- N0FullEnvelopeTrainableSystemV1 -> src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py:L58
-- test_full_trainable_system_final_judgment_gradient_reaches_shared_backbone_and_long_bridge() -> tests/eipm/test_n0_full_envelope_trainable_system_v1.py:L274
-- SemanticSegmentContextBridgeV1 -> src/alice_personality/n0/semantic_segment_context_bridge_v1.py:L48
-- test_response_wrapper_rejects_split_verified_source_set_across_sentences() -> tests/phase4/test_information_conversation_bridge.py:L628
+- test_incomplete_only_later_relation_steps_do_not_move_completed_path_frontier() -> tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py:L904
+- First exact sparse boundary for the full-envelope N0 successor. Unlike Binder… -> src/alice_personality/n0/qsre_full_envelope_binder_v1.py:L51
+- test_binder_global_support_cannot_apply_step0_reliability_to_step1_off_edge() -> tests/eipm/test_n0_full_envelope_modifier_gating_v1.py:L199
+- add() -> src/alice_conversation/response_validation.py:L241
 - AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
 - consensus_all_aligned() -> scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py:L327
+- ArbitrationV02Tests -> tests/eipm/n0/test_downstream_causal_arbitration_v0_2.py:L12
 - test_memory_identity_host_learning_architecture.py -> tests/governance/test_memory_identity_host_learning_architecture.py:L1
 - audit() -> scripts/audit_capability_barriers.py:L521
 - authority() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L87
-- authorization() -> tests/phase3/test_conversation_memory_grounding_bridge.py:L50
-- _boundaries() -> tests/phase4/test_information_grounding.py:L46
-- .boundary() -> src/alice_conversation/cli_policy.py:L67
+- authorize_boolean_map() -> src/alice_capability_profiles.py:L88
+- BehavioralBatchCompileConfig -> src/alice_personality/n0/full_envelope_behavioral_batch_v1.py:L30
+- Raised when deletion state belongs to another scope. -> src/cognitive_kernel/deletion_prototype.py:L47
+- Binder targets are query-relevant support, not relation-key membership. The… -> tests/eipm/test_n0_full_envelope_trainable_system_v1.py:L678
 - branch_forward() -> scripts/eipm/n0/train_n0_v02_structured_state_pilot.py:L287
-- ._bridge_relation_bias() -> src/alice_personality/n0/evidence_graph_query_edge_bridge.py:L43
 - _build() -> tests/phase4/test_information_grounding.py:L154
-- causal_specialist_probabilities() -> scripts/eipm/n0/audit_n0_v02_dual_view_specialist_failure_localization_v0_2.py:L83
 
 ## External/private routing
 
 - Recommended: True
-- Reason: question references a private/external source class
+- Reason: host-specific operational history may contain newer failure lessons than public receipts
 
 ## Trust contract
 
