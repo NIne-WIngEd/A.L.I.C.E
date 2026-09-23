@@ -147,6 +147,11 @@ def verify_pre_gradient_runtime(
     tokenizer_audit_path: str | Path,
     operator_evidence_token_receipt_path: str | Path,
     tokenizer_dir_path: str | Path,
+    topology_config_path: str | Path,
+    semantic_config_path: str | Path,
+    semantic_checkpoint_path: str | Path,
+    source_config_path: str | Path,
+    corpus_receipt_path: str | Path,
     cpu_runtime_receipt_path: str | Path,
     gpu_memory_receipt_path: str | Path,
     long_boundary_receipt_path: str | Path,
@@ -252,6 +257,52 @@ def verify_pre_gradient_runtime(
         repo_root/"configs/eipm/n0/n0_v02_semantic_operator_long_context_contract_v1.json"
     ):
         raise SystemExit("semantic long-context token contract hash drift")
+    cpu_expected={
+        "registered_topology_sha256":sha256_file(topology_config_path),
+        "qualification_config_sha256":sha256_file(
+            repo_root/"configs/eipm/n0/n0_v02_full_envelope_cpu_runtime_qualification_v1.json"
+        ),
+        "semantic_config_sha256":sha256_file(semantic_config_path),
+        "semantic_checkpoint_sha256":sha256_file(semantic_checkpoint_path),
+        "tokenizer_json_sha256":sha256_file(
+            Path(tokenizer_dir_path)/"tokenizer.json"
+        ),
+        "source_config_sha256":sha256_file(source_config_path),
+        "corpus_receipt_sha256":sha256_file(corpus_receipt_path),
+    }
+    for key,expected in cpu_expected.items():
+        if cpu.get(key)!=expected:
+            label={
+                "registered_topology_sha256":"CPU runtime topology hash drift",
+                "semantic_checkpoint_sha256":"CPU runtime semantic checkpoint hash drift",
+                "tokenizer_json_sha256":"CPU runtime tokenizer hash drift",
+            }.get(key,f"CPU runtime {key} drift")
+            raise SystemExit(label)
+    gpu_expected={
+        "registered_topology_sha256":sha256_file(topology_config_path),
+        "qualification_config_sha256":sha256_file(
+            repo_root/"configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json"
+        ),
+        "semantic_config_sha256":sha256_file(semantic_config_path),
+        "semantic_checkpoint_sha256":sha256_file(semantic_checkpoint_path),
+        "tokenizer_json_sha256":sha256_file(
+            Path(tokenizer_dir_path)/"tokenizer.json"
+        ),
+        "source_config_sha256":sha256_file(source_config_path),
+        "corpus_receipt_sha256":sha256_file(corpus_receipt_path),
+        "mixture_manifest_sha256":sha256_file(mixture_manifest_path),
+        "mixture_audit_sha256":sha256_file(mixture_audit_path),
+    }
+    for key,expected in gpu_expected.items():
+        if gpu.get(key)!=expected:
+            label={
+                "registered_topology_sha256":"GPU memory topology hash drift",
+                "semantic_checkpoint_sha256":"GPU memory semantic checkpoint hash drift",
+                "tokenizer_json_sha256":"GPU memory tokenizer hash drift",
+                "mixture_manifest_sha256":"GPU memory mixture manifest hash drift",
+                "mixture_audit_sha256":"GPU memory mixture audit hash drift",
+            }.get(key,f"GPU memory {key} drift")
+            raise SystemExit(label)
     static_proof=require_status(
         static_proof_receipt_path,
         "PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1",
@@ -690,6 +741,11 @@ def main() -> None:
         tokenizer_audit_path=args.tokenizer_audit,
         operator_evidence_token_receipt_path=args.operator_evidence_token_receipt,
         tokenizer_dir_path=args.tokenizer_dir,
+        topology_config_path=args.topology_config,
+        semantic_config_path=args.semantic_config,
+        semantic_checkpoint_path=args.semantic_checkpoint,
+        source_config_path=args.source_config,
+        corpus_receipt_path=Path(args.corpus_dir)/"corpus_receipt.json",
         cpu_runtime_receipt_path=args.cpu_runtime_receipt,
         gpu_memory_receipt_path=args.gpu_memory_receipt,
         long_boundary_receipt_path=args.long_boundary_receipt,
