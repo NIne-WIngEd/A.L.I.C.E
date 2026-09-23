@@ -181,7 +181,7 @@ def execute_full_envelope_joint_step(
     active_families=(
         tuple(ALL_FAMILIES)
         if policy is None
-        else tuple(policy.active_macro_families)
+        else policy.active_macro_families
     )
     requires_full_fabric_primary=bool(
         {

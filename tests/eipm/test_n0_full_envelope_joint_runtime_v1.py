@@ -276,14 +276,17 @@ def test_j1_joint_step_does_not_require_or_execute_full_fabric() -> None:
             if task=="mlm":
                 return {"loss":self.anchor.square()}
             if task=="teacher":
-                score=self.anchor.repeat(2)
-                semantic=self.anchor.repeat(2,3)
-                rationale=self.anchor.repeat(1,3)
+                # The governed replay lane includes an actual cross-example
+                # contrastive objective, so the fixture must represent at least
+                # two teacher groups instead of weakening production semantics.
+                score=self.anchor.repeat(4)
+                semantic=self.anchor.repeat(4,3)
+                rationale=self.anchor.repeat(2,3)
                 return {
                     "scores":score,
                     "semantic":semantic,
                     "rationale":rationale,
-                    "alignment_logits":self.anchor.repeat(2),
+                    "alignment_logits":self.anchor.repeat(4),
                 }
             if task=="semantic_operator":
                 return {"semantic_operator":{},"operator":object()}
@@ -300,9 +303,12 @@ def test_j1_joint_step_does_not_require_or_execute_full_fabric() -> None:
 
     system=_System()
     teacher={
-        "group_sizes":[2],
-        "preferred_masks":[torch.tensor([True,False])],
-        "principle_tags":["p"],
+        "group_sizes":[2,2],
+        "preferred_masks":[
+            torch.tensor([True,False]),
+            torch.tensor([False,True]),
+        ],
+        "principle_tags":["p","q"],
     }
     semantic={"batch":{},"operator_targets":{}}
     natural={
