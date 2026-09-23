@@ -263,7 +263,7 @@
       }
     },
     "gradient_clip_norm": 1,
-    "precision": "fp16_on_p100_or_successor_mixed_precision",
+    "precision": "fp16",
     "gradient_checkpointing": true,
     "scheduler": "linear_warmup_cosine_decay_to_nonzero_floor",
     "warmup_fraction": 0.05,
@@ -382,10 +382,23 @@
       "minimum_lr_scale": 0.1,
       "horizon_is_stage_completion": false,
       "post_horizon_behavior": "hold_precommitted_nonzero_floor_until_dev_decision",
-      "fixed_before_gradient": true
+      "fixed_before_gradient": true,
+      "operating_horizon_steps": 1000
     },
     "checkpoint_evaluation_cadence_steps": 25,
-    "checkpoint_cadence_fixed_before_gradient": true
+    "checkpoint_cadence_fixed_before_gradient": true,
+    "runtime_hyperparameters_fixed_before_gradient": true,
+    "training_seed": 20260922,
+    "training_operating_points": {
+      "replay_sequence_length": 512,
+      "lane_microbatch_source": "P43_gpu_memory_receipt",
+      "mlm_microbatch_source": "P43_gpu_memory_receipt",
+      "teacher_batch_source": "P43_gpu_memory_receipt",
+      "gradient_accumulation_source": "P43_gpu_memory_receipt",
+      "world_size_source": "P43_gpu_memory_receipt",
+      "mixed_precision_source": "P43_gpu_memory_receipt",
+      "capability_ceiling": false
+    }
   },
   "loss_balancing": {
     "method": "macro_family_balanced_with_per_objective_scale_normalization",
