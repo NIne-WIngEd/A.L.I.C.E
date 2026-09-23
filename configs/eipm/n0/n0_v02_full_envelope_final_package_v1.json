@@ -100,5 +100,8 @@
   "n0_complete": false,
   "evaluator_implementation": "scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py",
   "evaluator_gate_registry": "configs/eipm/n0/n0_v02_full_envelope_final_v2_gate_registry_v1.json",
-  "opening_authorizer": "scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py"
+  "opening_authorizer": "scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py",
+  "dev_checkpoint_selector": "scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py",
+  "final_opening_requires_first_passing_dev_checkpoint_selection": true,
+  "final_opening_requires_raw_dev_evaluation_receipt": true
 }
