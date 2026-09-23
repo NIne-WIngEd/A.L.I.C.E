@@ -99,3 +99,37 @@ def test_final_v2_evaluator_is_executable_precommitted_and_freeze_bound() -> Non
     assert "--gate-registry" in freezer
     assert '"evaluator_implementation"' in freezer
     assert '"gate_registry"' in freezer
+
+
+def test_final_v2_has_independent_synthetic_semantic_operator_component() -> None:
+    package=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json").read_text()
+    )
+    component=package["components"].get("synthetic_semantic_operator")
+    assert isinstance(component,dict), (
+        "FINAL-v2 cannot measure synthetic held-out relation families, "
+        "semantic plurality, schema-evidence causality, or mixed-step operator "
+        "semantics from the behavioral component alone"
+    )
+    assert component["row_schema"]=="alice.eipm.n0.semantic-operator-intervention-row.v1"
+    assert component["relation_families_heldout_from_train_dev"] is True
+    assert component["plurality_rows_required"] is True
+    assert component["source_target_pairs_required"] is True
+    assert component["ordered_composition_required"] is True
+    assert component["mixed_step_direction_required"] is True
+    assert component["mixed_step_modifier_required"] is True
+    assert component["unknown_defer_required"] is True
+
+    builder=(
+        ROOT/"scripts/eipm/n0/build_n0_v02_full_envelope_final_v2_package.py"
+    ).read_text()
+    auditor=(
+        ROOT/"scripts/eipm/n0/audit_n0_v02_full_envelope_final_v2_package.py"
+    ).read_text()
+    freezer=(
+        ROOT/"scripts/eipm/n0/freeze_n0_v02_full_envelope_final_v2_package.py"
+    ).read_text()
+    assert "--semantic-final-output" in builder
+    assert "--semantic-final-rows" in auditor
+    assert "--semantic-final-rows" in freezer
+    assert "FINAL_SEMANTIC_RELATIONS" in builder

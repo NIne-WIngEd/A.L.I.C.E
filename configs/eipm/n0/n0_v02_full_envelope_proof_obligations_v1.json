@@ -1398,6 +1398,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_final_v2_evaluator_is_executable_precommitted_and_freeze_bound",
       "requirement": "Before gradient, FINAL-v2 must have an executable evaluator and complete gate registry for every precommitted final-contract gate. Both implementation and gate mapping must be hash-bound into the frozen package so they cannot be authored or changed after candidate FINAL results are observed."
+    },
+    {
+      "id": "N0-P46B",
+      "stage": "final_closure",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_final_v2_has_independent_synthetic_semantic_operator_component",
+      "requirement": "The sealed successor FINAL-v2 package must contain an independent synthetic semantic-operator component with relation families absent from TRAIN/DEV and explicit plurality, source/target, ordered, mixed-step, unknown/defer, and evidence-grounding cases. Behavioral FINAL plus natural FewRel alone cannot satisfy the separate synthetic heldout-operator gates."
     }
   ],
   "closure_rule": {
