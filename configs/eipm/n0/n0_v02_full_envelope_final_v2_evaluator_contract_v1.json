@@ -35,7 +35,9 @@
     "final_opening_requires_first_passing_dev_checkpoint_selection": true,
     "dev_checkpoint_selection_receipt_required": true,
     "raw_dev_evaluation_receipt_required": true,
-    "dev_selection_and_evaluation_receipts_must_hash_bind_same_candidate": true
+    "dev_selection_and_evaluation_receipts_must_hash_bind_same_candidate": true,
+    "freeze_receipt_source_revision_must_match_candidate": true,
+    "full_clean_exact_source_worktree_required": true
   },
   "legacy_final_self_validation_v1_forbidden": true,
   "legacy_final_self_validation_v3_forbidden": true,
