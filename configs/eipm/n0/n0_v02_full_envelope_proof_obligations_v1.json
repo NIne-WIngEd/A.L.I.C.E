@@ -46,7 +46,8 @@
     "src/alice_personality/n0/natural_relation_batch_v1.py",
     "src/alice_personality/n0/full_envelope_joint_step_v1.py",
     "src/alice_personality/n0/full_envelope_stage_policy_v1.py",
-    "src/alice_personality/n0/full_envelope_runtime_factory_v1.py"
+    "src/alice_personality/n0/full_envelope_runtime_factory_v1.py",
+    "src/alice_personality/n0/full_envelope_training_batch_scheduler_v1.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
@@ -1158,6 +1159,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_stage_training_scheduler_routes_long_semantics_into_j1_without_downstream_fabric",
       "requirement": "J1's declared long-query/relation/factor semantic gates must be supplied by optimizer-facing long-context semantic rows through the semantic-operator task, not deferred until downstream full-fabric activation. J1 must still avoid full-fabric losses; J2 and J3 add only the stage-owned full-fabric lanes."
+    },
+    {
+      "id": "N0-P39QF",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_stage_training_scheduler_filters_long_surfaces_by_owner_stage",
+      "requirement": "Stage-aware lane scheduling must route long query/relation/factor surfaces into J1 semantic supervision, J2 only into its structural/type/field owners, and J3 into the complete long-context fabric. The schedule may not turn one arbitrary lane ratio or fixture count into a capability ceiling."
     }
   ],
   "closure_rule": {

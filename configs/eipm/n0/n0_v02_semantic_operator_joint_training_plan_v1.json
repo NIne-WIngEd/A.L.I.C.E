@@ -315,6 +315,25 @@
       "J3": "keep replay-head parameters fixed as regression anchors while all successor representation/judgment modules co-adapt with the shared backbone",
       "permanent_freeze": false,
       "identity_authority": false
+    },
+    "batch_scheduler": "src/alice_personality/n0/full_envelope_training_batch_scheduler_v1.py",
+    "stage_lane_routing": {
+      "J1_semantic": [
+        "semantic_operator_intervention",
+        "long_context_semantic(query/relation_schema/factor_schema)"
+      ],
+      "J1_full_fabric": [],
+      "J2_full_fabric": [
+        "full_envelope_behavioral",
+        "long_context_fabric(type_schema/field_text/field_descriptor)"
+      ],
+      "J3_full_fabric": [
+        "full_envelope_behavioral",
+        "runtime_view_supplement",
+        "long_context_fabric(all governed surfaces)"
+      ],
+      "natural_relation": "active in J1/J2/J3",
+      "fixed_lane_sampling_ratio_as_capability_definition": false
     }
   },
   "loss_balancing": {

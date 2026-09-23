@@ -90,6 +90,7 @@ on:
       - "src/alice_personality/n0/natural_relation_batch_v1.py"
       - "src/alice_personality/n0/full_envelope_joint_step_v1.py"
       - "src/alice_personality/n0/full_envelope_stage_policy_v1.py"
+      - "src/alice_personality/n0/full_envelope_training_batch_scheduler_v1.py"
       - "src/alice_personality/n0/full_envelope_runtime_factory_v1.py"
       - "tests/eipm/test_n0_full_envelope_trainable_system_v1.py"
       - "tests/eipm/test_n0_full_envelope_joint_runtime_v1.py"
@@ -139,6 +140,7 @@ jobs:
             src/alice_personality/n0/natural_relation_batch_v1.py \
             src/alice_personality/n0/full_envelope_joint_step_v1.py \
             src/alice_personality/n0/full_envelope_stage_policy_v1.py \
+            src/alice_personality/n0/full_envelope_training_batch_scheduler_v1.py \
             src/alice_personality/n0/full_envelope_runtime_factory_v1.py \
             src/alice_personality/n0/chunked_late_interaction.py \
             src/alice_personality/n0/full_envelope_structural_types.py \

@@ -434,3 +434,57 @@ def test_stage_training_scheduler_routes_long_semantics_into_j1_without_downstre
         "full_envelope_behavioral","runtime_view_supplement","long_context_fabric",
     )
     assert scheduler.active_natural_lanes(stage=J1)==("natural_relation",)
+
+
+def test_stage_training_scheduler_filters_long_surfaces_by_owner_stage() -> None:
+    from alice_personality.n0.full_envelope_stage_policy_v1 import J1,J2,J3
+    from alice_personality.n0.full_envelope_training_batch_scheduler_v1 import (
+        FullEnvelopeTrainingBatchSchedulerV1,
+        LONG_J2_FABRIC_SURFACES,
+        LONG_J3_FABRIC_SURFACES,
+    )
+    surfaces=[
+        "query","relation_schema","factor_schema","type_schema","field_text",
+        "field_descriptor","candidate_text","internal_view_descriptor",
+        "additional_view_descriptor","additional_view_source",
+    ]
+    long_rows=[
+        {
+            "id":f"long-{surface}",
+            "long_context_surface":surface,
+            "private_identity_data":False,
+            "final_validation_only":False,
+        }
+        for surface in surfaces
+    ]
+    semantic,fabric=FullEnvelopeTrainingBatchSchedulerV1.split_long_context_rows(
+        long_rows
+    )
+    scheduler=FullEnvelopeTrainingBatchSchedulerV1(
+        lanes={
+            "semantic_operator_intervention":[{
+                "id":"semantic","private_identity_data":False,
+                "final_validation_only":False,
+            }],
+            "long_context_semantic":semantic,
+            "full_envelope_behavioral":[{
+                "id":"behavior","private_identity_data":False,
+                "final_validation_only":False,
+            }],
+            "runtime_view_supplement":[{
+                "id":"runtime","private_identity_data":False,
+                "final_validation_only":False,
+            }],
+            "long_context_fabric":fabric,
+            "natural_relation":[{
+                "id":"natural","private_identity_data":False,
+                "final_validation_only":False,
+            }],
+        },
+        seed=1,
+    )
+    assert scheduler.active_full_fabric_lanes(stage=J1)==()
+    j2=scheduler._eligible_rows(stage=J2,lane="long_context_fabric")
+    j3=scheduler._eligible_rows(stage=J3,lane="long_context_fabric")
+    assert {x["long_context_surface"] for x in j2}==set(LONG_J2_FABRIC_SURFACES)
+    assert {x["long_context_surface"] for x in j3}==set(LONG_J3_FABRIC_SURFACES)
