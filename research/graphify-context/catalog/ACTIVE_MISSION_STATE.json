@@ -85,13 +85,13 @@
     "maximal_heads": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "1bced8adac6e7740b7957ad0807d4ddd0ac4c5c2",
-        "head_committed_at": "2026-09-22T22:04:00-05:00",
-        "head_message": "build(n0): execute real all-lane joint step",
-        "ahead": 1131,
+        "head": "1eeff40ad07f8a60ded92113f1ecb3755e0c67a7",
+        "head_committed_at": "2026-09-22T22:15:02-05:00",
+        "head_message": "build(n0): enforce staged causal family ownership",
+        "ahead": 1135,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 497,
+        "changed_file_count_vs_source_merge_base": 498,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -726,13 +726,13 @@
     "all_ahead_candidates": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "1bced8adac6e7740b7957ad0807d4ddd0ac4c5c2",
-        "head_committed_at": "2026-09-22T22:04:00-05:00",
-        "head_message": "build(n0): execute real all-lane joint step",
-        "ahead": 1131,
+        "head": "1eeff40ad07f8a60ded92113f1ecb3755e0c67a7",
+        "head_committed_at": "2026-09-22T22:15:02-05:00",
+        "head_message": "build(n0): enforce staged causal family ownership",
+        "ahead": 1135,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 497,
+        "changed_file_count_vs_source_merge_base": 498,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -4808,7 +4808,7 @@
   },
   "continuity_freshness": {
     "stale_relative_to_unmerged_experiment_frontier": true,
-    "newest_experiment_frontier_time": "2026-09-22T22:04:00-05:00",
+    "newest_experiment_frontier_time": "2026-09-22T22:15:02-05:00",
     "active_handoff_last_changed_at": "2026-09-22T18:45:52-05:00",
     "context_branch_head_time": "2026-09-22T18:45:52-05:00"
   },
