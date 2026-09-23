@@ -658,3 +658,88 @@ def test_gpu_memory_dry_run_covers_both_semantic_cardinality_and_long_semantic_l
     assert '"long_context_semantic"' in qualifier
     assert "semantic_case_receipts" in qualifier
     assert "--semantic-long-rows '$MIXTURE_ROOT/semantic-long/rows.jsonl'" in sbatch
+
+
+def test_successor_trainer_dev_evaluator_and_checkpoint_contract_exist_before_gradient() -> None:
+    trainer=ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py"
+    evaluator=ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py"
+    checkpoint_contract=ROOT/"configs/eipm/n0/n0_v02_full_envelope_checkpoint_contract_v1.json"
+    dev_contract=ROOT/"configs/eipm/n0/n0_v02_full_envelope_dev_validation_contract_v1.json"
+
+    assert trainer.is_file(), "successor staged full-envelope trainer missing"
+    assert evaluator.is_file(), "successor full-envelope DEV evaluator missing"
+    assert checkpoint_contract.is_file(), "successor checkpoint provenance contract missing"
+    assert dev_contract.is_file(), "successor DEV gate contract missing"
+
+    checkpoint=json.loads(checkpoint_contract.read_text())
+    assert checkpoint["schema"]=="alice.eipm.n0.full-envelope-checkpoint-contract.v1"
+    assert checkpoint["registered_system"]=="N0FullEnvelopeTrainableSystemV1"
+    assert checkpoint["required_lineage"]==[
+        "source_revision",
+        "registered_topology_sha256",
+        "semantic_initialization_sha256",
+        "full_public_mixture_manifest_sha256",
+        "full_public_mixture_audit_sha256",
+        "stage",
+        "stage_policy",
+        "optimizer_contract",
+        "scheduler_contract",
+        "objective_contract",
+        "tokenizer_sha256",
+        "public_corpus_receipt_sha256",
+        "teacher_audit_sha256",
+    ]
+    assert checkpoint["authority"]["final_results_observed"] is False
+    assert checkpoint["authority"]["final_checkpoint_selection_allowed"] is False
+    assert checkpoint["authority"]["private_identity_data"] is False
+
+    dev=json.loads(dev_contract.read_text())
+    assert dev["schema"]=="alice.eipm.n0.full-envelope-dev-validation-contract.v1"
+    assert dev["registered_system"]=="N0FullEnvelopeTrainableSystemV1"
+    assert dev["checkpoint_selection_surface"]=="DEV_ONLY"
+    assert dev["final_rows_allowed"] is False
+    assert dev["final_results_allowed"] is False
+    assert dev["shortcut_preflight_must_remain_passed"] is True
+    assert set(dev["stage_sections"])=={
+        "J1_joint_semantic_operator",
+        "J2_reopened_representation_interfaces",
+        "J3_full_public_n0_coadaptation",
+    }
+
+
+def test_successor_trainer_reuses_registered_stage_and_joint_step_without_historical_model_authority() -> None:
+    trainer=(
+        ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py"
+    ).read_text()
+    required=(
+        "load_registered_full_envelope_system",
+        "apply_stage_trainability",
+        "FullEnvelopeTrainingBatchSchedulerV1",
+        "execute_full_envelope_joint_step",
+        "FullEnvelopeJointTrainingObjectiveV1",
+        "compile_semantic_operator_batch",
+        "compile_behavioral_batch",
+        "compile_natural_relation_batch",
+        "verify_public_corpus_v021",
+        "verify_teacher_registry",
+        "PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1",
+    )
+    for symbol in required:
+        assert symbol in trainer
+    assert "AliceN0V02Model(" not in trainer
+    assert "SourceAnchoredCrossContextFusion(" not in trainer
+    assert "AdaptiveMultiViewLatentPool(" not in trainer
+    assert "final_validation" not in trainer.lower() or "forbid" in trainer.lower()
+
+
+def test_dev_evaluator_is_dev_only_and_cannot_open_final() -> None:
+    evaluator=(
+        ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py"
+    ).read_text()
+    assert "split" in evaluator
+    assert '"dev"' in evaluator or "'dev'" in evaluator
+    assert "final_validation_only" in evaluator
+    assert "final_results_observed" in evaluator
+    assert "final_opening_authorized" in evaluator
+    assert "checkpoint_selection_performed" in evaluator
+    assert "N0FullEnvelopeTrainableSystemV1" in evaluator
