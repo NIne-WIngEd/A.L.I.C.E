@@ -1538,6 +1538,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_runtime_training_authorization_breaks_no_gradient_source_mutation_cycle",
       "requirement": "Gradient authorization must be achievable without editing the exact source revision after P40/P40A/P40B/P40C/P42/P43/P39PN receipts are produced. A governed runtime authorizer must revalidate the exact public corpus and teacher bank, bind every optimizer-facing artifact and runtime receipt, keep FINAL closed, and emit the sole optimizer/gradient/GPU-training authorization consumed by the trainer."
+    },
+    {
+      "id": "N0-P43P",
+      "stage": "training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_stage_training_can_resume_same_stage_without_treating_step_budget_as_completion",
+      "requirement": "The staged trainer must support exact-state same-stage continuation beyond an invocation's optimizer-step operating point. J1 may not become non-resumable, J2/J3 continuation may not be confused with a predecessor stage transition, and an arbitrary max-optimizer-steps value may not become an implicit stage-completion or capability ceiling."
     }
   ],
   "closure_rule": {
