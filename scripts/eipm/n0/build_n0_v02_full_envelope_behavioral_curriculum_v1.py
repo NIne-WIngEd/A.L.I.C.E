@@ -174,6 +174,14 @@ FINAL_ENTITIES = [
     "Onyx","Pioneer","Quill","Radian","Summit","Trellis","Vale","Willow",
 ]
 
+DEV_TYPE_SCHEMA = [
+    {"key":"t_actor","text":"a responsible person, team, or public organization participating in a tracked process"},
+    {"key":"t_record","text":"an auditable docket, report, notice, or recorded public source"},
+    {"key":"t_claim","text":"a finding, proposition, or conclusion whose support must be established from evidence"},
+    {"key":"t_event","text":"a process occurrence, handoff, or state change that can participate in ordered reasoning"},
+    {"key":"t_context","text":"background material that may inform context without controlling the requested conclusion"},
+]
+
 FINAL_TYPE_SCHEMA = [
     {"key":"t_actor","text":"an accountable human or institutional participant in a public process"},
     {"key":"t_record","text":"a traceable public memorandum, instrument record, notice, or source document"},
@@ -832,6 +840,50 @@ def scenario(mode: int, entities: list[str], example: int, *, split: str) -> dic
             if first_is_stronger
             else "second_source_stronger"
         )
+    elif mode == 17 and split=="dev":
+        family="heldout_reliability_temporal_combo"
+        fields=[
+            field(
+                f"Inspection record {a} has the highest source reliability but falls outside the required review window.",
+                "t_record",reliability=0.99,temporal="outside required review window",
+            ),
+            field(f"Finding {b}: conclusion supported only by the out-of-window record.","t_claim"),
+            field(
+                f"Inspection record {c} is highly reliable and falls inside the required review window.",
+                "t_record",reliability=0.93,temporal="inside required review window",
+            ),
+            field(f"Finding {d}: conclusion supported by the strongest in-window record.","t_claim"),
+            field(
+                f"A second in-window inspection note has weaker reliability and supports Finding {b}.",
+                "t_record",reliability=0.55,temporal="inside required review window",
+            ),
+        ]
+        edges=[
+            edge(0,1,"r_support",reliability=0.99,temporal_match=0.0,support=True),
+            edge(2,3,"r_support",reliability=0.93,temporal_match=1.0,support=True,decisive=True),
+            edge(4,1,"r_support",reliability=0.55,temporal_match=1.0,support=True),
+        ]
+        query=(
+            "Apply the required review-window constraint first. Among evidence "
+            "that remains temporally admissible, use verified source reliability "
+            "to choose the controlling supported finding."
+        )
+        answers=[
+            f"Select Finding {d}; it has the strongest reliable support inside the required window.",
+            f"Select Finding {b}; the highest-reliability source wins even though it is outside the window.",
+            f"Select Finding {b}; any in-window source is sufficient regardless of reliability.",
+            "Ignore both the time-window and reliability criteria.",
+        ]
+        correct=0
+        relation_sequence=["r_support"]
+        relation_counterfactuals=["r_context"]
+        event_sequence=["CONTINUE","STOP"]
+        targets["traversal"]="TRAVERSAL_AGGREGATE"
+        targets["reliability"]="MOD_RELIABILITY_ON"
+        targets["temporal"]="MOD_TEMPORAL_ON"
+        decisive_fields=[2]
+        support_edges=[0,1,2]
+        endpoint={"active":False,"source_field":-1,"target_field":-1}
     elif mode == 17:
         family="long_causal_chain"
         # FINAL stays beyond TRAIN/DEV geometry after DEV gains a deeper
@@ -1024,6 +1076,7 @@ FINAL_QUERY_PARAPHRASES = {
     "mixed_direction_composition":"Traverse the first causal link forward and the second causal link backward from the shared intermediate state, then report the resulting endpoint.",
     "causal_chain":"Follow the entire ordered causal program from its initial observation to the terminal state and ignore unrelated background material.",
     "candidate_context_swap":"Use the active reliability criterion to compare the two evidence-backed propositions and select the one with stronger support.",
+    "heldout_reliability_temporal_combo":"Enforce the stated review window, then compare the reliability of the remaining admissible evidence and choose the supported finding that controls.",
     "long_causal_chain":"Execute the complete five-step causal program and identify the endpoint that appears only after every transition has been applied.",
     "heldout_recency_provenance_combo":"First enforce the authorized-provenance requirement, then use recency among the remaining eligible sources to select the controlling proposition.",
 }
@@ -1199,7 +1252,7 @@ def materialize_row(
         "dev":DEV_ENTITIES,
         "final":FINAL_ENTITIES,
     }[split]
-    mode=example % (19 if split=="final" else 17)
+    mode=example % (19 if split=="final" else (18 if split=="dev" else 17))
     base=scenario(mode,entities,example,split=split)
     if split=="dev":
         base["query"]=DEV_QUERY_PARAPHRASES[base["scenario_family"]]
@@ -1285,19 +1338,38 @@ def materialize_row(
     type_schema=(
         [dict(x) for x in FINAL_TYPE_SCHEMA]
         if split=="final"
-        else [dict(x) for x in TYPE_SCHEMA]
+        else (
+            [dict(x) for x in DEV_TYPE_SCHEMA]
+            if split=="dev"
+            else [dict(x) for x in TYPE_SCHEMA]
+        )
     )
     factor_schemas={
         name:[dict(item) for item in bank]
         for name,bank in FACTOR_BANKS.items()
     }
-    if split=="final":
+    if split=="dev":
         factor_schemas["open_semantic_factor"].append(
             {
-                "key":"OPEN_FINAL_4",
+                "key":"OPEN_DEV_4",
                 "opcode":None,
-                "text":"a held-out public semantic qualifier indicates that evidence remains conditional on an unresolved operational dependency",
+                "text":"a public semantic qualifier marks the conclusion as contingent on an unresolved procedural dependency",
             }
+        )
+    elif split=="final":
+        factor_schemas["open_semantic_factor"].extend(
+            [
+                {
+                    "key":"OPEN_FINAL_4",
+                    "opcode":None,
+                    "text":"a held-out public semantic qualifier indicates that evidence remains conditional on an unresolved operational dependency",
+                },
+                {
+                    "key":"OPEN_FINAL_5",
+                    "opcode":None,
+                    "text":"a second held-out public qualifier marks an independent unresolved condition without changing the executable relation program",
+                },
+            ]
         )
     semantic_text=" ".join(
         [base["query"]]
@@ -1409,6 +1481,15 @@ def materialize_row(
         "composition_extrapolation":(
             split=="dev" and len(relation_targets)>4
         ),
+        "factor_cardinality_extrapolation":(
+            split=="dev"
+            and len(factor_schemas["open_semantic_factor"])>len(FACTOR_BANKS["open_semantic_factor"])
+        ),
+        "factor_combination_transfer":(
+            split=="dev" and base["scenario_family"]=="heldout_reliability_temporal_combo"
+        ),
+        "type_schema_transfer":split=="dev",
+        "domain_transfer":split=="dev",
         "dev_extrapolation_operating_point_is_capability_ceiling":False,
         "generated_text":True,
         "data_origin":("deterministic_public_full_envelope_final_v2" if split=="final" else "deterministic_public_full_envelope_behavioral_fabric_v1"),
@@ -1421,7 +1502,11 @@ def materialize_row(
         "domain_family":(
             "heldout_public_operations_and_instrumentation"
             if split=="final"
-            else "public_synthetic_relational_reasoning"
+            else (
+                "heldout_public_quality_and_logistics"
+                if split=="dev"
+                else "public_synthetic_relational_reasoning"
+            )
         ),
     }
 
