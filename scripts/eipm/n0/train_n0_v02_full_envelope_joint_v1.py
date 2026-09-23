@@ -1033,6 +1033,9 @@ def main() -> None:
     natural_rows=read_jsonl(args.natural_rows,split="train")
     natural_bank=read_json(args.natural_bank)
 
+    resume_data_seed_offset=(start_optimizer_step-1 if resume_kind=="same_stage" else 0)
+    segment_seed=args.seed+resume_data_seed_offset*100003
+
     scheduler_rows={
         "semantic_operator_intervention":semantic_rows,
         "long_context_semantic":semantic_long_rows,
@@ -1043,7 +1046,7 @@ def main() -> None:
     }
     lane_scheduler=FullEnvelopeTrainingBatchSchedulerV1(
         lanes=scheduler_rows,
-        seed=args.seed+int(accelerator.process_index),
+        seed=segment_seed+int(accelerator.process_index),
     )
 
     mlm_dataset=PackedJSONLIterableDataset(
@@ -1051,7 +1054,7 @@ def main() -> None:
         tokenizer=tokenizer,
         sequence_length=args.replay_sequence_length,
         split="train",
-        shuffle_seed=args.seed,
+        shuffle_seed=segment_seed,
     )
     mlm_loader=DataLoader(
         mlm_dataset,
@@ -1061,16 +1064,21 @@ def main() -> None:
             mlm_probability=0.30,
             mean_span=3.0,
             max_span=10,
-            seed=args.seed+int(accelerator.process_index),
+            seed=segment_seed+int(accelerator.process_index),
         ),
         num_workers=0,
         pin_memory=True,
     )
     teacher_dataset=CurriculumDataset(curriculum_paths,"train")
+    teacher_generator=torch.Generator()
+    teacher_generator.manual_seed(
+        segment_seed+int(accelerator.process_index)
+    )
     teacher_loader=DataLoader(
         teacher_dataset,
         batch_size=args.teacher_batch_size,
         shuffle=True,
+        generator=teacher_generator,
         collate_fn=TeacherMultitaskCollator(tokenizer,256),
         num_workers=0,
         pin_memory=True,
