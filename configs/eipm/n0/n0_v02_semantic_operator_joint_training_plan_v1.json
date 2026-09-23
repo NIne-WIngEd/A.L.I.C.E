@@ -176,7 +176,6 @@
           "semantic_backbone_all_layers",
           "schema_conditioned_semantic_operator",
           "structured_successor_interface",
-          "evidence_successor_interface",
           "dynamic_relation_graph_semantic_interface",
           "long_context_segment_bridge",
           "production_executor_successor",
@@ -214,7 +213,9 @@
           "public_judgment_probe",
           "dynamic_fusion_successor",
           "dynamic_latent_successor",
-          "long_context_segment_bridge"
+          "long_context_segment_bridge",
+          "raw_semantic_view_layer_gate",
+          "semantic_input_summary_layer_gate"
         ],
         "permanently_frozen": [],
         "architecture_reduced": false,
@@ -276,13 +277,39 @@
       "stage_freeze_is_planned_optimization_not_architecture_reduction": true,
       "ad_hoc_freeze_outside_stage_policy_allowed_only_for_causal_debug": true,
       "all_ten_families_required_in_J3_before_final_selection": true,
-      "reason": "Avoid meaningless gradients through randomly initialized frozen downstream arbiters while preserving one full instantiated topology and progressively activating causally complete owner modules."
+      "reason": "Avoid meaningless gradients through randomly initialized frozen downstream arbiters while preserving one full instantiated topology and progressively activating causally complete owner modules.",
+      "J2_excludes_evidence_view_reason": "The evidence-specialist view feeds fusion rather than Binder/Executor structural losses, so it activates with the fusion/latent causal families in J3 instead of receiving no-signal or random-downstream gradients in J2."
     },
     "freeze_policy": {
       "planned_stage_inactivity_allowed": true,
       "ad_hoc_freeze_allowed_only_for_causal_debug": true,
       "permanent_parent_freeze_forbidden": true,
       "full_topology_instantiated_every_stage": true
+    },
+    "module_bindings": {
+      "semantic_backbone_all_layers": "semantic_model.backbone",
+      "semantic_existing_heads_for_replay": "semantic_model parameters excluding semantic_model.backbone",
+      "schema_conditioned_semantic_operator": "stack.semantic_operator",
+      "long_context_segment_bridge": "semantic_input.segment_bridge",
+      "semantic_input_summary_layer_gate": "semantic_input.summary_layer_gate",
+      "structured_successor_interface": "stack.structured",
+      "structured_successor": "stack.structured",
+      "dynamic_relation_graph_semantic_interface": "stack.evidence_graph",
+      "dynamic_evidence_graph": "stack.evidence_graph",
+      "binder_successor": "stack.binder",
+      "production_executor_successor": "stack.executor",
+      "evidence_successor": "stack.evidence_view",
+      "raw_semantic_view_layer_gate": "stack.raw_semantic_layer_gate",
+      "dynamic_fusion_successor": "stack.fusion",
+      "dynamic_latent_successor": "stack.latent",
+      "public_judgment_probe": "stack.public_judgment_probe"
+    },
+    "replay_head_stage_policy": {
+      "J1": "train replay heads jointly with the shared backbone to establish the public regression readouts",
+      "J2": "freeze replay-head parameters as fixed public regression anchors while replay losses continue to update the shared backbone",
+      "J3": "keep replay-head parameters fixed as regression anchors while all successor representation/judgment modules co-adapt with the shared backbone",
+      "permanent_freeze": false,
+      "identity_authority": false
     }
   },
   "loss_balancing": {

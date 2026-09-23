@@ -44,7 +44,8 @@
     "src/alice_personality/n0/full_envelope_behavioral_batch_v1.py",
     "src/alice_personality/n0/semantic_operator_batch_v1.py",
     "src/alice_personality/n0/natural_relation_batch_v1.py",
-    "src/alice_personality/n0/full_envelope_joint_step_v1.py"
+    "src/alice_personality/n0/full_envelope_joint_step_v1.py",
+    "src/alice_personality/n0/full_envelope_stage_policy_v1.py"
   ],
   "forbidden_critical_source_patterns": [
     ".detach(",
@@ -1097,6 +1098,27 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_joint_training_stages_have_explicit_causal_loss_family_activation",
       "requirement": "J1/J2/J3 must explicitly bind active macro loss families to the modules each stage is allowed to update. J1 trains replay and semantic/operator/natural-relation semantics; J2 adds structural support/execution with Binder and Executor co-trainable; J3 activates fusion/latent/public-judgment causal families. Inactive families are not computed through random frozen downstream modules, and the full topology remains instantiated rather than reduced."
+    },
+    {
+      "id": "N0-P39PX",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_stage_policy_owns_every_parameter_without_reducing_topology",
+      "requirement": "Stage trainability must own every parameter in the registered full topology, change only requires_grad authority, and never remove modules or silently leave trainable successor parameters outside governance."
+    },
+    {
+      "id": "N0-P39PY",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_stage_policy_keeps_random_downstream_owners_inactive_until_their_losses_activate",
+      "requirement": "Random downstream decision owners must remain inactive until their corresponding loss families activate: Binder/Executor enter with J2 structural supervision; evidence-view/fusion/latent/public-judgment and their summary gates enter with J3 causal judgment supervision."
+    },
+    {
+      "id": "N0-P39PZ",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_macro_family_balancer_stage_subset_leaves_inactive_ema_untouched",
+      "requirement": "Macro-family balancing must support precommitted stage subsets, renormalize fixed governance weights only over active families, and leave inactive family EMA state unchanged."
     }
   ],
   "closure_rule": {

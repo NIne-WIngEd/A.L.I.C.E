@@ -150,6 +150,12 @@ def test_joint_training_stages_have_explicit_causal_loss_family_activation() -> 
     assert "dynamic_fusion_successor" not in j2_trainable
     assert "dynamic_latent_successor" not in j2_trainable
     assert "public_judgment_probe" not in j2_trainable
+    assert "evidence_successor_interface" not in j2_trainable
+    j3_trainable=set(stages["J3_full_public_n0_coadaptation"]["trainable"])
+    assert "raw_semantic_view_layer_gate" in j3_trainable
+    assert "semantic_input_summary_layer_gate" in j3_trainable
+    assert plan["optimization_strategy"]["module_bindings"]["raw_semantic_view_layer_gate"]=="stack.raw_semantic_layer_gate"
+    assert plan["optimization_strategy"]["module_bindings"]["semantic_input_summary_layer_gate"]=="semantic_input.summary_layer_gate"
 
     j2_gates=set(plan["stage_gates"]["J2"])
     j3_gates=set(plan["stage_gates"]["J3"])
@@ -164,3 +170,58 @@ def test_joint_training_stages_have_explicit_causal_loss_family_activation() -> 
     assert plan["optimization_strategy"]["stage_family_policy"]["inactive_family_loss_computed"] is False
     assert plan["optimization_strategy"]["stage_family_policy"]["inactive_modules_removed_from_topology"] is False
     assert plan["optimization_strategy"]["stage_family_policy"]["newly_activated_family_owners_train_together"] is True
+
+
+def test_stage_policy_owns_every_parameter_without_reducing_topology() -> None:
+    from test_n0_full_envelope_trainable_system_v1 import _system
+    from alice_personality.n0.full_envelope_stage_policy_v1 import (
+        J1,J2,J3,apply_stage_trainability,
+    )
+
+    system=_system()
+    total=sum(p.numel() for p in system.parameters())
+    reports=[]
+    for stage in (J1,J2,J3):
+        report=apply_stage_trainability(system,stage=stage)
+        reports.append(report)
+        assert report["topology_parameter_count"]==total
+        assert report["all_parameters_owned"] is True
+        assert report["architecture_reduced"] is False
+        assert report["inactive_modules_removed_from_topology"] is False
+        assert report["trainable_parameter_count"]>0
+        assert report["trainable_parameter_count"]<=total
+
+    j1,j2,j3=reports
+    assert j1["trainable_parameter_count"] < j3["trainable_parameter_count"]
+    assert j2["trainable_parameter_count"] < j3["trainable_parameter_count"]
+    assert set(j1["active_macro_families"]) < set(j2["active_macro_families"])
+    assert set(j2["active_macro_families"]) < set(j3["active_macro_families"])
+
+
+def test_stage_policy_keeps_random_downstream_owners_inactive_until_their_losses_activate() -> None:
+    from test_n0_full_envelope_trainable_system_v1 import _system
+    from alice_personality.n0.full_envelope_stage_policy_v1 import (
+        J1,J2,J3,apply_stage_trainability,
+    )
+
+    system=_system()
+    apply_stage_trainability(system,stage=J1)
+    assert any(p.requires_grad for p in system.stack.semantic_operator.parameters())
+    assert not any(p.requires_grad for p in system.stack.binder.parameters())
+    assert not any(p.requires_grad for p in system.stack.public_judgment_probe.parameters())
+
+    apply_stage_trainability(system,stage=J2)
+    assert any(p.requires_grad for p in system.stack.binder.parameters())
+    assert any(p.requires_grad for p in system.stack.executor.parameters())
+    assert not any(p.requires_grad for p in system.stack.fusion.parameters())
+    assert not any(p.requires_grad for p in system.stack.latent.parameters())
+    assert not any(p.requires_grad for p in system.stack.public_judgment_probe.parameters())
+    assert not any(p.requires_grad for p in system.stack.evidence_view.parameters())
+
+    apply_stage_trainability(system,stage=J3)
+    assert any(p.requires_grad for p in system.stack.evidence_view.parameters())
+    assert any(p.requires_grad for p in system.stack.fusion.parameters())
+    assert any(p.requires_grad for p in system.stack.latent.parameters())
+    assert any(p.requires_grad for p in system.stack.public_judgment_probe.parameters())
+    assert any(p.requires_grad for p in system.stack.raw_semantic_layer_gate.parameters())
+    assert any(p.requires_grad for p in system.semantic_input.summary_layer_gate.parameters())

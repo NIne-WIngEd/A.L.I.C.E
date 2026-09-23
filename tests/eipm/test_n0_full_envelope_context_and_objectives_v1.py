@@ -1080,3 +1080,41 @@ def test_exact_masked_softmax_preserves_extreme_valid_logits_and_empty_rows() ->
     )
     assert torch.equal(probability[1],torch.zeros_like(probability[1]))
     assert bool(torch.isfinite(probability).all())
+
+
+def test_macro_family_balancer_stage_subset_leaves_inactive_ema_untouched() -> None:
+    balancer=MacroFamilyLossBalancer(
+        {"semantic":1.0,"operator":1.0,"fabric":1.0}
+    )
+    balancer.observe_detached_family_means(
+        {
+            "semantic":torch.tensor(4.0),
+            "operator":torch.tensor(2.0),
+            "fabric":torch.tensor(8.0),
+        }
+    )
+    before=balancer.ema_scale_snapshot()
+    a=torch.tensor(8.0,requires_grad=True)
+    b=torch.tensor(6.0,requires_grad=True)
+    result=balancer(
+        {
+            "semantic":{"loss":a},
+            "operator":{"loss":b},
+        },
+        update_ema=True,
+        active_families=("semantic","operator"),
+    )
+    after=balancer.ema_scale_snapshot()
+    assert torch.allclose(
+        after[:2],
+        before[:2]*0.98+torch.tensor([8.0,6.0])*0.02,
+        atol=1e-7,
+        rtol=1e-7,
+    )
+    assert torch.equal(after[2:],before[2:])
+    expected=0.5*(
+        a/after[0]+b/after[1]
+    )
+    assert torch.allclose(result["loss"],expected,atol=1e-7,rtol=1e-7)
+    result["loss"].backward()
+    assert a.grad is not None and b.grad is not None

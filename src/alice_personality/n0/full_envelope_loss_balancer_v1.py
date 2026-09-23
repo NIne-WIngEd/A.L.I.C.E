@@ -66,6 +66,8 @@ class MacroFamilyLossBalancer(nn.Module):
     def observe_detached_family_means(
         self,
         family_means: Mapping[str, Tensor],
+        *,
+        active_families: tuple[str, ...] | None = None,
     ) -> None:
         """Update EMA scales once from an effective-batch detached observation.
 
@@ -75,11 +77,25 @@ class MacroFamilyLossBalancer(nn.Module):
         raw family means over the effective batch, then call this method once
         after the optimizer step boundary is fixed.
         """
-        if set(family_means) != set(self.family_names):
+        active=(
+            tuple(self.family_names)
+            if active_families is None
+            else tuple(str(x) for x in active_families)
+        )
+        if not active or len(active)!=len(set(active)):
+            raise ValueError("active family set must be non-empty and unique")
+        unknown=set(active)-set(self.family_names)
+        if unknown:
             raise ValueError(
-                "EMA observation families must exactly match precommitted names"
+                "unknown active EMA families: "+repr(sorted(unknown))
             )
-        for index, name in enumerate(self.family_names):
+        if set(family_means) != set(active):
+            raise ValueError(
+                "EMA observation families must exactly match active families"
+            )
+        index_by_name={name:i for i,name in enumerate(self.family_names)}
+        for name in active:
+            index=index_by_name[name]
             value = family_means[name]
             if value.ndim != 0:
                 raise ValueError(
@@ -107,14 +123,27 @@ class MacroFamilyLossBalancer(nn.Module):
         losses: Mapping[str, Mapping[str, Tensor]],
         *,
         update_ema: bool,
+        active_families: tuple[str, ...] | None = None,
     ) -> dict[str, Tensor]:
-        if set(losses) != set(self.family_names):
+        active=(
+            tuple(self.family_names)
+            if active_families is None
+            else tuple(str(x) for x in active_families)
+        )
+        if not active or len(active)!=len(set(active)):
+            raise ValueError("active family set must be non-empty and unique")
+        unknown=set(active)-set(self.family_names)
+        if unknown:
             raise ValueError(
-                "loss families must exactly match precommitted family names"
+                "unknown active loss families: "+repr(sorted(unknown))
+            )
+        if set(losses) != set(active):
+            raise ValueError(
+                "loss families must exactly match active stage families"
             )
 
         raw_family: dict[str, Tensor] = {}
-        for name in self.family_names:
+        for name in active:
             objectives = losses[name]
             if not objectives:
                 raise ValueError(f"family {name!r} has no objectives")
@@ -136,10 +165,15 @@ class MacroFamilyLossBalancer(nn.Module):
         # False for every microbatch and call observe_detached_family_means()
         # once with sample-weighted effective-batch raw family means.
         if update_ema:
-            self.observe_detached_family_means(raw_family)
+            self.observe_detached_family_means(
+                raw_family,
+                active_families=active,
+            )
 
         normalized_family: dict[str, Tensor] = {}
-        for index, name in enumerate(self.family_names):
+        index_by_name={name:i for i,name in enumerate(self.family_names)}
+        for name in active:
+            index=index_by_name[name]
             family_raw = raw_family[name]
             scale = self._ema_scale[index].clamp_min(
                 self.config.minimum_scale
@@ -151,9 +185,13 @@ class MacroFamilyLossBalancer(nn.Module):
                 family_raw.dtype
             )
 
+        active_weight_total=sum(self.family_weights[name] for name in active)
+        if active_weight_total <= 0.0:
+            raise RuntimeError("active family governance weight sum must be positive")
         total = None
-        for name in self.family_names:
-            term = normalized_family[name] * self.family_weights[name]
+        for name in active:
+            normalized_weight=self.family_weights[name]/active_weight_total
+            term = normalized_family[name] * normalized_weight
             total = term if total is None else total + term
 
         assert total is not None
@@ -161,7 +199,12 @@ class MacroFamilyLossBalancer(nn.Module):
             "loss": total,
             "ema_scale": self._ema_scale.detach().clone(),
         }
-        for name in self.family_names:
+        result["active_family_count"] = torch.tensor(
+            len(active),
+            device=total.device,
+            dtype=total.dtype,
+        )
+        for name in active:
             result[f"raw/{name}"] = raw_family[name]
             result[f"normalized/{name}"] = normalized_family[name]
         return result
@@ -178,4 +221,7 @@ class MacroFamilyLossBalancer(nn.Module):
             "effective_batch_ema_observation_supported": True,
             "microbatch_partition_invariant_with_frozen_ema": True,
             "ema_update_once_per_effective_batch_required": True,
+            "stage_active_family_subset_supported": True,
+            "inactive_family_ema_unchanged": True,
+            "active_family_weights_renormalized": True,
         }
