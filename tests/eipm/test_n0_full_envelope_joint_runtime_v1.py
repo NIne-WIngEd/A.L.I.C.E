@@ -1434,6 +1434,28 @@ def test_semantic_plurality_row_compiles_into_optimizer_facing_multi_positive_ta
         )
         from test_n0_semantic_operator_foundation_v1 import _OffsetTokenizer
 
+        class _PluralityTokenizer(_OffsetTokenizer):
+            def __call__(
+                self,
+                texts,
+                *,
+                padding=True,
+                truncation=False,
+                return_tensors="pt",
+                return_offsets_mapping=False,
+                return_special_tokens_mask=False,
+                max_length=None,
+            ):
+                return super().__call__(
+                    texts,
+                    padding=padding,
+                    truncation=truncation,
+                    return_tensors=return_tensors,
+                    return_offsets_mapping=True,
+                    return_special_tokens_mask=True,
+                    max_length=max_length,
+                )
+
         row=module.make_row(
             split="train",
             relation=module.TRAIN_RELATIONS[0],
@@ -1444,7 +1466,7 @@ def test_semantic_plurality_row_compiles_into_optimizer_facing_multi_positive_ta
         )
         compiled=compile_semantic_operator_batch(
             rows=[row],
-            tokenizer=_OffsetTokenizer(),
+            tokenizer=_PluralityTokenizer(),
         )
         targets=compiled["operator_targets"]
         plural=targets["relation_plurality_mask"]
