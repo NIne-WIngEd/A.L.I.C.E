@@ -1559,6 +1559,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_stage_transition_restarts_optimizer_scheduler_without_losing_selected_model_state",
       "requirement": "J1->J2 and J2->J3 must load the exact first-DEV-selected predecessor model plus preserved objective-balancer state, while restarting AdamW and the stage-local warmup/cosine scheduler. A predecessor scheduler that may already be deeply decayed or at zero learning rate may not silently govern newly activated stage owners."
+    },
+    {
+      "id": "N0-P43S",
+      "stage": "stage_transition",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_stage_transition_checkpoint_receipt_preserves_dev_selection_authority_lineage",
+      "requirement": "Every J2/J3 checkpoint, including same-stage descendants, must retain the exact predecessor checkpoint, DEV evaluation, and first-pass selection receipt hashes that authorized entry into the stage. Successful transition authority may not disappear from descendant checkpoint provenance."
     }
   ],
   "closure_rule": {
