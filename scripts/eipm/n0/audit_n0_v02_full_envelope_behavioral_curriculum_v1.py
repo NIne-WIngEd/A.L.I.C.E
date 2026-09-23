@@ -443,11 +443,15 @@ def main() -> None:
         )
 
     required=set(contract["scenario_families"])
+    dev_only=set(contract.get("dev_only_scenario_families") or [])
     train_scenarios={str(x.get("scenario_family","")) for x in train}
     dev_scenarios={str(x.get("scenario_family","")) for x in dev}
     missing_train=sorted(required-train_scenarios)
-    missing_dev=sorted(required-dev_scenarios)
-    unexpected=sorted((train_scenarios | dev_scenarios)-required)
+    missing_dev=sorted((required|dev_only)-dev_scenarios)
+    unexpected=sorted((train_scenarios | dev_scenarios)-(required|dev_only))
+    leaked_dev_only=sorted(train_scenarios & dev_only)
+    if leaked_dev_only:
+        errors.append("DEV-only scenario leaked into TRAIN: "+repr(leaked_dev_only))
     if missing_train:
         errors.append("TRAIN missing scenario families: "+repr(missing_train))
     if missing_dev:
@@ -488,6 +492,62 @@ def main() -> None:
             errors.append(
                 "DEV reasoning depth must exceed every TRAIN operating point"
             )
+    train_factor_max=max(
+        max(len(bank) for bank in row["factor_schemas"].values())
+        for row in train
+    )
+    dev_factor_max=max(
+        max(len(bank) for bank in row["factor_schemas"].values())
+        for row in dev
+    )
+    if split_contract.get("dev_factor_cardinality_extrapolation_required") is True:
+        if dev_factor_max<=train_factor_max:
+            errors.append("DEV factor cardinality must exceed every TRAIN operating point")
+
+    train_type_surfaces={
+        tuple(str(x["text"]) for x in row["type_schema"]) for row in train
+    }
+    dev_type_surfaces={
+        tuple(str(x["text"]) for x in row["type_schema"]) for row in dev
+    }
+    if split_contract.get("dev_type_schema_surface_holdout_required") is True:
+        if train_type_surfaces & dev_type_surfaces:
+            errors.append("DEV runtime type-schema surface overlaps TRAIN")
+
+    train_domains={str(row.get("domain_family","")) for row in train}
+    dev_domains={str(row.get("domain_family","")) for row in dev}
+    if split_contract.get("dev_domain_transfer_required") is True:
+        if train_domains & dev_domains:
+            errors.append("DEV domain-family operating point overlaps TRAIN")
+
+    dev_combo=[
+        row for row in dev
+        if row.get("scenario_family")=="heldout_reliability_temporal_combo"
+    ]
+    if split_contract.get("dev_nonfinal_factor_combination_transfer_required") is True:
+        if not dev_combo:
+            errors.append("DEV non-FINAL factor-combination transfer row missing")
+        for row in dev_combo:
+            factors=row["factor_target_keys"]
+            if not (
+                factors["reliability"]=="MOD_RELIABILITY_ON"
+                and factors["temporal"]=="MOD_TEMPORAL_ON"
+                and factors["recency"]=="MOD_RECENCY_OFF"
+                and factors["provenance"]=="MOD_PROVENANCE_OFF"
+            ):
+                errors.append("DEV factor-combination transfer semantics drift")
+
+    if split_contract.get(
+        "sealed_final_recency_provenance_combination_must_remain_absent_from_train_dev"
+    ) is True:
+        leaked=[
+            row.get("id")
+            for row in rows
+            if row["factor_target_keys"]["recency"]=="MOD_RECENCY_ON"
+            and row["factor_target_keys"]["provenance"]=="MOD_PROVENANCE_ON"
+        ]
+        if leaked:
+            errors.append("sealed FINAL recency+provenance combination leaked into TRAIN/DEV")
     if split_contract.get("dev_extrapolation_is_operating_point_not_capability_ceiling") is not True:
         errors.append("DEV extrapolation operating points may not become capability ceilings")
 
@@ -654,6 +714,13 @@ def main() -> None:
         "dev_reasoning_step_points":dev_step_points,
         "train_answer_count_points":train_answer_points,
         "dev_answer_count_points":dev_answer_points,
+        "train_factor_cardinality_max":train_factor_max,
+        "dev_factor_cardinality_max":dev_factor_max,
+        "train_type_schema_surface_count":len(train_type_surfaces),
+        "dev_type_schema_surface_count":len(dev_type_surfaces),
+        "train_domain_families":sorted(train_domains),
+        "dev_domain_families":sorted(dev_domains),
+        "dev_nonfinal_factor_combination_rows":len(dev_combo),
         "public_target_position_histogram":dict(sorted(answer_hist.items())),
         "relation_target_position_histogram":dict(sorted(relation_target_positions.items())),
         "same_relation_irrelevant_hard_negative_rows":same_relation_irrelevant_hard_negative_rows,
