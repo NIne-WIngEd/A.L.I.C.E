@@ -55,7 +55,9 @@
     "stage_transition_requires_predecessor_dev_receipt": true,
     "first_passing_dev_checkpoint_required": true,
     "dev_selector": "scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py",
-    "every_chain_member_through_selected_candidate_requires_dev_evaluation": true
+    "every_chain_member_through_selected_candidate_requires_dev_evaluation": true,
+    "stage_transition_model_weights": "selected_predecessor_checkpoint",
+    "stage_transition_objective_balancer_state": "preserve"
   },
   "optimizer_contract": {
     "name": "AdamW",
@@ -66,14 +68,17 @@
     "norm_and_bias_weight_decay": 0,
     "gradient_clip_norm": 1,
     "macro_family_ema_updated_once_per_effective_batch": true,
-    "family_ema_reduced_across_all_distributed_ranks": true
+    "family_ema_reduced_across_all_distributed_ranks": true,
+    "stage_transition_optimizer_state": "restart"
   },
   "scheduler_contract": {
     "family": "linear_warmup_cosine_decay",
     "horizon_is_runtime_operating_point_not_stage_completion": true,
     "fixed_total_steps_as_capability_definition": false,
     "stage_completion_requires_dev_gate_not_step_budget": true,
-    "max_optimizer_steps_is_invocation_operating_point_not_stage_completion": true
+    "max_optimizer_steps_is_invocation_operating_point_not_stage_completion": true,
+    "stage_transition_scheduler_state": "restart_with_stage_local_warmup",
+    "same_stage_resume_scheduler_state": "preserve_exactly"
   },
   "authority": {
     "private_identity_data": false,
