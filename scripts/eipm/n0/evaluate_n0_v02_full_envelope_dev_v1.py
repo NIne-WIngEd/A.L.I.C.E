@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Mapping
@@ -1074,6 +1075,18 @@ def main() -> None:
         raise SystemExit("DEV contract unexpectedly allows FINAL results")
 
     candidate=read_json(args.candidate_receipt)
+    tracked_status=subprocess.check_output(
+        ["git","status","--porcelain","--untracked-files=no"],text=True
+    )
+    if tracked_status.strip():
+        raise SystemExit("DEV evaluator requires a clean tracked-source worktree")
+    current_revision=subprocess.check_output(
+        ["git","rev-parse","HEAD"],text=True
+    ).strip()
+    if candidate.get("source_revision")!=current_revision:
+        raise SystemExit(
+            "DEV evaluator source revision does not match candidate"
+        )
     if candidate.get("stage")!=args.stage:
         raise SystemExit("candidate checkpoint stage drift")
     if candidate.get("final_results_observed") is not False:
