@@ -249,8 +249,8 @@ def materialize(
     target_words: int,
     placement_variant: str = "tail",
 ) -> dict[str,Any]:
-    if split not in {"train","dev"}:
-        raise ValueError("long-context supplement is TRAIN/DEV only")
+    if split not in {"train","dev","final"}:
+        raise ValueError("long-context split must be train/dev/final")
     example=int(SURFACE_EXAMPLE[surface])
     if surface in {"additional_view_descriptor","additional_view_source"}:
         candidates=[
@@ -272,9 +272,9 @@ def materialize(
             "split":split,
             "example":example,
             "seed":BASE_SEED,
-            "relation_count":4,
-            "field_count":6,
-            "answer_count":4,
+            "relation_count":9 if split=="final" else 4,
+            "field_count":18 if split=="final" else 6,
+            "answer_count":7 if split=="final" else 4,
         }
         row=base.materialize_row(**params)
         base_materialization={
@@ -323,7 +323,11 @@ def materialize(
         list(row["entities"]),
     )
     row["causal_group"]=f"{split}:long-context:{surface}:{placement_variant}:{example:04d}"
-    row["data_origin"]="deterministic_public_full_envelope_long_context_supplement_v1"
+    row["data_origin"]=(
+        "deterministic_public_full_envelope_long_context_final_v2"
+        if split=="final"
+        else "deterministic_public_full_envelope_long_context_supplement_v1"
+    )
     row["long_context_surface"]=surface
     row["long_context_locator"]=locator
     row["long_context_placement_variant"]=placement_variant

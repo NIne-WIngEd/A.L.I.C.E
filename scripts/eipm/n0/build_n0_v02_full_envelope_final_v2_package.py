@@ -11,6 +11,8 @@ from typing import Any
 
 import build_n0_v02_full_envelope_behavioral_curriculum_v1 as behavioral
 import build_n0_v02_semantic_operator_intervention_curriculum_v1 as semantic
+import build_n0_v02_full_envelope_runtime_view_curriculum_v1 as runtime_views
+import build_n0_v02_full_envelope_long_context_curriculum_v1 as long_context
 
 PASS_STATUS="MATERIALIZED_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_NO_RESULTS"
 
@@ -57,6 +59,8 @@ def main() -> None:
     p.add_argument("--final-contract",required=True)
     p.add_argument("--synthetic-output",required=True)
     p.add_argument("--semantic-final-output",required=True)
+    p.add_argument("--runtime-view-final-output",required=True)
+    p.add_argument("--long-context-final-output",required=True)
     p.add_argument("--manifest-output",required=True)
     p.add_argument("--examples-per-mode",type=int,default=2)
     p.add_argument("--semantic-examples-per-relation",type=int,default=12)
@@ -72,8 +76,10 @@ def main() -> None:
     final_contract_path=Path(args.final_contract)
     synthetic_path=Path(args.synthetic_output)
     semantic_path=Path(args.semantic_final_output)
+    runtime_view_path=Path(args.runtime_view_final_output)
+    long_context_path=Path(args.long_context_final_output)
     manifest_path=Path(args.manifest_output)
-    if synthetic_path.exists() or semantic_path.exists() or manifest_path.exists():
+    if any(path.exists() for path in (synthetic_path,semantic_path,runtime_view_path,long_context_path,manifest_path)):
         raise SystemExit("refusing to overwrite final-v2 package artifacts")
 
     train_dev_rows=read_jsonl(behavioral_rows_path)
@@ -162,6 +168,30 @@ def main() -> None:
         encoding="utf-8",
     )
 
+
+    runtime_view_rows=runtime_views.materialize_rows("final")
+    runtime_view_path.parent.mkdir(parents=True,exist_ok=True)
+    runtime_view_path.write_text(
+        "".join(json.dumps(row,sort_keys=True)+"\n" for row in runtime_view_rows),
+        encoding="utf-8",
+    )
+
+    long_context_rows=[
+        long_context.materialize(
+            split="final",
+            surface=surface,
+            target_words=4608,
+            placement_variant=variant,
+        )
+        for surface in long_context.SURFACES
+        for variant in ("tail","boundary_early","boundary_late")
+    ]
+    long_context_path.parent.mkdir(parents=True,exist_ok=True)
+    long_context_path.write_text(
+        "".join(json.dumps(row,sort_keys=True)+"\n" for row in long_context_rows),
+        encoding="utf-8",
+    )
+
     synthetic_path.parent.mkdir(parents=True,exist_ok=True)
     synthetic_path.write_text(
         "".join(json.dumps(row,sort_keys=True)+"\n" for row in rows),
@@ -178,6 +208,8 @@ def main() -> None:
         "behavioral_train_dev_reference_sha256":sha256(behavioral_rows_path),
         "synthetic_final_rows_sha256":sha256(synthetic_path),
         "semantic_final_rows_sha256":sha256(semantic_path),
+        "runtime_view_final_rows_sha256":sha256(runtime_view_path),
+        "long_context_final_rows_sha256":sha256(long_context_path),
         "fewrel_final_rows_sha256":sha256(fewrel_rows_path),
         "fewrel_final_bank_sha256":sha256(fewrel_bank_path),
         "fewrel_manifest_sha256":sha256(fewrel_manifest_path),
@@ -187,6 +219,11 @@ def main() -> None:
         "semantic_final_relation_families":sorted({str(x["relation_family"]) for x in semantic_rows}),
         "semantic_final_interventions":sorted({str(x["intervention"]) for x in semantic_rows}),
         "semantic_final_plurality_rows":sum(1 for x in semantic_rows if x.get("plurality_supervision_required")),
+        "runtime_view_final_rows":len(runtime_view_rows),
+        "runtime_view_final_scenarios":sorted({str(x["scenario_family"]) for x in runtime_view_rows}),
+        "long_context_final_rows":len(long_context_rows),
+        "long_context_final_surfaces":sorted({str(x["long_context_surface"]) for x in long_context_rows}),
+        "long_context_final_placements":sorted({str(x["long_context_placement_variant"]) for x in long_context_rows}),
         "natural_final_rows":int(fewrel_manifest.get("final_rows",0)),
         "scenario_histogram":dict(sorted(Counter(str(x["scenario_family"]) for x in rows).items())),
         "relation_count_points":sorted({int(x["runtime_relation_count"]) for x in rows}),

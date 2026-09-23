@@ -49,6 +49,33 @@
       "mixed_step_direction_required": true,
       "mixed_step_modifier_required": true,
       "unknown_defer_required": true
+    },
+    "heterogeneous_runtime_views": {
+      "row_schema": "alice.eipm.n0.full-envelope-runtime-view-row.v1",
+      "role": "sealed runtime-described heterogeneous-view relevance and reliability challenge",
+      "fixed_view_taxonomy": false,
+      "relevance_not_availability_required": true,
+      "reliability_reversal_required": true,
+      "unavailable_view_required": true
+    },
+    "long_context": {
+      "row_schema": "alice.eipm.n0.full-envelope-long-context-row.v1",
+      "role": "sealed cross-native-window semantic/judgment challenge across every governed text surface",
+      "required_surfaces": [
+        "query",
+        "relation_schema",
+        "factor_schema",
+        "type_schema",
+        "field_text",
+        "field_descriptor",
+        "candidate_text",
+        "internal_view_descriptor",
+        "additional_view_descriptor",
+        "additional_view_source"
+      ],
+      "boundary_shift_pairs_required": true,
+      "distant_decisive_semantics_required": true,
+      "product_context_ceiling": null
     }
   },
   "independence": {

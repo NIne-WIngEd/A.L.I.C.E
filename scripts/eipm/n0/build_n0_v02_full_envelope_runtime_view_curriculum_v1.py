@@ -48,18 +48,27 @@ def _query(split: str) -> str:
             "about this query. If two relevant views conflict, use their declared "
             "reliability as evidence quality."
         )
+    if split=="dev":
+        return (
+            "Choose among the same candidate conclusions using the supplied runtime "
+            "evidence streams. Separate query-relevant streams from merely available "
+            "ones, then use stated reliability only among streams that actually bear "
+            "on the question."
+        )
     return (
-        "Choose among the same candidate conclusions using the supplied runtime "
-        "evidence streams. Separate query-relevant streams from merely available "
-        "ones, then use stated reliability only among streams that actually bear "
-        "on the question."
+        "For this sealed public evaluation case, compare the runtime-described "
+        "evidence channels by whether they actually answer the question. Treat "
+        "availability as access only, and use reliability to arbitrate only among "
+        "channels that are genuinely relevant."
     )
 
 
 def _descriptor(split: str) -> str:
     if split=="train":
         return "runtime-described public evidence stream with no fixed learned view identity"
-    return "public runtime evidence channel described at inference time without a learned channel ID"
+    if split=="dev":
+        return "public runtime evidence channel described at inference time without a learned channel ID"
+    return "sealed evaluation evidence channel whose semantics are supplied at runtime rather than by a learned channel identity"
 
 
 def _relevant_text(split: str, candidate: str, label: str) -> str:
@@ -68,9 +77,14 @@ def _relevant_text(split: str, candidate: str, label: str) -> str:
             f"Current independently checked evidence for this exact query {label} "
             f"supports the following candidate conclusion: {candidate}"
         )
+    if split=="dev":
+        return (
+            f"A current independently validated source bearing directly on the question {label} "
+            f"backs this candidate conclusion: {candidate}"
+        )
     return (
-        f"A current independently validated source bearing directly on the question {label} "
-        f"backs this candidate conclusion: {candidate}"
+        f"Sealed held-out evidence that directly addresses the present question {label} "
+        f"supports this candidate conclusion: {candidate}"
     )
 
 
@@ -81,10 +95,16 @@ def _irrelevant_text(split: str, candidate: str) -> str:
             f"schedule. It incidentally repeats words from this candidate but does "
             f"not bear on the current query: {candidate}"
         )
+    if split=="dev":
+        return (
+            "A trustworthy public background bulletin addresses a separate operational "
+            f"topic. It happens to mention wording from this candidate but is not "
+            f"evidence for the present question: {candidate}"
+        )
     return (
-        "A trustworthy public background bulletin addresses a separate operational "
-        f"topic. It happens to mention wording from this candidate but is not "
-        f"evidence for the present question: {candidate}"
+        "A sealed evaluation bulletin is highly reliable but concerns a separate "
+        f"public process. It echoes wording from this candidate while remaining "
+        f"irrelevant to the evaluated question: {candidate}"
     )
 
 
@@ -93,6 +113,8 @@ def _unavailable_text(split: str, candidate: str) -> str:
         "Unavailable archived evidence would have supported"
         if split=="train"
         else "An unavailable historical channel would have favored"
+        if split=="dev"
+        else "A sealed but unavailable evaluation channel would have favored"
     )
     return f"{prefix} this candidate: {candidate}"
 
@@ -122,18 +144,22 @@ def _decorate(
     row["runtime_additional_view_count"]=len(views)
     row["decisive_view_active"]=any(bool(x.get("decisive")) for x in views)
     row["irrelevant_view_active"]=any(bool(x.get("irrelevant")) for x in views)
-    row["data_origin"]="deterministic_public_full_envelope_runtime_view_supplement_v1"
+    row["data_origin"]=(
+        "deterministic_public_full_envelope_runtime_view_final_v2"
+        if split=="final"
+        else "deterministic_public_full_envelope_runtime_view_supplement_v1"
+    )
     row["generated_text"]=True
     row["private_identity_data"]=False
     row["training_authorized"]=split=="train"
     row["model_selection_authorized"]=split=="dev"
-    row["final_validation_only"]=False
+    row["final_validation_only"]=split=="final"
     return row
 
 
 def materialize_rows(split: str) -> list[dict[str,Any]]:
-    if split not in {"train","dev"}:
-        raise ValueError("runtime-view supplement is TRAIN/DEV only")
+    if split not in {"train","dev","final"}:
+        raise ValueError("runtime-view split must be train/dev/final")
     seed=_base(split)
     candidates=list(seed["candidate_answers"])
     if len(candidates)<2:
