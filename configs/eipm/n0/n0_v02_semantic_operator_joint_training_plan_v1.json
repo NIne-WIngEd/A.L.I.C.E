@@ -152,7 +152,22 @@
         ],
         "permanently_frozen": [],
         "downstream_modules_updated": false,
-        "architecture_reduced": false
+        "architecture_reduced": false,
+        "active_macro_families": [
+          "broad_semantic_replay",
+          "governed_judgment_replay",
+          "relation_program_semantics",
+          "dynamic_factor_semantics",
+          "uncertainty_and_control",
+          "token_evidence_grounding",
+          "natural_relation_semantics"
+        ],
+        "inactive_macro_families": [
+          "structural_support_and_roles",
+          "multi_view_causal_preservation",
+          "latent_judgment_and_noncollapse"
+        ],
+        "stage_freeze_role": "Only stage-owned modules update. Full successor topology remains instantiated; inactive downstream loss families are not evaluated through random frozen modules."
       },
       {
         "name": "J2_reopened_representation_interfaces",
@@ -163,10 +178,27 @@
           "structured_successor_interface",
           "evidence_successor_interface",
           "dynamic_relation_graph_semantic_interface",
-          "long_context_segment_bridge"
+          "long_context_segment_bridge",
+          "production_executor_successor",
+          "binder_successor"
         ],
         "permanently_frozen": [],
-        "architecture_reduced": false
+        "architecture_reduced": false,
+        "active_macro_families": [
+          "broad_semantic_replay",
+          "governed_judgment_replay",
+          "relation_program_semantics",
+          "dynamic_factor_semantics",
+          "uncertainty_and_control",
+          "token_evidence_grounding",
+          "natural_relation_semantics",
+          "structural_support_and_roles"
+        ],
+        "inactive_macro_families": [
+          "multi_view_causal_preservation",
+          "latent_judgment_and_noncollapse"
+        ],
+        "stage_freeze_role": "Binder and Executor co-adapt with structured/evidence/graph interfaces so structural-support and endpoint-role losses never optimize through a random frozen arbiter. Fusion, latent, and public-judgment modules remain instantiated but inactive until J3."
       },
       {
         "name": "J3_full_public_n0_coadaptation",
@@ -185,10 +217,24 @@
           "long_context_segment_bridge"
         ],
         "permanently_frozen": [],
-        "architecture_reduced": false
+        "architecture_reduced": false,
+        "active_macro_families": [
+          "broad_semantic_replay",
+          "governed_judgment_replay",
+          "relation_program_semantics",
+          "dynamic_factor_semantics",
+          "uncertainty_and_control",
+          "token_evidence_grounding",
+          "structural_support_and_roles",
+          "multi_view_causal_preservation",
+          "latent_judgment_and_noncollapse",
+          "natural_relation_semantics"
+        ],
+        "inactive_macro_families": [],
+        "stage_freeze_role": "All public N0 successor capability families are active and all reopened public successor modules co-adapt end-to-end."
       }
     ],
-    "temporary_freeze_allowed_only_for_causal_debug": true,
+    "temporary_freeze_allowed_only_for_causal_debug": false,
     "full_stack_cogradient_required_before_final_selection": true,
     "optimizer_name": "AdamW",
     "optimizer_parameter_groups": {
@@ -220,6 +266,23 @@
       "sample_weighted_effective_batch_observation_required": true,
       "microbatch_partition_may_not_change_family_scales_within_optimizer_step": true,
       "test_or_final_results_may_not_update_scales": true
+    },
+    "stage_family_policy": {
+      "family_activation_is_precommitted_before_results": true,
+      "inactive_family_loss_computed": false,
+      "inactive_modules_removed_from_topology": false,
+      "inactive_modules_receive_optimizer_updates": false,
+      "newly_activated_family_owners_train_together": true,
+      "stage_freeze_is_planned_optimization_not_architecture_reduction": true,
+      "ad_hoc_freeze_outside_stage_policy_allowed_only_for_causal_debug": true,
+      "all_ten_families_required_in_J3_before_final_selection": true,
+      "reason": "Avoid meaningless gradients through randomly initialized frozen downstream arbiters while preserving one full instantiated topology and progressively activating causally complete owner modules."
+    },
+    "freeze_policy": {
+      "planned_stage_inactivity_allowed": true,
+      "ad_hoc_freeze_allowed_only_for_causal_debug": true,
+      "permanent_parent_freeze_forbidden": true,
+      "full_topology_instantiated_every_stage": true
     }
   },
   "loss_balancing": {
@@ -283,7 +346,43 @@
     },
     "component_double_counting_forbidden": true,
     "equal_family_weights_before_results": true,
-    "integrated_objective": "src/alice_personality/n0/full_envelope_training_objective_v1.py"
+    "integrated_objective": "src/alice_personality/n0/full_envelope_training_objective_v1.py",
+    "stage_activation": {
+      "J1_joint_semantic_operator": [
+        "broad_semantic_replay",
+        "governed_judgment_replay",
+        "relation_program_semantics",
+        "dynamic_factor_semantics",
+        "uncertainty_and_control",
+        "token_evidence_grounding",
+        "natural_relation_semantics"
+      ],
+      "J2_reopened_representation_interfaces": [
+        "broad_semantic_replay",
+        "governed_judgment_replay",
+        "relation_program_semantics",
+        "dynamic_factor_semantics",
+        "uncertainty_and_control",
+        "token_evidence_grounding",
+        "natural_relation_semantics",
+        "structural_support_and_roles"
+      ],
+      "J3_full_public_n0_coadaptation": [
+        "broad_semantic_replay",
+        "governed_judgment_replay",
+        "relation_program_semantics",
+        "dynamic_factor_semantics",
+        "uncertainty_and_control",
+        "token_evidence_grounding",
+        "structural_support_and_roles",
+        "multi_view_causal_preservation",
+        "latent_judgment_and_noncollapse",
+        "natural_relation_semantics"
+      ]
+    },
+    "inactive_family_behavior": "not computed and not included in normalization/EMA at that stage",
+    "family_weight_normalization": "equal over active stage families only; fixed before results",
+    "ema_state_for_inactive_families": "unchanged until family becomes active"
   },
   "stage_gates": {
     "J1": [
@@ -316,9 +415,7 @@
       "unsupported_relation_mass_cannot_activate_graph_views",
       "long_field_and_descriptor_semantics",
       "prebinder_graph_type_invalid_edges_inert",
-      "binder_null_support_blocks_graph_views_from_fusion",
-      "long_internal_and_additional_view_descriptor_semantics",
-      "long_additional_runtime_view_source_and_descriptor_semantics"
+      "binder_null_support_blocks_graph_views_from_fusion"
     ],
     "J3": [
       "J1_and_J2_gates_retained",
@@ -336,7 +433,9 @@
       "fusion_route_gradient_reaches_final_judgment",
       "irrelevant_available_view_not_forced_recoverable",
       "ordered_relation_semantics_remain_step_conditioned_through_executor",
-      "long_candidate_judgment_semantics"
+      "long_candidate_judgment_semantics",
+      "long_internal_and_additional_view_descriptor_semantics",
+      "long_additional_runtime_view_source_and_descriptor_semantics"
     ]
   },
   "scaling": {
