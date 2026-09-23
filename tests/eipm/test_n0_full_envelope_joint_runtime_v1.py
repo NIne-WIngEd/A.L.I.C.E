@@ -1920,3 +1920,28 @@ def test_stage_training_can_resume_same_stage_without_treating_step_budget_as_co
         "optimization_strategy"
     ]["stop_rule"]
 
+
+
+def test_dev_checkpoint_selection_enforces_first_passing_chain_member() -> None:
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    assert plan["optimization_strategy"]["checkpoint_selection"].startswith(
+        "first checkpoint satisfying"
+    )
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "stage_checkpoint_parent_receipt_sha256" in trainer
+    assert 'parser.add_argument("--predecessor-selection-receipt")' in trainer
+    selector=ROOT/"scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py"
+    assert selector.is_file()
+    source=selector.read_text()
+    assert "SELECTED_FIRST_PASSING_N0_DEV_CHECKPOINT" in source
+    assert "stage_checkpoint_parent_receipt_sha256" in source
+    assert "candidate_checkpoint_receipt_sha256" in source
+    assert "first_passing_checkpoint" in source
+    assert "missing DEV receipt for checkpoint chain member" in source
+    assert "earlier passing checkpoint exists" in source
+    final_open=(ROOT/"scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py").read_text()
+    assert 'p.add_argument("--selection-receipt",required=True)' in final_open
+    assert "FINAL opening selection receipt drift" in final_open
+
