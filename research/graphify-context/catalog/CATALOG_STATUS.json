@@ -11,9 +11,9 @@
   "unmerged_experiment_frontier_present": true,
   "unmerged_experiment_maximal_head_count": 3,
   "continuity_stale_relative_to_experiment_frontier": true,
-  "document_pointer_count": 5174,
-  "failure_lesson_pointer_count": 3754,
-  "frontier_research_pointer_count": 1904,
+  "document_pointer_count": 5176,
+  "failure_lesson_pointer_count": 3756,
+  "frontier_research_pointer_count": 1905,
   "supersession_pointer_count": 1509,
   "authority": "routing-only",
   "notes": [

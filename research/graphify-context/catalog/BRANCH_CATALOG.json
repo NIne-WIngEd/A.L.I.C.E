@@ -137,14 +137,14 @@
     },
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "77cdac65d68634d3aae58e499179d85eba11ec62",
-      "head_committed_at": "2026-09-22T23:27:12-05:00",
-      "head_message": "fix(n0): read effective-batch family means from balancer",
+      "head": "cff2bbdd898bde5fc26f6895d02f19cf1423612d",
+      "head_committed_at": "2026-09-23T00:19:29-05:00",
+      "head_message": "fix(n0): add real DEV geometry extrapolation",
       "status": "ahead",
-      "ahead": 1171,
+      "ahead": 1178,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 511,
+      "changed_file_count_vs_source_merge_base": 514,
       "knowledge_surface": true
     },
     {
@@ -677,14 +677,14 @@
     },
     {
       "branch": "research/frontier-watch",
-      "head": "54dbc38cbba98ff4282d990d42fae50767133b9c",
-      "head_committed_at": "2026-09-20T08:13:48-05:00",
-      "head_message": "research: add retrieval-driven reconsolidation frontier delta",
+      "head": "22e4aba5e245341091f493a2a32f47af62da25ea",
+      "head_committed_at": "2026-09-23T00:19:03-05:00",
+      "head_message": "research: record SHAPER skill-harness evolution delta",
       "status": "ahead",
-      "ahead": 2,
+      "ahead": 3,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 1,
+      "changed_file_count_vs_source_merge_base": 2,
       "knowledge_surface": true
     },
     {

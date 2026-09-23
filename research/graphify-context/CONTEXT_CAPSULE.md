@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-dev-gate-metric-coverage-audit-20260922-055
-- Question: Deep-audit the exact successor N0 branch alice-eipm-v1-n0-full-envelope-foundation-build-v1 at its latest head after the staged trainer/DEV evaluator implementation. Stay aligned with N0's full-envelope identity-neutral semantic/judgment objective. Trace n0_v02_semantic_operator_joint_training_plan_v1.json stage_gates J1/J2/J3, n0_v02_full_envelope_final_validation_contract_v2.json frozen thresholds, the successor TRAIN/DEV row schemas/builders, N0FullEnvelopeTrainableSystemV1 outputs, semantic_operator_batch_v1, full_envelope_behavioral_batch_v1, natural_relation_batch_v1, and evaluate_n0_v02_full_envelope_dev_v1.py. Determine exactly which named stage gates can be measured causally from existing DEV rows/outputs without inventing labels, which require new DEV counterfactual rows or metric functions, and whether any current gate is only a textual name with no measurable successor path. Distinguish architecture correctness from empirical checkpoint-selection criteria. Reuse historical metric mechanics only as non-authoritative implementation references; do not import historical model/semantic authority. Do not use FINAL rows/results, private identity data, or authorize Magnolia/GPU/gradient/optimizer/N0 completion. Original exact branch source is authority; Graphify navigation only.
+- Request: n0-j2-j3-dev-gate-complete-metric-audit-20260923-056
+- Question: Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@cff2bbdd898bde5fc26f6895d02f19cf1423612d for J2/J3 DEV gate completeness before any gradient, aligned with the full-envelope identity-neutral N0 objective and no post-result gate invention. Trace n0_v02_semantic_operator_joint_training_plan_v1.json stage_gates J2/J3, n0_v02_full_envelope_dev_gate_registry_v1.json, evaluate_n0_v02_full_envelope_dev_v1.py, full_envelope_dev_metrics_v1.py, full_envelope_behavioral_batch_v1.py, behavioral/runtime-view/long-context DEV curricula, FullEnvelopeJointTrainingObjectiveV1 and exact static proof obligations. For every named J2 and J3 gate, identify whether it should be: (1) empirical DEV metric with exact computable definition and precommitted threshold, (2) composite DEV metric, or (3) exact-source static proof. Flag any gate that current DEV data cannot measure, any gate whose current evaluator only reports losses instead of capability metrics, and any gate that risks using TRAIN/FINAL or a proxy that does not causally match the gate. In particular cover runtime type descriptor transfer, endpoint causality, field permutation, exact-zero support, unsupported graph-view blocking, long field/descriptor semantics, full-stack support, fusion decisive/irrelevant causality, latent noncollapse, missing-view safety, candidate-cardinality and composition extrapolation, public judgment, zero-support execution confidence, long virtualized query, per-example subsets, distant decisive evidence, fusion-route gradient-to-judgment, ordered step-conditioned executor semantics, long candidate judgment, long internal/additional descriptor semantics, and long additional-view source/descriptor semantics. Do not authorize Magnolia/GPU/gradient/optimizer/FINAL/N0 completion. Original exact branch source is authority; Graphify is navigation only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -46,51 +46,49 @@ The old stable-build latent-stage pointer is historical routing context, not the
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ 77cdac65d68634d3aae58e499179d85eba11ec62 — fix(n0): read effective-batch family means from balancer
+- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ cff2bbdd898bde5fc26f6895d02f19cf1423612d — fix(n0): add real DEV geometry extrapolation
 - alice-eipm-v1-qsre-production-p2-ordered-evidence-v3 @ 342bdbbe8c5dfbe74ff3ab8210a30b1a456aa482 — state(n0): ratify P2 v3 static pass and authorize CPU qualification
 - alice-eipm-v1-qsre-production-p2-failure-localization @ c9b1d35823cb89245625bbc6afb05b0ef5fb69fb — fix(n0): emit strict JSON from P2 localization
 
 ## Source pointers
 
-- [139] alice-context:docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md — N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff
+- [233] alice-context:docs/chat-context/2026-09-22/sol/N0_FULL_ENVELOPE_DEEP_STATIC_AUDIT_AND_PERSONAL_DEVELOPMENT_HANDOFF.md — N0 Full-Envelope Deep Static Audit + Personal-Development Architecture Handoff
   - status:  active continuity authority for the current Sol handoff
-- [113] alice-eipm-v1-n0-full-envelope-foundation-build-v1:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [113] alice-eipm-v1-n0-full-envelope-foundation-build-v1:configs/eipm/n0/n0_v02_successor_authority_firewall_v1.json — n0_v02_successor_authority_firewall_v1.json
-- [113] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [113] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-production-core-v1-preflight.yml — Final-only artifacts may be built/cached/frozen before gradient,
-- [110] alice-eipm-v1-n0-full-envelope-foundation-build-v1:.github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml — Only the gate is deliberately zero-initialized.  Do not create a
-- [110] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml — Only the gate is deliberately zero-initialized.  Do not create a
-- [110] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml — Only the gate is deliberately zero-initialized.  Do not create a
-- [109] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-job-575966-frozen-semantic-authority-v3.md — N0 job 575966 — frozen semantic authority v3
-- [108] alice-eipm-v1-build:docs/MEMORY_SHADOW_MIGRATION_STAGE_D_IMPLEMENTATION.md — Memory Shadow Migration Stage D Implementation
-  - status:  deterministic historical-backfill prototype operational; Stage F+G successor research admitted
-- [106] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-full-envelope-retrospective-audit-v1.md — N0 Full-Envelope Retrospective Architecture Audit v1
-  - status:  retrospective architecture authority; no gradient/GPU authorization
-- [105] alice-eipm-v1-n0-full-envelope-foundation-build-v1:configs/eipm/n0/n0_v02_qsre_n0_frozen_authority_training_plan_v2.json — n0_v02_qsre_n0_frozen_authority_training_plan_v2.json
+- [223] alice-context:docs/chat-context/2026-09-15/sol/N0_V02_CONTINUATION_RECOVERY_AND_DEV_GATE.md — N0 v0.2 Continuation Recovery and Teacher-Dev Gate
+- [223] alice-eipm-v1-n0-full-envelope-foundation-build-v1:configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json — n0_v02_full_envelope_dev_gate_registry_v1.json
+- [200] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260915_N0_V02_DEV_GATE_HARDENING.jsonl — FBM_TRACE_20260915_N0_V02_DEV_GATE_HARDENING.jsonl
+- [185] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260918_N0_EXACT_CALIBRATION_ONE_RUN_GATE.jsonl — FBM_TRACE_20260918_N0_EXACT_CALIBRATION_ONE_RUN_GATE.jsonl
+- [182] alice-eipm-v1-n0-full-envelope-foundation-build-v1:.github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml — Only the gate is deliberately zero-initialized.  Do not create a
+- [182] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml — Only the gate is deliberately zero-initialized.  Do not create a
+- [182] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml — Only the gate is deliberately zero-initialized.  Do not create a
+- [177] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl — FBM_TRACE_20260916_SOURCE_ANCHORED_FUSION_CONFIRMATORY_GATE.jsonl
+- [168] alice-eipm-v1-build:docs/PHASE_1_NLI_CLAIM_SUPPORT_GATE.md — P1.11 NLI Claim-Support Gate
+- [166] alice-context:docs/chat-context/2026-09-15/sol/N0_V02_HELDOUT_PASS_AND_NOVEL_CHALLENGE_GATE.md — N0 v0.2 held-out teacher-dev pass and novel challenge gate
+- [163] alice-context:docs/chat-context/2026-09-16/sol/EIPM_CAPABILITY_LIMIT_AUDIT_AND_FULL_SCALE_FUSION_GATE.md — EIPM Capability-Limit Audit + Full-Scale Fusion Gate — 2026-09-16
 
 ## Graphify navigation hints
 
-- test_successor_trainer_reuses_registered_stage_and_joint_step_without_historical_model_authority() -> tests/eipm/test_n0_full_envelope_joint_runtime_v1.py:L710
-- test_successor_trainer_dev_evaluator_and_checkpoint_contract_exist_before_gradient() -> tests/eipm/test_n0_full_envelope_joint_runtime_v1.py:L663
-- N0FullEnvelopeTrainableSystemV1 -> src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py:L58
-- run_final_frozen_challenge_after_graph_arbitration_v0_1.py -> scripts/eipm/n0/run_final_frozen_challenge_after_graph_arbitration_v0_1.py:L1
+- FullEnvelopeJointTrainingObjectiveV1 -> src/alice_personality/n0/full_envelope_training_objective_v1.py:L479
+- audit_n0_v02_full_envelope_proof_obligations_v1.py -> scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py:L1
+- audit_n0_v02_semantic_operator_long_context_curriculum_v1.py -> scripts/eipm/n0/audit_n0_v02_semantic_operator_long_context_curriculum_v1.py:L1
+- train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py -> scripts/eipm/n0/train_n0_v02_relation_conditioned_multilayer_interface_v0_1.py:L1
 - AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
+- eval_n0_v02_final_self_validation_v3.py -> scripts/eipm/n0/eval_n0_v02_final_self_validation_v3.py:L1
+- additionalProperties -> policies/friday_release_attestation_schema.json:L122
 - consensus_all_aligned() -> scripts/eipm/n0/build_n0_v02_cross_context_fusion_frozen_challenge_v0_3.py:L327
-- .architecture_reduced() -> src/alice_personality/n0/full_envelope_stage_policy_v1.py:L90
 - audit() -> scripts/audit_capability_barriers.py:L521
-- authoritative_retrieval_digest() -> src/alice_memory/lexical_index.py:L118
 - authority() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L87
 - authorize_boolean_map() -> src/alice_capability_profiles.py:L88
 - batch_indices() -> scripts/eipm/n0/qsre_production_training_utils.py:L150
+- test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
 - BehavioralBatchCompileConfig -> src/alice_personality/n0/full_envelope_behavioral_batch_v1.py:L30
+- presidio_blocking_entities() -> src/alice_vault/privacy_scan.py:L196
 - branch_forward() -> scripts/eipm/n0/train_n0_v02_structured_state_pilot.py:L287
-- _build() -> tests/phase4/test_information_grounding.py:L154
-- test_executor_role_source_target_causally_switches_endpoint_readout() -> tests/eipm/test_n0_full_envelope_successor_mechanics_v1.py:L1101
 
 ## External/private routing
 
 - Recommended: True
-- Reason: question references a private/external source class
+- Reason: host-specific operational history may contain newer failure lessons than public receipts
 
 ## Trust contract
 
