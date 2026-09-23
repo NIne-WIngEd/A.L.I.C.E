@@ -1414,6 +1414,7 @@ def test_plurality_dev_metric_rewards_valid_set_mass_without_hard_top1() -> None
 
 
 def test_semantic_plurality_row_compiles_into_optimizer_facing_multi_positive_targets() -> None:
+    import torch
     import importlib.util
     import random
     import sys
