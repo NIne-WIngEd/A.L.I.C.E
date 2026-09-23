@@ -8,6 +8,10 @@ from torch import Tensor, nn
 from alice_personality.n0.natural_relation_batch_v1 import (
     natural_relation_semantic_loss,
 )
+from alice_personality.n0.full_envelope_stage_policy_v1 import (
+    ALL_FAMILIES,
+    resolve_stage_policy,
+)
 from alice_personality.n0.ranker import listwise_preference_loss
 from alice_personality.n0.v02_objectives import (
     multi_positive_contrastive_loss,
@@ -141,9 +145,10 @@ def execute_full_envelope_joint_step(
     mlm_batch: Mapping[str,Any],
     teacher_batch: Mapping[str,Any],
     semantic_operator_compiled: Mapping[str,Any],
-    full_fabric_compiled: Mapping[str,Any],
+    full_fabric_compiled: Mapping[str,Any] | None,
     natural_relation_compiled: Mapping[str,Any],
     update_ema: bool = False,
+    stage: str | None = None,
 ) -> dict[str,Any]:
     """Execute one differentiable all-lane public N0 successor step.
 
@@ -168,22 +173,58 @@ def execute_full_envelope_joint_step(
         batch=semantic_batch,
     )
 
-    primary=system(
-        task="full_envelope",
-        batch=full_fabric_compiled["primary_batch"],
+    policy=(
+        None
+        if stage is None
+        else resolve_stage_policy(stage)
     )
-    decisive=system(
-        task="full_envelope",
-        batch=full_fabric_compiled["decisive_ablated_batch"],
+    active_families=(
+        tuple(ALL_FAMILIES)
+        if policy is None
+        else tuple(policy.active_macro_families)
     )
-    irrelevant=system(
-        task="full_envelope",
-        batch=full_fabric_compiled["irrelevant_removed_batch"],
+    requires_full_fabric_primary=bool(
+        {
+            "structural_support_and_roles",
+            "multi_view_causal_preservation",
+            "latent_judgment_and_noncollapse",
+        }
+        & set(active_families)
     )
-    permuted=system(
-        task="full_envelope",
-        batch=full_fabric_compiled["permuted_batch"],
+    requires_full_fabric_counterfactuals=(
+        "multi_view_causal_preservation" in active_families
     )
+
+    primary: Mapping[str,Any]={}
+    decisive=None
+    irrelevant=None
+    permuted=None
+    behavioral_targets: Mapping[str,Any]={}
+    if requires_full_fabric_primary:
+        if full_fabric_compiled is None:
+            raise ValueError(
+                "active stage requires optimizer-facing full-fabric batch"
+            )
+        primary=system(
+            task="full_envelope",
+            batch=full_fabric_compiled["primary_batch"],
+        )
+        behavioral_targets=full_fabric_compiled[
+            "behavioral_targets"
+        ]
+        if requires_full_fabric_counterfactuals:
+            decisive=system(
+                task="full_envelope",
+                batch=full_fabric_compiled["decisive_ablated_batch"],
+            )
+            irrelevant=system(
+                task="full_envelope",
+                batch=full_fabric_compiled["irrelevant_removed_batch"],
+            )
+            permuted=system(
+                task="full_envelope",
+                batch=full_fabric_compiled["permuted_batch"],
+            )
 
     natural_outputs=system(
         task="natural_relation",
@@ -202,14 +243,13 @@ def execute_full_envelope_joint_step(
         irrelevant_removed_outputs=irrelevant,
         permuted_outputs=permuted,
         operator_targets=operator_targets,
-        behavioral_targets=full_fabric_compiled[
-            "behavioral_targets"
-        ],
+        behavioral_targets=behavioral_targets,
         broad_semantic_replay_loss=broad_loss,
         governed_judgment_replay_loss=teacher_loss,
         natural_relation_loss=natural_loss,
         semantic_operator_outputs=semantic_outputs,
         update_ema=bool(update_ema),
+        active_families=active_families,
     )
     return {
         **result,
@@ -219,7 +259,12 @@ def execute_full_envelope_joint_step(
             "natural_relation_semantics":natural_loss,
         },
         "governed_judgment_replay_components":teacher_components,
-        "all_public_training_lanes_executed":True,
+        "stage":None if policy is None else policy.name,
+        "active_families":active_families,
+        "requires_full_fabric_primary":requires_full_fabric_primary,
+        "requires_full_fabric_counterfactuals":requires_full_fabric_counterfactuals,
+        "all_active_stage_lanes_executed":True,
+        "all_public_training_lanes_executed":set(active_families)==set(ALL_FAMILIES),
         "placeholder_losses_used":False,
         "private_identity_data":False,
     }

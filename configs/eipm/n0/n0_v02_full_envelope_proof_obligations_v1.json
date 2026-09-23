@@ -1126,6 +1126,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_joint_step_stage_policy_prevents_inactive_downstream_loss_execution",
       "requirement": "The executable joint step, not only the plan, must honor J1/J2/J3 active-family policy. J1 may not execute full-fabric behavioral losses; J2 may execute only primary structural support/role supervision; decisive/irrelevant/permutation/public-judgment/latent causal paths activate together in J3."
+    },
+    {
+      "id": "N0-P39QB",
+      "stage": "joint_training_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_j1_joint_step_does_not_require_or_execute_full_fabric",
+      "requirement": "J1 executable runtime must complete its active replay/operator/natural-relation step without constructing or forwarding the downstream full-fabric lane. This prevents inactive random downstream arbiters from being mistaken for J1 supervision while keeping the full topology instantiated in the registered system."
     }
   ],
   "closure_rule": {

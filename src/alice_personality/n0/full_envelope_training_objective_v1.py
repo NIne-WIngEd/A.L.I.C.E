@@ -6,7 +6,14 @@ import torch
 from torch import Tensor, nn
 
 from alice_personality.n0.full_envelope_behavioral_objectives_v1 import (
-    full_envelope_behavioral_objective,
+    decisive_view_causal_margin_loss,
+    endpoint_role_loss,
+    irrelevant_view_invariance_loss,
+    latent_noncollapse_loss,
+    permutation_consistency_loss,
+    public_judgment_loss,
+    source_view_recoverability_loss,
+    support_selection_loss,
 )
 from alice_personality.n0.full_envelope_loss_balancer_v1 import (
     MacroFamilyLossBalancer,
@@ -234,79 +241,151 @@ def semantic_operator_supervision(
 def behavioral_supervision(
     *,
     primary_outputs: Mapping[str, Any],
-    decisive_ablated_outputs: Mapping[str, Any],
-    irrelevant_removed_outputs: Mapping[str, Any],
-    permuted_outputs: Mapping[str, Any],
+    decisive_ablated_outputs: Mapping[str, Any] | None,
+    irrelevant_removed_outputs: Mapping[str, Any] | None,
+    permuted_outputs: Mapping[str, Any] | None,
     targets: Mapping[str, Any],
+    active_families: tuple[str, ...] | None = None,
 ) -> dict[str, Tensor]:
-    primary_judgment = _require_public_judgment(
-        primary_outputs,
-        label="primary",
+    behavioral_families=(
+        "structural_support_and_roles",
+        "multi_view_causal_preservation",
+        "latent_judgment_and_noncollapse",
     )
-    decisive_judgment = _require_public_judgment(
-        decisive_ablated_outputs,
-        label="decisive_ablated",
+    active=(
+        set(behavioral_families)
+        if active_families is None
+        else set(map(str,active_families)) & set(behavioral_families)
     )
-    irrelevant_judgment = _require_public_judgment(
-        irrelevant_removed_outputs,
-        label="irrelevant_removed",
+    unknown=(
+        set()
+        if active_families is None
+        else set(map(str,active_families))-set(DEFAULT_FAMILY_WEIGHTS)
     )
+    if unknown:
+        raise ValueError(
+            "unknown active macro families: "+repr(sorted(unknown))
+        )
+    if not active:
+        return {}
 
-    binder = primary_outputs["binder"]
-    executor = primary_outputs["executor"]
-    latent = primary_outputs["latent"]
-    permuted_latent = permuted_outputs["latent"]
+    losses: dict[str, Tensor]={}
 
-    support_target = targets["support_target"]
-    support_valid_mask = targets["support_valid_mask"].bool()
-    if support_target.shape != binder["support_logits"].shape:
-        raise ValueError("support target geometry drift")
-    if support_valid_mask.shape != support_target.shape:
-        raise ValueError("support valid-mask geometry drift")
-    if bool(
-        (
-            support_target.bool()
-            & ~support_valid_mask
-        ).any()
+    if "structural_support_and_roles" in active:
+        binder=primary_outputs.get("binder")
+        executor=primary_outputs.get("executor")
+        if not isinstance(binder,Mapping) or not isinstance(executor,Mapping):
+            raise ValueError(
+                "structural supervision requires Binder and Executor outputs"
+            )
+        support_target=targets["support_target"]
+        support_valid_mask=targets["support_valid_mask"].bool()
+        if support_target.shape != binder["support_logits"].shape:
+            raise ValueError("support target geometry drift")
+        if support_valid_mask.shape != support_target.shape:
+            raise ValueError("support valid-mask geometry drift")
+        if bool((support_target.bool() & ~support_valid_mask).any()):
+            raise ValueError(
+                "positive support target lies outside support-valid mask"
+            )
+        losses["support_selection"]=support_selection_loss(
+            binder["support_logits"],
+            support_target,
+            support_valid_mask,
+            null_support_logit=binder["null_support_logit"],
+        )
+        losses["endpoint_roles"]=endpoint_role_loss(
+            executor["source_support_weight"],
+            executor["target_support_weight"],
+            targets["source_target_index"],
+            targets["target_target_index"],
+            targets["endpoint_active_mask"].bool(),
+        )
+
+    primary_judgment=None
+    if (
+        "multi_view_causal_preservation" in active
+        or "latent_judgment_and_noncollapse" in active
     ):
-        raise ValueError("positive support target lies outside support-valid mask")
+        primary_judgment=_require_public_judgment(
+            primary_outputs,
+            label="primary",
+        )
 
-    return full_envelope_behavioral_objective(
-        candidate_logits=primary_judgment["candidate_logits"],
-        target_index=targets["public_target_index"],
-        candidate_valid_mask=primary_judgment[
-            "candidate_valid_mask"
-        ],
-        support_logits=binder["support_logits"],
-        support_target=support_target,
-        support_valid_mask=support_valid_mask,
-        null_support_logit=binder["null_support_logit"],
-        source_weight=executor["source_support_weight"],
-        target_weight=executor["target_support_weight"],
-        source_target_index=targets["source_target_index"],
-        target_target_index=targets["target_target_index"],
-        endpoint_active_mask=targets["endpoint_active_mask"].bool(),
-        decisive_ablated_candidate_logits=decisive_judgment[
-            "candidate_logits"
-        ],
-        decisive_view_active_mask=targets[
-            "decisive_view_active_mask"
-        ].bool(),
-        irrelevant_removed_candidate_logits=irrelevant_judgment[
-            "candidate_logits"
-        ],
-        irrelevant_view_active_mask=targets[
-            "irrelevant_view_active_mask"
-        ].bool(),
-        latent_slots=latent["latent_slots"],
-        source_views=primary_outputs["source_views"],
-        view_available=primary_outputs["view_available"],
-        recoverable_view_mask=targets[
-            "recoverable_view_mask"
-        ].bool(),
-        pooled_state_permuted=permuted_latent["pooled_state"],
-        pooled_state_original=latent["pooled_state"],
-    )
+    if "latent_judgment_and_noncollapse" in active:
+        latent=primary_outputs.get("latent")
+        if not isinstance(latent,Mapping):
+            raise ValueError(
+                "latent/judgment supervision requires latent outputs"
+            )
+        assert primary_judgment is not None
+        losses["public_judgment"]=public_judgment_loss(
+            primary_judgment["candidate_logits"],
+            targets["public_target_index"],
+            candidate_valid_mask=primary_judgment[
+                "candidate_valid_mask"
+            ],
+        )
+        losses["latent_noncollapse"]=latent_noncollapse_loss(
+            latent["latent_slots"]
+        )
+
+    if "multi_view_causal_preservation" in active:
+        if (
+            decisive_ablated_outputs is None
+            or irrelevant_removed_outputs is None
+            or permuted_outputs is None
+        ):
+            raise ValueError(
+                "multi-view causal supervision requires decisive, irrelevant, "
+                "and permutation counterfactual outputs"
+            )
+        assert primary_judgment is not None
+        decisive_judgment=_require_public_judgment(
+            decisive_ablated_outputs,
+            label="decisive_ablated",
+        )
+        irrelevant_judgment=_require_public_judgment(
+            irrelevant_removed_outputs,
+            label="irrelevant_removed",
+        )
+        latent=primary_outputs.get("latent")
+        permuted_latent=permuted_outputs.get("latent")
+        if not isinstance(latent,Mapping) or not isinstance(
+            permuted_latent,Mapping
+        ):
+            raise ValueError(
+                "multi-view causal supervision requires latent outputs"
+            )
+        losses["decisive_view_causality"]=decisive_view_causal_margin_loss(
+            primary_judgment["candidate_logits"],
+            decisive_judgment["candidate_logits"],
+            targets["public_target_index"],
+            candidate_valid_mask=primary_judgment[
+                "candidate_valid_mask"
+            ],
+            active_mask=targets["decisive_view_active_mask"].bool(),
+        )
+        losses["irrelevant_view_invariance"]=irrelevant_view_invariance_loss(
+            primary_judgment["candidate_logits"],
+            irrelevant_judgment["candidate_logits"],
+            candidate_valid_mask=primary_judgment[
+                "candidate_valid_mask"
+            ],
+            active_mask=targets["irrelevant_view_active_mask"].bool(),
+        )
+        losses["source_view_recoverability"]=source_view_recoverability_loss(
+            latent["latent_slots"],
+            primary_outputs["source_views"],
+            primary_outputs["view_available"],
+            targets["recoverable_view_mask"].bool(),
+        )
+        losses["permutation_consistency"]=permutation_consistency_loss(
+            latent["pooled_state"],
+            permuted_latent["pooled_state"],
+        )
+
+    return losses
 
 
 def full_envelope_family_losses(
@@ -316,60 +395,85 @@ def full_envelope_family_losses(
     broad_semantic_replay_loss: Tensor,
     governed_judgment_replay_loss: Tensor,
     natural_relation_loss: Tensor,
+    active_families: tuple[str, ...] | None = None,
 ) -> dict[str, dict[str, Tensor]]:
-    return {
-        "broad_semantic_replay": {
-            "replay": broad_semantic_replay_loss,
-        },
-        "governed_judgment_replay": {
-            "replay": governed_judgment_replay_loss,
-        },
-        "relation_program_semantics": {
-            "relation_sequence": semantic_losses["relation_sequence"],
-            "causal_relation_margin": semantic_losses[
+    active=(
+        tuple(DEFAULT_FAMILY_WEIGHTS)
+        if active_families is None
+        else tuple(str(x) for x in active_families)
+    )
+    if not active or len(active)!=len(set(active)):
+        raise ValueError("active family set must be non-empty and unique")
+    unknown=set(active)-set(DEFAULT_FAMILY_WEIGHTS)
+    if unknown:
+        raise ValueError(
+            "unknown active macro families: "+repr(sorted(unknown))
+        )
+
+    families: dict[str, dict[str, Tensor]]={}
+    if "broad_semantic_replay" in active:
+        families["broad_semantic_replay"]={
+            "replay":broad_semantic_replay_loss,
+        }
+    if "governed_judgment_replay" in active:
+        families["governed_judgment_replay"]={
+            "replay":governed_judgment_replay_loss,
+        }
+    if "relation_program_semantics" in active:
+        families["relation_program_semantics"]={
+            "relation_sequence":semantic_losses["relation_sequence"],
+            "causal_relation_margin":semantic_losses[
                 "causal_relation_margin"
             ],
-        },
-        "dynamic_factor_semantics": {
-            "factor_semantics": semantic_losses["factor_semantics"],
-            "causal_factor_margin": semantic_losses[
+        }
+    if "dynamic_factor_semantics" in active:
+        families["dynamic_factor_semantics"]={
+            "factor_semantics":semantic_losses["factor_semantics"],
+            "causal_factor_margin":semantic_losses[
                 "causal_factor_margin"
             ],
-        },
-        "uncertainty_and_control": {
-            "event_control": semantic_losses["event_control"],
-            "applicability": semantic_losses["applicability"],
-            "uncertainty": semantic_losses["uncertainty"],
-        },
-        "token_evidence_grounding": {
-            "token_evidence": semantic_losses["token_evidence"],
-        },
-        "structural_support_and_roles": {
-            "support_selection": behavioral_losses["support_selection"],
-            "endpoint_roles": behavioral_losses["endpoint_roles"],
-        },
-        "multi_view_causal_preservation": {
-            "decisive_view_causality": behavioral_losses[
+        }
+    if "uncertainty_and_control" in active:
+        families["uncertainty_and_control"]={
+            "event_control":semantic_losses["event_control"],
+            "applicability":semantic_losses["applicability"],
+            "uncertainty":semantic_losses["uncertainty"],
+        }
+    if "token_evidence_grounding" in active:
+        families["token_evidence_grounding"]={
+            "token_evidence":semantic_losses["token_evidence"],
+        }
+    if "structural_support_and_roles" in active:
+        families["structural_support_and_roles"]={
+            "support_selection":behavioral_losses["support_selection"],
+            "endpoint_roles":behavioral_losses["endpoint_roles"],
+        }
+    if "multi_view_causal_preservation" in active:
+        families["multi_view_causal_preservation"]={
+            "decisive_view_causality":behavioral_losses[
                 "decisive_view_causality"
             ],
-            "irrelevant_view_invariance": behavioral_losses[
+            "irrelevant_view_invariance":behavioral_losses[
                 "irrelevant_view_invariance"
             ],
-            "source_view_recoverability": behavioral_losses[
+            "source_view_recoverability":behavioral_losses[
                 "source_view_recoverability"
             ],
-            "permutation_consistency": behavioral_losses[
+            "permutation_consistency":behavioral_losses[
                 "permutation_consistency"
             ],
-        },
-        "latent_judgment_and_noncollapse": {
-            "public_judgment": behavioral_losses["public_judgment"],
-            "latent_noncollapse": behavioral_losses["latent_noncollapse"],
-        },
-        "natural_relation_semantics": {
-            "natural_relation": natural_relation_loss,
-        },
-    }
+        }
+    if "latent_judgment_and_noncollapse" in active:
+        families["latent_judgment_and_noncollapse"]={
+            "public_judgment":behavioral_losses["public_judgment"],
+            "latent_noncollapse":behavioral_losses["latent_noncollapse"],
+        }
+    if "natural_relation_semantics" in active:
+        families["natural_relation_semantics"]={
+            "natural_relation":natural_relation_loss,
+        }
+    return families
+
 
 
 class FullEnvelopeJointTrainingObjectiveV1(nn.Module):
@@ -400,9 +504,9 @@ class FullEnvelopeJointTrainingObjectiveV1(nn.Module):
         self,
         *,
         primary_outputs: Mapping[str, Any],
-        decisive_ablated_outputs: Mapping[str, Any],
-        irrelevant_removed_outputs: Mapping[str, Any],
-        permuted_outputs: Mapping[str, Any],
+        decisive_ablated_outputs: Mapping[str, Any] | None,
+        irrelevant_removed_outputs: Mapping[str, Any] | None,
+        permuted_outputs: Mapping[str, Any] | None,
         operator_targets: Mapping[str, Any],
         behavioral_targets: Mapping[str, Any],
         broad_semantic_replay_loss: Tensor,
@@ -410,33 +514,59 @@ class FullEnvelopeJointTrainingObjectiveV1(nn.Module):
         natural_relation_loss: Tensor,
         update_ema: bool,
         semantic_operator_outputs: Mapping[str, Any] | None = None,
+        active_families: tuple[str, ...] | None = None,
     ) -> dict[str, Any]:
-        semantic_source = (
-            primary_outputs
-            if semantic_operator_outputs is None
-            else semantic_operator_outputs
+        active=(
+            tuple(DEFAULT_FAMILY_WEIGHTS)
+            if active_families is None
+            else tuple(str(x) for x in active_families)
         )
-        semantic_losses = semantic_operator_supervision(
-            outputs=semantic_source,
-            targets=operator_targets,
-        )
-        behavioral_losses = behavioral_supervision(
+        if not active or len(active)!=len(set(active)):
+            raise ValueError("active family set must be non-empty and unique")
+        unknown=set(active)-set(DEFAULT_FAMILY_WEIGHTS)
+        if unknown:
+            raise ValueError(
+                "unknown active macro families: "+repr(sorted(unknown))
+            )
+
+        semantic_family_names={
+            "relation_program_semantics",
+            "dynamic_factor_semantics",
+            "uncertainty_and_control",
+            "token_evidence_grounding",
+        }
+        semantic_losses={}
+        if set(active) & semantic_family_names:
+            semantic_source=(
+                primary_outputs
+                if semantic_operator_outputs is None
+                else semantic_operator_outputs
+            )
+            semantic_losses=semantic_operator_supervision(
+                outputs=semantic_source,
+                targets=operator_targets,
+            )
+
+        behavioral_losses=behavioral_supervision(
             primary_outputs=primary_outputs,
             decisive_ablated_outputs=decisive_ablated_outputs,
             irrelevant_removed_outputs=irrelevant_removed_outputs,
             permuted_outputs=permuted_outputs,
             targets=behavioral_targets,
+            active_families=active,
         )
-        families = full_envelope_family_losses(
+        families=full_envelope_family_losses(
             semantic_losses=semantic_losses,
             behavioral_losses=behavioral_losses,
             broad_semantic_replay_loss=broad_semantic_replay_loss,
             governed_judgment_replay_loss=governed_judgment_replay_loss,
             natural_relation_loss=natural_relation_loss,
+            active_families=active,
         )
-        balanced = self.balancer(
+        balanced=self.balancer(
             families,
             update_ema=update_ema,
+            active_families=active,
         )
         return {
             "loss": balanced["loss"],
@@ -448,7 +578,9 @@ class FullEnvelopeJointTrainingObjectiveV1(nn.Module):
                 else "dedicated_semantic_operator_lane"
             ),
             "behavioral": behavioral_losses,
-            "families": families,
+            "families":families,
+            "active_families":active,
+            "inactive_family_losses_computed":False,
         }
 
     def parameter_report(self) -> dict[str, Any]:

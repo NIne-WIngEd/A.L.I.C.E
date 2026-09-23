@@ -243,3 +243,83 @@ def test_joint_step_stage_policy_prevents_inactive_downstream_loss_execution() -
     assert "active_families=active" in objective.replace(" ","")
     assert "behavioral_supervision(" in objective
     assert "active_families=active" in objective.replace(" ","")
+
+
+def test_j1_joint_step_does_not_require_or_execute_full_fabric() -> None:
+    import torch
+    from torch import nn
+
+    from alice_personality.n0.full_envelope_joint_step_v1 import (
+        execute_full_envelope_joint_step,
+    )
+    from alice_personality.n0.full_envelope_stage_policy_v1 import J1
+
+    class _Objective(nn.Module):
+        def forward(self, **kwargs):
+            active=tuple(kwargs["active_families"])
+            assert "structural_support_and_roles" not in active
+            assert "multi_view_causal_preservation" not in active
+            assert "latent_judgment_and_noncollapse" not in active
+            assert kwargs["primary_outputs"] == {}
+            assert kwargs["decisive_ablated_outputs"] is None
+            assert kwargs["irrelevant_removed_outputs"] is None
+            assert kwargs["permuted_outputs"] is None
+            return {"loss":kwargs["broad_semantic_replay_loss"]}
+
+    class _System(nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.anchor=nn.Parameter(torch.tensor(1.0))
+            self.tasks=[]
+        def forward(self, *, task, batch):
+            self.tasks.append(task)
+            if task=="mlm":
+                return {"loss":self.anchor.square()}
+            if task=="teacher":
+                score=self.anchor.repeat(2)
+                semantic=self.anchor.repeat(2,3)
+                rationale=self.anchor.repeat(1,3)
+                return {
+                    "scores":score,
+                    "semantic":semantic,
+                    "rationale":rationale,
+                    "alignment_logits":self.anchor.repeat(2),
+                }
+            if task=="semantic_operator":
+                return {"semantic_operator":{},"operator":object()}
+            if task=="natural_relation":
+                logits=self.anchor.repeat(1,2)
+                return {
+                    "relation_logits":logits[:,None,:],
+                    "relation_step_mass":torch.ones(1,1),
+                    "relation_candidate_mask":torch.ones(1,2,dtype=torch.bool),
+                }
+            if task=="full_envelope":
+                raise AssertionError("J1 must not execute full-envelope fabric")
+            raise AssertionError(task)
+
+    system=_System()
+    teacher={
+        "group_sizes":[2],
+        "preferred_masks":[torch.tensor([True,False])],
+        "principle_tags":["p"],
+    }
+    semantic={"batch":{},"operator_targets":{}}
+    natural={
+        "batch":{},
+        "target_relation_index":torch.tensor([0]),
+    }
+    result=execute_full_envelope_joint_step(
+        system=system,
+        objective=_Objective(),
+        mlm_batch={},
+        teacher_batch=teacher,
+        semantic_operator_compiled=semantic,
+        full_fabric_compiled=None,
+        natural_relation_compiled=natural,
+        update_ema=False,
+        stage=J1,
+    )
+    assert "full_envelope" not in system.tasks
+    assert result["requires_full_fabric_primary"] is False
+    assert result["requires_full_fabric_counterfactuals"] is False
