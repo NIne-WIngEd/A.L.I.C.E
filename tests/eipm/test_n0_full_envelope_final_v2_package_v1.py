@@ -288,3 +288,35 @@ def test_final_v2_evaluator_verifies_every_frozen_package_input_hash() -> None:
         assert f'"{name}"' in source
     assert "frozen FINAL package artifact hash drift" in source
 
+
+
+def test_final_opening_is_bound_to_exact_dev_selected_j3_candidate() -> None:
+    authorizer=ROOT/"scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py"
+    assert authorizer.is_file(), "governed FINAL opening authorizer missing"
+    source=authorizer.read_text()
+    for required in (
+        "PASS_DEV_STAGE_GATE",
+        "candidate_checkpoint_receipt_sha256",
+        "candidate_system_sha256",
+        "checkpoint_selection_surface",
+        "DEV_ONLY",
+        "stage_gate_pass",
+        "stage_gate_coverage_complete",
+        "registry_matches_declared_stage_gates",
+        "dev_receipt_sha256",
+        "freeze_receipt_sha256",
+        "final_opening_authorized",
+        "automatic_checkpoint_selection",
+        "final_results_observed",
+    ):
+        assert required in source
+
+    evaluator=(
+        ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py"
+    ).read_text()
+    assert 'p.add_argument("--dev-selection-receipt",required=True)' in evaluator
+    assert "opening/DEV selection receipt drift" in evaluator
+    assert "opening/candidate checkpoint receipt drift" in evaluator
+    assert "DEV-selected candidate system drift" in evaluator
+    assert "FINAL opening DEV stage gate not passed" in evaluator
+
