@@ -934,7 +934,77 @@ def test_successor_dev_evaluator_executes_j1_gate_registry_and_fixed_regression_
         "PASS_DEV_STAGE_GATE",
     ):
         assert symbol in evaluator
-    assert 'parser.add_argument("--static-proof-receipt",required=True)' in evaluator
+    assert 'add_argument("--static-proof-receipt",required=True)' in evaluator
     assert "FINAL rows are forbidden in successor DEV evaluator" in evaluator
     assert "stage_gate_pass" in evaluator
     assert "stage_gate_pass=False" not in evaluator.replace(" ","")
+
+
+def test_behavioral_dev_geometry_extrapolates_beyond_train_without_becoming_ceiling() -> None:
+    import importlib.util
+    import sys
+
+    scripts=ROOT/"scripts/eipm/n0"
+    sys.path.insert(0,str(scripts))
+    try:
+        spec=importlib.util.spec_from_file_location(
+            "behavioral_builder_dev_geometry",
+            scripts/"build_n0_v02_full_envelope_behavioral_curriculum_v1.py",
+        )
+        assert spec is not None and spec.loader is not None
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        train=[
+            module.materialize_row(
+                split="train",
+                example=i,
+                seed=20260922,
+                relation_count=(1,2,4,6,8)[i % 5],
+                field_count=(4,6,8,12,16)[i % 5],
+                answer_count=(2,3,4,6)[i % 4],
+            )
+            for i in range(17)
+        ]
+        dev_answer_points=(3,4,5,7)
+        dev=[
+            module.materialize_row(
+                split="dev",
+                example=i,
+                seed=20260922,
+                relation_count=(1,2,4,6,8)[i % 5],
+                field_count=(4,6,8,12,16)[i % 5],
+                answer_count=dev_answer_points[i % len(dev_answer_points)],
+            )
+            for i in range(17)
+        ]
+        assert max(x["runtime_candidate_answer_count"] for x in dev) > max(
+            x["runtime_candidate_answer_count"] for x in train
+        )
+        assert max(x["runtime_reasoning_steps"] for x in dev) > max(
+            x["runtime_reasoning_steps"] for x in train
+        )
+
+        final=module.materialize_row(
+            split="final",
+            example=17,
+            seed=20260922,
+            relation_count=9,
+            field_count=18,
+            answer_count=8,
+        )
+        assert final["scenario_family"]=="long_causal_chain"
+        assert final["runtime_reasoning_steps"] > max(
+            x["runtime_reasoning_steps"] for x in dev
+        )
+        assert final["runtime_candidate_answer_count"] > max(
+            x["runtime_candidate_answer_count"] for x in dev
+        )
+
+        contract=json.loads(
+            (ROOT/"configs/eipm/n0/n0_v02_full_envelope_behavioral_curriculum_contract_v1.json").read_text()
+        )
+        assert contract["split_isolation"]["dev_extrapolation_is_operating_point_not_capability_ceiling"] is True
+    finally:
+        if sys.path and sys.path[0]==str(scripts):
+            sys.path.pop(0)

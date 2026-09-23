@@ -1286,6 +1286,13 @@
       "kind": "CI_REQUIRED",
       "receipt": "PASS_N0_FULL_ENVELOPE_BEHAVIORAL_FABRIC_STATIC_AUDIT",
       "requirement": "Before gradient, public behavioral DEV must contain candidate-answer cardinality and reasoning-depth operating points strictly beyond TRAIN, while FINAL remains separate. Candidate-cardinality and composition extrapolation cannot be named J3 stage gates if DEV only repeats TRAIN geometry."
+    },
+    {
+      "id": "N0-P39BY",
+      "stage": "behavioral_curriculum",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_behavioral_dev_geometry_extrapolates_beyond_train_without_becoming_ceiling",
+      "requirement": "Behavioral DEV must actually instantiate candidate-answer cardinality and reasoning-depth points beyond TRAIN while the sealed FINAL remains beyond DEV. These are evaluation operating points only; runtime candidate count and reasoning depth remain unbounded by learned identity tables or fixed serving ceilings."
     }
   ],
   "closure_rule": {

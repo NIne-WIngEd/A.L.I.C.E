@@ -272,7 +272,7 @@ def factor_counterfactuals(targets: dict[str,str]) -> dict[str,str | None]:
     return result
 
 
-def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
+def scenario(mode: int, entities: list[str], example: int, *, split: str) -> dict[str,Any]:
     pair_anchor=example-1 if mode==16 else example
     entity_example=pair_anchor if mode in {15,16} else example
     if mode in {15,16}:
@@ -650,7 +650,15 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         support_edges=[0,1]
     elif mode == 14:
         family="causal_chain"
-        chain_steps=3 if example % 2 == 0 else 4
+        # TRAIN covers ordinary 3/4-step composition. DEV deliberately
+        # adds one strictly deeper public operating point so checkpoint
+        # selection has real reasoning-depth extrapolation evidence. This is
+        # not a product ceiling; longer programs remain runtime-shaped.
+        chain_steps=(
+            5
+            if split=="dev"
+            else (3 if example % 2 == 0 else 4)
+        )
         names=[a,b,c,d]
         while len(names) < chain_steps + 1:
             names.append(entities[(example*13+len(names)*5) % len(entities)])
@@ -786,7 +794,10 @@ def scenario(mode: int, entities: list[str], example: int) -> dict[str,Any]:
         )
     elif mode == 17:
         family="long_causal_chain"
-        chain_steps=5
+        # FINAL stays beyond TRAIN/DEV geometry after DEV gains a deeper
+        # five-step operating point. Seven is a sealed evaluation operating
+        # point only, never a model or serving ceiling.
+        chain_steps=7
         names=[
             entities[(example*5+i*3) % len(entities)]
             for i in range(chain_steps+1)
@@ -1147,7 +1158,7 @@ def materialize_row(
         "final":FINAL_ENTITIES,
     }[split]
     mode=example % (19 if split=="final" else 17)
-    base=scenario(mode,entities,example)
+    base=scenario(mode,entities,example,split=split)
     if split=="dev":
         base["query"]=DEV_QUERY_PARAPHRASES[base["scenario_family"]]
     elif split=="final":
@@ -1379,9 +1390,15 @@ def main() -> None:
 
     relation_points=[1,2,4,6,8]
     field_points=[4,6,8,12,16]
-    answer_points=[2,3,4,6]
+    train_answer_points=[2,3,4,6]
+    # DEV must test unseen candidate geometry rather than only repeat TRAIN.
+    # Seven is a public evaluation operating point, not a candidate ceiling.
+    dev_answer_points=[3,4,5,7]
     rows=[]
     for split,count in (("train",args.train_rows),("dev",args.dev_rows)):
+        answer_points=(
+            train_answer_points if split=="train" else dev_answer_points
+        )
         for i in range(count):
             mode=i % 17
             axis_i=i-1 if mode==16 else i
