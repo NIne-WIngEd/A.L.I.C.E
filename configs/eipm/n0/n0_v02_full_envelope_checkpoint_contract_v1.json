@@ -47,7 +47,10 @@
     "no_historical_model_constructor_authority": true,
     "exact_head_static_proof_receipt_required": true,
     "runtime_training_authorization_receipt_required": true,
-    "source_mutation_to_enable_gradient_forbidden": true
+    "source_mutation_to_enable_gradient_forbidden": true,
+    "same_stage_resume_required": true,
+    "same_stage_resume_requires_dev_receipt": false,
+    "stage_transition_requires_predecessor_dev_receipt": true
   },
   "optimizer_contract": {
     "name": "AdamW",
@@ -64,7 +67,8 @@
     "family": "linear_warmup_cosine_decay",
     "horizon_is_runtime_operating_point_not_stage_completion": true,
     "fixed_total_steps_as_capability_definition": false,
-    "stage_completion_requires_dev_gate_not_step_budget": true
+    "stage_completion_requires_dev_gate_not_step_budget": true,
+    "max_optimizer_steps_is_invocation_operating_point_not_stage_completion": true
   },
   "authority": {
     "private_identity_data": false,
