@@ -225,3 +225,21 @@ def test_stage_policy_keeps_random_downstream_owners_inactive_until_their_losses
     assert any(p.requires_grad for p in system.stack.public_judgment_probe.parameters())
     assert any(p.requires_grad for p in system.stack.raw_semantic_layer_gate.parameters())
     assert any(p.requires_grad for p in system.semantic_input.summary_layer_gate.parameters())
+
+
+def test_joint_step_stage_policy_prevents_inactive_downstream_loss_execution() -> None:
+    source=(
+        ROOT/"src/alice_personality/n0/full_envelope_joint_step_v1.py"
+    ).read_text()
+    objective=(
+        ROOT/"src/alice_personality/n0/full_envelope_training_objective_v1.py"
+    ).read_text()
+    assert "stage:" in source
+    assert "resolve_stage_policy" in source
+    assert "active_families=policy.active_macro_families" in source.replace(" ","")
+    assert "requires_full_fabric_primary" in source
+    assert "requires_full_fabric_counterfactuals" in source
+    assert "active_families:" in objective
+    assert "active_families=active" in objective.replace(" ","")
+    assert "behavioral_supervision(" in objective
+    assert "active_families=active" in objective.replace(" ","")
