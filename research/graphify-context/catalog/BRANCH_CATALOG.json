@@ -137,14 +137,14 @@
     },
     {
       "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-      "head": "6735279271b8ae42be77c98062a5b65bb9663c5e",
-      "head_committed_at": "2026-09-22T19:32:55-05:00",
-      "head_message": "governance(n0): bind additional-view source text to shared semantics",
+      "head": "1bced8adac6e7740b7957ad0807d4ddd0ac4c5c2",
+      "head_committed_at": "2026-09-22T22:04:00-05:00",
+      "head_message": "build(n0): execute real all-lane joint step",
       "status": "ahead",
-      "ahead": 1115,
+      "ahead": 1131,
       "behind": 0,
       "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-      "changed_file_count_vs_source_merge_base": 489,
+      "changed_file_count_vs_source_merge_base": 497,
       "knowledge_surface": true
     },
     {

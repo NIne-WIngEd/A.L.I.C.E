@@ -85,13 +85,13 @@
     "maximal_heads": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "6735279271b8ae42be77c98062a5b65bb9663c5e",
-        "head_committed_at": "2026-09-22T19:32:55-05:00",
-        "head_message": "governance(n0): bind additional-view source text to shared semantics",
-        "ahead": 1115,
+        "head": "1bced8adac6e7740b7957ad0807d4ddd0ac4c5c2",
+        "head_committed_at": "2026-09-22T22:04:00-05:00",
+        "head_message": "build(n0): execute real all-lane joint step",
+        "ahead": 1131,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 489,
+        "changed_file_count_vs_source_merge_base": 497,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -213,6 +213,7 @@
           "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json",
+          "configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json",
           "configs/eipm/n0/n0_v02_natural_relation_sources_v1.json",
           "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
           "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v1.json",
@@ -291,8 +292,7 @@
           "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md",
           "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
           "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
-          "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
-          "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md"
+          "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md"
         ],
         "authority": "unmerged-experiment-pointer"
       },
@@ -726,13 +726,13 @@
     "all_ahead_candidates": [
       {
         "branch": "alice-eipm-v1-n0-full-envelope-foundation-build-v1",
-        "head": "6735279271b8ae42be77c98062a5b65bb9663c5e",
-        "head_committed_at": "2026-09-22T19:32:55-05:00",
-        "head_message": "governance(n0): bind additional-view source text to shared semantics",
-        "ahead": 1115,
+        "head": "1bced8adac6e7740b7957ad0807d4ddd0ac4c5c2",
+        "head_committed_at": "2026-09-22T22:04:00-05:00",
+        "head_message": "build(n0): execute real all-lane joint step",
+        "ahead": 1131,
         "behind": 0,
         "merge_base": "021c5021a98104b35f9c8e94b19e48d21f25f132",
-        "changed_file_count_vs_source_merge_base": 489,
+        "changed_file_count_vs_source_merge_base": 497,
         "changed_paths_vs_source_merge_base": [
           ".github/workflows/n0-arbitration-contract-check.yml",
           ".github/workflows/n0-competitive-edge-router-training-contract-check.yml",
@@ -854,6 +854,7 @@
           "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_runtime_view_curriculum_contract_v1.json",
           "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json",
+          "configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json",
           "configs/eipm/n0/n0_v02_natural_relation_sources_v1.json",
           "configs/eipm/n0/n0_v02_post_arbitration_decision_gate_v0_1.example.json",
           "configs/eipm/n0/n0_v02_qsre_closure_matcher_plan_v1.json",
@@ -932,8 +933,7 @@
           "docs/research/eipm-n0-qsre-tensor-mechanics-result-v0.1.md",
           "docs/research/eipm-n0-query-edge-routing-control-failure-localization-v0.1.md",
           "docs/research/eipm-n0-query-relation-role-router-external-research-v0.1.md",
-          "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md",
-          "docs/research/eipm-n0-query-semantics-layerwise-audit-v0.1.md"
+          "docs/research/eipm-n0-query-semantics-architecture-audit-v0.1.md"
         ],
         "authority": "unmerged-experiment-pointer"
       },
@@ -4808,7 +4808,7 @@
   },
   "continuity_freshness": {
     "stale_relative_to_unmerged_experiment_frontier": true,
-    "newest_experiment_frontier_time": "2026-09-22T19:32:55-05:00",
+    "newest_experiment_frontier_time": "2026-09-22T22:04:00-05:00",
     "active_handoff_last_changed_at": "2026-09-22T18:45:52-05:00",
     "context_branch_head_time": "2026-09-22T18:45:52-05:00"
   },

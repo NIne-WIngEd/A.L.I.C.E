@@ -1,7 +1,7 @@
 # A.L.I.C.E. Sol Context Capsule
 
-- Request: n0-long-runtime-view-training-coverage-audit-20260922-048
-- Question: Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@6735279271b8ae42be77c98062a5b65bb9663c5e for one specific pre-gradient question: the long-context TRAIN/DEV supplement covers query/relation/factor/type/field/descriptor/candidate/internal-view descriptor, and the heterogeneous runtime-view supplement covers additional view source+descriptor semantics but with short text. Does optimizer-facing TRAIN/DEV ever exercise additional runtime-view source text and additional runtime-view descriptor text beyond the native-window operating point through the registered shared semantic input? CPU qualification now does, but CPU smoke is not training coverage. Trace both builders, compiler, N0FullEnvelopeTrainableSystemV1, long-context contract, runtime-view contract and joint training plan. Classify A concrete curriculum gap before gradient, B only missing proof, C already covered. If A/B, propose the smallest identity-neutral, no-fixed-taxonomy repair that composes the existing long-context and runtime-view lanes rather than inventing a new architecture. No FINAL, private identity data, Magnolia/GPU/gradient/optimizer/N0 closure. Exact branch source is authority; Graphify navigation only.
+- Request: n0-j1-j2-j3-loss-activation-audit-20260922-050
+- Question: Audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@1bced8adac6e7740b7957ad0807d4ddd0ac4c5c2 only for staged optimization semantics. Trace n0_v02_semantic_operator_joint_training_plan_v1.json, FullEnvelopeJointTrainingObjectiveV1, N0FullEnvelopeTrainableSystemV1, and tests. Determine from source whether J1/J2 are intended to (a) compute all ten macro loss families while only updating stage-listed modules, (b) activate only stage-owned loss families, or (c) remain underspecified. Identify any contradiction between full_architecture_every_stage, downstream_modules_updated=false in J1, J2 trainable lists, equal macro-family weighting, and full_stack_cogradient_required_before_final_selection. Return source routes and classify a concrete pre-gradient implementation gap if stage loss activation is not specified. Do not propose pilot/reduced topology, private identity training, FINAL opening, GPU/gradient authorization, or result-driven weights. Original exact branch source is authority; Graphify navigation only.
 - Stable build: alice-eipm-v1-build @ 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Catalog source: 021c5021a98104b35f9c8e94b19e48d21f25f132
 - Graphify used: True
@@ -46,46 +46,45 @@ The old stable-build latent-stage pointer is historical routing context, not the
 
 ## Unmerged experiment frontier
 
-- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ 6735279271b8ae42be77c98062a5b65bb9663c5e — governance(n0): bind additional-view source text to shared semantics
+- alice-eipm-v1-n0-full-envelope-foundation-build-v1 @ 1bced8adac6e7740b7957ad0807d4ddd0ac4c5c2 — build(n0): execute real all-lane joint step
 - alice-eipm-v1-qsre-production-p2-ordered-evidence-v3 @ 342bdbbe8c5dfbe74ff3ab8210a30b1a456aa482 — state(n0): ratify P2 v3 static pass and authorize CPU qualification
 - alice-eipm-v1-qsre-production-p2-failure-localization @ c9b1d35823cb89245625bbc6afb05b0ef5fb69fb — fix(n0): emit strict JSON from P2 localization
 
 ## Source pointers
 
-- [140] alice-eipm-v1-n0-full-envelope-foundation-build-v1:configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json — n0_v02_full_envelope_long_context_curriculum_contract_v1.json
-- [138] alice-eipm-v1-n0-full-envelope-foundation-build-v1:docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md — N0 CPU/GPU Reality Gap and Data Validity Audit v0.1
-  - status:  architecture/data audit authority; all new gradient/GPU work frozen
-- [138] alice-eipm-v1-qsre-production-p2-failure-localization:docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md — N0 CPU/GPU Reality Gap and Data Validity Audit v0.1
-  - status:  architecture/data audit authority; all new gradient/GPU work frozen
-- [138] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:docs/research/eipm-n0-cpu-gpu-reality-gap-and-data-audit-v0.1.md — N0 CPU/GPU Reality Gap and Data Validity Audit v0.1
-  - status:  architecture/data audit authority; all new gradient/GPU work frozen
-- [130] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260922_N0_LONG_CONTEXT_TRAINING_COVERAGE.jsonl — FBM_TRACE_20260922_N0_LONG_CONTEXT_TRAINING_COVERAGE.jsonl
-- [127] alice-eipm-v1-n0-full-envelope-foundation-build-v1:configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json — n0_v02_semantic_operator_joint_training_plan_v1.json
-- [125] alice-eipm-v1-n0-full-envelope-foundation-build-v1:.github/workflows/n0-dual-view-specialist-training-contract-check.yml — n0-dual-view-specialist-training-contract-check.yml
-- [125] alice-eipm-v1-n0-full-envelope-foundation-build-v1:.github/workflows/n0-query-semantics-architecture-audit-contract-check.yml — n0-query-semantics-architecture-audit-contract-check.yml
-- [125] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-dual-view-specialist-training-contract-check.yml — n0-dual-view-specialist-training-contract-check.yml
-- [125] alice-eipm-v1-qsre-production-p2-failure-localization:.github/workflows/n0-query-semantics-architecture-audit-contract-check.yml — n0-query-semantics-architecture-audit-contract-check.yml
-- [125] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-dual-view-specialist-training-contract-check.yml — n0-dual-view-specialist-training-contract-check.yml
-- [125] alice-eipm-v1-qsre-production-p2-ordered-evidence-v3:.github/workflows/n0-query-semantics-architecture-audit-contract-check.yml — n0-query-semantics-architecture-audit-contract-check.yml
+- [99] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260916_FUSION_SOURCE_ANCHOR_REPAIR.jsonl — FBM_TRACE_20260916_FUSION_SOURCE_ANCHOR_REPAIR.jsonl
+- [93] alice-context:docs/chat-context/2026-09-18/sol/N0_MULTILAYER_PARENT_ONLY_CALIBRATION_READY.md — N0 Multi-Layer Interface — Parent-Only Calibration Ready
+- [92] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260914_N0_V02_SOURCE_SEMANTICS_AND_CONTRASTIVE.jsonl — FBM_TRACE_20260914_N0_V02_SOURCE_SEMANTICS_AND_CONTRASTIVE.jsonl
+- [91] alice-context:docs/chat-context/2026-09-13/sol/CURATED_FRONTIER_V2_PRIVATE_SOURCE_RECEIPT.md — Curated Frontier v2 — Private Source Receipt — 2026-09-13
+- [91] alice-context:docs/chat-context/2026-09-14/sol/N0_V02_PREFLIGHT_PASS_AND_SOURCE_ACTIVATION_NEXT.md — N0 v0.2 Preflight PASS and Source Activation Next
+- [91] alice-context:docs/chat-context/2026-09-16/sol/FUSION_FROZEN_CHALLENGE_FAILURE_AND_SOURCE_ANCHORED_REPAIR.md — Fusion frozen challenge failure + source-anchored repair — 2026-09-16
+  - status: `FAIL_NO_CHECKPOINT_ELIGIBLE_FOR_RATIFICATION`.
+- [89] alice-context:docs/chat-context/2026-09-06/astra/tools/qwen-v102-trace/package/ALICE_QWEN_READ_ONLY_TRACE_v1.0.0/README.md — Read-only investigation of the v102 stop
+- [88] alice-eipm-v1-build:docs/eipm/EIPM_CAPABILITY_LIMIT_AUDIT_2026-09-16.md — A.L.I.C.E. EIPM Capability-Limit Audit — 2026-09-16
+  - status:  owner-directed architecture audit / current interpretation authority
+- [88] fable-builder-model:docs/fable-builder/traces/FBM_TRACE_20260914_SOURCE_PROBE_TO_ACTIVATION.jsonl — FBM_TRACE_20260914_SOURCE_PROBE_TO_ACTIVATION.jsonl
+- [85] alice-eipm-v1-dual-view-late-interaction-binding:.github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml — Only the gate is deliberately zero-initialized.  Do not create a
+- [85] alice-eipm-v1-dual-view-specialist-failure-localization:.github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml — Only the gate is deliberately zero-initialized.  Do not create a
+- [85] alice-eipm-v1-n0-clean-sheet-relational-execution-review:.github/workflows/n0-query-edge-cross-attention-bridge-contract-check.yml — Only the gate is deliberately zero-initialized.  Do not create a
 
 ## Graphify navigation hints
 
-- test_long_context_train_dev_supplement_is_executable_and_covers_every_governed_text_surface() -> tests/eipm/test_n0_full_envelope_long_context_curriculum_v1.py:L10
-- test_cpu_runtime_qualifier_exercises_registered_additional_view_source_text_adapter() -> tests/eipm/test_n0_full_envelope_cpu_runtime_source_view_v1.py:L10
-- audit_n0_v02_full_envelope_long_context_curriculum_v1.py -> scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_curriculum_v1.py:L1
-- additionalProperties -> policies/friday_release_attestation_schema.json:L122
+- FullEnvelopeJointTrainingObjectiveV1 -> src/alice_personality/n0/full_envelope_training_objective_v1.py:L375
+- N0FullEnvelopeTrainableSystemV1 -> src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py:L58
+- test_joint_training_objective_wires_every_macro_family_without_learned_task_weights() -> tests/eipm/test_n0_full_envelope_trainable_system_v1.py:L515
+- Activate named capability profiles inside a mission. Profiles can be added… -> src/alice_evolution/capability_runtime.py:L78
+- RuntimeActivationError -> src/alice_evolution/capability_runtime.py:L22
 - AliceN0V02Model -> src/alice_personality/n0/v02_model.py:L13
-- MemoryAlreadyExistsError -> src/alice_memory/service.py:L58
 - test_memory_identity_host_learning_architecture.py -> tests/governance/test_memory_identity_host_learning_architecture.py:L1
 - audit() -> scripts/audit_capability_barriers.py:L521
 - authority() -> tests/eipm/test_n0_qsre_production_operator_v3.py:L87
+- authorization() -> tests/phase3/test_conversation_memory_grounding_bridge.py:L50
 - test_candidates_never_enter_derived_indexes_before_promotion() -> tests/phase2/test_memory_candidate_security_gates.py:L312
-- test_source_time_beyond_clock_skew_is_rejected() -> tests/phase4/test_information_freshness.py:L158
-- test_hybrid_conflict_expansion_surfaces_both_records() -> tests/phase2/test_memory_hybrid_retrieval.py:L314
+- test_reliability_prior_can_route_between_equivalent_views() -> tests/eipm/test_n0_cross_context_fusion.py:L79
 - branch_forward() -> scripts/eipm/n0/train_n0_v02_structured_state_pilot.py:L287
 - _build() -> tests/phase4/test_information_grounding.py:L154
-- candidate() -> tests/phase5/test_memory_m2_adjudication_contracts.py:L154
 - classify() -> scripts/audit_repository_phase_boundary.py:L120
+- compute() -> src/alice_vault/chunk_catalog.py:L80
 
 ## External/private routing
 
