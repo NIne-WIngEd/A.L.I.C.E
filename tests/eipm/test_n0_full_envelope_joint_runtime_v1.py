@@ -1867,3 +1867,32 @@ def test_gpu_memory_dry_run_binds_exact_optimizer_facing_mixture_lanes() -> None
     assert "GPU memory teacher audit hash drift" in source
     assert "GPU memory qualification source revision drift" in source
 
+
+
+def test_runtime_training_authorization_breaks_no_gradient_source_mutation_cycle() -> None:
+    plan=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
+    )
+    # Source authority remains false permanently. Runtime evidence opens the
+    # optimizer without a source edit that would invalidate exact-head receipts.
+    assert plan["authorization"]["optimizer"] is False
+    assert plan["authorization"]["gradient"] is False
+    assert plan["authorization"]["gpu_training"] is False
+    assert plan["authorization"]["runtime_training_authorization_receipt_required"] is True
+    authorizer=ROOT/"scripts/eipm/n0/authorize_n0_v02_full_envelope_training_v1.py"
+    assert authorizer.is_file()
+    source=authorizer.read_text()
+    assert "AUTHORIZED_N0_FULL_ENVELOPE_TRAINING_FROM_EXACT_RUNTIME_RECEIPTS" in source
+    assert "verify_pre_gradient_runtime" in source
+    assert "verify_optimizer_lane_bindings" in source
+    assert "verify_public_corpus_v021" in source
+    assert "verify_teacher_registry" in source
+    assert "training_authorizer_sha256" in source
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert 'parser.add_argument("--training-authorization")' in trainer
+    assert "runtime training authorization required for gradient" in trainer
+    assert "training authorization source revision drift" in trainer
+    assert "training authorization/mixture manifest hash drift" in trainer
+    assert "training authorization/GPU receipt hash drift" in trainer
+    assert "training authorization authorizer hash drift" in trainer
+
