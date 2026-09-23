@@ -1914,7 +1914,7 @@ def test_stage_training_can_resume_same_stage_without_treating_step_budget_as_co
     assert "same-stage resume must not supply predecessor DEV receipt" in trainer
     assert "same-stage resume checkpoint stage drift" in trainer
     assert "same-stage resume already reached requested optimizer-step operating point" in trainer
-    assert 'if resume_kind is not None:' in trainer
+    assert 'if all_resume:' in trainer
     assert 'resume_data_seed_offset=(start_optimizer_step-1 if resume_kind=="same_stage" else 0)' in trainer
     assert 'segment_seed=args.seed+resume_data_seed_offset*100003' in trainer
     plan=json.loads(
@@ -2013,7 +2013,10 @@ def test_stage_transition_checkpoint_receipt_preserves_dev_selection_authority_l
         "stage_transition_predecessor_selection_receipt_sha256",
     ):
         assert field in trainer
-    assert 'if resume_kind=="same_stage":\n        transition_predecessor_checkpoint_receipt_sha256=prior.get(' in trainer
+    assert 'if prior_stage==args.stage:' in trainer
+    assert 'transition_predecessor_checkpoint_receipt_sha256=prior.get(' in trainer
+    assert 'transition_predecessor_dev_receipt_sha256=prior.get(' in trainer
+    assert 'transition_predecessor_selection_receipt_sha256=prior.get(' in trainer
     checkpoint=json.loads(
         (ROOT/"configs/eipm/n0/n0_v02_full_envelope_checkpoint_contract_v1.json").read_text()
     )
