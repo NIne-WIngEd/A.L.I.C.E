@@ -105,6 +105,26 @@ def choose_semantic(rows: Sequence[Mapping[str,Any]]) -> dict[str,Any]:
     ))
 
 
+def choose_long_semantic(rows: Sequence[Mapping[str,Any]]) -> dict[str,Any]:
+    candidates=[
+        dict(row) for row in rows
+        if row.get("lane")=="semantic_operator_long_context"
+    ]
+    if not candidates:
+        raise ValueError("dedicated long semantic GPU dry-run row pool empty")
+    def score(row: Mapping[str,Any]) -> tuple[int,...]:
+        texts=[str(row.get("query",""))]
+        texts.extend(str(x.get("text","")) for x in row.get("relation_candidates") or [])
+        for bank in (row.get("factor_schemas") or {}).values():
+            texts.extend(str(x.get("text","")) for x in bank)
+        return (
+            max((len(text.split()) for text in texts),default=0),
+            int(row.get("runtime_relation_count",0)),
+            int(row.get("runtime_operator_slots",0)),
+        )
+    return dict(max(candidates,key=score))
+
+
 def choose_full_fabric(
     behavioral: Sequence[Mapping[str,Any]],
     runtime_views: Sequence[Mapping[str,Any]],
@@ -161,6 +181,7 @@ def main() -> None:
     p.add_argument("--teacher-registry",required=True)
     p.add_argument("--teacher-audit",required=True)
     p.add_argument("--semantic-rows",required=True)
+    p.add_argument("--semantic-long-rows",required=True)
     p.add_argument("--behavioral-rows",required=True)
     p.add_argument("--runtime-view-rows",required=True)
     p.add_argument("--long-context-rows",required=True)
@@ -206,6 +227,7 @@ def main() -> None:
     )
 
     semantic_rows=train_rows(args.semantic_rows)
+    semantic_long_rows=train_rows(args.semantic_long_rows)
     behavioral_rows=train_rows(args.behavioral_rows)
     runtime_rows=train_rows(args.runtime_view_rows)
     long_rows=train_rows(args.long_context_rows)
@@ -234,7 +256,7 @@ def main() -> None:
     teacher_dataset=CurriculumDataset(curriculum_paths,"train")
     teacher_loader=DataLoader(
         teacher_dataset,
-        batch_size=1,
+        batch_size=2,
         shuffle=False,
         collate_fn=TeacherMultitaskCollator(tokenizer,256),
         num_workers=0,
@@ -242,10 +264,16 @@ def main() -> None:
     mlm_batch=next(iter(mlm_loader))
     teacher_batch=next(iter(teacher_loader))
 
-    semantic_compiled=compile_semantic_operator_batch(
-        rows=[choose_semantic(semantic_rows)],
-        tokenizer=tokenizer,
-    )
+    semantic_compiled_cases={
+        "max_runtime_axes":compile_semantic_operator_batch(
+            rows=[choose_semantic(semantic_rows)],
+            tokenizer=tokenizer,
+        ),
+        "long_context_semantic":compile_semantic_operator_batch(
+            rows=[choose_long_semantic(semantic_long_rows)],
+            tokenizer=tokenizer,
+        ),
+    }
     full_compiled=compile_behavioral_batch(
         rows=[choose_full_fabric(
             behavioral_rows,
@@ -273,7 +301,10 @@ def main() -> None:
 
     mlm_batch=to_device(mlm_batch,device)
     teacher_batch=to_device(teacher_batch,device)
-    semantic_compiled=to_device(semantic_compiled,device)
+    semantic_compiled_cases={
+        name:to_device(compiled,device)
+        for name,compiled in semantic_compiled_cases.items()
+    }
     full_compiled=to_device(full_compiled,device)
     natural_compiled=to_device(natural_compiled,device)
 
@@ -282,30 +313,51 @@ def main() -> None:
     resident_before=int(torch.cuda.memory_allocated(device))
     reserved_before=int(torch.cuda.memory_reserved(device))
 
+    semantic_case_receipts={}
     with torch.inference_mode(), torch.autocast(
         device_type="cuda",
         dtype=torch.float16,
     ):
-        result=execute_full_envelope_joint_step(
-            system=system,
-            objective=objective,
-            mlm_batch=mlm_batch,
-            teacher_batch=teacher_batch,
-            semantic_operator_compiled=semantic_compiled,
-            full_fabric_compiled=full_compiled,
-            natural_relation_compiled=natural_compiled,
-            update_ema=False,
-            stage=J3,
-        )
-    loss=result["loss"]
-    if not isinstance(loss,torch.Tensor) or loss.ndim!=0 or not bool(torch.isfinite(loss)):
-        raise SystemExit("GPU no-gradient joint loss non-finite")
+        for case_name,semantic_compiled in semantic_compiled_cases.items():
+            result=execute_full_envelope_joint_step(
+                system=system,
+                objective=objective,
+                mlm_batch=mlm_batch,
+                teacher_batch=teacher_batch,
+                semantic_operator_compiled=semantic_compiled,
+                full_fabric_compiled=full_compiled,
+                natural_relation_compiled=natural_compiled,
+                update_ema=False,
+                stage=J3,
+            )
+            loss=result["loss"]
+            if (
+                not isinstance(loss,torch.Tensor)
+                or loss.ndim!=0
+                or not bool(torch.isfinite(loss))
+            ):
+                raise SystemExit(
+                    f"GPU no-gradient joint loss non-finite: {case_name}"
+                )
+            if result.get("all_public_training_lanes_executed") is not True:
+                raise SystemExit(
+                    f"J3 dry run did not execute every public lane: {case_name}"
+                )
+            if result.get("placeholder_losses_used") is not False:
+                raise SystemExit(
+                    f"J3 dry run used placeholder losses: {case_name}"
+                )
+            semantic_case_receipts[case_name]={
+                "finite_joint_loss":True,
+                "runtime_relation_count":int(
+                    semantic_compiled["metadata"]["runtime_relation_count"]
+                ),
+                "max_reasoning_steps":int(
+                    semantic_compiled["metadata"]["max_reasoning_steps"]
+                ),
+            }
     if any(p.grad is not None for p in system.parameters()):
         raise SystemExit("GPU dry run created gradients")
-    if result.get("all_public_training_lanes_executed") is not True:
-        raise SystemExit("J3 dry run did not execute every public lane")
-    if result.get("placeholder_losses_used") is not False:
-        raise SystemExit("J3 dry run used placeholder losses")
 
     peak_alloc=int(torch.cuda.max_memory_allocated(device))
     peak_reserved=int(torch.cuda.max_memory_reserved(device))
@@ -384,6 +436,7 @@ def main() -> None:
             "public_corpus_sources":len(corpus_receipt.get("sources") or []),
             "teacher_registered_rows":int(teacher_report["registered_rows"]),
             "real_optimizer_facing_public_lanes":True,
+            "semantic_case_receipts":semantic_case_receipts,
             "full_j3_counterfactual_path":True,
             "finite_joint_loss":True,
             "gradient":False,
