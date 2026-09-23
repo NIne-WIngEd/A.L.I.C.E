@@ -10,6 +10,7 @@ from alice_personality.n0.v02_training import (
     verify_public_corpus_v021,
     verify_teacher_registry,
 )
+from alice_personality.n0.source_authority_v1 import require_canonical_source_file
 from train_n0_v02_full_envelope_joint_v1 import (
     current_git_revision,
     read_json,
@@ -65,6 +66,11 @@ def main() -> None:
     require_clean_worktree()
     revision=current_git_revision()
 
+    require_canonical_source_file(
+        args.training_plan,
+        "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json",
+        label="joint training plan",
+    )
     plan=read_json(args.training_plan)
     if plan.get("schema")!="alice.eipm.n0.semantic-operator-joint-training-plan.v1":
         raise SystemExit("runtime training authorization plan schema drift")
