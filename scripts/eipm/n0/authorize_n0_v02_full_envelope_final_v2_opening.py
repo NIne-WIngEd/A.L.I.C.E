@@ -142,6 +142,8 @@ def main() -> None:
         raise SystemExit("FINAL opening freeze receipt schema drift")
     if freeze.get("status")!=PASS_FREEZE:
         raise SystemExit("FINAL opening requires valid pre-gradient freeze receipt")
+    if freeze.get("source_revision")!=revision:
+        raise SystemExit("FINAL opening freeze source revision drift")
     if freeze.get("results_observed") is not False:
         raise SystemExit("FINAL freeze already observed results")
     if freeze.get("final_opening_authorized") is not False:
