@@ -58,6 +58,7 @@ PASS_CPU="PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1"
 PASS_GPU="PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1"
 PASS_LONG_BOUNDARY="PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1"
 PASS_SEMANTIC_LONG_TOKEN="PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1"
+PASS_OPERATOR_TOKEN="PASS_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1"
 
 STAGES=(J1,J2,J3)
 PREDECESSOR={J1:None,J2:J1,J3:J2}
@@ -144,6 +145,8 @@ def verify_pre_gradient_runtime(
     mixture_manifest_path: str | Path,
     mixture_audit_path: str | Path,
     tokenizer_audit_path: str | Path,
+    operator_evidence_token_receipt_path: str | Path,
+    tokenizer_dir_path: str | Path,
     cpu_runtime_receipt_path: str | Path,
     gpu_memory_receipt_path: str | Path,
     long_boundary_receipt_path: str | Path,
@@ -177,6 +180,21 @@ def verify_pre_gradient_runtime(
     tokenizer=require_status(
         tokenizer_audit_path,"PASS",label="exact tokenizer stress"
     )
+    operator_token=require_status(
+        operator_evidence_token_receipt_path,PASS_OPERATOR_TOKEN,
+        label="operator evidence token alignment"
+    )
+    if operator_token.get("source_revision")!=source_revision:
+        raise SystemExit("operator evidence token alignment source revision drift")
+    semantic_lane=(mixture.get("training_lanes") or {}).get(
+        "semantic_operator_intervention"
+    ) or {}
+    if operator_token.get("rows_sha256")!=semantic_lane.get("rows_sha256"):
+        raise SystemExit("operator evidence token alignment row hash drift")
+    if operator_token.get("tokenizer_json_sha256")!=sha256_file(
+        Path(tokenizer_dir_path)/"tokenizer.json"
+    ):
+        raise SystemExit("operator evidence token alignment tokenizer hash drift")
     cpu=require_status(
         cpu_runtime_receipt_path,PASS_CPU,label="CPU full-envelope runtime"
     )
@@ -199,7 +217,8 @@ def verify_pre_gradient_runtime(
     if static_proof.get("source_revision")!=source_revision:
         raise SystemExit("static proof receipt source revision drift")
     for label,receipt in (
-        ("CPU",cpu),("GPU",gpu),("boundary",boundary),("semantic-long",semantic_long),
+        ("operator-token",operator_token),("CPU",cpu),("GPU",gpu),
+        ("boundary",boundary),("semantic-long",semantic_long),
         ("static-proof",static_proof)
     ):
         observed=receipt.get("source_revision")
@@ -216,6 +235,59 @@ def verify_pre_gradient_runtime(
     if tokenizer.get("model_training_performed") not in (None,False):
         raise SystemExit("tokenizer audit unexpectedly records training")
     return mixture,mixture_audit
+
+
+def verify_optimizer_lane_bindings(
+    *,
+    mixture: Mapping[str,Any],
+    semantic_rows: str | Path,
+    semantic_long_rows: str | Path,
+    behavioral_rows: str | Path,
+    runtime_view_rows: str | Path,
+    long_context_rows: str | Path,
+    natural_rows: str | Path,
+    natural_bank: str | Path,
+    source_config: str | Path,
+    corpus_receipt: str | Path,
+    teacher_registry: str | Path,
+    teacher_audit: str | Path,
+) -> None:
+    lanes=mixture.get("training_lanes") or {}
+    row_paths={
+        "semantic_operator_intervention":semantic_rows,
+        "semantic_operator_long_context":semantic_long_rows,
+        "full_envelope_behavioral":behavioral_rows,
+        "runtime_view_supplement":runtime_view_rows,
+        "long_context_supplement":long_context_rows,
+        "natural_relation":natural_rows,
+    }
+    for lane,path in row_paths.items():
+        spec=lanes.get(lane) or {}
+        if spec.get("rows_sha256")!=sha256_file(path):
+            raise SystemExit(
+                f"optimizer lane/mixture row hash drift: {lane}"
+            )
+    natural=lanes.get("natural_relation") or {}
+    if natural.get("bank_sha256")!=sha256_file(natural_bank):
+        raise SystemExit("optimizer lane/mixture bank hash drift: natural_relation")
+    broad=lanes.get("broad_semantic_replay") or {}
+    if broad.get("source_config_sha256")!=sha256_file(source_config):
+        raise SystemExit(
+            "optimizer broad replay/mixture source-config hash drift"
+        )
+    if broad.get("corpus_receipt_sha256")!=sha256_file(corpus_receipt):
+        raise SystemExit(
+            "optimizer broad replay/mixture corpus-receipt hash drift"
+        )
+    teacher=lanes.get("governed_judgment_replay") or {}
+    if teacher.get("teacher_registry_sha256")!=sha256_file(teacher_registry):
+        raise SystemExit(
+            "optimizer teacher replay/mixture registry hash drift"
+        )
+    if teacher.get("teacher_audit_sha256")!=sha256_file(teacher_audit):
+        raise SystemExit(
+            "optimizer teacher replay/mixture audit hash drift"
+        )
 
 
 def recursive_to_device(value: Any, device: torch.device) -> Any:
@@ -377,6 +449,7 @@ def save_checkpoint(
     semantic_initialization_path: Path,
     mixture_manifest_path: Path,
     mixture_audit_path: Path,
+    operator_evidence_token_receipt_path: Path,
     tokenizer_dir: Path,
     corpus_receipt_path: Path,
     teacher_audit_path: Path,
@@ -424,6 +497,9 @@ def save_checkpoint(
             ),
             "full_public_mixture_audit_sha256":sha256_file(
                 mixture_audit_path
+            ),
+            "operator_evidence_token_receipt_sha256":sha256_file(
+                operator_evidence_token_receipt_path
             ),
             "stage":stage,
             "stage_policy":{
@@ -497,6 +573,7 @@ def main() -> None:
     parser.add_argument("--mixture-manifest",required=True)
     parser.add_argument("--mixture-audit",required=True)
     parser.add_argument("--tokenizer-audit",required=True)
+    parser.add_argument("--operator-evidence-token-receipt",required=True)
     parser.add_argument("--cpu-runtime-receipt",required=True)
     parser.add_argument("--gpu-memory-receipt",required=True)
     parser.add_argument("--long-boundary-receipt",required=True)
@@ -568,6 +645,8 @@ def main() -> None:
         mixture_manifest_path=args.mixture_manifest,
         mixture_audit_path=args.mixture_audit,
         tokenizer_audit_path=args.tokenizer_audit,
+        operator_evidence_token_receipt_path=args.operator_evidence_token_receipt,
+        tokenizer_dir_path=args.tokenizer_dir,
         cpu_runtime_receipt_path=args.cpu_runtime_receipt,
         gpu_memory_receipt_path=args.gpu_memory_receipt,
         long_boundary_receipt_path=args.long_boundary_receipt,
@@ -689,6 +768,20 @@ def main() -> None:
         Path(__file__).resolve().parents[3],
         args.teacher_registry,
         args.teacher_audit,
+    )
+    verify_optimizer_lane_bindings(
+        mixture=mixture,
+        semantic_rows=args.semantic_rows,
+        semantic_long_rows=args.semantic_long_rows,
+        behavioral_rows=args.behavioral_rows,
+        runtime_view_rows=args.runtime_view_rows,
+        long_context_rows=args.long_context_rows,
+        natural_rows=args.natural_rows,
+        natural_bank=args.natural_bank,
+        source_config=args.source_config,
+        corpus_receipt=corpus_dir/"corpus_receipt.json",
+        teacher_registry=args.teacher_registry,
+        teacher_audit=args.teacher_audit,
     )
 
     semantic_rows=read_jsonl(args.semantic_rows,split="train")
@@ -916,6 +1009,9 @@ def main() -> None:
                 semantic_initialization_path=Path(args.semantic_checkpoint),
                 mixture_manifest_path=Path(args.mixture_manifest),
                 mixture_audit_path=Path(args.mixture_audit),
+                operator_evidence_token_receipt_path=Path(
+                    args.operator_evidence_token_receipt
+                ),
                 tokenizer_dir=tokenizer_dir,
                 corpus_receipt_path=corpus_dir/"corpus_receipt.json",
                 teacher_audit_path=Path(args.teacher_audit),
