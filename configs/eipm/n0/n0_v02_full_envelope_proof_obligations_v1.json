@@ -1243,7 +1243,7 @@
       "stage": "joint_training_authority",
       "kind": "STATIC_REQUIRED",
       "test": "test_successor_trainer_cannot_bypass_explicit_training_plan_authority",
-      "requirement": "The successor trainer must fail closed on optimizer, gradient, and GPU-training authority from the exact joint-training plan. A command-line execute-gradient flag or passed runtime qualifier may not override a still-false governance authorization."
+      "requirement": "The successor source plan must keep optimizer, gradient, and GPU-training authority false. --execute-gradient may proceed only with a separate exact-head runtime training-authorization receipt produced after all required pre-gradient runtime receipts pass; source mutation or the command-line flag alone may not authorize optimization."
     },
     {
       "id": "N0-P43G",
@@ -1531,6 +1531,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_gpu_memory_dry_run_binds_exact_optimizer_facing_mixture_lanes",
       "requirement": "The P43 GPU no-gradient memory dry run must exercise row/bank artifacts that hash-match every optimizer-facing lane in the audited full public mixture, including broad replay and governed teacher provenance. Memory routing may not be chosen from substituted easier data."
+    },
+    {
+      "id": "N0-P43O",
+      "stage": "training_authorization",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_runtime_training_authorization_breaks_no_gradient_source_mutation_cycle",
+      "requirement": "Gradient authorization must be achievable without editing the exact source revision after P40/P40A/P40B/P40C/P42/P43/P39PN receipts are produced. A governed runtime authorizer must revalidate the exact public corpus and teacher bank, bind every optimizer-facing artifact and runtime receipt, keep FINAL closed, and emit the sole optimizer/gradient/GPU-training authorization consumed by the trainer."
     }
   ],
   "closure_rule": {
