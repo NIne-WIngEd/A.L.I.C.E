@@ -43,13 +43,34 @@ def _empirical_result(
     value=resolve_metric(metrics,path)
     threshold=float(spec["threshold"])
     op=str(spec["comparison"])
+    metric_pass=compare(value,comparison=op,threshold=threshold)
+
+    coverage_path=spec.get("coverage_metric")
+    minimum_coverage=spec.get("minimum_coverage")
+    if (coverage_path is None) != (minimum_coverage is None):
+        raise ValueError(
+            "coverage_metric and minimum_coverage must be supplied together"
+        )
+    coverage_value=None
+    coverage_pass=True
+    if coverage_path is not None:
+        coverage_path=str(coverage_path)
+        coverage_value=resolve_metric(metrics,coverage_path)
+        minimum_coverage=float(minimum_coverage)
+        coverage_pass=coverage_value >= minimum_coverage
+
     return {
         "kind":"empirical",
         "metric":path,
         "value":value,
         "comparison":op,
         "threshold":threshold,
-        "passed":compare(value,comparison=op,threshold=threshold),
+        "metric_passed":metric_pass,
+        "coverage_metric":coverage_path,
+        "coverage_value":coverage_value,
+        "minimum_coverage":minimum_coverage,
+        "coverage_passed":coverage_pass,
+        "passed":metric_pass and coverage_pass,
     }
 
 

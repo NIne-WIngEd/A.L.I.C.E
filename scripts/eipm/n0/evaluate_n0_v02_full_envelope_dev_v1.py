@@ -89,6 +89,75 @@ def read_dev_rows(path: str | Path) -> list[dict[str,Any]]:
     return selected
 
 
+def verify_dev_lane_bindings(
+    *,
+    mixture: Mapping[str,Any],
+    semantic_rows: str | Path,
+    semantic_long_rows: str | Path,
+    behavioral_rows: str | Path,
+    runtime_view_rows: str | Path,
+    long_context_rows: str | Path,
+    natural_rows: str | Path,
+    natural_bank: str | Path,
+    teacher_registry: str | Path,
+    teacher_audit: str | Path,
+) -> dict[str,Any]:
+    """Bind every DEV input artifact to the exact pre-gradient public mixture.
+
+    The evaluator may select DEV rows from a combined TRAIN/DEV artifact, but
+    it may not silently substitute a different artifact after the candidate
+    checkpoint was trained. This is a provenance check, not FINAL access.
+    """
+    lanes=mixture.get("training_lanes") or {}
+    row_bindings={
+        "semantic_operator_intervention":Path(semantic_rows),
+        "semantic_operator_long_context":Path(semantic_long_rows),
+        "full_envelope_behavioral":Path(behavioral_rows),
+        "runtime_view_supplement":Path(runtime_view_rows),
+        "long_context_supplement":Path(long_context_rows),
+        "natural_relation":Path(natural_rows),
+    }
+    receipt={}
+    for lane,path in row_bindings.items():
+        lane_receipt=lanes.get(lane)
+        if not isinstance(lane_receipt,Mapping):
+            raise SystemExit(f"DEV lane missing from public mixture: {lane}")
+        expected=str(lane_receipt.get("rows_sha256",""))
+        actual=sha256_file(path)
+        if not expected or actual!=expected:
+            raise SystemExit(
+                f"DEV lane/mixture hash drift: {lane} rows"
+            )
+        receipt[lane]={"rows_sha256":actual}
+
+    natural_receipt=lanes.get("natural_relation") or {}
+    bank_hash=sha256_file(natural_bank)
+    if bank_hash!=str(natural_receipt.get("bank_sha256","")):
+        raise SystemExit("DEV lane/mixture hash drift: natural_relation bank")
+    receipt["natural_relation"]["bank_sha256"]=bank_hash
+
+    teacher_receipt=lanes.get("governed_judgment_replay") or {}
+    teacher_registry_hash=sha256_file(teacher_registry)
+    teacher_audit_hash=sha256_file(teacher_audit)
+    if teacher_registry_hash!=str(
+        teacher_receipt.get("teacher_registry_sha256","")
+    ):
+        raise SystemExit(
+            "DEV lane/mixture hash drift: governed_judgment_replay registry"
+        )
+    if teacher_audit_hash!=str(
+        teacher_receipt.get("teacher_audit_sha256","")
+    ):
+        raise SystemExit(
+            "DEV lane/mixture hash drift: governed_judgment_replay audit"
+        )
+    receipt["governed_judgment_replay"]={
+        "teacher_registry_sha256":teacher_registry_hash,
+        "teacher_audit_sha256":teacher_audit_hash,
+    }
+    return receipt
+
+
 def read_fixed_eval_rows(path: Path) -> list[dict[str,Any]]:
     rows=[
         json.loads(line)
@@ -397,17 +466,23 @@ def semantic_lane_metrics(
             for name,values in sorted(step_bank.items())
         },
         "source_target_pair_completion":boolean_rate(pair_success),
+        "source_target_pair_count":len(pair_success),
         "ordered_relation_sequence_exact":boolean_rate(ordered_success),
+        "ordered_relation_count":len(ordered_success),
         "unknown_defer_accuracy":boolean_rate(unknown_success),
+        "unknown_defer_count":len(unknown_success),
         "mixed_step_direction_sequence_exact":boolean_rate(
             mixed_direction_success
         ),
+        "mixed_step_direction_count":len(mixed_direction_success),
         "mixed_step_modifier_sequence_exact":boolean_rate(
             mixed_modifier_success
         ),
+        "mixed_step_modifier_count":len(mixed_modifier_success),
         "relation_counterfactual_margin_success":boolean_rate(
             relation_margin_values
         ),
+        "relation_counterfactual_margin_count":len(relation_margin_values),
         "factor_counterfactual_margin_success":boolean_rate(
             factor_margin_values
         ),
@@ -424,6 +499,9 @@ def semantic_lane_metrics(
         "long_relation_factor_semantics_min":(
             min(long_relation_factor_values)
             if long_relation_factor_values else relation_exact
+        ),
+        "long_relation_factor_surface_count":(
+            len(long_relation_rows)+len(long_factor_rows)
         ),
         "records":records,
     }
@@ -667,6 +745,29 @@ def fabric_lane_metrics(
         ]
         return boolean_rate(values)
 
+    def count(key: str, *, where=lambda _: True) -> int:
+        return sum(
+            1
+            for item in records
+            if where(item) and item.get(key) is not None
+        )
+
+    def surface_counts(key: str) -> dict[str,int]:
+        surfaces=sorted({
+            str(item["long_context_surface"])
+            for item in records
+            if item.get("long_context_surface")
+        })
+        return {
+            surface:count(
+                key,
+                where=lambda item,surface=surface: (
+                    item.get("long_context_surface")==surface
+                ),
+            )
+            for surface in surfaces
+        }
+
     def surface_rates(key: str) -> dict[str,float]:
         surfaces=sorted({
             str(item["long_context_surface"])
@@ -713,16 +814,24 @@ def fabric_lane_metrics(
                 "ROLE_SOURCE","ROLE_TARGET"
             },
         ),
+        "endpoint_pair_count":count(
+            "endpoint_pair_correct",
+            where=lambda item: item.get("role_target") in {
+                "ROLE_SOURCE","ROLE_TARGET"
+            },
+        ),
         "null_support_exact_rate":(
             boolean_rate([
                 bool(item["null_support_exact"]) for item in null_records
             ])
             if null_records else 1.0
         ),
+        "null_support_count":len(null_records),
         "no_support_execution_confidence_max":(
             max(confidence_values) if confidence_values else 0.0
         ),
         "surface_structural_accuracy":surface_rates("structural_success"),
+        "surface_structural_count":surface_counts("structural_success"),
         "ordered_executor_endpoint_accuracy":rate(
             "executor_readout_correct",
             where=lambda item: item["scenario_family"] in ordered_families,
@@ -732,8 +841,18 @@ def fabric_lane_metrics(
     if judgment_active:
         result.update({
             "public_judgment_top1":rate("public_judgment_correct"),
+            "public_judgment_count":count("public_judgment_correct"),
             "scenario_public_accuracy":{
                 scenario:rate(
+                    "public_judgment_correct",
+                    where=lambda item,scenario=scenario: (
+                        item["scenario_family"]==scenario
+                    ),
+                )
+                for scenario in scenario_names
+            },
+            "scenario_public_count":{
+                scenario:count(
                     "public_judgment_correct",
                     where=lambda item,scenario=scenario: (
                         item["scenario_family"]==scenario
@@ -744,7 +863,16 @@ def fabric_lane_metrics(
             "surface_public_accuracy":surface_rates(
                 "public_judgment_correct"
             ),
+            "surface_public_count":surface_counts(
+                "public_judgment_correct"
+            ),
             "candidate_cardinality_extrapolation_accuracy":rate(
+                "public_judgment_correct",
+                where=lambda item: item[
+                    "candidate_cardinality_extrapolation"
+                ],
+            ),
+            "candidate_cardinality_extrapolation_count":count(
                 "public_judgment_correct",
                 where=lambda item: item[
                     "candidate_cardinality_extrapolation"
@@ -754,7 +882,14 @@ def fabric_lane_metrics(
                 "public_judgment_correct",
                 where=lambda item: item["composition_extrapolation"],
             ),
+            "composition_extrapolation_count":count(
+                "public_judgment_correct",
+                where=lambda item: item["composition_extrapolation"],
+            ),
             "latent_noncollapse_success_rate":rate(
+                "latent_noncollapse_success"
+            ),
+            "latent_noncollapse_count":count(
                 "latent_noncollapse_success"
             ),
         })
@@ -764,13 +899,30 @@ def fabric_lane_metrics(
             "decisive_source_removal_success":rate(
                 "decisive_removal_success"
             ),
+            "decisive_source_removal_count":count(
+                "decisive_removal_success"
+            ),
             "irrelevant_source_removal_invariance":rate(
+                "irrelevant_removal_invariance"
+            ),
+            "irrelevant_source_removal_count":count(
                 "irrelevant_removal_invariance"
             ),
             "source_view_recoverability_success_rate":boolean_rate(
                 recoverability_values_all
             ),
+            "source_view_recoverability_count":len(
+                recoverability_values_all
+            ),
             "distant_decisive_removal_success":rate(
+                "decisive_removal_success",
+                where=lambda item: (
+                    item.get("long_context_surface") in distant_surfaces
+                    and item.get("long_context_placement_variant")
+                    in {"tail","boundary_late"}
+                ),
+            ),
+            "distant_decisive_removal_count":count(
                 "decisive_removal_success",
                 where=lambda item: (
                     item.get("long_context_surface") in distant_surfaces
@@ -869,6 +1021,21 @@ def main() -> None:
         args.mixture_audit
     ):
         raise SystemExit("candidate/mixture audit lineage drift")
+
+    if mixture.get("source_revision")!=candidate.get("source_revision"):
+        raise SystemExit("candidate/mixture source revision drift")
+    dev_lane_binding_receipt=verify_dev_lane_bindings(
+        mixture=mixture,
+        semantic_rows=args.semantic_rows,
+        semantic_long_rows=args.semantic_long_rows,
+        behavioral_rows=args.behavioral_rows,
+        runtime_view_rows=args.runtime_view_rows,
+        long_context_rows=args.long_context_rows,
+        natural_rows=args.natural_rows,
+        natural_bank=args.natural_bank,
+        teacher_registry=args.teacher_registry,
+        teacher_audit=args.teacher_audit,
+    )
 
     try:
         from safetensors.torch import load_file
@@ -1025,6 +1192,7 @@ def main() -> None:
         "candidate_checkpoint_receipt_sha256":sha256_file(args.candidate_receipt),
         "candidate_system_sha256":sha256_file(args.candidate_system),
         "static_proof_receipt_sha256":sha256_file(args.static_proof_receipt),
+        "dev_lane_binding_receipt":dev_lane_binding_receipt,
         "teacher_registered_rows":int(teacher_report["registered_rows"]),
         "metrics":metrics,
         "declared_stage_gates":declared,

@@ -38,19 +38,25 @@
           "kind": "empirical",
           "metric": "semantic_operator.source_target_pair_completion",
           "comparison": ">=",
-          "threshold": 1
+          "threshold": 1,
+          "coverage_metric": "semantic_operator.source_target_pair_count",
+          "minimum_coverage": 1
         },
         "ordered_relation_intervention": {
           "kind": "empirical",
           "metric": "semantic_operator.ordered_relation_sequence_exact",
           "comparison": ">=",
-          "threshold": 0.95
+          "threshold": 0.95,
+          "coverage_metric": "semantic_operator.ordered_relation_count",
+          "minimum_coverage": 1
         },
         "unknown_defer": {
           "kind": "empirical",
           "metric": "semantic_operator.unknown_defer_accuracy",
           "comparison": ">=",
-          "threshold": 0.95
+          "threshold": 0.95,
+          "coverage_metric": "semantic_operator.unknown_defer_count",
+          "minimum_coverage": 1
         },
         "historical_semantic_regression": {
           "kind": "composite",
@@ -76,13 +82,17 @@
           "kind": "empirical",
           "metric": "semantic_operator.mixed_step_direction_sequence_exact",
           "comparison": ">=",
-          "threshold": 0.9
+          "threshold": 0.9,
+          "coverage_metric": "semantic_operator.mixed_step_direction_count",
+          "minimum_coverage": 1
         },
         "mixed_step_modifier_composition": {
           "kind": "empirical",
           "metric": "semantic_operator.mixed_step_modifier_sequence_exact",
           "comparison": ">=",
-          "threshold": 0.9
+          "threshold": 0.9,
+          "coverage_metric": "semantic_operator.mixed_step_modifier_count",
+          "minimum_coverage": 1
         },
         "runtime_relation_symmetry_causal_pairs": {
           "kind": "static_source_proof",
@@ -114,7 +124,9 @@
           "kind": "empirical",
           "metric": "semantic_operator.relation_counterfactual_margin_success",
           "comparison": ">=",
-          "threshold": 0.9
+          "threshold": 0.9,
+          "coverage_metric": "semantic_operator.relation_counterfactual_margin_count",
+          "minimum_coverage": 1
         },
         "program_relation_state_assignment_weighting": {
           "kind": "static_source_proof",
@@ -138,7 +150,9 @@
           "kind": "empirical",
           "metric": "semantic_operator_long_context.long_relation_factor_semantics_min",
           "comparison": ">=",
-          "threshold": 0.9
+          "threshold": 0.9,
+          "coverage_metric": "semantic_operator_long_context.long_relation_factor_surface_count",
+          "minimum_coverage": 2
         }
       }
     },
@@ -162,7 +176,9 @@
           "kind": "empirical",
           "metric": "full_fabric.full_envelope_behavioral.endpoint_pair_accuracy",
           "comparison": ">=",
-          "threshold": 0.95
+          "threshold": 0.95,
+          "coverage_metric": "full_fabric.full_envelope_behavioral.endpoint_pair_count",
+          "minimum_coverage": 1
         },
         "field_permutation": {
           "kind": "static_source_proof",
@@ -182,7 +198,9 @@
           "kind": "empirical",
           "metric": "full_fabric.full_envelope_behavioral.null_support_exact_rate",
           "comparison": ">=",
-          "threshold": 0.98
+          "threshold": 0.98,
+          "coverage_metric": "full_fabric.full_envelope_behavioral.null_support_count",
+          "minimum_coverage": 1
         },
         "masked_runtime_relation_exclusion": {
           "kind": "static_source_proof",
@@ -204,12 +222,16 @@
             {
               "metric": "full_fabric.long_context_supplement.surface_structural_accuracy.field_text",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.long_context_supplement.surface_structural_count.field_text",
+              "minimum_coverage": 1
             },
             {
               "metric": "full_fabric.long_context_supplement.surface_structural_accuracy.field_descriptor",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.long_context_supplement.surface_structural_count.field_descriptor",
+              "minimum_coverage": 1
             }
           ]
         },
@@ -249,12 +271,16 @@
             {
               "metric": "full_fabric.full_envelope_behavioral.decisive_source_removal_success",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.full_envelope_behavioral.decisive_source_removal_count",
+              "minimum_coverage": 1
             },
             {
               "metric": "full_fabric.runtime_view_supplement.decisive_source_removal_success",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.runtime_view_supplement.decisive_source_removal_count",
+              "minimum_coverage": 1
             }
           ]
         },
@@ -264,17 +290,23 @@
             {
               "metric": "full_fabric.full_envelope_behavioral.irrelevant_source_removal_invariance",
               "comparison": ">=",
-              "threshold": 0.95
+              "threshold": 0.95,
+              "coverage_metric": "full_fabric.full_envelope_behavioral.irrelevant_source_removal_count",
+              "minimum_coverage": 1
             },
             {
               "metric": "full_fabric.runtime_view_supplement.irrelevant_source_removal_invariance",
               "comparison": ">=",
-              "threshold": 0.95
+              "threshold": 0.95,
+              "coverage_metric": "full_fabric.runtime_view_supplement.irrelevant_source_removal_count",
+              "minimum_coverage": 1
             },
             {
               "metric": "full_fabric.long_context_supplement.irrelevant_source_removal_invariance",
               "comparison": ">=",
-              "threshold": 0.95
+              "threshold": 0.95,
+              "coverage_metric": "full_fabric.long_context_supplement.irrelevant_source_removal_count",
+              "minimum_coverage": 1
             }
           ]
         },
@@ -284,12 +316,16 @@
             {
               "metric": "full_fabric.full_envelope_behavioral.latent_noncollapse_success_rate",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.full_envelope_behavioral.latent_noncollapse_count",
+              "minimum_coverage": 1
             },
             {
               "metric": "full_fabric.runtime_view_supplement.latent_noncollapse_success_rate",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.runtime_view_supplement.latent_noncollapse_count",
+              "minimum_coverage": 1
             }
           ]
         },
@@ -299,17 +335,23 @@
             {
               "metric": "full_fabric.full_envelope_behavioral.source_view_recoverability_success_rate",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.full_envelope_behavioral.source_view_recoverability_count",
+              "minimum_coverage": 1
             },
             {
               "metric": "full_fabric.runtime_view_supplement.source_view_recoverability_success_rate",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.runtime_view_supplement.source_view_recoverability_count",
+              "minimum_coverage": 1
             },
             {
               "metric": "full_fabric.long_context_supplement.source_view_recoverability_success_rate",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.long_context_supplement.source_view_recoverability_count",
+              "minimum_coverage": 1
             }
           ]
         },
@@ -323,13 +365,17 @@
           "kind": "empirical",
           "metric": "full_fabric.full_envelope_behavioral.candidate_cardinality_extrapolation_accuracy",
           "comparison": ">=",
-          "threshold": 0.9
+          "threshold": 0.9,
+          "coverage_metric": "full_fabric.full_envelope_behavioral.candidate_cardinality_extrapolation_count",
+          "minimum_coverage": 1
         },
         "composition_extrapolation": {
           "kind": "empirical",
           "metric": "full_fabric.full_envelope_behavioral.composition_extrapolation_accuracy",
           "comparison": ">=",
-          "threshold": 0.9
+          "threshold": 0.9,
+          "coverage_metric": "full_fabric.full_envelope_behavioral.composition_extrapolation_count",
+          "minimum_coverage": 1
         },
         "behaviorally_grounded_public_judgment": {
           "kind": "composite",
@@ -337,12 +383,16 @@
             {
               "metric": "full_fabric.full_envelope_behavioral.public_judgment_top1",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.full_envelope_behavioral.public_judgment_count",
+              "minimum_coverage": 1
             },
             {
               "metric": "full_fabric.full_envelope_behavioral.scenario_public_accuracy.candidate_context_swap",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.full_envelope_behavioral.scenario_public_count.candidate_context_swap",
+              "minimum_coverage": 1
             }
           ]
         },
@@ -356,7 +406,9 @@
           "kind": "empirical",
           "metric": "full_fabric.long_context_supplement.surface_public_accuracy.query",
           "comparison": ">=",
-          "threshold": 0.9
+          "threshold": 0.9,
+          "coverage_metric": "full_fabric.long_context_supplement.surface_public_count.query",
+          "minimum_coverage": 1
         },
         "per_example_candidate_subset_batching": {
           "kind": "empirical",
@@ -368,7 +420,9 @@
           "kind": "empirical",
           "metric": "full_fabric.long_context_supplement.distant_decisive_removal_success",
           "comparison": ">=",
-          "threshold": 0.9
+          "threshold": 0.9,
+          "coverage_metric": "full_fabric.long_context_supplement.distant_decisive_removal_count",
+          "minimum_coverage": 1
         },
         "fusion_route_gradient_reaches_final_judgment": {
           "kind": "static_source_proof",
@@ -395,7 +449,9 @@
           "kind": "empirical",
           "metric": "full_fabric.long_context_supplement.surface_public_accuracy.candidate_text",
           "comparison": ">=",
-          "threshold": 0.9
+          "threshold": 0.9,
+          "coverage_metric": "full_fabric.long_context_supplement.surface_public_count.candidate_text",
+          "minimum_coverage": 1
         },
         "long_internal_and_additional_view_descriptor_semantics": {
           "kind": "composite",
@@ -403,12 +459,16 @@
             {
               "metric": "full_fabric.long_context_supplement.surface_public_accuracy.internal_view_descriptor",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.long_context_supplement.surface_public_count.internal_view_descriptor",
+              "minimum_coverage": 1
             },
             {
               "metric": "full_fabric.long_context_supplement.surface_public_accuracy.additional_view_descriptor",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.long_context_supplement.surface_public_count.additional_view_descriptor",
+              "minimum_coverage": 1
             }
           ]
         },
@@ -418,12 +478,16 @@
             {
               "metric": "full_fabric.long_context_supplement.surface_public_accuracy.additional_view_source",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.long_context_supplement.surface_public_count.additional_view_source",
+              "minimum_coverage": 1
             },
             {
               "metric": "full_fabric.long_context_supplement.surface_public_accuracy.additional_view_descriptor",
               "comparison": ">=",
-              "threshold": 0.9
+              "threshold": 0.9,
+              "coverage_metric": "full_fabric.long_context_supplement.surface_public_count.additional_view_descriptor",
+              "minimum_coverage": 1
             }
           ]
         }
