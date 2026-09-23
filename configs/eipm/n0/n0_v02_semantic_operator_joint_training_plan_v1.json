@@ -265,7 +265,7 @@
     "gradient_clip_norm": 1,
     "precision": "fp16_on_p100_or_successor_mixed_precision",
     "gradient_checkpointing": true,
-    "scheduler": "linear_warmup_cosine_decay",
+    "scheduler": "linear_warmup_cosine_decay_to_nonzero_floor",
     "warmup_fraction": 0.05,
     "fixed_total_steps": null,
     "stop_rule": "continue until precommitted DEV capability saturates without broad-semantic regression; do not stop merely because an arbitrary step budget expires",
@@ -376,6 +376,13 @@
       "optimizer_state": "restart",
       "scheduler_state": "restart_with_stage_local_warmup",
       "reason": "Newly activated stage owners must not inherit a predecessor scheduler that may already be deeply decayed or at zero learning rate; model capability and public-loss calibration carry forward while optimizer dynamics restart for the new causal owner set."
+    },
+    "scheduler_policy": {
+      "family": "linear_warmup_cosine_decay_to_nonzero_floor",
+      "minimum_lr_scale": 0.1,
+      "horizon_is_stage_completion": false,
+      "post_horizon_behavior": "hold_precommitted_nonzero_floor_until_dev_decision",
+      "fixed_before_gradient": true
     }
   },
   "loss_balancing": {
