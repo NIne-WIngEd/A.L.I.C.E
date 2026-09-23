@@ -1758,9 +1758,10 @@ def test_dev_evaluator_requires_exact_candidate_source_checkout() -> None:
         ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py"
     ).read_text()
     assert 'subprocess.check_output(["git","rev-parse","HEAD"]' in source
-    assert 'subprocess.check_output(["git","status","--porcelain","--untracked-files=no"]' in source
+    assert 'subprocess.check_output(["git","status","--porcelain"]' in source
+    assert "--untracked-files=no" not in source
     assert "DEV evaluator source revision does not match candidate" in source
-    assert "DEV evaluator requires a clean tracked-source worktree" in source
+    assert "DEV evaluator requires a clean exact-source worktree" in source
 
 
 
@@ -2065,4 +2066,16 @@ def test_first_passing_dev_selection_uses_precommitted_checkpoint_cadence() -> N
     )
     assert checkpoint["stage_policy"]["checkpoint_evaluation_cadence_steps"]==cadence
     assert checkpoint["stage_policy"]["checkpoint_cadence_fixed_before_gradient"] is True
+
+
+
+def test_n0_authority_scripts_reject_untracked_source_shadowing() -> None:
+    for relative in (
+        "scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py",
+        "scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py",
+    ):
+        source=(ROOT/relative).read_text()
+        assert '["git","status","--porcelain"]' in source
+        assert "--untracked-files=no" not in source
+        assert "clean exact-source worktree" in source
 
