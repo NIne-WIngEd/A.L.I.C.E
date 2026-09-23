@@ -1489,6 +1489,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_final_opening_authorizer_is_pregradient_freeze_bound",
       "requirement": "The FINAL-v2 opening authorizer itself must be registered and hash-frozen before gradient. The authorizer must self-verify against the freeze receipt, and FINAL evaluation must verify that the opening receipt came from the frozen authorizer lineage."
+    },
+    {
+      "id": "N0-P40D",
+      "stage": "tokenizer_evidence_alignment",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_successor_trainer_requires_exact_short_operator_evidence_token_receipt",
+      "requirement": "Before any gradient, the staged successor trainer must require the exact short-form P40A operator-evidence token-alignment receipt, bound to the current source revision, exact semantic-operator TRAIN/DEV row artifact, and exact tokenizer. Passing tokenizer stress or long-context token alignment alone may not substitute for P40A."
+    },
+    {
+      "id": "N0-P39PMC",
+      "stage": "full_public_mixture",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_successor_trainer_binds_every_optimizer_lane_to_exact_public_mixture",
+      "requirement": "Every optimizer-facing successor data artifact must hash-match the exact audited full public-mixture manifest at training time, including semantic, semantic-long, behavioral, runtime-view, long-context, natural rows/bank, broad replay source/corpus receipt, and governed teacher registry/audit. Arbitrary CLI substitutions are forbidden."
     }
   ],
   "closure_rule": {
