@@ -93,8 +93,15 @@ def main() -> None:
     p.add_argument("--manifest",required=True)
     p.add_argument("--contract",required=True)
     p.add_argument("--tokenizer-dir",required=True)
+    p.add_argument("--source-revision",required=True)
     p.add_argument("--output",required=True)
     args=p.parse_args()
+
+    source_revision=str(args.source_revision).strip().lower()
+    if len(source_revision)!=40 or any(
+        ch not in "0123456789abcdef" for ch in source_revision
+    ):
+        raise SystemExit("source revision must be exact 40-hex git commit")
 
     rows_path=Path(args.rows)
     manifest_path=Path(args.manifest)
@@ -106,7 +113,8 @@ def main() -> None:
     rows=read_jsonl(rows_path)
     manifest=json.loads(manifest_path.read_text(encoding="utf-8"))
     contract=json.loads(contract_path.read_text(encoding="utf-8"))
-    tokenizer=load_tokenizer(args.tokenizer_dir)
+    tokenizer_dir=Path(args.tokenizer_dir).resolve()
+    tokenizer=load_tokenizer(tokenizer_dir)
 
     if manifest.get("sha256")!=sha256(rows_path):
         raise SystemExit("long-context row hash drift")
@@ -209,10 +217,12 @@ def main() -> None:
     result={
         "schema":"alice.eipm.n0.full-envelope-long-context-token-boundary-audit.v1",
         "status":PASS if not errors and verified==expected else "FAIL_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1",
+        "source_revision":source_revision,
         "errors":errors,
         "rows_sha256":sha256(rows_path),
         "manifest_sha256":sha256(manifest_path),
         "contract_sha256":sha256(contract_path),
+        "tokenizer_json_sha256":sha256(tokenizer_dir/"tokenizer.json"),
         "tokenizer_vocab_size":len(tokenizer),
         "native_window_tokens":native,
         "overlap_tokens":overlap,
