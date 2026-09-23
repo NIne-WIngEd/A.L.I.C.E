@@ -84,9 +84,13 @@ Build:
 
 - Context Planner;
 - Retrieval Trace;
+- invocation-scoped evidence-consumption/read receipts and citation-lock validation;
 - source and evidence expansion;
 - graph/vector/claim fusion;
 - uncertainty and contradiction preservation;
+- evidence-aware retention that can preserve old task-critical context instead of relying on recency alone;
+- versioned context-construction policies/programs as sandboxed champion/challenger artifacts;
+- usage-aware retrieval/accessibility projections learned from governed retrieval and outcome receipts;
 - compact through very-large-context plans;
 - multi-agent and simulation plans;
 - local and distributed inference;
@@ -103,13 +107,18 @@ Unknowns remain uncertain. Generated reconstruction is not source history.
 Build:
 
 - reusable skills and failure cases;
+- evidence-grounded failure localization across skill, context/harness, retrieval, model, tool/executor, environment, evaluator, and unknown causes before mutation;
+- separately versioned procedural-skill and context/harness challengers, including skill-only, harness-only, joint, and parametric comparisons;
 - dataset and replay manifests;
-- learned retrieval, routing, ranking, and preference models;
+- learned retrieval, routing, ranking, accessibility, and preference models;
+- retrieval-experience learning that may amortize reranking or learn usage-aware associations without becoming claim authority;
 - adapters and LoRA;
 - challenger models and continual-learning experiments;
 - shadow and canary serving;
 - machine-unlearning and model-editing research;
 - later deeper weight updates.
+
+External artifact evolution and parametric learning are complementary substrates. No frozen-model assumption is a permanent architecture rule. Optimizer summaries, textual gradients, and failure diagnoses remain derived proposals linked to the underlying rollout evidence and cannot become evidence or Claim authority by themselves.
 
 Production influence follows evaluation and authority profiles. Research begins when lineage and containment are sufficient.
 
