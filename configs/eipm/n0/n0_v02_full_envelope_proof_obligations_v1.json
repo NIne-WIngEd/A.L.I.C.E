@@ -1650,6 +1650,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_n0_contract_ci_syntax_checks_authoritative_runtime_shell_entrypoints",
       "requirement": "The authoritative Magnolia CPU/GPU handoff scripts and the P40-P42 CPU runner must pass shell syntax validation in exact-head CI. A watched but syntactically invalid handoff script may not reach external runtime qualification."
+    },
+    {
+      "id": "N0-P43W",
+      "stage": "gpu_memory_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_p43_gpu_memory_wraps_actual_ddp_replica_route_before_measurement",
+      "requirement": "When the selected P43 route is multi-process DDP, memory qualification must wrap the exact J3 system in DistributedDataParallel with the same unused-parameter policy before measuring peak memory. A per-rank bare-module forward may not authorize distributed training."
     }
   ],
   "closure_rule": {
