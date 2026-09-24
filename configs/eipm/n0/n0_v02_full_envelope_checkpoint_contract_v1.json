@@ -7,6 +7,7 @@
   "trainer": "scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py",
   "required_lineage": [
     "source_revision",
+    "trainer_implementation_sha256",
     "registered_topology_sha256",
     "semantic_initialization_sha256",
     "full_public_mixture_manifest_sha256",
@@ -103,6 +104,7 @@
     "final_checkpoint_selection_allowed": false,
     "final_opening_authorized": false,
     "checkpoint_receipt_is_n0_completion": false,
-    "runtime_training_authorization_receipt_required": true
+    "runtime_training_authorization_receipt_required": true,
+    "exact_trainer_implementation_hash_required": true
   }
 }
