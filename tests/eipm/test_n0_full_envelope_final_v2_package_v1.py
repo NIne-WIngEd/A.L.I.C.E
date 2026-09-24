@@ -366,3 +366,25 @@ def test_final_v2_freeze_is_bound_to_exact_source_revision() -> None:
     opener=(ROOT/"scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py").read_text()
     assert "FINAL opening freeze source revision drift" in opener
 
+
+
+def test_final_v2_result_binds_canonical_static_proof_and_full_closure_authority_chain() -> None:
+    source=(
+        ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py"
+    ).read_text()
+    assert "require_canonical_source_file" in source
+    assert 'configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json' in source
+    assert "static proof contract hash drift" in source
+    assert "static proof supersession hash drift" in source
+    assert "static proof retrospective hash drift" in source
+    for field in (
+        "final_opening_authorization_sha256",
+        "dev_selection_receipt_sha256",
+        "dev_evaluation_receipt_sha256",
+        "static_proof_receipt_sha256",
+        "proof_contract_sha256",
+        "opening_authorizer_sha256",
+    ):
+        assert f'"{field}"' in source
+    assert '"closure_authority_chain_complete":True' in source
+
