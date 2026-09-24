@@ -108,6 +108,7 @@ def main() -> None:
     ids: set[str] = set()
     static_count = 0
     required_static_tests: list[str] = []
+    ci_required_receipts: list[str] = []
     runtime_blocking = []
     training_blocking = []
     final_blocking = []
@@ -134,6 +135,8 @@ def main() -> None:
             receipt = str(obligation.get("receipt", "")).strip()
             if not receipt.startswith("PASS_N0_"):
                 errors.append(f"{oid}: invalid CI receipt name: {receipt}")
+            else:
+                ci_required_receipts.append(receipt)
         elif kind == "RUNTIME_REQUIRED":
             if obligation.get("status") != "UNRESOLVED_BLOCKING":
                 errors.append(f"{oid}: runtime obligation must remain blocking before runtime receipt")
@@ -237,6 +240,22 @@ def main() -> None:
             + repr(missing_residual)
         )
 
+    ci_workflow_path=(
+        root/".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml"
+    )
+    if not ci_workflow_path.is_file():
+        errors.append("authoritative N0 CI workflow missing")
+        ci_workflow_text=""
+    else:
+        ci_workflow_text=ci_workflow_path.read_text(encoding="utf-8")
+    unique_ci_required_receipts=sorted(set(ci_required_receipts))
+    for receipt in unique_ci_required_receipts:
+        if receipt not in ci_workflow_text:
+            errors.append(
+                "CI_REQUIRED receipt missing from authoritative workflow: "
+                + receipt
+            )
+
     source_revision=subprocess.check_output(
         ["git","-C",str(root),"rev-parse","HEAD"],
         text=True,
@@ -308,6 +327,8 @@ def main() -> None:
         "proof_contract_sha256": sha256_path(contract_path),
         "supersession_sha256": sha256_path(supersession_path),
         "retrospective_sha256": sha256_path(retrospective_path),
+        "ci_workflow_sha256": sha256_path(ci_workflow_path),
+        "ci_required_receipts": unique_ci_required_receipts,
         "static_suite_executed": True,
         "static_suite_pass": bool(static_suite_pass),
         "static_suite_exit_code": int(static_suite_exit_code),
