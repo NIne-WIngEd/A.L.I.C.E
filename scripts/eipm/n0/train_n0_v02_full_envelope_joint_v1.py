@@ -373,6 +373,21 @@ def verify_pre_gradient_runtime(
         repo_root/"configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json"
     ):
         raise SystemExit("static proof retrospective hash drift")
+    if static_proof.get("static_suite_executed") is not True:
+        raise SystemExit("static proof suite was not executed")
+    if (
+        static_proof.get("static_suite_pass") is not True
+        or int(static_proof.get("static_suite_exit_code",-1))!=0
+    ):
+        raise SystemExit("static proof suite did not pass")
+    proof_contract=read_json(
+        repo_root/"configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json"
+    )
+    expected_static_files=[
+        str(value) for value in proof_contract.get("static_test_files", [])
+    ]
+    if list(static_proof.get("executed_static_test_files") or [])!=expected_static_files:
+        raise SystemExit("static proof suite file coverage drift")
     for label,receipt in (
         ("operator-token",operator_token),("CPU",cpu),("GPU",gpu),
         ("boundary",boundary),("semantic-long",semantic_long),
