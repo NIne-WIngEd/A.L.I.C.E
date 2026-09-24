@@ -1185,6 +1185,19 @@ def main() -> None:
         raise SystemExit("DEV static proof suite file coverage drift")
     if int(static_receipt.get("pytest_skipped_cases",-1))!=0:
         raise SystemExit("DEV static proof suite skipped required cases")
+    ci_workflow=(
+        Path(__file__).resolve().parents[3]
+        /".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml"
+    )
+    if static_receipt.get("ci_workflow_sha256")!=sha256_file(ci_workflow):
+        raise SystemExit("DEV static proof CI workflow hash drift")
+    expected_ci_receipts=sorted({
+        str(item.get("receipt"))
+        for item in proof_for_static.get("obligations", [])
+        if item.get("kind")=="CI_REQUIRED"
+    })
+    if list(static_receipt.get("ci_required_receipts") or [])!=expected_ci_receipts:
+        raise SystemExit("DEV static proof CI receipt coverage drift")
 
     mixture=read_json(args.mixture_manifest)
     mixture_audit=read_json(args.mixture_audit)
