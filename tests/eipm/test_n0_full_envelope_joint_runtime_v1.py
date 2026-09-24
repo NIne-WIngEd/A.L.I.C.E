@@ -2434,3 +2434,27 @@ def test_checkpoint_receipt_consumers_require_canonical_schema_and_status() -> N
     assert "FINAL candidate checkpoint receipt schema drift" in final
     assert "FINAL candidate checkpoint receipt status drift" in final
 
+
+
+def test_dev_receipt_is_bound_to_canonical_evaluator_and_gate_contracts() -> None:
+    evaluator=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py").read_text()
+    for field in (
+        "dev_evaluator_sha256",
+        "dev_contract_sha256",
+        "gate_registry_sha256",
+        "proof_contract_sha256",
+        "training_plan_sha256",
+    ):
+        assert f'"{field}"' in evaluator
+    selector=(ROOT/"scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py").read_text()
+    assert "DEV evaluator implementation hash drift" in selector
+    assert "DEV contract hash drift" in selector
+    assert "DEV gate registry hash drift" in selector
+    assert "DEV proof contract hash drift" in selector
+    assert "DEV training plan hash drift" in selector
+    assert '"selected_dev_evaluator_sha256"' in selector
+    opening=(ROOT/"scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py").read_text()
+    assert "FINAL opening DEV evaluator implementation hash drift" in opening
+    final=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py").read_text()
+    assert "FINAL DEV evaluator implementation hash drift" in final
+
