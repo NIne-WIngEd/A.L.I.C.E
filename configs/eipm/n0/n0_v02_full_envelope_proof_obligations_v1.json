@@ -1741,6 +1741,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_pregradient_runtime_receipts_bind_exact_producer_implementations",
       "requirement": "Every pre-gradient runtime authority receipt consumed by the training authorizer must hash-bind the exact canonical producer implementation: P40/P40A/P40B/P40C auditors, P42 CPU qualifier, P43 GPU qualifier, and the static proof auditor. Same-revision receipts from substituted producer logic may not authorize gradient."
+    },
+    {
+      "id": "N0-P43AH",
+      "stage": "dev_validation",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_dev_evaluator_authenticates_runtime_training_authorization_producer",
+      "requirement": "DEV evaluation must authenticate the runtime training-authorization schema and exact canonical authorizer implementation, and that producer lineage must remain bound through FINAL opening and closure. A fabricated same-revision authorization payload may not inherit optimizer authority merely by copying the PASS status."
     }
   ],
   "closure_rule": {
