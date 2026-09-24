@@ -46,7 +46,8 @@
     "dev_contract_hash_required": true,
     "dev_gate_registry_hash_required": true,
     "proof_contract_hash_required": true,
-    "training_plan_hash_required": true
+    "training_plan_hash_required": true,
+    "training_authorizer_implementation_hash_required": true
   },
   "authority": {
     "private_identity_data": false,
@@ -74,6 +75,7 @@
     "candidate_checkpoint_receipt_sha256",
     "candidate_system_sha256",
     "training_authorization_sha256",
+    "training_authorizer_sha256",
     "static_proof_receipt_sha256"
   ]
 }
