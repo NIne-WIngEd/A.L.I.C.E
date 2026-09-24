@@ -3,9 +3,9 @@
 **Date:** 2026-09-23  
 **Continuity role:** authoritative handoff for the current N0 successor frontier  
 **N0 source branch:** `alice-eipm-v1-n0-full-envelope-foundation-build-v1`  
-**Exact N0 head:** `f78cb119b368a372c16e892646f7b7f247138eab`  
-**Exact-head CI:** run `35954996471` — **green**  
-**Observed exact-head static result:** **259 tests passed**, **219 static proof obligations**, **243 total proof obligations**, proof-matrix static audit PASS  
+**Exact N0 head:** `ab59c02d9a625b2b376d14ad0d9efd0250b305f3`  
+**Exact-head CI:** run `35958513992` — **green**  
+**Observed exact-head static result:** **260 tests passed**, **220 static proof obligations**, **244 total proof obligations**, proof-matrix static audit PASS  
 **Optimizer / gradient / FINAL:** still closed by source policy; no successor joint optimization has happened  
 **N0 complete:** false
 
@@ -155,12 +155,12 @@ FINAL still cannot train, repair, rerun automatically, or choose checkpoints.
 
 ## Exact-head evidence
 
-At `f78cb119b368a372c16e892646f7b7f247138eab`:
+At `ab59c02d9a625b2b376d14ad0d9efd0250b305f3`:
 
-- GitHub Actions run `35954996471` completed successfully;
-- 259 tests passed;
-- 219 STATIC_REQUIRED obligations passed;
-- 243 total proof obligations remain registered, with only empirical/runtime/training/FINAL blockers unresolved;
+- GitHub Actions run `35958513992` completed successfully;
+- 260 tests passed;
+- 220 STATIC_REQUIRED obligations passed;
+- 244 total proof obligations remain registered, with only empirical/runtime/training/FINAL blockers unresolved;
 - full proof-matrix static audit passed;
 - historical authority firewall remained intact;
 - source plan still reports optimizer=false, gradient=false, gpu_training=false, n0_complete=false.
@@ -179,7 +179,7 @@ Further source/static changes are justified only if they prevent one of the foll
 4. DEV/FINAL goalpost movement or leakage;
 5. a direct contradiction with the full-envelope successor objective.
 
-Do **not** continue adding hashes, receipt fields, wrappers, or duplicate provenance checks merely because another lineage field could exist. At `f78cb...`, the static audit should be treated as exhausted unless a new concrete defect satisfies one of the five criteria above.
+Do **not** continue adding hashes, receipt fields, wrappers, or duplicate provenance checks merely because another lineage field could exist. At `ab59c...`, the static audit should be treated as exhausted unless a new concrete defect satisfies one of the five criteria above.
 
 The most recent necessary addition is the canonical P39PN runtime materialization path:
 
@@ -191,6 +191,28 @@ The most recent necessary addition is the canonical P39PN runtime materializatio
 - emits no optimizer, gradient, training, or N0-complete authority.
 
 This is operational closure of an already-declared runtime blocker, not a new architecture layer.
+
+### Final pre-Magnolia check: incomplete FINAL TRAIN/DEV baseline
+
+A final necessity-filtered audit before external compute found one substantive defect at the prior `f78cb...` frontier.
+
+The sealed FINAL-v2 independence audit checked the ordinary semantic-operator TRAIN/DEV lane, but it did **not** include the dedicated semantic-operator long-context TRAIN/DEV lane. It also computed runtime-axis extrapolation against only the base behavioral curriculum rather than every relevant full-fabric TRAIN/DEV supplement.
+
+That could permit a false closure claim: a relation description, entity, factor combination, or runtime operating point seen in the semantic-long/runtime-view/long-context training supplements could have been treated as unseen FINAL evidence.
+
+The fix is now complete:
+
+- FINAL semantic independence merges ordinary semantic-operator and semantic-long TRAIN/DEV rows;
+- held-out factor-combination checks include semantic-long rows;
+- FINAL runtime-axis extrapolation uses behavioral + runtime-view + long-context TRAIN/DEV as the baseline;
+- context-length extrapolation is evaluated against the complete full-fabric baseline using the complete FINAL package;
+- the FINAL audit records hashes for every relevant TRAIN/DEV reference;
+- the canonical P39PN materializer and authoritative CI workflow pass the semantic-long TRAIN/DEV artifact into the FINAL auditor;
+- proof obligation `N0-P39RGA` makes this part of exact-head static authority.
+
+Exact-head run `35958513992` passed the full strengthened package build/audit/freeze path with **260 tests**, **220 STATIC_REQUIRED obligations**, **244 total obligations**, and `PASS_N0_FULL_PROOF_MATRIX_STATIC_AUDIT`.
+
+This defect satisfies the necessity filter because it could have produced a false claim of FINAL independence/generalization. It was not provenance-only polish. No additional source change is justified merely to keep auditing.
 
 ## Immediate next execution order
 
