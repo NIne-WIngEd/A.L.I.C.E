@@ -1190,6 +1190,11 @@ def main() -> None:
     if int(accelerator.num_processes)!=int(gpu_route_receipt.get("world_size",0)):
         raise SystemExit("P43 world-size drift")
 
+    if int(accelerator.num_processes)>1 and gpu_route_receipt.get(
+        "ddp_replica_wrapped"
+    ) is not True:
+        raise SystemExit("P43 DDP replica route was not measured")
+
     system,load_receipt=load_registered_full_envelope_system(
         topology_path=args.topology_config,
         semantic_config_path=args.semantic_config,
