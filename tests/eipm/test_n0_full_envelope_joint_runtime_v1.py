@@ -2462,3 +2462,21 @@ def test_dev_receipt_is_bound_to_canonical_evaluator_and_gate_contracts() -> Non
     final=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py").read_text()
     assert "FINAL DEV evaluator implementation hash drift" in final
 
+
+
+def test_static_proof_receipt_binds_all_ci_required_receipts_to_authoritative_workflow() -> None:
+    auditor=(
+        ROOT/"scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py"
+    ).read_text()
+    assert 'n0-full-envelope-foundation-build-v1-contract.yml' in auditor
+    assert '"ci_workflow_sha256"' in auditor
+    assert '"ci_required_receipts"' in auditor
+    assert "CI_REQUIRED receipt missing from authoritative workflow" in auditor
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "static proof CI workflow hash drift" in trainer
+    assert "static proof CI receipt coverage drift" in trainer
+    dev=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py").read_text()
+    assert "DEV static proof CI workflow hash drift" in dev
+    final=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py").read_text()
+    assert "FINAL static proof CI workflow hash drift" in final
+
