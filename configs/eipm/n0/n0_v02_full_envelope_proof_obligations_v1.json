@@ -1671,6 +1671,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_n0_contract_ci_watches_magnolia_udocker_runtime_wrapper",
       "requirement": "The shared Magnolia udocker execution wrapper used by both authoritative CPU and GPU qualification entrypoints must be watched and shell-syntax checked by exact-head N0 CI. Container-launch changes may not bypass the successor contract."
+    },
+    {
+      "id": "N0-P43Z",
+      "stage": "runtime_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_magnolia_udocker_wrapper_mounts_exact_repo_root",
+      "requirement": "The Magnolia udocker wrapper must mount the exact checked-out A.L.I.C.E repository root at the same path used as container workdir and ALICE_N0_REPO_ROOT. Qualification may not rely on the repo happening to live under a broader compute mount."
     }
   ],
   "closure_rule": {
