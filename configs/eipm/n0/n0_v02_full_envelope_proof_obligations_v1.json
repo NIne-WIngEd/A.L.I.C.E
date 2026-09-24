@@ -1755,6 +1755,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_cpu_runtime_runner_materializes_exact_static_proof_receipt_for_handoff",
       "requirement": "The canonical CPU runtime handoff must materialize the exact clean-head executed static-proof receipt needed by the later runtime training authorizer before producing P40-P42 receipts. External progression may not depend on manually reconstructing a proof artifact outside the governed handoff."
+    },
+    {
+      "id": "N0-P39PME",
+      "stage": "full_public_mixture",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_p39pn_has_canonical_source_stable_full_mixture_materializer",
+      "requirement": "P39PN must have one canonical source-stable runtime materializer that reuses the exact CPU-qualified semantic/long-context artifacts, materializes and audits behavioral/runtime-view/FewRel lanes, rebuilds and freezes the sealed FINAL-v2 package without observing results, and publishes the full public mixture only after every audit passes. The GPU/training handoff may not depend on undocumented manual artifact assembly."
     }
   ],
   "closure_rule": {
