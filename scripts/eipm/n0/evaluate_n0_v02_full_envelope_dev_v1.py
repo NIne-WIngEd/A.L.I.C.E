@@ -1115,6 +1115,11 @@ def main() -> None:
         raise SystemExit("candidate checkpoint receipt schema drift")
     if candidate.get("status")!="TRAINED_PUBLIC_N0_CANDIDATE_REQUIRES_DEV_SELECTION":
         raise SystemExit("candidate checkpoint receipt status drift")
+    trainer=Path(__file__).resolve().with_name(
+        "train_n0_v02_full_envelope_joint_v1.py"
+    )
+    if candidate.get("trainer_implementation_sha256")!=sha256_file(trainer):
+        raise SystemExit("candidate trainer implementation hash drift")
     training_authorization=read_json(args.training_authorization)
     tracked_status=subprocess.check_output(["git","status","--porcelain"],text=True)
     if tracked_status.strip():
