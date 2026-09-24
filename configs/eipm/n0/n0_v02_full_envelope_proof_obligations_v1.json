@@ -1657,6 +1657,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_p43_gpu_memory_wraps_actual_ddp_replica_route_before_measurement",
       "requirement": "When the selected P43 route is multi-process DDP, memory qualification must wrap the exact J3 system in DistributedDataParallel with the same unused-parameter policy before measuring peak memory. A per-rank bare-module forward may not authorize distributed training."
+    },
+    {
+      "id": "N0-P43X",
+      "stage": "gpu_memory_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_p43_magnolia_handoff_asserts_expanded_memory_coverage_and_clean_source",
+      "requirement": "The authoritative Magnolia P43 handoff must itself require a fully clean checkout and verify the expanded semantic/full-fabric stress coverage, 2-rank DDP wrapper, and every-rank projection PASS. A stale post-run assertion set may not bless a weaker receipt."
     }
   ],
   "closure_rule": {
