@@ -2209,3 +2209,20 @@ def test_cpu_runtime_runner_rejects_untracked_source_shadowing_before_p40_receip
     assert 'STOP: repo is not clean' in runner
     assert runner.index('git status --porcelain') < runner.index('audit_tokenizer_v02.py')
 
+
+
+def test_p40_runtime_auditors_verify_claimed_revision_against_clean_checkout() -> None:
+    helper=(ROOT/"src/alice_personality/n0/source_authority_v1.py").read_text()
+    assert "def require_clean_exact_revision(" in helper
+    assert '["git","status","--porcelain"]' in helper
+    assert '["git","rev-parse","HEAD"]' in helper
+    for relative in (
+        "scripts/eipm/n0/audit_tokenizer_v02.py",
+        "scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py",
+        "scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_token_boundaries_v1.py",
+        "scripts/eipm/n0/audit_n0_v02_semantic_operator_long_token_alignment_v1.py",
+    ):
+        source=(ROOT/relative).read_text()
+        assert "require_clean_exact_revision" in source
+        assert "expected_revision=source_revision" in source
+
