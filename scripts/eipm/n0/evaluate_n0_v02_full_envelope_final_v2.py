@@ -898,6 +898,10 @@ def main() -> None:
         args.candidate_system
     ):
         raise SystemExit("DEV-selected candidate system drift")
+    if dev_selection.get("training_authorization_sha256")!=candidate.get(
+        "training_authorization_sha256"
+    ):
+        raise SystemExit("FINAL DEV/training authorization lineage drift")
     if candidate.get("stage")!="J3_full_public_n0_coadaptation":
         raise SystemExit("FINAL may evaluate only selected J3 candidate")
     if candidate.get("final_results_observed") is not False:
@@ -1084,6 +1088,9 @@ def main() -> None:
         "static_proof_receipt_sha256":sha256_file(args.static_proof_receipt),
         "proof_contract_sha256":sha256_file(proof_contract_path),
         "opening_authorizer_sha256":sha256_file(args.opening_authorizer),
+        "training_authorization_sha256":candidate.get(
+            "training_authorization_sha256"
+        ),
         "closure_authority_chain_complete":True,
         "freeze_receipt_sha256":sha256_file(args.freeze_receipt),
         "final_contract_sha256":sha256_file(args.final_contract),
