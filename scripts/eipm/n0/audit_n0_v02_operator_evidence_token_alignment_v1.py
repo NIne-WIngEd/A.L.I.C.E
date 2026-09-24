@@ -135,6 +135,7 @@ def main() -> None:
         "schema":"alice.eipm.n0.operator-evidence-token-alignment-audit.v1",
         "status":PASS if not errors else FAIL,
         "source_revision":source_revision,
+        "auditor_sha256":sha256(Path(__file__).resolve()),
         "rows_sha256":sha256(rows_path),
         "tokenizer_json_sha256":sha256(tokenizer_dir/"tokenizer.json"),
         "rows":len(rows),
