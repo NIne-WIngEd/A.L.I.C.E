@@ -171,6 +171,7 @@ def main() -> None:
         "schema":"alice.eipm.n0.semantic-operator-long-token-alignment-audit.v1",
         "status":PASS if not errors else FAIL,
         "source_revision":source_revision,
+        "auditor_sha256":sha256(Path(__file__).resolve()),
         "rows_sha256":sha256(rows_path),
         "manifest_sha256":sha256(manifest_path),
         "contract_sha256":sha256(contract_path),
