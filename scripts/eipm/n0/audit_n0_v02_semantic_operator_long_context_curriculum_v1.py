@@ -108,18 +108,57 @@ def main() -> None:
             errors.append(f"{rid}: base semantic/operator targets changed")
 
         exact=True
+        operating_words=int(row["long_context_word_operating_point"])
+        if surface=="query" and builder.word_count(str(row["query"])) < operating_words:
+            errors.append(f"{rid}: long query surface fell below operating point")
         for span in row["query_relation_evidence_char_spans"]:
             exact &= validate_span(str(row["query"]),span)
-        for span in row["relation_schema_evidence_char_spans"]:
+
+        relation_spans=list(row["relation_schema_evidence_char_spans"])
+        relation_evidence_indices=sorted({
+            int(span["candidate_index"])
+            for span in relation_spans
+        })
+        if surface=="relation_schema":
+            locator_indices=sorted(
+                int(x)
+                for x in row.get("long_context_locator",{}).get(
+                    "candidate_indices",[]
+                )
+            )
+            if locator_indices != relation_evidence_indices:
+                errors.append(
+                    f"{rid}: relation-schema locator does not cover every "
+                    "supervised candidate"
+                )
+            for candidate_index in relation_evidence_indices:
+                candidate_text=str(
+                    row["relation_candidates"][candidate_index]["text"]
+                )
+                if builder.word_count(candidate_text) < operating_words:
+                    errors.append(
+                        f"{rid}: supervised relation-schema candidate "
+                        f"{candidate_index} fell below operating point"
+                    )
+        for span in relation_spans:
             exact &= validate_span(
                 str(row["relation_candidates"][int(span["candidate_index"])]["text"]),
                 span,
             )
         for name,span in row["factor_schema_evidence_char_spans"].items():
-            exact &= validate_span(
-                str(row["factor_schemas"][name][int(span["candidate_index"])]["text"]),
-                span,
+            factor_text=str(
+                row["factor_schemas"][name][int(span["candidate_index"])]["text"]
             )
+            if (
+                surface=="factor_schema"
+                and name==str(row.get("long_context_locator",{}).get("bank",""))
+                and builder.word_count(factor_text) < operating_words
+            ):
+                errors.append(
+                    f"{rid}: supervised factor-schema candidate fell below "
+                    "operating point"
+                )
+            exact &= validate_span(factor_text,span)
         for name,spans in row["step_factor_schema_evidence_char_spans"].items():
             for span in spans:
                 exact &= validate_span(
