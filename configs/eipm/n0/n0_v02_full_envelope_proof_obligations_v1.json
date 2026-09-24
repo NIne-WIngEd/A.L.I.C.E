@@ -1601,6 +1601,20 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_trainer_binds_optimizer_and_runtime_route_to_plan_and_p43_receipt",
       "requirement": "Optimizer learning rates, weight decays, clipping, seed, scheduler horizon/warmup, replay length, mixed precision, world size, microbatch sizes, teacher batch size, and gradient accumulation must be frozen before gradient or selected by the exact P43 memory receipt. Runtime CLI overrides may not silently retune the model after DEV observations."
+    },
+    {
+      "id": "N0-P40G",
+      "stage": "tokenizer_stress",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_p40_tokenizer_gate_executes_named_stress_families_and_is_exact_head_bound",
+      "requirement": "P40 must be a distinct exact-head runtime tokenizer stress gate, not a generic legacy tokenizer PASS. It must execute and receipt byte-fallback/OOV, Unicode normalization, held-out relation/factor fragmentation, long-entity, punctuation/code/math, and multilingual stress families against the exact governed tokenizer with no model training."
+    },
+    {
+      "id": "N0-P40H",
+      "stage": "runtime_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_cpu_runtime_runner_rejects_untracked_source_shadowing_before_p40_receipts",
+      "requirement": "The canonical CPU qualification runner must require a fully clean exact-head worktree before producing P40/P40A/P40B/P40C/P42 receipts. Untracked Python or config files may not shadow source during early runtime audits and then disappear before a later exact-source check."
     }
   ],
   "closure_rule": {
