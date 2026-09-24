@@ -1685,6 +1685,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_p43_memory_projection_includes_measured_resident_runtime_overhead",
       "requirement": "P43 projected training memory must use at least the measured resident GPU allocation after loading the exact model, DDP wrapper, objective, and fixed replay inputs as its baseline. Raw parameter bytes alone may not omit persistent runtime/DDP overhead from the safety projection."
+    },
+    {
+      "id": "N0-P43AB",
+      "stage": "runtime_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_static_proof_receipt_is_canonical_and_clean_exact_source_bound",
+      "requirement": "The static proof receipt consumed by runtime training authorization must be produced from the canonical proof matrix, supersession map, and retrospective audit on a fully clean exact-source checkout, and the trainer must hash-bind those canonical inputs. A same-HEAD receipt generated from substituted or dirty proof sources may not authorize gradient."
     }
   ],
   "closure_rule": {
