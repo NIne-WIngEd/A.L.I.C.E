@@ -41,7 +41,12 @@
     "j2_j3_remain_blocked_until_mapping_complete": true,
     "all_stage_gate_mappings_precommitted_before_gradient": true,
     "retained_prior_stage_gates_re_evaluated_on_current_checkpoint": true,
-    "candidate_training_authorization_lineage_required": true
+    "candidate_training_authorization_lineage_required": true,
+    "dev_evaluator_implementation_hash_required": true,
+    "dev_contract_hash_required": true,
+    "dev_gate_registry_hash_required": true,
+    "proof_contract_hash_required": true,
+    "training_plan_hash_required": true
   },
   "authority": {
     "private_identity_data": false,
@@ -59,5 +64,16 @@
     "novel_cross": "evaluation/eipm/n0/n0_v02_novel_cross_competency_base_v0.1.jsonl"
   },
   "runtime_training_authorization_required": true,
-  "runtime_training_authorization_schema": "alice.eipm.n0.full-envelope-training-authorization.v1"
+  "runtime_training_authorization_schema": "alice.eipm.n0.full-envelope-training-authorization.v1",
+  "dev_receipt_required_lineage": [
+    "dev_evaluator_sha256",
+    "dev_contract_sha256",
+    "gate_registry_sha256",
+    "proof_contract_sha256",
+    "training_plan_sha256",
+    "candidate_checkpoint_receipt_sha256",
+    "candidate_system_sha256",
+    "training_authorization_sha256",
+    "static_proof_receipt_sha256"
+  ]
 }
