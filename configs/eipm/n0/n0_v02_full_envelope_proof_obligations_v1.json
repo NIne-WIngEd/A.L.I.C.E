@@ -1706,6 +1706,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_final_v2_result_binds_canonical_static_proof_and_full_closure_authority_chain",
       "requirement": "The authoritative FINAL-v2 result that may mark N0 complete must bind the canonical static proof contract and receipt plus the full opening, DEV selection/evaluation, freeze, evaluator, package, and candidate authority chain. A passing metric payload without this provenance may not serve as the N0 closure receipt."
+    },
+    {
+      "id": "N0-P43AC",
+      "stage": "runtime_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_static_proof_receipt_executes_all_registered_static_tests",
+      "requirement": "The exact-head static proof receipt consumed by training, DEV selection, and FINAL closure must represent an executed passing pytest run over every registered static-test file, not merely structural presence of test functions. The suite must run on the same clean source revision before the receipt is emitted."
     }
   ],
   "closure_rule": {
