@@ -400,6 +400,14 @@ def test_final_v2_audit_includes_semantic_long_lane_and_all_full_fabric_train_de
         ROOT/"scripts/eipm/n0/materialize_n0_v02_full_public_mixture_v1.sh"
     ).read_text()
 
+    package=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_final_package_v1.json").read_text()
+    )
+    assert package["independence"]["semantic_operator_long_context_train_dev_included"] is True
+    assert package["independence"][
+        "full_fabric_extrapolation_baseline_includes_behavioral_runtime_view_and_long_context_train_dev"
+    ] is True
+
     assert 'p.add_argument("--semantic-long-train-dev-rows",required=True)' in auditor
     assert 'semantic_long=read_jsonl(paths["semantic_long_train_dev_rows"])' in auditor
     assert "semantic_train_dev=semantic+semantic_long" in auditor
