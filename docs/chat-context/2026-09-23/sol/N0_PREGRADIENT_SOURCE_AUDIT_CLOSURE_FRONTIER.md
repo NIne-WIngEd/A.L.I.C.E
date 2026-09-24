@@ -437,3 +437,28 @@ all source-bound `0441f99d...` P42/P39PN/P43 evidence is now historical only. Pr
 
 Calibration lesson:
 a final pre-GPU check must follow every real optimizer-facing lane through the production adapter boundary, not merely verify launcher, Slurm, DDP, artifact, and topology contracts. Cheap CPU qualification should execute interfaces whose failure does not intrinsically require GPU hardware. This is a direct application of the MC10D anti-hotfix rule: repair the interface failure class and move its detection earlier rather than retrying P43 with a one-off workaround.
+
+
+## 2026-09-24 P42 requalification job 576083 — replay interface repair empirically closed on CPU
+
+Magnolia job `576083` completed `0:0` on `node016` in `00:05:45` against exact source `af79bc8b79ba9401248e0e2bfd3e9e1e6588cd65`. stderr was empty.
+
+The strengthened pre-GPU gate executed the real registered semantic replay adapters and emitted:
+- `semantic_replay_interface_passed`
+- `mlm_dispatch_pass=true`
+- `teacher_dispatch_pass=true`
+- `objective_metadata_outside_native_model=true`
+- teacher objective metadata keys exactly `group_sizes`, `preferred_masks`, `principle_tags`, `ids`
+
+Thus the job-576080 failure class is now reproduced-and-closed at the cheaper CPU qualification boundary. This is stronger evidence than the earlier static repair alone.
+
+The full P42 runtime also passed at the repaired exact head:
+`PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1`, `combined_parameters=243693339`, peak RSS `2494.34765625 MB`, 8 relations, 9 factor banks, 10 edges, 8 views, 4 reasoning steps, all required virtualized surfaces true. Static proof also passed with zero pytest failures/errors/skips and 244 obligations.
+
+No optimizer, gradient, GPU training, private identity, FINAL opening, or N0 closure occurred.
+
+Authority state:
+- old `0441f99d...` CPU/P39PN/P43 evidence remains historical/preserved;
+- `af79bc8...` P42 CPU authority is now valid;
+- next minimal stage is exact-head P39PN rematerialization/freeze on `af79bc8...`;
+- only after P39PN passes may P43 be retried.
