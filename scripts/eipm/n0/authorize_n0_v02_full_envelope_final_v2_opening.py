@@ -80,6 +80,10 @@ def main() -> None:
     selection_receipt_sha256=sha256_file(args.selection_receipt)
     freeze_receipt_sha256=sha256_file(args.freeze_receipt)
 
+    if candidate.get("schema")!="alice.eipm.n0.full-envelope-checkpoint-receipt.v1":
+        raise SystemExit("FINAL opening candidate checkpoint receipt schema drift")
+    if candidate.get("status")!="TRAINED_PUBLIC_N0_CANDIDATE_REQUIRES_DEV_SELECTION":
+        raise SystemExit("FINAL opening candidate checkpoint receipt status drift")
     if candidate.get("stage")!=J3:
         raise SystemExit("FINAL opening requires a J3 candidate")
     if candidate.get("source_revision")!=revision:
@@ -95,6 +99,11 @@ def main() -> None:
 
     if dev.get("schema")!="alice.eipm.n0.full-envelope-dev-evaluation.v1":
         raise SystemExit("FINAL opening DEV receipt schema drift")
+    dev_evaluator=Path(__file__).resolve().with_name(
+        "evaluate_n0_v02_full_envelope_dev_v1.py"
+    )
+    if dev.get("dev_evaluator_sha256")!=sha256_file(dev_evaluator):
+        raise SystemExit("FINAL opening DEV evaluator implementation hash drift")
     if dev.get("status")!=PASS_DEV:
         raise SystemExit("FINAL opening requires PASS_DEV_STAGE_GATE")
     if dev.get("stage")!=J3:
@@ -117,6 +126,10 @@ def main() -> None:
         raise SystemExit("DEV selection/candidate checkpoint receipt drift")
     if dev.get("candidate_system_sha256")!=candidate_system_sha256:
         raise SystemExit("DEV selection/candidate system drift")
+    if dev.get("training_authorization_sha256")!=candidate.get(
+        "training_authorization_sha256"
+    ):
+        raise SystemExit("FINAL opening DEV/training authorization lineage drift")
 
     if selection.get("schema")!="alice.eipm.n0.full-envelope-dev-checkpoint-selection.v1":
         raise SystemExit("FINAL opening selection receipt drift: schema")
@@ -132,6 +145,10 @@ def main() -> None:
         raise SystemExit("FINAL opening selection receipt drift: system")
     if selection.get("selected_dev_receipt_sha256")!=dev_receipt_sha256:
         raise SystemExit("FINAL opening selection receipt drift: DEV")
+    if selection.get("selected_dev_evaluator_sha256")!=dev.get(
+        "dev_evaluator_sha256"
+    ):
+        raise SystemExit("FINAL opening selection receipt drift: DEV evaluator")
     selector=Path(__file__).resolve().with_name(
         "select_n0_v02_full_envelope_dev_checkpoint_v1.py"
     )
@@ -168,6 +185,10 @@ def main() -> None:
         "candidate_system_sha256":candidate_system_sha256,
         "candidate_checkpoint_receipt_sha256":candidate_receipt_sha256,
         "dev_receipt_sha256":dev_receipt_sha256,
+        "dev_evaluator_sha256":dev["dev_evaluator_sha256"],
+        "training_authorization_sha256":candidate.get(
+            "training_authorization_sha256"
+        ),
         "selection_receipt_sha256":selection_receipt_sha256,
         "freeze_receipt_sha256":freeze_receipt_sha256,
         "opening_authorizer_sha256":opening_authorizer_sha256,
