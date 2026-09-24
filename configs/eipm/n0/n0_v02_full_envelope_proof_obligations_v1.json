@@ -1615,6 +1615,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_cpu_runtime_runner_rejects_untracked_source_shadowing_before_p40_receipts",
       "requirement": "The canonical CPU qualification runner must require a fully clean exact-head worktree before producing P40/P40A/P40B/P40C/P42 receipts. Untracked Python or config files may not shadow source during early runtime audits and then disappear before a later exact-source check."
+    },
+    {
+      "id": "N0-P40I",
+      "stage": "runtime_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_p40_runtime_auditors_verify_claimed_revision_against_clean_checkout",
+      "requirement": "Every P40/P40A/P40B/P40C runtime auditor must independently verify that its claimed source revision equals the current clean checkout. A caller-supplied 40-hex value alone cannot establish exact-head provenance."
     }
   ],
   "closure_rule": {
