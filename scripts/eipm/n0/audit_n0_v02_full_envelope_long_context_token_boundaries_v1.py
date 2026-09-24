@@ -222,6 +222,7 @@ def main() -> None:
         "schema":"alice.eipm.n0.full-envelope-long-context-token-boundary-audit.v1",
         "status":PASS if not errors and verified==expected else "FAIL_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1",
         "source_revision":source_revision,
+        "auditor_sha256":sha256(Path(__file__).resolve()),
         "errors":errors,
         "rows_sha256":sha256(rows_path),
         "manifest_sha256":sha256(manifest_path),
