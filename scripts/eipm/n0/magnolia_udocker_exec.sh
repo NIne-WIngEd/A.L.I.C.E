@@ -48,6 +48,7 @@ esac
 ARGS=(
   run
   --volume="$BASE:$BASE"
+  --volume="$ROOT:$ROOT"
   --workdir="$ROOT"
   --env="PYTHON=python"
   --env="ALICE_REPO_ROOT=$ROOT"
