@@ -2311,6 +2311,15 @@ def test_p43_magnolia_handoff_asserts_expanded_memory_coverage_and_clean_source(
     assert 'r["stress_pair_count"]==18' in sbatch
     assert 'r["world_size"]==2' in sbatch
     assert 'r["ddp_replica_wrapped"] is True' in sbatch
+    assert "N0_MAIN_PROCESS_PORT" in sbatch
+    assert "accelerate launch" in sbatch
+    assert "--multi_gpu" in sbatch
+    assert "--num_processes 2" in sbatch
+    assert "--num_machines 1" in sbatch
+    assert "--mixed_precision fp16" in sbatch
+    assert "--dynamo_backend no" in sbatch
+    assert "--main_process_port" in sbatch
+    assert "torchrun --standalone" not in sbatch
 
 
 
