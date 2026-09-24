@@ -3,8 +3,10 @@ from __future__ import annotations
 
 import argparse
 import ast
+import hashlib
 import json
 import subprocess
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -231,18 +233,35 @@ def main() -> None:
             + repr(missing_residual)
         )
 
-    try:
-        source_revision=subprocess.check_output(
-            ["git","-C",str(root),"rev-parse","HEAD"],
-            text=True,
-        ).strip().lower()
-        require_clean_exact_revision(
-            expected_revision=source_revision,
-            label="static proof audit",
+    source_revision=subprocess.check_output(
+        ["git","-C",str(root),"rev-parse","HEAD"],
+        text=True,
+    ).strip().lower()
+    require_clean_exact_revision(
+        expected_revision=source_revision,
+        label="static proof audit",
+    )
+
+    static_test_files=[
+        str(value) for value in contract.get("static_test_files", [])
+    ]
+    static_suite=subprocess.run(
+        [sys.executable,"-m","pytest","-q",*static_test_files],
+        cwd=root,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    static_suite_exit_code=int(static_suite.returncode)
+    static_suite_pass=static_suite_exit_code==0
+    if not static_suite_pass:
+        errors.append(
+            f"static proof suite failed with exit code {static_suite_exit_code}"
         )
-    except Exception as exc:
-        errors.append(f"unable to bind static proof receipt to clean git revision: {exc}")
-        source_revision=None
+    require_clean_exact_revision(
+        expected_revision=source_revision,
+        label="static proof audit after pytest",
+    )
 
     result: dict[str, Any] = {
         "schema": "alice.eipm.n0.full-envelope-proof-obligations-static-audit.v1",
@@ -250,6 +269,17 @@ def main() -> None:
         "proof_contract_sha256": sha256_path(contract_path),
         "supersession_sha256": sha256_path(supersession_path),
         "retrospective_sha256": sha256_path(retrospective_path),
+        "static_suite_executed": True,
+        "static_suite_pass": bool(static_suite_pass),
+        "static_suite_exit_code": int(static_suite_exit_code),
+        "executed_static_test_files": static_test_files,
+        "static_test_function_count": len(all_test_names),
+        "pytest_stdout_sha256": hashlib.sha256(
+            static_suite.stdout.encode("utf-8")
+        ).hexdigest(),
+        "pytest_stderr_sha256": hashlib.sha256(
+            static_suite.stderr.encode("utf-8")
+        ).hexdigest(),
         "status": PASS if not errors else FAIL,
         "errors": errors,
         "obligation_count": len(ids),
