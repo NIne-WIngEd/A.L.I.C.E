@@ -71,6 +71,7 @@ def main() -> None:
     p.add_argument("--final-contract",required=True)
     p.add_argument("--behavioral-train-dev-rows",required=True)
     p.add_argument("--semantic-train-dev-rows",required=True)
+    p.add_argument("--semantic-long-train-dev-rows",required=True)
     p.add_argument("--runtime-view-train-dev-rows",required=True)
     p.add_argument("--long-context-train-dev-rows",required=True)
     p.add_argument("--synthetic-final-rows",required=True)
@@ -87,7 +88,8 @@ def main() -> None:
 
     paths={name:Path(getattr(args,name)) for name in (
         "package_config","evaluator_contract","final_contract","behavioral_train_dev_rows",
-        "semantic_train_dev_rows","runtime_view_train_dev_rows","long_context_train_dev_rows",
+        "semantic_train_dev_rows","semantic_long_train_dev_rows",
+        "runtime_view_train_dev_rows","long_context_train_dev_rows",
         "synthetic_final_rows","semantic_final_rows","runtime_view_final_rows","long_context_final_rows","package_manifest",
         "fewrel_final_rows","fewrel_final_bank","fewrel_manifest","fewrel_audit","output"
     )}
@@ -102,6 +104,8 @@ def main() -> None:
     fewrel_audit=json.loads(paths["fewrel_audit"].read_text(encoding="utf-8"))
     behavioral=read_jsonl(paths["behavioral_train_dev_rows"])
     semantic=read_jsonl(paths["semantic_train_dev_rows"])
+    semantic_long=read_jsonl(paths["semantic_long_train_dev_rows"])
+    semantic_train_dev=semantic+semantic_long
     runtime_train_dev=read_jsonl(paths["runtime_view_train_dev_rows"])
     long_train_dev=read_jsonl(paths["long_context_train_dev_rows"])
     final_rows=read_jsonl(paths["synthetic_final_rows"])
@@ -209,12 +213,13 @@ def main() -> None:
 
     def max_axis(rows: list[dict[str,Any]], key: str) -> int:
         return max((int(x.get(key,0)) for x in rows),default=0)
+    full_fabric_train_dev=behavioral+runtime_train_dev+long_train_dev
     axis_checks={
-        "relation":max_axis(final_rows,"runtime_relation_count") > max_axis(behavioral,"runtime_relation_count"),
-        "field":max_axis(final_rows,"runtime_field_count") > max_axis(behavioral,"runtime_field_count"),
-        "candidate":max_axis(final_rows,"runtime_candidate_answer_count") > max_axis(behavioral,"runtime_candidate_answer_count"),
-        "reasoning_steps":max_axis(final_rows,"runtime_reasoning_steps") > max_axis(behavioral,"runtime_reasoning_steps"),
-        "context_characters":max((full_text_characters(x) for x in final_rows),default=0) > max((full_text_characters(x) for x in behavioral),default=0),
+        "relation":max_axis(final_rows,"runtime_relation_count") > max_axis(full_fabric_train_dev,"runtime_relation_count"),
+        "field":max_axis(final_rows,"runtime_field_count") > max_axis(full_fabric_train_dev,"runtime_field_count"),
+        "candidate":max_axis(final_rows,"runtime_candidate_answer_count") > max_axis(full_fabric_train_dev,"runtime_candidate_answer_count"),
+        "reasoning_steps":max_axis(final_rows,"runtime_reasoning_steps") > max_axis(full_fabric_train_dev,"runtime_reasoning_steps"),
+        "context_characters":max((full_text_characters(x) for x in final_rows),default=0) > max((full_text_characters(x) for x in full_fabric_train_dev),default=0),
     }
     train_factor_max=max((max(len(bank) for bank in x.get("factor_schemas",{}).values()) for x in behavioral),default=0)
     final_factor_max=max((max(len(bank) for bank in x.get("factor_schemas",{}).values()) for x in final_rows),default=0)
@@ -236,7 +241,7 @@ def main() -> None:
     semantic_combo=any(
         int((x.get("factor_targets") or {}).get("recency_modifier",0))==1
         and int((x.get("factor_targets") or {}).get("provenance_constraint_modifier",0))==1
-        for x in semantic
+        for x in semantic_train_dev
     )
     final_combo=any(
         (x.get("factor_target_keys") or {}).get("recency")=="MOD_RECENCY_ON"
@@ -269,7 +274,7 @@ def main() -> None:
             errors.append(f"{rid}: semantic FINAL template partition drift")
 
     semantic_train_dev_families={
-        str(x.get("relation_family","")) for x in semantic
+        str(x.get("relation_family","")) for x in semantic_train_dev
     }
     semantic_final_families={
         str(x.get("relation_family","")) for x in semantic_final
@@ -284,7 +289,7 @@ def main() -> None:
         )
 
     semantic_train_dev_entities={
-        str(e) for x in semantic for e in x.get("entities") or []
+        str(e) for x in semantic_train_dev for e in x.get("entities") or []
     }
     semantic_final_entities={
         str(e) for x in semantic_final for e in x.get("entities") or []
@@ -300,7 +305,7 @@ def main() -> None:
 
     train_dev_relation_text={
         str(item.get("text","")).strip().lower()
-        for row in semantic
+        for row in semantic_train_dev
         for item in row.get("relation_candidates") or []
     }
     final_relation_text={
@@ -542,6 +547,11 @@ def main() -> None:
         "heldout_recency_provenance_combo_seen_in_behavioral_train_dev":behavioral_combo,
         "heldout_recency_provenance_combo_seen_in_semantic_train_dev":semantic_combo,
         "natural_relation_overlap":natural_relation_overlap,
+        "behavioral_train_dev_rows_sha256":sha256(paths["behavioral_train_dev_rows"]),
+        "semantic_train_dev_rows_sha256":sha256(paths["semantic_train_dev_rows"]),
+        "semantic_long_train_dev_rows_sha256":sha256(paths["semantic_long_train_dev_rows"]),
+        "runtime_view_train_dev_rows_sha256":sha256(paths["runtime_view_train_dev_rows"]),
+        "long_context_train_dev_rows_sha256":sha256(paths["long_context_train_dev_rows"]),
         "results_observed":False,
         "training_authorized":False,
         "model_selection_authorized":False,
