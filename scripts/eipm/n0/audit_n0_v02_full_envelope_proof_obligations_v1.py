@@ -8,6 +8,13 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
+from alice_personality.n0.source_authority_v1 import (
+    repository_root,
+    require_canonical_source_file,
+    require_clean_exact_revision,
+    sha256_path,
+)
+
 
 PASS = "PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1"
 FAIL = "FAIL_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1"
@@ -33,9 +40,26 @@ def main() -> None:
     args = p.parse_args()
 
     root = Path(args.repo_root).resolve()
-    contract_path = Path(args.contract).resolve()
-    supersession_path = Path(args.supersession).resolve()
-    retrospective_path = Path(args.retrospective).resolve()
+    canonical_root=repository_root().resolve()
+    if root!=canonical_root:
+        raise SystemExit(
+            f"proof audit repo root must be canonical exact source: {root} != {canonical_root}"
+        )
+    contract_path = require_canonical_source_file(
+        args.contract,
+        "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
+        label="proof obligation contract",
+    )
+    supersession_path = require_canonical_source_file(
+        args.supersession,
+        "configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json",
+        label="supersession map",
+    )
+    retrospective_path = require_canonical_source_file(
+        args.retrospective,
+        "configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json",
+        label="retrospective audit",
+    )
     output_path = Path(args.output).resolve()
     if output_path.exists():
         raise SystemExit(f"refusing to overwrite {output_path}")
@@ -211,14 +235,21 @@ def main() -> None:
         source_revision=subprocess.check_output(
             ["git","-C",str(root),"rev-parse","HEAD"],
             text=True,
-        ).strip()
+        ).strip().lower()
+        require_clean_exact_revision(
+            expected_revision=source_revision,
+            label="static proof audit",
+        )
     except Exception as exc:
-        errors.append(f"unable to bind static proof receipt to git revision: {exc}")
+        errors.append(f"unable to bind static proof receipt to clean git revision: {exc}")
         source_revision=None
 
     result: dict[str, Any] = {
         "schema": "alice.eipm.n0.full-envelope-proof-obligations-static-audit.v1",
         "source_revision": source_revision,
+        "proof_contract_sha256": sha256_path(contract_path),
+        "supersession_sha256": sha256_path(supersession_path),
+        "retrospective_sha256": sha256_path(retrospective_path),
         "status": PASS if not errors else FAIL,
         "errors": errors,
         "obligation_count": len(ids),
