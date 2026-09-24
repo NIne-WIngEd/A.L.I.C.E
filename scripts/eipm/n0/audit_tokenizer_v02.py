@@ -282,6 +282,7 @@ def main() -> None:
         "schema":SCHEMA,
         "status":PASS if not errors else "FAIL_N0_TOKENIZER_STRESS_V1",
         "source_revision":source_revision,
+        "auditor_sha256":sha256_file(Path(__file__).resolve()),
         "tokenizer_sha256":sha256_file(tokenizer_path),
         "tokenizer_receipt_sha256":sha256_file(tokenizer_receipt_path),
         "corpus_receipt_sha256":sha256_file(corpus_receipt_path),
