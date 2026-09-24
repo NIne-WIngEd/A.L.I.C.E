@@ -1692,6 +1692,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_static_proof_receipt_is_canonical_and_clean_exact_source_bound",
       "requirement": "The static proof receipt consumed by runtime training authorization must be produced from the canonical proof matrix, supersession map, and retrospective audit on a fully clean exact-source checkout, and the trainer must hash-bind those canonical inputs. A same-HEAD receipt generated from substituted or dirty proof sources may not authorize gradient."
+    },
+    {
+      "id": "N0-P39PMD",
+      "stage": "full_public_mixture",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_public_mixture_audit_verifies_clean_exact_source_and_canonical_contract",
+      "requirement": "The full public-mixture audit consumed by P43/training must be produced on a fully clean exact-source checkout from the canonical public-mixture contract, and its receipt must bind both the canonical contract and exact auditor implementation. A same-HEAD PASS produced by substituted or dirty audit code may not authorize runtime qualification or gradient."
     }
   ],
   "closure_rule": {
