@@ -2327,3 +2327,13 @@ def test_magnolia_udocker_wrapper_mounts_exact_repo_root() -> None:
     assert '--workdir="$ROOT"' in wrapper
     assert '--env="ALICE_N0_REPO_ROOT=$ROOT"' in wrapper
 
+
+
+def test_p43_memory_projection_includes_measured_resident_runtime_overhead() -> None:
+    qualifier=(ROOT/"scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py").read_text()
+    assert "projection_baseline_bytes=max(model_bytes,resident_before)" in qualifier
+    assert "projection_baseline_bytes" in qualifier
+    assert "projected=(\n        projection_baseline_bytes" in qualifier
+    assert '"projection_baseline_bytes":projection_baseline_bytes' in qualifier
+    assert '"measured_resident_overhead_bytes":max(0,resident_before-model_bytes)' in qualifier
+
