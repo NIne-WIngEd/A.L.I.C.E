@@ -308,6 +308,16 @@ assert r["combined_parameters"] == (
 )
 assert r["registered_trainable_system"]=="N0FullEnvelopeTrainableSystemV1"
 assert r["single_shared_backbone"] is True
+replay=r["semantic_replay_interface"]
+assert replay["mlm_dispatch_pass"] is True
+assert replay["teacher_dispatch_pass"] is True
+assert replay["objective_metadata_outside_native_model"] is True
+assert set(replay["teacher_objective_metadata_keys"])=={
+    "group_sizes",
+    "preferred_masks",
+    "principle_tags",
+    "ids",
+}
 assert r["long_context_bridge"]["segments"] >= 3
 assert r["long_context_bridge"]["dedicated_fixture_used"] is True
 assert r["long_context_bridge"]["standalone_virtualizer_semantics_complete"] is False
@@ -344,6 +354,7 @@ print("successor_parameters="+str(r["successor_parameters"]))
 print("segment_context_bridge_parameters="+str(r["segment_context_bridge_parameters"]))
 print("semantic_input_parameters="+str(r["semantic_input_parameters"]))
 print("peak_rss_mb="+str(r["memory_mb"]["peak_rss_mb"]))
+print("semantic_replay_interface="+json.dumps(r["semantic_replay_interface"],sort_keys=True))
 print("text_surface_virtualization="+json.dumps(r["text_surface_virtualization"]["surface_receipt"],sort_keys=True))
 print("long_context_bridge="+json.dumps(r["long_context_bridge"],sort_keys=True))
 print("runtime_case="+json.dumps(r["runtime_case"],sort_keys=True))
