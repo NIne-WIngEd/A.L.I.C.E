@@ -20,8 +20,9 @@ if [[ "$HEAD" != "$EXPECTED" ]]; then
   echo "STOP: GPU memory dry-run source drift HEAD=$HEAD expected=$EXPECTED" >&2
   exit 90
 fi
-if [[ -n "$(git status --porcelain --untracked-files=no)" ]]; then
-  echo "STOP: tracked repository changes exist" >&2
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "STOP: repository is not fully clean" >&2
+  git status --short
   exit 91
 fi
 
@@ -75,8 +76,19 @@ assert r["final_results_observed"] is False
 assert r["final_opening_authorized"] is False
 assert r["n0_complete"] is False
 assert r["real_optimizer_facing_public_lanes"] is True
-assert set(r["semantic_case_receipts"])=={"max_runtime_axes","long_context_semantic"}
+assert set(r["semantic_case_receipts"])=={
+    "max_runtime_axes",
+    "max_factor_cardinality",
+    "long_context_semantic",
+}
 assert all(x["finite_joint_loss"] for x in r["semantic_case_receipts"].values())
+assert set(r["full_fabric_case_receipts"])==set(r["required_full_fabric_memory_cases"])
+assert len(r["full_fabric_case_receipts"])==6
+assert r["stress_pair_count"]==18
+assert len(r["stress_pair_receipts"])==18
+assert r["world_size"]==2
+assert r["ddp_replica_topology_required"] is True
+assert r["ddp_replica_wrapped"] is True
 assert r["full_j3_counterfactual_path"] is True
 assert all(x["projection_pass"] for x in r["ranks"])
 print("PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1")
