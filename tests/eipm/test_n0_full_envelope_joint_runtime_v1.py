@@ -2560,3 +2560,36 @@ def test_cpu_runtime_runner_materializes_exact_static_proof_receipt_for_handoff(
     assert 'echo "static_proof=$STATIC_PROOF"' in runner
     assert runner.index('audit_n0_v02_full_envelope_proof_obligations_v1.py') < runner.index('audit_tokenizer_v02.py')
 
+
+
+def test_p39pn_has_canonical_source_stable_full_mixture_materializer() -> None:
+    path=ROOT/"scripts/eipm/n0/materialize_n0_v02_full_public_mixture_v1.sh"
+    assert path.is_file()
+    source=path.read_text()
+    assert 'ALICE_N0_EXPECTED_REVISION' in source
+    assert 'git status --porcelain' in source
+    assert 'ALICE_N0_FEWREL_ROOT' in source
+    assert '278a2315d2138810a379cd8d5718914dc56e2582' not in source
+    assert 'n0_v02_natural_relation_sources_v1.json' in source
+    assert 'build_n0_v02_full_envelope_behavioral_curriculum_v1.py' in source
+    assert 'audit_n0_v02_full_envelope_behavioral_curriculum_v1.py' in source
+    assert 'build_n0_v02_full_envelope_runtime_view_curriculum_v1.py' in source
+    assert 'audit_n0_v02_full_envelope_runtime_view_curriculum_v1.py' in source
+    assert 'build_n0_v02_fewrel_natural_relation_curriculum_v1.py' in source
+    assert 'audit_n0_v02_fewrel_natural_relation_curriculum_v1.py' in source
+    assert 'build_n0_v02_full_envelope_final_v2_package.py' in source
+    assert 'audit_n0_v02_full_envelope_final_v2_package.py' in source
+    assert 'freeze_n0_v02_full_envelope_final_v2_package.py' in source
+    assert 'build_n0_v02_full_public_mixture_manifest_v1.py' in source
+    assert 'audit_n0_v02_full_public_mixture_manifest_v1.py' in source
+    assert 'audit_n0_v02_full_envelope_shortcuts_v1.py' in source
+    assert 'PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1' in source
+    assert 'optimizer=false' in source
+    assert 'gradient=false' in source
+    assert 'training=false' in source
+    assert 'mv "$STAGING" "$MIXTURE_ROOT"' in source
+    assert '--execute-gradient' not in source
+    workflow=(ROOT/".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml").read_text()
+    assert 'scripts/eipm/n0/materialize_n0_v02_full_public_mixture_v1.sh' in workflow
+    assert 'bash -n scripts/eipm/n0/materialize_n0_v02_full_public_mixture_v1.sh' in workflow
+
