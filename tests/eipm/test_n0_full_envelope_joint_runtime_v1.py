@@ -2319,3 +2319,11 @@ def test_n0_contract_ci_watches_magnolia_udocker_runtime_wrapper() -> None:
     assert f'- "{path}"' in workflow
     assert f'bash -n {path}' in workflow
 
+
+
+def test_magnolia_udocker_wrapper_mounts_exact_repo_root() -> None:
+    wrapper=(ROOT/"scripts/eipm/n0/magnolia_udocker_exec.sh").read_text()
+    assert '--volume="$ROOT:$ROOT"' in wrapper
+    assert '--workdir="$ROOT"' in wrapper
+    assert '--env="ALICE_N0_REPO_ROOT=$ROOT"' in wrapper
+
