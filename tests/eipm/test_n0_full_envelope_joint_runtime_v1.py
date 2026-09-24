@@ -2258,3 +2258,21 @@ def test_p43_gpu_memory_stresses_independent_full_fabric_axes() -> None:
         assert case in qualifier
     assert "missing required full-fabric GPU memory case" in qualifier
 
+
+
+def test_p43_gpu_memory_stresses_semantic_factor_cardinality_separately() -> None:
+    qualifier=(ROOT/"scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py").read_text()
+    config=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json").read_text()
+    )
+    required=set(config["qualification"]["required_semantic_memory_cases"])
+    assert required=={
+        "max_runtime_axes",
+        "max_factor_cardinality",
+        "long_context_semantic",
+    }
+    assert "choose_max_factor_semantic" in qualifier
+    assert "required_semantic_memory_cases" in qualifier
+    assert "semantic_factor_candidate_count" in qualifier
+    assert "missing required semantic GPU memory case" in qualifier
+
