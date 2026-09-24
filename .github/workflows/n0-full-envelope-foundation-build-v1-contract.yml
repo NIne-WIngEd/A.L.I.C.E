@@ -62,6 +62,7 @@ on:
       - "scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_shortcuts_v1.py"
+      - "scripts/eipm/n0/audit_tokenizer_v02.py"
       - "scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py"
       - "scripts/eipm/n0/build_n0_v02_fewrel_natural_relation_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_fewrel_natural_relation_curriculum_v1.py"
@@ -175,6 +176,7 @@ jobs:
             scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_shortcuts_v1.py \
+            scripts/eipm/n0/audit_tokenizer_v02.py \
             scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py \
             scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py \
             scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py \
