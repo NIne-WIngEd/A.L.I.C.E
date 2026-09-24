@@ -2531,3 +2531,16 @@ def test_pregradient_runtime_receipts_bind_exact_producer_implementations() -> N
     ):
         assert message in trainer
 
+
+
+def test_dev_evaluator_authenticates_runtime_training_authorization_producer() -> None:
+    dev=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py").read_text()
+    assert 'alice.eipm.n0.full-envelope-training-authorization.v1' in dev
+    assert "training authorization schema drift" in dev
+    assert "training authorization authorizer hash drift" in dev
+    assert '"training_authorizer_sha256"' in dev
+    opening=(ROOT/"scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py").read_text()
+    assert "FINAL opening training-authorizer lineage drift" in opening
+    final=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py").read_text()
+    assert "FINAL training-authorizer lineage drift" in final
+
