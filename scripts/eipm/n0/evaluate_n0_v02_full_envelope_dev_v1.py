@@ -1121,6 +1121,9 @@ def main() -> None:
     if candidate.get("trainer_implementation_sha256")!=sha256_file(trainer):
         raise SystemExit("candidate trainer implementation hash drift")
     training_authorization=read_json(args.training_authorization)
+    training_authorizer=Path(__file__).resolve().with_name(
+        "authorize_n0_v02_full_envelope_training_v1.py"
+    )
     tracked_status=subprocess.check_output(["git","status","--porcelain"],text=True)
     if tracked_status.strip():
         raise SystemExit("DEV evaluator requires a clean exact-source worktree")
@@ -1129,8 +1132,14 @@ def main() -> None:
         raise SystemExit(
             "DEV evaluator source revision does not match candidate"
         )
+    if training_authorization.get("schema")!="alice.eipm.n0.full-envelope-training-authorization.v1":
+        raise SystemExit("training authorization schema drift")
     if training_authorization.get("status")!=PASS_TRAIN_AUTH:
         raise SystemExit("training authorization not PASS")
+    if training_authorization.get("training_authorizer_sha256")!=sha256_file(
+        training_authorizer
+    ):
+        raise SystemExit("training authorization authorizer hash drift")
     if training_authorization.get("source_revision")!=current_revision:
         raise SystemExit("training authorization source revision drift")
     if candidate.get("training_authorization_sha256")!=sha256_file(
@@ -1411,6 +1420,7 @@ def main() -> None:
         "candidate_checkpoint_receipt_sha256":sha256_file(args.candidate_receipt),
         "candidate_system_sha256":sha256_file(args.candidate_system),
         "training_authorization_sha256":sha256_file(args.training_authorization),
+        "training_authorizer_sha256":sha256_file(training_authorizer),
         "static_proof_receipt_sha256":sha256_file(args.static_proof_receipt),
         "dev_lane_binding_receipt":dev_lane_binding_receipt,
         "teacher_registered_rows":int(teacher_report["registered_rows"]),
