@@ -349,6 +349,125 @@ def main() -> None:
     memory["after_registered_system_construct_mb"] = rss_mb()
     progress("registered_system_constructed")
 
+    # Cheaply execute both native semantic replay adapters through the exact
+    # registered system before any GPU allocation can be justified. These
+    # batches intentionally include objective/collator metadata that the
+    # semantic model itself does not accept. If the registered-system boundary
+    # leaks that metadata (for example via **dict(batch)), this CPU gate fails
+    # with the same interface error that would otherwise waste a P43 run.
+    replay_encoded = tokenizer(
+        ["N0 replay interface contract"],
+        padding="max_length",
+        truncation=True,
+        max_length=32,
+        return_tensors="pt",
+    )
+    replay_labels = replay_encoded["input_ids"].clone()
+    replay_labels[
+        replay_encoded["attention_mask"] == 0
+    ] = -100
+    teacher_candidate = tokenizer(
+        [
+            "N0 governed replay interface",
+            "N0 governed replay interface",
+        ],
+        ["candidate alpha", "candidate beta"],
+        padding="max_length",
+        truncation=True,
+        max_length=32,
+        return_tensors="pt",
+    )
+    teacher_rationale = tokenizer(
+        ["public rationale alpha", "public rationale beta"],
+        padding="max_length",
+        truncation=True,
+        max_length=32,
+        return_tensors="pt",
+    )
+    with torch.inference_mode():
+        replay_mlm = system(
+            task="mlm",
+            batch={
+                "input_ids": replay_encoded["input_ids"],
+                "attention_mask": replay_encoded["attention_mask"],
+                "labels": replay_labels,
+                "ids": ["cpu-replay-mlm"],
+            },
+        )
+        replay_teacher = system(
+            task="teacher",
+            batch={
+                "candidate_input_ids": teacher_candidate["input_ids"],
+                "candidate_attention_mask": teacher_candidate[
+                    "attention_mask"
+                ],
+                "rationale_input_ids": teacher_rationale["input_ids"],
+                "rationale_attention_mask": teacher_rationale[
+                    "attention_mask"
+                ],
+                "candidate_rationale_index": torch.tensor(
+                    [0,1],
+                    dtype=torch.long,
+                ),
+                "group_sizes": [1,1],
+                "preferred_masks": [
+                    torch.tensor([True]),
+                    torch.tensor([True]),
+                ],
+                "principle_tags": [
+                    "cpu-replay-alpha",
+                    "cpu-replay-beta",
+                ],
+                "ids": [
+                    "cpu-replay-teacher-alpha",
+                    "cpu-replay-teacher-beta",
+                ],
+            },
+        )
+    replay_mlm_loss=(
+        replay_mlm.get("loss")
+        if isinstance(replay_mlm,dict)
+        else getattr(replay_mlm,"loss",None)
+    )
+    if (
+        not isinstance(replay_mlm_loss,torch.Tensor)
+        or replay_mlm_loss.ndim!=0
+        or not bool(torch.isfinite(replay_mlm_loss))
+    ):
+        raise ValueError("registered MLM replay interface produced non-finite loss")
+    if not isinstance(replay_teacher,dict):
+        raise ValueError("registered teacher replay interface must return a mapping")
+    teacher_required={
+        "scores",
+        "semantic",
+        "rationale",
+        "alignment_logits",
+    }
+    if teacher_required-set(replay_teacher):
+        raise ValueError(
+            "registered teacher replay interface missing outputs: "
+            +repr(sorted(teacher_required-set(replay_teacher)))
+        )
+    for name in teacher_required:
+        value=replay_teacher[name]
+        if not isinstance(value,torch.Tensor) or not bool(torch.isfinite(value).all()):
+            raise ValueError(
+                f"registered teacher replay interface non-finite output: {name}"
+            )
+    replay_interface_receipt={
+        "mlm_dispatch_pass":True,
+        "teacher_dispatch_pass":True,
+        "objective_metadata_outside_native_model":True,
+        "teacher_objective_metadata_keys":[
+            "group_sizes",
+            "preferred_masks",
+            "principle_tags",
+            "ids",
+        ],
+    }
+    memory["after_semantic_replay_interface_mb"] = rss_mb()
+    progress("semantic_replay_interface_passed")
+
     case = cfg["runtime_case"]
     batch_size = int(case["batch_size"])
     stress = cfg["text_surface_virtualization_stress"]
@@ -834,6 +953,7 @@ def main() -> None:
         "single_shared_backbone": bool(
             system_report["single_shared_backbone"]
         ),
+        "semantic_replay_interface": replay_interface_receipt,
         "memory_mb": memory,
         "tokenizer_stress": tokenizer_result,
         "corpus_source_count": len(
