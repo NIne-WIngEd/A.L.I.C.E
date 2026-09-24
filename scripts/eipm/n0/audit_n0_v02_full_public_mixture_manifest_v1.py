@@ -7,6 +7,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+from alice_personality.n0.source_authority_v1 import (
+    require_canonical_source_file,
+    require_clean_exact_revision,
+)
+
 PASS="PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1"
 
 
@@ -56,8 +61,18 @@ def main() -> None:
     output=Path(args.output)
     if output.exists():
         raise SystemExit("refusing to overwrite full public-mixture audit")
+    source_revision=str(args.source_revision).strip().lower()
+    require_clean_exact_revision(
+        expected_revision=source_revision,
+        label="full public mixture audit",
+    )
+    contract_path=require_canonical_source_file(
+        args.contract,
+        "configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json",
+        label="full public mixture contract",
+    )
     manifest=load_json(Path(args.manifest))
-    contract=load_json(Path(args.contract))
+    contract=load_json(contract_path)
     errors=[]
 
     if manifest.get("schema")!="alice.eipm.n0.full-public-mixture-manifest.v1":
@@ -66,9 +81,9 @@ def main() -> None:
         errors.append("mixture manifest status drift")
     if contract.get("schema")!="alice.eipm.n0.full-public-mixture-contract.v1":
         errors.append("mixture contract schema drift")
-    if manifest.get("contract_sha256")!=sha256(Path(args.contract)):
+    if manifest.get("contract_sha256")!=sha256(contract_path):
         errors.append("mixture contract hash drift")
-    if manifest.get("source_revision")!=str(args.source_revision):
+    if manifest.get("source_revision")!=source_revision:
         errors.append("source revision drift")
 
     lanes=manifest.get("training_lanes") or {}
@@ -173,8 +188,10 @@ def main() -> None:
         "schema":"alice.eipm.n0.full-public-mixture-manifest-audit.v1",
         "status":PASS if not errors else "FAIL_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1",
         "errors":errors,
-        "source_revision":str(args.source_revision),
+        "source_revision":source_revision,
         "manifest_sha256":sha256(Path(args.manifest)),
+        "contract_sha256":sha256(contract_path),
+        "auditor_sha256":sha256(Path(__file__).resolve()),
         "training_lanes":required,
         "macro_families":sorted(required_families),
         "lane_count":len(required),
