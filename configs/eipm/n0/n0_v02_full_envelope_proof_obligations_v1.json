@@ -1622,6 +1622,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_p40_runtime_auditors_verify_claimed_revision_against_clean_checkout",
       "requirement": "Every P40/P40A/P40B/P40C runtime auditor must independently verify that its claimed source revision equals the current clean checkout. A caller-supplied 40-hex value alone cannot establish exact-head provenance."
+    },
+    {
+      "id": "N0-P40J",
+      "stage": "runtime_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_n0_contract_ci_watches_source_authority_helper",
+      "requirement": "The shared exact-source authority helper used by P40/P42/P43/training/DEV/FINAL runtime paths must be a watched and compiled N0 contract dependency. Changes to provenance enforcement may not bypass exact-head CI."
     }
   ],
   "closure_rule": {
