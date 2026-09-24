@@ -94,6 +94,8 @@ def main() -> None:
             continue
         if receipt.get("schema")!="alice.eipm.n0.full-envelope-checkpoint-receipt.v1":
             continue
+        if receipt.get("status")!="TRAINED_PUBLIC_N0_CANDIDATE_REQUIRES_DEV_SELECTION":
+            raise SystemExit("checkpoint receipt status drift")
         if receipt.get("stage")!=args.stage:
             continue
         if receipt.get("source_revision")!=revision:
