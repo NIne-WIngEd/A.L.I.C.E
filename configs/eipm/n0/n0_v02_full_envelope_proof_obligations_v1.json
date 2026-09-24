@@ -1699,6 +1699,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_full_public_mixture_audit_verifies_clean_exact_source_and_canonical_contract",
       "requirement": "The full public-mixture audit consumed by P43/training must be produced on a fully clean exact-source checkout from the canonical public-mixture contract, and its receipt must bind both the canonical contract and exact auditor implementation. A same-HEAD PASS produced by substituted or dirty audit code may not authorize runtime qualification or gradient."
+    },
+    {
+      "id": "N0-P46L",
+      "stage": "final_closure",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_final_v2_result_binds_canonical_static_proof_and_full_closure_authority_chain",
+      "requirement": "The authoritative FINAL-v2 result that may mark N0 complete must bind the canonical static proof contract and receipt plus the full opening, DEV selection/evaluation, freeze, evaluator, package, and candidate authority chain. A passing metric payload without this provenance may not serve as the N0 closure receipt."
     }
   ],
   "closure_rule": {
