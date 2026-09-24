@@ -2386,17 +2386,25 @@ def test_static_proof_receipt_executes_all_registered_static_tests() -> None:
     assert '"executed_static_test_files": static_test_files' in auditor
     assert "static proof suite failed" in auditor
     assert 'label="static proof audit after pytest"' in auditor
+    assert "tree.body" in auditor
+    assert "required_static_nodeids" in auditor
+    assert '"--junitxml"' in auditor
+    assert '"pytest_skipped_cases"' in auditor
+    assert "static proof suite skipped required cases" in auditor
     trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
     assert "static proof suite was not executed" in trainer
     assert "static proof suite did not pass" in trainer
     assert "static proof suite file coverage drift" in trainer
+    assert "static proof suite skipped required cases" in trainer
 
     dev=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py").read_text()
     assert "DEV static proof suite was not executed" in dev
     assert "DEV static proof suite did not pass" in dev
     assert "DEV static proof suite file coverage drift" in dev
+    assert "DEV static proof suite skipped required cases" in dev
     final=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py").read_text()
     assert "FINAL static proof suite was not executed" in final
     assert "FINAL static proof suite did not pass" in final
     assert "FINAL static proof suite file coverage drift" in final
+    assert "FINAL static proof suite skipped required cases" in final
 
