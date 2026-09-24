@@ -38,6 +38,7 @@ CORPUS="$WORKDIR/tokenizer-corpus-v0.2.1-offline"
 SEMANTIC="$WORKDIR/targeted-repair-v0.1/checkpoints/step-00000080/alice_n0_v02.safetensors"
 RUN_ROOT="$WORKDIR/full-envelope-cpu-runtime-v1"
 RESULT="$RUN_ROOT/result.json"
+STATIC_PROOF="$RUN_ROOT/static_proof.json"
 TOKENIZER_STRESS="$RUN_ROOT/tokenizer_stress.json"
 EVIDENCE_ROOT="$RUN_ROOT/operator-evidence-alignment"
 EVIDENCE_ROWS="$EVIDENCE_ROOT/rows.jsonl"
@@ -83,6 +84,7 @@ python -m py_compile \
   "$ROOT/src/alice_personality/n0/full_envelope_semantic_input_v1.py" \
   "$ROOT/src/alice_personality/n0/n0_full_envelope_stack_v1.py" \
   "$ROOT/src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py" \
+  "$ROOT/scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py" \
   "$ROOT/scripts/eipm/n0/audit_tokenizer_v02.py" \
   "$ROOT/scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py" \
   "$ROOT/scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py" \
@@ -96,6 +98,31 @@ python -m py_compile \
   "$ROOT/scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"
 
 mkdir -p "$RUN_ROOT" "$EVIDENCE_ROOT" "$SEMANTIC_LONG_ROOT" "$LONG_CONTEXT_ROOT"
+
+python "$ROOT/scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py" \
+  --contract "$ROOT/configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json" \
+  --supersession "$ROOT/configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json" \
+  --retrospective "$ROOT/configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json" \
+  --repo-root "$ROOT" \
+  --output "$STATIC_PROOF"
+
+python - "$STATIC_PROOF" <<'PY'
+import json,sys
+r=json.load(open(sys.argv[1]))
+assert r["status"]=="PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1"
+assert r["static_suite_executed"] is True
+assert r["static_suite_pass"] is True
+assert int(r["static_suite_exit_code"])==0
+assert int(r["pytest_error_cases"])==0
+assert int(r["pytest_failure_cases"])==0
+assert int(r["pytest_skipped_cases"])==0
+assert r["source_revision"]
+assert r["optimizer_authorized"] is False
+assert r["gradient_authorized"] is False
+assert r["gpu_training_authorized"] is False
+assert r["n0_complete"] is False
+print("PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1")
+PY
 
 python "$ROOT/scripts/eipm/n0/audit_tokenizer_v02.py" \
   --corpus-dir "$CORPUS" \
@@ -325,4 +352,5 @@ PY
 echo "===== N0 FULL-ENVELOPE CPU RUNTIME QUALIFICATION V1 COMPLETE ====="
 date -Is
 echo "result=$RESULT"
+echo "static_proof=$STATIC_PROOF"
 echo "operator_evidence_token_alignment=$EVIDENCE_TOKEN_AUDIT"
