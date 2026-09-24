@@ -1762,6 +1762,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_p39pn_has_canonical_source_stable_full_mixture_materializer",
       "requirement": "P39PN must have one canonical source-stable runtime materializer that reuses the exact CPU-qualified semantic/long-context artifacts, materializes and audits behavioral/runtime-view/FewRel lanes, rebuilds and freezes the sealed FINAL-v2 package without observing results, and publishes the full public mixture only after every audit passes. The GPU/training handoff may not depend on undocumented manual artifact assembly."
+    },
+    {
+      "id": "N0-P39RGA",
+      "stage": "final_package_freeze",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_final_v2_audit_includes_semantic_long_lane_and_all_full_fabric_train_dev_axes",
+      "requirement": "Before the sealed FINAL-v2 package can be frozen, its TRAIN/DEV independence audit must include the dedicated semantic-operator long-context lane and must measure runtime-axis extrapolation against every relevant full-fabric TRAIN/DEV lane, not only the base behavioral curriculum. Otherwise FINAL could be certified against an incomplete training surface."
     }
   ],
   "closure_rule": {
