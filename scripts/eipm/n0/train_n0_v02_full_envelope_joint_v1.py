@@ -388,6 +388,8 @@ def verify_pre_gradient_runtime(
     ]
     if list(static_proof.get("executed_static_test_files") or [])!=expected_static_files:
         raise SystemExit("static proof suite file coverage drift")
+    if int(static_proof.get("pytest_skipped_cases",-1))!=0:
+        raise SystemExit("static proof suite skipped required cases")
     for label,receipt in (
         ("operator-token",operator_token),("CPU",cpu),("GPU",gpu),
         ("boundary",boundary),("semantic-long",semantic_long),
