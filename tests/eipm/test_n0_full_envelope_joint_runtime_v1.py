@@ -2337,3 +2337,22 @@ def test_p43_memory_projection_includes_measured_resident_runtime_overhead() -> 
     assert '"projection_baseline_bytes":projection_baseline_bytes' in qualifier
     assert '"measured_resident_overhead_bytes":max(0,resident_before-model_bytes)' in qualifier
 
+
+
+def test_static_proof_receipt_is_canonical_and_clean_exact_source_bound() -> None:
+    auditor=(
+        ROOT/"scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py"
+    ).read_text()
+    assert "require_clean_exact_revision" in auditor
+    assert "require_canonical_source_file" in auditor
+    assert 'configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json' in auditor
+    assert 'configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json' in auditor
+    assert 'configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json' in auditor
+    assert '"proof_contract_sha256"' in auditor
+    assert '"supersession_sha256"' in auditor
+    assert '"retrospective_sha256"' in auditor
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "static proof contract hash drift" in trainer
+    assert "static proof supersession hash drift" in trainer
+    assert "static proof retrospective hash drift" in trainer
+
