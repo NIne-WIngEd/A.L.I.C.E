@@ -681,6 +681,7 @@ def test_successor_trainer_dev_evaluator_and_checkpoint_contract_exist_before_gr
     assert checkpoint["registered_system"]=="N0FullEnvelopeTrainableSystemV1"
     assert checkpoint["required_lineage"]==[
         "source_revision",
+        "trainer_implementation_sha256",
         "registered_topology_sha256",
         "semantic_initialization_sha256",
         "full_public_mixture_manifest_sha256",
