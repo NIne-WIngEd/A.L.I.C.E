@@ -2298,3 +2298,16 @@ def test_p43_gpu_memory_wraps_actual_ddp_replica_route_before_measurement() -> N
     assert "find_unused_parameters=True" in qualifier
     assert "P43 DDP replica route was not measured" in trainer
 
+
+
+def test_p43_magnolia_handoff_asserts_expanded_memory_coverage_and_clean_source() -> None:
+    sbatch=(ROOT/"scripts/eipm/n0/magnolia_p100x2_n0_v02_full_envelope_gpu_memory_v1.sbatch").read_text()
+    assert 'git status --porcelain)' in sbatch
+    assert '--untracked-files=no' not in sbatch
+    assert 'set(r["semantic_case_receipts"])=={' in sbatch
+    assert '"max_factor_cardinality"' in sbatch
+    assert 'set(r["full_fabric_case_receipts"])==set(r["required_full_fabric_memory_cases"])' in sbatch
+    assert 'r["stress_pair_count"]==18' in sbatch
+    assert 'r["world_size"]==2' in sbatch
+    assert 'r["ddp_replica_wrapped"] is True' in sbatch
+
