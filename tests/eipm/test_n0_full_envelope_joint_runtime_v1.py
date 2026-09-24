@@ -2311,3 +2311,11 @@ def test_p43_magnolia_handoff_asserts_expanded_memory_coverage_and_clean_source(
     assert 'r["world_size"]==2' in sbatch
     assert 'r["ddp_replica_wrapped"] is True' in sbatch
 
+
+
+def test_n0_contract_ci_watches_magnolia_udocker_runtime_wrapper() -> None:
+    workflow=(ROOT/".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml").read_text()
+    path="scripts/eipm/n0/magnolia_udocker_exec.sh"
+    assert f'- "{path}"' in workflow
+    assert f'bash -n {path}' in workflow
+
