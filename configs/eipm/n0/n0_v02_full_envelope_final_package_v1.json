@@ -87,7 +87,9 @@
     "final_type_schema_surface_disjoint_from_train_dev": true,
     "final_factor_combination_heldout_from_train_dev": true,
     "model_results_may_not_be_observed_during_build_audit_or_freeze": true,
-    "thresholds_may_not_change_after_results": true
+    "thresholds_may_not_change_after_results": true,
+    "semantic_operator_long_context_train_dev_included": true,
+    "full_fabric_extrapolation_baseline_includes_behavioral_runtime_view_and_long_context_train_dev": true
   },
   "legacy_final_v1_authority": false,
   "legacy_final_v3_evaluator_authority": false,
