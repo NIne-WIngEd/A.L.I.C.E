@@ -2226,3 +2226,12 @@ def test_p40_runtime_auditors_verify_claimed_revision_against_clean_checkout() -
         assert "require_clean_exact_revision" in source
         assert "expected_revision=source_revision" in source
 
+
+
+def test_n0_contract_ci_watches_source_authority_helper() -> None:
+    workflow=(ROOT/".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml").read_text()
+    path="src/alice_personality/n0/source_authority_v1.py"
+    assert f'- "{path}"' in workflow
+    assert path+" \\\"" not in workflow  # guard accidental quoted escape form
+    assert path+" \\" in workflow
+
