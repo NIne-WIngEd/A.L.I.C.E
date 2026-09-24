@@ -384,7 +384,9 @@ def test_final_v2_result_binds_canonical_static_proof_and_full_closure_authority
         "static_proof_receipt_sha256",
         "proof_contract_sha256",
         "opening_authorizer_sha256",
+        "training_authorization_sha256",
     ):
         assert f'"{field}"' in source
     assert '"closure_authority_chain_complete":True' in source
+    assert "FINAL DEV/training authorization lineage drift" in source
 
