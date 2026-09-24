@@ -1162,6 +1162,24 @@ def main() -> None:
     if static_receipt.get("source_revision")!=candidate.get("source_revision"):
         raise SystemExit("candidate/static-proof source revision drift")
 
+    if static_receipt.get("proof_contract_sha256")!=sha256_file(
+        args.proof_contract
+    ):
+        raise SystemExit("DEV static proof contract hash drift")
+    if static_receipt.get("static_suite_executed") is not True:
+        raise SystemExit("DEV static proof suite was not executed")
+    if (
+        static_receipt.get("static_suite_pass") is not True
+        or int(static_receipt.get("static_suite_exit_code",-1))!=0
+    ):
+        raise SystemExit("DEV static proof suite did not pass")
+    proof_for_static=read_json(args.proof_contract)
+    expected_static_files=[
+        str(value) for value in proof_for_static.get("static_test_files", [])
+    ]
+    if list(static_receipt.get("executed_static_test_files") or [])!=expected_static_files:
+        raise SystemExit("DEV static proof suite file coverage drift")
+
     mixture=read_json(args.mixture_manifest)
     mixture_audit=read_json(args.mixture_audit)
     if mixture_audit.get("status")!="PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1":
