@@ -1734,6 +1734,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_checkpoint_receipt_binds_exact_trainer_implementation",
       "requirement": "Every successor checkpoint receipt must hash-bind the exact joint trainer implementation that produced it. Same-stage resume, DEV evaluation/selection, FINAL opening, and FINAL closure must reject checkpoints whose trainer implementation does not match the canonical exact-head trainer."
+    },
+    {
+      "id": "N0-P43AG",
+      "stage": "runtime_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_pregradient_runtime_receipts_bind_exact_producer_implementations",
+      "requirement": "Every pre-gradient runtime authority receipt consumed by the training authorizer must hash-bind the exact canonical producer implementation: P40/P40A/P40B/P40C auditors, P42 CPU qualifier, P43 GPU qualifier, and the static proof auditor. Same-revision receipts from substituted producer logic may not authorize gradient."
     }
   ],
   "closure_rule": {
