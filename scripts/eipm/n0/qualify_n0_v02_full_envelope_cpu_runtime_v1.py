@@ -778,6 +778,7 @@ def main() -> None:
         ),
         "status": PASS,
         "source_revision":source_revision,
+        "qualifier_sha256":sha256(Path(__file__).resolve()),
         "registered_topology_sha256":sha256(topology_path),
         "qualification_config_sha256":sha256(qualification_path),
         "semantic_config_sha256":sha256(semantic_config_path),
