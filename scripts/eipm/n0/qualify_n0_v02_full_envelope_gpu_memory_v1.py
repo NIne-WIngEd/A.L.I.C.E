@@ -605,6 +605,7 @@ def main() -> None:
             "schema":"alice.eipm.n0.full-envelope-gpu-memory-result.v1",
             "status":PASS if every_rank else "FAIL_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1",
             "source_revision":source_revision,
+            "qualifier_sha256":sha256_file(Path(__file__).resolve()),
             "registered_topology_sha256":sha256_file(args.topology_config),
             "qualification_config_sha256":sha256_file(args.qualification_config),
             "semantic_config_sha256":sha256_file(args.semantic_config),
