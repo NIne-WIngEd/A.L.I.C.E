@@ -2391,3 +2391,12 @@ def test_static_proof_receipt_executes_all_registered_static_tests() -> None:
     assert "static proof suite did not pass" in trainer
     assert "static proof suite file coverage drift" in trainer
 
+    dev=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py").read_text()
+    assert "DEV static proof suite was not executed" in dev
+    assert "DEV static proof suite did not pass" in dev
+    assert "DEV static proof suite file coverage drift" in dev
+    final=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py").read_text()
+    assert "FINAL static proof suite was not executed" in final
+    assert "FINAL static proof suite did not pass" in final
+    assert "FINAL static proof suite file coverage drift" in final
+
