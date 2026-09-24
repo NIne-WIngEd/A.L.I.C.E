@@ -114,9 +114,23 @@ def main() -> None:
             elif surface=="relation_schema":
                 tensor=compiled["relation_schema_evidence_target"]
                 locator=dict(row["long_context_locator"])
-                index=int(locator["candidate_index"])
-                total_tokens=int(
-                    compiled["relation_schema"]["input_ids"][index].numel()
+                indices=[
+                    int(x)
+                    for x in locator.get("candidate_indices",[])
+                ]
+                expected_indices=sorted({
+                    int(span["candidate_index"])
+                    for span in row["relation_schema_evidence_char_spans"]
+                })
+                if sorted(indices) != expected_indices:
+                    raise ValueError(
+                        "relation-schema locator does not cover every supervised candidate"
+                    )
+                if not indices:
+                    raise ValueError("relation-schema long surface has no supervised candidates")
+                total_tokens=min(
+                    int(compiled["relation_schema"]["input_ids"][index].numel())
+                    for index in indices
                 )
             elif surface=="factor_schema":
                 locator=dict(row["long_context_locator"])
@@ -129,9 +143,18 @@ def main() -> None:
                 step_tensor=compiled[
                     "step_factor_schema_evidence_target"
                 ].get(bank)
-                if step_tensor is None or not positive_positions(step_tensor):
+                step_positions=(
+                    [] if step_tensor is None
+                    else positive_positions(step_tensor)
+                )
+                if not step_positions:
                     raise ValueError(
                         "long factor surface produced no positive step-factor evidence tokens"
+                    )
+                if min(step_positions)<=native:
+                    raise ValueError(
+                        "decisive step-factor evidence did not remain beyond native "
+                        f"window: {min(step_positions)} <= {native}"
                     )
             else:
                 raise ValueError(f"unsupported long semantic surface: {surface}")
