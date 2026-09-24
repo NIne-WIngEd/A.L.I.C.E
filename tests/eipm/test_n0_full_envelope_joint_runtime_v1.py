@@ -2356,3 +2356,18 @@ def test_static_proof_receipt_is_canonical_and_clean_exact_source_bound() -> Non
     assert "static proof supersession hash drift" in trainer
     assert "static proof retrospective hash drift" in trainer
 
+
+
+def test_full_public_mixture_audit_verifies_clean_exact_source_and_canonical_contract() -> None:
+    source=(
+        ROOT/"scripts/eipm/n0/audit_n0_v02_full_public_mixture_manifest_v1.py"
+    ).read_text()
+    assert "require_clean_exact_revision" in source
+    assert "require_canonical_source_file" in source
+    assert 'configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json' in source
+    assert '"contract_sha256"' in source
+    assert '"auditor_sha256"' in source
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "mixture audit contract hash drift" in trainer
+    assert "mixture audit implementation hash drift" in trainer
+
