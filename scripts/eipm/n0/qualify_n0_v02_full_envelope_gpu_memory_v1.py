@@ -375,13 +375,26 @@ def main() -> None:
             tokenizer=tokenizer,
         ),
     }
-    full_compiled=compile_behavioral_batch(
-        rows=[
-            choose_full_fabric(behavioral_rows,runtime_rows,long_rows)
-            for _ in range(microbatch_size)
-        ],
-        tokenizer=tokenizer,
+    full_case_rows=choose_full_fabric_cases(
+        behavioral_rows,runtime_rows,long_rows
     )
+    required_full_cases=set(
+        map(str,q.get("required_full_fabric_memory_cases") or [])
+    )
+    if set(full_case_rows)!=required_full_cases:
+        missing=sorted(required_full_cases-set(full_case_rows))
+        extra=sorted(set(full_case_rows)-required_full_cases)
+        raise SystemExit(
+            "missing required full-fabric GPU memory case: "
+            f"missing={missing} extra={extra}"
+        )
+    full_compiled_cases={
+        name:compile_behavioral_batch(
+            rows=[dict(row) for _ in range(microbatch_size)],
+            tokenizer=tokenizer,
+        )
+        for name,row in full_case_rows.items()
+    }
     natural_compiled=compile_natural_relation_batch(
         rows=[choose_natural(natural_rows) for _ in range(microbatch_size)],
         relation_bank=relation_bank,
@@ -401,11 +414,6 @@ def main() -> None:
 
     mlm_batch=to_device(mlm_batch,device)
     teacher_batch=to_device(teacher_batch,device)
-    semantic_compiled_cases={
-        name:to_device(compiled,device)
-        for name,compiled in semantic_compiled_cases.items()
-    }
-    full_compiled=to_device(full_compiled,device)
     natural_compiled=to_device(natural_compiled,device)
 
     torch.cuda.empty_cache()
@@ -414,48 +422,77 @@ def main() -> None:
     reserved_before=int(torch.cuda.memory_reserved(device))
 
     semantic_case_receipts={}
+    full_fabric_case_receipts={
+        name:{
+            "row_id":str(row.get("id","")),
+            "runtime_candidate_answer_count":int(
+                row.get("runtime_candidate_answer_count",0)
+            ),
+            "runtime_field_count":int(row.get("runtime_field_count",0)),
+            "runtime_edge_count":int(row.get("runtime_edge_count",0)),
+            "runtime_additional_view_count":int(
+                row.get("runtime_additional_view_count",0)
+            ),
+            "runtime_reasoning_steps":int(
+                row.get("runtime_reasoning_steps",0)
+            ),
+            "long_context_surface":row.get("long_context_surface"),
+        }
+        for name,row in full_case_rows.items()
+    }
+    stress_pair_receipts={}
     with torch.inference_mode(), torch.autocast(
         device_type="cuda",
         dtype=torch.float16,
     ):
-        for case_name,semantic_compiled in semantic_compiled_cases.items():
-            result=execute_full_envelope_joint_step(
-                system=system,
-                objective=objective,
-                mlm_batch=mlm_batch,
-                teacher_batch=teacher_batch,
-                semantic_operator_compiled=semantic_compiled,
-                full_fabric_compiled=full_compiled,
-                natural_relation_compiled=natural_compiled,
-                update_ema=False,
-                stage=J3,
-            )
-            loss=result["loss"]
-            if (
-                not isinstance(loss,torch.Tensor)
-                or loss.ndim!=0
-                or not bool(torch.isfinite(loss))
-            ):
-                raise SystemExit(
-                    f"GPU no-gradient joint loss non-finite: {case_name}"
+        for semantic_name,semantic_cpu in semantic_compiled_cases.items():
+            for full_name,full_cpu in full_compiled_cases.items():
+                semantic_compiled=to_device(semantic_cpu,device)
+                full_compiled=to_device(full_cpu,device)
+                result=execute_full_envelope_joint_step(
+                    system=system,
+                    objective=objective,
+                    mlm_batch=mlm_batch,
+                    teacher_batch=teacher_batch,
+                    semantic_operator_compiled=semantic_compiled,
+                    full_fabric_compiled=full_compiled,
+                    natural_relation_compiled=natural_compiled,
+                    update_ema=False,
+                    stage=J3,
                 )
-            if result.get("all_public_training_lanes_executed") is not True:
-                raise SystemExit(
-                    f"J3 dry run did not execute every public lane: {case_name}"
-                )
-            if result.get("placeholder_losses_used") is not False:
-                raise SystemExit(
-                    f"J3 dry run used placeholder losses: {case_name}"
-                )
-            semantic_case_receipts[case_name]={
-                "finite_joint_loss":True,
-                "runtime_relation_count":int(
-                    semantic_compiled["metadata"]["runtime_relation_count"]
-                ),
-                "max_reasoning_steps":int(
-                    semantic_compiled["metadata"]["max_reasoning_steps"]
-                ),
-            }
+                loss=result["loss"]
+                pair_name=f"{semantic_name}__{full_name}"
+                if (
+                    not isinstance(loss,torch.Tensor)
+                    or loss.ndim!=0
+                    or not bool(torch.isfinite(loss))
+                ):
+                    raise SystemExit(
+                        f"GPU no-gradient joint loss non-finite: {pair_name}"
+                    )
+                if result.get("all_public_training_lanes_executed") is not True:
+                    raise SystemExit(
+                        f"J3 dry run did not execute every public lane: {pair_name}"
+                    )
+                if result.get("placeholder_losses_used") is not False:
+                    raise SystemExit(
+                        f"J3 dry run used placeholder losses: {pair_name}"
+                    )
+                semantic_case_receipts.setdefault(semantic_name,{
+                    "finite_joint_loss":True,
+                    "runtime_relation_count":int(
+                        semantic_compiled["metadata"]["runtime_relation_count"]
+                    ),
+                    "max_reasoning_steps":int(
+                        semantic_compiled["metadata"]["max_reasoning_steps"]
+                    ),
+                })
+                stress_pair_receipts[pair_name]={
+                    "semantic_case":semantic_name,
+                    "full_fabric_case":full_name,
+                    "finite_joint_loss":True,
+                }
+                del loss,result,semantic_compiled,full_compiled
     if any(p.grad is not None for p in system.parameters()):
         raise SystemExit("GPU dry run created gradients")
 
