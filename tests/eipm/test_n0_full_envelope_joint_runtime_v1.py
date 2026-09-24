@@ -121,6 +121,70 @@ def test_registered_joint_step_executes_all_public_training_lanes_without_placeh
     assert "\"placeholder_losses_used\":False" in source.replace(" ","")
 
 
+def test_registered_system_replay_dispatch_keeps_objective_metadata_out_of_semantic_model() -> None:
+    import torch
+    from torch import nn
+
+    from alice_personality.n0.n0_full_envelope_trainable_system_v1 import (
+        N0FullEnvelopeTrainableSystemV1,
+    )
+
+    class _StrictSemanticModel(nn.Module):
+        def __init__(self) -> None:
+            super().__init__()
+            self.backbone=nn.Identity()
+            self.calls=[]
+
+        def forward(
+            self,
+            *,
+            task,
+            input_ids=None,
+            attention_mask=None,
+            labels=None,
+            candidate_input_ids=None,
+            candidate_attention_mask=None,
+            rationale_input_ids=None,
+            rationale_attention_mask=None,
+            candidate_rationale_index=None,
+        ):
+            self.calls.append(task)
+            return {"task":task}
+
+    # This test isolates the registered-system dispatch boundary itself. The
+    # production constructor owns the large full-envelope stack, which is not
+    # needed to prove that collator/objective metadata cannot leak into the
+    # native semantic-model forward signature.
+    system=N0FullEnvelopeTrainableSystemV1.__new__(
+        N0FullEnvelopeTrainableSystemV1
+    )
+    nn.Module.__init__(system)
+    semantic=_StrictSemanticModel()
+    system.semantic_model=semantic
+
+    mlm={
+        "input_ids":torch.tensor([[1,2]]),
+        "attention_mask":torch.tensor([[1,1]]),
+        "labels":torch.tensor([[1,2]]),
+        "ids":["mlm-row"],
+    }
+    assert system(task="mlm",batch=mlm)=={"task":"mlm"}
+
+    teacher={
+        "candidate_input_ids":torch.tensor([[1,2],[3,4]]),
+        "candidate_attention_mask":torch.tensor([[1,1],[1,1]]),
+        "rationale_input_ids":torch.tensor([[5,6]]),
+        "rationale_attention_mask":torch.tensor([[1,1]]),
+        "candidate_rationale_index":torch.tensor([0,0]),
+        "group_sizes":[2],
+        "preferred_masks":[torch.tensor([True,False])],
+        "principle_tags":["p"],
+        "ids":["teacher-row"],
+    }
+    assert system(task="teacher",batch=teacher)=={"task":"teacher"}
+    assert semantic.calls==["mlm","teacher"]
+
+
 def test_joint_training_stages_have_explicit_causal_loss_family_activation() -> None:
     plan=json.loads(
         (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
