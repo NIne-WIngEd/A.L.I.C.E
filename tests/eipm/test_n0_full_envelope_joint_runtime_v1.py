@@ -2499,3 +2499,35 @@ def test_checkpoint_receipt_binds_exact_trainer_implementation() -> None:
         source=(ROOT/relative).read_text()
         assert message in source
 
+
+
+def test_pregradient_runtime_receipts_bind_exact_producer_implementations() -> None:
+    auditors=(
+        "scripts/eipm/n0/audit_tokenizer_v02.py",
+        "scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py",
+        "scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_token_boundaries_v1.py",
+        "scripts/eipm/n0/audit_n0_v02_semantic_operator_long_token_alignment_v1.py",
+        "scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py",
+    )
+    for relative in auditors:
+        source=(ROOT/relative).read_text()
+        assert '"auditor_sha256"' in source
+    qualifiers=(
+        "scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py",
+        "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py",
+    )
+    for relative in qualifiers:
+        source=(ROOT/relative).read_text()
+        assert '"qualifier_sha256"' in source
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    for message in (
+        "tokenizer stress auditor hash drift",
+        "operator evidence token auditor hash drift",
+        "long-context boundary auditor hash drift",
+        "semantic long-context token auditor hash drift",
+        "CPU runtime qualifier hash drift",
+        "GPU memory qualifier hash drift",
+        "static proof auditor hash drift",
+    ):
+        assert message in trainer
+
