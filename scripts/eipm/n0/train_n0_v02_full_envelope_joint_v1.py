@@ -390,6 +390,18 @@ def verify_pre_gradient_runtime(
         raise SystemExit("static proof suite file coverage drift")
     if int(static_proof.get("pytest_skipped_cases",-1))!=0:
         raise SystemExit("static proof suite skipped required cases")
+    ci_workflow=(
+        repo_root/".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml"
+    )
+    if static_proof.get("ci_workflow_sha256")!=sha256_file(ci_workflow):
+        raise SystemExit("static proof CI workflow hash drift")
+    expected_ci_receipts=sorted({
+        str(item.get("receipt"))
+        for item in proof_contract.get("obligations", [])
+        if item.get("kind")=="CI_REQUIRED"
+    })
+    if list(static_proof.get("ci_required_receipts") or [])!=expected_ci_receipts:
+        raise SystemExit("static proof CI receipt coverage drift")
     for label,receipt in (
         ("operator-token",operator_token),("CPU",cpu),("GPU",gpu),
         ("boundary",boundary),("semantic-long",semantic_long),
