@@ -41,7 +41,11 @@
     "canonical_static_proof_contract_required": true,
     "static_proof_canonical_input_hashes_required": true,
     "final_result_must_bind_complete_closure_authority_chain": true,
-    "dev_evaluation_must_bind_candidate_training_authorization": true
+    "dev_evaluation_must_bind_candidate_training_authorization": true,
+    "dev_evaluator_implementation_hash_required": true,
+    "dev_contract_hash_required": true,
+    "dev_gate_registry_hash_required": true,
+    "dev_training_plan_hash_required": true
   },
   "legacy_final_self_validation_v1_forbidden": true,
   "legacy_final_self_validation_v3_forbidden": true,
@@ -64,6 +68,7 @@
     "final_opening_authorization_sha256",
     "dev_selection_receipt_sha256",
     "dev_evaluation_receipt_sha256",
+    "dev_evaluator_sha256",
     "static_proof_receipt_sha256",
     "proof_contract_sha256",
     "opening_authorizer_sha256",
