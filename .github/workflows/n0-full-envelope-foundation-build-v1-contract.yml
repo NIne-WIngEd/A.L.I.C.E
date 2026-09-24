@@ -387,6 +387,45 @@ jobs:
           print("PASS_N0_SEMANTIC_OPERATOR_LONG_CONTEXT_CURRICULUM_AUDIT_V1")
           PY
 
+          python - <<'PY'
+          import json
+          rows=[
+              json.loads(line)
+              for line in open("/tmp/n0-semantic-long/rows.jsonl")
+              if line.strip()
+          ]
+          checked=0
+          for row in rows:
+              if row["long_context_surface"]!="relation_schema":
+                  continue
+              spans=list(row["relation_schema_evidence_char_spans"])
+              expected=sorted({int(x["candidate_index"]) for x in spans})
+              observed=sorted(
+                  int(x)
+                  for x in row["long_context_locator"]["candidate_indices"]
+              )
+              assert observed==expected, (row["id"],observed,expected)
+              assert len(expected)>=2, (row["id"],expected)
+              for index in expected:
+                  text=str(row["relation_candidates"][index]["text"])
+                  assert len(text.split())>=4608, (row["id"],index)
+                  owned=[
+                      x for x in spans
+                      if int(x["candidate_index"])==index
+                  ]
+                  assert owned
+                  for span in owned:
+                      start=int(span["start"])
+                      end=int(span["end"])
+                      assert text[start:end]==str(span["text"])
+                      assert len(text[:start].split())>4096, (
+                          row["id"],index,len(text[:start].split())
+                      )
+              checked+=1
+          assert checked==2, checked
+          print("PASS_N0_SEMANTIC_LONG_MULTI_STEP_RELATION_PLACEMENT_STATIC")
+          PY
+
       - name: Materialize and audit long-context TRAIN DEV supplement
         run: |
           set -euo pipefail
