@@ -324,6 +324,7 @@ def main() -> None:
     result: dict[str, Any] = {
         "schema": "alice.eipm.n0.full-envelope-proof-obligations-static-audit.v1",
         "source_revision": source_revision,
+        "auditor_sha256": sha256_path(Path(__file__).resolve()),
         "proof_contract_sha256": sha256_path(contract_path),
         "supersession_sha256": sha256_path(supersession_path),
         "retrospective_sha256": sha256_path(retrospective_path),
