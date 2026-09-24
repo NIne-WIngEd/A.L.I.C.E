@@ -835,6 +835,19 @@ def main() -> None:
     ):
         raise SystemExit("static proof retrospective hash drift")
 
+    if static_receipt.get("static_suite_executed") is not True:
+        raise SystemExit("FINAL static proof suite was not executed")
+    if (
+        static_receipt.get("static_suite_pass") is not True
+        or int(static_receipt.get("static_suite_exit_code",-1))!=0
+    ):
+        raise SystemExit("FINAL static proof suite did not pass")
+    expected_static_files=[
+        str(value) for value in proof_contract.get("static_test_files", [])
+    ]
+    if list(static_receipt.get("executed_static_test_files") or [])!=expected_static_files:
+        raise SystemExit("FINAL static proof suite file coverage drift")
+
     if final_contract.get("schema")!="alice.eipm.n0.full-envelope-final-validation-contract.v2":
         raise SystemExit("FINAL contract schema drift")
     if evaluator_contract.get("registered_system")!="N0FullEnvelopeTrainableSystemV1":
