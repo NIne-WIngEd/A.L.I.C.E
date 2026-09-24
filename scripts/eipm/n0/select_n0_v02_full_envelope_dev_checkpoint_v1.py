@@ -71,6 +71,13 @@ def main() -> None:
         label="joint training plan",
     )
     training_plan=read_json(args.training_plan)
+    repo_root=Path(__file__).resolve().parents[3]
+    dev_evaluator=Path(__file__).resolve().with_name(
+        "evaluate_n0_v02_full_envelope_dev_v1.py"
+    )
+    dev_contract=repo_root/"configs/eipm/n0/n0_v02_full_envelope_dev_validation_contract_v1.json"
+    gate_registry=repo_root/"configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json"
+    proof_contract=repo_root/"configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json"
     if training_plan.get("schema")!="alice.eipm.n0.semantic-operator-joint-training-plan.v1":
         raise SystemExit("DEV selector training-plan schema drift")
     strategy=dict(training_plan.get("optimization_strategy") or {})
@@ -119,6 +126,16 @@ def main() -> None:
             continue
         if receipt.get("schema")!="alice.eipm.n0.full-envelope-dev-evaluation.v1":
             continue
+        if receipt.get("dev_evaluator_sha256")!=sha256_file(dev_evaluator):
+            raise SystemExit("DEV evaluator implementation hash drift")
+        if receipt.get("dev_contract_sha256")!=sha256_file(dev_contract):
+            raise SystemExit("DEV contract hash drift")
+        if receipt.get("gate_registry_sha256")!=sha256_file(gate_registry):
+            raise SystemExit("DEV gate registry hash drift")
+        if receipt.get("proof_contract_sha256")!=sha256_file(proof_contract):
+            raise SystemExit("DEV proof contract hash drift")
+        if receipt.get("training_plan_sha256")!=sha256_file(args.training_plan):
+            raise SystemExit("DEV training plan hash drift")
         checkpoint_hash=str(receipt.get("candidate_checkpoint_receipt_sha256",""))
         if not checkpoint_hash:
             continue
@@ -171,6 +188,10 @@ def main() -> None:
             raise SystemExit("DEV receipt selection surface drift")
         if dev.get("candidate_system_sha256")!=receipt.get("full_system_sha256"):
             raise SystemExit("DEV receipt/checkpoint system hash drift")
+        if dev.get("training_authorization_sha256")!=receipt.get(
+            "training_authorization_sha256"
+        ):
+            raise SystemExit("DEV receipt/checkpoint training authorization drift")
         if dev.get("final_results_observed") is not False:
             raise SystemExit("DEV checkpoint chain observed FINAL")
         passed=(
@@ -211,6 +232,7 @@ def main() -> None:
         "selected_checkpoint_receipt_sha256":candidate_hash,
         "selected_system_sha256":candidate_receipt["full_system_sha256"],
         "selected_dev_receipt_sha256":sha256_file(selected_dev[0]),
+        "selected_dev_evaluator_sha256":selected_dev[1]["dev_evaluator_sha256"],
         "selected_optimizer_step":int(candidate_receipt["optimizer_step"]),
         "checkpoint_evaluation_cadence_steps":cadence,
         "training_plan_sha256":sha256_file(args.training_plan),
