@@ -534,6 +534,7 @@ jobs:
             --final-contract configs/eipm/n0/n0_v02_full_envelope_final_validation_contract_v2.json \
             --behavioral-train-dev-rows /tmp/n0-behavioral/rows.jsonl \
             --semantic-train-dev-rows /tmp/n0-so/rows.jsonl \
+            --semantic-long-train-dev-rows /tmp/n0-semantic-long/rows.jsonl \
             --runtime-view-train-dev-rows /tmp/n0-runtime-views/rows.jsonl \
             --long-context-train-dev-rows /tmp/n0-long-context/rows.jsonl \
             --synthetic-final-rows /tmp/n0-final-v2/synthetic_final_rows.jsonl \
