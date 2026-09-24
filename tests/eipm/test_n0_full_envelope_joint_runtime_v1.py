@@ -2200,3 +2200,12 @@ def test_p40_tokenizer_gate_executes_named_stress_families_and_is_exact_head_bou
     assert "tokenizer stress source revision drift" in trainer
     assert "tokenizer stress family coverage incomplete" in trainer
 
+
+
+def test_cpu_runtime_runner_rejects_untracked_source_shadowing_before_p40_receipts() -> None:
+    runner=(ROOT/"scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh").read_text()
+    assert 'git status --porcelain)' in runner
+    assert '--untracked-files=no' not in runner
+    assert 'STOP: repo is not clean' in runner
+    assert runner.index('git status --porcelain') < runner.index('audit_tokenizer_v02.py')
+
