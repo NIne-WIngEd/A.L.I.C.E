@@ -40,7 +40,8 @@
     "full_clean_exact_source_worktree_required": true,
     "canonical_static_proof_contract_required": true,
     "static_proof_canonical_input_hashes_required": true,
-    "final_result_must_bind_complete_closure_authority_chain": true
+    "final_result_must_bind_complete_closure_authority_chain": true,
+    "dev_evaluation_must_bind_candidate_training_authorization": true
   },
   "legacy_final_self_validation_v1_forbidden": true,
   "legacy_final_self_validation_v3_forbidden": true,
@@ -66,6 +67,7 @@
     "static_proof_receipt_sha256",
     "proof_contract_sha256",
     "opening_authorizer_sha256",
+    "training_authorization_sha256",
     "freeze_receipt_sha256",
     "final_contract_sha256",
     "evaluator_contract_sha256",
