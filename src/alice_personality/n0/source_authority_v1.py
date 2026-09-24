@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import subprocess
 from pathlib import Path
 
 
@@ -31,3 +32,27 @@ def require_canonical_source_file(
     if sha256_path(supplied_path)!=sha256_path(canonical):
         raise SystemExit(f"{label} drift from canonical exact-source file")
     return canonical
+
+
+def require_clean_exact_revision(
+    *,
+    expected_revision: str,
+    label: str,
+) -> str:
+    root=repository_root()
+    expected=str(expected_revision).strip().lower()
+    if len(expected)!=40 or any(ch not in "0123456789abcdef" for ch in expected):
+        raise SystemExit(f"{label} expected revision must be exact 40-hex")
+    status=subprocess.check_output(
+        ["git","status","--porcelain"],cwd=root,text=True
+    )
+    if status.strip():
+        raise SystemExit(f"{label} requires a clean exact-source worktree")
+    observed=subprocess.check_output(
+        ["git","rev-parse","HEAD"],cwd=root,text=True
+    ).strip().lower()
+    if observed!=expected:
+        raise SystemExit(
+            f"{label} source revision drift: observed={observed} expected={expected}"
+        )
+    return observed
