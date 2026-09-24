@@ -349,6 +349,18 @@ def verify_pre_gradient_runtime(
     )
     if static_proof.get("source_revision")!=source_revision:
         raise SystemExit("static proof receipt source revision drift")
+    if static_proof.get("proof_contract_sha256")!=sha256_file(
+        repo_root/"configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json"
+    ):
+        raise SystemExit("static proof contract hash drift")
+    if static_proof.get("supersession_sha256")!=sha256_file(
+        repo_root/"configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json"
+    ):
+        raise SystemExit("static proof supersession hash drift")
+    if static_proof.get("retrospective_sha256")!=sha256_file(
+        repo_root/"configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json"
+    ):
+        raise SystemExit("static proof retrospective hash drift")
     for label,receipt in (
         ("operator-token",operator_token),("CPU",cpu),("GPU",gpu),
         ("boundary",boundary),("semantic-long",semantic_long),
