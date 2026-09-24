@@ -557,8 +557,9 @@ def main() -> None:
     )
     projection=dict(cfg["memory_projection"])
     activation_delta=max(0,peak_alloc-resident_before)
+    projection_baseline_bytes=max(model_bytes,resident_before)
     projected=(
-        model_bytes
+        projection_baseline_bytes
         + trainable_params*int(projection["gradient_bytes_per_trainable_parameter"])
         + trainable_params*int(projection["adam_moment_bytes_per_trainable_parameter"])
         + int(math.ceil(
@@ -580,6 +581,8 @@ def main() -> None:
         "peak_reserved_bytes":peak_reserved,
         "no_grad_activation_delta_bytes":activation_delta,
         "model_parameter_bytes":model_bytes,
+        "projection_baseline_bytes":projection_baseline_bytes,
+        "measured_resident_overhead_bytes":max(0,resident_before-model_bytes),
         "trainable_parameters":trainable_params,
         "projected_training_bytes":projected,
         "projected_training_fraction":projected_fraction,
