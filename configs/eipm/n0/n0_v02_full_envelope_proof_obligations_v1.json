@@ -1748,6 +1748,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_dev_evaluator_authenticates_runtime_training_authorization_producer",
       "requirement": "DEV evaluation must authenticate the runtime training-authorization schema and exact canonical authorizer implementation, and that producer lineage must remain bound through FINAL opening and closure. A fabricated same-revision authorization payload may not inherit optimizer authority merely by copying the PASS status."
+    },
+    {
+      "id": "N0-P43AI",
+      "stage": "runtime_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_cpu_runtime_runner_materializes_exact_static_proof_receipt_for_handoff",
+      "requirement": "The canonical CPU runtime handoff must materialize the exact clean-head executed static-proof receipt needed by the later runtime training authorizer before producing P40-P42 receipts. External progression may not depend on manually reconstructing a proof artifact outside the governed handoff."
     }
   ],
   "closure_rule": {
