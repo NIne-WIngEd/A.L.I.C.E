@@ -1720,6 +1720,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_checkpoint_receipt_consumers_require_canonical_schema_and_status",
       "requirement": "Every consumer of an N0 successor checkpoint receipt—same-stage resume, stage transition, DEV evaluation/selection, and FINAL evaluation—must require the canonical checkpoint schema and trained-public-candidate status before trusting lineage fields. Merely presenting a JSON object with matching hashes may not grant checkpoint authority."
+    },
+    {
+      "id": "N0-P43AE",
+      "stage": "runtime_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_static_proof_receipt_binds_all_ci_required_receipts_to_authoritative_workflow",
+      "requirement": "Every CI_REQUIRED proof obligation must map to a named PASS receipt implemented by the authoritative exact-head N0 workflow, and the static proof receipt must hash-bind that workflow plus the complete CI-required receipt set. Training, DEV selection, and FINAL closure must reject static proof receipts from a different or incomplete CI contract."
     }
   ],
   "closure_rule": {
