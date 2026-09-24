@@ -262,3 +262,143 @@ Transfer these N0 lessons:
 - checkpoint/DEV/FINAL provenance must be complete enough to prevent silent goalpost movement.
 
 These are builder-system lessons, not N0 identity semantics.
+
+
+## 2026-09-24 empirical handoff continuation
+
+**Current N0 source head:** `0441f99d7d3f7df87b999fd7fc6074a7598be5d4`  
+**Current source branch:** `alice-eipm-v1-n0-full-envelope-foundation-build-v1`  
+**Exact-head CI:** run `36043889153` passed at this source revision with 262 tests, shell-syntax coverage, and the N0 proof-matrix contract.  
+**Current phase:** empirical pre-gradient qualification. P39PN is complete on the current source; P43 is next. Optimizer, gradient, model training, private-identity gradient, FINAL opening, and `n0_complete` remain false.
+
+### Runtime events after the pre-Magnolia static closure
+
+The first CPU qualification attempt, Magnolia job `576060`, exposed a real pre-gradient fixture defect rather than a model failure. In the multi-step `relation_schema` long-context row, only the first supervised relation candidate had been moved beyond the native window. Another supervised candidate remained near token 5. The repair was class-wide rather than row-specific: all supervised relation candidates are longified and span-revalidated; query/factor/step-factor evidence is checked; TRAIN+DEV regression coverage enforces the rule; and the real-token P40C auditor validates the complete supervised-candidate set. This became green at `c06aa612b1cc1a4a1f79b0c9eb62de78342ea533`.
+
+The CPU qualification path was then performance-corrected without reducing topology or capability. At `8899239ccad264139aee9200c0b7d03ee5ae63dc`, invalid padded segment slots no longer waste semantic-backbone computation; valid segments are processed and zeros are scattered back into invalid positions. Regression coverage keeps the gradient path live. Magnolia job `576071` then passed the exact P40/P40A/P40B/P40C/P41/P42 chain with `PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1`, `combined_parameters=243693339`, and peak CPU RSS about 2533.27 MiB.
+
+The first full-mixture materialization on that source also passed. The first subsequent P43 attempt, job `576077`, did **not** reach model/memory qualification. `torchrun --standalone` advertised `gpu001.cluster` as its TCP rendezvous host, which was not resolvable inside the Magnolia udocker network. Both ranks eventually failed with `DistNetworkError`. No P43 `result.json` was produced, so this is infrastructure/orchestration evidence, not model or memory evidence.
+
+The canonical P43 path was repaired at source rather than bypassed in a shell hotfix. The current sbatch now uses the historically proven Magnolia whole-stage launcher:
+
+```text
+accelerate launch
+--multi_gpu
+--num_processes 2
+--num_machines 1
+--mixed_precision fp16
+--dynamo_backend no
+--main_process_port <per-job port>
+```
+
+A regression rejects reintroduction of `torchrun --standalone`. Because that changed the qualified source, every exact-source runtime receipt downstream of source qualification was invalidated and regenerated instead of being reused across revisions.
+
+### Current exact-source P39PN evidence
+
+On the current source `0441f99d7d3f7df87b999fd7fc6074a7598be5d4`, Magnolia job `576079` completed successfully and published the canonical full public mixture.
+
+Observed current-head facts:
+
+- `PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1`;
+- source revision exactly `0441f99d7d3f7df87b999fd7fc6074a7598be5d4`;
+- 8 required optimizer-facing public training lanes;
+- 10 required macro families;
+- FewRel natural-relation lane: 39,200 TRAIN and 5,600 DEV rows;
+- governed judgment teacher bank: 1,020 rows / 51 competencies;
+- `errors=[]`;
+- FINAL-v2 package frozen before gradient;
+- `final_results_observed=false`;
+- `optimizer=false`;
+- `gradient=false`;
+- `gpu_training_authorized=false`;
+- `training=false`;
+- `final_opening=false`;
+- `n0_complete=false`.
+
+The current public-mixture root is:
+
+```text
+/homes/01/mxrayan/rayan-compute/rayan-n0/n0-v02/full-public-mixture-v1
+```
+
+The materialized manifest, audit, FINAL freeze, static proof, and CPU runtime receipt paths are all published under that root. The current P39PN pass therefore closes the exact-source public-mixture gate and leaves P43 as the immediate pre-gradient blocker.
+
+### Magnolia operating model recovered from historical evidence
+
+Treat these as operational invariants for the remaining N0 run:
+
+1. Magnolia's host Git is legacy. Do not use `git -C`, `git switch`, or unproven modern Git syntax. Explicitly `cd` before Git operations.
+2. The login shell is the control plane. Scientific Python execution belongs inside the qualified `rayan-n0-base` udocker/P2 environment.
+3. Run a whole scientific stage in one udocker session. Do not bounce individual Python calls between host and container.
+4. Host and container `$HOME` are not interchangeable. Pass Magnolia-visible absolute paths explicitly.
+5. Repository cleanliness includes untracked files. Slurm stdout/stderr must remain outside the Git checkout.
+6. Runtime evidence roots are immutable. Preserve failed/timed-out evidence by archiving it; never delete evidence simply to permit a retry.
+7. Keep the numeric Slurm job ID returned at submission. Use `squeue` only while active and `sacct` after completion.
+8. Do not use literal angle-bracket placeholders in shell assignments.
+9. CPU stages use the CPU/node partition. P100 allocations are reserved for CUDA-required stages.
+10. Runtime/infrastructure failure is not model evidence. Classify the failure first.
+11. A second failure of the same packaging/infrastructure class triggers a root-cause audit of that class, not a hotfix ladder.
+12. Do not mutate exact-qualified source merely to make orchestration convenient. Source changes require a genuine source defect and invalidate exact-source receipts.
+
+### Immediate execution boundary
+
+The next operation is **P43 only**: the exact 2×P100, no-gradient, DDP-wrapped J3-topology memory qualification using the repaired canonical Accelerate launcher.
+
+P43 must still prove all of the following before training authority can open:
+
+- exact source revision and clean checkout;
+- current-head P39PN manifest/audit/FINAL-freeze lineage;
+- world size 2 and DDP replica wrapping;
+- all required semantic cases;
+- all required full-fabric memory cases;
+- all 18 semantic × full-fabric stress pairs;
+- finite joint loss for every pair;
+- no backward;
+- no optimizer object;
+- no gradients;
+- no weight update;
+- no model training;
+- measured/projected training-memory route passes on both ranks;
+- FINAL remains unopened.
+
+If P43 passes, the next step is the non-mutating runtime training authorizer, then J1. Do not jump directly from P39PN to J1.
+
+### N0 role remains unchanged
+
+Recent runtime work has not changed N0's purpose. N0 is still the **full-production, identity-neutral semantic/evidential/relational/candidate-comparison foundation** for EIPM. It is not the user model, source-person identity store, assistant-self model, relationship store, memory authority, prose generator, planner, or continual-development engine. The 640-wide registered system is a qualified operating point, not a permanent parameter/width/depth/context/relation/factor/view/slot/reasoning ceiling. No reduced pilot model may substitute for this registered successor.
+
+### Main/frontier architecture updates that affect later integration, not current N0 source
+
+Main has advanced beyond the old `0abaed858...` boundary with the canonical personal-development architecture, memory-use calibration, adaptive retrieval/consolidation qualification, and failure-localized multi-substrate learning policy.
+
+The relevant architectural consequences are:
+
+- Fable/A.L.I.C.E. must keep **user/host**, **assistant-self**, and relationship state distinct; A.L.I.C.E. additionally preserves a separate source-person axis.
+- Personal development must eventually be causal: authorized experience → subject-bound state → native judgment → action/outcome → governed revision → changed future judgment when relevant.
+- Personal state must enter native EIPM judgment before downstream response generation; downstream LLM behavior is not sufficient proof.
+- N0 remains host-neutral and should merely be able to consume semantically described personal-state views later.
+- Memory influence requires calibrated `IGNORE` / `BOUND` / `CONTROL` behavior under existing authority rules; retrieval rank or repeated use cannot promote truth/identity authority.
+- Failure localization should compare memory/retrieval/context-harness/model/tool/environment/evaluator substrates before deciding what to mutate.
+- Usage-aware retrieval and lightweight memory-control challengers are derived/rebuildable optimization surfaces, not Claim or identity authority.
+- Parametric-memory ideas are future challengers, not replacements for governed Claim/Experience memory.
+
+These main/frontier changes **do not justify editing the active N0 source or invalidating current P39PN/P43 lineage**. They belong in later personal-learning/memory integration and Fable Builder formation logic.
+
+### MC10D / no-hotfix lesson still governing N0
+
+The MC10D failure mode to avoid is not merely one bad script. It is the broader pattern of repeated transport/infrastructure/validator patching until forward progress becomes a trial-error loop and narrow passes are mistaken for scientific or model evidence.
+
+The active rule remains:
+
+- preserve failure evidence;
+- classify infrastructure vs fixture vs runtime implementation vs model capability;
+- localize the failure substrate;
+- repair the **failure class** only when justified;
+- rerun the minimum invalidated authority chain;
+- never lower thresholds, parameter-fish, silently change gates, promote a narrow PASS, or automatic-retry a valid model failure.
+
+Job `576060` and job `576077` are now explicit negative examples of why this distinction matters.
+
+### Graphify boundary
+
+Graphify remains an external Sol-side context/navigation substrate, not A.L.I.C.E. runtime or truth authority. Use it to locate branch + SHA + path and then verify consequential claims against the original repository artifact. Do not merge the research/Graphify branch wholesale into N0 merely to obtain context.
