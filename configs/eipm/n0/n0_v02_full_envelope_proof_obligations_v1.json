@@ -1664,6 +1664,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_p43_magnolia_handoff_asserts_expanded_memory_coverage_and_clean_source",
       "requirement": "The authoritative Magnolia P43 handoff must itself require a fully clean checkout and verify the expanded semantic/full-fabric stress coverage, 2-rank DDP wrapper, and every-rank projection PASS. A stale post-run assertion set may not bless a weaker receipt."
+    },
+    {
+      "id": "N0-P43Y",
+      "stage": "runtime_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_n0_contract_ci_watches_magnolia_udocker_runtime_wrapper",
+      "requirement": "The shared Magnolia udocker execution wrapper used by both authoritative CPU and GPU qualification entrypoints must be watched and shell-syntax checked by exact-head N0 CI. Container-launch changes may not bypass the successor contract."
     }
   ],
   "closure_rule": {
