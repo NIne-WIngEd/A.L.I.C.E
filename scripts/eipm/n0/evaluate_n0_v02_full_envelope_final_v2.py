@@ -847,6 +847,8 @@ def main() -> None:
     ]
     if list(static_receipt.get("executed_static_test_files") or [])!=expected_static_files:
         raise SystemExit("FINAL static proof suite file coverage drift")
+    if int(static_receipt.get("pytest_skipped_cases",-1))!=0:
+        raise SystemExit("FINAL static proof suite skipped required cases")
 
     if final_contract.get("schema")!="alice.eipm.n0.full-envelope-final-validation-contract.v2":
         raise SystemExit("FINAL contract schema drift")
