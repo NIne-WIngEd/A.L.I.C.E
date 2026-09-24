@@ -1138,6 +1138,7 @@ def main() -> None:
         ),
         "dev_selection_receipt_sha256":sha256_file(args.dev_selection_receipt),
         "dev_evaluation_receipt_sha256":sha256_file(args.dev_evaluation_receipt),
+        "dev_evaluator_sha256":sha256_file(dev_evaluator),
         "static_proof_receipt_sha256":sha256_file(args.static_proof_receipt),
         "proof_contract_sha256":sha256_file(proof_contract_path),
         "opening_authorizer_sha256":sha256_file(args.opening_authorizer),
