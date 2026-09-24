@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from alice_personality.n0.curriculum_data import load_tokenizer
+from alice_personality.n0.source_authority_v1 import require_clean_exact_revision
 from alice_personality.n0.semantic_operator_evidence_targets_v1 import (
     compile_operator_evidence_targets,
 )
@@ -59,6 +60,9 @@ def main() -> None:
         ch not in "0123456789abcdef" for ch in source_revision
     ):
         raise SystemExit("source revision must be exact 40-hex git commit")
+    require_clean_exact_revision(
+        expected_revision=source_revision,label="P40C semantic long-token audit"
+    )
 
     rows_path=Path(args.rows).resolve()
     manifest_path=Path(args.manifest).resolve()
