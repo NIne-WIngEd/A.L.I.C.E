@@ -2545,3 +2545,18 @@ def test_dev_evaluator_authenticates_runtime_training_authorization_producer() -
     final=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py").read_text()
     assert "FINAL training-authorizer lineage drift" in final
 
+
+
+def test_cpu_runtime_runner_materializes_exact_static_proof_receipt_for_handoff() -> None:
+    runner=(ROOT/"scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh").read_text()
+    assert 'STATIC_PROOF="$RUN_ROOT/static_proof.json"' in runner
+    assert 'audit_n0_v02_full_envelope_proof_obligations_v1.py' in runner
+    assert '--contract "$ROOT/configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json"' in runner
+    assert '--supersession "$ROOT/configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json"' in runner
+    assert '--retrospective "$ROOT/configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json"' in runner
+    assert '--repo-root "$ROOT"' in runner
+    assert '--output "$STATIC_PROOF"' in runner
+    assert 'PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1' in runner
+    assert 'echo "static_proof=$STATIC_PROOF"' in runner
+    assert runner.index('audit_n0_v02_full_envelope_proof_obligations_v1.py') < runner.index('audit_tokenizer_v02.py')
+
