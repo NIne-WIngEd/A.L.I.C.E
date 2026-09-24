@@ -8,6 +8,7 @@ import unicodedata
 from collections import Counter
 from pathlib import Path
 from typing import Any, Iterable
+from alice_personality.n0.source_authority_v1 import require_clean_exact_revision
 
 
 SPECIAL_TOKEN_IDS={"[PAD]":0,"[UNK]":1,"[CLS]":2,"[SEP]":3,"[MASK]":4}
@@ -111,6 +112,9 @@ def main() -> None:
         raise SystemExit("Install requirements-n0.txt before auditing the tokenizer") from exc
 
     source_revision=exact_revision(args.source_revision)
+    require_clean_exact_revision(
+        expected_revision=source_revision,label="P40 tokenizer stress audit"
+    )
     if int(args.train_rows_per_source)<=0:
         raise SystemExit("train-rows-per-source must be positive")
 
