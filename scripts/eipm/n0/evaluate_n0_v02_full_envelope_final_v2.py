@@ -834,6 +834,9 @@ def main() -> None:
     dev_evaluator=Path(__file__).resolve().with_name(
         "evaluate_n0_v02_full_envelope_dev_v1.py"
     )
+    training_authorizer=Path(__file__).resolve().with_name(
+        "authorize_n0_v02_full_envelope_training_v1.py"
+    )
     dev_contract_path=(
         repo_root/"configs/eipm/n0/n0_v02_full_envelope_dev_validation_contract_v1.json"
     )
@@ -964,6 +967,10 @@ def main() -> None:
         "training_authorization_sha256"
     ):
         raise SystemExit("FINAL DEV/training authorization lineage drift")
+    if dev_selection.get("training_authorizer_sha256")!=sha256_file(
+        training_authorizer
+    ):
+        raise SystemExit("FINAL training-authorizer lineage drift")
     if opening.get("dev_evaluator_sha256")!=dev_selection.get(
         "dev_evaluator_sha256"
     ):
@@ -972,6 +979,8 @@ def main() -> None:
         "training_authorization_sha256"
     ):
         raise SystemExit("FINAL opening/training authorization lineage drift")
+    if opening.get("training_authorizer_sha256")!=sha256_file(training_authorizer):
+        raise SystemExit("FINAL opening/training-authorizer lineage drift")
     if candidate.get("stage")!="J3_full_public_n0_coadaptation":
         raise SystemExit("FINAL may evaluate only selected J3 candidate")
     if candidate.get("final_results_observed") is not False:
@@ -1163,6 +1172,7 @@ def main() -> None:
         "training_authorization_sha256":candidate.get(
             "training_authorization_sha256"
         ),
+        "training_authorizer_sha256":sha256_file(training_authorizer),
         "closure_authority_chain_complete":True,
         "freeze_receipt_sha256":sha256_file(args.freeze_receipt),
         "final_contract_sha256":sha256_file(args.final_contract),
