@@ -219,9 +219,22 @@ def main() -> None:
         "field":max_axis(final_rows,"runtime_field_count") > max_axis(full_fabric_train_dev,"runtime_field_count"),
         "candidate":max_axis(final_rows,"runtime_candidate_answer_count") > max_axis(full_fabric_train_dev,"runtime_candidate_answer_count"),
         "reasoning_steps":max_axis(final_rows,"runtime_reasoning_steps") > max_axis(full_fabric_train_dev,"runtime_reasoning_steps"),
-        "context_characters":max((full_text_characters(x) for x in final_rows),default=0) > max((full_text_characters(x) for x in full_fabric_train_dev),default=0),
+        "context_characters":max(
+            (full_text_characters(x) for x in (final_rows+runtime_final+long_final)),
+            default=0,
+        ) > max(
+            (full_text_characters(x) for x in full_fabric_train_dev),
+            default=0,
+        ),
     }
-    train_factor_max=max((max(len(bank) for bank in x.get("factor_schemas",{}).values()) for x in behavioral),default=0)
+    train_factor_max=max(
+        (
+            max(len(bank) for bank in x.get("factor_schemas",{}).values())
+            for x in full_fabric_train_dev
+            if x.get("factor_schemas")
+        ),
+        default=0,
+    )
     final_factor_max=max((max(len(bank) for bank in x.get("factor_schemas",{}).values()) for x in final_rows),default=0)
     axis_checks["factor"]=final_factor_max > train_factor_max
     for name,passed in axis_checks.items():
