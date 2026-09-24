@@ -163,6 +163,7 @@ def verify_pre_gradient_runtime(
     semantic_long_token_receipt_path: str | Path,
     static_proof_receipt_path: str | Path,
 ) -> tuple[dict[str,Any],dict[str,Any]]:
+    repo_root=Path(__file__).resolve().parents[3]
     require_canonical_source_file(
         topology_config_path,
         "configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json",
@@ -221,6 +222,10 @@ def verify_pre_gradient_runtime(
         raise SystemExit("tokenizer stress schema drift")
     if tokenizer.get("source_revision")!=source_revision:
         raise SystemExit("tokenizer stress source revision drift")
+    if tokenizer.get("auditor_sha256")!=sha256_file(
+        repo_root/"scripts/eipm/n0/audit_tokenizer_v02.py"
+    ):
+        raise SystemExit("tokenizer stress auditor hash drift")
     required_tokenizer_stress={
         "byte_fallback_oov",
         "unicode_normalization",
@@ -253,6 +258,10 @@ def verify_pre_gradient_runtime(
     )
     if operator_token.get("source_revision")!=source_revision:
         raise SystemExit("operator evidence token alignment source revision drift")
+    if operator_token.get("auditor_sha256")!=sha256_file(
+        repo_root/"scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py"
+    ):
+        raise SystemExit("operator evidence token auditor hash drift")
     semantic_lane=(mixture.get("training_lanes") or {}).get(
         "semantic_operator_intervention"
     ) or {}
@@ -280,6 +289,10 @@ def verify_pre_gradient_runtime(
     long_lane=lanes.get("long_context_supplement") or {}
     if boundary.get("source_revision")!=source_revision:
         raise SystemExit("long-context boundary source revision drift")
+    if boundary.get("auditor_sha256")!=sha256_file(
+        repo_root/"scripts/eipm/n0/audit_n0_v02_full_envelope_long_context_token_boundaries_v1.py"
+    ):
+        raise SystemExit("long-context boundary auditor hash drift")
     if boundary.get("rows_sha256")!=long_lane.get("rows_sha256"):
         raise SystemExit("long-context boundary row hash drift")
     if boundary.get("manifest_sha256")!=long_lane.get("manifest_sha256"):
@@ -291,6 +304,10 @@ def verify_pre_gradient_runtime(
     semantic_long_lane=lanes.get("semantic_operator_long_context") or {}
     if semantic_long.get("source_revision")!=source_revision:
         raise SystemExit("semantic long-context token source revision drift")
+    if semantic_long.get("auditor_sha256")!=sha256_file(
+        repo_root/"scripts/eipm/n0/audit_n0_v02_semantic_operator_long_token_alignment_v1.py"
+    ):
+        raise SystemExit("semantic long-context token auditor hash drift")
     if semantic_long.get("rows_sha256")!=semantic_long_lane.get("rows_sha256"):
         raise SystemExit("semantic long-context token row hash drift")
     if semantic_long.get("manifest_sha256")!=semantic_long_lane.get("manifest_sha256"):
@@ -299,7 +316,6 @@ def verify_pre_gradient_runtime(
         Path(tokenizer_dir_path)/"tokenizer.json"
     ):
         raise SystemExit("semantic long-context token tokenizer hash drift")
-    repo_root=Path(__file__).resolve().parents[3]
     if boundary.get("contract_sha256")!=sha256_file(
         repo_root/"configs/eipm/n0/n0_v02_full_envelope_long_context_curriculum_contract_v1.json"
     ):
@@ -321,6 +337,10 @@ def verify_pre_gradient_runtime(
         "source_config_sha256":sha256_file(source_config_path),
         "corpus_receipt_sha256":sha256_file(corpus_receipt_path),
     }
+    if cpu.get("qualifier_sha256")!=sha256_file(
+        repo_root/"scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"
+    ):
+        raise SystemExit("CPU runtime qualifier hash drift")
     for key,expected in cpu_expected.items():
         if cpu.get(key)!=expected:
             label={
@@ -344,6 +364,10 @@ def verify_pre_gradient_runtime(
         "mixture_manifest_sha256":sha256_file(mixture_manifest_path),
         "mixture_audit_sha256":sha256_file(mixture_audit_path),
     }
+    if gpu.get("qualifier_sha256")!=sha256_file(
+        repo_root/"scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py"
+    ):
+        raise SystemExit("GPU memory qualifier hash drift")
     for key,expected in gpu_expected.items():
         if gpu.get(key)!=expected:
             label={
@@ -361,6 +385,10 @@ def verify_pre_gradient_runtime(
     )
     if static_proof.get("source_revision")!=source_revision:
         raise SystemExit("static proof receipt source revision drift")
+    if static_proof.get("auditor_sha256")!=sha256_file(
+        repo_root/"scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py"
+    ):
+        raise SystemExit("static proof auditor hash drift")
     if static_proof.get("proof_contract_sha256")!=sha256_file(
         repo_root/"configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json"
     ):
