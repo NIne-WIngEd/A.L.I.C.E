@@ -11,9 +11,9 @@ if [[ "$HEAD" != "$EXPECTED" ]]; then
   echo "STOP: full-envelope CPU qualification source drift HEAD=$HEAD expected=$EXPECTED" >&2
   exit 90
 fi
-if [[ -n "$(git status --porcelain --untracked-files=no)" ]]; then
-  echo "STOP: tracked repo changes exist" >&2
-  git status --short --untracked-files=no
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "STOP: repo is not clean; tracked or untracked source may shadow exact-head qualification" >&2
+  git status --short
   exit 91
 fi
 
