@@ -128,25 +128,53 @@ def choose_long_semantic(rows: Sequence[Mapping[str,Any]]) -> dict[str,Any]:
     return dict(max(candidates,key=score))
 
 
-def choose_full_fabric(
+def choose_full_fabric_cases(
     behavioral: Sequence[Mapping[str,Any]],
     runtime_views: Sequence[Mapping[str,Any]],
     long_context: Sequence[Mapping[str,Any]],
-) -> dict[str,Any]:
-    all_rows=[dict(x) for x in behavioral]+[dict(x) for x in runtime_views]+[dict(x) for x in long_context]
+) -> dict[str,dict[str,Any]]:
+    all_rows=(
+        [dict(x) for x in behavioral]
+        +[dict(x) for x in runtime_views]
+        +[dict(x) for x in long_context]
+    )
     if not all_rows:
         raise ValueError("full-fabric GPU dry-run row pool empty")
-    def score(row: Mapping[str,Any]) -> tuple[int,...]:
-        return (
-            1 if row.get("long_context_surface")=="additional_view_source" else 0,
-            1 if row.get("long_context_surface")=="additional_view_descriptor" else 0,
-            int(row.get("runtime_additional_view_count",0)),
-            int(row.get("runtime_candidate_answer_count",0)),
-            int(row.get("runtime_field_count",0)),
-            int(row.get("runtime_edge_count",0)),
-            int(row.get("runtime_reasoning_steps",0)),
+
+    def pick(field: str) -> dict[str,Any]:
+        return dict(max(
+            all_rows,
+            key=lambda row:(
+                int(row.get(field,0)),
+                str(row.get("id","")),
+            ),
+        ))
+
+    long_source=[
+        row for row in all_rows
+        if row.get("long_context_surface")=="additional_view_source"
+    ]
+    if not long_source:
+        raise ValueError(
+            "missing required full-fabric GPU memory case: "
+            "long_additional_view_source"
         )
-    return dict(max(all_rows,key=score))
+    cases={
+        "max_candidate_cardinality":pick("runtime_candidate_answer_count"),
+        "max_field_cardinality":pick("runtime_field_count"),
+        "max_edge_cardinality":pick("runtime_edge_count"),
+        "max_view_cardinality":pick("runtime_additional_view_count"),
+        "max_reasoning_depth":pick("runtime_reasoning_steps"),
+        "long_additional_view_source":dict(max(
+            long_source,
+            key=lambda row:(
+                int(row.get("runtime_additional_view_count",0)),
+                int(row.get("runtime_candidate_answer_count",0)),
+                str(row.get("id","")),
+            ),
+        )),
+    }
+    return cases
 
 
 def choose_natural(rows: Sequence[Mapping[str,Any]]) -> dict[str,Any]:
