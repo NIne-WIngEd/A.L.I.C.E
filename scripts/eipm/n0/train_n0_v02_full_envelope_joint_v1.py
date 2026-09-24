@@ -1088,6 +1088,10 @@ def main() -> None:
         )
     if all_resume:
         prior=read_json(args.resume_receipt)
+        if prior.get("schema")!="alice.eipm.n0.full-envelope-checkpoint-receipt.v1":
+            raise SystemExit("resume checkpoint receipt schema drift")
+        if prior.get("status")!="TRAINED_PUBLIC_N0_CANDIDATE_REQUIRES_DEV_SELECTION":
+            raise SystemExit("resume checkpoint receipt status drift")
         prior_stage=str(prior.get("stage",""))
         if prior.get("final_results_observed") is not False:
             raise SystemExit("resume checkpoint has observed FINAL")
