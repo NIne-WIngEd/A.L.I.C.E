@@ -5,8 +5,10 @@ import argparse
 import gc
 import hashlib
 import json
+import os
 import resource
 import subprocess
+import time
 import unicodedata
 from pathlib import Path
 from typing import Any
@@ -17,6 +19,12 @@ from alice_personality.n0.source_authority_v1 import require_canonical_source_fi
 
 
 PASS = "PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1"
+_START_TIME = time.monotonic()
+
+
+def progress(label: str) -> None:
+    elapsed = time.monotonic() - _START_TIME
+    print(f"QUAL_PHASE elapsed_s={elapsed:.1f} {label}", flush=True)
 
 
 def sha256(path: Path) -> str:
@@ -175,6 +183,7 @@ def main() -> None:
     output_path = Path(args.output).resolve()
     if output_path.exists():
         raise SystemExit(f"refusing to overwrite {output_path}")
+    progress("start")
 
     status=subprocess.check_output(["git","status","--porcelain"],text=True)
     if status.strip():
@@ -222,6 +231,10 @@ def main() -> None:
         raise SystemExit("qualification config schema drift")
     if torch.cuda.is_available():
         raise SystemExit("CPU runtime qualification must not expose CUDA")
+    threads=max(1,int(os.environ.get("SLURM_CPUS_PER_TASK","1")))
+    torch.set_num_threads(threads)
+    torch.set_num_interop_threads(1)
+    progress(f"cpu_threads={threads}")
 
     from safetensors.torch import load_file
 
@@ -260,6 +273,7 @@ def main() -> None:
         source_config_path,
     )
     memory["after_corpus_and_tokenizer_verify_mb"] = rss_mb()
+    progress("tokenizer_and_corpus_verified")
 
     semantic_cfg = load_n0_config(semantic_config_path)
     semantic_model = AliceN0V02Model(semantic_cfg)
@@ -333,6 +347,7 @@ def main() -> None:
     stack_report = system.stack.parameter_report()
     semantic_input_report = system.semantic_input.parameter_report()
     memory["after_registered_system_construct_mb"] = rss_mb()
+    progress("registered_system_constructed")
 
     case = cfg["runtime_case"]
     batch_size = int(case["batch_size"])
@@ -576,6 +591,7 @@ def main() -> None:
         str(name): torch.tensor(values, dtype=torch.long)
         for name, values in case["descriptor_indices"].items()
     }
+    progress("runtime_fixture_tokenized")
 
     with torch.inference_mode():
         runtime_batch = {
@@ -659,11 +675,13 @@ def main() -> None:
             ),
         }
         memory["before_full_registered_forward_mb"] = rss_mb()
+        progress("full_registered_forward_begin")
         outputs = system(
             task="full_envelope",
             batch=runtime_batch,
         )
         memory["after_full_registered_forward_mb"] = rss_mb()
+        progress("full_registered_forward_end")
 
     for name, tensor in flatten_float_tensors(outputs):
         if not bool(torch.isfinite(tensor).all()):
