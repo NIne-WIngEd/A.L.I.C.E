@@ -2287,3 +2287,14 @@ def test_n0_contract_ci_syntax_checks_authoritative_runtime_shell_entrypoints() 
     ):
         assert f'bash -n {path}' in workflow
 
+
+
+def test_p43_gpu_memory_wraps_actual_ddp_replica_route_before_measurement() -> None:
+    qualifier=(ROOT/"scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py").read_text()
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "DistributedDataParallel" in qualifier
+    assert 'route.get("ddp_replica_topology") is not True' in qualifier
+    assert "ddp_replica_wrapped" in qualifier
+    assert "find_unused_parameters=True" in qualifier
+    assert "P43 DDP replica route was not measured" in trainer
+
