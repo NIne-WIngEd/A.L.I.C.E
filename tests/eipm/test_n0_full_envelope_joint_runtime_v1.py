@@ -2417,6 +2417,7 @@ def test_checkpoint_receipt_consumers_require_canonical_schema_and_status() -> N
         "scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py",
         "scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py",
         "scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py",
+        "scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py",
         "scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py",
     ):
         source=(ROOT/relative).read_text()
@@ -2430,6 +2431,9 @@ def test_checkpoint_receipt_consumers_require_canonical_schema_and_status() -> N
     assert "candidate checkpoint receipt status drift" in dev
     selector=(ROOT/"scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py").read_text()
     assert "checkpoint receipt status drift" in selector
+    opening=(ROOT/"scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py").read_text()
+    assert "FINAL opening candidate checkpoint receipt schema drift" in opening
+    assert "FINAL opening candidate checkpoint receipt status drift" in opening
     final=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py").read_text()
     assert "FINAL candidate checkpoint receipt schema drift" in final
     assert "FINAL candidate checkpoint receipt status drift" in final
