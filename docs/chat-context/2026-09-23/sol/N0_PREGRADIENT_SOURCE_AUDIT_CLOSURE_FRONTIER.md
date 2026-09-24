@@ -402,3 +402,38 @@ Job `576060` and job `576077` are now explicit negative examples of why this dis
 ### Graphify boundary
 
 Graphify remains an external Sol-side context/navigation substrate, not A.L.I.C.E. runtime or truth authority. Use it to locate branch + SHA + path and then verify consequential claims against the original repository artifact. Do not merge the research/Graphify branch wholesale into N0 merely to obtain context.
+
+
+## 2026-09-24 P43 job 576080 — registered replay adapter defect, class repair pending requalification
+
+P43 job `576080` reached the real two-rank DDP joint-step runtime on `gpu001`, so the prior Magnolia rendezvous repair was effective. Both ranks then failed deterministically in the governed-judgment replay lane before any valid memory-projection receipt was produced:
+
+`TypeError: AliceN0V02Model.forward() got an unexpected keyword argument 'group_sizes'`.
+
+Failure classification:
+- not a Magnolia networking/rendezvous failure;
+- not a GPU-memory-capability failure;
+- not a learned-model capability failure;
+- not a gradient/optimizer/training failure;
+- runtime implementation/interface defect at the registered-system replay adapter boundary.
+
+Root cause:
+`TeacherMultitaskCollator` correctly returns native semantic-model inputs plus objective-only metadata (`group_sizes`, `preferred_masks`, `principle_tags`, `ids`). `N0FullEnvelopeTrainableSystemV1.forward` incorrectly forwarded the entire teacher batch with `**dict(batch)` into `AliceN0V02Model.forward`, whose native teacher signature intentionally accepts only candidate/rationale tensors and their index map. The older standalone teacher objective path already kept these layers separate.
+
+Why static/CPU qualification missed it:
+the existing joint-step fixture used a permissive fake system, while P42 exercised the real registered system only through the full-envelope path. Thus the exact collator -> joint-step -> registered-system -> native semantic-model replay adapter contract was not executed before P43.
+
+Class repair on active N0 branch:
+- `61915721e95ea83d70c5027128b4eefd6ed76a7f`: explicit MLM/teacher native-field forwarding; objective metadata stays outside the semantic model.
+- `18a36b59951b1beacda67c99e3f46e6777f00fb6`: strict registered-system replay-dispatch regression reproducing the former metadata leak.
+- `91f833f8a7d0caa54797663765a5c7b9826bc7f1`: P42 CPU qualifier now executes real MLM and teacher replay adapters with objective metadata present.
+- `d4c9a6e3822be104719c7067b2f301bc71d85276`: CPU handoff requires a semantic-replay-interface receipt.
+- `af79bc8b79ba9401248e0e2bfd3e9e1e6588cd65`: static regression requires the cheap CPU pre-GPU replay coverage.
+
+Current active N0 head is `af79bc8b79ba9401248e0e2bfd3e9e1e6588cd65`. It is five commits ahead of the failed `0441f99d...` runtime source and has no divergence from the active branch.
+
+Authority consequence:
+all source-bound `0441f99d...` P42/P39PN/P43 evidence is now historical only. Preserve the failed P43 root from job 576080 and the old CPU/P39PN roots; do not overwrite or delete them. The minimal legal requalification chain is exact-head static proof -> P42 CPU qualification (including the new real replay-adapter evidence) -> P39PN rematerialization/freeze -> P43. No gradient, optimizer, FINAL opening, or private-identity training is authorized.
+
+Calibration lesson:
+a final pre-GPU check must follow every real optimizer-facing lane through the production adapter boundary, not merely verify launcher, Slurm, DDP, artifact, and topology contracts. Cheap CPU qualification should execute interfaces whose failure does not intrinsically require GPU hardware. This is a direct application of the MC10D anti-hotfix rule: repair the interface failure class and move its detection earlier rather than retrying P43 with a one-off workaround.
