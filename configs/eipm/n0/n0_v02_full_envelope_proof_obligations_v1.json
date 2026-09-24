@@ -1636,6 +1636,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_p43_gpu_memory_stresses_independent_full_fabric_axes",
       "requirement": "P43 may not estimate J3 training memory from one lexicographically selected full-fabric row. It must execute precommitted cases that independently stress candidate, field, edge, additional-view, reasoning-depth, and long additional-view-source axes, pair them with both high-cardinality and long semantic lanes, and project memory from the maximum observed peak."
+    },
+    {
+      "id": "N0-P43U",
+      "stage": "gpu_memory_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_p43_gpu_memory_stresses_semantic_factor_cardinality_separately",
+      "requirement": "P43 must independently stress semantic factor-bank cardinality in addition to relation/operator geometry and long semantic context. Relation-cardinality maxima may not stand in for factor-schema memory pressure."
     }
   ],
   "closure_rule": {
