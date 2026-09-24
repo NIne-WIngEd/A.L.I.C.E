@@ -129,3 +129,91 @@ def test_long_additional_runtime_view_surfaces_reach_optimizer_facing_batch() ->
     finally:
         if sys.path and sys.path[0]==str(scripts):
             sys.path.pop(0)
+
+
+def test_semantic_operator_long_context_moves_every_supervised_surface_beyond_native_window() -> None:
+    import importlib.util
+    import sys
+
+    scripts=ROOT/"scripts/eipm/n0"
+    sys.path.insert(0,str(scripts))
+    try:
+        spec=importlib.util.spec_from_file_location(
+            "semantic_operator_long_context_builder",
+            scripts/"build_n0_v02_semantic_operator_long_context_curriculum_v1.py",
+        )
+        assert spec is not None and spec.loader is not None
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        native_words=4096
+        target_words=4608
+        for split in ("train","dev"):
+            query_row=module.materialize(
+                split=split,
+                surface="query",
+                target_words=target_words,
+            )
+            for span in query_row["query_relation_evidence_char_spans"]:
+                prefix_words=len(
+                    str(query_row["query"])[:int(span["start"])].split()
+                )
+                assert prefix_words > native_words
+
+            relation_row=module.materialize(
+                split=split,
+                surface="relation_schema",
+                target_words=target_words,
+            )
+            relation_spans=list(
+                relation_row["relation_schema_evidence_char_spans"]
+            )
+            supervised_indices=sorted({
+                int(span["candidate_index"])
+                for span in relation_spans
+            })
+            assert (
+                sorted(relation_row["long_context_locator"]["candidate_indices"])
+                == supervised_indices
+            )
+            assert len(supervised_indices) >= 2
+            for candidate_index in supervised_indices:
+                text=str(
+                    relation_row["relation_candidates"][candidate_index]["text"]
+                )
+                assert module.word_count(text) >= target_words
+                candidate_spans=[
+                    span
+                    for span in relation_spans
+                    if int(span["candidate_index"])==candidate_index
+                ]
+                assert candidate_spans
+                for span in candidate_spans:
+                    assert text[int(span["start"]):int(span["end"])] == str(
+                        span["text"]
+                    )
+                    prefix_words=len(text[:int(span["start"])].split())
+                    assert prefix_words > native_words
+
+            factor_row=module.materialize(
+                split=split,
+                surface="factor_schema",
+                target_words=target_words,
+            )
+            locator=factor_row["long_context_locator"]
+            bank=str(locator["bank"])
+            candidate_index=int(locator["candidate_index"])
+            text=str(
+                factor_row["factor_schemas"][bank][candidate_index]["text"]
+            )
+            assert module.word_count(text) >= target_words
+            global_span=factor_row["factor_schema_evidence_char_spans"][bank]
+            assert len(text[:int(global_span["start"])].split()) > native_words
+            for span in factor_row[
+                "step_factor_schema_evidence_char_spans"
+            ].get(bank,[]):
+                if int(span["candidate_index"])==candidate_index:
+                    assert len(text[:int(span["start"])].split()) > native_words
+    finally:
+        if sys.path and sys.path[0]==str(scripts):
+            sys.path.pop(0)
