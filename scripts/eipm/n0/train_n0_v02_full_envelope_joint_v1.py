@@ -57,6 +57,7 @@ from alice_personality.n0.v02_training import (
 
 
 PASS_MIXTURE="PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1"
+PASS_TOKENIZER="PASS_N0_TOKENIZER_STRESS_V1"
 PASS_CPU="PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1"
 PASS_GPU="PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1"
 PASS_LONG_BOUNDARY="PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1"
@@ -202,8 +203,27 @@ def verify_pre_gradient_runtime(
         raise SystemExit("private identity data present in public mixture")
 
     tokenizer=require_status(
-        tokenizer_audit_path,"PASS",label="exact tokenizer stress"
+        tokenizer_audit_path,PASS_TOKENIZER,label="exact tokenizer stress"
     )
+    if tokenizer.get("schema")!="alice.eipm.n0.tokenizer-stress-audit.v1":
+        raise SystemExit("tokenizer stress schema drift")
+    if tokenizer.get("source_revision")!=source_revision:
+        raise SystemExit("tokenizer stress source revision drift")
+    required_tokenizer_stress={
+        "byte_fallback_oov",
+        "unicode_normalization",
+        "heldout_relation_factor_fragmentation",
+        "long_entity",
+        "punctuation_code_math",
+        "multilingual",
+    }
+    coverage=dict(tokenizer.get("stress_family_coverage") or {})
+    if set(coverage)!=required_tokenizer_stress or any(
+        int(coverage.get(name,0))<=0 for name in required_tokenizer_stress
+    ):
+        raise SystemExit("tokenizer stress family coverage incomplete")
+    if tokenizer.get("errors") not in ([],None):
+        raise SystemExit("tokenizer stress receipt contains errors")
     if tokenizer.get("tokenizer_sha256")!=sha256_file(
         Path(tokenizer_dir_path)/"tokenizer.json"
     ):
