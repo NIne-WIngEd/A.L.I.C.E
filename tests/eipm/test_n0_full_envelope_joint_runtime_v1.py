@@ -2179,7 +2179,7 @@ def test_p40_tokenizer_gate_executes_named_stress_families_and_is_exact_head_bou
     runner=(ROOT/"scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh").read_text()
     trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
     assert "PASS_N0_TOKENIZER_STRESS_V1" in audit
-    assert 'p.add_argument("--source-revision",required=True)' in audit or 'parser.add_argument("--source-revision", required=True)' in audit
+    assert 'parser.add_argument("--source-revision",required=True)' in audit or 'parser.add_argument("--source-revision", required=True)' in audit
     for family in (
         "byte_fallback_oov",
         "unicode_normalization",
