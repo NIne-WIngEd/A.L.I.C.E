@@ -390,3 +390,26 @@ def test_final_v2_result_binds_canonical_static_proof_and_full_closure_authority
     assert '"closure_authority_chain_complete":True' in source
     assert "FINAL DEV/training authorization lineage drift" in source
 
+
+
+def test_final_v2_audit_includes_semantic_long_lane_and_all_full_fabric_train_dev_axes() -> None:
+    auditor=(
+        ROOT/"scripts/eipm/n0/audit_n0_v02_full_envelope_final_v2_package.py"
+    ).read_text()
+    materializer=(
+        ROOT/"scripts/eipm/n0/materialize_n0_v02_full_public_mixture_v1.sh"
+    ).read_text()
+
+    assert 'p.add_argument("--semantic-long-train-dev-rows",required=True)' in auditor
+    assert 'semantic_long=read_jsonl(paths["semantic_long_train_dev_rows"])' in auditor
+    assert "semantic_train_dev=semantic+semantic_long" in auditor
+    assert "for x in semantic_train_dev" in auditor
+    assert "full_fabric_train_dev=behavioral+runtime_train_dev+long_train_dev" in auditor
+    assert 'max_axis(full_fabric_train_dev,"runtime_relation_count")' in auditor
+    assert 'max_axis(full_fabric_train_dev,"runtime_field_count")' in auditor
+    assert 'max_axis(full_fabric_train_dev,"runtime_candidate_answer_count")' in auditor
+    assert 'max_axis(full_fabric_train_dev,"runtime_reasoning_steps")' in auditor
+    assert '"semantic_long_train_dev_rows_sha256"' in auditor
+    assert '"runtime_view_train_dev_rows_sha256"' in auditor
+    assert '"long_context_train_dev_rows_sha256"' in auditor
+    assert '--semantic-long-train-dev-rows "$STAGING/semantic-long/rows.jsonl"' in materializer
