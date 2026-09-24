@@ -2371,3 +2371,23 @@ def test_full_public_mixture_audit_verifies_clean_exact_source_and_canonical_con
     assert "mixture audit contract hash drift" in trainer
     assert "mixture audit implementation hash drift" in trainer
 
+
+
+def test_static_proof_receipt_executes_all_registered_static_tests() -> None:
+    auditor=(
+        ROOT/"scripts/eipm/n0/audit_n0_v02_full_envelope_proof_obligations_v1.py"
+    ).read_text()
+    assert 'subprocess.run(' in auditor
+    assert '"-m","pytest","-q"' in auditor
+    assert 'contract.get("static_test_files", [])' in auditor
+    assert '"static_suite_executed": True' in auditor
+    assert '"static_suite_pass": bool(static_suite_pass)' in auditor
+    assert '"static_suite_exit_code": int(static_suite_exit_code)' in auditor
+    assert '"executed_static_test_files": static_test_files' in auditor
+    assert "static proof suite failed" in auditor
+    assert 'label="static proof audit after pytest"' in auditor
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "static proof suite was not executed" in trainer
+    assert "static proof suite did not pass" in trainer
+    assert "static proof suite file coverage drift" in trainer
+
