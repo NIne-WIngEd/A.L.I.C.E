@@ -2276,3 +2276,14 @@ def test_p43_gpu_memory_stresses_semantic_factor_cardinality_separately() -> Non
     assert "semantic_factor_candidate_count" in qualifier
     assert "missing required semantic GPU memory case" in qualifier
 
+
+
+def test_n0_contract_ci_syntax_checks_authoritative_runtime_shell_entrypoints() -> None:
+    workflow=(ROOT/".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml").read_text()
+    for path in (
+        "scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh",
+        "scripts/eipm/n0/magnolia_cpu_n0_v02_full_envelope_runtime_v1.sbatch",
+        "scripts/eipm/n0/magnolia_p100x2_n0_v02_full_envelope_gpu_memory_v1.sbatch",
+    ):
+        assert f'bash -n {path}' in workflow
+
