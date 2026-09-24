@@ -47,6 +47,7 @@ export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=true
 export RAYAN_UDOCKER_NVIDIA=1
+export N0_MAIN_PROCESS_PORT="${N0_MAIN_PROCESS_PORT:-$((20000 + (${SLURM_JOB_ID:-1337} % 20000)))}"
 
 echo "===== N0 FULL-ENVELOPE GPU NO-GRAD MEMORY DRY RUN ====="
 date -Is
@@ -55,9 +56,10 @@ echo "gradient=false"
 echo "optimizer=false"
 echo "training=false"
 echo "final_opening=false"
+echo "main_process_port=$N0_MAIN_PROCESS_PORT"
 
 bash "$ROOT/scripts/eipm/n0/magnolia_udocker_exec.sh" -lc "
-  torchrun --standalone --nproc_per_node=2     scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py     --qualification-config configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json     --topology-config configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json     --semantic-config configs/eipm/n0/alice_n0_semantic_v0.2.json     --semantic-checkpoint '$SEMANTIC'     --tokenizer-dir '$TOKENIZER'     --corpus-dir '$CORPUS'     --source-config configs/eipm/n0/public_corpus_v0.2.1.activated.json     --teacher-registry '$TEACHER_REGISTRY'     --teacher-audit '$TEACHER_AUDIT'     --semantic-rows '$MIXTURE_ROOT/semantic/rows.jsonl'     --semantic-long-rows '$MIXTURE_ROOT/semantic-long/rows.jsonl'     --behavioral-rows '$MIXTURE_ROOT/behavioral/rows.jsonl'     --runtime-view-rows '$MIXTURE_ROOT/runtime-view/rows.jsonl'     --long-context-rows '$MIXTURE_ROOT/long-context/rows.jsonl'     --fewrel-rows '$MIXTURE_ROOT/fewrel/train_dev_rows.jsonl'     --fewrel-bank '$MIXTURE_ROOT/fewrel/train_dev_bank.json'     --mixture-manifest '$MIXTURE_ROOT/full_public_mixture_manifest.json'     --mixture-audit '$MIXTURE_ROOT/full_public_mixture_audit.json'     --output '$RESULT'
+  accelerate launch --multi_gpu --num_processes 2 --num_machines 1 --mixed_precision fp16 --dynamo_backend no --main_process_port '$N0_MAIN_PROCESS_PORT'     scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py     --qualification-config configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json     --topology-config configs/eipm/n0/n0_v02_full_envelope_registered_topology_v1.json     --semantic-config configs/eipm/n0/alice_n0_semantic_v0.2.json     --semantic-checkpoint '$SEMANTIC'     --tokenizer-dir '$TOKENIZER'     --corpus-dir '$CORPUS'     --source-config configs/eipm/n0/public_corpus_v0.2.1.activated.json     --teacher-registry '$TEACHER_REGISTRY'     --teacher-audit '$TEACHER_AUDIT'     --semantic-rows '$MIXTURE_ROOT/semantic/rows.jsonl'     --semantic-long-rows '$MIXTURE_ROOT/semantic-long/rows.jsonl'     --behavioral-rows '$MIXTURE_ROOT/behavioral/rows.jsonl'     --runtime-view-rows '$MIXTURE_ROOT/runtime-view/rows.jsonl'     --long-context-rows '$MIXTURE_ROOT/long-context/rows.jsonl'     --fewrel-rows '$MIXTURE_ROOT/fewrel/train_dev_rows.jsonl'     --fewrel-bank '$MIXTURE_ROOT/fewrel/train_dev_bank.json'     --mixture-manifest '$MIXTURE_ROOT/full_public_mixture_manifest.json'     --mixture-audit '$MIXTURE_ROOT/full_public_mixture_audit.json'     --output '$RESULT'
 "
 
 python - "$RESULT" <<'PY'
