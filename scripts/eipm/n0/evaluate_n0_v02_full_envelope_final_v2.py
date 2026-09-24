@@ -803,6 +803,10 @@ def main() -> None:
     package_manifest=read_json(args.package_manifest)
     package_audit=read_json(args.package_audit)
     candidate=read_json(args.candidate_receipt)
+    if candidate.get("schema")!="alice.eipm.n0.full-envelope-checkpoint-receipt.v1":
+        raise SystemExit("FINAL candidate checkpoint receipt schema drift")
+    if candidate.get("status")!="TRAINED_PUBLIC_N0_CANDIDATE_REQUIRES_DEV_SELECTION":
+        raise SystemExit("FINAL candidate checkpoint receipt status drift")
     tracked_status=subprocess.check_output(["git","status","--porcelain"],text=True)
     if tracked_status.strip():
         raise SystemExit("FINAL evaluator requires a clean exact-source worktree")
