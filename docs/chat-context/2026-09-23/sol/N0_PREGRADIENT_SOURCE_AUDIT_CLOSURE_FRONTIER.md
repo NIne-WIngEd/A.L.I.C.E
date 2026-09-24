@@ -3,9 +3,9 @@
 **Date:** 2026-09-23  
 **Continuity role:** authoritative handoff for the current N0 successor frontier  
 **N0 source branch:** `alice-eipm-v1-n0-full-envelope-foundation-build-v1`  
-**Exact N0 head:** `c7e979c87e20c38988e796f96aa369d71a974f50`  
-**Exact-head CI:** run `35954241662` — **green**  
-**Observed exact-head static result:** **257 tests passed**, **217 static proof obligations**, proof-matrix static audit PASS  
+**Exact N0 head:** `f78cb119b368a372c16e892646f7b7f247138eab`  
+**Exact-head CI:** run `35954996471` — **green**  
+**Observed exact-head static result:** **259 tests passed**, **219 static proof obligations**, **243 total proof obligations**, proof-matrix static audit PASS  
 **Optimizer / gradient / FINAL:** still closed by source policy; no successor joint optimization has happened  
 **N0 complete:** false
 
@@ -13,7 +13,7 @@
 
 The deep source/static audit has now moved past the earlier `ac0def...` handoff and through the full staged-training, DEV-selection, runtime-qualification and FINAL-authority source path.
 
-At this exact head there are currently **no known unresolved STATIC_REQUIRED defects** in the proof matrix. The remaining blockers are the empirical/runtime obligations already precommitted in source:
+At this exact head there are currently **no known unresolved STATIC_REQUIRED defects** in the proof matrix. The remaining 24 obligations are intentionally non-static: 12 CI receipts, 9 runtime blockers, 2 training blockers, and 1 sealed FINAL blocker. The remaining blockers are the empirical/runtime obligations already precommitted in source:
 
 - P40 exact tokenizer stress;
 - P40A short operator evidence/token alignment;
@@ -155,16 +155,42 @@ FINAL still cannot train, repair, rerun automatically, or choose checkpoints.
 
 ## Exact-head evidence
 
-At `c7e979c87e20c38988e796f96aa369d71a974f50`:
+At `f78cb119b368a372c16e892646f7b7f247138eab`:
 
-- GitHub Actions run `35954241662` completed successfully;
-- 257 tests passed;
-- 217 STATIC_REQUIRED obligations passed;
+- GitHub Actions run `35954996471` completed successfully;
+- 259 tests passed;
+- 219 STATIC_REQUIRED obligations passed;
+- 243 total proof obligations remain registered, with only empirical/runtime/training/FINAL blockers unresolved;
 - full proof-matrix static audit passed;
 - historical authority firewall remained intact;
 - source plan still reports optimizer=false, gradient=false, gpu_training=false, n0_complete=false.
 
 This is the strongest source/static boundary so far. Unlike earlier greens, the current path includes the actual successor trainer, training authorizer, same-stage resume, first-pass DEV selector, stage-transition lineage, P40/P42/P43 runtime authority, sealed FINAL opening and closure path.
+
+## Necessity filter / stop condition for further static work
+
+The owner explicitly challenged whether the deep audit was becoming over-engineered. That challenge is now part of the handoff.
+
+Further source/static changes are justified only if they prevent one of the following:
+
+1. a plausible false N0 PASS;
+2. an accidental capability ceiling;
+3. training/evaluating a different topology or artifact lineage than the one qualified;
+4. DEV/FINAL goalpost movement or leakage;
+5. a direct contradiction with the full-envelope successor objective.
+
+Do **not** continue adding hashes, receipt fields, wrappers, or duplicate provenance checks merely because another lineage field could exist. At `f78cb...`, the static audit should be treated as exhausted unless a new concrete defect satisfies one of the five criteria above.
+
+The most recent necessary addition is the canonical P39PN runtime materialization path:
+
+- `scripts/eipm/n0/materialize_n0_v02_full_public_mixture_v1.sh`
+- builds/audits the exact optimizer-facing public mixture;
+- keeps FINAL frozen and unopened;
+- carries exact P40/P40A/P40B/P40C/P42 evidence forward;
+- materializes behavioral/runtime-view/natural lanes and the frozen FINAL-v2 package;
+- emits no optimizer, gradient, training, or N0-complete authority.
+
+This is operational closure of an already-declared runtime blocker, not a new architecture layer.
 
 ## Immediate next execution order
 
