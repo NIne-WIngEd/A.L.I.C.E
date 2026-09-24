@@ -46,7 +46,8 @@
     "dev_contract_hash_required": true,
     "dev_gate_registry_hash_required": true,
     "dev_training_plan_hash_required": true,
-    "candidate_trainer_implementation_hash_required": true
+    "candidate_trainer_implementation_hash_required": true,
+    "training_authorizer_implementation_hash_required": true
   },
   "legacy_final_self_validation_v1_forbidden": true,
   "legacy_final_self_validation_v3_forbidden": true,
@@ -75,6 +76,7 @@
     "proof_contract_sha256",
     "opening_authorizer_sha256",
     "training_authorization_sha256",
+    "training_authorizer_sha256",
     "freeze_receipt_sha256",
     "final_contract_sha256",
     "evaluator_contract_sha256",
