@@ -1643,6 +1643,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_p43_gpu_memory_stresses_semantic_factor_cardinality_separately",
       "requirement": "P43 must independently stress semantic factor-bank cardinality in addition to relation/operator geometry and long semantic context. Relation-cardinality maxima may not stand in for factor-schema memory pressure."
+    },
+    {
+      "id": "N0-P43V",
+      "stage": "runtime_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_n0_contract_ci_syntax_checks_authoritative_runtime_shell_entrypoints",
+      "requirement": "The authoritative Magnolia CPU/GPU handoff scripts and the P40-P42 CPU runner must pass shell syntax validation in exact-head CI. A watched but syntactically invalid handoff script may not reach external runtime qualification."
     }
   ],
   "closure_rule": {
