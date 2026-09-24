@@ -42,7 +42,16 @@
     "final_results_observed": false,
     "private_identity_data": false,
     "every_rank_must_fit": true,
-    "finite_joint_loss_required": true
+    "finite_joint_loss_required": true,
+    "required_full_fabric_memory_cases": [
+      "max_candidate_cardinality",
+      "max_field_cardinality",
+      "max_edge_cardinality",
+      "max_view_cardinality",
+      "max_reasoning_depth",
+      "long_additional_view_source"
+    ],
+    "full_fabric_axes_may_not_be_represented_by_one_lexicographic_row": true
   },
   "authorization": {
     "gpu_memory_qualification": true,
