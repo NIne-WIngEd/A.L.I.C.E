@@ -2172,3 +2172,31 @@ def test_p42_p43_require_canonical_clean_exact_source_configs() -> None:
         assert "semantic config" in source
         assert "public source config" in source
 
+
+
+def test_p40_tokenizer_gate_executes_named_stress_families_and_is_exact_head_bound() -> None:
+    audit=(ROOT/"scripts/eipm/n0/audit_tokenizer_v02.py").read_text()
+    runner=(ROOT/"scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh").read_text()
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "PASS_N0_TOKENIZER_STRESS_V1" in audit
+    assert 'p.add_argument("--source-revision",required=True)' in audit or 'parser.add_argument("--source-revision", required=True)' in audit
+    for family in (
+        "byte_fallback_oov",
+        "unicode_normalization",
+        "heldout_relation_factor_fragmentation",
+        "long_entity",
+        "punctuation_code_math",
+        "multilingual",
+    ):
+        assert family in audit
+    assert "stress_family_coverage" in audit
+    assert "stress_case_count" in audit
+    assert "fragmentation_limits" in audit
+    assert "tokenizer_stress.json" in runner
+    assert "audit_tokenizer_v02.py" in runner
+    assert '--source-revision "$HEAD"' in runner
+    assert "PASS_N0_TOKENIZER_STRESS_V1" in runner
+    assert 'PASS_TOKENIZER="PASS_N0_TOKENIZER_STRESS_V1"' in trainer
+    assert "tokenizer stress source revision drift" in trainer
+    assert "tokenizer stress family coverage incomplete" in trainer
+
