@@ -1179,6 +1179,8 @@ def main() -> None:
     ]
     if list(static_receipt.get("executed_static_test_files") or [])!=expected_static_files:
         raise SystemExit("DEV static proof suite file coverage drift")
+    if int(static_receipt.get("pytest_skipped_cases",-1))!=0:
+        raise SystemExit("DEV static proof suite skipped required cases")
 
     mixture=read_json(args.mixture_manifest)
     mixture_audit=read_json(args.mixture_audit)
