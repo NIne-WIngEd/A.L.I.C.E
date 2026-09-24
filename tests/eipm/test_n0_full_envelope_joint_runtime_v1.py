@@ -185,6 +185,31 @@ def test_registered_system_replay_dispatch_keeps_objective_metadata_out_of_seman
     assert semantic.calls==["mlm","teacher"]
 
 
+def test_cpu_pregradient_gate_executes_semantic_replay_adapters_with_metadata() -> None:
+    qualifier=(
+        ROOT/"scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"
+    ).read_text()
+    runner=(
+        ROOT/"scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh"
+    ).read_text()
+
+    assert 'task="mlm"' in qualifier
+    assert 'task="teacher"' in qualifier
+    for key in (
+        "group_sizes",
+        "preferred_masks",
+        "principle_tags",
+        "ids",
+    ):
+        assert key in qualifier
+    assert "semantic_replay_interface_passed" in qualifier
+    assert '"semantic_replay_interface": replay_interface_receipt' in qualifier
+    assert 'replay=r["semantic_replay_interface"]' in runner
+    assert 'replay["mlm_dispatch_pass"] is True' in runner
+    assert 'replay["teacher_dispatch_pass"] is True' in runner
+    assert 'replay["objective_metadata_outside_native_model"] is True' in runner
+
+
 def test_joint_training_stages_have_explicit_causal_loss_family_activation() -> None:
     plan=json.loads(
         (ROOT/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json").read_text()
