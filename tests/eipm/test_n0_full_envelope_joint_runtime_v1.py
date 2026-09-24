@@ -2235,3 +2235,26 @@ def test_n0_contract_ci_watches_source_authority_helper() -> None:
     assert path+" \\\"" not in workflow  # guard accidental quoted escape form
     assert path+" \\" in workflow
 
+
+
+def test_p43_gpu_memory_stresses_independent_full_fabric_axes() -> None:
+    qualifier=(ROOT/"scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py").read_text()
+    config=json.loads(
+        (ROOT/"configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json").read_text()
+    )
+    required=set(config["qualification"]["required_full_fabric_memory_cases"])
+    assert required=={
+        "max_candidate_cardinality",
+        "max_field_cardinality",
+        "max_edge_cardinality",
+        "max_view_cardinality",
+        "max_reasoning_depth",
+        "long_additional_view_source",
+    }
+    assert "choose_full_fabric_cases" in qualifier
+    assert "full_fabric_case_receipts" in qualifier
+    assert "required_full_fabric_memory_cases" in qualifier
+    for case in required:
+        assert case in qualifier
+    assert "missing required full-fabric GPU memory case" in qualifier
+
