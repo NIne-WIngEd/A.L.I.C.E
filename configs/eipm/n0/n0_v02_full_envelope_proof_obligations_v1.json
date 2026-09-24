@@ -1712,7 +1712,7 @@
       "stage": "runtime_qualification",
       "kind": "STATIC_REQUIRED",
       "test": "test_static_proof_receipt_executes_all_registered_static_tests",
-      "requirement": "The exact-head static proof receipt consumed by training, DEV selection, and FINAL closure must represent an executed passing pytest run over every registered static-test file, not merely structural presence of test functions. The suite must run on the same clean source revision before the receipt is emitted."
+      "requirement": "The exact-head static proof receipt consumed by training, DEV selection, and FINAL closure must represent an executed passing pytest run over every registered STATIC_REQUIRED test node on the same clean source revision. Required cases must be collected and may not be skipped, xfailed-by-skip, or replaced by mere structural presence of test functions."
     }
   ],
   "closure_rule": {
