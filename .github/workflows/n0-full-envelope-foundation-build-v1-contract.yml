@@ -39,6 +39,7 @@ on:
       - "tests/eipm/test_n0_full_envelope_fabric_v1.py"
       - "tests/eipm/test_n0_full_envelope_stack_v1.py"
       - "tests/eipm/test_n0_full_envelope_context_and_objectives_v1.py"
+      - "tests/eipm/test_n0_full_envelope_long_context_curriculum_v1.py"
       - "scripts/eipm/n0/build_n0_v02_full_envelope_behavioral_curriculum_v1.py"
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_behavioral_curriculum_v1.py"
       - "scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py"
