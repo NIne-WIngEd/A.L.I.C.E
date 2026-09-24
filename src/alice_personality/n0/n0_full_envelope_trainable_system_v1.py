@@ -610,8 +610,28 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
             return self._forward_semantic_operator(batch)
         if task == "natural_relation":
             return self._forward_natural_relation(batch)
-        if task in {"mlm", "teacher"}:
-            return self.semantic_model(task=task, **dict(batch))
+        if task == "mlm":
+            return self.semantic_model(
+                task=task,
+                input_ids=batch["input_ids"],
+                attention_mask=batch["attention_mask"],
+                labels=batch["labels"],
+            )
+        if task == "teacher":
+            # Teacher batches intentionally carry objective-only metadata
+            # (group geometry, preferred masks, principle tags, row ids).
+            # Those fields belong to governed_judgment_replay_loss and are not
+            # part of AliceN0V02Model.forward. Keep the registered-system
+            # boundary explicit so collator metadata cannot leak into the
+            # native semantic-model call under DDP or future trainers.
+            return self.semantic_model(
+                task=task,
+                candidate_input_ids=batch["candidate_input_ids"],
+                candidate_attention_mask=batch["candidate_attention_mask"],
+                rationale_input_ids=batch["rationale_input_ids"],
+                rationale_attention_mask=batch["rationale_attention_mask"],
+                candidate_rationale_index=batch["candidate_rationale_index"],
+            )
         raise ValueError(f"unsupported full-envelope system task: {task!r}")
 
     def parameter_report(self) -> dict[str, Any]:
