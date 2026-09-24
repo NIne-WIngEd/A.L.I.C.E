@@ -129,17 +129,29 @@ def materialize(
         spans=list(row["relation_schema_evidence_char_spans"])
         if not spans:
             raise RuntimeError("base semantic row lacks relation-schema evidence")
-        target_index=int(spans[0]["candidate_index"])
-        original=str(row["relation_candidates"][target_index]["text"])
-        transformed,offset=longify(
-            original,surface=surface,target_words=target_words
-        )
-        row["relation_candidates"][target_index]["text"]=transformed
+        target_indices=sorted({
+            int(span["candidate_index"])
+            for span in spans
+        })
+        offsets: dict[int,int]={}
+        for target_index in target_indices:
+            original=str(row["relation_candidates"][target_index]["text"])
+            transformed,offset=longify(
+                original,surface=surface,target_words=target_words
+            )
+            row["relation_candidates"][target_index]["text"]=transformed
+            offsets[target_index]=offset
         for span in spans:
-            if int(span["candidate_index"])==target_index:
-                _shift_span(span,offset)
-                _validate_span(transformed,span)
-        locator={"kind":"relation_schema","candidate_index":target_index}
+            target_index=int(span["candidate_index"])
+            _shift_span(span,offsets[target_index])
+            _validate_span(
+                str(row["relation_candidates"][target_index]["text"]),
+                span,
+            )
+        locator={
+            "kind":"relation_schema",
+            "candidate_indices":target_indices,
+        }
     else:
         bank_name="direction"
         span=dict(row["factor_schema_evidence_char_spans"][bank_name])
