@@ -195,6 +195,18 @@ def verify_pre_gradient_runtime(
         mixture_manifest_path
     ):
         raise SystemExit("full public mixture audit/manifest hash drift")
+    mixture_contract=(
+        Path(__file__).resolve().parents[3]
+        /"configs/eipm/n0/n0_v02_full_public_mixture_contract_v1.json"
+    )
+    mixture_auditor=(
+        Path(__file__).resolve().parent
+        /"audit_n0_v02_full_public_mixture_manifest_v1.py"
+    )
+    if mixture_audit.get("contract_sha256")!=sha256_file(mixture_contract):
+        raise SystemExit("mixture audit contract hash drift")
+    if mixture_audit.get("auditor_sha256")!=sha256_file(mixture_auditor):
+        raise SystemExit("mixture audit implementation hash drift")
     if mixture.get("final_results_observed") is not False:
         raise SystemExit("FINAL results were observed before gradient")
     if int(mixture.get("final_rows_in_training",-1))!=0:
