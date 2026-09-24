@@ -9,6 +9,7 @@ from typing import Any
 
 from alice_personality.n0.curriculum_data import load_tokenizer
 from alice_personality.n0.semantic_operator_evidence_targets_v1 import (
+from alice_personality.n0.source_authority_v1 import require_clean_exact_revision
     compile_operator_evidence_targets,
 )
 from alice_personality.n0.v02_training import verify_tokenizer_v021
@@ -44,6 +45,9 @@ def main() -> None:
         ch not in "0123456789abcdef" for ch in source_revision
     ):
         raise SystemExit("source revision must be exact 40-hex git commit")
+    require_clean_exact_revision(
+        expected_revision=source_revision,label="P40A operator evidence token audit"
+    )
 
     rows_path=Path(args.rows).resolve()
     tokenizer_dir=Path(args.tokenizer_dir).resolve()
