@@ -775,6 +775,7 @@ def save_checkpoint(
             "schema":"alice.eipm.n0.full-envelope-checkpoint-receipt.v1",
             "status":"TRAINED_PUBLIC_N0_CANDIDATE_REQUIRES_DEV_SELECTION",
             "source_revision":source_revision,
+            "trainer_implementation_sha256":sha256_file(Path(__file__).resolve()),
             "registered_topology_sha256":sha256_file(topology_path),
             "semantic_initialization_sha256":sha256_file(
                 semantic_initialization_path
@@ -1109,6 +1110,10 @@ def main() -> None:
             raise SystemExit("resume checkpoint has observed FINAL")
         if prior.get("source_revision")!=mixture.get("source_revision"):
             raise SystemExit("resume checkpoint source revision drift")
+        if prior.get("trainer_implementation_sha256")!=sha256_file(
+            Path(__file__).resolve()
+        ):
+            raise SystemExit("resume checkpoint trainer implementation hash drift")
         if prior.get("training_authorization_sha256")!=sha256_file(
             args.training_authorization
         ):
