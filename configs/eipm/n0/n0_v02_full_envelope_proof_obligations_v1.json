@@ -1678,6 +1678,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_magnolia_udocker_wrapper_mounts_exact_repo_root",
       "requirement": "The Magnolia udocker wrapper must mount the exact checked-out A.L.I.C.E repository root at the same path used as container workdir and ALICE_N0_REPO_ROOT. Qualification may not rely on the repo happening to live under a broader compute mount."
+    },
+    {
+      "id": "N0-P43AA",
+      "stage": "gpu_memory_qualification",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_p43_memory_projection_includes_measured_resident_runtime_overhead",
+      "requirement": "P43 projected training memory must use at least the measured resident GPU allocation after loading the exact model, DDP wrapper, objective, and fixed replay inputs as its baseline. Raw parameter bytes alone may not omit persistent runtime/DDP overhead from the safety projection."
     }
   ],
   "closure_rule": {
