@@ -51,7 +51,13 @@
       "max_reasoning_depth",
       "long_additional_view_source"
     ],
-    "full_fabric_axes_may_not_be_represented_by_one_lexicographic_row": true
+    "full_fabric_axes_may_not_be_represented_by_one_lexicographic_row": true,
+    "required_semantic_memory_cases": [
+      "max_runtime_axes",
+      "max_factor_cardinality",
+      "long_context_semantic"
+    ],
+    "semantic_factor_cardinality_may_not_be_inferred_from_relation_cardinality": true
   },
   "authorization": {
     "gpu_memory_qualification": true,
