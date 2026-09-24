@@ -149,42 +149,54 @@ class FullEnvelopeSemanticInputV1(nn.Module):
         flat_attention = attention_mask.reshape(batch * segments, window).bool()
         flat_valid = segment_valid_mask.reshape(batch * segments)
 
-        # Invalid segment slots are padding introduced by batching. Give the
-        # backbone one mechanically safe attended token, then zero all exposed
-        # states before the bridge sees them.
-        safe_attention = flat_attention.clone()
-        if bool((~flat_valid).any()):
-            safe_attention[~flat_valid, 0] = True
+        # Batching variable-length long items creates rectangular segment
+        # tensors. Most slots can be padding when one item is much longer than
+        # its neighbors. Never execute the 136M semantic backbone on those
+        # synthetic slots: they carry no semantic content and must be exactly
+        # inert. Encode only real segments, then scatter their states back into
+        # the rectangular geometry expected by the bridge.
+        if not bool(flat_valid.any()):
+            raise ValueError("segmented semantic batch has no valid segments")
+        valid_ids = flat_ids[flat_valid]
+        valid_attention = flat_attention[flat_valid]
+        if bool((valid_attention.sum(dim=-1) == 0).any()):
+            raise ValueError("valid semantic segment has no attended tokens")
 
         outputs = backbone(
-            input_ids=flat_ids,
-            attention_mask=safe_attention,
+            input_ids=valid_ids,
+            attention_mask=valid_attention,
             output_hidden_states=True,
             return_dict=True,
         )
         hidden = getattr(outputs, "hidden_states", None)
         if hidden is None or len(hidden) != self.config.num_hidden_states:
             raise RuntimeError("semantic backbone hidden-state depth drift")
-        stack = torch.stack(tuple(hidden), dim=1)
-        expected = (
+        valid_stack = torch.stack(tuple(hidden), dim=1)
+        expected_valid = (
+            int(flat_valid.sum().item()),
+            self.config.num_hidden_states,
+            window,
+            self.config.semantic_dim,
+        )
+        if valid_stack.shape != expected_valid:
+            raise ValueError(
+                "valid segmented semantic hidden-state geometry drift: "
+                f"{tuple(valid_stack.shape)} != {expected_valid}"
+            )
+
+        flat_stack = valid_stack.new_zeros(
             batch * segments,
             self.config.num_hidden_states,
             window,
             self.config.semantic_dim,
         )
-        if stack.shape != expected:
-            raise ValueError(
-                f"segmented semantic hidden-state geometry drift: {tuple(stack.shape)} != {expected}"
-            )
-        stack = stack.reshape(
+        flat_stack[flat_valid] = valid_stack
+        return flat_stack.reshape(
             batch,
             segments,
             self.config.num_hidden_states,
             window,
             self.config.semantic_dim,
-        )
-        return stack * segment_valid_mask[:, :, None, None, None].to(
-            stack.dtype
         )
 
     def encode_items(
@@ -456,7 +468,7 @@ class FullEnvelopeSemanticInputV1(nn.Module):
             "long_descriptor_supported": True,
             "native_window_is_operating_point": True,
             "all_text_surfaces_share_virtualization_policy": True,
-            "descriptor_summary_content_conditioned_all_layers": True,
+            "invalid_padded_segments_execute_backbone": False,\n            "descriptor_summary_content_conditioned_all_layers": True,
             "descriptor_summary_global_static_layer_mixture": False,
             "cross_window_semantic_bridge_required_when_virtualized": True,
             "item_count_dependent_parameters": 0,
