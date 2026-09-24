@@ -26,6 +26,10 @@ from alice_personality.n0.natural_relation_batch_v1 import (
 from alice_personality.n0.semantic_operator_batch_v1 import (
     compile_semantic_operator_batch,
 )
+from alice_personality.n0.source_authority_v1 import (
+    repository_root,
+    require_canonical_source_file,
+)
 from alice_personality.n0.v02_training import (
     TeacherMultitaskCollator,
     sha256_file,
@@ -786,10 +790,15 @@ def main() -> None:
     if opening.get("final_results_observed") is not False:
         raise SystemExit("FINAL opening receipt already observed FINAL")
 
+    proof_contract_path=require_canonical_source_file(
+        args.proof_contract,
+        "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json",
+        label="FINAL proof contract",
+    )
     final_contract=read_json(args.final_contract)
     evaluator_contract=read_json(args.evaluator_contract)
     registry=read_json(args.gate_registry)
-    proof_contract=read_json(args.proof_contract)
+    proof_contract=read_json(proof_contract_path)
     static_receipt=read_json(args.static_proof_receipt)
     package_manifest=read_json(args.package_manifest)
     package_audit=read_json(args.package_audit)
@@ -811,6 +820,20 @@ def main() -> None:
         raise SystemExit("FINAL DEV selection source revision drift")
     if dev_selection.get("source_revision")!=current_revision:
         raise SystemExit("FINAL DEV evaluation source revision drift")
+
+    repo_root=repository_root()
+    if static_receipt.get("proof_contract_sha256")!=sha256_file(
+        proof_contract_path
+    ):
+        raise SystemExit("static proof contract hash drift")
+    if static_receipt.get("supersession_sha256")!=sha256_file(
+        repo_root/"configs/eipm/n0/n0_v02_full_envelope_supersession_map_v1.json"
+    ):
+        raise SystemExit("static proof supersession hash drift")
+    if static_receipt.get("retrospective_sha256")!=sha256_file(
+        repo_root/"configs/eipm/n0/n0_v02_full_envelope_retrospective_audit_v1.json"
+    ):
+        raise SystemExit("static proof retrospective hash drift")
 
     if final_contract.get("schema")!="alice.eipm.n0.full-envelope-final-validation-contract.v2":
         raise SystemExit("FINAL contract schema drift")
@@ -1053,6 +1076,15 @@ def main() -> None:
         "source_revision":candidate["source_revision"],
         "candidate_system_sha256":sha256_file(args.candidate_system),
         "candidate_receipt_sha256":sha256_file(args.candidate_receipt),
+        "final_opening_authorization_sha256":sha256_file(
+            args.final_opening_authorization
+        ),
+        "dev_selection_receipt_sha256":sha256_file(args.dev_selection_receipt),
+        "dev_evaluation_receipt_sha256":sha256_file(args.dev_evaluation_receipt),
+        "static_proof_receipt_sha256":sha256_file(args.static_proof_receipt),
+        "proof_contract_sha256":sha256_file(proof_contract_path),
+        "opening_authorizer_sha256":sha256_file(args.opening_authorizer),
+        "closure_authority_chain_complete":True,
         "freeze_receipt_sha256":sha256_file(args.freeze_receipt),
         "final_contract_sha256":sha256_file(args.final_contract),
         "evaluator_contract_sha256":sha256_file(args.evaluator_contract),
