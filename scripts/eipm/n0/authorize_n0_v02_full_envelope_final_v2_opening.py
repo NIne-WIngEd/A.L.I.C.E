@@ -84,6 +84,11 @@ def main() -> None:
         raise SystemExit("FINAL opening candidate checkpoint receipt schema drift")
     if candidate.get("status")!="TRAINED_PUBLIC_N0_CANDIDATE_REQUIRES_DEV_SELECTION":
         raise SystemExit("FINAL opening candidate checkpoint receipt status drift")
+    trainer=Path(__file__).resolve().with_name(
+        "train_n0_v02_full_envelope_joint_v1.py"
+    )
+    if candidate.get("trainer_implementation_sha256")!=sha256_file(trainer):
+        raise SystemExit("FINAL opening candidate trainer implementation hash drift")
     if candidate.get("stage")!=J3:
         raise SystemExit("FINAL opening requires a J3 candidate")
     if candidate.get("source_revision")!=revision:
