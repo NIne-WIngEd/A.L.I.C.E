@@ -2480,3 +2480,22 @@ def test_static_proof_receipt_binds_all_ci_required_receipts_to_authoritative_wo
     final=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py").read_text()
     assert "FINAL static proof CI workflow hash drift" in final
 
+
+
+def test_checkpoint_receipt_binds_exact_trainer_implementation() -> None:
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert '"trainer_implementation_sha256":sha256_file(Path(__file__).resolve())' in trainer
+    assert "resume checkpoint trainer implementation hash drift" in trainer
+    for relative,message in (
+        ("scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py",
+         "candidate trainer implementation hash drift"),
+        ("scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py",
+         "checkpoint trainer implementation hash drift"),
+        ("scripts/eipm/n0/authorize_n0_v02_full_envelope_final_v2_opening.py",
+         "FINAL opening candidate trainer implementation hash drift"),
+        ("scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py",
+         "FINAL candidate trainer implementation hash drift"),
+    ):
+        source=(ROOT/relative).read_text()
+        assert message in source
+
