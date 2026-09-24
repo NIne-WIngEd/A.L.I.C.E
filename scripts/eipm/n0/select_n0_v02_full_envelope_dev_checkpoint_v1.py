@@ -78,6 +78,9 @@ def main() -> None:
     dev_contract=repo_root/"configs/eipm/n0/n0_v02_full_envelope_dev_validation_contract_v1.json"
     gate_registry=repo_root/"configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json"
     proof_contract=repo_root/"configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json"
+    trainer=Path(__file__).resolve().with_name(
+        "train_n0_v02_full_envelope_joint_v1.py"
+    )
     if training_plan.get("schema")!="alice.eipm.n0.semantic-operator-joint-training-plan.v1":
         raise SystemExit("DEV selector training-plan schema drift")
     strategy=dict(training_plan.get("optimization_strategy") or {})
@@ -103,6 +106,8 @@ def main() -> None:
             continue
         if receipt.get("status")!="TRAINED_PUBLIC_N0_CANDIDATE_REQUIRES_DEV_SELECTION":
             raise SystemExit("checkpoint receipt status drift")
+        if receipt.get("trainer_implementation_sha256")!=sha256_file(trainer):
+            raise SystemExit("checkpoint trainer implementation hash drift")
         if receipt.get("stage")!=args.stage:
             continue
         if receipt.get("source_revision")!=revision:
