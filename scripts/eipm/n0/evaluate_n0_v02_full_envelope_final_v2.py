@@ -826,6 +826,18 @@ def main() -> None:
         raise SystemExit("FINAL DEV evaluation source revision drift")
 
     repo_root=repository_root()
+    dev_evaluator=Path(__file__).resolve().with_name(
+        "evaluate_n0_v02_full_envelope_dev_v1.py"
+    )
+    dev_contract_path=(
+        repo_root/"configs/eipm/n0/n0_v02_full_envelope_dev_validation_contract_v1.json"
+    )
+    dev_gate_registry_path=(
+        repo_root/"configs/eipm/n0/n0_v02_full_envelope_dev_gate_registry_v1.json"
+    )
+    training_plan_path=(
+        repo_root/"configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"
+    )
     if static_receipt.get("proof_contract_sha256")!=sha256_file(
         proof_contract_path
     ):
@@ -886,6 +898,10 @@ def main() -> None:
         args.dev_evaluation_receipt
     ):
         raise SystemExit("FINAL DEV selection/evaluation receipt drift")
+    if selection.get("selected_dev_evaluator_sha256")!=sha256_file(
+        dev_evaluator
+    ):
+        raise SystemExit("FINAL DEV evaluator implementation hash drift")
     selector=Path(__file__).resolve().with_name(
         "select_n0_v02_full_envelope_dev_checkpoint_v1.py"
     )
@@ -893,6 +909,16 @@ def main() -> None:
         raise SystemExit("FINAL DEV selection authorizer hash drift")
     if dev_selection.get("schema")!="alice.eipm.n0.full-envelope-dev-evaluation.v1":
         raise SystemExit("FINAL DEV selection receipt schema drift")
+    if dev_selection.get("dev_evaluator_sha256")!=sha256_file(dev_evaluator):
+        raise SystemExit("FINAL DEV evaluator implementation hash drift")
+    if dev_selection.get("dev_contract_sha256")!=sha256_file(dev_contract_path):
+        raise SystemExit("FINAL DEV contract hash drift")
+    if dev_selection.get("gate_registry_sha256")!=sha256_file(dev_gate_registry_path):
+        raise SystemExit("FINAL DEV gate registry hash drift")
+    if dev_selection.get("proof_contract_sha256")!=sha256_file(proof_contract_path):
+        raise SystemExit("FINAL DEV proof contract hash drift")
+    if dev_selection.get("training_plan_sha256")!=sha256_file(training_plan_path):
+        raise SystemExit("FINAL DEV training plan hash drift")
     if dev_selection.get("status")!="PASS_DEV_STAGE_GATE":
         raise SystemExit("FINAL opening DEV stage gate not passed")
     if dev_selection.get("stage")!="J3_full_public_n0_coadaptation":
@@ -921,6 +947,14 @@ def main() -> None:
         "training_authorization_sha256"
     ):
         raise SystemExit("FINAL DEV/training authorization lineage drift")
+    if opening.get("dev_evaluator_sha256")!=dev_selection.get(
+        "dev_evaluator_sha256"
+    ):
+        raise SystemExit("FINAL opening/DEV evaluator lineage drift")
+    if opening.get("training_authorization_sha256")!=candidate.get(
+        "training_authorization_sha256"
+    ):
+        raise SystemExit("FINAL opening/training authorization lineage drift")
     if candidate.get("stage")!="J3_full_public_n0_coadaptation":
         raise SystemExit("FINAL may evaluate only selected J3 candidate")
     if candidate.get("final_results_observed") is not False:
