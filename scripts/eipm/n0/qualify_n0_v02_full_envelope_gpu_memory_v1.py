@@ -108,6 +108,29 @@ def choose_semantic(rows: Sequence[Mapping[str,Any]]) -> dict[str,Any]:
     ))
 
 
+def semantic_factor_candidate_count(row: Mapping[str,Any]) -> int:
+    return sum(
+        len(list(values or []))
+        for values in (row.get("factor_schemas") or {}).values()
+    )
+
+
+def choose_max_factor_semantic(
+    rows: Sequence[Mapping[str,Any]],
+) -> dict[str,Any]:
+    if not rows:
+        raise ValueError("semantic GPU dry-run row pool empty")
+    return dict(max(
+        rows,
+        key=lambda row:(
+            semantic_factor_candidate_count(row),
+            int(row.get("runtime_relation_count",0)),
+            int(row.get("runtime_operator_slots",0)),
+            str(row.get("id","")),
+        ),
+    ))
+
+
 def choose_long_semantic(rows: Sequence[Mapping[str,Any]]) -> dict[str,Any]:
     candidates=[
         dict(row) for row in rows
@@ -365,15 +388,27 @@ def main() -> None:
     mlm_batch=next(iter(mlm_loader))
     teacher_batch=next(iter(teacher_loader))
 
+    semantic_case_rows={
+        "max_runtime_axes":choose_semantic(semantic_rows),
+        "max_factor_cardinality":choose_max_factor_semantic(semantic_rows),
+        "long_context_semantic":choose_long_semantic(semantic_long_rows),
+    }
+    required_semantic_cases=set(
+        map(str,q.get("required_semantic_memory_cases") or [])
+    )
+    if set(semantic_case_rows)!=required_semantic_cases:
+        missing=sorted(required_semantic_cases-set(semantic_case_rows))
+        extra=sorted(set(semantic_case_rows)-required_semantic_cases)
+        raise SystemExit(
+            "missing required semantic GPU memory case: "
+            f"missing={missing} extra={extra}"
+        )
     semantic_compiled_cases={
-        "max_runtime_axes":compile_semantic_operator_batch(
-            rows=[choose_semantic(semantic_rows) for _ in range(microbatch_size)],
+        name:compile_semantic_operator_batch(
+            rows=[dict(row) for _ in range(microbatch_size)],
             tokenizer=tokenizer,
-        ),
-        "long_context_semantic":compile_semantic_operator_batch(
-            rows=[choose_long_semantic(semantic_long_rows) for _ in range(microbatch_size)],
-            tokenizer=tokenizer,
-        ),
+        )
+        for name,row in semantic_case_rows.items()
     }
     full_case_rows=choose_full_fabric_cases(
         behavioral_rows,runtime_rows,long_rows
@@ -486,6 +521,9 @@ def main() -> None:
                     "max_reasoning_steps":int(
                         semantic_compiled["metadata"]["max_reasoning_steps"]
                     ),
+                    "semantic_factor_candidate_count":semantic_factor_candidate_count(
+                        semantic_case_rows[semantic_name]
+                    ),
                 })
                 stress_pair_receipts[pair_name]={
                     "semantic_case":semantic_name,
@@ -588,6 +626,7 @@ def main() -> None:
             "teacher_registered_rows":int(teacher_report["registered_rows"]),
             "real_optimizer_facing_public_lanes":True,
             "semantic_case_receipts":semantic_case_receipts,
+            "required_semantic_memory_cases":sorted(required_semantic_cases),
             "full_fabric_case_receipts":full_fabric_case_receipts,
             "required_full_fabric_memory_cases":sorted(required_full_cases),
             "stress_pair_receipts":stress_pair_receipts,
