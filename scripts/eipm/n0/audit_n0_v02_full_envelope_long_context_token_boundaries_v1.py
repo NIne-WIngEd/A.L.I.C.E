@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from alice_personality.n0.curriculum_data import load_tokenizer
+from alice_personality.n0.source_authority_v1 import require_clean_exact_revision
 
 PASS="PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1"
 
@@ -102,6 +103,9 @@ def main() -> None:
         ch not in "0123456789abcdef" for ch in source_revision
     ):
         raise SystemExit("source revision must be exact 40-hex git commit")
+    require_clean_exact_revision(
+        expected_revision=source_revision,label="P40B long-context boundary audit"
+    )
 
     rows_path=Path(args.rows)
     manifest_path=Path(args.manifest)
