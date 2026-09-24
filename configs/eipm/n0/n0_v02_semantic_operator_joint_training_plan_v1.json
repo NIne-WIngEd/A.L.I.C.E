@@ -349,7 +349,7 @@
     "stage_transition_requires_complete_dev_gate_mapping": true,
     "trainer_requires_runtime_receipts_before_gradient": [
       "PASS_N0_FULL_ENVELOPE_PROOF_OBLIGATIONS_STATIC_V1 exact-head receipt",
-      "PASS tokenizer stress",
+      "PASS_N0_TOKENIZER_STRESS_V1 exact-head named stress receipt",
       "PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1",
       "PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1",
       "PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1",
@@ -675,6 +675,11 @@
     "gpu_memory_qualifier": "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py",
     "gpu_memory_sbatch": "scripts/eipm/n0/magnolia_p100x2_n0_v02_full_envelope_gpu_memory_v1.sbatch",
     "gpu_memory_receipt": "PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1",
-    "gpu_memory_pass_is_training_authorization": false
+    "gpu_memory_pass_is_training_authorization": false,
+    "tokenizer_stress_auditor": "scripts/eipm/n0/audit_tokenizer_v02.py",
+    "tokenizer_stress_receipt": "PASS_N0_TOKENIZER_STRESS_V1",
+    "p43_independent_full_fabric_memory_axes": true,
+    "p43_semantic_factor_memory_axis": true,
+    "p43_ddp_replica_wrapper_measured_when_multi_process": true
   }
 }
