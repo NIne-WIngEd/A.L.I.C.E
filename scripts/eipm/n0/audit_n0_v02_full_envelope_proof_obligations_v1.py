@@ -270,10 +270,16 @@ def main() -> None:
         if not junit_path.is_file():
             raise SystemExit("static proof suite did not produce JUnit receipt")
         xml_root=ET.parse(junit_path).getroot()
-        pytest_collected_cases=int(xml_root.attrib.get("tests",0))
-        pytest_error_cases=int(xml_root.attrib.get("errors",0))
-        pytest_failure_cases=int(xml_root.attrib.get("failures",0))
-        pytest_skipped_cases=int(xml_root.attrib.get("skipped",0))
+        suites=[
+            node for node in xml_root.iter()
+            if str(node.tag).rsplit("}",1)[-1]=="testsuite"
+        ]
+        if not suites:
+            raise SystemExit("static proof JUnit receipt contains no testsuite")
+        pytest_collected_cases=sum(int(node.attrib.get("tests",0)) for node in suites)
+        pytest_error_cases=sum(int(node.attrib.get("errors",0)) for node in suites)
+        pytest_failure_cases=sum(int(node.attrib.get("failures",0)) for node in suites)
+        pytest_skipped_cases=sum(int(node.attrib.get("skipped",0)) for node in suites)
 
     static_suite_exit_code=int(static_suite.returncode)
     static_suite_pass=(
