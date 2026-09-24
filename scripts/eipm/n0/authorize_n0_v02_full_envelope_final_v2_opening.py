@@ -109,6 +109,11 @@ def main() -> None:
     )
     if dev.get("dev_evaluator_sha256")!=sha256_file(dev_evaluator):
         raise SystemExit("FINAL opening DEV evaluator implementation hash drift")
+    training_authorizer=Path(__file__).resolve().with_name(
+        "authorize_n0_v02_full_envelope_training_v1.py"
+    )
+    if dev.get("training_authorizer_sha256")!=sha256_file(training_authorizer):
+        raise SystemExit("FINAL opening training-authorizer lineage drift")
     if dev.get("status")!=PASS_DEV:
         raise SystemExit("FINAL opening requires PASS_DEV_STAGE_GATE")
     if dev.get("stage")!=J3:
@@ -194,6 +199,7 @@ def main() -> None:
         "training_authorization_sha256":candidate.get(
             "training_authorization_sha256"
         ),
+        "training_authorizer_sha256":sha256_file(training_authorizer),
         "selection_receipt_sha256":selection_receipt_sha256,
         "freeze_receipt_sha256":freeze_receipt_sha256,
         "opening_authorizer_sha256":opening_authorizer_sha256,
