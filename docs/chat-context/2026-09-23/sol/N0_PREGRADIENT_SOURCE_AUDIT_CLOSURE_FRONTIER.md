@@ -462,3 +462,26 @@ Authority state:
 - `af79bc8...` P42 CPU authority is now valid;
 - next minimal stage is exact-head P39PN rematerialization/freeze on `af79bc8...`;
 - only after P39PN passes may P43 be retried.
+
+
+## 2026-09-24 P39PN exact-head rematerialization — job 576084 PASS
+
+Magnolia job `576084` completed `0:0` on `node016` in `00:01:08` against exact N0 source `af79bc8b79ba9401248e0e2bfd3e9e1e6588cd65`. stderr was empty.
+
+The canonical whole-stage udocker materializer revalidated the new P42 CPU receipt, rebuilt/audited the public behavioral and runtime-view curricula, rematerialized FewRel at exact governed revision `278a2315d2138810a379cd8d5718914dc56e2582`, rebuilt/audited/froze FINAL-v2 without observing results, and atomically published `full-public-mixture-v1`.
+
+Authority receipts:
+- `PASS_N0_P39PN_CPU_RECEIPT_INPUTS`
+- `PASS_N0_FULL_ENVELOPE_BEHAVIORAL_CURRICULUM_AUDIT_V1`
+- `PASS_N0_FULL_ENVELOPE_RUNTIME_VIEW_CURRICULUM_AUDIT_V1`
+- `PASS_N0_FULL_ENVELOPE_SHORTCUT_PREFLIGHT_V1`
+- `PASS_FEWREL_NATURAL_RELATION_AUDIT_V3`
+- `PASS_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_AUDIT_V1`
+- `FROZEN_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_BEFORE_GRADIENT`
+- `PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1`
+
+The exact-head public mixture contains all 8 required optimizer-facing training lanes and all 10 macro families. FewRel materialized 39,200 TRAIN / 5,600 DEV rows; 11,200 natural FINAL rows remain sealed and excluded from training/model selection. FINAL-v2 remains results_observed=false, training_authorized=false, final_opening_authorized=false.
+
+No gradient, optimizer, GPU training, private-identity training, or FINAL opening occurred.
+
+Next legal stage: P43 exact 2xP100 DDP no-gradient memory qualification using the canonical Accelerate launcher. P43 must be interpreted only as topology/lane/DDP/memory-route qualification, not as proof of the actual backward/optimizer path. The first authorized J1 tranche remains the first empirical gradient-path proof.
