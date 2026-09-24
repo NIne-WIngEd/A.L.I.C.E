@@ -11,6 +11,7 @@ from typing import Any, Mapping, Sequence
 
 import torch
 import torch.distributed as dist
+from torch.nn.parallel import DistributedDataParallel
 from torch.utils.data import DataLoader
 
 from alice_personality.n0.curriculum_data import (
@@ -279,6 +280,8 @@ def main() -> None:
     teacher_batch_size=int(route["teacher_batch_size"])
     replay_sequence_length=int(route["replay_sequence_length"])
     training_mixed_precision=str(route["training_mixed_precision"])
+    if route.get("ddp_replica_topology") is not True:
+        raise SystemExit("P43 qualification requires the planned DDP replica topology")
     if min(microbatch_size,teacher_batch_size,replay_sequence_length)<=0:
         raise SystemExit("P43 route batch/sequence operating points must be positive")
     if training_mixed_precision!="fp16":
@@ -444,6 +447,15 @@ def main() -> None:
         runtime_profile=None,
     )
     stage_report=apply_stage_trainability(system,stage=J3)
+    ddp_replica_wrapped=False
+    if world_size>1:
+        system=DistributedDataParallel(
+            system,
+            device_ids=[local_rank],
+            output_device=local_rank,
+            find_unused_parameters=True,
+        )
+        ddp_replica_wrapped=True
     system.eval()
     objective=FullEnvelopeJointTrainingObjectiveV1().to(device).eval()
 
@@ -611,6 +623,8 @@ def main() -> None:
                 "all_parameters_owned":bool(stage_report["all_parameters_owned"]),
             },
             "world_size":world_size,
+            "ddp_replica_topology_required":True,
+            "ddp_replica_wrapped":ddp_replica_wrapped,
             "preferred_world_size":preferred,
             "preferred_world_size_is_capability_ceiling":False,
             "microbatch_size":microbatch_size,
