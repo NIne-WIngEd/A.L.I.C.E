@@ -38,6 +38,7 @@ CORPUS="$WORKDIR/tokenizer-corpus-v0.2.1-offline"
 SEMANTIC="$WORKDIR/targeted-repair-v0.1/checkpoints/step-00000080/alice_n0_v02.safetensors"
 RUN_ROOT="$WORKDIR/full-envelope-cpu-runtime-v1"
 RESULT="$RUN_ROOT/result.json"
+TOKENIZER_STRESS="$RUN_ROOT/tokenizer_stress.json"
 EVIDENCE_ROOT="$RUN_ROOT/operator-evidence-alignment"
 EVIDENCE_ROWS="$EVIDENCE_ROOT/rows.jsonl"
 EVIDENCE_MANIFEST="$EVIDENCE_ROOT/manifest.json"
@@ -82,6 +83,7 @@ python -m py_compile \
   "$ROOT/src/alice_personality/n0/full_envelope_semantic_input_v1.py" \
   "$ROOT/src/alice_personality/n0/n0_full_envelope_stack_v1.py" \
   "$ROOT/src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py" \
+  "$ROOT/scripts/eipm/n0/audit_tokenizer_v02.py" \
   "$ROOT/scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py" \
   "$ROOT/scripts/eipm/n0/audit_n0_v02_semantic_operator_curriculum_v1.py" \
   "$ROOT/scripts/eipm/n0/audit_n0_v02_operator_evidence_token_alignment_v1.py" \
@@ -94,6 +96,36 @@ python -m py_compile \
   "$ROOT/scripts/eipm/n0/qualify_n0_v02_full_envelope_cpu_runtime_v1.py"
 
 mkdir -p "$RUN_ROOT" "$EVIDENCE_ROOT" "$SEMANTIC_LONG_ROOT" "$LONG_CONTEXT_ROOT"
+
+python "$ROOT/scripts/eipm/n0/audit_tokenizer_v02.py" \
+  --corpus-dir "$CORPUS" \
+  --tokenizer-dir "$TOKENIZER" \
+  --source-revision "$HEAD" \
+  --output "$TOKENIZER_STRESS"
+
+python - "$TOKENIZER_STRESS" <<'PY'
+import json,sys
+r=json.load(open(sys.argv[1]))
+required={
+    "byte_fallback_oov",
+    "unicode_normalization",
+    "heldout_relation_factor_fragmentation",
+    "long_entity",
+    "punctuation_code_math",
+    "multilingual",
+}
+assert r["status"]=="PASS_N0_TOKENIZER_STRESS_V1"
+assert r["source_revision"]
+assert set(r["required_stress_families"])==required
+assert set(r["stress_family_coverage"])==required
+assert all(int(r["stress_family_coverage"][name])>0 for name in required)
+assert int(r["stress_case_count"])>=len(required)
+assert not r["errors"]
+assert r["model_training_performed"] is False
+assert r["gradient"] is False
+assert r["optimizer"] is False
+print("PASS_N0_TOKENIZER_STRESS_V1")
+PY
 
 python "$ROOT/scripts/eipm/n0/build_n0_v02_semantic_operator_intervention_curriculum_v1.py" \
   --output "$EVIDENCE_ROWS" \
@@ -215,6 +247,7 @@ echo "optimizer=false"
 echo "model_training=false"
 echo "final_validation_opened=false"
 echo "semantic_checkpoint_sha256=$OBSERVED_SEMANTIC_SHA"
+echo "tokenizer_stress=$TOKENIZER_STRESS"
 echo "operator_evidence_token_alignment=$EVIDENCE_TOKEN_AUDIT"
 echo "semantic_operator_long_token_alignment=$SEMANTIC_LONG_TOKEN_AUDIT"
 echo "long_context_token_boundary_alignment=$LONG_CONTEXT_TOKEN_BOUNDARY_AUDIT"
