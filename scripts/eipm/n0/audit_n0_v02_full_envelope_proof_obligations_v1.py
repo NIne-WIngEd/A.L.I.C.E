@@ -7,6 +7,8 @@ import hashlib
 import json
 import subprocess
 import sys
+import tempfile
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
 
@@ -26,7 +28,7 @@ def test_functions(path: Path) -> set[str]:
     tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
     return {
         node.name
-        for node in ast.walk(tree)
+        for node in tree.body
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
         and node.name.startswith("test_")
     }
@@ -105,6 +107,7 @@ def main() -> None:
 
     ids: set[str] = set()
     static_count = 0
+    required_static_tests: list[str] = []
     runtime_blocking = []
     training_blocking = []
     final_blocking = []
@@ -124,6 +127,7 @@ def main() -> None:
         if kind == "STATIC_REQUIRED":
             static_count += 1
             test = str(obligation.get("test", ""))
+            required_static_tests.append(test)
             if test not in all_test_names:
                 errors.append(f"{oid}: required static test missing: {test}")
         elif kind == "CI_REQUIRED":
@@ -245,15 +249,44 @@ def main() -> None:
     static_test_files=[
         str(value) for value in contract.get("static_test_files", [])
     ]
-    static_suite=subprocess.run(
-        [sys.executable,"-m","pytest","-q",*static_test_files],
-        cwd=root,
-        text=True,
-        capture_output=True,
-        check=False,
-    )
+    required_static_nodeids=[
+        f"{all_test_names[name]}::{name}"
+        for name in sorted(set(required_static_tests))
+        if name in all_test_names
+    ]
+    with tempfile.TemporaryDirectory(prefix="alice-n0-static-proof-") as tmp:
+        junit_path=Path(tmp)/"pytest.xml"
+        static_suite=subprocess.run(
+            [
+                sys.executable,"-m","pytest","-q",
+                *required_static_nodeids,
+                "--junitxml",str(junit_path),
+            ],
+            cwd=root,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        if not junit_path.is_file():
+            raise SystemExit("static proof suite did not produce JUnit receipt")
+        xml_root=ET.parse(junit_path).getroot()
+        pytest_collected_cases=int(xml_root.attrib.get("tests",0))
+        pytest_error_cases=int(xml_root.attrib.get("errors",0))
+        pytest_failure_cases=int(xml_root.attrib.get("failures",0))
+        pytest_skipped_cases=int(xml_root.attrib.get("skipped",0))
+
     static_suite_exit_code=int(static_suite.returncode)
-    static_suite_pass=static_suite_exit_code==0
+    static_suite_pass=(
+        static_suite_exit_code==0
+        and pytest_error_cases==0
+        and pytest_failure_cases==0
+        and pytest_skipped_cases==0
+        and pytest_collected_cases>=len(required_static_nodeids)
+    )
+    if pytest_skipped_cases:
+        errors.append(
+            f"static proof suite skipped required cases: {pytest_skipped_cases}"
+        )
     if not static_suite_pass:
         errors.append(
             f"static proof suite failed with exit code {static_suite_exit_code}"
@@ -273,7 +306,12 @@ def main() -> None:
         "static_suite_pass": bool(static_suite_pass),
         "static_suite_exit_code": int(static_suite_exit_code),
         "executed_static_test_files": static_test_files,
+        "required_static_test_nodeids": required_static_nodeids,
         "static_test_function_count": len(all_test_names),
+        "pytest_collected_cases": int(pytest_collected_cases),
+        "pytest_error_cases": int(pytest_error_cases),
+        "pytest_failure_cases": int(pytest_failure_cases),
+        "pytest_skipped_cases": int(pytest_skipped_cases),
         "pytest_stdout_sha256": hashlib.sha256(
             static_suite.stdout.encode("utf-8")
         ).hexdigest(),
