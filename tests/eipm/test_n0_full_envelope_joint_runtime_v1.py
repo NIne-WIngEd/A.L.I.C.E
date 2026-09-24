@@ -2408,3 +2408,29 @@ def test_static_proof_receipt_executes_all_registered_static_tests() -> None:
     assert "FINAL static proof suite file coverage drift" in final
     assert "FINAL static proof suite skipped required cases" in final
 
+
+
+def test_checkpoint_receipt_consumers_require_canonical_schema_and_status() -> None:
+    expected_schema="alice.eipm.n0.full-envelope-checkpoint-receipt.v1"
+    expected_status="TRAINED_PUBLIC_N0_CANDIDATE_REQUIRES_DEV_SELECTION"
+    for relative in (
+        "scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py",
+        "scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py",
+        "scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py",
+        "scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py",
+    ):
+        source=(ROOT/relative).read_text()
+        assert expected_schema in source
+        assert expected_status in source
+    trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
+    assert "resume checkpoint receipt schema drift" in trainer
+    assert "resume checkpoint receipt status drift" in trainer
+    dev=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_dev_v1.py").read_text()
+    assert "candidate checkpoint receipt schema drift" in dev
+    assert "candidate checkpoint receipt status drift" in dev
+    selector=(ROOT/"scripts/eipm/n0/select_n0_v02_full_envelope_dev_checkpoint_v1.py").read_text()
+    assert "checkpoint receipt status drift" in selector
+    final=(ROOT/"scripts/eipm/n0/evaluate_n0_v02_full_envelope_final_v2.py").read_text()
+    assert "FINAL candidate checkpoint receipt schema drift" in final
+    assert "FINAL candidate checkpoint receipt status drift" in final
+
