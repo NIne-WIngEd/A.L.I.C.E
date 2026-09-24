@@ -101,6 +101,7 @@ on:
       - "scripts/eipm/n0/audit_n0_v02_full_envelope_cpu_runtime_contract_v1.py"
       - "scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh"
       - "scripts/eipm/n0/magnolia_cpu_n0_v02_full_envelope_runtime_v1.sbatch"
+      - "scripts/eipm/n0/magnolia_udocker_exec.sh"
       - "src/alice_personality/n0/n0_full_envelope_trainable_system_v1.py"
       - "src/alice_personality/n0/full_envelope_dev_metrics_v1.py"
       - "src/alice_personality/n0/full_envelope_dev_gate_v1.py"
@@ -211,6 +212,7 @@ jobs:
           bash -n scripts/eipm/n0/run_n0_v02_full_envelope_cpu_runtime_v1.sh
           bash -n scripts/eipm/n0/magnolia_cpu_n0_v02_full_envelope_runtime_v1.sbatch
           bash -n scripts/eipm/n0/magnolia_p100x2_n0_v02_full_envelope_gpu_memory_v1.sbatch
+          bash -n scripts/eipm/n0/magnolia_udocker_exec.sh
 
           for f in \
             configs/eipm/n0/n0_v02_natural_relation_sources_v1.json \
