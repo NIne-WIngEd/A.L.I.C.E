@@ -807,6 +807,11 @@ def main() -> None:
         raise SystemExit("FINAL candidate checkpoint receipt schema drift")
     if candidate.get("status")!="TRAINED_PUBLIC_N0_CANDIDATE_REQUIRES_DEV_SELECTION":
         raise SystemExit("FINAL candidate checkpoint receipt status drift")
+    trainer=Path(__file__).resolve().with_name(
+        "train_n0_v02_full_envelope_joint_v1.py"
+    )
+    if candidate.get("trainer_implementation_sha256")!=sha256_file(trainer):
+        raise SystemExit("FINAL candidate trainer implementation hash drift")
     tracked_status=subprocess.check_output(["git","status","--porcelain"],text=True)
     if tracked_status.strip():
         raise SystemExit("FINAL evaluator requires a clean exact-source worktree")
@@ -1145,6 +1150,7 @@ def main() -> None:
         "source_revision":candidate["source_revision"],
         "candidate_system_sha256":sha256_file(args.candidate_system),
         "candidate_receipt_sha256":sha256_file(args.candidate_receipt),
+        "trainer_implementation_sha256":sha256_file(trainer),
         "final_opening_authorization_sha256":sha256_file(
             args.final_opening_authorization
         ),
