@@ -1118,3 +1118,72 @@ def test_macro_family_balancer_stage_subset_leaves_inactive_ema_untouched() -> N
     assert torch.allclose(result["loss"],expected,atol=1e-7,rtol=1e-7)
     result["loss"].backward()
     assert a.grad is not None and b.grad is not None
+
+
+def test_semantic_segment_batch_executes_backbone_only_on_real_segments_and_keeps_gradient() -> None:
+    class CountingBackbone(torch.nn.Module):
+        def __init__(self) -> None:
+            super().__init__()
+            self.scale=torch.nn.Parameter(torch.tensor(1.0))
+            self.last_batch=-1
+
+        def forward(
+            self,
+            *,
+            input_ids,
+            attention_mask,
+            output_hidden_states,
+            return_dict,
+        ):
+            assert output_hidden_states is True
+            assert return_dict is True
+            self.last_batch=int(input_ids.size(0))
+            base=input_ids.float().unsqueeze(-1).expand(-1,-1,8)
+            base=base*self.scale
+            hidden=tuple(base+float(layer) for layer in range(3))
+            return SimpleNamespace(hidden_states=hidden)
+
+    semantic_input=FullEnvelopeSemanticInputV1(
+        FullEnvelopeSemanticInputConfig(
+            semantic_dim=8,
+            num_hidden_states=3,
+            num_attention_heads=2,
+            native_window_tokens=4,
+            overlap_tokens=1,
+            segment_bridge_layers=1,
+            segment_query_chunk=2,
+            segment_key_chunk=2,
+            special_token_ids=(0,1,2,3,4),
+            pad_token_id=0,
+            dropout=0.0,
+        )
+    )
+    backbone=CountingBackbone()
+    ids=torch.tensor(
+        [
+            [[5,6,7,8],[9,10,11,12],[13,14,15,16]],
+            [[17,18,19,20],[0,0,0,0],[0,0,0,0]],
+        ],
+        dtype=torch.long,
+    )
+    attention=ids.ne(0)
+    valid=torch.tensor(
+        [[True,True,True],[True,False,False]],
+        dtype=torch.bool,
+    )
+
+    encoded=semantic_input._encode_segment_batch(
+        backbone=backbone,
+        input_ids=ids,
+        attention_mask=attention,
+        segment_valid_mask=valid,
+    )
+
+    assert backbone.last_batch==int(valid.sum())==4
+    assert encoded.shape==(2,3,3,4,8)
+    assert torch.equal(encoded[1,1],torch.zeros_like(encoded[1,1]))
+    assert torch.equal(encoded[1,2],torch.zeros_like(encoded[1,2]))
+    encoded[valid].sum().backward()
+    assert backbone.scale.grad is not None
+    assert torch.isfinite(backbone.scale.grad)
+    assert float(backbone.scale.grad.abs())>0.0
