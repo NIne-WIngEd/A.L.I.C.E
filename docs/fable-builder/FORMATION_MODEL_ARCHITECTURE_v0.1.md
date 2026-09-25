@@ -201,7 +201,13 @@ Fable must operate only on host-authorized data. A consumer's raw evidence, deri
 
 Cross-user learning, if ever implemented, must use a separate consent and privacy design. The default architecture must not require sending one consumer's identity corpus to another user's model or to A.L.I.C.E.
 
-## 11. Open research questions
+## 11. Consumer foundation and conversation handoff (2026-09-25)
+
+The first consumer release design expands FBM beyond personality reconstruction. FBM must eventually form and connect the identity, Memory Formation, host, relationship, and assistant-self capabilities with the local memory and Experience Ledger architecture. Their separation remains authoritative; the count of weight files is open. User-selected eligible public/licensed and user-added sources support identity-neutral N0 training alongside private evidence and clearly labeled synthetic teaching material. Source permissions, license/provenance checks, adequacy, compute estimates, and fresh-initialization lineage must be inspectable.
+
+The live conversation system is a distinct first-party capability. FBM may build its training and evaluation substrate, but the five personal roles and memory architecture supply native verdict and response evaluation at runtime. The verdict includes expression and relationship behavior, not merely a conclusion. API language candidates must satisfy that local verdict; first-pass requests should normally succeed and corrective calls must be bounded. Privacy-limited encoding does not guarantee zero semantic disclosure. See [the dedicated handoff](CONVERSATION_AND_SOURCE_SELECTION_v0.1.md).
+
+## 12. Open research questions
 
 These remain intentionally open until build evidence answers them:
 
