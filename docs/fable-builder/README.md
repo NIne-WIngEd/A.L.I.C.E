@@ -76,6 +76,7 @@ A process trace records reproducible external behavior: inputs, operation, const
 See:
 
 - `FORMATION_MODEL_ARCHITECTURE_v0.1.md`
+- `CONVERSATION_AND_SOURCE_SELECTION_v0.1.md` — first-release builder scope, selectable outside-data sources, and conversation handoff
 - `TRACE_SCHEMA_v0.1.md`
 - `history/HISTORICAL_SYNTHETIC_AND_TEACHING_PIPELINE_v0.1.md`
 - `traces/FBM_TRACE_20260913.jsonl`
