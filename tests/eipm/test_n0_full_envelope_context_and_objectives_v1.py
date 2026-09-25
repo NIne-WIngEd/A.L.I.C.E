@@ -73,6 +73,61 @@ def test_chunked_late_interaction_matches_dense_reference() -> None:
         assert torch.allclose(i_to_q, expected_i, atol=1e-6, rtol=1e-6)
 
 
+def test_chunked_late_interaction_autocast_uses_masked_result_dtype_floor() -> None:
+    """Reproduce the P43 fp32-input/fp16-einsum masking boundary on CPU."""
+    torch.manual_seed(602)
+    query = F.normalize(torch.randn(1, 2, 5, 8), dim=-1)
+    items = F.normalize(torch.randn(1, 3, 2, 7, 8), dim=-1)
+    query_mask = torch.tensor([[True, True, True, False, False]])
+    item_mask = torch.ones(1, 3, 7, dtype=torch.bool)
+    item_mask[0, 0, -2:] = False
+    item_mask[0, 2] = False
+    valid = (
+        query_mask[:, None, None, :, None]
+        & item_mask[:, :, None, None, :]
+    )
+    item_available = item_mask.any(dim=-1)
+
+    with torch.no_grad(), torch.autocast(
+        device_type="cpu",
+        dtype=torch.float16,
+    ):
+        # CPU autocast mirrors the failed P43 boundary: operands can remain
+        # float32 while einsum materializes an fp16 similarity tensor.
+        dense = torch.einsum("bltd,bnlsd->bnlts", query, items)
+        assert dense.dtype == torch.float16
+        dense = dense.masked_fill(
+            ~valid,
+            torch.finfo(dense.dtype).min,
+        )
+        expected_q = dense.max(dim=-1).values
+        expected_q = expected_q.masked_fill(
+            ~query_mask[:, None, None, :],
+            0.0,
+        )
+        expected_q = expected_q.masked_fill(
+            ~item_available[:, :, None, None],
+            0.0,
+        )
+        expected_i = dense.max(dim=-2).values.masked_fill(
+            ~item_mask[:, :, None, :],
+            0.0,
+        )
+
+        actual_q, actual_i = chunked_batched_bidirectional_late_max(
+            query=query,
+            query_mask=query_mask,
+            items=items,
+            item_mask=item_mask,
+            chunk_tokens=3,
+        )
+
+    assert bool(torch.isfinite(actual_q).all())
+    assert bool(torch.isfinite(actual_i).all())
+    assert torch.allclose(actual_q, expected_q, atol=1.0e-3, rtol=1.0e-3)
+    assert torch.allclose(actual_i, expected_i, atol=1.0e-3, rtol=1.0e-3)
+
+
 def test_context_virtualizer_preserves_every_token_once_beyond_native_window() -> None:
     virtualizer = SemanticContextVirtualizerV1(
         SemanticContextVirtualizerConfig(
