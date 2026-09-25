@@ -47,7 +47,7 @@ Runs signed skills, local tools, OS actions, APIs, and connectors through declar
 
 ### Optional external-compute plane
 
-Cloud or remote models are optional. The host sees exactly what data is leaving, may redact or transform it locally, and may disable the plane entirely. The vendor cannot silently convert local-first operation into cloud-required operation.
+Cloud or remote models are host-controlled. The host sees exactly what data is leaving, may redact or transform it locally, and may disable the plane entirely. In the proposed first release, fluent conversation and general feature work may need an API; disabling this plane leaves the personal foundation and bounded local interactions, with the lost capability visible to the host. The vendor cannot silently export personal state or enable network access.
 
 ## 3. Storage design
 
@@ -71,11 +71,21 @@ The lifecycle manager predicts storage needs before ingestion or training, prese
 
 No shared cache, vector collection, telemetry batch, blob namespace, backup set, or model-training directory may mix two host instances.
 
+## First-release conversation path (2026-09-25)
+
+The initial Fable/Friday architecture builds a host-specific personal foundation locally. Identity, Memory Formation, host, relationship, and assistant-self roles use local evidence, memory infrastructure, and the Experience Ledger. A.L.I.C.E. preserves its additional Elaina source-person role. These are starting responsibilities, not a fixed number of independent weight files.
+
+A first-party local conversation capability assembles authorized state and an EIPM-native identity decision packet before external language generation. The packet records reasons, uncertainty, stance, relationship-specific expression, and boundaries. The local encoder and egress gate compile a minimum permitted abstract request. A GPT/Claude-class API may return a draft, but the existing personal foundation and conversation architecture compare its behavior and voice with the verdict, decode local references, and issue only bounded targeted corrections when needed. There is no separate memory judge model. First-pass match and latency are primary design targets.
+
+Local placeholder substitution reduces exposed identifiers but does not eliminate semantic disclosure. Source authorization, visible per-call destination and data class, decline/opt-in behavior for sensitive exact-content tasks, and multi-turn privacy qualification are required. Existing Phase 3 Qwen/Ollama is a research adapter, not the consumer first-release personal conversation architecture.
+
+The FBM should allow host choice of suitable outside identity-neutral training sources and addition of permitted sources, with license/provenance/adequacy and training-lineage checks. A shared package of code or eligible public training material does not imply sharing host-specific personal weights. See [the canonical destination contract](FABLE_PERSONAL_DEVELOPMENT_ARCHITECTURE.md#first-release-conversation-boundary-2026-09-25).
+
 ## 4. Host model stack
 
 ### General model layer
 
-Replaceable open or licensed model selected for hardware and task.
+Replaceable language and feature engine. In the initial release, external GPT/Claude-class APIs may supply candidate language and general task capability under the local verdict and egress policy. Local or first-party feature engines can replace them when qualified; the personal-state system remains distinct.
 
 ### Contextual layer
 

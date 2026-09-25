@@ -57,6 +57,14 @@ The public product claim should be:
 
 Do not claim absolute impossibility against a compromised operating system, administrator malware, or a malicious binary update. Instead provide verifiable controls, signed releases, source review, and egress transparency.
 
+## First-release conversation and feature egress
+
+The initial product plan uses external GPT/Claude-class services for general language and feature tasks when the host permits them. That is compatible with host-held keys and a local personal-state store only if the network boundary is explicit. “Developer non-access” does not mean an external inference provider receives no information; the provider processes whatever is sent.
+
+A local encoder and decoder minimize outbound material, maintain private placeholder mappings, and restore permitted references locally. The conversation system compiles requests from the locally determined identity verdict, checks candidate replies against that verdict using its existing personal foundation, and bounds corrective requests. The external engine may propose wording but cannot become memory authority or the final authority on personality and voice.
+
+Outbound requests must record destination, purpose, classification, source permissions, disclosed content or a reviewable equivalent, and provider retention settings where applicable. There must be no direct export of the raw vault, complete personal-state packet, or private mapping to an API. If a task requires exact private contents to be useful, keep it local or request specific host authorization for the disclosure. Redacted prompts can still reveal sensitive meaning; do not claim zero leakage, including across repeated calls. Offline and denied-egress operation must show the resulting language/feature limitations honestly.
+
 ## 5. Update security
 
 - signed application and update packages;
