@@ -512,3 +512,22 @@ The proof matrix now:
 Active N0 branch moved from `af79bc8b79ba9401248e0e2bfd3e9e1e6588cd65` to repair head `4270bfa2c856f9a7fbbbeab773b82ddae0608f31` (five commits, only the proof contract, three numeric kernels, and one regression-test file changed).
 
 Authority consequence: the prior `af79bc8...` P42/P39PN receipts and failed P43 576088 evidence are historical and must be preserved. The legal chain is again exact-head P42 -> P39PN -> P43. No gradient, optimizer, training, FINAL opening, threshold change, topology change, or capability reduction occurred.
+
+
+## 2026-09-24 P42 requalification job 576089 — mixed-precision regression now pre-GPU
+
+Magnolia job `576089` completed `0:0` on `node016` in `00:05:42` against exact repaired source `4270bfa2c856f9a7fbbbeab773b82ddae0608f31`. stderr was empty.
+
+The executed static proof now contains 245 obligations / 221 STATIC_REQUIRED obligations and collected 215 required pytest cases with zero failures, errors, or skips. Critically, the new CPU fp16-autocast regression `test_chunked_late_interaction_autocast_uses_masked_result_dtype_floor` executed and passed, so the P43-576088 failure class is now genuinely moved into the cheaper pre-GPU gate.
+
+The real CPU runtime qualification also passed:
+- `PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1`
+- `combined_parameters=243693339`
+- `peak_rss_mb=2511.3125`
+- replay adapter boundary still passed for MLM and teacher
+- full registered forward and long-context virtualization still passed
+- no gradient, optimizer, model training, GPU training authority, private identity, FINAL opening, or N0 closure
+
+Active N0 branch remains exactly `4270bfa2c856f9a7fbbbeab773b82ddae0608f31`.
+
+Next legal stage is exact-head P39PN rematerialization/freeze. Preserve the source-stable, old-Magnolia workflow: explicit host `cd`, no host Python, one whole-stage udocker session, all non-forwarded external paths passed positionally, external Slurm logs, and retain the actual numeric JOBID.
