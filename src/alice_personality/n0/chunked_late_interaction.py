@@ -41,7 +41,6 @@ def chunked_batched_bidirectional_late_max(
         raise ValueError("every query requires at least one valid token")
     item_available = item_mask.any(dim=-1)
 
-    neg = torch.finfo(query.dtype).min
     query_parts: list[Tensor] = []
     item_running: list[Tensor | None] = []
 
@@ -69,7 +68,11 @@ def chunked_batched_bidirectional_late_max(
                 q_valid[:, None, None, :, None]
                 & item_valid[:, :, None, None, :]
             )
-            similarity = similarity.masked_fill(~valid, neg)
+            # Autocast may lower the einsum result precision even when the
+            # source tensors remain float32. The structural floor must therefore
+            # be representable in the tensor being masked, not merely in an input.
+            similarity_floor = torch.finfo(similarity.dtype).min
+            similarity = similarity.masked_fill(~valid, similarity_floor)
 
             q_max = similarity.max(dim=-1).values
             s_max = similarity.max(dim=-2).values
