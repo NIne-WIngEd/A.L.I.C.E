@@ -34,6 +34,7 @@
     "src/alice_personality/n0/n0_full_envelope_stack_v1.py",
     "src/alice_personality/n0/semantic_backbone_interface_v1.py",
     "src/alice_personality/n0/chunked_set_attention_v1.py",
+    "src/alice_personality/n0/chunked_late_interaction.py",
     "src/alice_personality/n0/numeric_contracts.py",
     "src/alice_personality/n0/semantic_segment_context_bridge_v1.py",
     "src/alice_personality/n0/full_envelope_semantic_input_v1.py",
@@ -1769,6 +1770,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_final_v2_audit_includes_semantic_long_lane_and_all_full_fabric_train_dev_axes",
       "requirement": "Before the sealed FINAL-v2 package can be frozen, its TRAIN/DEV independence audit must include the dedicated semantic-operator long-context lane and must measure runtime-axis extrapolation against every relevant full-fabric TRAIN/DEV lane, not only the base behavioral curriculum. Otherwise FINAL could be certified against an incomplete training surface."
+    },
+    {
+      "id": "N0-P43AJ",
+      "stage": "mixed_precision_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_chunked_late_interaction_autocast_uses_masked_result_dtype_floor",
+      "requirement": "The exact streaming late-interaction kernel used by semantic/operator matching must execute under fp16 autocast with masked/padded tokens without dtype-overflow and must preserve the dense masked-max result. A float32 input floor may not be inserted into an fp16 autocast result."
     }
   ],
   "closure_rule": {
@@ -1858,6 +1866,30 @@
         "require_unit_interval"
       ],
       "reason": "Shared numeric contract must fail closed on probability-like runtime metadata."
+    },
+    {
+      "path": "src/alice_personality/n0/chunked_late_interaction.py",
+      "required_patterns": [
+        "torch.finfo(similarity.dtype).min"
+      ],
+      "forbidden_patterns": [
+        "torch.finfo(query.dtype).min"
+      ],
+      "reason": "Autocast may lower the einsum result dtype independently of its inputs; the structural mask floor must be derived from the tensor being masked."
+    },
+    {
+      "path": "src/alice_personality/n0/chunked_set_attention_v1.py",
+      "required_patterns": [
+        "torch.finfo(score.dtype).min"
+      ],
+      "reason": "Streaming set-attention score masking must derive its finite floor from the score tensor dtype so mixed-precision autocast cannot overflow a wider operand floor."
+    },
+    {
+      "path": "src/alice_personality/n0/dynamic_competitive_latent_pool_v3.py",
+      "required_patterns": [
+        "torch.finfo(score.dtype).min"
+      ],
+      "reason": "Streaming latent-competition score masking must derive its finite floor from the score tensor dtype so mixed-precision autocast cannot overflow a wider operand floor."
     }
   ],
   "critical_governance_files": [
