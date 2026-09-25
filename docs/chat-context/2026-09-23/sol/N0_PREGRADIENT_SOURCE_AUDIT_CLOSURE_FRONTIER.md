@@ -485,3 +485,30 @@ The exact-head public mixture contains all 8 required optimizer-facing training 
 No gradient, optimizer, GPU training, private-identity training, or FINAL opening occurred.
 
 Next legal stage: P43 exact 2xP100 DDP no-gradient memory qualification using the canonical Accelerate launcher. P43 must be interpreted only as topology/lane/DDP/memory-route qualification, not as proof of the actual backward/optimizer path. The first authorized J1 tranche remains the first empirical gradient-path proof.
+
+
+## 2026-09-24 P43 job 576088 — mixed-precision structural-mask failure and class repair
+
+P43 job `576088` reached the repaired Accelerate 2-rank DDP execution path on `gpu001`, then failed deterministically on both ranks before producing a valid memory receipt. This is not a rendezvous failure, not GPU OOM, not learned-capability evidence, and not a gradient/optimizer failure. The failure occurred inside the real semantic-operator lane under fp16 autocast:
+
+`chunked_late_interaction.py -> similarity.masked_fill(~valid, neg) -> RuntimeError: value cannot be converted to type at::Half without overflow`.
+
+Root cause: the streaming late-interaction kernel derived the finite structural mask floor from `query.dtype`, while autocast is allowed to materialize the einsum `similarity` tensor at a lower dtype. A float32 minimum therefore crossed a precision boundary into an fp16 masked-fill target and overflowed.
+
+This failure was reproduced independently on CPU with `torch.autocast(device_type="cpu", dtype=torch.float16)`: float32 operands produced an fp16 einsum result and inserting `torch.finfo(float32).min` raised the same overflow.
+
+Per the no-hotfix rule, the repair audited the complete registered successor mixed-precision masking class rather than only the observed line. Three production streaming kernels had input-derived finite mask floors:
+- `chunked_late_interaction.py`
+- `chunked_set_attention_v1.py`
+- `dynamic_competitive_latent_pool_v3.py`
+
+All three now derive the structural floor from the actual tensor being masked (`similarity.dtype` or `score.dtype`). Existing safe sites in `numeric_contracts.py` and `public_judgment_probe_v1.py` already derived floors from their target tensors and were left unchanged.
+
+The proof matrix now:
+- treats `chunked_late_interaction.py` as critical successor source;
+- requires a CPU fp16-autocast regression that reproduces the P43 boundary and checks dense-equivalent finite outputs;
+- requires target-dtype masking patterns for late interaction, streaming set attention, and latent competition.
+
+Active N0 branch moved from `af79bc8b79ba9401248e0e2bfd3e9e1e6588cd65` to repair head `4270bfa2c856f9a7fbbbeab773b82ddae0608f31` (five commits, only the proof contract, three numeric kernels, and one regression-test file changed).
+
+Authority consequence: the prior `af79bc8...` P42/P39PN receipts and failed P43 576088 evidence are historical and must be preserved. The legal chain is again exact-head P42 -> P39PN -> P43. No gradient, optimizer, training, FINAL opening, threshold change, topology change, or capability reduction occurred.
