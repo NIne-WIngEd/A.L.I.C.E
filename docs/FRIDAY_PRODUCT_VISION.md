@@ -18,7 +18,7 @@ The product internally codenamed **Friday** is not one assistant identity distri
 
 During onboarding, the host chooses the assistant's name, voice, identity settings, and initial operating relationship. The internal codename is never required to become the assistant's displayed name. One installation may become "Nova," another "Atlas," another "Maya," and another any name the host chooses.
 
-Each installation begins with common software and model packs, but its host instance develops its own:
+Each installation begins with common software and optional eligible identity-neutral source packs. Its personal components must be constructed and evaluated for that host, and it develops its own:
 
 - encrypted experience ledger;
 - inspectable memories, beliefs, and causal models;
@@ -31,6 +31,14 @@ Each installation begins with common software and model packs, but its host inst
 - portable encrypted Identity Capsule.
 
 The resulting installation is not merely a generic chatbot with a custom prompt. It is a host-owned personal model stack whose behavior, learned state, skills, and eventually neural parameters diverge from every other installation.
+
+## First consumer release staging
+
+The planned initial release includes the locally built personal foundation, memory and Experience Ledger infrastructure, and a first-party conversation system. Its five starting personal roles are identity/personality, MFM, host, relationship, and assistant-self. These are roles rather than a fixed count of trained weight files. Public/licensed or user-added identity-neutral N0 training sources and suitable synthetic teaching examples can be selected and qualified with provenance; personal evidence remains separate.
+
+Before a language or feature API call, native personal judgment decides Fable's stance, reasons, uncertainties, and expression. The conversation system compiles a minimal outbound request, receives a draft, and checks both behavior and voice against the verdict with the existing personal foundation. Focused correction is bounded; the first draft should normally qualify. A privacy gateway can minimize disclosure, not promise that an external provider learns no semantic information. Host-visible permissions and honest offline limitations apply.
+
+Coding, simulation, vision, image editing, and general language generation may initially use external APIs. First-party frontier feature models and automatic per-host feature-model building are later stages. This staging does not change A.L.I.C.E.-first transfer governance. See [Fable's first-release design](https://github.com/NIne-WIngEd/Fable_Sleight/blob/main/docs/FIRST_RELEASE.md) and [the native conversation boundary](FABLE_PERSONAL_DEVELOPMENT_ARCHITECTURE.md#first-release-conversation-boundary-2026-09-25). The capability is unimplemented until qualified; the current Phase 3 conversational adapter is not the release design.
 
 ## 2. Full capability-parity principle
 
@@ -64,7 +72,7 @@ A.L.I.C.E. may receive experimental capabilities first. The consumer product may
 6. **Personalization is correctable and portable.** The host can edit, delete, export, migrate, or rebuild learned state.
 7. **The assistant has judgment, not blind mimicry.** It develops a stable voice and may disagree while remaining subordinate to the host's constitutional authority.
 8. **Model independence.** Host identity survives replacement of the underlying base model.
-9. **Offline competence.** Core conversation, retrieval, learning, and common actions work without a network connection.
+9. **Offline foundation and honest limitations.** Local personal state, retrieval, and learning remain available without a network. The first-release conversation path may require a remote language service for fluent feature-grade replies; offline mode must disclose that limitation. Broader offline conversation remains a destination goal.
 10. **Visible network behavior.** Every outbound request is attributable, reviewable, and controllable.
 11. **Evidence-earned autonomy.** The system may gain broader authority as the host grants missions and measured reliability increases.
 12. **No reduced consumer destiny.** Consumer distribution is not planned as a permanently less intelligent edition of A.L.I.C.E.
@@ -85,7 +93,7 @@ The host-selected name is stored inside the encrypted Identity Capsule and can c
 
 Each installation combines:
 
-- a replaceable general foundation model;
+- a replaceable general language or feature engine, which may be an external API behind a governed egress boundary in the first release;
 - host memory and knowledge systems;
 - learned user, social, causal, and world models;
 - host-specific adapters, rankers, and routers;
