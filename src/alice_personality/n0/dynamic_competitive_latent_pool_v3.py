@@ -111,7 +111,7 @@ class DynamicCompetitiveLatentPoolV3(nn.Module):
         batch, slots, width = slot_key.shape
         items = item_key.size(1)
         scale = 1.0 / math.sqrt(float(width))
-        negative = torch.finfo(slot_key.dtype).min
+        running_floor = torch.finfo(slot_key.dtype).min
         result: list[tuple[int, int, Tensor, Tensor]] = []
 
         for i0 in range(0, items, self.config.item_chunk_size):
@@ -120,7 +120,7 @@ class DynamicCompetitiveLatentPoolV3(nn.Module):
             valid = item_mask[:, i0:i1]
             running_max = torch.full(
                 (batch, i1 - i0),
-                negative,
+                running_floor,
                 device=slot_key.device,
                 dtype=slot_key.dtype,
             )
@@ -133,9 +133,13 @@ class DynamicCompetitiveLatentPoolV3(nn.Module):
                     slot_key[:, s0:s1, :],
                     key_chunk,
                 ) * scale
+                # The score tensor is the masked storage boundary. Derive
+                # its finite structural floor from that dtype so autocast cannot
+                # overflow a wider input dtype's minimum into fp16.
+                score_floor = torch.finfo(score.dtype).min
                 score = score.masked_fill(
                     ~valid[:, None, :],
-                    negative,
+                    score_floor,
                 )
                 chunk_max = score.max(dim=1).values
                 new_max = torch.maximum(running_max, chunk_max)
