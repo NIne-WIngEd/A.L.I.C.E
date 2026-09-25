@@ -83,7 +83,7 @@ class ChunkedExactSetSelfAttention(nn.Module):
         k = self._heads(self.k_proj(value.float()))
         v = self._heads(self.v_proj(value.float()))
         scale = 1.0 / math.sqrt(float(self.head_dim))
-        negative = torch.finfo(q.dtype).min
+        running_floor = torch.finfo(q.dtype).min
 
         query_outputs: list[Tensor] = []
         q_chunk_size = self.config.query_chunk_fields
@@ -96,7 +96,7 @@ class ChunkedExactSetSelfAttention(nn.Module):
 
             running_max = torch.full(
                 (batch, self.config.num_attention_heads, q1 - q0),
-                fill_value=negative,
+                fill_value=running_floor,
                 dtype=q.dtype,
                 device=q.device,
             )
@@ -121,9 +121,12 @@ class ChunkedExactSetSelfAttention(nn.Module):
                     q_chunk,
                     k_chunk,
                 ) * scale
+                # Mask using the score storage dtype. Under autocast the
+                # matmul/einsum result may be lower precision than q/k.
+                score_floor = torch.finfo(score.dtype).min
                 score = score.masked_fill(
                     ~key_valid[:, None, None, :],
-                    negative,
+                    score_floor,
                 )
                 chunk_max = score.max(dim=-1).values
                 new_max = torch.maximum(running_max, chunk_max)
