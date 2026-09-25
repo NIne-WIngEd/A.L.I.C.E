@@ -531,3 +531,22 @@ The real CPU runtime qualification also passed:
 Active N0 branch remains exactly `4270bfa2c856f9a7fbbbeab773b82ddae0608f31`.
 
 Next legal stage is exact-head P39PN rematerialization/freeze. Preserve the source-stable, old-Magnolia workflow: explicit host `cd`, no host Python, one whole-stage udocker session, all non-forwarded external paths passed positionally, external Slurm logs, and retain the actual numeric JOBID.
+
+
+## 2026-09-24 P39PN requalification job 576092 — exact repaired head PASS
+
+Magnolia job `576092` completed `0:0` on `node016` in `00:01:07` against exact N0 source `4270bfa2c856f9a7fbbbeab773b82ddae0608f31`. stderr was empty.
+
+The canonical full-public-mixture materializer passed and published the exact-head mixture:
+- `PASS_N0_P39PN_CPU_RECEIPT_INPUTS`
+- `PASS_N0_FULL_ENVELOPE_BEHAVIORAL_CURRICULUM_AUDIT_V1`
+- `PASS_N0_FULL_ENVELOPE_RUNTIME_VIEW_CURRICULUM_AUDIT_V1`
+- `PASS_N0_FULL_ENVELOPE_SHORTCUT_PREFLIGHT_V1`
+- `PASS_FEWREL_NATURAL_RELATION_AUDIT_V3`
+- `PASS_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_AUDIT_V1`
+- `FROZEN_N0_FULL_ENVELOPE_FINAL_V2_PACKAGE_BEFORE_GRADIENT`
+- `PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1`
+
+The published manifest binds all 8 required training lanes and all 10 macro families. FewRel remains 39,200 TRAIN / 5,600 DEV with 11,200 FINAL rows sealed outside training/model selection. FINAL-v2 remains unopened/unobserved, and gradient/optimizer/GPU training authority remain false.
+
+Next legal stage: P43 exact 2xP100 DDP no-gradient GPU memory qualification on source `4270bfa2...`.
