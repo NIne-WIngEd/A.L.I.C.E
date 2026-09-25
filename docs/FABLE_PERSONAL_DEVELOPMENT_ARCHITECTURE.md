@@ -132,6 +132,27 @@ downstream reasoning / response generation
 
 The downstream model should not be the sole owner of personality, disagreement, preference, or relationship behavior.
 
+## First-release conversation boundary (2026-09-25)
+
+The destination loop also controls the *expression* of a judgment. Conversation is a first-party local capability under the personal foundation, even when a replaceable external language engine proposes words. The five starting personal roles and existing memory infrastructure participate in evaluating each draft; this is not a sixth memory model or an external judge.
+
+The native identity decision packet must specify stance, evidence and uncertainty, reasons and disagreement intent, subject/relationship context, and enough expression obligations to tell whether the reply behaves as that particular entity should. A packet saying only “agree” or “disagree” cannot qualify.
+
+The conversation architecture:
+
+1. assembles authorized personal state and computes the native verdict before invoking a downstream generator;
+2. compiles the verdict into a first-pass language request through a local privacy and egress boundary;
+3. receives a candidate from a replaceable GPT/Claude-class feature service or another qualified engine;
+4. compares the candidate against the verdict with the existing personal models, state, and governed response rules, including voice and relationship behavior, then restores locally held private references;
+5. accepts a matching draft or issues a targeted, bounded correction; on exhaustion it uses an appropriate local response or exposes the limitation;
+6. records any later outcome for governed learning.
+
+The intended ordinary path is one external generation attempt, not repeated redrafting. Latency, first-pass acceptance, provider portability, false acceptance of generic-assistant phrasing, and context-specific identity behavior require measurable release gates. A third-party generator's apparent disagreement is not evidence that EIPM caused it.
+
+A local encoder/decoder and egress gateway can redact identifiers and minimize disclosed context, but cannot guarantee zero semantic leakage to an external text API. The gateway must check source permissions and data classes, keep private mappings local, disclose destination and task, and decline or seek explicit user authorization when an exact task requires private material. No unfiltered memory store or raw identity packet becomes an API prompt. Offline behavior and remote-processing limits must be represented truthfully.
+
+This is a destination design requirement, not a statement that Phase 3's existing local Qwen adapter or current EIPM runtime implements it. Preserve A.L.I.C.E.'s Elaina source-person, Rayan host, and assistant-self separation when prototyping. Generalize only the capability to Fable.
+
 ## Outcome-driven development
 
 The architecture must support learning from outcomes.
@@ -158,7 +179,9 @@ At minimum:
 4. provide conflicting user evidence and verify evidence-governed revision;
 5. provide outcome evidence and verify later judgment revision;
 6. swap the downstream reasoning/generation model and verify characteristic personal judgment remains attributable to the personal-state/EIPM path;
-7. stale or remove personal state and verify the system does not reconstruct the same behavior from a hidden prompt and call it learned development.
+7. stale or remove personal state and verify the system does not reconstruct the same behavior from a hidden prompt and call it learned development;
+8. hold the conclusion fixed while changing relevant personal voice or relationship state, and verify that an otherwise fluent generic response is rejected or corrected;
+9. measure first-pass acceptance, corrective-call count, end-to-end latency, provider-swap stability, and privacy egress across realistic and adversarial multi-turn scenarios.
 
 ## Authority boundary
 
