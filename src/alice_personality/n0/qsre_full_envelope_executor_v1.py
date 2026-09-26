@@ -229,7 +229,11 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
         # step-conditioned relation state below.
         edge_symmetric_mask = relation_symmetric[b, relation_index]
 
-        origin_focus = focus_field_weight.clamp(min=0.0, max=1.0)
+        # Probabilistic traversal is an fp32 control path even when the learned
+        # projections run under autocast. Its edge/node reductions can mix
+        # projected half-precision states with fp32 evidence criteria.
+        origin_focus = focus_field_weight.float().clamp(min=0.0, max=1.0)
+        edge_support_weight = edge_support_weight.float()
         frontier = origin_focus
         path_semantic_source = torch.zeros_like(origin_focus)
         path_semantic_target = torch.zeros_like(origin_focus)
@@ -500,16 +504,16 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
             source_message = source_message * gate.unsqueeze(-1)
             target_message = target_message * gate.unsqueeze(-1)
 
-            aggregate = torch.zeros_like(node)
+            aggregate = torch.zeros_like(node, dtype=torch.float32)
             source_scatter = source_index.unsqueeze(-1).expand(-1, -1, self.config.model_dim)
             target_scatter = target_index.unsqueeze(-1).expand(-1, -1, self.config.model_dim)
-            aggregate.scatter_add_(1, source_scatter, source_message)
-            aggregate.scatter_add_(1, target_scatter, target_message)
+            aggregate.scatter_add_(1, source_scatter, source_message.float())
+            aggregate.scatter_add_(1, target_scatter, target_message.float())
 
-            active = torch.zeros(batch, fields, device=node.device, dtype=node.dtype)
-            active.scatter_add_(1, source_index, gate)
-            active.scatter_add_(1, target_index, gate)
-            active = active.clamp(0.0, 1.0) * field_valid_mask.to(node.dtype)
+            active = torch.zeros(batch, fields, device=node.device, dtype=torch.float32)
+            active.scatter_add_(1, source_index, gate.float())
+            active.scatter_add_(1, target_index, gate.float())
+            active = active.clamp(0.0, 1.0) * field_valid_mask.to(active.dtype)
             q_node = operator_state[:, None, :].expand(batch, fields, -1)
             updated = self.node_update(
                 torch.cat([aggregate, q_node], dim=-1).reshape(batch * fields, -1),
@@ -533,7 +537,7 @@ class FullEnvelopeQSREExecutorV1(nn.Module):
                 + (1.0 - path_probability[:, None]) * origin_focus
             )
 
-        source_support = torch.zeros(batch, fields, device=node.device, dtype=node.dtype)
+        source_support = torch.zeros(batch, fields, device=node.device, dtype=torch.float32)
         target_support = torch.zeros_like(source_support)
         source_support.scatter_add_(1, source_index, edge_support_weight)
         target_support.scatter_add_(1, target_index, edge_support_weight)
