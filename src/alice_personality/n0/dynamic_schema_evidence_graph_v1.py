@@ -227,26 +227,29 @@ class DynamicSchemaEvidenceGraphV1(nn.Module):
                 * edge_valid_mask.unsqueeze(-1).to(target_msg.dtype)
             )
 
-            aggregate = torch.zeros_like(node)
+            # Mixed-precision projections may produce fp16 messages while
+            # continuous semantic gates promote them to fp32. Accumulate in
+            # fp32 so scatter uses identical dtypes and retains gate precision.
+            aggregate = torch.zeros_like(node, dtype=torch.float32)
             source_scatter = source_index.unsqueeze(-1).expand(-1, -1, self.config.model_dim)
             target_scatter = target_index.unsqueeze(-1).expand(-1, -1, self.config.model_dim)
-            aggregate.scatter_add_(1, source_scatter, source_msg)
-            aggregate.scatter_add_(1, target_scatter, target_msg)
+            aggregate.scatter_add_(1, source_scatter, source_msg.float())
+            aggregate.scatter_add_(1, target_scatter, target_msg.float())
 
             q = operator[:, None, :].expand(batch, fields, -1)
             updated = self.node_update(
                 torch.cat([aggregate, q], dim=-1).reshape(batch * fields, -1),
                 node.reshape(batch * fields, -1),
             ).reshape(batch, fields, -1)
+            edge_gate = (
+                semantic_gate_scalar.float()
+                * edge_valid_mask.to(torch.float32)
+            )
             node_gate = torch.zeros(
                 batch,
                 fields,
                 device=node.device,
-                dtype=node.dtype,
-            )
-            edge_gate = (
-                semantic_gate_scalar
-                * edge_valid_mask.to(node.dtype)
+                dtype=edge_gate.dtype,
             )
             node_gate.scatter_add_(1, source_index, edge_gate)
             node_gate.scatter_add_(1, target_index, edge_gate)
