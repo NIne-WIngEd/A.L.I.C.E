@@ -43,7 +43,7 @@ At source SHA `4270bfa2`, job `576089` passed P42 CPU qualification: 245 static 
 
 P43 job `576166` exited 92 because `full-envelope-gpu-memory-v1` already exists. It produced no GPU-memory receipt. Inspect the preserved root and any writer before choosing a fresh versioned root. A valid prior result would need source, producer, mixture, rank and case verification. No optimizer, gradient, FINAL opening, private identity learning or N0 closure follows from this stop.
 
-The N0 branch acquired a doc-only commit after these receipts. The Magnolia qualification checkout must stay at `4270bfa2` with the existing exact-head inputs; moving its HEAD invalidates the source-bound chain. FBM should learn this precise distinction between **a documentation update on a branch** and **a code-and-artifact revision authorized by receipts**.
+At the time of the `576089`/`576092` receipts, only the doc-only update could be ignored for the pinned runtime. **Superseded execution advice (2026-09-26):** P43 job `576093` subsequently failed on `4270bfa2` during an actual two-rank fp16 forward. The Magnolia checkout has already advanced to `657ba2a4` for CPU autocast job `576167` (result not provided). N0 source repairs now reach `168c031556ee632061a2b9c2c3f151b865a79264`; prior P42/P39PN receipts do not qualify this code. FBM must record the distinction between historical receipts and the active source rather than preserving a broken pin.
 
 ## Priority change before FBM training
 
