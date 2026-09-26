@@ -1,7 +1,7 @@
 {
-  "request_id": "n0-remaining-static-gap-audit-20260923-061",
-  "question": "Deep-audit exact N0 successor head alice-eipm-v1-n0-full-envelope-foundation-build-v1@f357a767ca1542a4043944b380663f27b50c33ec for any remaining STATIC/source-level defect before CPU/GPU runtime qualification. Stay strictly aligned with N0's identity-neutral full-envelope semantic/judgment goal and do not add N1 identity mechanisms. Compare the implemented training lanes, joint objective, staged J1/J2/J3 optimizer, DEV gate registry/evaluator, runtime type/factor/relation/view/candidate interfaces, long-context virtualization, uncertainty/plurality, causal interventions, replay preservation, and sealed FINAL-v2 boundary against the full-envelope workload intent. Look specifically for declarations that lack executable optimizer-facing data, active objective paths, or non-vacuous DEV gates; hidden geometry/ID ceilings; FINAL-only capabilities that still lack non-FINAL DEV proxies; and stage-policy contradictions. Classify each candidate as A concrete defect needing repair before Magnolia, B missing falsification/proof, C already closed, or D genuinely runtime/empirical only. Do not authorize Magnolia, gradient, optimizer, FINAL opening, or N0 completion. Original exact branch source is authority; Graphify is navigation only.",
-  "budget": 18000,
+  "request_id": "n0-p43-full-path-and-fbm-continuation-20260926-001",
+  "question": "At current alice-eipm-v1-n0-full-envelope-foundation-build-v1 source, map N0 full-envelope P42 CPU, P39PN mixture, P43 two-rank fp16 memory forward through dynamic_schema_evidence_graph_v1, full-envelope Binder, Executor, operator, joint stack and regression test. Identify all active in-place mixed-precision reductions, direct callers, preflight and receipt lineage, and point to FBM case/trace and main/Fable subject/authority boundary docs. Distinguish verified source from historical receipts; do not authorize training, private identity gradients, FINAL opening, or narrow capability reduction.",
+  "budget": 9000,
   "traversal": "bfs",
   "contexts": [
     "call",
