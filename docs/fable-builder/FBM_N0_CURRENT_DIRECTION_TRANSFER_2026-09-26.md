@@ -53,3 +53,7 @@ At the time of the `576089`/`576092` receipts, only the doc-only update could be
 4. Evaluate cold start, sparse evidence, conflicting and revoked sources, unknown history, personal voice, relevant and irrelevant interventions, model replacement, provider swap and rollback. Freeze gates before using results to claim transfer.
 
 Continue the pinned N0 P43 evidence inspection in parallel with this FBM corpus design. No N0 topology, public mixture, thresholds, or current training authorization changes follow from this transfer note.
+
+## Observed CPU autocast diagnostic (2026-09-26)
+
+Magnolia job `576167` ran the full-stack CPU bfloat16 preflight on `657ba2a4` and FAILED `1:0` in 25 seconds at the Executor's `step_semantic_source.scatter_add_`, after the graph stage. The observed dtype mismatch confirms that the graph-only patch was insufficient for the full active path. N0's separately published `168c0315` Executor correction covers the float32 control and reduction family; no runtime outcome exists yet on its documentation-inclusive head `8b2c2488`. This is a failure-class/qualification case for FBM, not a model-learning example or a reason to narrow the full-envelope goal. Preserve the failed evidence, test the new exact head on CPU, and then repeat the invalidated P42/P39PN/P43 lineage gates in order.
