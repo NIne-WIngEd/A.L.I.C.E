@@ -1,0 +1,42 @@
+{
+  "schema": "fable.fbm.data-admission.v0.1",
+  "audit_date": "2026-09-26",
+  "reviewed_ref": "fable-builder-model@cf04d1ef242a7b15d3f068cacb731bb0322a066f",
+  "collections": [
+    {
+      "path": "training/fbm/bootstrap/sol_curriculum_seed_v0.1.jsonl",
+      "record_count": 60,
+      "purpose": "owner-authorized N0 candidate-ranking curriculum",
+      "origin_manifest": "training/fbm/bootstrap/sol_curriculum_seed_v0.1.origin.json",
+      "fbm_builder_train_eligible": false,
+      "fbm_builder_eval_eligible": false,
+      "reason": "single teacher family, no builder input-target-outcome or subject-permission cases"
+    },
+    {
+      "path": "training/fbm/builder_events/*.json",
+      "record_count": 2,
+      "purpose": "historical builder procedure and provenance",
+      "fbm_builder_train_eligible": false,
+      "fbm_builder_eval_eligible": false,
+      "reason": "narratives rather than linked supervised or independently evaluated cases"
+    },
+    {
+      "path": "docs/fable-builder/traces/*.jsonl",
+      "file_count": 107,
+      "record_count_after_jsonl_repair": 266,
+      "purpose": "mixed-schema procedure and audit traces",
+      "fbm_builder_train_eligible": false,
+      "fbm_builder_eval_eligible": false,
+      "reason": "case-by-case input, authority, target, outcome, rights and split linkage still required"
+    },
+    {
+      "path": "training/fbm/fixtures/fictional_case_shape_v0.1.jsonl",
+      "record_count": 4,
+      "purpose": "fictional case-contract examples",
+      "fbm_builder_train_eligible": false,
+      "fbm_builder_eval_eligible": false,
+      "reason": "manually authored targets and no independently observed outcomes"
+    }
+  ],
+  "notes": "No record count here is an independent-person, observed-outcome, or qualified model count. Historical source provenance remains unchanged."
+}
