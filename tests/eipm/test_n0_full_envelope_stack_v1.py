@@ -495,7 +495,8 @@ def test_additional_runtime_view_order_has_no_hidden_identity_axis() -> None:
     )
 
 def test_full_envelope_stack_cpu_autocast_graph_scatter() -> None:
-    """Exercise every graph/executor scatter in a full mixed-precision forward."""
+    """Exercise probability conservation and graph/executor scatters under autocast."""
+    torch.manual_seed(260926)
     model = N0FullEnvelopeStackV1(
         N0FullEnvelopeStackConfig(
             semantic_dim=24,
@@ -529,6 +530,25 @@ def test_full_envelope_stack_cpu_autocast_graph_scatter() -> None:
         )
 
     graph = out["evidence_graph"]
+    operator = out["semantic_operator"]["operator"]
+    assert operator.event_distribution.dtype == torch.float32
+    assert operator.relation_distribution.dtype == torch.float32
+    assert operator.relation_step_mass.dtype == torch.float32
+    incoming_mass = torch.cat(
+        [
+            torch.ones_like(operator.relation_step_mass[:, :1]),
+            operator.relation_step_mass[:, :-1],
+        ],
+        dim=1,
+    )
+    outgoing_mass = (
+        operator.relation_step_mass
+        + operator.stop_probability
+        + operator.unknown_probability
+    )
+    torch.testing.assert_close(
+        outgoing_mass, incoming_mass, atol=1.0e-6, rtol=1.0e-6
+    )
     assert graph["field_states"].shape == (2, 5, 24)
     assert torch.isfinite(graph["field_states"]).all()
     assert torch.isfinite(graph["source_summary"]).all()
