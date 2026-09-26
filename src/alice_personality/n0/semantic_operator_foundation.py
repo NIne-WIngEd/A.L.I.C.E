@@ -552,7 +552,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             raise ValueError("every example requires at least one active candidate")
         masked_logits = exact_masked_logits(logits, mask)
         probability = exact_masked_softmax(
-            logits,
+            logits.float(),
             mask,
             dim=-1,
         )
@@ -630,9 +630,12 @@ class SchemaConditionedSemanticOperator(nn.Module):
             batch,
             query_tokens,
             device=query_hidden_states.device,
-            dtype=query_hidden_states.dtype,
+            dtype=torch.float32,
         )
-        survival = torch.ones(batch, device=state.device, dtype=state.dtype)
+        # Event and candidate probabilities are control state. Autocast may
+        # produce bf16/fp16 network activations, but rounding the recurrent
+        # survival mass at every step breaks its conservation invariant.
+        survival = torch.ones(batch, device=state.device, dtype=torch.float32)
 
         relation_distributions: list[Tensor] = []
         relation_masses: list[Tensor] = []
@@ -770,7 +773,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
                 dim=-1,
             )
             event_logits = self.event_head(event_input)
-            event_probability = torch.softmax(event_logits, dim=-1)
+            event_probability = torch.softmax(event_logits.float(), dim=-1)
             continue_probability = event_probability[:, EVENT_CONTINUE]
             stop_probability = event_probability[:, EVENT_STOP]
             unknown_probability = event_probability[:, EVENT_UNKNOWN]
@@ -937,7 +940,7 @@ class SchemaConditionedSemanticOperator(nn.Module):
             * (1.0 - truncation_probability)
         )
 
-        applicability = torch.sigmoid(self.applicability_head(state)).squeeze(-1)
+        applicability = torch.sigmoid(self.applicability_head(state).float()).squeeze(-1)
         operator = SemanticOperatorState(
             relation_distribution=relation_distribution,
             relation_step_mass=relation_step_mass,
