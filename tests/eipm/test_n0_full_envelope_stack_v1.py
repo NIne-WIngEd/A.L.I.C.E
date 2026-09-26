@@ -495,7 +495,7 @@ def test_additional_runtime_view_order_has_no_hidden_identity_axis() -> None:
     )
 
 def test_full_envelope_stack_cpu_autocast_graph_scatter() -> None:
-    """Exercise the no-gradient mixed-precision path before GPU memory qualification."""
+    """Exercise every graph/executor scatter in a full mixed-precision forward."""
     model = N0FullEnvelopeStackV1(
         N0FullEnvelopeStackConfig(
             semantic_dim=24,
@@ -532,4 +532,12 @@ def test_full_envelope_stack_cpu_autocast_graph_scatter() -> None:
     assert graph["field_states"].shape == (2, 5, 24)
     assert torch.isfinite(graph["field_states"]).all()
     assert torch.isfinite(graph["source_summary"]).all()
+    executor = out["executor"]
+    assert executor["source_support_weight"].dtype == torch.float32
+    assert executor["path_frontier"].dtype == torch.float32
+    assert torch.isfinite(executor["node_state"]).all()
+    assert torch.isfinite(executor["relational_summary"]).all()
+    assert torch.isfinite(executor["relational_probability"]).all()
+    assert (executor["relational_probability"] >= 0).all()
+    assert (executor["relational_probability"].sum(dim=-1) <= 1.00001).all()
     assert torch.isfinite(out["public_judgment"]["candidate_logits"]).all()
