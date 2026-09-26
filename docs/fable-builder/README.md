@@ -10,7 +10,9 @@ Fable Sleight cannot depend on a hosted Sol, Astra, or another manually selected
 
 This branch captures that capability from the process that is actually building A.L.I.C.E. rather than inventing it later from memory.
 
-The working name is **Fable Builder Model (FBM)**. The name is provisional. FBM is the host-neutral model/capability that reconstructs and bootstraps a new personality from evidence. It is separate from the finished consumer personality model.
+The working name is **Fable Builder Model (FBM)**. The name is provisional. FBM is the host-neutral capability that builds and evaluates the connected personal foundation from authorized evidence. Personality reconstruction is one part of that build. FBM is separate from each finished consumer model and from memory authority.
+
+The [data and seed program](FBM_DATA_AND_SEED_PROGRAM_2026-09-26.md) specifies what the reusable builder must learn, which outside and instance data it may use, how operation traces become training cases, and the gate before a consumer build can be claimed. The existing process notebook and N0 teacher seed do not yet constitute a qualified builder training corpus.
 
 ## Core doctrine
 
