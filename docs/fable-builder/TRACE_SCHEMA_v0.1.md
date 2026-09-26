@@ -91,6 +91,12 @@ generation trace
 
 This lineage is more useful for FBM learning than a flat collection of final accepted rows.
 
+## Linked training-case boundary (2026-09-26)
+
+A compact method trace is an audit record and a procedure seed. It becomes a supervised or evaluable FBM example only when a separately versioned case binds the actual eligible input state, subject/source and permission roles, a choice set including stop/defer where appropriate, an independently checkable target or unresolved state, the authority decision, observed outcome, and source/generator split lineage. Link a case to `trace_id` and to the concrete producer/checkpoint versions. Keep user-private payloads in their authorized custody; use fictional or safe references here.
+
+Record `result=partial` when code/static or CPU evidence exists but a later GPU, gradient, DEV, FINAL or assembled-instance outcome has not run. A preflight guard that preserves an occupied evidence root is successful protection but **not** a GPU memory PASS. Review [the current N0 transfer](FBM_N0_CURRENT_DIRECTION_TRANSFER_2026-09-26.md) for the operation families that now need such cases.
+
 ## Private data rule
 
 The public branch may record private artifact hashes, logical identifiers, counts, schemas, or sanitized aggregate outcomes. It must not contain raw private identity text, private source-person records, private consumer data, credentials, or secret model artifacts.
