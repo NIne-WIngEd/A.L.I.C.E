@@ -1,0 +1,11 @@
+# N0 P43 mixed-precision repair handoff
+
+**Observed on Magnolia:** P43 job 576093 ran the pinned source `4270bfa2c856f9a7fbbbeab773b82ddae0608f31` on two P100 ranks and FAILED 1:0 after 00:01:24. Both ranks raised `scatter(): Expected self.dtype to be equal to src.dtype` at `dynamic_schema_evidence_graph_v1.py:233`. It produced no `result.json`. The `full-envelope-gpu-memory-v1` directory contains only itself. Job 576166 FAILED 92:0 at the directory-preservation guard; it did not run GPU inference. No GPU memory PASS, gradient, training, DEV or FINAL result exists from either job.
+
+**Root cause and repair:** Under fp16 autocast, projected graph node state can be fp16 while continuous semantic gating promotes the message to fp32. The graph scattered the message into `zeros_like(node)`. Its adjacent node-gate scatter had the same dtype risk. On the N0 branch the two accumulations now explicitly use fp32 source/destination tensors. A full-stack CPU bfloat16 no-gradient regression was added. The CPU runner now honors `ALICE_N0_CPU_RUNTIME_ROOT` so old receipts can remain in place.
+
+**N0 branch head after repair:** `9cff7be1a82513caa9692965b27af3ae2684763a`. This SHA changes exact-source lineage. Python syntax was checked; the CPU autocast regression, new P42, P39PN, P43 and optimizer authorization have **not** passed as of this handoff. Do not reuse receipts from `4270bfa2` as if they were for this head.
+
+**Next chain:** Fast-forward only a clean Magnolia checkout from the old exact head; run the new CPU autocast test in the target udocker CPU runtime. If it passes, rerun P42 into a **new** `ALICE_N0_CPU_RUNTIME_ROOT`; then rerun P39PN using that CPU root and a **new** `ALICE_N0_FULL_MIXTURE_ROOT`. Only after both exact-head receipts pass, rerun P43 into a **new** `ALICE_N0_GPU_MEMORY_ROOT` and inspect all required case receipts. Preserve the old CPU, mixture, and empty GPU roots plus logs. No optimizer/gradient/FINAL opening follows solely from the memory projection.
+
+**FBM process capture:** `fable-builder-model/docs/fable-builder/traces/FBM_TRACE_20260926_N0_P43_AUTOCAST_DTYPE_REPAIR.jsonl` records the observed failure and partial repair; it is not a supervised training case.
