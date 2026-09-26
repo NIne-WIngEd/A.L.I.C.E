@@ -9,7 +9,7 @@ During A.L.I.C.E. construction, Sol, Astra, other assistants, scripts, and the o
 
 A consumer Fable installation cannot assume those external assistants are available. Those operations must therefore become a native Fable capability.
 
-The working solution is a **Fable Builder Model (FBM)**: a host-neutral formation model that bootstraps a consumer-specific personality model from host-authorized data while preserving provenance, uncertainty, and identity boundaries.
+The working solution is a **Fable Builder Model (FBM)**: a host-neutral formation capability that builds the connected personal foundation from host-authorized data while preserving provenance, uncertainty, and identity boundaries. This document began with the personality construction path; the [2026-09-26 data and seed program](FBM_DATA_AND_SEED_PROGRAM_2026-09-26.md) extends it to MFM, host, relationship, assistant-self, governed memory, native judgment, and conversation handoff.
 
 ## 2. What FBM is not
 
@@ -55,7 +55,7 @@ The shared formation backbone may continue as or initialize the **Memory Formati
 
 ### 3.3 Governed identity-maintenance mode
 
-Optional post-activation mode. It may examine accumulated evidence, feedback, and fidelity failures and propose personality-model maintenance material.
+Separately gated post-activation mode. It may examine accumulated evidence, feedback, and fidelity failures and propose personality-model maintenance material. Governed user/host, relationship, and assistant-self development is a required destination capability, as specified in section 11 and the canonical personal-development architecture.
 
 This mode must be separately gated from ordinary memory formation. It cannot silently rewrite the core personality model during normal conversation.
 
