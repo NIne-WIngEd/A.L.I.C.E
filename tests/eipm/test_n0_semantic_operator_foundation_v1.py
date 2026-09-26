@@ -96,6 +96,45 @@ def test_runtime_relation_and_factor_cardinality_have_no_parameter_axis() -> Non
     assert report["type_vocabulary_ceiling"] is None
 
 
+def test_recurrent_event_mass_is_conserved_under_cpu_autocast() -> None:
+    """Random operator states must conserve survival at several runtime depths."""
+    q, qm = hidden()
+    for seed, relations, steps in ((37, 5, 3), (91, 11, 6)):
+        torch.manual_seed(seed)
+        model = SchemaConditionedSemanticOperator(config()).eval()
+        with torch.no_grad(), torch.autocast(device_type="cpu", dtype=torch.bfloat16):
+            operator = model(
+                query_hidden_states=q,
+                query_token_mask=qm,
+                relation_schema=schema(relations),
+                factor_schemas={"role": factor(4, seed + 1)},
+                max_steps=steps,
+            )["operator"]
+
+        assert operator.event_distribution.dtype == torch.float32
+        assert operator.relation_distribution.dtype == torch.float32
+        assert operator.relation_step_mass.dtype == torch.float32
+        incoming = torch.cat(
+            [
+                torch.ones_like(operator.relation_step_mass[:, :1]),
+                operator.relation_step_mass[:, :-1],
+            ],
+            dim=1,
+        )
+        outgoing = (
+            operator.relation_step_mass
+            + operator.stop_probability
+            + operator.unknown_probability
+        )
+        torch.testing.assert_close(outgoing, incoming, atol=1.0e-6, rtol=1.0e-6)
+        torch.testing.assert_close(
+            operator.truncation_probability,
+            operator.relation_step_mass[:, -1],
+            atol=1.0e-6,
+            rtol=1.0e-6,
+        )
+
+
 def test_relation_candidate_permutation_is_equivariant() -> None:
     torch.manual_seed(13)
     model = SchemaConditionedSemanticOperator(config()).eval()
