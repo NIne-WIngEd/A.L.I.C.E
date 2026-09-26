@@ -9,3 +9,11 @@
 **Next chain:** Fast-forward only a clean Magnolia checkout from the old exact head; run the new CPU autocast test in the target udocker CPU runtime. If it passes, rerun P42 into a **new** `ALICE_N0_CPU_RUNTIME_ROOT`; then rerun P39PN using that CPU root and a **new** `ALICE_N0_FULL_MIXTURE_ROOT`. Only after both exact-head receipts pass, rerun P43 into a **new** `ALICE_N0_GPU_MEMORY_ROOT` and inspect all required case receipts. Preserve the old CPU, mixture, and empty GPU roots plus logs. No optimizer/gradient/FINAL opening follows solely from the memory projection.
 
 **FBM process capture:** `fable-builder-model/docs/fable-builder/traces/FBM_TRACE_20260926_N0_P43_AUTOCAST_DTYPE_REPAIR.jsonl` records the observed failure and partial repair; it is not a supervised training case.
+
+## Continuation after submitted CPU diagnostic (2026-09-26)
+
+The owner fast-forwarded Magnolia to `657ba2a4` and submitted CPU autocast job `576167` with `-k cpu_autocast_graph_scatter` via udocker. The transcript ends after `squeue --me` shows no queued jobs; its sacct, stdout and stderr were not supplied. Treat its outcome as unknown, and remember it ran on the earlier graph-only revision.
+
+A whole active-stack scatter audit then found the same mixed-precision hazard in the Executor. N0 branch source now reaches `168c031556ee632061a2b9c2c3f151b865a79264`, with float32 probabilistic and message accumulations and extended full-stack bfloat16 checks. Binder uses matched destination/source dtype. Local syntax and diff checks passed; no target-runtime test has been seen for this new head. This supersedes the previous paragraph's head `657ba2a4` and its graph-only scope.
+
+Next: retrieve job `576167` accounting and logs for diagnosis; clean fast-forward Magnolia to `168c0315` and rerun the same CPU test on that exact head. If it passes, create new source-versioned P42 CPU and P39PN mixture roots, verify their receipts, and then use a new P43 GPU memory root with the same registered topology and two-rank fp16 route. Keep previous roots and logs. No GPU PASS, optimizer, gradient or FINAL authority is yet established.
