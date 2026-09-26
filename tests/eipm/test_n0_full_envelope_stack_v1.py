@@ -493,3 +493,43 @@ def test_additional_runtime_view_order_has_no_hidden_identity_axis() -> None:
         atol=1.0e-6,
         rtol=1.0e-6,
     )
+
+def test_full_envelope_stack_cpu_autocast_graph_scatter() -> None:
+    """Exercise the no-gradient mixed-precision path before GPU memory qualification."""
+    model = N0FullEnvelopeStackV1(
+        N0FullEnvelopeStackConfig(
+            semantic_dim=24,
+            model_dim=24,
+            num_hidden_states=3,
+            num_attention_heads=4,
+            structured_layers=1,
+            field_metadata_dim=3,
+            edge_metadata_dim=4,
+            dropout=0.0,
+        )
+    ).eval()
+    factors, opcodes = factor_bundle()
+    inputs = make_inputs()
+    candidate_hidden = torch.randn(2, 6, 3, 5, 24)
+    candidate_mask = torch.ones(2, 6, 5, dtype=torch.bool)
+
+    with torch.no_grad(), torch.autocast(device_type="cpu", dtype=torch.bfloat16):
+        out = model(
+            relation_schema=schema(5, seed=90),
+            factor_schemas=factors,
+            factor_opcodes=opcodes,
+            max_reasoning_steps=3,
+            graph_message_steps=2,
+            fusion_refinement_steps=2,
+            latent_slot_count=7,
+            latent_refinement_steps=2,
+            candidate_hidden_states=candidate_hidden,
+            candidate_token_mask=candidate_mask,
+            **inputs,
+        )
+
+    graph = out["evidence_graph"]
+    assert graph["field_states"].shape == (2, 5, 24)
+    assert torch.isfinite(graph["field_states"]).all()
+    assert torch.isfinite(graph["source_summary"]).all()
+    assert torch.isfinite(out["public_judgment"]["candidate_logits"]).all()
