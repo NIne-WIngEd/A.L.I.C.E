@@ -107,6 +107,12 @@ The new traces record six high-value construction lessons:
 
 These are process seeds for FBM. They do not grant Fable/A.L.I.C.E. model authority and do not contain private identity payloads.
 
+## N0 full-envelope catch-up — 2026-09-26
+
+The [current-direction transfer](FBM_N0_CURRENT_DIRECTION_TRANSFER_2026-09-26.md) reviews the 390 N0 commits since the last detailed FBM trace, through exact code source `4270bfa2`. Seven [operation traces](traces/FBM_TRACE_20260926_N0_FULL_ENVELOPE_CATCHUP.jsonl) capture the staged full-topology trainer, empirical DEV mapping, sealed FINAL independence, producer-authenticated training authority, resumable optimization, true long-context supervision, CPU-first failure localization, and P43 evidence preservation. The P42/P39PN CPU chain passed; P43 has no valid memory measurement on that source yet. J1/J2/J3 weights, DEV capability scores and FINAL results remain unobserved.
+
+These traces are procedures and partial outcomes. The [data and seed program](FBM_DATA_AND_SEED_PROGRAM_2026-09-26.md) requires separate cross-user input/target/outcome cases before calling them FBM training data. Continue the pinned N0 qualification without pulling the documentation-only N0 branch head into the Magnolia checkout.
+
 ## Mainstreaming rule
 
 FBM development follows the corrected A.L.I.C.E. doctrine:
