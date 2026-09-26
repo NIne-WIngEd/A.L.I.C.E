@@ -1,4 +1,4 @@
-# Fable Personality Builder Model Workstream
+# Fable Builder Model Workstream
 
 **Branch:** `fable-builder-model`  
 **Status:** active architecture and process-capture workstream  
@@ -16,7 +16,7 @@ The [data and seed program](FBM_DATA_AND_SEED_PROGRAM_2026-09-26.md) specifies w
 
 ## Core doctrine
 
-The FBM should learn the *construction process*, not copy any one developer model's personality.
+The FBM should learn the *construction process*, not copy any one developer model's personality. Personality formation is one workstream inside the larger connected-entity build.
 
 Its responsibilities include:
 
@@ -33,6 +33,8 @@ Its responsibilities include:
 - generating teaching curricula and hard cases for the personality model;
 - evaluating the resulting personality model against source evidence and owner/host feedback;
 - iterating from observed failures instead of running large external qualification tournaments.
+
+The builder must also form and qualify MFM, host, relationship and assistant-self capabilities; connect them to governed memory, native judgment and the conversation handoff; and learn from outcomes without crossing subject or authority boundaries. These obligations are specified in the linked data and seed program.
 
 The consumer's source evidence remains the authority about that consumer-derived personality. FBM is a builder and interpreter, not the historical authority.
 
