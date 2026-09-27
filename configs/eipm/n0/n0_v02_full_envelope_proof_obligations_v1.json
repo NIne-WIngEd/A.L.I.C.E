@@ -1791,6 +1791,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_full_envelope_stack_cpu_autocast_graph_scatter",
       "requirement": "The registered P42 static-proof receipt must execute the full stack under CPU autocast and verify operator conservation plus finite, bounded graph, Executor and candidate output before the source-bound GPU memory attempt."
+    },
+    {
+      "id": "N0-P43AM",
+      "stage": "mixed_precision_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_semantic_operator_probability_objectives_run_outside_autocast_with_gradients",
+      "requirement": "The source-bound P42 proof must execute every active semantic probability BCE surface under autocast and verify full-precision loss evaluation, finite objectives, and gradient continuity before a new P43 GPU attempt."
     }
   ],
   "closure_rule": {
