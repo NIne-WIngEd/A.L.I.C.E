@@ -13,7 +13,7 @@ set -euo pipefail
 REPO="${SLURM_SUBMIT_DIR:-$PWD}"
 cd "$REPO"
 EXPECTED=a19f8e8893422702c138182f239064385addf91c
-SCRIPT_SHA=b2d3af77466b3d861e1dc25e6e8a3701fe3e07e4f16e1a1a6dfd19fcc865e8b2
+SCRIPT_SHA=bd2d39fe507c02cf7e3e2fb479c651f4d2c98abb446eb506cc8c89b2e197f406
 if [[ "$(git rev-parse HEAD)" != "$EXPECTED" || -n "$(git status --porcelain)" ]]; then
   echo 'STOP: exact pinned clean N0 source required' >&2
   exit 90
