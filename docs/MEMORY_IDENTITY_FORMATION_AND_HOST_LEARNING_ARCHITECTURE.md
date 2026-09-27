@@ -276,19 +276,20 @@ The Memory Formation Model may propose that a relationship, semantic representat
 
 The architecture remains capability-first and backend-neutral.
 
-| Logical role | Purpose | Current candidate examples |
+| Logical role | Purpose | Selected current implementation |
 |---|---|---|
-| Experience/Event Fabric | Ordered evidence, event history, replay, correction/deletion lineage | KurrentDB-class event store |
-| Claim Fabric | Canonical adjudicated and bitemporal knowledge | distributed/bitemporal SQL-class store |
-| Cognitive Graph | Provenance-linked relationship, causal, social, project, identity, and temporal projections | Neo4j-class graph |
-| Vector/Multimodal Plane | Semantic and multimodal retrieval projections | Qdrant-class vector store |
-| Object/Archive Plane | Raw files, source corpus, datasets, checkpoints, model weights, manifests, exports, backups | object store / NAS / S3-compatible systems |
-| Durable Workflow Plane | Projection, repair, deletion, training, evaluation, migration, and recovery workflows | Temporal-class workflow engine |
-| Workspace / Adaptive Context | Current task and attention state | Redis-class / in-memory systems |
+| Experience/Event Fabric | Ordered evidence, event history, replay, correction/deletion lineage | PostgreSQL append-only event schema + outbox/checkpoints |
+| Claim Fabric | Canonical adjudicated and bitemporal knowledge | PostgreSQL bitemporal claims + materialized current state |
+| Cognitive Graph | Provenance-linked relationship, causal, social, project, identity, and temporal projections | Neo4j derived accelerator; relational projection remains rebuildable fallback |
+| Vector/Multimodal Plane | Semantic and multimodal retrieval projections | Qdrant derived accelerator |
+| Exact/source-native retrieval | Direct source evidence and live authoritative state | filesystem/grep-style, SQL/FTS, metadata, structured APIs, live source reads |
+| Object/Archive Plane | Raw files, source corpus, datasets, checkpoints, model weights, manifests, exports, backups | content-addressed local object store + optional owner-authorized S3-compatible backup |
+| Durable Workflow Plane | Projection, repair, deletion, training, evaluation, migration, and recovery workflows | Temporal for long-running/distributed profile; local durable runner allowed for single-host product profile |
+| Workspace / Adaptive Context | Current task and attention state | in-process first; Valkey when shared/distributed ephemeral state is useful |
 | Episodes / Cognitive Models | Derived autobiographical, host, source-person, self, world, mission, and relationship structure | governed structured projections |
-| Model/Dataset/Training Plane | Elaina identity model, Memory Formation Model, retrieval/context models, adapters, challengers | model registry + object storage + training infrastructure |
+| Model/Dataset/Training Plane | Elaina identity model, Memory Formation Model, retrieval/context models, adapters, challengers | content-addressed manifests + PyTorch/Accelerate training infrastructure |
 
-Neo4j, Qdrant, KurrentDB, Temporal, SQL engines, Redis-class systems, object stores, and future challengers remain candidates until Stage G evidence supports their roles. None is a permanent technology ceiling.
+This is a selected execution path, not a permanent technology ceiling. Challengers remain possible when a concrete A.L.I.C.E. failure or product constraint justifies reopening a decision.
 
 ## 10. Friday boundary
 
@@ -325,19 +326,19 @@ The Neo4j/Qdrant persistence work already performed is evidence for physical dur
 
 Stage G must qualify the complete cognitive-memory fabric.
 
-### Candidate technology qualification gate
+### Selected-stack qualification gate
 
-The canonical detailed candidate inventory and qualification contract are defined in `docs/STAGE_G_MEMORY_FABRIC_CANDIDATE_QUALIFICATION_MATRIX.md`.
+The canonical execution and qualification contract is defined in `docs/STAGE_G_MEMORY_FABRIC_CANDIDATE_QUALIFICATION_MATRIX.md`.
 
 Stage G cannot close until:
 
-- every concrete named candidate in that matrix is stress-tested individually;
-- same-role all-pairs comparison is required across every concrete candidate pair;
-- candidate substitutions are required across every registered architecturally meaningful cross-role interaction;
-- multi-plane combinations and complete end-to-end fabric runs use the complex synthetic Rayan-life workload;
-- correction, deletion, revocation, restore, failure, concurrency, replay, rebuild, rollback, scale, identity, provenance, and A.L.I.C.E./Friday-isolation evidence passes;
-- implementation-family placeholders are concretized into runnable candidates and qualified or separately owner-ratified as descriptive non-candidates;
+- the selected physical stack satisfies its registered logical contracts;
+- critical cross-plane interactions and the complete cognitive-memory loop pass on the complex synthetic Rayan-life workload;
+- MFM, deterministic authority, projections, retrieval/context, EIPM judgment, and outcome-driven revision operate coherently;
+- correction, deletion, revocation, restore, failure, concurrency, replay, rebuild, rollback, realistic scale, identity, provenance, and A.L.I.C.E./Fable-isolation evidence passes;
+- citation lock, consolidation path-dependence, memory-use calibration, and adaptive retrieval routing pass targeted tests;
 - README/governance promises are mapped to executable or inspectable evidence;
+- no challenger is required unless a concrete capability/operational decision remains unresolved;
 - no unresolved zero-tolerance failure remains.
 
 This gate expands Stage G evidence without selecting a permanent backend or creating a technology ceiling.

@@ -1,501 +1,373 @@
-# Stage G Memory Fabric Candidate Qualification Matrix
+# Stage G Memory Fabric Qualification Matrix
 
-**Version:** 1.0.0
-**Status:** Owner-ratified Stage G acceptance requirement
-**Applies to:** Stage G candidate evaluation, complex synthetic Rayan-life stress testing, cross-plane interoperability, README/governance promise coverage, and Stage G closure
+**Version:** 2.0.0  
+**Status:** Owner-ratified Stage G execution requirement  
+**Applies to:** Stage G integrated cognitive-memory qualification, selected infrastructure, targeted challengers, and Phase 2 replacement readiness
 
 ## 1. Purpose
 
-Stage G does not close merely because one backend works, because the primary stack works, or because graph/vector persistence survives restart.
+Stage G exists to prove that A.L.I.C.E.'s **complete cognitive-memory fabric works**, not to exhaustively benchmark infrastructure.
 
-Before Stage G can close, A.L.I.C.E. must evaluate every concrete named candidate in this matrix against the same governed memory contracts and progressively scaled complex synthetic Rayan-life workload.
+The governing execution rule is:
 
-Every concrete candidate is qualified:
+> **Select the strongest reasonable default stack from current architectural knowledge. Validate that integrated system deeply enough to protect capability, authority, deletion, rollback, and scarce compute. Open alternative infrastructure only when a real A.L.I.C.E. requirement creates an unresolved decision.**
 
-1. individually;
-2. against every other concrete candidate in the same logical role;
-3. across every registered architecturally meaningful cross-role interaction using candidate substitution;
-4. in multi-plane combinations;
-5. in complete end-to-end cognitive-memory runs;
-6. under correction, deletion, revocation, restore, failure, recovery, concurrency, replay, rebuild, rollback, and scale stress;
-7. against the promises made in `README.md`, memory governance, identity/host-learning rules, and the Phase 2 migration plan.
+This version supersedes the previous requirement to qualify every named backend, run every same-role pair, substitute every candidate across every interaction edge, or execute broad combinatorial infrastructure tournaments.
 
-This matrix is a qualification obligation rather than a permanent technology selection. Passing Stage G does not make a backend permanent.
+The earlier matrix produced useful architecture knowledge, but its exhaustive interpretation risks repeating the MC10 failure mode: spending more effort validating infrastructure than building A.L.I.C.E.
 
-## 2. Canonical candidate inventory
+## 2. Selected implementation profile
 
-| Role | Primary/current candidate | Other candidates/challengers |
-|---|---|---|
-| Raw Buffer / Workspace | **Redis-class** | in-memory reference; future distributed-state class |
-| Experience/Event Fabric | **KurrentDB** | Kafka; Pulsar; embedded append-only ledger; distributed-log class |
-| Claim Fabric | **distributed/bitemporal SQL-class** | PostgreSQL; distributed-SQL class; Datomic-like fact architecture; FoundationDB-backed custom store; SQLite edge/reference |
-| Cognitive Graph | **Neo4j** | FalkorDB; Memgraph; Amazon Neptune; custom graph engine |
-| Vector/Multimodal | **Qdrant** | Milvus; Vespa; Weaviate; pgvector; FAISS; DiskANN; HNSW |
-| Object/Archive | **S3-compatible / MinIO / NAS** | encrypted cloud/object/archive class |
-| Durable Workflow | **Temporal** | Dagster; Prefect; Ray; durable-consumer implementation; custom workflow service |
-| Existing compatibility authority | **SQLite** | retained as Phase 2/reference oracle; not selected successor destination |
-| Model serving | **vLLM** | other model-serving-stack class |
-| Training | **PyTorch Distributed / Ray** | DeepSpeed; FSDP; Slurm; Kubernetes |
-| Model/dataset registry | **MLflow-class / object-backed registry** | future registry-challenger class |
+The logical Memory v4.1 architecture remains backend-neutral and replaceable. Stage G now has a selected default physical path.
 
-The matrix currently contains 32 required named role assignments representing 31 unique concrete product/library candidates because Ray is evaluated in both workflow and training roles.
+| Logical role | Selected default for current A.L.I.C.E. build | Authority status |
+| --- | --- | --- |
+| Experience/Event Fabric | **PostgreSQL append-only event/experience schema** with ordered IDs, outbox, replay/checkpoint metadata, correction/deletion lineage | canonical event/evidence persistence after cutover |
+| Claim Fabric | **PostgreSQL bitemporal claim schema + materialized current projection** | canonical adjudicated knowledge |
+| Raw/Object/Archive | **content-addressed local filesystem/object store**, optional owner-authorized S3-compatible backup | raw/source payload authority by manifest/custody contract |
+| Cognitive Graph | **Neo4j derived projection**; relational edge projection remains rebuildable source/fallback | non-authoritative derived accelerator |
+| Vector/Multimodal | **Qdrant derived projection** | non-authoritative derived accelerator |
+| Exact/source-native retrieval | **filesystem, SQL/FTS, metadata, structured API, grep-style and live-source reads** | retrieval only |
+| Durable workflow | **Temporal** for long-running/distributed A.L.I.C.E. workflows; local durable runner may satisfy the same contract in single-host profiles | operational state, never Claim authority |
+| Workspace/cache | **in-process first; Valkey only when shared/distributed ephemeral state is useful** | ephemeral/non-authoritative |
+| Model/dataset artifact lineage | **content-addressed artifacts + exact manifests**; MLflow remains optional | lineage/registry |
+| Training | **PyTorch + Accelerate**, current DDP route; FSDP/offload only when measured memory requires it; Slurm where cluster scheduling is used | training infrastructure |
+| Large-model serving | **vLLM when appropriate**; current Fable v1 feature generation remains replaceable GPT/Claude API service | replaceable feature serving |
 
-The required concrete named candidates are:
+### 2.1 Why PostgreSQL carries both event and claim persistence
 
-```text
-Redis
-KurrentDB
-Kafka
-Pulsar
-PostgreSQL
-SQLite edge/reference
-Neo4j
-FalkorDB
-Memgraph
-Amazon Neptune
-Qdrant
-Milvus
-Vespa
-Weaviate
-pgvector
-FAISS
-DiskANN
-HNSW
-MinIO
-Temporal
-Dagster
-Prefect
-Ray
-SQLite Phase 2 reference oracle
-vLLM
-PyTorch Distributed
-DeepSpeed
-FSDP
-Slurm
-Kubernetes
-MLflow
-```
+Experience/Event and Claim authority remain logically distinct contracts.
 
-All concrete named candidates above are mandatory Stage G evaluation targets unless Rayan later ratifies an amendment to this matrix.
+Using one mature transactional engine for both physical stores currently reduces:
 
-The table also contains implementation-family candidates that cannot be evaluated as names alone:
+- cross-service consistency work;
+- deployment complexity;
+- dual-authority risk;
+- local-product packaging burden;
+- operational validation that does not improve cognition.
 
-```text
-in-memory reference
-future distributed-state class
-embedded append-only ledger
-distributed-log class
-distributed/bitemporal SQL class
-distributed-SQL class
-Datomic-like fact architecture
-FoundationDB-backed custom store
-custom graph engine
-S3-compatible implementation
-NAS implementation
-encrypted cloud/object/archive class
-durable-consumer implementation
-custom workflow service
-other model-serving-stack class
-object-backed registry
-future registry-challenger class
-```
+Separate schemas, APIs, authority rules, append semantics, and cutover generations preserve logical separation.
 
-Before Stage G acceptance, each implementation-family candidate must either:
+KurrentDB remains a legitimate challenger if measured event throughput, persistent-subscription, replay, or operational requirements exceed the selected PostgreSQL implementation. It is no longer a mandatory Stage G tournament participant.
 
-- be instantiated by at least one concrete runnable implementation and then receive the same applicable qualification as a named candidate; or
-- be reclassified through a separate owner-ratified amendment as a descriptive architecture family rather than an active Stage G candidate.
+### 2.2 Why Neo4j and Qdrant remain
 
-A family placeholder never counts as passed without a concrete runnable implementation.
+A.L.I.C.E.'s target workload includes relationship, temporal, causal, mission, identity, semantic, fuzzy episodic, and multimodal retrieval.
 
-## 3. Qualification levels
+Current evidence does not justify deleting graph or vector capability because source-native search became stronger in coding systems.
 
-Every required named candidate and every concretized implementation-family candidate produces evidence for all applicable levels.
+Neo4j and Qdrant remain rebuildable accelerators behind Claim/Evidence authority. The Context Planner decides whether a query needs them.
 
-### Q0 - Registration and reproducibility
+## 3. Qualification philosophy
 
-Record:
+### Q0 — exact registration and lineage
 
-- exact engine/product/library name;
-- role being evaluated;
-- version;
-- image, package, build, or source digest;
-- platform and architecture;
-- configuration;
-- deployment profile;
-- schema or contract generation;
-- dataset generation;
-- benchmark generation;
-- resource profile;
-- encryption/custody domain where applicable;
-- benchmark code and report hashes.
+For every selected component actually used in the profile, record:
 
-### Q1 - Individual candidate stress qualification
+- name/version/source digest;
+- configuration and deployment profile;
+- schema/contract generation;
+- data and projection generation;
+- custody/encryption domain;
+- build/runtime environment;
+- rollback/rebuild path;
+- benchmark/evaluation generation.
 
-Test each candidate in isolation behind its logical contract.
+### Q1 — component contract correctness
 
-Required dimensions include:
+Each selected component must satisfy the logical contract it owns.
 
-- correctness;
-- ordering or transaction semantics;
-- idempotency;
-- concurrency;
-- correction;
-- deletion and revocation;
-- replay and rebuild;
-- restart durability;
-- malformed input;
-- partial failure;
-- recovery;
-- export and replacement;
-- observability;
-- latency, throughput, storage, memory, CPU/GPU, and network behavior where applicable.
+Examples:
 
-Starting a service or persisting a sample record is not sufficient qualification evidence.
+- PostgreSQL event append/order/idempotency/replay;
+- PostgreSQL bitemporal claims/conflict/correction/deletion;
+- Neo4j projection consistency/rebuild/deletion;
+- Qdrant generation consistency/rebuild/deletion;
+- object integrity/custody/restore;
+- Temporal retry/idempotency/cancellation/recovery;
+- cache/workspace loss without authority loss.
 
-### Q2 - Same-role all-pairs comparison
+This is targeted contract validation, not a same-role product tournament.
 
-Within every logical role, compare every concrete candidate against every other concrete candidate in that role using the same gold workload and logical contract.
+### Q2 — critical cross-plane integration
 
-Examples include:
+Test the selected stack on the cross-plane edges that can materially break A.L.I.C.E.:
 
-- KurrentDB vs Kafka vs Pulsar;
-- Neo4j vs FalkorDB vs Memgraph vs Amazon Neptune;
-- Qdrant vs Milvus vs Vespa vs Weaviate vs pgvector vs FAISS vs DiskANN vs HNSW;
-- Temporal vs Dagster vs Prefect vs Ray;
-- PyTorch Distributed vs Ray vs DeepSpeed vs FSDP vs Slurm vs Kubernetes.
+- Experience -> MFM/context;
+- Experience -> Claim adjudication;
+- Claim -> graph/vector/episode projections;
+- correction/deletion -> every derivative plane;
+- retrieval -> evidence consumption/citation lock;
+- host/source-person/self/relationship state -> EIPM;
+- workflow -> projection/repair/training/deletion;
+- object/source -> evidence and model lineage;
+- serving -> Claim/Graph/Vector/Context without authority inversion.
 
-Record semantic loss, unsupported contract behavior, correctness, reliability, latency, throughput, operational complexity, recovery behavior, and resource profile.
+Do not generate candidate-substitution Cartesian products.
 
-### Q3 - Cross-role candidate-substitution interoperability
+### Q3 — full end-to-end cognitive-memory loop
 
-Every registered interaction edge is tested with every active candidate substitution on both sides of the edge.
-
-Registered Stage G interaction edges are:
-
-- Raw Buffer / Workspace <-> Experience/Event Fabric;
-- Raw Buffer / Workspace <-> retrieval/model-serving context;
-- Experience/Event Fabric <-> Claim Fabric;
-- Experience/Event Fabric <-> Object/Archive;
-- Experience/Event Fabric <-> Durable Workflow;
-- Claim Fabric <-> Cognitive Graph;
-- Claim Fabric <-> Vector/Multimodal;
-- Claim Fabric <-> Durable Workflow;
-- Claim Fabric <-> SQLite compatibility/reference oracle;
-- Cognitive Graph <-> Vector/Multimodal;
-- Cognitive Graph <-> retrieval/model serving;
-- Vector/Multimodal <-> retrieval/model serving;
-- Object/Archive <-> Training;
-- Object/Archive <-> Model/Dataset Registry;
-- Durable Workflow <-> Event, Claim, Graph, Vector, Object, Training, and Registry planes;
-- Model serving <-> Claim, Graph, Vector, Workspace, Retrieval, and Context planes;
-- Training <-> Object/Archive, Model/Dataset Registry, and Model serving;
-- Model/Dataset Registry <-> Training and Model serving;
-- SQLite compatibility/reference oracle <-> successor authority/projection comparisons.
-
-When two candidates are claimed not to interact on a registered edge, the report records an explicit non-interaction rationale and tests the isolation boundary. An unexecuted case does not silently become non-applicable.
-
-### Q4 - Multi-plane combination testing
-
-Run combinations capable of exposing higher-order failures that individual or pairwise tests cannot reveal.
-
-Required minimum combination classes:
-
-- all-current-primary stack after every family-primary has a concrete implementation;
-- one-challenger-at-a-time substitution;
-- same-role comparison winners substituted into the full fabric;
-- challenger substitutions across adjacent planes;
-- multiple simultaneous challenger substitutions;
-- mixed workstation, networked, distributed, remote, edge, cloud, and multi-region profiles where supported;
-- degraded-mode combinations;
-- backup/restore combinations;
-- replay/rebuild combinations;
-- deletion/revocation propagation across every active derivative plane.
-
-When a full Cartesian product is impractical, use documented combinatorial coverage. The report records covered combinations, uncovered combinations, the selection algorithm, and the justification for any residual gap.
-
-### Q5 - Full cognitive-memory end-to-end qualification
-
-Exercise the complete flow:
+Exercise:
 
 ```text
-synthetic/authorized life event
-        |
-        v
-Raw Buffer / capture
-        |
-        v
-Experience/Event Fabric + Object/Archive
-        |
-        v
+authorized/synthetic experience
+        ↓
+Experience/Event ledger
+        ↓
 Formation Context Planner
-        |
-        v
+        ↓
 Memory Formation Model
-        |
-        v
+        ↓
 MemoryProposalBundle
-        |
-        v
+        ↓
 deterministic Memory Gate / Authority Manager
-        |
-        v
+        ↓
 Claim Fabric
-        |
-        v
+        ↓
 Projection Manager
-        |
-        v
-Graph + Vector + Episodes + Host/Relationship/Self/Mission projections
-        |
-        v
-Retrieval Orchestrator
-        |
-        v
-Context Manager / Memory Fusion
-        |
-        v
-reasoning / action / outcome
-        |
-        v
-Experience feedback and revision
+        ↓
+Graph + Vector + Episodes + Host/Relationship/Self/Mission state
+        ↓
+Retrieval Orchestrator / Context Planner
+        ↓
+EIPM native judgment
+        ↓
+reasoning / action / response
+        ↓
+outcome
+        ↓
+Experience feedback and governed revision
 ```
 
-Learned components interpret and propose. Deterministic policy still controls authority.
+Stage G closes on this system behavior, not backend benchmark coverage.
 
-### Q5.1 - Evidence-consumption / citation-lock invariant
+## 4. Required cognitive-memory qualifications
 
-Reasoning-time retrieval must distinguish candidate discovery from evidence actually consumed by the invocation that produces an answer or action.
+### Q4.1 — Evidence-consumption / citation lock
 
-For every applicable retrieval/context path:
+Reasoning-time retrieval must distinguish candidate discovery from evidence actually consumed by the invocation.
 
-- issue an invocation-scoped receipt for evidence, claims, source spans, graph paths, episodes, and other context objects actually materialized or opened;
-- let the final support set be a subset of that consumed/opened set;
-- prohibit index metadata, vector scores, graph reachability, summaries, latent retrieval scores, or unopened source references from masquerading as consumed source evidence;
-- require every material externally asserted factual claim to resolve to consumed authoritative evidence or to an explicitly typed non-evidential operation;
-- when evidence is insufficient, expand retrieval, ask, defer, abstain, or expose uncertainty rather than fabricate support;
-- preserve the invariant across iterative retrieval, source expansion, graph traversal, vector retrieval, episode retrieval, claim retrieval, and exact-source inspection;
-- propagate correction, deletion, revocation, and source-generation changes to all active consumption receipts and derivative contexts.
+- record invocation-scoped evidence/read receipts;
+- final factual support must resolve to consumed authoritative evidence;
+- vector scores, graph reachability, summaries, latent activations, and unopened source references are not source evidence;
+- insufficient evidence triggers more retrieval, ask/defer/abstain, or exposed uncertainty;
+- preserve correction/deletion/revocation lineage through active contexts.
 
-A candidate cannot pass because the correct source existed somewhere in the store. It must demonstrate that the source actually entered the governed reasoning context that supported the result.
+### Q4.2 — Consolidation path dependence
 
-### Q5.2 - Consolidation path-dependence qualification
+The same evidence set must not silently become different authoritative truth solely because it arrived in a different order/grouping.
 
-The same authorized evidence set must be evaluated under materially different formation/consolidation schedules so order and grouping cannot silently determine authoritative memory.
+Use a small, capability-focused schedule set:
 
-Required schedules include:
+- chronological;
+- shuffled;
+- grouped by episode/entity/task;
+- near-duplicate-heavy;
+- adversarial unrelated mixture.
 
-- one-shot/static formation;
-- chronological streaming;
-- shuffled streaming;
-- entity-, episode-, and task-grouped batching;
-- adversarial mixtures of unrelated evidence;
-- near-duplicate-heavy streams.
+Detect applicability loss, overgeneralization, schedule-dependent promotion, and false duplicate confidence.
 
-Keep the underlying evidence byte-identical and compare MemoryProposalBundles, claim scope/applicability, adjudicated claims, episodes/projections, retrieval behavior, and downstream decisions.
+`RETAIN_RAW / NO_CONSOLIDATION` remains valid.
 
-Qualification must detect:
+This test is bounded to formation behavior. It is not permission to run a combinatorial consolidation tournament.
 
-- loss of applicability conditions;
-- overgeneralization;
-- schedule-dependent claim promotion;
-- silent semantic drift;
-- duplicated evidence creating false confidence;
-- a consolidation result that cannot be reconstructed from its contributing evidence.
+### Q4.3 — Memory-use calibration
 
-`RETAIN_RAW / NO_CONSOLIDATION` remains a valid proposal/action. Large unexplained divergence across schedules fails or quarantines the candidate rather than becoming authority. Correction/deletion/revocation tests must be repeated across abstractions created under each schedule.
+Retrieved memory must have the right **influence**, not merely be present.
 
-### Q5.3 - Usage-aware retrieval projection challenger
+Test:
 
-Stage G may shadow-evaluate a usage-aware retrieval projection that learns how memories have proved useful together across prior retrieval episodes.
+- relevant evidence that should control the result;
+- relevant-but-bounded evidence;
+- irrelevant/distracting memory that should be ignored;
+- conflicting evidence and uncertainty;
+- rare decisive owner/source constraints that must not disappear inside aggregate accuracy.
 
-Such a projection:
+Learned influence never changes Claim authority.
 
-- is versioned, rebuildable, rollback-safe, and derived from retrieval/outcome receipts;
-- may add, strengthen, weaken, or estimate explicitly typed retrieval-accessibility associations;
-- never turns co-retrieval, popularity, or repeated access into factual, causal, identity, or claim authority;
-- must preserve stable source/evidence identities and deletion/correction lineage;
-- must be tested against cold start, query-order shuffles, repeated/adversarial queries, popularity feedback loops, rare-but-critical evidence, contradictory evidence, distribution shift, and stale/deleted influence;
-- must be compared with static graph, vector, lexical, symbolic, and existing adaptive-context baselines on evidence recall, authority correctness, latency, token/resource cost, and calibration.
+### Q4.4 — Retrieval-strategy qualification
 
-Retrieval success alone cannot promote a claim, relationship, personality trait, or causal edge.
+The selected retrieval system must support:
 
-### Q5.4 - Retrieval-strategy and source-native search qualification
+- exact/lexical;
+- agentic source-native/no-vector search;
+- semantic/vector;
+- graph/temporal/claim-aware;
+- episode retrieval;
+- live system-of-record reads;
+- dynamic routing/fusion.
 
-No retrieval primitive receives permanent default status merely because it is fashionable, cheap, or successful on one domain. Stage G must compare retrieval strategies end to end on the same governed evidence and tasks.
+Do **not** independently optimize every retrieval strategy before building the system.
 
-Required strategy classes include:
+Use representative workload slices to verify that the Context Planner chooses a suitable path and that obvious regressions are absent:
 
-- exact/lexical retrieval over authoritative records and source text;
-- **agentic source-native search** that iteratively uses names, paths, fields, keywords, metadata, structured queries, file reads, source reads, and follow-up searches without a semantic vector index;
-- semantic/vector retrieval;
-- lexical + vector hybrid retrieval;
-- graph/temporal/claim-aware retrieval;
-- dynamic routed retrieval that chooses or composes the above per query;
-- an explicit **no-vector / no-semantic-index** serving challenger where the source type permits it.
+- exact wording/source lookup;
+- vocabulary mismatch/paraphrase;
+- fuzzy episodic/behavioral resemblance;
+- graph/relationship/mission;
+- temporal/update/correction;
+- current live fact;
+- multimodal evidence;
+- long-horizon mixed evidence.
 
-The agentic source-native challenger must be allowed to reformulate multiple queries, inspect source structure, follow references, and progressively disclose evidence. It must not receive hidden oracle hints unavailable to other strategies.
+Open a dedicated retrieval challenger only if a current path shows a material weakness or cost.
 
-Evaluate all applicable strategies on:
+### Q4.5 — Usage-aware retrieval remains projection-only
 
-- end-to-end answer/decision correctness, not retrieval recall alone;
-- complete supporting-evidence recovery under matched context/token budgets;
-- exact-source and exact-wording cases;
-- paraphrase, synonym, indirect-reference, emotional/behavioral resemblance, and vocabulary-mismatch cases;
-- multi-hop, temporal, causal, relationship, identity, and update/correction cases;
-- multimodal cases where plain text search is intrinsically incomplete;
-- live-source freshness cases where current authoritative state must beat a stale stored snapshot;
-- retrieval precision, recall, evidence completeness, calibration, and abstention;
-- tool calls, reasoning turns, tokens, latency, CPU/GPU, network, storage, and energy where measurable;
-- index build/update/rebuild cost and projection lag;
-- source mutation between queries, stale indexes, deletion/revocation, restore, and cold-start behavior;
-- traceability: every search/query/read and every consumed evidence object must remain inspectable.
+Retrieval outcomes may inform accessibility/routing, but repeated access/co-retrieval cannot become factual, causal, identity, relationship, or Claim authority.
 
-A no-index or lexical-first result may become the selected profile for a workload when it wins the governed evaluation. A vector, graph, hybrid, or learned strategy may likewise win where it adds measured value. Stage G must not retain an index merely because it already exists, and it must not delete a retrieval plane merely because a stronger model made that plane unnecessary on a different workload.
+Any usage-aware state must be:
 
-For mutable operational facts with a reachable current system of record, memory may provide historical context and routing hints, but the serving plan must test direct live-source retrieval and reconciliation rather than treating an old memory snapshot as current truth.
+- versioned;
+- rebuildable;
+- correction/deletion-aware;
+- protected against popularity feedback loops;
+- removable without loss of source truth.
 
-## 4. Complex synthetic Rayan-life workload
+### Q4.6 — Failure, recovery, deletion, rollback
 
-The candidate matrix uses the complex synthetic continuation of Rayan's life required by the Stage G architecture.
+The selected integrated stack must survive the failures that matter to A.L.I.C.E.:
 
-The workload includes:
+- process restart;
+- stale projection;
+- partial projection failure;
+- retry/idempotency;
+- correction;
+- deletion/revocation;
+- rebuild;
+- restore;
+- rollback;
+- source/model replacement;
+- product/host isolation;
+- malformed/untrusted external material.
 
-- changing preferences;
-- projects with dependencies and competing priorities;
-- school and work transitions;
-- people, relationships, and same-name collisions;
-- long-running goals and missions;
-- plans that succeed;
-- plans that fail;
-- decisions whose rationale changes later;
-- direct owner statements;
-- outside-source claims;
-- observations;
-- inferences;
-- predictions;
-- uncertain possibilities;
-- contradictory documents;
-- malicious or misleading documents;
-- stored prompt-injection-like content;
-- temporary/session-only facts;
-- TTL and ephemeral state;
-- corrections;
-- supersessions;
-- deletions;
-- revocations;
-- restore from backup after deletion;
-- stale summaries;
-- stale graph edges;
-- stale vectors;
-- duplicated evidence;
-- reordered events;
-- concurrent writes;
-- retries;
-- partial outages;
-- malformed or partial events;
-- false claims that "Rayan said X";
-- Elaina/source-person vs Rayan/host vs A.L.I.C.E.-continuity separation;
-- A.L.I.C.E./Friday product-isolation attacks.
+### Q4.7 — Identity and personal-development correctness
 
-The synthetic continuation spans enough simulated time to test historical vs current truth, recurring patterns, changed goals, relationship evolution, episode formation, correction lineage, deletion lineage, and long-horizon retrieval.
+Stage G must preserve:
 
-## 5. Scale and stress ladder
+- Elaina source-person history;
+- Rayan host state;
+- A.L.I.C.E. self/continuity;
+- A.L.I.C.E.–Rayan relationship state;
+- Mission/goal state.
 
-Stage G certification uses progressively larger workload points:
+The wrong subject must never receive another subject's history.
 
-```text
-1K
-10K
-100K
-1M
-```
+Relevant changes to host/relationship/self state should change later judgment when causally appropriate; irrelevant state changes should not.
 
-These values are certification points rather than architectural ceilings. Larger tiers such as `10M`, `100M`, `1B+`, and other scales remain available when resources and research value justify them.
+## 5. Challenger admission rule
 
-Stress testing continues until the relevant saturation, failure, or resource boundary is characterized well enough to compare candidates. Reports prioritize correctness, then record p50/p95/p99 latency where applicable, throughput, projection lag, replay/rebuild time, storage amplification, memory, CPU/GPU, network, and operational failure behavior.
+A new backend or architecture challenger is admitted only when at least one trigger exists:
 
-## 6. Zero-tolerance failure classes
+1. selected implementation cannot satisfy a required logical/authority contract;
+2. observed A.L.I.C.E. workload exposes a material capability or fidelity weakness;
+3. measured scale/latency/resource behavior blocks the intended profile;
+4. deletion, privacy, recovery, custody, distribution, or licensing makes the selected component unsuitable;
+5. frontier research presents strong directly relevant evidence that the selected path cannot express;
+6. target product packaging makes the selected physical implementation unreasonable.
 
-A Stage G candidate or combination cannot pass while any of these critical cases remains unresolved:
+When admitted:
+
+- define the exact decision the challenger can change;
+- compare only against the incumbent on the relevant workload;
+- stop once the decision is resolved;
+- preserve authority, provenance, deletion, rollback, and identity boundaries.
+
+A challenger is not automatically added to a permanent candidate inventory.
+
+## 6. Explicit non-requirements
+
+Stage G no longer requires:
+
+- every known backend to run;
+- all same-role candidate pairs;
+- all cross-role candidate substitutions;
+- full Cartesian or broad combinatorial backend coverage;
+- infrastructure comparison whose outcome would not change the implementation decision;
+- equal investment in a challenger that is clearly inferior for A.L.I.C.E.'s purpose.
+
+Research remains open. Execution is selected-stack-first.
+
+## 7. Complex A.L.I.C.E. workload
+
+The integrated qualification workload still includes:
+
+- changing preferences and goals;
+- school/work/project transitions;
+- people and relationships;
+- source-person vs host vs assistant-self distinctions;
+- missions and dependencies;
+- successful and failed plans;
+- outcomes and revised assumptions;
+- contradictory/malicious documents;
+- outside claims vs direct owner evidence;
+- uncertainty;
+- temporary/session state;
+- corrections/supersessions;
+- deletion/revocation;
+- stale graph/vector/summary state;
+- duplicate/reordered/concurrent events;
+- partial outages and retries;
+- long-horizon retrieval;
+- product-isolation attacks.
+
+Scale should grow until the intended profile's meaningful performance boundary is understood. Fixed 1K/10K/100K/1M points may be used as convenient checkpoints, not mandatory infrastructure rituals and not ceilings.
+
+## 8. Zero-tolerance failure classes
+
+Stage G cannot pass with unresolved:
 
 - deleted information served as current;
 - revoked information influencing active output without disclosure;
-- inference promoted to owner-stated fact;
-- another person's memory assigned to Rayan;
+- inference promoted to owner/source fact;
+- person/subject memory misassignment;
 - Rayan data rewritten as Elaina canon;
 - A.L.I.C.E. continuity relabeled as Elaina history;
-- external text treated as an owner statement;
+- outside text treated as authenticated owner speech;
 - generated reconstruction presented as historical truth;
-- graph, vector, workflow, summary, cache, or model state overriding Claim authority;
-- correction lost in a projection;
-- stale projection revived after rebuild or restore;
+- graph/vector/cache/workflow/model state overriding Claim authority;
+- correction lost in a derivative projection;
+- stale projection revived after rebuild/restore;
 - invented provenance;
-- cross-host or A.L.I.C.E./Friday private-data leakage;
+- cross-host or A.L.I.C.E./Fable private-data leakage;
 - unauthorized model/dataset contamination;
-- an aggregate score hiding a critical failure;
-- backend-specific behavior silently changing the logical authority contract;
-- a final factual claim citing or depending on evidence that was never consumed/opened by the producing invocation;
-- consolidation order or grouping silently changing authoritative truth without explicit conflict/quarantine;
-- a learned retrieval/accessibility association overriding Claim authority or surviving a correction, deletion, or revocation it depended on.
+- aggregate metrics hiding a critical identity/provenance failure;
+- backend-specific semantic contract drift;
+- factual output depending on evidence not actually consumed/opened by the producing invocation;
+- retrieval/accessibility feedback becoming factual/identity authority.
 
-## 7. README and governance promise coverage
+## 9. Stage G closure
 
-The Stage G acceptance report maps evidence to the promises made by the repository.
+Stage G is ready for Stage H when:
 
-At minimum verify that A.L.I.C.E. can:
+1. the selected physical stack is registered and reproducible;
+2. component contracts pass on the selected implementations;
+3. critical cross-plane integration passes;
+4. the complete cognitive-memory loop passes;
+5. MFM and EIPM participate in the integrated loop at the required maturity;
+6. correction/deletion/revocation/rebuild/restore/rollback pass;
+7. citation lock and memory-use calibration pass;
+8. identity/host/relationship/self separation passes;
+9. retrieval/context routing is adequate for the actual A.L.I.C.E. workload;
+10. realistic scale/latency/resource evidence exists for the selected profile;
+11. no zero-tolerance failure remains unresolved;
+12. exact versions/hashes/configurations/reports are recorded;
+13. Rayan accepts the integrated Stage G result.
 
-- preserve continuity across long-running work;
-- connect projects, missions, dependencies, decisions, and outcomes;
-- explain why a past decision was made;
-- distinguish current truth from historical truth;
-- distinguish direct statements, verified facts, outside claims, observations, inferences, predictions, reconstructions, disputes, outdated beliefs, corrections, and uncertainty;
-- preserve provenance, time, confidence, supporting evidence, corrections, influence, active/deleted state;
-- learn from outcomes without rewriting evidence;
-- detect conflicts and support evidence-based disagreement;
-- reconstruct the Experience Ledger chain from request through result, correction, and lesson;
-- retrieve exact source evidence when exact wording matters;
-- retain selective durable memory without treating all raw capture as permanent memory;
-- propagate correction, deletion, and revocation through every derivative layer;
-- restore safely without resurrecting deleted information;
-- replace models or backends without losing A.L.I.C.E. continuity;
-- preserve the Rayan-host / Elaina-source-person / A.L.I.C.E.-continuity boundary;
-- preserve A.L.I.C.E./Friday isolation;
-- remain inspectable, reversible, and honest about uncertainty and failure.
+Stage H is bounded successor canary authority. Stage I is cutover. Final Phase 2 replacement remains complete only after Stage J compatibility/fallback acceptance.
 
-A promise with no executable or inspectable evidence remains unverified.
+## 10. Relationship to frontier research
 
-## 8. Stage G closure gate
+Frontier research continues continuously.
 
-Stage G cannot close until all of the following are true:
+A paper can:
 
-1. G2 formation and identity foundations pass their acceptance gates.
-2. Every required concrete named candidate completes every applicable Q0-Q5 level.
-3. Every implementation-family candidate is concretized and qualified or separately owner-ratified as a descriptive non-candidate.
-4. Same-role all-pairs comparison coverage is complete.
-5. Every registered cross-role interaction edge has complete candidate-substitution coverage.
-6. Multi-plane combination coverage is documented and passes.
-7. Full-fabric end-to-end runs pass on the complex synthetic Rayan-life workload.
-8. Correction, deletion, revocation, restore, concurrency, failure, replay, rebuild, rollback, and product-isolation tests pass.
-9. Evidence-consumption/citation-lock qualification passes across every active retrieval/context path.
-10. Consolidation path-dependence qualification passes without unexplained authority divergence.
-11. Any usage-aware retrieval projection remains projection-only and passes feedback-loop, deletion/correction, and rollback qualification before influencing serving.
-12. Retrieval-strategy qualification compares agentic source-native/no-vector, lexical, semantic/vector, hybrid, graph/temporal/claim-aware, and dynamic-routed strategies on every applicable workload family before a serving default is selected.
-13. Scale and stress evidence is recorded for every applicable candidate.
-14. README/governance promise coverage is complete.
-15. No zero-tolerance failure remains unresolved.
-16. The evidence package records exact versions, hashes, configurations, benchmark generations, failures, limitations, and unresolved research questions.
-17. Rayan explicitly accepts the integrated Stage G result.
+- confirm the selected architecture;
+- add a targeted invariant/test;
+- create a future challenger;
+- expose a current capability defect;
+- invalidate a selected component.
 
-Stage G acceptance selects evidence-backed roles for later migration stages. It does not create a permanent technology ceiling.
+It does **not** automatically create another infrastructure-validation program.
 
-## 9. Relationship to Phase 2 and later stages
-
-Phase 2 remains the released authority, compatibility baseline, oracle, and fallback while Stage G is open.
-
-Stage H remains bounded canary authority.
-
-Stage I remains cutover.
-
-Stage J remains compatibility/fallback transition.
-
-Final Phase 2 replacement or retirement still requires Stage J acceptance and separate owner acceptance.
+The default response to a paper is to preserve the knowledge. Architecture changes only when the evidence changes what is best for A.L.I.C.E.
