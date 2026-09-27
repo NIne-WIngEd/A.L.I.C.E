@@ -478,7 +478,10 @@ def test_gpu_memory_dry_run_is_exact_topology_no_gradient_and_not_training_autho
     source=script_path.read_text()
     assert "torch.inference_mode()" in source
     assert "apply_stage_trainability(system,stage=J3)" in source.replace(" ","")
-    assert "execute_full_envelope_joint_step" in source
+    assert "FullEnvelopeJointDDPRouteV2" in source
+    assert "joint_route=DistributedDataParallel(" in source
+    assert "loss=joint_route(" in source
+    assert "take_observation()" in source
     assert "optimizer_object_created" in source
     assert "torch.optim" not in source
 
@@ -822,7 +825,7 @@ def test_successor_trainer_reuses_registered_stage_and_joint_step_without_histor
         "load_registered_full_envelope_system",
         "apply_stage_trainability",
         "FullEnvelopeTrainingBatchSchedulerV1",
-        "execute_full_envelope_joint_step",
+        "FullEnvelopeJointDDPRouteV2",
         "FullEnvelopeJointTrainingObjectiveV1",
         "compile_semantic_operator_batch",
         "compile_behavioral_batch",
@@ -2386,6 +2389,11 @@ def test_p43_gpu_memory_wraps_actual_ddp_replica_route_before_measurement() -> N
     assert 'route.get("ddp_replica_topology") is not True' in qualifier
     assert "ddp_replica_wrapped" in qualifier
     assert "find_unused_parameters=True" in qualifier
+    assert "joint_route=DistributedDataParallel(" in qualifier
+    assert "route=FullEnvelopeJointDDPRouteV2(system,objective)" in trainer
+    assert "accelerator.no_sync(route)" in trainer
+    assert "loss=joint_route(" in qualifier
+    assert "joint_loss=route(" in trainer
     assert "P43 DDP replica route was not measured" in trainer
 
 
@@ -2690,4 +2698,3 @@ def test_p39pn_has_canonical_source_stable_full_mixture_materializer() -> None:
     workflow=(ROOT/".github/workflows/n0-full-envelope-foundation-build-v1-contract.yml").read_text()
     assert 'scripts/eipm/n0/materialize_n0_v02_full_public_mixture_v1.sh' in workflow
     assert 'bash -n scripts/eipm/n0/materialize_n0_v02_full_public_mixture_v1.sh' in workflow
-

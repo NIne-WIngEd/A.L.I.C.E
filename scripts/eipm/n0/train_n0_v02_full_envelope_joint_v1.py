@@ -20,9 +20,6 @@ from alice_personality.n0.data import PackedJSONLIterableDataset, SpanMLMCollato
 from alice_personality.n0.full_envelope_behavioral_batch_v1 import (
     compile_behavioral_batch,
 )
-from alice_personality.n0.full_envelope_joint_step_v1 import (
-    execute_full_envelope_joint_step,
-)
 from alice_personality.n0.full_envelope_joint_ddp_route_v2 import (
     FullEnvelopeJointDDPRouteV2,
 )

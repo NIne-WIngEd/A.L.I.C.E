@@ -283,7 +283,17 @@ def test_accelerate_state_restores_outer_model_inner_objective_and_optimizer(tmp
     assert set(unwrapped.state_dict())==set(expected_model)
     for name,expected in expected_model.items():
         torch.testing.assert_close(unwrapped.state_dict()[name],expected)
-    torch.testing.assert_close(optimizer.state_dict(),expected_optimizer)
+    restored_optimizer=optimizer.state_dict()
+    assert restored_optimizer["param_groups"]==expected_optimizer["param_groups"]
+    assert set(restored_optimizer["state"])==set(expected_optimizer["state"])
+    for parameter_id,expected_state in expected_optimizer["state"].items():
+        observed_state=restored_optimizer["state"][parameter_id]
+        assert set(observed_state)==set(expected_state)
+        for key,expected in expected_state.items():
+            if isinstance(expected,torch.Tensor):
+                torch.testing.assert_close(observed_state[key],expected)
+            else:
+                assert observed_state[key]==expected
 
 
 def _gloo_worker(rank, rendezvous, stage):
