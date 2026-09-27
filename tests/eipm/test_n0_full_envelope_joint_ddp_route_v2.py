@@ -254,23 +254,36 @@ def test_accelerate_state_restores_outer_model_inner_objective_and_optimizer(tmp
         system,backbone_lr=1e-5,interface_lr=5e-5,
         backbone_weight_decay=0.1,interface_weight_decay=0.05,
     )
-    accelerator=Accelerator(cpu=True,mixed_precision="no")
-    route,optimizer=accelerator.prepare(route,optimizer)
-    batches=_stage_batches(_batches(fixture,system),J3)
-    optimizer.zero_grad(set_to_none=True)
-    loss=route(**batches)
-    observation=accelerator.unwrap_model(route).take_observation()
-    accelerator.backward(loss)
-    optimizer.step()
-    unwrapped=accelerator.unwrap_model(route)
-    unwrapped.objective.balancer.observe_detached_family_means(
-        {family:observation["balanced"][f"raw/{family}"] for family in observation["active_families"]},
-        active_families=observation["active_families"],
+    scheduler=trainer.cosine_with_warmup(
+        optimizer,warmup_steps=1,horizon_steps=8,minimum_lr_scale=0.1,
     )
+    accelerator=Accelerator(cpu=True,mixed_precision="no")
+    route,optimizer,scheduler=accelerator.prepare(route,optimizer,scheduler)
+    batches=_stage_batches(_batches(fixture,system),J3)
+    unwrapped=accelerator.unwrap_model(route)
+    def train_step():
+        optimizer.zero_grad(set_to_none=True)
+        loss=route(**batches)
+        observation=unwrapped.take_observation()
+        accelerator.backward(loss)
+        optimizer.step()
+        scheduler.step()
+        unwrapped.objective.balancer.observe_detached_family_means(
+            {family:observation["balanced"][f"raw/{family}"] for family in observation["active_families"]},
+            active_families=observation["active_families"],
+        )
+        return loss.detach().clone()
+
+    train_step()
     expected_model=copy.deepcopy(unwrapped.state_dict())
     expected_optimizer=copy.deepcopy(optimizer.state_dict())
+    expected_scheduler=copy.deepcopy(scheduler.state_dict())
     state_dir=tmp_path/"accelerator_state"
     accelerator.save_state(str(state_dir))
+    continuous_loss=train_step()
+    continuous_model=copy.deepcopy(unwrapped.state_dict())
+    continuous_optimizer=copy.deepcopy(optimizer.state_dict())
+    continuous_scheduler=copy.deepcopy(scheduler.state_dict())
     with torch.no_grad():
         next(unwrapped.system.parameters()).add_(1.0)
         unwrapped.objective.balancer._ema_scale.zero_()
@@ -284,6 +297,7 @@ def test_accelerate_state_restores_outer_model_inner_objective_and_optimizer(tmp
     for name,expected in expected_model.items():
         torch.testing.assert_close(unwrapped.state_dict()[name],expected)
     restored_optimizer=optimizer.state_dict()
+    assert scheduler.state_dict()==expected_scheduler
     assert restored_optimizer["param_groups"]==expected_optimizer["param_groups"]
     assert set(restored_optimizer["state"])==set(expected_optimizer["state"])
     for parameter_id,expected_state in expected_optimizer["state"].items():
@@ -294,6 +308,20 @@ def test_accelerate_state_restores_outer_model_inner_objective_and_optimizer(tmp
                 torch.testing.assert_close(observed_state[key],expected)
             else:
                 assert observed_state[key]==expected
+    resumed_loss=train_step()
+    torch.testing.assert_close(resumed_loss,continuous_loss)
+    for name,expected in continuous_model.items():
+        torch.testing.assert_close(unwrapped.state_dict()[name],expected)
+    assert scheduler.state_dict()==continuous_scheduler
+    resumed_optimizer=optimizer.state_dict()
+    assert resumed_optimizer["param_groups"]==continuous_optimizer["param_groups"]
+    for parameter_id,expected_state in continuous_optimizer["state"].items():
+        for key,expected in expected_state.items():
+            observed=resumed_optimizer["state"][parameter_id][key]
+            if isinstance(expected,torch.Tensor):
+                torch.testing.assert_close(observed,expected)
+            else:
+                assert observed==expected
 
 
 def _gloo_worker(rank, rendezvous, stage):
