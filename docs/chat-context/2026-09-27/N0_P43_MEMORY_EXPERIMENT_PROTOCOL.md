@@ -27,3 +27,53 @@ Read-only Windows checks on the already authenticated machine: `kaggle --version
 **Fallback.** If two L4s cannot actually be allocated and a complete T4/P100 route does not pass under the full obligations, choose a verified two-GPU high-memory provider with live cost and durable checkpoint storage; obtain owner approval before launching billed compute. Multiple time-sliced sessions solve quota/duration only after a full step fits.
 
 Primary documentation: [Kaggle CLI accelerator and restrictions](https://github.com/Kaggle/kaggle-cli/blob/main/docs/kernels.md); [PyTorch DDP checkpoint restrictions](https://docs.pytorch.org/docs/main/generated/torch.nn.parallel.DistributedDataParallel.html); [PyTorch checkpoint modes](https://docs.pytorch.org/docs/stable/checkpoint.html); [FSDP](https://docs.pytorch.org/docs/main/fsdp.html); [CUDA memory snapshots](https://docs.pytorch.org/docs/stable/torch_cuda_memory).
+
+## Guarded Magnolia submission (no gradient)
+
+Run on the Magnolia login shell with the already audited `a19f8e88` mixture and teacher bank. The script creates a **fresh diagnostic root**; previous roots remain untouched. `--nodelist=gpu001` targets the observed P100×2 node so a K80 allocation cannot be mistaken for the intended test.
+
+```bash
+(
+  set -euo pipefail
+  cd "$HOME/rayan-compute/rayan-eipm-main"
+  SHA=a19f8e8893422702c138182f239064385addf91c
+  WORK="$HOME/rayan-compute/rayan-n0/n0-v02"
+  MIXTURE="$WORK/full-public-mixture-a19f8e88-v1"
+  TEACHER_REGISTRY="$WORK/teacher-bank-v0.5/n0_v02_teacher_bank_v0.5.runtime.json"
+  TEACHER_AUDIT="$WORK/teacher-bank-v0.5/teacher-bank-v0.5-audit.json"
+  TRACE="$WORK/full-envelope-j3-forward-attribution-a19f8e88-v1"
+  LOGDIR="$HOME/rayan-compute/rayan-n0/slurm/j3-forward-attribution-a19f8e88-v1"
+  PROFILE="$WORK/n0_p43_j3_forward_attribution_v1.py"
+  BATCH="$WORK/n0_p43_j3_forward_attribution_v1.sbatch"
+  test "$(git rev-parse HEAD)" = "$SHA"
+  test -z "$(git status --porcelain)"
+  test -f "$MIXTURE/full_public_mixture_manifest.json"
+  test -f "$TEACHER_REGISTRY"
+  test -f "$TEACHER_AUDIT"
+  test ! -e "$TRACE"
+  git fetch origin alice-context
+  git show 4cd9f9860a43f923dd8d272fccfd8e62fc9aad29:docs/chat-context/2026-09-27/n0_p43_j3_forward_attribution_v1.py > "$PROFILE"
+  git show 4cd9f9860a43f923dd8d272fccfd8e62fc9aad29:docs/chat-context/2026-09-27/n0_p43_j3_forward_attribution_v1.sbatch > "$BATCH"
+  printf '%s  %s\n' b2d3af77466b3d861e1dc25e6e8a3701fe3e07e4f16e1a1a6dfd19fcc865e8b2 "$PROFILE" |
+    sha256sum -c -
+  printf '%s  %s\n' 26d5a32d2a7c2cdf83515d0912f68dcd479c816b4a52b449b231c7d351ad532b "$BATCH" |
+    sha256sum -c -
+  mkdir -p "$LOGDIR"
+  export ALICE_N0_WORKDIR="$WORK"
+  export ALICE_N0_FULL_MIXTURE_ROOT="$MIXTURE"
+  export ALICE_N0_TEACHER_REGISTRY="$TEACHER_REGISTRY"
+  export ALICE_N0_TEACHER_AUDIT="$TEACHER_AUDIT"
+  export ALICE_N0_FORWARD_TRACE_SCRIPT="$PROFILE"
+  export ALICE_N0_FORWARD_TRACE_ROOT="$TRACE"
+  JOBID="$(sbatch --parsable --nodelist=gpu001 \
+    --output="$LOGDIR/forward-%j.out" \
+    --error="$LOGDIR/forward-%j.err" \
+    --export=ALL "$BATCH")"
+  JOBID="${JOBID%%;*}"
+  echo "JOBID=$JOBID"
+  echo "TRACE=$TRACE"
+  echo "LOGDIR=$LOGDIR"
+)
+```
+
+After the job leaves the queue, inspect `sacct -j "$JOBID" --format=JobID,State,ExitCode,Elapsed,NodeList`, the `forward-$JOBID.{out,err}` logs, `$TRACE/diagnostic.json`, and `$TRACE/forward_trace.json`; preserve the entire root whether it passes or fails. An SBATCH submission or successful syntax check does not confer P43 or gradient authority. Actual numeric findings must be inspected before selecting a rematerialization site.
