@@ -158,6 +158,10 @@ not establish that one architecture or benchmark passes A.L.I.C.E.'s gates.
    capability, license, owner custody, and operational cost without declaring
    a permanent backend or assigning a production authority prematurely.
 
-The existing Stage G candidate inventory remains unchanged. Adding or removing
-mandatory qualification candidates requires its separate owner-ratified
-amendment. This branch changes no current production routing or authority.
+The current canonical Stage G execution doctrine is selected-stack-first under
+`main` PR #95 / the Phase-2-to-Fable-v1 execution plan. MFM does not reopen
+backend tournaments. It targets formation quality, context planning, authority
+boundaries, correction/deletion, and complete formation-to-judgment behavior
+against the selected stack. A backend challenger is opened only when a concrete
+MFM/A.L.I.C.E. capability or operational problem makes the current implementation
+insufficient. This branch changes no current production routing or authority.
