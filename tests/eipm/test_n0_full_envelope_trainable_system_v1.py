@@ -3,6 +3,7 @@ from __future__ import annotations
 from types import SimpleNamespace
 
 import torch
+import pytest
 from torch import nn
 
 from alice_personality.n0.n0_full_envelope_trainable_system_v1 import (
@@ -340,6 +341,68 @@ def test_full_trainable_system_encodes_additional_runtime_view_source_text() -> 
     report=system.parameter_report()
     assert report["additional_runtime_view_source_text_adapter"] is True
     assert report["precomputed_additional_runtime_views_still_supported"] is True
+
+
+def test_full_trainable_system_autocast_additional_text_views_keep_gradients() -> None:
+    """Both learned text summaries must survive backbone/summary dtype changes."""
+    torch.manual_seed(2822)
+    system=_system().eval()
+    batch=_full_batch()
+    source_ids,source_mask=_tokens(2,length=13,offset=81)
+    descriptor_ids,descriptor_mask=_tokens(2,length=12,offset=101)
+    batch["additional_view_source_input_ids"]=source_ids.reshape(1,2,-1)
+    batch["additional_view_source_attention_mask"]=source_mask.reshape(1,2,-1)
+    batch["additional_view_descriptor_input_ids"]=descriptor_ids.reshape(1,2,-1)
+    batch["additional_view_descriptor_attention_mask"]=descriptor_mask.reshape(1,2,-1)
+    batch["additional_view_available"]=torch.tensor([[True,False]])
+    batch["additional_view_reliability"]=torch.tensor([[1.0,1.0]])
+    with torch.autocast(device_type="cpu",dtype=torch.bfloat16):
+        out=system(task="full_envelope",batch=batch)
+        loss=(
+            out["source_views"][0,-2].float().square().mean()
+            +out["view_descriptors"][0,-2].float().square().mean()
+            +out["public_judgment"]["candidate_logits"].float().square().mean()
+        )
+    assert bool(torch.isfinite(loss))
+    assert torch.count_nonzero(out["source_views"][0,-1])==0
+    assert torch.count_nonzero(out["view_descriptors"][0,-1])==0
+    loss.backward()
+    summary_grads=[p.grad for p in system.semantic_input.summary_layer_gate.parameters()]
+    assert any(g is not None and bool(torch.isfinite(g).all()) and bool(g.abs().sum()>0)
+               for g in summary_grads)
+    backbone_grad=system.semantic_model.backbone.embedding.weight.grad
+    assert backbone_grad is not None and bool(torch.isfinite(backbone_grad).all())
+    assert bool(backbone_grad.abs().sum()>0)
+
+
+def test_full_trainable_system_cuda_fp16_additional_text_views_no_gradient() -> None:
+    if not torch.cuda.is_available():
+        pytest.skip("CUDA fp16 integration needs a GPU")
+    torch.manual_seed(2823)
+    system=_system().to("cuda").eval()
+    batch=_full_batch()
+    source_ids,source_mask=_tokens(2,length=13,offset=81)
+    descriptor_ids,descriptor_mask=_tokens(2,length=12,offset=101)
+    batch["additional_view_source_input_ids"]=source_ids.reshape(1,2,-1)
+    batch["additional_view_source_attention_mask"]=source_mask.reshape(1,2,-1)
+    batch["additional_view_descriptor_input_ids"]=descriptor_ids.reshape(1,2,-1)
+    batch["additional_view_descriptor_attention_mask"]=descriptor_mask.reshape(1,2,-1)
+    batch["additional_view_available"]=torch.tensor([[True,False]])
+    batch["additional_view_reliability"]=torch.tensor([[1.0,1.0]])
+    def move(value):
+        if isinstance(value,torch.Tensor):
+            return value.to("cuda")
+        if isinstance(value,dict):
+            return {key:move(item) for key,item in value.items()}
+        return value
+    with torch.inference_mode(),torch.autocast("cuda",dtype=torch.float16):
+        out=system(task="full_envelope",batch=move(batch))
+    assert bool(torch.isfinite(out["public_judgment"]["candidate_logits"]).all())
+    assert torch.count_nonzero(out["source_views"][0,-2])>0
+    assert torch.count_nonzero(out["view_descriptors"][0,-2])>0
+    assert torch.count_nonzero(out["source_views"][0,-1])==0
+    assert torch.count_nonzero(out["view_descriptors"][0,-1])==0
+    assert all(p.grad is None for p in system.parameters())
 
 
 def test_full_trainable_system_replay_and_full_envelope_share_same_backbone_parameters() -> None:
