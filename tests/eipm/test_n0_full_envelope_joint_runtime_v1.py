@@ -871,7 +871,8 @@ def test_successor_trainer_cannot_bypass_explicit_training_plan_authority() -> N
     assert 'if args.execute_gradient:' in trainer
     assert 'authority.get(name) is not False' in trainer
     assert "source training authority must remain false" in trainer
-    assert "runtime training authorization required for gradient" in trainer
+    assert "training authorization and whole-route proof required for gradient" in trainer
+    assert "require_complete_joint_route_qualification(" in trainer
 
 
 def test_j1_dev_gate_registry_covers_every_declared_gate_without_final_authority() -> None:
