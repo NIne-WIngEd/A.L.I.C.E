@@ -812,7 +812,7 @@ P4.5a citation-bound grounding is merged and remains part of the preserved Phase
 
 ### Memory M2 closeout and shadow migration
 
-PR #82 closed M2.0 through M2.6 at the implemented-contract and reversible-prototype level. PR #83 made Phase 2 shadow migration Stage A+B prototype-operational. PR #84 made the read-only Stage C+E destination-candidate and shadow-read evaluation profile prototype-operational. PR #85 made deterministic Stage D historical-backfill machinery prototype-operational with synthetic evaluation while real private batches remain separately owner-authorized. PR #86 made nonproduction Stage F controlled mirroring and Stage G graph/vector/workflow generation prototypes operational. The current persistent Stage F+G integration tranche adds restart/replay durability evidence and a polyglot backend-candidate registry while SQLite remains only a compatibility/reference durability oracle. Phase 2 remains the released compatibility baseline, test oracle, fallback, canonical writer, and current authority for its released profile. Live candidate integrations, owner-private execution, bounded canary review, canonical transfer, production influence, cutover, retirement, and P5.1e storage admission retain their own evidence and approval gates. Those gates are activation conditions rather than permanent research or architecture limits.
+PR #82 closed M2.0 through M2.6 at the implemented-contract and reversible-prototype level. PR #83 made Phase 2 shadow migration Stage A+B prototype-operational. PR #84 made the read-only Stage C+E destination/shadow-read profile prototype-operational. PR #85 made deterministic Stage D historical-backfill machinery prototype-operational with synthetic evaluation while real private batches remain separately owner-authorized. PR #86 made nonproduction Stage F controlled mirroring and Stage G graph/vector/workflow generation prototypes operational. PR #95 superseded the earlier exhaustive backend-tournament interpretation and locked a selected-stack-first execution path through Phase 2 replacement and Fable v1: PostgreSQL-centered Experience/Claim persistence, content-addressed objects, Neo4j/Qdrant derived accelerators, source-native retrieval, and Temporal only where durable long-running workflows need it. Phase 2 remains the released compatibility baseline, test oracle, fallback, canonical writer, and current authority until Stage H canary, Stage I cutover, and Stage J compatibility/fallback acceptance complete the replacement. Infrastructure challengers are now decision-triggered rather than mandatory all-pairs work.
 
 | Phase | Domain | Status |
 |---|---|---|
@@ -860,10 +860,10 @@ The repository currently contains working or released foundations for:
 - read-only destination-candidate profiles and synthetic shadow-read comparison receipts for Stage C+E;
 - deterministic Stage D historical-backfill manifests, idempotency keys, lineage, reconciliation, and checkpoint receipts;
 - nonproduction Stage F controlled-mirroring receipts and Stage G graph/vector/workflow generation manifests with deletion watermarks.
-- persistent Stage F+G restart/replay durability receipts and a non-exclusive KurrentDB/Neo4j/Qdrant/Temporal backend-candidate registry, with SQLite retained only as a compatibility/reference oracle.
+- persistent Stage F+G restart/replay durability receipts retained as historical research evidence; current execution now follows the selected-stack-first PR #95 plan rather than an exhaustive backend-candidate tournament, with SQLite retained only as the released compatibility/reference oracle until replacement completes.
 - owner-ratified identity and host-learning separation: A.L.I.C.E. is an Elaina-derived clone; Rayan is its owner/host; ordinary Rayan learning may change host understanding, relationship state, shared history, habits, and interaction strategy but may not modify the core Elaina-derived identity anchor.
 - owner-ratified continuing personal-development contract: user/host state, relationship state, and assistant-self state remain separate; all may develop through governed evidence and outcomes; the system must eventually prove that these versioned states causally alter native judgment rather than relying on a fixed prompt or replaceable downstream-model prior.
-- Stage G remains open for full cognitive-memory qualification: learned Memory Formation, Elaina identity modeling, Rayan host learning, A.L.I.C.E. continuity/self development, relationship-state development, synthetic Rayan-life stress, routing/authority, all memory layers, retrieval/context fusion, correction/deletion, failure/recovery, and scale.
+- Stage G remains open for **integrated selected-stack cognitive-memory qualification**: learned Memory Formation, Elaina identity modeling, Rayan host learning, A.L.I.C.E. continuity/self development, relationship-state development, routing/authority, retrieval/context fusion, correction/deletion, failure/recovery, realistic scale/latency, and the complete experience -> memory -> judgment -> outcome loop. Backend alternatives reopen only when a concrete A.L.I.C.E. need creates a real decision.
 
 ### Still under development
 
@@ -889,6 +889,12 @@ The complete destination includes:
 No future capability should be presented as complete before its implementation and evaluation support that claim.
 
 ---
+
+## Current execution path
+
+The concise owner-directed path from the current N0 work through integrated memory, final Phase 2 replacement, FBM generalization, and Fable v1 is recorded in [A.L.I.C.E. execution path to Phase 2 replacement and Fable v1](docs/ALICE_PHASE2_REPLACEMENT_AND_FABLE_V1_EXECUTION_PLAN_2026-09-27.md).
+
+Its operating rule is simple: **infrastructure serves A.L.I.C.E.; A.L.I.C.E. does not exist to benchmark infrastructure.** Validate what protects a real capability or implementation decision, then return to building the companion.
 
 ## Roadmap
 
