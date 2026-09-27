@@ -76,4 +76,4 @@ Run on the Magnolia login shell with the already audited `a19f8e88` mixture and 
 )
 ```
 
-After the job leaves the queue, inspect `sacct -j "$JOBID" --format=JobID,State,ExitCode,Elapsed,NodeList`, the `forward-$JOBID.{out,err}` logs, `$TRACE/diagnostic.json`, and `$TRACE/forward_trace.json`; preserve the entire root whether it passes or fails. An SBATCH submission or successful syntax check does not confer P43 or gradient authority. Actual numeric findings must be inspected before selecting a rematerialization site.
+The subshell prints the submitted job ID. In a new terminal, set `JOBID` to that printed value, then inspect `sacct -j "$JOBID" --format=JobID,State,ExitCode,Elapsed,NodeList`, the printed log directory's `forward-$JOBID.{out,err}` logs, and the printed trace root's `diagnostic.json` and `forward_trace.json`; preserve the entire root whether it passes or fails. An SBATCH submission or successful syntax check does not confer P43 or gradient authority. Actual numeric findings must be inspected before selecting a rematerialization site.
