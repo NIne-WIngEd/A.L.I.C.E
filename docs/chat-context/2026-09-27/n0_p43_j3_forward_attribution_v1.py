@@ -109,6 +109,20 @@ def main() -> None:
         raise SystemExit("original full-J3 single-process diagnostic mismatch")
     if len(set(row["pair_index"] for row in measurements)) != 18:
         raise SystemExit("incomplete per-pair model-forward attribution")
+    semantic_order = (
+        "max_runtime_axes", "max_factor_cardinality", "long_context_semantic",
+    )
+    full_order = (
+        "max_candidate_cardinality", "max_field_cardinality",
+        "max_edge_cardinality", "max_view_cardinality",
+        "max_reasoning_depth", "long_additional_view_source",
+    )
+    case_order = [f"{semantic}__{full}" for semantic in semantic_order
+                  for full in full_order]
+    if set(diagnostic.get("stress_pair_receipts", {})) != set(case_order):
+        raise SystemExit("case order and diagnostic coverage mismatch")
+    for row in measurements:
+        row["case"] = case_order[row["pair_index"] - 1]
     if any(sum(row["task"] == "full_envelope" for row in measurements
                if row["pair_index"] == index) != 4 for index in range(1, 19)):
         raise SystemExit("missing primary/three-counterfactual forward calls")
