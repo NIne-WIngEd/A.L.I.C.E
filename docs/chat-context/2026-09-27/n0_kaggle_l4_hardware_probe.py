@@ -86,15 +86,15 @@ def call(cli: str, args: list[str], label: str) -> subprocess.CompletedProcess[s
     return p
 
 
-def status(cli: str, number: int) -> str | None:
+def status(cli: str, number: int) -> tuple[str | None, int]:
     p = call(cli, ["kernels", "status", REF], f"status-{number:04d}")
     if p.returncode:
-        return None
+        return None, p.returncode
     response = (p.stdout + " " + p.stderr).upper()
     for token in ("COMPLETE", "ERROR", "CANCELLED", "RUNNING", "QUEUED"):
         if token in response:
-            return token
-    return None
+            return token, p.returncode
+    return None, p.returncode
 
 
 def stage() -> None:
@@ -146,6 +146,8 @@ def main() -> int:
         raise RuntimeError("run from the existing authenticated Kaggle CLI environment")
     if call(cli, ["--version"], "version").returncode:
         raise RuntimeError("Kaggle CLI version check failed")
+    if call(cli, ["kernels", "list", "-m", "--page-size", "1"], "authenticated-list").returncode:
+        raise RuntimeError("Kaggle account authentication check failed before any push intent")
     state = read_json(STATE) if STATE.exists() else {
         "request_sha256": REQUEST_SHA, "kernel_ref": REF, "push_attempted": False,
         "status_number": 0}
@@ -153,8 +155,11 @@ def main() -> int:
         raise RuntimeError("existing dispatch state identity drift")
     write_json(STATE, state)
     state["status_number"] += 1
-    observed = status(cli, state["status_number"])
+    observed, rc = status(cli, state["status_number"])
     write_json(STATE, state)
+    if rc == 0 and observed is None:
+        print("UNRECOGNIZED_EXISTING_KERNEL_STATUS; inspect logs and preserve identity")
+        return 4
     if observed is None and not state["push_attempted"]:
         state["push_attempted"] = True
         write_json(STATE, state)  # Persist intent before exactly one remote push.
@@ -170,7 +175,7 @@ def main() -> int:
         return 4
     for _ in range(40):
         state["status_number"] += 1
-        observed = status(cli, state["status_number"])
+        observed, rc = status(cli, state["status_number"])
         write_json(STATE, state)
         if observed in ("COMPLETE", "ERROR", "CANCELLED"):
             break
