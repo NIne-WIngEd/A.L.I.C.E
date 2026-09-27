@@ -155,6 +155,23 @@ def step_factor_semantic_loss(
     return torch.stack(losses).mean()
 
 
+def probability_binary_cross_entropy(
+    predicted: Tensor,
+    target: Tensor,
+) -> Tensor:
+    """Evaluate probability supervision in fp32 across CPU/CUDA autocast.
+
+    These probabilities are outputs of the recurrent operator and evidence
+    path, not independent logits. Keeping BCE on probabilities preserves the
+    registered objective while avoiding CUDA autocast's unsafe BCE operation.
+    Convert before clamping so an fp16 value rounded to one cannot bypass the
+    upper probability bound and produce an infinite backward derivative.
+    """
+    with torch.autocast(device_type=predicted.device.type, enabled=False):
+        probability = predicted.float().clamp(1.0e-5, 1.0 - 1.0e-5)
+        return F.binary_cross_entropy(probability, target.float())
+
+
 def binary_token_evidence_loss(
     predicted: Tensor,
     target: Tensor,
@@ -166,10 +183,9 @@ def binary_token_evidence_loss(
         raise ValueError("token evidence valid mask shape drift")
     if not bool(valid_mask.any()):
         return predicted.sum() * 0.0
-    probability = predicted.clamp(1.0e-5, 1.0 - 1.0e-5)
-    return F.binary_cross_entropy(
-        probability[valid_mask],
-        target.float()[valid_mask],
+    return probability_binary_cross_entropy(
+        predicted[valid_mask],
+        target[valid_mask],
     )
 
 
@@ -225,8 +241,7 @@ def uncertainty_supervision_loss(
 ) -> Tensor:
     if uncertainty.shape != target.shape:
         raise ValueError("uncertainty target shape drift")
-    probability = uncertainty.clamp(1.0e-5, 1.0 - 1.0e-5)
-    return F.binary_cross_entropy(probability, target.float())
+    return probability_binary_cross_entropy(uncertainty, target)
 
 
 def semantic_operator_objective(
@@ -324,9 +339,8 @@ def semantic_operator_objective(
 
     if applicability.shape != applicability_target.shape:
         raise ValueError("applicability target shape drift")
-    applicability_loss = F.binary_cross_entropy(
-        applicability.clamp(1.0e-5, 1.0 - 1.0e-5),
-        applicability_target.float(),
+    applicability_loss = probability_binary_cross_entropy(
+        applicability, applicability_target,
     )
 
     query_evidence_loss = binary_token_evidence_loss(
