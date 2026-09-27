@@ -70,7 +70,9 @@ Evaluate graph databases, graph algorithms, embeddings, retrieval, planning, ano
 
 Evaluate Qdrant, Milvus, Vespa, pgvector, embedded indexes, and later systems.
 
-Support generation-aware text, code, image, audio, video, sensor, and scientific retrieval. Benchmark hybrid lexical, vector, graph, symbolic, and source plans.
+Support generation-aware text, code, image, audio, video, sensor, and scientific retrieval. Benchmark exact/lexical, semantic/vector, graph, symbolic, temporal/claim-aware, hybrid, and agentic source-native plans.
+
+Agentic source-native retrieval is a first-class challenger: the model may progressively search live files, named records, structured fields, metadata, APIs, and source systems with iterative query reformulation and direct reads, including profiles that maintain no semantic index. Vector infrastructure is therefore optional per serving profile rather than mandatory on every query. Conversely, source-native/grep-style search is not assumed to replace semantic or multimodal retrieval where paraphrase, vocabulary mismatch, fuzzy episodic resemblance, or non-text modalities create measurable vector value.
 
 ## 7. Track E — Durable Curation and Mission Workflows
 
@@ -94,7 +96,8 @@ Build:
 - compact through very-large-context plans;
 - multi-agent and simulation plans;
 - local and distributed inference;
-- stale-index and no-memory fallbacks.
+- low-VRAM streamed/offloaded inference challengers, including layer-wise and sparse-expert streaming, evaluated on exact model/hardware/storage profiles for quality, first-token latency, throughput, disk/network I/O, host RAM, storage footprint, energy, concurrency, and failure recovery;
+- stale-index, no-index, and no-memory fallbacks.
 
 ## 9. Track G — Owner, Source, Relationship, Self, and World Models
 

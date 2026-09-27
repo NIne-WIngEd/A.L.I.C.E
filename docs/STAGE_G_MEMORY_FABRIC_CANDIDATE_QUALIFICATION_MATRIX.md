@@ -319,6 +319,41 @@ Such a projection:
 
 Retrieval success alone cannot promote a claim, relationship, personality trait, or causal edge.
 
+### Q5.4 - Retrieval-strategy and source-native search qualification
+
+No retrieval primitive receives permanent default status merely because it is fashionable, cheap, or successful on one domain. Stage G must compare retrieval strategies end to end on the same governed evidence and tasks.
+
+Required strategy classes include:
+
+- exact/lexical retrieval over authoritative records and source text;
+- **agentic source-native search** that iteratively uses names, paths, fields, keywords, metadata, structured queries, file reads, source reads, and follow-up searches without a semantic vector index;
+- semantic/vector retrieval;
+- lexical + vector hybrid retrieval;
+- graph/temporal/claim-aware retrieval;
+- dynamic routed retrieval that chooses or composes the above per query;
+- an explicit **no-vector / no-semantic-index** serving challenger where the source type permits it.
+
+The agentic source-native challenger must be allowed to reformulate multiple queries, inspect source structure, follow references, and progressively disclose evidence. It must not receive hidden oracle hints unavailable to other strategies.
+
+Evaluate all applicable strategies on:
+
+- end-to-end answer/decision correctness, not retrieval recall alone;
+- complete supporting-evidence recovery under matched context/token budgets;
+- exact-source and exact-wording cases;
+- paraphrase, synonym, indirect-reference, emotional/behavioral resemblance, and vocabulary-mismatch cases;
+- multi-hop, temporal, causal, relationship, identity, and update/correction cases;
+- multimodal cases where plain text search is intrinsically incomplete;
+- live-source freshness cases where current authoritative state must beat a stale stored snapshot;
+- retrieval precision, recall, evidence completeness, calibration, and abstention;
+- tool calls, reasoning turns, tokens, latency, CPU/GPU, network, storage, and energy where measurable;
+- index build/update/rebuild cost and projection lag;
+- source mutation between queries, stale indexes, deletion/revocation, restore, and cold-start behavior;
+- traceability: every search/query/read and every consumed evidence object must remain inspectable.
+
+A no-index or lexical-first result may become the selected profile for a workload when it wins the governed evaluation. A vector, graph, hybrid, or learned strategy may likewise win where it adds measured value. Stage G must not retain an index merely because it already exists, and it must not delete a retrieval plane merely because a stronger model made that plane unnecessary on a different workload.
+
+For mutable operational facts with a reachable current system of record, memory may provide historical context and routing hints, but the serving plan must test direct live-source retrieval and reconciliation rather than treating an old memory snapshot as current truth.
+
 ## 4. Complex synthetic Rayan-life workload
 
 The candidate matrix uses the complex synthetic continuation of Rayan's life required by the Stage G architecture.
@@ -444,11 +479,12 @@ Stage G cannot close until all of the following are true:
 9. Evidence-consumption/citation-lock qualification passes across every active retrieval/context path.
 10. Consolidation path-dependence qualification passes without unexplained authority divergence.
 11. Any usage-aware retrieval projection remains projection-only and passes feedback-loop, deletion/correction, and rollback qualification before influencing serving.
-12. Scale and stress evidence is recorded for every applicable candidate.
-13. README/governance promise coverage is complete.
-14. No zero-tolerance failure remains unresolved.
-15. The evidence package records exact versions, hashes, configurations, benchmark generations, failures, limitations, and unresolved research questions.
-16. Rayan explicitly accepts the integrated Stage G result.
+12. Retrieval-strategy qualification compares agentic source-native/no-vector, lexical, semantic/vector, hybrid, graph/temporal/claim-aware, and dynamic-routed strategies on every applicable workload family before a serving default is selected.
+13. Scale and stress evidence is recorded for every applicable candidate.
+14. README/governance promise coverage is complete.
+15. No zero-tolerance failure remains unresolved.
+16. The evidence package records exact versions, hashes, configurations, benchmark generations, failures, limitations, and unresolved research questions.
+17. Rayan explicitly accepts the integrated Stage G result.
 
 Stage G acceptance selects evidence-backed roles for later migration stages. It does not create a permanent technology ceiling.
 
