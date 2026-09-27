@@ -1993,7 +1993,8 @@ def test_runtime_training_authorization_breaks_no_gradient_source_mutation_cycle
     assert "training_authorizer_sha256" in source
     trainer=(ROOT/"scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py").read_text()
     assert 'parser.add_argument("--training-authorization")' in trainer
-    assert "runtime training authorization required for gradient" in trainer
+    assert "training authorization and whole-route proof required for gradient" in trainer
+    assert "require_complete_joint_route_qualification(" in source
     assert "training authorization source revision drift" in trainer
     assert "training authorization/mixture manifest hash drift" in trainer
     assert "training authorization/GPU receipt hash drift" in trainer
