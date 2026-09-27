@@ -1,6 +1,6 @@
 # Phase 2 to Cognitive Fabric Memory Migration Plan
 
-**Version:** 1.8.0
+**Version:** 1.9.0
 **Status:** Stage A+B, Stage C+E, deterministic Stage D, Stage F controlled-mirroring, and Stage G projection-generation prototypes operational; persistent F+G reference integration operational; private execution, live candidate integrations, and production authority stages independently gated
 **Source baseline:** Released Phase 2 Memory Core
 **Destination:** Backend-neutral Memory Architecture v4.1
@@ -53,11 +53,13 @@ Implement read adapters that translate Phase 2 records into neutral Evidence Eve
 
 Adapters record loss, ambiguity, and unsupported semantics.
 
-### Stage C — Destination candidates
+### Stage C — Selected destination implementation
 
-Build one or more destination backends behind `EvidenceLog`, `ClaimAuthority`, `CurrentClaimProjection`, `GraphProjection`, `VectorProjection`, `PayloadStore`, and `DeletionCoordinator` contracts.
+Build the selected destination behind `EvidenceLog`, `ClaimAuthority`, `CurrentClaimProjection`, `GraphProjection`, `VectorProjection`, `PayloadStore`, and `DeletionCoordinator` contracts.
 
-Candidates may include embedded and distributed systems. Selection follows benchmark and reliability evidence.
+The current execution profile selects PostgreSQL for Experience/Event and Claim persistence, a content-addressed local object store for raw payloads/artifacts, Neo4j and Qdrant as rebuildable graph/vector accelerators, and Temporal for long-running/distributed workflow needs. Exact/source-native retrieval remains a first-class path.
+
+This selection is an implementation decision, not a permanent technology ceiling. A challenger is opened only when an observed A.L.I.C.E. capability, reliability, scale, privacy, deletion, recovery, licensing, packaging, or cost issue creates a decision that the current stack cannot answer adequately. Stage C no longer requires a broad backend tournament.
 
 ### Stage D — Historical backfill
 
@@ -91,15 +93,15 @@ Construct graph and vector generations from registered claims and evidence. Laun
 
 Backend durability alone is not sufficient Stage G exit evidence. Before Stage G can close, the successor cognitive-memory fabric must also pass owner-authorized and synthetic qualification covering the learned Memory Formation Model, the Elaina Identity / Personality Model, Rayan host learning without Elaina-identity drift, deterministic authority/routing, per-layer behavior, cross-layer projection consistency, retrieval/context fusion, conflict and temporal correction, deletion/revocation propagation, A.L.I.C.E./Friday isolation, failure/recovery, concurrency, rebuild, rollback, scale, and README/governance promise alignment. Stage H is not eligible until this integrated Stage G qualification is accepted.
 
-#### Stage G candidate qualification matrix
+#### Stage G integrated qualification matrix
 
-The mandatory technology/challenger inventory is maintained in `docs/STAGE_G_MEMORY_FABRIC_CANDIDATE_QUALIFICATION_MATRIX.md`.
+The selected-stack and targeted-challenger contract is maintained in `docs/STAGE_G_MEMORY_FABRIC_CANDIDATE_QUALIFICATION_MATRIX.md`.
 
-Before Stage G can close, every concrete named candidate in that matrix must receive individual stress qualification, same-role all-pairs comparison must cover every concrete candidate pair, cross-role candidate-substitution must cover every registered architecturally meaningful interaction edge, and multi-plane plus full-fabric runs must pass on the complex synthetic Rayan-life workload.
+Stage G closes by proving the **selected integrated cognitive-memory fabric**, not by exhaustively testing every known backend. Required evidence covers selected-component contracts, critical cross-plane behavior, the full MFM -> authority -> projection -> retrieval/context -> EIPM -> outcome loop, correction/deletion/revocation, rebuild/restore/rollback, identity/provenance boundaries, A.L.I.C.E./Fable isolation, citation lock, memory-use calibration, retrieval routing, realistic scale/latency, and README/governance promise alignment.
 
-Implementation-family candidates must be concretized and qualified or separately owner-ratified as descriptive non-candidates. Candidate evidence must cover correction, deletion, revocation, restore, failure, concurrency, replay, rebuild, rollback, scale, identity/provenance boundaries, A.L.I.C.E./Friday isolation, and README/governance promise coverage.
+Alternative backends are evaluated only when a concrete trigger creates an unresolved implementation decision. Same-role all-pairs, all candidate substitutions, and broad combinatorial backend coverage are explicitly not Stage G requirements.
 
-Stage H remains ineligible while this candidate-qualification gate is incomplete. The matrix selects no permanent backend and creates no technology ceiling.
+Stage H remains ineligible until this integrated selected-stack qualification is accepted. The selection remains replaceable and creates no technology ceiling.
 
 ### Stage H — Canary authority
 
@@ -172,6 +174,6 @@ Owner-authorized private backfill, expanded mirroring, canary authority, canonic
 
 ## Persistent Stage F+G integration evidence after PR #86
 
-The persistent integration profile proves restart/replay durability and persistent projection-receipt semantics through a SQLite compatibility/reference oracle. SQLite is not selected as the migration destination. KurrentDB, Neo4j, Qdrant, Temporal, and later alternatives remain independently evaluable candidates. Phase 2 remains the canonical writer/current released authority. Live candidate integrations, owner-authorized private Stage D execution, full Stage G cognitive-memory qualification, Stage H bounded canary review, canonical transfer, production serving, cutover, Stage J compatibility acceptance, Phase 2 final replacement/retirement, and P5.1e remain separate evidence gates.
+The persistent integration profile proves restart/replay durability and persistent projection-receipt semantics through a SQLite compatibility/reference oracle. SQLite is not selected as the migration destination. The current selected destination path is PostgreSQL-centered authority/event persistence with Neo4j and Qdrant as derived accelerators, content-addressed object storage, and Temporal where durable long-running workflows require it. KurrentDB and other systems remain available as trigger-based challengers rather than mandatory qualification targets. Phase 2 remains the canonical writer/current released authority. Owner-authorized private Stage D execution, selected-stack Stage G cognitive-memory qualification, Stage H bounded canary review, canonical transfer, production serving, cutover, Stage J compatibility acceptance, Phase 2 final replacement/retirement, and P5.1e remain separate evidence gates.
 
 The owner-ratified identity and host-learning boundary is recorded in `docs/MEMORY_IDENTITY_FORMATION_AND_HOST_LEARNING_ARCHITECTURE.md`: A.L.I.C.E. is an Elaina-derived clone, Rayan is its owner/host, ordinary Rayan learning may update host and relationship models but not the core Elaina-derived identity anchor, and the Memory Formation Model remains a separate learned non-authoritative component.
