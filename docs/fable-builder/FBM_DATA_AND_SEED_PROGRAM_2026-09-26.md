@@ -116,3 +116,29 @@ The 16.535 GiB P43 figure is a precommitted **projection from no-gradient infere
 **Observed first-backward DDP failure, job 576213 (2026-09-27):** The owner's Magnolia Slurm output reports `FAILED 1:0` after 1m46s on two P100 ranks. Both ranks entered the *first* intact J3 semantic × fabric case and failed at `accelerator.backward(loss)` with `Expected to mark a variable ready only once`, naming `stack.public_judgment_probe.score.2.weight`. No case completed, no optimizer or weight update was performed, and no backward peak or 85% capacity qualification can be claimed from this run. The owner supplied rank JSONL SHA-256 `a8d462003f3d8f4abe6f1da1d721cb7409e6e5b7ffcc457b02103c02df7f4ab8` and `1698e5153064e8959e118983cc91a3a7c3134daa84155c68f067355c3c1bf7d5`. Each receipt verifies 17 nonreentrant checkpoint modules, Torch 2.7.1+cu118, Accelerate 1.15.0, Transformers 5.17.0, 242,697,624 trainable parameters, identical reducer exceptions and `oom=false`. Interrupted backward allocated peak 5,531,400,704 bytes and reserved peak 6,257,901,568 bytes per rank are partial failure snapshots; they cannot be used as a completed backward or optimizer bound. The registered trainer similarly calls one shared DDP system eight times inside one joint objective before a single backward; the earlier P43 ran in inference mode and could not reveal this structural reducer defect. FBM must distinguish no-gradient capacity, interrupted-backward telemetry, completed backward, and actual optimizer-step evidence. A candidate route places one DDP boundary around the complete joint step but requires full loss/gradient equivalence, dynamic-stage and optimizer-group audit, distributed checkpoint/resume and fresh authority; it is not an approved quick fix. Preserve failed job lineage, avoid false success, defer paid high-memory compute for the unchanged trainer, and keep this procedure evidence `training_eligible=false`. Details: `docs/chat-context/2026-09-27/N0_P43_J3_DDP_JOINT_STEP_FAILURE_576213.md`.
 
 **Corrective whole-step candidate and evidence scope (2026-09-27):** The isolated branch `alice-eipm-v1-n0-full-envelope-joint-ddp-v2` at `171e0cc21ef420a5bf93d01cd2631de8e789a2be` places the full original all-lane loss inside one outer distributed forward, returns only the scalar loss, and retains detached per-family observations for one effective-batch EMA update. It preserves stage-specific trainability, inner-system optimizer groups, the eight-microbatch accumulation boundary, and separately named system/objective checkpoint files. Tests on registered small fixtures compare J1/J2/J3 losses and named gradients with the old *unwrapped* joint route; two CPU Gloo ranks compare distributed accumulated gradients to a global reference; an Accelerate CPU test restores model/objective/AdamW/scheduler and compares the next step against an uninterrupted control. The [full Torch 2.7.1 / Accelerate 1.15.0 workflow](https://github.com/NIne-WIngEd/A.L.I.C.E/actions/runs/36349569245) reports **122 passed, one expected CUDA integration skip, zero failures** at that exact head. This candidate has **no completed full-topology CUDA backward, optimizer memory peak, 18-pair gradient completion, 85% GPU fit, or training authorization**. Its new whole-route proof producer is absent, so gradient authorization fails closed. FBM may encode this as a public method example of repair plus precise evidence limits, linked to failed job 576213, but never as a learned personality target, entity quality result, completed N0 step, or cross-person generalization. `training_eligible=false`; `evaluation_eligible=false`; `measured_training_peak_bytes=null`.
+
+
+## Selected-stack execution doctrine — 2026-09-27
+
+The canonical A.L.I.C.E. execution path now treats infrastructure as a means to the
+personal-intelligence objective rather than a builder curriculum or tournament.
+FBM should learn how to construct, verify, repair, migrate and replace a governed
+personal stack, but it must not learn that exhaustive backend comparison is a
+required build stage.
+
+Current A.L.I.C.E. defaults are PostgreSQL-centered Experience/Claim persistence,
+content-addressed objects, Neo4j/Qdrant derived accelerators, source-native
+retrieval, and Temporal only where durable long-running workflow semantics are
+needed. Fable v1 may use a lighter local physical profile while preserving the
+same logical capability contracts. Capability parity does not require daemon or
+backend parity.
+
+Builder examples should therefore encode **decision-triggered infrastructure
+change**: reopen a component only when observed fidelity, correctness, scale,
+latency, privacy, deletion/recovery, packaging, licensing or cost evidence makes
+the incumbent inadequate. Do not generate training traces whose target is
+"benchmark every candidate." MC10-style overvalidation is a negative procedure
+example, not a desired builder behavior.
+
+This doctrine does not change N0/N1 identity targets or make infrastructure
+choices personal-history authority.
