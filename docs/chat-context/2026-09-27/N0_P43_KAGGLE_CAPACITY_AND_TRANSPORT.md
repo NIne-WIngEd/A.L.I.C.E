@@ -28,3 +28,16 @@ Kaggle's current official CLI documents `NvidiaL4` accelerator selection but war
 - Exact Python package/runtime match and full transfer feasibility: verify against captured Magnolia container and actual Kaggle instance, rather than assuming identical containers.
 
 FBM learning label: `hardware_capacity_failure_with_full_path_pass`, separate from earlier fp16 graph scatter failure; retain all executed-path details and mark the provider proposal `unverified`. This remains process evidence, not an independently verified cross-user training example.
+
+## Read-only Magnolia inventory command
+
+Copy the audited script `docs/chat-context/2026-09-27/n0_p43_magnolia_input_inventory.py` from this branch to the Magnolia login host, then run it with the standard Python interpreter (no GPU reservation needed):
+
+```bash
+python3 n0_p43_magnolia_input_inventory.py \\
+  --repo "$HOME/rayan-compute/rayan-eipm-main" \\
+  --work "$HOME/rayan-compute/rayan-n0/n0-v02" \\
+  --mixture "$HOME/rayan-compute/rayan-n0/n0-v02/full-public-mixture-a19f8e88-v1"
+```
+
+It checks the pinned clean source and P39PN/teacher/row/corpus bindings, lists resolved teacher path kinds with file hashes, and reports corpus shard counts/sizes without displaying corpus text. Its output determines whether the original teacher registry bytes can be mounted on Kaggle and how large a private transfer would be; it is an inventory, not a package or a new scientific PASS. The `n0_kaggle_l4_hardware_probe.py` can be run independently on the authenticated Kaggle CLI host via `python n0_kaggle_l4_hardware_probe.py`; its first invocation records one push and later invocations reconcile the same kernel identity. Do not run both from the Magnolia login host if Kaggle credentials are absent there.
