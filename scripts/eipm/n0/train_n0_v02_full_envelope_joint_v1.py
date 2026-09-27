@@ -23,6 +23,9 @@ from alice_personality.n0.full_envelope_behavioral_batch_v1 import (
 from alice_personality.n0.full_envelope_joint_step_v1 import (
     execute_full_envelope_joint_step,
 )
+from alice_personality.n0.full_envelope_joint_ddp_route_v2 import (
+    FullEnvelopeJointDDPRouteV2,
+)
 from alice_personality.n0.full_envelope_runtime_factory_v1 import (
     load_registered_full_envelope_system,
 )
@@ -746,8 +749,7 @@ def globally_observe_effective_batch(
 def save_checkpoint(
     *,
     accelerator: Any,
-    system: torch.nn.Module,
-    objective: FullEnvelopeJointTrainingObjectiveV1,
+    route: torch.nn.Module,
     output_root: Path,
     stage: str,
     step: int,
@@ -782,12 +784,14 @@ def save_checkpoint(
     accelerator.wait_for_everyone()
     if accelerator.is_main_process:
         checkpoint.mkdir(parents=True,exist_ok=True)
-        unwrapped=accelerator.unwrap_model(system)
+        unwrapped=accelerator.unwrap_model(route)
+        if not isinstance(unwrapped,FullEnvelopeJointDDPRouteV2):
+            raise RuntimeError("checkpoint must own the complete joint DDP route")
         system_path=checkpoint/"full_system.safetensors"
         save_file(
             {
                 name:tensor.detach().cpu().contiguous()
-                for name,tensor in unwrapped.state_dict().items()
+                for name,tensor in unwrapped.system.state_dict().items()
             },
             str(system_path),
         )
@@ -795,7 +799,7 @@ def save_checkpoint(
         save_file(
             {
                 name:tensor.detach().cpu().contiguous()
-                for name,tensor in objective.state_dict().items()
+                for name,tensor in unwrapped.objective.state_dict().items()
             },
             str(objective_path),
         )
@@ -1407,10 +1411,13 @@ def main() -> None:
         minimum_lr_scale=minimum_lr_scale,
     )
 
-    system,optimizer,mlm_loader,teacher_loader,lr_scheduler=accelerator.prepare(
-        system,optimizer,mlm_loader,teacher_loader,lr_scheduler
+    route=FullEnvelopeJointDDPRouteV2(system,objective)
+    route,optimizer,mlm_loader,teacher_loader,lr_scheduler=accelerator.prepare(
+        route,optimizer,mlm_loader,teacher_loader,lr_scheduler
     )
-    objective=objective.to(device)
+    unwrapped_route=accelerator.unwrap_model(route)
+    system=unwrapped_route.system
+    objective=unwrapped_route.objective
 
     if resume_kind=="same_stage":
         accelerator.load_state(args.resume_accelerator_state)
@@ -1418,7 +1425,7 @@ def main() -> None:
         objective.load_state_dict(objective_state,strict=True)
         # Same-stage continuation preserves optimizer/scheduler state exactly.
         stage_report=apply_stage_trainability(
-            accelerator.unwrap_model(system),stage=args.stage
+            system,stage=args.stage
         )
     elif resume_kind=="stage_transition":
         # The selected predecessor model and loss-balancer state carry forward,
@@ -1452,8 +1459,7 @@ def main() -> None:
     output_root=Path(args.output_dir).resolve()
     output_root.mkdir(parents=True,exist_ok=True)
 
-    system.train()
-    objective.train()
+    route.train()
     stage_checkpoint_parent_receipt_sha256=(
         sha256_file(args.resume_receipt)
         if resume_kind=="same_stage"
@@ -1514,24 +1520,22 @@ def main() -> None:
                 full_compiled=recursive_to_device(full_compiled,device)
 
             sync_context=(
-                accelerator.no_sync(system)
+                accelerator.no_sync(route)
                 if micro<args.gradient_accumulation_steps-1
                 else contextlib.nullcontext()
             )
             with sync_context:
-                result=execute_full_envelope_joint_step(
-                    system=system,
-                    objective=objective,
+                joint_loss=route(
                     mlm_batch=mlm_batch,
                     teacher_batch=teacher_batch,
                     semantic_operator_compiled=semantic_compiled,
                     full_fabric_compiled=full_compiled,
                     natural_relation_compiled=natural_compiled,
-                    update_ema=False,
                     stage=args.stage,
                 )
-                loss=result["loss"]/float(args.gradient_accumulation_steps)
+                loss=joint_loss/float(args.gradient_accumulation_steps)
                 accelerator.backward(loss)
+            result=unwrapped_route.take_observation()
 
             weights=family_sample_weights(
                 result,
@@ -1574,8 +1578,7 @@ def main() -> None:
         if step%args.save_every==0:
             stage_checkpoint_parent_receipt_sha256=save_checkpoint(
                 accelerator=accelerator,
-                system=system,
-                objective=objective,
+                route=route,
                 output_root=output_root,
                 stage=args.stage,
                 step=step,

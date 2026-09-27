@@ -1,0 +1,31 @@
+name: n0-whole-step-ddp-v2-cpu
+
+on:
+  push:
+    branches:
+      - alice-eipm-v1-n0-full-envelope-joint-ddp-v2
+    paths:
+      - "src/alice_personality/n0/**"
+      - "scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py"
+      - "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py"
+      - "tests/eipm/test_n0_full_envelope_joint_ddp_route_v2.py"
+      - ".github/workflows/n0-whole-step-ddp-v2-cpu.yml"
+  workflow_dispatch:
+
+jobs:
+  joint-route:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      PYTHONPATH: src:scripts/eipm/n0
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install CPU runtime test dependencies
+        run: python -m pip install torch pytest numpy
+      - name: Full N0 objective equivalence and two-rank CPU DDP
+        run: pytest -q -x tests/eipm/test_n0_full_envelope_joint_ddp_route_v2.py

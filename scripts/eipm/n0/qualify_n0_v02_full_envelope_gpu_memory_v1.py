@@ -28,6 +28,9 @@ from alice_personality.n0.full_envelope_behavioral_batch_v1 import (
 from alice_personality.n0.full_envelope_joint_step_v1 import (
     execute_full_envelope_joint_step,
 )
+from alice_personality.n0.full_envelope_joint_ddp_route_v2 import (
+    FullEnvelopeJointDDPRouteV2,
+)
 from alice_personality.n0.full_envelope_runtime_factory_v1 import (
     load_registered_full_envelope_system,
 )
@@ -455,17 +458,21 @@ def main() -> None:
         runtime_profile=None,
     )
     stage_report=apply_stage_trainability(system,stage=J3)
+    objective=FullEnvelopeJointTrainingObjectiveV1()
+    joint_route=FullEnvelopeJointDDPRouteV2(system,objective).to(device)
     ddp_replica_wrapped=False
     if world_size>1:
-        system=DistributedDataParallel(
-            system,
+        joint_route=DistributedDataParallel(
+            joint_route,
             device_ids=[local_rank],
             output_device=local_rank,
             find_unused_parameters=True,
         )
         ddp_replica_wrapped=True
-    system.eval()
-    objective=FullEnvelopeJointTrainingObjectiveV1().to(device).eval()
+    joint_route.eval()
+    system=joint_route.module.system if ddp_replica_wrapped else joint_route.system
+    if objective is not (joint_route.module.objective if ddp_replica_wrapped else joint_route.objective):
+        raise RuntimeError("P43 objective is not owned by the measured joint route")
 
     mlm_batch=to_device(mlm_batch,device)
     teacher_batch=to_device(teacher_batch,device)
@@ -506,18 +513,15 @@ def main() -> None:
                 print(f"P43_FP16_CASE_START rank={rank} case={pair_name}",flush=True)
                 semantic_compiled=to_device(semantic_cpu,device)
                 full_compiled=to_device(full_cpu,device)
-                result=execute_full_envelope_joint_step(
-                    system=system,
-                    objective=objective,
+                loss=joint_route(
                     mlm_batch=mlm_batch,
                     teacher_batch=teacher_batch,
                     semantic_operator_compiled=semantic_compiled,
                     full_fabric_compiled=full_compiled,
                     natural_relation_compiled=natural_compiled,
-                    update_ema=False,
                     stage=J3,
                 )
-                loss=result["loss"]
+                result=(joint_route.module if ddp_replica_wrapped else joint_route).take_observation()
                 if (
                     not isinstance(loss,torch.Tensor)
                     or loss.ndim!=0
@@ -574,6 +578,7 @@ def main() -> None:
             "registered_topology_sha256":sha256_file(args.topology_config),
             "world_size":world_size,
             "ddp_replica_wrapped":ddp_replica_wrapped,
+            "ddp_boundary":"complete_joint_step_v2",
             "training_mixed_precision":training_mixed_precision,
             "stage":J3,
             "stress_pair_receipts":stress_pair_receipts,
@@ -677,6 +682,7 @@ def main() -> None:
             "world_size":world_size,
             "ddp_replica_topology_required":True,
             "ddp_replica_wrapped":ddp_replica_wrapped,
+            "ddp_boundary":"complete_joint_step_v2",
             "preferred_world_size":preferred,
             "preferred_world_size_is_capability_ceiling":False,
             "microbatch_size":microbatch_size,
