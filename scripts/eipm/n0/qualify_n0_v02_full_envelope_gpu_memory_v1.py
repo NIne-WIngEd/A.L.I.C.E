@@ -245,6 +245,10 @@ def main() -> None:
     p.add_argument("--mixture-manifest",required=True)
     p.add_argument("--mixture-audit",required=True)
     p.add_argument("--output",required=True)
+    p.add_argument(
+        "--diagnostic-only",action="store_true",
+        help="one-GPU complete J3 fp16 forward check; never a P43 memory receipt",
+    )
     args=p.parse_args()
 
     status=subprocess.check_output(["git","status","--porcelain"],text=True)
@@ -340,6 +344,10 @@ def main() -> None:
     preferred=int(cfg["route"]["preferred_world_size"])
     if world_size<1:
         raise SystemExit("invalid distributed world size")
+    if args.diagnostic_only and world_size!=1:
+        raise SystemExit("fp16 diagnostic requires exactly one GPU process")
+    if not args.diagnostic_only and world_size!=preferred:
+        raise SystemExit("authoritative P43 requires the planned DDP world size")
 
     verify_tokenizer_v021(args.tokenizer_dir)
     tokenizer=load_tokenizer(args.tokenizer_dir)
@@ -494,6 +502,8 @@ def main() -> None:
     ):
         for semantic_name,semantic_cpu in semantic_compiled_cases.items():
             for full_name,full_cpu in full_compiled_cases.items():
+                pair_name=f"{semantic_name}__{full_name}"
+                print(f"P43_FP16_CASE_START rank={rank} case={pair_name}",flush=True)
                 semantic_compiled=to_device(semantic_cpu,device)
                 full_compiled=to_device(full_cpu,device)
                 result=execute_full_envelope_joint_step(
@@ -508,7 +518,6 @@ def main() -> None:
                     stage=J3,
                 )
                 loss=result["loss"]
-                pair_name=f"{semantic_name}__{full_name}"
                 if (
                     not isinstance(loss,torch.Tensor)
                     or loss.ndim!=0
@@ -542,9 +551,48 @@ def main() -> None:
                     "full_fabric_case":full_name,
                     "finite_joint_loss":True,
                 }
+                if args.diagnostic_only:
+                    torch.cuda.synchronize(device)
+                print(f"P43_FP16_CASE_PASS rank={rank} case={pair_name}",flush=True)
                 del loss,result,semantic_compiled,full_compiled
     if any(p.grad is not None for p in system.parameters()):
         raise SystemExit("GPU dry run created gradients")
+
+    if args.diagnostic_only:
+        output=Path(args.output)
+        if output.exists():
+            raise SystemExit("refusing to overwrite fp16 diagnostic result")
+        output.parent.mkdir(parents=True,exist_ok=True)
+        diagnostic={
+            "schema":"alice.eipm.n0.full-envelope-fp16-j3-diagnostic.v1",
+            "status":"COMPLETE_N0_P43_FP16_J3_DIAGNOSTIC_NOT_AUTHORITY",
+            "source_revision":source_revision,
+            "qualifier_sha256":sha256_file(Path(__file__).resolve()),
+            "mixture_manifest_sha256":sha256_file(args.mixture_manifest),
+            "mixture_audit_sha256":sha256_file(args.mixture_audit),
+            "semantic_checkpoint_sha256":sha256_file(args.semantic_checkpoint),
+            "registered_topology_sha256":sha256_file(args.topology_config),
+            "world_size":world_size,
+            "ddp_replica_wrapped":ddp_replica_wrapped,
+            "training_mixed_precision":training_mixed_precision,
+            "stage":J3,
+            "stress_pair_receipts":stress_pair_receipts,
+            "stress_pair_count":len(stress_pair_receipts),
+            "all_public_training_lanes_executed":True,
+            "full_j3_counterfactual_path":True,
+            "finite_joint_loss":True,
+            "gradient":False,
+            "backward":False,
+            "optimizer_object_created":False,
+            "gpu_memory_projection_measured":False,
+            "gpu_training_authorized":False,
+            "final_results_observed":False,
+        }
+        output.write_text(
+            json.dumps(diagnostic,indent=2,sort_keys=True)+"\n",encoding="utf-8"
+        )
+        print(json.dumps(diagnostic,indent=2,sort_keys=True))
+        return
 
     peak_alloc=int(torch.cuda.max_memory_allocated(device))
     peak_reserved=int(torch.cuda.max_memory_reserved(device))
