@@ -67,6 +67,7 @@ PASS_LONG_BOUNDARY="PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_
 PASS_SEMANTIC_LONG_TOKEN="PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1"
 PASS_OPERATOR_TOKEN="PASS_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1"
 PASS_TRAIN_AUTH="AUTHORIZED_N0_FULL_ENVELOPE_TRAINING_FROM_EXACT_RUNTIME_RECEIPTS"
+PASS_WHOLE_ROUTE="PASS_N0_COMPLETE_JOINT_ROUTE_GRADIENT_OPTIMIZER_RESUME_V2"
 
 STAGES=(J1,J2,J3)
 PREDECESSOR={J1:None,J2:J1,J3:J2}
@@ -146,6 +147,53 @@ def require_status(path: str | Path, expected: str, *, label: str) -> dict[str,A
             f"observed={value.get('status')!r}"
         )
     return value
+
+
+def require_complete_joint_route_qualification(
+    path: str | Path,
+    *,
+    source_revision: str,
+    mixture_manifest: str | Path,
+    gpu_memory_receipt: str | Path,
+    topology_config: str | Path,
+) -> dict[str,Any]:
+    """Keep no-gradient P43 separate from whole-route training authority."""
+    qualifier=Path(__file__).resolve().with_name(
+        "qualify_n0_v02_complete_joint_route_v2.py"
+    )
+    if not qualifier.is_file():
+        raise SystemExit("whole-route gradient/optimizer qualifier is not implemented")
+    receipt=require_status(path,PASS_WHOLE_ROUTE,label="complete joint-route qualification")
+    route_file=Path(__file__).resolve().parents[3]/(
+        "src/alice_personality/n0/full_envelope_joint_ddp_route_v2.py"
+    )
+    expected={
+        "source_revision":source_revision,
+        "qualifier_sha256":sha256_file(qualifier),
+        "trainer_sha256":sha256_file(Path(__file__).resolve()),
+        "route_sha256":sha256_file(route_file),
+        "mixture_manifest_sha256":sha256_file(mixture_manifest),
+        "gpu_memory_receipt_sha256":sha256_file(gpu_memory_receipt),
+        "topology_config_sha256":sha256_file(topology_config),
+        "ddp_boundary":"complete_joint_step_v2",
+        "world_size":2,
+        "j3_stress_pair_count":18,
+        "all_ten_j3_families_executed":True,
+        "complete_backward_per_rank":True,
+        "finite_nonzero_gradients_per_rank":True,
+        "first_and_later_adamw_steps_measured":True,
+        "eight_microbatch_accumulation_measured":True,
+        "same_stage_and_predecessor_resume_verified":True,
+        "capacity_85_percent_pass_per_rank":True,
+        "final_results_observed":False,
+        "private_identity_data":False,
+    }
+    if receipt.get("schema")!="alice.eipm.n0.complete-joint-route-qualification.v2":
+        raise SystemExit("whole-route qualification schema drift")
+    for key,value in expected.items():
+        if receipt.get(key)!=value:
+            raise SystemExit(f"whole-route qualification/{key} drift")
+    return receipt
 
 
 def verify_pre_gradient_runtime(
@@ -530,6 +578,7 @@ def verify_runtime_training_authorization(
     long_boundary_receipt: str | Path,
     semantic_long_token_receipt: str | Path,
     static_proof_receipt: str | Path,
+    joint_route_receipt: str | Path,
 ) -> dict[str,Any]:
     receipt=require_status(path,PASS_TRAIN_AUTH,label="runtime training authorization")
     if receipt.get("schema")!="alice.eipm.n0.full-envelope-training-authorization.v1":
@@ -568,6 +617,7 @@ def verify_runtime_training_authorization(
         "long_boundary_receipt_sha256":sha256_file(long_boundary_receipt),
         "semantic_long_token_receipt_sha256":sha256_file(semantic_long_token_receipt),
         "static_proof_receipt_sha256":sha256_file(static_proof_receipt),
+        "joint_route_receipt_sha256":sha256_file(joint_route_receipt),
     }
     labels={
         "mixture_manifest_sha256":"training authorization/mixture manifest hash drift",
@@ -931,6 +981,7 @@ def main() -> None:
     parser.add_argument("--predecessor-dev-receipt")
     parser.add_argument("--predecessor-selection-receipt")
     parser.add_argument("--training-authorization")
+    parser.add_argument("--joint-route-receipt")
     parser.add_argument("--execute-gradient",action="store_true")
     parser.add_argument("--max-optimizer-steps",type=int,default=100)
     parser.add_argument("--save-every",type=int,default=25)
@@ -1030,8 +1081,8 @@ def main() -> None:
             )
         if authority.get("runtime_training_authorization_receipt_required") is not True:
             raise SystemExit("training plan lost runtime authorization requirement")
-        if not args.training_authorization:
-            raise SystemExit("runtime training authorization required for gradient")
+        if not args.training_authorization or not args.joint_route_receipt:
+            raise SystemExit("training authorization and whole-route proof required for gradient")
     mixture,mixture_audit=verify_pre_gradient_runtime(
         mixture_manifest_path=args.mixture_manifest,
         mixture_audit_path=args.mixture_audit,
@@ -1050,6 +1101,16 @@ def main() -> None:
         static_proof_receipt_path=args.static_proof_receipt,
     )
     gpu_route_receipt=read_json(args.gpu_memory_receipt)
+    if args.execute_gradient:
+        if gpu_route_receipt.get("ddp_boundary")!="complete_joint_step_v2":
+            raise SystemExit("P43 measured a different distributed forward boundary")
+        require_complete_joint_route_qualification(
+            args.joint_route_receipt,
+            source_revision=str(mixture["source_revision"]),
+            mixture_manifest=args.mixture_manifest,
+            gpu_memory_receipt=args.gpu_memory_receipt,
+            topology_config=args.topology_config,
+        )
     p43_microbatch=int(gpu_route_receipt.get("microbatch_size",0))
     if args.lane_batch_size!=p43_microbatch:
         raise SystemExit("P43 lane microbatch drift")
@@ -1091,6 +1152,7 @@ def main() -> None:
             long_boundary_receipt=args.long_boundary_receipt,
             semantic_long_token_receipt=args.semantic_long_token_receipt,
             static_proof_receipt=args.static_proof_receipt,
+            joint_route_receipt=args.joint_route_receipt,
         )
     if not args.execute_gradient:
         print(json.dumps({

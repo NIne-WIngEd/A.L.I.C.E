@@ -15,6 +15,7 @@ from train_n0_v02_full_envelope_joint_v1 import (
     current_git_revision,
     read_json,
     require_clean_worktree,
+    require_complete_joint_route_qualification,
     verify_optimizer_lane_bindings,
     verify_pre_gradient_runtime,
 )
@@ -46,6 +47,7 @@ def main() -> None:
     p.add_argument("--operator-evidence-token-receipt",required=True)
     p.add_argument("--cpu-runtime-receipt",required=True)
     p.add_argument("--gpu-memory-receipt",required=True)
+    p.add_argument("--joint-route-receipt",required=True)
     p.add_argument("--long-boundary-receipt",required=True)
     p.add_argument("--semantic-long-token-receipt",required=True)
     p.add_argument("--static-proof-receipt",required=True)
@@ -105,6 +107,16 @@ def main() -> None:
         semantic_long_token_receipt_path=args.semantic_long_token_receipt,
         static_proof_receipt_path=args.static_proof_receipt,
     )
+    gpu_route=read_json(args.gpu_memory_receipt)
+    if gpu_route.get("ddp_boundary")!="complete_joint_step_v2":
+        raise SystemExit("P43 measured a different distributed forward boundary")
+    require_complete_joint_route_qualification(
+        args.joint_route_receipt,
+        source_revision=revision,
+        mixture_manifest=args.mixture_manifest,
+        gpu_memory_receipt=args.gpu_memory_receipt,
+        topology_config=args.topology_config,
+    )
     verify_optimizer_lane_bindings(
         mixture=mixture,
         semantic_rows=args.semantic_rows,
@@ -162,6 +174,7 @@ def main() -> None:
         ),
         "cpu_runtime_receipt_sha256":sha256_file(args.cpu_runtime_receipt),
         "gpu_memory_receipt_sha256":sha256_file(args.gpu_memory_receipt),
+        "joint_route_receipt_sha256":sha256_file(args.joint_route_receipt),
         "long_boundary_receipt_sha256":sha256_file(args.long_boundary_receipt),
         "semantic_long_token_receipt_sha256":sha256_file(
             args.semantic_long_token_receipt

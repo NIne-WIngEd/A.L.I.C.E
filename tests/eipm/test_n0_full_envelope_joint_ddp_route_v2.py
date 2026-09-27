@@ -239,6 +239,53 @@ def test_split_predecessor_state_opens_j2_and_j3_without_changing_key_space():
         predecessor=current
 
 
+def test_accelerate_state_restores_outer_model_inner_objective_and_optimizer(tmp_path):
+    from accelerate import Accelerator
+
+    fixture=_registered_fixture()
+    trainer=_trainer()
+    torch.manual_seed(2901)
+    system=fixture._system().train()
+    apply_stage_trainability(system,stage=J3)
+    route=FullEnvelopeJointDDPRouteV2(
+        system,FullEnvelopeJointTrainingObjectiveV1(),
+    ).train()
+    optimizer=trainer.build_optimizer(
+        system,backbone_lr=1e-5,interface_lr=5e-5,
+        backbone_weight_decay=0.1,interface_weight_decay=0.05,
+    )
+    accelerator=Accelerator(cpu=True,mixed_precision="no")
+    route,optimizer=accelerator.prepare(route,optimizer)
+    batches=_stage_batches(_batches(fixture,system),J3)
+    optimizer.zero_grad(set_to_none=True)
+    loss=route(**batches)
+    observation=accelerator.unwrap_model(route).take_observation()
+    accelerator.backward(loss)
+    optimizer.step()
+    unwrapped=accelerator.unwrap_model(route)
+    unwrapped.objective.balancer.observe_detached_family_means(
+        {family:observation["balanced"][f"raw/{family}"] for family in observation["active_families"]},
+        active_families=observation["active_families"],
+    )
+    expected_model=copy.deepcopy(unwrapped.state_dict())
+    expected_optimizer=copy.deepcopy(optimizer.state_dict())
+    state_dir=tmp_path/"accelerator_state"
+    accelerator.save_state(str(state_dir))
+    with torch.no_grad():
+        next(unwrapped.system.parameters()).add_(1.0)
+        unwrapped.objective.balancer._ema_scale.zero_()
+        unwrapped.objective.balancer._seen.zero_()
+        for values in optimizer.state.values():
+            if "exp_avg" in values:
+                values["exp_avg"].zero_()
+                break
+    accelerator.load_state(str(state_dir))
+    assert set(unwrapped.state_dict())==set(expected_model)
+    for name,expected in expected_model.items():
+        torch.testing.assert_close(unwrapped.state_dict()[name],expected)
+    torch.testing.assert_close(optimizer.state_dict(),expected_optimizer)
+
+
 def _gloo_worker(rank, rendezvous, stage):
     dist.init_process_group("gloo",init_method=f"file://{rendezvous}",rank=rank,world_size=2)
     try:

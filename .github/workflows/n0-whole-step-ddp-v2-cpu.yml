@@ -7,6 +7,7 @@ on:
     paths:
       - "src/alice_personality/n0/**"
       - "scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py"
+      - "scripts/eipm/n0/authorize_n0_v02_full_envelope_training_v1.py"
       - "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py"
       - "tests/eipm/test_n0_full_envelope_joint_ddp_route_v2.py"
       - ".github/workflows/n0-whole-step-ddp-v2-cpu.yml"
@@ -24,8 +25,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.11"
       - name: Install CPU runtime test dependencies
-        run: python -m pip install torch pytest numpy
-      - name: Full N0 objective equivalence and two-rank CPU DDP
-        run: pytest -q -x tests/eipm/test_n0_full_envelope_joint_ddp_route_v2.py
+        run: python -m pip install "torch==2.7.1" "accelerate==1.15.0" safetensors pytest numpy
+      - name: Full N0 objective, two-rank DDP and checkpoint compatibility
+        run: |
+          pytest -q -x \
+            tests/eipm/test_n0_full_envelope_joint_ddp_route_v2.py \
+            tests/eipm/test_n0_full_envelope_trainable_system_v1.py \
+            tests/eipm/test_n0_full_envelope_joint_runtime_v1.py
