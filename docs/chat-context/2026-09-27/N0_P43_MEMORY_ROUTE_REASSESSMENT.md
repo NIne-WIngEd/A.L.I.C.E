@@ -42,3 +42,7 @@ The owner's exact `a19` read-only inventory ran successfully inside `magnolia_ud
 ## Sources and unresolved questions
 
 Primary documentation: [PyTorch checkpoint memory tradeoff](https://pytorch.org/blog/activation-checkpointing-techniques/), [PyTorch CUDA memory traces](https://docs.pytorch.org/docs/stable/torch_cuda_memory), [PyTorch FSDP](https://docs.pytorch.org/docs/main/fsdp.html), [PyTorch distributed checkpoints](https://docs.pytorch.org/docs/main/distributed.checkpoint.html), [Kaggle accelerator CLI and restrictions](https://github.com/Kaggle/kaggle-cli/blob/main/docs/kernels.md), [NVIDIA L4 specifications](https://www.nvidia.com/content/dam/en-zz/Solutions/Data-Center/l4/PB-11316-001_v01.pdf). No verified Kaggle L4 entitlement, live backward peak, validated lower-memory whole-model route, or paid allocation is yet recorded.
+
+## Concrete next experiment
+
+The [full-J3 memory experiment protocol](N0_P43_MEMORY_EXPERIMENT_PROTOCOL.md) records the checked non-authoritative profiler and guarded Magnolia launcher. They execute the original full 18-case no-gradient path with per-forward allocation attribution; they do not claim backward or optimizer fit. Its new live receipt is pending. The Kaggle account remains unverified for two L4s; official CLI quota and stored metadata cannot settle actual allocation.
