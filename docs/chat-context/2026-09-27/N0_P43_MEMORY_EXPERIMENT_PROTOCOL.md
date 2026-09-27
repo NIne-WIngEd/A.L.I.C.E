@@ -4,9 +4,9 @@
 
 Scientific checkout remains clean at `a19f8e8893422702c138182f239064385addf91c`. P42 and P39PN are PASS; source-bound P43 on Magnolia P100×2 is projection FAIL. A single-Kaggle-run `NvidiaL4` request executed on T4×2; Kaggle CLI metadata is a request, not an allocation receipt. No live two-L4 entitlement, backward peak, optimizer memory, sharding success or training authorization has been measured. Do not repush the same L4 probe as a pretend entitlement test.
 
-The first versioned artifact is `n0_p43_j3_forward_attribution_v1.py` with `n0_p43_j3_forward_attribution_v1.sbatch`. The script invokes the **original** exact-source qualifier in `--diagnostic-only` mode, traces every model forward of all 18 semantic × full-fabric pairings, and demands exactly four full-fabric views per pair. It reports allocated and reserved CUDA bytes immediately before/after each real task forward and its per-call peak. This is one rank's complete all-lane J3 **forward attribution only**, with no gradient, optimizer or checkpoint evaluation. It neither measures retained backward tensors nor grants P43 or training authority. The same full objective remains intact. The Slurm allocation asks for two P100 GPUs to match Magnolia's previously admitted 12 CPU/96 GB shape; the diagnostic explicitly runs one CUDA process. Original failed roots are preserved.
+The first versioned artifact is `n0_p43_j3_forward_attribution_v1.py` with `n0_p43_j3_forward_attribution_v1.sbatch`. The script invokes the **original** exact-source qualifier in `--diagnostic-only` mode, traces every model forward of all 18 semantic × full-fabric pairings, and demands exactly four full-fabric views per pair. It reports allocated and reserved CUDA bytes immediately before/after each real task forward and its per-call peak, bound to the named stress pair. This is one rank's complete all-lane J3 **forward attribution only**, with no gradient, optimizer or checkpoint evaluation. It neither measures retained backward tensors nor grants P43 or training authority. The same full objective remains intact. The Slurm allocation asks for two P100 GPUs to match Magnolia's previously admitted 12 CPU/96 GB shape; the diagnostic explicitly runs one CUDA process. Original failed roots are preserved.
 
-Syntax and shell parsing were checked locally; actual execution, PyTorch graph hooks, device allocation and numeric results **remain unverified** until Magnolia returns a receipt. Script SHA-256 `b2d3af77466b3d861e1dc25e6e8a3701fe3e07e4f16e1a1a6dfd19fcc865e8b2`; sbatch SHA-256 `26d5a32d2a7c2cdf83515d0912f68dcd479c816b4a52b449b231c7d351ad532b`. GitHub fetched bytes exactly matched the checked local files. An execution failure is a new observation to diagnose, not permission to weaken the objective or mark the gate PASS.
+Syntax and shell parsing were checked locally; actual execution, PyTorch graph hooks, device allocation and numeric results **remain unverified** until Magnolia returns a receipt. Script SHA-256 `bd2d39fe507c02cf7e3e2fb479c651f4d2c98abb446eb506cc8c89b2e197f406`; sbatch SHA-256 `997b3e7180ac2409443d2297dfefed82fc22a84f7ec840eee6568e95fa62c1a9`. GitHub fetched bytes exactly matched the checked local files. An execution failure is a new observation to diagnose, not permission to weaken the objective or mark the gate PASS.
 
 ## Kaggle account evidence
 
@@ -52,11 +52,11 @@ Run on the Magnolia login shell with the already audited `a19f8e88` mixture and 
   test -f "$TEACHER_AUDIT"
   test ! -e "$TRACE"
   git fetch origin alice-context
-  git show 4cd9f9860a43f923dd8d272fccfd8e62fc9aad29:docs/chat-context/2026-09-27/n0_p43_j3_forward_attribution_v1.py > "$PROFILE"
-  git show 4cd9f9860a43f923dd8d272fccfd8e62fc9aad29:docs/chat-context/2026-09-27/n0_p43_j3_forward_attribution_v1.sbatch > "$BATCH"
-  printf '%s  %s\n' b2d3af77466b3d861e1dc25e6e8a3701fe3e07e4f16e1a1a6dfd19fcc865e8b2 "$PROFILE" |
+  git show 1fd30d62a6d9360865df53e1712f7ce031efdfb9:docs/chat-context/2026-09-27/n0_p43_j3_forward_attribution_v1.py > "$PROFILE"
+  git show 1fd30d62a6d9360865df53e1712f7ce031efdfb9:docs/chat-context/2026-09-27/n0_p43_j3_forward_attribution_v1.sbatch > "$BATCH"
+  printf '%s  %s\n' bd2d39fe507c02cf7e3e2fb479c651f4d2c98abb446eb506cc8c89b2e197f406 "$PROFILE" |
     sha256sum -c -
-  printf '%s  %s\n' 26d5a32d2a7c2cdf83515d0912f68dcd479c816b4a52b449b231c7d351ad532b "$BATCH" |
+  printf '%s  %s\n' 997b3e7180ac2409443d2297dfefed82fc22a84f7ec840eee6568e95fa62c1a9 "$BATCH" |
     sha256sum -c -
   mkdir -p "$LOGDIR"
   export ALICE_N0_WORKDIR="$WORK"
