@@ -1,6 +1,6 @@
 # Memory Renovation Plan — Parallel Capability Tracks
 
-**Version:** 1.1.0
+**Version:** 1.2.0
 **Status:** Owner-ratified M1 capability-track plan; implementation activation remains separate
 **Architecture:** Memory v4.1 Capability-First Polyglot Cognitive Fabric
 
@@ -10,7 +10,23 @@ Renovate A.L.I.C.E. memory into a claim-centered, evidence-linked, graph-capable
 
 The plan uses parallel research and independently activated production profiles. A small first implementation may be useful, but it does not define the destination.
 
-## 2. Common entry requirements
+## 2. Execution selection
+
+The destination architecture remains replaceable, but the current program is **selected-stack-first**. Infrastructure research is opened only by a concrete A.L.I.C.E. capability, scale, reliability, privacy, deletion, recovery, licensing, packaging, or cost problem.
+
+Current default implementation path:
+
+- PostgreSQL for Experience/Event and Claim persistence behind separate logical contracts;
+- content-addressed local object storage for raw evidence and artifacts;
+- Neo4j and Qdrant as rebuildable graph/vector accelerators;
+- exact/source-native filesystem, SQL/FTS, metadata, API, and live-source retrieval alongside graph/vector paths;
+- Temporal for long-running/distributed durable workflows where needed;
+- in-process workspace first, Valkey only when shared/distributed ephemeral state is useful;
+- PyTorch + Accelerate for training, Slurm on cluster routes, and vLLM only where large-model serving requires it.
+
+This selection replaces broad mandatory infrastructure tournaments. Challengers remain allowed when they can change a real implementation decision.
+
+## 2.1 Common entry requirements
 
 Each track defines:
 
@@ -43,16 +59,13 @@ Candidate backends may include embedded, relational, distributed-SQL, and custom
 
 ## 4. Track B — Event and Experience Fabric
 
-Evaluate:
+Build the selected PostgreSQL append-only Experience/Event implementation with ordered identity, idempotent append, replay/checkpoints, outbox delivery, correction/deletion lineage, integrity, compaction/archive metadata, and projection interfaces.
 
-- current embedded Experience Ledger;
-- KurrentDB or another event store;
-- Kafka or Pulsar;
-- hybrid embedded and distributed event fabrics.
-
-Build append, expected-version, subscription, replay, outbox, integrity, compaction, archive, and projection interfaces.
+KurrentDB or another dedicated event store becomes a challenger only if measured subscription, replay, throughput, distribution, or operational requirements exceed the PostgreSQL implementation.
 
 ## 5. Track C — Cognitive Graph
+
+Use Neo4j as the selected A.L.I.C.E. graph accelerator while keeping graph state rebuildable from Claim/Evidence authority and preserving a relational fallback.
 
 Build ontologies and projections for:
 
@@ -64,11 +77,11 @@ Build ontologies and projections for:
 - claims, evidence, conflicts, predictions, and outcomes;
 - model and dataset lineage.
 
-Evaluate graph databases, graph algorithms, embeddings, retrieval, planning, anomaly detection, and graph-to-claim reconciliation.
+Evaluate graph algorithms, retrieval, planning, anomaly detection, and graph-to-claim reconciliation on the selected projection. Do not reopen a graph-database tournament unless the selected engine exposes a material A.L.I.C.E. limitation.
 
 ## 6. Track D — Vector and Multimodal Retrieval
 
-Evaluate Qdrant, Milvus, Vespa, pgvector, embedded indexes, and later systems.
+Use Qdrant as the selected semantic/multimodal accelerator. Retain exact/source-native search and live-source queries as first-class alternatives so vectors are used only when they add value.
 
 Support generation-aware text, code, image, audio, video, sensor, and scientific retrieval. Benchmark exact/lexical, semantic/vector, graph, symbolic, temporal/claim-aware, hybrid, and agentic source-native plans.
 
@@ -76,7 +89,7 @@ Agentic source-native retrieval is a first-class challenger: the model may progr
 
 ## 7. Track E — Durable Curation and Mission Workflows
 
-Evaluate Temporal, durable event consumers, Dagster, Prefect, Ray, and local runners.
+Use Temporal for long-running/distributed A.L.I.C.E. workflows when durable orchestration is materially useful. A local durable runner may implement the same contract for a single-host Fable product profile.
 
 Run candidate extraction, adjudication, projection refresh, deletion, migration, repair, training, evaluation, federation, and long missions with idempotency, retries, signals, cancellation, and recovery.
 
