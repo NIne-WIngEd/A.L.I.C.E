@@ -114,6 +114,36 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
     def backbone(self) -> nn.Module:
         return getattr(self.semantic_model, "backbone")
 
+    def _summarize_available_views(
+        self,
+        *,
+        encoded: Mapping[str, Tensor],
+        available: Tensor,
+    ) -> Tensor:
+        """Scatter learned summaries in their produced dtype under autocast.
+
+        The backbone hidden states may stay float32 while the learned layer
+        gate produces float16. Indexed writes must therefore allocate from the
+        summary, rather than assuming the backbone and summary share a dtype.
+        """
+        batch, views, layers, tokens, width = encoded["hidden_states"].shape
+        flat_hidden = encoded["hidden_states"].reshape(
+            batch * views, layers, tokens, width
+        )
+        flat_mask = encoded["token_mask"].reshape(batch * views, tokens)
+        flat_valid = available.reshape(-1)
+        if bool(flat_valid.any()):
+            indices = torch.nonzero(flat_valid, as_tuple=False).flatten()
+            valid_summary = self.semantic_input.summarize_items(
+                hidden_states=flat_hidden[flat_valid],
+                token_mask=flat_mask[flat_valid],
+            )
+            flat_summary = valid_summary.new_zeros(batch * views, width)
+            flat_summary = flat_summary.index_copy(0, indices, valid_summary)
+        else:
+            flat_summary = flat_hidden.new_zeros(batch * views, width)
+        return flat_summary.reshape(batch, views, width)
+
     def _encode_factor_schemas(
         self,
         batch: Mapping[str, Any],
@@ -433,32 +463,9 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
                     attention_mask=source_attention,
                     item_valid_mask=additional_view_available,
                 )
-                b, views, layers, tokens, width = (
-                    additional_source_encoded["hidden_states"].shape
-                )
-                flat_hidden = additional_source_encoded[
-                    "hidden_states"
-                ].reshape(b * views, layers, tokens, width)
-                flat_mask = additional_source_encoded["token_mask"].reshape(
-                    b * views,
-                    tokens,
-                )
-                flat_valid = additional_view_available.reshape(-1)
-                flat_summary = torch.zeros(
-                    b * views,
-                    width,
-                    device=flat_hidden.device,
-                    dtype=flat_hidden.dtype,
-                )
-                if bool(flat_valid.any()):
-                    flat_summary[flat_valid] = self.semantic_input.summarize_items(
-                        hidden_states=flat_hidden[flat_valid],
-                        token_mask=flat_mask[flat_valid],
-                    )
-                additional_source_views = flat_summary.reshape(
-                    b,
-                    views,
-                    width,
+                additional_source_views = self._summarize_available_views(
+                    encoded=additional_source_encoded,
+                    available=additional_view_available,
                 )
 
             additional_descriptor_encoded = self.semantic_input.encode_padded_items(
@@ -469,32 +476,9 @@ class N0FullEnvelopeTrainableSystemV1(nn.Module):
                 ],
                 item_valid_mask=additional_view_available,
             )
-            b, views, layers, tokens, width = (
-                additional_descriptor_encoded["hidden_states"].shape
-            )
-            flat_hidden = additional_descriptor_encoded[
-                "hidden_states"
-            ].reshape(b * views, layers, tokens, width)
-            flat_mask = additional_descriptor_encoded["token_mask"].reshape(
-                b * views,
-                tokens,
-            )
-            flat_valid = additional_view_available.reshape(-1)
-            flat_summary = torch.zeros(
-                b * views,
-                width,
-                device=flat_hidden.device,
-                dtype=flat_hidden.dtype,
-            )
-            if bool(flat_valid.any()):
-                flat_summary[flat_valid] = self.semantic_input.summarize_items(
-                    hidden_states=flat_hidden[flat_valid],
-                    token_mask=flat_mask[flat_valid],
-                )
-            additional_view_descriptor_states = flat_summary.reshape(
-                b,
-                views,
-                width,
+            additional_view_descriptor_states = self._summarize_available_views(
+                encoded=additional_descriptor_encoded,
+                available=additional_view_available,
             )
 
         outputs = self.stack(
