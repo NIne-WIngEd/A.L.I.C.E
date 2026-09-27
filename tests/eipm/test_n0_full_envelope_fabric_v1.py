@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import torch
+from unittest.mock import patch
 
 from alice_personality.n0.dynamic_competitive_latent_pool_v3 import (
     DynamicCompetitiveLatentPoolV3,
@@ -872,6 +873,81 @@ def test_semantic_operator_objective_macro_averages_query_and_schema_evidence_su
     assert float(factor_evidence["role"].grad.abs().sum()) > 0.0
     assert step_factor_evidence["role"].grad is not None
     assert float(step_factor_evidence["role"].grad.abs().sum()) > 0.0
+
+
+def test_semantic_operator_probability_objectives_run_outside_autocast_with_gradients() -> None:
+    """Cover every active probability BCE surface in the P43 joint objective."""
+    import alice_personality.n0.semantic_operator_objectives_v1 as objectives
+
+    original_bce = objectives.F.binary_cross_entropy
+    bce_calls = []
+
+    def checked_bce(predicted, target, *args, **kwargs):
+        assert not torch.is_autocast_enabled("cpu")
+        assert predicted.dtype == target.dtype == torch.float32
+        bce_calls.append(predicted.numel())
+        return original_bce(predicted, target, *args, **kwargs)
+
+    applicability = torch.tensor([0.8], requires_grad=True)
+    uncertainty = torch.tensor([0.2], requires_grad=True)
+    query_evidence = torch.full((1, 1, 2), 0.6, requires_grad=True)
+    relation_evidence = torch.full((1, 1, 2), 0.7, requires_grad=True)
+    factor_evidence = torch.full((1, 2), 0.4, requires_grad=True)
+    step_evidence = torch.full((1, 1, 2), 0.3, requires_grad=True)
+    valid = torch.ones((1, 1, 2), dtype=torch.bool)
+    with patch.object(objectives.F, "binary_cross_entropy", checked_bce):
+        with torch.autocast(device_type="cpu", dtype=torch.bfloat16):
+            result = objectives.semantic_operator_objective(
+                relation_logits=torch.tensor([[[0.3, -0.2]]], requires_grad=True),
+                relation_targets=torch.tensor([[0]]),
+                relation_step_mask=torch.tensor([[True]]),
+                factor_logits={"role": torch.tensor([[0.3, -0.2]], requires_grad=True)},
+                factor_targets={"role": torch.tensor([0])},
+                event_distribution=torch.tensor([[[0.8, 0.1, 0.1]]]),
+                event_targets=torch.tensor([[0]]),
+                event_mask=torch.tensor([[True]]),
+                applicability=applicability,
+                applicability_target=torch.ones(1),
+                relation_query_evidence=query_evidence,
+                query_evidence_target=torch.ones_like(query_evidence),
+                query_evidence_valid_mask=valid,
+                relation_schema_evidence=relation_evidence,
+                relation_schema_evidence_target=torch.ones_like(relation_evidence),
+                relation_schema_evidence_valid_mask=valid,
+                factor_schema_evidence={"role": factor_evidence},
+                factor_schema_evidence_target={"role": torch.zeros_like(factor_evidence)},
+                factor_schema_evidence_valid_mask={"role": valid[:, 0]},
+                step_factor_schema_evidence={"role": step_evidence},
+                step_factor_schema_evidence_target={"role": torch.ones_like(step_evidence)},
+                step_factor_schema_evidence_valid_mask={"role": valid},
+                uncertainty=uncertainty,
+                uncertainty_target=torch.zeros(1),
+                correct_relation_score=torch.ones(1),
+                counterfactual_relation_score=torch.zeros(1),
+                correct_factor_score=torch.ones(1),
+                counterfactual_factor_score=torch.zeros(1),
+            )
+        assert len(bce_calls) == 6
+        assert torch.isfinite(result["loss"])
+        result["loss"].backward()
+
+    for probability in (
+        applicability, uncertainty, query_evidence,
+        relation_evidence, factor_evidence, step_evidence,
+    ):
+        assert probability.grad is not None
+        assert torch.isfinite(probability.grad).all()
+        assert probability.grad.abs().sum() > 0
+
+    rounded = torch.tensor([0.0, 1.0], dtype=torch.float16, requires_grad=True)
+    with torch.autocast(device_type="cpu", dtype=torch.bfloat16):
+        boundary_loss = objectives.probability_binary_cross_entropy(
+            rounded, torch.tensor([1.0, 0.0]),
+        )
+    assert torch.isfinite(boundary_loss)
+    boundary_loss.backward()
+    assert rounded.grad is not None
+    assert torch.isfinite(rounded.grad).all()
 
 
 def test_semantic_operator_objective_rejects_partial_schema_evidence_contract() -> None:
