@@ -1798,6 +1798,13 @@
       "kind": "STATIC_REQUIRED",
       "test": "test_semantic_operator_probability_objectives_run_outside_autocast_with_gradients",
       "requirement": "The source-bound P42 proof must execute every active semantic probability BCE surface under autocast and verify full-precision loss evaluation, finite objectives, and gradient continuity before a new P43 GPU attempt."
+    },
+    {
+      "id": "N0-P43AN",
+      "stage": "mixed_precision_runtime",
+      "kind": "STATIC_REQUIRED",
+      "test": "test_full_trainable_system_autocast_additional_text_views_keep_gradients",
+      "requirement": "The source-bound P42 proof must execute the registered system with available and unavailable additional source and descriptor text under autocast, verify finite full-stack outputs and inert masked views, and preserve gradients to the summary gate and shared backbone. A separate one-GPU exact-checkpoint J3 diagnostic must exercise all 18 public stress pairs under CUDA fp16 before authoritative two-rank P43."
     }
   ],
   "closure_rule": {
