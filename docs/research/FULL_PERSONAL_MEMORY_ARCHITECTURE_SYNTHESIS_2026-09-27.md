@@ -121,26 +121,38 @@ Primary sources:
 
 ## Physical infrastructure research
 
-### Experience/Event Fabric — NATS JetStream
+### Experience/Event Fabric — KurrentDB + NATS JetStream federation
 
-Selected current Fable/A.L.I.C.E. event backbone: **NATS JetStream**, behind project-owned event/evidence contracts.
+Selected canonical Experience/Event store: **KurrentDB**, behind A.L.I.C.E./Fable-owned event/evidence contracts.
 
-Reasons:
+Why it wins the memory role:
 
-- durable streams and replay;
-- durable consumers and acknowledgement state;
-- replication and edge/private-cluster deployment;
-- Apache-2.0;
-- same server family can support one-host, LAN, multi-device and distributed topologies.
+- fine-grained immutable streams;
+- exact expected-revision optimistic concurrency;
+- idempotent event append semantics;
+- persistent subscriptions with durable checkpoints;
+- multi-stream atomic appends;
+- event-native replay/history rather than adapting a generic message log into an event store.
 
-The project layer still owns expected-version/event identity/idempotency/causal/evidence/deletion semantics.
+Selected federation/edge-ingress transport: **NATS JetStream**.
 
-KurrentDB remains a strong event-native reference/challenger. It is not selected as the universal product dependency because current KurrentDB uses KLv1, which is source-available but not OSI-approved and introduces future hosted-service/product-license constraints.
+NATS supplies:
+
+- durable edge/device streams;
+- replay and consumer state;
+- replication;
+- leaf/domain/federation patterns;
+- transport between devices/services and the canonical Experience fabric.
+
+The project layer still owns event identity, evidence semantics, product/host/device scope, causal clocks, correction/deletion lineage, custody and merge/reconciliation rules.
+
+KurrentDB's KLv1 is not OSI-approved and restricts providing KurrentDB itself as a hosted/managed service. That is recorded as a commercial/deployment constraint. It does not make NATS a more capable Experience Ledger. If a future managed Fable service conflicts with KLv1, the event contract allows a licensed Kurrent deployment or a successor event store without changing cognitive semantics.
 
 Sources:
-- https://docs.nats.io/reference/2.12/jetstream
-- https://github.com/nats-io/nats-server
 - https://docs.kurrent.io/server/v26.1/
+- https://docs.kurrent.io/clients/node/v1.3/appending-events
+- https://docs.kurrent.io/server/v22.10/persistent-subscriptions
+- https://docs.nats.io/reference/2.12/jetstream
 
 ### Claim Fabric — XTDB v2
 
@@ -168,7 +180,16 @@ A single engine is not allowed to become a graph-capability ceiling.
 - serializable ACID;
 - graph-algorithm extension including PageRank.
 
-**Scale-out private-cluster path:** NebulaGraph over an appropriate distributed backend:
+**Scale-out private-cluster path:** NebulaGraph:
+
+- symmetrically distributed;
+- separated storage/compute services;
+- horizontal scalability;
+- Raft-backed strong consistency;
+- openCypher-compatible query language;
+- native distributed graph deployment.
+
+This is a cleaner scale-out continuation of the Cypher-oriented graph contract than introducing a Gremlin-only abstraction plus a separate Cassandra/HBase storage choice.
 - Apache-2.0;
 - distributed property graph;
 - pluggable Cassandra/HBase/Scylla-class storage;
