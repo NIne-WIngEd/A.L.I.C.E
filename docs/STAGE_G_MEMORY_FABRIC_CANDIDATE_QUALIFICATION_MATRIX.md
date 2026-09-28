@@ -43,7 +43,7 @@ A physical backend can change. A logical capability cannot silently disappear be
 | Claim Authority | XTDB v2 | immutable/bitemporal adjudicated claims and historical/current views |
 | Episodic/Autobiographical | governed episode store/projection rooted in Event + Claim identities | learned event boundaries, narratives, outcomes, scenes |
 | Cognitive Multi-Graph — local | LadybugDB | embedded host-local graph projection/traversal/analytics |
-| Cognitive Multi-Graph — scale-out | JanusGraph + qualified distributed storage backend | same graph contract when host/private-cluster scale requires distribution |
+| Cognitive Multi-Graph — scale-out | NebulaGraph backend | same graph contract when host/private-cluster scale requires distribution |
 | Existing graph reference | Neo4j | retained A.L.I.C.E. reference/projection and migration evidence |
 | Associative graph compute | engine-independent graph-compute service | PPR/spreading activation/temporal decay/inhibition/path relevance |
 | Vector/Multimodal | Qdrant / Qdrant Edge or server/cluster placement | dense/sparse/named/multivector retrieval |
