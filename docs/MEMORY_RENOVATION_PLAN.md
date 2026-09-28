@@ -16,11 +16,11 @@ The destination remains **Memory v4.x Capability-First Polyglot Cognitive Fabric
 
 Current path:
 
-- NATS JetStream Experience/Event Fabric behind first-party event/evidence contracts;
+- KurrentDB Experience/Event Fabric with NATS JetStream federation/ingress behind first-party event/evidence contracts;
 - XTDB v2 bitemporal Claim Authority;
 - encrypted content-addressed object storage;
 - dynamic Episodes/Autobiographical plane;
-- hardware-adaptive Cognitive Multi-Graph: LadybugDB host-local, JanusGraph distributed-scale placement, existing Neo4j reference retained;
+- hardware-adaptive Cognitive Multi-Graph: LadybugDB host-local, NebulaGraph distributed-scale placement, existing Neo4j reference retained;
 - engine-independent associative graph compute;
 - Qdrant dense/sparse/multivector/multimodal retrieval;
 - exact/source-native/live retrieval;
@@ -95,7 +95,7 @@ Build a single logical multi-relational graph projection with orthogonal views f
 - model/dataset lineage;
 - decisions/outcomes.
 
-Use LadybugDB for the current host-local embedded placement. Use JanusGraph with a qualified distributed backend when the graph must scale across a private cluster. Preserve Neo4j as an existing A.L.I.C.E. reference/migration source rather than deleting useful evidence.
+Use LadybugDB for the current host-local embedded placement. Use NebulaGraph with a qualified distributed backend when the graph must scale across a private cluster. Preserve Neo4j as an existing A.L.I.C.E. reference/migration source rather than deleting useful evidence.
 
 Build an engine-independent associative compute layer for Personalized PageRank, spreading activation, temporal decay, lateral inhibition, path/bridge discovery and query-conditioned view traversal.
 
