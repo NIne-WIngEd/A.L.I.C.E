@@ -1,8 +1,15 @@
 # N0 5e29 exact-head CPU → mixture → one measured GPU handoff
 
-Status (2026-09-28): **prepared but not run on Magnolia**. This ChatGPT
-workspace has no mounted Magnolia corpus or `sbatch`, and `magnolia01` does
-not resolve here. The pinned scientific source is
+Status update (2026-09-28): owner-supplied Magnolia logs report CPU job
+`576234` COMPLETED `0:0` with all six exact-head CPU/static receipt statuses,
+and mixture job `576235` COMPLETED `0:0` with the eight-lane public mixture
+audit and sealed FINAL receipt. The single bounded two-P100 GPU job `576237`
+FAILED `1:0` on the measured full step's original 85% capacity check.
+Preserve its evidence root; do not resubmit this handoff or authorize
+training. See [the 576237 failure assessment](N0_MEASURED_JOINT_P43_576237_FAILURE.md).
+This ChatGPT workspace has no mounted Magnolia corpus or `sbatch`; the
+reported statuses come from the owner's terminal transcript, not a local
+read of the full receipt bytes. The pinned scientific source is
 `alice-eipm-v1-n0-full-envelope-joint-ddp-v2` at
 `5e29f7f69ba4a5d031c7036639b67bebbcdc0bd2`.
 [Exact-head CPU CI](https://github.com/NIne-WIngEd/A.L.I.C.E/actions/runs/36368390448)
