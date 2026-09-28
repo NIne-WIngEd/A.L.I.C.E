@@ -10,7 +10,7 @@ A.L.I.C.E. PR #97 merged to main at:
 
 Fable PR #1 merged to main at:
 
-`e57a0ab1639076db79406e92d4d675d8e9f6c4d6`
+`191b0dbf8c1c33114b56e8e5e2c4be52076cd4ce`
 
 The correction is architectural, not cosmetic:
 
@@ -191,7 +191,7 @@ FBM must learn the real construction process:
 
 Fable main after PR #1:
 
-`e57a0ab1639076db79406e92d4d675d8e9f6c4d6`
+`191b0dbf8c1c33114b56e8e5e2c4be52076cd4ce`
 
 Release requires a fresh user corpus to produce one connected personal entity with:
 
