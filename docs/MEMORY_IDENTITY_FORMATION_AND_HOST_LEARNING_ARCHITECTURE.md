@@ -279,10 +279,10 @@ The architecture is capability-first, polyglot, local-capable and deployment-unb
 | Logical role | Purpose | Selected current implementation |
 |---|---|---|
 | Raw Evidence/Object | original multimodal evidence, datasets, checkpoints, exports/backups | encrypted content-addressed storage behind an S3-compatible abstraction |
-| Experience/Event Fabric | ordered evidence, replay, subscriptions, correction/deletion/device lineage | NATS JetStream behind project-owned event/evidence contracts |
+| Experience/Event Fabric | ordered evidence, replay, subscriptions, correction/deletion/device lineage | KurrentDB behind project-owned event/evidence contracts; NATS JetStream for federation/edge ingress |
 | Claim Fabric | canonical adjudicated bitemporal knowledge | XTDB v2 |
 | Episodes/Autobiographical | learned event boundaries, narratives, outcomes, dynamic scene/domain membership | governed derived episode plane linked to Event/Claim identities |
-| Cognitive Multi-Graph | entity, semantic, temporal, causal, evidence, social, relationship, mission, skill, identity, model-lineage and outcome structure | LadybugDB host-local; JanusGraph + qualified distributed storage at scale; Neo4j retained as existing reference |
+| Cognitive Multi-Graph | entity, semantic, temporal, causal, evidence, social, relationship, mission, skill, identity, model-lineage and outcome structure | LadybugDB host-local; NebulaGraph at scale; Neo4j retained as existing reference |
 | Associative Graph Compute | PPR, spreading activation, temporal decay, inhibition, path/bridge discovery | engine-independent derived compute layer |
 | Vector/Multimodal Plane | dense/sparse/named/multivector semantic and perceptual retrieval | Qdrant Edge/server/cluster |
 | Exact/source-native retrieval | direct source evidence and live authoritative state | filesystem, SQL/FTS, metadata, structured APIs, live source reads |
