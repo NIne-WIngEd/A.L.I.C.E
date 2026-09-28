@@ -24,11 +24,11 @@
   },
   "selected_architecture": {
     "raw_object": "encrypted_content_addressed_s3_compatible_abstraction",
-    "experience_event": "nats_jetstream_behind_project_owned_evidence_log_contract",
+    "experience_event": "kurrentdb_canonical_event_store_with_nats_jetstream_federation_transport",
     "claim_authority": "xtdb_v2_bitemporal",
     "episodes": "governed_derived_episode_plane",
     "cognitive_graph_local": "ladybugdb",
-    "cognitive_graph_scale_out": "janusgraph_with_qualified_distributed_storage",
+    "cognitive_graph_scale_out": "nebulagraph_distributed_cypher_graph",
     "cognitive_graph_existing_reference": "neo4j",
     "associative_graph_compute": "engine_independent_ppr_spreading_activation_temporal_decay_inhibition",
     "vector_multimodal": "qdrant_edge_or_server_cluster",
