@@ -59,7 +59,7 @@ Build the full successor behind the neutral event, claim, episode, graph, associ
 
 The current physical architecture is:
 
-- NATS JetStream for the replayable Experience/Event fabric behind project-owned EvidenceLog/event semantics;
+- KurrentDB as the canonical replayable Experience/Event store behind project-owned EvidenceLog/event semantics, with NATS JetStream for durable federation/edge ingress;
 - XTDB v2 for bitemporal Claim Authority;
 - encrypted content-addressed object storage for raw evidence and artifacts;
 - LadybugDB for host-local Cognitive Multi-Graph placement and NebulaGraph on qualified distributed storage for scale-out private-cluster placement;
