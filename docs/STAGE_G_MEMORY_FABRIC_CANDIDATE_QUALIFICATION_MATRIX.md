@@ -1,6 +1,6 @@
 # Stage G Full Cognitive-Memory Fabric Qualification
 
-**Version:** 3.0.0  
+**Version:** 3.0.1  
 **Status:** owner-directed execution requirement  
 **Applies to:** the full A.L.I.C.E./Fable successor cognitive-memory fabric and Phase 2 replacement readiness
 
@@ -39,7 +39,7 @@ A physical backend can change. A logical capability cannot silently disappear be
 | Logical plane | Current selected implementation | Role |
 | --- | --- | --- |
 | Raw Evidence/Object | encrypted content-addressed object store behind S3-compatible abstraction | originals, large payloads, datasets, artifacts, backups |
-| Experience/Event | NATS JetStream behind project-owned EvidenceLog/Event contracts | append/replay/subscriptions/device/event lineage |
+| Experience/Event | KurrentDB canonical event store behind project-owned EvidenceLog/Event contracts; NATS JetStream federation/edge ingress | canonical append/replay/subscriptions plus device/federation transport lineage |
 | Claim Authority | XTDB v2 | immutable/bitemporal adjudicated claims and historical/current views |
 | Episodic/Autobiographical | governed episode store/projection rooted in Event + Claim identities | learned event boundaries, narratives, outcomes, scenes |
 | Cognitive Multi-Graph — local | LadybugDB | embedded host-local graph projection/traversal/analytics |
