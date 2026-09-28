@@ -72,9 +72,11 @@ Use XTDB v2 as the selected bitemporal Claim implementation. Treat its storage/l
 
 ## 4. Track B — Event and Experience Fabric
 
-Build the selected NATS JetStream-backed Experience/Event implementation with project-owned semantics for ordered identity, expected stream version, idempotent append, replay/checkpoints, durable consumption, device/causal metadata, correction/deletion lineage, integrity, archive metadata, and projection interfaces.
+Build the selected KurrentDB-backed canonical Experience/Event implementation with project-owned semantics for ordered identity, expected stream revision, idempotent append, replay/checkpoints, persistent consumption, device/causal metadata, correction/deletion lineage, integrity, archive metadata, and projection interfaces.
 
-KurrentDB remains a strong event-native reference/challenger. It is not the universal Fable dependency because the current KLv1 product/license boundary is less suitable for a user-owned distributable platform than NATS's Apache-2.0 base.
+Use NATS JetStream as the durable multi-device/federation and edge-ingress transport. Device/transport events do not silently become canonical Experience records; governed reconciliation binds them into the host event fabric.
+
+KurrentDB's KLv1 hosted-service constraint is tracked for future product deployment. It does not justify replacing the stronger event-native substrate in the user-owned/local architecture.
 
 ## 5. Track C — Cognitive Multi-Graph and associative compute
 
@@ -95,7 +97,7 @@ Build a single logical multi-relational graph projection with orthogonal views f
 - model/dataset lineage;
 - decisions/outcomes.
 
-Use LadybugDB for the current host-local embedded placement. Use NebulaGraph with a qualified distributed backend when the graph must scale across a private cluster. Preserve Neo4j as an existing A.L.I.C.E. reference/migration source rather than deleting useful evidence.
+Use LadybugDB for the current host-local embedded placement. Use NebulaGraph when the graph must scale across a private cluster. Preserve Neo4j as an existing A.L.I.C.E. reference/migration source rather than deleting useful evidence.
 
 Build an engine-independent associative compute layer for Personalized PageRank, spreading activation, temporal decay, lateral inhibition, path/bridge discovery and query-conditioned view traversal.
 
