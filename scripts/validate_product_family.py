@@ -68,9 +68,20 @@ def main() -> int:
         "Independent Product Readiness Gate",
         "Mission Graph and Cognitive Workspace lane",
         "Clone-aware private identity phase lane",
+        "complete transferable personal cognitive foundation",
+        "F4 through F11 are internal construction and qualification milestones",
     ):
         if marker not in roadmap:
             errors.append(f"roadmap missing product marker: {marker}")
+
+    product_roadmap = (ROOT / "docs/FRIDAY_ROADMAP.md").read_text(encoding="utf-8")
+    for marker in (
+        "Fable v1 Release Gate",
+        "internal engineering and qualification milestones",
+        "No F4–F11 milestone by itself satisfies this release gate.",
+    ):
+        if marker not in product_roadmap:
+            errors.append(f"consumer roadmap missing full-v1 marker: {marker}")
 
     try:
         parity = json.loads((ROOT / "policies/capability_parity_ledger.json").read_text(encoding="utf-8"))
