@@ -1,6 +1,6 @@
 # Stage G Full Cognitive-Memory Fabric Qualification
 
-**Version:** 3.0.1  
+**Version:** 3.0.0  
 **Status:** owner-directed execution requirement  
 **Applies to:** the full A.L.I.C.E./Fable successor cognitive-memory fabric and Phase 2 replacement readiness
 
