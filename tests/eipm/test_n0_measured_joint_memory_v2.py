@@ -60,6 +60,10 @@ def test_shared_production_optimizer_step_preserves_full_objective_and_state():
     )
     accelerator=_SingleProcessAccelerator()
     batches=_batches(fixture,reference_system)
+    # The registered compiler supplies these counts; the route fixture omits
+    # metadata because its earlier tests only exercise the forward boundary.
+    for key in ("semantic_operator_compiled","full_fabric_compiled","natural_relation_compiled"):
+        batches[key]["metadata"]={"batch_size":1}
     for _ in range(2):
         ref_opt.zero_grad(set_to_none=True)
         numerator={family:torch.zeros(()) for family in resolve_stage_policy(J3).active_macro_families}
