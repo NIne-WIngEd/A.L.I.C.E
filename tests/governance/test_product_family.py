@@ -129,11 +129,14 @@ def test_release_channels_do_not_define_fable_capability_tiers() -> None:
     assert semantics["partial_capability_consumer_release_allowed"] is False
     assert semantics["approved_closed_alpha_does_not_imply_fable_v1_release"] is True
 
-    kernel = json.loads(
-        (ROOT / "policies" / "cognitive_kernel_release_attestation_policy.json").read_text(
+    schema = json.loads(
+        (ROOT / "policies" / "friday_release_attestation_schema.json").read_text(
             encoding="utf-8"
         )
     )
-    assert kernel["release_channel_semantics"]["distribution_channel_is_not_capability_tier"] is True
-    assert kernel["invariants"]["partial_capability_consumer_fable_release_allowed"] is False
+    assert schema["x-release-channel-semantics"]["does_not_define_cognitive_capability_tier"] is True
+    assert (
+        schema["x-release-channel-semantics"]["fable_v1_capability_gate"]
+        == "full_personal_cognitive_foundation_after_f11"
+    )
 
