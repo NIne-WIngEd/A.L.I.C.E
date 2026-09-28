@@ -126,6 +126,10 @@ def _complete_memory_receipt():
         "state_reset_to_identical_initialization":True,
         "steps":[dict(step,optimizer_step_index=1),dict(step,optimizer_step_index=2)],
     } for s in semantic for f in fabric]
+    pairs[-1]["checkpoint_resume_memory"]=[
+        {**step,"stage":stage}
+        for stage in ("checkpoint_save","checkpoint_load","resumed_optimizer_step")
+    ]
     return {
         "schema":"alice.eipm.n0.full-envelope-measured-joint-memory.v2",
         "status":"PASS_N0_FULL_ENVELOPE_MEASURED_JOINT_MEMORY_V2",
@@ -137,6 +141,7 @@ def _complete_memory_receipt():
         "state_reset_to_identical_initialization_per_pair":True,
         "eight_microbatch_accumulation_measured":True,
         "same_stage_resume_verified":True,
+        "checkpoint_resume_capacity_pass_per_rank":True,
         "predecessor_state_transfer_verified":True,
         "stage_dev_selection_claimed":False,
         "capacity_85_percent_pass_per_rank":True,
@@ -179,6 +184,14 @@ def test_measured_capacity_gate_rejects_bad_rank_step_and_preserves_failed_proje
     altered=copy.deepcopy(receipt)
     altered["ranks"][1]["pairs"][8]["steps"][0]["nonzero_public_judgment_gradient"]=False
     with pytest.raises(SystemExit,match="incomplete step"):
+        trainer.require_measured_joint_memory(altered)
+    altered=copy.deepcopy(receipt)
+    altered["ranks"][1]["pairs"][-1]["checkpoint_resume_memory"][2]["max_reserved_bytes"]=70_000_000_000
+    with pytest.raises(SystemExit,match="checkpoint/resume memory arithmetic"):
+        trainer.require_measured_joint_memory(altered)
+    altered=copy.deepcopy(receipt)
+    altered["ranks"][0]["pairs"][-1].pop("checkpoint_resume_memory")
+    with pytest.raises(SystemExit,match="checkpoint/resume memory coverage"):
         trainer.require_measured_joint_memory(altered)
     altered=copy.deepcopy(receipt)
     altered["old_projection_status"]="PASS_N0_FULL_ENVELOPE_MEASURED_JOINT_MEMORY_V2"

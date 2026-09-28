@@ -161,6 +161,7 @@ def require_measured_joint_memory(receipt: Mapping[str,Any]) -> None:
         "state_reset_to_identical_initialization_per_pair":True,
         "eight_microbatch_accumulation_measured":True,
         "same_stage_resume_verified":True,
+        "checkpoint_resume_capacity_pass_per_rank":True,
         "predecessor_state_transfer_verified":True,
         "stage_dev_selection_claimed":False,
         "capacity_85_percent_pass_per_rank":True,
@@ -236,6 +237,29 @@ def require_measured_joint_memory(receipt: Mapping[str,Any]) -> None:
                     raise SystemExit("measured GPU step memory arithmetic drift")
                 if measured>math.floor(0.85*total):
                     raise SystemExit("measured GPU step exceeded original 85% limit")
+            if pair.get("pair")=="long_context_semantic__long_additional_view_source":
+                resumed=pair.get("checkpoint_resume_memory") or []
+                if [item.get("stage") for item in resumed]!=[
+                    "checkpoint_save","checkpoint_load","resumed_optimizer_step",
+                ]:
+                    raise SystemExit("measured GPU checkpoint/resume memory coverage drift")
+                for item in resumed:
+                    if item.get("capacity_85_percent_pass") is not True:
+                        raise SystemExit("measured GPU checkpoint/resume capacity failure")
+                    measured=int(item.get("conservative_measured_bytes",0))
+                    if (
+                        int(item.get("total_memory_bytes",0))!=total
+                        or int(item.get("safety_margin_bytes",0))!=1073741824
+                        or measured!=max(
+                            int(item.get("max_allocated_bytes",0)),
+                            int(item.get("max_reserved_bytes",0)),
+                            int(item.get("max_sampled_device_used_bytes",0))+1073741824,
+                        )
+                        or measured>math.floor(0.85*total)
+                    ):
+                        raise SystemExit("measured GPU checkpoint/resume memory arithmetic drift")
+                if resumed[-1].get("finite_nonzero_gradients") is not True:
+                    raise SystemExit("resumed optimizer step lacked named gradients")
 
 
 def require_complete_joint_route_qualification(
@@ -274,6 +298,7 @@ def require_complete_joint_route_qualification(
         "first_and_later_adamw_steps_measured":True,
         "eight_microbatch_accumulation_measured":True,
         "same_stage_resume_verified":True,
+        "checkpoint_resume_capacity_pass_per_rank":True,
         "predecessor_state_transfer_verified":True,
         "stage_dev_selection_claimed":False,
         "capacity_85_percent_pass_per_rank":True,

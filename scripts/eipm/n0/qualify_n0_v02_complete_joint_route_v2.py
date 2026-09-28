@@ -11,9 +11,11 @@ from __future__ import annotations
 import argparse
 import gc
 import hashlib
+import importlib.metadata
 import json
 import math
 import os
+import platform
 import random
 import subprocess
 from pathlib import Path
@@ -234,6 +236,50 @@ class MemoryObserver:
             "nonzero_public_judgment_gradient":self.nonzero_public_judgment,
             "stages":self.stages,
         }
+
+
+def checkpoint_memory_snapshot(device: torch.device,margin: int,stage: str) -> dict[str,Any]:
+    """Include checkpoint transport in the same device capacity contract."""
+    torch.cuda.synchronize(device)
+    total=int(torch.cuda.get_device_properties(device).total_memory)
+    free,_=torch.cuda.mem_get_info(device)
+    allocated=int(torch.cuda.max_memory_allocated(device))
+    reserved=int(torch.cuda.max_memory_reserved(device))
+    used=total-int(free)
+    conservative=max(allocated,reserved,used+margin)
+    return {
+        "stage":stage,"total_memory_bytes":total,
+        "max_allocated_bytes":allocated,"max_reserved_bytes":reserved,
+        "max_sampled_device_used_bytes":used,"safety_margin_bytes":margin,
+        "conservative_measured_bytes":conservative,
+        "capacity_85_percent_pass":conservative<=math.floor(0.85*total),
+    }
+
+
+def runtime_build(device: torch.device) -> dict[str,Any]:
+    packages={}
+    for package in ("accelerate","transformers","tokenizers","safetensors","datasets"):
+        try:
+            packages[package]=importlib.metadata.version(package)
+        except importlib.metadata.PackageNotFoundError:
+            packages[package]=None
+    try:
+        driver=subprocess.run(
+            ["nvidia-smi","--query-gpu=driver_version","--format=csv,noheader"],
+            capture_output=True,text=True,check=False,timeout=10,
+        )
+        driver_versions=driver.stdout.strip().splitlines() if driver.returncode==0 else []
+    except (FileNotFoundError,subprocess.TimeoutExpired):
+        driver_versions=[]
+    return {
+        "python":platform.python_version(),"torch":torch.__version__,
+        "cuda_build":torch.version.cuda,"nccl":str(torch.cuda.nccl.version()),
+        "cudnn":torch.backends.cudnn.version(),
+        "device_name":torch.cuda.get_device_name(device),
+        "device_compute_capability":list(torch.cuda.get_device_capability(device)),
+        "driver_versions":driver_versions,
+        "packages":packages,
+    }
 
 
 def parser() -> argparse.ArgumentParser:
@@ -567,6 +613,8 @@ def main() -> None:
     checkpoint_root=output/"resume_diagnostic"
     strict_transfer=None
     same_stage_resume=False
+    checkpoint_memory=[]
+    margin=int(config["device_memory_safety_margin_bytes"])
     for pair_number,pair in enumerate(pairs):
         semantic_name,full_name=pair.split("__",1)
         if pair_number:
@@ -621,10 +669,16 @@ def main() -> None:
 
             if pair==checkpoint_pair and index==0:
                 accelerator.wait_for_everyone()
+                torch.cuda.reset_peak_memory_stats(device)
                 accelerator.save_state(str(checkpoint_root))
                 if accelerator.is_main_process:
                     save_file({key:value.detach().cpu().contiguous() for key,value in objective.state_dict().items()},str(output/"objective_diagnostic.safetensors"))
                 accelerator.wait_for_everyone()
+                snapshot=checkpoint_memory_snapshot(device,margin,"checkpoint_save")
+                checkpoint_memory.append(snapshot)
+                if not snapshot["capacity_85_percent_pass"]:
+                    append_rank_row(rank_file,{"pair":pair,"status":"FAIL_85_PERCENT_CHECKPOINT_SAVE","measurement":snapshot})
+                    raise RuntimeError("checkpoint save exceeded original 85% per-rank capacity")
                 first_digest=digest_state(unwrapped,normalized_optimizer(optimizer),scheduler)
 
             if pair==checkpoint_pair and index==1:
@@ -634,18 +688,35 @@ def main() -> None:
                     "scheduler":cpu_state(scheduler.state_dict()),
                 }
                 accelerator.wait_for_everyone()
+                torch.cuda.reset_peak_memory_stats(device)
                 accelerator.load_state(str(checkpoint_root))
                 objective.load_state_dict(load_file(str(output/"objective_diagnostic.safetensors"),device="cpu"),strict=True)
+                snapshot=checkpoint_memory_snapshot(device,margin,"checkpoint_load")
+                checkpoint_memory.append(snapshot)
+                if not snapshot["capacity_85_percent_pass"]:
+                    append_rank_row(rank_file,{"pair":pair,"status":"FAIL_85_PERCENT_CHECKPOINT_LOAD","measurement":snapshot})
+                    raise RuntimeError("checkpoint load exceeded original 85% per-rank capacity")
                 if digest_state(unwrapped,normalized_optimizer(optimizer),scheduler)!=first_digest:
                     raise RuntimeError("same-stage restore changed model/optimizer/scheduler")
+                torch.cuda.reset_peak_memory_stats(device)
+                resumed_observer=MemoryObserver(device=device,margin=margin)
+                resumed_observer.model=system
                 resumed=execute_registered_optimizer_step(
                     accelerator=accelerator,route=route,unwrapped_route=unwrapped,
                     system=system,objective=objective,optimizer=optimizer,
                     lr_scheduler=scheduler,
                     next_batch=lambda:pair_batch(common,semantic[semantic_name],full[full_name],device),
                     stage=J3,device=device,accumulation_steps=8,
-                    gradient_clip_norm=options["gradient_clip_norm"],
+                    gradient_clip_norm=options["gradient_clip_norm"],observe=resumed_observer,
                 )
+                resumed_memory=resumed_observer.summary()
+                resumed_memory["stage"]="resumed_optimizer_step"
+                checkpoint_memory.append(resumed_memory)
+                if not resumed_memory["capacity_85_percent_pass"]:
+                    append_rank_row(rank_file,{"pair":pair,"status":"FAIL_85_PERCENT_RESUMED_STEP","measurement":resumed_memory})
+                    raise RuntimeError("resumed optimizer step exceeded original 85% per-rank capacity")
+                if accelerator.optimizer_step_was_skipped or not resumed_memory["finite_nonzero_gradients"]:
+                    raise RuntimeError("resumed step skipped AdamW or missing named gradients")
                 for expected,observed in zip(step_losses,resumed,strict=True):
                     if not math.isclose(expected,observed,rel_tol=1e-4,abs_tol=1e-5):
                         raise RuntimeError("same-stage resumed joint loss drift")
@@ -663,6 +734,12 @@ def main() -> None:
             "first_and_later_adamw_measured":True,
             "state_reset_to_identical_initialization":True,
         }
+        if pair==checkpoint_pair:
+            if [entry["stage"] for entry in checkpoint_memory]!=[
+                "checkpoint_save","checkpoint_load","resumed_optimizer_step",
+            ]:
+                raise RuntimeError("checkpoint and resumed memory coverage incomplete")
+            row["checkpoint_resume_memory"]=checkpoint_memory
         append_rank_row(rank_file,row)
         rank_rows.append(row)
         print(f"MEASURED_J3_PAIR_PASS rank={accelerator.process_index} pair={pair}",flush=True)
@@ -684,6 +761,7 @@ def main() -> None:
     local={
         "rank":accelerator.process_index,"local_rank":accelerator.local_process_index,
         "device_name":torch.cuda.get_device_name(device),"total_memory_bytes":total,
+        "runtime_build":runtime_build(device),
         "pair_count":len(rank_rows),"pairs":rank_rows,
         "same_stage_resume_verified":same_stage_resume,
         "predecessor_state_transfer_verified":True,
@@ -698,6 +776,12 @@ def main() -> None:
                 raise RuntimeError("measured full route omitted a pair on a rank")
             if row["same_stage_resume_verified"] is not True:
                 raise RuntimeError("rank did not verify same-stage resume")
+            resume_pair=next(p for p in row["pairs"] if p["pair"]==checkpoint_pair)
+            if len(resume_pair.get("checkpoint_resume_memory",[]))!=3 or any(
+                sample["capacity_85_percent_pass"] is not True
+                for sample in resume_pair["checkpoint_resume_memory"]
+            ):
+                raise RuntimeError("checkpoint transport or resumed step exceeded 85%")
             for pair in row["pairs"]:
                 if len(pair["steps"])!=2 or any(
                     step["capacity_85_percent_pass"] is not True
@@ -738,6 +822,7 @@ def main() -> None:
             "state_reset_to_identical_initialization_per_pair":True,
             "eight_microbatch_accumulation_measured":True,
             "same_stage_resume_verified":True,
+            "checkpoint_resume_capacity_pass_per_rank":True,
             "predecessor_state_transfer_verified":True,
             "stage_dev_selection_claimed":False,
             "capacity_85_percent_pass_per_rank":True,
@@ -767,6 +852,7 @@ def main() -> None:
             "first_and_later_adamw_steps_measured":True,
             "eight_microbatch_accumulation_measured":True,
             "same_stage_resume_verified":True,
+            "checkpoint_resume_capacity_pass_per_rank":True,
             "predecessor_state_transfer_verified":True,
             "stage_dev_selection_claimed":False,
             "capacity_85_percent_pass_per_rank":True,
