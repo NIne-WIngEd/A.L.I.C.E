@@ -1,6 +1,6 @@
 # Phase 2 to Cognitive Fabric Memory Migration Plan
 
-**Version:** 2.0.0
+**Version:** 2.0.1
 **Status:** Stage A+B, Stage C+E, deterministic Stage D, Stage F controlled-mirroring, and Stage G projection-generation prototypes operational; persistent F+G reference integration operational; private execution, live candidate integrations, and production authority stages independently gated
 **Source baseline:** Released Phase 2 Memory Core
 **Destination:** Backend-neutral Memory Architecture v4.1
@@ -59,7 +59,7 @@ Build the full successor behind the neutral event, claim, episode, graph, associ
 
 The current physical architecture is:
 
-- NATS JetStream for the replayable Experience/Event fabric behind project-owned EvidenceLog/event semantics;
+- KurrentDB as the canonical replayable Experience/Event store behind project-owned EvidenceLog/event semantics, with NATS JetStream for durable federation/edge ingress;
 - XTDB v2 for bitemporal Claim Authority;
 - encrypted content-addressed object storage for raw evidence and artifacts;
 - LadybugDB for host-local Cognitive Multi-Graph placement and NebulaGraph on qualified distributed storage for scale-out private-cluster placement;
