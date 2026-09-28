@@ -1,5 +1,10 @@
 # N0 final free-GPU route and paid-host portability decision
 
+**Later source status:** The missing measured P43 successor and whole-route
+producer were implemented on 2026-09-28. The 2026-09-27 blockers below are
+historical; use `docs/chat-context/2026-09-28/N0_MEASURED_JOINT_P43_V2_SOURCE_AND_EXECUTION_GATE.md`
+for the current exact head and remaining proof.
+
 Status (2026-09-27): **read-only reassessment and prepared hardware-only inventory. No new Kaggle kernel, Magnolia job, paid instance, P43 PASS or production training.** The executable scientific candidate is `alice-eipm-v1-n0-full-envelope-joint-ddp-v2` at `171e0cc21ef420a5bf93d01cd2631de8e789a2be`. Its CPU workflow passed 122 tests with one GPU-only skip. The predecessor `a19f8e8893422702c138182f239064385addf91c`, P100 P43 projection FAIL (`576210`), failed first-backward DDP diagnostic (`576213`) and Kaggle actual T4×2 probe remain preserved separately.
 
 ## Decision from existing evidence

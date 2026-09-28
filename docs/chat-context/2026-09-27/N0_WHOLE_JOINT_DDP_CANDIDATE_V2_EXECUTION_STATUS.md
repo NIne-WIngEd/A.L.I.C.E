@@ -1,5 +1,11 @@
 # N0 whole-joint DDP candidate: execution status and remaining proof
 
+**Later source status:** The missing measured P43 and whole-route proof producer
+were implemented on 2026-09-28. The CPU counts and missing-qualifier statement
+below describe the earlier `171e0cc` head; the current status and unchanged
+GPU proof requirement are in
+`docs/chat-context/2026-09-28/N0_MEASURED_JOINT_P43_V2_SOURCE_AND_EXECUTION_GATE.md`.
+
 The scientific predecessor `a19f8e8893422702c138182f239064385addf91c` and the failed two-rank J3 backward evidence from Magnolia job 576213 remain intact. That job failed with a shared parameter marked ready twice; its partial VRAM snapshots are not a completed backward or optimizer memory measurement. The original forward-only P43 remains failed. This document records the separate corrective candidate, not a P43 PASS or authorization to train.
 
 ## Implemented route
