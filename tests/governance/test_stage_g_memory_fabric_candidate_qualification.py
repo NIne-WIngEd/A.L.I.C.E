@@ -50,10 +50,10 @@ def test_selected_physical_architecture_matches_full_memory_roles() -> None:
     assert product["deployment_adaptation_may_remove_logical_planes"] is False
 
     stack = policy["selected_architecture"]
-    assert stack["experience_event"] == "nats_jetstream_behind_project_owned_evidence_log_contract"
+    assert stack["experience_event"] == "kurrentdb_canonical_event_store_with_nats_jetstream_federation_transport"
     assert stack["claim_authority"] == "xtdb_v2_bitemporal"
     assert stack["cognitive_graph_local"] == "ladybugdb"
-    assert stack["cognitive_graph_scale_out"] == "janusgraph_with_qualified_distributed_storage"
+    assert stack["cognitive_graph_scale_out"] == "nebulagraph_distributed_cypher_graph"
     assert stack["vector_multimodal"] == "qdrant_edge_or_server_cluster"
     assert stack["durable_workflow"] == "temporal"
     assert stack["shared_ephemeral"] == "valkey_with_process_local_l1"
@@ -225,7 +225,7 @@ def test_execution_map_rejects_lighter_fable_and_backend_simplification() -> Non
     assert "NATS JetStream" in execution
     assert "XTDB v2" in execution
     assert "LadybugDB" in execution
-    assert "JanusGraph" in execution
+    assert "NebulaGraph" in execution
     assert "Qdrant" in execution
     assert "Memory Resource Manager / Scheduler" in execution
     assert "cross-layer influence operation" in execution
