@@ -6,7 +6,7 @@
 > This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
 
 
-**Version:** 2.4.0
+**Version:** 2.5.0
 **Owner:** MK Rayan
 **Status:** Final top-level capability domains with a mapped Friday product track
 **Principle:** Capability, learning, and governance co-evolve. Earlier implementations remain changeable when necessary to serve the final architecture.
@@ -89,59 +89,65 @@ This is a release gate, not a new top-level phase and not the repository-creatio
 
 Files, email, calendars, repositories, services, scientific tools, APIs, MCP/A2A compatibility, images, audio, video, telemetry, sensors, and model routing.
 
-**Friday action:** Deliver the first signed Windows local-ingestion alpha using the shared kernel.
+**Friday/Fable action:** Internal F4 ingestion and local-runtime qualification. This is not a partial consumer release.
 
 ## Phase 8 — Autonomous Memory, Reflection, and Procedural Learning
 
 Learning Curator, automated memory formation, belief revision, consolidation, source trust, skill synthesis, executable procedures, learned retention, representative replay selection, compression, archival, intentional forgetting, and training candidates.
 
-**Friday action:** Earliest credible closed alpha. Friday's core differentiation requires automated selective learning, not only local chat.
+**Friday/Fable action:** Internal F5 selective-memory and learning qualification. The former "closed alpha" release interpretation is superseded; Phase 8 alone cannot ship as Fable v1.
 
 ## Phase 9 — Cognitive Core
 
 World model, temporal and causal graphs, model of Rayan, generic host model, self-model, metacognition, uncertainty, social models, identity continuity, voice, and independent judgment.
 
-**Friday action:** Personal-intelligence beta with stable host-specific behavior and the Personalization Inspector.
+**Friday/Fable action:** Internal F6 personal-intelligence qualification covering host, relationship, assistant-self, uncertainty, voice and native judgment. This is not a beta product tier.
 
 ## Phase 10 — Planning, Curiosity, and Proactive Agency
 
 Hierarchical goals, search, simulation, long-running missions, proactive research, automatic curriculum, specialist-agent teams, replanning, and resource-aware initiative.
 
-**Friday action:** Proactive local-agent beta.
+**Friday/Fable action:** Internal F7 mission and proactive-agency qualification. These capabilities remain part of the v1 personal foundation.
 
 ## Phase 11 — Computer Use, Autonomous Coding, and Self-Evolution
 
 General desktop and terminal operation, repository agency, code generation, skill libraries, self-modifying agents, variant archives, automatic low-risk promotion, canaries, and rollback.
 
-**Friday action:** Public beta with evaluated computer-use and signed local skill packages.
+**Friday/Fable action:** Internal F8 action, skill and self-evolution qualification. General feature generation may be API-backed, while local authority, procedural memory, evaluation and rollback remain first-party.
 
 ## Phase 12 — Scientific Discovery and Formal Intelligence
 
 Hypotheses, experiments, simulation, statistics, optimization, CAD, scientific tools, formal solvers, theorem proving, neuro-symbolic reasoning, and evolutionary discovery.
 
-**Friday action:** Expert and research capability packs.
+**Friday/Fable action:** Internal F9 expert-feature integration. Replaceable external feature models remain allowed in v1 behind the local personal controller.
 
 ## Phase 13 — Continual Model Adaptation and Self-Training
 
 Learned rankers, routers, preference models, world models, adapters, automated dataset curation, training, champion/challenger promotion, lifelong neural learning, and machine-unlearning research.
 
-**Friday action:** Host-specific adapters and model components become a standard product feature.
+**Friday/Fable action:** Internal F10 host-specific model-adaptation qualification, including lineage, deletion influence, challenger evaluation and rollback.
 
 ## Phase 14 — Operating Environment and Embodiment
 
 Persistent desktop/mobile/edge operation, multimodal ambient interface, secure synchronization, sensors, smart devices, laboratories, robotics, and physical-world action.
 
-**Friday action:** Friday Operating Environment preview and dedicated-system research.
+**Friday/Fable action:** Internal F11 persistent-environment and multi-device qualification. Completion of the required F4–F11 personal-foundation qualifications makes the full Fable v1 release gate eligible; no earlier phase creates a smaller consumer edition.
 
 ## Phase 15 — Generalized Platform and Frontier Research
 
 Reusable personal-AI platform, developer SDK, signed capability ecosystem, agent federation, distributed intelligence, optional open-source components, and active research on capabilities listed in `RESEARCH_FRONTIERS.md`.
 
-**Friday action:** Platform launch, household/enterprise modes, optional privacy-preserving federation, and eventual AI operating-system distribution.
+**Friday/Fable action:** F12 post-v1 platform/ecosystem expansion: SDK, capability ecosystem, household/enterprise modes, broader federation, and later operating-system distribution.
 
 ## Product-track rule
 
-Friday milestones are mapped in `docs/FRIDAY_ROADMAP.md`. They do not create or renumber top-level A.L.I.C.E. phases.
+Friday/Fable milestones are mapped in `docs/FRIDAY_ROADMAP.md`. They do not create or renumber top-level A.L.I.C.E. phases.
+
+F4 through F11 are internal construction and qualification milestones. Historical `alpha`, `closed_alpha`, `beta`, and `preview` labels may remain in compatibility schemas or controlled test channels, but they do not authorize partial-capability consumer editions.
+
+The first consumer Fable v1 release has one capability gate: the complete transferable personal cognitive foundation must be qualified as a connected entity. General feature models may remain replaceable API services in v1. Personal memory, identity, host/relationship/self development, native judgment, mission/workspace state, procedural learning, personal-model evolution, deletion/unlearning, and continuity may not be delegated or omitted to create a smaller release.
+
+F12 is post-v1 platform/ecosystem expansion.
 
 ## Architecture-change rule
 
