@@ -81,9 +81,24 @@ and checks the generated expected file set before opening entries supplied
 by a destination manifest. Local syntax, source-list comparison and synthetic
 sealed-file rejection passed. The expected successor has 78 entries if the
 owner's source files still match; **no v2 Magnolia manifest has been
-produced yet**. It requires a new evidence path and distinct hash. Do not
-overwrite or relabel the failed V1 manifest. No new N0 scientific source or
-training authorization is involved.
+produced yet** at the time of that source review. It requires a new evidence
+path and distinct hash. Do not overwrite or relabel the failed V1 manifest.
+No new N0 scientific source or training authorization is involved.
+
+**V2 source result, owner terminal (2026-09-28):** The V1 manifest SHA check
+returned OK. The V2 script's pinned Git blob and SHA-256 checks returned OK.
+The same CPU udocker runtime reported
+`CREATED_PUBLIC_INPUT_MANIFEST files=78 sha256=2d83e34f58918ad36d31142ba0e6f77447f2d647c6edc786f06678502f010b7d`.
+This is consistent with V1's 76 entries, excluding its two FewRel FINAL
+payloads and adding the four missing original CPU receipts. The V2 JSON
+contents have not yet been uploaded for independent entry-by-entry review;
+the producer itself checked those CPU receipts against exact-head statuses
+and the mixture's copies. The V1 and V2 files remain separate. No source
+payload, FINAL row, or private identity data has been transferred to a paid
+host. Destination hashes, runtime compatibility, actual two-device offer and
+the remaining full-route GPU proof are still outstanding. The owner's
+`cat HOME/...` read failed because `$HOME` was omitted; it did not alter the
+manifests.
 
 On Magnolia, after fetching this context revision and checking **both**
 script hashes, run the manifest producer under the validated CPU container
