@@ -6,7 +6,7 @@
 
 A.L.I.C.E. PR #97 merged to main at:
 
-`d7bdf75b38785e0ed3e45a724429c1161b902b15`
+`e6d0490cdf29ee56edbcb0e3d65d5783adfdf1a7`
 
 Fable PR #1 merged to main at:
 
@@ -15,6 +15,9 @@ Fable PR #1 merged to main at:
 The correction is architectural, not cosmetic:
 
 - Fable v1 is the **full transferable personal/cognitive architecture**.
+- PR #98 later closed the remaining release-governance loophole: F4–F11 are internal engineering/qualification milestones, not progressively shippable alpha/beta cognitive tiers.
+- The first consumer release uses one gate: `full_personal_cognitive_foundation_after_f11`.
+- Historical `closed_alpha` / `alpha` / `beta` labels are distribution/test channels only and cannot override the v1 capability gate.
 - There is no small/light/local-lite intelligence tier.
 - Hardware can change placement, sharding, scheduling, precision, and service topology.
 - Hardware may not remove a logical cognitive plane.
@@ -47,6 +50,28 @@ The current physical implementation direction is:
 - Training -> PyTorch + Accelerate with hardware-adaptive distributed strategy.
 
 This does **not** reintroduce MC10-style backend tournaments. The architecture is selected. Challengers are admitted only when a concrete observed blocker or strong frontier evidence can change a real decision.
+
+## Consumer release-boundary correction
+
+Canonical release-governance merge:
+
+`e6d0490cdf29ee56edbcb0e3d65d5783adfdf1a7` (PR #98)
+
+Interpretation:
+
+- F4 = ingestion/runtime qualification;
+- F5 = selective memory/learning qualification;
+- F6 = personal intelligence qualification;
+- F7 = mission/proactive-agency qualification;
+- F8 = action/skill/self-evolution qualification;
+- F9 = expert feature integration qualification;
+- F10 = host-specific model-adaptation qualification;
+- F11 = persistent environment/multi-device qualification;
+- **none is a standalone consumer Fable release**;
+- Fable v1 becomes release-eligible only after the complete F4–F11 personal foundation is qualified as one entity;
+- F12 is post-v1 SDK/platform/ecosystem expansion.
+
+Do not interpret any legacy profile named `friday.learning_alpha` as a reduced product tier. Its ID is retained for compatibility and now explicitly means internal qualification only.
 
 ## Non-skippable execution lanes
 
