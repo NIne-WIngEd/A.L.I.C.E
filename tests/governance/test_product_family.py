@@ -72,3 +72,71 @@ def test_consumer_has_parity_and_dual_production_approval() -> None:
     parity = json.loads((ROOT / "policies" / "capability_parity_ledger.json").read_text(encoding="utf-8"))
     assert parity["destination_parity_required"] is True
     assert "mission_graph.v1" in parity["capabilities"]
+
+def test_fable_v1_has_one_full_personal_foundation_release_gate() -> None:
+    payload = json.loads((ROOT / "policies" / "product_lines.json").read_text(encoding="utf-8"))
+    friday = payload["products"]["friday"]
+
+    assert friday["legacy_closed_alpha_gate"] == "8"
+    assert friday["legacy_closed_alpha_gate_semantics"] == "internal_qualification_only_not_consumer_release"
+    assert "closed_alpha_gate" not in friday
+    assert friday["first_consumer_release_gate"] == "full_personal_cognitive_foundation_after_f11"
+    assert friday["partial_capability_consumer_release_allowed"] is False
+    assert friday["fable_v1_full_personal_cognitive_foundation_required"] is True
+    assert friday["feature_model_api_delegation_allowed_v1"] is True
+    assert friday["personal_cognitive_core_api_delegation_allowed_v1"] is False
+    assert friday["internal_qualification_profiles_are_release_tiers"] is False
+    assert friday["f12_platform_required_before_fable_v1"] is False
+    assert friday["fable_v1_requires_internal_milestones"] == [
+        "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11"
+    ]
+
+    separation = payload["separation_rules"]
+    assert separation["internal_qualification_profile_may_define_consumer_release_capability"] is False
+    assert separation["hardware_constraints_may_remove_fable_v1_logical_cognitive_planes"] is False
+    assert separation["general_feature_models_may_be_external_in_fable_v1"] is True
+    assert separation["personal_cognitive_foundation_may_be_externalized_in_fable_v1"] is False
+
+
+def test_legacy_friday_profiles_are_internal_qualification_not_release_tiers() -> None:
+    profiles = json.loads((ROOT / "policies" / "capability_profiles.json").read_text(encoding="utf-8"))["profiles"]
+
+    assert profiles["friday.local_core"]["release_semantics"] == "internal_qualification_only"
+    assert profiles["friday.learning_alpha"]["release_semantics"] == "legacy_named_internal_qualification_only"
+    assert profiles["friday.optional_connected"]["release_semantics"] == "optional_overlay_not_release_tier"
+
+    for profile_id in ("friday.local_core", "friday.learning_alpha", "friday.optional_connected"):
+        assert profiles[profile_id]["consumer_release_eligible"] is False
+        assert profiles[profile_id]["may_define_fable_v1_capability_boundary"] is False
+
+
+def test_friday_roadmap_has_no_partial_consumer_launch_gate() -> None:
+    roadmap = (ROOT / "docs" / "FRIDAY_ROADMAP.md").read_text(encoding="utf-8")
+
+    assert "Fable v1 Release Gate" in roadmap
+    assert "F4–F11 are **internal engineering and qualification milestones**" in roadmap
+    assert "No F4–F11 milestone by itself satisfies this release gate." in roadmap
+    assert "minimum credible Friday launch cohort" not in roadmap
+    assert "## F5 — Learning closed alpha" not in roadmap
+    assert "## F6 — Personal intelligence beta" not in roadmap
+
+def test_release_channels_do_not_define_fable_capability_tiers() -> None:
+    production = json.loads(
+        (ROOT / "policies" / "friday_production_governance.json").read_text(encoding="utf-8")
+    )
+    semantics = production["release_channel_semantics"]
+    assert semantics["channel_labels_describe_distribution_maturity_not_cognitive_capability"] is True
+    assert semantics["partial_capability_consumer_release_allowed"] is False
+    assert semantics["approved_closed_alpha_does_not_imply_fable_v1_release"] is True
+
+    schema = json.loads(
+        (ROOT / "policies" / "friday_release_attestation_schema.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert schema["x-release-channel-semantics"]["does_not_define_cognitive_capability_tier"] is True
+    assert (
+        schema["x-release-channel-semantics"]["fable_v1_capability_gate"]
+        == "full_personal_cognitive_foundation_after_f11"
+    )
+

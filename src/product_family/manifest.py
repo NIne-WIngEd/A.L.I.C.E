@@ -30,6 +30,13 @@ class ProductIdentity:
     repository_required_before_product_source: bool | None = None
     product_source_allowed_in_alice_repository: bool | None = None
     production_dual_approval_required: bool | None = None
+    first_consumer_release_gate: str | None = None
+    partial_capability_consumer_release_allowed: bool | None = None
+    fable_v1_full_personal_cognitive_foundation_required: bool | None = None
+    feature_model_api_delegation_allowed_v1: bool | None = None
+    personal_cognitive_core_api_delegation_allowed_v1: bool | None = None
+    internal_qualification_profiles_are_release_tiers: bool | None = None
+    f12_platform_required_before_fable_v1: bool | None = None
 
     @classmethod
     def from_mapping(cls, product_id: str, payload: Mapping[str, Any]) -> "ProductIdentity":
@@ -71,6 +78,29 @@ class ProductIdentity:
             repository_required_before_product_source=optional_bool("repository_required_before_product_source"),
             product_source_allowed_in_alice_repository=optional_bool("product_source_allowed_in_alice_repository"),
             production_dual_approval_required=optional_bool("production_dual_approval_required"),
+            first_consumer_release_gate=(
+                str(payload["first_consumer_release_gate"])
+                if payload.get("first_consumer_release_gate")
+                else None
+            ),
+            partial_capability_consumer_release_allowed=optional_bool(
+                "partial_capability_consumer_release_allowed"
+            ),
+            fable_v1_full_personal_cognitive_foundation_required=optional_bool(
+                "fable_v1_full_personal_cognitive_foundation_required"
+            ),
+            feature_model_api_delegation_allowed_v1=optional_bool(
+                "feature_model_api_delegation_allowed_v1"
+            ),
+            personal_cognitive_core_api_delegation_allowed_v1=optional_bool(
+                "personal_cognitive_core_api_delegation_allowed_v1"
+            ),
+            internal_qualification_profiles_are_release_tiers=optional_bool(
+                "internal_qualification_profiles_are_release_tiers"
+            ),
+            f12_platform_required_before_fable_v1=optional_bool(
+                "f12_platform_required_before_fable_v1"
+            ),
         )
 
 
@@ -168,6 +198,20 @@ class ProductFamilyManifest:
             raise ProductManifestError("consumer product may not have a permanent capability ceiling")
         if friday.production_dual_approval_required is not True:
             raise ProductManifestError("Friday production must require dual approval")
+        if friday.first_consumer_release_gate != "full_personal_cognitive_foundation_after_f11":
+            raise ProductManifestError("Fable v1 must use the full personal-cognitive release gate")
+        if friday.partial_capability_consumer_release_allowed is not False:
+            raise ProductManifestError("partial-capability consumer Fable releases are prohibited")
+        if friday.fable_v1_full_personal_cognitive_foundation_required is not True:
+            raise ProductManifestError("Fable v1 must require the full personal cognitive foundation")
+        if friday.feature_model_api_delegation_allowed_v1 is not True:
+            raise ProductManifestError("Fable v1 must preserve the replaceable feature-model API boundary")
+        if friday.personal_cognitive_core_api_delegation_allowed_v1 is not False:
+            raise ProductManifestError("Fable's personal cognitive core may not be delegated to feature APIs")
+        if friday.internal_qualification_profiles_are_release_tiers is not False:
+            raise ProductManifestError("internal qualification profiles may not become consumer release tiers")
+        if friday.f12_platform_required_before_fable_v1 is not False:
+            raise ProductManifestError("F12 platform/ecosystem work must remain post-v1")
 
         required_false = (
             "alice_personal_data_may_seed_friday",
@@ -178,6 +222,9 @@ class ProductFamilyManifest:
             "host_selected_name_may_define_storage_schema",
             "friday_product_source_may_live_in_alice_repository",
             "private_companion_data_may_enter_shared_kernel_or_friday",
+            "internal_qualification_profile_may_define_consumer_release_capability",
+            "hardware_constraints_may_remove_fable_v1_logical_cognitive_planes",
+            "personal_cognitive_foundation_may_be_externalized_in_fable_v1",
         )
         for key in required_false:
             if self.separation_rules.get(key) is not False:
@@ -188,6 +235,7 @@ class ProductFamilyManifest:
             "all_generalizable_alice_capabilities_enter_parity_backlog",
             "product_and_assistant_names_must_be_separate",
             "difference_is_state_maturity_hardware_and_permissions_not_destination_capability",
+            "general_feature_models_may_be_external_in_fable_v1",
         )
         for key in required_true:
             if self.separation_rules.get(key) is not True:
@@ -199,6 +247,10 @@ class ProductFamilyManifest:
             raise ProductManifestError("capability parity ledger is required")
         if self.parity_policy.get("cognitive_workspace_working_parity_required") is not True:
             raise ProductManifestError("Cognitive Workspace working parity is required")
+        if self.parity_policy.get("first_consumer_release_requires_full_transferable_personal_foundation") is not True:
+            raise ProductManifestError("first consumer release must require the full transferable personal foundation")
+        if self.parity_policy.get("partial_capability_consumer_release_allowed") is not False:
+            raise ProductManifestError("parity policy may not authorize partial-capability consumer releases")
 
         governance = self.production_governance
         for key in (

@@ -93,7 +93,8 @@
         "alpha",
         "beta",
         "stable"
-      ]
+      ],
+      "description": "Distribution/test maturity channel only. It does not authorize a reduced cognitive architecture or satisfy the Fable v1 full-personal-foundation gate."
     },
     "alice_audit_attestation": {
       "$ref": "#/$defs/auditAttestation"
@@ -210,7 +211,8 @@
             "rejected",
             "revision_required",
             "deferred"
-          ]
+          ],
+          "description": "Owner release decision. approved_closed_alpha is a controlled distribution authorization only and does not make a partial-capability build Fable v1."
         },
         "source_commit": {
           "type": "string",
@@ -245,5 +247,10 @@
     {
       "description": "The host-neutral verifier must recompute artifact_manifest_digest and require the A.L.I.C.E. audit and owner approval to match the outer source commit, artifact manifest, evaluation bundle, and deployment manifest exactly."
     }
-  ]
+  ],
+  "x-release-channel-semantics": {
+    "meaning": "distribution_or_test_maturity_only",
+    "does_not_define_cognitive_capability_tier": true,
+    "fable_v1_capability_gate": "full_personal_cognitive_foundation_after_f11"
+  }
 }

@@ -15,11 +15,10 @@ A.L.I.C.E. is also the owner-specific frontier implementation for a separate loc
 - **Phases 0–3:** released compatibility baselines; evolvable when the ratified architecture requires migration.
 - **Phase 4:** operationally complete. The P4.10 operational live-public-information closure is approved and merged. P4.0–P4.9 remain the fixture-governed compatibility release, and P4.10 adds the approved exact-commit live PUBLIC research path.
 - **Phase 5.0:** active. The first implementation lane establishes the Experience Ledger, evaluation and storage substrate, host-neutral kernel contracts, private-companion provenance/custody interfaces, and Mission Graph/Cognitive Workspace contracts.
-- **Phase 6.5:** Independent Product Readiness Gate. Friday is already an independent repository; this gate proves independent builds, versioned kernel consumption, host isolation, dual-approval release enforcement, migration, and rollback.
-- **Phase 8:** earliest credible Friday closed alpha, after autonomous selective memory formation and procedural learning exist.
-- **Phase 13:** host-specific adapters and model components become a standard product capability.
-- **Phase 14:** operating-environment and embodiment work.
-- **Phase 15:** generalized platform, agent federation, and active frontier research.
+- **Phase 6.5:** Independent Product Readiness Gate. Friday is already an independent repository; this gate proves independent builds, versioned kernel consumption, host isolation, dual-approval release enforcement, migration, and rollback. It does not authorize a partial consumer release.
+- **Phases 7–14 / F4–F11:** internal Fable construction and qualification milestones. Historical alpha/beta labels are compatibility or test-channel names only; none is a smaller consumer Fable edition.
+- **Fable v1 release:** eligible only after the complete transferable personal cognitive foundation passes the single full-v1 release gate. General feature models may remain replaceable APIs; the personal cognitive foundation may not be omitted or outsourced.
+- **Phase 15 / F12:** post-v1 platform, SDK/ecosystem, household/enterprise, federation, and frontier expansion.
 
 No completed phase, test, validator, document, or compatibility contract has permanent authority to block the approved direction. Released behavior may remain reproducible through named profiles and migrations, but obsolete assumptions are replaceable.
 
@@ -52,7 +51,9 @@ See:
 
 Personal Cognitive Kernel extraction starts at Phase 5.0. Friday product implementation remains outside this repository from its first commit. Phase 6.5 certifies independent-product readiness rather than creating the repository.
 
-Friday has the same ultimate destination capability set as A.L.I.C.E. A.L.I.C.E. may receive frontier experiments first, but successful generalizable capabilities must enter the shared-kernel parity ledger and downstream productization path. Temporary release lag is allowed; permanent capability omission is not.
+Friday has the same ultimate destination capability set as A.L.I.C.E. A.L.I.C.E. may receive frontier experiments first, but successful generalizable capabilities must enter the shared-kernel parity ledger and downstream productization path. Temporary engineering lag is allowed; permanent capability omission is not.
+
+For the first consumer release, that principle is stricter than a long-term parity promise: Fable v1 must qualify the complete transferable personal cognitive foundation before consumer shipment. Internal F4–F11 builds are qualification artifacts, not smaller release tiers.
 
 A.L.I.C.E.'s personal data, credentials, memories, identity, adapters, and private state must never seed Friday or another host.
 

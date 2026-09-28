@@ -3,230 +3,317 @@
 > [!IMPORTANT]
 > **OWNER-RATIFIED FLAGSHIP CAPABILITY RULE:** A.L.I.C.E. is the flagship and mandatory default capability upstream. Through at least completion of A.L.I.C.E. Phase 15, Friday must receive every transferable A.L.I.C.E. capability. Friday may gain a new capability only after A.L.I.C.E. has implemented, evaluated, approved, and gained it, unless MK Rayan records an explicit exact-scope owner override.
 >
-> This owner-ratified rule supersedes conflicting capability-order, team-independence, or Phase 6.5 repository-creation language in this document.
+> This owner-ratified rule supersedes conflicting capability-order, team-independence, repository-creation, alpha/beta-release, or reduced-product language in this document.
 
+**Version:** 3.0.0  
+**Status:** Cross-product engineering and qualification roadmap  
+**Rules:** Milestones do not add or renumber A.L.I.C.E. phases. They are internal construction/qualification checkpoints until the single Fable v1 consumer release gate passes.
 
-**Status:** Cross-product roadmap mapped to the frozen A.L.I.C.E. capability phases
-**Rules:** Milestones do not add or renumber A.L.I.C.E. phases. The consumer product shares A.L.I.C.E.'s complete capability destination. Each installation uses a host-selected assistant name.
+## 1. Release doctrine
 
-## Milestone map
+The old interpretation that F4, F5, F6, F7, or F8 could be progressively shipped as smaller consumer editions is superseded.
 
-| Friday milestone | A.L.I.C.E. dependency | Deliverable |
+Before Fable v1:
+
+- F4–F11 are **internal engineering and qualification milestones**;
+- names such as alpha, closed alpha, beta, and preview may still exist in historical schemas or test channels, but they do not define smaller consumer capability tiers;
+- an internal build may exercise only the capability under test, but it cannot be marketed or treated as the Fable v1 product;
+- no partial-capability milestone is a consumer launch gate.
+
+Fable v1 has one consumer capability boundary:
+
+> **the full transferable personal cognitive foundation must be qualified as one connected entity.**
+
+That foundation includes the complete Memory v4.x fabric, FBM, MFM, host/relationship/Fable-self development, native personal judgment, Mission Graph, Cognitive Workspace, procedural learning, governed personal-model evolution, correction/deletion/unlearning, multi-device continuity, inspection/export/restore/rollback, and provider/model replacement.
+
+General feature models are the exception. In v1, fluent language generation, coding, research, simulation, vision, image editing, and similar broad feature work may use replaceable GPT/Claude-class APIs under the local Fable controller and egress policy. Those providers do not own the personal cognitive foundation.
+
+F12 is post-v1 platform/ecosystem expansion. A developer SDK or marketplace is not required before the first personal Fable can ship.
+
+## 2. Milestone map
+
+| Friday milestone | A.L.I.C.E. dependency | Internal deliverable |
 |---|---|---|
-| F0 — Product definition | Phase 4.5 | Vision, full capability parity, privacy promise, host-selected identity, product-brand clearance track |
-| F1 — Shared foundation | Phase 5 | Kernel identity, Experience Ledger/storage/evaluation contracts, Mission Graph, Result Capsule, traceback, attention/workspace/speaker/guest schemas, dual-approval schemas, parity expansion |
-| F2 — Cognitive Workspace | Phase 6 | Mission Canvas, adaptive windows, control plane, graph inspector, Result Capsule viewer, attention explanation, guest/trust UI, product-neutral model controls |
-| F3 — Independent Product Readiness | Phase 6.5 gate | Independent build, versioned kernel pin, host isolation, dual-approval signing gate, migration, rollback, and parity evidence |
-| F4 — Local ingestion alpha | Phase 7 | Windows app, host naming, hardware benchmark, multimodal local ingestion, connector permissions, local model runtime |
-| F5 — Learning closed alpha | Phase 8 | Automated memory curation, beliefs, skills, correction, deletion, Identity Capsule |
-| F6 — Personal intelligence beta | Phase 9 | User model, self-model, voice, judgment, uncertainty, personalization inspector |
-| F7 — Proactive agent beta | Phase 10 | Goals, long-running local missions, curiosity, planning, background operation |
-| F8 — Computer-use public beta | Phase 11 | Desktop/terminal action, skill packages, coding, evaluated local autonomy |
-| F9 — Research and expert packs | Phase 12 | Scientific tools, formal reasoning, domain capability packs |
-| F10 — Host-specific model adaptation | Phase 13 | Local rankers, routers, LoRA/adapters, challenger training, deletion-aware retraining |
-| F11 — Friday environment preview | Phase 14 | Persistent service, cross-device continuity, voice, sensors, AI-native shell/OS layer |
-| F12 — Platform launch | Phase 15 | Developer SDK, signed skill ecosystem, optional federation, enterprise/household modes |
+| F0 — Product definition | Phase 4.5 | Vision, full capability parity, privacy promise, host-selected identity, product-brand clearance |
+| F1 — Shared foundation | Phase 5 | Kernel identity, Experience/memory/evaluation contracts, Mission Graph, Result Capsule, traceback, attention/workspace/speaker/guest schemas, dual-approval schemas |
+| F2 — Cognitive Workspace | Phase 6 | Mission Canvas, adaptive workspace, control plane, graph inspector, Result Capsule viewer, attention explanation, guest/trust UI |
+| F3 — Independent Product Readiness | Phase 6.5 gate | Independent build, versioned kernel pin, host isolation, dual-approval signing, migration, rollback, parity evidence |
+| F4 — Ingestion and local-runtime qualification | Phase 7 | Signed Windows host, hardware planning, multimodal ingestion, connectors, local runtime, egress controls |
+| F5 — Selective memory and learning qualification | Phase 8 | Full Memory v4.x formation/lifecycle path, beliefs, episodes, procedures, correction/deletion, Identity Capsule |
+| F6 — Personal intelligence qualification | Phase 9 | Host, relationship and Fable-self development, world/social/causal state, native judgment, uncertainty, voice |
+| F7 — Mission and proactive-agency qualification | Phase 10 | Goals, long-running missions, curiosity, planning, background operation, resource-aware initiative |
+| F8 — Action, skill and self-evolution qualification | Phase 11 | Local action/controller path, tool/skill packages, coding/action integration, evaluated self-evolution and rollback |
+| F9 — Expert feature integration qualification | Phase 12 | Scientific/formal/domain feature engines behind the personal controller; API-backed feature work remains allowed |
+| F10 — Host-specific model adaptation qualification | Phase 13 | Local rankers, routers, adapters, challenger training, deletion-aware retraining and model continuity |
+| F11 — Persistent environment and multi-device qualification | Phase 14 | Persistent service, cross-device continuity, voice/sensors, scheduler, private distributed placement |
+| **Fable v1 Release Gate** | **F4–F11 + upstream acceptance** | **Complete transferable personal cognitive foundation; no reduced capability tier** |
+| F12 — Platform/ecosystem expansion | Phase 15 | SDK, signed capability ecosystem, household/enterprise modes, optional federation and later platform distribution |
 
-## F0 — Product definition
+## 3. F0 — Product definition
 
-Deliver now:
+Deliver:
 
-- Friday product vision;
-- A.L.I.C.E.–Friday separation plan;
+- product vision;
+- A.L.I.C.E.–Fable separation;
 - privacy and non-access architecture;
-- name and intellectual-property risk register;
-- YC narrative and demo targets;
-- product-line policy and validator.
+- public-name/IP track;
+- company narrative;
+- product-line policy and validators;
+- single full-v1 release doctrine.
 
 Exit criteria:
 
-- the product is not described merely as a local chatbot;
+- Fable is not described as a chatbot or memory plugin;
 - each host instance has a distinct technical identity;
 - developer non-access is an architectural property;
-- the independent-repository boundary and Phase 6.5 readiness semantics are fixed.
+- no document defines a permanently reduced consumer edition;
+- the first consumer release is bound to the full personal cognitive foundation.
 
-## F1 — Shared foundation
+## 4. F1 — Shared foundation
 
 **A.L.I.C.E. dependency:** Phase 5.0
 
-During A.L.I.C.E. Phase 5:
+Build host-neutral contracts for:
 
-- establish independently versioned host-neutral kernel contracts;
-- define product and host identity, Experience Ledger, storage, evaluation, and migration contracts;
-- define Mission Graph schemas and events;
-- define Result Capsule and traceback state machines;
-- define attention-decision, workspace-projection, speaker-context, and guest-grant schemas;
-- add dual-approval governance and release-attestation schemas;
-- test one synthetic A.L.I.C.E.-style host and at least two isolated synthetic Friday hosts;
-- expand the parity ledger.
+- product and host identity;
+- Experience/Event and Claim authority;
+- storage and evaluation;
+- Mission Graph;
+- Result Capsule and traceback;
+- attention/workspace;
+- speaker/guest state;
+- model/data lineage;
+- release attestations;
+- deletion and rollback;
+- parity tracking.
 
-Friday product code remains in the Friday repository. The complete consumer UI is not required in F1.
+Test at least one synthetic A.L.I.C.E.-style host and two isolated synthetic Fable hosts.
 
-Exit criteria:
+F1 is not a Fable release.
 
-- shared contracts contain no product-private state;
-- two synthetic Friday hosts remain isolated;
-- Friday can pin an explicit kernel contract version;
-- production promotion cannot be represented without both required approvals.
+## 5. F2 — Cognitive Workspace
 
-## F2 — Cognitive Workspace
+Build:
 
-During A.L.I.C.E. Phase 6 and the parallel Friday product track:
+- Mission Canvas and Mission Graph inspector;
+- adaptive multi-window composition;
+- Result Capsule and traceback views;
+- attention explanations;
+- speaker trust and guest mode;
+- memory/learning/model/capability controls;
+- inspection of what the local personal foundation knows and why.
 
-- build the Mission Canvas and Mission Graph inspector;
-- build adaptive multi-window composition with no empty fixed slots;
-- build Result Capsule and traceback views;
-- expose attention explanations and host workspace commands;
-- expose speaker trust, guest mode, permission state, and sensitive-view hiding;
-- build generic memory, learning, model, and capability controls;
-- integrate each product independently against the same semantic contracts.
+F2 is not a Fable release.
 
-Exit criteria:
-
-- A.L.I.C.E. and a synthetic Friday host interpret node state, Result Capsules, traceback, attention, and guest authority identically;
-- owner-specific policy and branding remain outside shared components;
-- Friday initializes without A.L.I.C.E. source or state.
-
-## F3 — Phase 6.5 Independent Product Readiness Gate
+## 6. F3 — Phase 6.5 Independent Product Readiness Gate
 
 Prove:
 
-- Friday's repository and build are independent from A.L.I.C.E.;
-- the kernel contract is independently versioned and pinned;
-- no A.L.I.C.E. private state exists in Friday artifacts;
-- at least two Friday hosts remain isolated through storage, cache, backup, restore, and deletion;
-- release manifests support exact-artifact A.L.I.C.E. audit and Rayan approval;
-- production signing rejects missing, mismatched, expired, or revoked approvals;
-- emergency rollback works and emergency feature addition fails;
-- migration, rollback, shared UI contracts, and parity tracking pass.
+- independent repository/build;
+- pinned host-neutral kernel interfaces;
+- no A.L.I.C.E. private state in Fable artifacts;
+- multi-host isolation through storage/cache/backup/restore/deletion;
+- exact-artifact A.L.I.C.E. audit + Rayan approval path;
+- production-signing rejection when approvals mismatch;
+- emergency rollback without emergency capability addition;
+- migration and rollback.
 
-## F4 — Windows local-ingestion alpha
+Phase 6.5 proves product independence. It does **not** authorize a partial consumer edition.
 
-Recommended first product stack:
+## 7. F4 — Ingestion and local-runtime qualification
 
-- Tauri desktop shell or an equivalent signed native Windows shell;
-- React/TypeScript UI;
-- Rust host process for permissions, storage, updates, and process control;
-- Python sidecar initially for mature A.L.I.C.E. ML/retrieval components;
-- llama.cpp-compatible local generation runtime;
-- ONNX Runtime for embeddings, classifiers, vision/audio, and on-device training experiments;
-- encrypted content-addressed local object store, database, vector index, lifecycle manager, and backup/restore verifier;
-- DPAPI-protected local master key on Windows.
+Build and qualify the installation/runtime shell:
 
-The architecture must allow later replacement of any runtime.
+- signed native Windows application;
+- host keys and Identity Capsule;
+- hardware capability measurement;
+- local/private service orchestration;
+- authorized source selection;
+- multimodal ingestion;
+- connector permissions;
+- source preview and custody controls;
+- local model/runtime management;
+- visible provider egress controls.
 
-Alpha flow:
+This milestone may use synthetic or controlled internal hosts. Calling such a build an alpha for engineering purposes does not make it a consumer Fable release.
 
-1. install signed application;
-2. benchmark hardware;
-3. choose offline-only or local-first mode;
-4. choose the assistant name and create host keys plus the Identity Capsule;
-5. select folders and connectors;
-6. perform metadata-only preview;
-7. approve ingestion scope;
-8. build initial memory and preference model;
-9. review what Friday learned;
-10. run personalization baseline evaluation.
+## 8. F5 — Selective memory and learning qualification
 
-## F5 — Learning closed alpha
+Qualify the **full memory architecture**, not a memory-only product edition.
 
-This is the minimum credible Friday launch cohort. Friday must automatically determine which interactions and files deserve:
+Required capabilities include:
 
-- discard;
-- session retention;
-- episodic memory;
-- semantic memory;
-- derived belief;
-- skill extraction;
-- training-candidate status;
-- quarantine;
-- warm or cold archival;
-- representative replay retention;
-- verified deletion.
+- Experience/Event history;
+- bitemporal Claim Authority;
+- raw evidence/object storage;
+- episodes/autobiographical memory;
+- Cognitive Multi-Graph;
+- associative graph retrieval;
+- vector/multimodal retrieval;
+- source-native/live retrieval;
+- perceptual personal memory where authorized;
+- Memory Resource Manager;
+- Retrieval Orchestrator / Cognitive Recollection;
+- Lifecycle Curator;
+- procedural memory;
+- correction/deletion/unlearning;
+- model/dataset influence lineage;
+- restore/rebuild/rollback.
 
-Closed-alpha gates:
+The old phrase “minimum credible closed alpha” is superseded. F5 is an internal qualification milestone only.
 
-- useful-memory precision and recall targets;
-- no cross-host data leakage;
-- complete source lineage;
-- correction and deletion propagation;
-- encrypted export/import;
-- storage-pressure behavior that preserves protected records;
-- successful backup and restore verification;
-- offline operation;
-- no mandatory vendor account.
+## 9. F6 — Personal intelligence qualification
 
-## F6 — Personal intelligence beta
+Qualify:
 
-Friday becomes meaningfully different for each host through:
+- host/user model;
+- relationship model;
+- Fable self/continuity;
+- world/social/causal state;
+- preferences and values;
+- native personal judgment;
+- uncertainty and confidence calibration;
+- stable expression/voice;
+- provider-swap continuity;
+- causal intervention tests proving that personal state, not a fixed prompt or generic provider prior, changes judgment.
 
-- preference prediction;
-- stable voice;
-- user and world models;
-- independent judgment;
-- confidence calibration;
-- counterfactual recommendations;
-- local personal evaluation suites.
+F6 is not a beta release. It is one required slice of the eventual v1 entity.
 
-Marketing may claim a distinct personal AI system. Claims of a separately trained model must correspond to actual host-specific learned parameters, not memory alone.
+## 10. F7 — Mission and proactive-agency qualification
 
-## F7–F8 — Proactive and computer-use beta
+Qualify:
 
-Friday begins completing local missions across applications. Permission prompts are replaced where appropriate by host-created standing mandates, visible action history, and revocable capability grants.
+- hierarchical goals;
+- Mission Graph continuity;
+- long-running missions;
+- proactive research/monitoring;
+- replanning;
+- resource-aware initiative;
+- background operation;
+- outcome capture and later learning.
 
-## F9–F10 — Expert packs and host adapters
+These capabilities belong to the personal cognitive foundation. They are not postponed because an external feature model can draft text.
 
-Friday trains small local components first:
+## 11. F8 — Action, skill and self-evolution qualification
 
-- memory utility classifier;
-- source-trust model;
-- preference ranker;
-- tool router;
-- style adapter;
-- task or domain adapters.
+Qualify:
 
-Full base-model retraining is a research option, not a requirement for a distinct Friday instance.
+- local desktop/terminal/tool execution under host authority;
+- reusable procedural skills;
+- signed skill packages;
+- coding/action integration through replaceable feature engines;
+- challenger generation;
+- frozen evaluation criteria;
+- canary promotion;
+- rollback;
+- preservation of identity/continuity across model changes.
 
-## F11 — Friday Operating Environment
+General feature generation may still be API-backed in v1. The local Fable owns the decision, action authority, skill memory, evaluation, and promotion logic.
 
-The application evolves into an AI-native environment through:
+## 12. F9 — Expert feature integration qualification
+
+Integrate scientific, formal, research, simulation, vision, coding, and other expert feature capabilities behind the same local personal controller.
+
+Fable v1 does not require first-party frontier feature models. External feature engines remain replaceable suppliers behind privacy/egress controls.
+
+## 13. F10 — Host-specific model adaptation qualification
+
+Qualify personal parametric learning such as:
+
+- memory utility and retention models;
+- source-trust models;
+- retrieval/routing models;
+- preference/judgment rankers;
+- adapters;
+- personal perceptual banks;
+- host/relationship/self updaters;
+- challenger personal models.
+
+Required controls:
+
+- exact data/model lineage;
+- representative replay;
+- correction/deletion influence;
+- champion/challenger evaluation;
+- rollback;
+- provider/base-model replacement.
+
+There is no fixed count or maximum size for personal learned components.
+
+## 14. F11 — Persistent environment and multi-device qualification
+
+Qualify:
 
 - persistent local service;
-- secure boot-time activation;
-- identity-aware application permissions;
-- personal data fabric;
-- local model scheduler;
+- secure boot-time activation where used;
+- cross-device continuity;
+- device identities and causal clocks;
+- offline continuation and reconciliation;
+- local/private model scheduler;
 - voice and multimodal shell;
-- device and sensor integration;
-- optional dedicated hardware image.
+- sensors/integrations where authorized;
+- one-machine, workstation, NAS, home-cluster and private-cluster placements of the same logical architecture.
 
-A true standalone operating system is considered after the OS-layer product proves demand and the team can sustain drivers, updates, security response, and hardware compatibility.
+A small machine may change placement or scheduling. It may not create a smaller cognitive edition.
 
-## F12 — Platform
+## 15. Fable v1 Release Gate
 
-Friday exposes:
+The first consumer release is eligible only when a fresh authorized user corpus can build one connected Fable that:
 
-- SDK and local APIs;
-- signed capability packages;
-- model packs;
-- enterprise or family tenancy;
+1. does not use A.L.I.C.E. private data or weights;
+2. contains the complete transferable personal memory architecture;
+3. develops host, relationship and Fable-self state;
+4. forms memory through MFM behind deterministic authority;
+5. performs adaptive episodic, graph/associative, vector/multimodal, source-native, procedural, mission and personal-state recollection;
+6. makes native personal judgments before replaceable feature generation;
+7. checks/corrects provider output against its own verdict and expression contract;
+8. learns from outcomes through governed updates;
+9. maintains Mission Graph and Cognitive Workspace continuity;
+10. supports governed personal-model evolution and rollback;
+11. corrects/deletes/revokes influence across durable, execution and parametric state;
+12. survives restart, restore, migration and device change;
+13. preserves identity across provider/model replacement;
+14. scales physical placement without removing logical cognitive planes;
+15. passes privacy, egress, provenance, isolation, latency/resource and failure-recovery gates;
+16. passes the product/comic behavioral suite.
+
+No F4–F11 milestone by itself satisfies this release gate.
+
+## 16. F12 — Platform/ecosystem expansion
+
+After v1, expand into:
+
+- developer SDK and local APIs;
+- signed capability ecosystem;
+- model/capability packs;
+- household/enterprise tenancy;
 - optional privacy-preserving federation;
-- third-party integrations with declared data flow;
-- migration between compatible devices and models.
+- broader operating-environment distribution;
+- later first-party frontier feature models.
 
-## Capability parity lane
+These are platform expansions. They do not retroactively define what the personal foundation needed to be.
 
-Every A.L.I.C.E. phase has a parallel downstream productization lane:
+## 17. Capability parity lane
 
-1. A.L.I.C.E. or shared research proves a capability.
-2. The capability receives a stable identifier and evaluation suite.
+Every transferable A.L.I.C.E. capability follows:
+
+1. A.L.I.C.E. implements and evaluates it.
+2. It receives a stable identifier and evidence bundle.
 3. Owner-specific dependencies are removed.
-4. It enters the Personal Cognitive Kernel or a signed product capability package.
-5. Hardware, migration, privacy, and support work is completed.
-6. It ships to host-named consumer instances.
+4. Host-neutral contracts/evaluations are generalized.
+5. Fable productizes it without removing semantics.
+6. Hardware/privacy/migration/support work is completed.
+7. The exact Fable candidate is audited and approved.
 
-A capability may be delayed in this lane. It may not be removed from the destination merely because it is powerful, experimental, or first appeared in A.L.I.C.E.
+Temporary implementation lag is allowed during development. Permanent omission from the destination is not.
 
-## Team handoff lane
+## 18. Team handoff lane
 
-Before a dedicated consumer team exists, the core team develops A.L.I.C.E., the kernel, and the consumer product together. After the team passes an independent-maintenance gate, Rayan may focus primarily on A.L.I.C.E.; the consumer team owns downstream implementation, support, and platform maintenance; production promotion remains subject to A.L.I.C.E. audit and Rayan approval.
+Before a dedicated product team exists, the core project maintains A.L.I.C.E., the shared kernel and Fable together.
+
+After a team passes independent-maintenance gates:
+
+- it may own packaging, compatibility, support and downstream productization;
+- A.L.I.C.E. remains the capability upstream;
+- the full-v1 release doctrine remains binding;
+- no team may redefine an internal qualification milestone as a smaller consumer intelligence tier without an explicit owner-ratified architecture change.

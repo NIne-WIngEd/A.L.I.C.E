@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "2.1.0",
   "authority": "docs/ALICE_FRIDAY_SEPARATION_PLAN.md",
   "shared_kernel": {
     "id": "personal-cognitive-kernel",
@@ -59,7 +59,6 @@
       "repository_required_before_product_source": true,
       "product_source_allowed_in_alice_repository": false,
       "independent_product_readiness_gate": "6.5",
-      "closed_alpha_gate": "8",
       "kernel_consumer": true,
       "personal_state_sharing": "prohibited",
       "raw_host_data_vendor_access": false,
@@ -94,7 +93,26 @@
       "owner_override_may_authorize_friday_first": true,
       "independent_capability_governance_before_formal_handover": false,
       "independent_maintenance_and_roadmap_after_formal_handover": true,
-      "new_capability_dual_permission_after_handover": true
+      "new_capability_dual_permission_after_handover": true,
+      "legacy_closed_alpha_gate": "8",
+      "legacy_closed_alpha_gate_semantics": "internal_qualification_only_not_consumer_release",
+      "first_consumer_release_gate": "full_personal_cognitive_foundation_after_f11",
+      "partial_capability_consumer_release_allowed": false,
+      "fable_v1_full_personal_cognitive_foundation_required": true,
+      "feature_model_api_delegation_allowed_v1": true,
+      "personal_cognitive_core_api_delegation_allowed_v1": false,
+      "internal_qualification_profiles_are_release_tiers": false,
+      "fable_v1_requires_internal_milestones": [
+        "F4",
+        "F5",
+        "F6",
+        "F7",
+        "F8",
+        "F9",
+        "F10",
+        "F11"
+      ],
+      "f12_platform_required_before_fable_v1": false
     }
   },
   "separation_rules": {
@@ -115,7 +133,11 @@
     "friday_capability_requires_existing_alice_precedent_by_default": true,
     "friday_discovered_capability_must_be_proposed_upstream": true,
     "alice_must_gain_capability_before_friday_eligibility_by_default": true,
-    "rayan_owner_override_may_authorize_exception": true
+    "rayan_owner_override_may_authorize_exception": true,
+    "internal_qualification_profile_may_define_consumer_release_capability": false,
+    "hardware_constraints_may_remove_fable_v1_logical_cognitive_planes": false,
+    "general_feature_models_may_be_external_in_fable_v1": true,
+    "personal_cognitive_foundation_may_be_externalized_in_fable_v1": false
   },
   "parity_policy": {
     "authority": "docs/PRODUCT_FAMILY_CAPABILITY_PARITY.md",
@@ -123,7 +145,9 @@
     "consumer_destination_matches_alice": true,
     "alice_may_lead_experiments": true,
     "successful_generalizable_capabilities_require_downstream_disposition": true,
-    "cognitive_workspace_working_parity_required": true
+    "cognitive_workspace_working_parity_required": true,
+    "first_consumer_release_requires_full_transferable_personal_foundation": true,
+    "partial_capability_consumer_release_allowed": false
   },
   "production_governance": {
     "authority": "docs/FRIDAY_PRODUCTION_GOVERNANCE.md",

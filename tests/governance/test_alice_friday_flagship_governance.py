@@ -146,7 +146,7 @@ def test_pre_phase_65_state_is_foundation_only() -> None:
 def test_production_policy_is_unambiguous_and_deny_by_default() -> None:
     production = load("policies/friday_production_governance.json")
     candidate = production["candidate_work"]
-    assert production["policy_version"] == "1.1.0"
+    assert production["policy_version"] == "1.2.0"
     assert candidate["maintenance_allowed"] is True
     assert candidate["product_experience_research_allowed"] is True
     assert candidate["upstream_proposal_research_allowed"] is True

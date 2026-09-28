@@ -380,7 +380,7 @@
       "product_id": "friday",
       "scope_kind": "product_default",
       "capability_ceiling": false,
-      "description": "Offline-first Friday host instance with local conversation, retrieval, ingestion, inspection, and signed local skills.",
+      "description": "Internal compatibility/qualification profile for offline-first local Fable mechanics. It is not a partial Fable v1 consumer release.",
       "capabilities": {
         "local_inference_allowed": true,
         "local_ingestion_allowed": true,
@@ -405,14 +405,17 @@
       "successor_profile": "friday.learning_alpha",
       "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
       "review_at": "evidence_or_owner_directive",
-      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "release_semantics": "internal_qualification_only",
+      "consumer_release_eligible": false,
+      "may_define_fable_v1_capability_boundary": false
     },
     "friday.learning_alpha": {
       "domain": "product",
       "product_id": "friday",
       "scope_kind": "host_selectable",
       "capability_ceiling": false,
-      "description": "Closed-alpha Friday profile with automated curation, beliefs, skills, Identity Capsule, and idle-time local learning.",
+      "description": "Legacy-named internal F5 selective-learning qualification profile. The 'alpha' label is a controlled test-channel identifier, not a reduced Fable v1 product tier.",
       "capabilities": {
         "local_inference_allowed": true,
         "local_ingestion_allowed": true,
@@ -440,14 +443,17 @@
       "successor_profile": null,
       "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
       "review_at": "evidence_or_owner_directive",
-      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "release_semantics": "legacy_named_internal_qualification_only",
+      "consumer_release_eligible": false,
+      "may_define_fable_v1_capability_boundary": false
     },
     "friday.optional_connected": {
       "domain": "product",
       "product_id": "friday",
       "scope_kind": "host_selectable",
       "capability_ceiling": false,
-      "description": "Friday profile for host-authorized web, remote models, encrypted sync, and connectors with visible egress.",
+      "description": "Host-authorized connected-capability overlay for web, remote feature models, encrypted sync, and connectors with visible egress. It is not a release tier and does not own the personal cognitive foundation.",
       "capabilities": {
         "external_network_allowed": true,
         "remote_inference_allowed": true,
@@ -470,7 +476,10 @@
       "successor_profile": null,
       "activation_condition": "exact_profile_selection_plus_required_authority_and_controls",
       "review_at": "evidence_or_owner_directive",
-      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile"
+      "removal_criterion": "superseded_by_a_more_capable_evaluated_profile",
+      "release_semantics": "optional_overlay_not_release_tier",
+      "consumer_release_eligible": false,
+      "may_define_fable_v1_capability_boundary": false
     },
     "kernel.phase5.foundation": {
       "domain": "cognitive_kernel",

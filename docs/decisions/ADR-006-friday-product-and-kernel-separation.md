@@ -1,6 +1,6 @@
 # ADR-006 — Separate Friday Product and Personal Cognitive Kernel
 
-**Status:** Accepted
+**Status:** Accepted; consumer-release consequence amended 2026-09-27
 **Date:** 2026-07-27
 
 ## Context
@@ -24,5 +24,8 @@ Waiting until the final platform phase to generalize would embed owner-specific 
 - New Phase 5+ contracts must be host-neutral from inception.
 - Some completed Phase 1–4 modules and tests will be refactored.
 - Product and host isolation become testable architecture requirements.
-- Friday's earliest credible closed alpha moves to Phase 8, when automatic selective learning exists.
-- A.L.I.C.E. may remain more experimental than the commercial product.
+- The historical interpretation that Phase 8 creates an earliest credible Friday/Fable closed-alpha consumer release is superseded. Phase 8/F5 is an internal selective-memory and learning qualification milestone.
+- F4 through F11 are internal engineering/qualification stages. The first consumer Fable v1 release requires the complete transferable personal cognitive foundation to pass one full release gate.
+- Historical `closed_alpha`, `alpha`, and `beta` channel names may remain for controlled testing/attestation but do not define reduced consumer capability tiers.
+- General feature models may remain replaceable API services in v1; the local personal cognitive foundation may not be omitted or outsourced.
+- A.L.I.C.E. may remain more experimental than the commercial product after the full v1 boundary is met.

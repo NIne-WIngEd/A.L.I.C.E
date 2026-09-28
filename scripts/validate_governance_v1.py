@@ -141,7 +141,14 @@ if learning.get("replay_selection") != "representative_budgeted_and_versioned":
     errors.append("lifelong learning policy must use representative replay")
 
 product_roadmap = (DOCS / "FRIDAY_ROADMAP.md").read_text(encoding="utf-8")
-for phrase in ["Phase 5.0", "Phase 6.5", "Identity Capsule", "closed alpha"]:
+for phrase in [
+    "Phase 5.0",
+    "Phase 6.5",
+    "Identity Capsule",
+    "Fable v1 Release Gate",
+    "internal engineering and qualification milestones",
+    "full transferable personal cognitive foundation",
+]:
     if phrase not in product_roadmap:
         errors.append(f"Friday roadmap missing marker: {phrase}")
 product_lines = json.loads((POLICIES / "product_lines.json").read_text(encoding="utf-8"))
@@ -165,6 +172,21 @@ if product_lines.get("products", {}).get("friday", {}).get("local_storage_lifecy
     errors.append("consumer product must implement the local storage lifecycle")
 if product_lines.get("products", {}).get("friday", {}).get("cross_host_deduplication_allowed") is not False:
     errors.append("consumer product must prohibit cross-host deduplication")
+friday_product = product_lines.get("products", {}).get("friday", {})
+if friday_product.get("first_consumer_release_gate") != "full_personal_cognitive_foundation_after_f11":
+    errors.append("Fable v1 must use the full personal-cognitive release gate")
+if friday_product.get("partial_capability_consumer_release_allowed") is not False:
+    errors.append("partial-capability consumer Fable releases must remain prohibited")
+if friday_product.get("fable_v1_full_personal_cognitive_foundation_required") is not True:
+    errors.append("Fable v1 must require the full personal cognitive foundation")
+if friday_product.get("feature_model_api_delegation_allowed_v1") is not True:
+    errors.append("Fable v1 must preserve the feature-model API boundary")
+if friday_product.get("personal_cognitive_core_api_delegation_allowed_v1") is not False:
+    errors.append("Fable's personal cognitive core may not be delegated to feature APIs")
+if friday_product.get("internal_qualification_profiles_are_release_tiers") is not False:
+    errors.append("internal Friday qualification profiles may not be consumer release tiers")
+if friday_product.get("f12_platform_required_before_fable_v1") is not False:
+    errors.append("F12 platform work must remain post-v1")
 if product_lines.get("separation_rules", {}).get("phase_1_to_4_files_are_migratable") is not True:
     errors.append("Phase 1–4 files must remain migratable")
 if product_lines.get("separation_rules", {}).get("cross_host_deduplication_allowed") is not False:

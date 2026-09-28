@@ -1271,7 +1271,17 @@ Prove:
 - shared UI contracts pass;
 - parity ledger is active.
 
-### Phase 7 / F4 — Signed Windows alpha
+### Fable v1 consumer-release rule
+
+F4 through F11 are internal engineering and qualification milestones. They may produce signed builds, synthetic-host packages, canaries, controlled internal distributions, or compatibility channels, but none is a smaller consumer Fable edition.
+
+The first consumer release is eligible only after the complete transferable personal cognitive foundation has passed the single Fable v1 release gate described in `docs/FRIDAY_ROADMAP.md` and the Fable repository first-release specification.
+
+Historical release-channel labels such as `closed_alpha`, `alpha`, and `beta` remain valid attestation vocabulary for controlled distribution/testing. They do not authorize a partial cognitive architecture.
+
+General feature models may remain external/API-backed in v1. The local personal foundation—memory, identity, host/relationship/self development, native judgment, Mission Graph, Cognitive Workspace, procedural learning, personal-model evolution, deletion/unlearning, and continuity—may not be removed to create an earlier release.
+
+### Phase 7 / F4 — Signed Windows ingestion/runtime qualification
 
 Deliver:
 
@@ -1287,7 +1297,7 @@ Deliver:
 - hardware benchmarking;
 - Mission Graph desktop experience.
 
-### Phase 8 / F5 — Selective learning closed alpha
+### Phase 8 / F5 — Selective learning and memory qualification
 
 Deliver:
 
@@ -1298,9 +1308,9 @@ Deliver:
 - Result Capsule-derived learning;
 - Identity Capsule;
 - deletion and correction;
-- credible closed alpha.
+- evidence that selective learning and memory are ready to participate in the eventual full Fable v1 entity; this milestone is not itself a consumer release.
 
-### Phase 9 / F6 — Personal intelligence beta
+### Phase 9 / F6 — Personal intelligence qualification
 
 Deliver:
 
@@ -1313,7 +1323,7 @@ Deliver:
 - Personalization Inspector;
 - learned layout preferences.
 
-### Phase 10 / F7 — Proactive missions
+### Phase 10 / F7 — Mission and proactive-agency qualification
 
 Deliver:
 
@@ -1325,7 +1335,7 @@ Deliver:
 - resource-aware attention;
 - mission continuation across sessions.
 
-### Phase 11 / F8 — Computer use and skill system
+### Phase 11 / F8 — Action, skill and self-evolution qualification
 
 Deliver:
 
@@ -1336,7 +1346,7 @@ Deliver:
 - evaluated local autonomy;
 - signed skill packages.
 
-### Phase 13 / F10 — Host-specific model adaptation
+### Phase 13 / F10 — Host-specific model-adaptation qualification
 
 Deliver:
 
@@ -1347,7 +1357,7 @@ Deliver:
 - deletion-aware retraining;
 - host-specific model components.
 
-### Phase 14 / F11 — Operating environment
+### Phase 14 / F11 — Persistent environment and multi-device qualification
 
 Deliver:
 
