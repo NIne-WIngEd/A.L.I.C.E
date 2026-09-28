@@ -1,6 +1,6 @@
 # Phase 2 to Cognitive Fabric Memory Migration Plan
 
-**Version:** 2.0.1
+**Version:** 2.0.0
 **Status:** Stage A+B, Stage C+E, deterministic Stage D, Stage F controlled-mirroring, and Stage G projection-generation prototypes operational; persistent F+G reference integration operational; private execution, live candidate integrations, and production authority stages independently gated
 **Source baseline:** Released Phase 2 Memory Core
 **Destination:** Backend-neutral Memory Architecture v4.1
