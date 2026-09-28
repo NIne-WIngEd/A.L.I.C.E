@@ -1,6 +1,6 @@
 # Memory Renovation Plan — Parallel Capability Tracks
 
-**Version:** 1.2.0
+**Version:** 1.3.0
 **Status:** Owner-ratified M1 capability-track plan; implementation activation remains separate
 **Architecture:** Memory v4.1 Capability-First Polyglot Cognitive Fabric
 
@@ -12,19 +12,32 @@ The plan uses parallel research and independently activated production profiles.
 
 ## 2. Execution selection
 
-The destination architecture remains replaceable, but the current program is **selected-stack-first**. Infrastructure research is opened only by a concrete A.L.I.C.E. capability, scale, reliability, privacy, deletion, recovery, licensing, packaging, or cost problem.
+The destination remains **Memory v4.x Capability-First Polyglot Cognitive Fabric**. The current implementation is selected from the full cognitive requirements rather than from packaging simplicity.
 
-Current default implementation path:
+Current path:
 
-- PostgreSQL for Experience/Event and Claim persistence behind separate logical contracts;
-- content-addressed local object storage for raw evidence and artifacts;
-- Neo4j and Qdrant as rebuildable graph/vector accelerators;
-- exact/source-native filesystem, SQL/FTS, metadata, API, and live-source retrieval alongside graph/vector paths;
-- Temporal for long-running/distributed durable workflows where needed;
-- in-process workspace first, Valkey only when shared/distributed ephemeral state is useful;
-- PyTorch + Accelerate for training, Slurm on cluster routes, and vLLM only where large-model serving requires it.
+- KurrentDB Experience/Event Fabric with NATS JetStream federation/ingress behind first-party event/evidence contracts;
+- XTDB v2 bitemporal Claim Authority;
+- encrypted content-addressed object storage;
+- dynamic Episodes/Autobiographical plane;
+- hardware-adaptive Cognitive Multi-Graph: LadybugDB host-local, NebulaGraph distributed-scale placement, existing Neo4j reference retained;
+- engine-independent associative graph compute;
+- Qdrant dense/sparse/multivector/multimodal retrieval;
+- exact/source-native/live retrieval;
+- protected perceptual personal memory;
+- governed host/source-person/relationship/self/world/mission/skill projections;
+- parametric personal memory with influence lineage;
+- Cognitive Workspace/activation-state provenance;
+- Memory Resource Manager and Retrieval Orchestrator;
+- Lifecycle Curator and cross-layer deletion/unlearning coordinator;
+- Temporal durable workflows;
+- process-local L1 plus Valkey shared ephemeral state;
+- content-addressed model/dataset registry;
+- PyTorch + Accelerate hardware-adaptive training.
 
-This selection replaces broad mandatory infrastructure tournaments. Challengers remain allowed when they can change a real implementation decision.
+This selection does not authorize a reduced desktop architecture. One machine and a private cluster instantiate the same logical planes with different placement.
+
+Broad infrastructure tournaments remain prohibited. Challengers are opened only when they can change a concrete implementation decision.
 
 ## 2.1 Common entry requirements
 
@@ -55,47 +68,68 @@ Deliver:
 - owner namespace and federation identity;
 - deletion and rollback receipts.
 
-Candidate backends may include embedded, relational, distributed-SQL, and custom fact architectures.
+Use XTDB v2 as the selected bitemporal Claim implementation. Treat its storage/log deployment as physical topology, not a reduction in Claim semantics.
 
 ## 4. Track B — Event and Experience Fabric
 
-Build the selected PostgreSQL append-only Experience/Event implementation with ordered identity, idempotent append, replay/checkpoints, outbox delivery, correction/deletion lineage, integrity, compaction/archive metadata, and projection interfaces.
+Build the selected KurrentDB-backed canonical Experience/Event implementation with project-owned semantics for ordered identity, expected stream revision, idempotent append, replay/checkpoints, persistent consumption, device/causal metadata, correction/deletion lineage, integrity, archive metadata, and projection interfaces.
 
-KurrentDB or another dedicated event store becomes a challenger only if measured subscription, replay, throughput, distribution, or operational requirements exceed the PostgreSQL implementation.
+Use NATS JetStream as the durable multi-device/federation and edge-ingress transport. Device/transport events do not silently become canonical Experience records; governed reconciliation binds them into the host event fabric.
 
-## 5. Track C — Cognitive Graph
+KurrentDB's KLv1 hosted-service constraint is tracked for future product deployment. It does not justify replacing the stronger event-native substrate in the user-owned/local architecture.
 
-Use Neo4j as the selected A.L.I.C.E. graph accelerator while keeping graph state rebuildable from Claim/Evidence authority and preserving a relational fallback.
+## 5. Track C — Cognitive Multi-Graph and associative compute
 
-Build ontologies and projections for:
+Build a single logical multi-relational graph projection with orthogonal views for:
 
-- missions and dependencies;
-- identity and source history;
-- temporal and causal relations;
-- social and relationship models;
-- projects, tools, skills, and concepts;
-- claims, evidence, conflicts, predictions, and outcomes;
-- model and dataset lineage.
+- semantic/concept;
+- entity;
+- temporal;
+- causal;
+- evidence/provenance;
+- social/relationship;
+- mission/project;
+- goals/dependencies;
+- skills/procedures;
+- source trust;
+- identity/person;
+- world/social/causal model;
+- model/dataset lineage;
+- decisions/outcomes.
 
-Evaluate graph algorithms, retrieval, planning, anomaly detection, and graph-to-claim reconciliation on the selected projection. Do not reopen a graph-database tournament unless the selected engine exposes a material A.L.I.C.E. limitation.
+Use LadybugDB for the current host-local embedded placement. Use NebulaGraph when the graph must scale across a private cluster. Preserve Neo4j as an existing A.L.I.C.E. reference/migration source rather than deleting useful evidence.
 
-## 6. Track D — Vector and Multimodal Retrieval
+Build an engine-independent associative compute layer for Personalized PageRank, spreading activation, temporal decay, lateral inhibition, path/bridge discovery and query-conditioned view traversal.
 
-Use Qdrant as the selected semantic/multimodal accelerator. Retain exact/source-native search and live-source queries as first-class alternatives so vectors are used only when they add value.
+Graph/activation outputs remain rebuildable retrieval projections and never Claim authority.
 
-Support generation-aware text, code, image, audio, video, sensor, and scientific retrieval. Benchmark exact/lexical, semantic/vector, graph, symbolic, temporal/claim-aware, hybrid, and agentic source-native plans.
+## 6. Track D — Vector, multimodal, perceptual, and source-native retrieval
 
-Agentic source-native retrieval is a first-class challenger: the model may progressively search live files, named records, structured fields, metadata, APIs, and source systems with iterative query reformulation and direct reads, including profiles that maintain no semantic index. Vector infrastructure is therefore optional per serving profile rather than mandatory on every query. Conversely, source-native/grep-style search is not assumed to replace semantic or multimodal retrieval where paraphrase, vocabulary mismatch, fuzzy episodic resemblance, or non-text modalities create measurable vector value.
+Use Qdrant as the full semantic/multimodal plane, with Edge/server/cluster placement chosen by hardware.
+
+Support dense, sparse, named and multivector/late-interaction representations across text, code, image, audio, video, sensor and scientific data.
+
+Maintain grounded perceptual personal memory for authorized people/voice/object/place identity so captions do not become a lossy substitute for native perception.
+
+Retain exact/source-native and live-source retrieval as a parallel first-class plane. The model may progressively search files, records, structured fields, metadata, APIs and source systems with iterative query reformulation/direct reads.
+
+The vector plane is part of the full architecture even when a particular query bypasses it. Source-native retrieval complements rather than replaces semantic/multimodal retrieval.
 
 ## 7. Track E — Durable Curation and Mission Workflows
 
-Use Temporal for long-running/distributed A.L.I.C.E. workflows when durable orchestration is materially useful. A local durable runner may implement the same contract for a single-host Fable product profile.
+Use Temporal as the selected durable workflow plane across both host-local and distributed deployments.
 
-Run candidate extraction, adjudication, projection refresh, deletion, migration, repair, training, evaluation, federation, and long missions with idempotency, retries, signals, cancellation, and recovery.
+Run candidate extraction, consolidation, adjudication, projection refresh, deletion/unlearning, execution-state replay, migration, repair, training, evaluation, model promotion/rollback, federation, and long missions with idempotency, retries, signals, cancellation and recovery.
 
-## 8. Track F — Adaptive Context and Serving
+A single host may self-host the workflow service. That placement does not remove the durable-workflow capability.
+
+## 8. Track F — Memory Resource Management, Cognitive Recollection and Serving
 
 Build:
+
+- Memory Resource Manager/Scheduler across external, episodic, graph, vector, procedural, parametric and activation memory;
+- fast/slow memory-formation scheduling;
+- dynamic episode/scene/domain routing;
 
 - Context Planner;
 - Retrieval Trace;
@@ -144,11 +178,13 @@ Build profiles for edge, mobile, workstation, multi-GPU, home cluster, private c
 
 Implement replication, sharding, synchronization, causal metadata, conflict resolution, owner-namespace federation, failover, export, and replacement.
 
-## 12. Track J — Inspection, Evaluation, Deletion, and Rollback
+## 12. Track J — Inspection, Evaluation, Deletion, Unlearning, and Rollback
 
-Provide one inspection and control surface across claims, events, graphs, vectors, objects, workflows, models, datasets, replicas, and archives.
+Provide one inspection and control surface across claims, events, episodes, graphs, vectors, objects, source-native evidence, active contexts/plans, workflows, personal models, datasets, replicas and archives.
 
-Test deletion propagation, restore filtering, cutover, rollback, model retirement, projection rebuild, and public-claim accuracy.
+Deletion propagation spans durable stores **and execution/parametric influence**. Track summaries, context, pending plans, caches/KV generations where controllable, replay/training examples, adapters/weights and backup/export generations.
+
+Test counterfactual execution-state replay where required, parameter-memory backflow prevention, restore filtering, cutover, rollback, model retirement, projection rebuild and public-claim accuracy.
 
 ## 13. Integration waves
 

@@ -1,6 +1,6 @@
 # A.L.I.C.E. Memory Identity, Formation, Host Learning, and Repository Lifecycle
 
-**Version:** 2.2.0
+**Version:** 2.3.0
 **Status:** Owner-ratified architecture decision
 **Applies to:** A.L.I.C.E. identity, memory formation, host learning, Stage G qualification, Friday separation, and repository lifecycle
 
@@ -272,24 +272,33 @@ registered derived memory planes
 
 The Memory Formation Model may propose that a relationship, semantic representation, episode, host-model observation, or workflow is useful. It does not directly choose Neo4j, Qdrant, KurrentDB, Temporal, SQL, Redis, or any other implementation as authority.
 
-## 9. Logical memory architecture and candidate engines
+## 9. Full logical memory architecture and selected engines
 
-The architecture remains capability-first and backend-neutral.
+The architecture is capability-first, polyglot, local-capable and deployment-unbounded. No host profile may remove a logical plane merely to simplify packaging.
 
 | Logical role | Purpose | Selected current implementation |
 |---|---|---|
-| Experience/Event Fabric | Ordered evidence, event history, replay, correction/deletion lineage | PostgreSQL append-only event schema + outbox/checkpoints |
-| Claim Fabric | Canonical adjudicated and bitemporal knowledge | PostgreSQL bitemporal claims + materialized current state |
-| Cognitive Graph | Provenance-linked relationship, causal, social, project, identity, and temporal projections | Neo4j derived accelerator; relational projection remains rebuildable fallback |
-| Vector/Multimodal Plane | Semantic and multimodal retrieval projections | Qdrant derived accelerator |
-| Exact/source-native retrieval | Direct source evidence and live authoritative state | filesystem/grep-style, SQL/FTS, metadata, structured APIs, live source reads |
-| Object/Archive Plane | Raw files, source corpus, datasets, checkpoints, model weights, manifests, exports, backups | content-addressed local object store + optional owner-authorized S3-compatible backup |
-| Durable Workflow Plane | Projection, repair, deletion, training, evaluation, migration, and recovery workflows | Temporal for long-running/distributed profile; local durable runner allowed for single-host product profile |
-| Workspace / Adaptive Context | Current task and attention state | in-process first; Valkey when shared/distributed ephemeral state is useful |
-| Episodes / Cognitive Models | Derived autobiographical, host, source-person, self, world, mission, and relationship structure | governed structured projections |
-| Model/Dataset/Training Plane | Elaina identity model, Memory Formation Model, retrieval/context models, adapters, challengers | content-addressed manifests + PyTorch/Accelerate training infrastructure |
+| Raw Evidence/Object | original multimodal evidence, datasets, checkpoints, exports/backups | encrypted content-addressed storage behind an S3-compatible abstraction |
+| Experience/Event Fabric | ordered evidence, replay, subscriptions, correction/deletion/device lineage | KurrentDB behind project-owned event/evidence contracts; NATS JetStream for federation/edge ingress |
+| Claim Fabric | canonical adjudicated bitemporal knowledge | XTDB v2 |
+| Episodes/Autobiographical | learned event boundaries, narratives, outcomes, dynamic scene/domain membership | governed derived episode plane linked to Event/Claim identities |
+| Cognitive Multi-Graph | entity, semantic, temporal, causal, evidence, social, relationship, mission, skill, identity, model-lineage and outcome structure | LadybugDB host-local; NebulaGraph at scale; Neo4j retained as existing reference |
+| Associative Graph Compute | PPR, spreading activation, temporal decay, inhibition, path/bridge discovery | engine-independent derived compute layer |
+| Vector/Multimodal Plane | dense/sparse/named/multivector semantic and perceptual retrieval | Qdrant Edge/server/cluster |
+| Exact/source-native retrieval | direct source evidence and live authoritative state | filesystem, SQL/FTS, metadata, structured APIs, live source reads |
+| Perceptual Personal Memory | grounded people/voice/object/place and cross-modal identity representations | protected specialist representations linked to source evidence |
+| Personal Cognitive Models | host/source-person/self/relationship/world/social/causal/mission/preference/skill state | governed versioned projections/models |
+| Parametric Personal Memory | identity, formation, ranker/router, adapter, skill and later native-model learning | provenance-bound model generations |
+| Working/Activation Memory | current attention, context, plans, summaries and controllable cache state | Cognitive Workspace + execution-state provenance |
+| Memory Resource Manager | scheduling/activation/movement across all memory representations | first-party control plane |
+| Retrieval Orchestrator | adaptive parallel/iterative cognitive recollection and evidence sufficiency | first-party Context Planner / retrieval control |
+| Lifecycle Curator | hot/warm/cold/archive/quarantine/retention/replay | first-party lifecycle control |
+| Deletion/Unlearning | cross-store, execution-state and parametric influence removal/rebuild/replay | first-party influence graph + workflow coordination |
+| Durable Workflow | projection, repair, deletion, migration, training/evaluation and long missions | Temporal |
+| Workspace/cache | shared ephemeral state only | process-local L1 + Valkey |
+| Model/Dataset/Training | model/data lineage and hardware-adaptive learning | content-addressed registry + PyTorch/Accelerate |
 
-This is a selected execution path, not a permanent technology ceiling. Challengers remain possible when a concrete A.L.I.C.E. failure or product constraint justifies reopening a decision.
+This is a full personal cognitive fabric. Hardware may change physical placement or distribution; it does not define a smaller product capability class. Challengers remain possible when a concrete failure or constraint justifies reopening one implementation decision.
 
 ## 10. Friday boundary
 
@@ -316,7 +325,9 @@ Not transferable from A.L.I.C.E. to Friday:
 - A.L.I.C.E. continuity;
 - private evaluation data tied to Elaina or Rayan.
 
-A Friday instance uses its own host data and develops its own personality and relationship state from that host.
+A Friday/Fable instance uses its own host data and develops its own personality, relationship and assistant-self state from that host.
+
+The consumer product receives the **full transferable cognitive architecture**. It is not a reduced deployment destiny. The five initial personal roles are capability roles, not a fixed model count. Fable v1 must preserve the full memory, retrieval, personal-development, mission/workspace, procedural-learning, deletion/rollback and continuity semantics described here; only replaceable general feature-model work may be delegated to external providers.
 
 ## 11. Stage G testing program
 
@@ -326,22 +337,26 @@ The Neo4j/Qdrant persistence work already performed is evidence for physical dur
 
 Stage G must qualify the complete cognitive-memory fabric.
 
-### Selected-stack qualification gate
+### Full-fabric qualification gate
 
 The canonical execution and qualification contract is defined in `docs/STAGE_G_MEMORY_FABRIC_CANDIDATE_QUALIFICATION_MATRIX.md`.
 
 Stage G cannot close until:
 
-- the selected physical stack satisfies its registered logical contracts;
-- critical cross-plane interactions and the complete cognitive-memory loop pass on the complex synthetic Rayan-life workload;
-- MFM, deterministic authority, projections, retrieval/context, EIPM judgment, and outcome-driven revision operate coherently;
-- correction, deletion, revocation, restore, failure, concurrency, replay, rebuild, rollback, realistic scale, identity, provenance, and A.L.I.C.E./Fable-isolation evidence passes;
-- citation lock, consolidation path-dependence, memory-use calibration, and adaptive retrieval routing pass targeted tests;
+- every logical plane required by the full personal architecture is operational;
+- each selected implementation satisfies its logical contract;
+- fast and slow memory-formation paths work without bypassing authority;
+- critical cross-plane interactions and the complete Experience -> MFM -> Gate -> Claim -> cognitive projections -> recollection -> EIPM -> outcome -> governed-revision loop pass;
+- dynamic episodes/scenes, multi-graph views, associative activation, vector/multimodal retrieval and source-native retrieval operate coherently;
+- host, source-person, relationship and assistant-self state remain separated and causally affect only relevant judgments;
+- correction, deletion and revocation propagate through durable stores, execution state, replay/training data and parametric personal memory;
+- multi-device/federation, restore, failure, concurrency, rebuild and rollback behavior passes;
+- citation lock, consolidation path-dependence, memory-use calibration and adaptive retrieval routing pass targeted tests;
+- scale/resource evidence is collected without treating certification points as product ceilings;
 - README/governance promises are mapped to executable or inspectable evidence;
-- no challenger is required unless a concrete capability/operational decision remains unresolved;
 - no unresolved zero-tolerance failure remains.
 
-This gate expands Stage G evidence without selecting a permanent backend or creating a technology ceiling.
+Alternative infrastructure remains a trigger-based challenger, not a mandatory tournament. The full architecture itself may not be reduced to avoid infrastructure work.
 
 ### G2 — learned formation and identity foundations
 
