@@ -30,6 +30,17 @@ complete destination closure and every file hash, failing on missing, altered,
 extra, escaping or FINAL paths. The source-side manifest has **not yet been
 run**; the earlier inventory did not individually publish all shard hashes.
 
+**Checksum correction after the owner's first retrieval:** The original
+terminal handoff mistakenly used SHA-256 `a5652804...`, calculated before the
+tokenizer-receipt addition. The published script in context commit
+`5b155c0ae3590df9ac17167b105250bd926b5c18` has Git blob
+`d2b9c32b43bbc5e3b2ec19664439c9248c6a2a6a` and actual SHA-256
+`50bfac0720e8a4433cee6cf4dbf0d661e146dd22b9b535a53bbf19ff756e1a4b`.
+The reported checksum failure occurred before the container call and created
+no manifest. Verify the already downloaded file against both hashes, then run
+the existing producer; do not fetch or replace it merely to match the stale
+checksum.
+
 On Magnolia, after fetching this context revision and checking **both**
 script hashes, run the manifest producer under the validated CPU container
 with `--repo`, `--work`, `--mixture` and a **fresh** `--manifest` path outside
