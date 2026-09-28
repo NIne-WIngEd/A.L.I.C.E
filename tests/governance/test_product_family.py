@@ -114,7 +114,7 @@ def test_friday_roadmap_has_no_partial_consumer_launch_gate() -> None:
     roadmap = (ROOT / "docs" / "FRIDAY_ROADMAP.md").read_text(encoding="utf-8")
 
     assert "Fable v1 Release Gate" in roadmap
-    assert "F4 through F11 are **internal engineering and qualification milestones**" in roadmap
+    assert "F4–F11 are **internal engineering and qualification milestones**" in roadmap
     assert "No F4–F11 milestone by itself satisfies this release gate." in roadmap
     assert "minimum credible Friday launch cohort" not in roadmap
     assert "## F5 — Learning closed alpha" not in roadmap
