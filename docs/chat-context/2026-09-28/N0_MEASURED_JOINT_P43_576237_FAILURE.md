@@ -43,11 +43,38 @@ actual measured memory before raising. The traceback is a policy capacity
 failure, not evidence of a CUDA OOM or a new dtype failure. The kernel/NCCL
 messages do not supersede the explicit exception.
 
-The pasted stdout and stderr do **not** include the per-rank `rank-0.jsonl`
-and `rank-1.jsonl` measurement objects. Thus the exact peak, overage,
-allocator-versus-device-used contribution, and timing within the step remain
-unverified here. Even the five reported PASS pairs do not establish all 18
-pairs or the checkpoint/save/load/resumed-step requirement. The source keeps
+The owner subsequently pasted the last `rank-0.jsonl` and `rank-1.jsonl`
+failure rows. Both report the identical actual step measurement:
+
+| Per-rank quantity | Bytes | GiB |
+| --- | ---: | ---: |
+| P100 total capacity | 12,778,733,568 | 11.901 |
+| 85% policy limit (floor) | 10,861,923,532 | 10.116 |
+| Peak PyTorch allocation | 9,350,800,384 | 8.709 |
+| Peak PyTorch reservation | 10,498,342,912 | 9.777 |
+| Maximum sampled whole-device use | 10,886,447,104 | 10.139 |
+| Safety margin | 1,073,741,824 | 1.000 |
+| Conservative measured peak | 11,960,188,928 | 11.139 |
+| Over the 85% policy limit | 1,098,265,396 | 1.023 |
+
+The conservative peak is the larger of allocator allocation, reservation and
+sampled whole-device use plus the frozen margin. The last term dominates. The
+sampled device use alone was already 24,523,572 bytes above the 85% limit;
+the 1 GiB margin is an explicit part of the original capacity policy, not an
+optional extra to drop. Both rows report finite loss, all eight microbatches,
+finite nonzero gradients, nonzero named public judgment gradient, and changed
+weight/AdamW state. The stage samples show device use growing at backward
+microbatch 1 and staying at 10,886,447,104 bytes through optimizer. The
+allocator's higher instantaneous allocation peak is not localized by those
+post-stage snapshots. No CUDA OOM occurred.
+
+The same measured demand would require at least 14,070,810,504 total device
+bytes to pass an 85% arithmetic check **if all memory behavior stayed
+identical**. This is only a lower bound for the one failing step. Different
+hardware, the other 12 pairs, a later AdamW step, and checkpoint transport
+can change the peak. It cannot certify a T4, L4, 16 GB or 24 GB offer. Even
+the five reported PASS pairs do not establish all 18 pairs or the
+checkpoint/save/load/resumed-step requirement. The source keeps
 `measured/result.json` marked `INCOMPLETE_N0_MEASURED_JOINT_ROUTE_NOT_AUTHORITY`
 on this early failure; a successful measured GPU receipt and joint-route
 receipt are not reported. The older projected FAIL remains intact.
@@ -56,13 +83,12 @@ receipt are not reported. The older projected FAIL remains intact.
 
 Inspect the preserved root at
 `$HOME/rayan-compute/rayan-n0/n0-v02/measured-joint-5e29f7f-v1`.
-Read `measured/rank-0.jsonl` and `measured/rank-1.jsonl` for each step's
-`max_allocated_bytes`, `max_reserved_bytes`, `max_sampled_device_used_bytes`,
-`conservative_measured_bytes`, capacity fraction, stage samples and named
-gradient flags. Confirm the failure row on each rank and check that the
-root's incomplete result and old projection are preserved. Use the actual
-overage and peak stage to compare faithful complete-step memory routes and
-verified two-GPU high-memory offers. No second Magnolia/Kaggle attempt,
+Preserve both rank files and their source/input hashes; do not reset or rename
+the root. Compare faithful complete-step memory routes and verified two-GPU
+high-memory offers against the **unmeasured** remainder, not just the 1.023
+GiB gap in the first failing pair. A larger device may solve this observed
+capacity failure but still requires all 18 pairs, second steps and
+checkpoint/resume on the actual purchased runtime. No second Magnolia/Kaggle attempt,
 reduced family/shape, weaker threshold, fabricated PASS, production training,
 checkpoint selection or FINAL opening follows from this result. Any source
 change invalidates this exact-head predecessor chain for later authorization.
@@ -70,3 +96,25 @@ change invalidates this exact-head predecessor chain for later authorization.
 FBM may retain this as an observed public **procedure failure** with source,
 jobs, hardware, executed stage and evidence gaps. It is not entity or
 personality gold. `training_eligible=false`, `evaluation_eligible=false`.
+
+## Paid fallback, still unallocated
+
+The measured lower bound makes a larger-memory replicated DDP host a simpler
+candidate than a new sharding/offload implementation. Lambda's current public
+listing describes one two-GPU A6000 instance with 48 GB per card, 28 vCPUs,
+200 GiB RAM and 1 TiB SSD at $1.09 per GPU-hour ($2.18/hour for the pair,
+before taxes). Its two-A100 PCIe instance lists 40 GB per card at $1.99 per
+GPU-hour. These are catalogue prices and shapes, not a checked account offer
+or availability. [Lambda instance shapes](https://docs.lambda.ai/public-cloud/on-demand/)
+and [pricing](https://lambda.ai/pricing). A different provider's advertised
+GPU cannot substitute for an observed two-device allocation.
+
+Before any allocation, inventory the exact public source/data/checkpoint
+closure and the absolute teacher shard path, then prepare a digest-pinned
+container or compatible locked runtime with the current trainer. Confirm the
+specific offer's two unsliced GPUs, driver, Python/Torch/CUDA/Accelerate
+versions, host RAM/disk, persistence and billing. On the rented host, first
+verify hashes, rank mapping and NCCL, then run one bounded original full-route
+qualification; stop on mismatch or failure. The P100 receipt does not promise
+that 18 pairs, checkpoint/resume or numerical behavior will pass there. No
+instance is selected, purchased or started by this note.
