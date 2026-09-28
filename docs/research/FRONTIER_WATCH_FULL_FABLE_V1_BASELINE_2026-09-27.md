@@ -3,7 +3,7 @@
 **Date:** 2026-09-27  
 **Status:** mandatory comparison baseline for future frontier-watch intake  
 **A.L.I.C.E. architecture authority:** `main@e6d0490cdf29ee56edbcb0e3d65d5783adfdf1a7` or newer  
-**Fable product authority:** `NIne-WIngEd/Fable_Sleight main@e57a0ab1639076db79406e92d4d675d8e9f6c4d6` or newer
+**Fable product authority:** `NIne-WIngEd/Fable_Sleight main@191b0dbf8c1c33114b56e8e5e2c4be52076cd4ce` or newer
 
 ## Why this note exists
 
