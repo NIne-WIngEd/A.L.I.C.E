@@ -118,3 +118,15 @@ verify hashes, rank mapping and NCCL, then run one bounded original full-route
 qualification; stop on mismatch or failure. The P100 receipt does not promise
 that 18 pairs, checkpoint/resume or numerical behavior will pass there. No
 instance is selected, purchased or started by this note.
+
+The read-only, no-payload
+`n0_5e29_paid_portability_input_inventory_v1.py` is prepared in this directory.
+It pins source `5e29f7f`, public mixture SHA-256 `c5f18c6f...51b97`, the
+exact-head CPU proof copies, teacher registry/shards, tokenizer, semantic
+checkpoint, corpus shard closure and seven optimizer-facing public lane files.
+It records paths, byte sizes and SHA-256 rather than row content, and checks
+the sealed FINAL freeze without staging FINAL inputs. Script SHA-256 is
+`f6fc332fb8d8fcb1a81cf901f9f642f4dbacd52ea85fd51d9ddce40f11cebfa1`.
+Local Python parse passed. It has **not** been executed against Magnolia's
+actual bytes; its output cannot yet establish transfer readiness or paid
+host compatibility.
