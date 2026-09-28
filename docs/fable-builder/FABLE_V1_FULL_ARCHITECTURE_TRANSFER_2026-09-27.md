@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-27  
 **Status:** required builder-direction correction  
-**Upstream architecture authority:** A.L.I.C.E. main `d7bdf75b38785e0ed3e45a724429c1161b902b15`  
+**Upstream architecture authority:** A.L.I.C.E. main `e6d0490cdf29ee56edbcb0e3d65d5783adfdf1a7`  
 **Fable product authority:** Fable main `e57a0ab1639076db79406e92d4d675d8e9f6c4d6`
 
 ## Correction
@@ -108,6 +108,29 @@ FBM must build lineage deep enough to trace influence through:
 source -> Event -> Claim -> Episode/Graph/Vector/Summary -> Context/Plan -> Dataset/Replay -> Personal Model -> later regenerated memory.
 
 This is required so user deletion can remove or quarantine downstream influence rather than only removing the visible source row.
+
+## Release-boundary implication
+
+The builder must not learn a staged product ladder where a partial personal architecture becomes a smaller consumer Fable.
+
+F4 through F11 are internal qualification stages only:
+
+- ingestion/runtime;
+- selective memory/learning;
+- personal intelligence;
+- missions/proactive agency;
+- actions/skills/self-evolution;
+- expert feature integration;
+- host-specific adaptation;
+- persistent environment/multi-device continuity.
+
+FBM may produce intermediate artifacts while constructing or testing these stages. Those artifacts are not consumer release targets.
+
+The consumer release predicate is:
+
+`full_personal_cognitive_foundation_after_f11`
+
+General feature engines may remain API-backed. The builder may not satisfy the release predicate by outsourcing or omitting the personal cognitive core.
 
 ## Qualification implication
 
