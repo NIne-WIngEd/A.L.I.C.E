@@ -90,9 +90,16 @@ returned OK. The V2 script's pinned Git blob and SHA-256 checks returned OK.
 The same CPU udocker runtime reported
 `CREATED_PUBLIC_INPUT_MANIFEST files=78 sha256=2d83e34f58918ad36d31142ba0e6f77447f2d647c6edc786f06678502f010b7d`.
 This is consistent with V1's 76 entries, excluding its two FewRel FINAL
-payloads and adding the four missing original CPU receipts. The V2 JSON
-contents have not yet been uploaded for independent entry-by-entry review;
-the producer itself checked those CPU receipts against exact-head statuses
+payloads and adding the four missing original CPU receipts. The owner then uploaded the V2 JSON. Independent review reproduced the printed
+SHA-256 from its LF-terminated bytes, counted 78 distinct sorted entries
+(14 repo, 64 work; 879,804,786 bytes), and checked every repo entry's size
+and SHA-256 against `5e29f7f`. Comparison with the uploaded V1 entry set
+removed exactly `fewrel/final_rows.jsonl` and `fewrel/final_bank.json`, added
+exactly four original CPU receipts, and preserved identical size/hash for all
+74 shared entries. The only `final-v2` entry is `freeze_receipt.json`.
+Source work-file hashes were generated on Magnolia and are not independently
+recomputed from its private filesystem here; the destination must run `verify`.
+The producer also checked those CPU receipts against exact-head statuses
 and the mixture's copies. The V1 and V2 files remain separate. No source
 payload, FINAL row, or private identity data has been transferred to a paid
 host. Destination hashes, runtime compatibility, actual two-device offer and
@@ -160,3 +167,13 @@ but its full numerical and resume result is an experiment, not something that
 can be guaranteed before the actual hardware runs it. A provider mismatch is
 also measurable before the expensive full route. Do not purchase on the
 strength of a projected margin alone.
+
+**Purchase candidate, not an authorization:** If live account inventory offers
+one Lambda 2× A6000 instance with 48 GB on each GPU, this is the preferred
+first paid host at catalogue $2.18 per pair-hour plus tax. It is a single
+node, matching the two-rank topology, and gives ample nominal capacity over
+the measured 11,960,188,928-byte first-step conservative demand. The other
+12 pairs, later optimizer step, checkpoint/resume, CUDA driver/container
+compatibility and account availability are still empirical gates. The 2×
+A100 PCIe 40 GB instance is a more expensive fallback at $3.98 per pair-hour.
+Do not purchase separate 1× instances as a substitute for the same-node route.
