@@ -27,8 +27,8 @@ and mixture provenance files. It records each file's SHA-256 and byte length.
 It excludes the sealed `final-v2` tree except the freeze receipt. It transfers
 no bytes. Its verifier repeats the source authority checks and compares the
 complete destination closure and every file hash, failing on missing, altered,
-extra, escaping or FINAL paths. The source-side manifest has **not yet been
-run**; the earlier inventory did not individually publish all shard hashes.
+extra, escaping or FINAL paths. The earlier inventory did not individually
+publish all shard hashes.
 
 **Checksum correction after the owner's first retrieval:** The original
 terminal handoff mistakenly used SHA-256 `a5652804...`, calculated before the
@@ -40,6 +40,16 @@ The reported checksum failure occurred before the container call and created
 no manifest. Verify the already downloaded file against both hashes, then run
 the existing producer; do not fetch or replace it merely to match the stale
 checksum.
+
+**Source-side manifest observed, owner terminal (2026-09-28):** The corrected
+Git blob and SHA-256 checks returned OK, and the producer completed in the
+CPU udocker runtime. It reported
+`CREATED_PUBLIC_INPUT_MANIFEST files=76 sha256=8eb21cf4cc4634e1a9c5ceeb7d6137760b6eb594027ded56ccdb26831be91c66`.
+This establishes a locally retained, per-file source manifest of the public
+input closure. The full manifest contents have not been supplied here for an
+independent row-by-row review. No payload was transferred, no destination
+hash or absolute-path binding was checked, and no paid host was allocated.
+Keep the manifest at its original path and do not regenerate over it.
 
 On Magnolia, after fetching this context revision and checking **both**
 script hashes, run the manifest producer under the validated CPU container
