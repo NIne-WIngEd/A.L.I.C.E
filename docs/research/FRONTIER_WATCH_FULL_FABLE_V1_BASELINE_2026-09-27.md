@@ -47,12 +47,12 @@ General feature models may remain replaceable GPT/Claude-class services in v1. T
 
 Current implementation direction:
 
-- Experience/Event -> NATS JetStream behind first-party event/evidence contracts;
+- Experience/Event -> KurrentDB as the canonical event store behind first-party event/evidence contracts, with NATS JetStream for federation/edge ingress;
 - Claim Authority -> XTDB v2;
 - raw evidence/artifacts -> encrypted content-addressed storage behind an S3-compatible abstraction;
 - host-local Cognitive Multi-Graph -> LadybugDB;
-- scale-out graph placement -> JanusGraph + qualified distributed storage;
-- existing graph reference -> Neo4j;
+- scale-out graph placement -> NebulaGraph for qualified private-cluster distribution;
+- existing graph reference -> Neo4j retained for migration/reference evidence;
 - associative graph compute -> engine-independent first-party layer;
 - vector/multimodal -> Qdrant Edge/server/cluster;
 - source-native -> local/live source reads;
