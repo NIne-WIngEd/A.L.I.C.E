@@ -456,7 +456,7 @@ The views share registered node/evidence identities but do not collapse their ed
 
 **Local embedded graph engine:** LadybugDB is the current preferred host-local engine because it is MIT-licensed, embedded, ACID, columnar, multi-core, Cypher-capable and provides graph algorithms.
 
-**Scale-out graph engine:** JanusGraph on an appropriate distributed backend is the current private-cluster path when one host's graph materially exceeds a single-machine placement.
+**Scale-out graph engine:** NebulaGraph on an appropriate distributed backend is the current private-cluster path when one host's graph materially exceeds a single-machine placement.
 
 This is **not** a reduced-vs-full profile. It is the same graph contract with hardware-adaptive placement.
 
