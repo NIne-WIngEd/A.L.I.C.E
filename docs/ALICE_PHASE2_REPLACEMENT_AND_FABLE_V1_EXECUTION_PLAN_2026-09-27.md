@@ -365,29 +365,25 @@ Use encrypted content-addressed storage with an S3-compatible abstraction. Local
 
 Selected architecture: **event-stream-native, replayable append-only fabric**.
 
-Current physical default: **NATS JetStream** behind A.L.I.C.E./Fable-owned `EvidenceLog` and event-envelope contracts.
+Current canonical event-store default: **KurrentDB** behind A.L.I.C.E./Fable-owned `EvidenceLog` and event-envelope contracts.
 
-Why:
+It is selected for the Experience Ledger because event streams, expected revisions, idempotent appends, durable replay, persistent subscription checkpoints and event-history semantics are first-class rather than reconstructed over a generic database.
 
-- persistent replayable streams;
-- durable consumers;
-- replication;
-- local/edge/distributed deployment;
-- Apache-2.0 distribution;
-- one server family can span desktop, LAN, private cluster and multi-device edge topology.
+**NATS JetStream is the selected multi-device/federation and edge-ingress transport.** It provides durable edge/device buffering, replication, replay and service/device stream transport before governed reconciliation into the canonical Experience fabric.
 
-A.L.I.C.E./Fable code owns:
+A.L.I.C.E./Fable code still owns:
 
-- event identity;
-- expected-stream/version semantics;
+- event identity and evidence semantics;
+- expected-stream/version contract;
 - idempotency;
-- evidence binding;
+- product/host/device scope;
 - causal/device clocks;
 - correction/deletion lineage;
 - custody classes;
+- reconciliation rules;
 - projection checkpoints.
 
-**KurrentDB remains a strong event-native reference/challenger**, but its KLv1 non-OSI license makes it a poor dependency to hard-code into the entire Fable product family. This is a product-architecture decision, not a claim that KurrentDB is technically weak.
+KurrentDB's KLv1 hosted/managed-service restriction is tracked as a deployment/business constraint, not used to downgrade the memory architecture. A future managed product can license KurrentDB or substitute another event store behind the same contract.
 
 ### D3 — Claim Authority
 
@@ -456,7 +452,7 @@ The views share registered node/evidence identities but do not collapse their ed
 
 **Local embedded graph engine:** LadybugDB is the current preferred host-local engine because it is MIT-licensed, embedded, ACID, columnar, multi-core, Cypher-capable and provides graph algorithms.
 
-**Scale-out graph engine:** NebulaGraph on an appropriate distributed backend is the current private-cluster path when one host's graph materially exceeds a single-machine placement.
+**Scale-out graph engine:** NebulaGraph is the current private-cluster path when one host's graph materially exceeds a single-machine placement. Its distributed storage/compute architecture, Raft consistency and openCypher-compatible query model preserve the graph contract without introducing a separate Gremlin + external-storage abstraction.
 
 This is **not** a reduced-vs-full profile. It is the same graph contract with hardware-adaptive placement.
 
