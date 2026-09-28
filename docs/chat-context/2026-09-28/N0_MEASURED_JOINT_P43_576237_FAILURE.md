@@ -127,6 +127,35 @@ checkpoint, corpus shard closure and seven optimizer-facing public lane files.
 It records paths, byte sizes and SHA-256 rather than row content, and checks
 the sealed FINAL freeze without staging FINAL inputs. Script SHA-256 is
 `f6fc332fb8d8fcb1a81cf901f9f642f4dbacd52ea85fd51d9ddce40f11cebfa1`.
-Local Python parse passed. It has **not** been executed against Magnolia's
-actual bytes; its output cannot yet establish transfer readiness or paid
-host compatibility.
+Local Python parse passed. At publication, it had **not** been executed
+against Magnolia's actual bytes; the subsequent owner transcript below
+resolves that source-side question. Paid-host compatibility remains unknown.
+
+**Observed inventory, owner terminal transcript (2026-09-28):** The script
+hash check returned OK and its CPU-container invocation completed without an
+error. It confirmed clean source `5e29f7f`, public mixture manifest SHA-256
+`c5f18c6f7ebf8c1a198cd420740966b5e9c7ffe9143b1125c06edfb94de51b97`,
+mixture audit SHA-256 `171ba5d606e6c36739db07b0267a4df2886fc087a1f8e4890c2d8ea8163986bd`,
+the exact-head CPU proof copies, frozen unopened FINAL receipt, semantic
+checkpoint SHA-256 `6c2706984c0e05123c4d88ba456788fbd4c9e7f0fca41d43d9e575ac6e53bf43`
+(669,270,116 bytes), tokenizer SHA-256 `cd4cb8025918891c84b908c2a8aceba1d49f08b23f99b7913a0a279f8a43c9aa`,
+21 public corpus shards (123,677,368 bytes), seven named optimizer-facing
+public lane files, and all eight teacher curriculum/manifest pairs. Seven
+teacher pairs resolve relative to the exact source repo; the v0.5 wave pair
+resolves under the absolute Magnolia
+`/homes/01/mxrayan/rayan-compute/rayan-n0/n0-v02/teacher-bank-v0.5/`
+path. Registry SHA-256 remains
+`4c06e08cf7ca217fe803ec16a63da2d7381b1d400172af8ffd9f90de120f6de9`.
+The core checkpoint, corpus, tokenizer and seven lane files total about
+0.819 GiB before receipts, repo files, container and checkpoint outputs.
+
+This inventory establishes the source-side byte closure and the one
+nonportable path. A paid container can bind the original absolute work tree
+at the same path while preserving registry and mixture bytes, provided the
+destination hashes all match. If the provider cannot expose that path, a
+versioned portable registry and refreshed public-mixture audits are required;
+editing the registered path in place would invalidate the bound hashes. The
+transcript does not include a complete per-shard transfer manifest or a paid
+host readback, runtime lock, two-GPU allocation or NCCL result. It authorizes
+neither transfer nor spend by itself. No identity payload, FINAL rows or model
+training were involved.
