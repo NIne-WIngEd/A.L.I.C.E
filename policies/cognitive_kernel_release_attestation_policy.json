@@ -75,15 +75,7 @@
     "deployment_implemented": false,
     "approval_generation_implemented": false,
     "friday_product_source_implemented": false,
-    "private_payload_allowed": false,
-    "friday_release_channel_does_not_override_full_v1_capability_gate": true,
-    "partial_capability_consumer_fable_release_allowed": false
+    "private_payload_allowed": false
   },
-  "capability_ceiling": false,
-  "release_channel_semantics": {
-    "distribution_channel_is_not_capability_tier": true,
-    "partial_fable_consumer_release_allowed": false,
-    "fable_v1_requires_full_personal_cognitive_foundation": true,
-    "legacy_alpha_beta_channels_allowed_for_controlled_testing": true
-  }
+  "capability_ceiling": false
 }
