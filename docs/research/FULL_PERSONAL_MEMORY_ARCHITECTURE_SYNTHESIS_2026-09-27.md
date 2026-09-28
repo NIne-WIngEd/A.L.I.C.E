@@ -168,7 +168,7 @@ A single engine is not allowed to become a graph-capability ceiling.
 - serializable ACID;
 - graph-algorithm extension including PageRank.
 
-**Scale-out private-cluster path:** JanusGraph over an appropriate distributed backend:
+**Scale-out private-cluster path:** NebulaGraph over an appropriate distributed backend:
 - Apache-2.0;
 - distributed property graph;
 - pluggable Cassandra/HBase/Scylla-class storage;
