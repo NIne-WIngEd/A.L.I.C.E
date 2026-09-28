@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "policy_version": "1.1.0",
+  "policy_version": "1.2.0",
   "policy_id": "friday.production_governance.v1",
   "authority": "docs/FRIDAY_PRODUCTION_GOVERNANCE.md",
   "capability_ceiling": false,
@@ -90,5 +90,12 @@
     "legacy_candidate_work_fields_are_deny_by_default": true,
     "post_handover_upstream_proposal_research_allowed": true,
     "uneligible_capability_implementation_or_testing_allowed": false
+  },
+  "release_channel_semantics": {
+    "channel_labels_describe_distribution_maturity_not_cognitive_capability": true,
+    "closed_alpha_alpha_beta_may_be_internal_or_controlled_test_channels": true,
+    "partial_capability_consumer_release_allowed": false,
+    "fable_v1_consumer_release_requires": "full_personal_cognitive_foundation_after_f11",
+    "approved_closed_alpha_does_not_imply_fable_v1_release": true
   }
 }
