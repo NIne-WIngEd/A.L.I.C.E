@@ -1,5 +1,9 @@
 # N0 5e29 paid-host transfer and full-route qualification handoff
 
+**SUPERSEDED TRANSFER LIST — DO NOT TRANSFER FROM THE 76-FILE V1 MANIFEST.**
+Independent review of the owner's uploaded manifest found two sealed FewRel
+FINAL payloads. See the v2 correction below. No bytes had been transferred.
+
 Status 2026-09-28: **prepared, no paid allocation, no transferred data, no GPU
 authorization**. The source-side inventory from the owner's Magnolia terminal
 completed at clean `5e29f7f69ba4a5d031c7036639b67bebbcdc0bd2`. The
@@ -50,6 +54,36 @@ input closure. The full manifest contents have not been supplied here for an
 independent row-by-row review. No payload was transferred, no destination
 hash or absolute-path binding was checked, and no paid host was allocated.
 Keep the manifest at its original path and do not regenerate over it.
+
+**Independent manifest audit and v2 successor (2026-09-28):** The owner
+uploaded the 76-entry JSON. Its upload used CRLF line endings; normalizing
+to LF reproduces the printed SHA-256
+`8eb21cf4cc4634e1a9c5ceeb7d6137760b6eb594027ded56ccdb26831be91c66`.
+All 14 repo-relative teacher files match size and SHA-256 in the pinned local
+source checkout. The 62 work-root entries total with the repo entries
+897,956,446 bytes. **V1 wrongly includes**
+`fewrel/final_rows.jsonl` (18,144,173 bytes) and
+`fewrel/final_bank.json` (28,449 bytes) under the mixture root. The script's
+directory walk excluded only `final-v2`, so its `final_rows_staged=false`
+field was false as a transfer claim. The 76-file manifest is retained as
+failed procedure evidence; it must never be used for packaging or transfer.
+The uploaded manifest contains paths, hashes and sizes, not those row bytes.
+
+`n0_5e29_paid_input_transfer_manifest_v2.py` replaces the directory walk
+with an explicit list of the 29 observed **non-FINAL** mixture files. It
+includes all six source-bound CPU receipts needed by the later full training
+authorizer: result, static proof, tokenizer stress, operator evidence token
+alignment, semantic long-context token alignment, and long-context boundary
+alignment. Four of these were absent from V1's transfer list. Each of those
+four is checked against its mixture copy and exact-head PASS status. V2
+rejects `final_*` payload names, preserves only the `final-v2` freeze receipt,
+and checks the generated expected file set before opening entries supplied
+by a destination manifest. Local syntax, source-list comparison and synthetic
+sealed-file rejection passed. The expected successor has 78 entries if the
+owner's source files still match; **no v2 Magnolia manifest has been
+produced yet**. It requires a new evidence path and distinct hash. Do not
+overwrite or relabel the failed V1 manifest. No new N0 scientific source or
+training authorization is involved.
 
 On Magnolia, after fetching this context revision and checking **both**
 script hashes, run the manifest producer under the validated CPU container
