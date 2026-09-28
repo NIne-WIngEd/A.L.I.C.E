@@ -9,7 +9,15 @@ on:
       - "scripts/eipm/n0/train_n0_v02_full_envelope_joint_v1.py"
       - "scripts/eipm/n0/authorize_n0_v02_full_envelope_training_v1.py"
       - "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py"
+      - "scripts/eipm/n0/qualify_n0_v02_complete_joint_route_v2.py"
+      - "scripts/eipm/n0/run_n0_v02_measured_joint_route_v2.sh"
+      - "scripts/eipm/n0/magnolia_p100x2_n0_v02_measured_joint_memory_v2.sbatch"
+      - "scripts/eipm/n0/magnolia_udocker_exec.sh"
+      - "configs/eipm/n0/n0_v02_full_envelope_measured_joint_memory_v2.json"
+      - "configs/eipm/n0/n0_v02_semantic_operator_joint_training_plan_v1.json"
+      - "configs/eipm/n0/n0_v02_full_envelope_proof_obligations_v1.json"
       - "tests/eipm/test_n0_full_envelope_joint_ddp_route_v2.py"
+      - "tests/eipm/test_n0_measured_joint_memory_v2.py"
       - "tests/eipm/test_n0_full_envelope_joint_runtime_v1.py"
       - "tests/eipm/test_n0_full_envelope_trainable_system_v1.py"
       - ".github/workflows/n0-whole-step-ddp-v2-cpu.yml"
@@ -32,7 +40,11 @@ jobs:
         run: python -m pip install "torch==2.7.1" "accelerate==1.15.0" safetensors pytest numpy
       - name: Full N0 objective, two-rank DDP and checkpoint compatibility
         run: |
+          python -m compileall -q scripts/eipm/n0/qualify_n0_v02_complete_joint_route_v2.py
+          bash -n scripts/eipm/n0/run_n0_v02_measured_joint_route_v2.sh
+          bash -n scripts/eipm/n0/magnolia_p100x2_n0_v02_measured_joint_memory_v2.sbatch
           pytest -q \
             tests/eipm/test_n0_full_envelope_joint_ddp_route_v2.py \
             tests/eipm/test_n0_full_envelope_trainable_system_v1.py \
-            tests/eipm/test_n0_full_envelope_joint_runtime_v1.py
+            tests/eipm/test_n0_full_envelope_joint_runtime_v1.py \
+            tests/eipm/test_n0_measured_joint_memory_v2.py

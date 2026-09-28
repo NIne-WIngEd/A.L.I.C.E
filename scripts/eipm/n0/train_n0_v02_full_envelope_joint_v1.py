@@ -59,7 +59,7 @@ from alice_personality.n0.v02_training import (
 PASS_MIXTURE="PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1"
 PASS_TOKENIZER="PASS_N0_TOKENIZER_STRESS_V1"
 PASS_CPU="PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1"
-PASS_GPU="PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1"
+PASS_GPU="PASS_N0_FULL_ENVELOPE_MEASURED_JOINT_MEMORY_V2"
 PASS_LONG_BOUNDARY="PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1"
 PASS_SEMANTIC_LONG_TOKEN="PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1"
 PASS_OPERATOR_TOKEN="PASS_N0_OPERATOR_EVIDENCE_TOKEN_ALIGNMENT_V1"
@@ -146,6 +146,98 @@ def require_status(path: str | Path, expected: str, *, label: str) -> dict[str,A
     return value
 
 
+def require_measured_joint_memory(receipt: Mapping[str,Any]) -> None:
+    """Check raw per-rank steps; top-level PASS booleans alone are insufficient."""
+    if receipt.get("status")!=PASS_GPU:
+        raise SystemExit("measured GPU receipt not PASS")
+    if receipt.get("schema")!="alice.eipm.n0.full-envelope-measured-joint-memory.v2":
+        raise SystemExit("measured GPU receipt schema drift")
+    expected={
+        "world_size":2,"ddp_replica_wrapped":True,
+        "ddp_boundary":"complete_joint_step_v2",
+        "stress_pair_count":18,"all_ten_j3_families_executed":True,
+        "complete_backward_per_rank":True,"finite_nonzero_gradients_per_rank":True,
+        "first_and_later_adamw_steps_measured":True,
+        "state_reset_to_identical_initialization_per_pair":True,
+        "eight_microbatch_accumulation_measured":True,
+        "same_stage_resume_verified":True,
+        "predecessor_state_transfer_verified":True,
+        "stage_dev_selection_claimed":False,
+        "capacity_85_percent_pass_per_rank":True,
+        "predecessor_no_gradient_forward_verified":True,
+        "old_projection_remains_independent":True,
+        "projection_is_training_authorization":False,
+        "measurement_is_training_authorization":False,
+        "diagnostic_weight_updates":True,
+        "production_model_training_performed":False,
+        "gpu_training_authorized":False,
+        "private_identity_data":False,
+        "final_results_observed":False,
+    }
+    for key,value in expected.items():
+        if receipt.get(key)!=value:
+            raise SystemExit(f"measured GPU receipt/{key} drift")
+    if receipt.get("old_projection_status") not in {
+        "PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1",
+        "FAIL_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1",
+    }:
+        raise SystemExit("measured GPU receipt lost old projection outcome")
+    if not isinstance(receipt.get("no_gradient_receipt_sha256"),str) or len(receipt["no_gradient_receipt_sha256"])!=64:
+        raise SystemExit("measured GPU receipt lost no-gradient receipt binding")
+    if (receipt.get("microbatch_size"),receipt.get("teacher_batch_size"),
+        receipt.get("replay_sequence_length"),receipt.get("candidate_gradient_accumulation"),
+        receipt.get("training_mixed_precision"))!=(1,2,512,8,"fp16"):
+        raise SystemExit("measured GPU receipt operating point drift")
+    expected_pairs={
+        f"{semantic}__{full}"
+        for semantic in ("max_runtime_axes","max_factor_cardinality","long_context_semantic")
+        for full in (
+            "max_candidate_cardinality","max_field_cardinality","max_edge_cardinality",
+            "max_view_cardinality","max_reasoning_depth","long_additional_view_source",
+        )
+    }
+    ranks=receipt.get("ranks") or []
+    if len(ranks)!=2 or sorted(row.get("rank") for row in ranks)!=[0,1]:
+        raise SystemExit("measured GPU rank coverage drift")
+    for rank in ranks:
+        if rank.get("pair_count")!=18 or rank.get("same_stage_resume_verified") is not True:
+            raise SystemExit("measured GPU rank step or resume coverage drift")
+        pairs=rank.get("pairs") or []
+        if len(pairs)!=18 or {pair.get("pair") for pair in pairs}!=expected_pairs:
+            raise SystemExit("measured GPU rank stress-pair coverage drift")
+        total=int(rank.get("total_memory_bytes",0))
+        if total<=0:
+            raise SystemExit("measured GPU rank has no device capacity")
+        for pair in pairs:
+            if (pair.get("all_ten_j3_families_executed") is not True
+                or pair.get("complete_backward") is not True
+                or pair.get("state_reset_to_identical_initialization") is not True):
+                raise SystemExit("measured GPU stress pair skipped a family or backward")
+            steps=pair.get("steps") or []
+            if len(steps)!=2 or [s.get("optimizer_step_index") for s in steps]!=[1,2]:
+                raise SystemExit("measured GPU stress pair lacks first and later AdamW")
+            for step in steps:
+                if any(step.get(key) is not True for key in (
+                    "finite_joint_loss","finite_nonzero_gradients",
+                    "nonzero_public_judgment_gradient","weight_and_optimizer_state_changed",
+                    "capacity_85_percent_pass",
+                )):
+                    raise SystemExit("measured GPU stress pair has incomplete step evidence")
+                if step.get("microbatch_count")!=8:
+                    raise SystemExit("measured GPU step lacks eight microbatches")
+                if int(step.get("total_memory_bytes",0))!=total:
+                    raise SystemExit("measured GPU step device capacity drift")
+                measured=int(step.get("conservative_measured_bytes",0))
+                margin=int(step.get("safety_margin_bytes",0))
+                allocated=int(step.get("max_allocated_bytes",0))
+                reserved=int(step.get("max_reserved_bytes",0))
+                device_used=int(step.get("max_sampled_device_used_bytes",0))
+                if margin!=1073741824 or measured!=max(allocated,reserved,device_used+margin):
+                    raise SystemExit("measured GPU step memory arithmetic drift")
+                if measured>math.floor(0.85*total):
+                    raise SystemExit("measured GPU step exceeded original 85% limit")
+
+
 def require_complete_joint_route_qualification(
     path: str | Path,
     *,
@@ -154,12 +246,13 @@ def require_complete_joint_route_qualification(
     gpu_memory_receipt: str | Path,
     topology_config: str | Path,
 ) -> dict[str,Any]:
-    """Keep no-gradient P43 separate from whole-route training authority."""
+    """Require measured P43 and independent whole-route evidence before training."""
     qualifier=Path(__file__).resolve().with_name(
         "qualify_n0_v02_complete_joint_route_v2.py"
     )
     if not qualifier.is_file():
         raise SystemExit("whole-route gradient/optimizer qualifier is not implemented")
+    require_measured_joint_memory(read_json(gpu_memory_receipt))
     receipt=require_status(path,PASS_WHOLE_ROUTE,label="complete joint-route qualification")
     route_file=Path(__file__).resolve().parents[3]/(
         "src/alice_personality/n0/full_envelope_joint_ddp_route_v2.py"
@@ -180,8 +273,11 @@ def require_complete_joint_route_qualification(
         "finite_nonzero_gradients_per_rank":True,
         "first_and_later_adamw_steps_measured":True,
         "eight_microbatch_accumulation_measured":True,
-        "same_stage_and_predecessor_resume_verified":True,
+        "same_stage_resume_verified":True,
+        "predecessor_state_transfer_verified":True,
+        "stage_dev_selection_claimed":False,
         "capacity_85_percent_pass_per_rank":True,
+        "diagnostic_weight_updates_are_production_training":False,
         "final_results_observed":False,
         "private_identity_data":False,
     }
@@ -323,8 +419,9 @@ def verify_pre_gradient_runtime(
         cpu_runtime_receipt_path,PASS_CPU,label="CPU full-envelope runtime"
     )
     gpu=require_status(
-        gpu_memory_receipt_path,PASS_GPU,label="GPU no-gradient memory"
+        gpu_memory_receipt_path,PASS_GPU,label="GPU measured full-joint memory"
     )
+    require_measured_joint_memory(gpu)
     boundary=require_status(
         long_boundary_receipt_path,PASS_LONG_BOUNDARY,
         label="long-context tokenizer boundary"
@@ -400,7 +497,7 @@ def verify_pre_gradient_runtime(
     gpu_expected={
         "registered_topology_sha256":sha256_file(topology_config_path),
         "qualification_config_sha256":sha256_file(
-            repo_root/"configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json"
+            repo_root/"configs/eipm/n0/n0_v02_full_envelope_measured_joint_memory_v2.json"
         ),
         "semantic_config_sha256":sha256_file(semantic_config_path),
         "semantic_checkpoint_sha256":sha256_file(semantic_checkpoint_path),
@@ -413,7 +510,7 @@ def verify_pre_gradient_runtime(
         "mixture_audit_sha256":sha256_file(mixture_audit_path),
     }
     if gpu.get("qualifier_sha256")!=sha256_file(
-        repo_root/"scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py"
+        repo_root/"scripts/eipm/n0/qualify_n0_v02_complete_joint_route_v2.py"
     ):
         raise SystemExit("GPU memory qualifier hash drift")
     for key,expected in gpu_expected.items():
@@ -791,6 +888,94 @@ def globally_observe_effective_batch(
     objective.balancer.observe_detached_family_means(
         means,active_families=active_families
     )
+
+
+def execute_registered_optimizer_step(
+    *,
+    accelerator: Any,
+    route: torch.nn.Module,
+    unwrapped_route: FullEnvelopeJointDDPRouteV2,
+    system: torch.nn.Module,
+    objective: FullEnvelopeJointTrainingObjectiveV1,
+    optimizer: Any,
+    lr_scheduler: Any,
+    next_batch: Any,
+    stage: str,
+    device: torch.device,
+    accumulation_steps: int,
+    gradient_clip_norm: float,
+    observe: Any = None,
+) -> tuple[float, ...]:
+    """Execute the same full joint microbatches in qualification and training."""
+    if accumulation_steps<=0:
+        raise ValueError("accumulation_steps must be positive")
+    policy=resolve_stage_policy(stage)
+    optimizer.zero_grad(set_to_none=True)
+    numerators={
+        family:torch.zeros((),device=device,dtype=torch.float32)
+        for family in policy.active_macro_families
+    }
+    denominators={
+        family:torch.zeros((),device=device,dtype=torch.float32)
+        for family in policy.active_macro_families
+    }
+    losses=[]
+    for micro in range(accumulation_steps):
+        batches=next_batch()
+        expected={
+            "mlm_batch","teacher_batch","semantic_operator_compiled",
+            "full_fabric_compiled","natural_relation_compiled",
+        }
+        if set(batches)!=expected:
+            raise RuntimeError("joint optimizer microbatch lost a required lane")
+        sync_context=(
+            accelerator.no_sync(route)
+            if micro<accumulation_steps-1
+            else contextlib.nullcontext()
+        )
+        with sync_context:
+            joint_loss=route(**batches,stage=stage)
+            if not bool(torch.isfinite(joint_loss.detach())):
+                raise RuntimeError("nonfinite whole-step loss")
+            loss=joint_loss/float(accumulation_steps)
+            accelerator.backward(loss)
+        result=unwrapped_route.take_observation()
+        if result["all_active_stage_lanes_executed"] is not True or result["placeholder_losses_used"] is not False:
+            raise RuntimeError("incomplete whole-step family execution")
+        if stage==J3 and result["all_public_training_lanes_executed"] is not True:
+            raise RuntimeError("J3 dropped an optimizer-facing public lane")
+        weights=family_sample_weights(
+            result,
+            mlm_batch=batches["mlm_batch"],
+            teacher_batch=batches["teacher_batch"],
+            semantic_compiled=batches["semantic_operator_compiled"],
+            full_compiled=batches["full_fabric_compiled"],
+            natural_compiled=batches["natural_relation_compiled"],
+        )
+        for family in policy.active_macro_families:
+            raw=result["balanced"][f"raw/{family}"].detach().float()
+            weight=float(weights[family])
+            numerators[family].add_(raw*weight)
+            denominators[family].add_(weight)
+        if observe is not None:
+            losses.append(float(joint_loss.detach().float().item()))
+            observe("backward",micro=micro,loss=losses[-1],result=result)
+
+    if observe is not None:
+        observe("pre_clip",micro=accumulation_steps-1,loss=losses[-1],result=result)
+    accelerator.clip_grad_norm_(system.parameters(),gradient_clip_norm)
+    optimizer.step()
+    lr_scheduler.step()
+    if observe is not None:
+        observe("optimizer",micro=accumulation_steps-1,loss=losses[-1],result=result)
+    globally_observe_effective_batch(
+        accelerator=accelerator,
+        objective=objective,
+        raw_numerators=numerators,
+        raw_denominators=denominators,
+        active_families=policy.active_macro_families,
+    )
+    return tuple(losses)
 
 
 def save_checkpoint(
@@ -1524,104 +1709,52 @@ def main() -> None:
         if resume_kind=="same_stage"
         else None
     )
-    for step in range(start_optimizer_step,args.max_optimizer_steps+1):
-        optimizer.zero_grad(set_to_none=True)
-        numerators={
-            family:torch.zeros((),device=device,dtype=torch.float32)
-            for family in policy.active_macro_families
-        }
-        denominators={
-            family:torch.zeros((),device=device,dtype=torch.float32)
-            for family in policy.active_macro_families
-        }
-
-        for micro in range(args.gradient_accumulation_steps):
-            mlm_batch,mlm_iterator=cycle_next(mlm_iterator,mlm_loader)
-            teacher_batch,teacher_iterator=cycle_next(
-                teacher_iterator,teacher_loader
-            )
-            semantic_lane,semantic_selected=lane_scheduler.next_rows(
-                stage=args.stage,
-                kind="semantic",
-                batch_size=args.lane_batch_size,
-            )
-            semantic_compiled=compile_semantic_operator_batch(
-                rows=semantic_selected,
-                tokenizer=tokenizer,
-            )
-            natural_lane,natural_selected=lane_scheduler.next_rows(
-                stage=args.stage,
-                kind="natural",
-                batch_size=args.lane_batch_size,
-            )
-            natural_compiled=compile_natural_relation_batch(
-                rows=natural_selected,
-                relation_bank=natural_bank,
-                tokenizer=tokenizer,
-            )
-            full_compiled=None
-            if lane_scheduler.active_full_fabric_lanes(stage=args.stage):
-                full_lane,full_selected=lane_scheduler.next_rows(
-                    stage=args.stage,
-                    kind="full_fabric",
-                    batch_size=args.lane_batch_size,
-                )
-                full_compiled=compile_behavioral_batch(
-                    rows=full_selected,
-                    tokenizer=tokenizer,
-                )
-
-            mlm_batch=recursive_to_device(mlm_batch,device)
-            teacher_batch=recursive_to_device(teacher_batch,device)
-            semantic_compiled=recursive_to_device(semantic_compiled,device)
-            natural_compiled=recursive_to_device(natural_compiled,device)
-            if full_compiled is not None:
-                full_compiled=recursive_to_device(full_compiled,device)
-
-            sync_context=(
-                accelerator.no_sync(route)
-                if micro<args.gradient_accumulation_steps-1
-                else contextlib.nullcontext()
-            )
-            with sync_context:
-                joint_loss=route(
-                    mlm_batch=mlm_batch,
-                    teacher_batch=teacher_batch,
-                    semantic_operator_compiled=semantic_compiled,
-                    full_fabric_compiled=full_compiled,
-                    natural_relation_compiled=natural_compiled,
-                    stage=args.stage,
-                )
-                loss=joint_loss/float(args.gradient_accumulation_steps)
-                accelerator.backward(loss)
-            result=unwrapped_route.take_observation()
-
-            weights=family_sample_weights(
-                result,
-                mlm_batch=mlm_batch,
-                teacher_batch=teacher_batch,
-                semantic_compiled=semantic_compiled,
-                full_compiled=full_compiled,
-                natural_compiled=natural_compiled,
-            )
-            for family in policy.active_macro_families:
-                raw=result["balanced"][f"raw/{family}"].detach().float()
-                weight=float(weights[family])
-                numerators[family].add_(raw*weight)
-                denominators[family].add_(weight)
-
-        accelerator.clip_grad_norm_(
-            system.parameters(),args.gradient_clip_norm
+    def next_training_microbatch() -> dict[str,Any]:
+        nonlocal mlm_iterator,teacher_iterator
+        mlm_batch,mlm_iterator=cycle_next(mlm_iterator,mlm_loader)
+        teacher_batch,teacher_iterator=cycle_next(teacher_iterator,teacher_loader)
+        _,semantic_selected=lane_scheduler.next_rows(
+            stage=args.stage,kind="semantic",batch_size=args.lane_batch_size,
         )
-        optimizer.step()
-        lr_scheduler.step()
+        semantic_compiled=compile_semantic_operator_batch(
+            rows=semantic_selected,tokenizer=tokenizer,
+        )
+        _,natural_selected=lane_scheduler.next_rows(
+            stage=args.stage,kind="natural",batch_size=args.lane_batch_size,
+        )
+        natural_compiled=compile_natural_relation_batch(
+            rows=natural_selected,relation_bank=natural_bank,tokenizer=tokenizer,
+        )
+        full_compiled=None
+        if lane_scheduler.active_full_fabric_lanes(stage=args.stage):
+            _,full_selected=lane_scheduler.next_rows(
+                stage=args.stage,kind="full_fabric",batch_size=args.lane_batch_size,
+            )
+            full_compiled=compile_behavioral_batch(
+                rows=full_selected,tokenizer=tokenizer,
+            )
+        return {
+            "mlm_batch":recursive_to_device(mlm_batch,device),
+            "teacher_batch":recursive_to_device(teacher_batch,device),
+            "semantic_operator_compiled":recursive_to_device(semantic_compiled,device),
+            "full_fabric_compiled":recursive_to_device(full_compiled,device),
+            "natural_relation_compiled":recursive_to_device(natural_compiled,device),
+        }
 
-        globally_observe_effective_batch(
+    for step in range(start_optimizer_step,args.max_optimizer_steps+1):
+        execute_registered_optimizer_step(
             accelerator=accelerator,
+            route=route,
+            unwrapped_route=unwrapped_route,
+            system=system,
             objective=objective,
-            raw_numerators=numerators,
-            raw_denominators=denominators,
-            active_families=policy.active_macro_families,
+            optimizer=optimizer,
+            lr_scheduler=lr_scheduler,
+            next_batch=next_training_microbatch,
+            stage=args.stage,
+            device=device,
+            accumulation_steps=args.gradient_accumulation_steps,
+            gradient_clip_norm=args.gradient_clip_norm,
         )
 
         if accelerator.is_main_process and (step==1 or step%10==0):

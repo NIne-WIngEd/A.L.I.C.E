@@ -629,10 +629,11 @@
       "stage": "gpu_memory",
       "kind": "RUNTIME_REQUIRED",
       "status": "UNRESOLVED_BLOCKING",
-      "requirement": "Exact full training topology must pass a GPU no-gradient memory dry run before any gradient or optimizer authorization. The dry run chooses a safe sharding/microbatch/accumulation route; it may not update weights.",
-      "receipt": "PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1",
-      "implementation": "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py",
-      "qualification_config": "configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json"
+      "requirement": "Exact full topology must finish a separate two-rank no-gradient inference diagnostic before any gradient. Preserve its conservative projection FAIL as independent evidence. A versioned successor must then measure actual full J3 two-rank accumulated backward, first and later AdamW and resume over all 18 pairs at the original 85 percent per-rank bound. Neither diagnostic alone authorizes production training.",
+      "receipt": "PASS_N0_FULL_ENVELOPE_MEASURED_JOINT_MEMORY_V2",
+      "implementation": "scripts/eipm/n0/qualify_n0_v02_complete_joint_route_v2.py",
+      "qualification_config": "configs/eipm/n0/n0_v02_full_envelope_measured_joint_memory_v2.json",
+      "pregradient_diagnostic": "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py"
     },
     {
       "id": "N0-P44",

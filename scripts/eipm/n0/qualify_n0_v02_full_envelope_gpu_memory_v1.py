@@ -249,7 +249,17 @@ def main() -> None:
         "--diagnostic-only",action="store_true",
         help="one-GPU complete J3 fp16 forward check; never a P43 memory receipt",
     )
+    p.add_argument(
+        "--preserve-projection-failure",action="store_true",
+        help=(
+            "write the unchanged two-rank no-gradient projection FAIL and finish "
+            "cleanly so a separate measured-step successor can test actual memory; "
+            "this flag never changes FAIL to PASS or authorizes training"
+        ),
+    )
     args=p.parse_args()
+    if args.diagnostic_only and args.preserve_projection_failure:
+        raise SystemExit("single-rank diagnostic and preserved projection are separate routes")
 
     status=subprocess.check_output(["git","status","--porcelain"],text=True)
     if status.strip():
@@ -708,6 +718,9 @@ def main() -> None:
             "weight_update":False,
             "model_training_performed":False,
             "projection_is_training_authorization":False,
+            "projection_failure_preserved_for_measured_successor":bool(
+                args.preserve_projection_failure
+            ),
             "gpu_training_authorized":False,
             "private_identity_data":False,
             "final_results_observed":False,
@@ -720,7 +733,7 @@ def main() -> None:
             encoding="utf-8",
         )
         print(json.dumps(result_json,indent=2,sort_keys=True))
-        if not every_rank:
+        if not every_rank and not args.preserve_projection_failure:
             raise SystemExit(2)
 
     if world_size>1:

@@ -1,0 +1,34 @@
+{
+  "schema": "alice.eipm.n0.full-envelope-measured-joint-memory.v2",
+  "status": "PRECOMMITTED_COMPLETE_STEP_MEASUREMENT",
+  "source_qualification_config": "configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json",
+  "required_world_size": 2,
+  "stage": "J3_full_public_n0_coadaptation",
+  "required_semantic_cases": [
+    "max_runtime_axes",
+    "max_factor_cardinality",
+    "long_context_semantic"
+  ],
+  "required_full_fabric_cases": [
+    "max_candidate_cardinality",
+    "max_field_cardinality",
+    "max_edge_cardinality",
+    "max_view_cardinality",
+    "max_reasoning_depth",
+    "long_additional_view_source"
+  ],
+  "required_stress_pairs": 18,
+  "gradient_accumulation_steps": 8,
+  "measured_optimizer_steps_per_pair": 2,
+  "memory_fraction_max": 0.85,
+  "device_memory_safety_margin_bytes": 1073741824,
+  "no_gradient_forward_before_backward": true,
+  "first_and_later_adamw_required": true,
+  "same_stage_optimizer_scheduler_resume_required": true,
+  "predecessor_state_transfer_required": true,
+  "stage_dev_selection_claimed": false,
+  "private_identity_data": false,
+  "final_results_observed": false,
+  "production_checkpoint_selection": false,
+  "diagnostic_weight_updates_are_training_authorization": false
+}

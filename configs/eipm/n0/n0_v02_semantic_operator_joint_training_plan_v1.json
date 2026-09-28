@@ -352,7 +352,7 @@
       "PASS_N0_TOKENIZER_STRESS_V1 exact-head named stress receipt",
       "PASS_N0_FULL_PUBLIC_MIXTURE_MANIFEST_AUDIT_V1",
       "PASS_N0_FULL_ENVELOPE_CPU_RUNTIME_QUALIFICATION_V1",
-      "PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1",
+      "PASS_N0_FULL_ENVELOPE_MEASURED_JOINT_MEMORY_V2",
       "PASS_N0_FULL_ENVELOPE_LONG_CONTEXT_TOKEN_BOUNDARY_ALIGNMENT_V1",
       "PASS_N0_SEMANTIC_OPERATOR_LONG_TOKEN_ALIGNMENT_V1"
     ],
@@ -671,10 +671,12 @@
     }
   },
   "runtime_qualification": {
-    "gpu_memory_config": "configs/eipm/n0/n0_v02_full_envelope_gpu_memory_dry_run_v1.json",
-    "gpu_memory_qualifier": "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py",
-    "gpu_memory_sbatch": "scripts/eipm/n0/magnolia_p100x2_n0_v02_full_envelope_gpu_memory_v1.sbatch",
-    "gpu_memory_receipt": "PASS_N0_FULL_ENVELOPE_GPU_MEMORY_DRY_RUN_V1",
+    "gpu_memory_config": "configs/eipm/n0/n0_v02_full_envelope_measured_joint_memory_v2.json",
+    "gpu_memory_qualifier": "scripts/eipm/n0/qualify_n0_v02_complete_joint_route_v2.py",
+    "gpu_memory_sbatch": "scripts/eipm/n0/magnolia_p100x2_n0_v02_measured_joint_memory_v2.sbatch",
+    "gpu_memory_receipt": "PASS_N0_FULL_ENVELOPE_MEASURED_JOINT_MEMORY_V2",
+    "pregradient_inference_diagnostic": "scripts/eipm/n0/qualify_n0_v02_full_envelope_gpu_memory_v1.py",
+    "old_projection_failure_remains_independent": true,
     "gpu_memory_pass_is_training_authorization": false,
     "tokenizer_stress_auditor": "scripts/eipm/n0/audit_tokenizer_v02.py",
     "tokenizer_stress_receipt": "PASS_N0_TOKENIZER_STRESS_V1",
