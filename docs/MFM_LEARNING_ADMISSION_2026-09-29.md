@@ -41,6 +41,12 @@ workspace, not product capability ceilings. No gradient step, learned
 checkpoint, real selected-stack read, authority-gate integration or downstream
 judgment result is claimed.
 
+The public source and rights review is in
+[`MFM_PUBLIC_DATA_RIGHTS_DECISION_2026-09-29.md`](MFM_PUBLIC_DATA_RIGHTS_DECISION_2026-09-29.md).
+In particular, LoCoMo's noncommercial terms prevent treating its attractive
+long histories as a distributable Fable training pack. LongMemEval-V2 is
+reserved for evaluation, not used to train away the benchmark.
+
 ## Training data and model path
 
 1. **Admit sources.** Build host-neutral, rights-cleared histories from
