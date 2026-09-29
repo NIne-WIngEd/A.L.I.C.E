@@ -42,11 +42,48 @@ use different Transformers dependency environments. Both produce local,
 content-addressed, self-contained weights, and their outputs remain proposals
 for the separate authority gate.
 
+## Work before renting GPUs
+
 Run from the exact MFM commit with the three frozen inputs in
-`../mfm-candidates`. Install
-`scripts/mfm/requirements-formation-multimodal.txt` plus `ffmpeg/ffprobe`
-in the Gemma 4 environment. First validate the actual processor and longest
-prompt/answer on the *entire* mixture without loading weight tensors:
+`../mfm-candidates`. Prepare a transferable environment with
+`scripts/mfm/requirements-formation-multimodal.txt`, `ffmpeg` and `ffprobe`.
+Keep the installed versions recorded; the processor receipt binds the exact
+Transformers version and the trainer/prompt source bytes. Run the static checks,
+install dependencies and stage the pinned model snapshot on a non-billed
+machine. The snapshot and its staging receipt must be copied to storage that
+the training machine can read before the paid allocation starts. A processor
+download by itself does **not** stage the weight files. The receipt binds an
+absolute snapshot path, so preserve that path after transfer or regenerate the
+receipt against the final mounted path before renting GPUs.
+
+Stage the exact pinned Hub snapshot and write a per-file receipt on the
+non-billed preparation machine. Standard Hugging Face authentication must
+already be available to that machine; do not put credentials in the repo:
+
+```bash
+PYTHONPATH=src:. python -m scripts.mfm.stage_gemma4_model stage \
+  --snapshot-dir /persistent/gemma4-12b-it \
+  --receipt /persistent/gemma4-stage.json --download
+PYTHONPATH=src:. python -m scripts.mfm.stage_gemma4_model verify \
+  --receipt /persistent/gemma4-stage.json
+PYTHONPATH=src:. python - <<'PY'
+from pathlib import Path
+from scripts.mfm.multimodal_paid_run import require_complete_weight_export
+print(require_complete_weight_export(Path('/persistent/gemma4-12b-it')))
+PY
+```
+
+The latter two commands check local bytes and model weight structure without
+loading tensors or needing network. Repeat the offline staging verification on the
+final runtime-visible disk **before** allocating the paid GPU instance. If
+that storage is visible only after allocation, the same verification becomes
+the first paid action; account for those minutes. A partially copied snapshot
+must never be treated as ready.
+
+On the non-billed machine, validate the actual processor and longest
+prompt/answer on the *entire* mixture without loading weight tensors. Keep the
+receipt alongside the exact frozen inputs; do not edit its bound code or change
+the Transformers version after this pass:
 
 ```bash
 sha256sum ../mfm-candidates/*formation_train.jsonl ../mfm-candidates/mfm_training_mixture_v1.json
@@ -54,33 +91,96 @@ PYTHONPATH=src:. python -m scripts.mfm.train_multimodal_formation \
   --curriculum-manifest ../mfm-candidates/mfm_training_mixture_v1.json \
   --input-sha256 60fa44a5be62c8d2f0daf508e543dc1a41c34562dc0c4d399e26c9cabb772e21 \
   --owner-authorization-ref owner_authorized_service_teacher \
-  --output-dir ../mfm-runs/gemma4-12b-formation \
+  --output-dir ../mfm-runs/cpu-preflight \
+  --preflight-receipt ../mfm-runs/processor-preflight-v1.json \
   --max-sequence-tokens 32768 --preflight-only
 ```
 
 The 32,768-token value is an execution request, not a model or product
-ceiling. The preflight must report actual complete prompt/answer lengths and
-refuse overflow; increase the requested context and/or change the hardware
-route if a complete case does not fit. Do not crop evidence or target JSON.
-On a compatible allocation, execute the same frozen input with an output
-directory reserved for this exact run:
+ceiling. The preflight reports complete prompt/answer lengths and rejects
+overflow. Increase the requested context or change the hardware route if a
+complete case does not fit. Do not crop evidence or target JSON. This frozen
+corpus contains text and structured inputs, so this pass cannot establish
+sensory formation ability.
+
+Do **not** purchase MFM GPU time until all of these are complete and retained
+outside the paid instance:
+
+1. The exact three corpus digests above, CPU processor receipt and trainer
+   source fingerprint match the committed code and intended run options.
+2. The exact `google/gemma-4-12B-it` revision is fully staged, its receipt
+   verifies from the runtime-visible disk with network disabled, and the
+   processor and model read the same staged snapshot. A model download on
+   the paid machine is not the planned route.
+3. The intended Python, PyTorch, Transformers 5.17.0, Accelerate and
+   DeepSpeed environment is built and import-checked before allocation.
+   CUDA kernels and distributed loading still need the paid hardware probe.
+4. The run has a durable output volume with at least 750 GiB free for multiple
+   full ZeRO optimizer checkpoints, the final model and rank receipts, and a way to export them before
+   releasing ephemeral storage. GPU allocation, startup, mounting, model
+   load, the backward pass and export all consume billed time.
+
+## First paid run: one complete optimizer step
+
+Use a fresh, empty probe output directory. Request one node with four actual
+A100 80 GB GPUs. The trainer checks each visible device for `A100`, at least
+75 GiB of VRAM, BF16 support and exactly four torchrun ranks. Its selected
+64 training cases include the four longest processed inputs and cover one
+full 16-microbatch accumulation on each rank. The probe saves a full optimizer
+checkpoint, an exported model and per-rank peak-memory/timing receipts. It is
+a capacity and code-path qualification, not the full training run.
 
 ```bash
-PYTHONPATH=src:. python -m scripts.mfm.train_multimodal_formation \
+PYTHONPATH=src:. torchrun --standalone --nnodes=1 --nproc_per_node=4 \
+  -m scripts.mfm.train_multimodal_formation \
   --curriculum-manifest ../mfm-candidates/mfm_training_mixture_v1.json \
   --input-sha256 60fa44a5be62c8d2f0daf508e543dc1a41c34562dc0c4d399e26c9cabb772e21 \
   --owner-authorization-ref owner_authorized_service_teacher \
+  --preflight-receipt ../mfm-runs/processor-preflight-v1.json \
+  --staged-model-receipt /persistent/gemma4-stage.json \
+  --deepspeed-config scripts/mfm/deepspeed_zero3_a100_4gpu.json \
+  --output-dir ../mfm-runs/gemma4-12b-probe \
+  --max-sequence-tokens 32768 --probe-only
+```
+
+The probe must finish backward, optimizer, sharded checkpoint, gathered model
+export and receipt writing on all ranks. Check the measured peak VRAM and
+throughput before deciding whether the full run fits and what it costs. A
+32,768-token request and four 80 GB GPUs are not a proven fit until this passes.
+
+## Full fit and resume
+
+After a green probe, use a new empty output directory for the exact full run:
+
+```bash
+PYTHONPATH=src:. torchrun --standalone --nnodes=1 --nproc_per_node=4 \
+  -m scripts.mfm.train_multimodal_formation \
+  --curriculum-manifest ../mfm-candidates/mfm_training_mixture_v1.json \
+  --input-sha256 60fa44a5be62c8d2f0daf508e543dc1a41c34562dc0c4d399e26c9cabb772e21 \
+  --owner-authorization-ref owner_authorized_service_teacher \
+  --preflight-receipt ../mfm-runs/processor-preflight-v1.json \
+  --staged-model-receipt /persistent/gemma4-stage.json \
+  --deepspeed-config scripts/mfm/deepspeed_zero3_a100_4gpu.json \
   --output-dir ../mfm-runs/gemma4-12b-formation \
   --max-sequence-tokens 32768
 ```
 
+To resume after interruption, run the **same command with the same code,
+source, environment, world size, configuration and options**, adding
+`--resume-from-checkpoint ../mfm-runs/gemma4-12b-formation/checkpoints/checkpoint-N`
+for a complete local checkpoint from this run. Keep the entire checkpoint,
+including optimizer and scheduler states; the exported model alone cannot
+resume a ZeRO-3 training run. The run manifest rejects a changed configuration
+or a new run over an occupied output directory. Retain at least two complete
+step checkpoints on durable storage.
+
 Record the exact MFM commit, source mixture digest, tokenizer/processor
 revision, actual GPU model and VRAM, framework versions, full training and
 checkpoint receipts, peak memory, elapsed time and the final artifact SHA.
-The full-weight path is the default; an optional learned adapter must be
-merged into a self-contained artifact. If the real allocation cannot fit the
-full objective, introduce and verify an explicit sharding/offload route rather
-than silently shrinking context, source coverage or the backbone.
+The paid route updates full weights with ZeRO-3; LoRA and CPU offload require
+separate qualification. If the actual allocation does not fit, replan the
+hardware or explicitly qualify offload. Do not shrink context, source coverage
+or the backbone to make a receipt appear green.
 
 ## Available hardware and remaining proof
 
@@ -89,9 +189,8 @@ and four K80s on `gpu002`. That inventory does not establish a feasible
 full-weight or native BF16 training allocation for the pinned 12B multimodal
 backbone. A later, stronger device allocation has not been observed here.
 The prior Kaggle L4 request actually ran on T4s; requested hardware is not
-proof of delivered hardware. Obtain the current device inventory and a
-source-bound processor/forward/backward memory measurement before scheduling
-the complete fit. No GPU or PyTorch is available in this workspace.
+proof of delivered hardware. No target four-A100 optimizer step has been
+observed. Do not describe the proposed rental shape as a proved fit.
 
 After training, independently reviewed histories from distinct generators,
 languages, media, corrections, deletion/revocation and long-lived people must
