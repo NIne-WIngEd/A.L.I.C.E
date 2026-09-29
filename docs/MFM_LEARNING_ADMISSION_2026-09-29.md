@@ -4,9 +4,11 @@
 
 ## What this branch now supplies
 
-- `formation_contracts.py` v1.2.0 exposes registered source item, speaker,
+- `formation_contracts.py` v1.3.0 exposes registered source item, speaker,
   subject, observation/record times, duplicate family and parent references in
-  the context digest. These fields are **source metadata**, not model claims.
+  the context digest. A proposal carries semantic `value_text` and exact-source
+  anchors as well as an opaque ID. Anchors verify byte binding and span bounds,
+  not semantic entailment or an accepted memory claim.
 - `formation_sources.py` binds that metadata to a registered private object and
   checks current permission before and after opening bytes. A read receipt
   records source IDs, digests, registration versions and routes; it does not
@@ -23,20 +25,34 @@
   procedural-skill candidate. `formation_gold.py` checks
   schema, citation/role consistency and split leakage. `formation_candidate.py`
   evaluates a supplied artifact against development or challenge cases and
-  keeps critical errors visible.
+  keeps critical errors visible. `training_examples()` refuses to hand the
+  public diagnostic fixture to an optimizer.
+- `formation_dataset_admission.py` checks hashed files, declared rights and
+  reviewer receipts, and connected split isolation. It checks claim structure;
+  an external steward must authenticate permission and actual independent
+  review. FINAL remains unopened metadata in this verifier.
+- `inventory_multisource_sources.py` freezes 480 newly seeded fictional source
+  histories with five structural streams each. No MFM target or reviewer label
+  is present. See the [source receipt](MFM_CORPUS_SOURCE_RECEIPT_2026-09-29.md).
 
 ## Why a training run is not authorized from this fixture
 
-There are only **three** train cases. They are fictional contract checks, not a
+There are only **three** train cases in the frozen public fixture. They are fictional contract checks, not a
 formation curriculum spanning languages, source systems, years, modalities,
 rare events, ambiguity and independent people. The same author created all
 three splits; the challenge is host-disjoint but not generator-disjoint or
 independently adjudicated. It is public and cannot serve as a sealed final.
 Training weights on these rows would only create a memorized diagnostic. It
-would not advance the full-capability MFM the owner requested.
+would not advance the full-capability MFM the owner requested. The 6,000
+ChatGPT-templated candidate cases are separately quarantined from training:
+their ten scenario skeletons cross nominal partitions, their targets are
+unreviewed, and their training rights need clarification. The newly seeded
+Multi-Source histories have a permissive upstream license path but no MFM
+formation targets, independent review or sealed FINAL. Neither artifact
+justifies a GPU run or a capability claim.
 
 The execution environment also has no PyTorch, pretrained MFM backbone,
-registered training corpus or GPU. Those are observed limitations of this
+admitted training corpus or GPU. Those are observed limitations of this
 workspace, not product capability ceilings. No gradient step, learned
 checkpoint, real selected-stack read, authority-gate integration or downstream
 judgment result is claimed.
@@ -66,7 +82,8 @@ reserved for evaluation, not used to train away the benchmark.
 4. **Train.** Use a learned multimodal encoder/fusion and structured
    evidence-pointer decoder (or another demonstrated architecture). Train
    source attribution, subject binding, temporal revision, proposal type,
-   citation, uncertainty and abstention jointly. Evaluate fast event
+   citation, uncertainty, scoped action and abstention jointly. A deferred
+   outcome can coexist with a valid scheduled-plan proposal. Evaluate fast event
    segmentation separately from slow consolidation. Choose representation,
    checkpoint and resource topology from measured capability rather than a
    predetermined parameter cap. Version weights, optimizer, source mixture,
@@ -80,6 +97,8 @@ reserved for evaluation, not used to train away the benchmark.
    Intervene on one host, relationship or self state at a time. A correct
    proposal alone cannot certify the later personal judgment.
 
-This work stays on the independent MFM branch. FBM receives compact process
+The [source receipt and annotation objective](MFM_CORPUS_SOURCE_RECEIPT_2026-09-29.md)
+pin the current data and missing independent target files. This work stays on
+the independent MFM branch. FBM receives compact process
 traces of actual construction and its failures. A trace is not automatically
 an eligible supervised builder case.

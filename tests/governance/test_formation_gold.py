@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+from dataclasses import replace
 import json
 from pathlib import Path
 import tempfile
 import unittest
 
 from cognitive_kernel.canonical import CognitiveKernelContractError
-from cognitive_kernel.formation_contracts import FormationProposal, MemoryProposalBundle
+from cognitive_kernel.formation_contracts import FormationEvidenceAnchor, FormationProposal, MemoryProposalBundle
 from cognitive_kernel.formation_evaluation import assess_formation
 from cognitive_kernel.formation_gold import (
     compile_formation_case, load_formation_gold, load_frozen_formation_gold,
@@ -18,6 +19,24 @@ MANIFEST = CORPUS.with_suffix(".manifest.json")
 
 
 class FormationGoldTests(unittest.TestCase):
+    def test_matching_words_with_wrong_source_span_do_not_score_as_gold(self):
+        case = next(c for c in load_formation_gold(CORPUS)
+                    if c.gold.case_id == "aria-change")
+        original = case.gold.expected[0]
+        changed = replace(original, anchors=(FormationEvidenceAnchor(
+            original.evidence_refs[0], 0, 1),))
+        bundle = MemoryProposalBundle(
+            scope=case.gold.context.scope,
+            authority_namespace_id=case.gold.context.authority_namespace_id,
+            bundle_id="wrong-span", experience_refs=case.gold.context.experience_refs,
+            context_digest=case.gold.context.content_digest(),
+            model_artifact_digest="f" * 64, inference_run_id="span-run",
+            proposals=(changed,),
+        )
+        result = assess_formation(case.gold, bundle)
+        self.assertEqual((result.true_positives, result.false_positives,
+                          result.false_negatives), (0, 1, 1))
+
     def test_independent_host_splits_and_provenance_validity(self):
         cases = load_frozen_formation_gold(MANIFEST)
         self.assertEqual(len(cases), 11)
@@ -37,8 +56,11 @@ class FormationGoldTests(unittest.TestCase):
         kind, domain, subject, value, status = case.gold.critical_forbidden[0]
         forbidden = FormationProposal(
             proposal_id="invented-history", kind=kind, domain=domain,
-            subject_ref=subject, value_ref=value,
+            subject_ref=subject, value_ref="forbidden-value", value_text=value,
             evidence_refs=(case.gold.context.evidence[0].ref_id,),
+            anchors=(FormationEvidenceAnchor(
+                case.gold.context.evidence[0].ref_id, 0,
+                len(case.texts[0][1].encode("utf-8"))),),
             epistemic_status=status,
         )
         # The role gate must reject this outright. A generated rehearsal cannot

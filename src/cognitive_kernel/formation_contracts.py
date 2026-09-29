@@ -7,6 +7,7 @@ confirms an assertion, or grants a model permission to choose an authority store
 from __future__ import annotations
 
 from dataclasses import dataclass
+from hashlib import sha256
 
 from .canonical import (
     CognitiveKernelContractError,
@@ -20,7 +21,7 @@ from .canonical import (
 )
 from .contracts import ProductHostScope
 
-FORMATION_SCHEMA_VERSION = "1.2.0"
+FORMATION_SCHEMA_VERSION = "1.3.0"
 PROPOSAL_KINDS = frozenset({
     "claim", "preference", "relationship", "episode", "goal", "mission",
     "host_observation", "source_person_evidence", "self_observation",
@@ -159,6 +160,32 @@ class FormationContextPacket:
 
 
 @dataclass(frozen=True)
+class FormationEvidenceAnchor:
+    """An exact source byte span, or a source-native multimodal locator."""
+
+    ref_id: str
+    start_byte: int | None = None
+    end_byte: int | None = None
+    locator: str | None = None
+
+    def validate(self) -> None:
+        _canonical_id(self.ref_id, "anchor ref_id")
+        if self.locator is not None:
+            if (not isinstance(self.locator, str) or not self.locator.strip()
+                    or self.start_byte is not None or self.end_byte is not None):
+                raise CognitiveKernelContractError("invalid source-native anchor")
+        elif (not isinstance(self.start_byte, int) or isinstance(self.start_byte, bool)
+              or not isinstance(self.end_byte, int) or isinstance(self.end_byte, bool)
+              or self.start_byte < 0 or self.end_byte <= self.start_byte):
+            raise CognitiveKernelContractError("invalid source byte span")
+
+    def record(self) -> dict[str, object]:
+        self.validate()
+        return {"ref_id": self.ref_id, "start_byte": self.start_byte,
+                "end_byte": self.end_byte, "locator": self.locator}
+
+
+@dataclass(frozen=True)
 class FormationProposal:
     """One interpretation of evidence, with no canonical authority."""
 
@@ -168,6 +195,8 @@ class FormationProposal:
     subject_ref: str
     value_ref: str
     evidence_refs: tuple[str, ...]
+    value_text: str = ""
+    anchors: tuple[FormationEvidenceAnchor, ...] = ()
     epistemic_status: str = "uncertain"
     valid_from: str | None = None
     valid_to: str | None = None
@@ -185,10 +214,17 @@ class FormationProposal:
             raise CognitiveKernelContractError("unsupported epistemic status")
         _canonical_id(self.subject_ref, "subject_ref")
         _canonical_id(self.value_ref, "value_ref")
+        if (not isinstance(self.value_text, str) or not self.value_text.strip()
+                or "\x00" in self.value_text):
+            raise CognitiveKernelContractError("formation proposal needs semantic value text")
         if not self.evidence_refs:
             raise CognitiveKernelContractError("a proposal needs evidence references")
         if normalize_identifier_sequence(self.evidence_refs, "evidence_refs") != self.evidence_refs:
             raise CognitiveKernelContractError("evidence_refs must be canonical")
+        for anchor in self.anchors:
+            anchor.validate()
+        if {anchor.ref_id for anchor in self.anchors} != set(self.evidence_refs):
+            raise CognitiveKernelContractError("semantic value must anchor every cited source")
         if normalize_identifier_sequence(self.contradicts, "contradicts") != self.contradicts:
             raise CognitiveKernelContractError("contradicts must be canonical")
         if self.valid_from is not None:
@@ -208,6 +244,8 @@ class FormationProposal:
             "proposal_id": self.proposal_id, "kind": self.kind,
             "domain": self.domain, "subject_ref": self.subject_ref,
             "value_ref": self.value_ref, "evidence_refs": list(self.evidence_refs),
+            "value_text": self.value_text,
+            "anchors": [anchor.record() for anchor in self.anchors],
             "epistemic_status": self.epistemic_status,
             "valid_from": normalize_timestamp(self.valid_from) if self.valid_from else None,
             "valid_to": normalize_timestamp(self.valid_to) if self.valid_to else None,
@@ -304,3 +342,27 @@ def validate_formation_binding(
         required = compatible_roles.get(proposal.epistemic_status)
         if required and not all(evidence[ref].role == required for ref in proposal.evidence_refs):
             raise CognitiveKernelContractError("proposal epistemic status lacks matching evidence")
+        for anchor in proposal.anchors:
+            if anchor.locator is None and evidence[anchor.ref_id].modality not in {"text", "code", "structured"}:
+                # An audio/image/video/sensor anchor must use its source-native
+                # locator, not pretend its bytes are a text span.
+                raise CognitiveKernelContractError("non-text evidence requires source-native anchor")
+
+
+def validate_formation_grounding(
+    context: FormationContextPacket,
+    bundle: MemoryProposalBundle,
+    opened_sources: tuple[tuple[str, bytes], ...],
+) -> None:
+    """Verify cited byte ranges against the exact opened input; entailment is separate."""
+    validate_formation_binding(context, bundle)
+    opened = dict(opened_sources)
+    if len(opened) != len(opened_sources) or set(opened) != {r.ref_id for r in context.evidence}:
+        raise CognitiveKernelContractError("grounding requires every exact opened source")
+    for ref in context.evidence:
+        if not isinstance(opened[ref.ref_id], bytes) or sha256(opened[ref.ref_id]).hexdigest() != ref.content_digest:
+            raise CognitiveKernelContractError("grounding source digest mismatch")
+    for proposal in bundle.proposals:
+        for anchor in proposal.anchors:
+            if anchor.end_byte is not None and anchor.end_byte > len(opened[anchor.ref_id]):
+                raise CognitiveKernelContractError("source byte span exceeds opened evidence")

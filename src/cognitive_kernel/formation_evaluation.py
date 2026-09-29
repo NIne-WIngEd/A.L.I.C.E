@@ -18,12 +18,15 @@ from .formation_contracts import (
 
 
 def _label(p: FormationProposal) -> tuple[str, str, str, str, str]:
-    return (p.kind, p.domain, p.subject_ref, p.value_ref, p.epistemic_status)
+    return (p.kind, p.domain, p.subject_ref, p.value_text, p.epistemic_status)
 
 
 def _identity(p: FormationProposal) -> tuple[object, ...]:
     return (
         *_label(p), tuple(sorted(p.evidence_refs)),
+        tuple(sorted(((a.ref_id, a.start_byte, a.end_byte, a.locator)
+                      for a in p.anchors), key=lambda a: (a[0], -1 if a[1] is None else a[1],
+                                                            -1 if a[2] is None else a[2], a[3] or ""))),
         normalize_timestamp(p.valid_from) if p.valid_from else None,
         normalize_timestamp(p.valid_to) if p.valid_to else None,
         p.uncertainty_ref, tuple(sorted(p.contradicts)),

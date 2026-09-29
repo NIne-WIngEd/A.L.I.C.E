@@ -14,8 +14,8 @@ from pathlib import Path
 from .canonical import CognitiveKernelContractError, normalize_timestamp, require_identifier
 from .contracts import ProductHostScope
 from .formation_contracts import (
-    FormationContextPacket, FormationEvidenceRef, FormationProposal,
-    MemoryProposalBundle, validate_formation_binding,
+    FormationContextPacket, FormationEvidenceAnchor, FormationEvidenceRef,
+    FormationProposal, MemoryProposalBundle, validate_formation_grounding,
 )
 from .formation_evaluation import FormationGoldCase
 
@@ -32,11 +32,24 @@ class CompiledFormationCase:
     reason: str
 
 
-def _proposal(row: dict[str, object]) -> FormationProposal:
+def _proposal(row: dict[str, object], values: dict[str, str],
+              sources: dict[str, tuple[FormationEvidenceRef, str]]) -> FormationProposal:
+    cited = tuple(row["evidence_refs"])
+    value_ref = row["value_ref"]
+    if value_ref not in values:
+        raise CognitiveKernelContractError("gold proposal value has no declared meaning")
+    if any(ref_id not in sources for ref_id in cited):
+        raise CognitiveKernelContractError("gold proposal cites absent source")
     return FormationProposal(
         proposal_id=row["proposal_id"], kind=row["kind"], domain=row["domain"],
-        subject_ref=row["subject_ref"], value_ref=row["value_ref"],
-        evidence_refs=tuple(row["evidence_refs"]),
+        subject_ref=row["subject_ref"], value_ref=value_ref,
+        evidence_refs=cited, value_text=values[value_ref],
+        anchors=tuple(FormationEvidenceAnchor(
+            ref_id=ref_id,
+            **({"start_byte": 0, "end_byte": len(sources[ref_id][1].encode("utf-8"))}
+               if sources[ref_id][0].modality in {"text", "code", "structured"}
+               else {"locator": "entire-source"}),
+        ) for ref_id in cited),
         epistemic_status=row["epistemic_status"],
         valid_from=(normalize_timestamp(row["valid_from"]) if row.get("valid_from") else None),
         valid_to=(normalize_timestamp(row["valid_to"]) if row.get("valid_to") else None),
@@ -87,21 +100,23 @@ def compile_formation_case(row: dict[str, object]) -> CompiledFormationCase:
         isinstance(k, str) and isinstance(v, str) and v.strip() for k, v in values.items()
     ):
         raise CognitiveKernelContractError("gold value map is invalid")
-    expected = tuple(_proposal(p) for p in row["expected"])
+    source_map = {ref.ref_id: (ref, text) for ref, (_, text) in zip(refs, texts)}
+    expected = tuple(_proposal(p, values, source_map) for p in row["expected"])
     if not all(p.value_ref in values for p in expected):
         raise CognitiveKernelContractError("gold proposal value has no declared meaning")
-    forbidden = tuple(tuple(label) for label in row["critical_forbidden"])
-    if not all(len(label) == 5 and label[3] in values for label in forbidden):
+    forbidden_refs = tuple(tuple(label) for label in row["critical_forbidden"])
+    if not all(len(label) == 5 and label[3] in values for label in forbidden_refs):
         raise CognitiveKernelContractError("critical forbidden value has no declared meaning")
+    forbidden = tuple((*label[:3], values[label[3]], label[4]) for label in forbidden_refs)
     gold = FormationGoldCase(case_id, context, expected, forbidden)
     gold.validate()
     # The same provenance gate used at inference rejects mislabeled gold.
-    validate_formation_binding(context, MemoryProposalBundle(
+    validate_formation_grounding(context, MemoryProposalBundle(
         scope=scope, authority_namespace_id=namespace,
         bundle_id=f"gold-{case_id}", experience_refs=context.experience_refs,
         context_digest=context.content_digest(), model_artifact_digest="0" * 64,
         inference_run_id="gold-validation", proposals=expected,
-    ))
+    ), tuple((ref_id, text.encode("utf-8")) for ref_id, text in texts))
     reason = row["reason"]
     if not isinstance(reason, str) or not reason.strip():
         raise CognitiveKernelContractError("gold needs checkable label reason")
