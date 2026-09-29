@@ -48,6 +48,53 @@ focused architecture, not a finalized limit on FBM's duties. This section record
 the required MFM integration boundary; it does not implement FBM or take over
 the parallel builder/personality work.
 
+### Authorized host corpus ingestion
+
+A user's corpus is not a single autobiography. The available A.L.I.C.E. host
+material includes separately authored biographies and diaries, communication
+archives, social posts and interactions, calendars and notes, activity records,
+files and media, and conversations with assistants. FBM needs resumable source
+adapters and a versioned inventory before it can build a faithful host model
+and supply authorized experience to MFM. One curated snapshot or one PDF does
+not represent the full authorized host evidence set. Duplicate exports across
+accounts and archives must share source lineage instead of becoming independent
+corroboration.
+
+The Rayan archive is primarily **host-model evidence**. Accepted personal facts,
+preferences, changes, goals and relationships belong to governed host and
+relationship state. MFM has a different objective: given an authorized new
+experience and context, propose its subjects, provenance, temporal scope,
+uncertainty, contradictions, corrections and possible memory changes. The
+deterministic gate decides what can become canonical; the host model receives
+the accepted projections. Training an MFM to recite Rayan's biography would be
+a category error. Private host examples may teach or evaluate formation
+operations and support scoped instance adaptation, but they cannot become
+portable personal facts in Fable's host-neutral weights.
+
+Each ingested unit needs its originating archive/account and item, content
+digest, actor and recipient attribution where available, event and export times,
+modality, custody and consent scope, sensitivity, and any parent/attachment
+relationship. An owner's outgoing message is evidence of what the owner said;
+an incoming message is evidence of what another person said. A calendar entry
+may record a plan without proving the event occurred. Likes, browsing, location
+and platform-generated recommendations are weaker behavioral signals, not direct
+owner testimony. A conversation with an assistant contains owner speech,
+assistant-generated text, quotations and tool output; those require separate
+roles. Photos and documents require subject and source attribution before a
+personal claim is proposed. Conflicting dates, changed preferences and later
+outcomes stay linked to their own evidence rather than being flattened into a
+single timeless trait.
+
+The initial formation curriculum should include formation tasks sampled from
+these source classes, with independent held-out histories. Use the actual
+archives as source-linked qualification and instance-specific context; construct
+host-neutral training cases and private, governed adaptation separately. It must
+test actor confusion, duplicate-export amplification, plan-versus-outcome
+confusion, cross-account identity, quoted or generated text laundering, temporal
+revision, and relationship boundaries. The private selection manifest and
+personal content stay in owner-controlled custody; the public repository carries
+only host-neutral schemas, adapters, synthetic fixtures and non-private results.
+
 `src/cognitive_kernel/formation_contracts.py` establishes a backend-neutral
 `FormationContextPacket` and `MemoryProposalBundle`. They bind product and host
 scope, evidence roles and modalities, model and context digests, epistemic
@@ -111,7 +158,7 @@ Elaina's or Rayan's actual history. Private data stays in authorized custody.
 | Licensed or permissioned host-neutral material and fabricated fictional users | Train source attribution, temporal revision, contradiction handling, outcomes, abstention, cross-modal grounding and proposal formation; cover rare and adversarial cases | Mark as third-party or fictional; never identify a fictional case as an actual user's past |
 | Procedurally generated sequences and controlled counterfactuals | Vary speakers, times, evidence quality, decisions, corrections, relationships and outcomes; train contrasts and stress-test the complete formation-to-judgment loop | Retain generation recipe, seed, parent case and label rationale; split held-out evaluations by underlying source and generator family |
 | Private Elaina evidence (E0) and evidence-constrained E-INF/A-SYN completion | Train and evaluate A.L.I.C.E. identity distinctions and, where authorized, source-person versus host formation | E0 is attested source; E-INF and A-SYN are inferred/synthetic and never become Elaina historical evidence; no private identity bytes or weights ship in Fable |
-| Private Rayan corpus and synthetic Rayan-life sequences | Train and evaluate A.L.I.C.E. host, relationship and memory formation, plus simulated long-lived outcomes | Keep actual Rayan observations distinct from fictional continuations; never transfer his data or derived private weights to another user |
+| Private Rayan corpus and synthetic Rayan-life sequences | Build and evaluate A.L.I.C.E. host and relationship state; provide source-linked formation tasks and simulated long-lived outcomes to MFM evaluation or scoped adaptation | MFM learns formation operations, not Rayan's biography as a portable target; keep actual observations distinct from fictional continuations and never transfer his private data or adapted weights |
 | Later per-user authorized evidence and outcomes | FBM creates an instance-specific training/evaluation substrate and revises its stack under governance | Record consent, subject, source, time and derivative lineage; use held-out real evidence and feedback to assess personal fidelity |
 
 Synthetic examples teach general formation operations and probe failure modes;
