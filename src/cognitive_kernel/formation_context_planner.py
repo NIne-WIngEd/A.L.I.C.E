@@ -56,6 +56,7 @@ class AssembledFormationContext:
     # Kept out of packet metadata and serialization; caller handles custody.
     opened_content: tuple[tuple[str, bytes], ...]
     selected_planes: tuple[tuple[str, tuple[str, ...]], ...]
+    closure_refs: tuple[str, ...] = ()
 
 
 FormationSelector = Callable[
@@ -105,19 +106,27 @@ def assemble_formation_context(
             planes.append(hit.plane)
     all_ids = dict.fromkeys((*request.experience_refs, *hits_by_ref))
     registered: dict[str, FormationEvidenceRef] = {}
-    for ref_id in all_ids:
+    def resolve_registered(ref_id: str) -> FormationEvidenceRef:
+        if ref_id in registered:
+            return registered[ref_id]
         ref = store.resolve(ref_id)
         if ref is None or ref.ref_id != ref_id:
             raise CognitiveKernelContractError("unregistered formation evidence")
         ref.validate()
         if ref.scope != request.scope or ref.authority_namespace_id != request.authority_namespace_id:
             raise CognitiveKernelContractError("foreign-scope formation evidence")
-        if request.as_of is not None and ref.recorded_at is not None:
+        if request.as_of is not None:
+            if ref.recorded_at is None:
+                raise CognitiveKernelContractError("historical context requires source record time")
             if normalize_timestamp(ref.recorded_at) > normalize_timestamp(request.as_of):
                 raise CognitiveKernelContractError("context contains a future-recorded source")
         if not store.permits_formation(ref):
             raise CognitiveKernelContractError("formation evidence is not permitted")
         registered[ref_id] = ref
+        return ref
+
+    for ref_id in all_ids:
+        resolve_registered(ref_id)
 
     eligible = tuple(registered.values())
     selected = selector(request, eligible, request.candidates)
@@ -125,7 +134,35 @@ def assemble_formation_context(
         raise CognitiveKernelContractError("selector must return unique reference IDs")
     if not all(isinstance(ref_id, str) and ref_id in registered for ref_id in selected):
         raise CognitiveKernelContractError("selector named unregistered evidence")
-    ordered = tuple(dict.fromkeys((*request.experience_refs, *selected)))
+    # Retrieval of a derived item must bring its original evidence along. A
+    # similarity hit is never sufficient provenance, including on read-time
+    # reconstruction of an old episode or a superseded state.
+    roots = tuple(dict.fromkeys((*request.experience_refs, *selected)))
+    ordered_ids: list[str] = []
+    state: dict[str, int] = {}
+    closure_ids: set[str] = set()
+    for root in roots:
+        stack: list[tuple[str, bool]] = [(root, False)]
+        while stack:
+            ref_id, completed = stack.pop()
+            if completed:
+                state[ref_id] = 2
+                ordered_ids.append(ref_id)
+                continue
+            if state.get(ref_id) == 2:
+                continue
+            if state.get(ref_id) == 1:
+                raise CognitiveKernelContractError("formation evidence lineage cycle")
+            ref = resolve_registered(ref_id)
+            state[ref_id] = 1
+            stack.append((ref_id, True))
+            for parent in reversed(ref.parent_refs):
+                if state.get(parent) == 1:
+                    raise CognitiveKernelContractError("formation evidence lineage cycle")
+                if state.get(parent) != 2:
+                    closure_ids.add(parent)
+                    stack.append((parent, False))
+    ordered = tuple(ordered_ids)
     opened: list[tuple[str, bytes]] = []
     for ref_id in ordered:
         ref = registered[ref_id]
@@ -141,4 +178,7 @@ def assemble_formation_context(
     )
     packet.validate()
     planes = tuple((ref_id, tuple(hits_by_ref.get(ref_id, ()))) for ref_id in ordered)
-    return AssembledFormationContext(packet, tuple(opened), planes)
+    return AssembledFormationContext(
+        packet, tuple(opened), planes,
+        tuple(ref_id for ref_id in ordered if ref_id in closure_ids),
+    )

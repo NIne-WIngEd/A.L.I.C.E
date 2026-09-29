@@ -100,6 +100,7 @@ class FormationReadReceipt:
 
     context_digest: str
     opened: tuple[tuple[str, str, str, tuple[str, ...]], ...]
+    closure_refs: tuple[str, ...]
     receipt_sha256: str
 
 
@@ -123,7 +124,11 @@ def record_formation_read(
         opened.append((ref_id, ref.content_digest, source.registration_sha256, planes[ref_id]))
     items = tuple(opened)
     digest = assembled.packet.content_digest()
+    closure_refs = assembled.closure_refs
+    if not set(closure_refs).issubset({ref.ref_id for ref in assembled.packet.evidence}):
+        raise CognitiveKernelContractError("formation closure receipt names missing evidence")
     return FormationReadReceipt(
-        context_digest=digest, opened=items,
-        receipt_sha256=canonical_sha256({"context_digest": digest, "opened": items}),
+        context_digest=digest, opened=items, closure_refs=closure_refs,
+        receipt_sha256=canonical_sha256({"context_digest": digest, "opened": items,
+                                         "closure_refs": closure_refs}),
     )

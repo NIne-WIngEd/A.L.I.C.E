@@ -140,6 +140,9 @@ class FormationContextPacket:
             ids.add(ref.ref_id)
         if not set(self.experience_refs).issubset(ids):
             raise CognitiveKernelContractError("experience is missing from context evidence")
+        for ref in self.evidence:
+            if not set(ref.parent_refs).issubset(ids):
+                raise CognitiveKernelContractError("context is missing parent source evidence")
 
     def metadata_record(self) -> dict[str, object]:
         self.validate()

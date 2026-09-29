@@ -4,7 +4,7 @@ from dataclasses import replace
 from hashlib import sha256
 import unittest
 
-from cognitive_kernel.canonical import CognitiveKernelContractError
+from cognitive_kernel.canonical import CognitiveKernelContractError, normalize_timestamp
 from cognitive_kernel.contracts import ProductHostScope
 from cognitive_kernel.formation_context_planner import (
     FormationPlanningRequest, FormationRetrievalHit, assemble_formation_context,
@@ -96,6 +96,67 @@ class FormationPlannerTests(unittest.TestCase):
         forged = replace(self.refs[1], role="made-up-owner")
         with self.assertRaisesRegex(CognitiveKernelContractError, "role"):
             assemble_formation_context(self.request, FakeStore((self.refs[0], forged, self.refs[2]), self.content))
+
+    def test_derived_source_requires_transitive_authorized_lineage(self):
+        self.content.update({"parent": b"original", "grandparent": b"first record"})
+        parent = FormationEvidenceRef(
+            ref_id="parent", scope=self.scope, authority_namespace_id="fictional-ns",
+            content_digest=sha256(self.content["parent"]).hexdigest(),
+            role="historical_experience", modality="text", parent_refs=("grandparent",),
+        )
+        grandparent = replace(parent, ref_id="grandparent", parent_refs=(),
+                              content_digest=sha256(self.content["grandparent"]).hexdigest())
+        derived = replace(self.refs[1], parent_refs=("parent",))
+        refs = (self.refs[0], derived, self.refs[2], parent, grandparent)
+        store = FakeStore(refs, self.content)
+        assembled = assemble_formation_context(
+            self.request, store, lambda request, evidence, hits: ("prior-claim",))
+        self.assertEqual(tuple(ref.ref_id for ref in assembled.packet.evidence),
+                         ("new-event", "grandparent", "parent", "prior-claim"))
+        self.assertEqual(assembled.selected_planes[1], ("grandparent", ()))
+        self.assertEqual(assembled.closure_refs, ("grandparent", "parent"))
+        self.assertEqual(store.reads, ["new-event", "grandparent", "parent", "prior-claim"])
+
+        for broken in (
+            FakeStore(refs[:-1], self.content),
+            FakeStore(refs, self.content, denied=("grandparent",)),
+            FakeStore((*refs[:-1], replace(grandparent, scope=replace(
+                self.scope, host_instance_id="other-host"))), self.content),
+        ):
+            with self.assertRaises(CognitiveKernelContractError):
+                assemble_formation_context(
+                    self.request, broken, lambda request, evidence, hits: ("prior-claim",))
+            self.assertEqual(broken.reads, [])
+
+        cycled = FakeStore((*refs[:-1], replace(grandparent, parent_refs=("parent",))), self.content)
+        with self.assertRaisesRegex(CognitiveKernelContractError, "cycle"):
+            assemble_formation_context(
+                self.request, cycled, lambda request, evidence, hits: ("prior-claim",))
+
+    def test_future_lineage_parent_cannot_enter_as_of_context(self):
+        self.content["parent"] = b"late attestation"
+        parent = FormationEvidenceRef(
+            ref_id="parent", scope=self.scope, authority_namespace_id="fictional-ns",
+            content_digest=sha256(self.content["parent"]).hexdigest(),
+            role="historical_experience", modality="text",
+            recorded_at=normalize_timestamp("2026-09-29T00:00:00Z"),
+        )
+        store = FakeStore((*self.refs[:1], replace(self.refs[1], parent_refs=("parent",)),
+                           *self.refs[2:], parent), self.content)
+        timed_refs = tuple(replace(ref, recorded_at=normalize_timestamp("2026-09-27T00:00:00Z"))
+                           for ref in store.refs.values() if ref.ref_id != "parent")
+        store = FakeStore((*timed_refs, parent), self.content)
+        with self.assertRaisesRegex(CognitiveKernelContractError, "future-recorded"):
+            assemble_formation_context(replace(self.request, as_of=normalize_timestamp("2026-09-28T00:00:00Z")),
+                store, lambda request, evidence, hits: ("prior-claim",))
+        self.assertEqual(store.reads, [])
+
+        unknown_time = FakeStore(
+            (*timed_refs, replace(parent, recorded_at=None)), self.content)
+        with self.assertRaisesRegex(CognitiveKernelContractError, "requires source record time"):
+            assemble_formation_context(replace(self.request, as_of=normalize_timestamp("2026-09-28T00:00:00Z")),
+                unknown_time, lambda request, evidence, hits: ("prior-claim",))
+        self.assertEqual(unknown_time.reads, [])
 
 
 if __name__ == "__main__":
