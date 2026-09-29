@@ -190,6 +190,13 @@ not establish that one architecture or benchmark passes A.L.I.C.E.'s gates.
 
 ## Next independent implementation work
 
+The full-capability build order, completion evidence, selected-stack boundaries,
+and FBM seed rules are tracked in
+[`MFM_FULL_CAPABILITY_BUILD_PLAN_2026-09-29.md`](MFM_FULL_CAPABILITY_BUILD_PLAN_2026-09-29.md).
+The registered, scope- and digest-checked context assembly boundary is now in
+`src/cognitive_kernel/formation_context_planner.py`; its reference selector is
+not a trained planner and its tests do not certify runtime integration.
+
 1. Build the context planner that selects relevant registered evidence across
    memory planes and loads authorized content behind the packet's references.
    Compare learned planning to simpler mechanisms on frozen cases.
