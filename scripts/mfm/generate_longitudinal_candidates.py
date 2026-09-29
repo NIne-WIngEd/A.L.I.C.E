@@ -1,8 +1,9 @@
 """Generate fictional diagnostic histories from ChatGPT-authored templates.
 
 These are source/target proposals for independent review, never admitted gold.
-The templates and labels were authored with ChatGPT. Keep every output
-quarantined from distributable-weight training pending a separate rights decision.
+The templates and labels were authored with ChatGPT/Codex as owner-authorized
+teaching material for A.L.I.C.E., Fable and FBM. Preserve that provenance.
+Independent adjudication and nonleaking evaluation remain required for gold.
 No private host facts, benchmark QA or FINAL rows enter.
 The number of histories is a CLI choice; this script imposes no product ceiling.
 """
@@ -159,6 +160,21 @@ def generate(seed: int, hosts: int) -> list[dict[str, object]]:
                         if kind is not None else [])
             if expected and expected[0]["valid_from"] < events[index]["observed_at"]:
                 raise AssertionError("formation target precedes its new experience")
+            if suffix in {"plan-not-outcome", "unverified-skill"}:
+                narrower_scope = ("scheduled_plan" if suffix == "plan-not-outcome"
+                                  else "host_attempt")
+                blocked_scope = ("outcome_claim" if suffix == "plan-not-outcome"
+                                 else "self_skill_promotion")
+                expected[0]["disposition_scope_ref"] = narrower_scope
+                decisions = {"dispositions": [
+                    {"scope_ref": narrower_scope, "action": "propose",
+                     "evidence_refs": list(cited), "target_refs": []},
+                    {"scope_ref": blocked_scope, "action": action,
+                     "evidence_refs": [str(events[index]["ref_id"])], "target_refs": []},
+                ]}
+            else:
+                decisions = {"decision_action": action,
+                             "decision_scope": "formation_proposal"}
             rows.append({
                 "case_id": case_id, "host_family": host,
                 "source_family": f"{host}-history", "generator_family": "chatgpt-templated-diagnostic-v1",
@@ -169,15 +185,12 @@ def generate(seed: int, hosts: int) -> list[dict[str, object]]:
                 "values": {**({value_id: value} if value else {}), wrong_id: forbidden[3]},
                 "expected": expected,
                 "critical_forbidden": [[*forbidden[:3], wrong_id, forbidden[4]]],
-                "decision_action": action,
-                "decision_scope": ("outcome_claim" if suffix == "plan-not-outcome" else
-                                   "self_skill_promotion" if suffix == "unverified-skill" else
-                                   "formation_proposal"),
+                **decisions,
                 "deletion_target_refs": [E["plan"]] if suffix == "delete-request" else [],
                 "raw_source_retained": True,
                 "reason": f"Source roles and event times support {suffix}; the forbidden alternative is not established.",
                 "admission": "candidate_only_unreviewed",
-                "training_rights": "quarantined_chatgpt_authored_templates",
+                "training_rights": "owner_authorized_chatgpt_codex_teaching_output",
             })
     return rows
 

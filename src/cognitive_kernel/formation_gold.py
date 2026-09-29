@@ -15,7 +15,7 @@ from .canonical import CognitiveKernelContractError, normalize_timestamp, requir
 from .contracts import ProductHostScope
 from .formation_contracts import (
     FormationContextPacket, FormationEvidenceAnchor, FormationEvidenceRef,
-    FormationProposal, MemoryProposalBundle, validate_formation_grounding,
+    FormationDisposition, FormationProposal, MemoryProposalBundle, validate_formation_grounding,
 )
 from .formation_evaluation import FormationGoldCase
 
@@ -33,26 +33,36 @@ class CompiledFormationCase:
 
 
 def _proposal(row: dict[str, object], values: dict[str, str],
-              sources: dict[str, tuple[FormationEvidenceRef, str]]) -> FormationProposal:
+              sources: dict[str, tuple[FormationEvidenceRef, str]],
+              case_targets: dict[str, tuple[str, ...]],
+              default_disposition_scope: str | None) -> FormationProposal:
     cited = tuple(row["evidence_refs"])
     value_ref = row["value_ref"]
     if value_ref not in values:
         raise CognitiveKernelContractError("gold proposal value has no declared meaning")
     if any(ref_id not in sources for ref_id in cited):
         raise CognitiveKernelContractError("gold proposal cites absent source")
-    return FormationProposal(
-        proposal_id=row["proposal_id"], kind=row["kind"], domain=row["domain"],
-        subject_ref=row["subject_ref"], value_ref=value_ref,
-        evidence_refs=cited, value_text=values[value_ref],
-        anchors=tuple(FormationEvidenceAnchor(
+    target_refs = tuple(row.get("target_refs", case_targets.get(row["kind"], ())))
+    if "anchors" in row:
+        anchors = tuple(FormationEvidenceAnchor(**item) for item in row["anchors"])
+    else:
+        anchors = tuple(FormationEvidenceAnchor(
             ref_id=ref_id,
             **({"start_byte": 0, "end_byte": len(sources[ref_id][1].encode("utf-8"))}
                if sources[ref_id][0].modality in {"text", "code", "structured"}
                else {"locator": "entire-source"}),
-        ) for ref_id in cited),
+        ) for ref_id in cited)
+    return FormationProposal(
+        proposal_id=row["proposal_id"], kind=row["kind"], domain=row["domain"],
+        subject_ref=row["subject_ref"], value_ref=value_ref,
+        evidence_refs=cited, value_text=values[value_ref],
+        anchors=anchors,
         epistemic_status=row["epistemic_status"],
         valid_from=(normalize_timestamp(row["valid_from"]) if row.get("valid_from") else None),
         valid_to=(normalize_timestamp(row["valid_to"]) if row.get("valid_to") else None),
+        target_refs=target_refs,
+        disposition_scope_ref=row.get("disposition_scope_ref", default_disposition_scope),
+        temporal_granularity=row.get("temporal_granularity", "instant"),
     )
 
 
@@ -84,9 +94,11 @@ def compile_formation_case(row: dict[str, object]) -> CompiledFormationCase:
             subject_ref=source.get("subject_ref"), speaker_ref=source.get("speaker_ref"),
             source_item_ref=source.get("source_item_ref", ref_id),
             observed_at=normalize_timestamp(source["observed_at"]),
-            recorded_at=normalize_timestamp(source.get("recorded_at", source["observed_at"])),
+            recorded_at=(normalize_timestamp(source.get("recorded_at", source["observed_at"]))
+                         if source.get("recorded_at", source["observed_at"]) is not None else None),
             duplicate_group_ref=source.get("duplicate_group_ref", ref_id),
             parent_refs=tuple(source.get("parent_refs", ())),
+            temporal_granularity=source.get("temporal_granularity", "instant"),
         ))
     if len({ref.ref_id for ref in refs}) != len(refs):
         raise CognitiveKernelContractError("duplicate source in gold case")
@@ -101,21 +113,50 @@ def compile_formation_case(row: dict[str, object]) -> CompiledFormationCase:
     ):
         raise CognitiveKernelContractError("gold value map is invalid")
     source_map = {ref.ref_id: (ref, text) for ref, (_, text) in zip(refs, texts)}
-    expected = tuple(_proposal(p, values, source_map) for p in row["expected"])
-    if not all(p.value_ref in values for p in expected):
-        raise CognitiveKernelContractError("gold proposal value has no declared meaning")
+    case_targets = {
+        "deletion_request": tuple(row.get("deletion_target_refs", ())),
+        "correction_request": tuple(row.get("correction_target_refs", ())),
+    }
     forbidden_refs = tuple(tuple(label) for label in row["critical_forbidden"])
     if not all(len(label) == 5 and label[3] in values for label in forbidden_refs):
         raise CognitiveKernelContractError("critical forbidden value has no declared meaning")
     forbidden = tuple((*label[:3], values[label[3]], label[4]) for label in forbidden_refs)
-    gold = FormationGoldCase(case_id, context, expected, forbidden)
+    decision_action = row.get("decision_action")
+    decision_scope = row.get("decision_scope")
+    if "dispositions" in row and (decision_action is not None or decision_scope is not None):
+        raise CognitiveKernelContractError("gold cannot mix disposition and legacy decision labels")
+    if (decision_action is None) != (decision_scope is None):
+        raise CognitiveKernelContractError("gold decision needs both action and scope")
+    dispositions: tuple[FormationDisposition, ...] = ()
+    if "dispositions" in row:
+        entries = row["dispositions"]
+        if not isinstance(entries, list):
+            raise CognitiveKernelContractError("gold dispositions must be an array")
+        dispositions = tuple(FormationDisposition(
+            scope_ref=entry["scope_ref"], action=entry["action"],
+            evidence_refs=tuple(entry["evidence_refs"]),
+            target_refs=tuple(entry.get("target_refs", ())),
+        ) for entry in entries)
+    elif decision_action is not None:
+        decision_targets = tuple(row.get("decision_target_refs", dict.fromkeys(
+            (*case_targets["deletion_request"], *case_targets["correction_request"]))))
+        dispositions = (FormationDisposition(
+            scope_ref=decision_scope, action=decision_action,
+            evidence_refs=tuple(row.get("decision_evidence_refs", row["experience_refs"])),
+            target_refs=decision_targets,
+        ),)
+    propose_scopes = tuple(d.scope_ref for d in dispositions if d.action == "propose")
+    default_scope = propose_scopes[0] if len(propose_scopes) == 1 else None
+    expected = tuple(_proposal(p, values, source_map, case_targets, default_scope)
+                     for p in row["expected"])
+    gold = FormationGoldCase(case_id, context, expected, forbidden, dispositions)
     gold.validate()
     # The same provenance gate used at inference rejects mislabeled gold.
     validate_formation_grounding(context, MemoryProposalBundle(
         scope=scope, authority_namespace_id=namespace,
         bundle_id=f"gold-{case_id}", experience_refs=context.experience_refs,
         context_digest=context.content_digest(), model_artifact_digest="0" * 64,
-        inference_run_id="gold-validation", proposals=expected,
+        inference_run_id="gold-validation", proposals=expected, dispositions=dispositions,
     ), tuple((ref_id, text.encode("utf-8")) for ref_id, text in texts))
     reason = row["reason"]
     if not isinstance(reason, str) or not reason.strip():

@@ -21,7 +21,23 @@ from .canonical import (
 )
 from .contracts import ProductHostScope
 
-FORMATION_SCHEMA_VERSION = "1.3.0"
+FORMATION_SCHEMA_VERSION = "1.5.0"
+TEMPORAL_GRANULARITIES = frozenset({"instant", "day"})
+
+
+def _validate_temporal_granularity(value: str, timestamp: str | None,
+                                   field: str) -> None:
+    if value not in TEMPORAL_GRANULARITIES:
+        raise CognitiveKernelContractError("unsupported temporal granularity")
+    if value == "day":
+        # Midnight encodes a calendar-date marker. A same-day validity range
+        # covers that whole day; it is not a zero-duration observed instant.
+        if timestamp is None or not normalize_timestamp(timestamp).endswith(
+                "T00:00:00.000000Z"):
+            raise CognitiveKernelContractError(
+                f"{field} day granularity needs a UTC date marker")
+
+
 PROPOSAL_KINDS = frozenset({
     "claim", "preference", "relationship", "episode", "goal", "mission",
     "host_observation", "source_person_evidence", "self_observation",
@@ -48,11 +64,20 @@ EVIDENCE_MODALITIES = frozenset({
     "text", "image", "audio", "video", "code", "structured",
     "sensor", "action", "multimodal",
 })
+FORMATION_ACTIONS = frozenset({"propose", "defer", "retain_raw", "abstain"})
 
 
 def _canonical_id(value: str, field: str) -> None:
     if require_identifier(value, field) != value:
         raise CognitiveKernelContractError(f"{field} must be canonical")
+
+
+def _canonical_disposition_scope(value: str) -> None:
+    # Semantic scopes use established snake_case names; evidence IDs do not.
+    if (not isinstance(value, str) or not value or
+            require_identifier(value.replace("_", "-"),
+                               "disposition scope_ref") != value.replace("_", "-")):
+        raise CognitiveKernelContractError("disposition scope_ref must be canonical")
 
 
 @dataclass(frozen=True)
@@ -72,6 +97,7 @@ class FormationEvidenceRef:
     recorded_at: str | None = None
     duplicate_group_ref: str | None = None
     parent_refs: tuple[str, ...] = ()
+    temporal_granularity: str = "instant"
 
     def validate(self) -> None:
         self.scope.validate()
@@ -93,6 +119,8 @@ class FormationEvidenceRef:
             value = getattr(self, field)
             if value is not None and normalize_timestamp(value, field) != value:
                 raise CognitiveKernelContractError(f"{field} must be canonical")
+        _validate_temporal_granularity(self.temporal_granularity, self.observed_at,
+                                       "observed_at")
         if normalize_identifier_sequence(self.parent_refs, "parent_refs") != self.parent_refs:
             raise CognitiveKernelContractError("parent_refs must be canonical")
 
@@ -107,6 +135,7 @@ class FormationEvidenceRef:
             "source_item_ref": self.source_item_ref,
             "observed_at": self.observed_at,
             "recorded_at": self.recorded_at,
+            "temporal_granularity": self.temporal_granularity,
             "duplicate_group_ref": self.duplicate_group_ref,
             "parent_refs": list(self.parent_refs),
         }
@@ -203,6 +232,9 @@ class FormationProposal:
     confidence: float | None = None
     uncertainty_ref: str | None = None
     contradicts: tuple[str, ...] = ()
+    target_refs: tuple[str, ...] = ()
+    disposition_scope_ref: str | None = None
+    temporal_granularity: str = "instant"
 
     def validate(self) -> None:
         _canonical_id(self.proposal_id, "proposal_id")
@@ -227,10 +259,19 @@ class FormationProposal:
             raise CognitiveKernelContractError("semantic value must anchor every cited source")
         if normalize_identifier_sequence(self.contradicts, "contradicts") != self.contradicts:
             raise CognitiveKernelContractError("contradicts must be canonical")
+        if normalize_identifier_sequence(self.target_refs, "target_refs") != self.target_refs:
+            raise CognitiveKernelContractError("target_refs must be canonical")
+        if self.disposition_scope_ref is not None:
+            _canonical_disposition_scope(self.disposition_scope_ref)
         if self.valid_from is not None:
             normalize_timestamp(self.valid_from, "valid_from")
         if self.valid_to is not None:
             normalize_timestamp(self.valid_to, "valid_to")
+        _validate_temporal_granularity(self.temporal_granularity, self.valid_from,
+                                       "valid_from")
+        if self.valid_to is not None:
+            _validate_temporal_granularity(self.temporal_granularity, self.valid_to,
+                                           "valid_to")
         if self.valid_from and self.valid_to:
             if normalize_timestamp(self.valid_to) < normalize_timestamp(self.valid_from):
                 raise CognitiveKernelContractError("valid_to precedes valid_from")
@@ -251,7 +292,35 @@ class FormationProposal:
             "valid_to": normalize_timestamp(self.valid_to) if self.valid_to else None,
             "confidence": self.confidence, "uncertainty_ref": self.uncertainty_ref,
             "contradicts": list(self.contradicts),
+            "target_refs": list(self.target_refs),
+            "disposition_scope_ref": self.disposition_scope_ref,
+            "temporal_granularity": self.temporal_granularity,
         }
+
+
+@dataclass(frozen=True)
+class FormationDisposition:
+    """A scoped formation decision; other scopes may still yield proposals."""
+
+    scope_ref: str
+    action: str
+    evidence_refs: tuple[str, ...]
+    target_refs: tuple[str, ...] = ()
+
+    def validate(self) -> None:
+        _canonical_disposition_scope(self.scope_ref)
+        if self.action not in FORMATION_ACTIONS:
+            raise CognitiveKernelContractError("unsupported formation action")
+        if (not self.evidence_refs or
+                normalize_identifier_sequence(self.evidence_refs, "disposition evidence_refs") != self.evidence_refs):
+            raise CognitiveKernelContractError("disposition needs canonical evidence references")
+        if normalize_identifier_sequence(self.target_refs, "disposition target_refs") != self.target_refs:
+            raise CognitiveKernelContractError("disposition target_refs must be canonical")
+
+    def record(self) -> dict[str, object]:
+        self.validate()
+        return {"scope_ref": self.scope_ref, "action": self.action,
+                "evidence_refs": list(self.evidence_refs), "target_refs": list(self.target_refs)}
 
 
 @dataclass(frozen=True)
@@ -266,6 +335,7 @@ class MemoryProposalBundle:
     model_artifact_digest: str
     inference_run_id: str
     proposals: tuple[FormationProposal, ...]
+    dispositions: tuple[FormationDisposition, ...] = ()
     schema_version: str = FORMATION_SCHEMA_VERSION
 
     def validate(self) -> None:
@@ -290,6 +360,12 @@ class MemoryProposalBundle:
             if proposal.proposal_id in ids:
                 raise CognitiveKernelContractError("duplicate proposal_id")
             ids.add(proposal.proposal_id)
+        scopes: set[str] = set()
+        for disposition in self.dispositions:
+            disposition.validate()
+            if disposition.scope_ref in scopes:
+                raise CognitiveKernelContractError("duplicate formation disposition scope")
+            scopes.add(disposition.scope_ref)
 
     def metadata_record(self) -> dict[str, object]:
         self.validate()
@@ -302,6 +378,7 @@ class MemoryProposalBundle:
             "model_artifact_digest": self.model_artifact_digest,
             "inference_run_id": self.inference_run_id,
             "proposals": [proposal.record() for proposal in self.proposals],
+            "dispositions": [disposition.record() for disposition in self.dispositions],
             "schema_version": self.schema_version,
         }
 
@@ -347,6 +424,13 @@ def validate_formation_binding(
                 # An audio/image/video/sensor anchor must use its source-native
                 # locator, not pretend its bytes are a text span.
                 raise CognitiveKernelContractError("non-text evidence requires source-native anchor")
+        if bundle.dispositions and (proposal.disposition_scope_ref is None or
+                next((d.action for d in bundle.dispositions
+                      if d.scope_ref == proposal.disposition_scope_ref), None) != "propose"):
+            raise CognitiveKernelContractError("proposal requires matching propose disposition scope")
+    for disposition in bundle.dispositions:
+        if not set(disposition.evidence_refs).issubset(evidence):
+            raise CognitiveKernelContractError("disposition cites evidence absent from context")
 
 
 def validate_formation_grounding(

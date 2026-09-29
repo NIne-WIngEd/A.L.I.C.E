@@ -1,0 +1,9 @@
+# Separate from the text-only Transformers 4.x training environment.
+# Gemma 4 Unified and AutoModelForMultimodalLM need Transformers 5.x.
+torch>=2.7,<3
+transformers>=5.17,<6
+accelerate>=1,<3
+peft>=0.18,<1
+safetensors>=0.5,<1
+torchvision
+torchcodec

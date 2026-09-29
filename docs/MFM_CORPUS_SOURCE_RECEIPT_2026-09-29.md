@@ -1,9 +1,9 @@
 # MFM source receipt and formation objective
 
-**State, 2026-09-29:** source inventory and diagnostic candidates only. No
-independently adjudicated formation corpus, sealed FINAL, trained weights or
-GPU run exists. This receipt does not promote simulator truth, QA labels, or
-assistant-authored targets into formation gold.
+**State, 2026-09-29:** owner-authorized synthetic training curricula prepared.
+No independently adjudicated FINAL, trained weights or GPU run exists. These
+curricula can train a model; they do not certify its generalization. Simulator
+truth and upstream QA are excluded from MFM inputs.
 
 ## Licensed source intake
 
@@ -46,22 +46,65 @@ manifest digest `3930d31bb1b1a05ffcf64fc2f89b8ac3d95ce6e4b3f2387dc0ae2f758a59499
 The inventory itself is outside the public branch and can be regenerated.
 Its status is `source_candidate_only_no_formation_labels_or_review`.
 
-## Quarantined diagnostic material
+## Owner-authorized diagnostic material
 
 `generate_longitudinal_candidates.py --seed 20260929 --hosts 600` created
 6,000 fictional diagnostic cases, SHA-256
-`4089c61e6bf9b0e309ef23fc09a521592ebdbf74b5f982e19d37d4a678ea55ac`.
+`5de85384f0428fb168bc796fb53bd21d68996f383520143381a84e090cc6aab1`.
 Its source templates and target labels were authored through this ChatGPT/Codex
-session. The [OpenAI Terms of Use](https://openai.com/policies/terms-of-use/)
-restrict use of Output to develop competing models. Whether the intended
-Fable model legally falls into that category requires a separate rights
-determination. Ownership of Output alone does not settle that question.
-Therefore these cases remain outside distributable-weight training absent
-written clarification or independent permission. The three renderers share
-the same ten scenario skeletons across nominal train/development groups; those
-groups cannot count as scenario-isolated evaluation. No FINAL was created.
+session as owner-authorized teaching material for A.L.I.C.E., Fable and FBM.
+Record that origin and authorization with the generator. The prior
+ChatGPT-specific rights quarantine was an unsupported self-classification and
+is withdrawn. These cases remain **unreviewed teaching examples**, not final gold:
+the three renderers share the same ten scenario skeletons across nominal
+train/development groups. Those groups cannot count as scenario-isolated
+evaluation, and no independently custodied FINAL was created.
 
-## Target and learned objective required before a GPU run
+## Frozen training mixture
+
+`assemble_formation_curriculum.py` extracts training targets only from the
+fresh-seeded observed structural streams. It never supplies simulator truth or
+upstream QA as model input. Across 480 hosts, it produced **43,819** cases:
+14,400 multi-domain plan-only decisions, 14,400 multi-domain
+plan-then-report decisions, 12,139 tracker reconciliation decisions, 1,920
+seven-day bounded patterns, and 960 as-of day-15/day-30 bounded histories.
+Every plan/report/tracker source state has one complete target across the six
+supported domains. A prior 71,659-row draft had 28,800 identical source
+inputs with conflicting single-domain answers and was replaced before GPU
+training. The corrected curriculum SHA-256 is
+`2595e5209c0cf9cc8077e330b9e288c08cf5752f6db46acde6a455ff781519a1`.
+Source-grounded structured targets now carry field-level UTF-8 byte spans;
+day-scoped proposals and weekly/monthly patterns have explicit end markers.
+Date-only source fields are normalized to UTC-midnight **day markers** with
+`temporal_granularity=day` in contract v1.5.0, not assertions about a precise
+observation or ingestion time. A same-day `valid_from`/`valid_to` pair denotes
+the inclusive calendar day, and a first-to-last pair denotes inclusive
+calendar dates. Recorded clock time remains unknown. A tracker signal
+agreement is a signal observation, and disagreement is uncertainty; neither
+establishes the host's physical exercise outcome.
+The code-generated targets are a source-grounded synthetic training tier.
+They are not independently adjudicated semantic gold.
+
+`convert_longitudinal_candidates.py` compiled all 6,000 owner-authorized
+fictional teaching cases into the same structured training format, SHA-256
+`2c92302390ebcf46ea222df8cf1c79b75710fdfb7a47a684c4897b9e0f6ae830`.
+Their nominal development renderer rows are explicitly reassigned to training
+only. The combined **49,819-case** manifest is
+`mfm_training_mixture_v1.json`, SHA-256
+`60fa44a5be62c8d2f0daf508e543dc1a41c34562dc0c4d399e26c9cabb772e21`.
+It binds both component hashes, counts, generator families and the prior
+`owner_authorized_service_teacher` authorization. The complete JSONL and
+manifest are reproducible work artifacts outside this public code branch.
+
+This mixture broadens training beyond the original ten template narratives.
+The ten template families still use whole-utterance citations; the structural
+curriculum supplies the narrower field-span supervision.
+It is still synthetic, primarily structured/text, and does not cover every
+audio, video, image, multilingual, deletion/revocation or lived-history case.
+Those gaps are qualification and later curriculum work, not a legal hold on
+starting a measured learned run.
+
+## Qualification targets and learned objective
 
 Independent annotators must work from the *observed* structural streams,
 without upstream `event_table.json`, `ground_truth.json`, profile generator
@@ -85,12 +128,12 @@ formation target with:
    permission/deletion influence. Add multilingual and multimodal material
    from separate rights-cleared families; this simulator alone covers neither.
 
-Two independently authenticated reviewers must inspect the exact source and
-target bytes blind to the author's label, adjudicate disagreements, and attach
-their signed or otherwise verifiable receipts. The steward must confirm live
-consent/license rights for commercial distributable-weight training, no
-revocation, and generator/provider ancestry. Hashes and self-asserted JSON
-reviewer IDs alone only prove that a claim stayed byte-identical.
+For independently claimed development and FINAL results, two independently
+authenticated reviewers must inspect exact source and target bytes blind to
+the author's label, adjudicate disagreements, and attach verifiable receipts.
+The steward confirms source permission and revocation state. This standard
+does not require manual dual review of every synthetic training row. Hashes
+and self-asserted JSON reviewer IDs alone only prove byte identity.
 
 Freeze train, development and separately custodied FINAL by connected host,
 source/duplicate, generator, scenario and ancestor families. The current
@@ -110,8 +153,13 @@ no aggregate metric can conceal a critical failure. Checkpoint, optimizer,
 tokenizer/encoders, data rights, sources and exact compute environment must be
 versioned. The authority gate still decides whether a proposal changes memory.
 
-**Next executable handoff:** commission independent formation annotation and
-rights verification on the frozen source inventory, add other licensed
-longitudinal/generator/modal families, then freeze three nonleaking splits.
-Only those admitted bytes can be handed to Magnolia or Kaggle for a measured
-learned run. The present data cannot authorize that run.
+**Next executable handoff:** preflight the frozen mixture with the pinned
+processor and actual available Magnolia GPU topology, then run the entire
+mixture through the learned trainer. Record an exact model revision,
+source/data and tokenizer hashes, completed optimizer/checkpoint step and
+resource metrics.
+In parallel, build independent multilingual, multimodal and real permissioned
+families, then freeze a separately custodied FINAL. A training run can start
+from the current owner-authorized mixture; no trained artifact can claim full
+MFM capability until those independent evaluations and the governed downstream
+memory loop pass.

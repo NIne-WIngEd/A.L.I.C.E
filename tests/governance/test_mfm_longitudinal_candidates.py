@@ -17,17 +17,17 @@ spec.loader.exec_module(module)
 
 
 class LongitudinalCandidateTests(unittest.TestCase):
-    def test_quarantined_candidates_reproduce_and_compile_without_gold_admission(self):
+    def test_owner_authorized_candidates_reproduce_without_gold_admission(self):
         rows = module.generate(20260929, 15)
         self.assertEqual(module._json_bytes(rows), module._json_bytes(module.generate(20260929, 15)))
         self.assertEqual(len(rows), 150)
         self.assertEqual({r["generator_family"] for r in rows},
                          {"chatgpt-templated-diagnostic-v1"})
         self.assertEqual(len({r["scenario_family"] for r in rows}), 10)
-        self.assertTrue(all(r["training_rights"] == "quarantined_chatgpt_authored_templates"
+        self.assertTrue(all(r["training_rights"] == "owner_authorized_chatgpt_codex_teaching_output"
                             for r in rows))
         self.assertTrue(all(r["admission"] == "candidate_only_unreviewed" for r in rows))
-        self.assertTrue(all(r["decision_action"] in {"propose", "defer", "retain_raw"}
+        self.assertTrue(all(r.get("decision_action", "propose") == "propose"
                             for r in rows))
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / "candidate.json"
@@ -35,11 +35,15 @@ class LongitudinalCandidateTests(unittest.TestCase):
             compiled = load_formation_gold(path)
         self.assertEqual(len(compiled), len(rows))
         self.assertEqual(len({case.host_family for case in compiled}), 15)
-        self.assertEqual(len([r for r in rows if r["decision_action"] == "defer"]), 15)
+        self.assertEqual(len([r for r in rows if any(
+            d["action"] == "defer" for d in r.get("dispositions", []))]), 15)
         for row in rows:
-            if row["decision_action"] in {"defer", "retain_raw"}:
+            if "dispositions" in row:
                 self.assertEqual(len(row["expected"]), 1)
                 self.assertNotEqual(row["expected"][0]["kind"], row["critical_forbidden"][0][0])
+                self.assertEqual(row["dispositions"][0]["action"], "propose")
+                self.assertEqual(row["expected"][0]["disposition_scope_ref"],
+                                 row["dispositions"][0]["scope_ref"])
             if row["case_id"].endswith("negotiated-norm"):
                 self.assertEqual(row["expected"][0]["epistemic_status"], "owner_statement")
                 self.assertEqual(len(row["expected"][0]["evidence_refs"]), 1)

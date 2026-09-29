@@ -19,6 +19,68 @@ MANIFEST = CORPUS.with_suffix(".manifest.json")
 
 
 class FormationGoldTests(unittest.TestCase):
+    def test_scoped_defer_preserves_narrower_proposal(self):
+        rows = json.loads(CORPUS.read_text())
+        plan = dict(rows[2], case_id="aria-plan-scoped")
+        plan["expected"] = [dict(plan["expected"][0],
+                                 disposition_scope_ref="scheduled_plan")]
+        plan["dispositions"] = [
+            {"scope_ref": "outcome_claim", "action": "defer",
+             "evidence_refs": ["aria-calendar"]},
+            {"scope_ref": "scheduled_plan", "action": "propose",
+             "evidence_refs": ["aria-calendar"]},
+        ]
+        compiled = compile_formation_case(plan)
+        self.assertEqual(len(compiled.gold.expected), 1)
+        self.assertEqual(compiled.gold.expected[0].kind, "goal")
+        self.assertEqual(compiled.gold.expected_dispositions[0].action, "defer")
+        self.assertEqual(compiled.gold.expected_dispositions[0].scope_ref, "outcome_claim")
+        self.assertEqual(compiled.gold.expected[0].disposition_scope_ref, "scheduled_plan")
+        output = MemoryProposalBundle(
+            scope=compiled.gold.context.scope,
+            authority_namespace_id=compiled.gold.context.authority_namespace_id,
+            bundle_id="narrower-plan", experience_refs=compiled.gold.context.experience_refs,
+            context_digest=compiled.gold.context.content_digest(),
+            model_artifact_digest="f" * 64, inference_run_id="scoped-run",
+            proposals=compiled.gold.expected,
+            dispositions=compiled.gold.expected_dispositions,
+        )
+        assessed = assess_formation(compiled.gold, output)
+        self.assertEqual((assessed.true_positives, assessed.disposition_true_positives), (1, 2))
+        legacy = dict(rows[2], case_id="aria-plan-legacy", decision_action="propose",
+                      decision_scope="scheduled_plan")
+        self.assertEqual(compile_formation_case(legacy).gold.expected[0].disposition_scope_ref,
+                         "scheduled_plan")
+
+    def test_explicit_multiple_actions_and_deletion_target_refs(self):
+        rows = json.loads(CORPUS.read_text())
+        deletion = dict(rows[5], case_id="ben-delete-scoped",
+                        deletion_target_refs=["old-travel-log"])
+        deletion["dispositions"] = [
+            {"scope_ref": "deletion_request", "action": "propose",
+             "evidence_refs": ["ben-delete-event"], "target_refs": ["old-travel-log"]},
+            {"scope_ref": "historical_reconstruction", "action": "abstain",
+             "evidence_refs": ["ben-delete-event"]},
+        ]
+        compiled = compile_formation_case(deletion)
+        self.assertEqual(compiled.gold.expected[0].target_refs, ("old-travel-log",))
+        self.assertEqual(len(compiled.gold.expected_dispositions), 2)
+        output = MemoryProposalBundle(
+            scope=compiled.gold.context.scope,
+            authority_namespace_id=compiled.gold.context.authority_namespace_id,
+            bundle_id="deletion-scoped", experience_refs=compiled.gold.context.experience_refs,
+            context_digest=compiled.gold.context.content_digest(),
+            model_artifact_digest="f" * 64, inference_run_id="scoped-run",
+            proposals=compiled.gold.expected, dispositions=compiled.gold.expected_dispositions,
+        )
+        self.assertEqual(assess_formation(compiled.gold, output).disposition_true_positives, 2)
+        wrong_target = replace(compiled.gold.expected[0], target_refs=("other-log",))
+        assessed = assess_formation(compiled.gold, replace(output, proposals=(wrong_target,)))
+        self.assertEqual((assessed.true_positives, assessed.false_negatives), (0, 1))
+        mixed = dict(deletion, decision_action="propose", decision_scope="formation_proposal")
+        with self.assertRaisesRegex(CognitiveKernelContractError, "cannot mix"):
+            compile_formation_case(mixed)
+
     def test_matching_words_with_wrong_source_span_do_not_score_as_gold(self):
         case = next(c for c in load_formation_gold(CORPUS)
                     if c.gold.case_id == "aria-change")

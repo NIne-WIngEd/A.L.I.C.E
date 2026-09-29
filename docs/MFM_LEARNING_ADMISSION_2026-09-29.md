@@ -1,14 +1,18 @@
 # MFM learned candidate: data and qualification admission
 
-**State:** A.L.I.C.E. MFM contract build, not a trained or promoted model.
+**State:** A.L.I.C.E. MFM learned training route prepared, no trained or
+promoted model yet.
 
 ## What this branch now supplies
 
-- `formation_contracts.py` v1.3.0 exposes registered source item, speaker,
+- `formation_contracts.py` v1.5.0 exposes registered source item, speaker,
   subject, observation/record times, duplicate family and parent references in
   the context digest. A proposal carries semantic `value_text` and exact-source
   anchors as well as an opaque ID. Anchors verify byte binding and span bounds,
-  not semantic entailment or an accepted memory claim.
+  not semantic entailment or an accepted memory claim. Scoped dispositions
+  distinguish propose, defer, retain raw and abstain. Correction/deletion
+  proposals carry target references. A `day` temporal granularity explicitly
+  marks inclusive date ranges without asserting an observed clock instant.
 - `formation_sources.py` binds that metadata to a registered private object and
   checks current permission before and after opening bytes. A read receipt
   records source IDs, digests, registration versions and routes; it does not
@@ -32,10 +36,17 @@
   an external steward must authenticate permission and actual independent
   review. FINAL remains unopened metadata in this verifier.
 - `inventory_multisource_sources.py` freezes 480 newly seeded fictional source
-  histories with five structural streams each. No MFM target or reviewer label
-  is present. See the [source receipt](MFM_CORPUS_SOURCE_RECEIPT_2026-09-29.md).
+  histories with five structural streams each. The curriculum assembler then
+  derives 43,819 source-grounded, multi-domain and bounded-history training
+  cases. The owner-authorized fictional generator contributes 6,000 more.
+  The corrected frozen mixture has 49,819
+  train-only cases. See the [source receipt](MFM_CORPUS_SOURCE_RECEIPT_2026-09-29.md).
+- `formation_learning.py` and `train_formation_model.py` bind exact source
+  bytes and owner authorization, supervise structured proposal/disposition
+  output, and train real pretrained weights once a GPU environment is supplied.
+  The current text/structured route does not establish multimodal competence.
 
-## Why a training run is not authorized from this fixture
+## Training and qualification have different evidence
 
 There are only **three** train cases in the frozen public fixture. They are fictional contract checks, not a
 formation curriculum spanning languages, source systems, years, modalities,
@@ -44,16 +55,20 @@ three splits; the challenge is host-disjoint but not generator-disjoint or
 independently adjudicated. It is public and cannot serve as a sealed final.
 Training weights on these rows would only create a memorized diagnostic. It
 would not advance the full-capability MFM the owner requested. The 6,000
-ChatGPT-templated candidate cases are separately quarantined from training:
-their ten scenario skeletons cross nominal partitions, their targets are
-unreviewed, and their training rights need clarification. The newly seeded
-Multi-Source histories have a permissive upstream license path but no MFM
-formation targets, independent review or sealed FINAL. Neither artifact
-justifies a GPU run or a capability claim.
+ChatGPT/Codex-templated cases are owner-authorized teaching material for
+A.L.I.C.E., Fable and FBM. Their ten scenario skeletons cross nominal
+partitions and their targets are unreviewed, so they are **training only**.
+The Multi-Source-derived formation targets are also synthetic training
+material. Their exact source hashes, narrow field spans and scoped decisions
+now form the 49,819-case mixture. A previous draft paired identical inputs
+with incompatible single-domain targets; the corrected version gives each
+source state one combined target. A measured learned GPU run is the next
+execution step after pinned-processor context and hardware preflight.
+These sources do not supply independent FINAL or a capability claim.
 
-The execution environment also has no PyTorch, pretrained MFM backbone,
-admitted training corpus or GPU. Those are observed limitations of this
-workspace, not product capability ceilings. No gradient step, learned
+The execution environment has no PyTorch, pretrained MFM backbone or GPU.
+Those are observed limitations of this workspace, not product capability
+ceilings. No gradient step, learned
 checkpoint, real selected-stack read, authority-gate integration or downstream
 judgment result is claimed.
 
@@ -71,11 +86,12 @@ reserved for evaluation, not used to train away the benchmark.
    family, consent, custody and deletion influence. Keep Rayan/Elaina private
    facts outside shared weights. Their authorized examples can assess
    A.L.I.C.E. instance formation and subject separation in private custody.
-2. **Author targets.** Independently adjudicate direct and uncertain cases,
+2. **Author targets.** Use owner-authorized, source-grounded synthetic cases
+   for training. Independently adjudicate direct and uncertain challenge cases,
    including abstain, retain raw, defer, correct and delete. Add counterfactual
    and synthetic histories with visible generator/seed/parent lineage. A
    generated continuation remains a rehearsal, never historical truth.
-3. **Freeze splits.** Separate people, original sources, duplicate exports,
+3. **Freeze qualification splits.** Separate people, original sources, duplicate exports,
    scenario lineage and generator families. Register hashes and exact
    exclusions before fitting. Keep an independently reviewed final set outside
    training and model-selection access.
@@ -98,7 +114,8 @@ reserved for evaluation, not used to train away the benchmark.
    proposal alone cannot certify the later personal judgment.
 
 The [source receipt and annotation objective](MFM_CORPUS_SOURCE_RECEIPT_2026-09-29.md)
-pin the current data and missing independent target files. This work stays on
+and [learned-run handoff](MFM_GPU_EXECUTION_HANDOFF_2026-09-29.md) pin the
+current data, exact execution path and missing independent target files. This work stays on
 the independent MFM branch. FBM receives compact process
 traces of actual construction and its failures. A trace is not automatically
 an eligible supervised builder case.
