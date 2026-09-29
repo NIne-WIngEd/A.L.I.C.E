@@ -145,7 +145,10 @@ PYTHONPATH=src:. torchrun --standalone --nnodes=1 --nproc_per_node=4 \
 
 The probe must finish backward, optimizer, sharded checkpoint, gathered model
 export and receipt writing on all ranks. Check the measured peak VRAM and
-throughput before deciding whether the full run fits and what it costs. A
+throughput and checkpoint/export duration before deciding whether the full run
+fits, its cost, and a `--save-steps` interval that balances checkpoint time
+against work lost on interruption. Bind that interval before starting the
+full run; do not change it during resume. A
 32,768-token request and four 80 GB GPUs are not a proven fit until this passes.
 
 ## Full fit and resume
