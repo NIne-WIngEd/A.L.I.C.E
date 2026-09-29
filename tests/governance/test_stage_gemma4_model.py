@@ -5,6 +5,7 @@ from __future__ import annotations
 from hashlib import sha1, sha256
 import json
 from pathlib import Path
+import shutil
 import sys
 import tempfile
 import types
@@ -75,6 +76,12 @@ class StagedGemmaModelTests(unittest.TestCase):
                 self.assertEqual(stage.verify_staged_model(
                     receipt_path, stage.GEMMA_4_12B_MODEL,
                     stage.GEMMA_4_12B_REVISION, rehash=False), (snapshot, sealed))
+                relocated = root / "relocated"
+                shutil.copytree(snapshot, relocated)
+                self.assertEqual(stage.verify_staged_model(
+                    receipt_path, stage.GEMMA_4_12B_MODEL,
+                    stage.GEMMA_4_12B_REVISION, snapshot_override=relocated),
+                    (relocated, sealed))
                 with self.assertRaisesRegex(stage.StagedModelError, "already exists"):
                     stage.stage_model(snapshot, receipt_path)
 

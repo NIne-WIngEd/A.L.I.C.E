@@ -204,7 +204,8 @@ def stage_model(snapshot_dir: str | Path, receipt_path: str | Path, *,
 
 
 def verify_staged_model(receipt_path: str | Path, expected_model: str,
-                        expected_revision: str, rehash: bool = True) -> tuple[Path, dict]:
+                        expected_revision: str, rehash: bool = True,
+                        snapshot_override: str | Path | None = None) -> tuple[Path, dict]:
     """Offline, fail-closed verification before any GPU weights are loaded."""
     receipt_file = Path(receipt_path).expanduser().resolve()
     receipt = json.loads(receipt_file.read_bytes())
@@ -227,8 +228,8 @@ def verify_staged_model(receipt_path: str | Path, expected_model: str,
     raw_path = receipt["snapshot_path"]
     if not isinstance(raw_path, str) or not Path(raw_path).is_absolute():
         raise StagedModelError("staged model path is not absolute")
-    snapshot = Path(raw_path)
-    if snapshot.resolve() != snapshot:
+    snapshot = Path(snapshot_override).expanduser() if snapshot_override else Path(raw_path)
+    if not snapshot.is_absolute() or snapshot.resolve() != snapshot or snapshot.is_symlink():
         raise StagedModelError("snapshot path changed or contains a symlink")
     files = _regular_files(snapshot)
     listed = receipt["files"]
@@ -286,6 +287,8 @@ def main() -> None:
                        help="download the full pinned snapshot before verification")
     verify = commands.add_parser("verify", help="offline rehash of the sealed snapshot")
     verify.add_argument("--receipt", required=True, type=Path)
+    verify.add_argument("--snapshot-dir", type=Path,
+                        help="verified copy at a new absolute path; rehash every file")
     args = parser.parse_args()
     if args.command == "stage":
         receipt = stage_model(args.snapshot_dir, args.receipt, download=args.download)
@@ -294,7 +297,8 @@ def main() -> None:
                   "snapshot_path": receipt["snapshot_path"]}
     else:
         snapshot, receipt = verify_staged_model(args.receipt, GEMMA_4_12B_MODEL,
-                                                GEMMA_4_12B_REVISION)
+                                                GEMMA_4_12B_REVISION,
+                                                snapshot_override=args.snapshot_dir)
         result = {"receipt_sha256": receipt["receipt_sha256"],
                   "files": len(receipt["files"]), "snapshot_path": str(snapshot),
                   "verified": True}

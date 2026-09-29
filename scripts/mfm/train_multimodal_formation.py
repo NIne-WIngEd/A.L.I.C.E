@@ -54,6 +54,8 @@ def arguments() -> argparse.Namespace:
                         help="CPU processor receipt; required before any paid GPU run")
     parser.add_argument("--staged-model-receipt", type=Path,
                         help="CPU-verified exact model snapshot; required before paid GPU work")
+    parser.add_argument("--staged-model-dir", type=Path,
+                        help="relocated local snapshot; verify its bytes against staging receipt")
     parser.add_argument("--epochs", type=float, default=2.0)
     parser.add_argument("--gradient-accumulation", type=int, default=16)
     parser.add_argument("--learning-rate", type=float, default=2e-5)
@@ -121,10 +123,10 @@ def main() -> None:
         raise CognitiveKernelContractError("training hyperparameters must be positive")
     if args.preflight_receipt is None:
         raise CognitiveKernelContractError("exact processor preflight receipt is required")
-    if args.preflight_only and args.staged_model_receipt:
-        raise CognitiveKernelContractError("processor preflight does not require model weights")
     if not args.preflight_only and args.staged_model_receipt is None:
         raise CognitiveKernelContractError("paid run requires a verified staged model receipt")
+    if args.staged_model_dir is not None and args.staged_model_receipt is None:
+        raise CognitiveKernelContractError("relocated snapshot requires a staging receipt")
     if args.preflight_only and (args.probe_only or args.resume_from_checkpoint):
         raise CognitiveKernelContractError("processor preflight cannot train or resume")
     if not args.preflight_only and (args.precision != "bf16" or args.lora_rank != 0 or
@@ -143,6 +145,14 @@ def main() -> None:
         for example in (*train, *dev):
             with formation_media_messages(example):
                 pass
+        # A CPU compute node can process the pinned snapshot without outbound
+        # Hub access after the snapshot has been staged and verified elsewhere.
+        if args.staged_model_receipt:
+            snapshot_path, staged_model = verify_staged_model(
+                args.staged_model_receipt, GEMMA_4_12B_MODEL, args.model_revision,
+                snapshot_override=args.staged_model_dir)
+        else:
+            snapshot_path = staged_model = None
     import torch
     import transformers
     binding = {"objective": MULTIMODAL_OBJECTIVE, "corpus_status": status,
@@ -184,15 +194,13 @@ def main() -> None:
             raise CognitiveKernelContractError("output volume lacks free space for ZeRO checkpoints")
         snapshot_path, staged_model = verify_staged_model(
             args.staged_model_receipt, GEMMA_4_12B_MODEL, args.model_revision,
-            rehash=rank == 0)
-    else:
-        snapshot_path = staged_model = None
+            rehash=rank == 0, snapshot_override=args.staged_model_dir)
     from transformers import AutoModelForMultimodalLM, AutoProcessor, Trainer, TrainingArguments
 
     processor = AutoProcessor.from_pretrained(
-        GEMMA_4_12B_MODEL if args.preflight_only else snapshot_path,
-        **({"revision": args.model_revision} if args.preflight_only else {}),
-        trust_remote_code=False, local_files_only=not args.preflight_only)
+        snapshot_path if snapshot_path else GEMMA_4_12B_MODEL,
+        **({"revision": args.model_revision} if snapshot_path is None else {}),
+        trust_remote_code=False, local_files_only=snapshot_path is not None)
     if getattr(processor, "audio_seq_length", 0) < 750 or not hasattr(processor, "video_processor"):
         raise CognitiveKernelContractError("checkpoint lacks Gemma 4 Unified audio/video processor")
     if args.preflight_only:
@@ -222,6 +230,8 @@ def main() -> None:
             "longest_processed_tokens": maximum, "longest_prompt_tokens": longest_prompt,
             "longest_answer_tokens": longest_answer, "longest_case_index": longest_index,
             "probe_indices": probe_indices(lengths),
+            "processor_snapshot_sha256": staged_model["receipt_sha256"]
+            if staged_model else None,
             "modality_counts": {modality: sum(
                 ref.modality == modality for case in (*train, *dev)
                 for ref in case.context.evidence)

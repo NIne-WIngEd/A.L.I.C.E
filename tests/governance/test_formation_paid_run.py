@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 from pathlib import Path
+from contextlib import nullcontext
 import sys
 import tempfile
 import types
@@ -108,6 +109,56 @@ class PaidRunBindingsTests(unittest.TestCase):
                 len(header).to_bytes(8, "little") + header + tensor[:2])
             with self.assertRaisesRegex(CognitiveKernelContractError, "invalid tensor metadata"):
                 require_complete_weight_export(root, min_bytes=1, min_parameters=2)
+
+    def test_cpu_processor_preflight_can_use_staged_snapshot_offline(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            receipt = root / "processor.json"
+            snapshot = root / "snapshot"
+            calls = []
+
+            class FakeProcessor:
+                audio_seq_length = 750
+                video_processor = object()
+
+            class FakeLabels:
+                def __eq__(self, value):
+                    return types.SimpleNamespace(sum=lambda: types.SimpleNamespace(item=lambda: 10))
+
+                def numel(self):
+                    return 20
+
+            fake_batch = {"input_ids": types.SimpleNamespace(shape=(1, 20)),
+                          "labels": FakeLabels()}
+            transformers = types.ModuleType("transformers")
+            transformers.__version__ = "5.17.0"
+            transformers.AutoProcessor = types.SimpleNamespace(
+                from_pretrained=lambda *args, **kw: (calls.append((args, kw)) or FakeProcessor()))
+            transformers.AutoModelForMultimodalLM = object()
+            transformers.Trainer = object()
+            transformers.TrainingArguments = object()
+            argv = ["train", "--curriculum", str(root / "train.jsonl"),
+                    "--input-sha256", "a" * 64, "--owner-authorization-ref", "owner-test",
+                    "--output-dir", str(root / "unused"), "--preflight-receipt", str(receipt),
+                    "--staged-model-receipt", str(root / "staged.json"),
+                    "--max-sequence-tokens", "32768", "--preflight-only"]
+            with (patch.object(sys, "argv", argv),
+                  patch.dict(sys.modules, {"torch": types.ModuleType("torch"),
+                                           "transformers": transformers}),
+                  patch("builtins.print"),
+                  patch.object(train_multimodal_formation, "_dataset", return_value=(
+                      (types.SimpleNamespace(context=types.SimpleNamespace(evidence=())),), (),
+                      "owner-authorized-training-only-unqualified")),
+                  patch.object(train_multimodal_formation, "formation_media_messages",
+                               side_effect=lambda _: nullcontext([])),
+                  patch.object(train_multimodal_formation, "supervised_multimodal_batch",
+                               return_value=fake_batch),
+                  patch.object(train_multimodal_formation, "verify_staged_model",
+                               return_value=(snapshot, {"receipt_sha256": "b" * 64}))):
+                train_multimodal_formation.main()
+            self.assertEqual(calls[0][0], (snapshot,))
+            self.assertTrue(calls[0][1]["local_files_only"])
+            self.assertEqual(read_sealed(receipt)["processor_snapshot_sha256"], "b" * 64)
 
     def test_paid_probe_shards_before_load_and_exits_after_one_step(self):
         events = []

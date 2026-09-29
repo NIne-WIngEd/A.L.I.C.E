@@ -52,9 +52,10 @@ Transformers version and the trainer/prompt source bytes. Run the static checks,
 install dependencies and stage the pinned model snapshot on a non-billed
 machine. The snapshot and its staging receipt must be copied to storage that
 the training machine can read before the paid allocation starts. A processor
-download by itself does **not** stage the weight files. The receipt binds an
-absolute snapshot path, so preserve that path after transfer or regenerate the
-receipt against the final mounted path before renting GPUs.
+download by itself does **not** stage the weight files. The receipt records the
+original absolute path. A relocated copy can use `--snapshot-dir` for offline
+verification and `--staged-model-dir` for the trainer. Both paths verify its
+contents against the original receipt.
 
 Stage the exact pinned Hub snapshot and write a per-file receipt on the
 non-billed preparation machine. Standard Hugging Face authentication must
@@ -80,6 +81,11 @@ that storage is visible only after allocation, the same verification becomes
 the first paid action; account for those minutes. A partially copied snapshot
 must never be treated as ready.
 
+For a transferred snapshot at a different path, repeat the offline verification
+with `--snapshot-dir /new/path/gemma4-12b-it`. Include
+`--staged-model-dir /new/path/gemma4-12b-it` on the processor, probe and full
+fit commands. The original receipt travels with the snapshot.
+
 On the non-billed machine, validate the actual processor and longest
 prompt/answer on the *entire* mixture without loading weight tensors. Keep the
 receipt alongside the exact frozen inputs; do not edit its bound code or change
@@ -93,8 +99,15 @@ PYTHONPATH=src:. python -m scripts.mfm.train_multimodal_formation \
   --owner-authorization-ref owner_authorized_service_teacher \
   --output-dir ../mfm-runs/cpu-preflight \
   --preflight-receipt ../mfm-runs/processor-preflight-v1.json \
+  --staged-model-receipt /persistent/gemma4-stage.json \
   --max-sequence-tokens 32768 --preflight-only
 ```
+
+With the staging receipt, this processor pass reads the verified local
+snapshot and needs no compute-node network. Run it inside a CPU Slurm job on
+Magnolia, using the partition shown by `sinfo` (the owner's earlier N0 CPU
+jobs used `node`), not on the login node. The snapshot path in the receipt
+must match its path on the job's filesystem.
 
 The 32,768-token value is an execution request, not a model or product
 ceiling. The preflight reports complete prompt/answer lengths and rejects
@@ -118,7 +131,7 @@ outside the paid instance:
 4. The run has a durable output volume with at least 750 GiB free for multiple
    full ZeRO optimizer checkpoints, the final model and rank receipts, and a way to export them before
    releasing ephemeral storage. GPU allocation, startup, mounting, model
-   load, the backward pass and export all consume billed time.
+load, the backward pass and export all consume billed time.
 
 ## First paid run: one complete optimizer step
 
