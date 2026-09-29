@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from hashlib import sha256
 from typing import Callable, Protocol
 
-from .canonical import CognitiveKernelContractError, require_identifier
+from .canonical import CognitiveKernelContractError, normalize_timestamp, require_identifier
 from .contracts import ProductHostScope
 from .formation_contracts import FormationContextPacket, FormationEvidenceRef
 
@@ -47,6 +47,7 @@ class FormationPlanningRequest:
     authority_namespace_id: str
     experience_refs: tuple[str, ...]
     candidates: tuple[FormationRetrievalHit, ...] = ()
+    as_of: str | None = None
 
 
 @dataclass(frozen=True)
@@ -93,6 +94,8 @@ def assemble_formation_context(
             raise CognitiveKernelContractError("experience reference must be canonical")
     if require_identifier(request.authority_namespace_id, "authority_namespace_id") != request.authority_namespace_id:
         raise CognitiveKernelContractError("authority_namespace_id must be canonical")
+    if request.as_of is not None and normalize_timestamp(request.as_of, "as_of") != request.as_of:
+        raise CognitiveKernelContractError("as_of must be canonical")
 
     hits_by_ref: dict[str, list[str]] = {}
     for hit in request.candidates:
@@ -109,6 +112,9 @@ def assemble_formation_context(
         ref.validate()
         if ref.scope != request.scope or ref.authority_namespace_id != request.authority_namespace_id:
             raise CognitiveKernelContractError("foreign-scope formation evidence")
+        if request.as_of is not None and ref.recorded_at is not None:
+            if normalize_timestamp(ref.recorded_at) > normalize_timestamp(request.as_of):
+                raise CognitiveKernelContractError("context contains a future-recorded source")
         if not store.permits_formation(ref):
             raise CognitiveKernelContractError("formation evidence is not permitted")
         registered[ref_id] = ref

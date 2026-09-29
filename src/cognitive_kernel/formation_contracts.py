@@ -20,7 +20,7 @@ from .canonical import (
 )
 from .contracts import ProductHostScope
 
-FORMATION_SCHEMA_VERSION = "1.1.0"
+FORMATION_SCHEMA_VERSION = "1.2.0"
 PROPOSAL_KINDS = frozenset({
     "claim", "preference", "relationship", "episode", "goal", "mission",
     "host_observation", "source_person_evidence", "self_observation",
@@ -65,6 +65,12 @@ class FormationEvidenceRef:
     role: str
     modality: str
     subject_ref: str | None = None
+    speaker_ref: str | None = None
+    source_item_ref: str | None = None
+    observed_at: str | None = None
+    recorded_at: str | None = None
+    duplicate_group_ref: str | None = None
+    parent_refs: tuple[str, ...] = ()
 
     def validate(self) -> None:
         self.scope.validate()
@@ -78,6 +84,16 @@ class FormationEvidenceRef:
             raise CognitiveKernelContractError("unsupported evidence modality")
         if self.subject_ref is not None:
             _canonical_id(self.subject_ref, "subject_ref")
+        for field in ("speaker_ref", "source_item_ref", "duplicate_group_ref"):
+            value = getattr(self, field)
+            if value is not None:
+                _canonical_id(value, field)
+        for field in ("observed_at", "recorded_at"):
+            value = getattr(self, field)
+            if value is not None and normalize_timestamp(value, field) != value:
+                raise CognitiveKernelContractError(f"{field} must be canonical")
+        if normalize_identifier_sequence(self.parent_refs, "parent_refs") != self.parent_refs:
+            raise CognitiveKernelContractError("parent_refs must be canonical")
 
     def metadata_record(self) -> dict[str, object]:
         self.validate()
@@ -86,6 +102,12 @@ class FormationEvidenceRef:
             "authority_namespace_id": self.authority_namespace_id,
             "content_digest": self.content_digest, "role": self.role,
             "modality": self.modality, "subject_ref": self.subject_ref,
+            "speaker_ref": self.speaker_ref,
+            "source_item_ref": self.source_item_ref,
+            "observed_at": self.observed_at,
+            "recorded_at": self.recorded_at,
+            "duplicate_group_ref": self.duplicate_group_ref,
+            "parent_refs": list(self.parent_refs),
         }
 
 

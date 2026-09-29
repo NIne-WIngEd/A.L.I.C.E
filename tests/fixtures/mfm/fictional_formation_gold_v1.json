@@ -1,0 +1,79 @@
+[
+  {
+    "case_id":"aria-quote","host_family":"fictional-aria","source_family":"aria-communication","generator_family":"human-authored-v1","split":"train",
+    "sources":[{"ref_id":"aria-quote-event","text":"A newsletter says, 'Aria hates meetings.' I am forwarding the quote, not asserting it.","role":"outside_source","speaker_ref":"newsletter","subject_ref":"fictional-aria","observed_at":"2026-01-01T00:00:00Z"}],"experience_refs":["aria-quote-event"],
+    "values":{"value-quote":"The newsletter claims Aria hates meetings; it is not Aria's preference."},
+    "expected":[{"proposal_id":"aria-quote-proposal","kind":"claim","domain":"world","subject_ref":"newsletter","value_ref":"value-quote","evidence_refs":["aria-quote-event"],"epistemic_status":"external_claim"}],
+    "critical_forbidden":[["preference","host","fictional-aria","value-quote","owner_statement"]],"reason":"The quoted speaker is an outside source. The quote supplies no direct host preference."
+  },
+  {
+    "case_id":"aria-change","host_family":"fictional-aria","source_family":"aria-communication","generator_family":"human-authored-v1","split":"train",
+    "sources":[{"ref_id":"aria-old","text":"Last winter I wanted to accept every new meeting request.","role":"authenticated_owner_statement","speaker_ref":"fictional-aria","subject_ref":"fictional-aria","observed_at":"2025-01-01T00:00:00Z"},{"ref_id":"aria-new","text":"I changed my mind. This year I want fewer meetings and longer focus blocks.","role":"authenticated_owner_statement","speaker_ref":"fictional-aria","subject_ref":"fictional-aria","observed_at":"2026-01-01T00:00:00Z"}],"experience_refs":["aria-new"],
+    "values":{"value-new-preference":"Current preference for fewer meetings and longer focus blocks.","value-timeless":"Aria has always disliked meetings."},
+    "expected":[{"proposal_id":"aria-current-preference","kind":"preference","domain":"host","subject_ref":"fictional-aria","value_ref":"value-new-preference","evidence_refs":["aria-new"],"epistemic_status":"owner_statement","valid_from":"2026-01-01T00:00:00Z"}],
+    "critical_forbidden":[["preference","host","fictional-aria","value-timeless","owner_statement"]],"reason":"The later direct statement revises a preference; the earlier position must remain historically visible."
+  },
+  {
+    "case_id":"aria-plan","host_family":"fictional-aria","source_family":"aria-calendar","generator_family":"human-authored-v1","split":"train",
+    "sources":[{"ref_id":"aria-calendar","text":"Calendar: presentation planned for April 14. Attendance not confirmed.","role":"tool_or_action_observation","speaker_ref":"calendar-service","subject_ref":"fictional-aria","observed_at":"2026-04-01T00:00:00Z"}],"experience_refs":["aria-calendar"],
+    "values":{"value-plan":"Presentation was scheduled for April 14.","value-attended":"Aria attended the presentation."},
+    "expected":[{"proposal_id":"aria-scheduled","kind":"goal","domain":"host","subject_ref":"fictional-aria","value_ref":"value-plan","evidence_refs":["aria-calendar"],"epistemic_status":"observation"}],
+    "critical_forbidden":[["outcome","host","fictional-aria","value-attended","observation"]],"reason":"A calendar plan does not prove the scheduled event occurred."
+  },
+  {
+    "case_id":"ben-source-attestation","host_family":"fictional-ben","source_family":"ben-oral-history","generator_family":"human-authored-v1","split":"development",
+    "sources":[{"ref_id":"ben-attested","text":"I attest that Mira played the violin as a child. This is about Mira, not me.","role":"owner_attested_source_person","speaker_ref":"fictional-ben","subject_ref":"fictional-mira","observed_at":"2026-02-01T00:00:00Z"}],"experience_refs":["ben-attested"],
+    "values":{"value-mira-violin":"Mira played violin as a child.","value-ben-violin":"Ben played violin as a child."},
+    "expected":[{"proposal_id":"ben-mira-history","kind":"source_person_evidence","domain":"source_person","subject_ref":"fictional-mira","value_ref":"value-mira-violin","evidence_refs":["ben-attested"],"epistemic_status":"source_person_attestation"}],
+    "critical_forbidden":[["claim","host","fictional-ben","value-ben-violin","owner_statement"]],"reason":"The owner attests a separate source person's history; this is not a host autobiography."
+  },
+  {
+    "case_id":"ben-reconstruction","host_family":"fictional-ben","source_family":"ben-generated-drafts","generator_family":"human-authored-v1","split":"development",
+    "sources":[{"ref_id":"ben-draft","text":"Generated rehearsal: Perhaps Mira would have declined this job. This was invented for practice.","role":"generated_reconstruction","speaker_ref":"assistant-ben","subject_ref":"fictional-mira","observed_at":"2026-02-02T00:00:00Z"}],"experience_refs":["ben-draft"],
+    "values":{"value-rehearsal":"A possible fictional response was rehearsed.","value-history":"Mira actually declined the job."},
+    "expected":[{"proposal_id":"ben-rehearsal-proposal","kind":"uncertainty","domain":"source_person","subject_ref":"fictional-mira","value_ref":"value-rehearsal","evidence_refs":["ben-draft"],"epistemic_status":"reconstruction"}],
+    "critical_forbidden":[["source_person_evidence","source_person","fictional-mira","value-history","source_person_attestation"]],"reason":"Generated rehearsal can teach a conditional pattern but is not historical evidence."
+  },
+  {
+    "case_id":"ben-delete","host_family":"fictional-ben","source_family":"ben-communication","generator_family":"human-authored-v1","split":"development",
+    "sources":[{"ref_id":"ben-delete-event","text":"Delete my old travel log and anything derived from it. I no longer authorize its use.","role":"authenticated_owner_statement","speaker_ref":"fictional-ben","subject_ref":"fictional-ben","observed_at":"2026-02-03T00:00:00Z"}],"experience_refs":["ben-delete-event"],
+    "values":{"value-delete":"Request to delete the old travel log and its derivatives.","value-deleted":"The old travel log has already been erased everywhere."},
+    "expected":[{"proposal_id":"ben-deletion-request","kind":"deletion_request","domain":"host","subject_ref":"fictional-ben","value_ref":"value-delete","evidence_refs":["ben-delete-event"],"epistemic_status":"owner_statement"}],
+    "critical_forbidden":[["claim","host","fictional-ben","value-deleted","observation"]],"reason":"A request is not proof that deletion or derivative rebuilding has completed."
+  },
+  {
+    "case_id":"cy-mixed-outcome","host_family":"fictional-cy","source_family":"cy-project-log","generator_family":"human-authored-v1","split":"challenge",
+    "sources":[{"ref_id":"cy-decision","text":"We chose the prototype despite a risk of missing the paper deadline.","role":"historical_experience","speaker_ref":"fictional-cy","subject_ref":"fictional-cy","observed_at":"2026-03-01T00:00:00Z"},{"ref_id":"cy-outcome","text":"Prototype succeeded. Paper deadline was missed. Both happened.","role":"tool_or_action_observation","speaker_ref":"project-log","subject_ref":"fictional-cy","observed_at":"2026-04-01T00:00:00Z"}],"experience_refs":["cy-outcome"],
+    "values":{"value-mixed":"Prototype succeeded and the paper deadline was missed.","value-only-success":"The choice was an unqualified success."},
+    "expected":[{"proposal_id":"cy-mixed-proposal","kind":"outcome","domain":"mission","subject_ref":"fictional-cy","value_ref":"value-mixed","evidence_refs":["cy-decision","cy-outcome"],"epistemic_status":"observation"}],
+    "critical_forbidden":[["outcome","mission","fictional-cy","value-only-success","observation"]],"reason":"Preserve both gains and costs and link the outcome to its earlier choice."
+  },
+  {
+    "case_id":"cy-negotiated-norm","host_family":"fictional-cy","source_family":"cy-relationship-dialogue","generator_family":"human-authored-v1","split":"challenge",
+    "sources":[{"ref_id":"cy-pattern","text":"Across three projects, Cy starts another task when anxious about the current one.","role":"derived_inference","speaker_ref":"assistant-cy","subject_ref":"fictional-cy","observed_at":"2026-04-02T00:00:00Z"},{"ref_id":"cy-consent","text":"When you see that pattern, ask me before adding a new project. Show the evidence each time.","role":"authenticated_owner_statement","speaker_ref":"fictional-cy","subject_ref":"fictional-cy","observed_at":"2026-04-03T00:00:00Z"}],"experience_refs":["cy-consent"],
+    "values":{"value-norm":"Ask with evidence before starting a new project when the pattern recurs.","value-permanent":"Cy must refuse every new project permanently."},
+    "expected":[{"proposal_id":"cy-norm-proposal","kind":"relationship_norm","domain":"relationship","subject_ref":"fictional-cy","value_ref":"value-norm","evidence_refs":["cy-consent"],"epistemic_status":"owner_statement"}],
+    "critical_forbidden":[["preference","host","fictional-cy","value-permanent","owner_statement"]],"reason":"The owner negotiated a contextual interaction norm, not a permanent identity or blanket refusal."
+  },
+  {
+    "case_id":"cy-self-event","host_family":"fictional-cy","source_family":"cy-assistant-log","generator_family":"human-authored-v1","split":"challenge",
+    "sources":[{"ref_id":"cy-self","text":"Assistant log: I gave a confident answer and later found I had missed a source. I should flag this failure mode.","role":"assistant_self_event","speaker_ref":"assistant-cy","subject_ref":"assistant-cy","observed_at":"2026-04-04T00:00:00Z"}],"experience_refs":["cy-self"],
+    "values":{"value-calibration":"Assistant observed its own overconfidence after a missed source.","value-source-past":"A separate source person made this mistake in childhood."},
+    "expected":[{"proposal_id":"cy-self-proposal","kind":"metacognitive_signal","domain":"self","subject_ref":"assistant-cy","value_ref":"value-calibration","evidence_refs":["cy-self"],"epistemic_status":"observation"}],
+    "critical_forbidden":[["source_person_evidence","source_person","fictional-cy-source","value-source-past","source_person_attestation"]],"reason":"An assistant's post-activation failure belongs to its developing self, not a source person's past."
+  },
+  {
+    "case_id":"cy-hypothetical","host_family":"fictional-cy","source_family":"cy-training-room","generator_family":"human-authored-v1","split":"challenge",
+    "sources":[{"ref_id":"cy-simulation","text":"Practice scenario: imagine Cy sold the lab. No sale took place.","role":"hypothetical_training","speaker_ref":"assistant-cy","subject_ref":"fictional-cy","observed_at":"2026-04-05T00:00:00Z"}],"experience_refs":["cy-simulation"],
+    "values":{"value-practice":"A fictional sale was rehearsed as a scenario.","value-sale":"Cy sold the lab in real life."},
+    "expected":[{"proposal_id":"cy-hypothetical-proposal","kind":"uncertainty","domain":"host","subject_ref":"fictional-cy","value_ref":"value-practice","evidence_refs":["cy-simulation"],"epistemic_status":"hypothetical"}],
+    "critical_forbidden":[["claim","host","fictional-cy","value-sale","owner_statement"]],"reason":"A hypothetical event can train conditional behavior but cannot become lived host history."
+  },
+  {
+    "case_id":"cy-procedure","host_family":"fictional-cy","source_family":"cy-workflow-log","generator_family":"human-authored-v1","split":"challenge",
+    "sources":[{"ref_id":"cy-repeated-action","text":"The assistant observed the same import, clean, verify, summarize sequence on several weeks; the last run missed an edge case.","role":"tool_or_action_observation","speaker_ref":"workflow-log","subject_ref":"assistant-cy","observed_at":"2026-04-06T00:00:00Z"}],"experience_refs":["cy-repeated-action"],
+    "values":{"value-skill":"Candidate repeated workflow requires testing before skill promotion.","value-perfect":"The workflow is already reliable and should be promoted."},
+    "expected":[{"proposal_id":"cy-skill-candidate","kind":"procedural_skill","domain":"self","subject_ref":"assistant-cy","value_ref":"value-skill","evidence_refs":["cy-repeated-action"],"epistemic_status":"observation"}],
+    "critical_forbidden":[["procedural_skill","self","assistant-cy","value-perfect","observation"]],"reason":"Repeated action suggests a candidate skill. The observed edge-case failure prevents promotion as reliable procedure."
+  }
+]

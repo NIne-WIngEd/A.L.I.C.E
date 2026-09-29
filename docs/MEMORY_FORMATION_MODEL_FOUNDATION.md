@@ -196,6 +196,9 @@ and FBM seed rules are tracked in
 The registered, scope- and digest-checked context assembly boundary is now in
 `src/cognitive_kernel/formation_context_planner.py`; its reference selector is
 not a trained planner and its tests do not certify runtime integration.
+The next A.L.I.C.E.-owned source and retrieval interfaces, frozen fictional
+contract cases and learned-candidate evaluation seam are described in
+[`MFM_LEARNING_ADMISSION_2026-09-29.md`](MFM_LEARNING_ADMISSION_2026-09-29.md).
 
 1. Build the context planner that selects relevant registered evidence across
    memory planes and loads authorized content behind the packet's references.

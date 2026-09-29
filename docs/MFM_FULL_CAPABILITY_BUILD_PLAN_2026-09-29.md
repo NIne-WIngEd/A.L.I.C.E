@@ -59,20 +59,19 @@ capability or operational failure, not a new backend tournament.
 
 ## Current implementation and next increment
 
-`formation_contracts.py` and `formation_evaluation.py` already define evidence
-roles, scoped proposal binding and gold-case assessment. The new
-`formation_context_planner.py` is the first Lane 1 boundary: retrieval provides
-IDs; a registered store resolves and authorizes them; a replaceable selector
-chooses context; only exact digest-verified bytes are opened; the mandatory
-experience cannot be dropped. Its all-registered selector is an explicit
-reference baseline, **not** a learned planner or runtime integration.
-
-Next implement selected-stack source adapters, permission and revocation
-semantics, retrieval candidate generation, read receipts, and a frozen
-multi-history formation set. Then train a real model and evaluate it through
-the gate and later judgment. Keep private corpus manifests and raw payloads
-outside the public branch. FBM process traces remain procedure seeds until
-an eligible case binds actual input, target, authority result and outcome.
+`formation_context_planner.py`, `formation_sources.py` and
+`formation_retrieval.py` now establish the A.L.I.C.E.-owned Lane 1 interface:
+arbitrary retrieval planes return source IDs; a registered private source
+service supplies actor/subject/time/lineage, custody and permission; exact
+digest-verified bytes enter the packet; read receipts bind the opened IDs. The
+all-registered selector is an explicit reference baseline, **not** a learned
+planner or runtime integration. `formation_gold.py` and `formation_candidate.py`
+now load and score a frozen, public, multi-host contract fixture. The exact
+learning admission boundary and remaining evidence are in
+[`MFM_LEARNING_ADMISSION_2026-09-29.md`](MFM_LEARNING_ADMISSION_2026-09-29.md).
+Keep private corpus manifests and raw payloads outside the public branch.
+FBM process traces remain procedure seeds until an eligible case binds actual
+input, target, authority result and outcome.
 
 ## Lessons applied from N0 and FBM
 

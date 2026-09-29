@@ -1,0 +1,22 @@
+{
+  "schema": "mfm-fictional-gold-manifest-v1",
+  "corpus": "fictional_formation_gold_v1.json",
+  "sha256": "312b0f8a826ca83a0cae1db105e39a9addcd24cef98c74c2ef84f971db95d85c",
+  "case_count": 11,
+  "splits": {
+    "train": ["fictional-aria"],
+    "development": ["fictional-ben"],
+    "challenge": ["fictional-cy"]
+  },
+  "origin": "human-authored fictional histories with explicit checkable labels",
+  "authority": "public development and challenge cases only; no real user history",
+  "qualification": "Not an independently reviewed or sealed FINAL corpus. Not sufficient to train or certify a full-capability MFM.",
+  "open_gaps": [
+    "independent reviewer adjudication",
+    "licensed multi-person and multimodal source families",
+    "separate generator-family holdout",
+    "longitudinal multi-year histories and consolidation schedules",
+    "private owner-authorized qualification custody",
+    "sealed final cases before model selection"
+  ]
+}
