@@ -7,10 +7,13 @@ Owner-provided Slurm stdout for job `576486` reports a completed CPU run on
 `ad081e28519961d72181815b7a74c65b42238e2c2ab0a65065acbc8e2be606df`,
 and a separate MFM role-clone receipt digest
 `54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7`.
-The clone digest was printed twice. The batch script and full receipt JSON have
-not been independently inspected here, so the exact final verifier invocation
-and parent fields remain to be confirmed on Magnolia. This is an owner-reported
-custody result, not a processor, inference or training run. No complete 1.6
+The clone digest was printed twice. The owner then ran the foundation
+`read_receipt` metadata check on Magnolia. It validated both receipt digests,
+the clone's parent-source digest, `role=mfm`, `qualification=unqualified`, and
+identical eight-file rows against the pinned file manifest. The submitted batch
+script and complete JSON were not transferred for independent inspection here;
+the exact final verifier invocation remains unconfirmed. This is an
+owner-reported custody result, not a processor, inference or training run. No complete 1.6
 corpus processor preflight, GPU probe, full training, independent FINAL
 evaluation or product qualification has occurred.
 
@@ -143,3 +146,19 @@ memory formation. Measure an assembled specialist against its matched
 seeded-untrained control and independent FINAL. The public source-only
 diagnostic is optional for studying
 inherited defaults; no separate weight-cleaning program blocks training.
+
+## Magnolia public processor diagnostic after job 576486
+
+`scripts/mfm/magnolia_v16_public_cpu_preflight.sbatch` uses the existing
+`rayan-n0-base` CPU container because Magnolia's host Python/glibc is not the
+validated Transformers 5.17 runtime. Supply absolute `MFM_REPO_ROOT` and
+`MFM_FOUNDATION_ROOT` checkouts under `$HOME/rayan-compute` and submit from the
+login node with Slurm logs outside the repository. The job checks the exact
+21-case authoring seed, imports processor dependencies before rehashing the
+role clone, and writes a new job-specific receipt under
+`$HOME/rayan-compute/mfm/receipts`. It opens only public fiction and loads no
+Gemma weight tensors. This is a **diagnostic** processor pass for 15 synthetic
+train and six same-generator development cases, not the complete signed 1.6
+corpus preflight required before a full fit. The complete pass must later bind
+the separately admitted full-role corpus, external trust roster and exact
+clone on the same isolated runtime path.
