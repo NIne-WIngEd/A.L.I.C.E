@@ -1,10 +1,11 @@
-"""Offline public diagnostic for a verified, changed-weight MFM Gemma base.
+"""Offline public diagnostic for a verified MFM-role Gemma base.
 
 The pristine publisher checkpoint is the untouched control run by
-``run_gemma4_base_behavior.py``. This runner accepts only an MFM-role
-derivative whose actual safetensor bytes differ and whose receipt verifies
-against the pinned publisher ancestry. Its output is paired with untouched
-output by ``evaluate_base_behavior.py score``. Neither run qualifies a base.
+``run_gemma4_base_behavior.py``. This runner accepts a separately receipted
+MFM-role clone or an evidence-backed modified derivative, verified against the
+pinned publisher ancestry. Identical outputs from a clone and source are an
+expected result; a changed hash is never required to start MFM training.
+Neither run qualifies a base.
 
 Stage dependencies and the complete prepared artifact locally. Network
 isolation can be required by flag; the default public-only route remains
@@ -65,20 +66,29 @@ def _configure_offline_process(*, require_network_isolation: bool) -> str:
 
 def _prepared_receipt(snapshot: Path, receipt_path: Path) -> tuple[dict, str]:
     try:
-        from alice_foundation.gemma4_v1 import verify_derivative
+        from alice_foundation.gemma4_v1 import verify_role_base
     except ImportError as exc:
         raise BaselineError("install the pinned first-party alice_foundation package") from exc
-    receipt = verify_derivative(receipt_path, snapshot=snapshot, expected_role="mfm")
-    if (receipt.get("repository"), receipt.get("revision"),
-            receipt.get("upstream_weight_sha256"), receipt.get("qualification")) != (
-                REPO, REVISION, FILES["model.safetensors"][1], "unqualified"):
+    receipt = verify_role_base(receipt_path, snapshot=snapshot, expected_role="mfm")
+    if (receipt.get("repository"), receipt.get("revision"), receipt.get("role")) != \
+            (REPO, REVISION, "mfm"):
         raise BaselineError("prepared base lineage or status differs")
+    schema = receipt.get("schema")
+    source_weight = FILES["model.safetensors"][1]
     weight = next((row for row in receipt.get("files", [])
                    if row.get("path") == "model.safetensors"), None)
     digest = weight.get("sha256") if weight else None
-    if not isinstance(digest, str) or len(digest) != 64 or \
-            digest == FILES["model.safetensors"][1]:
-        raise BaselineError("prepared base is missing a changed safetensor digest")
+    if schema == "alice-gemma4-v1-clone-v1":
+        if digest != source_weight or \
+                not isinstance(receipt.get("parent_source_receipt_sha256"), str):
+            raise BaselineError("prepared role clone lacks pinned source ancestry")
+    elif schema == "alice-gemma4-v1-derivative-v1":
+        if (receipt.get("qualification") != "unqualified" or
+                receipt.get("upstream_weight_sha256") != source_weight or
+                not isinstance(digest, str) or len(digest) != 64 or digest == source_weight):
+            raise BaselineError("prepared derivative lacks changed pinned ancestry")
+    else:
+        raise BaselineError("prepared base receipt is not a verified MFM role copy")
     return receipt, digest
 
 
@@ -120,10 +130,11 @@ def run(snapshot: Path, receipt_path: Path, prompts_path: Path, output: Path,
                        "model_artifact_digest": weight_digest,
                        "source_repository": REPO, "source_revision": REVISION,
                        "base_source_sha256": FILES["model.safetensors"][1],
-                       "prepared_base_parent_sha256": receipt["upstream_weight_sha256"],
+                       "prepared_base_parent_sha256": FILES["model.safetensors"][1],
                        "prepared_base_sha256": weight_digest,
                        "prepared_base_receipt_sha256": receipt["receipt_sha256"],
                        "prepared_base_qualification": "unqualified",
+                       "prepared_base_kind": receipt["schema"],
                        "generation": generation, "processed_modalities": ["text"],
                        "network_boundary": network_boundary}
                 if case["has_attachments"]:

@@ -3,8 +3,10 @@
 **Status:** CPU scorer and frozen public fixture only. No 12B forward pass,
 prepared base, trained formation component or model-quality result exists yet.
 The pristine `google/gemma-4-12B` checkpoint is a measured reference. Fable's
-MFM operating base must be a distinct, hash-linked prepared derivative with
-separately trained formation weights. The older `-it` trainer is excluded.
+MFM operating base is a distinct, hash-linked MFM role clone of the publisher
+source or an evidence-backed modified derivative, plus separately trained
+formation weights. The older `-it` trainer is excluded. No tensor change is
+required before specialist training.
 
 `scripts/mfm/qualify_v1_role_boundary.py` accepts three independently produced
 JSONL output files on the same seven public synthetic cases:
@@ -25,9 +27,10 @@ also supply `base_source_sha256`, `prepared_base_parent_sha256`,
 `prepared_base_sha256`, `prepared_base_receipt_sha256`,
 `formation_component_sha256`, and `formation_component_active`. The first two
 source ancestry fields are the pinned pretrained weight SHA-256. The prepared
-base digest must differ. Both specialist runs must name the same prepared base
-and formation component, and differ only in whether it is active. The runner
-that eventually emits these rows must separately authenticate the prepared
+base digest may equal the source digest for an exact role clone. Its receipt
+must differ from the publisher source receipt. Both specialist runs name the
+same prepared base and formation component, and differ only in whether it is
+active. The runner that eventually emits these rows must separately authenticate the prepared
 base and component artifacts; metadata alone cannot establish their bytes or
 prove the ablation truly occurred.
 
@@ -36,10 +39,10 @@ verifies the corresponding source receipt before scoring. Its fixture is
 `tests/fixtures/mfm/base_behavior_diagnostic_v1.json`; it opens no private
 Elaina, Rayan or consumer data and makes no network requests. Generate the
 unlabeled prompts with `evaluate_base_behavior.py emit`. The untouched runner
-loads the exact source. The changed-base runner verifies the MFM derivative
-through `alice_foundation.gemma4_v1.verify_derivative`, checks a loopback-only
-Linux network namespace when requested, uses local files only and the identical
-greedy decoding control. The default accepts active interfaces for this
+loads the exact source. The prepared-base runner verifies the MFM role clone
+or derivative through `alice_foundation.gemma4_v1.verify_role_base`, checks a
+loopback-only Linux network namespace when requested, uses local files only,
+and applies the identical greedy decoding control. The default accepts active interfaces for this
 **public synthetic diagnostic only** and records that network isolation was
 not established. The prepared runner also pins the complete emitted prompt
 file digest; a `public_synthetic` label on different text cannot admit it:
@@ -62,7 +65,9 @@ PYTHONPATH=src python scripts/mfm/evaluate_base_behavior.py score \
   --output /results/prepared-vs-untouched.json
 ```
 
-Both are public diagnostics only. `--require-network-isolation` makes the
+For an unmodified role clone, paired source and clone runs are expected to
+behave the same. This is a custody check, not an edit efficacy claim. Both
+are public diagnostics only. `--require-network-isolation` makes the
 runner fail if it observes a non-loopback interface. Even a loopback-only
 interface check does not exclude a same-host Unix socket proxy. An externally
 isolated process remains required before private evidence may be opened.

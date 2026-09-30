@@ -1,21 +1,23 @@
 # MFM V1 specialist training path
 
 **Status, 2026-09-30:** Implemented training code and synthetic CPU component
-tests. No actual 23.9 GB source clone has been transformed for MFM. No
-processor preflight, GPU probe, full training, independent FINAL evaluation,
-or product qualification has occurred on the pinned prepared artifact.
+tests. The eight source files were SHA-256 verified on Magnolia. No MFM role
+clone receipt, complete corpus processor preflight, GPU probe, full training,
+independent FINAL evaluation or product qualification has occurred.
 
 ## Boundary
 
 The source ancestry is the exact non-instruction-tuned
 `google/gemma-4-12B@023679ed352de9bb66cc873c9009ce3482585c08` weight
 file, SHA-256 `fe054ae05ff7f44318fd8ae90d58992531455c7ed31356704088f0f2d8c8009a`.
-`alice_foundation.gemma4_v1.verify_derivative` must fully rehash a separate
-role=`mfm` transformed snapshot and reject unchanged publisher weights. A
-receipt that merely records a copy cannot pass. This check proves custody and
-changed bytes. It does not prove suppression or behavior improvement.
+`alice_foundation.gemma4_v1.verify_role_base` fully rehashes a separate
+role=`mfm` clone of those exact bytes, or a changed derivative when an
+evidence-backed edit is warranted. A bare publisher snapshot and mismatched
+role or receipt cannot pass. Cloning establishes custody and a separate
+local artifact. It does not confer ownership of Google-origin weights or prove
+suppression or behavior improvement. An edit is not a V1 training prerequisite.
 The trainer pins the verifier file from foundation commit
-`1f76064263f035de41f1c7d71a4d90e87643d181`; the file hash is included
+`3e1328410dac52ba18be243cb9f7144e7a3964d1`; the file hash is included
 in the processor and training binding.
 
 The prepared base supplies multimodal hidden states. Its pretrained language
@@ -51,10 +53,14 @@ precondition, not a guarantee against host compromise.
      --owner-authorization-ref "$OWNER_AUTH_REF"
    ```
 
-2. After materializing and verifying a **changed-weight** MFM base, run the
-   complete source and target processor pass on a CPU node. Use the same corpus
-   arguments and set `--prepared-base-dir`, `--prepared-base-receipt`, and a
-   new `--preflight-receipt`, then select `processor-preflight`. Media are
+2. Clone the verified publisher source into a separate MFM role snapshot and
+   seal its clone receipt with the pinned foundation tool. Verify the role
+   clone once before admission; the trainer independently rehashes all eight
+   files at each admission. An optional edited derivative uses its own receipt.
+   Then run the complete source and target processor pass on a CPU node. Use
+   the same corpus arguments and set `--prepared-base-dir` to that role clone,
+   `--prepared-base-receipt` to its receipt, and a new `--preflight-receipt`,
+   then select `processor-preflight`. Media are
    decoded and tensorized; no source or target is silently truncated. The
    resulting receipt includes the longest tokenized inputs, modality set, and
    source/target/joint cross-attention stress cases.
@@ -85,8 +91,8 @@ currently loads the prepared base on one GPU. No 48 GB or multi-GPU fit claim
 has been established.
 
 The preflight receipt, checkpoint and component receipt all say
-`qualified_for_product: false`. A finite changed-weight check, successful
-training loss, or successful hardware probe cannot qualify suppression of
-inherited behavior or Alice memory formation. The paired untouched-base,
-prepared-base, assembled, and specialist-ablated diagnostics and independent
-FINAL remain separate required steps.
+`qualified_for_product: false`. A verified clone, successful training loss or
+hardware probe cannot qualify suppression of inherited behavior or Alice
+memory formation. Measure an assembled specialist against its ablation and
+independent FINAL. The public source-only diagnostic is optional for studying
+inherited defaults; no separate weight-cleaning program blocks training.

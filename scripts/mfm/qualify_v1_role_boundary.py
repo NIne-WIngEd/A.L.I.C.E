@@ -73,11 +73,11 @@ def _controls(cases: dict, runs: dict[str, dict[str, dict]],
                     raise DiagnosticError(f"{role}: formation component state differs")
                 prepared = row.get("prepared_base_sha256")
                 if (not isinstance(prepared, str) or not _HEX64.fullmatch(prepared) or
-                        prepared == SOURCE_SHA256 or
                         row.get("prepared_base_parent_sha256") != SOURCE_SHA256):
-                    raise DiagnosticError(f"{role}: missing distinct prepared base lineage")
+                    raise DiagnosticError(f"{role}: missing prepared base lineage")
                 base_receipt = row.get("prepared_base_receipt_sha256")
-                if not isinstance(base_receipt, str) or not _HEX64.fullmatch(base_receipt):
+                if (not isinstance(base_receipt, str) or not _HEX64.fullmatch(base_receipt)
+                        or base_receipt == source_receipt_sha256):
                     raise DiagnosticError(f"{role}: missing prepared base receipt digest")
                 if not isinstance(row.get("model_artifact_digest"), str) or not _HEX64.fullmatch(row["model_artifact_digest"]):
                     raise DiagnosticError(f"{role}: missing model artifact digest")

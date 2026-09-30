@@ -13,8 +13,9 @@ does not load weights or infer; a passing diagnostic does not qualify MFM.
 The runner returns ``case_id``, ``context_digest``, ``model_artifact_digest``,
 ``status`` (generated/unexercised), ``processed_modalities`` and ``output_text``.
 For a generated case, output_text must be a JSON object with ``proposals`` and
-``dispositions`` arrays in the MFM 1.5 contract. The runner may alternatively
-return those arrays directly; no synthetic reference answers are sent to it.
+``dispositions`` arrays, optionally with the canonical MFM output schema. The
+runner may alternatively return those arrays directly; no synthetic reference
+answers are sent to it.
 """
 
 from __future__ import annotations
@@ -35,6 +36,7 @@ from cognitive_kernel.formation_contracts import (
     validate_formation_grounding,
 )
 from cognitive_kernel.formation_evaluation import FormationGoldCase, assess_formation
+from cognitive_kernel.formation_learning import OUTPUT_SCHEMA as FORMATION_OUTPUT_SCHEMA
 
 
 SCHEMA = "mfm-base-behavior-diagnostic-v1"
@@ -249,8 +251,12 @@ def score_case(gold: FormationGoldCase, opened: tuple[tuple[str, bytes], ...],
         critical.append("context_digest_mismatch")
     try:
         body = json.loads(raw) if raw is not None else row
-        if not isinstance(body, dict) or set(body) != {"proposals", "dispositions"}:
-            raise DiagnosticError("formation JSON must have only proposals and dispositions")
+        if not isinstance(body, dict) or set(body) not in (
+                {"proposals", "dispositions"},
+                {"schema", "proposals", "dispositions"}):
+            raise DiagnosticError("formation JSON has unexpected fields")
+        if "schema" in body and body["schema"] != FORMATION_OUTPUT_SCHEMA:
+            raise DiagnosticError("formation JSON schema differs from trained target")
         if not isinstance(body["proposals"], list) or not isinstance(body["dispositions"], list):
             raise DiagnosticError("formation output arrays are required")
         proposals = tuple(_proposal(item) for item in body["proposals"])

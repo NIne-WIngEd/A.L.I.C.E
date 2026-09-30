@@ -1,8 +1,9 @@
-"""V1 MFM specialist: transformed local Gemma representations, fresh formation weights.
+"""V1 MFM specialist: verified local Gemma representations, fresh formation weights.
 
 The immutable 23,919,549,408-byte publisher checkpoint is only an ancestor.
-This command requires a separately materialized, changed-weight MFM base
-receipt. Gemma's LM head never produces the specialist's answer or its loss.
+This command requires a separately materialized, verified MFM-role clone or
+an evidence-backed modified derivative. It never admits a bare publisher
+snapshot. Gemma's LM head never produces the specialist's answer or its loss.
 The independent decoder learns the existing source-linked proposal/disposition
 contract from admitted or explicitly authorized training examples. Its output
 is a proposal; the independent Claim gate alone may authorize memory writes.
@@ -38,9 +39,12 @@ from cognitive_kernel.formation_multimodal import (
 PREFLIGHT_SCHEMA = "mfm-v1-specialist-processor-preflight-v1"
 ARTIFACT_SCHEMA = "mfm-v1-formation-specialist-artifact-v1"
 RUN_SCHEMA = "mfm-v1-specialist-training-run-v1"
-FOUNDATION_COMMIT = "1f76064263f035de41f1c7d71a4d90e87643d181"
-FOUNDATION_VERIFIER_SHA256 = "c3a76bc24050de08d093f5ab99def0919224b407feb372d9caa947b8b06dc77a"
+FOUNDATION_COMMIT = "3e1328410dac52ba18be243cb9f7144e7a3964d1"
+FOUNDATION_VERIFIER_SHA256 = "e6b36eb921d34b067703cf77adc81051923dc2b9bf82866f75176c9ebeb53e9f"
 FOUNDATION_INVENTORY_SHA256 = "be1cd95b5db1544f3750fb278973aa88d0361633dc4fe5a53649d9d98c029737"
+SOURCE_WEIGHT_SHA256 = "fe054ae05ff7f44318fd8ae90d58992531455c7ed31356704088f0f2d8c8009a"
+CLONE_SCHEMA = "alice-gemma4-v1-clone-v1"
+DERIVATIVE_SCHEMA = "alice-gemma4-v1-derivative-v1"
 # The non-instruction-tuned publisher tokenizer has no chat template. This
 # first-party template renders a single source packet for the processor and
 # keeps native media placeholders. Its exact bytes are bound to preflight.
@@ -152,11 +156,30 @@ def _prepared_base(args: argparse.Namespace) -> dict:
     if (_digest(Path(foundation.__file__)) != FOUNDATION_VERIFIER_SHA256 or
             _digest(Path(gemma4_inventory.__file__)) != FOUNDATION_INVENTORY_SHA256):
         raise CognitiveKernelContractError("installed foundation verifier differs from pinned V1 commit")
-    receipt = foundation.verify_derivative(
+    receipt = foundation.verify_role_base(
         args.prepared_base_receipt, snapshot=args.prepared_base_dir, expected_role="mfm")
-    if receipt.get("qualification") != "unqualified":
-        raise CognitiveKernelContractError("unexpected prepared base receipt qualification")
+    if receipt.get("role") != "mfm" or receipt.get("schema") not in \
+            (CLONE_SCHEMA, DERIVATIVE_SCHEMA):
+        raise CognitiveKernelContractError("prepared base is not a verified MFM role copy")
+    weight = next((row.get("sha256") for row in receipt.get("files", [])
+                   if row.get("path") == "model.safetensors"), None)
+    if receipt["schema"] == CLONE_SCHEMA:
+        if weight != SOURCE_WEIGHT_SHA256 or \
+                not isinstance(receipt.get("parent_source_receipt_sha256"), str):
+            raise CognitiveKernelContractError("MFM clone lacks exact source ancestry")
+    elif receipt.get("qualification") != "unqualified" or \
+            receipt.get("upstream_weight_sha256") != SOURCE_WEIGHT_SHA256 or \
+            weight == SOURCE_WEIGHT_SHA256:
+        raise CognitiveKernelContractError("MFM derivative lacks changed pinned ancestry")
     return receipt
+
+
+def _prepared_kind(prepared: dict) -> str:
+    if prepared["schema"] == CLONE_SCHEMA:
+        return "licensed-verified-mfm-role-clone"
+    if prepared["schema"] == DERIVATIVE_SCHEMA:
+        return "licensed-verified-mfm-role-derivative"
+    raise CognitiveKernelContractError("unsupported prepared base receipt schema")
 
 
 def _target_ids(tokenizer, example, max_target_tokens: int) -> tuple[list[int], list[int]]:
@@ -215,7 +238,8 @@ def _binding(args, prepared: dict, status: str, train_count: int, dev_count: int
     return {"objective": OBJECTIVE_VERSION,
             "prepared_base_receipt_sha256": prepared["receipt_sha256"],
             "prepared_base_weight_sha256": weight,
-            "prepared_base_parent_weight_sha256": prepared["upstream_weight_sha256"],
+            "prepared_base_parent_weight_sha256": SOURCE_WEIGHT_SHA256,
+            "prepared_base_kind": _prepared_kind(prepared),
             "foundation_commit": FOUNDATION_COMMIT,
             "foundation_verifier_sha256": FOUNDATION_VERIFIER_SHA256,
             "foundation_inventory_sha256": FOUNDATION_INVENTORY_SHA256,
@@ -426,7 +450,7 @@ def _run_training(args, train, development, status, prepared, processor, preflig
            "max_cross_attention_pairs": args.max_cross_attention_pairs,
            "torch_version": torch.__version__, "transformers_version": preflight["transformers_version"],
            "probe_only": args.probe_only,
-           "weight_lineage": "licensed-prepared-base-plus-fresh-formation-weights",
+           "weight_lineage": _prepared_kind(prepared) + "-plus-fresh-formation-weights",
            "qualified_for_product": False}
     manifest_digest = _record_hash(run)
     if args.resume_checkpoint:
@@ -514,6 +538,7 @@ def _run_training(args, train, development, status, prepared, processor, preflig
         "prepared_base_sha256": preflight["prepared_base_weight_sha256"],
         "prepared_base_parent_sha256": preflight["prepared_base_parent_weight_sha256"],
         "prepared_base_receipt_sha256": prepared["receipt_sha256"],
+        "prepared_base_kind": preflight["prepared_base_kind"],
         "run_manifest_sha256": manifest_digest,
         "specialist_config": config.record(),
         "optimizer_steps": global_step,

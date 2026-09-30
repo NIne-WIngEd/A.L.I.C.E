@@ -94,10 +94,12 @@ no third party will ever raise a claim. Record artifact-level rights review
 before distribution. Do not claim Google owns the independently made Fable
 system or private evidence merely because licensed weights are included.
 
-Before paid training, implement a **new** exact-base admission and local clone
-receipt, secure processor/load path, provenance for every edit, privacy
-boundary, user-specific separation and the independent behavioral gate.
-Verify exact processor output and full backward/checkpoint/restart on the
-actual intended allocation. The superseded `-it` CPU/GPU receipts do not
-qualify this route. No V1 foundation copy, specialized MFM checkpoint,
-independent FINAL or product qualification is claimed by this document.
+Exact source admission, local role clone receipts and a specialist training
+path now exist. A measured change to publisher tensors is optional when a
+specific failure warrants it; every edit still needs byte-level provenance.
+Before private data processing, establish the process isolation boundary.
+Before paid training, verify exact processor output and full backward,
+checkpoint and restart on the actual intended allocation. The superseded
+`-it` CPU/GPU receipts do not qualify this route. No role clone on Magnolia,
+specialized MFM checkpoint, independent FINAL or product qualification is
+claimed by this document.

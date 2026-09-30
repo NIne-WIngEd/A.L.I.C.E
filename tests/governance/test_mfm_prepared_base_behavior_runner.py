@@ -67,8 +67,9 @@ class PreparedBaseDiagnosticTests(unittest.TestCase):
             prompts = root / "public.jsonl"
             prompts.write_bytes(emitted)
             output = root / "result.jsonl"
-            derivative = {"receipt_sha256": "c" * 64,
-                          "upstream_weight_sha256": prepared.FILES["model.safetensors"][1]}
+            derivative = {"schema": "alice-gemma4-v1-clone-v1",
+                          "receipt_sha256": "c" * 64,
+                          "parent_source_receipt_sha256": "a" * 64}
             with patch.object(prepared, "_configure_offline_process",
                               return_value="network_interfaces_present_public_only"), \
                     patch.object(prepared, "_prepared_receipt", return_value=(derivative, "d" * 64)), \
@@ -96,25 +97,43 @@ class PreparedBaseDiagnosticTests(unittest.TestCase):
             self.assertTrue(report["paired_control_verified"])
             self.assertFalse(report["qualification_claim"])
 
-    def test_derivative_must_be_changed_mfm_role_with_pinned_ancestry(self):
+    def test_mfm_role_clone_and_modified_derivative_admit_with_pinned_ancestry(self):
         pinned = prepared.FILES["model.safetensors"][1]
-        receipt = {"repository": prepared.REPO, "revision": prepared.REVISION,
-                   "upstream_weight_sha256": pinned, "qualification": "unqualified",
-                   "files": [{"path": "model.safetensors", "sha256": "d" * 64}]}
+        receipt = {"schema": "alice-gemma4-v1-clone-v1", "role": "mfm",
+                   "repository": prepared.REPO, "revision": prepared.REVISION,
+                   "parent_source_receipt_sha256": "a" * 64,
+                   "files": [{"path": "model.safetensors", "sha256": pinned}]}
         module = types.ModuleType("alice_foundation.gemma4_v1")
-        module.verify_derivative = lambda *args, **kwargs: receipt
+        def verified(*args, **kwargs):
+            self.assertEqual(kwargs["expected_role"], "mfm")
+            return receipt
+        module.verify_role_base = verified
         package = types.ModuleType("alice_foundation")
         package.__path__ = []
         with patch.dict("sys.modules", {"alice_foundation": package,
                                         "alice_foundation.gemma4_v1": module}):
             _, digest = prepared._prepared_receipt(Path("/fake"), Path("/fake/receipt"))
+            self.assertEqual(digest, pinned)
+            receipt["schema"] = "alice-gemma4-v1-source-v1"
+            with self.assertRaisesRegex(BaselineError, "not a verified MFM role copy"):
+                prepared._prepared_receipt(Path("/fake"), Path("/fake/receipt"))
+            receipt["schema"] = "alice-gemma4-v1-clone-v1"
+            receipt["role"] = "personality"
+            with self.assertRaisesRegex(BaselineError, "lineage or status"):
+                prepared._prepared_receipt(Path("/fake"), Path("/fake/receipt"))
+            receipt["role"] = "mfm"
+            receipt["schema"] = "alice-gemma4-v1-derivative-v1"
+            receipt["files"][0]["sha256"] = "d" * 64
+            receipt["upstream_weight_sha256"] = pinned
+            receipt["qualification"] = "unqualified"
+            _, digest = prepared._prepared_receipt(Path("/fake"), Path("/fake/receipt"))
             self.assertEqual(digest, "d" * 64)
             receipt["files"][0]["sha256"] = pinned
-            with self.assertRaisesRegex(BaselineError, "changed safetensor"):
+            with self.assertRaisesRegex(BaselineError, "changed pinned ancestry"):
                 prepared._prepared_receipt(Path("/fake"), Path("/fake/receipt"))
             receipt["files"][0]["sha256"] = "d" * 64
             receipt["qualification"] = "qualified"
-            with self.assertRaisesRegex(BaselineError, "lineage or status"):
+            with self.assertRaisesRegex(BaselineError, "changed pinned ancestry"):
                 prepared._prepared_receipt(Path("/fake"), Path("/fake/receipt"))
 
     def test_public_route_records_network_and_strict_flag_rejects_active_interface(self):

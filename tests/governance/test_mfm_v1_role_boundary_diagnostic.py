@@ -8,6 +8,7 @@ from unittest.mock import patch
 from urllib import request
 
 from scripts.mfm.evaluate_base_behavior import DiagnosticError, _input_bytes, load_diagnostic
+from cognitive_kernel.formation_learning import OUTPUT_SCHEMA
 from scripts.mfm.qualify_v1_role_boundary import SOURCE_SHA256, assess
 
 
@@ -75,10 +76,37 @@ class RoleBoundaryDiagnosticTests(unittest.TestCase):
         self.assertTrue(any("wrong_subject" in item or "unsupported_personal_assertion" in item
                             for item in failed["assembled_failures"]))
 
-    def test_rejects_pristine_as_operating_base_and_inconsistent_lineage(self):
+    def test_canonical_specialist_output_scores_and_wrong_schema_fails(self):
         runs = self.rows()
-        runs["assembled"]["neutral-owner-event"]["prepared_base_sha256"] = SOURCE_SHA256
-        with self.assertRaisesRegex(DiagnosticError, "distinct prepared base lineage"):
+        for row in runs["assembled"].values():
+            if row["output_text"] is not None:
+                row["output_text"] = json.dumps({
+                    "schema": OUTPUT_SCHEMA, **json.loads(row["output_text"])})
+        report = assess(self.cases, runs, source_receipt_sha256=self.receipt_digest)
+        self.assertFalse(any("invalid_or_unbound_formation" in str(result["assembled"])
+                             for result in report["cases"] if result["assembled"]["status"] == "generated"))
+        broken = runs["assembled"]["neutral-owner-event"]
+        broken["output_text"] = broken["output_text"].replace(OUTPUT_SCHEMA, "unknown-schema")
+        report = assess(self.cases, runs, source_receipt_sha256=self.receipt_digest)
+        case = next(row for row in report["cases"] if row["case_id"] == "neutral-owner-event")
+        self.assertTrue(any("schema differs" in failure for failure in
+                            case["assembled"]["critical_failures"]))
+
+    def test_clone_weight_digest_may_equal_source_but_receipt_must_be_distinct(self):
+        runs = self.rows()
+        for role in ("assembled", "ablated"):
+            for row in runs[role].values():
+                row["prepared_base_sha256"] = SOURCE_SHA256
+        report = assess(self.cases, runs, source_receipt_sha256=self.receipt_digest)
+        self.assertFalse(report["qualification_claim"])
+        runs["assembled"]["neutral-owner-event"]["prepared_base_receipt_sha256"] = self.receipt_digest
+        with self.assertRaisesRegex(DiagnosticError, "prepared base receipt"):
+            assess(self.cases, runs, source_receipt_sha256=self.receipt_digest)
+
+    def test_rejects_inconsistent_lineage(self):
+        runs = self.rows()
+        runs["assembled"]["neutral-owner-event"]["prepared_base_parent_sha256"] = "0" * 64
+        with self.assertRaisesRegex(DiagnosticError, "prepared base lineage"):
             assess(self.cases, runs, source_receipt_sha256=self.receipt_digest)
         runs = self.rows()
         runs["ablated"]["neutral-owner-event"]["formation_component_sha256"] = "0" * 64
