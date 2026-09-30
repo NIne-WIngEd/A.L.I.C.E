@@ -36,6 +36,10 @@ Its responsibilities include:
 
 The builder must also form and qualify MFM, host, relationship and assistant-self capabilities; connect them to governed memory, native judgment and the conversation handoff; and learn from outcomes without crossing subject or authority boundaries. These obligations are specified in the linked data and seed program.
 
+**Production MFM weight lineage:** FBM must build the personal Memory Formation Model from a fresh-initialized native weight lineage. It may continue from a checkpoint whose entire ancestry began with that native initialization, with hashes and training receipts for each link. A third-party pretrained checkpoint, including Gemma, cannot be the MFM base, be merged into MFM weights, or qualify as the shipped personal MFM. External models may be separately labeled teachers, research baselines, or replaceable feature tools. Their weights do not become personal MFM weights or a mandatory consumer dependency. The earlier Gemma staging and paid-route procedure is preserved as a historical, superseded method trace; it is not an FBM assembly recipe.
+
+**Production MFM build order:** Train a fresh-initialized native foundation on eligible public data and attributed assistant-teacher examples. Continue that checkpoint with formation-specific data and objectives, then apply any authorized user-specific learning under separate instance custody. FBM offers eligible default public packs and owner-controlled source selection/addition, with rights, adequacy, and compute checks before a build. A fully traced first-party native checkpoint can seed consumer builds; an external pretrained checkpoint cannot substitute for either native stage. Neither stage is yet trained or qualified by this branch.
+
 The consumer's source evidence remains the authority about that consumer-derived personality. FBM is a builder and interpreter, not the historical authority.
 
 ## Relationship to A.L.I.C.E.
@@ -55,7 +59,7 @@ pre-activation
 source data -> FBM bootstrap mode -> personality substrate -> personality model
 
 post-activation
-FBM shared formation backbone
+FBM native formation backbone (fresh-initialized weight ancestry)
         |-> Memory Formation runtime head
         |-> required personal-development / reflection capability
         |      |-> evidence-linked user/host model revision
