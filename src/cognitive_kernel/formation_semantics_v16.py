@@ -33,6 +33,9 @@ TARGET_KINDS = frozenset({"entity", "scene", "mission", "workspace"})
 ADJUDICATION_DIMENSIONS = frozenset({
     "sensitivity", "episode", "relationship", "mission", "workspace",
 })
+FULL_ROLE_ADJUDICATION_DIMENSIONS = ADJUDICATION_DIMENSIONS | frozenset({
+    "correction", "source_person", "contradiction", "outcome", "abstention",
+})
 
 
 def _canonical_id(value: str, name: str) -> None:
@@ -362,7 +365,7 @@ class FormationGoldCaseV16:
 
     def validate(self) -> None:
         _canonical_id(self.case_id, "case_id")
-        if self.adjudicated_dimensions != ADJUDICATION_DIMENSIONS:
+        if self.adjudicated_dimensions != FULL_ROLE_ADJUDICATION_DIMENSIONS:
             raise CognitiveKernelContractError("v1.6 gold has unadjudicated dimensions")
         _ids(self.reviewer_refs, "reviewer_refs")
         if len(self.reviewer_refs) < 2:
@@ -436,8 +439,7 @@ def require_full_role_structural_coverage_v16(
     """
     if corpus_schema != "mfm-full-role-corpus-v1.6":
         raise CognitiveKernelContractError("historical v1.5 corpus lacks full-role labels")
-    required = {"sensitivity", "episode", "relationship", "mission", "workspace",
-                "correction", "source_person", "contradiction", "outcome", "abstention"}
+    required = FULL_ROLE_ADJUDICATION_DIMENSIONS
     if set(split_roster) != {"train", "development", "final"}:
         raise CognitiveKernelContractError("full-role corpus needs sealed train/dev/FINAL splits")
     for split, count in split_roster.items():

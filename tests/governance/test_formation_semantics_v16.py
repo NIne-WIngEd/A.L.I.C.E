@@ -13,7 +13,8 @@ from cognitive_kernel.formation_contracts import (
 from cognitive_kernel.formation_learning import output_record
 from cognitive_kernel.formation_evaluation import FormationGoldCase, assess_formation
 from cognitive_kernel.formation_semantics_v16 import (
-    ADJUDICATION_DIMENSIONS, EpisodeSemantics, FormationContextV16,
+    ADJUDICATION_DIMENSIONS, FULL_ROLE_ADJUDICATION_DIMENSIONS,
+    EpisodeSemantics, FormationContextV16,
     FormationGoldCaseV16, FormationProposalV16, MemoryProposalBundleV16,
     RegisteredFormationTarget, RegisteredSourceSensitivity, assess_formation_v16,
     bundle_v16_from_output, context_v16_from_record, require_full_role_structural_coverage_v16,
@@ -146,7 +147,7 @@ class FormationSemanticsV16Tests(unittest.TestCase):
     def test_v16_evaluator_scores_link_change_and_requires_adjudication(self):
         context, bundle = fixture()
         gold = FormationGoldCaseV16(
-            "case-1", context, bundle.proposals, (), (), ADJUDICATION_DIMENSIONS,
+            "case-1", context, bundle.proposals, (), (), FULL_ROLE_ADJUDICATION_DIMENSIONS,
             ("reviewer-a", "reviewer-b"), (("source-1", SOURCE),))
         self.assertEqual(assess_formation_v16(gold, bundle).true_positives, 1)
         equivalent = replace(bundle.proposals[0], base=replace(
@@ -160,6 +161,9 @@ class FormationSemanticsV16Tests(unittest.TestCase):
                           report.false_negatives), (0, 1, 1))
         with self.assertRaisesRegex(CognitiveKernelContractError, "unadjudicated"):
             assess_formation_v16(replace(gold, adjudicated_dimensions=frozenset()), bundle)
+        with self.assertRaisesRegex(CognitiveKernelContractError, "unadjudicated"):
+            assess_formation_v16(replace(gold, adjudicated_dimensions=ADJUDICATION_DIMENSIONS),
+                                 bundle)
         with self.assertRaisesRegex(CognitiveKernelContractError, "reviewer"):
             replace(gold, reviewer_refs=("reviewer-a",)).validate()
 

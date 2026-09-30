@@ -1,0 +1,99 @@
+{
+  "blocking_reasons": [
+    "single assistant author; no independent target reviews or authenticated rights receipts",
+    "development shares synthetic generator lineage with training",
+    "no sealed independently adjudicated FINAL; no real owner histories in this seed",
+    "contract grounding does not prove semantic entailment or later judgment"
+  ],
+  "case_counts": {
+    "development": 6,
+    "train": 15
+  },
+  "controlled_input_pairs": {
+    "social-boundary-dev-flip": "v16-pair-social-boundary-dev-flip-later",
+    "temperament-evidence-flip": "v16-pair-temperament-evidence-flip-later"
+  },
+  "corpus_sha256": "8e967ee6494f2c5ec47ab602bad213df8c07c53b1abe9a9aff950f19c0e78e22",
+  "cross_split_family_keys": [
+    "generator_family:assistant-authored-v16-seed-20260930"
+  ],
+  "cross_split_source_digest_count": 0,
+  "disposition_action_counts": {
+    "development": {
+      "abstain": 3,
+      "defer": 2,
+      "propose": 5
+    },
+    "train": {
+      "abstain": 4,
+      "defer": 1,
+      "propose": 12,
+      "retain_raw": 1
+    }
+  },
+  "full_role_admission": "blocked",
+  "linked_history_cases": {
+    "dove-writing-hours": [
+      "v16-seed-19",
+      "v16-seed-20"
+    ]
+  },
+  "positive_case_counts": {
+    "development": {
+      "abstention": 3,
+      "contradiction": 2,
+      "correction": 1,
+      "episode": 1,
+      "mission": 2,
+      "outcome": 2,
+      "relationship": 1,
+      "sensitivity": 5,
+      "source_person": 1,
+      "workspace": 2
+    },
+    "train": {
+      "abstention": 4,
+      "contradiction": 3,
+      "correction": 3,
+      "episode": 1,
+      "mission": 3,
+      "outcome": 2,
+      "relationship": 3,
+      "sensitivity": 12,
+      "source_person": 1,
+      "workspace": 3
+    }
+  },
+  "proposal_kind_counts": {
+    "development": {
+      "contradiction": 1,
+      "correction_request": 1,
+      "decision_rationale": 1,
+      "episode": 1,
+      "mission": 1,
+      "outcome": 2,
+      "preference": 1,
+      "relationship_norm": 1,
+      "source_person_evidence": 1
+    },
+    "train": {
+      "behavior_pattern": 2,
+      "correction_request": 2,
+      "decision_rationale": 2,
+      "deletion_request": 1,
+      "episode": 1,
+      "goal": 2,
+      "host_observation": 1,
+      "metacognitive_signal": 1,
+      "mission": 1,
+      "outcome": 3,
+      "preference": 2,
+      "procedural_skill": 1,
+      "relationship_norm": 2,
+      "self_observation": 1,
+      "source_person_evidence": 1
+    }
+  },
+  "schema": "mfm-v16-authoring-audit-v1",
+  "state": "synthetic-training-and-development-diagnostics-only"
+}
