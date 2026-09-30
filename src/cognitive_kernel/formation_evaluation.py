@@ -99,6 +99,8 @@ def assess_formation(
     gold: FormationGoldCase,
     output: MemoryProposalBundle,
 ) -> FormationAssessment:
+    if not isinstance(gold, FormationGoldCase) or not isinstance(output, MemoryProposalBundle):
+        raise CognitiveKernelContractError("v1.5 evaluator only accepts v1.5 formation records")
     gold.validate()
     if output.scope != gold.context.scope or output.authority_namespace_id != gold.context.authority_namespace_id:
         raise CognitiveKernelContractError("assessment output has foreign host scope")

@@ -98,6 +98,8 @@ def evaluate_candidate(
     for case in selected:
         opened = tuple((ref_id, text.encode("utf-8")) for ref_id, text in case.texts)
         output = candidate.infer(context=case.gold.context, opened_sources=opened)
+        if not isinstance(output, MemoryProposalBundle):
+            raise CognitiveKernelContractError("v1.5 candidate evaluator only accepts v1.5 output")
         if output.model_artifact_digest != digest:
             raise CognitiveKernelContractError("candidate output cites different model artifact")
         validate_formation_grounding(case.gold.context, output, opened)

@@ -132,6 +132,8 @@ def bundle_from_output(
 
 
 def output_record(bundle: MemoryProposalBundle) -> dict[str, object]:
+    if not isinstance(bundle, MemoryProposalBundle):
+        raise CognitiveKernelContractError("v1.5 output serializer only accepts v1.5 formation records")
     bundle.validate()
     return {"schema": OUTPUT_SCHEMA,
             "proposals": [p.record() for p in bundle.proposals],
