@@ -105,8 +105,10 @@ intervention/qualification sequence. Neither procedure is builder gold or
 model-quality evidence.
 The [machine-readable MFM replay seed](../../training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json)
 pins the exact non-IT source and stop conditions. The owner has reported all
-eight SHA checks passing on Magnolia; a fresh foundation source receipt and
-role-clone receipt at that path remain pending. The original source and the
+eight SHA checks passing on Magnolia. A later owner-pasted CPU job `576486`
+reports source receipt `ad081e28519961d72181815b7a74c65b42238e2c2ab0a65065acbc8e2be606df`
+and MFM role-clone receipt `54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7`.
+The complete JSON receipts and batch script remain to be inspected. The original source and the
 trained formation specialist retain separate lineages.
 
 The [MFM training coverage audit](../../training/fbm/base_assembly/mfm_v1_training_role_coverage_20260930.json)
@@ -124,7 +126,7 @@ Changing its input manifest alone would not add missing output semantics.
 The MFM branch now has a [CPU-tested 1.6 semantic admission contract](https://github.com/NIne-WIngEd/A.L.I.C.E/blob/a5b04504c227347c5b56e6555d7aa7cc4ae86af4/docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md),
 signed full-fit code, a matching runner and a separate custodian assessor for
 one-step or full-fit artifacts. These paths still need admitted independent
-gold, real source/CPU/GPU receipts, actual full-fit outputs and downstream
+gold, real 1.6 processor/GPU receipts, actual full-fit outputs and downstream
 gate results. The active seed pins that
 public MFM commit and the foundation commit separately.
 Source/clone verification, CPU processor work and a bounded hardware probe
@@ -138,7 +140,7 @@ separates these receipts so one passing step cannot stand in for another:
 
 | Step | Required evidence | Current state |
 | --- | --- | --- |
-| Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Owner-pasted source SHA checks; clone receipt pending |
+| Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Magnolia job `576486` completed `0:0` and printed source and clone receipt digests; full JSON and batch script inspection pending |
 | Full-role corpus | Versioned 1.6 targets, authenticated rights, two reviewers, disjoint DEV and sealed FINAL | Historical 49,819 rows fail coverage; published 21-case 1.6 authoring seed is diagnostic only |
 | Code path | Matching 1.6 codec, signed full-fit trainer, inference, custodian assessor and full-role gate adapter | Published full-fit path and narrow P2 host-profile candidate bridge; rich 1.6 semantics still fail closed in P2, with no full-role adapter or capability receipt |
 | CPU and GPU admission | Complete Magnolia CPU processor receipt, then bounded 1.6 backward/restart result | Neither receipt established |

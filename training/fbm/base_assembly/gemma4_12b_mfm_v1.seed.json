@@ -1,14 +1,14 @@
 {
   "schema": "alice.fbm.base_derivation_seed.v1",
   "scope": "Fable/A.L.I.C.E. V1 MFM; process seed only",
-  "authority": "Procedure seed only. Published 1.6 signed full-fit trainer, runner, custodian assessor and narrow P2 bridge code exist. No admitted full-role corpus, exact MFM role clone, Magnolia complete processor, bounded GPU, paid full fit, real paired inference, full-role downstream qualification or autonomous FBM product build is recorded.",
+  "authority": "Procedure seed plus owner-reported Magnolia custody observation. Published 1.6 signed full-fit trainer, runner, custodian assessor and narrow P2 bridge code exist. Magnolia job 576486 completed 0:0 and printed source and MFM role-clone receipt digests; full receipt JSON and submitted script have not been inspected in this checkout. No admitted full-role corpus, complete 1.6 processor, bounded GPU, paid full fit, real paired inference, full-role downstream qualification or autonomous FBM product build is recorded.",
   "implementation_sources": {
     "foundation_branch": "research/gemma4-v1-source-derivation-20260930",
     "foundation_commit": "3e1328410dac52ba18be243cb9f7144e7a3964d1",
     "mfm_branch": "research/mfm-v1-licensed-base-20260930",
     "mfm_commit": "a5b04504c227347c5b56e6555d7aa7cc4ae86af4",
     "mfm_v1_6_contract_path": "docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md",
-    "mfm_v1_6_contract_status": "Published 1.6 codec, signed full-fit trainer, matched runner, separate FINAL custodian assessor and narrow P2 owner host-profile candidate bridge with CPU/static tests. No admitted 1.6 gold, exact clone/processor/GPU/full-fit outputs or full-role downstream result.",
+    "mfm_v1_6_contract_status": "Published 1.6 codec, signed full-fit trainer, matched runner, separate FINAL custodian assessor and narrow P2 owner host-profile candidate bridge with CPU/static tests. Owner-reported exact source/clone CPU custody run 576486; no admitted 1.6 gold, processor/GPU/full-fit outputs or full-role downstream result.",
     "mfm_published_tree": "753ffa36121fa1bf37150665f1bcf970c86bed22"
   },
   "source": {
@@ -56,6 +56,20 @@
     "complete_source_bytes_present": false,
     "historical_verified_source_receipt": "MFM docs/receipts/GEMMA4_12B_PRETRAINED_SOURCE_20260930.json; historical path was pruned",
     "partial_downloads_are_not_a_source": true,
+    "magnolia_owner_reported_custody": {
+      "job_id": "576486",
+      "node": "node005.cluster",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "source_receipt_sha256": "ad081e28519961d72181815b7a74c65b42238e2c2ab0a65065acbc8e2be606df",
+      "clone_receipt_sha256": "54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7",
+      "clone_path": "/homes/01/mxrayan/rayan-compute/mfm/gemma4-12b-023679ed352de9bb66cc873c9009ce3482585c08/mfm-role-clone-576486",
+      "source_receipt_path": "/homes/01/mxrayan/rayan-compute/mfm/receipts/source-576486.json",
+      "clone_receipt_path": "/homes/01/mxrayan/rayan-compute/mfm/receipts/mfm-clone-576486.json",
+      "full_receipt_json_inspected": false,
+      "submitted_script_inspected": false,
+      "meaning": "Custody stdout supplied by owner; clone remains licensed unqualified starting checkpoint, not a processed or trained MFM"
+    },
     "verified_derived_weights": false,
     "measured_untouched_forward": false,
     "measured_weight_intervention": false,

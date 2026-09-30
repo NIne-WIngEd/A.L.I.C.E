@@ -1,7 +1,7 @@
 # FBM V1: shared Gemma 4 base dissection and role specialization
 
 **Owner-local decision:** 2026-09-29, revised 2026-09-30. **Status:** reusable construction
-procedure with a verified source inventory; no role clone, personal model or
+procedure with a verified source inventory and owner-reported MFM role clone; no personal model or
 behavioral qualification is asserted here. This applies to all five personal model roles in
 Fable V1 and refines [the V1 assembly contract](FBM_V1_LICENSED_BASE_ASSEMBLY_2026-09-30.md).
 
@@ -30,8 +30,14 @@ lineage, license duties or inherited behavior.
 complete 24 GB snapshot. The owner subsequently downloaded the exact eight
 files on Magnolia at `$HOME/rayan-compute/mfm/gemma4-12b-023679ed352de9bb66cc873c9009ce3482585c08/source`.
 Their pasted `sha256sum -c` output reports all eight pinned checks passing on
-a CPU node. The foundation verifier has not yet sealed that path or produced
-an MFM role clone. The 24 GB checkpoint and `google/gemma-4-12B` name
+a CPU node. The owner's pasted Magnolia job `576486` stdout reports a
+completed CPU source receipt (`ad081e28519961d72181815b7a74c65b42238e2c2ab0a65065acbc8e2be606df`)
+and MFM role-clone receipt (`54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7`)
+at separate paths, with `COMPLETED 0:0` on `node005.cluster` and empty stderr.
+The clone digest appears twice. The full JSON receipts and submitted batch
+script were not available for independent inspection in this checkout. Keep
+their parent digest, `role=mfm`, eight pinned file rows and verification command
+as point-of-use checks. The 24 GB checkpoint and `google/gemma-4-12B` name
 refer to this same pretrained, non-IT release. It is not an earlier neutral
 checkpoint. Its Apache license permits derivatives under license conditions;
 neither licensing nor absence of instruction tuning proves the source is free
@@ -63,7 +69,7 @@ for one-step or full-fit artifacts are now published with CPU/static tests.
 Its narrow P2 candidate bridge stages one owner host profile claim and rejects
 richer 1.6 semantics; the full persistent receipt and promotion-time source
 recheck remain open. There is still no admitted full-role corpus or real
-exact-base processor pass, BF16 GPU step, restart, full fit or independent
+exact-base 1.6 processor pass, BF16 GPU step, restart, full fit or independent
 entity qualification.
 The existing 49,819-case owner-authorized synthetic mixture is available for
 training-only admission through `--curriculum-manifest`. It supplies neither
@@ -197,9 +203,8 @@ The verified source has 677 BF16 tensors, 11,959,730,224 elements, a
 global), a shared decoder, 10 vision-named tensors and one audio projection.
 The latter two are input capabilities, not detachable third-party personas.
 The tokenizer contains turn/tool/thinking markers, and the default generation
-config samples; neither establishes a causal behavioral failure. No verified
-MFM role clone, role-specific tensor edit, assembled MFM inference, MFM fit or
-qualification exists yet. Magnolia has space for a role clone but its CPU
-source receipt and clone have not been returned. FBM must preserve these
-observed limits in its seed lineage and measure the assembled MFM before
-claiming role quality.
+config samples; neither establishes a causal behavioral failure. The owner's
+Magnolia log reports an exact MFM role-clone custody run; the complete receipts
+remain to be inspected. No role-specific tensor edit, assembled MFM inference,
+MFM fit or qualification exists yet. FBM must preserve these observed limits
+in its seed lineage and measure the assembled MFM before claiming role quality.
