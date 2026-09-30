@@ -57,6 +57,28 @@ original absolute path. A relocated copy can use `--snapshot-dir` for offline
 verification and `--staged-model-dir` for the trainer. Both paths verify its
 contents against the original receipt.
 
+### Magnolia transfer route observed 2026-09-29
+
+The `node` CPU partition was available, but `node016.cluster` could not resolve
+`huggingface.co`. An earlier N0 attempt also failed on Magnolia DNS. Do not
+download the model or install from the Hub in a Magnolia job. Stage and seal
+the exact snapshot on an internet-connected, non-billed machine, then transfer
+the complete snapshot, its receipt and the three frozen corpus files through
+the `hpcwoods.olemiss.edu` gateway. The gateway and Magnolia share home
+storage. Keep MFM in its own owner-only directory under `rayan-compute`; do
+not upgrade the N0 container or use its name for an MFM environment. The
+observed 3.1 TB free is shared-filesystem space, not a reserved allocation.
+
+Copying from a Windows staging machine leaves a Windows origin path in the
+receipt. On Magnolia, use the committed staging verifier with
+`--snapshot-dir /homes/01/mxrayan/rayan-compute/rayan-mfm/gemma4-12b-it` on
+the `node` partition. The override is rehashed against every receipt entry;
+the original path need not be valid on Linux. Include that same path with
+`--staged-model-dir` on the processor preflight and any later training command.
+Run the verification and the full processor pass in a CPU Slurm job with a
+separate MFM-compatible Python runtime. Do not hash the 24 GB snapshot or
+process the 49,819 cases on the login or transfer gateway.
+
 Stage the exact pinned Hub snapshot and write a per-file receipt on the
 non-billed preparation machine. Standard Hugging Face authentication must
 already be available to that machine; do not put credentials in the repo:
@@ -100,14 +122,13 @@ PYTHONPATH=src:. python -m scripts.mfm.train_multimodal_formation \
   --output-dir ../mfm-runs/cpu-preflight \
   --preflight-receipt ../mfm-runs/processor-preflight-v1.json \
   --staged-model-receipt /persistent/gemma4-stage.json \
+  --staged-model-dir /persistent/gemma4-12b-it \
   --max-sequence-tokens 32768 --preflight-only
 ```
 
-With the staging receipt, this processor pass reads the verified local
-snapshot and needs no compute-node network. Run it inside a CPU Slurm job on
-Magnolia, using the partition shown by `sinfo` (the owner's earlier N0 CPU
-jobs used `node`), not on the login node. The snapshot path in the receipt
-must match its path on the job's filesystem.
+With the staging receipt and relocated snapshot directory, this processor pass
+reads verified local files and needs no compute-node network. Run it inside a
+CPU Slurm job on Magnolia's observed `node` partition, not on the login node.
 
 The 32,768-token value is an execution request, not a model or product
 ceiling. The preflight reports complete prompt/answer lengths and rejects
@@ -151,6 +172,7 @@ PYTHONPATH=src:. torchrun --standalone --nnodes=1 --nproc_per_node=4 \
   --owner-authorization-ref owner_authorized_service_teacher \
   --preflight-receipt ../mfm-runs/processor-preflight-v1.json \
   --staged-model-receipt /persistent/gemma4-stage.json \
+  --staged-model-dir /persistent/gemma4-12b-it \
   --deepspeed-config scripts/mfm/deepspeed_zero3_a100_4gpu.json \
   --output-dir ../mfm-runs/gemma4-12b-probe \
   --max-sequence-tokens 32768 --probe-only
@@ -176,6 +198,7 @@ PYTHONPATH=src:. torchrun --standalone --nnodes=1 --nproc_per_node=4 \
   --owner-authorization-ref owner_authorized_service_teacher \
   --preflight-receipt ../mfm-runs/processor-preflight-v1.json \
   --staged-model-receipt /persistent/gemma4-stage.json \
+  --staged-model-dir /persistent/gemma4-12b-it \
   --deepspeed-config scripts/mfm/deepspeed_zero3_a100_4gpu.json \
   --output-dir ../mfm-runs/gemma4-12b-formation \
   --max-sequence-tokens 32768

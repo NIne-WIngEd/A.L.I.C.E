@@ -2,8 +2,8 @@
 
 ``stage`` compares every repository file to Hugging Face's metadata for the
 pinned commit. ``verify`` is wholly local and rehashes every staged file. The
-receipt must be transported with the same absolute snapshot path (for example
-on a persistent volume mounted at the same path on the training machine).
+receipt travels with the snapshot. An offline verification at a new path uses
+``snapshot_override`` and rehashes the copied bytes.
 
 The receipt is content-addressed, not a signature. Keep its expected digest in
 the run record or another independently controlled location.
@@ -226,7 +226,9 @@ def verify_staged_model(receipt_path: str | Path, expected_model: str,
             expected_revision != GEMMA_4_12B_REVISION):
         raise StagedModelError("staged model does not match pinned MFM backbone")
     raw_path = receipt["snapshot_path"]
-    if not isinstance(raw_path, str) or not Path(raw_path).is_absolute():
+    if not isinstance(raw_path, str) or not raw_path:
+        raise StagedModelError("staged model path is missing")
+    if snapshot_override is None and not Path(raw_path).is_absolute():
         raise StagedModelError("staged model path is not absolute")
     snapshot = Path(snapshot_override).expanduser() if snapshot_override else Path(raw_path)
     if not snapshot.is_absolute() or snapshot.resolve() != snapshot or snapshot.is_symlink():

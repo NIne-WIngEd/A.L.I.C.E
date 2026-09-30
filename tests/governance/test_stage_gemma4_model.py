@@ -82,6 +82,22 @@ class StagedGemmaModelTests(unittest.TestCase):
                     receipt_path, stage.GEMMA_4_12B_MODEL,
                     stage.GEMMA_4_12B_REVISION, snapshot_override=relocated),
                     (relocated, sealed))
+                # A Windows staging receipt can be copied to a Linux CPU node.
+                # Its original absolute path is not a Linux absolute path.
+                windows_receipt = dict(sealed, snapshot_path=r"C:\mfm\gemma4-12b-it")
+                unsigned = {key: value for key, value in windows_receipt.items()
+                            if key != "receipt_sha256"}
+                windows_receipt["receipt_sha256"] = sha256(
+                    stage._canonical(unsigned)).hexdigest()
+                receipt_path.write_text(json.dumps(windows_receipt))
+                self.assertEqual(stage.verify_staged_model(
+                    receipt_path, stage.GEMMA_4_12B_MODEL,
+                    stage.GEMMA_4_12B_REVISION, snapshot_override=relocated),
+                    (relocated, windows_receipt))
+                with self.assertRaisesRegex(stage.StagedModelError, "not absolute"):
+                    stage.verify_staged_model(
+                        receipt_path, stage.GEMMA_4_12B_MODEL,
+                        stage.GEMMA_4_12B_REVISION)
                 with self.assertRaisesRegex(stage.StagedModelError, "already exists"):
                     stage.stage_model(snapshot, receipt_path)
 
