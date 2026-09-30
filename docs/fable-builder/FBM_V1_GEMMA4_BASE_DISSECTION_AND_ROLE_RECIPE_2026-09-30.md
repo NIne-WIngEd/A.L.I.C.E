@@ -34,10 +34,12 @@ a CPU node. The owner's pasted Magnolia job `576486` stdout reports a
 completed CPU source receipt (`ad081e28519961d72181815b7a74c65b42238e2c2ab0a65065acbc8e2be606df`)
 and MFM role-clone receipt (`54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7`)
 at separate paths, with `COMPLETED 0:0` on `node005.cluster` and empty stderr.
-The clone digest appears twice. The full JSON receipts and submitted batch
-script were not available for independent inspection in this checkout. Keep
-their parent digest, `role=mfm`, eight pinned file rows and verification command
-as point-of-use checks. The 24 GB checkpoint and `google/gemma-4-12B` name
+The clone digest appears twice. The owner then ran the foundation
+`read_receipt` check on Magnolia: self-digests, parent source digest,
+`role=mfm`, `qualification=unqualified`, and the eight file rows matched the
+pinned manifest. Full receipt JSON and the submitted batch script were not
+transferred for independent inspection in this checkout. Rehash the clone at
+point of use. The 24 GB checkpoint and `google/gemma-4-12B` name
 refer to this same pretrained, non-IT release. It is not an earlier neutral
 checkpoint. Its Apache license permits derivatives under license conditions;
 neither licensing nor absence of instruction tuning proves the source is free
@@ -119,6 +121,16 @@ verification, role cloning and optional 1.5 CPU/`--probe-only` feasibility work
 may proceed now. The full 1.6 CPU processor receipt and bounded backward pass
 require the admitted corpus and matching 1.6 code path. These checks establish
 custody and hardware fit, not full-role learning or product qualification.
+
+MFM commit `412ae32a` adds a source-only 1.6 review packet builder for the
+pinned Multi-Source inventory. Its in-memory smoke covered 480 simulated hosts
+and 1,920 cumulative day windows. Packets exclude simulator truth and prior
+QA/targets, preserve source-file hashes and host/generator lineage, and are
+marked `candidate_unreviewed`. They are **not** rights-cleared or adjudicated
+gold; all hosts share one generator family. The same commit publishes a
+Magnolia CPU Slurm script to run the 21-case public 1.6 processor diagnostic
+against the verified role clone. That job has not run. Its receipt, if it
+passes, will check a processor route only, not the admitted full-role corpus.
 Do not claim capability from the present training-only mixture.
 The published signed-review verifier tests record format and signatures; an
 independent steward must authenticate the reviewers, rights issuer, blind
@@ -204,7 +216,7 @@ global), a shared decoder, 10 vision-named tensors and one audio projection.
 The latter two are input capabilities, not detachable third-party personas.
 The tokenizer contains turn/tool/thinking markers, and the default generation
 config samples; neither establishes a causal behavioral failure. The owner's
-Magnolia log reports an exact MFM role-clone custody run; the complete receipts
-remain to be inspected. No role-specific tensor edit, assembled MFM inference,
+Magnolia log reports an exact MFM role-clone custody run and the owner-checked
+receipt metadata matches the pinned source. No role-specific tensor edit, assembled MFM inference,
 MFM fit or qualification exists yet. FBM must preserve these observed limits
 in its seed lineage and measure the assembled MFM before claiming role quality.

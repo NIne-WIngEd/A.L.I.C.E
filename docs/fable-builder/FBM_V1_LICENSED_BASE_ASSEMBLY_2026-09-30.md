@@ -108,7 +108,10 @@ pins the exact non-IT source and stop conditions. The owner has reported all
 eight SHA checks passing on Magnolia. A later owner-pasted CPU job `576486`
 reports source receipt `ad081e28519961d72181815b7a74c65b42238e2c2ab0a65065acbc8e2be606df`
 and MFM role-clone receipt `54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7`.
-The complete JSON receipts and batch script remain to be inspected. The original source and the
+The owner additionally checked both receipt self-digests, parent digest,
+`role=mfm`, `qualification=unqualified`, and all eight pinned file rows with
+the foundation reader. The full JSON and batch script were not transferred
+for independent inspection. The original source and the
 trained formation specialist retain separate lineages.
 
 The [MFM training coverage audit](../../training/fbm/base_assembly/mfm_v1_training_role_coverage_20260930.json)
@@ -132,6 +135,12 @@ public MFM commit and the foundation commit separately.
 Source/clone verification, CPU processor work and a bounded hardware probe
 remain possible while that corpus work proceeds. No current
 training, inference or product capability follows from this audit.
+The MFM branch at `412ae32a` now packages pinned Multi-Source records into
+source-only cumulative review windows without importing simulator truth,
+prior QA or v1.5 labels. A 480-host in-memory smoke made 1,920 unreviewed
+packets. This does not supply independent target adjudication or additional
+generator families. It also publishes an unrun Magnolia CPU script for the
+21-case public 1.6 processor diagnostic against the job `576486` role clone.
 
 ## Ordered V1 MFM replay evidence
 
@@ -140,7 +149,7 @@ separates these receipts so one passing step cannot stand in for another:
 
 | Step | Required evidence | Current state |
 | --- | --- | --- |
-| Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Magnolia job `576486` completed `0:0` and printed source and clone receipt digests; full JSON and batch script inspection pending |
+| Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Magnolia job `576486` completed `0:0`; owner checked both sealed receipt digests, parent, role and all eight file rows. Full JSON and script were not transferred. |
 | Full-role corpus | Versioned 1.6 targets, authenticated rights, two reviewers, disjoint DEV and sealed FINAL | Historical 49,819 rows fail coverage; published 21-case 1.6 authoring seed is diagnostic only |
 | Code path | Matching 1.6 codec, signed full-fit trainer, inference, custodian assessor and full-role gate adapter | Published full-fit path and narrow P2 host-profile candidate bridge; rich 1.6 semantics still fail closed in P2, with no full-role adapter or capability receipt |
 | CPU and GPU admission | Complete Magnolia CPU processor receipt, then bounded 1.6 backward/restart result | Neither receipt established |

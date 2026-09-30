@@ -1,15 +1,15 @@
 {
   "schema": "alice.fbm.base_derivation_seed.v1",
   "scope": "Fable/A.L.I.C.E. V1 MFM; process seed only",
-  "authority": "Procedure seed plus owner-reported Magnolia custody observation. Published 1.6 signed full-fit trainer, runner, custodian assessor and narrow P2 bridge code exist. Magnolia job 576486 completed 0:0 and printed source and MFM role-clone receipt digests; full receipt JSON and submitted script have not been inspected in this checkout. No admitted full-role corpus, complete 1.6 processor, bounded GPU, paid full fit, real paired inference, full-role downstream qualification or autonomous FBM product build is recorded.",
+  "authority": "Procedure seed plus owner-reported Magnolia custody observation. Published 1.6 signed full-fit trainer, runner, custodian assessor and narrow P2 bridge code exist. Magnolia job 576486 completed 0:0 and printed source and MFM role-clone receipt digests; the owner subsequently checked both receipt self-digests, parent digest, mfm role, unqualified status and all eight pinned file rows with the foundation reader. Full receipt JSON and submitted script have not been inspected in this checkout. No admitted full-role corpus, complete 1.6 processor, bounded GPU, paid full fit, real paired inference, full-role downstream qualification or autonomous FBM product build is recorded.",
   "implementation_sources": {
     "foundation_branch": "research/gemma4-v1-source-derivation-20260930",
     "foundation_commit": "3e1328410dac52ba18be243cb9f7144e7a3964d1",
     "mfm_branch": "research/mfm-v1-licensed-base-20260930",
-    "mfm_commit": "a5b04504c227347c5b56e6555d7aa7cc4ae86af4",
+    "mfm_commit": "412ae32aef60896966e10a7613a9d207a74eceee",
     "mfm_v1_6_contract_path": "docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md",
     "mfm_v1_6_contract_status": "Published 1.6 codec, signed full-fit trainer, matched runner, separate FINAL custodian assessor and narrow P2 owner host-profile candidate bridge with CPU/static tests. Owner-reported exact source/clone CPU custody run 576486; no admitted 1.6 gold, processor/GPU/full-fit outputs or full-role downstream result.",
-    "mfm_published_tree": "753ffa36121fa1bf37150665f1bcf970c86bed22"
+    "mfm_published_tree": "9616bfe97a93c9daa42f0aa3be52daa23d8799d5"
   },
   "source": {
     "repository": "google/gemma-4-12B",
@@ -68,6 +68,8 @@
       "clone_receipt_path": "/homes/01/mxrayan/rayan-compute/mfm/receipts/mfm-clone-576486.json",
       "full_receipt_json_inspected": false,
       "submitted_script_inspected": false,
+      "owner_metadata_check_passed": true,
+      "owner_metadata_check_scope": "Foundation read_receipt self-digests, parent source digest, role=mfm, qualification=unqualified, identical eight-file rows matching independent PINNED_FILES; no new full byte rehash in this metadata check",
       "meaning": "Custody stdout supplied by owner; clone remains licensed unqualified starting checkpoint, not a processed or trained MFM"
     },
     "verified_derived_weights": false,
@@ -565,5 +567,19 @@
     "fail_closed": "Episodes, relationships, missions, contradictions, correction targets, uncertainty references, day precision, multiple proposals and non-propose dispositions rejected.",
     "gaps": "Complete 1.6 context/output/anchor receipt and host scope are not persisted in P2; promotion has no source-registry recheck. Full-role persistent Claim projection and native downstream assessment are pending.",
     "status": "PUBLIC_CODE_METHOD_ONLY at MFM commit a5b04504c227347c5b56e6555d7aa7cc4ae86af4; synthetic test, no trained result or full-role integration."
+  },
+  "latest_v16_source_review_intake": {
+    "script_path": "scripts/mfm/build_v16_source_review_packets.py",
+    "method_commit": "412ae32aef60896966e10a7613a9d207a74eceee",
+    "inventory_sha256": "a5fcd53f84e049f84a2aaf0e1902da17a2d9d8fd4eec85deccb4bf8902c4d362",
+    "result": "Source-only cumulative day-1/7/15/30 synthetic history windows with exact parent-file SHA, canonical extracted-unit SHA, source locator and host/generator lineage. Whole-run profile is withheld until day 30. No source rights, target labels, reviewer decisions, development split or FINAL are created.",
+    "smoke": "480 synthetic hosts, 1,920 packets, 92,817,429 bytes, SHA-256 4ae868b2cae39b837364f71c8b68cebe5fee731bca3711e1459d87782084e642; produced in memory only, not retained as corpus or gold",
+    "status": "PUBLIC_CODE_METHOD_ONLY; one generator family and no admitted 1.6 training data"
+  },
+  "magnolia_v16_public_cpu_diagnostic": {
+    "script_path": "scripts/mfm/magnolia_v16_public_cpu_preflight.sbatch",
+    "method_commit": "412ae32aef60896966e10a7613a9d207a74eceee",
+    "purpose": "Run the exact role-clone v1.6 processor against the 21-case public synthetic authoring pack in the existing Magnolia CPU container; the trainer rehashes the clone at point of use and seals a separate job-specific receipt",
+    "status": "PUBLISHED_UNRUN; no processor receipt, model forward, trained MFM or full-role corpus qualification"
   }
 }
