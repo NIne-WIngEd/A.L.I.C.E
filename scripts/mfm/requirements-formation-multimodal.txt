@@ -2,6 +2,7 @@
 # Gemma 4 Unified and AutoModelForMultimodalLM need Transformers 5.x.
 torch>=2.7,<3
 transformers==5.17.0
+pillow==11.3.0
 accelerate>=1,<3
 peft>=0.18,<1
 safetensors>=0.5,<1

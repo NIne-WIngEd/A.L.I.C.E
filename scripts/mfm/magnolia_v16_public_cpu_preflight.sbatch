@@ -48,6 +48,25 @@ PREFLIGHT="$COMPUTE_ROOT/mfm/receipts/mfm-v16-public-processor-${SLURM_JOB_ID}.j
 UDOCKER="$COMPUTE_ROOT/tools/udocker-1.3.17/udocker/udocker"
 CONTAINER="${MFM_CPU_CONTAINER:-rayan-n0-base}"
 [[ -x "$UDOCKER" ]] || { echo "udocker is unavailable" >&2; exit 6; }
+PILLOW_WHEEL_NAME=pillow-11.3.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+PILLOW_WHEEL="${MFM_PILLOW_WHEEL:-$COMPUTE_ROOT/mfm/wheels/$PILLOW_WHEEL_NAME}"
+[[ -f "$PILLOW_WHEEL" ]] || {
+  echo "stage the pinned Pillow wheel on the login node first: $PILLOW_WHEEL" >&2; exit 7;
+}
+PILLOW_WHEEL="$(realpath -e "$PILLOW_WHEEL")"
+case "$PILLOW_WHEEL" in
+  "$COMPUTE_ROOT"/*) ;;
+  *) echo "Pillow wheel is outside the mounted compute root: $PILLOW_WHEEL" >&2; exit 7 ;;
+esac
+[[ "${PILLOW_WHEEL##*/}" == "$PILLOW_WHEEL_NAME" ]] || {
+  echo "unexpected Pillow wheel filename" >&2; exit 7;
+}
+read -r pillow_hash _ < <(sha256sum "$PILLOW_WHEEL")
+[[ "$pillow_hash" == 106064daa23a745510dabce1d84f29137a37224831d88eb4ce94bb187b1d7e5f ]] || {
+  echo "Pillow wheel differs from pinned bytes" >&2; exit 7;
+}
+PILLOW_TARGET="$COMPUTE_ROOT/mfm/runtime/pillow-11.3.0-${SLURM_JOB_ID}"
+[[ ! -e "$PILLOW_TARGET" ]] || { echo "job-specific Pillow runtime already exists" >&2; exit 7; }
 export UDOCKER_DIR="$COMPUTE_ROOT/udocker-store"
 export UDOCKER_TMP="$COMPUTE_ROOT/udocker-tmp"
 mkdir -p "$UDOCKER_DIR" "$UDOCKER_TMP"
@@ -55,20 +74,49 @@ mkdir -p "$UDOCKER_DIR" "$UDOCKER_TMP"
 echo "job=$SLURM_JOB_ID node=$(hostname) MFM=$(cd "$MFM_REPO_ROOT" && git rev-parse HEAD) foundation=$(cd "$MFM_FOUNDATION_ROOT" && git rev-parse HEAD)"
 echo "diagnostic_preflight=$PREFLIGHT"
 # Magnolia's host Python/glibc is not the validated scientific runtime.
-# Keep the whole processor stage inside one already established CPU container.
+# Install only into this MFM job's mounted directory; never change the shared
+# N0 container. The wheel is staged on the login node and verified above.
 "$UDOCKER" setup "$CONTAINER"
 "$UDOCKER" run \
   --volume="$COMPUTE_ROOT:$COMPUTE_ROOT" \
+  --entrypoint=/bin/bash "$CONTAINER" -c '
+    set -euo pipefail
+    python -m pip install --isolated --no-index --no-deps --no-cache-dir \
+      --no-compile --target "$1" "$2"
+  ' mfm-v16-install "$PILLOW_TARGET" "$PILLOW_WHEEL"
+"$UDOCKER" run \
+  --volume="$COMPUTE_ROOT:$COMPUTE_ROOT" \
   --workdir="$MFM_REPO_ROOT" \
-  --env="PYTHONPATH=$MFM_REPO_ROOT/src:$MFM_FOUNDATION_ROOT/src" \
+  --env="PYTHONPATH=$PILLOW_TARGET:$MFM_REPO_ROOT/src:$MFM_FOUNDATION_ROOT/src" \
   --env="HF_HUB_OFFLINE=1" --env="TRANSFORMERS_OFFLINE=1" \
   --env="HF_HUB_DISABLE_TELEMETRY=1" --env="OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-4}" \
   --entrypoint=/bin/bash "$CONTAINER" -c '
     set -euo pipefail
-    python -c '\''import torch, transformers; from transformers import AutoProcessor; import alice_foundation.gemma4_v1, cognitive_kernel.formation_learning_v16; assert transformers.__version__ == "5.17.0", transformers.__version__; print("runtime", torch.__version__, transformers.__version__)'\''
+    # A real local processor load must pass before the trainer rehashes 24 GB.
+    python - "$3" "$6" <<'\''PY'\''
+import sys
+from pathlib import Path
+import PIL
+from PIL import Image, _imaging
+import torch
+import transformers
+from transformers import AutoProcessor
+import alice_foundation.gemma4_v1
+import cognitive_kernel.formation_learning_v16
+
+assert PIL.__version__ == "11.3.0", PIL.__version__
+assert Path(PIL.__file__).resolve().is_relative_to(Path(sys.argv[2]).resolve()), PIL.__file__
+assert transformers.__version__ == "5.17.0", transformers.__version__
+processor = AutoProcessor.from_pretrained(
+    sys.argv[1], trust_remote_code=False, local_files_only=True)
+assert all(hasattr(processor, name) for name in (
+    "apply_chat_template", "tokenizer", "image_token", "audio_token", "video_token"))
+print("runtime", torch.__version__, transformers.__version__, "Pillow", PIL.__version__,
+      "processor", type(processor).__name__)
+PY
     exec python -m scripts.mfm.train_v16_formation_specialist processor-preflight \
       --public-synthetic-curriculum "$1" --input-sha256 "$2" \
       --owner-authorization-ref owner-directed-mfm-v16-synthetic \
       --prepared-base-dir "$3" --prepared-base-receipt "$4" \
       --preflight-receipt "$5"
-  ' mfm-v16 "$SOURCE" "$SOURCE_HASH" "$CLONE" "$CLONE_RECEIPT" "$PREFLIGHT"
+  ' mfm-v16 "$SOURCE" "$SOURCE_HASH" "$CLONE" "$CLONE_RECEIPT" "$PREFLIGHT" "$PILLOW_TARGET"

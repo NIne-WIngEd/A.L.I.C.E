@@ -151,11 +151,31 @@ inherited defaults; no separate weight-cleaning program blocks training.
 
 `scripts/mfm/magnolia_v16_public_cpu_preflight.sbatch` uses the existing
 `rayan-n0-base` CPU container because Magnolia's host Python/glibc is not the
-validated Transformers 5.17 runtime. Supply absolute `MFM_REPO_ROOT` and
-`MFM_FOUNDATION_ROOT` checkouts under `$HOME/rayan-compute` and submit from the
-login node with Slurm logs outside the repository. The job checks the exact
-21-case authoring seed, imports processor dependencies before rehashing the
-role clone, and writes a new job-specific receipt under
+validated Transformers 5.17 runtime. Stage the pinned CPython 3.11 Pillow
+wheel on the Magnolia login node; downloading a wheel there does not install
+it into the host or the shared N0 container:
+
+```bash
+module load python/3.11.5
+COMPUTE_ROOT="$(realpath -e "$HOME/rayan-compute")"
+WHEEL_NAME=pillow-11.3.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+mkdir -p "$COMPUTE_ROOT/mfm/wheels"
+python3 -m pip download --no-deps --only-binary=:all: \
+  --implementation cp --python-version 311 --abi cp311 \
+  --platform manylinux_2_28_x86_64 \
+  --dest "$COMPUTE_ROOT/mfm/wheels" 'pillow==11.3.0'
+printf '106064daa23a745510dabce1d84f29137a37224831d88eb4ce94bb187b1d7e5f  %s\n' \
+  "$COMPUTE_ROOT/mfm/wheels/$WHEEL_NAME" | sha256sum -c -
+module unload python/3.11.5
+```
+
+Supply absolute `MFM_REPO_ROOT` and `MFM_FOUNDATION_ROOT` checkouts under
+`$HOME/rayan-compute` and submit from the login node with Slurm logs outside
+the repository. The job checks the exact 21-case authoring seed and wheel,
+installs Pillow offline into a new MFM-only directory for that Slurm job, and
+loads the local processor before rehashing the role clone. A processor import
+or load failure therefore stops before the 23.9 GB weight verification. A
+passing diagnostic writes a new job-specific receipt under
 `$HOME/rayan-compute/mfm/receipts`. It opens only public fiction and loads no
 Gemma weight tensors. This is a **diagnostic** processor pass for 15 synthetic
 train and six same-generator development cases, not the complete signed 1.6
