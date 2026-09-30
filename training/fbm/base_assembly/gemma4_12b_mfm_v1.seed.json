@@ -1,14 +1,15 @@
 {
   "schema": "alice.fbm.base_derivation_seed.v1",
   "scope": "Fable/A.L.I.C.E. V1 MFM; process seed only",
-  "authority": "Procedure only. A verified role clone may initialize V1 formation-specialist training; no actual MFM role clone, trained weights, suppression or entity qualification is established by this seed.",
+  "authority": "Procedure seed only. Source and 1.6 semantic contract code exist, but no admitted full-role 1.6 corpus, upgraded codec/trainer/inference path, exact MFM role clone receipt, Magnolia full processor receipt, GPU full fit, matched-control result, downstream qualification or autonomous FBM product build is recorded.",
   "implementation_sources": {
     "foundation_branch": "research/gemma4-v1-source-derivation-20260930",
     "foundation_commit": "3e1328410dac52ba18be243cb9f7144e7a3964d1",
     "mfm_branch": "research/mfm-v1-licensed-base-20260930",
-    "mfm_commit": "df3da321feb56cc33762e38e19f43bbb078a6e36",
+    "mfm_commit": "23fbe88faeb3f90b2e6d360d3c1ca983b8b3b040",
     "mfm_v1_6_contract_path": "docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md",
-    "mfm_v1_6_contract_status": "CPU-tested additive 1.6 semantic contract; historical 1.5 trainer/inference serialization is not upgraded by this commit"
+    "mfm_v1_6_contract_status": "Published 1.6 semantic contract, codec/trainer/runner and one-step custody assessor with CPU/static tests; historical 1.5 remains separate. No admitted 1.6 gold, exact processor/GPU/full-fit/downstream receipt.",
+    "mfm_published_tree": "439bd93ca3093802bbe81c836346913694fd7c18"
   },
   "source": {
     "repository": "google/gemma-4-12B",
@@ -100,7 +101,24 @@
     "max_cross_attention_pairs": "at least the CPU preflight peak_train_attention_pairs; measured GPU fit still required",
     "public_diagnostic_output_dir": "path for nonprivate synthetic diagnostic artifacts",
     "prepared_base_dir": "the verified clone_dir by default; only an independently justified and validated role derivative when optional intervention is elected",
-    "prepared_base_receipt": "clone_receipt by default; the validated derivative_receipt only when optional intervention is elected"
+    "prepared_base_receipt": "clone_receipt by default; the validated derivative_receipt only when optional intervention is elected",
+    "v16_corpus_manifest": "new rights-cleared, versioned full-role train corpus with source/item hashes, subject roles, generator family, reviewed 1.6 targets and exact split lineage",
+    "v16_rights_receipts": "authenticated rights and allowed-use records for each original source; never inferred from a generator assertion",
+    "v16_reviewer_receipts": "two independent target adjudication receipts bound to exact cases and reviewer identity, with disagreement disposition",
+    "v16_dev_manifest": "source/person/generator-disjoint independently adjudicated development split",
+    "v16_final_freeze_receipt": "sealed FINAL commitment with split hashes and access log; no FINAL target bytes in training/preflight",
+    "v16_code_revision": "exact target codec, training objective, inference, evaluation and downstream adapter source commit and schema digest",
+    "v16_processor_receipt": "actual Magnolia or equivalent CPU-node complete-corpus processor receipt bound to code, model, corpus and tokenizer hashes",
+    "v16_hardware_probe_receipt": "bounded complete backward and restart receipt on exact 1.6 source/target stress envelope and intended GPU topology",
+    "v16_training_receipt": "actual paid full-fit run/checkpoint/optimizer lineage bound to admitted corpus and prepared base",
+    "v16_matched_control_receipt": "trained and seeded-untrained v1.6 inference outputs with identical base, inputs, decoding and sealed component hashes",
+    "v16_downstream_receipt": "independent FINAL and evidence-to-gate-to-judgment result with critical errors and causal ablations",
+    "consumer_authorized_corpus": "future per-user authorized intake manifest under that user’s custody",
+    "consumer_build_receipt": "future FBM per-user build and promotion receipt; no shared private gradient",
+    "per_user_adaptation_receipt": "future private receipt binding owner authorization, qualified shared MFM parent, source inventory, learned instance state, cold-start decisions, no-egress boundary and deletion/export lineage",
+    "consumer_local_rights_receipt": "future scoped owner authorization for private source access and local formation_training, excluding any assumed model_distribution grant",
+    "consumer_private_adaptation_manifest": "future per-user source-role, consent, sensitivity, duplicate and data-deletion manifest in owner custody; distinct from the shared 1.6 training corpus",
+    "v16_external_trust_roster_sha256": "independent steward-pinned digest outside the corpus manifest for author, rights issuer and two reviewer public keys, expiry and revocation checks"
   },
   "steps": [
     {
@@ -147,27 +165,70 @@
       "gate": "Exact eight-file copy, mfm role, pinned source ancestry and fresh receipt checks pass. Admission is a custody check, not behavioral qualification."
     },
     {
-      "id": "processor_and_bounded_hardware_probe",
+      "id": "v16_corpus_design",
       "after": [
         "role_base_verify"
       ],
-      "operation": "Run exact admitted-corpus and complete CPU processor checks, then a bounded GPU backward/restart/fit measurement on the frozen training-only curriculum. These checks establish data loading and resource behavior, not MFM role capability or admission to full paid fit.",
-      "data_preflight_tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/train_v1_formation_specialist.py data-preflight --admitted-manifest {admitted_manifest} --input-sha256 {input_sha256}",
-      "synthetic_training_argument_alternative": "For the current training-only curriculum, replace --admitted-manifest {admitted_manifest} in data_preflight_tool, processor_preflight_tool and probe_tool with --curriculum-manifest {training_curriculum_manifest} --owner-authorization-ref {owner_authorization_ref}; bind input_sha256 to that curriculum manifest. Do not run specialist_training.tool for a full fit on this mixture alone.",
-      "processor_preflight_tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/train_v1_formation_specialist.py processor-preflight --admitted-manifest {admitted_manifest} --input-sha256 {input_sha256} --prepared-base-dir {prepared_base_dir} --prepared-base-receipt {prepared_base_receipt} --preflight-receipt {preflight_receipt} --max-source-tokens {max_source_tokens} --max-target-tokens {max_target_tokens} --specialist-width {specialist_width} --specialist-layers {specialist_layers} --specialist-heads {specialist_heads}",
-      "probe_tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/train_v1_formation_specialist.py train --admitted-manifest {admitted_manifest} --input-sha256 {input_sha256} --prepared-base-dir {prepared_base_dir} --prepared-base-receipt {prepared_base_receipt} --preflight-receipt {preflight_receipt} --output-dir {probe_output_dir} --max-source-tokens {max_source_tokens} --max-target-tokens {max_target_tokens} --specialist-width {specialist_width} --specialist-layers {specialist_layers} --specialist-heads {specialist_heads} --max-cross-attention-pairs {max_cross_attention_pairs} --probe-only",
-      "implementation_status": "Source files have owner-pasted eight-file SHA passes on Magnolia. No foundation source/role-clone receipt at that path, full CPU processor receipt or bounded GPU backward probe has been returned.",
-      "gate": "Role clone and corpus input hashes match; CPU processor covers every case with no silent truncation; bounded GPU step includes peak-stress cases and checkpoint restart. Passing this gate does not override full_role_readiness."
+      "operation": "FBM records a reusable autonomous source/target construction method: inventory independent rights-eligible histories, keep host, source-person, other person and assistant-self roles separate, derive source-grounded 1.6 training candidates with unknown/abstain, correction, revocation, sensitive and multimodal cases, and freeze split and generator lineage. Current A.L.I.C.E. development may involve assistants and human adjudicators; future consumer FBM must automate intake from authorized data without asking every user to hand-label gold.",
+      "tool": null,
+      "implementation_status": "Local MFM work has a frozen amended 21-case fictional text authoring seed and hash-bound audit with ten explicit status dimensions. Fifteen train and six diagnostic development cases share one assistant generator; this tests authoring/codec mechanics and does not demonstrate diverse or independent gold or autonomous consumer FBM building.",
+      "gate": "Versioned proposal semantics and coverage matrix exist, originals remain in authorized custody, every generated target cites its source, and missing source evidence remains UNKNOWN. Synthetic continuations do not assert historical fact.",
+      "diagnostic_seed_sha256": "8e967ee6494f2c5ec47ab602bad213df8c07c53b1abe9a9aff950f19c0e78e22"
+    },
+    {
+      "id": "v16_corpus_admission",
+      "after": [
+        "v16_corpus_design"
+      ],
+      "operation": "Admit actual new 1.6 train and independently reviewed DEV while keeping FINAL sealed. Authenticate source rights, exact original/case hashes, two independent reviewer decisions and disagreements, person/source/generator separation, and full-role target coverage. The old 49,819 rows may be a historical auxiliary training tier only, never replacement labels or independent FINAL.",
+      "tool": null,
+      "implementation_status": "Local MFM has structural admission and a CPU-tested offline signature-verifier mechanism, not an independent trusted roster or signed/adjudicated 1.6 corpus. The 21 amended fictional cases have no rights issuer receipts, two real independent reviewers, generator-disjoint DEV or sealed FINAL; full-role paid fit remains blocked.",
+      "gate": "v16_corpus_manifest, v16_rights_receipts, v16_reviewer_receipts, v16_dev_manifest, v16_final_freeze_receipt and an independently steward-pinned v16_external_trust_roster_sha256 must bind exact bytes. Shared distributable training sources require formation_training and model_distribution rights; two distinct qualified reviewers must sign exact source/target/lineage after blind independent review, with expiry/revocation checked at each optimizer handoff. Signature structure cannot by itself establish real identity, genuine blindness, legal rights or semantic truth; an independent steward authenticates those. No FINAL payload may enter training or processor preflight. The 21-case authoring seed is diagnostic-only."
+    },
+    {
+      "id": "v16_code_path",
+      "after": [
+        "role_base_verify"
+      ],
+      "operation": "Implement versioned 1.6 source/target codec, serializer, objective, trainer, checkpoint/restart, inference, evaluator and downstream bundle adapter with one shared schema digest. Keep the historical 1.5 path readable and prevent loss of 1.6 fields or silent fallback to Gemma’s language head.",
+      "tool": null,
+      "implementation_status": "Public MFM commit 23fbe88faeb3f90b2e6d360d3c1ca983b8b3b040 contains v1.6 source/target codec, trainer, inference runner, one-step custody assessor and cache prototype with CPU/static tests. It has no admitted full-role corpus, exact 12B/Magnolia/GPU receipts, full-fit assessment or downstream result; executable full-fit replay tool remains null.",
+      "gate": "Codec roundtrip preserves every 1.6 field, source anchors and unknowns; trainer loss and inference output use that exact contract; evaluator refuses mismatched versions; deterministic gate independently checks registered evidence and current policy. CPU tests are code evidence, not corpus/fit/quality evidence. A one-step diagnostic, signed-review verifier mechanism or cache prototype is code-path evidence only and cannot satisfy corpus authentication, full CPU processing, GPU fit or downstream qualification."
+    },
+    {
+      "id": "v16_cpu_processor_receipt",
+      "after": [
+        "v16_corpus_admission",
+        "v16_code_path",
+        "role_base_verify"
+      ],
+      "operation": "Run complete no-egress 1.6 source/target processor admission on the actual admitted corpus and verified MFM role clone on a Magnolia CPU node or equivalent. Include all modalities, longest source/target examples, grounding and sensitivity/target links. Seal hashes, versions, peak attention envelope, counts and zero silent truncation in a new receipt.",
+      "tool": null,
+      "implementation_status": "Magnolia eight-file publisher SHA output was owner-pasted, but no foundation role-clone or complete 1.6 processor receipt has been returned. Historical 1.5 CPU tests do not supply this receipt.",
+      "gate": "Fresh exact-path source and clone receipts, corpus and code digests, full case count, modality coverage, rights-safe no-egress process and max-token/attention results verify. Processor result is hardware/data admission only, not learned capability."
+    },
+    {
+      "id": "v16_bounded_hardware_probe",
+      "after": [
+        "v16_cpu_processor_receipt"
+      ],
+      "operation": "Before paid full training, run one bounded 1.6 BF16 forward/backward/optimizer step and durable checkpoint/restart on actual corpus stress cases with intended GPU topology. Measure memory, time and storage; stop the allocation after a recorded pass/fail.",
+      "tool": null,
+      "implementation_status": "Local one-step diagnostic code exists, but no exact-role 12B BF16 GPU backward/restart, paid-host transfer or v1.6 topology receipt exists.",
+      "gate": "v16_hardware_probe_receipt binds exact role clone, v16 code, corpus, processor and topology; an out-of-memory or timeout is a failure to diagnose, not a model-quality result. Do not extrapolate a 1.5 probe to 1.6 fit."
     },
     {
       "id": "full_role_readiness",
       "after": [
-        "role_base_verify"
+        "v16_corpus_admission",
+        "v16_code_path",
+        "v16_cpu_processor_receipt",
+        "v16_bounded_hardware_probe"
       ],
-      "operation": "Audit versioned formation targets against the full MFM role before any full paid fit. Freeze independently adjudicated, rights-cleared development and sealed FINAL histories separated by person, source, time and generator lineage. Test sensitive, cross-person, longitudinal and multimodal formation including authority, uncertainty, contradiction, correction and revocation.",
+      "operation": "Join separately verified rights/adjudication/FINAL, versioned full-role target coverage, 1.6 codec/trainer/inference/evaluator code, exact CPU processor receipt and bounded GPU backward/restart evidence before allowing a full paid fit. FBM must record every missing condition instead of inferring readiness from code or row counts.",
       "audit_path": "training/fbm/base_assembly/mfm_v1_training_role_coverage_20260930.json",
       "audit_sha256": "0f198706d5158f830c79dd3a6a891449025f453c0976f9fa21377c8cd5085cec",
-      "current_status": "BLOCKED_FOR_FULL_FIT: 49,819 train-only rows do not provide full-role targets or independent DEV/FINAL.",
+      "current_status": "BLOCKED_FOR_FULL_FIT: 49,819 historical train-only rows lack full 1.6 targets; amended 21-case authoring seed is single-assistant, text-only and unadmitted; independent rights/two reviewers/DEV/FINAL and exact 1.6 CPU/GPU receipts are absent.",
       "required_before_full_fit": [
         "versioned target schema and measured coverage for episodes, relationships, missions, correction, revocation, decision rationale and source-person boundary",
         "non-null, reviewed confidence/uncertainty and contradiction labels where appropriate",
@@ -175,43 +236,90 @@
         "multiple rights-cleared independent history and generator families with sensitive, cross-person and longitudinal cases",
         "sealed person/source/generator-disjoint DEV and FINAL with independent adjudication and contamination checks",
         "versioned v1.6 full-role trainer, inference runner and evaluator consume the same exact target schema and preserve typed outputs, provenance and authority interfaces; v1.5 CLI is hardware-probe-only",
-        "migrate 1.6 training target serializer, loss, inference and evaluator as one version-bound path; CPU-tested 1.6 semantic validators alone are not a trained full-role MFM"
+        "migrate 1.6 training target serializer, loss, inference and evaluator as one version-bound path; CPU-tested 1.6 semantic validators alone are not a trained full-role MFM",
+        "exact manifest-bound rights records and two independent adjudication receipts per accepted target family; sealed unopened FINAL with source/person/generator lineage"
       ],
-      "gate": "Current audit fails: 420,367/426,367 proposals come from host-only structured multisource cases; all 426,367 have null confidence/uncertainty_ref and empty contradicts, and no nonnull sensitivity_hint. The remaining 6,000 are ten templated text families. Episode and decision_rationale proposal kinds, source_person domain and media beyond text/structured are absent; some basic deletion_request and relationship_norm labels exist only in the small templated tier. Preserve training-only status. CPU verification and bounded hardware probing may continue; full paid fit and product/capability claim must stop. A new corpus manifest alone cannot promote the current v1.5 trainer to a full-role trainer; matching trainer/inference/evaluator schema support is mandatory.",
+      "gate": "Current audit fails: 420,367/426,367 proposals come from host-only structured multisource cases; all 426,367 have null confidence/uncertainty_ref and empty contradicts, and no nonnull sensitivity_hint. The remaining 6,000 are ten templated text families. Episode and decision_rationale proposal kinds, source_person domain and media beyond text/structured are absent; some basic deletion_request and relationship_norm labels exist only in the small templated tier. Preserve training-only status. Source/role-clone verification and optional historical 1.5 CPU/bounded probing may continue. Full 1.6 CPU and GPU receipts wait for admitted 1.6 corpus and matching code; full paid fit and product/capability claim must stop. A new corpus manifest alone cannot promote the current v1.5 trainer to a full-role trainer; matching trainer/inference/evaluator schema support is mandatory. The published 1.6 codec/runner/one-step assessor, 49,819 training-only rows and owner-pasted eight-file source SHA receipt satisfy none of the missing corpus, processor, GPU or downstream gates by themselves. The amended 21-case authoring pack and local one-step diagnostics are not independent gold, a Magnolia CPU receipt, a GPU training result or a capability claim.",
       "contract_ref": "A.L.I.C.E:research/mfm-v1-licensed-base-20260930@df3da321feb56cc33762e38e19f43bbb078a6e36:docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md"
     },
     {
       "id": "specialist_training",
       "after": [
-        "processor_and_bounded_hardware_probe",
         "full_role_readiness"
       ],
-      "operation": "Only after full-role readiness and bounded hardware probe pass, train distinct first-party MFM formation parameters on the verified role clone and versioned, sufficiently broad rights-cleared formation targets. Bind proposals to registered evidence and the deterministic Claim gate. Keep user-private data and gradients in their own custody.",
-      "implementation_status": "MFM public commit ff44c1bd has CPU-tested additive 1.6 semantic validators and an evaluator boundary. The actual trainer/processor/target serializer and inference runner remain 1.5 and are not a full-role 1.6 implementation. No exact 12B processor pass, BF16 backward/probe, full fit, independent FINAL or role qualification has run.",
-      "gate": "Hard stop on the current 49,819-row curriculum as a sole full-fit source. Full paid fit requires the versioned coverage audit, independent adjudicated DEV/FINAL and sealed splits in full_role_readiness, plus a measured backward/restart/resource pass. No product capability follows merely from a trained checkpoint. Require an exact schema/version match across targets, train serialization, runtime inference and evaluator. Do not start a full run with the retained v1.5 CLI or merely swap its manifest.",
-      "legacy_v1_5_cli_hardware_probe_only": "Use processor_and_bounded_hardware_probe.probe_tool with --probe-only for capacity measurement. The former full train command is intentionally not replayable from this seed.",
+      "operation": "Only after full-role readiness and bounded 1.6 hardware probe pass, perform the paid full MFM fit on the admitted, reviewed 1.6 corpus with the verified role clone and first-party formation component. Preserve seeded-untrained negative control, optimizer/checkpoint lineage, license ancestry, no-egress private custody and exact training/source hashes.",
+      "implementation_status": "Blocked: no admitted 1.6 corpus, complete matching codec/trainer/inference/evaluator, actual CPU processor receipt or bounded 1.6 GPU backward/restart receipt. Existing 1.5 mechanics remain an optional feasibility path.",
+      "gate": "A new version-pinned executable tool is recorded only when v16_corpus_admission, v16_code_path, v16_cpu_processor_receipt, v16_bounded_hardware_probe and full_role_readiness pass. Paid output must provide v16_training_receipt and seeded-untrained control; loss alone is not MFM quality.",
+      "legacy_v1_5_cli_hardware_probe_only": "Use optional_diagnostics.optional_v15_processor_and_bounded_hardware_probe.probe_tool with --probe-only for capacity measurement. The former full train command is intentionally not replayable from this seed.",
       "tool": null,
-      "tool_status": "BLOCKED_UNIMPLEMENTED: replace with a version-pinned v1.6-or-later full-role trainer only after its inference runner and evaluator consume the same target contract; the retained v1.5 CLI is valid solely for data/processor checks and a bounded --probe-only hardware receipt."
+      "tool_status": "BLOCKED_BY_EVIDENCE: the published v1.6 trainer exists, but no authenticated full-role corpus, exact CPU processor or bounded GPU receipt exists. Keep the executable full-fit command null until admitted inputs, matching runner/evaluator and exact run arguments are verified; the retained v1.5 CLI is an optional bounded feasibility path only."
+    },
+    {
+      "id": "v16_matched_control_inference",
+      "after": [
+        "specialist_training"
+      ],
+      "operation": "Generate real trained and seeded-untrained 1.6 specialist outputs on identical opened evidence, role clone, decoding, processor and source version; validate both checkpoint/control hashes and output schema. Keep source-only Gemma output optional/descriptive.",
+      "tool": null,
+      "implementation_status": "Local v1.6 runner and one-step paired diagnostic qualifier code exist, but no real trained full-fit v1.6 checkpoint, matched 12B outputs or independent scored result exists. The current qualifier explicitly rejects full-fit artifacts and cannot establish runner execution authenticity.",
+      "gate": "v16_matched_control_receipt verifies both real runs and identical inputs/settings. No stub, copied target, synthetic pass label, silent JSON repair or fallback to Gemma language head may count."
     },
     {
       "id": "qualification",
       "after": [
-        "specialist_training"
+        "v16_matched_control_inference"
       ],
-      "operation": "Compare trained versus seeded-untrained specialist on the same verified MFM role clone under matched inputs and decoding, then specialist removal/swap and the complete governed memory loop on independent histories. Source-only Gemma inference is an optional descriptive reference, not a measured formation control. Add edited-base or fine-tuned-base controls only when an intervention is actually attempted. Exercise attribution, correction/deletion, uncertainty, multimodal cases and no-egress custody.",
+      "operation": "On independently adjudicated sealed FINAL, compare trained versus seeded-untrained 1.6 MFM outputs and evaluate the actual evidence-to-proposal-to-deterministic Claim gate-to-projection/retrieval-to-native judgment loop. Test source-person/host isolation, sensitive authority, cross-person relations, episodes, missions, correction/revocation, uncertainty, multimodal source grounding, deletion propagation and privacy. Log critical errors, ablations and downstream change.",
       "tool": null,
-      "implementation_status": "No sealed assembled-entity evaluation exists.",
-      "gate": "Independent assembled tests require zero critical authority/privacy failures on the qualified suite and causal specialist value against a real seeded-untrained control. A source-only language-head diagnostic cannot substitute for that matched comparison. Diagnosed failures trigger targeted repair and requalification; no finite test certifies universal zero foreign influence."
+      "implementation_status": "A local custody-bound one-step v1.6 assessment script and CPU tests exist; it opens FINAL only with separate explicit custodian invocation after hash/signature checks, but supports one-step probe artifacts only and reports no execution authenticity or memory-gate/downstream judgment. No real sealed independent FINAL, full-fit evaluator, accepted-memory projection/retrieval or native-judgment result exists.",
+      "gate": "v16_downstream_receipt binds sealed FINAL access and actual model/runtime versions; critical authority/privacy failures must be zero on the qualified suite and MFM must show causal value over matched seeded control. Any missing role dimension, rights/FINAL breach, or unmeasured downstream claim blocks product promotion. A one-step custody assessment may diagnose development or custodian-held FINAL probe outputs, but cannot qualify a full-fit MFM or replace the actual gate-to-judgment loop. The full-fit evaluator must retain separate FINAL custody and externally pinned authentic roster semantics.",
+      "probe_assessment_reference": "scripts/mfm/qualify_v16_formation_specialist.py is a separate one-step diagnostic evaluator, not this full-fit/downstream qualification tool."
+    },
+    {
+      "id": "private_owner_adaptation_admission",
+      "after": [
+        "qualification"
+      ],
+      "operation": "FBM authenticates a new owner’s consent and source permissions for local, private MFM adaptation separately from the shared distributable MFM corpus. Record per-source access, formation_training permission, subject/counterpart scope, sensitivity, retention, revocation and egress rules. A model_distribution grant is neither required nor inferred from local permission. If training permission is absent, admit only permitted governed memory/retrieval and do not create private gradient updates.",
+      "tool": null,
+      "implementation_status": "A separate local-owner rights admission contract and tool remain unimplemented. The existing formation_dataset_admission.py requires formation_training plus model_distribution for shared train sources and cannot be reused unchanged here.",
+      "gate": "consumer_local_rights_receipt and consumer_private_adaptation_manifest bind exact owner-scoped source bytes/identities and intended local operations. No two independent target reviewers or owner-supplied gold corpus is required for installation; ambiguous personal facts stay uncertain or ask selectively. Revocation must propagate to adapted state and derivatives."
+    },
+    {
+      "id": "per_user_mfm_adaptation",
+      "after": [
+        "private_owner_adaptation_admission"
+      ],
+      "operation": "At consumer installation, FBM starts from the qualified host-neutral V1 MFM capability and its licensed role-base ancestry, then uses a separately admitted, consented private corpus to resolve actor/subject/host/source-person roles, deduplicate exports and construct isolated per-user specialist state and governed memory links. Local weight updates require the owner’s formation_training permission; model_distribution is not required for a private adaptation. If local training is denied or evidence is sparse, use only permitted state/retrieval, retain UNKNOWN, defer or ask selectively rather than invent a personal history.",
+      "tool": null,
+      "implementation_status": "Future builder lane only. No qualified shared 1.6 MFM, per-user adaptation trainer, cold-start receipt or autonomous FBM transfer evaluation exists in this seed.",
+      "gate": "private_owner_adaptation_admission has passed for exact sources and intended operations. per_user_adaptation_receipt binds parent base/MFM versions, local rights, private inventory, adapted weights if authorized, cold-start decisions and deletion/export lineage. No Rayan/Elaina or other consumer private data, gradients or reconstructable descendants may enter shared MFM/FBM weights. Sparse-data cases require calibrated abstention and safe partial activation."
+    },
+    {
+      "id": "fbm_consumer_replay_qualification",
+      "after": [
+        "per_user_mfm_adaptation"
+      ],
+      "operation": "Across independent new users, prove FBM can automatically assemble and qualify isolated personal MFM, identity, host, relationship and assistant-self state from authorized corpus and source choices, with governed memory and updates. Demonstrate cold-start and sparse-evidence abstention, sensitive/cross-person handling, correction/deletion, rollback and portability without per-user hand-labeled gold or external teacher.",
+      "tool": null,
+      "implementation_status": "Future product gate. This procedure seed records the required builder behavior but no autonomous FBM build, cross-user transfer or consumer qualification has been run.",
+      "gate": "Multiple person/source-disjoint transfer cases demonstrate automatic building from consented data only, correct abstention when personal evidence is absent, no shared-private gradient or cross-user leakage, and independent downstream gains. The shared MFM qualification and one-person fit alone do not establish FBM product autonomy."
     }
   ],
   "artifacts_to_keep": [
     "pinned source manifest and license",
-    "fresh source receipt",
-    "immutable verified role clone and parent-linked receipt",
-    "hash-bound full-role coverage and independent adjudication receipts",
-    "first-party specialist checkpoint/optimizer lineage",
-    "independent assembled qualification receipt",
-    "optional baseline or diagnosed-repair receipts when generated"
+    "fresh source receipt and parent-linked verified role clone",
+    "versioned 1.6 codec/trainer/inference/evaluator source and schema digest",
+    "rights and two-reviewer target receipts with sealed DEV/FINAL split lineage",
+    "hash-bound full-role coverage report",
+    "actual Magnolia or equivalent full CPU processor receipt",
+    "bounded 1.6 GPU backward/restart receipt",
+    "paid full-fit checkpoint/optimizer and seeded-control lineage",
+    "matched trained/control inference receipt",
+    "independent FINAL downstream gate-to-judgment receipt",
+    "private owner adaptation rights and source-role admission receipt when implemented",
+    "private per-user adaptation and cold-start/abstention receipt when implemented",
+    "FBM per-user autonomous replay and privacy/rollback receipt when achieved"
   ],
   "training_eligible": false,
   "evaluation_eligible": false,
@@ -247,6 +355,46 @@
       "operation": "Optional public baseline inference against the unmodified source; capture deterministic outputs and runtime/device provenance if useful to diagnose an observed assembled MFM failure.",
       "tool": "python {mfm_checkout}/scripts/mfm/run_gemma4_base_behavior.py --snapshot {snapshot_dir} --receipt {receipt_path} --prompts {public_diagnostic_output_dir}/inputs.jsonl --output {public_diagnostic_output_dir}/untouched.jsonl",
       "gate": "Real model outputs, runtime/device receipt and unexercised modality coverage are recorded. Never substitute a stub or the -it trainer."
+    },
+    {
+      "id": "optional_v15_processor_and_bounded_hardware_probe",
+      "after": [
+        "role_base_verify"
+      ],
+      "operation": "Optional feasibility-only data/processor and bounded GPU backward/restart measurement with historical 1.5 targets on the verified role clone. It cannot stand in for a 1.6 corpus, codec or full-role CPU/GPU receipt.",
+      "data_preflight_tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/train_v1_formation_specialist.py data-preflight --admitted-manifest {admitted_manifest} --input-sha256 {input_sha256}",
+      "synthetic_training_argument_alternative": "For the current training-only curriculum, replace --admitted-manifest {admitted_manifest} in data_preflight_tool, processor_preflight_tool and probe_tool with --curriculum-manifest {training_curriculum_manifest} --owner-authorization-ref {owner_authorization_ref}; bind input_sha256 to that curriculum manifest. Do not run specialist_training.tool for a full fit on this mixture alone.",
+      "processor_preflight_tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/train_v1_formation_specialist.py processor-preflight --admitted-manifest {admitted_manifest} --input-sha256 {input_sha256} --prepared-base-dir {prepared_base_dir} --prepared-base-receipt {prepared_base_receipt} --preflight-receipt {preflight_receipt} --max-source-tokens {max_source_tokens} --max-target-tokens {max_target_tokens} --specialist-width {specialist_width} --specialist-layers {specialist_layers} --specialist-heads {specialist_heads}",
+      "probe_tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/train_v1_formation_specialist.py train --admitted-manifest {admitted_manifest} --input-sha256 {input_sha256} --prepared-base-dir {prepared_base_dir} --prepared-base-receipt {prepared_base_receipt} --preflight-receipt {preflight_receipt} --output-dir {probe_output_dir} --max-source-tokens {max_source_tokens} --max-target-tokens {max_target_tokens} --specialist-width {specialist_width} --specialist-layers {specialist_layers} --specialist-heads {specialist_heads} --max-cross-attention-pairs {max_cross_attention_pairs} --probe-only",
+      "implementation_status": "Source files have owner-pasted eight-file SHA passes on Magnolia. No foundation source/role-clone receipt at that path, full CPU processor receipt or bounded GPU backward probe has been returned.",
+      "gate": "Preserve exact 1.5 input and code lineage; no silent truncation. Passing this optional bounded measurement does not admit full 1.6 paid fit or product capability."
+    },
+    {
+      "id": "v16_synthetic_authoring_diagnostic",
+      "after": [
+        "v16_corpus_design"
+      ],
+      "operation": "Reproduce the amended fictional 1.6 authoring seed and aggregate audit to exercise source anchors, explicit present/negative/unknown statuses, paired source flips and bounded history. Keep this diagnostic separate from rights-authenticated, twice-adjudicated, independent DEV/FINAL.",
+      "tool": null,
+      "script_refs": [
+        "scripts/mfm/build_v16_authoring_seed.py",
+        "scripts/mfm/audit_v16_authoring_corpus.py"
+      ],
+      "corpus_sha256": "8e967ee6494f2c5ec47ab602bad213df8c07c53b1abe9a9aff950f19c0e78e22",
+      "audit_sha256": "3df1ba7d61db6e4a09106ac80c7fc95353e8b31579fbe14d7ee3226ba695d99d",
+      "implementation_status": "Public MFM code and exact amended diagnostic artifacts at implementation_sources.mfm_commit; 15 train/6 same-generator diagnostic DEV. No full corpus admission or model result.",
+      "gate": "Artifact hashes and authoring audit agree. Diagnostic development shares generator lineage with training; no authenticated rights, independent human target review, sealed FINAL or full-role fit admission follows."
+    },
+    {
+      "id": "v16_one_step_custody_assessment",
+      "after": [
+        "v16_bounded_hardware_probe"
+      ],
+      "operation": "In a separate assessment process, compare actual trained versus seeded-untrained one-optimizer-step probe outputs on hash-bound, signed reviewed cases. FINAL is opened only when an authorized custodian explicitly invokes --split final --final-custodian; the optimizer never reads its payload. Check external roster, source/target/output hashes and matching local artifacts, and write a private immutable 0600 report outside inputs.",
+      "tool": null,
+      "script_ref": "scripts/mfm/qualify_v16_formation_specialist.py",
+      "implementation_status": "Published one-step assessor code and CPU tests; no trusted roster, signed independent gold, role clone, 12B inference output or real diagnostic report has run. Full-fit artifacts are explicitly rejected.",
+      "gate": "One-step probe artifacts only; reject a full-fit checkpoint. Even a report with signed declarations cannot independently authenticate real reviewers, legal rights, semantic truth or runner execution, and it does not test memory-gate writes, projection, retrieval or native judgment. Diagnostic-only result never promotes MFM."
     }
   ],
   "optional_intervention": [
@@ -290,9 +438,56 @@
     "prepared_base_receipt": "{derivative_receipt}",
     "verification_tool": "PYTHONPATH={foundation_checkout} python -m src.alice_foundation.gemma4_v1 verify-role-base {derivative_receipt} --snapshot {derivative_dir} --role mfm",
     "replay_steps": [
+      "v16_cpu_processor_receipt",
+      "v16_bounded_hardware_probe",
+      "full_role_readiness",
       "specialist_training",
-      "qualification"
+      "v16_matched_control_inference",
+      "qualification",
+      "per_user_mfm_adaptation",
+      "fbm_consumer_replay_qualification"
     ],
-    "gate": "Recompute processor/optimizer/checkpoint lineage from the selected derivative and rerun independent assembled qualification. An edit hash or seven-case diagnostic is not a capability pass."
+    "gate": "A changed hash or seven-case diagnostic is not capability evidence. Recompute CPU/GPU fit, optimizer/control/inference lineage and independent downstream qualification on the chosen derivative; deployed per-user assemblies require migration and requalification."
+  },
+  "autonomous_fbm_replay_contract": {
+    "consumer_input": "Owner authorizes corpus access and optional source-pack choices; the owner is not required to bring a hand-labeled formation corpus, manually construct models or subscribe to an external teacher.",
+    "fbm_responsibilities": [
+      "inventory, adapt and deduplicate authorized sources with actor/subject/source-person/host separation",
+      "preserve consent, rights, sensitivity, provenance, time, corrections and revocations",
+      "construct versioned training candidates and critique them without treating synthetic continuations as lived truth",
+      "plan coverage, frozen splits, fit and qualification from reusable host-neutral builder competence",
+      "assemble per-user MFM with identity, host, relationship, assistant-self and governed memory interfaces",
+      "monitor outcome-driven updates, failures, deletion lineage, export and rollback"
+    ],
+    "review_boundary": "Shared full-role MFM development needs rights authentication, two independent target reviewers and sealed FINAL; consumer installation uses built-in qualified builder competence plus selective owner review for genuinely ambiguous personal fidelity, not an expert-labeling job on every installation.",
+    "current_status": "PROCEDURE_ONLY: autonomous FBM construction and per-user MFM replay are not implemented or qualified.",
+    "shared_capability": "V1 distributes a qualified host-neutral MFM capability on licensed Gemma ancestry. FBM creates isolated owner-specific formation state from authorized evidence; Rayan/Elaina private data or gradients never enter shared weights.",
+    "cold_start": "With sparse, contradictory or missing evidence, FBM retains provenance and abstains or asks selectively. It may not fabricate a source person, relationship, episode or user history to appear complete.",
+    "rights_profiles": {
+      "shared_host_neutral_MFM_training": "Every included source requires authenticated permission for formation_training AND model_distribution of the resulting shared weight lineage, plus development-level independent review and sealed FINAL.",
+      "local_owner_instance_adaptation": "Only the owner’s authorized local formation_training and scoped source access are required for private adapted weights; model_distribution is not required or implied. If local training is denied, FBM may use permitted governed retrieval/state with uncertainty but must not update personal weights.",
+      "implementation_separation": "Current formation_dataset_admission.py enforces shared distributable train-source rights and must not be reused unchanged for private owner adaptation. A distinct local owner admission contract/tool remains to be implemented."
+    }
+  },
+  "latest_v16_diagnostic_authoring_seed": {
+    "artifact_scope": "Published MFM V1 branch at exact implementation_sources.mfm_commit; hashes name diagnostic case/audit bytes, not an admitted full-role corpus.",
+    "corpus_path": "benchmarks/mfm/v16_authoring_seed.jsonl",
+    "corpus_sha256": "8e967ee6494f2c5ec47ab602bad213df8c07c53b1abe9a9aff950f19c0e78e22",
+    "aggregate_audit_path": "benchmarks/mfm/v16_authoring_seed_audit.json",
+    "aggregate_audit_sha256": "3df1ba7d61db6e4a09106ac80c7fc95353e8b31579fbe14d7ee3226ba695d99d",
+    "partition_counts": {
+      "train": 15,
+      "diagnostic_development": 6
+    },
+    "status": "fictional text-only single-assistant authoring and code diagnostics; ten explicit present/negative/unknown dimensions; no authenticated source rights, two real independent target reviews, generator-disjoint DEV, sealed FINAL, trained model or downstream result",
+    "blind_qa": "Two source-only assistant QA passes prompted target amendments; both used the same provider and do not count as independent human gold.",
+    "admission": "BLOCKED_FOR_SHARED_FULL_FIT; do not relabel this seed as adjudicated gold or substitute it for the 49,819-row historical mixture."
+  },
+  "latest_v16_assessment_method": {
+    "script_path": "scripts/mfm/qualify_v16_formation_specialist.py",
+    "current_scope": "CPU-tested one-optimizer-step diagnostic only; refuses full-fit artifacts; cannot assert execution authenticity or downstream authority/judgment",
+    "custody": "Separate explicitly invoked FINAL custodian process opens exact hash-bound FINAL source and target payload only after manifest admission and roster signature checks; trainer and development selector do not import this module. Report is new-file-only, mode 0600, outside inputs.",
+    "lineage_checks": "Pinned corpus manifest, external roster digest, prepared base, processor, trained and seeded-untrained component files, paired output SHA-256 and matched decoding.",
+    "status": "PUBLIC_CODE_METHOD_ONLY at MFM commit 23fbe88faeb3f90b2e6d360d3c1ca983b8b3b040; no trusted external roster, independent gold, role clone, real 12B output or qualified result."
   }
 }

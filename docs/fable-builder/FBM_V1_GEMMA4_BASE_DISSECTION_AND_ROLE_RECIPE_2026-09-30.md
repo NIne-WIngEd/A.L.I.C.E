@@ -54,17 +54,14 @@ assembled MFM, causally diagnosed, and a candidate repair is justified. The
 intervention tools have tiny synthetic tests, not a 24 GB behavior result.
 The MFM public diagnostic runner and paired scorer remain optional tools,
 not an edit-before-training gate.
-The current v1.5 specialist CLI has CPU-tested data, processor and training
-mechanics for its narrower target schema. The V1 seed permits its exact-base
-CPU processor pass and bounded `--probe-only` backward/restart check. It
-blocks full fit until a versioned full-role target and matching trainer,
-inference runner and evaluator exist. A corpus manifest swap does not upgrade
-the v1.5 CLI. The MFM branch's [1.6 admission contract](https://github.com/NIne-WIngEd/A.L.I.C.E/blob/df3da321feb56cc33762e38e19f43bbb078a6e36/docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md)
-now has CPU-tested additive semantic checks for source sensitivity, episodes,
-relationship counterparts and mission links. It has not migrated the 1.5
-target serializer, trainer or inference runner. No exact-base processor pass,
-BF16 gradient step, restart, full fit or independent entity qualification has
-been measured.
+The historical v1.5 specialist CLI has CPU-tested mechanics for its narrower
+target schema. The V1 seed keeps its CPU and bounded `--probe-only` route as
+optional feasibility work; a corpus manifest swap does not upgrade it. The
+MFM branch's [1.6 admission contract](https://github.com/NIne-WIngEd/A.L.I.C.E/blob/23fbe88faeb3f90b2e6d360d3c1ca983b8b3b040/docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md)
+and v1.6 codec, trainer, runner and one-step assessor are now published with
+CPU/static tests. There is still no admitted full-role corpus or real
+exact-base processor pass, BF16 GPU step, restart, full fit or independent
+entity qualification.
 The existing 49,819-case owner-authorized synthetic mixture is available for
 training-only admission through `--curriculum-manifest`. It supplies neither
 independent development results nor sealed FINAL qualification.
@@ -86,6 +83,21 @@ templated tier does include 600 deletion requests and 600 relationship norms;
 those counts do not fill correction, revocation, relationship and mission
 coverage for the full role.
 
+The MFM branch at public commit
+`23fbe88faeb3f90b2e6d360d3c1ca983b8b3b040` has a **diagnostic-only**
+amended 1.6 authoring seed:
+15 fictional train and six diagnostic development cases. The seed SHA-256 is
+`8e967ee6494f2c5ec47ab602bad213df8c07c53b1abe9a9aff950f19c0e78e22`;
+its aggregate audit SHA-256 is
+`3df1ba7d61db6e4a09106ac80c7fc95353e8b31579fbe14d7ee3226ba695d99d`.
+It explicitly marks ten formation dimensions as present, negative or unknown
+and exercises the 1.6 codec. Two source-only assistant QA passes prompted
+target corrections, but both used the same provider. The pack remains one
+author's text-only fiction with shared generator lineage, no authenticated
+rights, two real independent target reviews, independent DEV or sealed FINAL.
+It cannot admit a paid full fit or support a capability claim. The active
+FBM seed pins that exact MFM commit and the two diagnostic file hashes.
+
 The current curriculum is **blocked as the sole source for full paid MFM
 training**. FBM must first version the target schema and show coverage of the
 full formation role, then obtain additional rights-cleared histories with
@@ -94,10 +106,15 @@ families must cover sensitive, cross-person, longitudinal, multimodal,
 uncertainty, contradiction, correction and revocation cases with person,
 source and generator separation. The full-role trainer, inference runner and
 evaluator must all consume the same versioned target semantics. Source
-verification, role cloning, CPU
-processor admission and a bounded backward/restart hardware probe may proceed
-now. Those checks establish custody and fit, not full-role learning or product
-qualification. Do not claim capability from the present training-only mixture.
+verification, role cloning and optional 1.5 CPU/`--probe-only` feasibility work
+may proceed now. The full 1.6 CPU processor receipt and bounded backward pass
+require the admitted corpus and matching 1.6 code path. These checks establish
+custody and hardware fit, not full-role learning or product qualification.
+Do not claim capability from the present training-only mixture.
+The published signed-review verifier tests record format and signatures; an
+independent steward must authenticate the reviewers, rights issuer, blind
+review and original source rights. The shared distributable MFM gate remains
+separate from private per-user adaptation consent.
 
 ## Reproducible procedure
 
@@ -105,21 +122,24 @@ qualification. Do not claim capability from the present training-only mixture.
    preserve attribution, seal a role-local clone, and rehash it at trainer use.
    An inventory can record tensor keys/shapes/dtypes/ties and processor paths;
    structure alone does not confer MFM authority or prove behavioral causes.
-2. **Check the data and hardware.** Run a corpus-wide CPU processor pass and
-   a bounded backward/restart hardware probe on the verified role clone.
-   Version and audit full-role formation targets and independently adjudicated
-   development/FINAL histories before approving a full paid fit.
-3. **Train the MFM role after readiness passes.** Initialize separate
+2. **Admit full-role data and code.** Version 1.6 source and target records,
+   authenticate rights and two independent reviews, and freeze disjoint DEV
+   plus sealed FINAL. Build one matching codec, trainer, inference and evaluator
+   path. The 1.5 CPU and bounded hardware checks remain optional feasibility.
+3. **Measure the exact 1.6 route.** Complete the corpus-wide CPU processor
+   pass on Magnolia or equivalent, then a bounded backward/restart probe on
+   the intended GPU topology. Neither receipt proves role quality.
+4. **Train the MFM role after readiness passes.** Initialize separate
    first-party formation parameters from sufficiently broad authorized data.
    Bind structured proposals to registered evidence and the deterministic
    Claim gate. The clone supplies inherited representations; new learned
    parameters must causally perform formation on independent histories.
-4. **Assemble per person.** Build each role's distinct learned state from
+5. **Assemble per person.** Build each role's distinct learned state from
    authorized instance evidence. Keep private corpora, adapters/deltas,
    optimizer states, indexes, memory and backups in separate instance custody.
    Never merge a user's private gradient or data into the distributed common
    base. Bind all components to upstream and transform manifests.
-5. **Qualify and diagnose.** Compare the MFM role clone with trained versus
+6. **Qualify and diagnose.** Compare the MFM role clone with trained versus
    seeded-untrained specialist weights under matched inputs and decoding,
    each role with and without its personal component, wrong-person swaps and
    the complete governed loop on independent held-out cases. Source-only
@@ -128,14 +148,14 @@ qualification. Do not claim capability from the present training-only mixture.
    deletion. If a specific Gemma influence causes failure, distinguish it
    from prompt, tokenizer, loader, retrieval, learned-component and gate
    effects. Record the cases, localization evidence and uncertainty.
-6. **Repair only an observed failure.** Prefer role-specific training,
+7. **Repair only an observed failure.** Prefer role-specific training,
    structured outputs and enforceable authority gates. Change base parameters
    only when a controlled intervention improves independent role tests
    without unacceptable capability loss. Store parent/result hashes, changed
    tensors, data provenance, script and rollback. A shared edit requires
    cross-role requalification. A policy is a runtime control, not evidence
    that weights lost a trait.
-7. **Requalify any repaired assembly.** Include an edited-base control only
+8. **Requalify any repaired assembly.** Include an edited-base control only
    when an edit was attempted. Record every critical inherited-behavior
    override, privacy failure and competence regression. Promotion requires
    the registered acceptance gates and no critical failure on the qualified

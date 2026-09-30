@@ -25,6 +25,21 @@ corpus, optimizer state, indexes, checkpoints and backups in separate private
 custody. Never promote private content or gradients to the shared base. A
 full-weight fine-tune still has upstream ancestry; a detachable personal
 component offers clearer custody but still depends on the base at inference.
+At consumer installation, the user supplies corpus access and optional source
+choices. FBM must inventory and attribute that data, assemble and qualify the
+personal components, and continue governed updates. The user does not have
+to hand-label a gold corpus or hire a teacher to build MFM. The prelaunch
+shared MFM training and qualification program still needs authenticated
+source rights, two independent target reviews and sealed FINAL evidence;
+those are development gates, not a labeling job transferred to consumers.
+Shared distributable MFM weights require source rights for both
+`formation_training` and `model_distribution`. A user's private local
+adaptation requires that owner's scoped `formation_training` permission for
+weight updates, without a `model_distribution` grant. If local training is
+denied, FBM may use separately authorized governed memory/retrieval without
+private gradient updates. The existing shared-source admission checker applies
+the distribution rule and cannot be reused unchanged for consumer adaptation;
+a separate private owner admission contract and tool remain future work.
 For MFM specifically, train formation weights under an explicit
 source-selection, attribution, uncertainty, consolidation and revision
 objective. Connect their structured proposals to registered evidence and the
@@ -106,10 +121,58 @@ formation. The trainer, inference runner and evaluator must consume that
 same versioned full-role target; the current v1.5 specialist CLI is usable
 only for data/processor checks and a bounded `--probe-only` hardware receipt.
 Changing its input manifest alone would not add missing output semantics.
-The MFM branch now has a [CPU-tested 1.6 semantic admission contract](https://github.com/NIne-WIngEd/A.L.I.C.E/blob/df3da321feb56cc33762e38e19f43bbb078a6e36/docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md),
-but its trainer, target serializer and inference runner still require a
-version-bound upgrade and new adjudicated labels. The active seed pins that
-public MFM commit and foundation commit separately.
+The MFM branch now has a [CPU-tested 1.6 semantic admission contract](https://github.com/NIne-WIngEd/A.L.I.C.E/blob/23fbe88faeb3f90b2e6d360d3c1ca983b8b3b040/docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md)
+and a published 1.6 codec, trainer, runner and one-step assessor. These paths
+still need admitted independent gold, real source/CPU/GPU receipts and a
+full-fit evaluator plus downstream gate results. The active seed pins that
+public MFM commit and the foundation commit separately.
 Source/clone verification, CPU processor work and a bounded hardware probe
 remain possible while that corpus work proceeds. No current
 training, inference or product capability follows from this audit.
+
+## Ordered V1 MFM replay evidence
+
+The [active FBM procedure seed](../../training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json)
+separates these receipts so one passing step cannot stand in for another:
+
+| Step | Required evidence | Current state |
+| --- | --- | --- |
+| Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Owner-pasted source SHA checks; clone receipt pending |
+| Full-role corpus | Versioned 1.6 targets, authenticated rights, two reviewers, disjoint DEV and sealed FINAL | Historical 49,819 rows fail coverage; published 21-case 1.6 authoring seed is diagnostic only |
+| Code path | Matching 1.6 codec, trainer, inference, evaluator and gate adapter | Published codec/trainer/runner and one-step assessor code; no complete capability receipt or downstream gate adapter |
+| CPU and GPU admission | Complete Magnolia CPU processor receipt, then bounded 1.6 backward/restart result | Neither receipt established |
+| Paid full fit | Hash-bound model, optimizer and seeded-untrained control | Blocked |
+| Independent qualification | Matched trained/control outputs, sealed FINAL and actual memory-gate-to-native-judgment effect | Not run |
+| Private owner admission | Scoped local training/access rights, source roles, sensitivity and deletion lineage; no distribution grant or two reviewers required | Contract and tool pending |
+| Per-user adaptation | Qualified shared MFM parent, authorized private corpus, isolated instance state and sparse-data abstention receipt | Procedure only |
+| Consumer FBM replay | Automatic private per-user assembly and independent transfer tests across new users | Procedure only |
+
+The historical 1.5 processor/probe path remains optional feasibility work.
+Unimplemented 1.6 tools are `null` in the seed. A passing code test, source
+checksum, GPU step or training loss cannot skip the later gates.
+The amended 21-case authoring seed is pinned by SHA-256
+`8e967ee6494f2c5ec47ab602bad213df8c07c53b1abe9a9aff950f19c0e78e22`
+and its aggregate audit by
+`3df1ba7d61db6e4a09106ac80c7fc95353e8b31579fbe14d7ee3226ba695d99d`.
+Fifteen cases are synthetic train; six are same-generator diagnostic DEV.
+Blind source-only internal model QA amended several targets but did not
+provide independent human gold, rights authentication or sealed FINAL. The
+signed-review verifier mechanism still needs an independent trusted roster
+and actual steward-authenticated reviews. Local one-step and cache tests are
+code diagnostics, not a Magnolia processor, GPU fit or downstream result.
+The MFM `scripts/mfm/qualify_v16_formation_specialist.py` assessor is
+restricted to **one-optimizer-step probe artifacts**. Its separate custodian
+invocation may open hash-bound FINAL source/target bytes only with explicit
+`--split final --final-custodian`; training and development selection do not
+import that module. It checks a pinned external roster, prepared base,
+processor, paired trained/seeded weights and output digests, then writes a
+private mode-0600 report outside input paths. It cannot prove inference
+execution authenticity, authenticate human identities or legal rights by
+itself, assess full-fit checkpoints, or demonstrate the memory gate and native
+judgment. No such real diagnostic report has run.
+A qualified shared V1 MFM would supply host-neutral formation competence with
+licensed Gemma ancestry; no such qualified checkpoint exists yet. FBM must
+build each user's private learned state automatically
+from consented evidence and keep Rayan, Elaina and every consumer's private
+data and gradients out of shared weights. Sparse evidence permits cautious
+partial state and abstention; it never licenses a fabricated personal history.
