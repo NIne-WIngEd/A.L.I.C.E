@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+from contextlib import redirect_stdout
 from hashlib import sha256
+import io
 import json
 from pathlib import Path
 import shutil
@@ -97,6 +99,73 @@ class FoundationCustodyTests(unittest.TestCase):
             self.clone_receipt, replacement, candidate, operation, stage_receipt)
         return candidate, operation, stage_receipt
 
+    def test_exact_role_clone_is_an_admitted_unqualified_v1_base(self):
+        self._clone()
+        clone = foundation.read_receipt(self.clone_receipt)
+        self.assertEqual(clone["qualification"], "unqualified")
+        self.assertEqual(foundation.verify_clone(
+            self.clone_receipt, snapshot=self.clone, expected_role="mfm"), clone)
+        self.assertEqual(foundation.verify_role_base(
+            self.clone_receipt, snapshot=self.clone, expected_role="mfm"), clone)
+        self.assertEqual(clone["files"], foundation.read_receipt(self.source_receipt)["files"])
+        self.assertFalse((self.clone / "qualified.json").exists())
+
+    def test_role_base_cli_accepts_verified_clone(self):
+        self._clone()
+        output = io.StringIO()
+        with redirect_stdout(output):
+            self.assertEqual(foundation.main([
+                "verify-role-base", str(self.clone_receipt), "--snapshot", str(self.clone),
+                "--role", "mfm",
+            ]), 0)
+        self.assertEqual(json.loads(output.getvalue()), {
+            "schema": foundation.CLONE_SCHEMA,
+            "receipt_sha256": foundation.read_receipt(self.clone_receipt)["receipt_sha256"],
+        })
+
+    def test_role_base_rejects_raw_source_wrong_role_or_wrong_clone(self):
+        self._clone()
+        with self.assertRaisesRegex(foundation.FoundationError, "unexpected receipt schema"):
+            foundation.verify_role_base(self.source_receipt, snapshot=self.source,
+                                        expected_role="mfm")
+        with self.assertRaisesRegex(foundation.FoundationError, "wrong role"):
+            foundation.verify_role_base(self.clone_receipt, expected_role="personality")
+        with self.assertRaisesRegex(foundation.FoundationError, "path differs"):
+            foundation.verify_role_base(self.clone_receipt, snapshot=self.source,
+                                        expected_role="mfm")
+
+    def test_role_base_rechecks_clone_bytes_even_if_receipt_is_resealed(self):
+        self._clone()
+        (self.clone / "model.safetensors").write_bytes(_weights(modified=True))
+        with self.assertRaisesRegex(foundation.FoundationError, "changed since receipt"):
+            foundation.verify_role_base(self.clone_receipt, expected_role="mfm")
+        altered = json.loads(self.clone_receipt.read_text())
+        for row in altered["files"]:
+            if row["path"] == "model.safetensors":
+                row["sha256"] = sha256(_weights(modified=True)).hexdigest()
+        altered.pop("receipt_sha256")
+        altered["receipt_sha256"] = sha256(foundation._canonical(altered)).hexdigest()
+        self.clone_receipt.write_text(json.dumps(altered))
+        with self.assertRaisesRegex(foundation.FoundationError, "pinned publisher bytes"):
+            foundation.verify_role_base(self.clone_receipt, expected_role="mfm")
+
+    def test_clone_cannot_claim_qualification_or_omit_parent_ancestry(self):
+        self._clone()
+        clone = json.loads(self.clone_receipt.read_text())
+        clone["qualification"] = "qualified"
+        clone.pop("receipt_sha256")
+        clone["receipt_sha256"] = sha256(foundation._canonical(clone)).hexdigest()
+        self.clone_receipt.write_text(json.dumps(clone))
+        with self.assertRaisesRegex(foundation.FoundationError, "unexpected clone qualification"):
+            foundation.verify_clone(self.clone_receipt, expected_role="mfm")
+        clone["qualification"] = "unqualified"
+        clone.pop("parent_source_receipt_sha256")
+        clone.pop("receipt_sha256")
+        clone["receipt_sha256"] = sha256(foundation._canonical(clone)).hexdigest()
+        self.clone_receipt.write_text(json.dumps(clone))
+        with self.assertRaisesRegex(foundation.FoundationError, "parent source receipt"):
+            foundation.verify_clone(self.clone_receipt, expected_role="mfm")
+
     def test_clone_then_changed_derivative_materializes_with_unqualified_receipt(self):
         self._clone()
         candidate, operation, stage_receipt = self._stage()
@@ -115,6 +184,8 @@ class FoundationCustodyTests(unittest.TestCase):
                             (self.clone / "model.safetensors").read_bytes())
         self.assertEqual(foundation.read_receipt(receipt_path), derivative)
         self.assertEqual(foundation.verify_derivative(
+            receipt_path, snapshot=destination, expected_role="mfm"), derivative)
+        self.assertEqual(foundation.verify_role_base(
             receipt_path, snapshot=destination, expected_role="mfm"), derivative)
         with self.assertRaisesRegex(foundation.FoundationError, "wrong role"):
             foundation.verify_derivative(receipt_path, expected_role="personality")

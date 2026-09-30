@@ -1,9 +1,10 @@
 """Offline custody and provenance for the shared Fable V1 Gemma 4 source.
 
 This module does not download weights, import model code, train, or infer
-behavior. It can stage one explicitly supplied tensor payload into a separate
-copy, leaving the source unchanged. The resulting artifact is not a finished
-or behaviorally qualified personal model.
+behavior. A role-local, hash-verified clone may be used as the licensed V1
+starting checkpoint. It can also stage one explicitly supplied tensor payload
+into a separate copy. Neither artifact is a finished or behaviorally
+qualified personal model.
 """
 
 from __future__ import annotations
@@ -180,6 +181,31 @@ def _verify_receipted_snapshot(receipt: dict) -> tuple[Path, dict[str, dict]]:
     return snapshot, indexed
 
 
+def verify_clone(receipt_path: str | Path, *, snapshot: str | Path | None = None,
+                 expected_role: str | None = None) -> dict:
+    """Admit only an exact, role-local copy of the pinned publisher bytes.
+
+    All eight files are rehashed at the point of use. The clone is a licensed
+    source checkpoint, not an independently owned or trained role model.
+    """
+    receipt = read_receipt(receipt_path, schemas={CLONE_SCHEMA})
+    if expected_role is not None and receipt.get("role") != expected_role:
+        raise FoundationError("prepared base has the wrong role")
+    _validate_role(receipt.get("role", ""))
+    parent_digest = receipt.get("parent_source_receipt_sha256")
+    if not isinstance(parent_digest, str) or not re.fullmatch(r"[0-9a-f]{64}", parent_digest):
+        raise FoundationError("clone lacks a parent source receipt digest")
+    if receipt.get("qualification") not in (None, "unqualified"):
+        raise FoundationError("unexpected clone qualification")
+    if not isinstance(receipt.get("snapshot_path"), str):
+        raise FoundationError("clone receipt lacks an absolute snapshot path")
+    if snapshot is not None and _absolute_directory(snapshot) != \
+            _absolute_directory(receipt["snapshot_path"]):
+        raise FoundationError("prepared base path differs from clone receipt")
+    _verify_receipted_snapshot(receipt)
+    return receipt
+
+
 def verify_derivative(receipt_path: str | Path, *, snapshot: str | Path | None = None,
                       expected_role: str | None = None) -> dict:
     """Admit the exact modified artifact bytes, without claiming role quality.
@@ -220,6 +246,19 @@ def verify_derivative(receipt_path: str | Path, *, snapshot: str | Path | None =
     except InventoryError as exc:
         raise FoundationError(f"prepared base structure invalid: {exc}") from exc
     return receipt
+
+
+def verify_role_base(receipt_path: str | Path, *, snapshot: str | Path | None = None,
+                     expected_role: str | None = None) -> dict:
+    """Admit a role clone or a measured, byte-tracked derivative for V1 use.
+
+    No weight edit is mandatory. The two receipt schemas remain distinct so a
+    source clone cannot be relabelled a derivative or a qualified MFM.
+    """
+    receipt = read_receipt(receipt_path, schemas={CLONE_SCHEMA, DERIVATIVE_SCHEMA})
+    if receipt["schema"] == CLONE_SCHEMA:
+        return verify_clone(receipt_path, snapshot=snapshot, expected_role=expected_role)
+    return verify_derivative(receipt_path, snapshot=snapshot, expected_role=expected_role)
 
 
 def _validate_role(role: str) -> None:
@@ -270,7 +309,8 @@ def clone_verified_source(source: str | Path, destination: str | Path,
                        role=role, snapshot_path=str(target),
                        parent_source_receipt_sha256=parent["receipt_sha256"],
                        files=parent["files"],
-                       meaning="Verified editable copy of licensed source; no role qualification")
+                       qualification="unqualified",
+                       meaning="Verified role-local copy of licensed source; no role qualification")
     try:
         _write_receipt(receipt, receipt_target, origin, target)
     except BaseException:
@@ -607,6 +647,11 @@ def main(argv: list[str] | None = None) -> int:
     derivative.add_argument("receipt", type=Path)
     derivative.add_argument("--snapshot", type=Path)
     derivative.add_argument("--role")
+    for command in ("verify-clone", "verify-role-base"):
+        role_base = commands.add_parser(command)
+        role_base.add_argument("receipt", type=Path)
+        role_base.add_argument("--snapshot", type=Path)
+        role_base.add_argument("--role")
     patch = commands.add_parser("stage-tensor-replacement")
     patch.add_argument("parent_receipt", type=Path)
     patch.add_argument("replacement_payload", type=Path)
@@ -628,6 +673,12 @@ def main(argv: list[str] | None = None) -> int:
             result = stage_tensor_replacement(args.parent_receipt, args.replacement_payload,
                                               args.candidate, args.operation_manifest,
                                               args.stage_receipt)
+        elif args.command == "verify-clone":
+            result = verify_clone(args.receipt, snapshot=args.snapshot,
+                                  expected_role=args.role)
+        elif args.command == "verify-role-base":
+            result = verify_role_base(args.receipt, snapshot=args.snapshot,
+                                      expected_role=args.role)
         else:
             result = verify_derivative(args.receipt, snapshot=args.snapshot,
                                        expected_role=args.role)
