@@ -94,3 +94,15 @@ The public default and each owner's selected pack must remain versioned and
 auditable. Training on a source establishes representation learning, not
 permission to make a canonical memory from it. The deterministic memory gate
 continues to decide writes after MFM emits source-citing proposals.
+
+## Current validator boundary
+
+`scripts/mfm/native_source_admission.py` verifies the hashes and internal
+consistency of a separate item-level admission manifest, recorded rights and
+review evidence, source bytes, split lineage and optimizer input handoff. It
+does **not** authenticate an upstream grant, reviewer identity, actual source
+origin, semantic near-duplicate separation or coverage adequacy. Those require
+independent source stewardship and corpus analysis. Its current whole-manifest
+memory use makes it a pack-level verification primitive; a sharded, globally
+reconciled pipeline is still required for foundation-scale admission. No
+candidate or public byte has been admitted by adding this validator.
