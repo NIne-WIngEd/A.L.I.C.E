@@ -130,6 +130,7 @@ component. Even a passing seven-case diagnostic cannot qualify MFM.
 The preflight receipt, checkpoint and component receipt all say
 `qualified_for_product: false`. A verified clone, successful training loss or
 hardware probe cannot qualify suppression of inherited behavior or Alice
-memory formation. Measure an assembled specialist against its ablation and
-independent FINAL. The public source-only diagnostic is optional for studying
+memory formation. Measure an assembled specialist against its matched
+seeded-untrained control and independent FINAL. The public source-only
+diagnostic is optional for studying
 inherited defaults; no separate weight-cleaning program blocks training.

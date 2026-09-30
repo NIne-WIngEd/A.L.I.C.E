@@ -2,7 +2,8 @@
 
 **Status:** CPU scorer and frozen public fixture only. No 12B forward pass,
 prepared base, trained formation component or model-quality result exists yet.
-The pristine `google/gemma-4-12B` checkpoint is a measured reference. Fable's
+The pristine `google/gemma-4-12B` checkpoint is an optional descriptive
+reference; no source-only forward pass is reported here. Fable's
 MFM operating base is a distinct, hash-linked MFM role clone of the publisher
 source or an evidence-backed modified derivative, plus separately trained
 formation weights. The older `-it` trainer is excluded. No tensor change is
