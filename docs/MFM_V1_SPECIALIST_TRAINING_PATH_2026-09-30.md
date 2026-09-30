@@ -2,8 +2,17 @@
 
 **Status, 2026-09-30:** Implemented training and evaluation code with synthetic
 CPU contract tests. The eight source files were SHA-256 verified on Magnolia.
-No MFM role clone receipt, complete corpus processor preflight, GPU probe, full
-training, independent FINAL evaluation or product qualification has occurred.
+Owner-provided Slurm stdout for job `576486` reports a completed CPU run on
+`node005.cluster` (exit `0:0`), a new source receipt digest
+`ad081e28519961d72181815b7a74c65b42238e2c2ab0a65065acbc8e2be606df`,
+and a separate MFM role-clone receipt digest
+`54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7`.
+The clone digest was printed twice. The batch script and full receipt JSON have
+not been independently inspected here, so the exact final verifier invocation
+and parent fields remain to be confirmed on Magnolia. This is an owner-reported
+custody result, not a processor, inference or training run. No complete 1.6
+corpus processor preflight, GPU probe, full training, independent FINAL
+evaluation or product qualification has occurred.
 
 ## Boundary
 
