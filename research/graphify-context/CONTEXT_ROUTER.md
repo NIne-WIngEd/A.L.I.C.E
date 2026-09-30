@@ -2,6 +2,11 @@
 
 This file defines how Sol/ChatGPT should locate A.L.I.C.E. context without rereading the whole project.
 
+For the separate Gemma 4 V1 source, MFM, and FBM branches, first use
+[`V1_MODEL_ROUTES.md`](V1_MODEL_ROUTES.md) and its exact-commit JSON index.
+The existing code graph is sourced from N0 and does not represent these V1
+model branches.
+
 ## Retrieval order
 
 For every substantial A.L.I.C.E. task:

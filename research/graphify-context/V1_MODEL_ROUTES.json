@@ -1,0 +1,111 @@
+{
+  "schema": "alice.graphify.v1-model-routes.v1",
+  "authority": "navigation-only",
+  "graph_status": "existing Graphify code graph is N0-only; no V1 graph built",
+  "qualification_status": "no model qualification can be inferred from this index",
+  "areas": {
+    "foundation": {
+      "branch": "research/gemma4-v1-source-derivation-20260930",
+      "commit": "1f76064263f035de41f1c7d71a4d90e87643d181",
+      "files": [
+        {
+          "path": "docs/GEMMA4_V1_SOURCE_AND_DERIVATIVE_CONTRACT.md",
+          "purpose": "source custody and derivative contract",
+          "blob_sha": "f685349b1ec1043dbc11c7a3b627d1927d0a84c1"
+        },
+        {
+          "path": "src/alice_foundation/gemma4_v1.py",
+          "purpose": "clone, mutation, and derivative verification",
+          "blob_sha": "52f77281f0ebaa13288c5b4c419e31c7269f4834"
+        },
+        {
+          "path": "src/alice_foundation/gemma4_inventory.py",
+          "purpose": "source tensor inventory",
+          "blob_sha": "2ab72e37a6d57f50d2e1bf5066ca5862ad272af5"
+        },
+        {
+          "path": "tests/foundation/test_gemma4_v1.py",
+          "purpose": "foundation contract tests",
+          "blob_sha": "58020531a34d364b8102c8c4b745c5495c75f29a"
+        }
+      ]
+    },
+    "mfm": {
+      "branch": "research/mfm-v1-licensed-base-20260930",
+      "commit": "a8266daf08af5505a641dcec8dae8a2ed013a095",
+      "files": [
+        {
+          "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
+          "purpose": "V1 source direction and qualification limits",
+          "blob_sha": "53e8c27886554e0adee6d2a844cd9f56bcfffe46"
+        },
+        {
+          "path": "docs/MFM_V1_SPECIALIST_TRAINING_PATH_2026-09-30.md",
+          "purpose": "MFM specialist training path",
+          "blob_sha": "acc4643bb52940158d826310c540f542b86d7b3d"
+        },
+        {
+          "path": "docs/MFM_V1_ROLE_BOUNDARY_DIAGNOSTIC_2026-09-30.md",
+          "purpose": "paired behavior and role boundary diagnostic",
+          "blob_sha": "b5cdf6ada4b8d8e4b67756220b6f43339306e599"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_v1_specialist.py",
+          "purpose": "separate formation model architecture",
+          "blob_sha": "0d99a24d43864555460f4b1dbe61980316ed6b4f"
+        },
+        {
+          "path": "scripts/mfm/train_v1_formation_specialist.py",
+          "purpose": "training and processor preflight",
+          "blob_sha": "ce072d7a46e1b5ce3a0587f982a8f583be4ce929"
+        },
+        {
+          "path": "scripts/mfm/verify_gemma4_pretrained.py",
+          "purpose": "historical MFM source receipt schema",
+          "blob_sha": "087367560a852f40d8f2f7f084e45f491a8197c6"
+        },
+        {
+          "path": "scripts/mfm/run_gemma4_base_behavior.py",
+          "purpose": "historical baseline requiring MFM source receipt",
+          "blob_sha": "38af9830b27982f1e32270a88377778456442463"
+        },
+        {
+          "path": "scripts/mfm/run_gemma4_prepared_base_behavior.py",
+          "purpose": "prepared source public diagnostic",
+          "blob_sha": "c880a0c5c5515412f6a217f070f2b612bdb1db3b"
+        },
+        {
+          "path": "scripts/mfm/qualify_v1_role_boundary.py",
+          "purpose": "role boundary comparison",
+          "blob_sha": "7a87f6a8d5bf6771a5d36afcf66fde6ee6b7d97b"
+        }
+      ]
+    },
+    "fbm": {
+      "branch": "research/fbm-v1-licensed-base-20260930",
+      "commit": "1f42d2e9d49179a77ba8bfbd0b47c79d23fff9bb",
+      "files": [
+        {
+          "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
+          "purpose": "FBM ordered replay seed",
+          "blob_sha": "ebf9ef3d965648ef3ad2a2380d6070fdfa2eb0de"
+        },
+        {
+          "path": "docs/fable-builder/FBM_V1_GEMMA4_BASE_DISSECTION_AND_ROLE_RECIPE_2026-09-30.md",
+          "purpose": "FBM source and role recipe",
+          "blob_sha": "06f22b8d2eeb4b136a23350f065f0061de18234a"
+        },
+        {
+          "path": "docs/fable-builder/traces/FBM_TRACE_20260930_GEMMA4_MFM_REPLAY_SEED.jsonl",
+          "purpose": "FBM process trace",
+          "blob_sha": "5f4e451dd4143ac1362c09c7267c2a48ab7799f8"
+        },
+        {
+          "path": "docs/fable-builder/traces/FBM_TRACE_20260930_GEMMA4_MFM_PUBLICATION_REBIND.jsonl",
+          "purpose": "published cross-branch lineage",
+          "blob_sha": "5022b0e19162bfd1205ef80995fbb83d52352c12"
+        }
+      ]
+    }
+  }
+}
