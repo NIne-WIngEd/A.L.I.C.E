@@ -129,8 +129,25 @@ QA/targets, preserve source-file hashes and host/generator lineage, and are
 marked `candidate_unreviewed`. They are **not** rights-cleared or adjudicated
 gold; all hosts share one generator family. The same commit publishes a
 Magnolia CPU Slurm script to run the 21-case public 1.6 processor diagnostic
-against the verified role clone. That job has not run. Its receipt, if it
-passes, will check a processor route only, not the admitted full-role corpus.
+against the verified role clone. Owner-reported job `576488` ran on
+`node005.cluster` and `FAILED 1:0` after `00:03:35` in udocker P2. The runtime
+printed Torch `2.7.1+cu118` and Transformers `5.17.0`, then
+`AutoProcessor.from_pretrained` failed because `Gemma4UnifiedProcessor`
+required PIL, which was unavailable in that container. The printed
+job-specific receipt path is an intended output; no successful processor
+receipt was observed. The [failure trace](traces/FBM_TRACE_20260930_MFM_V16_PUBLIC_CPU_576488_FAILURE.jsonl)
+preserves this dependency lesson without changing the verified job `576486`
+source/clone metadata. Published MFM commit `079c010c` (tree
+`11aa22b85c75dcc8f097609800780ea2fddb8860`) now pins a CPython 3.11
+Pillow 11.3.0 wheel with SHA-256
+`106064daa23a745510dabce1d84f29137a37224831d88eb4ce94bb187b1d7e5f`.
+The launcher verifies those bytes, installs the wheel offline into a fresh
+MFM-only job directory, and actually loads the local Gemma 4 `AutoProcessor`
+inside udocker before the 23.9 GB clone rehash. This
+[published repair procedure](traces/FBM_TRACE_20260930_MFM_V16_PILLOW_RUNTIME_FIX_PUBLISHED.jsonl)
+is **unrun** on Magnolia. A fresh source-bound public diagnostic could check
+only the processor route, not the admitted full-role corpus; no repair result
+has been observed.
 Do not claim capability from the present training-only mixture.
 The published signed-review verifier tests record format and signatures; an
 independent steward must authenticate the reviewers, rights issuer, blind

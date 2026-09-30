@@ -1,15 +1,15 @@
 {
   "schema": "alice.fbm.base_derivation_seed.v1",
   "scope": "Fable/A.L.I.C.E. V1 MFM; process seed only",
-  "authority": "Procedure seed plus owner-reported Magnolia custody observation. Published 1.6 signed full-fit trainer, runner, custodian assessor and narrow P2 bridge code exist. Magnolia job 576486 completed 0:0 and printed source and MFM role-clone receipt digests; the owner subsequently checked both receipt self-digests, parent digest, mfm role, unqualified status and all eight pinned file rows with the foundation reader. Full receipt JSON and submitted script have not been inspected in this checkout. No admitted full-role corpus, complete 1.6 processor, bounded GPU, paid full fit, real paired inference, full-role downstream qualification or autonomous FBM product build is recorded.",
+  "authority": "Procedure seed plus owner-reported Magnolia custody and failed public CPU diagnostic observations. Published 1.6 signed full-fit trainer, runner, custodian assessor and narrow P2 bridge code exist. Magnolia job 576486 completed 0:0 and printed source and MFM role-clone receipt digests; the owner subsequently checked both receipt self-digests, parent digest, mfm role, unqualified status and all eight pinned file rows with the foundation reader. Job 576488 FAILED 1:0 in udocker at Gemma4UnifiedProcessor construction because PIL was unavailable; no successful processor receipt was observed. An exact-wheel, target-runtime processor preflight repair is published at MFM commit 079c010c but has not run on Magnolia. Full custody receipt JSON and submitted script have not been inspected in this checkout. No admitted full-role corpus, complete 1.6 processor, bounded GPU, paid full fit, real paired inference, full-role downstream qualification or autonomous FBM product build is recorded.",
   "implementation_sources": {
     "foundation_branch": "research/gemma4-v1-source-derivation-20260930",
     "foundation_commit": "3e1328410dac52ba18be243cb9f7144e7a3964d1",
     "mfm_branch": "research/mfm-v1-licensed-base-20260930",
-    "mfm_commit": "412ae32aef60896966e10a7613a9d207a74eceee",
+    "mfm_commit": "079c010c0c93e3d02352cfe8c20b502c46c8cfd3",
     "mfm_v1_6_contract_path": "docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md",
-    "mfm_v1_6_contract_status": "Published 1.6 codec, signed full-fit trainer, matched runner, separate FINAL custodian assessor and narrow P2 owner host-profile candidate bridge with CPU/static tests. Owner-reported exact source/clone CPU custody run 576486; no admitted 1.6 gold, processor/GPU/full-fit outputs or full-role downstream result.",
-    "mfm_published_tree": "9616bfe97a93c9daa42f0aa3be52daa23d8799d5"
+    "mfm_v1_6_contract_status": "Published 1.6 codec, signed full-fit trainer, matched runner, separate FINAL custodian assessor and narrow P2 owner host-profile candidate bridge with CPU/static tests. Owner-reported exact source/clone CPU custody run 576486 remains metadata verified. Public 21-case Magnolia CPU diagnostic job 576488 failed at processor construction due missing PIL in the udocker Transformers 5.17.0 runtime. MFM commit 079c010c publishes an exact Pillow-wheel and early processor-load repair, not yet run; no successful processor receipt, admitted 1.6 gold, GPU/full-fit outputs or full-role downstream result.",
+    "mfm_published_tree": "11aa22b85c75dcc8f097609800780ea2fddb8860"
   },
   "source": {
     "repository": "google/gemma-4-12B",
@@ -71,6 +71,26 @@
       "owner_metadata_check_passed": true,
       "owner_metadata_check_scope": "Foundation read_receipt self-digests, parent source digest, role=mfm, qualification=unqualified, identical eight-file rows matching independent PINNED_FILES; no new full byte rehash in this metadata check",
       "meaning": "Custody stdout supplied by owner; clone remains licensed unqualified starting checkpoint, not a processed or trained MFM"
+    },
+    "magnolia_owner_reported_v16_public_cpu_diagnostic": {
+      "job_id": "576488",
+      "node": "node005.cluster",
+      "state": "FAILED",
+      "exit_code": "1:0",
+      "elapsed": "00:03:35",
+      "max_rss_kib": 338812,
+      "mfm_commit": "412ae32aef60896966e10a7613a9d207a74eceee",
+      "foundation_commit": "3e1328410dac52ba18be243cb9f7144e7a3964d1",
+      "udocker_execmode": "P2",
+      "torch_version": "2.7.1+cu118",
+      "transformers_version": "5.17.0",
+      "failure_stage": "_processor_preflight AutoProcessor.from_pretrained at train_v16_formation_specialist.py line 269",
+      "error": "Gemma4UnifiedProcessor requires the PIL library but it was not found in your environment",
+      "diagnostic_preflight_path": "/homes/01/mxrayan/rayan-compute/mfm/receipts/mfm-v16-public-processor-576488.json",
+      "successful_processor_receipt_observed": false,
+      "model_forward_observed": false,
+      "training_observed": false,
+      "meaning": "Target-container dependency failure in a 21-case public synthetic processor diagnostic. The path printed by the launcher is a planned output, not evidence of a sealed receipt. Job 576486 source and clone custody metadata remain verified; this failure does not invalidate them or qualify processing."
     },
     "verified_derived_weights": false,
     "measured_untouched_forward": false,
@@ -229,7 +249,7 @@
       ],
       "operation": "Run complete no-egress 1.6 source/target processor admission on the actual admitted corpus and verified MFM role clone on a Magnolia CPU node or equivalent. Include all modalities, longest source/target examples, grounding and sensitivity/target links. Seal hashes, versions, peak attention envelope, counts and zero silent truncation in a new receipt.",
       "tool": null,
-      "implementation_status": "Magnolia eight-file publisher SHA output was owner-pasted, but no foundation role-clone or complete 1.6 processor receipt has been returned. Historical 1.5 CPU tests do not supply this receipt.",
+      "implementation_status": "Magnolia job 576486 source and MFM role-clone custody digests and owner-checked receipt metadata are recorded. Public 21-case diagnostic job 576488 FAILED 1:0 when Transformers 5.17.0 tried to construct Gemma4UnifiedProcessor without PIL in udocker. MFM commit 079c010c publishes a pinned Pillow 11.3.0 wheel check and early target-runtime AutoProcessor load before the 24 GB clone rehash; this repair is PUBLISHED_UNRUN. No successful public diagnostic or complete admitted-corpus 1.6 processor receipt is observed. Historical 1.5 CPU tests do not supply this receipt.",
       "gate": "Fresh exact-path source and clone receipts, corpus and code digests, full case count, modality coverage, rights-safe no-egress process and max-token/attention results verify. Processor result is hardware/data admission only, not learned capability."
     },
     {
@@ -384,7 +404,7 @@
   "latest_owner_reported_source": {
     "location": "Magnolia $HOME/rayan-compute/mfm/gemma4-12b-023679ed352de9bb66cc873c9009ce3482585c08/source",
     "evidence": "Owner-pasted output from srun CPU-node sha256sum -c checked all eight manifest files OK on 2026-09-29 local Magnolia time",
-    "limits": "A foundation Python source receipt, role clone and trainer receipt at this path have not been returned; no local independent inspection in this FBM checkout."
+    "limits": "Job 576486 printed source and role-clone receipt digests and the owner checked their metadata. Full receipt JSON and submitted batch script have not been transferred for independent inspection in this FBM checkout. No trainer receipt exists in this evidence."
   },
   "optional_diagnostics": [
     {
@@ -578,8 +598,18 @@
   },
   "magnolia_v16_public_cpu_diagnostic": {
     "script_path": "scripts/mfm/magnolia_v16_public_cpu_preflight.sbatch",
-    "method_commit": "412ae32aef60896966e10a7613a9d207a74eceee",
+    "method_commit": "079c010c0c93e3d02352cfe8c20b502c46c8cfd3",
     "purpose": "Run the exact role-clone v1.6 processor against the 21-case public synthetic authoring pack in the existing Magnolia CPU container; the trainer rehashes the clone at point of use and seals a separate job-specific receipt",
-    "status": "PUBLISHED_UNRUN; no processor receipt, model forward, trained MFM or full-role corpus qualification"
+    "status": "PUBLISHED_UNRUN_RUNTIME_REPAIR after JOB_576488_FAILED_ENVIRONMENT_DEPENDENCY. No successful processor receipt observed, model forward, training or full-role corpus qualification. Source/clone custody from job 576486 remains metadata verified.",
+    "failure_trace": "docs/fable-builder/traces/FBM_TRACE_20260930_MFM_V16_PUBLIC_CPU_576488_FAILURE.jsonl",
+    "published_repair_trace": "docs/fable-builder/traces/FBM_TRACE_20260930_MFM_V16_PILLOW_RUNTIME_FIX_PUBLISHED.jsonl",
+    "prior_failed_method_commit": "412ae32aef60896966e10a7613a9d207a74eceee",
+    "pillow_wheel": {
+      "filename": "pillow-11.3.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "106064daa23a745510dabce1d84f29137a37224831d88eb4ce94bb187b1d7e5f",
+      "staging": "Stage under the owner-controlled compute root and verify exact filename and SHA-256 before Slurm; install offline with no dependencies into a fresh per-job MFM-only directory, without changing the shared N0 container."
+    },
+    "early_target_runtime_preflight": "Inside udocker with the per-job Pillow directory on PYTHONPATH, import PIL.Image and PIL._imaging; assert Pillow 11.3.0 comes from that directory and Transformers is 5.17.0; actually load the local Gemma 4 AutoProcessor with trust_remote_code=False and local_files_only=True and check its multimodal attributes before the trainer rehashes the 23.9 GB clone. Then run the same public 21-case processor diagnostic and require its new job-specific sealed receipt.",
+    "replay_lesson": "An import/version print did not exercise the lazy Gemma 4 processor backend in job 576488. The published source now checks its exact initialization in the target runtime before expensive clone verification. Publication and shell syntax do not establish a Magnolia pass; no repaired run has been observed."
   }
 }

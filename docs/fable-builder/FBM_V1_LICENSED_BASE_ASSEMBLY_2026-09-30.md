@@ -139,8 +139,24 @@ The MFM branch at `412ae32a` now packages pinned Multi-Source records into
 source-only cumulative review windows without importing simulator truth,
 prior QA or v1.5 labels. A 480-host in-memory smoke made 1,920 unreviewed
 packets. This does not supply independent target adjudication or additional
-generator families. It also publishes an unrun Magnolia CPU script for the
-21-case public 1.6 processor diagnostic against the job `576486` role clone.
+generator families. Its Magnolia CPU script was attempted as job `576488`
+against the job `576486` role clone. It `FAILED 1:0` on `node005.cluster`
+after `00:03:35`: udocker P2 printed Torch `2.7.1+cu118` and Transformers
+`5.17.0`, then `AutoProcessor.from_pretrained` could not initialize
+`Gemma4UnifiedProcessor` because PIL was unavailable in that container.
+No successful processor receipt was observed. The
+[failure trace](traces/FBM_TRACE_20260930_MFM_V16_PUBLIC_CPU_576488_FAILURE.jsonl)
+records the target-runtime dependency and keeps the prior source/clone
+metadata verification intact. No repaired rerun has been observed.
+Current MFM commit `079c010c` (tree
+`11aa22b85c75dcc8f097609800780ea2fddb8860`) publishes an isolated
+target-runtime fix: stage the CPython 3.11 Pillow 11.3.0 wheel with SHA-256
+`106064daa23a745510dabce1d84f29137a37224831d88eb4ce94bb187b1d7e5f`,
+verify it, install offline into a fresh MFM-only job directory, and load the
+local Gemma 4 `AutoProcessor` inside udocker before rehashing the clone. The
+[repair method trace](traces/FBM_TRACE_20260930_MFM_V16_PILLOW_RUNTIME_FIX_PUBLISHED.jsonl)
+is **PUBLISHED_UNRUN**. It does not turn job `576488` into a processor pass or
+change its original `412ae32a` source pin.
 
 ## Ordered V1 MFM replay evidence
 
@@ -152,7 +168,7 @@ separates these receipts so one passing step cannot stand in for another:
 | Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Magnolia job `576486` completed `0:0`; owner checked both sealed receipt digests, parent, role and all eight file rows. Full JSON and script were not transferred. |
 | Full-role corpus | Versioned 1.6 targets, authenticated rights, two reviewers, disjoint DEV and sealed FINAL | Historical 49,819 rows fail coverage; published 21-case 1.6 authoring seed is diagnostic only |
 | Code path | Matching 1.6 codec, signed full-fit trainer, inference, custodian assessor and full-role gate adapter | Published full-fit path and narrow P2 host-profile candidate bridge; rich 1.6 semantics still fail closed in P2, with no full-role adapter or capability receipt |
-| CPU and GPU admission | Complete Magnolia CPU processor receipt, then bounded 1.6 backward/restart result | Neither receipt established |
+| CPU and GPU admission | Complete Magnolia CPU processor receipt, then bounded 1.6 backward/restart result | Public 21-case CPU diagnostic job `576488` failed on missing PIL; exact-wheel early processor-load fix published but unrun; no successful processor or GPU receipt established |
 | Paid full fit | Hash-bound model, optimizer and seeded-untrained control | Blocked |
 | Independent qualification | Matched trained/control outputs, sealed FINAL and actual memory-gate-to-native-judgment effect | Not run |
 | Private owner admission | Scoped local training/access rights, source roles, sensitivity and deletion lineage; no distribution grant or two reviewers required | Contract and tool pending |
