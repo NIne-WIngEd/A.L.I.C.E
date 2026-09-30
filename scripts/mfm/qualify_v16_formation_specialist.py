@@ -2,8 +2,8 @@
 
 This standalone command may open FINAL payloads only when explicitly invoked by
 its custodian. The trainer and development selector never import this module.
-The current runner supports a one-optimizer-step probe, so this report is
-diagnostic even with authenticated gold. It does not establish model execution
+It compares a bounded one-step probe or a signed full-fit artifact to its
+matched seeded control. The report does not establish model execution
 authenticity, downstream memory-gate behavior, or product qualification.
 """
 
@@ -17,7 +17,9 @@ import os
 from pathlib import Path
 from uuid import uuid4
 
-from cognitive_kernel.canonical import CognitiveKernelContractError, require_sha256
+from cognitive_kernel.canonical import (
+    CognitiveKernelContractError, canonical_sha256, require_sha256,
+)
 from cognitive_kernel.formation_adjudication_v16 import verify_adjudicated_corpus_v16
 from cognitive_kernel.formation_dataset_admission import admit_formation_corpus
 from cognitive_kernel.formation_learning_v16 import (
@@ -140,10 +142,16 @@ def _assert_input(rows: list[dict], gold: dict[str, FormationGoldCaseV16]) -> No
 
 
 def verify_local_controls(component_dir: Path, prepared_base_dir: Path,
-                          prepared_base_receipt: Path, preflight_receipt: Path) -> dict:
+                          prepared_base_receipt: Path, preflight_receipt: Path, *,
+                          manifest_sha256: str | None = None,
+                          roster_sha256: str | None = None,
+                          review_sha256: str | None = None) -> dict:
     verified = {role: inference.verify_artifacts(
         component_dir, prepared_base_dir, prepared_base_receipt,
-        preflight_receipt, control=role) for role in CONTROL_ROLES}
+        preflight_receipt, control=role,
+        expected_manifest_sha256=manifest_sha256,
+        expected_roster_sha256=roster_sha256,
+        expected_review_sha256=review_sha256) for role in CONTROL_ROLES}
     (prepared, preflight, component, trained_file) = verified["trained"]
     other_prepared, other_preflight, other_component, seed_file = verified["seeded-untrained"]
     if (prepared != other_prepared or preflight != other_preflight or
@@ -166,10 +174,15 @@ def verify_local_controls(component_dir: Path, prepared_base_dir: Path,
         "source_repository": prepared["repository"],
         "source_revision": prepared["revision"],
         "max_target_tokens": preflight["max_target_tokens"],
+        "preflight_sha256": preflight["record_sha256"],
+        "training_input_sha256": preflight["corpus_sha256"],
+        "trust_roster_sha256": component.get("trust_roster_sha256"),
+        "signed_review_receipt_sha256": component.get("signed_review_receipt_sha256"),
         "weights": weights,
         "receipts": {"trained": component["record_sha256"],
                      "seeded-untrained": seed["record_sha256"]},
         "probe_only": component["probe_only"],
+        "full_fit": component.get("full_fit", False),
         "optimizer_steps": component["optimizer_steps"],
     }
 
@@ -178,15 +191,22 @@ def _check_output_row(row: dict, case: FormationGoldCaseV16, role: str,
                       input_sha: str, lineage: dict) -> None:
     expected = {
         "case_id": case.case_id,
-        "status": "probe_generated",
+        "status": "fit_generated" if lineage["full_fit"] else "probe_generated",
         "context_digest": case.context.content_digest(),
         "processed_modalities": sorted({ref.modality for ref in case.context.base.evidence}),
         "model_artifact_digest": lineage["weights"][role],
         "model_receipt": lineage["receipts"][role],
         "formation_component_sha256": lineage["weights"][role],
         "control_kind": role,
-        "probe_only": True,
+        "full_fit": lineage["full_fit"],
+        "probe_only": lineage["probe_only"],
+        "optimizer_steps": lineage["optimizer_steps"],
         "qualified_for_product": False,
+        "run_manifest_sha256": lineage["run_manifest_sha256"],
+        "preflight_sha256": lineage["preflight_sha256"],
+        "training_input_sha256": lineage["training_input_sha256"],
+        "trust_roster_sha256": lineage["trust_roster_sha256"],
+        "signed_review_receipt_sha256": lineage["signed_review_receipt_sha256"],
         "source_repository": lineage["source_repository"],
         "source_revision": lineage["source_revision"],
         "base_source_sha256": training.shared.SOURCE_WEIGHT_SHA256,
@@ -211,7 +231,9 @@ def _check_output_row(row: dict, case: FormationGoldCaseV16, role: str,
             any(type(token) is not int or token < 0 for token in row["generated_token_ids"]) or \
             type(row.get("eos_observed")) is not bool:
         raise CognitiveKernelContractError(f"{role}: raw decoder output differs")
-    valid = row.get("validation_status") == "grounded_probe_proposal_only"
+    valid_status = ("grounded_fit_proposal_only" if lineage["full_fit"] else
+                    "grounded_probe_proposal_only")
+    valid = row.get("validation_status") == valid_status
     invalid = row.get("validation_status") == "invalid" and \
         isinstance(row.get("validation_error"), str) and bool(row["validation_error"])
     if not (valid or invalid) or (valid and (row.get("validation_error") is not None or
@@ -262,13 +284,24 @@ def _positive_gold_dimensions(case: FormationGoldCaseV16) -> set[str]:
 
 def assess_pair(gold: dict[str, FormationGoldCaseV16], input_sha: str,
                 runs: dict[str, list[dict]], lineage: dict) -> dict:
-    """Assess two observed probe files; never infer execution from JSON alone."""
+    """Assess two observed run files; never infer execution from JSON alone."""
     if set(runs) != set(CONTROL_ROLES) or any(
             {row["case_id"] for row in runs[role]} != set(gold)
             for role in CONTROL_ROLES):
         raise CognitiveKernelContractError("paired runs have missing or extra reviewed cases")
-    if lineage.get("probe_only") is not True or lineage.get("optimizer_steps") != 1:
-        raise CognitiveKernelContractError("this evaluator supports one-step probe artifacts only")
+    full_fit = lineage.get("full_fit", False)
+    if type(full_fit) is not bool or (
+            full_fit and (
+                lineage.get("probe_only") is not False or
+                type(lineage.get("optimizer_steps")) is not int or
+                lineage["optimizer_steps"] < 1 or
+                any(not isinstance(lineage.get(field), str) or
+                    len(lineage[field]) != 64 for field in (
+                        "trust_roster_sha256", "signed_review_receipt_sha256")))
+            ) or (
+                not full_fit and (lineage.get("probe_only") is not True or
+                                  lineage.get("optimizer_steps") != 1)):
+        raise CognitiveKernelContractError("assessment requires signed full fit or one-step probe")
     indexed = {role: {row["case_id"]: row for row in runs[role]}
                for role in CONTROL_ROLES}
     report = []
@@ -315,7 +348,8 @@ def assess_pair(gold: dict[str, FormationGoldCaseV16], input_sha: str,
             if hint_mismatch:
                 critical.append("sensitivity_mismatch")
             scores[role] = {
-                "status": "grounded_probe_proposal_only",
+                "status": "grounded_fit_proposal_only" if full_fit else
+                          "grounded_probe_proposal_only",
                 "true_positives": scored.true_positives,
                 "false_positives": scored.false_positives,
                 "false_negatives": scored.false_negatives,
@@ -343,7 +377,8 @@ def assess_pair(gold: dict[str, FormationGoldCaseV16], input_sha: str,
             "observed_gold_coverage": dict(sorted(coverage.items())),
             "missing_positive_gold_dimensions": sorted(
                 name for name, count in coverage.items() if count == 0),
-            "full_fit_artifact_not_supported": True,
+            "assessment_mode": "signed_full_fit" if full_fit else "one_step_probe",
+            "full_fit_artifact_not_supported": not full_fit,
             "inference_execution_authenticity_verified": False,
             "qualification_claim": False}
 
@@ -357,6 +392,10 @@ def run(args: argparse.Namespace) -> dict:
         raise CognitiveKernelContractError("FINAL requires explicit separate custodian mode")
     if args.split == "development" and args.final_custodian:
         raise CognitiveKernelContractError("custodian mode must name FINAL")
+    # Admission hashes private train/development evidence and a FINAL custodian
+    # may also open sealed payloads. Enforce the same no-egress precondition as
+    # training and inference before reading either split.
+    training.shared._require_private_network_isolation()
     paths = [args.manifest, args.roster, args.input_jsonl, args.trained,
              args.seeded_untrained, args.component_dir, args.prepared_base_dir,
              args.prepared_base_receipt, args.preflight_receipt]
@@ -369,15 +408,27 @@ def run(args: argparse.Namespace) -> dict:
     review = verify_adjudicated_corpus_v16(
         admission, args.manifest, args.roster,
         expected_roster_sha256=args.roster_sha256)
+    if (review.get("corpus_manifest_sha256") != admission.manifest_sha256 or
+            review.get("externally_pinned_roster_sha256") != args.roster_sha256 or
+            review.get("rights_and_review_signatures_verified") is not True or
+            review.get("final_payloads_opened") is not False):
+        raise CognitiveKernelContractError("custodian signed review receipt differs")
+    # Check all full-fit bindings before the custodian opens any FINAL payload.
+    local_run = training.shared._read_sealed(
+        args.component_dir / "run.json", training.RUN_SCHEMA)
+    full_fit = local_run.get("full_fit", False)
+    lineage = verify_local_controls(
+        args.component_dir, args.prepared_base_dir,
+        args.prepared_base_receipt, args.preflight_receipt,
+        manifest_sha256=admission.manifest_sha256 if full_fit else None,
+        roster_sha256=args.roster_sha256 if full_fit else None,
+        review_sha256=canonical_sha256(review) if full_fit else None)
     manifest = json.loads(_bound_bytes(args.manifest, args.manifest_sha256,
                                        "corpus manifest"), object_pairs_hook=_unique_json)
     gold = _gold_cases(admission, manifest, args.split)
     input_raw = _bound_bytes(args.input_jsonl, args.input_sha256, "inference input")
     input_rows = _rows(input_raw, "inference input")
     _assert_input(input_rows, gold)
-    lineage = verify_local_controls(
-        args.component_dir, args.prepared_base_dir,
-        args.prepared_base_receipt, args.preflight_receipt)
     runs = {"trained": _rows(_bound_bytes(args.trained, args.trained_sha256,
                                           "trained output"), "trained output"),
             "seeded-untrained": _rows(_bound_bytes(
@@ -394,7 +445,8 @@ def run(args: argparse.Namespace) -> dict:
         "gold_status": "caller-pinned-signed-roster; identity-and-semantic-truth-need-steward",
         "final_custodian_invocation": args.split == "final",
         "synthetic_authoring_seed_qualifies": False,
-        "limits": ["one_step_probe_only", "runner_output_does_not_attest_execution",
+        "limits": (["signed_full_fit_behavior_diagnostic_only"] if full_fit else
+                   ["one_step_probe_only"]) + ["runner_output_does_not_attest_execution",
                    "external_reviewer_identity_and_semantic_truth_unverified",
                    "no_memory_gate_or_downstream_judgment_result"],
         **assess_pair(gold, sha256(input_raw).hexdigest(), runs, lineage),

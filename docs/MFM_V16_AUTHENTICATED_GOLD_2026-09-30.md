@@ -49,6 +49,24 @@ are steward and adjudication responsibilities. Current synthetic authoring
 cases contain no such records. They remain construction tests, never full-role
 gold or paid-fit authorization.
 
+The v1.6 trainer now accepts `--full-fit` only with `--admitted-manifest`,
+`--input-sha256`, `--trust-roster`, and `--trust-roster-sha256`. Pass those same
+pins to `data-preflight`, `processor-preflight`, and `train`; the latter also
+needs the exact processor receipt, verified local role-base receipt and normal
+training parameters. Obtain the roster digest from the independent steward
+outside the corpus. The CLI checks signatures before decoding admitted targets
+into optimizer examples. Base admission reads train/development source and
+target files first to verify hashes and rights. It never opens FINAL payload
+files. A missing, expired, revoked or tampered review blocks the full route.
+The signed review receipt hash and roster hash enter the processor preflight,
+training run and component receipts. Checkpoint resume must match that run
+digest. The full route also requires at least one observed positive target for
+each of the ten formation dimensions in both visible splits; its error names
+each missing split/dimension. This coverage check is a cost guard, not proof
+of diverse examples or learned capability. `--probe-only` remains a separate
+one-step diagnostic path and synthetic CPU material cannot enter `--full-fit`.
+No paid GPU execution or capability result has been observed.
+
 Per-user private FBM adaptation has a different consent contract and never
 requires model-distribution permission or two reviewers for every owner event.
 The signed corpus path above qualifies shared, distributable MFM competence.

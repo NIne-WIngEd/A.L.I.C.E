@@ -2,8 +2,8 @@
 
 Only a verified local role base supplies source representations. The Gemma
 language head cannot answer for MFM. Raw invalid outputs are preserved. A
-bounded probe remains diagnostic even if it produces a grounded proposal;
-this command never promotes a proposal into authoritative memory.
+full fit requires independently pinned signed corpus lineage. Neither a
+bounded probe nor a full fit promotes a proposal into authoritative memory.
 """
 
 from __future__ import annotations
@@ -18,7 +18,12 @@ from pathlib import Path
 from types import SimpleNamespace
 from uuid import uuid4
 
-from cognitive_kernel.canonical import CognitiveKernelContractError, require_identifier
+from cognitive_kernel.canonical import (
+    CognitiveKernelContractError, canonical_sha256, require_identifier,
+    require_sha256,
+)
+from cognitive_kernel.formation_adjudication_v16 import verify_adjudicated_corpus_v16
+from cognitive_kernel.formation_dataset_admission import admit_formation_corpus
 from cognitive_kernel.formation_semantics_v16 import (
     bundle_v16_from_output, context_v16_from_record,
     validate_formation_grounding_v16,
@@ -34,7 +39,9 @@ def _config(record: dict):
 
 def verify_artifacts(component_dir: Path, prepared_base_dir: Path,
                      prepared_base_receipt: Path, preflight_receipt: Path, *,
-                     control: str) -> tuple[dict, dict, dict, Path]:
+                     control: str, expected_manifest_sha256: str | None = None,
+                     expected_roster_sha256: str | None = None,
+                     expected_review_sha256: str | None = None) -> tuple[dict, dict, dict, Path]:
     """Rehash the prepared base, versioned processor, run, and both controls."""
     if control not in ("trained", "seeded-untrained"):
         raise CognitiveKernelContractError("unknown v1.6 specialist control")
@@ -92,11 +99,46 @@ def verify_artifacts(component_dir: Path, prepared_base_dir: Path,
             preflight["max_source_tokens"] < 1 or \
             run.get("transformers_version") != preflight.get("transformers_version") or \
             run.get("qualified_for_product") is not False or \
-            component.get("qualified_for_product") is not False or \
-            run.get("probe_only") is not True or \
-            component.get("probe_only") is not True or \
-            component.get("optimizer_steps") != 1:
+            component.get("qualified_for_product") is not False:
         raise CognitiveKernelContractError("v1.6 component, run or preflight lineage differs")
+    full_fit = run.get("full_fit", False)
+    if type(full_fit) is not bool or any(
+            record.get("full_fit", False) is not full_fit
+            for record in (preflight, component)):
+        raise CognitiveKernelContractError("v1.6 full-fit mode lineage differs")
+    if full_fit:
+        if any(value is None for value in (
+                expected_manifest_sha256, expected_roster_sha256,
+                expected_review_sha256)):
+            raise CognitiveKernelContractError(
+                "v1.6 full fit needs externally pinned signed corpus lineage")
+        binding = {
+            "corpus_sha256": require_sha256(expected_manifest_sha256, "manifest_sha256"),
+            "trust_roster_sha256": require_sha256(expected_roster_sha256, "roster_sha256"),
+            "signed_review_receipt_sha256": require_sha256(
+                expected_review_sha256, "signed_review_receipt_sha256"),
+        }
+        if any(any(record.get(field) != digest for field, digest in binding.items())
+               for record in (preflight, run)) or any(
+                   component.get(field) != binding[field]
+                   for field in ("trust_roster_sha256", "signed_review_receipt_sha256")) or \
+                preflight.get("corpus_status") != \
+                "admitted-signed-review-final-sealed-unqualified" or \
+                run.get("probe_only") is not False or \
+                component.get("probe_only") is not False or \
+                type(component.get("optimizer_steps")) is not int or \
+                component["optimizer_steps"] < 1:
+            raise CognitiveKernelContractError("v1.6 signed full-fit lineage differs")
+    elif (any(value is not None for value in (
+            expected_manifest_sha256, expected_roster_sha256, expected_review_sha256)) or
+          any(record.get("trust_roster_sha256") is not None or
+              record.get("signed_review_receipt_sha256") is not None
+              for record in (preflight, run, component)) or
+          run.get("probe_only") is not True or
+          component.get("probe_only") is not True or
+          type(component.get("optimizer_steps")) is not int or
+          component["optimizer_steps"] != 1):
+        raise CognitiveKernelContractError("v1.6 one-step probe lineage differs")
     trained_path = component_dir / "formation-specialist.safetensors"
     if training.shared._digest(trained_path) != component.get("formation_component_sha256"):
         raise CognitiveKernelContractError("v1.6 specialist weight bytes differ")
@@ -107,6 +149,23 @@ def verify_artifacts(component_dir: Path, prepared_base_dir: Path,
             training.shared._digest(selected) != seed["specialist_sha256"]:
         raise CognitiveKernelContractError("v1.6 seeded-control weight bytes differ")
     return prepared, preflight, component, selected
+
+
+def verify_signed_binding(manifest: Path, manifest_sha256: str,
+                          roster: Path, roster_sha256: str) -> str:
+    """Recheck external signed corpus pins without opening FINAL payloads."""
+    training.shared._require_private_network_isolation()
+    require_sha256(manifest_sha256, "manifest_sha256")
+    require_sha256(roster_sha256, "roster_sha256")
+    admission = admit_formation_corpus(manifest, expected_sha256=manifest_sha256)
+    receipt = verify_adjudicated_corpus_v16(
+        admission, manifest, roster, expected_roster_sha256=roster_sha256)
+    if (receipt.get("corpus_manifest_sha256") != manifest_sha256 or
+            receipt.get("externally_pinned_roster_sha256") != roster_sha256 or
+            receipt.get("rights_and_review_signatures_verified") is not True or
+            receipt.get("final_payloads_opened") is not False):
+        raise CognitiveKernelContractError("v1.6 signed review receipt differs")
+    return canonical_sha256(receipt)
 
 
 def read_input(row: dict):
@@ -143,7 +202,8 @@ def read_input(row: dict):
 
 def generate_case(*, processor, base, specialist, context, opened_sources,
                   case_id: str, component_sha256: str, inference_run_id: str,
-                  max_source_tokens: int, max_new_tokens: int) -> dict:
+                  max_source_tokens: int, max_new_tokens: int,
+                  full_fit: bool = False) -> dict:
     import torch
 
     source = training.source_batch_v16(
@@ -174,7 +234,8 @@ def generate_case(*, processor, base, specialist, context, opened_sources,
     except (ValueError, TypeError, KeyError, CognitiveKernelContractError) as exc:
         result["validation_error"] = f"{type(exc).__name__}: {exc}"
         return result
-    result["validation_status"] = "grounded_probe_proposal_only"
+    result["validation_status"] = ("grounded_fit_proposal_only" if full_fit else
+                                   "grounded_probe_proposal_only")
     return result
 
 
@@ -186,15 +247,27 @@ def run(args: argparse.Namespace) -> None:
     if require_identifier(args.inference_run_id, "inference_run_id") != args.inference_run_id or \
             len(args.inference_run_id) > 240:
         raise CognitiveKernelContractError("invalid v1.6 inference run ID")
+    manifest = getattr(args, "manifest", None)
+    manifest_sha256 = getattr(args, "manifest_sha256", None)
+    roster = getattr(args, "trust_roster", None)
+    roster_sha256 = getattr(args, "trust_roster_sha256", None)
+    pins = (manifest, manifest_sha256, roster, roster_sha256)
+    if any(value is not None for value in pins) and any(
+            value is None for value in pins):
+        raise CognitiveKernelContractError("v1.6 signed corpus pins must be complete")
+    review_sha256 = (verify_signed_binding(manifest, manifest_sha256, roster, roster_sha256)
+                     if all(value is not None for value in pins) else None)
+    prepared, preflight, component, weight_path = verify_artifacts(
+        args.component_dir, args.prepared_base_dir, args.prepared_base_receipt,
+        args.preflight_receipt, control=args.control,
+        expected_manifest_sha256=manifest_sha256,
+        expected_roster_sha256=roster_sha256, expected_review_sha256=review_sha256)
     import torch
     from safetensors.torch import load_file
     import transformers
     from transformers import AutoModelForMultimodalLM, AutoProcessor
     from cognitive_kernel.formation_v1_specialist import FormationSpecialist
 
-    prepared, preflight, component, weight_path = verify_artifacts(
-        args.component_dir, args.prepared_base_dir, args.prepared_base_receipt,
-        args.preflight_receipt, control=args.control)
     config = _config(component["specialist_config"])
     if transformers.__version__ != preflight["transformers_version"] or \
             not 1 <= args.max_new_tokens <= config.max_target_tokens:
@@ -242,9 +315,12 @@ def run(args: argparse.Namespace) -> None:
                     component_sha256=selected_sha,
                     inference_run_id=f"{args.inference_run_id}-{number}",
                     max_source_tokens=preflight["max_source_tokens"],
-                    max_new_tokens=args.max_new_tokens)
+                    max_new_tokens=args.max_new_tokens,
+                    full_fit=component.get("full_fit", False))
                 row = {
-                    "case_id": case_id, "status": "probe_generated",
+                    "case_id": case_id,
+                    "status": ("fit_generated" if component.get("full_fit", False)
+                               else "probe_generated"),
                     "context_digest": context.content_digest(),
                     "processed_modalities": sorted({
                         item.modality for item in context.base.evidence}),
@@ -252,7 +328,16 @@ def run(args: argparse.Namespace) -> None:
                     "model_receipt": receipt,
                     "formation_component_sha256": selected_sha,
                     "control_kind": args.control,
-                    "probe_only": True, "qualified_for_product": False,
+                    "full_fit": component.get("full_fit", False),
+                    "probe_only": component["probe_only"],
+                    "optimizer_steps": component["optimizer_steps"],
+                    "qualified_for_product": False,
+                    "run_manifest_sha256": component["run_manifest_sha256"],
+                    "preflight_sha256": preflight["record_sha256"],
+                    "training_input_sha256": preflight["corpus_sha256"],
+                    "trust_roster_sha256": component.get("trust_roster_sha256"),
+                    "signed_review_receipt_sha256": component.get(
+                        "signed_review_receipt_sha256"),
                     "source_repository": prepared["repository"],
                     "source_revision": prepared["revision"],
                     "base_source_sha256": training.shared.SOURCE_WEIGHT_SHA256,
@@ -278,6 +363,10 @@ def main() -> None:
     parser.add_argument("--prepared-base-dir", type=Path, required=True)
     parser.add_argument("--prepared-base-receipt", type=Path, required=True)
     parser.add_argument("--preflight-receipt", type=Path, required=True)
+    parser.add_argument("--manifest", type=Path)
+    parser.add_argument("--manifest-sha256")
+    parser.add_argument("--trust-roster", type=Path)
+    parser.add_argument("--trust-roster-sha256")
     parser.add_argument("--input-jsonl", type=Path, required=True)
     parser.add_argument("--output-jsonl", type=Path, required=True)
     parser.add_argument("--control", choices=("trained", "seeded-untrained"), required=True)

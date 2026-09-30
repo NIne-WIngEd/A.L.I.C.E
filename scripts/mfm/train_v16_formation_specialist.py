@@ -3,8 +3,9 @@
 This path never upgrades frozen v1.5 targets. The exact v1.6 registration
 context reaches the processor, and all supervised dimensions must be
 adjudicated. A public synthetic curriculum may be checked on CPU; an admitted
-corpus may supply a bounded one-step fit probe. A complete paid fit remains
-blocked until an independently authenticated review handoff exists.
+corpus may supply a bounded one-step fit probe. A complete fit uses an explicit
+signed-review admission path and an externally pinned trust roster. Signature
+checks do not establish reviewer identity or semantic truth.
 
 The Gemma language head never supplies answers or target labels. Formation
 weights start from a separate seeded decoder. No result authorizes a memory
@@ -22,10 +23,14 @@ import random
 import sys
 from uuid import uuid4
 
-from cognitive_kernel.canonical import CognitiveKernelContractError, canonical_json_bytes, require_sha256
+from cognitive_kernel.canonical import (
+    CognitiveKernelContractError, canonical_json_bytes, canonical_sha256, require_sha256,
+)
+from cognitive_kernel.formation_adjudication_v16 import verify_adjudicated_corpus_v16
 from cognitive_kernel.formation_dataset_admission import admit_formation_corpus
 from cognitive_kernel.formation_learning_v16 import (
-    OBJECTIVE_VERSION_V16, admitted_rows_v16, learning_example_v16_from_record,
+    FULL_ROLE_DIMENSIONS, OBJECTIVE_VERSION_V16, admitted_rows_v16,
+    learning_example_v16_from_record,
     model_input_sha256_v16, supervised_output_record_v16,
 )
 from cognitive_kernel.formation_multimodal import (
@@ -149,8 +154,34 @@ def _public_examples(path: Path, expected_sha256: str, owner_authorization_ref: 
     return tuple(examples["train"]), tuple(examples["development"])
 
 
+def _require_signed_fit_coverage(train, development) -> None:
+    """Demand observed positives in both visible splits, never infer FINAL labels.
+
+    This is a minimal GPU admission guard, not proof of diversity, target
+    correctness, learning, or full product capability.
+    """
+    missing = {}
+    for split, examples in (("train", train), ("development", development)):
+        positives = {name for example in examples for name, state in
+                     example.adjudications if state == "present"}
+        absent = sorted(FULL_ROLE_DIMENSIONS - positives)
+        if absent:
+            missing[split] = absent
+    if missing:
+        raise CognitiveKernelContractError(
+            "signed v1.6 fit lacks positive reviewed dimensions: " +
+            json.dumps(missing, sort_keys=True, separators=(",", ":")))
+
+
 def _examples(args):
     require_sha256(args.input_sha256, "input_sha256")
+    if getattr(args, "full_fit", False) and args.public_synthetic_curriculum is not None:
+        raise CognitiveKernelContractError("synthetic curriculum cannot supply full fit")
+    if getattr(args, "full_fit", False):
+        if args.admitted_manifest is None or getattr(args, "trust_roster", None) is None or \
+                getattr(args, "trust_roster_sha256", None) is None:
+            raise CognitiveKernelContractError("full fit needs manifest and externally pinned roster")
+        require_sha256(args.trust_roster_sha256, "trust_roster_sha256")
     if args.public_synthetic_curriculum is not None:
         if args.mode == "train":
             raise CognitiveKernelContractError("synthetic curriculum cannot supply a GPU fit")
@@ -162,6 +193,19 @@ def _examples(args):
         raise CognitiveKernelContractError("admitted corpus does not use synthetic authorization")
     admission = admit_formation_corpus(args.admitted_manifest,
                                         expected_sha256=args.input_sha256)
+    if getattr(args, "full_fit", False):
+        # Base admission reads train/development bytes to hash and check
+        # rights. Verify signed review before turning those bytes into any
+        # optimizer examples. FINAL stays metadata-only throughout.
+        signed = verify_adjudicated_corpus_v16(
+            admission, args.admitted_manifest, args.trust_roster,
+            expected_roster_sha256=args.trust_roster_sha256)
+        if (signed.get("corpus_manifest_sha256") != args.input_sha256 or
+                signed.get("externally_pinned_roster_sha256") != args.trust_roster_sha256 or
+                signed.get("rights_and_review_signatures_verified") is not True or
+                signed.get("final_payloads_opened") is not False):
+            raise CognitiveKernelContractError("v1.6 signed corpus review receipt differs")
+        args.signed_review_receipt_sha256 = canonical_sha256(signed)
     train = tuple(admitted_rows_v16(admission, split="train"))
     development = tuple(admitted_rows_v16(admission, split="development"))
     seen = set()
@@ -173,8 +217,13 @@ def _examples(args):
         seen.add(fingerprint)
     if not train or not development:
         raise CognitiveKernelContractError("v1.6 admission needs train and development")
+    if getattr(args, "full_fit", False):
+        _require_signed_fit_coverage(train, development)
     # CorpusAdmission audits FINAL's manifest metadata but never opens FINAL.
-    return train, development, "admitted-structural-final-sealed-unqualified"
+    status = ("admitted-signed-review-final-sealed-unqualified"
+              if getattr(args, "full_fit", False) else
+              "admitted-structural-final-sealed-unqualified")
+    return train, development, status
 
 
 def _binding(args, prepared, status: str, train_count: int, development_count: int,
@@ -193,6 +242,10 @@ def _binding(args, prepared, status: str, train_count: int, development_count: i
         "foundation_verifier_sha256": shared.FOUNDATION_VERIFIER_SHA256,
         "foundation_inventory_sha256": shared.FOUNDATION_INVENTORY_SHA256,
         "corpus_sha256": args.input_sha256, "corpus_status": status,
+        "full_fit": bool(getattr(args, "full_fit", False)),
+        "trust_roster_sha256": getattr(args, "trust_roster_sha256", None),
+        "signed_review_receipt_sha256": getattr(
+            args, "signed_review_receipt_sha256", None),
         "train_cases": train_count, "development_cases": development_count,
         "owner_authorization_ref": args.owner_authorization_ref,
         "max_source_tokens": args.max_source_tokens,
@@ -353,6 +406,35 @@ def _resume(checkpoint_dir, output_dir, specialist, optimizer, run_digest):
     return receipt["epoch"], receipt["next_case"], receipt["step"]
 
 
+def _run_manifest_v16(args, prepared, preflight, config, torch_version: str) -> dict:
+    """Bind the signed admission into the immutable run and resume digest."""
+    if getattr(args, "full_fit", False):
+        roster = getattr(args, "trust_roster_sha256", None)
+        review = getattr(args, "signed_review_receipt_sha256", None)
+        if roster is None or review is None:
+            raise CognitiveKernelContractError("full fit has no verified review binding")
+        require_sha256(roster, "trust_roster_sha256")
+        require_sha256(review, "signed_review_receipt_sha256")
+    return {
+        "schema": RUN_SCHEMA, "objective": OBJECTIVE_VERSION_V16,
+        "preflight_sha256": preflight["record_sha256"],
+        "prepared_base_receipt_sha256": prepared["receipt_sha256"],
+        "corpus_sha256": args.input_sha256,
+        "full_fit": bool(getattr(args, "full_fit", False)),
+        "trust_roster_sha256": getattr(args, "trust_roster_sha256", None),
+        "signed_review_receipt_sha256": getattr(
+            args, "signed_review_receipt_sha256", None),
+        "specialist_config": config.record(), "epochs": args.epochs,
+        "learning_rate": args.learning_rate,
+        "gradient_accumulation": args.gradient_accumulation, "seed": args.seed,
+        "max_cross_attention_pairs": args.max_cross_attention_pairs,
+        "torch_version": torch_version,
+        "transformers_version": preflight["transformers_version"],
+        "probe_only": args.probe_only, "qualified_for_product": False,
+        "weight_lineage": shared._prepared_kind(prepared) + "+fresh-v16-formation-weights",
+    }
+
+
 def _run_training(args, train, development, status, prepared, processor, preflight):
     import torch
     from safetensors.torch import save_file
@@ -390,20 +472,7 @@ def _run_training(args, train, development, status, prepared, processor, preflig
         logit_chunk_tokens=args.logit_chunk_tokens)
     specialist = FormationSpecialist(config).to(device)
     optimizer = torch.optim.AdamW(specialist.parameters(), lr=args.learning_rate)
-    run = {
-        "schema": RUN_SCHEMA, "objective": OBJECTIVE_VERSION_V16,
-        "preflight_sha256": preflight["record_sha256"],
-        "prepared_base_receipt_sha256": prepared["receipt_sha256"],
-        "corpus_sha256": args.input_sha256,
-        "specialist_config": config.record(), "epochs": args.epochs,
-        "learning_rate": args.learning_rate,
-        "gradient_accumulation": args.gradient_accumulation, "seed": args.seed,
-        "max_cross_attention_pairs": args.max_cross_attention_pairs,
-        "torch_version": torch.__version__,
-        "transformers_version": preflight["transformers_version"],
-            "probe_only": args.probe_only, "qualified_for_product": False,
-        "weight_lineage": shared._prepared_kind(prepared) + "+fresh-v16-formation-weights",
-    }
+    run = _run_manifest_v16(args, prepared, preflight, config, torch.__version__)
     digest = shared._record_hash(run)
     if args.resume_checkpoint:
         if args.probe_only or not args.output_dir.is_dir() or (
@@ -492,6 +561,10 @@ def _run_training(args, train, development, status, prepared, processor, preflig
         "prepared_base_receipt_sha256": prepared["receipt_sha256"],
         "prepared_base_kind": preflight["prepared_base_kind"],
         "run_manifest_sha256": digest,
+        "full_fit": bool(getattr(args, "full_fit", False)),
+        "trust_roster_sha256": getattr(args, "trust_roster_sha256", None),
+        "signed_review_receipt_sha256": getattr(
+            args, "signed_review_receipt_sha256", None),
         "seed_control_sha256": seed["specialist_sha256"],
         "specialist_config": config.record(), "optimizer_steps": steps,
         "mean_training_loss_for_current_segment": (
@@ -530,6 +603,12 @@ def arguments() -> argparse.Namespace:
     parser.add_argument("--save-every-steps", type=int, default=100)
     parser.add_argument("--seed", type=int, default=73129)
     parser.add_argument("--probe-only", action="store_true")
+    parser.add_argument("--full-fit", action="store_true",
+                        help="require signed admission with an externally pinned roster")
+    parser.add_argument("--trust-roster", type=Path,
+                        help="steward-controlled rights/reviewer trust roster")
+    parser.add_argument("--trust-roster-sha256",
+                        help="exact roster hash pinned independently of the corpus")
     parser.add_argument("--resume-checkpoint", type=Path)
     return parser.parse_args()
 
@@ -546,11 +625,26 @@ def main() -> None:
         raise CognitiveKernelContractError("invalid v1.6 cross-attention cap")
     if args.probe_only and args.mode != "train":
         raise CognitiveKernelContractError("probe-only applies only to training")
+    full_fit = bool(getattr(args, "full_fit", False))
+    roster = getattr(args, "trust_roster", None)
+    roster_sha = getattr(args, "trust_roster_sha256", None)
+    if full_fit and args.probe_only:
+        raise CognitiveKernelContractError("full fit and one-step probe are separate routes")
+    if full_fit and (args.public_synthetic_curriculum is not None or
+                     getattr(args, "admitted_manifest", None) is None):
+        raise CognitiveKernelContractError("v1.6 full fit requires an admitted corpus")
+    if full_fit:
+        if roster is None or roster_sha is None:
+            raise CognitiveKernelContractError(
+                "v1.6 full fit needs an externally pinned signed trust roster")
+        require_sha256(roster_sha, "trust_roster_sha256")
+    elif roster is not None or roster_sha is not None:
+        raise CognitiveKernelContractError("trust roster flags require explicit full fit")
     if args.resume_checkpoint and (args.mode != "train" or args.probe_only):
         raise CognitiveKernelContractError("resume applies only to full v1.6 training")
-    if args.mode == "train" and not args.probe_only:
+    if args.mode == "train" and not (args.probe_only or full_fit):
         raise CognitiveKernelContractError(
-            "full v1.6 fit blocked: independent adjudication and rights authentication absent")
+            "full v1.6 fit needs independent adjudication, signed admission and external roster")
     if args.mode == "train" and args.public_synthetic_curriculum:
         raise CognitiveKernelContractError("synthetic curriculum cannot supply a GPU fit")
     os.environ.update({"HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1",
