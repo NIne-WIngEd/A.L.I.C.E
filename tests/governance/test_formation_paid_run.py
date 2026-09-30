@@ -17,10 +17,38 @@ from scripts.mfm.multimodal_paid_run import (
     PREFLIGHT_SCHEMA, bind_run, probe_indices, read_sealed, require_complete_weight_export,
     require_preflight, require_zero3, source_fingerprint, write_sealed,
 )
-from scripts.mfm import train_multimodal_formation
+from scripts.mfm import train_formation_model, train_multimodal_formation
 
 
 class PaidRunBindingsTests(unittest.TestCase):
+    def test_pretrained_routes_require_explicit_nonproduct_research_selection(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            common = ["train", "--curriculum", str(root / "train.jsonl"),
+                      "--input-sha256", "a" * 64,
+                      "--output-dir", str(root / "run"),
+                      "--max-sequence-tokens", "32768"]
+            with patch.object(sys, "argv", common), \
+                 patch.object(train_multimodal_formation, "_dataset") as dataset:
+                with self.assertRaisesRegex(CognitiveKernelContractError,
+                                            "Gemma-derived MFM route is superseded"):
+                    train_multimodal_formation.main()
+                dataset.assert_not_called()
+            with patch.object(sys, "argv", common):
+                with self.assertRaisesRegex(CognitiveKernelContractError,
+                                            "pretrained MFM route is superseded"):
+                    train_formation_model.main()
+            with self.assertRaisesRegex(CognitiveKernelContractError,
+                                        "cannot be loaded as the personal core"):
+                train_formation_model.load_hf_candidate(
+                    root, inference_run_id="research", max_input_tokens=1,
+                    max_new_tokens=1)
+            with self.assertRaisesRegex(CognitiveKernelContractError,
+                                        "cannot be loaded as the personal core"):
+                train_multimodal_formation.load_multimodal_candidate(
+                    root, inference_run_id="research", max_input_tokens=1,
+                    max_new_tokens=1)
+
     def test_processor_receipt_binds_source_and_exact_data(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "preflight.json"
@@ -141,7 +169,8 @@ class PaidRunBindingsTests(unittest.TestCase):
                     "--input-sha256", "a" * 64, "--owner-authorization-ref", "owner-test",
                     "--output-dir", str(root / "unused"), "--preflight-receipt", str(receipt),
                     "--staged-model-receipt", str(root / "staged.json"),
-                    "--max-sequence-tokens", "32768", "--preflight-only"]
+                    "--max-sequence-tokens", "32768", "--preflight-only",
+                    "--research-derivative-only"]
             with (patch.object(sys, "argv", argv),
                   patch.dict(sys.modules, {"torch": types.ModuleType("torch"),
                                            "transformers": transformers}),
@@ -170,6 +199,8 @@ class PaidRunBindingsTests(unittest.TestCase):
                       "deepspeed_zero3_a100_4gpu.json")
             write_sealed(receipt, {
                 "schema": PREFLIGHT_SCHEMA, "objective": "mfm-grounded-multimodal-disposition-objective-v1",
+                "weight_lineage": "third-party-pretrained-derivative-research-only",
+                "qualified_for_product": False,
                 "model": "google/gemma-4-12B-it",
                 "model_revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
                 "input_sha256": "a" * 64, "owner_authorization_ref": "owner-test",
@@ -259,7 +290,7 @@ class PaidRunBindingsTests(unittest.TestCase):
                     "--preflight-receipt", str(receipt), "--output-dir", str(output),
                     "--staged-model-receipt", str(root / "staged.json"),
                     "--deepspeed-config", str(config), "--max-sequence-tokens", "32768",
-                    "--probe-only"]
+                    "--probe-only", "--research-derivative-only"]
             env = {"WORLD_SIZE": "4", "RANK": "0", "LOCAL_RANK": "0"}
             with (patch.object(sys, "argv", argv), patch.dict(os.environ, env),
                   patch.dict(sys.modules, {"torch": torch, "transformers": transformers}),

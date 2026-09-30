@@ -1,4 +1,4 @@
-"""Stage and seal the exact Gemma 4 MFM backbone before renting GPUs.
+"""Legacy Gemma-derivative research snapshot staging, superseded for MFM.
 
 ``stage`` compares every repository file to Hugging Face's metadata for the
 pinned commit. ``verify`` is wholly local and rehashes every staged file. The
@@ -287,12 +287,17 @@ def main() -> None:
     stage.add_argument("--receipt", required=True, type=Path)
     stage.add_argument("--download", action="store_true",
                        help="download the full pinned snapshot before verification")
+    stage.add_argument("--research-derivative-only", action="store_true",
+                       help="explicit nonproduct research; never stage as an FBM personal MFM base")
     verify = commands.add_parser("verify", help="offline rehash of the sealed snapshot")
     verify.add_argument("--receipt", required=True, type=Path)
     verify.add_argument("--snapshot-dir", type=Path,
                         help="verified copy at a new absolute path; rehash every file")
     args = parser.parse_args()
     if args.command == "stage":
+        if not args.research_derivative_only:
+            parser.error("Gemma staging is superseded for personal MFM; see "
+                         "docs/MFM_NATIVE_LINEAGE_DECISION_2026-09-29.md")
         receipt = stage_model(args.snapshot_dir, args.receipt, download=args.download)
         result = {"receipt_sha256": receipt["receipt_sha256"],
                   "files": len(receipt["files"]), "total_bytes": receipt["total_bytes"],

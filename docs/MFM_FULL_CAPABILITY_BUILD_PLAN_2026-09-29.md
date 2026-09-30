@@ -4,18 +4,25 @@
 `research/mfm-foundation-20260923`. This work is independent of N0/N1 model
 weights. It will integrate with the selected Stage G successor stack after its
 interfaces qualify; it does not change the current Phase 2 authority path.
+The [native lineage decision](MFM_NATIVE_LINEAGE_DECISION_2026-09-29.md)
+supersedes the Gemma-derived learned route. No native MFM weights or public
+foundation checkpoint have been trained.
 
 ## Destination and boundaries
 
 Fable's reusable, learned MFM interprets an authorized experience in context
 and emits source-citing, time-scoped, uncertain `MemoryProposalBundle` entries.
-Its learned weights encode **formation competence**, not a particular user's
-biography. For A.L.I.C.E., Rayan's corpus supplies host evidence and selected
+Its two-stage first-party weight lineage has a fresh-initialized public-data
+semantic/sensory foundation followed by a specialized formation model trained
+atop that verified first-party artifact. These weights encode **formation
+competence**, not a particular user's biography. For A.L.I.C.E., Rayan's corpus supplies host evidence and selected
 formation tasks; Elaina's evidence is a separate source-person axis; A.L.I.C.E.'s
 post-activation history belongs to her own self. Consumer Fable has a host and
 developing self without requiring a separate source person. FBM must assemble
 and evaluate these roles from authorized inputs without depending on a paid
-teacher or asking every consumer for manually labeled gold.
+teacher or asking every consumer for manually labeled gold. During research,
+assistant teaching may provide attributed public examples and contrasts as in
+N0; neither stage may inherit outside model weights.
 
 The formation output is a **proposal**. Registered Experience and source bytes
 remain authoritative evidence; a deterministic gate authenticates and decides
@@ -40,12 +47,12 @@ defines MFM-1 through MFM-6; its Stage G matrix is selected-stack-first.
 | Lane | Construct | Qualification before claiming it works |
 | --- | --- | --- |
 | 1. Registered intake and context | Resumable source adapters, original-item lineage, speaker/subject/permission/time/modality, exact content hashes; adaptive retrieval across claims, events, episodes, graph, multimodal, source-native, mission and personal-state planes. A learned selector can choose zero or many planes. | Real authorized reads bind to source bytes, scope and consent; injection, missing sources, duplicate exports and stale/revoked data do not become owner speech. Measure selector against frozen retrieval cases, including irrelevant-context stability and evidence actually opened. |
-| 2. Formation gold | Independent semantic decomposition over multiple fictional people and permissioned histories; labels for direct, inference, hypothesis, unknown, event boundary, subject, time, contradiction, correction/deletion, outcome, norm, skill, multimodal grounding. Rayan/Elaina private evidence only in their authorized stores. | Freeze held-out source families, people, time windows and generators before fitting. Audit independent authority, abstention and critical error labels; keep generated cases from grading themselves. |
-| 3. Learned formation | Train a host-neutral model with its own weights or equivalent learned artifact and an optional governed instance adaptation. It consumes authorized content plus `FormationContextPacket` and emits evidence-bound bundles; support temporal and multimodal fusion, competing interpretations and abstention. | Compare strong extraction/context baselines on the same opened evidence; report per-class and critical provenance, subject, deletion and false-memory errors, calibration, resource/latency, and cross-host transfer. Do not claim learned competence from a deterministic fixture or schema test. |
+| 2. Public pack admission and native foundation | Offer rights-cleared public base packs with FBM recommendations and user selection/additions. Inventory exact source/license/distribution scope, language, modalities, coverage, duplicate ancestry, contamination and teacher origin. Train the broad semantic/sensory foundation from freshly initialized weights only after an adequate real corpus exists. | Verify selected pack bytes, rights and intended coverage before any foundation GPU job. Track teacher examples separately from independent evidence. Bind tokenizer, architecture, training input and weight-initialization lineage; measure public transfer and sensory understanding without using personal identity as general pretraining data. |
+| 3. Formation gold and native specialization | Independently adjudicate semantic decomposition over multiple fictional people and permissioned histories; label direct/inference/hypothesis/unknown, event boundary, subject, time, contradiction, correction/deletion, outcome, norm, skill and multimodal grounding. Train the specialized learned MFM only atop the exact first-party foundation, with an optional governed instance adaptation. Rayan/Elaina private evidence stays in authorized stores. | Freeze held-out source families, people, time windows and generators before fitting; audit independent authority, abstention and critical errors. Compare strong extraction/context baselines on identical opened evidence and report false memories, calibration and cross-host transfer. The 49,819 training-only synthetic cases are one formation tier, not adequate native foundation pretraining or independent FINAL. |
 | 4. Episodic and scene formation | Learned event boundaries, source-linked episodes, dynamic overlapping scenes/domains, separate episode facts and context-specific traits. No fixed Life/Work/Interest ontology. | Longitudinal cases with changing scenes and counterevidence; rebuild after correction/deletion; no single event becomes a timeless trait. |
 | 5. Fast/slow loop | Fast immutable event capture, source binding, segmentation and search keys; asynchronous slow consolidation/reflection, conflicts, pattern/norm/skill/retention/model-update candidates. Version the schedule and replay. | Path-dependence tests vary consolidation order; eventual proposals are evidence traceable, idempotent and reversible. Observed outcomes stay distinct from prediction and reward. |
 | 6. Governed full loop | MFM -> deterministic gate -> Claim/episode/graph/vector/personal state -> resource manager/retrieval -> native judgment -> action/outcome -> governed revision. Connect the selected owner-controlled planes through contracts. | Stage G Q0 exact registration, Q1 plane contracts, Q2 cross-plane invariants and Q3 personal loop. Include multi-device reconciliation, backup/replay, deletion through derivatives/weights, downstream-model swap and subject-state interventions. No aggregate score conceals a critical failure. |
-| 7. FBM transfer | Capture each material operation as an FBM process trace, then construct separately versioned eligible input-target-outcome cases; build and qualify MFM for a second independent fictional/authorized host. | A fresh consumer can authorize a varied corpus and obtain a coherent personal entity without Elaina/Rayan leakage or hand-built labels; evaluate independent host differences and sparse-data abstention. |
+| 7. FBM transfer | Capture each material operation as an FBM process trace, then construct separately versioned eligible input-target-outcome cases. Recommend public base packs, let the consumer select/add packs, verify adequacy and lineage, then build and qualify an MFM for a second independent fictional/authorized host. | A fresh consumer can authorize a varied corpus and obtain a coherent personal entity without outside pretrained weights, Elaina/Rayan leakage, a paid teacher or hand-built labels; evaluate independent host differences and sparse-data abstention. |
 
 This is an order of dependency and validation, **not** a model-size, context,
 history, modality, device or capability ceiling. CPU contract tests can prove a
@@ -72,6 +79,14 @@ learning admission boundary and remaining evidence are in
 Keep private corpus manifests and raw payloads outside the public branch.
 FBM process traces remain procedure seeds until an eligible case binds actual
 input, target, authority result and outcome.
+The former pinned-Gemma commands in
+[`MFM_GPU_EXECUTION_HANDOFF_2026-09-29.md`](MFM_GPU_EXECUTION_HANDOFF_2026-09-29.md)
+are retired. Do not stage a third-party checkpoint or buy the proposed GPU
+route as if it were the native two-stage build. The next independent work is
+public pack inventory/rights/coverage and a CPU-verifiable fresh-initialization
+foundation design, followed by the formation specialist and separately held-out
+qualification. The current data and code cannot support a native pretraining
+cost or capability estimate yet.
 
 ## Lessons applied from N0 and FBM
 

@@ -1,4 +1,4 @@
-"""Train actual MFM weights from frozen, source-bound formation examples.
+"""Legacy pretrained text MFM research route, superseded for personal MFM.
 
 Examples come either from a separately admitted train/development corpus or
 from an explicitly owner-authorized synthetic *training-only* curriculum.
@@ -124,8 +124,13 @@ def evaluate_development(candidate, examples) -> dict[str, object]:
 
 
 def load_hf_candidate(artifact_dir: str | Path, *, inference_run_id: str,
-                      max_input_tokens: int, max_new_tokens: int):
-    """Load a locally frozen weight artifact for bound text-source inference."""
+                      max_input_tokens: int, max_new_tokens: int,
+                      allow_derivative_research: bool = False):
+    """Load a pretrained-derivative artifact for explicitly selected research."""
+    if not allow_derivative_research:
+        raise CognitiveKernelContractError(
+            "pretrained-derived MFM cannot be loaded as the personal core; "
+            "pass allow_derivative_research only for a labeled baseline")
     from transformers import AutoModelForCausalLM, AutoTokenizer
     import torch
     from cognitive_kernel.formation_learning import PretrainedFormationCandidate
@@ -173,6 +178,8 @@ def _arguments() -> argparse.Namespace:
     parser.add_argument("--owner-authorization-ref")
     parser.add_argument("--preflight-only", action="store_true",
                         help="validate exact training data and report shape without loading weights")
+    parser.add_argument("--research-derivative-only", action="store_true",
+                        help="allow a nonproduct pretrained-weight research run")
     parser.add_argument("--base-model", help="pretrained open-weight HF model ID")
     parser.add_argument("--model-revision",
                         help="exact 40-hex upstream git commit, not a moving branch/tag")
@@ -196,6 +203,11 @@ def main() -> None:
     args = _arguments()
     require_sha256(args.input_sha256, "input_sha256")
     if not args.preflight_only:
+        if not args.research_derivative_only:
+            raise CognitiveKernelContractError(
+                "pretrained MFM route is superseded for the personal model; "
+                "see docs/MFM_NATIVE_LINEAGE_DECISION_2026-09-29.md. "
+                "Only explicit --research-derivative-only permits historical experiments")
         if not args.base_model or not args.model_revision:
             raise CognitiveKernelContractError("train run requires pretrained model ID and revision")
         if len(args.model_revision) != 40 or any(c not in "0123456789abcdef" for c in args.model_revision):
@@ -339,6 +351,8 @@ def main() -> None:
     model.save_pretrained(final_dir, safe_serialization=True)
     tokenizer.save_pretrained(final_dir)
     provenance = {"objective": OBJECTIVE_VERSION, "corpus_status": corpus_status,
+                  "weight_lineage": "third-party-pretrained-derivative-research-only",
+                  "qualified_for_product": False,
                   "corpus_sha256": args.input_sha256,
                   "owner_authorization_ref": args.owner_authorization_ref,
                   "base_model": args.base_model, "model_revision": args.model_revision,
@@ -364,7 +378,8 @@ def main() -> None:
     if dev:
         candidate = load_hf_candidate(final_dir, inference_run_id="development-eval",
                                       max_input_tokens=args.max_sequence_tokens - args.max_new_tokens,
-                                      max_new_tokens=args.max_new_tokens)
+                                      max_new_tokens=args.max_new_tokens,
+                                      allow_derivative_research=True)
         report = evaluate_development(candidate, dev)
         (args.output_dir / "development-diagnostics.json").write_bytes(
             canonical_json_bytes(report) + b"\n")

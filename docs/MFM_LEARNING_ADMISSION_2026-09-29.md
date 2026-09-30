@@ -2,6 +2,12 @@
 
 **State:** A.L.I.C.E. MFM learned training route prepared, no trained or
 promoted model yet.
+**Lineage correction:** the former pretrained/Gemma fit path described below
+is retired by the
+[two-stage native decision](MFM_NATIVE_LINEAGE_DECISION_2026-09-29.md).
+The admitted formation cases remain training-only material for the future
+specialist. First admit broad public base packs and teacher-source receipts,
+then train a fresh-initialized first-party foundation before specializing.
 
 ## What this branch now supplies
 
@@ -41,10 +47,10 @@ promoted model yet.
   cases. The owner-authorized fictional generator contributes 6,000 more.
   The corrected frozen mixture has 49,819
   train-only cases. See the [source receipt](MFM_CORPUS_SOURCE_RECEIPT_2026-09-29.md).
-- `formation_learning.py` and `train_formation_model.py` bind exact source
-  bytes and owner authorization, supervise structured proposal/disposition
-  output, and train real pretrained weights once a GPU environment is supplied.
-  The current text/structured route does not establish multimodal competence.
+- `formation_learning.py` binds exact source bytes and owner authorization
+  and supervises structured proposal/disposition output. The historical
+  `train_formation_model.py` pretrained route is not the native MFM build.
+  Text/structured contract work does not establish multimodal competence.
 
 ## Training and qualification have different evidence
 
@@ -62,11 +68,14 @@ The Multi-Source-derived formation targets are also synthetic training
 material. Their exact source hashes, narrow field spans and scoped decisions
 now form the 49,819-case mixture. A previous draft paired identical inputs
 with incompatible single-domain targets; the corrected version gives each
-source state one combined target. A measured learned GPU run is the next
-execution step after pinned-processor context and hardware preflight.
-These sources do not supply independent FINAL or a capability claim.
+source state one combined target. This mixture can teach specialized
+formation after the first-party public foundation is trained. It does not
+train broad native semantic/sensory competence from scratch and does not
+supply independent FINAL or a capability claim. No public-foundation GPU
+pretraining starts until real rights-audited, coverage-checked public source
+packs and attributed teacher candidates exist.
 
-The execution environment has no PyTorch, pretrained MFM backbone or GPU.
+The execution environment has no PyTorch, native MFM foundation checkpoint or GPU.
 Those are observed limitations of this workspace, not product capability
 ceilings. No gradient step, learned
 checkpoint, real selected-stack read, authority-gate integration or downstream
@@ -95,8 +104,14 @@ reserved for evaluation, not used to train away the benchmark.
    scenario lineage and generator families. Register hashes and exact
    exclusions before fitting. Keep an independently reviewed final set outside
    training and model-selection access.
-4. **Train.** Use a learned multimodal encoder/fusion and structured
-   evidence-pointer decoder (or another demonstrated architecture). Train
+4. **Train two native stages.** First train the broad semantic/sensory public
+   foundation from newly initialized parameters on adequate, selected and
+   rights-audited base packs with attributed assistant teaching as in N0.
+   FBM recommends packs and records the user's selections/additions,
+   exact versions, distribution rights and measured coverage. Then use that
+   first-party artifact alone to initialize the learned MFM, with native
+   multimodal fusion and a structured evidence-pointer decoder (or another
+   demonstrated architecture). Train
    source attribution, subject binding, temporal revision, proposal type,
    citation, uncertainty, scoped action and abstention jointly. A deferred
    outcome can coexist with a valid scheduled-plan proposal. Evaluate fast event
@@ -114,8 +129,10 @@ reserved for evaluation, not used to train away the benchmark.
    proposal alone cannot certify the later personal judgment.
 
 The [source receipt and annotation objective](MFM_CORPUS_SOURCE_RECEIPT_2026-09-29.md)
-and [learned-run handoff](MFM_GPU_EXECUTION_HANDOFF_2026-09-29.md) pin the
-current data, exact execution path and missing independent target files. This work stays on
-the independent MFM branch. FBM receives compact process
+pin the current formation data. The
+[native training handoff](MFM_GPU_EXECUTION_HANDOFF_2026-09-29.md) records
+missing public packs, evaluation sets and measured hardware before a new
+execution command can be bound. This work stays on the independent MFM
+branch. FBM receives compact process
 traces of actual construction and its failures. A trace is not automatically
 an eligible supervised builder case.

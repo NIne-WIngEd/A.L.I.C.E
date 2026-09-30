@@ -16,6 +16,16 @@ from scripts.mfm import stage_gemma4_model as stage
 
 
 class StagedGemmaModelTests(unittest.TestCase):
+    def test_cli_cannot_stage_for_personal_mfm_by_default(self):
+        with patch.object(sys, "argv", ["stage", "stage", "--snapshot-dir", "/tmp/model",
+                                        "--receipt", "/tmp/receipt.json", "--download"]), \
+             patch.object(stage, "stage_model") as stage_model, \
+             patch("sys.stderr"):
+            with self.assertRaises(SystemExit) as error:
+                stage.main()
+            self.assertEqual(error.exception.code, 2)
+            stage_model.assert_not_called()
+
     def _upstream(self, root: Path):
         snapshot = root / "snapshot"
         snapshot.mkdir()

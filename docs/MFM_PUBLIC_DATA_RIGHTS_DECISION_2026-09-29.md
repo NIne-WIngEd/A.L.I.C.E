@@ -24,7 +24,12 @@ The earlier ChatGPT-specific rights hold has been withdrawn. The two
 owner-authorized components form **49,819 train-only cases**, bound by the
 frozen mixture manifest described in the source receipt. Independent target
 review, nonleaking development/FINAL splits and further generator families
-are needed for a generalization claim, not for starting learned training.
+are needed for a generalization claim. These cases teach the downstream
+formation objective; they are not the broad public substrate for training
+a new MFM semantic/sensory foundation from fresh initialization. Select and
+admit that separate foundation corpus with exact rights and lineage before
+the native base-model training plan. The earlier Gemma-derived route is
+superseded by `MFM_NATIVE_LINEAGE_DECISION_2026-09-29.md`.
 A licensed retrieval/QA benchmark cannot substitute for MFM's source-role,
 temporal, subject, correction and uncertainty labels. Preserve benchmark and
 generator-family isolation during qualification.

@@ -153,13 +153,13 @@ no aggregate metric can conceal a critical failure. Checkpoint, optimizer,
 tokenizer/encoders, data rights, sources and exact compute environment must be
 versioned. The authority gate still decides whether a proposal changes memory.
 
-**Next executable handoff:** preflight the frozen mixture with the pinned
-processor and actual available Magnolia GPU topology, then run the entire
-mixture through the learned trainer. Record an exact model revision,
-source/data and tokenizer hashes, completed optimizer/checkpoint step and
-resource metrics.
-In parallel, build independent multilingual, multimodal and real permissioned
-families, then freeze a separately custodied FINAL. A training run can start
-from the current owner-authorized mixture; no trained artifact can claim full
-MFM capability until those independent evaluations and the governed downstream
-memory loop pass.
+**Native-lineage correction, 2026-09-29:** this mixture is formation-task
+supervision, not a public foundation-pretraining corpus. The former pinned
+Gemma processor and paid training handoff are superseded by
+[`MFM_NATIVE_LINEAGE_DECISION_2026-09-29.md`](MFM_NATIVE_LINEAGE_DECISION_2026-09-29.md).
+Build a separately sourced, fresh-initialized, identity-neutral foundation
+from eligible public data and governed teacher material. Train the MFM
+formation objective on top of that first-party lineage. New architecture,
+tokenizer/media processor, data and runtime fingerprints require new CPU and
+GPU receipts. The 49,819 cases remain available as training-only formation
+material, with no independent FINAL or capability claim.

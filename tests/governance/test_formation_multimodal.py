@@ -169,7 +169,8 @@ class MultimodalFormationTests(unittest.TestCase):
             (model / "config.json").write_text('{"changed":true}')
             with self.assertRaisesRegex(CognitiveKernelContractError, "differs"):
                 load_multimodal_candidate(model, inference_run_id="read",
-                                          max_input_tokens=100, max_new_tokens=30)
+                                          max_input_tokens=100, max_new_tokens=30,
+                                          allow_derivative_research=True)
 
     def test_audio_over_one_window_is_segmented_without_base64_prompt(self):
         example = _example("audio", _wav(31))

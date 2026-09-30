@@ -1,15 +1,15 @@
-"""Train MFM weights with exact text, image, audio and video source inputs.
+"""Legacy Gemma-derivative research route, superseded for personal MFM.
 
 This uses the official Gemma 4 12B Unified processor, a pinned open-weight
 checkpoint, source-only loss masking, and the existing MFM curriculum/admission
 contracts. It does not open FINAL. Preflight processes the actual media without
 loading model weights. GPU training requires Torch, Transformers and ffmpeg.
 
-Example: PYTHONPATH=src python -m scripts.mfm.train_multimodal_formation \
+Example (derivative research only): PYTHONPATH=src python -m scripts.mfm.train_multimodal_formation \
     --curriculum /path/train.jsonl --input-sha256 SHA256 \
     --owner-authorization-ref owner_authorized_service_teacher \
     --output-dir /path/run --preflight-receipt /path/processor.json \
-    --max-sequence-tokens 32768 --preflight-only
+    --max-sequence-tokens 32768 --preflight-only --research-derivative-only
 """
 
 from __future__ import annotations
@@ -50,6 +50,8 @@ def arguments() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--max-sequence-tokens", type=int, required=True)
     parser.add_argument("--preflight-only", action="store_true")
+    parser.add_argument("--research-derivative-only", action="store_true",
+                        help="explicitly run obsolete Gemma-derivative research; never an FBM personal MFM recipe")
     parser.add_argument("--preflight-receipt", type=Path,
                         help="CPU processor receipt; required before any paid GPU run")
     parser.add_argument("--staged-model-receipt", type=Path,
@@ -111,6 +113,11 @@ def require_rank_receipt(path: Path, rank: int, world_size: int,
 
 def main() -> None:
     args = arguments()
+    if not args.research_derivative_only:
+        raise CognitiveKernelContractError(
+            "Gemma-derived MFM route is superseded for the personal model; "
+            "see docs/MFM_NATIVE_LINEAGE_DECISION_2026-09-29.md. "
+            "Only explicit --research-derivative-only permits historical experiments")
     require_sha256(args.input_sha256, "input_sha256")
     if (len(args.model_revision) != 40 or
             any(ch not in "0123456789abcdef" for ch in args.model_revision)):
@@ -156,6 +163,8 @@ def main() -> None:
     import torch
     import transformers
     binding = {"objective": MULTIMODAL_OBJECTIVE, "corpus_status": status,
+               "weight_lineage": "third-party-pretrained-derivative-research-only",
+               "qualified_for_product": False,
                "model": GEMMA_4_12B_MODEL, "model_revision": args.model_revision,
                "input_sha256": args.input_sha256, "train_cases": len(train),
                "development_cases": len(dev), "max_sequence_tokens": args.max_sequence_tokens,
@@ -240,6 +249,8 @@ def main() -> None:
         print(json.dumps(receipt, sort_keys=True))
         return
     run_record = {"schema": RUN_SCHEMA, "model": GEMMA_4_12B_MODEL,
+                  "weight_lineage": "third-party-pretrained-derivative-research-only",
+                  "qualified_for_product": False,
                   "model_revision": args.model_revision, "input_sha256": args.input_sha256,
                   "preflight_sha256": summary["record_sha256"],
                   "staged_model_sha256": staged_model["receipt_sha256"],
@@ -357,8 +368,13 @@ def main() -> None:
 
 
 def load_multimodal_candidate(artifact_dir: Path, *, inference_run_id: str,
-                              max_input_tokens: int, max_new_tokens: int):
-    """Reload only the content-addressed local artifact for governed inference."""
+                              max_input_tokens: int, max_new_tokens: int,
+                              allow_derivative_research: bool = False):
+    """Reload a Gemma-derived artifact for explicitly selected research."""
+    if not allow_derivative_research:
+        raise CognitiveKernelContractError(
+            "Gemma-derived MFM cannot be loaded as the personal core; "
+            "pass allow_derivative_research only for a labeled baseline")
     artifact_dir = Path(artifact_dir)
     digest = verify_artifact_receipt(artifact_dir)
     if max_input_tokens < 1 or max_new_tokens < 1:
