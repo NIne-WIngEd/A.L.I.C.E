@@ -120,11 +120,12 @@ has been established.
 
 Autoregressive decoding currently recomputes the decoder prefix without a
 cache, so long 8K outputs may be slow and require measured runtime capacity.
-The public source-only Gemma diagnostic uses a different 1024-token cap; its
-generation settings are not an exactly matched three-way control. The seeded
+The public source-only Gemma diagnostic uses a different 1024-token cap and
+language head, so its output is a descriptive reference. The role-boundary
+qualifier compares the real trained and seeded-untrained specialist outputs
+under matched settings and rehashes their common run artifacts. The seeded
 control has a distinct weight hash and is **not** a fictional "disabled"
-component. The existing role-boundary qualifier predates this real decoder
-path and must be revised before treating its three-role result as evidence.
+component. Even a passing seven-case diagnostic cannot qualify MFM.
 
 The preflight receipt, checkpoint and component receipt all say
 `qualified_for_product: false`. A verified clone, successful training loss or

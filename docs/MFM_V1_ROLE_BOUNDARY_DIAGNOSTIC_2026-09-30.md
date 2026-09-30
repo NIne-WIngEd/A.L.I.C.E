@@ -8,31 +8,28 @@ source or an evidence-backed modified derivative, plus separately trained
 formation weights. The older `-it` trainer is excluded. No tensor change is
 required before specialist training.
 
-`scripts/mfm/qualify_v1_role_boundary.py` accepts three independently produced
-JSONL output files on the same seven public synthetic cases:
+`scripts/mfm/qualify_v1_role_boundary.py` compares two outputs from the actual
+first-party specialist inference runner on the same seven public synthetic
+cases. A third publisher output is optional descriptive context:
 
 | Run | Model state | Purpose |
 | --- | --- | --- |
-| `untouched` | Pinned publisher pretrained checkpoint only | Measure inherited defaults and compare general behavior. Never promote it directly. |
-| `assembled` | Prepared base plus trained formation component | Inspect source-bound, non-authoritative memory proposals. |
-| `ablated` | Same prepared base and recorded component with the component disabled | Measure whether learned MFM parameters actually affect the role. |
+| `trained` | Prepared base plus trained specialist weights | Inspect source-bound, non-authoritative memory proposals. |
+| `seeded-untrained` | Same prepared base plus the saved decoder weights from before the first optimizer step | Measure whether specialist training improves the same role. |
+| `untouched` (optional) | Pinned publisher pretrained checkpoint and its language head | Describe inherited defaults. It uses a different decoder and a 1024-token cap, so it is not a matched training control. |
 
-Each row uses the existing
-`scripts/mfm/run_gemma4_base_behavior.py` output fields: `case_id`,
-`context_digest`, `prompt_set_sha256`, `source_repository`, `source_revision`,
-`generation`, `status`, `processed_modalities`, `output_text`,
-`model_artifact_digest` and `model_receipt`. Preserve `raw_output_text` so
-special tokens cannot disappear through display decoding. The latter two runs
-also supply `base_source_sha256`, `prepared_base_parent_sha256`,
-`prepared_base_sha256`, `prepared_base_receipt_sha256`,
-`formation_component_sha256`, and `formation_component_active`. The first two
-source ancestry fields are the pinned pretrained weight SHA-256. The prepared
-base digest may equal the source digest for an exact role clone. Its receipt
-must differ from the publisher source receipt. Both specialist runs name the
-same prepared base and formation component, and differ only in whether it is
-active. The runner that eventually emits these rows must separately authenticate the prepared
-base and component artifacts; metadata alone cannot establish their bytes or
-prove the ablation truly occurred.
+The two specialist rows come from
+`scripts/mfm/run_v1_formation_specialist.py --control trained` and
+`--control seeded-untrained`. They record the exact input-file digest,
+context, source and prepared-base lineage, selected specialist weight digest,
+sealed receipt, control kind, deterministic decoder settings, token IDs, raw
+completion, EOS and validation status. Their weight and receipt digests must
+differ while the prompt, prepared-base receipt and decoding settings match.
+The prepared-base weight digest may equal its publisher parent for an exact
+role clone, while its separate clone receipt differs. The qualifier rehashes
+the local base, component and seed files and checks their common sealed run
+manifest before it can report a diagnostic pass. This does not independently
+prove that a recorded JSONL completion was actually emitted by those files.
 
 The scorer CLI rehashes the eight publisher files against pinned values and
 verifies the corresponding source receipt before scoring. Its fixture is
@@ -71,27 +68,36 @@ are public diagnostics only. `--require-network-isolation` makes the
 runner fail if it observes a non-loopback interface. Even a loopback-only
 interface check does not exclude a same-host Unix socket proxy. An externally
 isolated process remains required before private evidence may be opened.
-The specialist and ablated output rows
-need their own genuine inference runner. Once the three role outputs exist,
-run:
+Run the real specialist inference command from the
+[V1 training path](MFM_V1_SPECIALIST_TRAINING_PATH_2026-09-30.md) twice on the
+same emitted JSONL. Set `--control trained` and `--control seeded-untrained`
+with separate output paths and run IDs. Once the results exist, run:
 
 ```bash
 PYTHONPATH=src python scripts/mfm/qualify_v1_role_boundary.py \
   --snapshot /models/gemma-4-12B-pretrained \
   --source-receipt /receipts/gemma-4-12B-pretrained.json \
+  --component-dir /secure/run \
+  --prepared-base-dir /secure/mfm-role-clone \
+  --prepared-base-receipt /secure/mfm-role-clone.json \
+  --preflight-receipt /secure/processor-preflight.json \
   --untouched /results/untouched.jsonl \
-  --assembled /results/mfm-assembled.jsonl \
-  --ablated /results/mfm-ablated.jsonl \
+  --trained /results/trained-output.jsonl \
+  --seeded-untrained /results/seeded-output.jsonl \
   --output /results/mfm-role-diagnostic.json
 ```
 
 The output reports per-case critical errors, omissions and modality gaps.
-`formation_contribution_cases` requires a matched ablation to worsen at least
-one observed case. `role_boundary_diagnostic_pass` also requires the assembled
-run to have no scored errors and every fixture case to be exercised. Both
-values describe this small diagnostic only; `qualification_claim` is always
-false. An image case is currently unexercised by the text-only source runner,
-so the diagnostic cannot pass until a genuine sensory execution exists.
+`formation_contribution_cases` requires the seeded control to score worse on
+at least one matched case. `role_boundary_diagnostic_pass` also requires a
+rehash of both specialist artifacts, no trained-case errors and complete
+trained/control fixture coverage. The optional publisher reference may leave
+the image case unexercised; that appears separately under
+`reference_coverage_gaps` and does not hide the specialist image result. This
+remains a small public diagnostic, and `qualification_claim` is always false.
+Running this scorer without local artifacts cannot yield a pass. An output
+file could still be fabricated, so independently observed execution remains
+unmeasured.
 
 Before any capability promotion: verify actual prepared/component artifact
 bytes and training lineage; run a process under an OS-enforced no-egress
