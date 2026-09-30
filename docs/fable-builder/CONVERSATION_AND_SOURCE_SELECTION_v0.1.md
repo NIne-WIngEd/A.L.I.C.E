@@ -1,5 +1,10 @@
 # FBM consumer build and conversation handoff — v0.1
 
+**V1 ancestry update:** The shared licensed-base contract in
+[`FBM_V1_LICENSED_BASE_ASSEMBLY_2026-09-30.md`](FBM_V1_LICENSED_BASE_ASSEMBLY_2026-09-30.md)
+supersedes the native-only foundation requirement below for V1. Source
+choice, adequacy, privacy and qualification duties still apply.
+
 **Status:** first-release research contract, 2026-09-25. No runtime implementation or qualification is implied.  
 **Scope:** `fable-builder-model` workstream and A.L.I.C.E.-first transfer to Fable Sleight.
 
@@ -7,7 +12,11 @@
 
 FBM must eventually construct and connect the qualified consumer personal foundation: identity/personality, Memory Formation, host, relationship, and assistant-self capabilities, together with evidence, provenance, memory, Experience Ledger, context, and governed revision infrastructure. These five names identify starting roles, not a settled neural-model count. Some roles may require multiple learned components or structured stores.
 
-For a new user, the builder must start from that user's authorized evidence. Identity-neutral semantic foundation training (N0 or a successor) also needs public, licensed, or user-provided eligible source data and controlled synthetic teaching examples. Provide a user-facing source selection and addition flow, a provenance/license eligibility manifest, an adequacy check, and a compute estimate. Excluding sources is permitted, but a foundation that cannot qualify must fail transparently. Disallow transferring Elaina or Rayan private content. Record whether each personal weight file really began at fresh initialization; a third-party checkpoint with user tuning does not qualify as personal weights trained from scratch.
+For V1, use the pinned licensed Gemma representation source and train separately initialized personal formation weights with governed memory and causal qualification; see `FBM_V1_LICENSED_BASE_ASSEMBLY_2026-09-30.md`. The fresh-initialization-only procedure below is the future foundation replacement.
+
+For a new user, the builder must start the *personal* build from that user's authorized evidence. Offer versioned default public source packs and let the owner select, exclude, or add eligible sources. Before either training stage, show the source/provenance/license manifest, the target-specific adequacy result, and a compute estimate. If the selected sources cannot qualify a capability, fail transparently. User-private evidence stays in its authorized instance custody and cannot silently enter a shared public foundation. Disallow transferring Elaina or Rayan private content.
+
+For the future first-party foundation replacement, build the MFM through two distinct native weight stages. First initialize its foundation weights afresh and train identity-neutral semantic, temporal, evidence, and modality competence on eligible public/owner-selected foundation data and separately labeled assistant-teacher examples. Reusing architecture code does not import pretrained weights. Then continue **that native checkpoint** with independently checked formation-specific training data and objectives, including abstention, subjects, chronology, corrections, and source-bound proposals. A consumer may start from a qualified first-party native checkpoint with complete fresh-init ancestry or build one from the selected packs; any local adaptation uses only authorized instance evidence under a separate lineage. An owner who excludes a source pack already in the inherited checkpoint's ancestry needs a compatible checkpoint or a fresh build, not a false claim that the exclusion removed it. Teacher output has its own origin and rights and cannot become historical truth or a runtime dependency. Record the initialization, parent checkpoint hashes, source eligibility, and training receipts at both stages. A third-party checkpoint with user tuning does not qualify as personal weights trained from scratch.
 
 The formation model is responsible for preparing personal components and their test data. It does not itself become the source person, the live conversation voice, or an independent memory authority. Observed outcomes must enter governed personal-state revision so that later relevant judgments change.
 

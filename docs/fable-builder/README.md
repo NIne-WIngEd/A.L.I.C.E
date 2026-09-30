@@ -1,5 +1,18 @@
 # Fable Builder Model Workstream
 
+**V1 lineage update (2026-09-29 owner-local):** The owner selected a common,
+locally cloned, Apache-licensed pretrained base plus distinct user-specific
+learned components. See
+[`FBM_V1_LICENSED_BASE_ASSEMBLY_2026-09-30.md`](FBM_V1_LICENSED_BASE_ASSEMBLY_2026-09-30.md).
+The [V1 shared-base dissection and five-role recipe](FBM_V1_GEMMA4_BASE_DISSECTION_AND_ROLE_RECIPE_2026-09-30.md)
+pins the publisher checkpoint metadata and records the verification and
+specialization gates. The exact pretrained source has now been downloaded
+and rehashed locally; the receipt is linked in that recipe. No 12B forward
+pass or base edit has been observed.
+Earlier fresh-initialization-only passages below describe the future
+first-party replacement, not V1 production ancestry. No V1 base-derived
+MFM or FBM build is trained or qualified.
+
 **Branch:** `fable-builder-model`  
 **Status:** active architecture and process-capture workstream  
 **Created:** 2026-09-13
@@ -36,6 +49,23 @@ Its responsibilities include:
 
 The builder must also form and qualify MFM, host, relationship and assistant-self capabilities; connect them to governed memory, native judgment and the conversation handoff; and learn from outcomes without crossing subject or authority boundaries. These obligations are specified in the linked data and seed program.
 
+**V1 MFM lineage:** A pinned, licensed Gemma pretrained checkpoint supplies a
+shared representation source. FBM must create separately initialized and
+trained, instance-custodied formation weights, connect them to the evidence
+fabric and Claim gate, and demonstrate their causal contribution. A personal
+data fine-tune of an external chatbot served as the finished model repeats the
+obsolete personality Phase 2 pattern and does not qualify. The source weights
+retain Google ancestry and applicable license duties; the newly trained
+specialist has its own traceable lineage. The earlier `-it` Gemma staging and
+paid-route procedure remains historical research, not this V1 assembly recipe.
+
+**Future first-party MFM weight lineage:** A later first-party replacement must
+build the full required foundation from a fresh-initialized native weight
+lineage, with every subsequent parent hash and training receipt recorded. Its
+native-only constraint is a future target, not V1 checkpoint eligibility.
+
+**Future first-party MFM build order:** Train a fresh-initialized native foundation on eligible public data and attributed assistant-teacher examples. Continue that checkpoint with formation-specific data and objectives, then apply any authorized user-specific learning under separate instance custody. FBM offers eligible default public packs and owner-controlled source selection/addition, with rights, adequacy, and compute checks before a build. A fully traced first-party native checkpoint can seed consumer builds; an external pretrained checkpoint cannot substitute for either native stage. Neither stage is yet trained or qualified by this branch.
+
 The consumer's source evidence remains the authority about that consumer-derived personality. FBM is a builder and interpreter, not the historical authority.
 
 ## Relationship to A.L.I.C.E.
@@ -55,7 +85,7 @@ pre-activation
 source data -> FBM bootstrap mode -> personality substrate -> personality model
 
 post-activation
-FBM shared formation backbone
+FBM formation backbone (V1 licensed base; later first-party replacement)
         |-> Memory Formation runtime head
         |-> required personal-development / reflection capability
         |      |-> evidence-linked user/host model revision
