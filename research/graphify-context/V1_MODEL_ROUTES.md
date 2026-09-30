@@ -43,5 +43,8 @@ The source pointers above lead to both validators.
 
 The owner reported all eight pinned SHA-256 checks as `OK` on Magnolia on
 2026-09-30. This report has not yet produced the foundation Python receipt,
-a role-specific weight edit, or a behavior qualification. The route index
-does not claim any of those events occurred.
+an MFM role clone receipt, a trained specialist, or behavior qualification.
+The MFM 1.6 contract now describes missing full-role semantics, while the
+frozen 1.5 corpus and trainer remain partial training and hardware-probe
+material. The FBM aggregate coverage audit and readiness gate are indexed
+as procedure evidence, not model-quality gold.

@@ -6,17 +6,17 @@
   "areas": {
     "foundation": {
       "branch": "research/gemma4-v1-source-derivation-20260930",
-      "commit": "1f76064263f035de41f1c7d71a4d90e87643d181",
+      "commit": "3e1328410dac52ba18be243cb9f7144e7a3964d1",
       "files": [
         {
           "path": "docs/GEMMA4_V1_SOURCE_AND_DERIVATIVE_CONTRACT.md",
           "purpose": "source custody and derivative contract",
-          "blob_sha": "f685349b1ec1043dbc11c7a3b627d1927d0a84c1"
+          "blob_sha": "fbf26093bc43aeaeac69824058bfd8c660b603ec"
         },
         {
           "path": "src/alice_foundation/gemma4_v1.py",
           "purpose": "clone, mutation, and derivative verification",
-          "blob_sha": "52f77281f0ebaa13288c5b4c419e31c7269f4834"
+          "blob_sha": "59cd87a4ef7202944b7b9967595ea634979054d1"
         },
         {
           "path": "src/alice_foundation/gemma4_inventory.py",
@@ -26,38 +26,53 @@
         {
           "path": "tests/foundation/test_gemma4_v1.py",
           "purpose": "foundation contract tests",
-          "blob_sha": "58020531a34d364b8102c8c4b745c5495c75f29a"
+          "blob_sha": "6dea50e709f4028d5e47c66df96c9deb25a79add"
         }
       ]
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "a8266daf08af5505a641dcec8dae8a2ed013a095",
+      "commit": "df3da321feb56cc33762e38e19f43bbb078a6e36",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
           "purpose": "V1 source direction and qualification limits",
-          "blob_sha": "53e8c27886554e0adee6d2a844cd9f56bcfffe46"
+          "blob_sha": "ee76d7bf78bad07e3bed869bd39e4e28507dd08b"
         },
         {
           "path": "docs/MFM_V1_SPECIALIST_TRAINING_PATH_2026-09-30.md",
           "purpose": "MFM specialist training path",
-          "blob_sha": "acc4643bb52940158d826310c540f542b86d7b3d"
+          "blob_sha": "9701e9853846cb122502d5c836dee84cd10200ac"
         },
         {
           "path": "docs/MFM_V1_ROLE_BOUNDARY_DIAGNOSTIC_2026-09-30.md",
           "purpose": "paired behavior and role boundary diagnostic",
-          "blob_sha": "b5cdf6ada4b8d8e4b67756220b6f43339306e599"
+          "blob_sha": "5d01c0ab1464db915bec57d9edb9ebd0d185a065"
+        },
+        {
+          "path": "docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md",
+          "purpose": "full-role formation contract and admission gap",
+          "blob_sha": "3d92273b077c03cd6a24a0a19320834c88821264"
         },
         {
           "path": "src/cognitive_kernel/formation_v1_specialist.py",
           "purpose": "separate formation model architecture",
-          "blob_sha": "0d99a24d43864555460f4b1dbe61980316ed6b4f"
+          "blob_sha": "c4a931a4e0891079e134eea7aaa91d07a7abb42c"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_semantics_v16.py",
+          "purpose": "versioned sensitivity, episode, relationship and mission semantics",
+          "blob_sha": "effdb33c4ec5543e5e5b35b540aab970bf1643d7"
         },
         {
           "path": "scripts/mfm/train_v1_formation_specialist.py",
           "purpose": "training and processor preflight",
-          "blob_sha": "ce072d7a46e1b5ce3a0587f982a8f583be4ce929"
+          "blob_sha": "f1f89953f552de7620d8c401bae36516ddde2e82"
+        },
+        {
+          "path": "scripts/mfm/run_v1_formation_specialist.py",
+          "purpose": "trained and seeded control inference",
+          "blob_sha": "0d8fcea08ae59cd9357b4eb8f26042416a5a998a"
         },
         {
           "path": "scripts/mfm/verify_gemma4_pretrained.py",
@@ -72,28 +87,33 @@
         {
           "path": "scripts/mfm/run_gemma4_prepared_base_behavior.py",
           "purpose": "prepared source public diagnostic",
-          "blob_sha": "c880a0c5c5515412f6a217f070f2b612bdb1db3b"
+          "blob_sha": "ce3b6597d64b0ff15cb7b14c2dc8f83ca9d61a28"
         },
         {
           "path": "scripts/mfm/qualify_v1_role_boundary.py",
           "purpose": "role boundary comparison",
-          "blob_sha": "7a87f6a8d5bf6771a5d36afcf66fde6ee6b7d97b"
+          "blob_sha": "4e2b3d000b43751816b4c400c1079204eedadccd"
         }
       ]
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "1f42d2e9d49179a77ba8bfbd0b47c79d23fff9bb",
+      "commit": "a4ab03d1f519cbef0c85e96424233d46f7ce85a5",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
           "purpose": "FBM ordered replay seed",
-          "blob_sha": "ebf9ef3d965648ef3ad2a2380d6070fdfa2eb0de"
+          "blob_sha": "baa2ae0160ba580c249f69e9b5b3365e2e17c1ce"
+        },
+        {
+          "path": "training/fbm/base_assembly/mfm_v1_training_role_coverage_20260930.json",
+          "purpose": "hash-bound training-role coverage audit",
+          "blob_sha": "0c23ecf5295d1d1f7056279948f1623649239773"
         },
         {
           "path": "docs/fable-builder/FBM_V1_GEMMA4_BASE_DISSECTION_AND_ROLE_RECIPE_2026-09-30.md",
           "purpose": "FBM source and role recipe",
-          "blob_sha": "06f22b8d2eeb4b136a23350f065f0061de18234a"
+          "blob_sha": "cd8fc59bae013646fd3502e5ada30c83c8c89d2f"
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20260930_GEMMA4_MFM_REPLAY_SEED.jsonl",
@@ -104,6 +124,31 @@
           "path": "docs/fable-builder/traces/FBM_TRACE_20260930_GEMMA4_MFM_PUBLICATION_REBIND.jsonl",
           "purpose": "published cross-branch lineage",
           "blob_sha": "5022b0e19162bfd1205ef80995fbb83d52352c12"
+        },
+        {
+          "path": "docs/fable-builder/traces/FBM_TRACE_20260930_GEMMA4_CLONE_FIRST_FORMATION_SEED.jsonl",
+          "purpose": "clone-first decision trace",
+          "blob_sha": "946d92e2b3811aa4fb93002dee9676387e5f23e5"
+        },
+        {
+          "path": "docs/fable-builder/traces/FBM_TRACE_20260930_MFM_FULL_ROLE_READINESS_AUDIT.jsonl",
+          "purpose": "full-fit stop and corpus audit trace",
+          "blob_sha": "ab1d6ef784cfc1889d88552533be374fec2d8b45"
+        },
+        {
+          "path": "docs/fable-builder/traces/FBM_TRACE_20260930_MFM_V15_PROBE_ONLY_CONTRACT.jsonl",
+          "purpose": "v1.5 trainer probe-only correction",
+          "blob_sha": "b919ce8762555106ca92c448871ab0039ed401f5"
+        },
+        {
+          "path": "docs/fable-builder/traces/FBM_TRACE_20260930_MFM_V16_PUBLIC_CONTRACT_PIN.jsonl",
+          "purpose": "published v1.6 contract pin",
+          "blob_sha": "d7932e4f9e96b660b4de2275b6c8d007ab7bd849"
+        },
+        {
+          "path": "docs/fable-builder/traces/FBM_TRACE_20260930_MFM_PUBLIC_DOCS_CORRECTION_PIN.jsonl",
+          "purpose": "matched control and exact public MFM pin",
+          "blob_sha": "3ade194a9254a32d637df42bf1e56bda0e444006"
         }
       ]
     }
