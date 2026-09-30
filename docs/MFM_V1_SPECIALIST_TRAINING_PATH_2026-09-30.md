@@ -1,9 +1,9 @@
 # MFM V1 specialist training path
 
-**Status, 2026-09-30:** Implemented training code and synthetic CPU component
-tests. The eight source files were SHA-256 verified on Magnolia. No MFM role
-clone receipt, complete corpus processor preflight, GPU probe, full training,
-independent FINAL evaluation or product qualification has occurred.
+**Status, 2026-09-30:** Implemented training and evaluation code with synthetic
+CPU contract tests. The eight source files were SHA-256 verified on Magnolia.
+No MFM role clone receipt, complete corpus processor preflight, GPU probe, full
+training, independent FINAL evaluation or product qualification has occurred.
 
 ## Boundary
 
@@ -77,8 +77,36 @@ precondition, not a guarantee against host compromise.
    processor, stress-case backward pass, checkpoint replay, storage, and
    training duration fit the selected allocation. Checkpoints are content
    hashed and `--resume-checkpoint` resumes at the next case after a complete
-   optimizer step. No inference or development evaluation has yet been run on
-   the resulting specialist component.
+   optimizer step. A new training run saves its exact seeded, untrained
+   specialist and a sealed digest before the first update, as a matched
+   negative control. A resumed run rehashes that control.
+
+5. On the same local, isolated network boundary, run the specialist evaluator
+   separately for `trained` and `seeded-untrained` using the same exact input
+   JSONL, preflight and role clone. Each input row has `case_id`, canonical
+   `context`, `context_digest`, and `opened_sources` as ordered `{ref_id,
+   payload_base64}` entries. The public diagnostic `emit` command produces
+   seven such rows without its gold answers. Example:
+
+   ```bash
+   python -m scripts.mfm.run_v1_formation_specialist \
+     --component-dir /secure/run --prepared-base-dir /secure/mfm-role-clone \
+     --prepared-base-receipt /secure/mfm-role-clone.json \
+     --preflight-receipt /secure/processor-preflight.json \
+     --input-jsonl /secure/diagnostic-inputs.jsonl \
+     --output-jsonl /secure/trained-output.jsonl --control trained \
+     --inference-run-id evaluation-trained --max-new-tokens 8192
+   ```
+
+   Change `--control` to `seeded-untrained`, the output path and run ID for the
+   negative control. The runner rehashes the role base, both specialist files
+   and sealed component/run/preflight/control receipts, then uses the exact
+   training source encoding. It generates BOS to EOS greedily through the
+   first-party decoder only. A malformed, ungrounded or truncated JSON
+   completion remains in the output with its raw tokens and invalid status;
+   there is no repair, authority write or hidden fallback to Gemma's LM head.
+   Output publication is atomic, local and mode 0600. The loopback-only Linux
+   process boundary is mandatory before private input is opened.
 
 `--max-source-tokens` and `--max-target-tokens` are configurable resource
 admission bounds. They do not silently shorten a history or define an MFM
@@ -89,6 +117,14 @@ logit chunks to avoid a full target-by-262K-vocabulary loss tensor. Dense
 cross attention still needs an actual full backward measurement. This script
 currently loads the prepared base on one GPU. No 48 GB or multi-GPU fit claim
 has been established.
+
+Autoregressive decoding currently recomputes the decoder prefix without a
+cache, so long 8K outputs may be slow and require measured runtime capacity.
+The public source-only Gemma diagnostic uses a different 1024-token cap; its
+generation settings are not an exactly matched three-way control. The seeded
+control has a distinct weight hash and is **not** a fictional "disabled"
+component. The existing role-boundary qualifier predates this real decoder
+path and must be revised before treating its three-role result as evidence.
 
 The preflight receipt, checkpoint and component receipt all say
 `qualified_for_product: false`. A verified clone, successful training loss or

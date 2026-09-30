@@ -163,3 +163,13 @@ formation objective on top of that first-party lineage. New architecture,
 tokenizer/media processor, data and runtime fingerprints require new CPU and
 GPU receipts. The 49,819 cases remain available as training-only formation
 material, with no independent FINAL or capability claim.
+
+**V1 lineage supersession, 2026-09-30:** the correction above records the
+future first-party foundation route. For Fable V1, the selected route uses a
+verified local clone of the licensed non-instruction-tuned Gemma 4 source as
+representation ancestry and trains a separate fresh formation decoder;
+see [`MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md`](MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md)
+and [`MFM_V1_SPECIALIST_TRAINING_PATH_2026-09-30.md`](MFM_V1_SPECIALIST_TRAINING_PATH_2026-09-30.md).
+The corpus qualification limits and need for independent FINAL above still
+apply. This does not make the 49,819 cases native foundation pretraining or
+qualify a product model.

@@ -32,13 +32,14 @@ from cognitive_kernel.formation_learning import (
     OBJECTIVE_VERSION, admitted_rows, curriculum_rows, mixture_rows, output_record,
 )
 from cognitive_kernel.formation_multimodal import (
-    _assert_modality_tensors, formation_media_messages,
+    _assert_modality_tensors, formation_context_media_messages,
 )
 
 
 PREFLIGHT_SCHEMA = "mfm-v1-specialist-processor-preflight-v1"
 ARTIFACT_SCHEMA = "mfm-v1-formation-specialist-artifact-v1"
 RUN_SCHEMA = "mfm-v1-specialist-training-run-v1"
+SEED_CONTROL_SCHEMA = "mfm-v1-specialist-seeded-control-v1"
 FOUNDATION_COMMIT = "3e1328410dac52ba18be243cb9f7144e7a3964d1"
 FOUNDATION_VERIFIER_SHA256 = "e6b36eb921d34b067703cf77adc81051923dc2b9bf82866f75176c9ebeb53e9f"
 FOUNDATION_INVENTORY_SHA256 = "be1cd95b5db1544f3750fb278973aa88d0361633dc4fe5a53649d9d98c029737"
@@ -203,8 +204,10 @@ def _escaped_text(value: str) -> str:
     return json.dumps(value, ensure_ascii=True).replace("<", "\\u003c")
 
 
-def _source_batch(processor, example, max_source_tokens: int):
-    with formation_media_messages(example) as messages:
+def source_batch(processor, context, opened_sources, max_source_tokens: int,
+                 *, case_id: str = "inference"):
+    """Shared exact-source train/inference encoding; never accepts a text surrogate."""
+    with formation_context_media_messages(context, opened_sources) as messages:
         # Preserve original bytes in custody and grounding while rendering
         # source text as a reversible JSON string. A literal "<|image|>" or
         # an original "\\u003c" cannot become a processor media placeholder.
@@ -217,7 +220,7 @@ def _source_batch(processor, example, max_source_tokens: int):
             rendered, chat_template=SOURCE_TEMPLATE,
             tokenize=True, add_generation_prompt=False,
             return_dict=True, return_tensors="pt", do_sample_frames=False)
-        _assert_modality_tensors(example.context, payload)
+        _assert_modality_tensors(context, payload)
     selected = {key: value for key, value in payload.items()
                 if hasattr(value, "shape") and key not in {
                     "num_soft_tokens_per_image", "num_soft_tokens_per_video"}}
@@ -225,10 +228,15 @@ def _source_batch(processor, example, max_source_tokens: int):
     if tokens is None or tokens.ndim != 2 or tokens.shape[0] != 1 or \
             not 0 < tokens.shape[1] <= max_source_tokens:
         raise CognitiveKernelContractError(
-            f"case {example.case_id} exceeds full source budget or lacks tokens; do not truncate")
+            f"case {case_id} exceeds full source budget or lacks tokens; do not truncate")
     if "attention_mask" not in selected or selected["attention_mask"].shape != tokens.shape:
         raise CognitiveKernelContractError("prepared processor omitted aligned attention mask")
     return selected
+
+
+def _source_batch(processor, example, max_source_tokens: int):
+    return source_batch(processor, example.context, example.opened_sources,
+                        max_source_tokens, case_id=example.case_id)
 
 
 def _binding(args, prepared: dict, status: str, train_count: int, dev_count: int,
@@ -407,6 +415,28 @@ def _resume(checkpoint_dir: Path, output_dir: Path, specialist,
     return receipt["epoch"], receipt["next_case"], receipt["step"]
 
 
+def _seed_control(output_dir: Path, specialist, run_digest: str, config) -> None:
+    """Persist the exact seeded specialist before its first optimizer step."""
+    from safetensors.torch import save_file
+    path = output_dir / "seed-control.safetensors"
+    save_file({name: value.detach().cpu().contiguous()
+               for name, value in specialist.state_dict().items()}, str(path))
+    _write_new(output_dir / "seed-control.json", {
+        "schema": SEED_CONTROL_SCHEMA, "specialist_sha256": _digest(path),
+        "run_manifest_sha256": run_digest, "specialist_config": config.record(),
+        "optimizer_steps": 0, "meaning": "same-seed untrained specialist negative control"})
+
+
+def _verify_seed_control(output_dir: Path, run_digest: str, config) -> dict:
+    receipt = _read_sealed(output_dir / "seed-control.json", SEED_CONTROL_SCHEMA)
+    if (receipt["run_manifest_sha256"] != run_digest or
+            receipt["specialist_config"] != config.record() or
+            receipt["optimizer_steps"] != 0 or
+            receipt["specialist_sha256"] != _digest(output_dir / "seed-control.safetensors")):
+        raise CognitiveKernelContractError("seeded control differs from frozen specialist run")
+    return receipt
+
+
 def _run_training(args, train, development, status, prepared, processor, preflight):
     import torch
     from safetensors.torch import load_file, save_file
@@ -459,11 +489,13 @@ def _run_training(args, train, development, status, prepared, processor, preflig
         previous = _read_sealed(args.output_dir / "run.json", RUN_SCHEMA)
         if previous["record_sha256"] != manifest_digest:
             raise CognitiveKernelContractError("resume configuration differs from frozen run")
+        _verify_seed_control(args.output_dir, manifest_digest, config)
         start_epoch, start_case, global_step = _resume(
             args.resume_checkpoint, args.output_dir, specialist, optimizer, manifest_digest)
     else:
         args.output_dir.mkdir(parents=True, exist_ok=False)
         _write_new(args.output_dir / "run.json", run)
+        _seed_control(args.output_dir, specialist, manifest_digest, config)
         start_epoch = start_case = global_step = 0
     loss_log = []
     for epoch in range(start_epoch, args.epochs):
@@ -540,6 +572,8 @@ def _run_training(args, train, development, status, prepared, processor, preflig
         "prepared_base_receipt_sha256": prepared["receipt_sha256"],
         "prepared_base_kind": preflight["prepared_base_kind"],
         "run_manifest_sha256": manifest_digest,
+        "seed_control_sha256": _verify_seed_control(
+            args.output_dir, manifest_digest, config)["specialist_sha256"],
         "specialist_config": config.record(),
         "optimizer_steps": global_step,
         "mean_training_loss_for_current_segment": (

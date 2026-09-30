@@ -74,8 +74,8 @@ class FormationSpecialist(nn.Module):
                                              norm=nn.LayerNorm(config.width))
         self.output_bias = nn.Parameter(torch.zeros(config.vocabulary_size))
 
-    def forward(self, *, base_states: torch.Tensor, source_mask: torch.Tensor,
-                input_ids: torch.Tensor, labels: torch.Tensor | None = None):
+    def _decode(self, *, base_states: torch.Tensor, source_mask: torch.Tensor,
+                input_ids: torch.Tensor) -> torch.Tensor:
         if base_states.ndim != 3 or input_ids.ndim != 2 or source_mask.ndim != 2:
             raise ValueError("specialist expects [batch, source, hidden] and 2D masks/tokens")
         batch, source_length, hidden_size = base_states.shape
@@ -92,10 +92,24 @@ class FormationSpecialist(nn.Module):
         memory = self.source_projection(base_states.to(self.source_projection.weight.dtype))
         causal = torch.ones(target_length, target_length, device=input_ids.device,
                             dtype=torch.bool).triu_(diagonal=1)
-        decoded = self.decoder(
+        return self.decoder(
             target, memory, tgt_mask=causal,
             tgt_key_padding_mask=input_ids.eq(self.config.pad_token_id),
             memory_key_padding_mask=~source_mask.bool())
+
+    def next_token_logits(self, *, base_states: torch.Tensor,
+                          source_mask: torch.Tensor,
+                          input_ids: torch.Tensor) -> torch.Tensor:
+        """Project only the final decoder position during autoregressive inference."""
+        decoded = self._decode(base_states=base_states, source_mask=source_mask,
+                               input_ids=input_ids)
+        return F.linear(decoded[:, -1], self.token_embedding.weight, self.output_bias)
+
+    def forward(self, *, base_states: torch.Tensor, source_mask: torch.Tensor,
+                input_ids: torch.Tensor, labels: torch.Tensor | None = None):
+        decoded = self._decode(base_states=base_states, source_mask=source_mask,
+                               input_ids=input_ids)
+        target_length = decoded.shape[1]
         # A tied head is a fresh trainable specialist head, not Gemma's LM head.
         if labels is None:
             return F.linear(decoded, self.token_embedding.weight, self.output_bias)
