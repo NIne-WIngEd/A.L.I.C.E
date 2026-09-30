@@ -11,7 +11,10 @@ import tempfile
 import unittest
 from types import SimpleNamespace
 
-from scripts.mfm.native_hf_acquire import fetch_exact_file
+from scripts.mfm.native_hf_acquire import (
+    fetch_exact_file, freeze_selection, inventory_exact_repo, selection_template,
+    verify_complete_acquisitions,
+)
 from scripts.mfm.native_public_corpus import _row_sha256, reconcile, stage_shard, verify_shard
 
 
@@ -39,6 +42,23 @@ class TestPublicCorpus(unittest.TestCase):
         self.sources = {row["source_id"]: row for row in
                         json.loads(N0.read_text("utf-8"))["sources"]}
 
+    def frozen_repo(self, family, api, name):
+        tree_file = self.base / f"{name}-tree.json"
+        tree = inventory_exact_repo(candidate_file=CANDIDATE,
+                                    candidate_sha=self.candidate_sha,
+                                    n0_file=N0, n0_sha=self.n0_sha,
+                                    candidate_id=family, output=tree_file, api=api)
+        selection = selection_template(tree)
+        selection["repo_tree_sha256"] = digest(tree_file)
+        selection["review_record"] = "fixture source file inventory reviewed"
+        selection_file = self.base / f"{name}-selection.json"
+        selection_sha = freeze(selection_file, selection)
+        frozen_file = self.base / f"{name}-frozen.json"
+        result = freeze_selection(tree_file=tree_file, tree_sha=digest(tree_file),
+                                  selection_file=selection_file,
+                                  selection_sha=selection_sha, output=frozen_file)
+        return frozen_file, digest(frozen_file), tree, result
+
     def source_row(self, family, row_id, text, url, *, license_value=None,
                    provenance="original source provenance"):
         source = self.sources[family]
@@ -57,10 +77,18 @@ class TestPublicCorpus(unittest.TestCase):
             def dataset_info(self, *, repo_id, revision):
                 return SimpleNamespace(sha=revision)
 
+            def list_repo_tree(self, **kwargs):
+                yield SimpleNamespace(path=".gitattributes", size=8,
+                                      blob_id="b" * 40, lfs=None)
+                yield SimpleNamespace(path=repo_path, size=len(raw_bytes),
+                                      blob_id="a" * 40,
+                                      lfs=SimpleNamespace(sha256=sha256(raw_bytes).hexdigest(),
+                                                          size=len(raw_bytes)))
+
             def get_paths_info(self, repo_id, **kwargs):
                 if kwargs["paths"] != [repo_path]:
                     raise AssertionError("acquisition did not request the exact file path")
-                return [SimpleNamespace(path=repo_path, blob_id="a" * 40,
+                return [SimpleNamespace(path=repo_path, size=len(raw_bytes), blob_id="a" * 40,
                                         lfs=SimpleNamespace(sha256=sha256(raw_bytes).hexdigest(),
                                                             size=len(raw_bytes)))]
 
@@ -70,10 +98,13 @@ class TestPublicCorpus(unittest.TestCase):
             path.write_bytes(raw_bytes)
             return str(path)
 
+        frozen_file, frozen_sha, _, _ = self.frozen_repo(family, API(), name)
         acquired = fetch_exact_file(candidate_file=CANDIDATE,
                                     candidate_sha=self.candidate_sha,
                                     n0_file=N0, n0_sha=self.n0_sha,
                                     candidate_id=family, upstream_repo_path=repo_path,
+                                    frozen_inventory_file=frozen_file,
+                                    frozen_inventory_sha=frozen_sha,
                                     output=acquire_dir, api=API(), downloader=download)
         receipt_file = acquire_dir / "acquisition_receipt.json"
         raw = acquire_dir / repo_path
@@ -197,14 +228,12 @@ class TestPublicCorpus(unittest.TestCase):
         class NoHashAPI:
             def dataset_info(self, **kwargs):
                 return SimpleNamespace(sha=source["revision"])
-            def get_paths_info(self, *args, **kwargs):
-                return [SimpleNamespace(path="data/f.parquet", blob_id=None, lfs=None)]
+            def list_repo_tree(self, **kwargs):
+                yield SimpleNamespace(path="data/f.parquet", size=10, blob_id=None,
+                                      lfs=None)
 
-        with self.assertRaisesRegex(ValueError, "no verifiable object ID"):
-            fetch_exact_file(candidate_file=CANDIDATE, candidate_sha=self.candidate_sha,
-                             n0_file=N0, n0_sha=self.n0_sha, candidate_id=family,
-                             upstream_repo_path="data/f.parquet", output=self.base / "invalid",
-                             api=NoHashAPI(), downloader=lambda **_: None)
+        with self.assertRaisesRegex(ValueError, "no verifiable 40-hex object ID"):
+            self.frozen_repo(family, NoHashAPI(), "invalid")
 
     def test_acquisition_verifies_regular_git_blob(self):
         family = "common_pile_wikimedia_filtered"
@@ -216,8 +245,13 @@ class TestPublicCorpus(unittest.TestCase):
             def dataset_info(self, **kwargs):
                 return SimpleNamespace(sha=source["revision"])
 
+            def list_repo_tree(self, **kwargs):
+                yield SimpleNamespace(path="data/f.jsonl", size=len(data), blob_id=blob,
+                                      lfs=None)
+
             def get_paths_info(self, *args, **kwargs):
-                return [SimpleNamespace(path="data/f.jsonl", blob_id=blob, lfs=None)]
+                return [SimpleNamespace(path="data/f.jsonl", size=len(data),
+                                        blob_id=blob, lfs=None)]
 
         def download(*, local_dir, filename, **kwargs):
             path = Path(local_dir) / filename
@@ -225,14 +259,210 @@ class TestPublicCorpus(unittest.TestCase):
             path.write_bytes(data)
             return str(path)
 
+        frozen_file, frozen_sha, _, _ = self.frozen_repo(family, GitAPI(), "git")
         receipt = fetch_exact_file(candidate_file=CANDIDATE,
                                    candidate_sha=self.candidate_sha,
                                    n0_file=N0, n0_sha=self.n0_sha, candidate_id=family,
                                    upstream_repo_path="data/f.jsonl",
+                                   frozen_inventory_file=frozen_file,
+                                   frozen_inventory_sha=frozen_sha,
                                    output=self.base / "git_blob", api=GitAPI(),
                                    downloader=download)
         self.assertEqual(receipt["upstream_git_blob_id"], blob)
         self.assertEqual(receipt["downloaded_sha256"], sha256(data).hexdigest())
+        self.assertEqual(receipt["frozen_repo_inventory_sha256"], frozen_sha)
+
+    def test_pinned_tree_is_exhausted_and_selection_accounts_for_every_file(self):
+        family = "common_pile_wikimedia_filtered"
+        revision = self.sources[family]["revision"]
+        paths = [f"data/train-{i:05d}.parquet" for i in range(1207)]
+
+        class PaginatedAPI:
+            def dataset_info(self, **kwargs):
+                self_outer.assertEqual(kwargs["revision"], revision)
+                return SimpleNamespace(sha=revision)
+
+            def list_repo_tree(self, **kwargs):
+                self_outer.assertEqual(kwargs["revision"], revision)
+                self_outer.assertTrue(kwargs["recursive"])
+                self_outer.assertFalse(kwargs["expand"])
+                self_outer.assertEqual(kwargs["repo_type"], "dataset")
+                yield SimpleNamespace(path="data", tree_id="f" * 40)
+                for path in paths:
+                    yield SimpleNamespace(path=path, size=2, blob_id="c" * 40,
+                                          lfs=SimpleNamespace(sha256="d" * 64, size=2))
+                yield SimpleNamespace(path="README.md", size=10,
+                                      blob_id="e" * 40, lfs=None)
+                yield SimpleNamespace(path="extra.csv", size=100,
+                                      blob_id="a" * 40, lfs=None)
+
+        self_outer = self
+        tree_file = self.base / "many-tree.json"
+        tree = inventory_exact_repo(candidate_file=CANDIDATE,
+                                    candidate_sha=self.candidate_sha,
+                                    n0_file=N0, n0_sha=self.n0_sha,
+                                    candidate_id=family, output=tree_file,
+                                    api=PaginatedAPI())
+        self.assertEqual(tree["file_count"], 1209)
+        self.assertEqual(tree["files"][0]["path"], "README.md")
+        self.assertEqual(tree["files"][-1]["path"], "extra.csv")
+        self.assertEqual(tree["files"][-1]["suggestion"], "manual_review_required")
+        selection = selection_template(tree)
+        selection["repo_tree_sha256"] = digest(tree_file)
+        selection["review_record"] = "fixture repository tree and exclusions reviewed"
+        selection_path = self.base / "many-selection.json"
+        selection_sha = freeze(selection_path, selection)
+        with self.assertRaisesRegex(ValueError, "unreviewed"):
+            freeze_selection(tree_file=tree_file, tree_sha=digest(tree_file),
+                             selection_file=selection_path, selection_sha=selection_sha,
+                             output=self.base / "incomplete-frozen.json")
+        selection["files"][-1] = {"path": "extra.csv", "decision": "exclude",
+                                  "reason": "CSV needs separate parser and terms review"}
+        selection_sha = freeze(selection_path, selection)
+        frozen = freeze_selection(tree_file=tree_file, tree_sha=digest(tree_file),
+                                  selection_file=selection_path,
+                                  selection_sha=selection_sha,
+                                  output=self.base / "many-frozen.json")
+        self.assertEqual(frozen["selected_data_count"], len(paths))
+        self.assertEqual(frozen["selected_data_bytes"], 2 * len(paths))
+        self.assertEqual([row["path"] for row in frozen["files"]
+                          if row["decision"] == "exclude"], ["README.md", "extra.csv"])
+        selection["files"].pop()
+        selection_sha = freeze(selection_path, selection)
+        with self.assertRaisesRegex(ValueError, "every repository file"):
+            freeze_selection(tree_file=tree_file, tree_sha=digest(tree_file),
+                             selection_file=selection_path,
+                             selection_sha=selection_sha,
+                             output=self.base / "missing-frozen.json")
+
+    def test_inventory_refuses_duplicate_paths_and_revision_drift(self):
+        family = "common_pile_news_filtered"
+        revision = self.sources[family]["revision"]
+
+        class DuplicateAPI:
+            def dataset_info(self, **kwargs):
+                return SimpleNamespace(sha=revision)
+
+            def list_repo_tree(self, **kwargs):
+                for _ in range(2):
+                    yield SimpleNamespace(path="data/train.parquet", size=2,
+                                          blob_id="e" * 40, lfs=None)
+
+        with self.assertRaisesRegex(ValueError, "duplicate repository tree path"):
+            self.frozen_repo(family, DuplicateAPI(), "duplicate")
+
+        class DriftAPI(DuplicateAPI):
+            def dataset_info(self, **kwargs):
+                return SimpleNamespace(sha="f" * 40)
+
+        with self.assertRaisesRegex(ValueError, "exact pinned dataset commit"):
+            self.frozen_repo(family, DriftAPI(), "drift")
+
+    def test_inventory_is_available_for_all_pinned_n0_source_families(self):
+        class EverySourceAPI:
+            def dataset_info(self, **kwargs):
+                return SimpleNamespace(sha=kwargs["revision"])
+
+            def list_repo_tree(self, **kwargs):
+                yield SimpleNamespace(path="data/train.parquet", size=20,
+                                      blob_id="a" * 40,
+                                      lfs=SimpleNamespace(sha256="c" * 64, size=20))
+
+        self.assertEqual(len(self.sources), 21)
+        for family in self.sources:
+            with self.subTest(family=family):
+                frozen, _, tree, selection = self.frozen_repo(family, EverySourceAPI(), family)
+                self.assertEqual(tree["dataset_repo_id"], self.sources[family]["repo_id"])
+                self.assertEqual(selection["revision"], self.sources[family]["revision"])
+                self.assertTrue(frozen.is_file())
+
+    def test_acquisition_coverage_requires_every_selected_shard_once(self):
+        family = "common_pile_arxiv_abstracts_filtered"
+        revision = self.sources[family]["revision"]
+        data = {"data/first.jsonl": b'{"one":1}\n',
+                "data/second.jsonl": b'{"two":2}\n'}
+
+        def entry(path, raw):
+            return SimpleNamespace(path=path, size=len(raw), blob_id="a" * 40,
+                                   lfs=SimpleNamespace(sha256=sha256(raw).hexdigest(),
+                                                       size=len(raw)))
+
+        class API:
+            def dataset_info(self, **kwargs):
+                return SimpleNamespace(sha=revision)
+
+            def list_repo_tree(self, **kwargs):
+                for path, raw in data.items():
+                    yield entry(path, raw)
+                yield SimpleNamespace(path="README.md", size=10,
+                                      blob_id="b" * 40, lfs=None)
+
+            def get_paths_info(self, repo_id, *, paths, **kwargs):
+                return [entry(paths[0], data[paths[0]])]
+
+        def download(*, filename, local_dir, **kwargs):
+            path = Path(local_dir) / filename
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data[filename])
+            return str(path)
+
+        frozen_file, frozen_sha, _, _ = self.frozen_repo(family, API(), "coverage")
+        class ChangedAPI(API):
+            def get_paths_info(self, repo_id, *, paths, **kwargs):
+                altered = entry(paths[0], data[paths[0]])
+                altered.lfs.sha256 = "f" * 64
+                return [altered]
+
+        with self.assertRaisesRegex(ValueError, "differs from frozen repo tree"):
+            fetch_exact_file(candidate_file=CANDIDATE, candidate_sha=self.candidate_sha,
+                             n0_file=N0, n0_sha=self.n0_sha, candidate_id=family,
+                             upstream_repo_path="data/first.jsonl",
+                             output=self.base / "changed",
+                             frozen_inventory_file=frozen_file,
+                             frozen_inventory_sha=frozen_sha,
+                             api=ChangedAPI(),
+                             downloader=lambda **_: self.fail("unexpected download"))
+        with self.assertRaisesRegex(ValueError, "not included"):
+            fetch_exact_file(candidate_file=CANDIDATE, candidate_sha=self.candidate_sha,
+                             n0_file=N0, n0_sha=self.n0_sha, candidate_id=family,
+                             upstream_repo_path="README.md", output=self.base / "metadata",
+                             frozen_inventory_file=frozen_file,
+                             frozen_inventory_sha=frozen_sha,
+                             api=API(), downloader=download)
+        receipt_paths = []
+        for index, path in enumerate(data):
+            output = self.base / f"shard-{index}"
+            fetch_exact_file(candidate_file=CANDIDATE,
+                             candidate_sha=self.candidate_sha,
+                             n0_file=N0, n0_sha=self.n0_sha, candidate_id=family,
+                             upstream_repo_path=path, output=output,
+                             frozen_inventory_file=frozen_file,
+                             frozen_inventory_sha=frozen_sha,
+                             api=API(), downloader=download)
+            receipt = output / "acquisition_receipt.json"
+            receipt_paths.append({"path": str(receipt.relative_to(self.base)),
+                                  "sha256": digest(receipt)})
+        receipt_list = self.base / "acquisitions.json"
+        partial_sha = freeze(receipt_list, {"schema": "mfm-native-hf-acquisition-receipt-list-v1",
+                                            "frozen_repo_inventory_sha256": frozen_sha,
+                                            "receipts": receipt_paths[:1]})
+        with self.assertRaisesRegex(ValueError, "omits 1 selected shards"):
+            verify_complete_acquisitions(frozen_inventory_file=frozen_file,
+                                         frozen_inventory_sha=frozen_sha,
+                                         receipt_list=receipt_list,
+                                         receipt_list_sha=partial_sha,
+                                         output=self.base / "partial.json")
+        complete_sha = freeze(receipt_list,
+                              {"schema": "mfm-native-hf-acquisition-receipt-list-v1",
+                               "frozen_repo_inventory_sha256": frozen_sha,
+                               "receipts": receipt_paths})
+        result = verify_complete_acquisitions(frozen_inventory_file=frozen_file,
+                                              frozen_inventory_sha=frozen_sha,
+                                              receipt_list=receipt_list,
+                                              receipt_list_sha=complete_sha,
+                                              output=self.base / "coverage.json")
+        self.assertEqual(result["shard_count"], 2)
+        self.assertFalse(result["training_admitted"])
 
     def test_parquet_scalar_hold_digest_is_order_independent(self):
         row = {"metadata": {"archive_date": date(2024, 3, 5),

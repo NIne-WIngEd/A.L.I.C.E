@@ -1,7 +1,8 @@
 # Native MFM Stage A public corpus: acquisition to review candidates
 
-**Status:** Implemented CPU acquisition, per-upstream-shard candidate staging,
-and cross-shard exact-lineage reconciliation. No public shard has been fetched,
+**Status:** Implemented exact-commit complete repository inventory and explicit
+file selection, CPU acquisition, per-upstream-shard candidate staging, and
+cross-shard exact-lineage reconciliation. No public shard has been fetched,
 no rights have been authenticated, no corpus is admitted, and no optimizer has
 run. These commands are a foundation data path, not a full-capability claim.
 
@@ -12,22 +13,41 @@ The MFM candidate inventory binds that hash. N0's per-row license strings are
 **only a conservative metadata filter proposal**. An N0 right to train N0 does
 not grant commercial MFM training or distribution automatically.
 
-## Sequence for each exact upstream file
+## Sequence for each pinned repository and its upstream files
 
 1. On a CPU environment with Hugging Face access and persistent working space,
-   freeze the MFM inventory hash, N0 evidence hash, dataset commit, the full
-   list of repository shard paths selected for that source, and an exclusion
-   manifest. Do not cap rows or characters to meet a budget. `part_bytes` only
-   chooses the size of transport files; a long source row is never truncated.
-   Freeze **all** source/file choices before the global reconciliation that
-   assigns split candidates.
-2. Run `native_hf_acquire.py` for each shard. It resolves the exact dataset
-   commit, obtains the exact file's LFS SHA-256 or regular Git blob ID from that
-   commit, downloads with the same revision, checks all bytes against the
-   object ID, and writes `acquisition_receipt.json`. Missing/verifiably wrong
-   upstream object IDs fail closed. This authenticates *repository byte
-   lineage*, not the legal grant or underlying authorship.
-3. Run `native_public_corpus.py stage` with the acquisition receipt, its SHA,
+   hash the MFM candidate source manifest and pinned N0 source evidence. For
+   each of the 21 pinned N0 Common Pile repositories, run `native_hf_acquire.py
+   inventory`. It verifies the exact 40-hex commit, exhausts the paginated
+   recursive `HfApi.list_repo_tree` iterator, and freezes **every** repository
+   file path, byte size, LFS SHA-256 or regular Git blob ID, and folder tree
+   IDs. It writes a separate file-selection template. This fetches repository
+   *metadata*, not dataset contents. No maximum shard count is applied.
+2. Review the template: assign `include` to each data shard intended for the
+   foundation and `exclude` with an explicit reason to every other file,
+   including `README.md`, `.gitattributes` and other metadata. Supported
+   staged formats are Parquet, JSONL and gzipped JSONL. Unrecognized files are
+   `review_required`, so freezing fails until each one has a decision. An
+   intentionally omitted data shard needs a recorded reason; it cannot simply
+   disappear from the tree. `review_record` must name the actual source/file
+   review evidence; the generated template has `null` there and cannot be
+   frozen as-is. Hash the reviewed selection and run
+   `native_hf_acquire.py freeze`; the resulting manifest binds the full tree
+   and all decisions. Freeze **all** source/file choices before the global
+   reconciliation that assigns split candidates. No row or character caps are
+   allowed; `part_bytes` only sizes transport files, never truncates a row.
+3. Run `native_hf_acquire.py fetch` for **each included file**. The downloader
+   requires its frozen inventory, rechecks exact-commit Hub metadata against
+   the selected path/size/object ID, downloads from that revision, checks all
+   bytes, and writes `acquisition_receipt.json` tied to the tree and selection
+   hashes. An excluded, unknown or changed path fails before download. This
+   authenticates *repository byte lineage*, not the legal grant or underlying
+   authorship. Freeze a list of acquisition receipt paths and hashes; run
+   `native_hf_acquire.py coverage`. It rechecks raw bytes and fails if any
+   selected file lacks exactly one receipt. Match the later stage receipts to
+   the same complete set before global reconciliation; acquisition coverage
+   alone cannot prove every selected shard was staged.
+4. Run `native_public_corpus.py stage` with the acquisition receipt, its SHA,
    the downloaded raw path and SHA, the source ID, and file path within the
    repository. It streams all JSONL, gzipped JSONL or Parquet rows. Its exact
    N0 source license match, nonempty provenance, syntactically valid HTTP(S) source URL,
@@ -36,7 +56,8 @@ not grant commercial MFM training or distribution automatically.
    hash in `held_rows.jsonl`; the receipt counts every row. No row is marked
    PII-safe, rights-cleared or benchmark-clean. Original URLs, source IDs,
    provenance, revision, license expression and content hashes survive.
-4. Hash and transfer the acquisition receipt, original upstream shard,
+5. Hash and transfer the frozen repository inventory, acquisition receipt,
+   original upstream shard,
    staged candidate parts, hold ledger and stage receipt by owner-controlled
    storage. On Magnolia, verify the raw SHA and stage receipt with the `verify`
    command. The compute nodes in the observed Magnolia check could not resolve
@@ -44,7 +65,7 @@ not grant commercial MFM training or distribution automatically.
    bytes, then verify on Magnolia. Stage output can be retried per upstream
    file: an identical completed output verifies and returns its receipt;
    incomplete output is rejected rather than silently appended.
-5. Freeze a JSON receipt list and the separate exclusion JSON, including
+6. Freeze a JSON receipt list and the separate exclusion JSON, including
    reserved independent evaluations, exact content hashes, source URLs,
    source record references and excluded families known by that point. Run
    `reconcile` over **all** accepted shard receipts together. It verifies each
@@ -59,19 +80,38 @@ not grant commercial MFM training or distribution automatically.
 
 Use `python -m scripts.mfm.native_hf_acquire` and
 `python -m scripts.mfm.native_public_corpus` from the MFM repository root with
-`PYTHONPATH=src:.`. For example, this is one file's **shape**, with paths and
-hashes taken from real frozen manifests and acquired bytes before execution:
+`PYTHONPATH=src:.`. The commands below are the **shape** for one repository;
+compute each SHA from the actual completed file, edit the template's unresolved
+decisions, then repeat `fetch` and `stage` for **every included shard**:
 
 ```bash
 export PYTHONPATH=src:.
-python -m scripts.mfm.native_hf_acquire \
+python -m scripts.mfm.native_hf_acquire inventory \
   --candidate-inventory configs/mfm/native_foundation_source_candidates_v1.json \
   --candidate-sha256 "$CANDIDATE_SHA" \
   --n0-manifest configs/mfm/n0_public_corpus_v0.2.1.activated.pinned.json \
   --n0-sha256 8bfbc11a2974af8f9d03aff558c413dafc699d45743d674a3db0180d17be7c31 \
   --candidate-id common_pile_wikimedia_filtered \
+  --output "$TREE_FILE" --selection-template-output "$SELECTION_TEMPLATE"
+# Review every path in a copy of the template, then hash that reviewed file.
+python -m scripts.mfm.native_hf_acquire freeze \
+  --repo-tree "$TREE_FILE" --repo-tree-sha256 "$TREE_SHA" \
+  --selection "$REVIEWED_SELECTION" --selection-sha256 "$SELECTION_SHA" \
+  --output "$FROZEN_FILE"
+python -m scripts.mfm.native_hf_acquire fetch \
+  --candidate-inventory configs/mfm/native_foundation_source_candidates_v1.json \
+  --candidate-sha256 "$CANDIDATE_SHA" \
+  --n0-manifest configs/mfm/n0_public_corpus_v0.2.1.activated.pinned.json \
+  --n0-sha256 8bfbc11a2974af8f9d03aff558c413dafc699d45743d674a3db0180d17be7c31 \
+  --candidate-id common_pile_wikimedia_filtered \
+  --frozen-inventory "$FROZEN_FILE" --frozen-inventory-sha256 "$FROZEN_SHA" \
   --upstream-repo-path "$EXACT_REPO_FILE" \
   --output "$ACQUIRED_DIR"
+# Repeat fetch for every included file, freeze a receipt list, then:
+python -m scripts.mfm.native_hf_acquire coverage \
+  --frozen-inventory "$FROZEN_FILE" --frozen-inventory-sha256 "$FROZEN_SHA" \
+  --receipt-list "$ACQUISITION_LIST" --receipt-list-sha256 "$ACQUISITION_LIST_SHA" \
+  --output "$COVERAGE_FILE"
 python -m scripts.mfm.native_public_corpus stage \
   --candidate-inventory configs/mfm/native_foundation_source_candidates_v1.json \
   --candidate-sha256 "$CANDIDATE_SHA" \
@@ -87,6 +127,13 @@ python -m scripts.mfm.native_public_corpus stage \
 python -m scripts.mfm.native_public_corpus verify \
   --receipt "$STAGE_DIR/shard_receipt.json" \
   --raw-file "$ACQUIRED_DIR/$EXACT_REPO_FILE"
+```
+
+The acquisition receipt list has shape (with one entry for each included
+shard, relative to the list's parent directory):
+
+```json
+{"schema":"mfm-native-hf-acquisition-receipt-list-v1","frozen_repo_inventory_sha256":"<actual 64-hex SHA>","receipts":[{"path":"shard-0/acquisition_receipt.json","sha256":"<actual 64-hex SHA>"}]}
 ```
 
 The `reconcile` input has shape:
