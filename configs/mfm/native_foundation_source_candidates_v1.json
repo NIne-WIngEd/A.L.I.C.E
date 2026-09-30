@@ -1,0 +1,948 @@
+{
+  "schema": "mfm-native-foundation-source-candidates-v1",
+  "date_owner_local": "2026-09-29",
+  "status": "candidate_only_no_training_admission",
+  "model_lineage": {
+    "stage_a": "fresh_initialized_first_party_public_foundation",
+    "stage_b": "specialize_from_exact_first_party_stage_a_checkpoint",
+    "third_party_pretrained_weights_allowed": false
+  },
+  "prior_n0_source_manifest_reference": {
+    "path_in_n0_worktree": "configs/eipm/n0/public_corpus_v0.2.1.activated.json",
+    "n0_git_commit_observed": "54f5b0a533b5c9492f345ce6eae1687dc58dd1fa",
+    "sha256_observed": "8bfbc11a2974af8f9d03aff558c413dafc699d45743d674a3db0180d17be7c31",
+    "source_count": 21,
+    "mfm_admission_inherited": false
+  },
+  "formation_supervision_separate": {
+    "manifest": "mfm_training_mixture_v1.json",
+    "cases": 49819,
+    "stage_a_base_pretraining": false,
+    "independent_final": false
+  },
+  "gate_before_use": [
+    "exact_dataset_or_dump_revision",
+    "actual_file_sha256",
+    "per_item_license_and_terms",
+    "author_source_url_and_attribution",
+    "PII_and_consent_review",
+    "removal_state",
+    "source_lineage_and_deduplication",
+    "commercial_training_and_distribution_authority",
+    "reserved_benchmark_and_final_isolation",
+    "adequacy_measurement"
+  ],
+  "teacher_candidates": {
+    "authorization": "owner_authorized_service_teacher",
+    "status": "training_candidates_only",
+    "record": [
+      "teacher_provider",
+      "teacher_model_and_version_if_exposed",
+      "source_input_digest",
+      "prompt_digest",
+      "output_digest",
+      "author",
+      "authorization",
+      "date",
+      "seed_and_generator_family",
+      "independent_review_status"
+    ],
+    "teacher_not": [
+      "inherited_parameters",
+      "historical_owner_evidence",
+      "canonical_claim_authority",
+      "independent_final_gold"
+    ]
+  },
+  "candidates": [
+    {
+      "candidate_id": "common_pile_wikimedia_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "reference_encyclopedic",
+      "source_url": "https://huggingface.co/datasets/common-pile/wikimedia_filtered",
+      "dataset_repo_id": "common-pile/wikimedia_filtered",
+      "candidate_revision_from_n0": "0641bb84bd9b7162bcddf8be7836822161a9a342",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/4.0/"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_wikiteam_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "reference_encyclopedic",
+      "source_url": "https://huggingface.co/datasets/common-pile/wikiteam_filtered",
+      "dataset_repo_id": "common-pile/wikiteam_filtered",
+      "candidate_revision_from_n0": "f4ed055b57763a8f12238824140914b9eb098cab",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/3.0/"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_arxiv_abstracts_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "science_research",
+      "source_url": "https://huggingface.co/datasets/common-pile/arxiv_abstracts_filtered",
+      "dataset_repo_id": "common-pile/arxiv_abstracts_filtered",
+      "candidate_revision_from_n0": "dc1ceab4755eb037ec61e49cf1350dab7ceee6e7",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Creative Commons Zero - Public Domain - https://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_arxiv_papers_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "science_research",
+      "source_url": "https://huggingface.co/datasets/common-pile/arxiv_papers_filtered",
+      "dataset_repo_id": "common-pile/arxiv_papers_filtered",
+      "candidate_revision_from_n0": "033cf7f53f9b348deec868c1a5a48484f3ee9e52",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Creative Commons - Attribution - https://creativecommons.org/licenses/by/3.0/",
+        "Creative Commons - Attribution - https://creativecommons.org/licenses/by/4.0/",
+        "Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/4.0/",
+        "Creative Commons Zero - Public Domain - https://creativecommons.org/publicdomain/zero/1.0/",
+        "Public Domain"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_pubmed_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "science_research",
+      "source_url": "https://huggingface.co/datasets/common-pile/pubmed_filtered",
+      "dataset_repo_id": "common-pile/pubmed_filtered",
+      "candidate_revision_from_n0": "c156f0569a92d8f2edc33cebe1f72f7d3e1cae84",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Creative Commons - Attribution - https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_stackexchange_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "educational_qa_explanation",
+      "source_url": "https://huggingface.co/datasets/common-pile/stackexchange_filtered",
+      "dataset_repo_id": "common-pile/stackexchange_filtered",
+      "candidate_revision_from_n0": "c0ac7373830c688a43fc12d1988c4b19ccd884ab",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/3.0/",
+        "Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/4.0/"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_libretexts_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "educational_qa_explanation",
+      "source_url": "https://huggingface.co/datasets/common-pile/libretexts_filtered",
+      "dataset_repo_id": "common-pile/libretexts_filtered",
+      "candidate_revision_from_n0": "70388bca52b4a93515e14b1d56618fd7944988fd",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Creative Commons - Attribution - https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_pressbooks_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "educational_qa_explanation",
+      "source_url": "https://huggingface.co/datasets/common-pile/pressbooks_filtered",
+      "dataset_repo_id": "common-pile/pressbooks_filtered",
+      "candidate_revision_from_n0": "1a1d3b50d77f834370f8eb4c0d174668dd1676bb",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Creative Commons - Attribution - https://creativecommons.org/licenses/by/4.0/",
+        "Creative Commons Zero - Public Domain - https://creativecommons.org/publicdomain/zero/1.0/"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_ubuntu_irc_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "conversation_and_spoken_pragmatics",
+      "source_url": "https://huggingface.co/datasets/common-pile/ubuntu_irc_filtered",
+      "dataset_repo_id": "common-pile/ubuntu_irc_filtered",
+      "candidate_revision_from_n0": "84f88c986584f11d672befab542fa4d5123f3e8f",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Public Domain"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_youtube_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "conversation_and_spoken_pragmatics",
+      "source_url": "https://huggingface.co/datasets/common-pile/youtube_filtered",
+      "dataset_repo_id": "common-pile/youtube_filtered",
+      "candidate_revision_from_n0": "dff8c8a54e98bce64c2e7ce9a8466c144c1cddd6",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Creative Commons - Attribution - https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_project_gutenberg_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "books_longform",
+      "source_url": "https://huggingface.co/datasets/common-pile/project_gutenberg_filtered",
+      "dataset_repo_id": "common-pile/project_gutenberg_filtered",
+      "candidate_revision_from_n0": "3cdf6879c807f4e4e063f2ceb23bc268d8c29ab7",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Public Domain"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_pre_1929_books_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "books_longform",
+      "source_url": "https://huggingface.co/datasets/common-pile/pre_1929_books_filtered",
+      "dataset_repo_id": "common-pile/pre_1929_books_filtered",
+      "candidate_revision_from_n0": "23f9d96dbb1db3324bbc9fbfe1f8299cc799c4d1",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Public Domain"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_doab_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "books_longform",
+      "source_url": "https://huggingface.co/datasets/common-pile/doab_filtered",
+      "dataset_repo_id": "common-pile/doab_filtered",
+      "candidate_revision_from_n0": "defb24ca72ef6aba6ce0228b669eec06dcfbffbc",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Creative Commons - Attribution - https://creativecommons.org/licenses/by/3.0/",
+        "Creative Commons - Attribution - https://creativecommons.org/licenses/by/4.0/",
+        "Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/4.0/"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_public_domain_review_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "books_longform",
+      "source_url": "https://huggingface.co/datasets/common-pile/public_domain_review_filtered",
+      "dataset_repo_id": "common-pile/public_domain_review_filtered",
+      "candidate_revision_from_n0": "efc7f21259d069a27d6ca3655f74fda969f82b01",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Creative Commons - Attribution Share-Alike - https://creativecommons.org/licenses/by-sa/4.0/"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_stackv2_edu_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "software_code_discussion",
+      "source_url": "https://huggingface.co/datasets/common-pile/stackv2_edu_filtered",
+      "dataset_repo_id": "common-pile/stackv2_edu_filtered",
+      "candidate_revision_from_n0": "c354dbe88469a1153e97c6a63ac50591849654de",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Apache-2.0",
+        "BSD-2-Clause",
+        "BSD-2-Clause,Apache-2.0",
+        "BSD-3-Clause",
+        "BSD-3-Clause,MIT",
+        "MIT",
+        "MIT,Apache-2.0",
+        "Unlicense"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_github_archive_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "software_code_discussion",
+      "source_url": "https://huggingface.co/datasets/common-pile/github_archive_filtered",
+      "dataset_repo_id": "common-pile/github_archive_filtered",
+      "candidate_revision_from_n0": "52282fe96670254bdc0d44dd718ee7a27210ee85",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Apache-2.0",
+        "BSD-3-Clause",
+        "CC-BY-4.0",
+        "MIT",
+        "apache-2.0",
+        "bsd-3-clause",
+        "mit"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_python_peps_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "software_code_discussion",
+      "source_url": "https://huggingface.co/datasets/common-pile/python_enhancement_proposals_filtered",
+      "dataset_repo_id": "common-pile/python_enhancement_proposals_filtered",
+      "candidate_revision_from_n0": "582170907dd303c207770fceacd38e6abf133edc",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Public Domain"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_usgpo_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "government_legal_deliberation",
+      "source_url": "https://huggingface.co/datasets/common-pile/usgpo_filtered",
+      "dataset_repo_id": "common-pile/usgpo_filtered",
+      "candidate_revision_from_n0": "b150cc22211de4d57f1b7f570097a00e65042424",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Public Domain"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_regulations_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "government_legal_deliberation",
+      "source_url": "https://huggingface.co/datasets/common-pile/regulations_filtered",
+      "dataset_repo_id": "common-pile/regulations_filtered",
+      "candidate_revision_from_n0": "3327364490dfc7929009226ad667eceb2441d93a",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Public Domain"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_uk_hansard_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "government_legal_deliberation",
+      "source_url": "https://huggingface.co/datasets/common-pile/uk_hansard_filtered",
+      "dataset_repo_id": "common-pile/uk_hansard_filtered",
+      "candidate_revision_from_n0": "c88adc44309aa255a41b51cef93ba783f775fe23",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Open Parliament Licence - https://www.parliament.uk/site-information/copyright-parliament/open-parliament-licence/"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "common_pile_news_filtered",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text"
+      ],
+      "category": "news_expository",
+      "source_url": "https://huggingface.co/datasets/common-pile/news_filtered",
+      "dataset_repo_id": "common-pile/news_filtered",
+      "candidate_revision_from_n0": "59aaa8f104e189e6fb8033f0ed319c5c343a03b1",
+      "split_from_n0": "train",
+      "text_field_from_n0": "text",
+      "row_license_field_from_n0": "metadata.license",
+      "row_provenance_field_from_n0": "metadata.provenance",
+      "row_id_field_from_n0": "id",
+      "previous_n0_license_values_reference_only": [
+        "Creative Commons - Attribution - https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "required_recheck": [
+        "actual_revision_and_file_bytes",
+        "row_license_and_source_terms",
+        "row_provenance_and_attribution",
+        "PII_and_removals",
+        "benchmark_contamination",
+        "commercial_training_and_distribution_rights"
+      ],
+      "notes": "N0 activation is previous audit evidence only; no MFM training admission is inherited."
+    },
+    {
+      "candidate_id": "wikidata_entities",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "structured",
+        "text"
+      ],
+      "category": "temporal_structured",
+      "source_url": "https://www.wikidata.org/wiki/Wikidata:Database_download",
+      "candidate_revision": null,
+      "rights_summary_for_review": "CC0 for Wikidata main, Property, Lexeme and EntitySchema structured data; snapshot/revision rights to recheck.",
+      "admission_conditions": [
+        "pin_dump_date_and_file_sha256",
+        "namespace_filter",
+        "item_and_statement_lineage",
+        "PII_review",
+        "benchmark_and_wikipedia_overlap"
+      ]
+    },
+    {
+      "candidate_id": "wikimedia_article_revisions",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "text",
+        "structured"
+      ],
+      "category": "document_revisions",
+      "source_url": "https://meta.wikimedia.org/wiki/Data_dumps/Dump_format",
+      "candidate_revision": null,
+      "rights_summary_for_review": "Per-wiki/article terms often CC BY-SA; exact original and attribution obligations require review.",
+      "admission_conditions": [
+        "pin_dump_and_file_sha256",
+        "restrict_to_vetted_article_namespaces",
+        "per_page_rights_and_attribution",
+        "revisions_and_suppression_review",
+        "living_person_PII",
+        "avoid_ground_truth_from_undocumented_edit"
+      ]
+    },
+    {
+      "candidate_id": "open_images_v7",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "image",
+        "text"
+      ],
+      "category": "general_visual",
+      "source_url": "https://storage.googleapis.com/openimages/web/download_v7.html",
+      "candidate_revision": null,
+      "rights_summary_for_review": "Mixed per-image CC licenses; annotations separately CC BY 4.0.",
+      "admission_conditions": [
+        "pin_release_and_raw_file_sha256",
+        "verify_image_license_author_landing_url",
+        "allow_only_reviewed_CC0_or_CC_BY_images",
+        "face_and_PII_review",
+        "deduplicate_with_other_media",
+        "benchmark_isolation"
+      ]
+    },
+    {
+      "candidate_id": "librispeech",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "audio",
+        "text"
+      ],
+      "category": "speech",
+      "source_url": "https://www.openslr.org/12/",
+      "candidate_revision": null,
+      "rights_summary_for_review": "CC BY 4.0 per official dataset page.",
+      "admission_conditions": [
+        "pin_archive_and_sha256",
+        "retain_attribution_and_speaker_split",
+        "transcript_audio_alignment",
+        "PII_and_distribution_review"
+      ]
+    },
+    {
+      "candidate_id": "musan",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "audio"
+      ],
+      "category": "sound_speech_noise_music",
+      "source_url": "https://www.openslr.org/17/",
+      "candidate_revision": null,
+      "rights_summary_for_review": "CC BY 4.0 per official dataset page.",
+      "admission_conditions": [
+        "pin_archive_and_sha256",
+        "retain_attribution",
+        "clip_origin_and_duplicate_review",
+        "PII_and_distribution_review"
+      ]
+    },
+    {
+      "candidate_id": "nsynth",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "audio",
+        "structured"
+      ],
+      "category": "music_timbre",
+      "source_url": "https://magenta.tensorflow.org/datasets/nsynth",
+      "candidate_revision": null,
+      "rights_summary_for_review": "CC BY 4.0 per official project page.",
+      "admission_conditions": [
+        "pin_files_and_sha256",
+        "retain_artist_and_attribution",
+        "instrument_and_split_lineage",
+        "distribution_review"
+      ]
+    },
+    {
+      "candidate_id": "expanded_groove_midi",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "audio",
+        "structured"
+      ],
+      "category": "music_temporal",
+      "source_url": "https://magenta.tensorflow.org/datasets/e-gmd",
+      "candidate_revision": null,
+      "rights_summary_for_review": "CC BY 4.0 per official project page.",
+      "admission_conditions": [
+        "pin_files_and_sha256",
+        "retain_artist_and_attribution",
+        "MIDI_audio_alignment",
+        "distribution_review"
+      ]
+    },
+    {
+      "candidate_id": "wikimedia_commons_media",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "image",
+        "audio",
+        "video",
+        "text"
+      ],
+      "category": "licensed_media",
+      "source_url": "https://commons.wikimedia.org/wiki/Commons:Licensing",
+      "candidate_revision": null,
+      "rights_summary_for_review": "Mixed per-file rights; metadata are incomplete for some files.",
+      "admission_conditions": [
+        "pin_each_file_and_SHA256",
+        "review_original_file_page_and_each_license",
+        "prefer_verified_CC0_or_CC_BY",
+        "hold_multi_license_or_CC_BY_SA_for_separate_review",
+        "faces_voices_and_PII",
+        "attribution_and_removal_state"
+      ]
+    },
+    {
+      "candidate_id": "usgs_multimedia",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "image",
+        "audio",
+        "video"
+      ],
+      "category": "public_sector_media",
+      "source_url": "https://www.usgs.gov/products/multimedia-gallery",
+      "candidate_revision": null,
+      "rights_summary_for_review": "Public domain unless an item has a specific exception.",
+      "admission_conditions": [
+        "pin_each_asset_and_sha256",
+        "check_item_rights_and_third_party_exceptions",
+        "persons_and_endorsement_review",
+        "remove_restricted_audio_or_footage"
+      ]
+    },
+    {
+      "candidate_id": "nasa_svs_media",
+      "recommended_pack": "default_candidate",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "image",
+        "audio",
+        "video"
+      ],
+      "category": "public_sector_media",
+      "source_url": "https://svs.gsfc.nasa.gov/help/",
+      "candidate_revision": null,
+      "rights_summary_for_review": "Reusable NASA work subject to item exceptions; some soundtracks are separately licensed.",
+      "admission_conditions": [
+        "pin_each_asset_and_sha256",
+        "check_item_rights_and_third_party_exceptions",
+        "remove_unlicensed_soundtrack",
+        "persons_and_endorsement_review"
+      ]
+    },
+    {
+      "candidate_id": "mozilla_common_voice",
+      "recommended_pack": "optional_owner_selected_conditional",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "audio",
+        "text"
+      ],
+      "category": "multilingual_speech",
+      "source_url": "https://mozilladatacollective.com/datasets/cmu5wui2w00e8nq07idithpm6",
+      "candidate_revision": null,
+      "rights_summary_for_review": "CC0 clips with separate Mozilla Collective terms limiting rehosting and speaker identification.",
+      "admission_conditions": [
+        "resolve_exact_version_and_terms",
+        "download_from_authorized_channel",
+        "do_not_rehost_raw_corpus",
+        "do_not_identify_speakers",
+        "check_training_and_distribution_rights"
+      ]
+    },
+    {
+      "candidate_id": "fsd50k",
+      "recommended_pack": "optional_owner_selected_conditional",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "audio",
+        "text"
+      ],
+      "category": "environmental_sound",
+      "source_url": "https://zenodo.org/records/4060432",
+      "candidate_revision": null,
+      "rights_summary_for_review": "Mixed per-clip grants including noncommercial/Sampling+; commercial users asked to contact authors.",
+      "admission_conditions": [
+        "exclude_NC_and_unresolved_clips",
+        "obtain_applicable_commercial_grants",
+        "pin_clip_sha256_and_origin",
+        "distribution_review"
+      ]
+    },
+    {
+      "candidate_id": "v3c1",
+      "recommended_pack": "optional_owner_selected_conditional",
+      "status": "candidate_not_admitted",
+      "modalities": [
+        "video",
+        "audio",
+        "text"
+      ],
+      "category": "broad_video",
+      "source_url": "https://catalog.data.gov/dataset/vimeo-creative-commons-collection-v3c1",
+      "candidate_revision": null,
+      "rights_summary_for_review": "NIST access agreement for project research; per-video Vimeo CC license and withdrawal controls.",
+      "admission_conditions": [
+        "signed_access_and_scope_review",
+        "per_video_license_review",
+        "withdrawal_and_distribution_controls",
+        "pin_clip_sha256_and_origin"
+      ]
+    }
+  ]
+}

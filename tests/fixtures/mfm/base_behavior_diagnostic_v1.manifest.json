@@ -1,0 +1,8 @@
+{
+  "schema": "mfm-base-behavior-diagnostic-v1",
+  "diagnostic_only": true,
+  "independent_final": false,
+  "fixture": "base_behavior_diagnostic_v1.json",
+  "sha256": "5aa1000762a8bb6ee5dd903667e5b04a1fd200f5e1a0df374f10e3d15bd1070f",
+  "case_count": 7
+}

@@ -1,0 +1,51 @@
+{
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "484fac0cb8b057eefe1992c8b72ac6e7438c7d17bd60c0e278b401c2190f7e72",
+      "size": 1624
+    },
+    {
+      "path": "README.md",
+      "sha256": "131e26f7f1fa69445dc4b0ab98a2251811f8c3128426bf09fcef6ac5ee16e7e4",
+      "size": 28340
+    },
+    {
+      "path": "config.json",
+      "sha256": "14f38c5492ffc9cbcdf808647ca0c025bb5b9b4eb737526347134d500ace6098",
+      "size": 4383
+    },
+    {
+      "path": "generation_config.json",
+      "sha256": "02b56bd11e1cd1e363e701a85a2fd7fbaa2992ec3358c1cd7cc44ead7208f505",
+      "size": 233
+    },
+    {
+      "path": "model.safetensors",
+      "sha256": "fe054ae05ff7f44318fd8ae90d58992531455c7ed31356704088f0f2d8c8009a",
+      "size": 23919549408
+    },
+    {
+      "path": "processor_config.json",
+      "sha256": "6b938e76555b3e9946890770e1abcd442a4718f34041a58e8139dc8ad34545c9",
+      "size": 1382
+    },
+    {
+      "path": "tokenizer.json",
+      "sha256": "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6",
+      "size": 32170070
+    },
+    {
+      "path": "tokenizer_config.json",
+      "sha256": "522a38334973725dba8f7c645195b19dda0c284f403f43273f77837679ba2eab",
+      "size": 888
+    }
+  ],
+  "meaning": "Exact pretrained source bytes verified; no behavioral qualification",
+  "receipt_sha256": "b80271bf8ff30023fac84aa247f7e21d8eb25fe2dbc4cd19709c9e7a24dde6e5",
+  "repository": "google/gemma-4-12B",
+  "revision": "023679ed352de9bb66cc873c9009ce3482585c08",
+  "schema": "mfm-gemma4-pretrained-source-v1",
+  "snapshot_path": "/workspace/gemma4-12b-base-snapshot",
+  "verified_at_utc": "2026-09-30T05:06:54.728745+00:00"
+}

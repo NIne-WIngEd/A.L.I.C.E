@@ -7,10 +7,13 @@ from cognitive_kernel.canonical import CognitiveKernelContractError
 from cognitive_kernel.contracts import ProductHostScope
 from cognitive_kernel.formation_contracts import (
     FormationContextPacket,
+    FormationDisposition,
+    FormationEvidenceAnchor,
     FormationEvidenceRef,
     FormationProposal,
     MemoryProposalBundle,
     validate_formation_binding,
+    validate_formation_grounding,
 )
 from cognitive_kernel.formation_evaluation import FormationGoldCase, assess_formation
 
@@ -36,6 +39,8 @@ def _bundle(product: str = "alice") -> MemoryProposalBundle:
             subject_ref="entity-1",
             value_ref="private-value-1",
             evidence_refs=("experience-1",),
+            value_text="The owner requested a correction.",
+            anchors=(FormationEvidenceAnchor("experience-1", locator="entire-source"),),
             valid_from="2026-09-23T00:00:00Z",
         ),),
     )
@@ -67,6 +72,8 @@ class FormationContractsTests(unittest.TestCase):
         self.assertNotIn("backend", alice_record)
         self.assertNotIn("adjudication", alice_record)
         self.assertEqual(alice_record["proposals"][0]["kind"], "correction_request")
+        self.assertEqual(alice_record["proposals"][0]["value_text"],
+                         "The owner requested a correction.")
 
     def test_proposals_require_evidence_and_reject_authority(self) -> None:
         bundle = _bundle()
@@ -74,6 +81,8 @@ class FormationContractsTests(unittest.TestCase):
             replace(bundle, proposals=(replace(bundle.proposals[0], evidence_refs=()),)).validate()
         with self.assertRaisesRegex(CognitiveKernelContractError, "kind"):
             replace(bundle, proposals=(replace(bundle.proposals[0], kind="authoritative_write"),)).validate()
+        with self.assertRaisesRegex(CognitiveKernelContractError, "semantic value"):
+            replace(bundle, proposals=(replace(bundle.proposals[0], value_text=""),)).validate()
 
     def test_duplicate_proposals_and_backward_time_fail(self) -> None:
         bundle = _bundle()
@@ -84,6 +93,33 @@ class FormationContractsTests(unittest.TestCase):
                 bundle.proposals[0], valid_to="2026-09-22T00:00:00Z"
             ),)).validate()
 
+    def test_day_granularity_is_an_inclusive_date_marker_not_an_instant(self) -> None:
+        bundle = _bundle()
+        source = replace(self._context(bundle).evidence[0],
+                         observed_at="2026-01-03T00:00:00.000000Z",
+                         temporal_granularity="day")
+        source.validate()
+        self.assertEqual(source.metadata_record()["temporal_granularity"], "day")
+        proposal = replace(bundle.proposals[0],
+                           valid_from="2026-01-03T00:00:00.000000Z",
+                           valid_to="2026-01-03T00:00:00.000000Z",
+                           temporal_granularity="day")
+        proposal.validate()
+        self.assertEqual(proposal.record()["temporal_granularity"], "day")
+        with self.assertRaisesRegex(CognitiveKernelContractError, "UTC date marker"):
+            replace(source, observed_at="2026-01-03T12:00:00.000000Z").validate()
+        with self.assertRaisesRegex(CognitiveKernelContractError, "UTC date marker"):
+            replace(proposal, valid_to="2026-01-03T12:00:00.000000Z").validate()
+
+        context = replace(self._context(bundle), evidence=(source,))
+        gold = FormationGoldCase("day-marker", context, (proposal,))
+        output = replace(bundle, context_digest=context.content_digest(),
+                         proposals=(replace(proposal, temporal_granularity="instant"),))
+        assessment = assess_formation(gold, output)
+        self.assertEqual(assessment.true_positives, 0)
+        self.assertEqual(assessment.false_positives, 1)
+        self.assertEqual(assessment.false_negatives, 1)
+
     def test_binding_rejects_unseen_evidence_and_reclassified_external_text(self) -> None:
         original = _bundle()
         context = self._context(original)
@@ -91,6 +127,7 @@ class FormationContractsTests(unittest.TestCase):
         validate_formation_binding(context, bundle)
         forged = replace(bundle, proposals=(replace(
             bundle.proposals[0], evidence_refs=("made-up-owner-statement",),
+            anchors=(FormationEvidenceAnchor("made-up-owner-statement", locator="entire-source"),),
         ),))
         with self.assertRaisesRegex(CognitiveKernelContractError, "absent"):
             validate_formation_binding(context, forged)
@@ -108,7 +145,9 @@ class FormationContractsTests(unittest.TestCase):
         mixed_claim = replace(bundle, context_digest=mixed.content_digest(),
                               proposals=(replace(bundle.proposals[0],
                                   epistemic_status="owner_statement",
-                                  evidence_refs=("experience-1", "outside-quote")),))
+                                  evidence_refs=("experience-1", "outside-quote"),
+                                  anchors=(FormationEvidenceAnchor("experience-1", locator="entire-source"),
+                                           FormationEvidenceAnchor("outside-quote", locator="entire-source"))),))
         with self.assertRaisesRegex(CognitiveKernelContractError, "matching evidence"):
             validate_formation_binding(mixed, mixed_claim)
 
@@ -148,7 +187,7 @@ class FormationContractsTests(unittest.TestCase):
             context=context,
             expected=(correct,),
             critical_forbidden=((bad.kind, bad.domain, bad.subject_ref,
-                                 bad.value_ref, bad.epistemic_status),),
+                                 bad.value_text, bad.epistemic_status),),
         )
         output = replace(original, context_digest=context.content_digest(),
                          proposals=(correct, bad))
@@ -160,6 +199,7 @@ class FormationContractsTests(unittest.TestCase):
                             role="historical_experience")
         extended = replace(context, evidence=context.evidence + (other_ref,))
         wrong_lineage = replace(correct, evidence_refs=("historical-2",),
+                                anchors=(FormationEvidenceAnchor("historical-2", locator="entire-source"),),
                                 epistemic_status="inference")
         inference_gold = replace(gold, context=extended,
                                  expected=(replace(correct, epistemic_status="inference"),),
@@ -183,6 +223,73 @@ class FormationContractsTests(unittest.TestCase):
         self.assertEqual((report.true_positives, report.false_positives,
                           report.false_negatives), (0, 0, 0))
         self.assertTrue(report.passes_critical_gate)
+
+    def test_scoped_defer_coexists_with_valid_narrower_proposal(self) -> None:
+        original = _bundle()
+        context = self._context(original)
+        plan = replace(original.proposals[0], kind="goal", epistemic_status="observation",
+                       value_text="A plan was scheduled, with no completed outcome established.",
+                       disposition_scope_ref="scheduled_plan")
+        defer = FormationDisposition("outcome_claim", "defer", ("experience-1",))
+        propose_plan = FormationDisposition("scheduled_plan", "propose", ("experience-1",))
+        retain = FormationDisposition("self_skill_promotion", "retain_raw", ("experience-1",))
+        gold = FormationGoldCase("scope-specific-action", context, (plan,),
+                                 expected_dispositions=(defer, propose_plan, retain))
+        output = replace(original, context_digest=context.content_digest(), proposals=(plan,),
+                         dispositions=(defer, propose_plan, retain))
+        result = assess_formation(gold, output)
+        self.assertEqual((result.true_positives, result.false_positives,
+                          result.disposition_true_positives), (1, 0, 3))
+        self.assertTrue(result.passes_critical_gate)
+        premature = replace(output, dispositions=(replace(defer, action="propose"),
+                                                propose_plan, retain))
+        blocked = assess_formation(gold, premature)
+        self.assertIn("premature_propose:outcome_claim", blocked.critical_failures)
+        self.assertEqual(blocked.true_positives, 1)
+
+    def test_target_references_and_disposition_evidence_are_bound(self) -> None:
+        original = _bundle()
+        context = self._context(original)
+        correction = replace(original.proposals[0], target_refs=("older-claim",),
+                             disposition_scope_ref="correction_scope")
+        decision = FormationDisposition("correction_scope", "propose", ("experience-1",),
+                                        ("older-claim",))
+        output = replace(original, context_digest=context.content_digest(),
+                         proposals=(correction,), dispositions=(decision,))
+        validate_formation_binding(context, output)
+        self.assertEqual(output.metadata_record()["proposals"][0]["target_refs"], ["older-claim"])
+        self.assertEqual(output.metadata_record()["dispositions"][0]["target_refs"], ["older-claim"])
+        wrong_source = replace(output, dispositions=(replace(
+            decision, evidence_refs=("unopened-claim",)),))
+        with self.assertRaisesRegex(CognitiveKernelContractError, "disposition cites evidence absent"):
+            validate_formation_binding(context, wrong_source)
+        with self.assertRaisesRegex(CognitiveKernelContractError, "duplicate formation disposition scope"):
+            replace(output, dispositions=(decision, decision)).validate()
+        contradictory = replace(output, dispositions=(replace(decision, action="defer"),))
+        with self.assertRaisesRegex(CognitiveKernelContractError, "matching propose disposition"):
+            validate_formation_binding(context, contradictory)
+        unscoped = replace(output, proposals=(replace(correction, disposition_scope_ref=None),))
+        with self.assertRaisesRegex(CognitiveKernelContractError, "matching propose disposition"):
+            validate_formation_binding(context, unscoped)
+
+    def test_grounding_checks_exact_source_bytes_and_anchor_bounds(self) -> None:
+        original = _bundle()
+        text = b"Owner asked for a correction"
+        from hashlib import sha256
+        context = replace(self._context(original), evidence=(replace(
+            self._context(original).evidence[0], modality="text",
+            content_digest=sha256(text).hexdigest()),))
+        proposal = replace(original.proposals[0], anchors=(
+            FormationEvidenceAnchor("experience-1", 0, len(text)),))
+        bundle = replace(original, context_digest=context.content_digest(),
+                         proposals=(proposal,))
+        validate_formation_grounding(context, bundle, (("experience-1", text),))
+        with self.assertRaisesRegex(CognitiveKernelContractError, "span exceeds"):
+            validate_formation_grounding(context, replace(bundle, proposals=(replace(
+                proposal, anchors=(FormationEvidenceAnchor("experience-1", 0, len(text) + 1),)),)),
+                (("experience-1", text),))
+        with self.assertRaisesRegex(CognitiveKernelContractError, "digest mismatch"):
+            validate_formation_grounding(context, bundle, (("experience-1", b"tampered"),))
 
 
 if __name__ == "__main__":

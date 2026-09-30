@@ -40,12 +40,37 @@ class OracleForHarnessOnly:
 class CandidateHarnessTests(unittest.TestCase):
     def test_train_isolation_and_challenge_evaluation(self):
         cases = load_frozen_formation_gold(MANIFEST)
-        self.assertEqual({c.host_family for c in training_examples(cases)},
-                         {"fictional-aria"})
+        with self.assertRaisesRegex(CognitiveKernelContractError, "not admitted training"):
+            training_examples(cases)
         result = evaluate_candidate(OracleForHarnessOnly(cases), cases, split="challenge")
         self.assertEqual(len(result.cases), 5)
         self.assertEqual(result.totals["false_negatives"], 0)
         self.assertEqual(result.critical_failures, ())
+        self.assertFalse(result.review_callback_used)
+
+    def test_independent_review_flags_novel_unsupported_memory(self):
+        cases = load_frozen_formation_gold(MANIFEST)
+        candidate = OracleForHarnessOnly(cases)
+        original = candidate.infer
+        def invented(*, context, opened_sources):
+            bundle = original(context=context, opened_sources=opened_sources)
+            first = bundle.proposals[0]
+            return replace(bundle, proposals=bundle.proposals + (replace(
+                first, proposal_id="novel-invention", value_ref="novel-value",
+                value_text="The owner owns Mars.", epistemic_status="inference"),))
+        candidate.infer = invented
+        class IndependentReviewer:
+            reviewer_id = "separate-evidence-reviewer"
+            artifact_sha256 = "c" * 64
+            def unsupported_proposal_ids(self, *, context, opened_sources, output):
+                assert all(isinstance(data, bytes) for _, data in opened_sources)
+                return tuple(p.proposal_id for p in output.proposals
+                             if p.value_text == "The owner owns Mars.")
+        report = evaluate_candidate(candidate, cases, split="development",
+                                    grounding_reviewer=IndependentReviewer())
+        self.assertTrue(report.review_callback_used)
+        self.assertEqual(len([x for x in report.critical_failures
+                              if "unsupported:novel-invention" in x]), 3)
 
     def test_wrong_artifact_and_train_scoring_blocked(self):
         cases = load_frozen_formation_gold(MANIFEST)
