@@ -1,12 +1,14 @@
 {
   "schema": "alice.fbm.base_derivation_seed.v1",
   "scope": "Fable/A.L.I.C.E. V1 MFM; process seed only",
-  "authority": "No production base, MFM weight edit, trained specialist, or entity qualification is recorded by this seed.",
+  "authority": "Procedure only. A verified role clone may initialize V1 formation-specialist training; no actual MFM role clone, trained weights, suppression or entity qualification is established by this seed.",
   "implementation_sources": {
     "foundation_branch": "research/gemma4-v1-source-derivation-20260930",
-    "foundation_commit": "1f76064263f035de41f1c7d71a4d90e87643d181",
+    "foundation_commit": "3e1328410dac52ba18be243cb9f7144e7a3964d1",
     "mfm_branch": "research/mfm-v1-licensed-base-20260930",
-    "mfm_commit": "a8266daf08af5505a641dcec8dae8a2ed013a095"
+    "mfm_commit": "df3da321feb56cc33762e38e19f43bbb078a6e36",
+    "mfm_v1_6_contract_path": "docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md",
+    "mfm_v1_6_contract_status": "CPU-tested additive 1.6 semantic contract; historical 1.5 trainer/inference serialization is not upgraded by this commit"
   },
   "source": {
     "repository": "google/gemma-4-12B",
@@ -15,14 +17,38 @@
     "forbidden_substitution": "google/gemma-4-12B-it",
     "license": "Apache-2.0; preserve upstream attribution and notices in derivatives",
     "file_manifest": {
-      ".gitattributes": [1624, "484fac0cb8b057eefe1992c8b72ac6e7438c7d17bd60c0e278b401c2190f7e72"],
-      "README.md": [28340, "131e26f7f1fa69445dc4b0ab98a2251811f8c3128426bf09fcef6ac5ee16e7e4"],
-      "config.json": [4383, "14f38c5492ffc9cbcdf808647ca0c025bb5b9b4eb737526347134d500ace6098"],
-      "generation_config.json": [233, "02b56bd11e1cd1e363e701a85a2fd7fbaa2992ec3358c1cd7cc44ead7208f505"],
-      "model.safetensors": [23919549408, "fe054ae05ff7f44318fd8ae90d58992531455c7ed31356704088f0f2d8c8009a"],
-      "processor_config.json": [1382, "6b938e76555b3e9946890770e1abcd442a4718f34041a58e8139dc8ad34545c9"],
-      "tokenizer.json": [32170070, "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6"],
-      "tokenizer_config.json": [888, "522a38334973725dba8f7c645195b19dda0c284f403f43273f77837679ba2eab"]
+      ".gitattributes": [
+        1624,
+        "484fac0cb8b057eefe1992c8b72ac6e7438c7d17bd60c0e278b401c2190f7e72"
+      ],
+      "README.md": [
+        28340,
+        "131e26f7f1fa69445dc4b0ab98a2251811f8c3128426bf09fcef6ac5ee16e7e4"
+      ],
+      "config.json": [
+        4383,
+        "14f38c5492ffc9cbcdf808647ca0c025bb5b9b4eb737526347134d500ace6098"
+      ],
+      "generation_config.json": [
+        233,
+        "02b56bd11e1cd1e363e701a85a2fd7fbaa2992ec3358c1cd7cc44ead7208f505"
+      ],
+      "model.safetensors": [
+        23919549408,
+        "fe054ae05ff7f44318fd8ae90d58992531455c7ed31356704088f0f2d8c8009a"
+      ],
+      "processor_config.json": [
+        1382,
+        "6b938e76555b3e9946890770e1abcd442a4718f34041a58e8139dc8ad34545c9"
+      ],
+      "tokenizer.json": [
+        32170070,
+        "12bac982b793c44b03d52a250a9f0d0b666813da566b910c24a6da0695fd11e6"
+      ],
+      "tokenizer_config.json": [
+        888,
+        "522a38334973725dba8f7c645195b19dda0c284f403f43273f77837679ba2eab"
+      ]
     }
   },
   "current_state_at_capture": {
@@ -39,7 +65,10 @@
     "cases": 49819,
     "manifest_sha256": "60fa44a5be62c8d2f0daf508e543dc1a41c34562dc0c4d399e26c9cabb772e21",
     "owner_authorization_ref": "owner_authorized_service_teacher",
-    "status": "synthetic training only; no independently adjudicated FINAL or MFM quality claim"
+    "status": "synthetic training only; no independently adjudicated FINAL or MFM quality claim",
+    "role_coverage_audit_path": "training/fbm/base_assembly/mfm_v1_training_role_coverage_20260930.json",
+    "role_coverage_audit_sha256": "0f198706d5158f830c79dd3a6a891449025f453c0976f9fa21377c8cd5085cec",
+    "role_coverage_summary": "43,819 multisource rows carry 420,367 proposals, all host-domain and only goal/host_observation/behavior_pattern/uncertainty; 6,000 templated rows carry 6,000 proposals in ten scenario families. Both components lack nonnull confidence, uncertainty_ref, contradicts and sensitivity_hint; evidence is only structured or text. This tier cannot support a full-role fit or claim."
   },
   "inputs_at_replay": {
     "download_staging_dir": "fresh absolute directory outside snapshot_dir; Hugging Face local-dir cache and partial files stay here",
@@ -47,15 +76,15 @@
     "receipt_path": "absolute path outside immutable snapshot",
     "mfm_checkout": "exact MFM source revision recorded in each run receipt",
     "foundation_checkout": "exact Gemma-base source revision recorded in each derivation receipt",
-    "work_dir": "private writable path with measured capacity for separate 24 GB source, clone, staged candidate and derivative, plus cache and outputs",
+    "work_dir": "private writable path with measured space for distinct 24 GB source and exact role clone, cache, preflight and outputs; optional intervention needs further space",
     "clone_dir": "fresh immutable role-local absolute clone directory",
     "clone_receipt": "fresh append-only receipt outside model directories",
-    "replacement_payload": "independently justified same-shape tensor payload file with exact new SHA-256 and byte count",
-    "operation_manifest": "parent-bound tensor name, exact old/new payload hashes, size, implementation revision and predicted effect",
-    "candidate_dir": "fresh absolute candidate directory distinct from the immutable clone",
-    "stage_receipt": "fresh append-only one-tensor staging receipt outside model directories",
-    "derivative_dir": "fresh absolute derivative directory distinct from clone and candidate",
-    "derivative_receipt": "append-only receipt outside model directories",
+    "replacement_payload": "OPTIONAL AFTER OBSERVED AND CAUSALLY DIAGNOSED ASSEMBLED MFM FAILURE: independently justified same-shape tensor payload file with exact new SHA-256 and byte count",
+    "operation_manifest": "OPTIONAL AFTER OBSERVED AND CAUSALLY DIAGNOSED ASSEMBLED MFM FAILURE: parent-bound tensor name, exact old/new payload hashes, size, implementation revision and predicted effect",
+    "candidate_dir": "OPTIONAL AFTER OBSERVED AND CAUSALLY DIAGNOSED ASSEMBLED MFM FAILURE: fresh absolute candidate directory distinct from the immutable clone",
+    "stage_receipt": "OPTIONAL AFTER OBSERVED AND CAUSALLY DIAGNOSED ASSEMBLED MFM FAILURE: fresh append-only one-tensor staging receipt outside model directories",
+    "derivative_dir": "OPTIONAL AFTER OBSERVED AND CAUSALLY DIAGNOSED ASSEMBLED MFM FAILURE: fresh absolute derivative directory distinct from clone and candidate",
+    "derivative_receipt": "OPTIONAL AFTER OBSERVED AND CAUSALLY DIAGNOSED ASSEMBLED MFM FAILURE: append-only receipt outside model directories",
     "admitted_manifest": "owner-authorized corpus manifest with sealed person and source-family splits; never public raw private payload",
     "training_curriculum_manifest": "optional existing 49,819-case owner-authorized training-only mixture outside public Git",
     "owner_authorization_ref": "authorization bound to the synthetic curriculum, if used",
@@ -69,7 +98,9 @@
     "specialist_layers": "resource-tested decoder depth, not a capability ceiling",
     "specialist_heads": "resource-tested decoder attention heads, dividing width",
     "max_cross_attention_pairs": "at least the CPU preflight peak_train_attention_pairs; measured GPU fit still required",
-    "public_diagnostic_output_dir": "path for nonprivate synthetic diagnostic artifacts"
+    "public_diagnostic_output_dir": "path for nonprivate synthetic diagnostic artifacts",
+    "prepared_base_dir": "the verified clone_dir by default; only an independently justified and validated role derivative when optional intervention is elected",
+    "prepared_base_receipt": "clone_receipt by default; the validated derivative_receipt only when optional intervention is elected"
   },
   "steps": [
     {
@@ -77,61 +108,164 @@
       "after": [],
       "operation": "Download the eight pinned files into a disposable owner-controlled staging directory; persist the upstream Apache license and notices outside the exact snapshot. Hugging Face may place .cache/huggingface metadata beside downloaded files. Reject partial files and the -it repository.",
       "tool": "hf download google/gemma-4-12B --revision 023679ed352de9bb66cc873c9009ce3482585c08 --local-dir {download_staging_dir}",
-      "gate": "Before download, verify enough free disk for 23,919,549,408 source bytes plus cache/temp overhead; the current 20 GB free workspace fails. Then confirm all eight named files exist as regular files in staging. No private person data or paid GPU is required. Keep metadata cache and partial files outside snapshot_dir."
+      "gate": "Measure free capacity for all eight pinned files and download staging overhead. Confirm eight regular files, exact revision and non-IT variant. No private person data or paid GPU is required; metadata cache and partial files stay outside snapshot_dir."
     },
     {
       "id": "source_stage",
-      "after": ["source_acquire"],
+      "after": [
+        "source_acquire"
+      ],
       "operation": "On the same filesystem, create a fresh empty snapshot directory and move only the eight manifest-named regular files into it. Do not move the Hugging Face .cache/huggingface directory, temporary files or a license copy into the exact snapshot.",
       "tool": "test ! -e \"{snapshot_dir}\" && install -d -m 0700 \"{snapshot_dir}\" && mv -- \"{download_staging_dir}/.gitattributes\" \"{download_staging_dir}/README.md\" \"{download_staging_dir}/config.json\" \"{download_staging_dir}/generation_config.json\" \"{download_staging_dir}/model.safetensors\" \"{download_staging_dir}/processor_config.json\" \"{download_staging_dir}/tokenizer.json\" \"{download_staging_dir}/tokenizer_config.json\" \"{snapshot_dir}/\"",
       "gate": "Exactly eight regular, nonsymlink files and no nested metadata directory are in snapshot_dir. Any partial move must fail the following exact-tree verifier and be discarded."
     },
     {
       "id": "source_verify",
-      "after": ["source_stage"],
+      "after": [
+        "source_stage"
+      ],
       "operation": "Rehash all eight files against the pinned independent manifest and emit a fresh path-specific receipt.",
-      "tool": "python {mfm_checkout}/scripts/mfm/verify_gemma4_pretrained.py {snapshot_dir} {receipt_path}",
-      "gate": "All file sizes and SHA-256 digests match; a historical receipt alone does not pass."
+      "tool": "PYTHONPATH={foundation_checkout} python -m src.alice_foundation.gemma4_v1 verify-source {snapshot_dir} {receipt_path}",
+      "gate": "The foundation verifier rehashes exactly eight file sizes and SHA-256 digests and emits a fresh path-specific source receipt. An owner-pasted SHA pass or historical receipt does not substitute for this receipt."
     },
     {
+      "id": "immutable_role_clone",
+      "after": [
+        "source_verify"
+      ],
+      "operation": "Create an immutable role-local copy of the freshly verified non-IT source. It is the V1 MFM starting base and retains Google ancestry; a tensor edit is not required.",
+      "tool": "PYTHONPATH={foundation_checkout} python -m src.alice_foundation.gemma4_v1 clone {snapshot_dir} {clone_dir} {clone_receipt} --role mfm",
+      "gate": "Fresh clone path and external parent-linked receipt, exact eight-file hashes and separate storage capacity. The clone is unqualified source lineage, not a trained MFM or evidence of suppression."
+    },
+    {
+      "id": "role_base_verify",
+      "after": [
+        "immutable_role_clone"
+      ],
+      "operation": "At point of use, rehash and admit the MFM role clone under the foundation role-base contract. Keep source, clone, specialist weights and owner-private data lineages distinct.",
+      "tool": "PYTHONPATH={foundation_checkout} python -m src.alice_foundation.gemma4_v1 verify-role-base {clone_receipt} --snapshot {clone_dir} --role mfm",
+      "gate": "Exact eight-file copy, mfm role, pinned source ancestry and fresh receipt checks pass. Admission is a custody check, not behavioral qualification."
+    },
+    {
+      "id": "processor_and_bounded_hardware_probe",
+      "after": [
+        "role_base_verify"
+      ],
+      "operation": "Run exact admitted-corpus and complete CPU processor checks, then a bounded GPU backward/restart/fit measurement on the frozen training-only curriculum. These checks establish data loading and resource behavior, not MFM role capability or admission to full paid fit.",
+      "data_preflight_tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/train_v1_formation_specialist.py data-preflight --admitted-manifest {admitted_manifest} --input-sha256 {input_sha256}",
+      "synthetic_training_argument_alternative": "For the current training-only curriculum, replace --admitted-manifest {admitted_manifest} in data_preflight_tool, processor_preflight_tool and probe_tool with --curriculum-manifest {training_curriculum_manifest} --owner-authorization-ref {owner_authorization_ref}; bind input_sha256 to that curriculum manifest. Do not run specialist_training.tool for a full fit on this mixture alone.",
+      "processor_preflight_tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/train_v1_formation_specialist.py processor-preflight --admitted-manifest {admitted_manifest} --input-sha256 {input_sha256} --prepared-base-dir {prepared_base_dir} --prepared-base-receipt {prepared_base_receipt} --preflight-receipt {preflight_receipt} --max-source-tokens {max_source_tokens} --max-target-tokens {max_target_tokens} --specialist-width {specialist_width} --specialist-layers {specialist_layers} --specialist-heads {specialist_heads}",
+      "probe_tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/train_v1_formation_specialist.py train --admitted-manifest {admitted_manifest} --input-sha256 {input_sha256} --prepared-base-dir {prepared_base_dir} --prepared-base-receipt {prepared_base_receipt} --preflight-receipt {preflight_receipt} --output-dir {probe_output_dir} --max-source-tokens {max_source_tokens} --max-target-tokens {max_target_tokens} --specialist-width {specialist_width} --specialist-layers {specialist_layers} --specialist-heads {specialist_heads} --max-cross-attention-pairs {max_cross_attention_pairs} --probe-only",
+      "implementation_status": "Source files have owner-pasted eight-file SHA passes on Magnolia. No foundation source/role-clone receipt at that path, full CPU processor receipt or bounded GPU backward probe has been returned.",
+      "gate": "Role clone and corpus input hashes match; CPU processor covers every case with no silent truncation; bounded GPU step includes peak-stress cases and checkpoint restart. Passing this gate does not override full_role_readiness."
+    },
+    {
+      "id": "full_role_readiness",
+      "after": [
+        "role_base_verify"
+      ],
+      "operation": "Audit versioned formation targets against the full MFM role before any full paid fit. Freeze independently adjudicated, rights-cleared development and sealed FINAL histories separated by person, source, time and generator lineage. Test sensitive, cross-person, longitudinal and multimodal formation including authority, uncertainty, contradiction, correction and revocation.",
+      "audit_path": "training/fbm/base_assembly/mfm_v1_training_role_coverage_20260930.json",
+      "audit_sha256": "0f198706d5158f830c79dd3a6a891449025f453c0976f9fa21377c8cd5085cec",
+      "current_status": "BLOCKED_FOR_FULL_FIT: 49,819 train-only rows do not provide full-role targets or independent DEV/FINAL.",
+      "required_before_full_fit": [
+        "versioned target schema and measured coverage for episodes, relationships, missions, correction, revocation, decision rationale and source-person boundary",
+        "non-null, reviewed confidence/uncertainty and contradiction labels where appropriate",
+        "sensitivity and multimodal examples with source/subject authority",
+        "multiple rights-cleared independent history and generator families with sensitive, cross-person and longitudinal cases",
+        "sealed person/source/generator-disjoint DEV and FINAL with independent adjudication and contamination checks",
+        "versioned v1.6 full-role trainer, inference runner and evaluator consume the same exact target schema and preserve typed outputs, provenance and authority interfaces; v1.5 CLI is hardware-probe-only",
+        "migrate 1.6 training target serializer, loss, inference and evaluator as one version-bound path; CPU-tested 1.6 semantic validators alone are not a trained full-role MFM"
+      ],
+      "gate": "Current audit fails: 420,367/426,367 proposals come from host-only structured multisource cases; all 426,367 have null confidence/uncertainty_ref and empty contradicts, and no nonnull sensitivity_hint. The remaining 6,000 are ten templated text families. Episode and decision_rationale proposal kinds, source_person domain and media beyond text/structured are absent; some basic deletion_request and relationship_norm labels exist only in the small templated tier. Preserve training-only status. CPU verification and bounded hardware probing may continue; full paid fit and product/capability claim must stop. A new corpus manifest alone cannot promote the current v1.5 trainer to a full-role trainer; matching trainer/inference/evaluator schema support is mandatory.",
+      "contract_ref": "A.L.I.C.E:research/mfm-v1-licensed-base-20260930@df3da321feb56cc33762e38e19f43bbb078a6e36:docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md"
+    },
+    {
+      "id": "specialist_training",
+      "after": [
+        "processor_and_bounded_hardware_probe",
+        "full_role_readiness"
+      ],
+      "operation": "Only after full-role readiness and bounded hardware probe pass, train distinct first-party MFM formation parameters on the verified role clone and versioned, sufficiently broad rights-cleared formation targets. Bind proposals to registered evidence and the deterministic Claim gate. Keep user-private data and gradients in their own custody.",
+      "implementation_status": "MFM public commit ff44c1bd has CPU-tested additive 1.6 semantic validators and an evaluator boundary. The actual trainer/processor/target serializer and inference runner remain 1.5 and are not a full-role 1.6 implementation. No exact 12B processor pass, BF16 backward/probe, full fit, independent FINAL or role qualification has run.",
+      "gate": "Hard stop on the current 49,819-row curriculum as a sole full-fit source. Full paid fit requires the versioned coverage audit, independent adjudicated DEV/FINAL and sealed splits in full_role_readiness, plus a measured backward/restart/resource pass. No product capability follows merely from a trained checkpoint. Require an exact schema/version match across targets, train serialization, runtime inference and evaluator. Do not start a full run with the retained v1.5 CLI or merely swap its manifest.",
+      "legacy_v1_5_cli_hardware_probe_only": "Use processor_and_bounded_hardware_probe.probe_tool with --probe-only for capacity measurement. The former full train command is intentionally not replayable from this seed.",
+      "tool": null,
+      "tool_status": "BLOCKED_UNIMPLEMENTED: replace with a version-pinned v1.6-or-later full-role trainer only after its inference runner and evaluator consume the same target contract; the retained v1.5 CLI is valid solely for data/processor checks and a bounded --probe-only hardware receipt."
+    },
+    {
+      "id": "qualification",
+      "after": [
+        "specialist_training"
+      ],
+      "operation": "Compare trained versus seeded-untrained specialist on the same verified MFM role clone under matched inputs and decoding, then specialist removal/swap and the complete governed memory loop on independent histories. Source-only Gemma inference is an optional descriptive reference, not a measured formation control. Add edited-base or fine-tuned-base controls only when an intervention is actually attempted. Exercise attribution, correction/deletion, uncertainty, multimodal cases and no-egress custody.",
+      "tool": null,
+      "implementation_status": "No sealed assembled-entity evaluation exists.",
+      "gate": "Independent assembled tests require zero critical authority/privacy failures on the qualified suite and causal specialist value against a real seeded-untrained control. A source-only language-head diagnostic cannot substitute for that matched comparison. Diagnosed failures trigger targeted repair and requalification; no finite test certifies universal zero foreign influence."
+    }
+  ],
+  "artifacts_to_keep": [
+    "pinned source manifest and license",
+    "fresh source receipt",
+    "immutable verified role clone and parent-linked receipt",
+    "hash-bound full-role coverage and independent adjudication receipts",
+    "first-party specialist checkpoint/optimizer lineage",
+    "independent assembled qualification receipt",
+    "optional baseline or diagnosed-repair receipts when generated"
+  ],
+  "training_eligible": false,
+  "evaluation_eligible": false,
+  "latest_owner_reported_source": {
+    "location": "Magnolia $HOME/rayan-compute/mfm/gemma4-12b-023679ed352de9bb66cc873c9009ce3482585c08/source",
+    "evidence": "Owner-pasted output from srun CPU-node sha256sum -c checked all eight manifest files OK on 2026-09-29 local Magnolia time",
+    "limits": "A foundation Python source receipt, role clone and trainer receipt at this path have not been returned; no local independent inspection in this FBM checkout."
+  },
+  "optional_diagnostics": [
+    {
       "id": "source_inventory",
-      "after": ["source_verify"],
+      "after": [
+        "source_verify"
+      ],
       "operation": "Inventory BF16 tensor names, shapes and offsets without assigning behavior to a tensor based on its name.",
       "tool": "python {mfm_checkout}/scripts/mfm/inspect_gemma4_checkpoint.py --snapshot {snapshot_dir} --output {public_diagnostic_output_dir}/inventory.json",
       "gate": "Source digest and config agree; the inventory is structural evidence only."
     },
     {
       "id": "diagnostic_freeze",
-      "after": ["source_inventory"],
+      "after": [
+        "source_inventory"
+      ],
       "operation": "Emit the existing seven public synthetic inputs and freeze the emitted prompt bytes before model runs.",
       "tool": "PYTHONPATH={mfm_checkout}/src python {mfm_checkout}/scripts/mfm/evaluate_base_behavior.py emit --output {public_diagnostic_output_dir}/inputs.jsonl",
       "gate": "No private Elaina, Rayan or consumer payload; record prompt digest and fixture/source revisions. This diagnostic is not FINAL gold."
     },
     {
       "id": "untouched_forward",
-      "after": ["diagnostic_freeze"],
-      "operation": "Run deterministic offline inference against the unmodified exact source and capture raw and displayed outputs. Check actual fit on the available GPU.",
+      "after": [
+        "diagnostic_freeze"
+      ],
+      "operation": "Optional public baseline inference against the unmodified source; capture deterministic outputs and runtime/device provenance if useful to diagnose an observed assembled MFM failure.",
       "tool": "python {mfm_checkout}/scripts/mfm/run_gemma4_base_behavior.py --snapshot {snapshot_dir} --receipt {receipt_path} --prompts {public_diagnostic_output_dir}/inputs.jsonl --output {public_diagnostic_output_dir}/untouched.jsonl",
       "gate": "Real model outputs, runtime/device receipt and unexercised modality coverage are recorded. Never substitute a stub or the -it trainer."
-    },
-    {
-      "id": "immutable_role_clone",
-      "after": ["untouched_forward"],
-      "operation": "Create an MFM role-local immutable clone of the freshly verified source, preserving Google ancestry. Record parent and clone hashes; this is still pristine upstream behavior.",
-      "tool": "PYTHONPATH={foundation_checkout} python -m src.alice_foundation.gemma4_v1 clone {snapshot_dir} {clone_dir} {clone_receipt} --role mfm",
-      "gate": "Fresh clone path and external receipt, exact eight-file digest, separate storage capacity; a clone is not a prepared base or measured suppression."
-    },
+    }
+  ],
+  "optional_intervention": [
     {
       "id": "candidate_role_derivation",
-      "after": ["immutable_role_clone"],
+      "after": [
+        "qualification"
+      ],
       "operation": "Localize an observed unwanted behavior with a controlled intervention and independently produce an explicitly justified replacement tensor. The staging CLI streams exactly one named same-shape payload after checking old/new SHA-256 and size. It does not choose, generate, or validate the efficacy of that payload.",
       "tool": "PYTHONPATH={foundation_checkout} python -m src.alice_foundation.gemma4_v1 stage-tensor-replacement {clone_receipt} {replacement_payload} {candidate_dir} {operation_manifest} {stage_receipt}",
       "implementation_status": "Manifest-checked staging and sealed stage receipt implemented with tiny synthetic tests. No real replacement payload, 24 GB intervention, causal localization or behavior result exists.",
-      "gate": "The parent clone and payload are authenticated; capture the staging tool's candidate_weight_sha256 and old/new tensor hashes as a durable receipt. Candidate remains staged_unqualified. No candidate should be promoted on a tensor name, token marker, or speculative edit alone."
+      "gate": "The parent clone and payload are authenticated; capture the staging tool's candidate_weight_sha256 and old/new tensor hashes as a durable receipt. Candidate remains staged_unqualified. No candidate should be promoted on a tensor name, token marker, or speculative edit alone.",
+      "when": "Only a specific assembled MFM failure with causal evidence implicating source weights justifies this optional one-tensor route; other repairs may target specialist training or governed runtime instead."
     },
     {
       "id": "derivative_seal",
-      "after": ["candidate_role_derivation"],
+      "after": [
+        "candidate_role_derivation"
+      ],
       "operation": "Make a separately hash-linked MFM derivative from the staged candidate, verify changed weight bytes and publisher notices, and retain immutable parent and rollback. Bind the derivative's file digest to the captured staging output before asserting this was the one-tensor candidate. Derivative custody is not a behavior pass.",
       "tool": "PYTHONPATH={foundation_checkout} python -m src.alice_foundation.gemma4_v1 materialize-transform {clone_receipt} {candidate_dir} {derivative_dir} {operation_manifest} {derivative_receipt} --stage-receipt {stage_receipt}",
       "verification_tool": "PYTHONPATH={foundation_checkout} python -m src.alice_foundation.gemma4_v1 verify-derivative {derivative_receipt} --snapshot {derivative_dir} --role mfm",
@@ -140,35 +274,25 @@
     },
     {
       "id": "candidate_behavior_comparison",
-      "after": ["derivative_seal"],
+      "after": [
+        "derivative_seal"
+      ],
       "operation": "Run matched untouched and prepared-base diagnostics, independently check the targeted inherited behavior, general competence and cross-role regressions, and either retain or reject the candidate with a causal receipt.",
       "tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/run_gemma4_prepared_base_behavior.py --snapshot {derivative_dir} --receipt {derivative_receipt} --prompts {public_diagnostic_output_dir}/inputs.jsonl --output {public_diagnostic_output_dir}/prepared.jsonl",
       "scoring_tool": "PYTHONPATH={mfm_checkout}/src python {mfm_checkout}/scripts/mfm/evaluate_base_behavior.py score --untouched {public_diagnostic_output_dir}/untouched.jsonl --edited {public_diagnostic_output_dir}/prepared.jsonl --output {public_diagnostic_output_dir}/paired-report.json",
       "implementation_status": "Prepared runner and seven-case scorer have CPU fixture tests. No real 12B paired inference or independent broad behavior qualification has run. The diagnostic alone cannot promote a base.",
-      "gate": "A real public paired diagnostic is required, followed by independent targeted behavior and competence cases. If either fails or lacks coverage, specialist training is blocked and the derivative remains unqualified."
-    },
-    {
-      "id": "specialist_training",
-      "after": ["candidate_behavior_comparison"],
-      "operation": "Initialize and train separate MFM formation-specific parameters with a source-selection, subject/time, uncertainty, consolidation, correction and deletion objective. Bind proposals to registered evidence and a deterministic canonical Claim gate. Isolate per-user data, gradients, adapters and memory.",
-      "data_preflight_tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/train_v1_formation_specialist.py data-preflight --admitted-manifest {admitted_manifest} --input-sha256 {input_sha256}",
-      "synthetic_training_argument_alternative": "For training-only runs, replace --admitted-manifest {admitted_manifest} in all four tools with --curriculum-manifest {training_curriculum_manifest} --owner-authorization-ref {owner_authorization_ref}; bind input_sha256 to that curriculum manifest. This does not supply development or FINAL gold.",
-      "processor_preflight_tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/train_v1_formation_specialist.py processor-preflight --admitted-manifest {admitted_manifest} --input-sha256 {input_sha256} --prepared-base-dir {derivative_dir} --prepared-base-receipt {derivative_receipt} --preflight-receipt {preflight_receipt} --max-source-tokens {max_source_tokens} --max-target-tokens {max_target_tokens} --specialist-width {specialist_width} --specialist-layers {specialist_layers} --specialist-heads {specialist_heads}",
-      "probe_tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/train_v1_formation_specialist.py train --admitted-manifest {admitted_manifest} --input-sha256 {input_sha256} --prepared-base-dir {derivative_dir} --prepared-base-receipt {derivative_receipt} --preflight-receipt {preflight_receipt} --output-dir {probe_output_dir} --max-source-tokens {max_source_tokens} --max-target-tokens {max_target_tokens} --specialist-width {specialist_width} --specialist-layers {specialist_layers} --specialist-heads {specialist_heads} --max-cross-attention-pairs {max_cross_attention_pairs} --probe-only",
-      "tool": "PYTHONPATH={mfm_checkout}/src:{foundation_checkout}/src python {mfm_checkout}/scripts/mfm/train_v1_formation_specialist.py train --admitted-manifest {admitted_manifest} --input-sha256 {input_sha256} --prepared-base-dir {derivative_dir} --prepared-base-receipt {derivative_receipt} --preflight-receipt {preflight_receipt} --output-dir {specialist_output_dir} --max-source-tokens {max_source_tokens} --max-target-tokens {max_target_tokens} --specialist-width {specialist_width} --specialist-layers {specialist_layers} --specialist-heads {specialist_heads} --max-cross-attention-pairs {max_cross_attention_pairs}",
-      "implementation_status": "V1 specialist trainer and CPU tests exist. No exact 12B processor pass, BF16 backward/probe, full fit, independent FINAL or role qualification has run. Configurable source/target budgets and decoder size are admission choices, not a proven capability ceiling.",
-      "gate": "Run admitted private data only in an OS-enforced no-egress process; data and CPU processor preflights pass on exact artifacts; measure complete backward, checkpoint/restart and full envelope before paying for full fit. Formation weights have independent first-party lineage and causal contribution; a personal-data fine-tuned chatbot is insufficient."
-    },
-    {
-      "id": "qualification",
-      "after": ["specialist_training"],
-      "operation": "Compare source-only, edited-base, fine-tuned-base control, specialist removal/swap, and full governed memory loop on independent histories. Exercise cross-person attribution, correction/deletion, uncertainty, multimodal cases and no-egress private custody.",
-      "tool": null,
-      "implementation_status": "No sealed assembled-entity evaluation exists.",
-      "gate": "Critical authority/privacy failures are zero on the qualified suite and the specialist has causal value; no finite test certifies universal zero foreign influence."
+      "gate": "A changed hash is never suppression evidence. A matched causal and competence assessment must improve independent cases without unacceptable regression. If retained, repeat specialist training/preflight against the new prepared_base_dir/receipt and rerun qualification."
     }
   ],
-  "artifacts_to_keep": ["pinned source manifest and license", "fresh source receipt", "immutable source custody reference", "prompt/fixture digest", "untouched runtime and output receipt", "candidate derivative and edit receipt", "first-party specialist checkpoint/optimizer lineage", "independent qualification receipt"],
-  "training_eligible": false,
-  "evaluation_eligible": false
+  "optional_intervention_reentry": {
+    "condition": "Only after independent paired causal/competence evidence supports a diagnosed base-weight repair.",
+    "prepared_base_dir": "{derivative_dir}",
+    "prepared_base_receipt": "{derivative_receipt}",
+    "verification_tool": "PYTHONPATH={foundation_checkout} python -m src.alice_foundation.gemma4_v1 verify-role-base {derivative_receipt} --snapshot {derivative_dir} --role mfm",
+    "replay_steps": [
+      "specialist_training",
+      "qualification"
+    ],
+    "gate": "Recompute processor/optimizer/checkpoint lineage from the selected derivative and rerun independent assembled qualification. An edit hash or seven-case diagnostic is not a capability pass."
+  }
 }

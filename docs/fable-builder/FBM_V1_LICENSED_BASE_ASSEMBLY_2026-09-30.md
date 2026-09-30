@@ -30,8 +30,9 @@ source-selection, attribution, uncertainty, consolidation and revision
 objective. Connect their structured proposals to registered evidence and the
 independent Claim gate. A copied base with a personal-data fine-tune and a
 free-form chatbot answer is the obsolete personality Phase 2 pattern, not
-this MFM. A base-only or fine-tune control must be compared to the assembled
-specialist, including removal/swaps of the new formation component.
+this MFM. Compare the trained specialist to a matched seeded-untrained
+specialist on the same role clone, plus removal/swaps of the new formation
+component. Source-only Gemma output is an optional descriptive diagnostic.
 
 The defensible V1 claim is **a distinct personal learned state and governed
 memory under each user's control**, atop a shared licensed foundation. User
@@ -65,11 +66,13 @@ is not a privacy control and no software stack can prove universal zero leak.
 ## Ordered work and evidence
 
 1. Audit exact pretrained base, Apache rights, all artifact files and safe
-   loader. Preserve unmodified and working snapshots with transformation
+   loader. Preserve unmodified source and a verified role clone with ancestry
    receipts. Keep the older instruction-tuned research guard intact.
-2. Build a new V1 base loader, formation specialist, per-user assembly and
-   no-egress runtime. Track every edit, parameter parent, private data source
-   and ownership/custody contract. Test edited versus untouched competence.
+2. Build a V1 base loader, formation specialist, per-user assembly and
+   no-egress runtime. The verified clone needs no tensor edit. Run exact CPU
+   processor and bounded hardware checks, then audit the full role's target
+   coverage before full paid training. Track parent, private source and
+   custody. Diagnose assembled failures before an optional targeted edit.
 3. Freeze independent formation and personal-behavior gold. Test the complete
    evidence-to-judgment loop, correction/deletion, subject separation,
    privacy and cross-user non-leakage. The existing 49,819 MFM cases are
@@ -86,7 +89,27 @@ records the common pinned source, five distinct specialist roles and
 intervention/qualification sequence. Neither procedure is builder gold or
 model-quality evidence.
 The [machine-readable MFM replay seed](../../training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json)
-pins the exact non-IT source and stop conditions. The previous verified
-24 GB bytes are absent from the current workspace; a fresh source receipt is
-required before any derivative is made. The original source and the trained
-formation specialist retain separate lineages.
+pins the exact non-IT source and stop conditions. The owner has reported all
+eight SHA checks passing on Magnolia; a fresh foundation source receipt and
+role-clone receipt at that path remain pending. The original source and the
+trained formation specialist retain separate lineages.
+
+The [MFM training coverage audit](../../training/fbm/base_assembly/mfm_v1_training_role_coverage_20260930.json)
+is bound to the exact 49,819-case training-only mixture. Its 426,367 proposal
+targets concentrate on host goals and observations; confidence, uncertainty
+links, contradiction links and sensitivity are unfilled, and the evidence is
+text or structured data. This mixture alone fails the `full_role_readiness`
+gate for full paid fit. FBM must add versioned full-role targets and
+rights-cleared, independently adjudicated development and sealed FINAL
+histories covering sensitive, cross-person, longitudinal and multimodal
+formation. The trainer, inference runner and evaluator must consume that
+same versioned full-role target; the current v1.5 specialist CLI is usable
+only for data/processor checks and a bounded `--probe-only` hardware receipt.
+Changing its input manifest alone would not add missing output semantics.
+The MFM branch now has a [CPU-tested 1.6 semantic admission contract](https://github.com/NIne-WIngEd/A.L.I.C.E/blob/df3da321feb56cc33762e38e19f43bbb078a6e36/docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md),
+but its trainer, target serializer and inference runner still require a
+version-bound upgrade and new adjudicated labels. The active seed pins that
+public MFM commit and foundation commit separately.
+Source/clone verification, CPU processor work and a bounded hardware probe
+remain possible while that corpus work proceeds. No current
+training, inference or product capability follows from this audit.

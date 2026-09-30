@@ -1,0 +1,134 @@
+{
+  "components": {
+    "longitudinal_formation_train.jsonl": {
+      "cases": 6000,
+      "disposition_actions": {
+        "defer": 600,
+        "propose": 6000,
+        "retain_raw": 600
+      },
+      "evidence_modalities": {
+        "text": 41400
+      },
+      "missing_proposal_fields": {
+        "confidence": 0,
+        "contradicts": 0,
+        "counterpart_ref": 6000,
+        "event_start": 6000,
+        "mission_links": 6000,
+        "participant_refs": 6000,
+        "sensitivity_hint": 6000,
+        "target_refs": 0,
+        "uncertainty_ref": 0
+      },
+      "nonnull_proposal_fields": {
+        "confidence": 0,
+        "contradicts": 0,
+        "counterpart_ref": 0,
+        "event_start": 0,
+        "mission_links": 0,
+        "participant_refs": 0,
+        "sensitivity_hint": 0,
+        "target_refs": 600,
+        "uncertainty_ref": 0
+      },
+      "proposal_domains": {
+        "host": 2400,
+        "mission": 1200,
+        "relationship": 600,
+        "self": 1200,
+        "world": 600
+      },
+      "proposal_kinds": {
+        "claim": 600,
+        "deletion_request": 600,
+        "goal": 600,
+        "host_observation": 600,
+        "metacognitive_signal": 600,
+        "outcome": 600,
+        "preference": 600,
+        "procedural_skill": 600,
+        "relationship_norm": 600,
+        "uncertainty": 600
+      },
+      "proposals": 6000,
+      "scenario_families": {
+        "shared-scenario-current-preference": 600,
+        "shared-scenario-delete-request": 600,
+        "shared-scenario-mixed-outcome": 600,
+        "shared-scenario-negotiated-norm": 600,
+        "shared-scenario-outside-quote": 600,
+        "shared-scenario-plan-not-outcome": 600,
+        "shared-scenario-rehearsal": 600,
+        "shared-scenario-self-correction": 600,
+        "shared-scenario-unverified-skill": 600,
+        "shared-scenario-verified-skill": 600
+      },
+      "sha256": "2c92302390ebcf46ea222df8cf1c79b75710fdfb7a47a684c4897b9e0f6ae830"
+    },
+    "multisource_formation_train.jsonl": {
+      "cases": 43819,
+      "disposition_actions": {
+        "defer": 382169,
+        "propose": 420367
+      },
+      "evidence_modalities": {
+        "structured": 114657
+      },
+      "missing_proposal_fields": {
+        "confidence": 0,
+        "contradicts": 0,
+        "counterpart_ref": 420367,
+        "event_start": 420367,
+        "mission_links": 420367,
+        "participant_refs": 420367,
+        "sensitivity_hint": 420367,
+        "target_refs": 0,
+        "uncertainty_ref": 0
+      },
+      "nonnull_proposal_fields": {
+        "confidence": 0,
+        "contradicts": 0,
+        "counterpart_ref": 0,
+        "event_start": 0,
+        "mission_links": 0,
+        "participant_refs": 0,
+        "sensitivity_hint": 0,
+        "target_refs": 0,
+        "uncertainty_ref": 0
+      },
+      "proposal_domains": {
+        "host": 420367
+      },
+      "proposal_kinds": {
+        "behavior_pattern": 3360,
+        "goal": 245634,
+        "host_observation": 169392,
+        "uncertainty": 1981
+      },
+      "proposals": 420367,
+      "scenario_families": {
+        "multisource-bounded-15-day-consolidation": 480,
+        "multisource-bounded-30-day-consolidation": 480,
+        "multisource-bounded-weekly-consolidation": 1920,
+        "multisource-multi-domain-plan-then-report": 14400,
+        "multisource-multi-domain-plan-without-outcome": 14400,
+        "multisource-multi-domain-self-report-vs-tracker": 12139
+      },
+      "sha256": "2595e5209c0cf9cc8077e330b9e288c08cf5752f6db46acde6a455ff781519a1"
+    }
+  },
+  "fields_checked": [
+    "confidence",
+    "uncertainty_ref",
+    "contradicts",
+    "target_refs",
+    "sensitivity_hint",
+    "event_start",
+    "participant_refs",
+    "counterpart_ref",
+    "mission_links"
+  ],
+  "manifest_sha256": "60fa44a5be62c8d2f0daf508e543dc1a41c34562dc0c4d399e26c9cabb772e21",
+  "schema": "mfm-v1-training-role-coverage-v1"
+}
