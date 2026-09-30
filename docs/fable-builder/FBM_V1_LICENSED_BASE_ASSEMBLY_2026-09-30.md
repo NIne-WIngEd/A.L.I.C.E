@@ -121,10 +121,11 @@ formation. The trainer, inference runner and evaluator must consume that
 same versioned full-role target; the current v1.5 specialist CLI is usable
 only for data/processor checks and a bounded `--probe-only` hardware receipt.
 Changing its input manifest alone would not add missing output semantics.
-The MFM branch now has a [CPU-tested 1.6 semantic admission contract](https://github.com/NIne-WIngEd/A.L.I.C.E/blob/23fbe88faeb3f90b2e6d360d3c1ca983b8b3b040/docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md)
-and a published 1.6 codec, trainer, runner and one-step assessor. These paths
-still need admitted independent gold, real source/CPU/GPU receipts and a
-full-fit evaluator plus downstream gate results. The active seed pins that
+The MFM branch now has a [CPU-tested 1.6 semantic admission contract](https://github.com/NIne-WIngEd/A.L.I.C.E/blob/a5b04504c227347c5b56e6555d7aa7cc4ae86af4/docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md),
+signed full-fit code, a matching runner and a separate custodian assessor for
+one-step or full-fit artifacts. These paths still need admitted independent
+gold, real source/CPU/GPU receipts, actual full-fit outputs and downstream
+gate results. The active seed pins that
 public MFM commit and the foundation commit separately.
 Source/clone verification, CPU processor work and a bounded hardware probe
 remain possible while that corpus work proceeds. No current
@@ -139,7 +140,7 @@ separates these receipts so one passing step cannot stand in for another:
 | --- | --- | --- |
 | Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Owner-pasted source SHA checks; clone receipt pending |
 | Full-role corpus | Versioned 1.6 targets, authenticated rights, two reviewers, disjoint DEV and sealed FINAL | Historical 49,819 rows fail coverage; published 21-case 1.6 authoring seed is diagnostic only |
-| Code path | Matching 1.6 codec, trainer, inference, evaluator and gate adapter | Published codec/trainer/runner and one-step assessor code; no complete capability receipt or downstream gate adapter |
+| Code path | Matching 1.6 codec, signed full-fit trainer, inference, custodian assessor and full-role gate adapter | Published full-fit path and narrow P2 host-profile candidate bridge; rich 1.6 semantics still fail closed in P2, with no full-role adapter or capability receipt |
 | CPU and GPU admission | Complete Magnolia CPU processor receipt, then bounded 1.6 backward/restart result | Neither receipt established |
 | Paid full fit | Hash-bound model, optimizer and seeded-untrained control | Blocked |
 | Independent qualification | Matched trained/control outputs, sealed FINAL and actual memory-gate-to-native-judgment effect | Not run |
@@ -148,7 +149,8 @@ separates these receipts so one passing step cannot stand in for another:
 | Consumer FBM replay | Automatic private per-user assembly and independent transfer tests across new users | Procedure only |
 
 The historical 1.5 processor/probe path remains optional feasibility work.
-Unimplemented 1.6 tools are `null` in the seed. A passing code test, source
+Unachieved replay tools are `null` in the seed even where code entrypoints
+exist. A passing code test, source
 checksum, GPU step or training loss cannot skip the later gates.
 The amended 21-case authoring seed is pinned by SHA-256
 `8e967ee6494f2c5ec47ab602bad213df8c07c53b1abe9a9aff950f19c0e78e22`
@@ -160,16 +162,22 @@ provide independent human gold, rights authentication or sealed FINAL. The
 signed-review verifier mechanism still needs an independent trusted roster
 and actual steward-authenticated reviews. Local one-step and cache tests are
 code diagnostics, not a Magnolia processor, GPU fit or downstream result.
-The MFM `scripts/mfm/qualify_v16_formation_specialist.py` assessor is
-restricted to **one-optimizer-step probe artifacts**. Its separate custodian
+The MFM `scripts/mfm/qualify_v16_formation_specialist.py` assessor accepts
+one-step diagnostic or signed full-fit artifacts. Its separate custodian
 invocation may open hash-bound FINAL source/target bytes only with explicit
 `--split final --final-custodian`; training and development selection do not
 import that module. It checks a pinned external roster, prepared base,
 processor, paired trained/seeded weights and output digests, then writes a
 private mode-0600 report outside input paths. It cannot prove inference
 execution authenticity, authenticate human identities or legal rights by
-itself, assess full-fit checkpoints, or demonstrate the memory gate and native
-judgment. No such real diagnostic report has run.
+itself or demonstrate the memory gate and native judgment. No real full-fit
+assessment report has run. The [P2 candidate bridge](https://github.com/NIne-WIngEd/A.L.I.C.E/blob/a5b04504c227347c5b56e6555d7aa7cc4ae86af4/docs/MFM_V16_P2_CANDIDATE_BRIDGE_2026-09-30.md)
+stages exactly one owner host profile claim under live source checks and
+requires separate human confirmation. It rejects episodes, relations,
+missions, contradictions, corrections, uncertainty links, multiple proposals
+and unsupported dispositions. P2 does not persist the complete 1.6 receipt or
+recheck the source registry at promotion; a full-role integration must provide
+both before downstream qualification.
 A qualified shared V1 MFM would supply host-neutral formation competence with
 licensed Gemma ancestry; no such qualified checkpoint exists yet. FBM must
 build each user's private learned state automatically

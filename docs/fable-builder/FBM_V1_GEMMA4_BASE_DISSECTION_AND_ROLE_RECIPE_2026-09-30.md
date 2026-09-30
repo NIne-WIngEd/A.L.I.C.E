@@ -57,9 +57,12 @@ not an edit-before-training gate.
 The historical v1.5 specialist CLI has CPU-tested mechanics for its narrower
 target schema. The V1 seed keeps its CPU and bounded `--probe-only` route as
 optional feasibility work; a corpus manifest swap does not upgrade it. The
-MFM branch's [1.6 admission contract](https://github.com/NIne-WIngEd/A.L.I.C.E/blob/23fbe88faeb3f90b2e6d360d3c1ca983b8b3b040/docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md)
-and v1.6 codec, trainer, runner and one-step assessor are now published with
-CPU/static tests. There is still no admitted full-role corpus or real
+MFM branch's [1.6 admission contract](https://github.com/NIne-WIngEd/A.L.I.C.E/blob/a5b04504c227347c5b56e6555d7aa7cc4ae86af4/docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md)
+and v1.6 codec, signed full-fit trainer, runner and separate custodian assessor
+for one-step or full-fit artifacts are now published with CPU/static tests.
+Its narrow P2 candidate bridge stages one owner host profile claim and rejects
+richer 1.6 semantics; the full persistent receipt and promotion-time source
+recheck remain open. There is still no admitted full-role corpus or real
 exact-base processor pass, BF16 GPU step, restart, full fit or independent
 entity qualification.
 The existing 49,819-case owner-authorized synthetic mixture is available for
@@ -84,7 +87,7 @@ those counts do not fill correction, revocation, relationship and mission
 coverage for the full role.
 
 The MFM branch at public commit
-`23fbe88faeb3f90b2e6d360d3c1ca983b8b3b040` has a **diagnostic-only**
+`a5b04504c227347c5b56e6555d7aa7cc4ae86af4` has a **diagnostic-only**
 amended 1.6 authoring seed:
 15 fictional train and six diagnostic development cases. The seed SHA-256 is
 `8e967ee6494f2c5ec47ab602bad213df8c07c53b1abe9a9aff950f19c0e78e22`;
