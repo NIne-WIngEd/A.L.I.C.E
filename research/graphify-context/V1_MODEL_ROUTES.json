@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "df3da321feb56cc33762e38e19f43bbb078a6e36",
+      "commit": "a5b04504c227347c5b56e6555d7aa7cc4ae86af4",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -55,6 +55,26 @@
           "blob_sha": "3d92273b077c03cd6a24a0a19320834c88821264"
         },
         {
+          "path": "docs/MFM_V16_CORPUS_AUTHORING_AND_ADMISSION_2026-09-30.md",
+          "purpose": "fictional v1.6 authoring pack, audit, and missing gold",
+          "blob_sha": "fb858e09aa9469bae6b786b42448d26567b8f483"
+        },
+        {
+          "path": "docs/MFM_V16_INTERNAL_BLIND_REVIEW_2026-09-30.md",
+          "purpose": "source-only synthetic target QA and correction limits",
+          "blob_sha": "25aa88a520119a434deb40edd6eddc5f565869eb"
+        },
+        {
+          "path": "docs/MFM_V16_AUTHENTICATED_GOLD_2026-09-30.md",
+          "purpose": "external signer roster and signed rights/review boundary",
+          "blob_sha": "c259eb48fc97762457e6f75e22b314ea5730d6c2"
+        },
+        {
+          "path": "docs/MFM_V16_P2_CANDIDATE_BRIDGE_2026-09-30.md",
+          "purpose": "narrow existing P2 gate bridge and unsupported-field limits",
+          "blob_sha": "7ad599914a04ce1c9774d17c64630408a6f3f6c5"
+        },
+        {
           "path": "src/cognitive_kernel/formation_v1_specialist.py",
           "purpose": "separate formation model architecture",
           "blob_sha": "c4a931a4e0891079e134eea7aaa91d07a7abb42c"
@@ -62,7 +82,42 @@
         {
           "path": "src/cognitive_kernel/formation_semantics_v16.py",
           "purpose": "versioned sensitivity, episode, relationship and mission semantics",
-          "blob_sha": "effdb33c4ec5543e5e5b35b540aab970bf1643d7"
+          "blob_sha": "9d267ca1fc738b163cffaa2b0ea391e971ddf848"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_learning_v16.py",
+          "purpose": "v1.6 source-bound target codec and admitted learning rows",
+          "blob_sha": "16badb6cf60d4773f997db9e918d0def4726f56e"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_adjudication_v16.py",
+          "purpose": "externally pinned reviewer and rights signature verification",
+          "blob_sha": "18e306ecbd973b27000f5ad378828cd709c3669a"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_incremental_decoder.py",
+          "purpose": "experimental specialist inference cache requiring parity receipts",
+          "blob_sha": "f929283ba3b40515e8da4f37c4db690e736f9c1b"
+        },
+        {
+          "path": "src/cognitive_kernel/formation_context_planner.py",
+          "purpose": "registered-source retrieval and permission-bound context assembly",
+          "blob_sha": "6ef1516b9554dc497654052f0d9ddafa7ac297bc"
+        },
+        {
+          "path": "src/alice_memory/formation_v16_p2_adapter.py",
+          "purpose": "loss-aware v1.6 proposal staging to P2 candidate gate",
+          "blob_sha": "aee37a0189e892f5f6a797acfc9f3ad8e120e552"
+        },
+        {
+          "path": "scripts/mfm/build_v16_authoring_seed.py",
+          "purpose": "fictional text-only authoring pack generator",
+          "blob_sha": "6ca4f38684559294f19c6a8ad6844215a6fedf3a"
+        },
+        {
+          "path": "scripts/mfm/audit_v16_authoring_corpus.py",
+          "purpose": "v1.6 synthetic authoring coverage and admission-blocker audit",
+          "blob_sha": "66b5e6e3f9e9ff9c2f759260d1c8871771956d80"
         },
         {
           "path": "scripts/mfm/train_v1_formation_specialist.py",
@@ -70,9 +125,24 @@
           "blob_sha": "f1f89953f552de7620d8c401bae36516ddde2e82"
         },
         {
+          "path": "scripts/mfm/train_v16_formation_specialist.py",
+          "purpose": "versioned v1.6 specialist training and admission",
+          "blob_sha": "051727bceb35cc94b995bab64c524c0039c476da"
+        },
+        {
           "path": "scripts/mfm/run_v1_formation_specialist.py",
           "purpose": "trained and seeded control inference",
           "blob_sha": "0d8fcea08ae59cd9357b4eb8f26042416a5a998a"
+        },
+        {
+          "path": "scripts/mfm/run_v16_formation_specialist.py",
+          "purpose": "versioned v1.6 specialist inference",
+          "blob_sha": "65eab3260262251b5d16a7005534d179b8e2f490"
+        },
+        {
+          "path": "scripts/mfm/qualify_v16_formation_specialist.py",
+          "purpose": "v1.6 specialist assessment and diagnostic boundary",
+          "blob_sha": "37f658294a7f1abd34f187595f89f7470603c622"
         },
         {
           "path": "scripts/mfm/verify_gemma4_pretrained.py",
@@ -93,17 +163,42 @@
           "path": "scripts/mfm/qualify_v1_role_boundary.py",
           "purpose": "role boundary comparison",
           "blob_sha": "4e2b3d000b43751816b4c400c1079204eedadccd"
+        },
+        {
+          "path": "tests/governance/test_mfm_v16_downstream_intervention.py",
+          "purpose": "synthetic proposal-to-gate-to-retrieval integration regression",
+          "blob_sha": "db47fd4039aa33f76de0e8b17a733f0db58233f5"
+        },
+        {
+          "path": "tests/governance/test_formation_incremental_decoder.py",
+          "purpose": "experimental cache parity regression",
+          "blob_sha": "6d64adc00d53a68c4367473ea31acc843251c4b1"
+        },
+        {
+          "path": "tests/governance/test_mfm_v16_specialist_assessment.py",
+          "purpose": "v1.6 specialist assessment contract tests",
+          "blob_sha": "661b3f2143ec9acd49bba5d7e77f06181b76234a"
+        },
+        {
+          "path": "tests/governance/test_mfm_v16_signed_fit_gate.py",
+          "purpose": "externally pinned signed corpus optimizer gate tests",
+          "blob_sha": "e2b7b26c0ea4c439cc2fd65895ca8ea11ea72c72"
+        },
+        {
+          "path": "tests/phase2/test_formation_v16_p2_adapter.py",
+          "purpose": "synthetic narrow P2 bridge and rejection regressions",
+          "blob_sha": "851072637856d9dfa0a110b894b911af7dc52d06"
         }
       ]
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "a4ab03d1f519cbef0c85e96424233d46f7ce85a5",
+      "commit": "4dbc1943e93700840da734b1e0c7bd77f843ca85",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
           "purpose": "FBM ordered replay seed",
-          "blob_sha": "baa2ae0160ba580c249f69e9b5b3365e2e17c1ce"
+          "blob_sha": "08240975a84e3342492310724372b3b5c65d3b0d"
         },
         {
           "path": "training/fbm/base_assembly/mfm_v1_training_role_coverage_20260930.json",
@@ -113,7 +208,7 @@
         {
           "path": "docs/fable-builder/FBM_V1_GEMMA4_BASE_DISSECTION_AND_ROLE_RECIPE_2026-09-30.md",
           "purpose": "FBM source and role recipe",
-          "blob_sha": "cd8fc59bae013646fd3502e5ada30c83c8c89d2f"
+          "blob_sha": "a5421b940e69c0b0d00863fd4072c925b2c195f5"
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20260930_GEMMA4_MFM_REPLAY_SEED.jsonl",
@@ -149,6 +244,21 @@
           "path": "docs/fable-builder/traces/FBM_TRACE_20260930_MFM_PUBLIC_DOCS_CORRECTION_PIN.jsonl",
           "purpose": "matched control and exact public MFM pin",
           "blob_sha": "3ade194a9254a32d637df42bf1e56bda0e444006"
+        },
+        {
+          "path": "docs/fable-builder/traces/FBM_TRACE_20260930_MFM_V16_AUTONOMOUS_REPLAY_LADDER.jsonl",
+          "purpose": "v1.6 admission and autonomous replay seed",
+          "blob_sha": "72fb088c02ae5b229cb6a33bd3887f1b6ef6afbd"
+        },
+        {
+          "path": "docs/fable-builder/traces/FBM_TRACE_20260930_MFM_AMENDED_V16_AUTHORING_DIAGNOSTIC.jsonl",
+          "purpose": "amended synthetic target hash and diagnostic-only replay boundary",
+          "blob_sha": "318e610634d9d8765573465b8c19f7d1c1d5b06e"
+        },
+        {
+          "path": "docs/fable-builder/traces/FBM_TRACE_20260930_MFM_SIGNED_FULL_FIT_AND_P2_BRIDGE.jsonl",
+          "purpose": "signed fit gate and narrow P2 bridge replay pin",
+          "blob_sha": "3fd29e104a984816ae8ece40bdd2faa0372b9633"
         }
       ]
     }

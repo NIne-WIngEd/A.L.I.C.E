@@ -32,6 +32,18 @@ training cases, and inferred relations. This cheap route avoids importing the
 Graphify package into the three model branches. A V1 graph would need its own
 exact-source extraction receipts and freshness checks before use.
 
+The v1.6 pointers cover the fictional text-only authoring generator and audit,
+the independent signer/rights verifier, the source-bound training codec, the
+trainer and runner, and specialist assessment. They also point to an
+experimental decoder cache, a signed corpus optimizer gate, a narrow
+v1.6-to-P2 candidate bridge, and synthetic gate/retrieval regressions. The
+cache requires parity and hardware receipts. The bridge rejects fields the
+existing P2 store cannot represent; it is not a general Fable host memory
+authority. The regressions inject authored proposals and do not test a
+trained model or Alice's native judgment. FBM's v1.6 replay trace records
+the ordered procedure and its blocking gates; it is not a substitute for
+independent gold or a run receipt.
+
 ## Current receipt boundary
 
 The foundation's `alice-gemma4-v1-source-v1` receipt differs from the older
@@ -44,7 +56,13 @@ The source pointers above lead to both validators.
 The owner reported all eight pinned SHA-256 checks as `OK` on Magnolia on
 2026-09-30. This report has not yet produced the foundation Python receipt,
 an MFM role clone receipt, a trained specialist, or behavior qualification.
-The MFM 1.6 contract now describes missing full-role semantics, while the
-frozen 1.5 corpus and trainer remain partial training and hardware-probe
-material. The FBM aggregate coverage audit and readiness gate are indexed
-as procedure evidence, not model-quality gold.
+The MFM 1.6 contract specifies full-role semantics and admission boundaries.
+The frozen 1.5 corpus and trainer remain partial training and hardware-probe
+material. The FBM aggregate coverage audit and readiness gate are indexed as
+procedure evidence, not model-quality gold.
+
+The v1.6 fictional seed exercises the new shape and target codec. Its internal
+source-only QA is distinct from authenticated independent review. There is no
+rights-authenticated, independently adjudicated, sealed FINAL corpus and no
+trained or qualified v1.6 MFM. The Graphify graph remains N0-only; this route
+index cannot establish learned formation or downstream behavior.
