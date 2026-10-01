@@ -93,7 +93,7 @@
     "private_instance": "A consumer grants owner-scoped access. Local private adaptation has its own consent and custody contract, not shared-weight model-distribution rights or mandatory two-reviewer labeling per event. Do not promote private bytes or gradients to the shared base.",
     "training_eligible": false,
     "evaluation_eligible": false,
-    "current_result": "No complete v1.6 teacher training corpus, CPU full-corpus preflight, GPU backward, trained weights, independent FINAL or autonomous FBM consumer build is asserted."
+    "current_result": "A synthetic-only, unqualified 16-train/nine-development v1.6 teacher corpus is locally admitted and archived in owner custody. No protected full-corpus CPU preflight, GPU backward, trained weights, independent FINAL or autonomous FBM consumer build is asserted. AMI/ICSI teacher candidates remain unadmitted."
   },
   "first_scoped_teacher_candidate": {
     "status": "PUBLISHED_METHOD_PRIVATE_CANDIDATE_UNADMITTED",

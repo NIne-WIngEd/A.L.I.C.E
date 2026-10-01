@@ -857,5 +857,19 @@
     "rights_verified": false,
     "independent_review": false,
     "status": "ONE_PRIVATE_FICTIONAL_SOURCE_GROUNDED_TEACHER_CANDIDATE_UNQUALIFIED; no full v1.6 corpus, optimizer or FINAL"
+  },
+  "current_v16_synthetic_teacher_corpus": {
+    "authoritative_mfm_commit": "be3786415d028ea5953eb0e3d24c590142d9a8e2",
+    "authoritative_mfm_tree": "c7d6f7c5dde376e715e917a51b279c4610822c91",
+    "overlay_seed": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
+    "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_SYNTHETIC_TEACHER_CORPUS_ISSUED.jsonl",
+    "manifest_sha256": "4e59403ee2205d5219eed09a1dfd712c87b4bbae09dc0435a2275aac18ca7573",
+    "private_archive_sha256": "fd34cddc1c8b8958d00d5daf74f39b928e9fb2818ccaa4ee6294b928037f40a3",
+    "train_cases": 16,
+    "diagnostic_development_cases": 9,
+    "status": "SYNTHETIC_ONLY_TEACHER_CORPUS_ADMITTED_UNQUALIFIED",
+    "protected_full_corpus_cpu_receipt": null,
+    "trained_weights": false,
+    "independent_qualification": false
   }
 }
