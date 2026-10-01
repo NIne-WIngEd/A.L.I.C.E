@@ -182,6 +182,14 @@ escapes every source text block against literal media-token markers and passes
 adds an unadmitted private annotation draft intake with all ten dimensions
 `unknown`, null original byte offsets, and no target, split or rights/review
 claim. See the [FBM source-revision trace](traces/FBM_TRACE_20261001_MFM_V16_SOURCE_ENCODING_AND_DRAFT_INTAKE.jsonl).
+The owner-reported corrected Magnolia CPU job `576510` then completed `0:0`
+at exact MFM `1a614846` in `00:02:35`. It printed a new preflight digest
+`35c4101e1c22fbe77ba957e4069f3e83c7384418bcd55f4ebf04e2a14ccdce53`
+for the same 21-case public text-only fixture, with no processor-kwargs
+warnings. The underlying JSON remains uninspected here. See the
+[new job trace](traces/FBM_TRACE_20261001_MFM_V16_PUBLIC_CPU_576510_TEXT_SUCCESS.jsonl).
+The admitted full-role corpus, multimedia processing, model forward and
+backward, training, downstream effects and product qualification remain open.
 Do not claim capability from the present training-only mixture.
 The published signed-review verifier tests record format and signatures; an
 independent steward must authenticate the reviewers, rights issuer, blind
