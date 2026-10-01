@@ -26,7 +26,10 @@ Across development, all ten v1.6 adjudication dimensions have a positive
 example, and proposals include assistant self, procedural skill, behavior
 pattern, decision rationale, deletion and revocation. The negative labels are
 explicit in the authored spec for the **selected visible evidence** of each
-case. The model does not see every earlier event at each later window. This
+case. `sensitivity=negative` means no explicit sensitivity hint was proposed
+in that target; it does not mean the source lacks confidentiality. The
+registered source minimum remains in the context and the gate must enforce it.
+The model does not see every earlier event at each later window. This
 keeps an unrelated earlier observation from becoming a false negative in a
 later focused adjudication. The source-only record carries `as_of`, parent
 lineage and original source-item identities; no future event enters the
@@ -40,9 +43,9 @@ The aggregate SHA-256 values are:
 
 | Artifact | SHA-256 |
 | --- | --- |
-| Source windows JSONL | `ad4bd2533d083b6e8cbbaca8f32c02a2ce4b10398ac489451146814137cdb834` |
-| Candidate target JSONL | `0bd57221aa58158431e39c9e0ac3f11a8ec74701b4048d3eda21fcb840594970` |
-| Generation receipt | `fb2566af8d938277dd20106c24b60f17310114c3ffe6f214ae7ebf3f82c6b8b3` |
+| Source windows JSONL | `4f963c19c4aebabcc04c12222322832425c9245f2d568c47071c42e8ac7e09be` |
+| Candidate target JSONL | `75a63c9df0a6380646c53ff911cd3833c282666b4a304fd1d40a1f9491bba54d` |
+| Generation receipt | `c4bcd0b68b434dc815bcf42b083228d48349c216d451ac09e4b17e97a075c1d8` |
 
 To materialize separate files for `assemble_v16_owner_teacher_corpus.py`,
 select a new private output directory outside Git:
@@ -60,12 +63,17 @@ The resulting `bundle-index.json` lists per-case candidate, ordered source
 bytes, canonical target output, original generator input, converter bytes and
 provenance hashes. Its target output is the deterministic generator's exact
 output, rather than a fabricated service-teacher response. It intentionally
-contains **no source-rights receipt**. A steward has to authenticate source
+contains **no issued source-rights receipt**. The per-source draft binds the
+exact ID, hash and host but leaves issuer, authority, permissions and revocation
+`null` under a distinct unissued schema that the assembler cannot admit. A
+steward has to authenticate source
 and model distribution permission, owner authorization, generator identity,
 and truthful lineage before an assembler may admit these cases. An assembler
 intake and the receipt must use the same authorization ID; pass a different
 ID at generation time if the owner authorizes a different combined corpus.
 Never alter candidate JSON after generation to make that ID match.
+Pass only a selected per-case `source_packet.json` to an annotator; the
+aggregate JSONL contains later windows from both fictional histories.
 
 Even after an authenticated synthetic teacher fit and a complete CPU pass,
 these data do not establish Alice-level formation capability. That requires

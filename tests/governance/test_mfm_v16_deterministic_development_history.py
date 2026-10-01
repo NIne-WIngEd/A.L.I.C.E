@@ -83,7 +83,7 @@ class DeterministicDevelopmentHistoryTests(unittest.TestCase):
     def test_materialized_bytes_match_assembler_contract_without_rights(self):
         files = _materialized_files(self.source, self.target, self.receipt)
         self.assertEqual(len([p for p in files if p.endswith("/candidate.json")]), 9)
-        self.assertFalse(any("rights" in p for p in files))
+        self.assertFalse(any(p.endswith("/rights.json") for p in files))
         index = json.loads(files["bundle-index.json"])
         self.assertEqual(index["status"], "unreviewed-unadmitted-source-rights-absent")
         for item in index["cases"]:
@@ -98,6 +98,11 @@ class DeterministicDevelopmentHistoryTests(unittest.TestCase):
             for source in item["sources"]:
                 self.assertEqual(sha256(files[source["path"]]).hexdigest(),
                                  source["sha256"])
+                draft = json.loads(files[source["rights_draft"]["path"]])
+                self.assertEqual(draft["schema"], "mfm-source-rights-unissued-draft-v1")
+                self.assertEqual(draft["source_sha256"], source["sha256"])
+                self.assertIsNone(draft["issuer_id"])
+                self.assertIsNone(draft["formation_evaluation"])
 
     def test_authorization_changes_exact_candidate_and_receipt(self):
         other = render("other-owner-authorized-training")

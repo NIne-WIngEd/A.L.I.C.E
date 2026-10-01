@@ -277,10 +277,21 @@ def _materialized_files(source_raw: bytes, target_raw: bytes,
             raw = b64decode(item["content_b64"], validate=True)
             path = f"{base}/sources/{ref}.txt"
             files[path] = raw
+            draft_path = f"{base}/rights-drafts/{ref}.json"
+            files[draft_path] = _raw({
+                "schema": "mfm-source-rights-unissued-draft-v1",
+                "source_id": ref, "source_sha256": sha256(raw).hexdigest(),
+                "host_family": candidate["lineage"]["host_family"],
+                "issuer_id": None, "authority_ref": None, "revoked": None,
+                "formation_training": None, "formation_evaluation": None,
+                "model_distribution": None, "status": "unissued-not-admissible",
+            })
             sources.append({"source_id": ref, "path": path,
                             "sha256": sha256(raw).hexdigest(),
                             "parent_source_ids": [],
-                            "rights_status": "unverified"})
+                            "rights_status": "unverified",
+                            "rights_draft": {"path": draft_path,
+                                             "sha256": sha256(files[draft_path]).hexdigest()}})
         index.append({
             "case_id": case_id, "split": "development",
             "authorization_id": candidate["authorization_id"],
