@@ -44,9 +44,19 @@ private corpus. The former mapped the owner to UID 0, so udocker refused; the
 latter found util-linux 2.23.2, which lacks `--map-current-user`, and direct
 `--net` returned `Operation not permitted`. The new helper calls the Linux
 `unshare` syscall directly and writes a single same-UID map, `setgroups=deny`,
-and a same-GID map in the process before it executes bash. This route has not
-yet run on Magnolia; it may still be denied by site policy or fail P2 startup.
-Use the teacher CPU script only after this new no-data probe passes.
+and a same-GID map in the process before it executes bash.
+
+The owner-reported **job 576551** ran that helper on node005 at MFM commit
+`6bddc31e724edee6485ad9306148dd0a390b8858`. Slurm reported
+`COMPLETED 0:0` in five seconds with empty stderr. The host network namespace
+was `net:[4026531956]`. The helper kept UID/GID `1905/100` and entered
+`net:[4026532988]` with only `lo`. The actual P2 process reported that same
+new namespace and `p2_interfaces=lo`. This is a successful **no-data P2
+network capability check on node005**. It is based on pasted accounting and
+logs; the original Magnolia files were not independently fetched. It does
+not establish complete privacy, source rights, corpus admission, a processor
+receipt or learned formation behavior. The teacher job repeats the P2 check
+on its assigned node before opening any private corpus input.
 
 After a passing capability probe, a separate private-corpus job must still
 pin its own branch head, source rights and target provenance, complete v1.6

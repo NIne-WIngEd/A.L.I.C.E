@@ -36,11 +36,14 @@ first. Once it passes, set the required variables above from the frozen record
 and submit the teacher job, with logs outside Git:
 
 Jobs 576516 and 576517 did not pass. The first reached udocker as UID 0; the
-second found that util-linux 2.23.2 lacks the same-user mapping option. The
-teacher script now shares the no-data probe's host Python namespace helper.
-It remains conditional on a fresh successful P2 probe and an admitted, pinned
-full teacher manifest. A successful namespace helper alone is insufficient:
-the actual P2 process must see only `lo` before any private manifest opens.
+second found that util-linux 2.23.2 lacks the same-user mapping option. Job
+576551 then passed the no-data P2 network check on node005 at MFM `6bddc31`:
+the P2 process reported only `lo` in a namespace distinct from the host.
+This clears the measured network capability gate for that node. The teacher
+script uses the same helper and repeats the P2 check on its assigned node
+before opening private input. An admitted, pinned full teacher manifest and
+all the inputs above are still required; none has been inferred from the
+namespace result. No full-corpus CPU job has been submitted.
 
 ```bash
 MFM_LOGDIR="$HOME/rayan-compute/mfm/slurm"
