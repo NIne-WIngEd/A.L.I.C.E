@@ -213,9 +213,18 @@ The 21-case synthetic text-only processor diagnostic reported longest source
 and target lengths of 2,244 and 1,484 tokens, and preflight digest
 `35c4101e1c22fbe77ba957e4069f3e83c7384418bcd55f4ebf04e2a14ccdce53`.
 Stderr contained only a pip root-user warning; the repeated processor-kwargs
-warning from job `576509` was absent. The actual JSON receipt has not been
-read in this checkout. See the
+warning from job `576509` was absent. The owner subsequently pasted the full
+receipt JSON. Recomputing its canonical self-digest (excluding
+`record_sha256`) matched the printed digest. The trainer, codec, decoder,
+semantics, source builder, instruction and template hashes matched the local
+MFM code; the corpus seed hash matched too. The JSON says `full_fit: false`,
+`processed_modalities: ["text"]`, 15 TRAIN and 6 DEV cases, and null trust
+roster and signed-review references. This checks the **pasted content** and
+its local code bindings. The original Magnolia file at the printed path has
+not been independently fetched or checked for custody. See the
 [exact-code diagnostic trace](traces/FBM_TRACE_20261001_MFM_V16_PUBLIC_CPU_576510_TEXT_SUCCESS.jsonl).
+The [pasted-receipt validation trace](traces/FBM_TRACE_20261001_MFM_V16_PUBLIC_CPU_576510_PASTED_RECEIPT_VALIDATED.jsonl)
+records this narrower check.
 This validates the corrected code's public text fixture at the CPU processor
 boundary only. It is not a full-role corpus or multimedia pass, a model
 forward, a backward step, or a trained formation model.
@@ -255,7 +264,7 @@ separates these receipts so one passing step cannot stand in for another:
 | Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Magnolia job `576486` completed `0:0`; owner checked both sealed receipt digests, parent, role and all eight file rows. Full JSON and script were not transferred. |
 | Full-role corpus | Versioned 1.6 targets, authenticated rights, two reviewers, disjoint DEV and sealed FINAL | Historical 49,819 rows fail coverage; published 21-case 1.6 authoring seed is diagnostic only |
 | Code path | Matching 1.6 codec, signed full-fit trainer, inference, custodian assessor and full-role gate adapter | Published full-fit path and narrow P2 host-profile candidate bridge; rich 1.6 semantics still fail closed in P2, with no full-role adapter or capability receipt |
-| CPU and GPU admission | Complete admitted-corpus Magnolia CPU processor receipt at exact trainer SHA, then bounded 1.6 backward/restart result | Public 21-case text-only synthetic diagnostic job `576510` completed at corrected MFM `1a614846` and printed a preflight digest; its JSON is uninspected here. Job `576509` remains an earlier-code pass; jobs `576488` and `576508` failed. No admitted full-role multimodal CPU or GPU receipt established |
+| CPU and GPU admission | Complete admitted-corpus Magnolia CPU processor receipt at exact trainer SHA, then bounded 1.6 backward/restart result | Public 21-case text-only synthetic diagnostic job `576510` completed at corrected MFM `1a614846`; owner-pasted JSON self-digest and local code bindings match, while original Magnolia file custody remains unchecked. Job `576509` remains an earlier-code pass; jobs `576488` and `576508` failed. No admitted full-role multimodal CPU or GPU receipt established |
 | Paid full fit | Hash-bound model, optimizer and seeded-untrained control | Blocked |
 | Independent qualification | Matched trained/control outputs, sealed FINAL and actual memory-gate-to-native-judgment effect | Not run |
 | Private owner admission | Scoped local training/access rights, source roles, sensitivity and deletion lineage; no distribution grant or two reviewers required | Contract and tool pending |
