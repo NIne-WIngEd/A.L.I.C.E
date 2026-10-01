@@ -10,7 +10,10 @@ import tempfile
 import unittest
 
 from cognitive_kernel.canonical import CognitiveKernelContractError, canonical_json_bytes
-from scripts.mfm.assemble_v16_owner_teacher_corpus import assemble, INTAKE_SCHEMA, STATUS
+from scripts.mfm.assemble_v16_owner_teacher_corpus import (
+    assemble, INTAKE_SCHEMA, INTAKE_SCHEMA_V2, STATUS,
+)
+from cognitive_kernel.formation_dataset_admission import admit_formation_corpus, TEACHER_SCHEMA_V2
 from scripts.mfm.build_v16_authoring_seed import render
 
 
@@ -86,6 +89,38 @@ class OwnerTeacherAssemblyTests(unittest.TestCase):
                         intake_sha256=intake_ref["sha256"],
                         check_role_coverage=check_role_coverage)
 
+    def mixed_authorization(self):
+        """A fictional stand-in for two distinct source-rights authorities."""
+        train, development = self.intake["cases"]
+        external_auth = "public-case-original-authorization"
+        candidate_path = self.root / train["candidate"]["path"]
+        candidate = json.loads(candidate_path.read_bytes())
+        candidate["authorization_id"] = external_auth
+        train["candidate"] = write(self.root, train["candidate"]["path"], raw(candidate))
+        provenance_path = self.root / train["converter_provenance"]["path"]
+        provenance = json.loads(provenance_path.read_bytes())
+        provenance["case_sha256"] = train["candidate"]["sha256"]
+        train["converter_provenance"] = write(
+            self.root, train["converter_provenance"]["path"], raw(provenance))
+        for source in train["sources"]:
+            path = self.root / source["rights_path"]
+            rights = json.loads(path.read_bytes())
+            rights["authority_ref"] = "public-case-license-authority"
+            rights["issuer_id"] = "project-license-record-issuer"
+            source["rights_sha256"] = write(self.root, source["rights_path"], raw(rights))["sha256"]
+        train["authorization_id"] = external_auth
+        development["authorization_id"] = self.intake["authorization_id"]
+        self.intake["schema"] = INTAKE_SCHEMA_V2
+        self.intake["authorizations"] = [
+            {"authorization_id": external_auth, "source_family": train["source_family"],
+             "rights_authority_ref": "public-case-license-authority",
+             "rights_issuer_id": "project-license-record-issuer"},
+            {"authorization_id": self.intake["authorization_id"],
+             "source_family": development["source_family"],
+             "rights_authority_ref": "fictional-unit-only",
+             "rights_issuer_id": "fictional-unit-owner"},
+        ]
+
     def test_exact_source_target_and_provenance_admit(self):
         receipt = self.run_assembly()
         self.assertEqual((receipt["train_cases"], receipt["development_cases"]), (1, 1))
@@ -100,6 +135,64 @@ class OwnerTeacherAssemblyTests(unittest.TestCase):
         self.assertFalse(receipt["qualified_for_product"])
         with self.assertRaises(FileExistsError):
             self.run_assembly()
+
+    def test_v2_preserves_original_case_authorizations_and_rights_authorities(self):
+        self.mixed_authorization()
+        receipt = self.run_assembly()
+        manifest = json.loads(Path(receipt["manifest_path"]).read_bytes())
+        self.assertEqual(manifest["schema"], TEACHER_SCHEMA_V2)
+        self.assertEqual(manifest["authorization_id"], "fictional-owner-attestation")
+        self.assertEqual([case["authorization_id"] for case in manifest["cases"]],
+                         ["public-case-original-authorization", "fictional-owner-attestation"])
+        admission = admit_formation_corpus(
+            receipt["manifest_path"], expected_sha256=receipt["manifest_sha256"],
+            teacher_training=True, owner_authorization_ref="fictional-owner-attestation")
+        self.assertEqual((len(admission.train), len(admission.development)), (1, 1))
+        with self.assertRaisesRegex(CognitiveKernelContractError, "pinned owner authorization"):
+            admit_formation_corpus(receipt["manifest_path"],
+                                   expected_sha256=receipt["manifest_sha256"],
+                                   teacher_training=True, owner_authorization_ref="foreign-owner")
+
+    def test_v2_rejects_foreign_case_authorization_and_mismatched_rights(self):
+        self.mixed_authorization()
+        self.intake["cases"][0]["authorization_id"] = "foreign-case-authorization"
+        with self.assertRaisesRegex(ValueError, "unregistered authorization"):
+            self.run_assembly()
+        self.assertFalse((self.root / "owner-teacher-manifest.json").exists())
+
+        self.intake["cases"][0]["authorization_id"] = "public-case-original-authorization"
+        self.intake["authorizations"][0]["rights_authority_ref"] = "foreign-license"
+        with self.assertRaisesRegex(ValueError, "rights differ"):
+            self.run_assembly()
+        self.assertFalse((self.root / "owner-teacher-manifest.json").exists())
+
+    def test_v2_rejects_candidate_auth_relabel_and_registry_ambiguity(self):
+        self.mixed_authorization()
+        self.intake["cases"][0]["authorization_id"] = "fictional-owner-attestation"
+        self.intake["authorizations"].append({
+            **self.intake["authorizations"][0],
+            "authorization_id": "fictional-owner-attestation"})
+        with self.assertRaisesRegex(ValueError, "candidate schema, case, split or authorization"):
+            self.run_assembly()
+        self.assertFalse((self.root / "owner-teacher-manifest.json").exists())
+
+        self.intake["cases"][0]["authorization_id"] = "public-case-original-authorization"
+        self.intake["authorizations"].append(dict(self.intake["authorizations"][0]))
+        with self.assertRaisesRegex(ValueError, "duplicate authorization binding"):
+            self.run_assembly()
+
+    def test_v2_admission_rechecks_case_authority_after_assembly(self):
+        self.mixed_authorization()
+        receipt = self.run_assembly()
+        manifest_path = Path(receipt["manifest_path"])
+        manifest = json.loads(manifest_path.read_bytes())
+        manifest["authorizations"][0]["rights_authority_ref"] = "foreign-license"
+        changed = raw(manifest)
+        manifest_path.write_bytes(changed)
+        with self.assertRaisesRegex(CognitiveKernelContractError, "rights differ"):
+            admit_formation_corpus(manifest_path, expected_sha256=sha256(changed).hexdigest(),
+                                   teacher_training=True,
+                                   owner_authorization_ref="fictional-owner-attestation")
 
     def test_mismatched_candidate_source_and_raw_teacher_provenance_fail(self):
         entry = self.intake["cases"][0]

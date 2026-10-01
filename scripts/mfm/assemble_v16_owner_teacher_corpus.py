@@ -21,7 +21,8 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from cognitive_kernel.canonical import canonical_json_bytes
 from cognitive_kernel.formation_dataset_admission import (
-    TEACHER_SCHEMA, _identifier, _path, _unique_json, admit_formation_corpus,
+    TEACHER_SCHEMA, TEACHER_SCHEMA_V2, _identifier, _path, _unique_json,
+    admit_formation_corpus,
 )
 from cognitive_kernel.formation_learning_v16 import (
     CURRICULUM_SCHEMA_V16, TARGET_SCHEMA_V16, admitted_rows_v16,
@@ -30,6 +31,7 @@ from cognitive_kernel.formation_learning_v16 import (
 
 
 INTAKE_SCHEMA = "mfm-v16-owner-teacher-assembly-intake-v1"
+INTAKE_SCHEMA_V2 = "mfm-v16-owner-teacher-assembly-intake-v2"
 STATUS = "owner-authorized-teacher-training-only-unqualified"
 FAMILY_FIELDS = ("host_family", "source_family", "generator_family",
                  "scenario_family", "duplicate_group")
@@ -145,28 +147,54 @@ def assemble(bundle_root: Path, intake_path: Path, *, intake_sha256: str,
     if _sha(raw) != intake_sha256:
         raise ValueError("intake differs from externally pinned SHA-256")
     intake = _unique_json(raw, "assembly intake")
-    if (intake.get("schema") != INTAKE_SCHEMA or
+    multi_auth = intake.get("schema") == INTAKE_SCHEMA_V2
+    if (intake.get("schema") not in {INTAKE_SCHEMA, INTAKE_SCHEMA_V2} or
             intake.get("status") != STATUS or
             not isinstance(intake.get("cases"), list) or not intake["cases"]):
         raise ValueError("intake needs owner teacher schema, status and cases")
     authorization = _identifier(intake.get("authorization_id"), "authorization_id")
     corpus_id = _identifier(intake.get("corpus_id"), "corpus_id")
+    authorizations: dict[tuple[str, str], tuple[str, str]] = {}
+    if multi_auth:
+        records = intake.get("authorizations")
+        if not isinstance(records, list) or not records:
+            raise ValueError("mixed intake needs case authorization bindings")
+        for record in records:
+            if not isinstance(record, dict) or set(record) != {
+                    "authorization_id", "source_family", "rights_authority_ref",
+                    "rights_issuer_id"}:
+                raise ValueError("mixed intake has malformed authorization binding")
+            key = (_identifier(record["authorization_id"], "authorization_id"),
+                   _identifier(record["source_family"], "source_family"))
+            value = (_identifier(record["rights_authority_ref"], "rights_authority_ref"),
+                     _identifier(record["rights_issuer_id"], "rights_issuer_id"))
+            if key in authorizations:
+                raise ValueError("mixed intake has duplicate authorization binding")
+            authorizations[key] = value
     _, manifest_file = _path(root, manifest_path, "manifest")
     if manifest_file.exists() or manifest_file.is_symlink():
         raise FileExistsError("manifest path already exists")
     rows, outputs = [], {}
+    used_authorizations: set[tuple[str, str]] = set()
     for item in intake["cases"]:
         if not isinstance(item, dict) or set(item) != {
                 "case_id", "split", "author_id", *FAMILY_FIELDS,
                 "parent_case_ids", "candidate", "sources", "target_origin",
                 "producer_version", "prompt", "response", "converter",
-                "converter_provenance"}:
+                "converter_provenance", *(("authorization_id",) if multi_auth else ())}:
             raise ValueError("intake case has missing or unsupported fields")
         case_id = _identifier(item["case_id"], "case_id")
         if item["split"] not in {"train", "development"}:
             raise ValueError("owner teacher split must be train or development")
         for field in (*FAMILY_FIELDS, "author_id", "producer_version"):
             _identifier(item[field], field)
+        case_authorization = (_identifier(item["authorization_id"], "case authorization_id")
+                              if multi_auth else authorization)
+        if multi_auth:
+            auth_key = (case_authorization, item["source_family"])
+            if auth_key not in authorizations:
+                raise ValueError("intake case has unregistered authorization")
+            used_authorizations.add(auth_key)
         parents = item["parent_case_ids"]
         if not isinstance(parents, list):
             raise ValueError("parent case IDs must be a list")
@@ -176,7 +204,14 @@ def assemble(bundle_root: Path, intake_path: Path, *, intake_sha256: str,
         if origin not in {"owner-authorized-service-teacher",
                           "licensed-deterministic-generator"}:
             raise ValueError("unsupported target origin")
-        candidate, candidate_raw = _candidate(root, item, authorization)
+        candidate, candidate_raw = _candidate(root, item, case_authorization)
+        if multi_auth:
+            for source in item["sources"]:
+                rights = _unique_json(_read_ref(root, {
+                    "path": source["rights_path"], "sha256": source["rights_sha256"]},
+                    "source rights"), "source rights")
+                if (rights.get("authority_ref"), rights.get("issuer_id")) != authorizations[auth_key]:
+                    raise ValueError("source rights differ from case authorization binding")
         prompt = _ref(root, item["prompt"], "teacher prompt")
         response = _ref(root, item["response"], "raw teacher output")
         converter = _ref(root, item["converter"], "converter implementation")
@@ -202,7 +237,7 @@ def assemble(bundle_root: Path, intake_path: Path, *, intake_sha256: str,
         rows.append({"case_id": case_id, "split": item["split"],
                      "author_id": item["author_id"],
                      **{name: item[name] for name in FAMILY_FIELDS},
-                     "parent_case_ids": parents, "authorization_id": authorization,
+                     "parent_case_ids": parents, "authorization_id": case_authorization,
                      "target_origin": origin,
                      "target_provenance": {
                          "producer_id": item["author_id"],
@@ -212,9 +247,14 @@ def assemble(bundle_root: Path, intake_path: Path, *, intake_sha256: str,
                      "sources": item["sources"],
                      "target": {"path": target_path, "sha256": _sha(target_raw)},
                      "reviews": []})
-    manifest = {"schema": TEACHER_SCHEMA, "corpus_id": corpus_id,
+    if multi_auth and used_authorizations != set(authorizations):
+        raise ValueError("mixed intake has unused authorization binding")
+    manifest = {"schema": TEACHER_SCHEMA_V2 if multi_auth else TEACHER_SCHEMA,
+                "corpus_id": corpus_id,
                 "status": STATUS, "authorization_id": authorization,
                 "case_count": len(rows), "cases": rows}
+    if multi_auth:
+        manifest["authorizations"] = intake["authorizations"]
     manifest_raw = canonical_json_bytes(manifest) + b"\n"
     created: list[Path] = []
     try:

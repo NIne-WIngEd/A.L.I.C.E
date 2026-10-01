@@ -4,13 +4,18 @@
 21-case public diagnostic. It requires an owner-authorized
 `mfm-v16-owner-teacher-corpus-v1` manifest with authenticated source rights,
 exact target provenance and distinct train/diagnostic-development lineage.
-The [issued synthetic-only manifest](MFM_V16_CHAT_DIRECTED_SYNTHETIC_CORPUS_2026-10-01.md)
-admits 16 fictional train and nine fictional diagnostic development cases
-under the owner's chat direction. Its manifest SHA-256 is
-`4e59403ee2205d5219eed09a1dfd712c87b4bbae09dc0435a2275aac18ca7573`.
-This is a bounded teacher processor run, not a full capability corpus or
-independent gold. There is **no teacher CPU receipt yet**. Do not use the
-earlier unissued candidates, AMI/ICSI teacher candidates or old v1.5 mixture.
+The original [issued synthetic-only manifest](MFM_V16_CHAT_DIRECTED_SYNTHETIC_CORPUS_2026-10-01.md)
+has 16 fictional train and nine fictional diagnostic development cases. The
+[expanded synthetic-only manifest](MFM_V16_LONGITUDINAL_SYNTHETIC_EXPANSION_2026-10-01.md)
+is the next CPU input: 432 train and nine diagnostic development cases, SHA-256
+`f54f03ace36b7bb8afde531faf5a283b1cb894ff40389ddaeb96d2f5caa4c48a`,
+in a private archive with SHA-256
+`8d33f44fe9e0f37e0fcf09de03c4705d5c1d867f19a285e94cc4e72d2bdee65f`.
+It is single-author fictional teaching material, not a full capability corpus
+or independent gold. There is **no teacher CPU receipt yet**. The separate
+443-case synthetic/AMI v2 manifest has not passed the protected CPU processor;
+the source-derived AMI archive remains local after a rejected Drive upload.
+Do not use unissued candidates or the old v1.5 mixture.
 
 Before submission, record the following values in owner custody independently
 of the job. Export them on the Magnolia login node. All paths must be absolute
@@ -45,9 +50,9 @@ second found that util-linux 2.23.2 lacks the same-user mapping option. Job
 the P2 process reported only `lo` in a namespace distinct from the host.
 This clears the measured network capability gate for that node. The teacher
 script uses the same helper and repeats the P2 check on its assigned node
-before opening private input. The synthetic-only manifest is now issued, but
-must be transferred, hashed and pinned on Magnolia along with all the other
-inputs above. No teacher corpus CPU job has been submitted.
+before opening private input. The expanded synthetic-only archive must be
+transferred, hashed and pinned on Magnolia along with all the other inputs
+above. No teacher corpus CPU job has been submitted.
 
 ```bash
 MFM_LOGDIR="$HOME/rayan-compute/mfm/slurm"

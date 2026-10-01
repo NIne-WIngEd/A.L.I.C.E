@@ -18,6 +18,7 @@ from .canonical import CognitiveKernelContractError, require_identifier, require
 
 SCHEMA = "mfm-formation-corpus-v1"
 TEACHER_SCHEMA = "mfm-v16-owner-teacher-corpus-v1"
+TEACHER_SCHEMA_V2 = "mfm-v16-owner-teacher-corpus-v2"
 RIGHTS_SCHEMA = "mfm-source-rights-v1"
 SPLITS = frozenset({"train", "development", "final"})
 
@@ -188,7 +189,9 @@ def admit_formation_corpus(manifest_path: str | Path, *,
     if digest != _digest(expected_sha256, "expected_sha256"):
         raise CognitiveKernelContractError("corpus manifest differs from frozen digest")
     manifest = _unique_json(raw, "corpus manifest")
-    if manifest.get("schema") != (TEACHER_SCHEMA if teacher_training else SCHEMA):
+    teacher_v2 = teacher_training and manifest.get("schema") == TEACHER_SCHEMA_V2
+    if manifest.get("schema") not in ((TEACHER_SCHEMA, TEACHER_SCHEMA_V2)
+                                      if teacher_training else (SCHEMA,)):
         raise CognitiveKernelContractError("unsupported formation corpus schema")
     if teacher_training:
         authorization = _identifier(owner_authorization_ref, "owner_authorization_ref")
@@ -198,6 +201,22 @@ def admit_formation_corpus(manifest_path: str | Path, *,
             raise CognitiveKernelContractError("teacher corpus lacks pinned owner authorization or count")
     elif owner_authorization_ref is not None:
         raise CognitiveKernelContractError("signed corpus does not use teacher authorization")
+    authorizations: dict[tuple[str, str], tuple[str, str]] = {}
+    if teacher_v2:
+        for value in _list(manifest.get("authorizations"), "authorizations"):
+            item = _object(value, "authorization binding")
+            if set(item) != {"authorization_id", "source_family",
+                             "rights_authority_ref", "rights_issuer_id"}:
+                raise CognitiveKernelContractError("authorization binding has unsupported fields")
+            key = (_identifier(item["authorization_id"], "authorization_id"),
+                   _identifier(item["source_family"], "source_family"))
+            binding = (_identifier(item["rights_authority_ref"], "rights_authority_ref"),
+                       _identifier(item["rights_issuer_id"], "rights_issuer_id"))
+            if key in authorizations:
+                raise CognitiveKernelContractError("duplicate authorization binding")
+            authorizations[key] = binding
+        if not authorizations:
+            raise CognitiveKernelContractError("teacher corpus lacks case authorizations")
     corpus_id = _identifier(manifest.get("corpus_id"), "corpus_id")
     root = file.parent.resolve()
     cases = _list(manifest.get("cases"), "cases")
@@ -206,9 +225,11 @@ def admit_formation_corpus(manifest_path: str | Path, *,
     if teacher_training and len(cases) != manifest["case_count"]:
         raise CognitiveKernelContractError("teacher corpus count differs from pinned manifest")
     seen_cases: set[str] = set()
+    used_authorizations: set[tuple[str, str]] = set()
     case_groups: dict[str, set[tuple[str, str]]] = {}
     case_parents: dict[str, tuple[str, ...]] = {}
     source_owners: dict[str, tuple[str, str, str]] = {}
+    source_authorizations: dict[str, tuple[str, str, str]] = {}
     source_lineage: dict[str, tuple[str, ...]] = {}
     source_parents: list[tuple[str, str]] = []
     memberships: dict[tuple[str, str], set[str]] = {}
@@ -222,12 +243,23 @@ def admit_formation_corpus(manifest_path: str | Path, *,
         split = row.get("split")
         if split not in (SPLITS - {"final"} if teacher_training else SPLITS):
             raise CognitiveKernelContractError("unsupported corpus split")
-        if teacher_training and (row.get("authorization_id") != authorization or
-                not isinstance(row.get("target_origin"), str) or
+        if teacher_training and (not isinstance(row.get("target_origin"), str) or
                 row["target_origin"] not in {
                     "owner-authorized-service-teacher",
                     "licensed-deterministic-generator"}):
-            raise CognitiveKernelContractError("teacher target lacks origin and owner authorization")
+            raise CognitiveKernelContractError("teacher target lacks supported origin")
+        case_rights_binding: tuple[str, str] | None = None
+        if teacher_training:
+            case_authorization = _identifier(row.get("authorization_id"), "case authorization_id")
+            if teacher_v2:
+                source_family = _identifier(row.get("source_family"), "source_family")
+                auth_key = (case_authorization, source_family)
+                case_rights_binding = authorizations.get(auth_key)
+                if case_rights_binding is None:
+                    raise CognitiveKernelContractError("teacher case has unregistered authorization")
+                used_authorizations.add(auth_key)
+            elif case_authorization != authorization:
+                raise CognitiveKernelContractError("teacher case differs from owner authorization")
         author = _identifier(row.get("author_id"), "author_id")
         groups: set[tuple[str, str]] = set()
         for field in ("host_family", "source_family", "generator_family",
@@ -283,8 +315,19 @@ def admit_formation_corpus(manifest_path: str | Path, *,
                                      ("host_family", row["host_family"])):
                     if rights.get(field) != value:
                         raise CognitiveKernelContractError("source rights receipt has wrong binding")
-                _identifier(rights.get("issuer_id"), "rights issuer_id")
-                _identifier(rights.get("authority_ref"), "rights authority_ref")
+                rights_issuer = _identifier(rights.get("issuer_id"), "rights issuer_id")
+                rights_authority = _identifier(rights.get("authority_ref"), "rights authority_ref")
+                if case_rights_binding is not None and (
+                        rights_authority, rights_issuer) != case_rights_binding:
+                    raise CognitiveKernelContractError(
+                        "source rights differ from case authorization binding")
+                if teacher_v2:
+                    source_binding = (case_authorization, rights_authority, rights_issuer)
+                    if (source_id in source_authorizations and
+                            source_authorizations[source_id] != source_binding):
+                        raise CognitiveKernelContractError(
+                            "source ID has conflicting case authorization")
+                    source_authorizations[source_id] = source_binding
                 if rights.get("revoked") is not False:
                     raise CognitiveKernelContractError("source authorization is revoked or unknown")
                 permitted = (rights.get("formation_training") is True and
@@ -359,6 +402,8 @@ def admit_formation_corpus(manifest_path: str | Path, *,
         admitted[split].append(AdmittedCase(
             case_id, split, tuple(source_payloads), PayloadRef(target_path, target_digest),
             tuple(rights_receipts)))
+    if teacher_v2 and used_authorizations != set(authorizations):
+        raise CognitiveKernelContractError("teacher corpus has unused authorization binding")
     # Group equivalence includes identities, raw and derivative sources,
     # duplication, scenarios, generator and explicit parent-case lineage.
     for case_id, groups in case_groups.items():
