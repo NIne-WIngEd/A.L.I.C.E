@@ -52,6 +52,8 @@ case "$MFM_REPO_ROOT" in
 esac
 SELF="$MFM_REPO_ROOT/scripts/mfm/magnolia_v16_teacher_cpu_preflight.sbatch"
 [[ -f "$SELF" ]] || { echo 'teacher CPU script missing from checkout' >&2; exit 2; }
+NAMESPACE_HELPER="$MFM_REPO_ROOT/scripts/mfm/enter_private_network_namespace.py"
+[[ -f "$NAMESPACE_HELPER" ]] || { echo 'namespace helper missing from checkout' >&2; exit 2; }
 
 if [[ "${1:-}" == --inside-namespace ]]; then
   : "${MFM_HOST_NETNS:?outer host namespace pin was not supplied}"
@@ -96,7 +98,7 @@ PY
 export -f p2_loopback_check
 
 if [[ "${1:-}" == --inside-namespace ]]; then
-  # This is a fresh unshare child. Verify the actual P2 process before any
+  # This is a fresh namespace child. Verify the actual P2 process before any
   # private manifest/source bytes are opened. The trainer repeats this guard.
   p2_loopback_check
 
@@ -205,21 +207,15 @@ PY
 fi
 
 [[ $# == 0 ]] || { echo 'unexpected job argument' >&2; exit 2; }
-command -v unshare >/dev/null || { echo 'unshare unavailable' >&2; exit 2; }
 "$UDOCKER" setup "$CONTAINER" >/dev/null
 
-# No data is opened by either capability check. Select the first supported
-# route, then execute the *entire* private flow once under that route. A data
-# or processor failure cannot trigger fallback to host networking.
-if unshare --help | grep -Fq -- '--map-current-user' && \
-   unshare --user --map-current-user --net -- bash -c \
-     'set -euo pipefail; p2_loopback_check'; then
-  NAMESPACE_ARGS=(--user --map-current-user --net)
-elif unshare --net -- bash -c \
+# No data is opened by the capability check. The helper maps the original
+# nonroot UID/GID before exec. A later failure never triggers host fallback.
+if ! bash -lc 'set -euo pipefail; module load python/3.11.5; exec python3 -I "$@"' \
+    mfm-host-python "$NAMESPACE_HELPER" -- /bin/bash -c \
     'set -euo pipefail; p2_loopback_check'; then
-  NAMESPACE_ARGS=(--net)
-else
   echo 'no supported loopback-only network namespace; private CPU pass blocked' >&2
   exit 3
 fi
-unshare "${NAMESPACE_ARGS[@]}" -- bash "$SELF" --inside-namespace
+bash -lc 'set -euo pipefail; module load python/3.11.5; exec python3 -I "$@"' \
+  mfm-host-python "$NAMESPACE_HELPER" -- /bin/bash "$SELF" --inside-namespace

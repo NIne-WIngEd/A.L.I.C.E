@@ -14,11 +14,18 @@ set -euo pipefail
 umask 077
 
 : "${SLURM_JOB_ID:?submit this probe with sbatch}"
+: "${MFM_REPO_ROOT:?export the absolute MFM checkout when submitting the probe}"
 COMPUTE_ROOT="$(realpath -e "${RAYAN_COMPUTE_ROOT:-$HOME/rayan-compute}")"
+MFM_REPO_ROOT="$(realpath -e "$MFM_REPO_ROOT")"
+case "$MFM_REPO_ROOT" in
+  "$COMPUTE_ROOT"/*) ;;
+  *) echo 'MFM checkout is outside compute root' >&2; exit 2 ;;
+esac
+NAMESPACE_HELPER="$MFM_REPO_ROOT/scripts/mfm/enter_private_network_namespace.py"
+[[ -f "$NAMESPACE_HELPER" ]] || { echo 'namespace helper missing' >&2; exit 2; }
 UDOCKER="$COMPUTE_ROOT/tools/udocker-1.3.17/udocker/udocker"
 CONTAINER="${MFM_CPU_CONTAINER:-rayan-n0-base}"
 [[ -x "$UDOCKER" ]] || { echo 'udocker unavailable' >&2; exit 2; }
-command -v unshare >/dev/null || { echo 'unshare unavailable' >&2; exit 2; }
 
 export UDOCKER_DIR="$COMPUTE_ROOT/udocker-store"
 export UDOCKER_TMP="$COMPUTE_ROOT/udocker-tmp"
@@ -32,6 +39,7 @@ mkdir -p "$UDOCKER_DIR" "$UDOCKER_TMP"
 echo "job=$SLURM_JOB_ID node=$(hostname) container=$CONTAINER"
 echo "host_netns=$(readlink /proc/self/ns/net)"
 echo "unshare_version=$(unshare --version)"
+echo "MFM=$(cd "$MFM_REPO_ROOT" && git rev-parse HEAD)"
 MFM_HOST_NETNS="$(readlink /proc/self/ns/net)"
 MFM_HOST_UID="$(id -u)"
 MFM_HOST_GID="$(id -g)"
@@ -39,10 +47,8 @@ MFM_HOST_GID="$(id -g)"
 echo "host_uid=$MFM_HOST_UID host_gid=$MFM_HOST_GID"
 export MFM_HOST_NETNS MFM_HOST_UID MFM_HOST_GID
 
-# Try rootless user+network namespaces first. Some installations allow a
-# direct network namespace instead. Both candidates must pass the *inner*
-# Python check after udocker P2 starts; merely succeeding at unshare is not
-# sufficient. No fallback runs a corpus with host networking.
+# The helper identity-maps this user before exec. The P2 container must also
+# pass the inner check; merely creating a namespace is not sufficient.
 probe_inner() {
   # udocker must be invoked as the original nonroot user. P2 may emulate
   # root *inside* its container, which is a different boundary.
@@ -71,18 +77,8 @@ PY
 }
 export -f probe_inner
 
-# The original --map-root-user route did enter a namespace on node005, but
-# udocker refused its UID 0. Map the caller to the same nonzero UID instead.
-if unshare --help | grep -Fq -- '--map-current-user'; then
-  if unshare --user --map-current-user --net -- bash -c \
-      'set -euo pipefail; probe_inner'; then
-    exit 0
-  fi
-else
-  echo 'this unshare lacks --map-current-user' >&2
-fi
-
-if unshare --net -- bash -c \
+if bash -lc 'set -euo pipefail; module load python/3.11.5; exec python3 -I "$@"' \
+    mfm-host-python "$NAMESPACE_HELPER" -- /bin/bash -c \
     'set -euo pipefail; probe_inner'; then
   exit 0
 fi

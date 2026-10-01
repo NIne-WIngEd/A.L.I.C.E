@@ -35,10 +35,12 @@ Run the separate [no-data namespace probe](MFM_MAGNOLIA_PRIVATE_CPU_NAMESPACE_PR
 first. Once it passes, set the required variables above from the frozen record
 and submit the teacher job, with logs outside Git:
 
-Job 576516 did not pass: udocker refused UID 0 under the old root mapping,
-and direct `--net` was denied. The revised teacher script uses the same UID
-mapping route as the revised no-data probe. It remains conditional on a fresh
-successful P2 probe and on an admitted, pinned full teacher manifest.
+Jobs 576516 and 576517 did not pass. The first reached udocker as UID 0; the
+second found that util-linux 2.23.2 lacks the same-user mapping option. The
+teacher script now shares the no-data probe's host Python namespace helper.
+It remains conditional on a fresh successful P2 probe and an admitted, pinned
+full teacher manifest. A successful namespace helper alone is insufficient:
+the actual P2 process must see only `lo` before any private manifest opens.
 
 ```bash
 MFM_LOGDIR="$HOME/rayan-compute/mfm/slurm"

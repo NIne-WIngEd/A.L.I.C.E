@@ -14,7 +14,7 @@ login node. Keep logs under the owner-controlled compute root:
 MFM_REPO_ROOT="$HOME/rayan-compute/mfm/alice-mfm-v16-412ae32a"
 MFM_LOGDIR="$HOME/rayan-compute/mfm/slurm"
 mkdir -p "$MFM_LOGDIR"
-JOBID="$(sbatch --parsable \
+JOBID="$(sbatch --parsable --export=ALL,MFM_REPO_ROOT="$MFM_REPO_ROOT" \
   --output="$MFM_LOGDIR/rayan-mfm-netns-probe-%j.out" \
   --error="$MFM_LOGDIR/rayan-mfm-netns-probe-%j.err" \
   "$MFM_REPO_ROOT/scripts/mfm/magnolia_private_network_namespace_probe.sbatch")"
@@ -31,24 +31,22 @@ cat "$MFM_LOGDIR/rayan-mfm-netns-probe-${JOBID}.err"
 ```
 
 `COMPLETED 0:0` counts only if `p2_interfaces=lo` appears and `p2_netns`
-differs from `host_netns`. The job tries rootless user-plus-network `unshare`
-and then direct network `unshare`; neither route uses private evidence. If
-both fail, exit 3 deliberately blocks the private teacher CPU pass on this
-runtime. Do not rerun the public 21-case job as a substitute. Keep the
-trainer's loopback-only guard in place. Test an administrator-approved isolated
-runtime separately if Magnolia denies namespace creation.
+differs from `host_netns`. The job uses a small host Python 3.11 helper to
+create user and network namespaces together, maps the owner's UID/GID to the
+same nonzero values before exec, and closes inherited file descriptors above
+standard streams. The actual P2 process must separately pass the loopback
+check. Any failure deliberately blocks the private teacher CPU pass. Do not
+rerun the public 21-case job as a substitute. Keep the trainer's loopback-only
+guard in place.
 
-Job 576516 failed with exit 3 in two seconds on node005. The first route,
-`--map-root-user`, reached udocker with UID 0 and udocker refused to run; the
-direct `--net` route returned `Operation not permitted`. It opened no private
-corpus and does **not** prove that user-plus-network namespaces are denied.
-The revised probe checks Magnolia's `unshare` version and support for
-`--map-current-user`, maps the caller's UID/GID to the same nonzero values,
-and verifies the P2 network namespace and interfaces. Some older `unshare`
-versions lack that flag. If it is absent or the P2 check fails, the job still
-exits 3; inspect its log before trying another runtime. Neither the failed
-job nor the revised code authorizes the private CPU pass. Use the revised
-teacher CPU script only after this no-data probe passes on Magnolia.
+Jobs 576516 and 576517 both failed with exit 3 on node005 without opening a
+private corpus. The former mapped the owner to UID 0, so udocker refused; the
+latter found util-linux 2.23.2, which lacks `--map-current-user`, and direct
+`--net` returned `Operation not permitted`. The new helper calls the Linux
+`unshare` syscall directly and writes a single same-UID map, `setgroups=deny`,
+and a same-GID map in the process before it executes bash. This route has not
+yet run on Magnolia; it may still be denied by site policy or fail P2 startup.
+Use the teacher CPU script only after this new no-data probe passes.
 
 After a passing capability probe, a separate private-corpus job must still
 pin its own branch head, source rights and target provenance, complete v1.6
