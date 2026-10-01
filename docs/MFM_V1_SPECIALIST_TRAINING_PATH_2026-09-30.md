@@ -26,8 +26,16 @@ block and left later source text unescaped; the trainer now escapes every text
 item and passes `do_sample_frames` through `processor_kwargs`. This changes
 the trainer SHA bound by a future preflight, so job 576509 is historical
 processor evidence and its receipt must not be reused for a fit on the
-corrected trainer. No admitted full-role corpus preflight, GPU probe, training,
-independent FINAL evaluation or product qualification has occurred.
+corrected trainer. Owner-provided Slurm accounting and stdout for job `576510`
+report `COMPLETED 0:0` in 2:35 on `node005.cluster`, at MFM
+`1a6148466b9a96b1e9841b2a4a3115968036a752` and the same pinned
+foundation. The corrected 21-case text processor pass reports preflight
+digest `35c4101e1c22fbe77ba957e4069f3e83c7384418bcd55f4ebf04e2a14ccdce53`,
+longest source 2,244 tokens and target 1,484 tokens. Its stderr contains only
+pip's root-in-container warning. The receipt JSON still needs a direct
+self-digest and exact-trainer binding check. No admitted full-role corpus
+preflight, GPU probe, training, independent FINAL evaluation or product
+qualification has occurred.
 
 ## Boundary
 
@@ -159,15 +167,17 @@ seeded-untrained control and independent FINAL. The public source-only
 diagnostic is optional for studying
 inherited defaults; no separate weight-cleaning program blocks training.
 
-## Magnolia public processor diagnostic after jobs 576486, 576508 and 576509
+## Magnolia public processor diagnostic through job 576510
 
 `scripts/mfm/magnolia_v16_public_cpu_preflight.sbatch` uses the existing
 `rayan-n0-base` CPU container because Magnolia's host Python/glibc is not the
 validated Transformers 5.17 runtime. Job 576508 proved that its early Gemma 4
 processor construction needs TorchVision as well as Pillow; it failed before
 clone rehash or a processor receipt. Job 576509 passed the text-only CPU
-processor path with both pinned wheels. The 21-case public authoring seed has 38
-text references and no media, but the processor imports its image module even
+processor path with both pinned wheels. Job 576510 repeated that diagnostic
+successfully at the corrected source-encoding trainer commit. The 21-case
+public authoring seed has 38 text references and no media, but the processor
+imports its image module even
 for text. Stage these two CPython 3.11 wheels on the Magnolia login node.
 Downloading wheels there does not install them into the host or the shared N0
 container:
