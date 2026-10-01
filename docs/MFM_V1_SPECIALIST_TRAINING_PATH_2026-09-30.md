@@ -147,18 +147,23 @@ seeded-untrained control and independent FINAL. The public source-only
 diagnostic is optional for studying
 inherited defaults; no separate weight-cleaning program blocks training.
 
-## Magnolia public processor diagnostic after job 576486
+## Magnolia public processor diagnostic after jobs 576486 and 576508
 
 `scripts/mfm/magnolia_v16_public_cpu_preflight.sbatch` uses the existing
 `rayan-n0-base` CPU container because Magnolia's host Python/glibc is not the
-validated Transformers 5.17 runtime. Stage the pinned CPython 3.11 Pillow
-wheel on the Magnolia login node; downloading a wheel there does not install
-it into the host or the shared N0 container:
+validated Transformers 5.17 runtime. Job 576508 proved that its early Gemma 4
+processor construction needs TorchVision as well as Pillow; it failed before
+clone rehash or a processor receipt. The 21-case public authoring seed has 38
+text references and no media, but the processor imports its image module even
+for text. Stage these two CPython 3.11 wheels on the Magnolia login node.
+Downloading wheels there does not install them into the host or the shared N0
+container:
 
 ```bash
 module load python/3.11.5
 COMPUTE_ROOT="$(realpath -e "$HOME/rayan-compute")"
 WHEEL_NAME=pillow-11.3.0-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+VISION_NAME='torchvision-0.22.1+cu118-cp311-cp311-manylinux_2_28_x86_64.whl'
 mkdir -p "$COMPUTE_ROOT/mfm/wheels"
 python3 -m pip download --no-deps --only-binary=:all: \
   --implementation cp --python-version 311 --abi cp311 \
@@ -166,13 +171,21 @@ python3 -m pip download --no-deps --only-binary=:all: \
   --dest "$COMPUTE_ROOT/mfm/wheels" 'pillow==11.3.0'
 printf '106064daa23a745510dabce1d84f29137a37224831d88eb4ce94bb187b1d7e5f  %s\n' \
   "$COMPUTE_ROOT/mfm/wheels/$WHEEL_NAME" | sha256sum -c -
+python3 -m pip download --no-deps --only-binary=:all: \
+  --implementation cp --python-version 311 --abi cp311 \
+  --platform manylinux_2_28_x86_64 \
+  --index-url https://download.pytorch.org/whl/cu118 \
+  --dest "$COMPUTE_ROOT/mfm/wheels" 'torchvision==0.22.1+cu118'
+printf '6dd3d825fb4a75eae887665d1da812a360d69273118bfa17616c836bfb466627  %s\n' \
+  "$COMPUTE_ROOT/mfm/wheels/$VISION_NAME" | sha256sum -c -
 module unload python/3.11.5
 ```
 
 Supply absolute `MFM_REPO_ROOT` and `MFM_FOUNDATION_ROOT` checkouts under
 `$HOME/rayan-compute` and submit from the login node with Slurm logs outside
-the repository. The job checks the exact 21-case authoring seed and wheel,
-installs Pillow offline into a new MFM-only directory for that Slurm job, and
+the repository. The job checks the exact 21-case authoring seed and both wheels,
+installs Pillow and the TorchVision build paired with the container's Torch
+2.7.1+cu118 offline into a new MFM-only directory for that Slurm job, and
 loads the local processor before rehashing the role clone. A processor import
 or load failure therefore stops before the 23.9 GB weight verification. A
 passing diagnostic writes a new job-specific receipt under
@@ -181,4 +194,6 @@ Gemma weight tensors. This is a **diagnostic** processor pass for 15 synthetic
 train and six same-generator development cases, not the complete signed 1.6
 corpus preflight required before a full fit. The complete pass must later bind
 the separately admitted full-role corpus, external trust roster and exact
-clone on the same isolated runtime path.
+clone on the same isolated runtime path. Media cases in that later corpus also
+need tested ffmpeg/ffprobe and decoder support; this text-only diagnostic does
+not certify those paths.
