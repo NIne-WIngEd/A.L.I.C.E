@@ -218,5 +218,204 @@
     "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_ROLE_EXPANSION_AND_CPU_GATE.jsonl",
     "namespace_probe_trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_NAMESPACE_PROBE_576516.jsonl"
   },
+  "source_family_teacher_corpus_assembly_20261001": {
+    "status": "SYNTHETIC_ONLY_TEACHER_CORPUS_ADMITTED_UNQUALIFIED_PUBLIC_MEETINGS_UNADMITTED",
+    "mfm_authoritative_branch": "research/mfm-v1-licensed-base-20260930",
+    "mfm_method_commit": "be3786415d028ea5953eb0e3d24c590142d9a8e2",
+    "mfm_method_tree": "c7d6f7c5dde376e715e917a51b279c4610822c91",
+    "source_family_candidates": [
+      {
+        "family": "AMI Meeting Corpus",
+        "scope": "Official Edinburgh manual-word annotations v1.6.2; 24 meetings in six four-stage scenarios, 72 bounded transcript windows and 26,556 selected word occurrences. No original audio/video was acquired in this source run.",
+        "authorization": "Review terms per file. CC BY 4.0 is stated for all signals/transcription and some annotations; do not infer permission for contributed or derived labels. Preserve upstream attribution and notices.",
+        "source_zip_sha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+        "source_windows_sha256": "f414869926088e241f694db00f20862609e6992933e8713fda4a1733f659311d",
+        "acquisition_status": "SOURCE_ONLY_HASH_PINNED_NOT_TARGET_ADMITTED",
+        "replay_method": "scripts/mfm/inventory_ami_meeting_sources.py",
+        "admitted": false
+      },
+      {
+        "family": "ICSI Meeting Corpus",
+        "scope": "Official Edinburgh core NXT orthographic annotations v1.0; 75 meeting IDs, 458 within-meeting as-of word windows, 870,650 timed words. Original audio and contributed annotations were not acquired.",
+        "authorization": "Pin Edinburgh-distributed CC BY 4.0 material; separately distributed LDC or contributed annotations require their own review.",
+        "source_zip_sha256": "cf4860245b9ca9c9ed11a66e5a74cfea2a99a686a52f7580aa0a6bc2225895a9",
+        "source_windows_sha256": "de15370f4a747f41818af568764630c8bf2f69e39ab9e1b2a8ba421a51fc0ebb",
+        "acquisition_status": "SOURCE_ONLY_HASH_PINNED_NOT_TARGET_ADMITTED",
+        "replay_method": "scripts/mfm/acquire_v16_icsi_source_windows.py",
+        "admitted": false
+      },
+      {
+        "family": "Synthea sample FHIR R4",
+        "scope": "Pinned sample repository and archive; simulated patient bundles are source-only observations",
+        "authorization": "Simulator terms alone do not settle the sample FHIR terminology or redistribution rights. All patients share one generator family unless independent origin is proven.",
+        "admitted": false
+      }
+    ],
+    "durable_public_source_custody": {
+      "owner_drive_folder_id": "1PRoNVljN1CV_6joU4HpRaMIKjwu9Yu4t",
+      "owner_drive_path": "A.L.I.C.E/MFM_public_source_custody",
+      "scope": "MFM source acquisition reports Drive read-back SHA verification for AMI official ZIP, inventory and 72 windows, plus ICSI official ZIP, acquisition receipt and four bounded excerpts. The full ICSI window JSONL is reproducible and hash-pinned below, but FBM does not assert that it was stored in Drive. FBM Git retains only locations, hashes and process lessons; it has not mounted raw Drive payloads.",
+      "ami_archive_sha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "ami_inventory_sha256": "c459b15898fa9f1fbaf51154ef15fbbf05e8a1ec736be4cc4aa0eda2d2c3eb3d",
+      "ami_windows_sha256": "f414869926088e241f694db00f20862609e6992933e8713fda4a1733f659311d",
+      "icsi_archive_sha256": "cf4860245b9ca9c9ed11a66e5a74cfea2a99a686a52f7580aa0a6bc2225895a9",
+      "icsi_source_windows_sha256": "de15370f4a747f41818af568764630c8bf2f69e39ab9e1b2a8ba421a51fc0ebb",
+      "icsi_bounded_excerpts_reported": 4,
+      "admission_status": "SOURCE_ONLY_RIGHTS_AND_TARGETS_PENDING"
+    },
+    "private_public_history_teacher_custody": {
+      "scope": "Owner-controlled Drive archives of source-grounded but unadmitted teaching candidates; no raw payload in FBM Git. Drive read-back SHA was reported by MFM source agents, not independently mounted by FBM.",
+      "ami": {
+        "drive_folder_id": "1WPNf9leFs6zhwd9LSxpAC1sSarizB49O",
+        "accepted_archive_file_id": "1QicJ3M3SJyUpJVxtFpsUNIM2CRDjok8W",
+        "accepted_archive_sha256_prefix": "a0c961fa",
+        "accepted_cases": 5,
+        "cross_stage_is1001bcd_revised_case_sha256_prefix": "2b658051",
+        "rejected_ts3004b_separate": true
+      },
+      "icsi": {
+        "drive_folder_id": "18sGkDm2rh3NUwg1pMR-V08NnccfkM-j0",
+        "accepted_archive_file_id": "1WOSCt7kcIQAMacWStaqaFYMJIlGvaVLg",
+        "accepted_archive_sha256_prefix": "c1343f",
+        "accepted_cases": 4,
+        "rejected_bed003_separate": true
+      },
+      "source_rights_receipts_issued": false,
+      "teacher_manifest_admitted": false
+    },
+    "ami_cross_stage_method": {
+      "local_integration_commit": "98fcc1a",
+      "remote_isolated_commit": "36aa7e",
+      "authoritative_mfm_commit": "be3786415d028ea5953eb0e3d24c590142d9a8e2",
+      "method": "scripts/mfm/prepare_v16_ami_longitudinal_teacher_case.py",
+      "contract": "docs/MFM_V16_AMI_CROSS_STAGE_TEACHER_2026-10-01.md",
+      "scope": "One same-team IS1001 history selects exact turns from pinned stage b, c and d windows. The model sees a derived header with meeting, stage, as-of stage, attributed speaker, relative seconds and original turn hash, followed by unaltered transcript text. The converter rejects mixed teams, reordered stages, future turns and modified original bytes.",
+      "target_scope": "A stage-d manager answer about voice being absent is a meeting-scoped answer, not proof of shipped product outcome. The unreviewed teacher candidate marks source_person and abstention present, outcome and correction negative.",
+      "provenance": "Preserve both wrapper converter bytes and the earlier single-window base converter SHA, plus original source windows, prompt, raw answer, target and their hashes.",
+      "status": "ONE_MULTI_STAGE_METHOD_AND_UNADMITTED_CANDIDATE_NOT_LONGITUDINAL_QUALIFICATION"
+    },
+    "candidate_materializers": {
+      "synthetic_train": {
+        "cases": 16,
+        "original_seed_cases": 15,
+        "separate_role_revocation_cases": 1,
+        "methods": ["scripts/mfm/materialize_v16_authoring_seed_train.py", "scripts/mfm/materialize_v16_role_revocation_train.py"],
+        "original_seed_generator_family": "assistant-authored-v16-seed-20260930",
+        "role_revocation_generator_family": "codex-fictional-role-chronicle-20261001",
+        "source_rights": "Exact source-bound drafts are deliberately unissued with null issuer, authority, permissions and revocation. Do not mechanically turn drafts into rights receipts.",
+        "shared_source_identity_rule": "When one source ID denotes identical original bytes in related cases, reuse one physical source path and rehash it for each case. The optimizer-path audit deduplicates that physical path before handoff.",
+        "counterfactual_repair": "The original v16-seed-03 later statement reused a source ID with different bytes. Preserve the original case and record a derived candidate mapping that later source to v16-seed-03-temperament-later in context evidence, target anchors, dispositions and source list; retain original and derived digests. Never silently force distinct bytes under one ID.",
+        "status": "POTENTIAL_TRAIN_CANDIDATES_RIGHTS_UNISSUED_UNADMITTED"
+      },
+      "deterministic_diagnostic_development": {
+        "cases": 9,
+        "histories": 2,
+        "method": "scripts/mfm/build_v16_development_history.py",
+        "source_windows_sha256": "4f963c19c4aebabcc04c12222322832425c9245f2d568c47071c42e8ac7e09be",
+        "target_candidates_sha256": "75a63c9df0a6380646c53ff911cd3833c282666b4a304fd1d40a1f9491bba54d",
+        "rights": "The per-source drafts are unissued. Generator output can be an exact deterministic target but its semantic correctness and independent origin are not established by this code path.",
+        "status": "DIAGNOSTIC_CANDIDATES_UNREVIEWED_RIGHTS_UNISSUED_UNADMITTED"
+      },
+      "assembly_method": "scripts/mfm/assemble_v16_owner_teacher_corpus.py",
+      "ready_manifest": true,
+      "lesson": "The source candidates and their unissued drafts were separately assembled into the chat-directed synthetic-only admitted manifest below after issuer-bound exact source receipts, provenance, role coverage and connected lineage passed. The original drafts remain unissued and should not be swapped for the issued receipts. Admission permits a diagnostic CPU pass, not an independent capability claim."
+    },
+    "synthetic_only_issued_teacher_corpus": {
+      "scope": "Only newly authored fictional histories under the owner's 2026-10-01 chat direction; AMI, ICSI, third-party corpora and real owner data excluded. The owner did not sign these receipts and targets have no independent reviewer certification.",
+      "issuer_id": "alice-agent-under-owner-direction",
+      "issuer_method": "owner-chat-direction",
+      "authoritative_mfm_commit": "be3786415d028ea5953eb0e3d24c590142d9a8e2",
+      "issuance_method": "scripts/mfm/issue_v16_synthetic_teacher_corpus.py",
+      "original_seed_materialization_receipt_sha256": "a0fef0217557cf9733fadc7289486ae674d56e3141b5b86752c90fa7199d581a",
+      "revocation_materialization_receipt_sha256": "4089c5aa50ee41a5f01e24c394313eb88014872b2b034e28b597f121a557cc48",
+      "development_bundle_index_sha256": "54e7d7dc2f126ca86a86801ab23467383b0c7ddcb13e94a6b7d43cc8414dc642",
+      "intake_sha256": "1ecc3fc4709db42fde700272caa811c59f2caaef60a6dddbd3207ba41f739538",
+      "manifest_sha256": "4e59403ee2205d5219eed09a1dfd712c87b4bbae09dc0435a2275aac18ca7573",
+      "issuance_receipt_sha256": "8396cc9d1c0dd7f1dfee18d830b48307aa1306de2ec58fc6bb5e2ce16e68e6b1",
+      "private_archive_sha256": "fd34cddc1c8b8958d00d5daf74f39b928e9fb2818ccaa4ee6294b928037f40a3",
+      "private_archive_drive_file_id": "1LmfUnGzbqFfen5LkEH2xAgQyOes-VmH7",
+      "archive_readback": "MFM assembler agent downloaded and independently rehashed complete owner Drive archive; FBM has not opened private payload bytes.",
+      "train_cases": 16,
+      "diagnostic_development_cases": 9,
+      "issued_source_bound_rights_receipts": 57,
+      "admission_status": "OWNER_AUTHORIZED_TEACHER_TRAINING_ONLY_UNQUALIFIED",
+      "assembly_role_coverage": "Passed exact local assembly, source-rights/provenance admission and v1.6 positive-role coverage; this is fictional single-author diagnostic content, not independent semantic gold.",
+      "supersedes": "Earlier v2 private archive; do not use it for Magnolia handoff.",
+      "next_gate": "Transfer and rehash the v3 archive and manifest in owner Magnolia custody, pin clean published MFM/foundation/base receipts, then repeat P2 isolation on the assigned CPU node before complete data/processor preflight.",
+      "protected_full_corpus_cpu_receipt": null,
+      "trained_weights": false,
+      "independent_qualification": false
+    },
+    "observed_public_source_authority_corrections": [
+      {
+        "rejected_case_id": "ami-ts3004b-audience-correction",
+        "rejected_case_sha256_prefix": "7213b7c",
+        "replacement_case_id": "ami-ts3004b-transcript-contradiction",
+        "replacement_case_sha256_prefix": "7a2dca2",
+        "lesson": "An attributed public speaker correction of meeting content is a contradiction in outside-source evidence, not an authorized request to correct Alice's memory. The replacement labels contradiction present and correction_request negative."
+      },
+      {
+        "rejected_case_id": "icsi-bed003",
+        "rejected_case_sha256_prefix": "f68df9d",
+        "replacement_case_id": "icsi-bed003-demo-input-instruction",
+        "replacement_case_sha256_prefix": "4870b814",
+        "lesson": "A hypothetical instruction about correcting demo input is attributed source-person evidence, not owner or assistant memory authority. The replacement uses source_person_evidence and correction_request negative."
+      }
+    ],
+    "multi_window_limit": "The AMI b/c/d wrapper now exposes one source-pinned, model-visible cross-stage history and checks original as-of ordering. The eight earlier public teacher cases use one window each. ICSI extraction supplies within-meeting deltas without established chronology across meeting IDs. One unadmitted AMI cross-stage example does not demonstrate learned multi-window continuity, repeated relationship changes, accepted memory or later judgment effects.",
+    "autonomous_replay": [
+      {
+        "id": "acquire_immutable_source",
+        "input": "Owner-selected or recommended original upstream source with exact release, URL, file list and expected digest when available",
+        "action": "Download to private custody; compute each file SHA-256 and size, preserve original bytes, terms, attribution and retrieval time in a source inventory. Regenerate as-of source-only windows without later meeting, patient or revision facts.",
+        "stop_if": "An original file, version, hash, attribution or chronological boundary is ambiguous. Never synthesize missing observations."
+      },
+      {
+        "id": "authenticate_source_scope",
+        "input": "Original file inventory and applicable terms plus owner/steward authority",
+        "action": "In parallel with public source-only teacher authoring, a responsible steward verifies actual permission for formation training and model distribution for train, or formation evaluation for diagnostic development; writes one mfm-source-rights-v1 receipt per exact source ID/hash/host, with issuer, authority reference and revoked=false. Keep the evidence and attribution in custody. The already owner-authorized CC BY public AMI/ICSI teacher snippets and raw responses preceded source-specific MFM receipt issuance; that authoring did not admit the cases to training.",
+        "stop_if": "If the steward cannot authenticate a permission assertion, source host binding, owner authority or revocation state, stop manifest admission, gradients and shared model distribution. Do not retroactively deny the public source-only teacher authoring that already occurred. Machine-valid JSON is not a legal or consent finding."
+      },
+      {
+        "id": "compose_bounded_longitudinal_teacher_view",
+        "input": "Permitted original source-only windows from a connected same-team history",
+        "action": "Select only turns visible by each stage cutoff; pin original XML word/member byte anchors and each selected source-window digest. The AMI cross-stage wrapper may combine b/c/d same-team windows in chronological order and render attributed, model-visible derived headers. Keep the earlier single-window converter and new wrapper converter hashes distinct in provenance. Source-only preparation and owner-authorized public teacher authoring can precede source-specific MFM rights receipts; neither confers corpus admission or training permission.",
+        "stop_if": "Windows mix unrelated teams, stages are reordered, any selected turn falls after its as-of cutoff, the original source bytes change, or a later stage is presented as an earlier observation. A meeting answer must remain scoped to that meeting rather than become a product outcome."
+      },
+      {
+        "id": "derive_and_record_teacher_target",
+        "input": "Owner-authorized public source-only as-of window or separately permitted private source, isolated teacher packet and v1.6 target contract",
+        "action": "Generate a complete grounded v1.6 target proposal, saving separate exact prompt/generator input, raw output, converter and target bytes and SHA-256s. Resolve narrow evidence spans against the original source; check all ten adjudications and the six extra positive constructs without inferring a negative from absence.",
+        "stop_if": "A proposed target cites future or absent bytes, confuses speaker/subject, turns a plan into an outcome, promotes public speaker talk or hypothetical demo instructions to owner memory authority, cannot express uncertainty, or reuses a prior label as original source."
+      },
+      {
+        "id": "freeze_connected_split_manifest",
+        "input": "Complete candidate cases, rights receipts, exact source/target provenance and owner authorization",
+        "action": "Assign entire connected host/source/generator/scenario/duplicate/parent components to train or diagnostic development. Use independent upstream source and actual teacher/generator origin families for the two opened splits; retain same source ID only for identical bytes and assign distinct IDs to altered bytes. Freeze mfm-v16-owner-teacher-corpus-v1, externally record its file SHA-256 and count, then run exact admission and optimizer-path audit.",
+        "stop_if": "Any connected component crosses splits, including one service teacher under renamed generator IDs; a source or provenance file changes; a rights receipt is missing or unauthenticated; or either split lacks a full-role positive. Repacking a manifest does not cure lineage or rights."
+      },
+      {
+        "id": "run_private_full_corpus_cpu",
+        "input": "Admitted manifest and independently pinned SHA, authorization ID, clean exact MFM and foundation commits, verified MFM role clone receipt, pinned runtime wheels and prepared fresh output path",
+        "action": "First recheck no-data P2 loopback-only capability on the allocated Magnolia node. Submit the separate teacher CPU job, which repeats P2 isolation before opening private bytes, runs data-preflight and processes every train/development case. Audit accounting, original logs, output receipt and exact code/corpus/base hashes.",
+        "stop_if": "Namespace or privacy gate fails, a source/provenance byte differs, a processor dependency or decoder is absent, source/target length exceeds budget, or the receipt lacks complete exact-corpus coverage. No less private fallback or paid GPU purchase follows automatically."
+      }
+    ],
+    "qualification_boundary": "A CPU success is a processor/data receipt only. A measured full backward/restart probe and teacher fit are later unqualified training steps. Independent blind development and sealed FINAL, matched controls and accepted memory changing later judgment are separate capability requirements. Owner-local consumer adaptation needs its own private rights contract and must not inherit shared distribution rights rules.",
+    "current_observations": {
+      "synthetic_only_v16_teacher_manifest_admitted": true,
+      "synthetic_source_bound_rights_issued": true,
+      "declared_train_development_lineage_gate_passed": true,
+      "independent_development_gold": false,
+      "public_meeting_training_rights_issued": false,
+      "full_corpus_cpu_receipt": null,
+      "trained_mfm": false,
+      "private_payload_in_fbm_git": false
+    },
+    "candidate_replay_trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_SOURCE_CANDIDATES_AND_AUTHORITY_FIX.jsonl",
+    "cross_stage_teacher_trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_AMI_CROSS_STAGE_CUSTODY.jsonl",
+    "synthetic_issuance_trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_SYNTHETIC_TEACHER_CORPUS_ISSUED.jsonl",
+    "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_CORPUS_REPLAY_GATE.jsonl"
+  },
   "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_TEACHER_LANE_AND_EXACT_SLICES.jsonl"
 }
