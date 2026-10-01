@@ -168,7 +168,8 @@
       "Keep a counterfactual's connected ancestry in one split and give different immutable source bytes distinct source IDs; validate claim-level temporal entailment, not merely valid byte offsets.",
       "Before a paid fit, assemble actual rights-authenticated, lineage-separated full-role train and diagnostic-development with source/target provenance; demand positives for the six omitted constructs, then run the exact full-corpus processor in loopback-only custody.",
       "Do not interpret a passed 21-case public CPU diagnostic, a no-data namespace probe, twelve fictional candidates or source inventory as trained memory behavior. Independent FINAL and later gate/retrieval/judgment effects are separate requirements.",
-      "For Magnolia P2 isolation, invoke udocker from the same nonzero UID/GID inside a new user-plus-network namespace. Test the actual P2 interfaces and netns inode in a no-data job. Do not treat a changed namespace alone as isolation, use --map-root-user to invoke udocker, or open private source after a failed probe. Check compute-node unshare option support before assuming --map-current-user exists."
+      "For Magnolia P2 isolation, invoke udocker from the same nonzero UID/GID inside a new user-plus-network namespace. Test the actual P2 interfaces and netns inode in a no-data job. Do not treat a changed namespace alone as isolation, use --map-root-user to invoke udocker, or open private source after a failed probe. Check compute-node unshare option support before assuming --map-current-user exists.",
+      "For util-linux 2.23.2, create user and network namespaces together in one nonroot host process, write a one-line same-UID map, deny setgroups, then write a one-line same-GID map before exec. Verify the mappings and loopback-only network, close inherited descriptors above standard streams, and recheck the actual P2 process. A separate no-data Magnolia result is mandatory before corpus access."
     ],
     "cpu_full_corpus_receipt": null,
     "magnolia_namespace_probe_result": {
@@ -181,6 +182,19 @@
       "revised_mfm_commit": "721b95bf35ac9b210340bfd1ac0f52d86e2573af",
       "revised_mfm_tree": "6424de689295bd22f48d7ae5575967fe025dcbd3",
       "next_gate": "Run revised no-data same-UID P2 probe on Magnolia; --map-current-user support and actual P2 network result remain unverified"
+    },
+    "magnolia_legacy_identity_namespace_revision_20261001": {
+      "owner_reported_probe_job": 576517,
+      "state": "FAILED 3:0 on node005.cluster in 00:00:03",
+      "observed_unshare_version": "util-linux 2.23.2",
+      "cause": "--map-current-user option absent; direct --net returned Operation not permitted",
+      "private_corpus_opened": false,
+      "p2_isolation_proven": false,
+      "revised_mfm_commit": "6bddc31e724edee6485ad9306148dd0a390b8858",
+      "revised_mfm_tree": "6e882652e92625913be953200ac74c7bc9fb4fa8",
+      "helper": "scripts/mfm/enter_private_network_namespace.py",
+      "next_gate": "Run the new no-data P2 probe on Magnolia; local mocked tests and shell syntax do not establish host-kernel/P2 support",
+      "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_LEGACY_NAMESPACE_576517.jsonl"
     },
     "trained_weights": false,
     "evaluation_eligible": false,
