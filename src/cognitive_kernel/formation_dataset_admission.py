@@ -309,6 +309,11 @@ def admit_formation_corpus(manifest_path: str | Path, *,
                     _identifier(provenance.get("producer_id"), "producer_id") != author:
                 raise CognitiveKernelContractError("teacher target producer differs from author")
             _identifier(provenance.get("producer_version"), "producer_version")
+            if row["target_origin"] == "owner-authorized-service-teacher":
+                # Do not let differently named generator families place one
+                # service teacher's output on both sides of diagnostic split.
+                # Steward authentication is still required for an asserted ID.
+                groups.add(("service_teacher_producer_id", author))
             for field in ("input", "output", "conversion"):
                 _checked_bytes(root, _object(provenance[field], field),
                                f"target provenance {field}", open_payload=True)

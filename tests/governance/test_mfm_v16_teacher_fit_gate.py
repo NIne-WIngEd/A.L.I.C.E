@@ -171,7 +171,7 @@ class TeacherFitGateTests(unittest.TestCase):
             (root / prompt_path).write_bytes(f"fictional prompt {split}".encode())
             (root / response_path).write_bytes(f"fictional response {split}".encode())
             cases.append({"case_id": row["case_id"], "split": split,
-                          "author_id": "test-teacher", "host_family": host,
+                          "author_id": f"test-teacher-{split}", "host_family": host,
                           "source_family": f"unit-{split}",
                           "generator_family": f"unit-{split}-generator",
                           "scenario_family": f"unit-{split}-scenario",
@@ -179,7 +179,7 @@ class TeacherFitGateTests(unittest.TestCase):
                           "parent_case_ids": [], "authorization_id": "unit-owner-teacher",
                           "target_origin": "owner-authorized-service-teacher",
                           "target_provenance": {
-                              "producer_id": "test-teacher", "producer_version": "unit-v1",
+                              "producer_id": f"test-teacher-{split}", "producer_version": "unit-v1",
                               "input": {"path": prompt_path, "sha256": sha256(
                                   (root / prompt_path).read_bytes()).hexdigest()},
                               "output": {"path": response_path, "sha256": sha256(
@@ -218,6 +218,20 @@ class TeacherFitGateTests(unittest.TestCase):
             self.assertNotIn("train/response.txt", gradient_paths)
             self.assertNotIn("unit-converter.py", gradient_paths)
             manifest["cases"][1]["generator_family"] = manifest["cases"][0]["generator_family"]
+            digest = _write(path, manifest)
+            with self.assertRaisesRegex(CognitiveKernelContractError, "lineage leaks"):
+                admit_formation_corpus(path, expected_sha256=digest,
+                                       teacher_training=True,
+                                       owner_authorization_ref="unit-owner-teacher")
+
+    def test_service_teacher_producer_cannot_cross_splits_by_renaming_family(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path, manifest, _ = self._fixture(root)
+            train, development = manifest["cases"]
+            development["author_id"] = train["author_id"]
+            development["target_provenance"]["producer_id"] = train["author_id"]
+            self.assertNotEqual(development["generator_family"], train["generator_family"])
             digest = _write(path, manifest)
             with self.assertRaisesRegex(CognitiveKernelContractError, "lineage leaks"):
                 admit_formation_corpus(path, expected_sha256=digest,

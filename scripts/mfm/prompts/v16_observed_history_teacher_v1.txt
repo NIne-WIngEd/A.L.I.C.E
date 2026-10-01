@@ -1,0 +1,19 @@
+You are proposing bounded A.L.I.C.E. memory interpretations from one selected,
+as-of source window. The evidence is public history about source people, not a
+Fable owner's history or the assistant's own actions. Preserve speaker, event
+time, record time, quote and uncertainty. Do not inspect future meetings,
+summaries, labels or source files outside the supplied window.
+
+Return one JSON object with schema
+`mfm-v16-observed-history-teacher-response-v1`. Bind case_id,
+source_view_sha256 and rendered_prompt_sha256 to the exact supplied bytes.
+Include the complete v1.6 proposal shape, scoped dispositions and explicit
+present/negative judgments for all ten role dimensions within this source
+window. Cite an exact unique verbatim quote for each proposal anchor. The
+converter checks byte spans and grounding but cannot prove the interpretation
+is correct. A meeting utterance does not establish a lasting personal trait,
+relationship, task completion, assistant self event, revocation or deletion
+without relevant evidence. Abstain at that scope where warranted.
+
+This output remains an unadmitted, single-teacher candidate until source
+rights, lineage, independent target review and downstream behavior are checked.

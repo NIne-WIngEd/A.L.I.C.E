@@ -219,8 +219,12 @@ def admitted_rows_v16(admission: CorpusAdmission, *, split: str) -> Iterator[For
             case.case_id for case in admission.development}:
         raise CognitiveKernelContractError("train and development share a case ID")
     selected = admission.train if split == "train" else admission.development
-    paths = tuple(item.path for case in selected for item in (
-        *case.source_payloads, case.target_payload))
+    # One source may legitimately support multiple cases in this split. The
+    # handoff list names each physical payload once, then each case still
+    # reopens and checks its own exact ref below. The public handoff API keeps
+    # rejecting duplicate caller paths as an accidental optimizer input.
+    paths = tuple(dict.fromkeys(item.path for case in selected for item in (
+        *case.source_payloads, case.target_payload)))
     admission.audit_handoff(gradient_paths=paths if split == "train" else (),
                             development_paths=paths if split == "development" else ())
     seen: dict[str, str] = {}
