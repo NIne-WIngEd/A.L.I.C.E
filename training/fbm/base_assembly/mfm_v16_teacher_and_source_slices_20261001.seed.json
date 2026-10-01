@@ -167,13 +167,25 @@
       "For corrections and deletions, cite the owner's exact request and named target; a registry tombstone may replace withdrawn content but must not be promoted to owner speech or silently reopened.",
       "Keep a counterfactual's connected ancestry in one split and give different immutable source bytes distinct source IDs; validate claim-level temporal entailment, not merely valid byte offsets.",
       "Before a paid fit, assemble actual rights-authenticated, lineage-separated full-role train and diagnostic-development with source/target provenance; demand positives for the six omitted constructs, then run the exact full-corpus processor in loopback-only custody.",
-      "Do not interpret a passed 21-case public CPU diagnostic, a no-data namespace probe, twelve fictional candidates or source inventory as trained memory behavior. Independent FINAL and later gate/retrieval/judgment effects are separate requirements."
+      "Do not interpret a passed 21-case public CPU diagnostic, a no-data namespace probe, twelve fictional candidates or source inventory as trained memory behavior. Independent FINAL and later gate/retrieval/judgment effects are separate requirements.",
+      "For Magnolia P2 isolation, invoke udocker from the same nonzero UID/GID inside a new user-plus-network namespace. Test the actual P2 interfaces and netns inode in a no-data job. Do not treat a changed namespace alone as isolation, use --map-root-user to invoke udocker, or open private source after a failed probe. Check compute-node unshare option support before assuming --map-current-user exists."
     ],
     "cpu_full_corpus_receipt": null,
-    "magnolia_namespace_probe_result": null,
+    "magnolia_namespace_probe_result": {
+      "job_id": 576516,
+      "evidence": "owner-pasted sacct/stdout/stderr; original Magnolia files not independently fetched",
+      "state": "FAILED 3:0 on node005.cluster in 00:00:02",
+      "cause": "--map-root-user reached udocker as UID 0 and was refused; direct --net returned Operation not permitted",
+      "private_corpus_opened": false,
+      "p2_isolation_proven": false,
+      "revised_mfm_commit": "721b95bf35ac9b210340bfd1ac0f52d86e2573af",
+      "revised_mfm_tree": "6424de689295bd22f48d7ae5575967fe025dcbd3",
+      "next_gate": "Run revised no-data same-UID P2 probe on Magnolia; --map-current-user support and actual P2 network result remain unverified"
+    },
     "trained_weights": false,
     "evaluation_eligible": false,
-    "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_ROLE_EXPANSION_AND_CPU_GATE.jsonl"
+    "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_ROLE_EXPANSION_AND_CPU_GATE.jsonl",
+    "namespace_probe_trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_NAMESPACE_PROBE_576516.jsonl"
   },
   "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_TEACHER_LANE_AND_EXACT_SLICES.jsonl"
 }
