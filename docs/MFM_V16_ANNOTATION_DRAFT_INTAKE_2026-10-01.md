@@ -53,8 +53,34 @@ and `mfm-formation-corpus-v1`. It has no target or split field and is not an
 input to `train_v16_formation_specialist.py`. The trainer continues to refuse
 a full fit without signed admitted data and an external trust roster.
 
+`scripts/mfm/audit_v16_candidate_lineage.py` can replay the pinned packet and
+draft bytes against the original inventory and source files, then group
+declared generator, host, lineage-group, upstream-code-commit, source-ID and
+whole-source-file ancestries. It reports whether the **declared** graph has
+fewer than three components, which blocks a train/development/FINAL split.
+The present 1,920 drafts have one generator family, so all rows connect even
+though they contain 480 different hosts. The audit assigns no partition,
+proves no independent provenance, and creates no gold, rights receipt or
+sealed FINAL payload. A future count of three components would only remove
+one necessary blocker; a steward must establish actual source ancestry,
+near-duplicate separation, rights and independent adjudication.
+
+After the source packet and draft hashes are pinned in owner custody, run:
+
+```bash
+PYTHONPATH=src:. python scripts/mfm/audit_v16_candidate_lineage.py \
+  --drafts ../mfm-review-private/annotation-drafts.jsonl \
+  --drafts-sha256 "$DRAFT_SHA256" \
+  --packets ../mfm-review-private/source-review.jsonl \
+  --packets-sha256 "$PACKET_SHA256" \
+  --dataset-dir ../mfm-multisource-new-seed \
+  --inventory ../mfm-multisource-new-seed/mfm_source_inventory.json \
+  --inventory-sha256 a5fcd53f84e049f84a2aaf0e1902da17a2d9d8fd4eec85deccb4bf8902c4d362
+```
+
 Focused check:
 
 ```bash
 PYTHONPATH=src:. python -m unittest tests/governance/test_mfm_v16_annotation_draft_intake.py -v
+PYTHONPATH=src:. python -m unittest tests/governance/test_mfm_v16_candidate_lineage_audit.py -v
 ```

@@ -139,6 +139,14 @@ def verify_artifacts(component_dir: Path, prepared_base_dir: Path,
           type(component.get("optimizer_steps")) is not int or
           component["optimizer_steps"] != 1):
         raise CognitiveKernelContractError("v1.6 one-step probe lineage differs")
+    placement = run.get("device_placement")
+    if (not isinstance(placement, dict) or
+            set(placement) != {"base", "specialist", "strategy"} or
+            component.get("device_placement") != placement or
+            training._device_plan(SimpleNamespace(
+                base_device=placement["base"],
+                specialist_device=placement["specialist"])) != placement):
+        raise CognitiveKernelContractError("v1.6 training role placement lineage differs")
     trained_path = component_dir / "formation-specialist.safetensors"
     if training.shared._digest(trained_path) != component.get("formation_component_sha256"):
         raise CognitiveKernelContractError("v1.6 specialist weight bytes differ")
@@ -203,20 +211,22 @@ def read_input(row: dict):
 def generate_case(*, processor, base, specialist, context, opened_sources,
                   case_id: str, component_sha256: str, inference_run_id: str,
                   max_source_tokens: int, max_new_tokens: int,
-                  full_fit: bool = False) -> dict:
+                  full_fit: bool = False, base_device=None) -> dict:
     import torch
 
     source = training.source_batch_v16(
         processor, context, opened_sources, max_source_tokens, case_id=case_id)
-    device = next(specialist.parameters()).device
-    payload = {name: value.to(device) for name, value in source.items()}
+    specialist_device = next(specialist.parameters()).device
+    if base_device is None:
+        base_device = specialist_device
+    payload = {name: value.to(base_device) for name, value in source.items()}
     with torch.inference_mode():
         states = base.model(**payload, use_cache=False,
                             return_dict=True).last_hidden_state
-    if states.shape[:2] != payload["attention_mask"].shape:
-        raise CognitiveKernelContractError("v1.6 prepared states do not align to source")
+    states, source_mask = training._specialist_sources(
+        states, payload["attention_mask"], specialist_device)
     token_ids, ended = shared_inference.greedy_tokens(
-        specialist, base_states=states, source_mask=payload["attention_mask"],
+        specialist, base_states=states, source_mask=source_mask,
         max_new_tokens=max_new_tokens)
     raw = processor.tokenizer.decode(token_ids, skip_special_tokens=False)
     result = {"output_text": raw, "raw_output_text": raw,
@@ -240,6 +250,10 @@ def generate_case(*, processor, base, specialist, context, opened_sources,
 
 
 def run(args: argparse.Namespace) -> None:
+    if (getattr(args, "base_device", None) is None) != (
+            getattr(args, "specialist_device", None) is None):
+        raise CognitiveKernelContractError(
+            "v1.6 role split needs both explicit base and specialist devices")
     os.environ.update({"HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1",
                        "HF_DATASETS_OFFLINE": "1", "HF_HUB_DISABLE_TELEMETRY": "1",
                        "DO_NOT_TRACK": "1", "WANDB_DISABLED": "true"})
@@ -279,16 +293,29 @@ def run(args: argparse.Namespace) -> None:
             processor.tokenizer.eos_token_id != config.end_token_id or
             processor.tokenizer.pad_token_id != config.pad_token_id):
         raise CognitiveKernelContractError("v1.6 processor tokenizer differs")
-    device = torch.device(args.device)
-    dtype = torch.bfloat16 if device.type == "cuda" else torch.float32
-    base = AutoModelForMultimodalLM.from_pretrained(
-        prepared["snapshot_path"], trust_remote_code=False,
-        local_files_only=True, use_safetensors=True, dtype=dtype)
+    base_name = getattr(args, "base_device", None) or args.device
+    specialist_name = getattr(args, "specialist_device", None) or args.device
+    base_device = torch.device(base_name)
+    specialist_device = torch.device(specialist_name)
+    if base_device != specialist_device:
+        training._device_plan(SimpleNamespace(base_device=base_name,
+                                              specialist_device=specialist_name),
+                              cuda_devices=torch.cuda.device_count())
+    dtype = torch.bfloat16 if base_device.type == "cuda" else torch.float32
+    base_kwargs = dict(trust_remote_code=False, local_files_only=True,
+                       use_safetensors=True, dtype=dtype)
+    if base_device != specialist_device:
+        base_kwargs.update(device_map={"": str(base_device)}, low_cpu_mem_usage=True)
+    base = AutoModelForMultimodalLM.from_pretrained(prepared["snapshot_path"], **base_kwargs)
     if getattr(base.config, "model_type", None) != "gemma4_unified" or \
             config.base_hidden_size != base.config.text_config.hidden_size:
         raise CognitiveKernelContractError("v1.6 prepared base geometry differs")
-    base.to(device).requires_grad_(False).eval()
-    specialist = FormationSpecialist(config).to(device)
+    if base_device == specialist_device:
+        base.to(base_device)
+    elif any(parameter.device != base_device for parameter in base.parameters()):
+        raise CognitiveKernelContractError("v1.6 inference base was offloaded or mis-placed")
+    base.requires_grad_(False).eval()
+    specialist = FormationSpecialist(config).to(specialist_device)
     specialist.load_state_dict(load_file(str(weight_path)), strict=True)
     specialist.eval()
     if args.output_jsonl.exists() or args.output_jsonl.resolve() == args.input_jsonl.resolve():
@@ -316,7 +343,8 @@ def run(args: argparse.Namespace) -> None:
                     inference_run_id=f"{args.inference_run_id}-{number}",
                     max_source_tokens=preflight["max_source_tokens"],
                     max_new_tokens=args.max_new_tokens,
-                    full_fit=component.get("full_fit", False))
+                    full_fit=component.get("full_fit", False),
+                    base_device=base_device)
                 row = {
                     "case_id": case_id,
                     "status": ("fit_generated" if component.get("full_fit", False)
@@ -348,6 +376,8 @@ def run(args: argparse.Namespace) -> None:
                     "generation": {"do_sample": False,
                                    "max_new_tokens": args.max_new_tokens,
                                    "decoder": "v1.6-specialist-greedy-bos-eos"},
+                    "inference_placement": {"base": str(base_device),
+                                             "specialist": str(specialist_device)},
                     "inference_runner_sha256": training.shared._digest(Path(__file__)),
                     **generated,
                 }
@@ -373,6 +403,9 @@ def main() -> None:
     parser.add_argument("--inference-run-id", required=True)
     parser.add_argument("--max-new-tokens", type=int, default=8192)
     parser.add_argument("--device", default="cuda:0")
+    parser.add_argument("--base-device", help="base CUDA device in an explicit role split")
+    parser.add_argument("--specialist-device",
+                        help="specialist CUDA device in an explicit role split")
     run(parser.parse_args())
 
 

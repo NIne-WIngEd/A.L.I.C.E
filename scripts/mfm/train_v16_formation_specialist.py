@@ -20,7 +20,9 @@ import json
 import os
 from pathlib import Path
 import random
+import re
 import sys
+from time import perf_counter
 from uuid import uuid4
 
 from cognitive_kernel.canonical import (
@@ -350,6 +352,38 @@ def _verify_seed_control(output_dir: Path, run_digest: str, config):
     return receipt
 
 
+def _device_plan(args, *, cuda_devices: int | None = None) -> dict[str, str]:
+    """Bind explicit CUDA role placement; never silently select another GPU."""
+    base = getattr(args, "base_device", "cuda:0")
+    specialist = getattr(args, "specialist_device", "cuda:0")
+    for name, value in (("base", base), ("specialist", specialist)):
+        if not isinstance(value, str) or re.fullmatch(r"cuda:(0|[1-9][0-9]*)", value) is None:
+            raise CognitiveKernelContractError(f"v1.6 {name} device needs an explicit CUDA ordinal")
+        if cuda_devices is not None and int(value.split(":", 1)[1]) >= cuda_devices:
+            raise CognitiveKernelContractError(f"v1.6 {name} GPU is unavailable")
+    return {"base": base, "specialist": specialist,
+            "strategy": ("frozen-base-role-split" if base != specialist else "single-gpu")}
+
+
+def _specialist_sources(states, source_mask, device):
+    """Move detached frozen representations, not the base's computation graph."""
+    if states.shape[:2] != source_mask.shape:
+        raise CognitiveKernelContractError("prepared states do not align to source")
+    return states.detach().to(device), source_mask.to(device)
+
+
+def _probe_hardware(torch, devices, *, model_load_seconds: float,
+                    optimizer_step_seconds: float) -> dict:
+    """Observed CUDA peaks since the stress step began, not a capacity estimate."""
+    return {"model_load_seconds": model_load_seconds,
+            "optimizer_step_seconds": optimizer_step_seconds,
+            "devices": {name: {
+                "peak_allocated_bytes": torch.cuda.max_memory_allocated(name),
+                "peak_reserved_bytes": torch.cuda.max_memory_reserved(name),
+                "total_bytes": torch.cuda.get_device_properties(name).total_memory,
+            } for name in devices}}
+
+
 def _checkpoint(output_dir: Path, *, specialist, optimizer, run_digest: str,
                 epoch: int, next_case: int, step: int):
     import torch
@@ -432,6 +466,7 @@ def _run_manifest_v16(args, prepared, preflight, config, torch_version: str) -> 
         "learning_rate": args.learning_rate,
         "gradient_accumulation": args.gradient_accumulation, "seed": args.seed,
         "max_cross_attention_pairs": args.max_cross_attention_pairs,
+        "device_placement": _device_plan(args),
         "torch_version": torch_version,
         "transformers_version": preflight["transformers_version"],
         "probe_only": args.probe_only, "qualified_for_product": False,
@@ -450,21 +485,38 @@ def _run_training(args, train, development, status, prepared, processor, preflig
                             len(train) < args.gradient_accumulation):
         raise CognitiveKernelContractError(
             "probe needs stress examples in one full accumulation step")
-    if not torch.cuda.is_available() or not torch.cuda.is_bf16_supported():
+    if not torch.cuda.is_available():
         raise CognitiveKernelContractError("v1.6 specialist training requires BF16 CUDA")
+    placement = _device_plan(args, cuda_devices=torch.cuda.device_count())
+    for name in {placement["base"], placement["specialist"]}:
+        with torch.cuda.device(name):
+            if not torch.cuda.is_bf16_supported():
+                raise CognitiveKernelContractError(f"v1.6 {name} lacks BF16 CUDA")
     if args.max_cross_attention_pairs is None or \
             preflight["peak_train_attention_pairs"] > args.max_cross_attention_pairs:
         raise CognitiveKernelContractError("v1.6 probe exceeds declared cross-attention cap")
-    device = torch.device("cuda:0")
+    base_device = torch.device(placement["base"])
+    specialist_device = torch.device(placement["specialist"])
+    devices = tuple(sorted({placement["base"], placement["specialist"]}))
     torch.manual_seed(args.seed)
     torch.cuda.manual_seed_all(args.seed)
+    load_start = perf_counter()
+    base_kwargs = dict(trust_remote_code=False, local_files_only=True,
+                       use_safetensors=True, dtype=torch.bfloat16)
+    if placement["strategy"] == "frozen-base-role-split":
+        # Stream the frozen base directly onto its assigned GPU. The specialist
+        # and optimizer are constructed separately on the other GPU below.
+        base_kwargs.update(device_map={"": placement["base"]}, low_cpu_mem_usage=True)
     base = AutoModelForMultimodalLM.from_pretrained(
-        prepared["snapshot_path"], trust_remote_code=False, local_files_only=True,
-        use_safetensors=True, dtype=torch.bfloat16)
+        prepared["snapshot_path"], **base_kwargs)
     if getattr(base.config, "model_type", None) != "gemma4_unified" or \
             not hasattr(base, "model"):
         raise CognitiveKernelContractError("prepared base has no Gemma 4 representation path")
-    base.to(device).requires_grad_(False).eval()
+    if placement["strategy"] == "single-gpu":
+        base.to(base_device)
+    elif any(parameter.device != base_device for parameter in base.parameters()):
+        raise CognitiveKernelContractError("v1.6 frozen base was offloaded or mis-placed")
+    base.requires_grad_(False).eval()
     config = SpecialistConfig(
         base_hidden_size=base.config.text_config.hidden_size,
         vocabulary_size=len(processor.tokenizer), width=args.specialist_width,
@@ -474,8 +526,11 @@ def _run_training(args, train, development, status, prepared, processor, preflig
         start_token_id=processor.tokenizer.bos_token_id,
         end_token_id=processor.tokenizer.eos_token_id,
         logit_chunk_tokens=args.logit_chunk_tokens)
-    specialist = FormationSpecialist(config).to(device)
+    specialist = FormationSpecialist(config).to(specialist_device)
     optimizer = torch.optim.AdamW(specialist.parameters(), lr=args.learning_rate)
+    for name in devices:
+        torch.cuda.synchronize(name)
+    model_load_seconds = perf_counter() - load_start
     run = _run_manifest_v16(args, prepared, preflight, config, torch.__version__)
     digest = shared._record_hash(run)
     if args.resume_checkpoint:
@@ -494,6 +549,7 @@ def _run_training(args, train, development, status, prepared, processor, preflig
         _seed_control(args.output_dir, specialist, digest, config)
         start_epoch = start_case = steps = 0
     losses = []
+    probe_hardware = None
     for epoch in range(start_epoch, args.epochs):
         order = list(range(len(train)))
         random.Random(args.seed + epoch).shuffle(order)
@@ -506,22 +562,27 @@ def _run_training(args, train, development, status, prepared, processor, preflig
             order = order[start_case:]
         optimizer.zero_grad(set_to_none=True)
         pending = 0
+        if args.probe_only:
+            for name in devices:
+                torch.cuda.synchronize(name)
+                torch.cuda.reset_peak_memory_stats(name)
+            step_start = perf_counter()
         for index, case_index in enumerate(order):
             example = train[case_index]
             encoded = source_batch_v16(processor, example.context, example.opened_sources,
                                        args.max_source_tokens, case_id=example.case_id)
             inputs, labels = _target_ids(processor.tokenizer, example, args.max_target_tokens)
-            payload = {key: value.to(device) for key, value in encoded.items()}
+            payload = {key: value.to(base_device) for key, value in encoded.items()}
             with torch.no_grad():
                 states = base.model(**payload, use_cache=False,
                                     return_dict=True).last_hidden_state
-            if states.shape[:2] != payload["attention_mask"].shape:
-                raise CognitiveKernelContractError("prepared states do not align to source")
-            ids = torch.tensor([inputs], device=device)
-            target = torch.tensor([labels], device=device)
+            states, source_mask = _specialist_sources(
+                states, payload["attention_mask"], specialist_device)
+            ids = torch.tensor([inputs], device=specialist_device)
+            target = torch.tensor([labels], device=specialist_device)
             with torch.autocast("cuda", dtype=torch.bfloat16):
                 _, loss = specialist(base_states=states,
-                                     source_mask=payload["attention_mask"],
+                                     source_mask=source_mask,
                                      input_ids=ids, labels=target)
             if not torch.isfinite(loss):
                 raise CognitiveKernelContractError("v1.6 training loss is nonfinite")
@@ -538,6 +599,12 @@ def _run_training(args, train, development, status, prepared, processor, preflig
                 optimizer.zero_grad(set_to_none=True)
                 pending = 0
                 steps += 1
+                if args.probe_only:
+                    for name in devices:
+                        torch.cuda.synchronize(name)
+                    probe_hardware = _probe_hardware(
+                        torch, devices, model_load_seconds=model_load_seconds,
+                        optimizer_step_seconds=perf_counter() - step_start)
                 if steps % args.save_every_steps == 0 or args.probe_only:
                     _checkpoint(args.output_dir, specialist=specialist,
                                 optimizer=optimizer, run_digest=digest,
@@ -570,7 +637,9 @@ def _run_training(args, train, development, status, prepared, processor, preflig
         "signed_review_receipt_sha256": getattr(
             args, "signed_review_receipt_sha256", None),
         "seed_control_sha256": seed["specialist_sha256"],
+        "device_placement": placement,
         "specialist_config": config.record(), "optimizer_steps": steps,
+        "probe_hardware": probe_hardware,
         "mean_training_loss_for_current_segment": (
             sum(losses) / len(losses) if losses else None),
         "development_cases": len(development), "development_evaluated": False,
@@ -579,6 +648,7 @@ def _run_training(args, train, development, status, prepared, processor, preflig
     })
     return {"component_sha256": component["record_sha256"],
             "optimizer_steps": steps, "probe_only": args.probe_only,
+            "probe_hardware": probe_hardware,
             "qualified_for_product": False}
 
 
@@ -606,6 +676,10 @@ def arguments() -> argparse.Namespace:
     parser.add_argument("--learning-rate", type=float, default=1e-4)
     parser.add_argument("--save-every-steps", type=int, default=100)
     parser.add_argument("--seed", type=int, default=73129)
+    parser.add_argument("--base-device", default="cuda:0",
+                        help="explicit CUDA device for the frozen Gemma representation base")
+    parser.add_argument("--specialist-device", default="cuda:0",
+                        help="explicit CUDA device for the trainable formation specialist")
     parser.add_argument("--probe-only", action="store_true")
     parser.add_argument("--full-fit", action="store_true",
                         help="require signed admission with an externally pinned roster")

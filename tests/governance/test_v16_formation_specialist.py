@@ -266,6 +266,8 @@ class V16InferenceTests(unittest.TestCase):
                 "prepared_base_receipt_sha256": "a" * 64,
                 "corpus_sha256": "b" * 64,
                 "specialist_config": config.record(),
+                "device_placement": {"base": "cuda:0", "specialist": "cuda:0",
+                                     "strategy": "single-gpu"},
                 "transformers_version": "test-version",
                 "probe_only": True,
                 "qualified_for_product": False,
@@ -284,6 +286,7 @@ class V16InferenceTests(unittest.TestCase):
                 "prepared_base_receipt_sha256": "a" * 64,
                 "prepared_base_kind": "licensed-verified-mfm-role-clone",
                 "run_manifest_sha256": run["record_sha256"],
+                "device_placement": run["device_placement"],
                 "seed_control_sha256": trainer.shared._digest(
                     root / "seed-control.safetensors"),
                 "specialist_config": config.record(), "probe_only": True,

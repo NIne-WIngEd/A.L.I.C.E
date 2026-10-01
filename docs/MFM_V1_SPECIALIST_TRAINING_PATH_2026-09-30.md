@@ -43,6 +43,12 @@ the original Magnolia file was not transferred for independent byte custody.
 No admitted full-role corpus preflight, GPU probe, training, independent FINAL
 evaluation or product qualification has occurred.
 
+The later v1.6 role-placement change alters `trainer_sha256`. Job 576510
+remains a verified owner-pasted **historical CPU diagnostic**; its receipt
+cannot bind a run of the changed trainer. The required next processor pass is
+over the independently admitted corpus, so repeating the same 21 synthetic
+cases would not advance full-fit admission.
+
 ## Boundary
 
 The source ancestry is the exact non-instruction-tuned
@@ -153,8 +159,22 @@ histories that do not fit require a measured long-context or source selection
 plan and a new preflight. The specialist computes target loss in recomputed
 logit chunks to avoid a full target-by-262K-vocabulary loss tensor. Dense
 cross attention still needs an actual full backward measurement. This script
-currently loads the prepared base on one GPU. No 48 GB or multi-GPU fit claim
-has been established.
+defaults both roles to `cuda:0`. For an explicit two-GPU role partition,
+pass `--base-device cuda:0 --specialist-device cuda:1` to the trainer. The
+frozen Gemma base is loaded onto the base GPU; detached source states and the
+source mask move to the specialist GPU for first-party decoder training. Its
+gradients and AdamW state stay on that second GPU. The two roles and strategy
+are hashed into immutable run and component receipts. The inference runner
+accepts the same paired role flags; its legacy `--device` is the single-device
+default. This is a role partition, not FSDP or ZeRO. No 48 GB or multi-GPU fit
+claim has been established; the stress-case forward, backward, checkpoint and
+resume must be measured before a paid full fit. The split uses Transformers'
+inference-only `device_map` to stream the frozen base to its assigned GPU;
+`scripts/mfm/requirements-formation-multimodal.txt` declares
+`accelerate>=1,<3`. Its installed GPU-host version and Gemma 4 dispatch must
+be verified in the bounded probe. The probe receipt reports synchronized
+model-load and stress optimizer-step seconds, plus allocated/reserved peaks
+for both selected GPUs; these are observed values, not a full-fit guarantee.
 
 Autoregressive decoding currently recomputes the decoder prefix without a
 cache, so long 8K outputs may be slow and require measured runtime capacity.

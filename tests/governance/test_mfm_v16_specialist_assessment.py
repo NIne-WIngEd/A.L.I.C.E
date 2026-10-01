@@ -301,6 +301,8 @@ class MFMV16SpecialistAssessmentTests(unittest.TestCase):
                "objective": runner.training.OBJECTIVE_VERSION_V16,
                "preflight_sha256": e, "prepared_base_receipt_sha256": a,
                "corpus_sha256": f, "specialist_config": {},
+               "device_placement": {"base": "cuda:0", "specialist": "cuda:0",
+                                    "strategy": "single-gpu"},
                "transformers_version": "fixture", "probe_only": False,
                "qualified_for_product": False}
         component = {**common, "record_sha256": "2" * 64,
@@ -311,6 +313,7 @@ class MFMV16SpecialistAssessmentTests(unittest.TestCase):
                      "prepared_base_parent_sha256": shared.SOURCE_WEIGHT_SHA256,
                      "prepared_base_receipt_sha256": a,
                      "prepared_base_kind": "licensed-verified-mfm-role-clone",
+                     "device_placement": run["device_placement"],
                      "specialist_config": {}, "seed_control_sha256": "4" * 64,
                      "probe_only": False, "optimizer_steps": 1,
                      "qualified_for_product": False}
