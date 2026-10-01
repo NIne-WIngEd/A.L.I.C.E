@@ -196,6 +196,23 @@
       "next_gate": "Run the new no-data P2 probe on Magnolia; local mocked tests and shell syntax do not establish host-kernel/P2 support",
       "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_LEGACY_NAMESPACE_576517.jsonl"
     },
+    "magnolia_p2_network_probe_576551": {
+      "evidence": "owner-pasted sacct/stdout/stderr; original Magnolia files not independently fetched",
+      "job_id": 576551,
+      "state": "COMPLETED 0:0 on node005.cluster in 00:00:05",
+      "mfm_commit": "6bddc31e724edee6485ad9306148dd0a390b8858",
+      "host_netns": "net:[4026531956]",
+      "helper_and_p2_netns": "net:[4026532988]",
+      "caller_uid_gid": "1905/100",
+      "p2_interfaces": ["lo"],
+      "stderr_empty": true,
+      "private_corpus_opened": false,
+      "scope": "no-data P2 network namespace capability check on node005 only; not complete privacy or corpus admission",
+      "next_gate": "Assemble and authenticate a full v1.6 owner-teacher corpus with exact rights and target lineage; the teacher CPU job repeats isolation on its assigned node before opening private bytes",
+      "cpu_full_corpus_receipt": null,
+      "trained_weights": false,
+      "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_P2_NETWORK_PROBE_576551.jsonl"
+    },
     "trained_weights": false,
     "evaluation_eligible": false,
     "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_ROLE_EXPANSION_AND_CPU_GATE.jsonl",
