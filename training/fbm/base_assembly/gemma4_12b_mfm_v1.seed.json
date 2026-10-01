@@ -859,8 +859,8 @@
     "status": "ONE_PRIVATE_FICTIONAL_SOURCE_GROUNDED_TEACHER_CANDIDATE_UNQUALIFIED; no full v1.6 corpus, optimizer or FINAL"
   },
   "current_v16_synthetic_teacher_corpus": {
-    "authoritative_mfm_commit": "be3786415d028ea5953eb0e3d24c590142d9a8e2",
-    "authoritative_mfm_tree": "c7d6f7c5dde376e715e917a51b279c4610822c91",
+    "authoritative_mfm_commit": "ae7d680286b84a5755caeb1d2e82e0d09c5176ae",
+    "authoritative_mfm_tree": "171e5f8df1a7855f5296e90a18fd1f38f80266de",
     "overlay_seed": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
     "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_SYNTHETIC_TEACHER_CORPUS_ISSUED.jsonl",
     "manifest_sha256": "4e59403ee2205d5219eed09a1dfd712c87b4bbae09dc0435a2275aac18ca7573",
@@ -868,6 +868,37 @@
     "train_cases": 16,
     "diagnostic_development_cases": 9,
     "status": "SYNTHETIC_ONLY_TEACHER_CORPUS_ADMITTED_UNQUALIFIED",
+    "protected_full_corpus_cpu_receipt": null,
+    "trained_weights": false,
+    "independent_qualification": false
+  },
+  "current_v16_synthetic_longitudinal_expansion": {
+    "historical_method_commit": "82127e4",
+    "authoritative_mfm_commit": "ae7d680286b84a5755caeb1d2e82e0d09c5176ae",
+    "overlay_seed": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
+    "trace": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_LONGITUDINAL_SYNTHETIC_EXPANSION.jsonl",
+    "manifest_sha256": "f54f03ace36b7bb8afde531faf5a283b1cb894ff40389ddaeb96d2f5caa4c48a",
+    "private_archive_sha256": "8d33f44fe9e0f37e0fcf09de03c4705d5c1d867f19a285e94cc4e72d2bdee65f",
+    "train_cases": 432,
+    "diagnostic_development_cases": 9,
+    "status": "SYNTHETIC_ONLY_LOCALLY_ADMITTED_UNQUALIFIED_LOCAL_ARCHIVE_CUSTODY",
+    "protected_full_corpus_cpu_receipt": null,
+    "trained_weights": false,
+    "independent_qualification": false
+  },
+  "current_v16_mixed_teacher_corpus": {
+    "historical_method_commit": "7d69a77",
+    "authoritative_mfm_commit": "ae7d680286b84a5755caeb1d2e82e0d09c5176ae",
+    "overlay_seed": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
+    "trace": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_MIXED_V2_LOCAL_ASSEMBLY.jsonl",
+    "manifest_sha256": "3ba6e4f40451c51246ed7601e1e7ae95aec473d33e8a4be9425d6ce50de6c655",
+    "intake_sha256": "3eb8e3395c963db5cb41cf09d1c9e5407a3dfdb005406ea794bda9002b37f374",
+    "train_cases": 434,
+    "diagnostic_development_cases": 9,
+    "status": "V2_MIXED_TEACHER_CORPUS_LOCALLY_ADMITTED_UNQUALIFIED_PRIVATE_WORKSPACE",
+    "private_archive_sha256": "8eb58481f59658cc3c1b0c3c2f5d616b654c28c14dd4eff15b3c9ac4c928a9e2",
+    "private_archive_size_bytes": 2047028,
+    "archive_custody": "LOCAL_MODE_0600_OUTSIDE_GIT_NOT_TRANSFERRED",
     "protected_full_corpus_cpu_receipt": null,
     "trained_weights": false,
     "independent_qualification": false
