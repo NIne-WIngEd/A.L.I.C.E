@@ -6,10 +6,10 @@
     "foundation_branch": "research/gemma4-v1-source-derivation-20260930",
     "foundation_commit": "3e1328410dac52ba18be243cb9f7144e7a3964d1",
     "mfm_branch": "research/mfm-v1-licensed-base-20260930",
-    "mfm_commit": "1a6148466b9a96b1e9841b2a4a3115968036a752",
+    "mfm_commit": "706f69406afbc5e55768bc5d01154a459680e644",
     "mfm_v1_6_contract_path": "docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md",
-    "mfm_v1_6_contract_status": "Published 1.6 codec, signed full-fit trainer, matched runner, separate FINAL custodian assessor and narrow P2 owner host-profile candidate bridge with CPU/static tests. Owner-reported exact source/clone CPU custody run 576486 remains metadata verified. Public 21-case Magnolia CPU jobs 576488 and 576508 failed on missing PIL and TorchVision, respectively. Job 576509 completed 0:0 at historical MFM e93e098a but cannot bind the corrected trainer. Owner-reported job 576510 completed 0:0 under corrected MFM 1a614846. Its full owner-pasted receipt JSON had a valid canonical self-digest and matching local code/corpus bindings; original Magnolia file custody was not checked. It processed only 15 TRAIN and 6 DEV synthetic text cases. No admitted 1.6 gold, full-role multimodal CPU receipt, GPU/full-fit outputs or full-role downstream result.",
-    "mfm_published_tree": "aa060efdc811122adfece34117a0dd08c5c41463"
+    "mfm_v1_6_contract_status": "Published 1.6 codec, signed full-fit trainer, matched runner, separate FINAL custodian assessor and narrow P2 owner host-profile candidate bridge with CPU/static tests. Source/clone custody run 576486 remains owner-checked metadata. Jobs 576488 and 576508 failed on missing processor dependencies. Job 576509 completed at historical MFM e93e098a. Job 576510 completed at MFM 1a614846; the full owner-pasted JSON self-digest and local code/corpus bindings match, while original Magnolia file custody was not checked. It processed 15 TRAIN and 6 DEV synthetic text cases. MFM 706f6940 now publishes an explicit frozen-base GPU0/specialist GPU1 role split and probe telemetry. Its trainer hash differs, making 576510 historical for this head. Exact-head admitted full-role CPU processing, measured GPU backward/restart, gold and downstream results remain pending.",
+    "mfm_published_tree": "5cac4e9b0eb12470d785fff49839b73af8b6a1ab"
   },
   "source": {
     "repository": "google/gemma-4-12B",
@@ -178,7 +178,9 @@
       "pasted_json_corpus_sha256": "8e967ee6494f2c5ec47ab602bad213df8c07c53b1abe9a9aff950f19c0e78e22",
       "pasted_json_prepared_clone_receipt_sha256": "54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7",
       "pasted_json_full_fit": false,
-      "pasted_json_processed_modalities": ["text"],
+      "pasted_json_processed_modalities": [
+        "text"
+      ],
       "pasted_json_signed_review_receipt_sha256": null,
       "pasted_json_trust_roster_sha256": null,
       "pasted_json_train_cases": 15,
@@ -711,7 +713,12 @@
     "pre_inventory_files": 3843,
     "pre_inventory_bytes": 75359948,
     "inventory_sha256": "a5fcd53f84e049f84a2aaf0e1902da17a2d9d8fd4eec85deccb4bf8902c4d362",
-    "source_packet_days": [1, 7, 15, 30],
+    "source_packet_days": [
+      1,
+      7,
+      15,
+      30
+    ],
     "source_packets": 1920,
     "unique_hosts": 480,
     "unique_packet_ids": 1920,
@@ -727,6 +734,66 @@
     "verification": "Independent local sha256sum matched inventory, source packet and draft; parsed all row/host/packet ID/anchor/unknown counts and file modes. No source-person gold, original byte offset verification, target, rights, reviewer, independent generator split, FINAL or training admission was produced.",
     "status": "DETERMINISTIC_SYNTHETIC_INTAKE_REPRODUCED_UNADMITTED",
     "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_SYNTHETIC_REVIEW_INTAKE_REPRODUCED.jsonl"
+  },
+  "latest_v16_explicit_gpu_role_split": {
+    "method_commit": "706f69406afbc5e55768bc5d01154a459680e644",
+    "method_tree": "5cac4e9b0eb12470d785fff49839b73af8b6a1ab",
+    "trainer_entrypoint": "scripts/mfm/train_v16_formation_specialist.py",
+    "trainer_sha256": "38d548d6cdea0efc30fc97c134b2c0c34d8eae968aa375dfd2289c6486bce467",
+    "inference_entrypoint": "scripts/mfm/run_v16_formation_specialist.py",
+    "inference_runner_sha256": "38fc5527ce92fcfd5bb1fe09c602a9afbf9e7d45b2422d3cc6dcec9418dff5b2",
+    "role_placement": {
+      "default": {
+        "base": "cuda:0",
+        "specialist": "cuda:0",
+        "strategy": "single-gpu"
+      },
+      "explicit_two_gpu": {
+        "base": "cuda:0",
+        "specialist": "cuda:1",
+        "strategy": "frozen-base-role-split"
+      }
+    },
+    "procedure": "Freeze and load the prepared Gemma 4 base on base GPU, detach its source states, transfer states and source mask to the specialist GPU, and train the separate first-party formation decoder and AdamW state there. Match inference role flags. Reject unavailable or malformed CUDA ordinals and reject offloaded/misplaced base. Store role placement in immutable run/component receipts.",
+    "probe_telemetry": [
+      "synchronized model_load_seconds",
+      "synchronized optimizer_step_seconds",
+      "per-selected-GPU peak_allocated_bytes",
+      "per-selected-GPU peak_reserved_bytes",
+      "per-selected-GPU total_bytes"
+    ],
+    "runtime_dependency": "Transformers inference-only device_map streaming of frozen base requires accelerate>=1,<3; verify installed version and Gemma 4 dispatch on the actual GPU host.",
+    "cpu_static_test_status": "PUBLISHED_AND_TESTED_WITH_CPU_STAND_INS; no model-load, GPU forward, backward, checkpoint/resume or fit observed for this role split",
+    "prior_cpu_receipt": "Owner-pasted job 576510 receipt validated at historical trainer SHA 528bdfbe25ca8f3a9863a523318805589e97b3e9d1de4fd3ad19ae3ab977b017; it cannot bind the changed 38d548d6 trainer.",
+    "next_gate": "Fresh full-role admitted-corpus processor pass at exact changed trainer SHA, then bounded GPU backward/restart and measured memory/time before any paid full fit. No 48 GB or two-GPU capacity claim follows from CPU tests.",
+    "gpu_execution_observed": false,
+    "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_ROLE_SPLIT_AND_CANDIDATE_LINEAGE.jsonl"
+  },
+  "latest_v16_candidate_lineage_audit": {
+    "method_commit": "706f69406afbc5e55768bc5d01154a459680e644",
+    "method_tree": "5cac4e9b0eb12470d785fff49839b73af8b6a1ab",
+    "entrypoint": "scripts/mfm/audit_v16_candidate_lineage.py",
+    "script_sha256": "d2f3616605ea6dcb0c86d6bfa4e2ccc72bc50067bf7dc1a035f002026dce6cc5",
+    "input_inventory_sha256": "a5fcd53f84e049f84a2aaf0e1902da17a2d9d8fd4eec85deccb4bf8902c4d362",
+    "input_packet_sha256": "4ae868b2cae39b837364f71c8b68cebe5fee731bca3711e1459d87782084e642",
+    "input_draft_sha256": "b43a8d290b07127d6ccc7204016f6aea6bb890caf996c40bf7430bda709b7c5e",
+    "replay_result": {
+      "candidate_rows": 1920,
+      "host_families": 480,
+      "source_anchor_inventory_entries": 102240,
+      "declared_generator_families": [
+        "multisource-membench-7a44de847315c244d675646b6e92910474493526"
+      ],
+      "connected_declared_lineage_components": 1,
+      "component_id_sha256": "d903d3e8e549469943b4fca46103a32bc199711e0deae9e3923d6cd56c7a9207",
+      "three_way_split_declared_lineage_blocked": true
+    },
+    "method": "Rehash and exactly replay private drafts from pinned source packets, inventory and original structural files; union declared generator, host, lineage group, upstream commit, source ID and whole-source-file ancestries. Count connected components without assigning a split.",
+    "provenance_scope": "Only declared graph; neither independent family provenance nor rights and blind review established. Three declared components in a future corpus would remove one necessary split blocker, not prove independent ancestry.",
+    "training_admitted": false,
+    "sealed_final_created": false,
+    "status": "LOCAL_PINNED_REPLAY_PASS_SINGLE_SHARED_GENERATOR_COMPONENT; no gold, rights, independent reviews, source-person history or sealed FINAL",
+    "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_ROLE_SPLIT_AND_CANDIDATE_LINEAGE.jsonl"
   },
   "magnolia_v16_public_cpu_diagnostic": {
     "script_path": "scripts/mfm/magnolia_v16_public_cpu_preflight.sbatch",
@@ -756,6 +823,9 @@
     "previous_successful_method_commit": "e93e098ad5546e8021fe209a401dabcdbe54a8fd",
     "corrected_public_text_diagnostic_trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_PUBLIC_CPU_576510_TEXT_SUCCESS.jsonl",
     "corrected_stdout_reported_preflight_sha256": "35c4101e1c22fbe77ba957e4069f3e83c7384418bcd55f4ebf04e2a14ccdce53",
-    "corrected_owner_pasted_json_validation_trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_PUBLIC_CPU_576510_PASTED_RECEIPT_VALIDATED.jsonl"
+    "corrected_owner_pasted_json_validation_trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_PUBLIC_CPU_576510_PASTED_RECEIPT_VALIDATED.jsonl",
+    "current_head_uses_this_preflight": false,
+    "historical_receipt_trainer_sha256": "528bdfbe25ca8f3a9863a523318805589e97b3e9d1de4fd3ad19ae3ab977b017",
+    "current_head_trainer_sha256": "38d548d6cdea0efc30fc97c134b2c0c34d8eae968aa375dfd2289c6486bce467"
   }
 }

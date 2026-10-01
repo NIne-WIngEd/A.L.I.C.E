@@ -254,6 +254,36 @@ stores only public procedure metadata, hashes and counts. No raw packet or
 draft is published here. This is reproducible synthetic review intake, with
 no targets, rights, independent reviews or admitted split.
 
+MFM `706f6940` (tree `5cac4e9b`) now publishes an optional explicit
+two-GPU role split: frozen Gemma base on `cuda:0` and the first-party
+formation specialist and optimizer on `cuda:1`. Detached source states and
+their mask cross the device boundary. The runner accepts matching device
+roles. Placement is bound into the run and component receipts. The bounded
+probe code reports synchronized load and optimizer-step times and peak
+allocated/reserved bytes on both selected GPUs. These are **measurement
+fields**, not measured values: no GPU run has occurred on this version. The
+split uses the pinned runtime's inference-only `device_map` for base loading;
+its `accelerate` version and Gemma 4 dispatch still need verification on the
+actual GPU host. The trainer SHA is now
+`38d548d6cdea0efc30fc97c134b2c0c34d8eae968aa375dfd2289c6486bce467`.
+The validated owner-pasted job `576510` JSON binds the prior trainer
+`528bdfbe25ca8f3a9863a523318805589e97b3e9d1de4fd3ad19ae3ab977b017`.
+It remains historical. The next CPU processor pass must use an admitted
+full-role corpus at the new exact trainer SHA. Repeating 21 synthetic text
+cases would not supply that gate.
+
+The new candidate-lineage auditor replayed the pinned inventory, source
+packets and private drafts byte for byte. Its local report counted 1,920
+candidate rows, 480 host families and 102,240 source-anchor entries. All
+rows belong to **one connected declared generator component** because they
+share the same generator ancestry. A three-way train/DEV/FINAL split is
+blocked for this source set. The audit checks declared source lineage; it
+does not authenticate independent provenance, rights, blind review or a
+sealed FINAL. Its
+[procedure trace](traces/FBM_TRACE_20261001_MFM_V16_ROLE_SPLIT_AND_CANDIDATE_LINEAGE.jsonl)
+stores only hashes, counts, code lineage and the unqualified result. No raw
+draft or packet bytes are published in FBM Git.
+
 ## Ordered V1 MFM replay evidence
 
 The [active FBM procedure seed](../../training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json)
@@ -264,7 +294,7 @@ separates these receipts so one passing step cannot stand in for another:
 | Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Magnolia job `576486` completed `0:0`; owner checked both sealed receipt digests, parent, role and all eight file rows. Full JSON and script were not transferred. |
 | Full-role corpus | Versioned 1.6 targets, authenticated rights, two reviewers, disjoint DEV and sealed FINAL | Historical 49,819 rows fail coverage; published 21-case 1.6 authoring seed is diagnostic only |
 | Code path | Matching 1.6 codec, signed full-fit trainer, inference, custodian assessor and full-role gate adapter | Published full-fit path and narrow P2 host-profile candidate bridge; rich 1.6 semantics still fail closed in P2, with no full-role adapter or capability receipt |
-| CPU and GPU admission | Complete admitted-corpus Magnolia CPU processor receipt at exact trainer SHA, then bounded 1.6 backward/restart result | Public 21-case text-only synthetic diagnostic job `576510` completed at corrected MFM `1a614846`; owner-pasted JSON self-digest and local code bindings match, while original Magnolia file custody remains unchecked. Job `576509` remains an earlier-code pass; jobs `576488` and `576508` failed. No admitted full-role multimodal CPU or GPU receipt established |
+| CPU and GPU admission | Complete admitted-corpus Magnolia CPU processor receipt at exact trainer SHA, then bounded 1.6 backward/restart result | Public 21-case text-only synthetic diagnostic job `576510` completed at MFM `1a614846`; owner-pasted JSON self-digest and local code bindings match, while original Magnolia file custody remains unchecked. MFM `706f6940` changes the trainer SHA, so this diagnostic is historical. Explicit two-GPU role split and telemetry are published code only. No admitted full-role multimodal CPU or GPU receipt established |
 | Paid full fit | Hash-bound model, optimizer and seeded-untrained control | Blocked |
 | Independent qualification | Matched trained/control outputs, sealed FINAL and actual memory-gate-to-native-judgment effect | Not run |
 | Private owner admission | Scoped local training/access rights, source roles, sensitivity and deletion lineage; no distribution grant or two reviewers required | Contract and tool pending |
