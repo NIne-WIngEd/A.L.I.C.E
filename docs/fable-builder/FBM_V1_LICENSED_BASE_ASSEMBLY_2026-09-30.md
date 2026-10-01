@@ -210,6 +210,22 @@ creating a new mode-0600 draft. Each of the ten review dimensions remains
 them. It creates no target, split, rights attestation, independent review,
 sealed FINAL or admitted training row. Its one-generator source family cannot
 populate independent train, DEV and FINAL by itself.
+The MFM author then reproduced the synthetic intake in local scratch from
+generator `7a44de847315c244d675646b6e92910474493526`: 480 synthetic hosts
+over 30 days, 3,843 pre-inventory files (75,359,948 bytes), inventory SHA-256
+`a5fcd53f84e049f84a2aaf0e1902da17a2d9d8fd4eec85deccb4bf8902c4d362`;
+1,920 day-1/7/15/30 source packets (92,817,429 bytes), SHA-256
+`4ae868b2cae39b837364f71c8b68cebe5fee731bca3711e1459d87782084e642`;
+and 1,920 private unadmitted drafts (46,153,607 bytes), SHA-256
+`b43a8d290b07127d6ccc7204016f6aea6bb890caf996c40bf7430bda709b7c5e`.
+Independent local rehash and parse confirmed 480 unique hosts, 1,920 unique
+packet IDs, 102,240 unresolved original-file byte anchors and 19,200
+`unknown` dimension states. The draft file mode was `0600`; the source
+packet was `0644` in local scratch. The
+[reproduction trace](traces/FBM_TRACE_20261001_MFM_V16_SYNTHETIC_REVIEW_INTAKE_REPRODUCED.jsonl)
+stores only public procedure metadata, hashes and counts. No raw packet or
+draft is published here. This is reproducible synthetic review intake, with
+no targets, rights, independent reviews or admitted split.
 
 ## Ordered V1 MFM replay evidence
 
