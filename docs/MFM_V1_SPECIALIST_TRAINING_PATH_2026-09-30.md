@@ -12,10 +12,22 @@ The clone digest was printed twice. The owner then ran the foundation
 the clone's parent-source digest, `role=mfm`, `qualification=unqualified`, and
 identical eight-file rows against the pinned file manifest. The submitted batch
 script and complete JSON were not transferred for independent inspection here;
-the exact final verifier invocation remains unconfirmed. This is an
-owner-reported custody result, not a processor, inference or training run. No complete 1.6
-corpus processor preflight, GPU probe, full training, independent FINAL
-evaluation or product qualification has occurred.
+the exact final verifier invocation remains unconfirmed. Owner-provided Slurm
+accounting and stdout for job `576509` report `COMPLETED 0:0` in 2:33 on
+`node005.cluster`. The pinned local `Gemma4UnifiedProcessor` and all 21 public
+authoring cases completed a CPU source/target processor pass. The reported
+preflight digest is
+`fa46ea11f020874637b680549313cef233b1bf2535b7aaa09e5f1a1c8deef4d9`;
+the longest source was 2,244 tokens and target 1,484 tokens. That receipt's
+contents have not been read independently in this workspace. The 21
+Transformers warnings were from an old `do_sample_frames` call shape, not a
+failed input. A later code review found that v1.6 escaped only the instruction
+block and left later source text unescaped; the trainer now escapes every text
+item and passes `do_sample_frames` through `processor_kwargs`. This changes
+the trainer SHA bound by a future preflight, so job 576509 is historical
+processor evidence and its receipt must not be reused for a fit on the
+corrected trainer. No admitted full-role corpus preflight, GPU probe, training,
+independent FINAL evaluation or product qualification has occurred.
 
 ## Boundary
 
@@ -147,13 +159,14 @@ seeded-untrained control and independent FINAL. The public source-only
 diagnostic is optional for studying
 inherited defaults; no separate weight-cleaning program blocks training.
 
-## Magnolia public processor diagnostic after jobs 576486 and 576508
+## Magnolia public processor diagnostic after jobs 576486, 576508 and 576509
 
 `scripts/mfm/magnolia_v16_public_cpu_preflight.sbatch` uses the existing
 `rayan-n0-base` CPU container because Magnolia's host Python/glibc is not the
 validated Transformers 5.17 runtime. Job 576508 proved that its early Gemma 4
 processor construction needs TorchVision as well as Pillow; it failed before
-clone rehash or a processor receipt. The 21-case public authoring seed has 38
+clone rehash or a processor receipt. Job 576509 passed the text-only CPU
+processor path with both pinned wheels. The 21-case public authoring seed has 38
 text references and no media, but the processor imports its image module even
 for text. Stage these two CPython 3.11 wheels on the Magnolia login node.
 Downloading wheels there does not install them into the host or the shared N0

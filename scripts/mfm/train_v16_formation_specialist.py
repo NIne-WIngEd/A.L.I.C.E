@@ -86,19 +86,23 @@ def source_batch_v16(processor, context: FormationContextV16, opened_sources,
         first = messages[0]["content"][0]
         if first.get("type") != "text":
             raise CognitiveKernelContractError("source builder lost instruction position")
+        instruction = SOURCE_INSTRUCTION + "\n" + canonical_json_bytes({
+            "objective": OBJECTIVE_VERSION_V16,
+            "context": context.record(),
+        }).decode("utf-8")
+        # Escape every source text block, not just the instruction. A literal
+        # media marker inside evidence must never become a processor token.
         versioned = [{**message, "content": [
             {**item, "text": "json_text=" + shared._escaped_text(
-                SOURCE_INSTRUCTION + "\n" + canonical_json_bytes({
-                    "objective": OBJECTIVE_VERSION_V16,
-                    "context": context.record(),
-                }).decode("utf-8") if index == 0 else item["text"])}
+                instruction if message_index == 0 and item_index == 0
+                else item["text"])}
             if item["type"] == "text" else item
-            for index, item in enumerate(message["content"])]}
-            for message in messages]
+            for item_index, item in enumerate(message["content"])]}
+            for message_index, message in enumerate(messages)]
         payload = processor.apply_chat_template(
             versioned, chat_template=shared.SOURCE_TEMPLATE,
             tokenize=True, add_generation_prompt=False, return_dict=True,
-            return_tensors="pt", do_sample_frames=False)
+            return_tensors="pt", processor_kwargs={"do_sample_frames": False})
         _assert_modality_tensors(context.base, payload)
     selected = {name: value for name, value in payload.items()
                 if hasattr(value, "shape") and name not in {
