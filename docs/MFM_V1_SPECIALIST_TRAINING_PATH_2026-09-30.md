@@ -32,10 +32,16 @@ report `COMPLETED 0:0` in 2:35 on `node005.cluster`, at MFM
 foundation. The corrected 21-case text processor pass reports preflight
 digest `35c4101e1c22fbe77ba957e4069f3e83c7384418bcd55f4ebf04e2a14ccdce53`,
 longest source 2,244 tokens and target 1,484 tokens. Its stderr contains only
-pip's root-in-container warning. The receipt JSON still needs a direct
-self-digest and exact-trainer binding check. No admitted full-role corpus
-preflight, GPU probe, training, independent FINAL evaluation or product
-qualification has occurred.
+pip's root-in-container warning. The owner subsequently pasted the full
+receipt JSON. A local recomputation of its canonical self-digest matched the
+reported digest. Its trainer, 21-case corpus, codec, decoder, semantics,
+source builder, instruction and template hashes matched the published bytes.
+The pasted fields say `train_cases=15`, `development_cases=6`,
+`processed_modalities=["text"]`, `full_fit=false`, and null trust roster and
+signed review. These checks validate the pasted JSON and local code binding;
+the original Magnolia file was not transferred for independent byte custody.
+No admitted full-role corpus preflight, GPU probe, training, independent FINAL
+evaluation or product qualification has occurred.
 
 ## Boundary
 
