@@ -65,6 +65,9 @@ establish those facts from hashes.
 Training development is diagnostic and is never sealed FINAL or independent
 qualification. The old 49,819 v1/v1.5 rows, 21 public v1.6 CPU diagnostics,
 and unadmitted fictional role candidates cannot be admitted by relabeling
-them. Once a real manifest passes, record its SHA outside the job and use
-`magnolia_v16_teacher_cpu_preflight.sbatch` under P2 isolation for a full
-processor pass. No paid GPU time is justified by assembly alone.
+them. The separate [chat-directed synthetic issuance](MFM_V16_CHAT_DIRECTED_SYNTHETIC_CORPUS_2026-10-01.md)
+created a 16/9 manifest with explicit source-bound rights and provenance;
+this remains unqualified fictional teaching material. Record its SHA outside
+the job and use `magnolia_v16_teacher_cpu_preflight.sbatch` under P2 isolation
+for a complete pass over that manifest. No paid GPU time is justified by
+assembly alone.

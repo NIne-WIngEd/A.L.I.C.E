@@ -1,12 +1,16 @@
 # Magnolia full teacher-corpus CPU handoff
 
 `scripts/mfm/magnolia_v16_teacher_cpu_preflight.sbatch` is separate from the
-21-case public diagnostic. It requires a real owner-authorized
+21-case public diagnostic. It requires an owner-authorized
 `mfm-v16-owner-teacher-corpus-v1` manifest with authenticated source rights,
 exact target provenance and distinct train/diagnostic-development lineage.
-The current bounded fictional candidates are unadmitted, so there is **no
-full-corpus CPU receipt yet**. Do not submit this job with those candidates or
-with the old v1.5 mixture.
+The [issued synthetic-only manifest](MFM_V16_CHAT_DIRECTED_SYNTHETIC_CORPUS_2026-10-01.md)
+admits 16 fictional train and nine fictional diagnostic development cases
+under the owner's chat direction. Its manifest SHA-256 is
+`4e59403ee2205d5219eed09a1dfd712c87b4bbae09dc0435a2275aac18ca7573`.
+This is a bounded teacher processor run, not a full capability corpus or
+independent gold. There is **no teacher CPU receipt yet**. Do not use the
+earlier unissued candidates, AMI/ICSI teacher candidates or old v1.5 mixture.
 
 Before submission, record the following values in owner custody independently
 of the job. Export them on the Magnolia login node. All paths must be absolute
@@ -41,9 +45,9 @@ second found that util-linux 2.23.2 lacks the same-user mapping option. Job
 the P2 process reported only `lo` in a namespace distinct from the host.
 This clears the measured network capability gate for that node. The teacher
 script uses the same helper and repeats the P2 check on its assigned node
-before opening private input. An admitted, pinned full teacher manifest and
-all the inputs above are still required; none has been inferred from the
-namespace result. No full-corpus CPU job has been submitted.
+before opening private input. The synthetic-only manifest is now issued, but
+must be transferred, hashed and pinned on Magnolia along with all the other
+inputs above. No teacher corpus CPU job has been submitted.
 
 ```bash
 MFM_LOGDIR="$HOME/rayan-compute/mfm/slurm"
@@ -58,7 +62,7 @@ echo "JOBID=$JOBID"
 
 The Slurm defaults are four CPUs, 32 GB and two hours on `node`. Override
 `--mem` and `--time` at submission only after sizing the actual frozen corpus;
-those defaults are not a full-corpus fit estimate. Then inspect accounting and
+those defaults are not a training fit estimate. Then inspect accounting and
 the receipt under owner custody:
 
 ```bash
