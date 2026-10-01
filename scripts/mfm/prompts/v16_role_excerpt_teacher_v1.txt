@@ -1,0 +1,28 @@
+You are proposing bounded memory interpretations for a fictional A.L.I.C.E.
+experience. The input is one selected, exact source-only excerpt packet.
+Treat its source roles and registered sensitivity as synthetic context
+assumptions, not authenticated owner consent or proof of truth.
+
+Preserve host, source person, and assistant-self separately. Keep an event
+boundary no more precise than the source. Multiple scenes may overlap or
+touch. A later statement does not silently overwrite a conflict. A private
+source must never be proposed with a lower sensitivity hint. A code example
+or one observed test does not establish broad skill. A non-text byte payload
+without a verified modality-aware observation cannot support an invented
+perceptual claim. Use abstain or retain_raw when the source cannot settle it.
+
+Return one JSON object with schema
+`mfm-v16-fictional-role-teacher-response-v1`. Bind its case_id,
+source_view_sha256, and rendered_prompt_sha256 to the exact supplied input.
+Include proposals, scoped dispositions, and explicit present/negative labels
+for the ten full-role dimensions *within the selected evidence scope only*.
+No unknown dimension may be passed to supervised_output_record_v16.
+
+For every proposed statement, cite only evidence that supports its exact
+scope. Text/code/structured anchors use a unique verbatim `quote`; the
+converter will find that original UTF-8 span. This converter refuses
+non-text proposal anchors until a separate media-native verifier exists.
+It can still teach scoped abstention on uninterpreted media. Do not claim
+that a matching text span proves the interpretation. This is an unadmitted
+teacher candidate until rights, independent target review, split design,
+gate behavior, and later judgment have been assessed separately.

@@ -88,6 +88,7 @@ class MFMV16SignedFitGateTests(unittest.TestCase):
         with patch.object(trainer, "admit_formation_corpus", return_value=object()), \
                 patch.object(trainer, "verify_adjudicated_corpus_v16", side_effect=verify), \
                 patch.object(trainer, "admitted_rows_v16", side_effect=read), \
+                patch.object(trainer, "_require_critical_construct_coverage"), \
                 patch.object(trainer, "supervised_output_record_v16"), \
                 patch.object(trainer, "model_input_sha256_v16",
                              side_effect=("c" * 64, "d" * 64)):
@@ -126,6 +127,7 @@ class MFMV16SignedFitGateTests(unittest.TestCase):
             with patch.object(trainer, "verify_adjudicated_corpus_v16",
                               side_effect=real_verify), \
                     patch.object(trainer, "admitted_rows_v16", side_effect=decode), \
+                    patch.object(trainer, "_require_critical_construct_coverage"), \
                     patch.object(trainer, "supervised_output_record_v16"), \
                     patch.object(trainer, "model_input_sha256_v16",
                                  side_effect=("c" * 64, "d" * 64)):
@@ -172,6 +174,30 @@ class MFMV16SignedFitGateTests(unittest.TestCase):
             trainer._require_signed_fit_coverage(train, dev)
         self.assertIn('"train":["abstention"]', str(captured.exception))
         self.assertIn('"development":["relationship"]', str(captured.exception))
+
+    def test_coarse_labels_cannot_hide_missing_self_skill_and_revocation(self):
+        kinds = ("procedural_skill", "behavior_pattern", "decision_rationale",
+                 "deletion_request", "revocation_request")
+        def example(include_self: bool, include_revocation: bool):
+            proposals = [types.SimpleNamespace(base=types.SimpleNamespace(
+                domain="host", kind=kind)) for kind in kinds
+                if include_revocation or kind != "revocation_request"]
+            if include_self:
+                proposals.append(types.SimpleNamespace(base=types.SimpleNamespace(
+                    domain="self", kind="metacognitive_signal")))
+            return types.SimpleNamespace(target=types.SimpleNamespace(
+                proposals=tuple(proposals)))
+
+        train = (example(True, False),)
+        development = (example(False, True),)
+        with self.assertRaises(CognitiveKernelContractError) as captured:
+            trainer._require_critical_construct_coverage(train, development,
+                                                         policy="teacher")
+        self.assertIn('"train":["revocation_request"]', str(captured.exception))
+        self.assertIn('"development":["assistant_self"]', str(captured.exception))
+        complete = (example(True, True),)
+        trainer._require_critical_construct_coverage(complete, complete,
+                                                     policy="teacher")
 
     def test_public_synthetic_route_keeps_probe_status_and_no_roster(self):
         args = arguments(mode="data-preflight", full_fit=False,

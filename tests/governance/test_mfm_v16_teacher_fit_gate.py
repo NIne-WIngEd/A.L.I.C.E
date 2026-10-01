@@ -403,6 +403,7 @@ class TeacherFitGateTests(unittest.TestCase):
                           return_value=object()) as admit, \
                 patch.object(trainer, "admitted_rows_v16",
                              side_effect=(iter((complete,)), iter((dev,)))) as rows, \
+                patch.object(trainer, "_require_critical_construct_coverage"), \
                 patch.object(trainer, "supervised_output_record_v16"), \
                 patch.object(trainer, "model_input_sha256_v16",
                              side_effect=("c" * 64, "d" * 64)):

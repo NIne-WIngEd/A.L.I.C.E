@@ -180,6 +180,36 @@ def _require_signed_fit_coverage(train, development, *, policy="signed") -> None
             json.dumps(missing, sort_keys=True, separators=(",", ":")))
 
 
+def _require_critical_construct_coverage(train, development, *, policy="signed") -> None:
+    """Catch role targets that v1.6's ten coarse labels do not enumerate.
+
+    A positive label count alone can pass with no learned self, skill, pattern,
+    decision-rationale, deletion, or revocation example. This checks actual
+    supervised proposal kinds in each opened split; it does not validate the
+    proposal's meaning or replace a future explicit adjudication schema.
+    """
+    required = frozenset({"assistant_self", "procedural_skill", "behavior_pattern",
+                          "decision_rationale", "deletion_request", "revocation_request"})
+    missing = {}
+    for split, examples in (("train", train), ("development", development)):
+        observed = set()
+        for example in examples:
+            for proposal in example.target.proposals:
+                base = proposal.base
+                if base.domain == "self" and base.kind in {
+                        "self_observation", "metacognitive_signal"}:
+                    observed.add("assistant_self")
+                if base.kind in required:
+                    observed.add(base.kind)
+        absent = sorted(required - observed)
+        if absent:
+            missing[split] = absent
+    if missing:
+        raise CognitiveKernelContractError(
+            f"{policy} v1.6 fit lacks critical proposal constructs: " +
+            json.dumps(missing, sort_keys=True, separators=(",", ":")))
+
+
 def _examples(args):
     require_sha256(args.input_sha256, "input_sha256")
     teacher_fit = bool(getattr(args, "teacher_fit", False))
@@ -202,6 +232,7 @@ def _examples(args):
                 raise CognitiveKernelContractError("teacher input repeats across splits")
             seen.add(fingerprint)
         _require_signed_fit_coverage(train, development, policy="teacher")
+        _require_critical_construct_coverage(train, development, policy="teacher")
         return train, development, "owner-authorized-teacher-fit-diagnostic-development-unqualified"
     if getattr(args, "full_fit", False) and args.public_synthetic_curriculum is not None:
         raise CognitiveKernelContractError("synthetic curriculum cannot supply full fit")
@@ -247,6 +278,7 @@ def _examples(args):
         raise CognitiveKernelContractError("v1.6 admission needs train and development")
     if getattr(args, "full_fit", False):
         _require_signed_fit_coverage(train, development)
+        _require_critical_construct_coverage(train, development)
     # CorpusAdmission audits FINAL's manifest metadata but never opens FINAL.
     status = ("admitted-signed-review-final-sealed-unqualified"
               if getattr(args, "full_fit", False) else

@@ -46,6 +46,15 @@ the registered v1.6 context. `unknown` cannot become a negative supervised
 label. Both opened splits must contain a positive example for each full-role
 dimension. Source, generator and connected parent families cannot cross
 train/development; development is **diagnostic**, not independent or FINAL.
+The fit gate also requires actual proposal targets for assistant-self
+observation, procedural skill, recurring behavior pattern, decision rationale,
+deletion request and revocation request in **each** opened split. The ten
+v1.6 adjudication labels do not separately enumerate those constructs; a
+label-complete corpus with no such examples is not ready for a paid fit. This
+extra positive check does not supply explicit negative adjudications for those
+constructs or establish semantic correctness. Extend the versioned target
+contract and independent qualification rubric before claiming complete role
+coverage.
 Only train enters gradients. The source and target processor must pass over
 the entire pinned corpus and write a fresh preflight receipt before a GPU
 probe. The run, checkpoint and component bind `teacher_fit=true`, the corpus
