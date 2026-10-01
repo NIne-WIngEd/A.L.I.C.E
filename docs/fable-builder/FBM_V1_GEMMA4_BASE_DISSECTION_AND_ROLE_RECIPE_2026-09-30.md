@@ -145,9 +145,31 @@ The launcher verifies those bytes, installs the wheel offline into a fresh
 MFM-only job directory, and actually loads the local Gemma 4 `AutoProcessor`
 inside udocker before the 23.9 GB clone rehash. This
 [published repair procedure](traces/FBM_TRACE_20260930_MFM_V16_PILLOW_RUNTIME_FIX_PUBLISHED.jsonl)
-is **unrun** on Magnolia. A fresh source-bound public diagnostic could check
-only the processor route, not the admitted full-role corpus; no repair result
-has been observed.
+was unrun when published. Owner-reported job `576508` then used `079c010c`:
+the exact wheel SHA-256 checked OK and udocker installed Pillow 11.3.0, but
+the job `FAILED 1:0` on `node005.cluster` in `00:00:42` when early
+`AutoProcessor.from_pretrained` imported `Gemma4UnifiedProcessor`. Its image
+module imports `torchvision.transforms.v2` at module load, and the target
+container lacked `torchvision`. This import path is reached even with the
+text-only public diagnostic. The
+[job 576508 trace](traces/FBM_TRACE_20260930_MFM_V16_PUBLIC_CPU_576508_TORCHVISION_FAILURE.jsonl)
+records the intended receipt path but no successful processor result.
+
+MFM commit `e93e098a` (tree `2bf4630e71c97cb925da3c082ee055864f182d5f`)
+publishes the next isolated dependency repair. The
+[pinned Transformers source](https://github.com/huggingface/transformers/blob/v5.17.0/src/transformers/models/gemma4_unified/image_processing_gemma4_unified.py)
+and [official PyTorch CUDA 11.8 pairing](https://pytorch.org/get-started/previous-versions/#v271)
+show why container Torch `2.7.1+cu118` needs matching TorchVision
+`0.22.1+cu118`. The launcher verifies the official wheel's SHA-256
+`6dd3d825fb4a75eae887665d1da812a360d69273118bfa17616c836bfb466627`,
+installs it with Pillow without replacing Torch, asserts both imports inside
+udocker, and loads the local processor before clone rehash. The
+[matching-runtime procedure trace](traces/FBM_TRACE_20260930_MFM_V16_TORCHVISION_RUNTIME_FIX_PUBLISHED.jsonl)
+is **published, unrun**. The 21-case fixture has 38 text references and no
+media; actual full-role media later needs separate decoder and ffmpeg/ffprobe
+tests. Jobs `576488` and `576508` do not change the verified source/clone
+custody from `576486` and neither supplies a processor, forward, training or
+full-role receipt.
 Do not claim capability from the present training-only mixture.
 The published signed-review verifier tests record format and signatures; an
 independent steward must authenticate the reviewers, rights issuer, blind

@@ -147,16 +147,40 @@ after `00:03:35`: udocker P2 printed Torch `2.7.1+cu118` and Transformers
 No successful processor receipt was observed. The
 [failure trace](traces/FBM_TRACE_20260930_MFM_V16_PUBLIC_CPU_576488_FAILURE.jsonl)
 records the target-runtime dependency and keeps the prior source/clone
-metadata verification intact. No repaired rerun has been observed.
-Current MFM commit `079c010c` (tree
+metadata verification intact. MFM commit `079c010c` (tree
 `11aa22b85c75dcc8f097609800780ea2fddb8860`) publishes an isolated
 target-runtime fix: stage the CPython 3.11 Pillow 11.3.0 wheel with SHA-256
 `106064daa23a745510dabce1d84f29137a37224831d88eb4ce94bb187b1d7e5f`,
 verify it, install offline into a fresh MFM-only job directory, and load the
 local Gemma 4 `AutoProcessor` inside udocker before rehashing the clone. The
 [repair method trace](traces/FBM_TRACE_20260930_MFM_V16_PILLOW_RUNTIME_FIX_PUBLISHED.jsonl)
-is **PUBLISHED_UNRUN**. It does not turn job `576488` into a processor pass or
-change its original `412ae32a` source pin.
+records its published, unrun status at that capture. Job `576508` then ran
+the `079c010c` method: the owner verified the exact Pillow wheel SHA-256 and
+stdout reports `Successfully installed pillow-11.3.0` in the MFM-only target.
+The job `FAILED 1:0` on `node005.cluster` after `00:00:42`. Early
+`AutoProcessor.from_pretrained` could not import `Gemma4UnifiedProcessor`
+because `torchvision` was absent in udocker. The printed
+`mfm-v16-public-processor-576508.json` path was intended output; no sealed
+processor receipt was supplied. The
+[new failure trace](traces/FBM_TRACE_20260930_MFM_V16_PUBLIC_CPU_576508_TORCHVISION_FAILURE.jsonl)
+preserves job `576488`'s missing-PIL result and job `576486`'s source/clone
+custody metadata. The [Gemma4Unified image module](https://github.com/huggingface/transformers/blob/v5.17.0/src/transformers/models/gemma4_unified/image_processing_gemma4_unified.py)
+imports `torchvision.transforms.v2` at module load when the processor takes
+the vision path, even for this text-only diagnostic.
+
+MFM commit `e93e098a` (tree `2bf4630e71c97cb925da3c082ee055864f182d5f`)
+now publishes the matching target-runtime repair. It pins the official
+TorchVision `0.22.1+cu118` CPython 3.11 wheel at SHA-256
+`6dd3d825fb4a75eae887665d1da812a360d69273118bfa17616c836bfb466627`,
+matching container Torch `2.7.1+cu118` under
+[PyTorch's CUDA 11.8 pairing](https://pytorch.org/get-started/previous-versions/#v271).
+The launcher verifies both wheel hashes, installs them offline into a fresh
+MFM-only job target, checks their import paths and versions without replacing
+Torch, and constructs the local processor before clone rehash. This
+[published repair trace](traces/FBM_TRACE_20260930_MFM_V16_TORCHVISION_RUNTIME_FIX_PUBLISHED.jsonl)
+is **unrun** on Magnolia. It does not turn either failed job into a processor
+pass. The public 21-case text fixture has 38 references and no media; later
+full-role media processing requires separate decoder and ffmpeg/ffprobe tests.
 
 ## Ordered V1 MFM replay evidence
 
@@ -168,7 +192,7 @@ separates these receipts so one passing step cannot stand in for another:
 | Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Magnolia job `576486` completed `0:0`; owner checked both sealed receipt digests, parent, role and all eight file rows. Full JSON and script were not transferred. |
 | Full-role corpus | Versioned 1.6 targets, authenticated rights, two reviewers, disjoint DEV and sealed FINAL | Historical 49,819 rows fail coverage; published 21-case 1.6 authoring seed is diagnostic only |
 | Code path | Matching 1.6 codec, signed full-fit trainer, inference, custodian assessor and full-role gate adapter | Published full-fit path and narrow P2 host-profile candidate bridge; rich 1.6 semantics still fail closed in P2, with no full-role adapter or capability receipt |
-| CPU and GPU admission | Complete Magnolia CPU processor receipt, then bounded 1.6 backward/restart result | Public 21-case CPU diagnostic job `576488` failed on missing PIL; exact-wheel early processor-load fix published but unrun; no successful processor or GPU receipt established |
+| CPU and GPU admission | Complete Magnolia CPU processor receipt, then bounded 1.6 backward/restart result | Public 21-case job `576488` failed on missing PIL. Job `576508` verified and installed Pillow, then failed on missing TorchVision. Matching `e93e098a` target-runtime fix published but unrun; no successful processor or GPU receipt established |
 | Paid full fit | Hash-bound model, optimizer and seeded-untrained control | Blocked |
 | Independent qualification | Matched trained/control outputs, sealed FINAL and actual memory-gate-to-native-judgment effect | Not run |
 | Private owner admission | Scoped local training/access rights, source roles, sensitivity and deletion lineage; no distribution grant or two reviewers required | Contract and tool pending |
