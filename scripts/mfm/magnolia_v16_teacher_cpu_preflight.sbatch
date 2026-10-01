@@ -58,7 +58,10 @@ if [[ "${1:-}" == --inside-namespace ]]; then
 else
   MFM_HOST_NETNS="$(readlink /proc/self/ns/net)"
 fi
-export MFM_HOST_NETNS
+MFM_HOST_UID="$(id -u)"
+MFM_HOST_GID="$(id -g)"
+[[ "$MFM_HOST_UID" != 0 ]] || { echo 'root host UID is not supported' >&2; exit 2; }
+export MFM_HOST_NETNS MFM_HOST_UID MFM_HOST_GID
 
 within_root() {
   local selected
@@ -70,6 +73,10 @@ within_root() {
 }
 
 p2_loopback_check() {
+  [[ "$(id -u)" == "$MFM_HOST_UID" && "$(id -g)" == "$MFM_HOST_GID" ]] || {
+    echo 'namespace changed the caller UID/GID before udocker' >&2
+    return 1
+  }
   "$UDOCKER" run --volume="$COMPUTE_ROOT:$COMPUTE_ROOT" \
     --env="MFM_HOST_NETNS=$MFM_HOST_NETNS" \
     --entrypoint=/bin/bash "$CONTAINER" -c '
@@ -204,9 +211,10 @@ command -v unshare >/dev/null || { echo 'unshare unavailable' >&2; exit 2; }
 # No data is opened by either capability check. Select the first supported
 # route, then execute the *entire* private flow once under that route. A data
 # or processor failure cannot trigger fallback to host networking.
-if unshare --user --map-root-user --net -- bash -c \
-    'set -euo pipefail; p2_loopback_check'; then
-  NAMESPACE_ARGS=(--user --map-root-user --net)
+if unshare --help | grep -Fq -- '--map-current-user' && \
+   unshare --user --map-current-user --net -- bash -c \
+     'set -euo pipefail; p2_loopback_check'; then
+  NAMESPACE_ARGS=(--user --map-current-user --net)
 elif unshare --net -- bash -c \
     'set -euo pipefail; p2_loopback_check'; then
   NAMESPACE_ARGS=(--net)

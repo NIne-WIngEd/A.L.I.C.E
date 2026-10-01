@@ -31,14 +31,26 @@ mkdir -p "$UDOCKER_DIR" "$UDOCKER_TMP"
 
 echo "job=$SLURM_JOB_ID node=$(hostname) container=$CONTAINER"
 echo "host_netns=$(readlink /proc/self/ns/net)"
+echo "unshare_version=$(unshare --version)"
 MFM_HOST_NETNS="$(readlink /proc/self/ns/net)"
-export MFM_HOST_NETNS
+MFM_HOST_UID="$(id -u)"
+MFM_HOST_GID="$(id -g)"
+[[ "$MFM_HOST_UID" != 0 ]] || { echo 'root host UID is not supported' >&2; exit 2; }
+echo "host_uid=$MFM_HOST_UID host_gid=$MFM_HOST_GID"
+export MFM_HOST_NETNS MFM_HOST_UID MFM_HOST_GID
 
 # Try rootless user+network namespaces first. Some installations allow a
 # direct network namespace instead. Both candidates must pass the *inner*
 # Python check after udocker P2 starts; merely succeeding at unshare is not
 # sufficient. No fallback runs a corpus with host networking.
 probe_inner() {
+  # udocker must be invoked as the original nonroot user. P2 may emulate
+  # root *inside* its container, which is a different boundary.
+  [[ "$(id -u)" == "$MFM_HOST_UID" && "$(id -g)" == "$MFM_HOST_GID" ]] || {
+    echo 'namespace changed the caller UID/GID before udocker' >&2
+    return 1
+  }
+  echo "namespace_uid=$(id -u) namespace_gid=$(id -g)"
   "$UDOCKER" run \
     --volume="$COMPUTE_ROOT:$COMPUTE_ROOT" \
     --env="MFM_HOST_NETNS=$MFM_HOST_NETNS" \
@@ -59,9 +71,15 @@ PY
 }
 export -f probe_inner
 
-if unshare --user --map-root-user --net -- bash -c \
-    'set -euo pipefail; probe_inner'; then
-  exit 0
+# The original --map-root-user route did enter a namespace on node005, but
+# udocker refused its UID 0. Map the caller to the same nonzero UID instead.
+if unshare --help | grep -Fq -- '--map-current-user'; then
+  if unshare --user --map-current-user --net -- bash -c \
+      'set -euo pipefail; probe_inner'; then
+    exit 0
+  fi
+else
+  echo 'this unshare lacks --map-current-user' >&2
 fi
 
 if unshare --net -- bash -c \
