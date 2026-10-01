@@ -2,8 +2,9 @@
 
 Only a verified local role base supplies source representations. The Gemma
 language head cannot answer for MFM. Raw invalid outputs are preserved. A
-full fit requires independently pinned signed corpus lineage. Neither a
-bounded probe nor a full fit promotes a proposal into authoritative memory.
+full fit requires independently pinned signed corpus lineage. An explicitly
+unqualified teacher fit has separate owner-authorized source custody. No
+inference result promotes a proposal into authoritative memory.
 """
 
 from __future__ import annotations
@@ -41,7 +42,8 @@ def verify_artifacts(component_dir: Path, prepared_base_dir: Path,
                      prepared_base_receipt: Path, preflight_receipt: Path, *,
                      control: str, expected_manifest_sha256: str | None = None,
                      expected_roster_sha256: str | None = None,
-                     expected_review_sha256: str | None = None) -> tuple[dict, dict, dict, Path]:
+                     expected_review_sha256: str | None = None,
+                     expected_teacher_manifest_sha256: str | None = None) -> tuple[dict, dict, dict, Path]:
     """Rehash the prepared base, versioned processor, run, and both controls."""
     if control not in ("trained", "seeded-untrained"):
         raise CognitiveKernelContractError("unknown v1.6 specialist control")
@@ -106,8 +108,13 @@ def verify_artifacts(component_dir: Path, prepared_base_dir: Path,
             record.get("full_fit", False) is not full_fit
             for record in (preflight, component)):
         raise CognitiveKernelContractError("v1.6 full-fit mode lineage differs")
+    teacher_fit = run.get("teacher_fit", False)
+    if type(teacher_fit) is not bool or (full_fit and teacher_fit) or any(
+            record.get("teacher_fit", False) is not teacher_fit
+            for record in (preflight, component)):
+        raise CognitiveKernelContractError("v1.6 teacher-fit mode lineage differs")
     if full_fit:
-        if any(value is None for value in (
+        if expected_teacher_manifest_sha256 is not None or any(value is None for value in (
                 expected_manifest_sha256, expected_roster_sha256,
                 expected_review_sha256)):
             raise CognitiveKernelContractError(
@@ -129,7 +136,28 @@ def verify_artifacts(component_dir: Path, prepared_base_dir: Path,
                 type(component.get("optimizer_steps")) is not int or \
                 component["optimizer_steps"] < 1:
             raise CognitiveKernelContractError("v1.6 signed full-fit lineage differs")
-    elif (any(value is not None for value in (
+    elif teacher_fit:
+        if (expected_teacher_manifest_sha256 is None or
+                any(value is not None for value in (
+                    expected_manifest_sha256, expected_roster_sha256,
+                    expected_review_sha256)) or
+                any(record.get("corpus_sha256") != require_sha256(
+                    expected_teacher_manifest_sha256, "teacher_manifest_sha256")
+                    for record in (preflight, run)) or
+                any(record.get("trust_roster_sha256") is not None or
+                    record.get("signed_review_receipt_sha256") is not None
+                    for record in (preflight, run, component)) or
+                preflight.get("corpus_status") !=
+                "owner-authorized-teacher-fit-diagnostic-development-unqualified" or
+                not preflight.get("owner_authorization_ref") or
+                run.get("probe_only") is not component.get("probe_only") or
+                type(run.get("probe_only")) is not bool or
+                type(component.get("optimizer_steps")) is not int or
+                component["optimizer_steps"] < 1 or
+                (run["probe_only"] and component["optimizer_steps"] != 1)):
+            raise CognitiveKernelContractError("v1.6 unqualified teacher-fit lineage differs")
+    elif (expected_teacher_manifest_sha256 is not None or
+          any(value is not None for value in (
             expected_manifest_sha256, expected_roster_sha256, expected_review_sha256)) or
           any(record.get("trust_roster_sha256") is not None or
               record.get("signed_review_receipt_sha256") is not None
@@ -176,6 +204,20 @@ def verify_signed_binding(manifest: Path, manifest_sha256: str,
     return canonical_sha256(receipt)
 
 
+def verify_teacher_binding(manifest: Path, manifest_sha256: str,
+                           owner_authorization_ref: str) -> None:
+    """Recheck exact unqualified teacher bytes and rights before inference."""
+    training.shared._require_private_network_isolation()
+    admission = admit_formation_corpus(
+        manifest, expected_sha256=manifest_sha256, teacher_training=True,
+        owner_authorization_ref=owner_authorization_ref)
+    train = tuple(training.admitted_rows_v16(admission, split="train"))
+    development = tuple(training.admitted_rows_v16(admission, split="development"))
+    for example in (*train, *development):
+        training.supervised_output_record_v16(example)
+    training._require_signed_fit_coverage(train, development, policy="teacher")
+
+
 def read_input(row: dict):
     if not isinstance(row, dict) or set(row) != {
             "case_id", "context", "context_digest", "opened_sources"}:
@@ -211,7 +253,8 @@ def read_input(row: dict):
 def generate_case(*, processor, base, specialist, context, opened_sources,
                   case_id: str, component_sha256: str, inference_run_id: str,
                   max_source_tokens: int, max_new_tokens: int,
-                  full_fit: bool = False, base_device=None) -> dict:
+                  full_fit: bool = False, teacher_fit: bool = False,
+                  base_device=None) -> dict:
     import torch
 
     source = training.source_batch_v16(
@@ -245,6 +288,7 @@ def generate_case(*, processor, base, specialist, context, opened_sources,
         result["validation_error"] = f"{type(exc).__name__}: {exc}"
         return result
     result["validation_status"] = ("grounded_fit_proposal_only" if full_fit else
+                                   "grounded_teacher_fit_proposal_only" if teacher_fit else
                                    "grounded_probe_proposal_only")
     return result
 
@@ -265,17 +309,28 @@ def run(args: argparse.Namespace) -> None:
     manifest_sha256 = getattr(args, "manifest_sha256", None)
     roster = getattr(args, "trust_roster", None)
     roster_sha256 = getattr(args, "trust_roster_sha256", None)
+    teacher_manifest = getattr(args, "teacher_manifest", None)
+    teacher_sha256 = getattr(args, "teacher_manifest_sha256", None)
+    owner_ref = getattr(args, "owner_authorization_ref", None)
     pins = (manifest, manifest_sha256, roster, roster_sha256)
     if any(value is not None for value in pins) and any(
             value is None for value in pins):
         raise CognitiveKernelContractError("v1.6 signed corpus pins must be complete")
+    if any(value is not None for value in (teacher_manifest, teacher_sha256, owner_ref)):
+        if any(value is None for value in (teacher_manifest, teacher_sha256, owner_ref)) or \
+                any(value is not None for value in pins):
+            raise CognitiveKernelContractError("v1.6 teacher corpus pins must be separate and complete")
+        verify_teacher_binding(teacher_manifest, teacher_sha256, owner_ref)
     review_sha256 = (verify_signed_binding(manifest, manifest_sha256, roster, roster_sha256)
                      if all(value is not None for value in pins) else None)
     prepared, preflight, component, weight_path = verify_artifacts(
         args.component_dir, args.prepared_base_dir, args.prepared_base_receipt,
         args.preflight_receipt, control=args.control,
         expected_manifest_sha256=manifest_sha256,
-        expected_roster_sha256=roster_sha256, expected_review_sha256=review_sha256)
+        expected_roster_sha256=roster_sha256, expected_review_sha256=review_sha256,
+        expected_teacher_manifest_sha256=teacher_sha256)
+    if teacher_sha256 is not None and preflight.get("owner_authorization_ref") != owner_ref:
+        raise CognitiveKernelContractError("v1.6 teacher owner authorization differs")
     import torch
     from safetensors.torch import load_file
     import transformers
@@ -344,10 +399,12 @@ def run(args: argparse.Namespace) -> None:
                     max_source_tokens=preflight["max_source_tokens"],
                     max_new_tokens=args.max_new_tokens,
                     full_fit=component.get("full_fit", False),
+                    teacher_fit=component.get("teacher_fit", False),
                     base_device=base_device)
                 row = {
                     "case_id": case_id,
                     "status": ("fit_generated" if component.get("full_fit", False)
+                               else "teacher_fit_generated" if component.get("teacher_fit", False)
                                else "probe_generated"),
                     "context_digest": context.content_digest(),
                     "processed_modalities": sorted({
@@ -357,6 +414,7 @@ def run(args: argparse.Namespace) -> None:
                     "formation_component_sha256": selected_sha,
                     "control_kind": args.control,
                     "full_fit": component.get("full_fit", False),
+                    "teacher_fit": component.get("teacher_fit", False),
                     "probe_only": component["probe_only"],
                     "optimizer_steps": component["optimizer_steps"],
                     "qualified_for_product": False,
@@ -397,6 +455,9 @@ def main() -> None:
     parser.add_argument("--manifest-sha256")
     parser.add_argument("--trust-roster", type=Path)
     parser.add_argument("--trust-roster-sha256")
+    parser.add_argument("--teacher-manifest", type=Path)
+    parser.add_argument("--teacher-manifest-sha256")
+    parser.add_argument("--owner-authorization-ref")
     parser.add_argument("--input-jsonl", type=Path, required=True)
     parser.add_argument("--output-jsonl", type=Path, required=True)
     parser.add_argument("--control", choices=("trained", "seeded-untrained"), required=True)

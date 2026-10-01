@@ -20,7 +20,7 @@ import json
 from typing import Iterator
 
 from .canonical import CognitiveKernelContractError, canonical_sha256, require_identifier
-from .formation_dataset_admission import CorpusAdmission
+from .formation_dataset_admission import CorpusAdmission, _unique_json
 from .formation_semantics_v16 import (
     FULL_ROLE_ADJUDICATION_DIMENSIONS, FormationContextV16, MemoryProposalBundleV16,
     OUTPUT_SCHEMA_V16, bundle_v16_from_output, context_v16_from_record,
@@ -232,7 +232,7 @@ def admitted_rows_v16(admission: CorpusAdmission, *, split: str) -> Iterator[For
             raise CognitiveKernelContractError("admitted v1.6 consumed payload changed")
         return raw
     for case in selected:
-        target_row = json.loads(exact_bytes(case.target_payload))
+        target_row = _unique_json(exact_bytes(case.target_payload), "admitted v1.6 target")
         if not isinstance(target_row, dict) or set(target_row) != {
                 "schema", "context", "source_ids", "proposals", "dispositions", "adjudications"}:
             raise CognitiveKernelContractError("admitted v1.6 target has unsupported fields")
@@ -241,7 +241,7 @@ def admitted_rows_v16(admission: CorpusAdmission, *, split: str) -> Iterator[For
         sources: list[tuple[str, bytes]] = []
         hosts: set[str] = set()
         for source, rights_ref in zip(case.source_payloads, case.rights_receipts, strict=True):
-            rights = json.loads(exact_bytes(rights_ref))
+            rights = _unique_json(exact_bytes(rights_ref), "admitted v1.6 rights")
             hosts.add(rights["host_family"])
             sources.append((rights["source_id"], exact_bytes(source)))
         if target_row["source_ids"] != [ref for ref, _ in sources]:

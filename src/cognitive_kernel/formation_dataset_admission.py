@@ -17,6 +17,7 @@ from .canonical import CognitiveKernelContractError, require_identifier, require
 
 
 SCHEMA = "mfm-formation-corpus-v1"
+TEACHER_SCHEMA = "mfm-v16-owner-teacher-corpus-v1"
 RIGHTS_SCHEMA = "mfm-source-rights-v1"
 SPLITS = frozenset({"train", "development", "final"})
 
@@ -39,6 +40,20 @@ def _object(value: object, name: str) -> dict:
     if not isinstance(value, dict):
         raise CognitiveKernelContractError(f"{name} must be an object")
     return value
+
+
+def _unique_json(raw: bytes, name: str) -> dict:
+    def unique(pairs: list[tuple[str, object]]) -> dict:
+        result: dict = {}
+        for key, value in pairs:
+            if key in result:
+                raise CognitiveKernelContractError(f"{name} has duplicate JSON key")
+            result[key] = value
+        return result
+    try:
+        return _object(json.loads(raw, object_pairs_hook=unique), name)
+    except json.JSONDecodeError as exc:
+        raise CognitiveKernelContractError(f"{name} is not one JSON object") from exc
 
 
 def _list(value: object, name: str) -> list:
@@ -155,8 +170,15 @@ class CorpusAdmission:
 
 
 def admit_formation_corpus(manifest_path: str | Path, *,
-                           expected_sha256: str) -> CorpusAdmission:
-    """Admit train/dev bytes; inspect FINAL metadata without opening its bytes."""
+                           expected_sha256: str, teacher_training: bool = False,
+                           owner_authorization_ref: str | None = None) -> CorpusAdmission:
+    """Admit exact bytes; the opt-in teacher lane is training-only, not gold.
+
+    The default signed-review corpus policy is unchanged. Teacher training
+    uses the same source rights and connected-lineage checks but no invented
+    independent reviews or FINAL. Owner authorization is an attestation, not
+    cryptographic proof of consent or semantic correctness.
+    """
     file = Path(manifest_path)
     try:
         raw = file.read_bytes()
@@ -165,14 +187,24 @@ def admit_formation_corpus(manifest_path: str | Path, *,
     digest = sha256(raw).hexdigest()
     if digest != _digest(expected_sha256, "expected_sha256"):
         raise CognitiveKernelContractError("corpus manifest differs from frozen digest")
-    manifest = _object(json.loads(raw), "corpus manifest")
-    if manifest.get("schema") != SCHEMA:
+    manifest = _unique_json(raw, "corpus manifest")
+    if manifest.get("schema") != (TEACHER_SCHEMA if teacher_training else SCHEMA):
         raise CognitiveKernelContractError("unsupported formation corpus schema")
+    if teacher_training:
+        authorization = _identifier(owner_authorization_ref, "owner_authorization_ref")
+        if (manifest.get("authorization_id") != authorization or
+                manifest.get("status") != "owner-authorized-teacher-training-only-unqualified" or
+                type(manifest.get("case_count")) is not int or manifest["case_count"] < 1):
+            raise CognitiveKernelContractError("teacher corpus lacks pinned owner authorization or count")
+    elif owner_authorization_ref is not None:
+        raise CognitiveKernelContractError("signed corpus does not use teacher authorization")
     corpus_id = _identifier(manifest.get("corpus_id"), "corpus_id")
     root = file.parent.resolve()
     cases = _list(manifest.get("cases"), "cases")
     if not cases:
         raise CognitiveKernelContractError("corpus has no cases")
+    if teacher_training and len(cases) != manifest["case_count"]:
+        raise CognitiveKernelContractError("teacher corpus count differs from pinned manifest")
     seen_cases: set[str] = set()
     case_groups: dict[str, set[tuple[str, str]]] = {}
     case_parents: dict[str, tuple[str, ...]] = {}
@@ -188,8 +220,14 @@ def admit_formation_corpus(manifest_path: str | Path, *,
             raise CognitiveKernelContractError("duplicate case ID")
         seen_cases.add(case_id)
         split = row.get("split")
-        if split not in SPLITS:
+        if split not in (SPLITS - {"final"} if teacher_training else SPLITS):
             raise CognitiveKernelContractError("unsupported corpus split")
+        if teacher_training and (row.get("authorization_id") != authorization or
+                not isinstance(row.get("target_origin"), str) or
+                row["target_origin"] not in {
+                    "owner-authorized-service-teacher",
+                    "licensed-deterministic-generator"}):
+            raise CognitiveKernelContractError("teacher target lacks origin and owner authorization")
         author = _identifier(row.get("author_id"), "author_id")
         groups: set[tuple[str, str]] = set()
         for field in ("host_family", "source_family", "generator_family",
@@ -236,7 +274,8 @@ def admit_formation_corpus(manifest_path: str | Path, *,
                     root, {"path": source.get("rights_path"),
                            "sha256": source.get("rights_sha256")},
                     "source rights receipt", open_payload=True)
-                rights = _object(json.loads((root / receipt_path).read_bytes()), "source rights receipt")
+                rights = _unique_json((root / receipt_path).read_bytes(),
+                                      "source rights receipt")
                 if rights.get("schema") != RIGHTS_SCHEMA:
                     raise CognitiveKernelContractError("unsupported source rights receipt")
                 for field, value in (("source_id", source_id),
@@ -263,6 +302,39 @@ def admit_formation_corpus(manifest_path: str | Path, *,
         target_row = _object(row.get("target"), "target")
         target_path, target_digest = _checked_bytes(
             root, target_row, "target", open_payload=split != "final")
+        if teacher_training:
+            provenance = _object(row.get("target_provenance"), "target_provenance")
+            if set(provenance) != {"producer_id", "producer_version", "input",
+                                   "output", "conversion"} or \
+                    _identifier(provenance.get("producer_id"), "producer_id") != author:
+                raise CognitiveKernelContractError("teacher target producer differs from author")
+            _identifier(provenance.get("producer_version"), "producer_version")
+            for field in ("input", "output", "conversion"):
+                _checked_bytes(root, _object(provenance[field], field),
+                               f"target provenance {field}", open_payload=True)
+            source_paths = {_path(root, source.path, "source")[1]
+                            for source in source_payloads}
+            target_absolute = _path(root, target_path, "target")[1]
+            provenance_paths = {field: _path(root, provenance[field]["path"],
+                                             f"target provenance {field}")[1]
+                                for field in ("input", "output", "conversion")}
+            if row["target_origin"] == "owner-authorized-service-teacher":
+                if (len(set(provenance_paths.values())) != 3 or
+                        set(provenance_paths.values()) & (source_paths | {target_absolute})):
+                    raise CognitiveKernelContractError(
+                        "teacher provenance paths must be distinct from each other, sources and target")
+            else:
+                if (provenance["output"]["path"] != target_path or
+                        provenance["output"]["sha256"] != target_digest):
+                    raise CognitiveKernelContractError(
+                        "deterministic generator output must bind exact target bytes")
+                if (provenance_paths["input"] == provenance_paths["conversion"] or
+                        {provenance_paths["input"], provenance_paths["conversion"]} &
+                        (source_paths | {target_absolute})):
+                    raise CognitiveKernelContractError(
+                        "deterministic provenance input and conversion paths must be distinct")
+            groups.add(("target_provenance_input_sha256", provenance["input"]["sha256"]))
+            groups.add(("target_provenance_output_sha256", provenance["output"]["sha256"]))
         reviews = _list(row.get("reviews"), "reviews")
         reviewers: set[str] = set()
         for review_value in reviews:
@@ -275,7 +347,9 @@ def admit_formation_corpus(manifest_path: str | Path, *,
                     review.get("source_sha256s") != source_digests):
                 raise CognitiveKernelContractError("reviewers did not independently accept exact target and sources")
             reviewers.add(reviewer)
-        if len(reviewers) < 2:
+        if teacher_training and reviews:
+            raise CognitiveKernelContractError("teacher training must not claim independent review")
+        if not teacher_training and len(reviewers) < 2:
             raise CognitiveKernelContractError("case requires two independent reviewers")
         admitted[split].append(AdmittedCase(
             case_id, split, tuple(source_payloads), PayloadRef(target_path, target_digest),
@@ -319,7 +393,10 @@ def admit_formation_corpus(manifest_path: str | Path, *,
             raise CognitiveKernelContractError("connected source/person/generator lineage leaks across splits")
     result = CorpusAdmission(corpus_id, digest, tuple(admitted["train"]),
                              tuple(admitted["development"]), tuple(admitted["final"]), root)
-    if not result.train or not result.development or not result.final_metadata:
+    if teacher_training:
+        if not result.train or not result.development or result.final_metadata:
+            raise CognitiveKernelContractError("teacher corpus needs train and diagnostic development only")
+    elif not result.train or not result.development or not result.final_metadata:
         raise CognitiveKernelContractError("corpus requires train, development and sealed FINAL metadata")
     # Metadata-level exclusion happens even if nobody requests a handoff.
     result.audit_handoff(gradient_paths=(), development_paths=())

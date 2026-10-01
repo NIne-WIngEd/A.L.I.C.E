@@ -43,6 +43,14 @@ the original Magnolia file was not transferred for independent byte custody.
 No admitted full-role corpus preflight, GPU probe, training, independent FINAL
 evaluation or product qualification has occurred.
 
+Owner-authorized, training-only teacher targets may use a distinct unqualified
+v1.6 corpus lane without falsely asserting two independent human reviews per
+training row. Its source rights, target provenance and exact data contract are
+in [the owner-teacher training lane](MFM_V16_OWNER_TEACHER_TRAINING_LANE_2026-10-01.md).
+Neither the older v1/v1.5 mixture nor the 21-case CPU diagnostic seed is that
+corpus. The existing signed full-fit lane remains available for independently
+adjudicated evidence.
+
 The later v1.6 role-placement change alters `trainer_sha256`. Job 576510
 remains a verified owner-pasted **historical CPU diagnostic**; its receipt
 cannot bind a run of the changed trainer. The required next processor pass is

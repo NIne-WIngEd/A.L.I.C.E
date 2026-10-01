@@ -3,9 +3,10 @@
 This path never upgrades frozen v1.5 targets. The exact v1.6 registration
 context reaches the processor, and all supervised dimensions must be
 adjudicated. A public synthetic curriculum may be checked on CPU; an admitted
-corpus may supply a bounded one-step fit probe. A complete fit uses an explicit
-signed-review admission path and an externally pinned trust roster. Signature
-checks do not establish reviewer identity or semantic truth.
+corpus may supply a bounded one-step fit probe. An explicitly unqualified,
+owner-authorized teacher corpus may train through its own exact provenance and
+rights admission. The separate signed full-fit path requires an externally
+pinned trust roster. Signature checks do not establish semantic truth.
 
 The Gemma language head never supplies answers or target labels. Formation
 weights start from a separate seeded decoder. No result authorizes a memory
@@ -160,7 +161,7 @@ def _public_examples(path: Path, expected_sha256: str, owner_authorization_ref: 
     return tuple(examples["train"]), tuple(examples["development"])
 
 
-def _require_signed_fit_coverage(train, development) -> None:
+def _require_signed_fit_coverage(train, development, *, policy="signed") -> None:
     """Demand observed positives in both visible splits, never infer FINAL labels.
 
     This is a minimal GPU admission guard, not proof of diversity, target
@@ -175,12 +176,33 @@ def _require_signed_fit_coverage(train, development) -> None:
             missing[split] = absent
     if missing:
         raise CognitiveKernelContractError(
-            "signed v1.6 fit lacks positive reviewed dimensions: " +
+            f"{policy} v1.6 fit lacks positive supervised dimensions: " +
             json.dumps(missing, sort_keys=True, separators=(",", ":")))
 
 
 def _examples(args):
     require_sha256(args.input_sha256, "input_sha256")
+    teacher_fit = bool(getattr(args, "teacher_fit", False))
+    teacher_manifest = getattr(args, "teacher_training_manifest", None)
+    if teacher_fit:
+        if teacher_manifest is None or args.owner_authorization_ref is None or \
+                getattr(args, "full_fit", False) or args.admitted_manifest is not None or \
+                args.public_synthetic_curriculum is not None:
+            raise CognitiveKernelContractError("teacher fit needs its own pinned manifest and owner authorization")
+        admission = admit_formation_corpus(
+            teacher_manifest, expected_sha256=args.input_sha256,
+            teacher_training=True, owner_authorization_ref=args.owner_authorization_ref)
+        train = tuple(admitted_rows_v16(admission, split="train"))
+        development = tuple(admitted_rows_v16(admission, split="development"))
+        seen = set()
+        for item in (*train, *development):
+            supervised_output_record_v16(item)
+            fingerprint = model_input_sha256_v16(item)
+            if fingerprint in seen:
+                raise CognitiveKernelContractError("teacher input repeats across splits")
+            seen.add(fingerprint)
+        _require_signed_fit_coverage(train, development, policy="teacher")
+        return train, development, "owner-authorized-teacher-fit-diagnostic-development-unqualified"
     if getattr(args, "full_fit", False) and args.public_synthetic_curriculum is not None:
         raise CognitiveKernelContractError("synthetic curriculum cannot supply full fit")
     if getattr(args, "full_fit", False):
@@ -249,6 +271,7 @@ def _binding(args, prepared, status: str, train_count: int, development_count: i
         "foundation_inventory_sha256": shared.FOUNDATION_INVENTORY_SHA256,
         "corpus_sha256": args.input_sha256, "corpus_status": status,
         "full_fit": bool(getattr(args, "full_fit", False)),
+        "teacher_fit": bool(getattr(args, "teacher_fit", False)),
         "trust_roster_sha256": getattr(args, "trust_roster_sha256", None),
         "signed_review_receipt_sha256": getattr(
             args, "signed_review_receipt_sha256", None),
@@ -445,7 +468,7 @@ def _resume(checkpoint_dir, output_dir, specialist, optimizer, run_digest):
 
 
 def _run_manifest_v16(args, prepared, preflight, config, torch_version: str) -> dict:
-    """Bind the signed admission into the immutable run and resume digest."""
+    """Bind the selected admission into the immutable run and resume digest."""
     if getattr(args, "full_fit", False):
         roster = getattr(args, "trust_roster_sha256", None)
         review = getattr(args, "signed_review_receipt_sha256", None)
@@ -459,6 +482,7 @@ def _run_manifest_v16(args, prepared, preflight, config, torch_version: str) -> 
         "prepared_base_receipt_sha256": prepared["receipt_sha256"],
         "corpus_sha256": args.input_sha256,
         "full_fit": bool(getattr(args, "full_fit", False)),
+        "teacher_fit": bool(getattr(args, "teacher_fit", False)),
         "trust_roster_sha256": getattr(args, "trust_roster_sha256", None),
         "signed_review_receipt_sha256": getattr(
             args, "signed_review_receipt_sha256", None),
@@ -633,6 +657,7 @@ def _run_training(args, train, development, status, prepared, processor, preflig
         "prepared_base_kind": preflight["prepared_base_kind"],
         "run_manifest_sha256": digest,
         "full_fit": bool(getattr(args, "full_fit", False)),
+        "teacher_fit": bool(getattr(args, "teacher_fit", False)),
         "trust_roster_sha256": getattr(args, "trust_roster_sha256", None),
         "signed_review_receipt_sha256": getattr(
             args, "signed_review_receipt_sha256", None),
@@ -658,6 +683,7 @@ def arguments() -> argparse.Namespace:
     corpus = parser.add_mutually_exclusive_group(required=True)
     corpus.add_argument("--admitted-manifest", type=Path)
     corpus.add_argument("--public-synthetic-curriculum", type=Path)
+    corpus.add_argument("--teacher-training-manifest", type=Path)
     parser.add_argument("--input-sha256", required=True)
     parser.add_argument("--owner-authorization-ref")
     parser.add_argument("--prepared-base-dir", type=Path)
@@ -683,6 +709,8 @@ def arguments() -> argparse.Namespace:
     parser.add_argument("--probe-only", action="store_true")
     parser.add_argument("--full-fit", action="store_true",
                         help="require signed admission with an externally pinned roster")
+    parser.add_argument("--teacher-fit", action="store_true",
+                        help="owner-authorized training-only fit; never independent qualification")
     parser.add_argument("--trust-roster", type=Path,
                         help="steward-controlled rights/reviewer trust roster")
     parser.add_argument("--trust-roster-sha256",
@@ -704,10 +732,20 @@ def main() -> None:
     if args.probe_only and args.mode != "train":
         raise CognitiveKernelContractError("probe-only applies only to training")
     full_fit = bool(getattr(args, "full_fit", False))
+    teacher_fit = bool(getattr(args, "teacher_fit", False))
+    teacher_manifest = getattr(args, "teacher_training_manifest", None)
     roster = getattr(args, "trust_roster", None)
     roster_sha = getattr(args, "trust_roster_sha256", None)
     if full_fit and args.probe_only:
         raise CognitiveKernelContractError("full fit and one-step probe are separate routes")
+    if full_fit and teacher_fit:
+        raise CognitiveKernelContractError("signed and teacher fit are separate routes")
+    if (teacher_fit and (teacher_manifest is None or
+                         getattr(args, "admitted_manifest", None) is not None or
+                         args.public_synthetic_curriculum is not None or
+                         not getattr(args, "owner_authorization_ref", None))) or \
+            (teacher_manifest is not None and not teacher_fit):
+        raise CognitiveKernelContractError("teacher fit needs its own pinned manifest and owner authorization")
     if full_fit and (args.public_synthetic_curriculum is not None or
                      getattr(args, "admitted_manifest", None) is None):
         raise CognitiveKernelContractError("v1.6 full fit requires an admitted corpus")
@@ -720,7 +758,7 @@ def main() -> None:
         raise CognitiveKernelContractError("trust roster flags require explicit full fit")
     if args.resume_checkpoint and (args.mode != "train" or args.probe_only):
         raise CognitiveKernelContractError("resume applies only to full v1.6 training")
-    if args.mode == "train" and not (args.probe_only or full_fit):
+    if args.mode == "train" and not (args.probe_only or full_fit or teacher_fit):
         raise CognitiveKernelContractError(
             "full v1.6 fit needs independent adjudication, signed admission and external roster")
     if args.mode == "train" and args.public_synthetic_curriculum:
@@ -730,7 +768,7 @@ def main() -> None:
                        "DO_NOT_TRACK": "1", "WANDB_DISABLED": "true"})
     # Explicitly public/synthetic CPU tests may run on a connected compute
     # node. All admitted data and every GPU path require a loopback-only NS.
-    if args.admitted_manifest is not None or args.mode == "train":
+    if args.admitted_manifest is not None or teacher_manifest is not None or args.mode == "train":
         shared._require_private_network_isolation()
     train, development, status = _examples(args)
     if args.mode == "data-preflight":
