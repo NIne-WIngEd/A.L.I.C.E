@@ -127,5 +127,53 @@
     "private_artifacts_in_fbm_git": false,
     "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_FIRST_SCOPED_TEACHER_CANDIDATE.jsonl"
   },
+  "source_grounded_role_expansion_20261001": {
+    "status": "PUBLISHED_METHOD_PRIVATE_CANDIDATES_UNADMITTED",
+    "mfm_commit": "23903016ee2f4d8f89c8e3649f70e50c68911a4e",
+    "mfm_tree": "2d3f0e800c22278d542c5c3c6e0be903405459af",
+    "public_methods": [
+      "scripts/mfm/build_v16_role_teacher_candidates.py",
+      "scripts/mfm/prepare_v16_role_excerpt_teacher_cases.py",
+      "scripts/mfm/inventory_synthea_sample_sources.py",
+      "scripts/mfm/magnolia_private_network_namespace_probe.sbatch",
+      "scripts/mfm/magnolia_v16_teacher_cpu_preflight.sbatch"
+    ],
+    "private_candidate_references": {
+      "fictional_role_jsonl_cases": 6,
+      "fictional_role_jsonl_sha256": "2096cb9a148678e9a2a4a2fea9a3c09d44e9f45db448713998667f3f4219d08e",
+      "role_excerpt_cases": 6,
+      "role_excerpt_manifest_sha256": "42da926754900edf7610951b0a9c7c17446d44b35c57767bb9502522eddef3ba",
+      "role_excerpt_bundle_sha256": "421edcd8fc4dae41db92e263bc00a2f0d7616b3902363ca9b638479d850b6896",
+      "role_excerpt_converter_sha256": "b56c698e493e9350db85eefea1ea99cb9dfa47b1b7c92a441b5b19f927ad33fd",
+      "source_rights_authenticated": false,
+      "training_admitted": false
+    },
+    "source_families": {
+      "synthea_sample_commit": "9959d9178ea28f4ec10f17ee238b6fabe6eb0de5",
+      "synthea_archive_sha256": "6d3c5433bcae4791bc5c30469d1445b430fb4894d5c13bda15fee0584bbd7778",
+      "synthea_source_inventory_sha256": "18934bb58539650c4cd42c556c83e4a6c011fa1e54ae7386c04689aaf1df8a55",
+      "synthea_patient_bundles": 555,
+      "synthea_lineage_components": 1,
+      "additional_research_only": ["AMI Meeting Corpus", "ICSI Meeting Corpus", "Wikimedia revision history"],
+      "source_rights_status": "exact-byte external review pending; no automatic cross-split independence"
+    },
+    "new_fit_guard": {
+      "entrypoint": "scripts/mfm/train_v16_formation_specialist.py",
+      "required_positive_constructs_per_opened_split": ["assistant_self", "procedural_skill", "behavior_pattern", "decision_rationale", "deletion_request", "revocation_request"],
+      "scope": "GPU admission safeguard in addition to ten coarse v1.6 dimension positives; does not supply missing explicit negative labels or qualification"
+    },
+    "fbm_replay": [
+      "Keep observed original source bytes, teacher-visible as-of slices, prompt, raw answer, converter, target and exact hashes separate; a model-produced target is a proposal, not a fact.",
+      "For corrections and deletions, cite the owner's exact request and named target; a registry tombstone may replace withdrawn content but must not be promoted to owner speech or silently reopened.",
+      "Keep a counterfactual's connected ancestry in one split and give different immutable source bytes distinct source IDs; validate claim-level temporal entailment, not merely valid byte offsets.",
+      "Before a paid fit, assemble actual rights-authenticated, lineage-separated full-role train and diagnostic-development with source/target provenance; demand positives for the six omitted constructs, then run the exact full-corpus processor in loopback-only custody.",
+      "Do not interpret a passed 21-case public CPU diagnostic, a no-data namespace probe, twelve fictional candidates or source inventory as trained memory behavior. Independent FINAL and later gate/retrieval/judgment effects are separate requirements."
+    ],
+    "cpu_full_corpus_receipt": null,
+    "magnolia_namespace_probe_result": null,
+    "trained_weights": false,
+    "evaluation_eligible": false,
+    "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_ROLE_EXPANSION_AND_CPU_GATE.jsonl"
+  },
   "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_TEACHER_LANE_AND_EXACT_SLICES.jsonl"
 }
