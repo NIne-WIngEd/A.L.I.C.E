@@ -4,9 +4,9 @@
 21-case public diagnostic. It requires a real owner-authorized
 `mfm-v16-owner-teacher-corpus-v1` manifest with authenticated source rights,
 exact target provenance and distinct train/diagnostic-development lineage.
-The current single-case candidate is unadmitted, so there is **no full-corpus
-CPU receipt yet**. Do not submit this job with that candidate or with the old
-v1.5 mixture.
+The current bounded fictional candidates are unadmitted, so there is **no
+full-corpus CPU receipt yet**. Do not submit this job with those candidates or
+with the old v1.5 mixture.
 
 Before submission, record the following values in owner custody independently
 of the job. Export them on the Magnolia login node. All paths must be absolute
