@@ -165,11 +165,16 @@ show why container Torch `2.7.1+cu118` needs matching TorchVision
 installs it with Pillow without replacing Torch, asserts both imports inside
 udocker, and loads the local processor before clone rehash. The
 [matching-runtime procedure trace](traces/FBM_TRACE_20260930_MFM_V16_TORCHVISION_RUNTIME_FIX_PUBLISHED.jsonl)
-is **published, unrun**. The 21-case fixture has 38 text references and no
-media; actual full-role media later needs separate decoder and ffmpeg/ffprobe
-tests. Jobs `576488` and `576508` do not change the verified source/clone
-custody from `576486` and neither supplies a processor, forward, training or
-full-role receipt.
+was unrun at publication. The owner then reported Magnolia job `576509`
+`COMPLETED 0:0` on MFM `e93e098a`: the target runtime loaded
+`Gemma4UnifiedProcessor` and processed the 21-case public synthetic text
+fixture, with stdout reporting a preflight digest. See the
+[bounded success trace](traces/FBM_TRACE_20260930_MFM_V16_PUBLIC_CPU_576509_TEXT_SUCCESS.jsonl).
+The actual receipt JSON has not been independently inspected here. The fixture
+has 38 text references and no media; actual full-role media needs separate
+decoder and ffmpeg/ffprobe tests. Jobs `576488` and `576508` remain failures
+and do not change source/clone custody from `576486`. Job `576509` supplies no
+model forward, training or admitted full-role processor qualification.
 Do not claim capability from the present training-only mixture.
 The published signed-review verifier tests record format and signatures; an
 independent steward must authenticate the reviewers, rights issuer, blind
