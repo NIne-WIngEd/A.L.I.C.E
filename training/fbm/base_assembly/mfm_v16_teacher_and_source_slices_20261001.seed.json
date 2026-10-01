@@ -95,5 +95,37 @@
     "evaluation_eligible": false,
     "current_result": "No complete v1.6 teacher training corpus, CPU full-corpus preflight, GPU backward, trained weights, independent FINAL or autonomous FBM consumer build is asserted."
   },
+  "first_scoped_teacher_candidate": {
+    "status": "PUBLISHED_METHOD_PRIVATE_CANDIDATE_UNADMITTED",
+    "method_parent_commit": "22df35e401860a5f03532cea21ac22110b2c3f64",
+    "candidate_method_commit": "4264a519c6a19f467b7ae921391d3eef46308b64",
+    "candidate_method_tree": "28389a73f3a9271ff94138557e67b50a2dcf22e0",
+    "candidate_method_path": "scripts/mfm/prepare_v16_scoped_exercise_teacher_case.py",
+    "candidate_contract_path": "docs/MFM_V16_FIRST_SCOPED_TEACHER_CANDIDATE_2026-10-01.md",
+    "prompt_template_path": "scripts/mfm/prompts/v16_scoped_exercise_teacher_v1.txt",
+    "selected_source_fields": ["planner.exercise_target", "daily_self_report.exercise", "device_log.activity_tracker"],
+    "scope": "One fictional day and these three exact source fields only; no claims about the full history.",
+    "role_boundary": "Separate day-scoped plan, self-reported outcome and device signal; abstain from claiming the planned run was completed.",
+    "positive_dimensions": ["outcome", "abstention"],
+    "remaining_dimension_status": "The other eight were explicitly reviewed as negative within the selected three fields only; never turn absence in the wider history into a negative label.",
+    "claim_anchors": "Narrow spans on the selected original source properties, not whole-field citations; original parent-file offsets and handle mapping stay in private custody.",
+    "reported_private_artifact_hashes": {
+      "three_field_teacher_input_sha256": "fd0118adbaac41a93e86b28a3510414ffb9649fbcb5692808db352895eb1aaff",
+      "rendered_prompt_sha256": "bff619766462ed543347abad930761524f9782002771f19c2da489afb117b971",
+      "raw_teacher_response_sha256": "250beac24bbfb0e73372b0bfa98b76eab1f0ea136b12ed4e706130acb299899c",
+      "candidate_sha256": "e8a805032c589057fd3099f1fad90595b817fabec9a0fd180566dfa75ad22a10",
+      "conversion_provenance_sha256": "964a5e9b9a4a4f3d133105b61ea3ac13ca1f3a49a71d18a58e082ec556b1bd78"
+    },
+    "hash_evidence_scope": "The published MFM candidate document reports hashes for owner-controlled private artifacts. FBM does not contain or independently rehash their bytes.",
+    "owner_controlled_custody_bundle_sha256_reported": "ab6da265c7885e8fb385c25496e3f60cd27283c38f5830d94e347b89222b035c",
+    "custody_bundle_role": "Seven-entry private archive reported by the owner for handoff and audit. Its SHA is reference metadata only; FBM did not mount it and neither training nor runtime depends on the archive.",
+    "rights_status": "unverified",
+    "independent_review": false,
+    "training_admitted": false,
+    "evaluation_eligible": false,
+    "gradient_step_observed": false,
+    "private_artifacts_in_fbm_git": false,
+    "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_FIRST_SCOPED_TEACHER_CANDIDATE.jsonl"
+  },
   "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_TEACHER_LANE_AND_EXACT_SLICES.jsonl"
 }

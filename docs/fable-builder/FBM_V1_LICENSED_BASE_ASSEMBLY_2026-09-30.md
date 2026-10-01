@@ -127,6 +127,20 @@ Neither source-slice output nor a v1.6 teacher corpus is stored in FBM Git.
 The method has focused CPU tests; no admitted complete teacher corpus, GPU
 fit, independent FINAL or capability result exists.
 
+MFM `4264a519` adds a converter for one fictional day-1 exercise teaching
+case. It selects only the planner exercise target, daily self-report exercise
+and device activity signal, binds narrow original-source claim spans, and
+keeps the plan, reported outcome and device signal distinct. The owner-controlled
+candidate SHA-256 is
+`e8a805032c589057fd3099f1fad90595b817fabec9a0fd180566dfa75ad22a10`;
+the private provenance SHA-256 is
+`964a5e9b9a4a4f3d133105b61ea3ac13ca1f3a49a71d18a58e082ec556b1bd78`.
+FBM records [the procedure trace](traces/FBM_TRACE_20261001_MFM_V16_FIRST_SCOPED_TEACHER_CANDIDATE.jsonl)
+and hashes only, not the private source or target bytes. Rights are unverified;
+this one case is unadmitted, unreviewed and cannot support a GPU fit or model
+capability claim. The trainer SHA from `22df35e4` is unchanged by the separate
+candidate converter.
+
 The [MFM training coverage audit](../../training/fbm/base_assembly/mfm_v1_training_role_coverage_20260930.json)
 is bound to the exact 49,819-case training-only mixture. Its 426,367 proposal
 targets concentrate on host goals and observations; confidence, uncertainty
@@ -277,8 +291,10 @@ allocated/reserved bytes on both selected GPUs. These are **measurement
 fields**, not measured values: no GPU run has occurred on this version. The
 split uses the pinned runtime's inference-only `device_map` for base loading;
 its `accelerate` version and Gemma 4 dispatch still need verification on the
-actual GPU host. The trainer SHA is now
+actual GPU host. The trainer SHA at `706f6940` was
 `38d548d6cdea0efc30fc97c134b2c0c34d8eae968aa375dfd2289c6486bce467`.
+The published teacher-lane head `22df35e4` changes it again to
+`f2622d6b73a89b8cc58cc02bb47ca24b8cbcff4e174c89e81d848a01ae58f72d`.
 The validated owner-pasted job `576510` JSON binds the prior trainer
 `528bdfbe25ca8f3a9863a523318805589e97b3e9d1de4fd3ad19ae3ab977b017`.
 It remains historical. The next CPU processor pass must use an admitted
