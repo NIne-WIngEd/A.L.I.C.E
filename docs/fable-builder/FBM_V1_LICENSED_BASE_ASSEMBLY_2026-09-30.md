@@ -191,9 +191,25 @@ path or digest alone does not verify every field. The
 [successful diagnostic trace](traces/FBM_TRACE_20260930_MFM_V16_PUBLIC_CPU_576509_TEXT_SUCCESS.jsonl)
 records this limited evidence. The fixture has 38 text references and no
 media; later full-role media processing requires separate decoder and
-ffmpeg/ffprobe tests. Repeated `processor.__call__` kwargs warnings in stderr
-also warrant attention for those media tests. Neither failed historical job
-is reclassified as a pass.
+ffmpeg/ffprobe tests. A subsequent MFM source review corrected every source
+text block to escape literal media markers and moved `do_sample_frames=False`
+into `processor_kwargs`. This resolves the old call shape responsible for the
+reported warnings, but changes the trainer SHA. Job `576509` remains a
+historical diagnostic at `e93e098a`; its digest cannot be reused as a
+preflight for the newly published MFM `1a614846` (tree
+`aa060efdc811122adfece34117a0dd08c5c41463`). A fresh exact-code CPU
+receipt is required. Neither failed historical job is reclassified as a pass.
+The new [source and draft intake method trace](traces/FBM_TRACE_20261001_MFM_V16_SOURCE_ENCODING_AND_DRAFT_INTAKE.jsonl)
+records the version change without making a capability claim.
+
+MFM `1a614846` also publishes a private annotation draft intake from pinned
+source-only review packets. It regenerates the selected host/day packet matrix
+from original structural source files and checks the exact bytes before
+creating a new mode-0600 draft. Each of the ten review dimensions remains
+`unknown`, and original-file byte offsets are null until a reviewer verifies
+them. It creates no target, split, rights attestation, independent review,
+sealed FINAL or admitted training row. Its one-generator source family cannot
+populate independent train, DEV and FINAL by itself.
 
 ## Ordered V1 MFM replay evidence
 
@@ -205,7 +221,7 @@ separates these receipts so one passing step cannot stand in for another:
 | Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Magnolia job `576486` completed `0:0`; owner checked both sealed receipt digests, parent, role and all eight file rows. Full JSON and script were not transferred. |
 | Full-role corpus | Versioned 1.6 targets, authenticated rights, two reviewers, disjoint DEV and sealed FINAL | Historical 49,819 rows fail coverage; published 21-case 1.6 authoring seed is diagnostic only |
 | Code path | Matching 1.6 codec, signed full-fit trainer, inference, custodian assessor and full-role gate adapter | Published full-fit path and narrow P2 host-profile candidate bridge; rich 1.6 semantics still fail closed in P2, with no full-role adapter or capability receipt |
-| CPU and GPU admission | Complete admitted-corpus Magnolia CPU processor receipt, then bounded 1.6 backward/restart result | Public 21-case text-only synthetic diagnostic job `576509` completed and printed a preflight digest; its JSON is uninspected here. Prior jobs `576488` and `576508` failed. No admitted full-role multimodal CPU or GPU receipt established |
+| CPU and GPU admission | Complete admitted-corpus Magnolia CPU processor receipt at exact trainer SHA, then bounded 1.6 backward/restart result | Public 21-case text-only synthetic diagnostic job `576509` completed under historical MFM `e93e098a` and printed a preflight digest; its JSON is uninspected here. Corrected MFM `1a614846` needs a fresh exact-code receipt. Prior jobs `576488` and `576508` failed. No admitted full-role multimodal CPU or GPU receipt established |
 | Paid full fit | Hash-bound model, optimizer and seeded-untrained control | Blocked |
 | Independent qualification | Matched trained/control outputs, sealed FINAL and actual memory-gate-to-native-judgment effect | Not run |
 | Private owner admission | Scoped local training/access rights, source roles, sensitivity and deletion lineage; no distribution grant or two reviewers required | Contract and tool pending |

@@ -1,15 +1,15 @@
 {
   "schema": "alice.fbm.base_derivation_seed.v1",
   "scope": "Fable/A.L.I.C.E. V1 MFM; process seed only",
-  "authority": "Procedure seed plus owner-reported Magnolia custody and public CPU diagnostic observations. Published 1.6 signed full-fit trainer, runner, custodian assessor and narrow P2 bridge code exist. Magnolia job 576486 completed 0:0 and printed source and MFM role-clone receipt digests; the owner subsequently checked both receipt self-digests, parent digest, mfm role, unqualified status and all eight pinned file rows with the foundation reader. Job 576488 failed without PIL; job 576508 installed Pillow and failed without TorchVision. MFM commit e93e098a published the exact matching TorchVision/Pillow runtime repair; owner-supplied Magnolia job 576509 completed 0:0 and printed a sealed preflight digest after processing the 21-case public text-only synthetic diagnostic. The actual preflight receipt JSON, custody JSON and submitted batch script have not been independently inspected in this checkout. No admitted full-role corpus, full-role multimodal processor pass, bounded GPU, paid full fit, real paired inference, downstream qualification or autonomous FBM product build is recorded.",
+  "authority": "Procedure seed plus owner-reported Magnolia custody and public CPU diagnostic observations. Published 1.6 signed full-fit trainer, runner, custodian assessor and narrow P2 bridge code exist. Magnolia job 576486 completed 0:0 and printed source and MFM role-clone receipt digests; the owner subsequently checked both receipt self-digests, parent digest, mfm role, unqualified status and all eight pinned file rows with the foundation reader. Job 576488 failed without PIL; job 576508 installed Pillow and failed without TorchVision. MFM commit e93e098a published the exact matching TorchVision/Pillow runtime repair; owner-supplied Magnolia job 576509 completed 0:0 and printed a sealed preflight digest after processing the 21-case public text-only synthetic diagnostic. MFM successor 1a614846 escapes every source text block, corrects processor kwargs, and publishes an unadmitted source-packet annotation draft intake. The 576509 digest is historical at e93e098a and cannot authorize the changed trainer; obtain a fresh exact-source processor receipt. The actual preflight receipt JSON, custody JSON and submitted batch script have not been independently inspected in this checkout. No admitted full-role corpus, full-role multimodal processor pass, bounded GPU, paid full fit, real paired inference, downstream qualification or autonomous FBM product build is recorded.",
   "implementation_sources": {
     "foundation_branch": "research/gemma4-v1-source-derivation-20260930",
     "foundation_commit": "3e1328410dac52ba18be243cb9f7144e7a3964d1",
     "mfm_branch": "research/mfm-v1-licensed-base-20260930",
-    "mfm_commit": "e93e098ad5546e8021fe209a401dabcdbe54a8fd",
+    "mfm_commit": "1a6148466b9a96b1e9841b2a4a3115968036a752",
     "mfm_v1_6_contract_path": "docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md",
-    "mfm_v1_6_contract_status": "Published 1.6 codec, signed full-fit trainer, matched runner, separate FINAL custodian assessor and narrow P2 owner host-profile candidate bridge with CPU/static tests. Owner-reported exact source/clone CPU custody run 576486 remains metadata verified. Public 21-case Magnolia CPU jobs 576488 and 576508 failed on missing PIL and TorchVision, respectively. Job 576509 completed 0:0 at MFM e93e098a with the matching isolated wheels and Gemma4UnifiedProcessor, printing a digest for a source-bound public text-only diagnostic receipt. Receipt JSON has not been independently inspected. No admitted 1.6 gold, full-role multimodal CPU receipt, GPU/full-fit outputs or full-role downstream result.",
-    "mfm_published_tree": "2bf4630e71c97cb925da3c082ee055864f182d5f"
+    "mfm_v1_6_contract_status": "Published 1.6 codec, signed full-fit trainer, matched runner, separate FINAL custodian assessor and narrow P2 owner host-profile candidate bridge with CPU/static tests. Owner-reported exact source/clone CPU custody run 576486 remains metadata verified. Public 21-case Magnolia CPU jobs 576488 and 576508 failed on missing PIL and TorchVision, respectively. Job 576509 completed 0:0 at historical MFM e93e098a with the matching isolated wheels and Gemma4UnifiedProcessor, printing a digest for a source-bound public text-only diagnostic receipt. MFM 1a614846 corrects source text marker escaping and processor kwargs, changing the trainer SHA, and adds unadmitted draft intake. Receipt JSON has not been independently inspected, and 576509 cannot be reused for 1a614846. No admitted 1.6 gold, full-role multimodal CPU receipt, GPU/full-fit outputs or full-role downstream result.",
+    "mfm_published_tree": "aa060efdc811122adfece34117a0dd08c5c41463"
   },
   "source": {
     "repository": "google/gemma-4-12B",
@@ -142,7 +142,7 @@
       "model_forward_observed": false,
       "training_observed": false,
       "qualified_for_product": false,
-      "meaning": "The owner-supplied sacct/stdout/stderr support a completed public text-only v1.6 processor diagnostic and stdout-reported preflight digest at exact MFM and foundation commits. The underlying JSON has not been independently read or verified; the diagnostic cannot satisfy the admitted full-role, multimodal processor gate, model fit or behavioral qualification."
+      "meaning": "The owner-supplied sacct/stdout/stderr support a completed public text-only v1.6 processor diagnostic and stdout-reported preflight digest at exact historical MFM e93e098a and foundation 3e132841 commits. The underlying JSON has not been independently read or verified. The later 1a614846 trainer changed source text escaping and processor kwargs, so this digest cannot authorize its preflight; even the original diagnostic cannot satisfy admitted full-role multimodal processing, model fit or behavioral qualification."
     },
     "verified_derived_weights": false,
     "measured_untouched_forward": false,
@@ -301,7 +301,7 @@
       ],
       "operation": "Run complete no-egress 1.6 source/target processor admission on the actual admitted corpus and verified MFM role clone on a Magnolia CPU node or equivalent. Include all modalities, longest source/target examples, grounding and sensitivity/target links. Seal hashes, versions, peak attention envelope, counts and zero silent truncation in a new receipt.",
       "tool": null,
-      "implementation_status": "Magnolia job 576486 source and MFM role-clone custody digests and owner-checked receipt metadata are recorded. Public 21-case diagnostic jobs 576488 and 576508 failed on missing PIL and TorchVision, respectively. Job 576509 on MFM e93e098a verified both matching wheels, isolated their installation, constructed Gemma4UnifiedProcessor, and COMPLETED 0:0 after the 21-case text-only synthetic processor pass; stdout reports preflight SHA-256 fa46ea11f020874637b680549313cef233b1bf2535b7aaa09e5f1a1c8deef4d9, but receipt JSON has not been independently inspected. No complete admitted-corpus multimodal 1.6 processor receipt is observed. Historical 1.5 CPU tests do not supply this gate.",
+      "implementation_status": "Magnolia job 576486 source and MFM role-clone custody digests and owner-checked receipt metadata are recorded. Public 21-case diagnostic jobs 576488 and 576508 failed on missing PIL and TorchVision, respectively. Job 576509 on historical MFM e93e098a verified both matching wheels, isolated their installation, constructed Gemma4UnifiedProcessor, and COMPLETED 0:0 after the 21-case text-only synthetic processor pass; stdout reports preflight SHA-256 fa46ea11f020874637b680549313cef233b1bf2535b7aaa09e5f1a1c8deef4d9, but receipt JSON has not been independently inspected. MFM 1a614846 changes the trainer SHA through source escaping and processor-kwargs correction; a fresh exact-source preflight is required. No complete admitted-corpus multimodal 1.6 processor receipt is observed. Historical 1.5 CPU tests do not supply this gate.",
       "gate": "Fresh exact-path source and clone receipts, corpus and code digests, full case count, modality coverage, rights-safe no-egress process and max-token/attention results verify. Processor result is hardware/data admission only, not learned capability."
     },
     {
@@ -647,6 +647,17 @@
     "result": "Source-only cumulative day-1/7/15/30 synthetic history windows with exact parent-file SHA, canonical extracted-unit SHA, source locator and host/generator lineage. Whole-run profile is withheld until day 30. No source rights, target labels, reviewer decisions, development split or FINAL are created.",
     "smoke": "480 synthetic hosts, 1,920 packets, 92,817,429 bytes, SHA-256 4ae868b2cae39b837364f71c8b68cebe5fee731bca3711e1459d87782084e642; produced in memory only, not retained as corpus or gold",
     "status": "PUBLIC_CODE_METHOD_ONLY; one generator family and no admitted 1.6 training data"
+  },
+  "latest_v16_source_text_and_annotation_draft_method": {
+    "method_commit": "1a6148466b9a96b1e9841b2a4a3115968036a752",
+    "method_tree": "aa060efdc811122adfece34117a0dd08c5c41463",
+    "source_encoding_entrypoint": "scripts/mfm/train_v16_formation_specialist.py",
+    "source_encoding_correction": "Escape every text item in each opened source block so literal media markers cannot become processor tokens; pass do_sample_frames=False inside processor_kwargs. Prior job 576509 ran the older e93e098a trainer and its preflight digest must not be reused at the corrected trainer SHA.",
+    "annotation_draft_entrypoint": "scripts/mfm/prepare_v16_annotation_drafts.py",
+    "annotation_draft_contract": "Pin source packet SHA-256 and inventory SHA-256, regenerate selected host/day packets from original structural source files and reject byte drift. Emit new private 0600 draft with packet/row/source lineage and original byte-anchor start/end null, all ten formation dimension review states unknown. No generated target, rights/reviewer receipt, split, training admission or sealed FINAL.",
+    "replay_gate": "After source corrections, obtain a fresh exact-code CPU processor receipt on an authenticated admitted full-role multimodal corpus before GPU/full fit. Independently authenticate rights, human blind review and generator-disjoint splits; no draft is allowed directly into the trainer.",
+    "status": "PUBLISHED_CODE_METHOD_ONLY; focused tests reported by MFM author; no Magnolia execution of changed trainer, admitted annotation corpus or MFM capability result",
+    "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_SOURCE_ENCODING_AND_DRAFT_INTAKE.jsonl"
   },
   "magnolia_v16_public_cpu_diagnostic": {
     "script_path": "scripts/mfm/magnolia_v16_public_cpu_preflight.sbatch",

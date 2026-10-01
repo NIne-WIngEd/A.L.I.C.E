@@ -175,6 +175,13 @@ has 38 text references and no media; actual full-role media needs separate
 decoder and ffmpeg/ffprobe tests. Jobs `576488` and `576508` remain failures
 and do not change source/clone custody from `576486`. Job `576509` supplies no
 model forward, training or admitted full-role processor qualification.
+MFM successor `1a614846` (tree `aa060efdc811122adfece34117a0dd08c5c41463`)
+escapes every source text block against literal media-token markers and passes
+`do_sample_frames` inside `processor_kwargs`. The trainer hash changed, so
+`576509` cannot serve as the new code's processor admission. The same revision
+adds an unadmitted private annotation draft intake with all ten dimensions
+`unknown`, null original byte offsets, and no target, split or rights/review
+claim. See the [FBM source-revision trace](traces/FBM_TRACE_20261001_MFM_V16_SOURCE_ENCODING_AND_DRAFT_INTAKE.jsonl).
 Do not claim capability from the present training-only mixture.
 The published signed-review verifier tests record format and signatures; an
 independent steward must authenticate the reviewers, rights issuer, blind
