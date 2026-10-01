@@ -28,10 +28,11 @@ component offers clearer custody but still depends on the base at inference.
 At consumer installation, the user supplies corpus access and optional source
 choices. FBM must inventory and attribute that data, assemble and qualify the
 personal components, and continue governed updates. The user does not have
-to hand-label a gold corpus or hire a teacher to build MFM. The prelaunch
-shared MFM training and qualification program still needs authenticated
-source rights, two independent target reviews and sealed FINAL evidence;
-those are development gates, not a labeling job transferred to consumers.
+to hand-label a gold corpus or hire a teacher to build MFM. Prelaunch shared
+MFM needs authenticated training-source rights and source-bound teaching
+labels. Two independent target reviews apply to independently claimed
+development and sealed FINAL gold; they are not required for every synthetic
+training case or transferred to consumers.
 Shared distributable MFM weights require source rights for both
 `formation_training` and `model_distribution`. A user's private local
 adaptation requires that owner's scoped `formation_training` permission for
@@ -113,6 +114,18 @@ The owner additionally checked both receipt self-digests, parent digest,
 the foundation reader. The full JSON and batch script were not transferred
 for independent inspection. The original source and the
 trained formation specialist retain separate lineages.
+
+The [v1.6 teacher and source-slice replay seed](../../training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json)
+pins MFM `22df35e4` and its `706f6940` parent. The published method keeps
+exact original-source byte slices in owner custody and exports one selected
+source-only packet for an authorized teacher without revealing later records.
+The separate teacher-fit lane admits owner-authorized, rights-checked, complete
+v1.6 training targets with exact teacher or generator provenance; it never
+claims independent gold. The recorded day-1 export SHA-256 is
+`6c5b1a66d6e79ad1a17845f5ff6240d4d91a0b7f5673214d8ec109a770c75858`.
+Neither source-slice output nor a v1.6 teacher corpus is stored in FBM Git.
+The method has focused CPU tests; no admitted complete teacher corpus, GPU
+fit, independent FINAL or capability result exists.
 
 The [MFM training coverage audit](../../training/fbm/base_assembly/mfm_v1_training_role_coverage_20260930.json)
 is bound to the exact 49,819-case training-only mixture. Its 426,367 proposal
@@ -292,9 +305,9 @@ separates these receipts so one passing step cannot stand in for another:
 | Step | Required evidence | Current state |
 | --- | --- | --- |
 | Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Magnolia job `576486` completed `0:0`; owner checked both sealed receipt digests, parent, role and all eight file rows. Full JSON and script were not transferred. |
-| Full-role corpus | Versioned 1.6 targets, authenticated rights, two reviewers, disjoint DEV and sealed FINAL | Historical 49,819 rows fail coverage; published 21-case 1.6 authoring seed is diagnostic only |
-| Code path | Matching 1.6 codec, signed full-fit trainer, inference, custodian assessor and full-role gate adapter | Published full-fit path and narrow P2 host-profile candidate bridge; rich 1.6 semantics still fail closed in P2, with no full-role adapter or capability receipt |
-| CPU and GPU admission | Complete admitted-corpus Magnolia CPU processor receipt at exact trainer SHA, then bounded 1.6 backward/restart result | Public 21-case text-only synthetic diagnostic job `576510` completed at MFM `1a614846`; owner-pasted JSON self-digest and local code bindings match, while original Magnolia file custody remains unchecked. MFM `706f6940` changes the trainer SHA, so this diagnostic is historical. Explicit two-GPU role split and telemetry are published code only. No admitted full-role multimodal CPU or GPU receipt established |
+| Full-role corpus | Rights-checked, source-bound v1.6 teaching cases for gradients; independently reviewed development and sealed FINAL for qualification | Historical 49,819 rows fail v1.6 coverage; the 21-case 1.6 authoring seed is diagnostic only. Neither is a complete admitted teacher corpus or independent gold. |
+| Code path | Matching 1.6 codec, teacher-fit or signed-fit trainer, inference, independent custodian assessment and full-role gate adapter | MFM `22df35e4` publishes exact source-slice and teacher-fit methods with focused CPU tests; the narrow P2 bridge still rejects richer 1.6 semantics, and no full-role downstream receipt exists. |
+| CPU and GPU admission | Complete admitted-corpus CPU processor receipt at exact trainer SHA, then bounded 1.6 backward/restart result | Public 21-case text-only synthetic diagnostic job `576510` completed at MFM `1a614846`; owner-pasted JSON self-digest and local code bindings match, while original Magnolia file custody remains unchecked. MFM `22df35e4` changes the trainer SHA, so this diagnostic is historical. No admitted full-role multimodal CPU or GPU receipt exists. |
 | Paid full fit | Hash-bound model, optimizer and seeded-untrained control | Blocked |
 | Independent qualification | Matched trained/control outputs, sealed FINAL and actual memory-gate-to-native-judgment effect | Not run |
 | Private owner admission | Scoped local training/access rights, source roles, sensitivity and deletion lineage; no distribution grant or two reviewers required | Contract and tool pending |

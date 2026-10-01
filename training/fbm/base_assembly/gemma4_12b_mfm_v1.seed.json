@@ -6,10 +6,10 @@
     "foundation_branch": "research/gemma4-v1-source-derivation-20260930",
     "foundation_commit": "3e1328410dac52ba18be243cb9f7144e7a3964d1",
     "mfm_branch": "research/mfm-v1-licensed-base-20260930",
-    "mfm_commit": "706f69406afbc5e55768bc5d01154a459680e644",
+    "mfm_commit": "22df35e401860a5f03532cea21ac22110b2c3f64",
     "mfm_v1_6_contract_path": "docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md",
-    "mfm_v1_6_contract_status": "Published 1.6 codec, signed full-fit trainer, matched runner, separate FINAL custodian assessor and narrow P2 owner host-profile candidate bridge with CPU/static tests. Source/clone custody run 576486 remains owner-checked metadata. Jobs 576488 and 576508 failed on missing processor dependencies. Job 576509 completed at historical MFM e93e098a. Job 576510 completed at MFM 1a614846; the full owner-pasted JSON self-digest and local code/corpus bindings match, while original Magnolia file custody was not checked. It processed 15 TRAIN and 6 DEV synthetic text cases. MFM 706f6940 now publishes an explicit frozen-base GPU0/specialist GPU1 role split and probe telemetry. Its trainer hash differs, making 576510 historical for this head. Exact-head admitted full-role CPU processing, measured GPU backward/restart, gold and downstream results remain pending.",
-    "mfm_published_tree": "5cac4e9b0eb12470d785fff49839b73af8b6a1ab"
+    "mfm_v1_6_contract_status": "Published 1.6 codec, signed full-fit trainer, matched runner, separate FINAL custodian assessor and narrow P2 owner host-profile candidate bridge with CPU/static tests. Source/clone custody run 576486 remains owner-checked metadata. Jobs 576488 and 576508 failed on missing processor dependencies. Job 576509 completed at historical MFM e93e098a. Job 576510 completed at MFM 1a614846; the full owner-pasted JSON self-digest and local code/corpus bindings match, while original Magnolia file custody was not checked. It processed 15 TRAIN and 6 DEV synthetic text cases. MFM 706f6940 now publishes an explicit frozen-base GPU0/specialist GPU1 role split and probe telemetry. Its trainer hash differs, making 576510 historical for this head. Exact-head admitted full-role CPU processing, measured GPU backward/restart, gold and downstream results remain pending. MFM 22df35e4 additionally publishes exact source-slice isolation and a separate owner-authorized teacher-fit training lane with focused CPU tests. No complete v1.6 teacher corpus, new exact-head processor pass, GPU fit or independent qualification exists.",
+    "mfm_published_tree": "50e29a36f00d7dd9649dec30c3d00cdb9754955b"
   },
   "source": {
     "repository": "google/gemma-4-12B",
@@ -648,12 +648,12 @@
       "assemble per-user MFM with identity, host, relationship, assistant-self and governed memory interfaces",
       "monitor outcome-driven updates, failures, deletion lineage, export and rollback"
     ],
-    "review_boundary": "Shared full-role MFM development needs rights authentication, two independent target reviewers and sealed FINAL; consumer installation uses built-in qualified builder competence plus selective owner review for genuinely ambiguous personal fidelity, not an expert-labeling job on every installation.",
+    "review_boundary": "Shared MFM teaching targets may be owner-authorized, source-bound and training-only without two authenticated human reviews per gradient case. Independently claimed development and sealed FINAL require authentic blind adjudication and separate custody. Consumer installation does not require an expert-labeling job.",
     "current_status": "PROCEDURE_ONLY: autonomous FBM construction and per-user MFM replay are not implemented or qualified.",
     "shared_capability": "V1 distributes a qualified host-neutral MFM capability on licensed Gemma ancestry. FBM creates isolated owner-specific formation state from authorized evidence; Rayan/Elaina private data or gradients never enter shared weights.",
     "cold_start": "With sparse, contradictory or missing evidence, FBM retains provenance and abstains or asks selectively. It may not fabricate a source person, relationship, episode or user history to appear complete.",
     "rights_profiles": {
-      "shared_host_neutral_MFM_training": "Every included source requires authenticated permission for formation_training AND model_distribution of the resulting shared weight lineage, plus development-level independent review and sealed FINAL.",
+      "shared_host_neutral_MFM_training": "Every included shared training source needs authenticated formation_training and model_distribution rights. Teacher provenance and exact source grounding are checked for training; two blind reviews and an independent steward roster apply to the independently claimed gold lane, not every synthetic gradient case. FINAL remains sealed.",
       "local_owner_instance_adaptation": "Only the owner\u2019s authorized local formation_training and scoped source access are required for private adapted weights; model_distribution is not required or implied. If local training is denied, FBM may use permitted governed retrieval/state with uncertainty but must not update personal weights.",
       "implementation_separation": "Current formation_dataset_admission.py enforces shared distributable train-source rights and must not be reused unchanged for private owner adaptation. A distinct local owner admission contract/tool remains to be implemented."
     }
@@ -827,5 +827,21 @@
     "current_head_uses_this_preflight": false,
     "historical_receipt_trainer_sha256": "528bdfbe25ca8f3a9863a523318805589e97b3e9d1de4fd3ad19ae3ab977b017",
     "current_head_trainer_sha256": "38d548d6cdea0efc30fc97c134b2c0c34d8eae968aa375dfd2289c6486bce467"
+  },
+  "steps_scope": "The steps array records the existing signed full-fit route. The published owner-teacher training alternative and exact source-slice intake are in latest_v16_teacher_and_source_slices.overlay_seed. Both routes remain unqualified pending independent FINAL and downstream behavior.",
+  "latest_v16_teacher_and_source_slices": {
+    "method_commit": "22df35e401860a5f03532cea21ac22110b2c3f64",
+    "method_tree": "50e29a36f00d7dd9649dec30c3d00cdb9754955b",
+    "parent_commit": "706f69406afbc5e55768bc5d01154a459680e644",
+    "overlay_seed": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
+    "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_TEACHER_LANE_AND_EXACT_SLICES.jsonl",
+    "method": "Exact original-source JSON byte slices are retained in private custody and one receipt-pinned isolated packet is exported without future records. The distinct teacher-fit path verifies owner authorization, rights, complete v1.6 targets and teacher/generator byte provenance without pretending every synthetic training row has two human reviews.",
+    "owner_controlled_slice_receipt_sha256": "7eb0c22c1b36825bb26b140565c33706401fb9b3b5ce48f4d21223b50b7c80c9",
+    "owner_controlled_day1_export_sha256": "6c5b1a66d6e79ad1a17845f5ff6240d4d91a0b7f5673214d8ec109a770c75858",
+    "private_payload_in_fbm_git": false,
+    "training_admitted": false,
+    "model_trained": false,
+    "independent_qualification": false,
+    "status": "PUBLISHED_CODE_METHOD_AND_LOCAL_FOCUSED_CPU_TESTS_ONLY"
   }
 }

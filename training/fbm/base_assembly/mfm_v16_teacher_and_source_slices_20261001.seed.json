@@ -1,0 +1,99 @@
+{
+  "schema": "alice.fbm.mfm_v16_teacher_lane_seed.v1",
+  "scope": "Fable V1 shared MFM formation training and source-only teacher intake; procedure seed, not a builder training case",
+  "status": "PUBLISHED_CODE_METHOD_UNQUALIFIED",
+  "mfm_lineage": {
+    "branch": "research/mfm-v1-licensed-base-20260930",
+    "published_parent_commit": "706f69406afbc5e55768bc5d01154a459680e644",
+    "new_method_commit": "22df35e401860a5f03532cea21ac22110b2c3f64",
+    "new_method_tree": "50e29a36f00d7dd9649dec30c3d00cdb9754955b",
+    "publication_gate": "The new MFM commit contains the source-slice and teacher-fit methods; preserve this exact pin for future replay. The 706f694 parent alone does not contain them."
+  },
+  "foundation_lineage": {
+    "branch": "research/gemma4-v1-source-derivation-20260930",
+    "commit": "3e1328410dac52ba18be243cb9f7144e7a3964d1",
+    "mfm_role_clone_receipt_sha256": "54484dd523c396648fdf7069abe219c3f8f7c1fdcfec026cda1038810d4d7ac7",
+    "boundary": "Licensed representation ancestry only; the fresh formation specialist is the trained role. Clone custody is not a fit or behavior result."
+  },
+  "published_method_paths": {
+    "source_slice_materializer": "scripts/mfm/materialize_v16_source_slices.py",
+    "isolated_exporter": "scripts/mfm/export_v16_source_packet.py",
+    "source_slice_contract": "docs/MFM_V16_EXACT_SOURCE_SLICES_2026-10-01.md",
+    "teacher_lane_contract": "docs/MFM_V16_OWNER_TEACHER_TRAINING_LANE_2026-10-01.md",
+    "training_entrypoint": "scripts/mfm/train_v16_formation_specialist.py",
+    "source_slice_test": "tests/governance/test_mfm_v16_source_slice_materialization.py",
+    "teacher_fit_test": "tests/governance/test_mfm_v16_teacher_fit_gate.py"
+  },
+  "source_candidate_inputs": {
+    "generator_revision": "7a44de847315c244d675646b6e92910474493526",
+    "inventory_sha256": "a5fcd53f84e049f84a2aaf0e1902da17a2d9d8fd4eec85deccb4bf8902c4d362",
+    "source_packet_sha256": "4ae868b2cae39b837364f71c8b68cebe5fee731bca3711e1459d87782084e642",
+    "source_packet_count": 1920,
+    "source_reference_count": 102240,
+    "shared_generator_family_count": 1,
+    "rights_status": "unverified",
+    "formation_targets_present": false,
+    "training_admitted": false
+  },
+  "observed_draft_source_slice_receipt": {
+    "reported_by": "MFM published method documentation; FBM has not independently mounted the owner-controlled private output",
+    "source_slice_receipt_file_sha256": "7eb0c22c1b36825bb26b140565c33706401fb9b3b5ce48f4d21223b50b7c80c9",
+    "index_sha256": "d3c118e9e5a6324423eae354090652171237c83542f90ddf4df69653a72846dc",
+    "fragment_blob_sha256": "9df692ade0c10454da9cb3198cd9649ec43721c330b936daa649830b59974e34",
+    "unique_fragments": 58560,
+    "day_1_example_export_sha256": "6c5b1a66d6e79ad1a17845f5ff6240d4d91a0b7f5673214d8ec109a770c75858",
+    "status": "SOURCE_ONLY_UNREVIEWED_UNADMITTED"
+  },
+  "replay_steps": [
+    {
+      "id": "freeze_sources",
+      "requires": [],
+      "action": "Regenerate the pinned source-only packet and inventory from observed structural streams, excluding simulator truth, upstream QA, generator-only knobs and prior formation labels. Keep original files and source packet in owner-controlled custody.",
+      "gate": "Verify exact source/inventory hashes, observed day and ancestor lineage; do not treat a packet as rights or target authority."
+    },
+    {
+      "id": "materialize_exact_slices",
+      "requires": ["freeze_sources"],
+      "action": "Rebuild the packet from pinned original JSON bytes; extract only the verbatim source-native values visible in each day window, record original whole-file digest and exact byte offsets in a private index, and store deduplicated fragments in a private blob.",
+      "gate": "Reject packet drift, future-day records and altered fragments. Create a new 0700 directory with 0600 files; store receipt hash separately before any export. The shared blob and index are custody artifacts, never teacher input."
+    },
+    {
+      "id": "export_one_isolated_packet",
+      "requires": ["materialize_exact_slices"],
+      "action": "With an externally pinned slice receipt hash, rehash receipt, index and blob; select exactly one packet ID and export only its exact selected source fragments, source type, window and HMAC-derived opaque packet/host/source/slice handles to a fresh 0600 file. Keep the original packet ID and handle map in private custody.",
+      "gate": "No original packet or host ID, whole parent file, shared blob, index, future-day source, private path or generator-only field enters the teacher-visible export; the output remains source-only and unadmitted. Opaque handles reduce incidental disclosure but are not secrecy against a party with the public corpus and derived HMAC key. Authorization is checked separately before any external teacher sees source bytes."
+    },
+    {
+      "id": "author_v16_teacher_targets",
+      "requires": ["export_one_isolated_packet"],
+      "action": "Create source-grounded full v1.6 targets with exact narrow original evidence spans resolved privately from slice handles. Preserve the teacher identity, version, exact input/response and conversion bytes separately from the target, or record a licensed deterministic generator with the corresponding input/output/converter bytes.",
+      "gate": "Review all ten dimensions as present, negative or unknown; never infer negative from missing older labels. Resolve plan versus outcome, host versus source person, time, contradiction, correction and abstention. A teacher suggestion is not historical truth or independent gold."
+    },
+    {
+      "id": "admit_teacher_training",
+      "requires": ["author_v16_teacher_targets"],
+      "action": "Build an exact-hash owner-authorized mfm-v16-owner-teacher-corpus-v1 manifest and check train/diagnostic-development lineage, source rights, provenance payload bindings, complete target schema, duplicate inputs and full-role positives before handoff.",
+      "gate": "Owner/steward authenticates source rights for shared formation training and model distribution outside the hash checker. No fictitious reviewer records or roster. A single generator may supply training but cannot create independent development or FINAL merely by changing host IDs."
+    },
+    {
+      "id": "fit_teacher_supervised_role",
+      "requires": ["admit_teacher_training"],
+      "action": "Run an exact-code full-corpus CPU processor pass on the role clone, then a bounded full backward/checkpoint/restart GPU probe, then the complete teacher-fit training objective if actual memory/time fit. Bind clone, corpus, code, processor, optimizer, seeded-untrained control and checkpoint lineage.",
+      "gate": "Record teacher_fit=true, status owner-authorized-teacher-training-only-unqualified; report observed modality and role coverage. The 49,819 v1.5 rows and current 21-case v1.6 diagnostic are not complete admitted v1.6 training. No paid hour is authorized by this seed alone."
+    },
+    {
+      "id": "independent_qualification",
+      "requires": ["fit_teacher_supervised_role"],
+      "action": "Use independently sourced person/source/generator/time/modality development and separately custodied sealed FINAL with authenticated rights and blind review. Freeze model and evaluator before FINAL custodian access. Compare trained specialist to matched seeded-untrained and base controls, then test proposal to independent memory gate, accepted retrieval, and controlled later judgment.",
+      "gate": "No teacher training result, hash check or synthetic self-evaluation qualifies an MFM. Keep FINAL unavailable to gradients and model selection; record critical failures and independent causal contribution."
+    }
+  ],
+  "fbm_transfer_boundary": {
+    "shared_model": "Build host-neutral formation competence from rights-authorized teacher material, then require independent qualification before distributing it.",
+    "private_instance": "A consumer grants owner-scoped access. Local private adaptation has its own consent and custody contract, not shared-weight model-distribution rights or mandatory two-reviewer labeling per event. Do not promote private bytes or gradients to the shared base.",
+    "training_eligible": false,
+    "evaluation_eligible": false,
+    "current_result": "No complete v1.6 teacher training corpus, CPU full-corpus preflight, GPU backward, trained weights, independent FINAL or autonomous FBM consumer build is asserted."
+  },
+  "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_TEACHER_LANE_AND_EXACT_SLICES.jsonl"
+}
