@@ -178,9 +178,22 @@ The launcher verifies both wheel hashes, installs them offline into a fresh
 MFM-only job target, checks their import paths and versions without replacing
 Torch, and constructs the local processor before clone rehash. This
 [published repair trace](traces/FBM_TRACE_20260930_MFM_V16_TORCHVISION_RUNTIME_FIX_PUBLISHED.jsonl)
-is **unrun** on Magnolia. It does not turn either failed job into a processor
-pass. The public 21-case text fixture has 38 references and no media; later
-full-role media processing requires separate decoder and ffmpeg/ffprobe tests.
+was unrun at that capture. The owner subsequently ran it as Magnolia job
+`576509` on `node005.cluster`; `sacct` reported `COMPLETED 0:0` in `00:02:33`.
+The owner verified both wheel hashes and supplied stdout showing their
+isolated installation, Torch `2.7.1+cu118`, Transformers `5.17.0`, NumPy
+`2.4.6`, Pillow `11.3.0`, TorchVision `0.22.1+cu118` and
+`Gemma4UnifiedProcessor`. The 21-case synthetic public diagnostic printed
+longest source and target lengths of 2,244 and 1,484 tokens and preflight
+digest `fa46ea11f020874637b680549313cef233b1bf2535b7aaa09e5f1a1c8deef4d9`.
+The actual receipt JSON has not been independently inspected here; a printed
+path or digest alone does not verify every field. The
+[successful diagnostic trace](traces/FBM_TRACE_20260930_MFM_V16_PUBLIC_CPU_576509_TEXT_SUCCESS.jsonl)
+records this limited evidence. The fixture has 38 text references and no
+media; later full-role media processing requires separate decoder and
+ffmpeg/ffprobe tests. Repeated `processor.__call__` kwargs warnings in stderr
+also warrant attention for those media tests. Neither failed historical job
+is reclassified as a pass.
 
 ## Ordered V1 MFM replay evidence
 
@@ -192,7 +205,7 @@ separates these receipts so one passing step cannot stand in for another:
 | Source and MFM role clone | Eight pinned source hashes and a fresh clone receipt | Magnolia job `576486` completed `0:0`; owner checked both sealed receipt digests, parent, role and all eight file rows. Full JSON and script were not transferred. |
 | Full-role corpus | Versioned 1.6 targets, authenticated rights, two reviewers, disjoint DEV and sealed FINAL | Historical 49,819 rows fail coverage; published 21-case 1.6 authoring seed is diagnostic only |
 | Code path | Matching 1.6 codec, signed full-fit trainer, inference, custodian assessor and full-role gate adapter | Published full-fit path and narrow P2 host-profile candidate bridge; rich 1.6 semantics still fail closed in P2, with no full-role adapter or capability receipt |
-| CPU and GPU admission | Complete Magnolia CPU processor receipt, then bounded 1.6 backward/restart result | Public 21-case job `576488` failed on missing PIL. Job `576508` verified and installed Pillow, then failed on missing TorchVision. Matching `e93e098a` target-runtime fix published but unrun; no successful processor or GPU receipt established |
+| CPU and GPU admission | Complete admitted-corpus Magnolia CPU processor receipt, then bounded 1.6 backward/restart result | Public 21-case text-only synthetic diagnostic job `576509` completed and printed a preflight digest; its JSON is uninspected here. Prior jobs `576488` and `576508` failed. No admitted full-role multimodal CPU or GPU receipt established |
 | Paid full fit | Hash-bound model, optimizer and seeded-untrained control | Blocked |
 | Independent qualification | Matched trained/control outputs, sealed FINAL and actual memory-gate-to-native-judgment effect | Not run |
 | Private owner admission | Scoped local training/access rights, source roles, sensitivity and deletion lineage; no distribution grant or two reviewers required | Contract and tool pending |

@@ -1,14 +1,14 @@
 {
   "schema": "alice.fbm.base_derivation_seed.v1",
   "scope": "Fable/A.L.I.C.E. V1 MFM; process seed only",
-  "authority": "Procedure seed plus owner-reported Magnolia custody and failed public CPU diagnostic observations. Published 1.6 signed full-fit trainer, runner, custodian assessor and narrow P2 bridge code exist. Magnolia job 576486 completed 0:0 and printed source and MFM role-clone receipt digests; the owner subsequently checked both receipt self-digests, parent digest, mfm role, unqualified status and all eight pinned file rows with the foundation reader. Job 576488 FAILED 1:0 at processor construction without PIL. The Pillow repair at MFM commit 079c010c was executed in job 576508: the owner verified the wheel SHA-256 and stdout shows its isolated installation, but the early Gemma4UnifiedProcessor import failed because torchvision was absent. MFM commit e93e098a now publishes an exact matching TorchVision/Pillow target-runtime repair, unrun on Magnolia. Neither failed job supplied a successful processor receipt. Full custody receipt JSON and submitted scripts have not been inspected in this checkout. No admitted full-role corpus, complete 1.6 processor, bounded GPU, paid full fit, real paired inference, full-role downstream qualification or autonomous FBM product build is recorded.",
+  "authority": "Procedure seed plus owner-reported Magnolia custody and public CPU diagnostic observations. Published 1.6 signed full-fit trainer, runner, custodian assessor and narrow P2 bridge code exist. Magnolia job 576486 completed 0:0 and printed source and MFM role-clone receipt digests; the owner subsequently checked both receipt self-digests, parent digest, mfm role, unqualified status and all eight pinned file rows with the foundation reader. Job 576488 failed without PIL; job 576508 installed Pillow and failed without TorchVision. MFM commit e93e098a published the exact matching TorchVision/Pillow runtime repair; owner-supplied Magnolia job 576509 completed 0:0 and printed a sealed preflight digest after processing the 21-case public text-only synthetic diagnostic. The actual preflight receipt JSON, custody JSON and submitted batch script have not been independently inspected in this checkout. No admitted full-role corpus, full-role multimodal processor pass, bounded GPU, paid full fit, real paired inference, downstream qualification or autonomous FBM product build is recorded.",
   "implementation_sources": {
     "foundation_branch": "research/gemma4-v1-source-derivation-20260930",
     "foundation_commit": "3e1328410dac52ba18be243cb9f7144e7a3964d1",
     "mfm_branch": "research/mfm-v1-licensed-base-20260930",
     "mfm_commit": "e93e098ad5546e8021fe209a401dabcdbe54a8fd",
     "mfm_v1_6_contract_path": "docs/MFM_FORMATION_CONTRACT_V1_6_ADMISSION_2026-09-30.md",
-    "mfm_v1_6_contract_status": "Published 1.6 codec, signed full-fit trainer, matched runner, separate FINAL custodian assessor and narrow P2 owner host-profile candidate bridge with CPU/static tests. Owner-reported exact source/clone CPU custody run 576486 remains metadata verified. Public 21-case Magnolia CPU job 576488 failed without PIL. Job 576508 executed the MFM 079c010c Pillow repair and installed the verified wheel, then failed on missing torchvision during early Gemma4UnifiedProcessor import. MFM e93e098a publishes an exact-wheel TorchVision/Pillow target-runtime repair, unrun on Magnolia. A new source-bound processor receipt remains pending; no successful processor receipt, admitted 1.6 gold, GPU/full-fit outputs or full-role downstream result.",
+    "mfm_v1_6_contract_status": "Published 1.6 codec, signed full-fit trainer, matched runner, separate FINAL custodian assessor and narrow P2 owner host-profile candidate bridge with CPU/static tests. Owner-reported exact source/clone CPU custody run 576486 remains metadata verified. Public 21-case Magnolia CPU jobs 576488 and 576508 failed on missing PIL and TorchVision, respectively. Job 576509 completed 0:0 at MFM e93e098a with the matching isolated wheels and Gemma4UnifiedProcessor, printing a digest for a source-bound public text-only diagnostic receipt. Receipt JSON has not been independently inspected. No admitted 1.6 gold, full-role multimodal CPU receipt, GPU/full-fit outputs or full-role downstream result.",
     "mfm_published_tree": "2bf4630e71c97cb925da3c082ee055864f182d5f"
   },
   "source": {
@@ -111,6 +111,38 @@
       "model_forward_observed": false,
       "training_observed": false,
       "meaning": "Pillow installation alone did not complete the target-runtime dependency chain. The logged path is intended output, not an observed sealed receipt. Job 576486 source/clone custody remains metadata verified, while the processor, GPU, model and downstream gates remain pending."
+    },
+    "magnolia_owner_reported_v16_public_cpu_diagnostic_success": {
+      "job_id": "576509",
+      "node": "node005.cluster",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:02:33",
+      "batch_max_rss_kib": 320556,
+      "mfm_commit": "e93e098ad5546e8021fe209a401dabcdbe54a8fd",
+      "foundation_commit": "3e1328410dac52ba18be243cb9f7144e7a3964d1",
+      "udocker_execmode": "P2",
+      "pillow_wheel_sha256_owner_verified": "106064daa23a745510dabce1d84f29137a37224831d88eb4ce94bb187b1d7e5f",
+      "torchvision_wheel_sha256_owner_verified": "6dd3d825fb4a75eae887665d1da812a360d69273118bfa17616c836bfb466627",
+      "runtime": {
+        "torch": "2.7.1+cu118",
+        "transformers": "5.17.0",
+        "numpy": "2.4.6",
+        "pillow": "11.3.0",
+        "torchvision": "0.22.1+cu118",
+        "processor": "Gemma4UnifiedProcessor"
+      },
+      "diagnostic_preflight_path": "/homes/01/mxrayan/rayan-compute/mfm/receipts/mfm-v16-public-processor-576509.json",
+      "stdout_reported_preflight_sha256": "fa46ea11f020874637b680549313cef233b1bf2535b7aaa09e5f1a1c8deef4d9",
+      "preflight_receipt_json_independently_inspected": false,
+      "longest_source_tokens": 2244,
+      "longest_target_tokens": 1484,
+      "fixture": "21 public synthetic text-only cases; 15 TRAIN and 6 same-generator diagnostic DEV with 38 evidence references; no media",
+      "transformers_processor_kwargs_warnings": "21 repeated warnings about kwargs placement in processor.__call__; successful exit does not by itself resolve their meaning for future multimodal inputs",
+      "model_forward_observed": false,
+      "training_observed": false,
+      "qualified_for_product": false,
+      "meaning": "The owner-supplied sacct/stdout/stderr support a completed public text-only v1.6 processor diagnostic and stdout-reported preflight digest at exact MFM and foundation commits. The underlying JSON has not been independently read or verified; the diagnostic cannot satisfy the admitted full-role, multimodal processor gate, model fit or behavioral qualification."
     },
     "verified_derived_weights": false,
     "measured_untouched_forward": false,
@@ -269,7 +301,7 @@
       ],
       "operation": "Run complete no-egress 1.6 source/target processor admission on the actual admitted corpus and verified MFM role clone on a Magnolia CPU node or equivalent. Include all modalities, longest source/target examples, grounding and sensitivity/target links. Seal hashes, versions, peak attention envelope, counts and zero silent truncation in a new receipt.",
       "tool": null,
-      "implementation_status": "Magnolia job 576486 source and MFM role-clone custody digests and owner-checked receipt metadata are recorded. Public 21-case diagnostic job 576488 FAILED 1:0 without PIL in udocker. Job 576508 on MFM 079c010c verified and installed Pillow 11.3.0 in an isolated target, then FAILED 1:0 on missing torchvision at the early Gemma4UnifiedProcessor import before clone rehash or 21-case processing. MFM e93e098a publishes a matching TorchVision/Pillow target-runtime fix; it has not run on Magnolia. No successful public diagnostic or complete admitted-corpus 1.6 processor receipt is observed. Historical 1.5 CPU tests do not supply this receipt.",
+      "implementation_status": "Magnolia job 576486 source and MFM role-clone custody digests and owner-checked receipt metadata are recorded. Public 21-case diagnostic jobs 576488 and 576508 failed on missing PIL and TorchVision, respectively. Job 576509 on MFM e93e098a verified both matching wheels, isolated their installation, constructed Gemma4UnifiedProcessor, and COMPLETED 0:0 after the 21-case text-only synthetic processor pass; stdout reports preflight SHA-256 fa46ea11f020874637b680549313cef233b1bf2535b7aaa09e5f1a1c8deef4d9, but receipt JSON has not been independently inspected. No complete admitted-corpus multimodal 1.6 processor receipt is observed. Historical 1.5 CPU tests do not supply this gate.",
       "gate": "Fresh exact-path source and clone receipts, corpus and code digests, full case count, modality coverage, rights-safe no-egress process and max-token/attention results verify. Processor result is hardware/data admission only, not learned capability."
     },
     {
