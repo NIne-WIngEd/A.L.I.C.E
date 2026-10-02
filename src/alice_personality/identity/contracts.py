@@ -21,6 +21,11 @@ SOURCE_KINDS = ("E0", "EINF", *SYNTHETIC_KINDS, "UNKNOWN", "HOST", "RELATIONSHIP
 CONCEPT_VIEWS = ("identity", "host", "relationship", "self", "context")
 EDGE_ROLES = ("identity_support", "context_only", "excluded_context", "inference_support")
 HEAD_FAMILIES = ("stance", "values", "relationship", "emotion", "communication", "voice", "drift")
+CALIBRATION_SCHEMA = "alice-personality-sparse-calibration-targets-v2"
+CALIBRATION_SCALARS = frozenset({"co_valid_probabilities", "evidence_sufficiency", "uncertainty",
+    "contraindications", "failure_tail_risk", "owner_fidelity_uncertainty"})
+CALIBRATION_FAMILIES = CALIBRATION_SCALARS | {"preferences", "candidate_pair_probabilities",
+    "value_tradeoff_probabilities", "voice_control_confidence", *("head:" + name for name in HEAD_FAMILIES)}
 
 
 class IdentityError(ValueError):
@@ -334,6 +339,19 @@ class IdentityRepresentation:
     concept_source_mask: Tensor
 
 
+def calibration_candidate_mask(name: str, mask: Tensor) -> Tensor:
+    """Explicit target availability projected onto candidate endpoints."""
+    if name in CALIBRATION_SCALARS or name == "preferences":
+        return mask
+    if name == "candidate_pair_probabilities":
+        return mask.any(-1) | mask.any(-2)
+    if name == "value_tradeoff_probabilities":
+        return mask.any(-1).any(-1)
+    if name.startswith("head:") or name == "voice_control_confidence":
+        return mask.any(-1)
+    raise IdentityError("unsupported calibration target family")
+
+
 @dataclass(frozen=True)
 class CalibrationBatch:
     """Explicit calibration-only labels; provenance is declared, not accepted.
@@ -350,10 +368,11 @@ class CalibrationBatch:
     target_lineage_sha256: str
     split: str = "CALIBRATION"
     target_masks: Mapping[str, Tensor] | None = None
+    schema: str = CALIBRATION_SCHEMA
 
     def validate(self, config: IdentityModelConfig) -> None:
         self.frame.validate(config)
-        if self.split != "CALIBRATION" or self.source_class not in {"public_mechanical_fixture", "governed_calibration_targets"}:
+        if self.schema != CALIBRATION_SCHEMA or self.split != "CALIBRATION" or self.source_class not in {"public_mechanical_fixture", "governed_calibration_targets"}:
             raise IdentityError("N3 needs explicitly separate calibration data")
         _text(self.source_family_id, "calibration source family")
         if not isinstance(self.target_lineage_sha256, str) or re.fullmatch(r"[0-9a-f]{64}", self.target_lineage_sha256) is None:
@@ -362,31 +381,58 @@ class CalibrationBatch:
         _bool_tensor(self.target_mask, tuple(mask.shape), "calibration target mask")
         if self.target_mask.device != mask.device or bool((self.target_mask & ~mask).any()) or not bool(self.target_mask.any()):
             raise IdentityError("calibration labels require available authorized candidates")
-        if not self.targets or not set(self.targets) <= {"uncertainty", "failure_tail_risk", "owner_fidelity_uncertainty"}:
+        if not self.targets or not set(self.targets) <= CALIBRATION_FAMILIES:
             raise IdentityError("calibration requires provided implemented target families")
+        legacy = {"uncertainty", "failure_tail_risk", "owner_fidelity_uncertainty"}
+        if self.target_masks is None and not set(self.targets) <= legacy:
+            raise IdentityError("additional calibration families require explicit per-target availability")
+        identity_available = torch.tensor([any(record is not None and record.identity_core_allowed for record in row)
+                                            for row in self.frame.source_records], device=mask.device)
+        allowed = {name: mask for name in CALIBRATION_SCALARS | {"preferences"}}
+        candidate_pairs = mask[..., :, None] & mask[..., None, :]
+        allowed["candidate_pair_probabilities"] = candidate_pairs & ~torch.eye(mask.shape[-1], dtype=torch.bool, device=mask.device)
+        for family in HEAD_FAMILIES:
+            allowed["head:" + family] = mask[..., None] & self.frame.labels[family].entry_mask[:, None]
+        allowed["voice_control_confidence"] = allowed["head:voice"] & identity_available[:, None, None]
+        values_mask = allowed["head:values"]
+        allowed["value_tradeoff_probabilities"] = (values_mask[..., :, None] & values_mask[..., None, :]
+            & ~torch.eye(values_mask.shape[-1], dtype=torch.bool, device=mask.device))
         if self.target_masks is not None:
             if set(self.target_masks) != set(self.targets):
                 raise IdentityError("per-target calibration availability must match provided families")
             union = torch.zeros_like(self.target_mask)
             for name, family_mask in self.target_masks.items():
-                _bool_tensor(family_mask, tuple(mask.shape), f"{name} calibration availability")
-                if family_mask.device != mask.device or bool((family_mask & ~self.target_mask).any()):
+                _bool_tensor(family_mask, tuple(allowed[name].shape), f"{name} calibration availability")
+                candidates = calibration_candidate_mask(name, family_mask)
+                if family_mask.device != mask.device or bool((family_mask & ~allowed[name]).any()) \
+                        or bool((candidates & ~self.target_mask).any()):
                     raise IdentityError("per-target calibration mask exceeds admitted aggregate availability")
-                union |= family_mask
+                union |= candidates
             if not torch.equal(union, self.target_mask):
                 raise IdentityError("aggregate calibration mask must equal provided target availability union")
-        identity_available = torch.tensor([any(record is not None and record.identity_core_allowed for record in row)
-                                            for row in self.frame.source_records], device=mask.device)
         for name, value in self.targets.items():
             family_mask = self.target_mask if self.target_masks is None else self.target_masks[name]
-            if (not isinstance(value, Tensor) or tuple(value.shape) != tuple(mask.shape)
+            if (not isinstance(value, Tensor) or tuple(value.shape) != tuple(allowed[name].shape)
                     or not value.is_floating_point() or value.device != mask.device
+                    or value.requires_grad
                     or not bool(torch.isfinite(value[family_mask]).all())
                     or not bool(((value[family_mask] >= 0) & (value[family_mask] <= 1)).all())):
                 raise IdentityError(f"{name} available calibration labels must be finite probabilities matching candidates")
-            unavailable = family_mask & ~identity_available[:, None]
-            if bool((value[unavailable] != 1).any()):
-                raise IdentityError("calibration cannot overrule deterministic missing identity evidence")
+            if name in {"preferences", "head:stance"}:
+                clean = torch.where(family_mask, value, torch.zeros_like(value))
+                known = family_mask.any(-1)
+                if bool((torch.abs(clean.sum(-1)[known] - 1) > 1e-5).any()):
+                    raise IdentityError("reviewed calibration distributions must sum to one on known choices")
+            if name in {"candidate_pair_probabilities", "value_tradeoff_probabilities"}:
+                both = family_mask & family_mask.transpose(-1, -2)
+                sums = value + value.transpose(-1, -2)
+                if bool((torch.abs(sums[both] - 1) > 1e-5).any()):
+                    raise IdentityError("reviewed calibration pair directions must be complementary when both are known")
+            if name in {"uncertainty", "failure_tail_risk", "owner_fidelity_uncertainty", "evidence_sufficiency"}:
+                unavailable = family_mask & ~identity_available[:, None]
+                required = 0 if name == "evidence_sufficiency" else 1
+                if bool((value[unavailable] != required).any()):
+                    raise IdentityError("calibration cannot overrule deterministic missing identity evidence")
 
 
 @dataclass(frozen=True)

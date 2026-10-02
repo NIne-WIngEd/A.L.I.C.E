@@ -14,6 +14,10 @@ Later custom-N0 branches contain substantial generic semantic/evidence/graph
 modules, not learned Elaina personality stages. Their objectives and checkpoints
 must not be relabeled as personality.
 
+The owner accepts residual Gemma influence as a v1 constraint. Use practical
+best-effort suppression of measured judgment interference, preserve semantic
+capabilities and record residuals; complete suppression is not required.
+
 The current Gemma route prepares a frozen, headless source provider. Its v2
 interface preserves all actual text hidden layers and binds source geometry,
 code, contracts and runtime. General semantics and inherited-influence evidence
@@ -53,15 +57,18 @@ archive existence and hashes cannot qualify source fidelity or a teaching target
 
 ## Implementation and evidence still required
 
-This preparation branch now implements a first-party learned N1/N2/N3 tensor
+This preparation branch now implements a first-party trainable N1/N2/N3 tensor
 core in `src/alice_personality/identity/`. It is newly initialized, not a trained
-identity checkpoint. N1 learns all-layer/token readouts and directed provenance
+identity checkpoint. N1 implements all-layer/token readouts and directed provenance
 graphs, separates five source/context views, and exposes concept/source support
 scores. N2 produces dynamic candidate preferences, independent co-validity, all
 seven semantic head families, value trade-offs, portable voice controls, distinct
 history/experience pointers, uncertainty and rich latent state. N3 is separately
-frozen except for an explicit supplied calibration batch, with sparse target
-availability. Source authority remains structural and cannot be learned away.
+frozen except for an explicit supplied calibration batch. Sparse reviewed targets
+now reach preferences, independent co-validity, every semantic-head temperature,
+voice confidence, scalar risks and candidate/value pair margins. Missing pair
+labels contribute no loss, and contradictory known directions are refused.
+Source authority remains structural and cannot be learned away.
 
 The new JSON ACFP document and IDP output codecs in `identity/codec.py` preserve
 full situation/evidence/context coverage with explicit absence, arbitrary entry
@@ -81,6 +88,12 @@ teaching requires external source/compiled/prepared/target/family/current-
 authorization pins, a separately qualified personality N0, and a verified
 closed producer session linked to the exact feature frame. Public random-tensor
 fixtures exercise these mechanics only. Real private training has not run.
+
+The separate public N0 qualification verifier requires complete role coverage,
+precommitted reviewed criteria and independently reviewed actual observations.
+It writes no report and cannot authenticate a reviewer or honest measurement
+from JSON assertions. Its external report pin must come from an independently
+trusted review. No qualifying N0 report exists for the current build.
 
 The role-specific public semantic readout is a diagnostic of learnable frozen
 representations, not the private identity model or an MFM specialist. Its first
@@ -120,6 +133,48 @@ closure. Declared row eligibility remains separate from pending package
 acceptance. It has passed public fixtures; actual private source compilation
 and payload validation are still separate. UNKNOWN is epistemic uncertainty,
 not a behavioral void; ASYN supplies explicit governed starting priors.
+
+Actual isolated candidate-compilation attempts reached source validation under
+the original owner UID/GID and fresh loopback-only network namespaces. They
+stopped before model loading or gradients on a loss-role check. Allocated
+diagnostic job 576605, code `d116f0367a04c2cf03451321683bb6b041b78f5b`,
+confirmed that the compiler's context-lane/identity-key substring assumptions
+do not describe the package faithfully: some records explicitly permit multiple
+uses, and exclusion markers are separate from positive losses. Fixed aggregate
+structural diagnostics expose no source text, record IDs or unknown field names.
+The failed receipts are preserved; source validation remains incomplete.
+
+Exact isolated diagnostic 576607 confirmed the actual positive fields
+`direct_identity` and `conditional_identity`. Repair `6002549e` preserves
+multi-use context and arbitrary declared Boolean masks without substring
+inference; exact explicit exclusion still rejects known positive loss lanes.
+Its 69 source/namespace tests and 63 subtests passed, and Linux repository
+checks passed. Actual isolated attempt 576612 progressed beyond the loss check
+and refused missing raw inference lineage. The original raw archive exists;
+its actual E-INF IDs must be verified in isolation, not guessed from references.
+No source acceptance, model load or gradients followed this progress.
+
+The independent data-to-role audit found that current N1 supervision is only
+source alignment and provenance. Metadata/source-graph shortcuts can satisfy
+those losses without learning conditional identity meaning. A reviewed
+source-to-complete-target materializer, explicit conditional N1 teaching,
+evidence-pointer abstention semantics, full spoken review and generator
+enforcement remain substantive work. See
+`PERSONALITY_RESEARCH_AND_LEARNING_DECISIONS_2026-10-02.md` for source-grounded
+method choices, alternatives and measured best-effort repair criteria.
+
+Public semantic experiment 576600 is running on Magnolia under `mxrayan` with
+immutable tested code `f85a9833c5f5af6b8359bd63f4391be7e4db1744`.
+Its existing Torch runtime passed all 18 tiny compatibility tests before the
+actual experiment. There is no learned result or inherited-influence finding yet.
+
+Kaggle's existing CLI successfully listed the owner's `mkrayanyan` notebooks.
+That observes working authentication, not current GPU quota or allocation.
+Magnolia and Kaggle remain the first compute routes; paid GPUs are the last
+fallback after concrete failures of the free routes. Moving complete public
+features to Kaggle requires a closed source-verification receipt, exact portable
+inventory and a separate consumer; the original Magnolia plan is not resealed
+or silently rebound to new paths. No Kaggle job or paid GPU has been submitted.
 
 ## Independent public semantics
 

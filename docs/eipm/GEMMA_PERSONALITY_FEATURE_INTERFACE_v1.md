@@ -47,6 +47,12 @@ a successful forward cannot establish that those priors cannot steer a future
 personal readout. Independent semantic tests and causal inherited-influence
 tests are required before declaring N0 approved for personality learning.
 
+For v1, the owner accepts residual pretrained influence. Approval requires
+practical measured suitability and best-effort suppression of observable
+judgment interference with semantic retention, not complete latent-persona
+erasure. Tolerances are reviewed against actual evidence; this interface
+defines no zero-influence condition or publisher weight intervention.
+
 Public diagnostic artifacts are always unqualified. They contain execution
 metadata, not saved source representations or personality gold. Private
 evidence requires its own authorization, source isolation and qualified

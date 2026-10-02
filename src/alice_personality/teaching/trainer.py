@@ -18,17 +18,18 @@ from typing import Mapping
 import numpy as np
 import torch
 
-from ..identity.contracts import CalibrationBatch, FRAME_SCHEMA, PACKET_SCHEMA
+from ..identity.contracts import CalibrationBatch, CALIBRATION_SCHEMA, calibration_candidate_mask, FRAME_SCHEMA, PACKET_SCHEMA
 from ..identity.model import IdentityModel
 from .contracts import (AUTH_SCHEMA, FAMILY_SCHEMA, REVIEW_SCHEMA, TARGET_SCHEMA, TeachingBatch,
                         TeachingError, TrainingRecipe, canonical, fingerprint)
 from .objectives import IdentityObjectives
 
-CHECKPOINT_SCHEMA = "alice-personality-resumable-teaching-checkpoint-v1"
+CHECKPOINT_SCHEMA = "alice-personality-resumable-teaching-checkpoint-v2"
 _DIGEST = re.compile(r"[0-9a-f]{64}\Z")
 _ARTIFACT_ROLES = {"source_package", "compiled_receipt", "prepared_receipt", "reviewed_targets",
                    "source_families", "authorization"}
 _GOVERNED_ROLES = _ARTIFACT_ROLES | {"n0_qualification"}
+_PRODUCTION_IMPLEMENTATION_FILES = ("feature_producer.py", "codec.py", "contracts.py", "__init__.py")
 
 
 def _digest(value, label):
@@ -160,6 +161,7 @@ class TeachingAdmission:
                 "model_initial_state_sha256": self.model_initial_state_sha256,
                 "recipe_sha256": self.recipe_sha256, "code_sha256": dict(self.code_sha256),
                 "frame_schema": FRAME_SCHEMA, "packet_schema": PACKET_SCHEMA,
+                "calibration_schema": CALIBRATION_SCHEMA,
                 "target_schema": TARGET_SCHEMA, "torch_version": str(torch.__version__),
                 "numpy_version": str(np.__version__), "python_version": platform.python_version(),
                 "cuda_runtime": torch.version.cuda}
@@ -302,7 +304,7 @@ class IdentityTrainer:
             prepared_pin = self.admission.artifacts["prepared_receipt"]
             prepared = _json(_path(prepared_pin.path))
             code = {name: self.admission.code_sha256["identity/" + name]
-                    for name in ("codec.py", "feature_producer.py")}
+                    for name in _PRODUCTION_IMPLEMENTATION_FILES}
             arguments = {"prepared_file_sha256": prepared_pin.sha256,
                          "prepared_receipt_sha256": prepared.get("receipt_sha256"), "implementation": code}
             _production(batch.frame, batch.production_binding, batch.production_session, **arguments)
@@ -322,7 +324,8 @@ class IdentityTrainer:
     def _phase(self, batch):
         if self.recipe.phase == "calibration":
             batch_data = CalibrationBatch(batch.frame, {name: target.values for name, target in batch.targets.items()},
-                torch.stack([target.available for target in batch.targets.values()]).any(0), batch.source_class,
+                torch.stack([calibration_candidate_mask(name, target.available)
+                             for name, target in batch.targets.items()]).any(0), batch.source_class,
                 fingerprint(batch.source_family_ids), batch.fingerprint(), target_masks={
                     name: target.available for name, target in batch.targets.items()})
             self.model.set_phase("calibration", calibration_batch=batch_data)

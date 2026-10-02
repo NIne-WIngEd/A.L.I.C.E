@@ -8,10 +8,10 @@ from pathlib import Path
 
 import torch
 
-from .contracts import FRAME_SCHEMA, PACKET_SCHEMA, IdentityError, IdentityModelConfig
+from .contracts import CALIBRATION_SCHEMA, FRAME_SCHEMA, PACKET_SCHEMA, IdentityError, IdentityModelConfig
 from .model import IdentityModel
 
-SNAPSHOT_SCHEMA = "alice-personality-identity-untrained-snapshot-v1"
+SNAPSHOT_SCHEMA = "alice-personality-identity-untrained-snapshot-v2"
 
 
 def _canonical(value: object) -> bytes:
@@ -56,6 +56,7 @@ def save_untrained_snapshot(model: IdentityModel, destination: str | Path) -> di
                 "training_evidence": None, "source_acceptance_authority": False,
                 "meaning": "Implemented random/unverified learned-state snapshot; no personality qualification",
                 "frame_schema": FRAME_SCHEMA, "packet_schema": PACKET_SCHEMA,
+                "calibration_schema": CALIBRATION_SCHEMA,
                 "config": config, "code_sha256": _code_hashes(), "torch_version": str(torch.__version__),
                 "files": {name: _hash(path / name) for name in ("config.json", "core.pt", "calibration.pt")},
                 "calibration_separate_from_core": True, "source_values_retained": False}
@@ -78,6 +79,7 @@ def load_untrained_snapshot(source: str | Path, *, device: str = "cpu") -> Ident
     if (manifest.get("schema") != SNAPSHOT_SCHEMA or manifest.get("training_state") != "UNTRAINED"
             or manifest.get("qualification") != "UNQUALIFIED" or manifest.get("training_evidence") is not None
             or manifest.get("source_acceptance_authority") is not False
+            or manifest.get("calibration_schema") != CALIBRATION_SCHEMA
             or manifest.get("frame_schema") != FRAME_SCHEMA or manifest.get("packet_schema") != PACKET_SCHEMA):
         raise IdentityError("snapshot cannot grant training, acceptance or qualification")
     if manifest.get("code_sha256") != _code_hashes() or manifest.get("torch_version") != str(torch.__version__):

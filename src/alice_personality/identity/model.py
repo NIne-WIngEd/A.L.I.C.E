@@ -291,7 +291,7 @@ class IdentityCalibration(nn.Module):
     def __init__(self):
         super().__init__()
         self.log_temperatures = nn.ParameterDict({"temperature_" + name: nn.Parameter(torch.zeros(()))
-                                                 for name in (*HEAD_FAMILIES, "preference", "scalar")})
+                                                 for name in (*HEAD_FAMILIES, "preference", "scalar", "voice_confidence")})
         self.risk_adjustment = nn.Linear(3, 3)
         nn.init.zeros_(self.risk_adjustment.weight)
         nn.init.zeros_(self.risk_adjustment.bias)
@@ -409,7 +409,8 @@ class IdentityModel(nn.Module):
                     voice_values[row, :, col] = (spec.minimum + heads["voice"].activations[row, :, col]
                                                  * (spec.maximum - spec.minimum))
         voice_values *= heads["voice"].mask
-        voice_confidence = torch.sigmoid(raw["voice_confidence"]) * heads["voice"].mask * grounded_candidates[..., None]
+        voice_confidence = torch.sigmoid(self.n3.scale("voice_confidence", raw["voice_confidence"])) \
+            * heads["voice"].mask * grounded_candidates[..., None]
         value_scores = heads["values"].scores
         pair_mask = heads["values"].mask[..., :, None] & heads["values"].mask[..., None, :]
         value_tradeoffs = (value_scores[..., :, None] - value_scores[..., None, :]) * pair_mask
@@ -447,6 +448,21 @@ class IdentityModel(nn.Module):
             family_mask = batch.target_mask if batch.target_masks is None else batch.target_masks[name]
             if not bool(family_mask.any()):
                 continue
-            values = getattr(packet, name)[family_mask]
-            total = total + nn.functional.binary_cross_entropy(values, targets.detach().to(values.dtype)[family_mask])
+            clean = torch.where(family_mask, targets.detach(), torch.zeros_like(targets))
+            if name in {"preferences", "head:stance"}:
+                scores = packet.preference_logits if name == "preferences" else packet.heads["stance"].scores
+                logits = scores.float().masked_fill(~family_mask, -torch.finfo(torch.float32).max)
+                loss = -(clean.float() * nn.functional.log_softmax(logits, dim=-1)).sum(-1)
+                total = total + loss[family_mask.any(-1)].mean()
+            elif name.startswith("head:"):
+                values = packet.heads[name.split(":", 1)[1]].scores[family_mask]
+                total = total + nn.functional.binary_cross_entropy_with_logits(values, clean.to(values.dtype)[family_mask])
+            elif name == "candidate_pair_probabilities":
+                margins = packet.preference_logits[..., :, None] - packet.preference_logits[..., None, :]
+                total = total + nn.functional.binary_cross_entropy_with_logits(margins[family_mask], clean[family_mask])
+            elif name == "value_tradeoff_probabilities":
+                total = total + nn.functional.binary_cross_entropy_with_logits(packet.value_tradeoff_margins[family_mask], clean[family_mask])
+            else:
+                values = getattr(packet, name)[family_mask]
+                total = total + nn.functional.binary_cross_entropy(values, clean.to(values.dtype)[family_mask])
         return total

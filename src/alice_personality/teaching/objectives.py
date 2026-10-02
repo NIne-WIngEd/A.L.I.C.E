@@ -5,7 +5,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
-from ..identity.contracts import HEAD_FAMILIES, SOURCE_KINDS
+from ..identity.contracts import CALIBRATION_FAMILIES, HEAD_FAMILIES, SOURCE_KINDS
 from .contracts import ReviewedTarget, TeachingBatch, TeachingError
 
 
@@ -66,9 +66,10 @@ class IdentityObjectives(nn.Module):
         if batch.phase == "n1":
             supported = {"concept_source_alignment", "provenance"}
         elif batch.phase == "calibration":
-            supported = {"uncertainty", "failure_tail_risk", "owner_fidelity_uncertainty"}
+            supported = CALIBRATION_FAMILIES
         else:
             supported = {"preferences", *(scalar_names - {"owner_fidelity_uncertainty"}), "value_tradeoff_probabilities",
+                         "candidate_pair_probabilities",
                          "evidence_pointers", "historical_evidence_pointers",
                          "alice_experience_pointers", "concept_pointers", "voice_control_values",
                          "voice_control_confidence", *("head:" + name for name in HEAD_FAMILIES if name != "voice")}
@@ -98,6 +99,16 @@ class IdentityObjectives(nn.Module):
                                 raise TeachingError("reviewed provenance contradicts source-kind authority")
             elif name == "preferences":
                 result = _distribution(packet.preference_logits, target, candidate)
+            elif name == "candidate_pair_probabilities":
+                allowed = candidate[..., :, None] & candidate[..., None, :]
+                allowed &= ~torch.eye(candidate.shape[-1], dtype=torch.bool, device=candidate.device)
+                margins = packet.preference_logits[..., :, None] - packet.preference_logits[..., None, :]
+                target.validate(tuple(margins.shape), allowed)
+                both = target.available & target.available.transpose(-1, -2)
+                pair_sum = target.values + target.values.transpose(-1, -2)
+                if bool((torch.abs(pair_sum[both] - 1) > 1e-5).any()):
+                    raise TeachingError("reviewed candidate-pair directions must be complementary when both are known")
+                result = _probability(margins, target, allowed, logits=True)
             elif name == "value_tradeoff_probabilities":
                 # Gold describes an explicit context-conditioned preference
                 # probability for this ordered value pair, not a raw logit.

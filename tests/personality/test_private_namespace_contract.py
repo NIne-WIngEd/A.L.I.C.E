@@ -32,6 +32,8 @@ SPEC.loader.exec_module(helper)
     ("recommended_supervision_lane must be an array of nonempty strings", "source_row_list_type_mismatch"),
     ("personality dimensions contains duplicate identifiers or labels", "source_row_list_duplicate"),
     ("E0 text requires a SHA256 digest", "source_text_pin_missing_or_invalid"),
+    ("context-only or excluded evidence cannot enable identity loss", "source_loss_role_conflict"),
+    ("explicitly excluded evidence cannot enable identity loss", "source_loss_role_conflict"),
     ("FICTITIOUS SOURCE SENTENCE MUST NOT REACH LOGS", "private_stage_refused"),
 ])
 def test_failure_categories_are_fixed_public_diagnostics(message, category):

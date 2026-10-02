@@ -14,6 +14,7 @@ from pathlib import Path
 import random
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 import torch
@@ -21,6 +22,7 @@ import torch
 from src.alice_personality.identity import (HEAD_FAMILIES, ConceptRecord, FrozenTokenBank,
     IdentityError, IdentityFrame, IdentityModel, IdentityModelConfig, LabelSpec, SourceRecord, SupportGraph)
 from src.alice_personality.identity.contracts import SOURCE_KINDS
+from src.alice_personality.identity.feature_producer import FrozenFrameProducer
 from src.alice_personality.teaching import (ArtifactPin, ContrastConstraint, IdentityObjectives, IdentityTrainer,
     ReviewedTarget, TARGET_SCHEMA, TeachingAdmission, TeachingBatch, TeachingError, TrainingRecipe,
     current_code_hashes, model_fingerprint)
@@ -78,6 +80,19 @@ def _batch(model, frame, phase="n2", split="TRAIN", name="case", *, full=False):
         # Sparse independent owner target, with unavailable facts carried as NaN.
         targets = {"owner_fidelity_uncertainty": _target([[0.3, float("nan"), 0.8]],
                                                        torch.tensor([[True, False, True]]))}
+        if full:
+            targets.update({"preferences": _target([[0.1, 0.2, 0.7]]), "co_valid_probabilities": _target([[0.9, 0.8, 0.3]])})
+            targets.update({name: _target([[0.2, 0.4, 0.8]]) for name in
+                           ("evidence_sufficiency", "uncertainty", "contraindications", "failure_tail_risk")})
+            for name in HEAD_FAMILIES:
+                values = [[[0.7, 0.2, 0.1]] * 3] if name == "stance" else [[[1.0, 0.0, 0.7]] * 3]
+                targets["head:" + name] = _target(values)
+            targets["voice_control_confidence"] = _target([[[0.9, 0.8, 0.7]] * 3])
+            pair_mask = ~torch.eye(3, dtype=torch.bool)[None].expand(1, -1, -1)
+            pair_values = torch.tensor([[[0.5, 0.7, 0.8], [0.3, 0.5, 0.6], [0.2, 0.4, 0.5]]])
+            targets["candidate_pair_probabilities"] = _target(pair_values, pair_mask)
+            targets["value_tradeoff_probabilities"] = _target(pair_values[:, None].expand(-1, 3, -1, -1),
+                                                                pair_mask[:, None].expand(-1, 3, -1, -1))
     else:
         targets = {"preferences": _target([[0.4, 0.4, 0.2]]), "co_valid_probabilities": _target([[1.0, 1.0, 0.0]])}
         if full:
@@ -145,7 +160,7 @@ def _admission(directory, model, recipe, batches, *, auth_changes=None, reviewed
 
 def _production_fixture(frame):
     """Only a public metadata validation fixture, never real custody evidence."""
-    code = {name: current_code_hashes()["identity/" + name] for name in ("codec.py", "feature_producer.py")}
+    code = FrozenFrameProducer._code_hashes()
     common = {"source_class": "prepared_frozen_gemma_features_unqualified", "prepared_receipt_file_sha256": "a" * 64,
               "implementation_sha256": code, "qualification": "UNQUALIFIED", "source_acceptance_authority": False,
               "persistent_feature_values_retained": False}
@@ -159,6 +174,60 @@ def _production_fixture(frame):
     session["receipt_sha256"] = sha256(canonical(session)).hexdigest()
     kwargs = {"prepared_file_sha256": "a" * 64, "prepared_receipt_sha256": "b" * 64, "implementation": code}
     return binding, session, kwargs
+
+
+def _governed_custody_seam(directory, model, recipe, batch, *, implementation_changes=None):
+    """Synthetic governed-path dependency test, not real custody qualification.
+
+    Only external custody validators are mocked. Actual file/code/batch pins,
+    closed-session hashes and trainer admission run normally. No optimizer
+    step is executed, no private identity payload exists, and no fixture can
+    satisfy the actual N0 verifier's protocol/outcome/sidecar requirements.
+    """
+    from src.alice_foundation import gemma4_v1 as foundation
+    path = Path(directory)
+    admission = _admission(path, model, recipe, [batch])
+    artifacts = dict(admission.artifacts)
+    def write(role, value):
+        target = path / (role + ".json")
+        payload = canonical(value) + b"\n"
+        target.write_bytes(payload)
+        artifacts[role] = ArtifactPin(str(target), sha256(payload).hexdigest())
+        return value
+    prepared = write("prepared_receipt", {"schema": "synthetic-custody-test-only", "repository": foundation.MODEL,
+        "revision": foundation.REVISION, "receipt_sha256": "b" * 64,
+        "model_geometry": {"hidden_size": model.config.provider_width, "hidden_state_count": model.config.provider_state_count}})
+    compiled = write("compiled_receipt", {"schema": "synthetic-custody-test-only",
+        "source_package_sha256": artifacts["source_package"].sha256, "acceptance_authority": False})
+    qualification = write("n0_qualification", {"schema": "alice-personality-n0-role-qualification-v1",
+        "state": "QUALIFIED_PERSONALITY_N0", "role": "personality", "repository": foundation.MODEL,
+        "revision": foundation.REVISION, "prepared_receipt_file_sha256": artifacts["prepared_receipt"].sha256,
+        "prepared_receipt_sha256": prepared["receipt_sha256"], "fixture_only": True})
+    binding, session, _ = _production_fixture(batch.frame)
+    for value, digest_key in ((binding, "binding_sha256"), (session, "receipt_sha256")):
+        value["prepared_receipt_file_sha256"] = artifacts["prepared_receipt"].sha256
+        value["implementation_sha256"] = {**value["implementation_sha256"]}
+        for name, digest in (implementation_changes or {}).items():
+            if digest is None:
+                value["implementation_sha256"].pop(name, None)
+            else:
+                value["implementation_sha256"][name] = digest
+        value.pop(digest_key)
+        if digest_key == "receipt_sha256":
+            value["frame_binding_sha256"] = [binding["binding_sha256"]]
+        value[digest_key] = sha256(canonical(value)).hexdigest()
+    linked = replace(batch, source_class="governed_identity_targets", production_binding=binding, production_session=session)
+    reviewed = json.loads(Path(artifacts["reviewed_targets"].path).read_bytes())
+    reviewed["source_class"] = linked.source_class
+    reviewed["reviewed_batches"] = {linked.fingerprint(): {"split": linked.split, "case_ids": list(linked.case_ids),
+        "source_family_ids": [list(row) for row in linked.source_family_ids]}}
+    reviewed["batch_order"] = {linked.split: [linked.fingerprint()]}
+    write("reviewed_targets", reviewed)
+    auth = json.loads(Path(artifacts["authorization"].path).read_bytes())
+    auth.update({"source_class": linked.source_class, "private_gradient_authorized": True,
+                 "artifact_file_sha256": {role: pin.sha256 for role, pin in artifacts.items() if role != "authorization"}})
+    write("authorization", auth)
+    return replace(admission, artifacts=artifacts), linked, (compiled, prepared, qualification)
 
 
 class IdentityTeachingMechanicalTests(unittest.TestCase):
@@ -228,6 +297,53 @@ class IdentityTeachingMechanicalTests(unittest.TestCase):
         self.assertEqual(event["reviewed_target_coverage"]["owner_fidelity_uncertainty"], 2)
         self.assertTrue(any(not torch.equal(before[k], self.model.state_dict()[k]) for k in before if k.startswith("n3.")))
         self.assertTrue(all(torch.equal(before[k], self.model.state_dict()[k]) for k in before if k.startswith(("n1.", "n2."))))
+
+    def test_full_n3_calibration_updates_preference_scalar_all_heads_and_voice_confidence(self):
+        trainer, batch = self.trainer("calibration", full=True)
+        before = copy.deepcopy(self.model.state_dict())
+        banks = (self.frame.query, self.frame.sources, self.frame.concepts, self.frame.candidates,
+                 self.frame.relations, *self.frame.labels.values())
+        for bank in banks:
+            bank.states.requires_grad_(True)
+        event = trainer.step(batch)
+        self.assertEqual(set(event["objectives"]), set(batch.targets))
+        for name, parameter in self.model.n3.log_temperatures.items():
+            with self.subTest(name=name):
+                self.assertIsNotNone(parameter.grad)
+                self.assertNotEqual(float(parameter.grad), 0)
+                self.assertNotEqual(float(parameter.detach()), float(before["n3.log_temperatures." + name]))
+        self.assertTrue(all(torch.equal(before[k], self.model.state_dict()[k]) for k in before if k.startswith(("n1.", "n2."))))
+        self.assertTrue(all(bank.states.grad is None for bank in banks))
+        self.assertFalse(event["acceptance_authority"])
+        self.assertFalse(event["private_gradient_authorized"])
+
+    def test_full_sparse_n3_resume_preserves_new_temperatures_and_targets(self):
+        trainer, batch = self.trainer("calibration", full=True)
+        trainer.step(batch)
+        manifest = trainer.save_checkpoint(self.path / "n3-resume")
+        expected_event = trainer.step(batch)
+        expected_state = copy.deepcopy(self.model.n3.state_dict())
+        restarted = IdentityModel(self.config)
+        restarted.load_state_dict(self.initial)
+        other = IdentityTrainer(restarted, trainer.recipe, trainer.admission, first_batch=batch)
+        other.resume_checkpoint(self.path / "n3-resume", expected_manifest_sha256=manifest["manifest_sha256"])
+        self.assertEqual(expected_event, other.step(batch))
+        for name in expected_state:
+            torch.testing.assert_close(expected_state[name], restarted.n3.state_dict()[name], atol=0, rtol=0)
+
+    def test_sparse_calibration_unknown_pair_targets_have_no_loss_gradient(self):
+        batch = _batch(self.model, self.frame, "calibration")
+        values = torch.full((1, 3, 3), float("nan"))
+        mask = torch.zeros_like(values, dtype=torch.bool)
+        values[:, 0, 2], mask[:, 0, 2] = 0.8, True
+        target = _target(values, mask)
+        preference_logits = torch.tensor([[0.2, -20.0, 0.8]], requires_grad=True)
+        packet = replace(self.model(self.frame), preference_logits=preference_logits)
+        loss, _, _ = self.objectives(packet, replace(batch, targets={"candidate_pair_probabilities": target}))
+        loss.backward()
+        self.assertEqual(float(preference_logits.grad[0, 1]), 0)
+        self.assertNotEqual(float(preference_logits.grad[0, 0]), 0)
+        self.assertNotEqual(float(preference_logits.grad[0, 2]), 0)
 
     def test_n2_explicit_adaptation_permits_n1_continuation(self):
         trainer, batch = self.trainer(adapt_n1=True)
@@ -580,6 +696,36 @@ class IdentityTeachingMechanicalTests(unittest.TestCase):
         with self.assertRaisesRegex(TeachingError, "QUALIFIED_PERSONALITY_N0"):
             self.trainer(reviewed_changes={"source_class": "governed_identity_targets"},
                          auth_changes={"source_class": "governed_identity_targets", "private_gradient_authorized": True})
+
+    def test_governed_admission_matches_actual_four_file_producer_dependency_scope(self):
+        recipe = TrainingRecipe("n2", learning_rate=0.01, max_grad_norm=0.5, seed=777)
+        batch = _batch(self.model, self.frame)
+        admission, linked, outputs = _governed_custody_seam(self.path, self.model, recipe, batch)
+        expected = FrozenFrameProducer._code_hashes()
+        self.assertEqual(set(expected), {"codec.py", "feature_producer.py", "contracts.py", "__init__.py"})
+        self.assertEqual(linked.production_binding["implementation_sha256"], expected)
+        with patch("src.alice_personality.n1.compiler.verify_compiled", return_value=outputs[0]), \
+             patch("src.alice_personality.gemma_n0.preparation.verify_prepared", return_value=outputs[1]), \
+             patch("src.alice_personality.gemma_n0.qualification.verify_personality_n0_qualification", return_value=outputs[2]):
+            trainer = IdentityTrainer(self.model, recipe, admission, first_batch=linked)
+            self.assertEqual(trainer.steps, 0)
+            self.assertEqual(trainer._check_batch(linked), linked.fingerprint())
+        self.assertTrue(all(parameter.grad is None for parameter in self.model.parameters()))
+
+    def test_governed_admission_rejects_missing_changed_producer_contract_or_package_dependencies(self):
+        recipe = TrainingRecipe("n2", learning_rate=0.01, max_grad_norm=0.5, seed=777)
+        batch = _batch(self.model, self.frame)
+        for changes in ({"contracts.py": None}, {"__init__.py": None},
+                        {"contracts.py": "c" * 64}, {"__init__.py": "c" * 64}):
+            with self.subTest(changes=changes):
+                admission, linked, outputs = _governed_custody_seam(self.path, self.model, recipe, batch,
+                                                                  implementation_changes=changes)
+                with patch("src.alice_personality.n1.compiler.verify_compiled", return_value=outputs[0]), \
+                     patch("src.alice_personality.gemma_n0.preparation.verify_prepared", return_value=outputs[1]), \
+                     patch("src.alice_personality.gemma_n0.qualification.verify_personality_n0_qualification", return_value=outputs[2]), \
+                     self.assertRaisesRegex(TeachingError, "custody/source/code binding"):
+                    IdentityTrainer(self.model, recipe, admission, first_batch=linked)
+        self.assertTrue(all(parameter.grad is None for parameter in self.model.parameters()))
 
     def test_returned_evidence_cannot_mutate_checkpoint_authority(self):
         trainer, batch = self.trainer()

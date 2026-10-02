@@ -238,7 +238,8 @@ def _safe_reason(exc: BaseException) -> str:
         return "source_archive_structure_or_encoding_refused"
     if message == "loss_mask requires named Boolean values":
         return "source_loss_mask_type_mismatch"
-    if message == "context-only or excluded evidence cannot enable identity loss":
+    if message in {"context-only or excluded evidence cannot enable identity loss",
+                   "explicitly excluded evidence cannot enable identity loss"}:
         return "source_loss_role_conflict"
     return reasons.get(message, "private_stage_refused")
 

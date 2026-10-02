@@ -13,7 +13,7 @@ import torch
 from src.alice_personality.identity import (
     HEAD_FAMILIES, CalibrationBatch, ConceptRecord, FrozenTokenBank, IdentityError, IdentityFrame,
     IdentityModel, IdentityModelConfig, LabelSpec, SourceRecord, SupportGraph,
-    load_untrained_snapshot, save_untrained_snapshot)
+    calibration_candidate_mask, load_untrained_snapshot, save_untrained_snapshot)
 
 
 def _bank(batch, count, config, prefix, *, tokens=4, dtype=torch.float32):
@@ -354,6 +354,74 @@ class IdentityModelMechanicalTests(unittest.TestCase):
             replace(batch, target_masks={"uncertainty": wrong_mask}).validate(self.config)
         with self.assertRaisesRegex(IdentityError, "separate calibration data"):
             replace(batch, split="TRAIN").validate(self.config)
+
+    def test_direct_n3_distribution_and_multilabel_targets_reach_every_temperature(self):
+        targets = {"preferences": torch.tensor([[0.1, 0.2, 0.7]] * 2),
+                   "co_valid_probabilities": torch.tensor([[0.9, 0.8, 0.3]] * 2),
+                   "voice_control_confidence": torch.full((2, 3, 3), 0.8)}
+        masks = {name: torch.ones_like(value, dtype=torch.bool) for name, value in targets.items()}
+        for name in HEAD_FAMILIES:
+            targets["head:" + name] = torch.tensor([[[0.7, 0.2, 0.1]] * 3] * 2) if name == "stance" else \
+                                      torch.tensor([[[1.0, 0.0, 0.7]] * 3] * 2)
+            masks["head:" + name] = torch.ones_like(targets["head:" + name], dtype=torch.bool)
+        aggregate = torch.stack([calibration_candidate_mask(name, mask) for name, mask in masks.items()]).any(0)
+        batch = CalibrationBatch(self.frame, targets, aggregate, "public_mechanical_fixture", "public-direct-calibration",
+                                 "c" * 64, target_masks=masks)
+        self.model.set_phase("calibration", calibration_batch=batch)
+        self.model.calibration_loss(batch).backward()
+        for name, parameter in self.model.n3.log_temperatures.items():
+            with self.subTest(name=name):
+                self.assertIsNotNone(parameter.grad)
+                self.assertNotEqual(float(parameter.grad), 0)
+        self.assertTrue(all(p.grad is None for module in (self.model.n1, self.model.n2) for p in module.parameters()))
+
+    def test_direct_sparse_candidate_margin_labels_do_not_generate_rival_gold(self):
+        mask = torch.zeros(2, 3, 3, dtype=torch.bool)
+        mask[:, 0, 2] = True
+        values = torch.full((2, 3, 3), float("nan"))
+        values[:, 0, 2] = 0.8
+        aggregate = calibration_candidate_mask("candidate_pair_probabilities", mask)
+        batch = CalibrationBatch(self.frame, {"candidate_pair_probabilities": values}, aggregate,
+                                 "public_mechanical_fixture", "public-margin-pair", "d" * 64,
+                                 target_masks={"candidate_pair_probabilities": mask})
+        self.model.set_phase("calibration", calibration_batch=batch)
+        self.model.calibration_loss(batch).backward()
+        self.assertNotEqual(float(self.model.n3.log_temperatures["temperature_preference"].grad), 0)
+        self.assertTrue(all(parameter.grad is None for name, parameter in self.model.n3.log_temperatures.items()
+                            if name != "temperature_preference"))
+        self.assertFalse(aggregate[:, 1].any())
+
+    def test_calibration_masks_distribution_and_pair_authority_fail_closed(self):
+        candidate = torch.ones(2, 3, dtype=torch.bool)
+        values = torch.tensor([[0.1, 0.2, 0.7]] * 2)
+        batch = CalibrationBatch(self.frame, {"preferences": values}, candidate, "public_mechanical_fixture",
+                                 "public-mask-validation", "e" * 64, target_masks={"preferences": candidate})
+        batch.validate(self.config)
+        with self.assertRaisesRegex(IdentityError, "explicit per-target"):
+            replace(batch, target_masks=None).validate(self.config)
+        with self.assertRaisesRegex(IdentityError, "sum to one"):
+            replace(batch, targets={"preferences": torch.ones_like(values)}).validate(self.config)
+        pair = torch.ones(2, 3, 3, dtype=torch.bool)
+        with self.assertRaisesRegex(IdentityError, "exceeds admitted"):
+            replace(batch, targets={"candidate_pair_probabilities": torch.full((2, 3, 3), 0.5)},
+                    target_masks={"candidate_pair_probabilities": pair}).validate(self.config)
+        pair &= ~torch.eye(3, dtype=torch.bool)[None]
+        with self.assertRaisesRegex(IdentityError, "complementary"):
+            replace(batch, targets={"candidate_pair_probabilities": torch.full((2, 3, 3), 0.8)},
+                    target_masks={"candidate_pair_probabilities": pair}).validate(self.config)
+
+    def test_new_voice_confidence_calibration_exports_separately_from_core(self):
+        with torch.no_grad():
+            self.model.n3.log_temperatures["temperature_voice_confidence"].fill_(0.7)
+        before = self.model(self.frame)
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary).resolve() / "n3-new-control"
+            manifest = save_untrained_snapshot(self.model, path)
+            restored = load_untrained_snapshot(path)
+            self.assertIn("temperature_voice_confidence", restored.n3.log_temperatures)
+            torch.testing.assert_close(before.voice_control_confidence, restored(self.frame).voice_control_confidence)
+            self.assertEqual(manifest["calibration_schema"], "alice-personality-sparse-calibration-targets-v2")
+            self.assertFalse(any(name.startswith("n3.") for name in torch.load(path / "core.pt", weights_only=True)))
 
     def test_nonfinite_learned_packet_is_refused(self):
         with torch.no_grad():
