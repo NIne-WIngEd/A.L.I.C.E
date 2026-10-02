@@ -40,6 +40,13 @@ def test_failure_categories_are_fixed_public_diagnostics(message, category):
     assert helper._safe_reason(ValueError(message)) == category
 
 
+def test_raw_source_failure_categories_admit_only_fixed_reader_labels():
+    from src.alice_personality.n1.raw_inference_lineage import RawInferenceLineageError
+    assert helper._safe_reason(RawInferenceLineageError("logical_member_root_mismatch")) == "raw_lineage_logical_member_root_mismatch"
+    assert helper._safe_reason(RawInferenceLineageError("PRIVATE SOURCE SENTENCE")) == "private_stage_refused"
+    assert helper._safe_reason(ValueError("logical_member_root_mismatch")) == "private_stage_refused"
+
+
 @pytest.fixture
 def namespace(monkeypatch):
     monkeypatch.setenv("PERSONALITY_HOST_NETNS", "net:[100]")

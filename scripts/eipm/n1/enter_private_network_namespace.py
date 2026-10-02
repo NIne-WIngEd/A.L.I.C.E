@@ -217,6 +217,22 @@ def _safe_reason(exc: BaseException) -> str:
                "curation manifest omits required source counts or gap status": "source_manifest_count_missing",
                "curation manifest count or closed-gap status mismatch": "source_manifest_count_mismatch"}
     message = str(exc)
+    # These categories are literal public reader errors, never source values.
+    raw_reasons = {"invalid_expected_archive_sha256", "duplicate_json_key", "nonfinite_json", "invalid_json",
+        "unsafe_archive_member_path", "archive_inventory_bound", "duplicate_or_aliased_archive_member",
+        "nonregular_archive_member", "archive_member_type_conflict", "encrypted_archive_member",
+        "unsupported_archive_compression", "invalid_archive_member_size", "directory_archive_member_has_payload",
+        "archive_file_directory_alias", "missing_or_ambiguous_logical_member", "logical_member_root_mismatch",
+        "selected_member_resource_bound", "invalid_checksum_ledger", "checksum_member_missing_or_ambiguous",
+        "checksum_member_namespace_conflict", "duplicate_checksum_member", "empty_checksum_ledger",
+        "proposal_row_count_bound", "proposal_line_resource_bound", "invalid_proposal_namespace",
+        "invalid_original_proposal_id", "duplicate_original_proposal_id", "invalid_archive_path",
+        "unsafe_archive_path", "linked_archive_path", "nonregular_source_archive", "source_archive_resource_bound",
+        "source_archive_changed", "source_archive_sha256_mismatch", "required_member_missing_from_checksum_ledger",
+        "manifest_checksum_mismatch", "invalid_generation_manifest", "proposal_member_checksum_mismatch",
+        "lineage_reader_code_changed", "raw_lineage_source_unreadable"}
+    if type(exc).__name__ == "RawInferenceLineageError" and message in raw_reasons:
+        return "raw_lineage_" + message
     # These labels originate exclusively in the public compiler schema; no
     # source values or exception chaining may enter a diagnostic category.
     boolean_fields = {"training_authority", "model_training_authority", "historical_truth_allowed",
