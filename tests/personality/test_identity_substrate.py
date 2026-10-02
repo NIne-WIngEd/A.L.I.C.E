@@ -261,14 +261,14 @@ class IdentitySubstrateTests(unittest.TestCase):
             with self.subTest(kind=kind, field=field), self.assertRaises(c.IdentitySubstrateError):
                 self.compile(package, pin)
 
-    def test_conflicting_training_flags_and_context_identity_masks_fail(self):
+    def test_conflicting_training_flags_and_explicit_excluded_identity_masks_fail(self):
         rows = deepcopy(self.rows)
         rows["E0"][0]["model_training_authority"] = True
         package, pin = self.archive(rows=rows)
         with self.assertRaisesRegex(c.IdentitySubstrateError, "conflict"):
             self.compile(package, pin)
         rows = deepcopy(self.rows)
-        rows["E0"][0]["use_lanes"] = ["context_only_conditioning"]
+        rows["E0"][0]["use_lanes"] = ["exclude_from_identity_loss"]
         package, pin = self.archive(rows=rows)
         with self.assertRaisesRegex(c.IdentitySubstrateError, "identity loss"):
             self.compile(package, pin)
@@ -292,16 +292,119 @@ class IdentitySubstrateTests(unittest.TestCase):
         self.assertEqual(counts["legacy_conflicting_rows"], 2)
         self.assertEqual(counts["conflicting_positive_direct_identity_rows"], 1)
         self.assertEqual(counts["conflicting_identity_exclusion_name_rows"], 1)
+        self.assertEqual(counts["positive_known_identity_rows"], 2)
+        self.assertEqual(counts["context_and_positive_known_identity_rows"], 1)
+        self.assertEqual(counts["explicit_exclusion_rows"], 1)
+        self.assertEqual(counts["explicit_identity_loss_conflicting_rows"], 0)
+        self.assertEqual(counts["positive_known_fields_under_exclusion_lane"],
+                         {key: 0 for key in c._POSITIVE_IDENTITY_LOSS_MASKS})
         self.assertFalse(report["acceptance_authority"])
         self.assertFalse(report["training_authorized"])
         rendered = json.dumps(report)
         self.assertNotIn("PRIVATE_LOOKING_FIXTURE_KEY", rendered)
         self.assertNotIn("Public fixture evidence", rendered)
         self.assertNotIn("e0.1", rendered)
-        with self.assertRaisesRegex(c.IdentitySubstrateError, "identity loss"):
-            self.compile(package, pin)
+        output, receipt = self.compile(package, pin)
+        records = {record["record_id"]: record for record in self.records(output)}
+        for row in rows["E0"]:
+            self.assertEqual(records[row["unit_id"]]["loss_mask"], row["loss_mask"])
+            self.assertEqual(records[row["unit_id"]]["supervision_lanes"], row["use_lanes"])
+        self.assertFalse(receipt["acceptance_authority"])
+        self.assertFalse(receipt["private_gradient_authorized"])
         with self.assertRaisesRegex(c.IdentitySubstrateError, "archive SHA256"):
             c.audit_loss_role_structure(package, pin=c.PackagePin("0" * 64, pin.package_root, pin.members_sha256))
+
+    def test_context_conditioning_and_direct_or_conditional_loss_are_independent_declared_uses(self):
+        for mask in ({"direct_identity": True}, {"direct_identity": False, "conditional_identity": True},
+                     {"direct_identity": True, "conditional_identity": True},
+                     {"identity_core": True, "identity_loss": True}):
+            rows = deepcopy(self.rows)
+            rows["E0"][0]["use_lanes"] = ["context_only_conditioning", "direct_identity_supervision", "public_fixture_other_use"]
+            rows["E0"][0]["loss_mask"] = mask
+            package, pin = self.archive(rows=rows)
+            with self.subTest(mask=mask):
+                output, receipt = self.compile(package, pin)
+                record = next(record for record in self.records(output) if record["record_id"] == "e0.1")
+                self.assertEqual(record["loss_mask"], mask)
+                self.assertEqual(record["supervision_lanes"], rows["E0"][0]["use_lanes"])
+                self.assertFalse(receipt["source_training_authority_granted"])
+                self.assertFalse(receipt["acceptance_authority"])
+                self.assertFalse(receipt["private_gradient_authorized"])
+                self.assertEqual(c.verify_compiled(output), receipt)
+
+    def test_explicit_exclusion_lane_or_mask_rejects_each_exact_known_positive(self):
+        for field in c._POSITIVE_IDENTITY_LOSS_MASKS:
+            for exclusion in ("lane", "mask", "both"):
+                rows = deepcopy(self.rows)
+                rows["E0"][0]["use_lanes"] = ["context_only_conditioning"]
+                rows["E0"][0]["loss_mask"] = {field: True}
+                if exclusion in {"lane", "both"}:
+                    rows["E0"][0]["use_lanes"].append("exclude_from_identity_loss")
+                if exclusion in {"mask", "both"}:
+                    rows["E0"][0]["loss_mask"]["exclude_from_identity_loss"] = True
+                package, pin = self.archive(rows=rows)
+                with self.subTest(field=field, exclusion=exclusion), self.assertRaisesRegex(c.IdentitySubstrateError, "identity loss"):
+                    self.compile(package, pin)
+
+    def test_exclusion_markers_and_unknown_identity_names_are_preserved_not_positive_losses(self):
+        rows = deepcopy(self.rows)
+        rows["E0"][0]["use_lanes"] = ["exclude_from_identity_loss", "context_only_conditioning"]
+        rows["E0"][0]["loss_mask"] = {"direct_identity": False, "conditional_identity": False,
+            "exclude_from_identity_loss": True, "exclude_identity_supervision": True,
+            "identity_reconstruction": True, "UNKNOWN_IDENTITY_FIXTURE": True,
+            "public_fixture_extra_mask": False}
+        package, pin = self.archive(rows=rows)
+        before = package.read_bytes()
+        output, receipt = self.compile(package, pin)
+        record = next(record for record in self.records(output) if record["record_id"] == "e0.1")
+        self.assertEqual(record["loss_mask"], rows["E0"][0]["loss_mask"])
+        self.assertEqual(record["supervision_lanes"], rows["E0"][0]["use_lanes"])
+        self.assertNotIn("identity_core_allowed", record)
+        self.assertEqual(package.read_bytes(), before)
+        self.assertFalse(receipt["private_gradient_authorized"])
+        self.assertFalse(receipt["acceptance_authority"])
+        report = c.audit_loss_role_structure(package, pin=pin)
+        self.assertEqual(report["counts"]["explicit_identity_loss_conflicting_rows"], 0)
+        self.assertNotIn("UNKNOWN_IDENTITY_FIXTURE", json.dumps(report))
+
+    def test_false_exclusion_mask_does_not_create_an_exclusion_or_infer_unknown_lanes(self):
+        row = {"loss_mask": {"direct_identity": True, "exclude_from_identity_loss": False,
+                             "identity_prompt_authorized": True}}
+        mask = deepcopy(row["loss_mask"])
+        lanes = ["public_fixture_unknown_identity_lane", "context_only_conditioning"]
+        self.assertEqual(c._loss_mask(row, lanes), mask)
+        self.assertEqual(row["loss_mask"], mask)
+        self.assertEqual(lanes, ["public_fixture_unknown_identity_lane", "context_only_conditioning"])
+
+    def test_precise_exclusion_diagnostics_are_fixed_known_counts_not_substring_guesses(self):
+        rows = deepcopy(self.rows)
+        rows["E0"][0]["use_lanes"] = ["exclude_from_identity_loss", "context_only_conditioning"]
+        rows["E0"][0]["loss_mask"] = {"direct_identity": True, "conditional_identity": True,
+                                      "exclude_from_identity_loss": True, "PRIVATE_LOOKING_FIXTURE_identity_loss": True}
+        rows["E0"][1]["use_lanes"] = ["context_only_conditioning"]
+        rows["E0"][1]["loss_mask"] = {"identity_core": True, "identity_loss": True, "exclude_from_identity_loss": True}
+        rows["E0"][2]["use_lanes"] = ["exclude_from_identity_loss"]
+        rows["E0"][2]["loss_mask"] = {"direct_identity": False, "conditional_identity": False,
+            "exclude_from_identity_loss": True, "PRIVATE_LOOKING_FIXTURE_other_identity": True}
+        package, pin = self.archive(rows=rows)
+        before = package.read_bytes()
+        report = c.audit_loss_role_structure(package, pin=pin)
+        counts = report["counts"]
+        self.assertEqual(counts["positive_known_fields_under_exclusion_lane"],
+                         {"direct_identity": 1, "conditional_identity": 1, "identity_core": 0, "identity_loss": 0})
+        self.assertEqual(counts["positive_known_fields_under_exclusion_mask"],
+                         {key: 1 for key in c._POSITIVE_IDENTITY_LOSS_MASKS})
+        self.assertEqual(counts["positive_known_fields_under_explicit_exclusion"],
+                         {key: 1 for key in c._POSITIVE_IDENTITY_LOSS_MASKS})
+        self.assertEqual(counts["exclusion_lane_rows"], 2)
+        self.assertEqual(counts["exclusion_mask_rows"], 3)
+        self.assertEqual(counts["explicit_exclusion_rows"], 3)
+        self.assertEqual(counts["explicit_identity_loss_conflicting_rows"], 2)
+        self.assertFalse(report["acceptance_authority"])
+        self.assertFalse(report["training_authorized"])
+        self.assertEqual(package.read_bytes(), before)
+        self.assertNotIn("PRIVATE_LOOKING_FIXTURE", json.dumps(report))
+        self.assertNotIn("e0.1", json.dumps(report))
 
     def test_unknown_and_alternatives_cannot_gain_learning_or_negative_authority(self):
         for field, value in (("training_authority", True), ("hard_negative_authorized", True),

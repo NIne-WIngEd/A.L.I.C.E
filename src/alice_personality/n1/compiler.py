@@ -46,6 +46,15 @@ _ID = re.compile(r"[^\s\x00-\x1f\x7f]{1,512}\Z")
 _ARTIFACTS = {"active_identity_records.jsonl", "support_edges.jsonl",
               "historical_unknown_bank.jsonl", "alternative_competitors_unordered.jsonl",
               "observed_concept_inventory.json", "split_families.jsonl"}
+# Loss lanes are independent declared uses, not record-wide role guesses.
+# Original 021c5021 compiler.py:98-99 preserves both fields; its public test
+# explicitly documents direct_identity. The isolated pinned frontier schema
+# audit also confirms conditional_identity, including multi-use context rows.
+# identity_core/identity_loss are exact recognized schema names, not a rule
+# interpreting arbitrary names containing "identity". This contradiction check
+# never derives identity_core_allowed or training/acceptance permission.
+_POSITIVE_IDENTITY_LOSS_MASKS = ("direct_identity", "conditional_identity", "identity_core", "identity_loss")
+_IDENTITY_LOSS_EXCLUSION = "exclude_from_identity_loss"
 
 
 class IdentitySubstrateError(ValueError):
@@ -222,10 +231,12 @@ def _loss_mask(row: dict, lanes: list[str]) -> dict:
     if not isinstance(mask, dict) or any(not isinstance(key, str) or not key or type(value) is not bool
                                        for key, value in mask.items()):
         raise IdentitySubstrateError("loss_mask requires named Boolean values")
-    context_only = {"context_only_conditioning", "exclude_from_identity_loss"} & set(lanes)
-    if context_only and any(value and "identity" in key for key, value in mask.items()):
-        raise IdentitySubstrateError("context-only or excluded evidence cannot enable identity loss")
-    return dict(sorted(mask.items()))
+    excluded = _IDENTITY_LOSS_EXCLUSION in lanes or mask.get(_IDENTITY_LOSS_EXCLUSION) is True
+    if excluded and any(mask.get(key) is True for key in _POSITIVE_IDENTITY_LOSS_MASKS):
+        raise IdentitySubstrateError("explicitly excluded evidence cannot enable identity loss")
+    # Context conditioning is one permitted use of a record that may also
+    # support direct/conditional identity. Unknown masks remain uninterpreted.
+    return dict(mask)
 
 
 def _normalize(kind: str, row: dict) -> dict:
@@ -512,8 +523,13 @@ def audit_loss_role_structure(package_path: str | Path, *, pin: PackagePin) -> d
     counts = {name: 0 for name in ("e0_rows", "legacy_conflicting_rows",
         "context_only_rows", "exclusion_lane_rows", "context_and_direct_supervision_rows",
         "conflicting_positive_direct_identity_rows", "conflicting_positive_identity_core_rows",
-        "conflicting_identity_exclusion_name_rows", "conflicting_other_identity_name_rows")}
+        "conflicting_identity_exclusion_name_rows", "conflicting_other_identity_name_rows",
+        "exclusion_mask_rows", "explicit_exclusion_rows", "positive_known_identity_rows",
+        "context_and_positive_known_identity_rows", "explicit_identity_loss_conflicting_rows")}
     counts["enabled_known_mask_fields"] = {key: 0 for key in keys}
+    for field in ("positive_known_fields_under_exclusion_lane", "positive_known_fields_under_exclusion_mask",
+                  "positive_known_fields_under_explicit_exclusion"):
+        counts[field] = {key: 0 for key in _POSITIVE_IDENTITY_LOSS_MASKS}
     with zipfile.ZipFile(package) as archive:
         _verify_members(archive, binding)
         rows = _jsonl(archive, binding["package_root"] + "/" + ACTIVE_FILES["E0"])
@@ -525,7 +541,22 @@ def audit_loss_role_structure(package_path: str | Path, *, pin: PackagePin) -> d
                 raise IdentitySubstrateError("loss role structural audit requires explicit schema types")
             counts["e0_rows"] += 1
             context = "context_only_conditioning" in lanes
-            excluded = "exclude_from_identity_loss" in lanes
+            excluded = _IDENTITY_LOSS_EXCLUSION in lanes
+            excluded_mask = mask.get(_IDENTITY_LOSS_EXCLUSION) is True
+            explicit_exclusion = excluded or excluded_mask
+            positive = any(mask.get(key) is True for key in _POSITIVE_IDENTITY_LOSS_MASKS)
+            counts["exclusion_mask_rows"] += int(excluded_mask)
+            counts["explicit_exclusion_rows"] += int(explicit_exclusion)
+            counts["positive_known_identity_rows"] += int(positive)
+            counts["context_and_positive_known_identity_rows"] += int(context and positive)
+            counts["explicit_identity_loss_conflicting_rows"] += int(explicit_exclusion and positive)
+            for key in _POSITIVE_IDENTITY_LOSS_MASKS:
+                enabled = mask.get(key) is True
+                counts["positive_known_fields_under_exclusion_lane"][key] += int(excluded and enabled)
+                counts["positive_known_fields_under_exclusion_mask"][key] += int(excluded_mask and enabled)
+                counts["positive_known_fields_under_explicit_exclusion"][key] += int(explicit_exclusion and enabled)
+            # Reproduce the old broken heuristic only as explicitly historical
+            # aggregate diagnostics. It is never used for source admission.
             conflict_keys = [key for key, value in mask.items() if value and "identity" in key]
             counts["context_only_rows"] += int(context)
             counts["exclusion_lane_rows"] += int(excluded)
