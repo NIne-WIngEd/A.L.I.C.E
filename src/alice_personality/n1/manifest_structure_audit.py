@@ -47,7 +47,9 @@ DECLARED_SOURCE_HASH_COUNT = 30
 _FLAGS = ("acceptance_authority", "private_gradient_authorized",
           "historical_authority_granted", "training_authorized")
 _FAILURES = frozenset({"audit_refused", "audit_input_invalid", "audit_custody_refused", "audit_inventory_refused",
-                      "audit_metadata_refused", "audit_structure_bound", "audit_code_changed"})
+                      "audit_metadata_refused", "audit_structure_bound", "audit_code_changed",
+                      "audit_reviewed_structure_refused", "audit_reviewed_manifest_pins_refused",
+                      "audit_declared_map_shape_refused", "audit_declared_digest_format_refused"})
 
 
 class ManifestStructureAuditError(ValueError):
@@ -401,10 +403,10 @@ def _declared_matches(manifest: dict) -> int:
     values = manifest.get("source_hashes")
     if type(values) is not dict or len(values) != DECLARED_SOURCE_HASH_COUNT or \
             type(manifest.get("source_package")) is not str:
-        _fail("audit_metadata_refused")
+        _fail("audit_declared_map_shape_refused")
     if any(type(value) is not str or re.fullmatch(r"[0-9a-f]{64}", value) is None
            for value in values.values()):
-        _fail("audit_metadata_refused")
+        _fail("audit_declared_digest_format_refused")
     # Validate EVERY declaration before any equality comparison.
     return sum(value == LEGACY_RESERVE_SHA256 for value in values.values())
 
@@ -471,10 +473,11 @@ def compare_declared_source_hashes(curated_archive_path: str | Path, *,
 
             def compare(protected, manifest):
                 nonlocal matches
-                if reviewed_bytes != raw._canonical(reviewed) + b"\n" or raw._canonical(protected) != raw._canonical(reviewed) or \
-                        protected["curated"]["manifest_sha256"] != curated_digest or \
+                if reviewed_bytes != raw._canonical(reviewed) + b"\n" or raw._canonical(protected) != raw._canonical(reviewed):
+                    _fail("audit_reviewed_structure_refused")
+                if protected["curated"]["manifest_sha256"] != curated_digest or \
                         protected["raw"]["manifest_sha256"] != raw_digest:
-                    _fail("audit_metadata_refused")
+                    _fail("audit_reviewed_manifest_pins_refused")
                 matches = _declared_matches(manifest)
 
             _, discovered = _inspect_manifests(curated_archive_path, curated_pin=curated_pin,

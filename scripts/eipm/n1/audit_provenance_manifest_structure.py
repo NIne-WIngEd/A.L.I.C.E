@@ -41,6 +41,10 @@ _AUDIT_REASON_CATEGORIES = {
     "audit_custody_refused": "input_custody_refused",
     "audit_inventory_refused": "archive_inventory_refused",
     "audit_metadata_refused": "metadata_or_review_refused",
+    "audit_reviewed_structure_refused": "reviewed_structure_refused",
+    "audit_reviewed_manifest_pins_refused": "reviewed_manifest_pins_refused",
+    "audit_declared_map_shape_refused": "declared_map_shape_refused",
+    "audit_declared_digest_format_refused": "declared_digest_format_refused",
     "audit_structure_bound": "structure_resource_bound",
     "audit_code_changed": "implementation_changed"}
 _FAILURE_CATEGORIES = frozenset({"unclassified_refusal", "boundary_or_schema_refused",

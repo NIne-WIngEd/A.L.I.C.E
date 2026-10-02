@@ -420,7 +420,7 @@ def test_targeted_declaration_count_without_label_or_original_authority(tmp_path
 def test_all30_declared_values_must_validate_before_any_match_result(tmp_path, invalid):
     inputs = fixture_comparison(tmp_path, matches=1, manifest_change=lambda value:
         value["source_hashes"].__setitem__("PUBLIC_FIXTURE_LABEL_29", invalid))
-    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_metadata_refused$"):
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_declared_digest_format_refused$"):
         audit.compare_declared_source_hashes(**inputs)
 
 
@@ -431,7 +431,7 @@ def test_declared_map_requires_exact30_and_package_string(tmp_path):
         directory = tmp_path / str(number)
         directory.mkdir()
         inputs = fixture_comparison(directory, manifest_change=change)
-        with pytest.raises(audit.ManifestStructureAuditError, match="^audit_metadata_refused$"):
+        with pytest.raises(audit.ManifestStructureAuditError, match="^audit_declared_map_shape_refused$"):
             audit.compare_declared_source_hashes(**inputs)
 
 
@@ -446,7 +446,7 @@ def test_reviewed_structure_exact_typed_bytes_reject_false_zero_and_key_drift(tm
             assert len(fields) == 30
         path.write_bytes(raw._canonical(changed) + b"\n")
         inputs["expected_reviewed_structure_file_sha256"] = digest(path.read_bytes())
-        with pytest.raises(audit.ManifestStructureAuditError, match="^audit_metadata_refused$"):
+        with pytest.raises(audit.ManifestStructureAuditError, match="^audit_reviewed_structure_refused$"):
             audit.compare_declared_source_hashes(**inputs)
 
 
@@ -458,7 +458,7 @@ def test_reviewed_structure_and_actual_manifest_pins_are_both_required(tmp_path,
         audit.compare_declared_source_hashes(**dict(inputs, expected_reviewed_structure_file_sha256="0" * 64))
     opened.assert_not_called()
     monkeypatch.undo()
-    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_metadata_refused$"):
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_reviewed_manifest_pins_refused$"):
         audit.compare_declared_source_hashes(**dict(inputs, expected_raw_generation_manifest_sha256="0" * 64))
 
 
@@ -541,6 +541,11 @@ def test_guard_passed_missing_boundary_env_is_reported_before_any_source_path(mo
     (ValueError("audit_custody_refused"), "unclassified_refusal"),
     (audit.ManifestStructureAuditError("audit_custody_refused"), "input_custody_refused"),
     (audit.ManifestStructureAuditError("audit_metadata_refused"), "metadata_or_review_refused"),
+    (audit.ManifestStructureAuditError("audit_reviewed_structure_refused"), "reviewed_structure_refused"),
+    (audit.ManifestStructureAuditError("audit_reviewed_manifest_pins_refused"), "reviewed_manifest_pins_refused"),
+    (audit.ManifestStructureAuditError("audit_declared_map_shape_refused"), "declared_map_shape_refused"),
+    (audit.ManifestStructureAuditError("audit_declared_digest_format_refused"), "declared_digest_format_refused"),
+    (ValueError("audit_declared_digest_format_refused"), "unclassified_refusal"),
     (audit.ManifestStructureAuditError("PRIVATE-FIXTURE-KEY"), "unclassified_refusal"),
 ])
 def test_fixed_failure_stage_category_never_echoes_errors_or_forges_module_reason(monkeypatch, capsys, exception, category):
@@ -629,3 +634,81 @@ def test_create_only_failure_stage_preserves_existing_evidence(tmp_path, monkeyp
     value = json.loads(capsys.readouterr().err)
     assert value["failure_stage"] == "public_summary_write" and value["failure_category"] == "create_only_conflict"
     assert path.read_bytes() == b"old public fixture evidence"
+
+
+@pytest.mark.parametrize("case, category", [
+    ("reviewed_structure", "reviewed_structure_refused"),
+    ("reviewed_encoding", "reviewed_structure_refused"),
+    ("curated_manifest_pin", "reviewed_manifest_pins_refused"),
+    ("raw_manifest_pin", "reviewed_manifest_pins_refused"),
+    ("map_shape", "declared_map_shape_refused"),
+    ("package_shape", "declared_map_shape_refused"),
+    ("digest_format", "declared_digest_format_refused"),
+])
+def test_actual_comparison_refusals_have_fixed_subcategories_after_fixture_guard(
+        tmp_path, monkeypatch, capsys, case, category):
+    # The guard is mocked; this is not evidence of actual Magnolia isolation.
+    changes = {
+        "map_shape": lambda value: value["source_hashes"].pop("PUBLIC_FIXTURE_LABEL_29"),
+        "package_shape": lambda value: value.__setitem__("source_package", False),
+        "digest_format": lambda value: value["source_hashes"].__setitem__("PUBLIC_FIXTURE_LABEL_29", "A" * 64),
+    }
+    inputs = fixture_comparison(tmp_path, matches=1, manifest_change=changes.get(case))
+    reviewed_path = inputs["reviewed_structure_path"]
+    if case in ("reviewed_structure", "reviewed_encoding"):
+        reviewed = json.loads(reviewed_path.read_bytes())
+        if case == "reviewed_structure":
+            reviewed["link_compared"] = 0
+            reviewed_bytes = raw._canonical(reviewed) + b"\n"
+        else:
+            reviewed_bytes = json.dumps(reviewed, indent=2).encode() + b"\n"
+        reviewed_path.write_bytes(reviewed_bytes)
+        inputs["expected_reviewed_structure_file_sha256"] = digest(reviewed_bytes)
+    if case in ("curated_manifest_pin", "raw_manifest_pin"):
+        field = "expected_curated_manifest_sha256" if case == "curated_manifest_pin" else "expected_raw_generation_manifest_sha256"
+        inputs[field] = "0" * 64
+    unchanged_review = reviewed_path.read_bytes()
+    guard, publish = Mock(return_value={}), Mock()
+    opened = []
+    read_member = raw._read_member
+
+    def observed(archive, member, limit):
+        opened.append(member.filename)
+        return read_member(archive, member, limit)
+
+    def fixture_stage(*, compare_source_hashes, progress):
+        progress.mark("namespace_guard")
+        entry.namespace._p2_guard()
+        progress.mark("declared_hash_comparison")
+        result = audit.compare_declared_source_hashes(**inputs)
+        publish(result)
+        return result
+
+    monkeypatch.setattr(entry.namespace, "_p2_guard", guard)
+    monkeypatch.setattr(entry, "_run_structure_audit", fixture_stage)
+    monkeypatch.setattr(raw, "_read_member", observed)
+    assert entry.main(["--p2-source-hash-comparison-stage"]) == 3
+    output = capsys.readouterr()
+    value = json.loads(output.err)
+    assert output.out == "" and "PUBLIC_FIXTURE_LABEL" not in output.err and "PUBLIC_PACKAGE_VALUE" not in output.err
+    assert str(reviewed_path) not in output.err and "Traceback" not in output.err
+    assert value["failure_stage"] == "declared_hash_comparison" and value["failure_category"] == category
+    assert all(value[name] is False for name in ("link_compared", *audit._FLAGS, "source_admission",
+                                                "original_source_independently_verified", "legacy_namespace_proven"))
+    guard.assert_called_once_with()
+    publish.assert_not_called()
+    assert len(opened) == 4 and not any(name.endswith(".jsonl") for name in opened)
+    assert reviewed_path.read_bytes() == unchanged_review
+
+
+def test_reporting_refinement_preserves_original_structure_first_refusal_order(tmp_path):
+    inputs = fixture_comparison(tmp_path, manifest_change=lambda value:
+        value["source_hashes"].__setitem__("PUBLIC_FIXTURE_LABEL_29", "A" * 64))
+    path = inputs["reviewed_structure_path"]
+    reviewed = json.loads(path.read_bytes())
+    reviewed["link_compared"] = 0
+    path.write_bytes(raw._canonical(reviewed) + b"\n")
+    inputs["expected_reviewed_structure_file_sha256"] = digest(path.read_bytes())
+    inputs["expected_raw_generation_manifest_sha256"] = "0" * 64
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_reviewed_structure_refused$"):
+        audit.compare_declared_source_hashes(**inputs)
