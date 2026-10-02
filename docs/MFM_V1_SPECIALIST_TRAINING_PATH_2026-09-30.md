@@ -1,5 +1,11 @@
 # MFM V1 specialist training path
 
+**2026-10-02 continuation:** the recovered 441-case teacher corpus passed the
+protected Magnolia CPU path in job 576606. The separately versioned CPU frozen
+feature / FP32 specialist route and remaining qualification gates are documented
+in [the build continuation](MFM_V16_BUILD_CONTINUATION_2026-10-02.md). No fit or
+full capability is inferred from that processor pass.
+
 **Status, 2026-09-30:** Implemented training and evaluation code with synthetic
 CPU contract tests. The eight source files were SHA-256 verified on Magnolia.
 Owner-provided Slurm stdout for job `576486` reports a completed CPU run on
