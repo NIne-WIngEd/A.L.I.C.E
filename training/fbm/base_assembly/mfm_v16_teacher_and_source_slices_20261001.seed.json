@@ -567,9 +567,9 @@
   },
   "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_TEACHER_LANE_AND_EXACT_SLICES.jsonl",
   "build_continuation_20261002": {
-    "status": "BF16_EXPORT_RUNNING_BOUNDED_RESUMES_AND_GUARDED_GPU_PIPELINE_QUEUED_UNQUALIFIED",
+    "status": "DEDICATED_SOURCE_EXPORT_RESUMED_SYNTHETIC_FULL_CAPACITY_PASSED_PROTECTED_CPU_LEARNING_QUEUED_UNQUALIFIED",
     "mfm_branch": "research/mfm-v1-licensed-base-20260930",
-    "mfm_commit": "a9c143f457f10b93d5d4f914fc10ad002e485fa4",
+    "mfm_commit": "41252af3a30cb3680a209450a7d49c0886908737",
     "tested_implementation_commit": "561fac07570e78e2a9833f6bbac728a8950dc713",
     "contract": "docs/MFM_V16_BUILD_CONTINUATION_2026-10-02.md",
     "original_v3_archive_sha256": "fd34cddc1c8b8958d00d5daf74f39b928e9fb2818ccaa4ee6294b928037f40a3",
@@ -597,9 +597,16 @@
       "576604": "namespace helper argument mismatch before corpus open",
       "576609": "legacy Bash empty-array error before exporter execution",
       "576611": "container clone library-copy failure",
-      "576613": "fresh runtime library-copy failure; repaired dedicated runtime separately"
+      "576613": "fresh runtime library-copy failure; repaired dedicated runtime separately",
+      "576619": "FAILED 3:0 policy halt",
+      "576620": "FAILED 3:0 policy halt",
+      "576621": "FAILED 3:0 policy halt",
+      "576622": "cancelled unsatisfiable dependency",
+      "576614": "TIMEOUT no completed FP32 forward or numerical receipt",
+      "576629": "FAILED 3:0 GPU unshare USER+NET EINVAL before private data",
+      "576634": "cancelled failed prerequisite automatically"
     },
-    "feature_export_job": 576610,
+    "feature_export_job": 576630,
     "feature_export_complete": false,
     "feature_bank_sha256": null,
     "trained_mfm": false,
@@ -612,14 +619,16 @@
     "fresh_specialist": {
       "dtype": "float32",
       "architecture_unchanged": true,
-      "full_size_backward_restart_proved": false
+      "full_size_backward_restart_proved": false,
+      "synthetic_full_size_backward_restart_proved": true,
+      "qualification_scope": "synthetic tensor GPU capacity passes; empirical admitted-corpus stress remains pending"
     },
     "feature_entrypoint": "scripts/mfm/export_v16_frozen_features.py",
     "cached_training_entrypoint": "scripts/mfm/train_v16_cached_specialist.py",
     "original_live_inference_schema_compatible": false,
     "free_compute": {
-      "magnolia": "source export active; bounded resumes and guarded GPU capacity/fit/generated pipeline queued under mxrayan",
-      "kaggle": "owner CLI works; actual new allocation and remaining quota unverified",
+      "magnolia": "dedicated source CPU export active; protected cache-only CPU stress/fit/generated pipeline 576637 queued; GPU private namespace denied but full public synthetic capacity passed",
+      "kaggle": "actual private internet-off T4 x2 notebook completed; both tested namespace methods denied; no corpus/model inputs attached",
       "hugging_face": "connected NineWinged non-PRO; eligible ZeroGPU may offer short free probes; Jobs use billed credits"
     },
     "paid_compute_used": false,
@@ -628,7 +637,7 @@
     "product_qualified": false,
     "next_gates": [
       "complete exact frozen bank",
-      "full-size GPU backward and restart",
+      "full-size admitted-corpus CPU backward and actual restart under verified isolation",
       "complete teacher fit",
       "matched generated trained/seeded diagnostics",
       "independent source/host/time/generator-separated gold and native modalities",
@@ -639,8 +648,8 @@
     "training_eligible": false,
     "evaluation_eligible": false,
     "qualification_boundary": "CPU and small-model tests prove contracts only. Single-author fictional targets, lower CE and frozen exports do not prove useful learned formation.",
-    "execution_code_commit": "7f9621bddfe0b1136b776a9850e2f0e5c8f4842a",
-    "feature_export_code_commit": "eee3b30cf1791b92dbb509b7423b993d45e6596c",
+    "execution_code_commit": "01ad19de001b47604593e15661f2d4cd4af963f1",
+    "feature_export_code_commit": "01ad19de001b47604593e15661f2d4cd4af963f1",
     "additional_linux_diagnostic_tests_passed": 5,
     "target_tokenizer_parity": {
       "job": 576615,
@@ -660,21 +669,21 @@
       "teacher_corpus_opened": false
     },
     "feature_export_continuation_jobs": [
-      576619,
-      576620,
-      576621
+      576631,
+      576632,
+      576633
     ],
     "feature_export_resume_policy": "bounded 12h allocations, resume only prior TIMEOUT; skip completed bank; halt other failures and preserve interrupted atomic stages",
     "cpu_fp32_benchmark": {
       "job": 576614,
-      "status_at_handoff": "RUNNING",
-      "results_reviewed": false,
-      "allocated_memory_gb": 96,
+      "state": "TIMEOUT",
+      "completed_forward_measurements": 0,
+      "numerical_receipt_available": false,
       "precision_change_adopted": false
     },
     "gpu_learning_pipeline": {
       "job": 576622,
-      "status_at_handoff": "PENDING_DEPENDENCY",
+      "status_at_handoff": "CANCELLED_SUPERSEDED_BY_PROTECTED_CPU_576637",
       "depends_afterok": 576621,
       "external_bank_pin_from_producer_jobs": [
         576610,
@@ -692,6 +701,132 @@
       "capacity_or_fit_pass_inferred_from_submission": false
     },
     "generated_diagnostic_entrypoint": "scripts/mfm/run_v16_cached_diagnostic.py",
-    "generated_diagnostic_scope": "raw generated failures and JSON/source grounding; no semantic accuracy, independent gold, Claim-gate or downstream usefulness claim"
+    "generated_diagnostic_scope": "raw generated failures and JSON/source grounding; no semantic accuracy, independent gold, Claim-gate or downstream usefulness claim",
+    "public_capacity_code_commit": "924ea46b3907297c912b34422890d142381f527b",
+    "feature_export_binding_modules_unchanged": true,
+    "previous_feature_export_job": 576610,
+    "previous_feature_export_state": "FAILED_1:0_CONTAINER_PATH_NOT_FOUND_HOST_CASES_PRESERVED",
+    "feature_export_dedicated_runtime": "rayan-mfm-source-cpu-20261002",
+    "prior_committed_cases_reverified": 17,
+    "additional_local_feature_diagnostic_tests_passed": 17,
+    "synthetic_full_decoder_capacity": {
+      "job": 576636,
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:03:54",
+      "code_commit": "924ea46b3907297c912b34422890d142381f527b",
+      "parameters": 267542272,
+      "run": {
+        "decoder_sha256": "36446060dabcbb20df08ed0d5bd1749cad3b0cf367d59a96dcff81945eafab07",
+        "gradient_accumulation": 16,
+        "probe_sha256": "5c46a45b88ff310900a7af61e1710708c2960698583be2a6301e4dcdb838f060",
+        "qualified_for_product": false,
+        "record_sha256": "e39d7ef57bf28890273ec0e53819553c362c4fa2c9a73b23c59fe1855316f429",
+        "schema": "mfm-v16-cached-synthetic-capacity-run-v1",
+        "shape_reference_file_opened": false,
+        "shape_reference_sha256": "f2a8d521a567d88833a485604dfd259e232efb20adda1334d4365c55f043230c",
+        "source_dtype": "bfloat16",
+        "source_length": 3035,
+        "specialist_config": {
+          "base_hidden_size": 3840,
+          "end_token_id": 1,
+          "heads": 12,
+          "layers": 6,
+          "logit_chunk_tokens": 64,
+          "max_target_tokens": 8192,
+          "pad_token_id": 0,
+          "start_token_id": 2,
+          "vocabulary_size": 262144,
+          "width": 768
+        },
+        "specialist_dtype": "float32",
+        "target_length": 1607,
+        "teacher_corpus_opened": false,
+        "torch_version": "2.7.1+cu118"
+      },
+      "receipt": {
+        "capability": [
+          6,
+          0
+        ],
+        "checkpoint_reload_executed": true,
+        "device": "Tesla P100-PCIE-12GB",
+        "empirical_corpus_stress_passed": false,
+        "first_step": {
+          "gradient_norm": 190.2529296875,
+          "mean_loss": 374.3492126464844,
+          "peak_allocated_bytes": 6008453632,
+          "peak_reserved_bytes": 6928990208,
+          "seconds": 27.500982839614153,
+          "step": 1
+        },
+        "model_max_abs_difference": 0.0,
+        "optimizer_max_abs_difference": 0.0,
+        "qualified_for_product": false,
+        "record_sha256": "6b27110a7fe87a0ef0da348f8e443a0f4e6dc56e6d2d511060e0969799c36bf1",
+        "resumed_third_step": {
+          "gradient_norm": 181.6624755859375,
+          "mean_loss": 220.5015106201172,
+          "peak_allocated_bytes": 10304656384,
+          "peak_reserved_bytes": 10961813504,
+          "seconds": 26.79638112336397,
+          "step": 3
+        },
+        "run_sha256": "e39d7ef57bf28890273ec0e53819553c362c4fa2c9a73b23c59fe1855316f429",
+        "schema": "mfm-v16-cached-synthetic-capacity-v1",
+        "scope": "full configured decoder and maximal-length synthetic tensor resource/restart measurement; no teacher learning or admitted-corpus stress pass",
+        "second_step": {
+          "gradient_norm": 240.19100952148438,
+          "mean_loss": 293.2458190917969,
+          "peak_allocated_bytes": 8153681408,
+          "peak_reserved_bytes": 8543797248,
+          "seconds": 26.81045151501894,
+          "step": 2
+        },
+        "seconds": 204.56015969067812,
+        "synthetic_tensor_capacity_passed": true,
+        "teacher_corpus_opened": false,
+        "total_memory_bytes": 12778733568
+      }
+    },
+    "kaggle_no_data_compute_probe": {
+      "kernel": "mkrayanyan/rayan-mfm-nodata-gpu-20261002",
+      "versions_completed": [
+        1,
+        2
+      ],
+      "owner": "mkrayanyan",
+      "actual_device": "Tesla T4",
+      "actual_device_count": 2,
+      "actual_torch_version": "2.11.0+cu128",
+      "returned_private": true,
+      "returned_internet": false,
+      "inputs_attached": false,
+      "user_net_namespace_denied": true,
+      "root_net_only_denied": true,
+      "receipt_sha256": "a80934a8d6689ec436cbdcb283284000638a4225816b13361fdaad9b9befb312",
+      "private_corpus_uploaded": false
+    },
+    "selected_learning_pipeline": {
+      "job": 576637,
+      "state_at_submission": "PENDING_DEPENDENCY",
+      "depends_afterok": 576633,
+      "device": "cpu",
+      "cpu_threads": 12,
+      "memory_gb": 64,
+      "allocation_hours": 12,
+      "code_commit": "01ad19de001b47604593e15661f2d4cd4af963f1",
+      "stages": [
+        "full admitted-corpus stress accumulation and actual restart",
+        "fresh all-432-case two-epoch FP32 teacher fit",
+        "matched trained/seeded generated diagnostic development"
+      ],
+      "session_seconds": 28800,
+      "save_every_optimizer_steps": 5,
+      "incomplete_fit_behavior": "checkpoint at optimizer boundary after eight training hours; no component means pipeline stops before generation; manual verified resume required",
+      "privacy": "same owner UID and verified loopback-only namespace; independent external complete bank pin required",
+      "capacity_fit_or_usefulness_pass_inferred": false
+    },
+    "compute_audit": "docs/MFM_COMPUTE_RECOVERY_RECEIPTS_2026-10-02.json"
   }
 }
