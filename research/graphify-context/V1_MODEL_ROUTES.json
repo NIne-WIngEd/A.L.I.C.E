@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "a5b04504c227347c5b56e6555d7aa7cc4ae86af4",
+      "commit": "a9c143f457f10b93d5d4f914fc10ad002e485fa4",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -42,7 +42,12 @@
         {
           "path": "docs/MFM_V1_SPECIALIST_TRAINING_PATH_2026-09-30.md",
           "purpose": "MFM specialist training path",
-          "blob_sha": "9701e9853846cb122502d5c836dee84cd10200ac"
+          "blob_sha": "7e39cba9c31f2a903874213a335e07f6e04c6a6d"
+        },
+        {
+          "path": "docs/MFM_V16_BUILD_CONTINUATION_2026-10-02.md",
+          "purpose": "MFM recovered corpus, compute decisions and remaining full-capability roadmap",
+          "blob_sha": "e7760af2b8eab3e7074ffc82a61504668656b0d0"
         },
         {
           "path": "docs/MFM_V1_ROLE_BOUNDARY_DIAGNOSTIC_2026-09-30.md",
@@ -87,7 +92,7 @@
         {
           "path": "src/cognitive_kernel/formation_learning_v16.py",
           "purpose": "v1.6 source-bound target codec and admitted learning rows",
-          "blob_sha": "16badb6cf60d4773f997db9e918d0def4726f56e"
+          "blob_sha": "428aa46da9083e1868abbdf5ab3cc4a4c6f620d9"
         },
         {
           "path": "src/cognitive_kernel/formation_adjudication_v16.py",
@@ -127,7 +132,62 @@
         {
           "path": "scripts/mfm/train_v16_formation_specialist.py",
           "purpose": "versioned v1.6 specialist training and admission",
-          "blob_sha": "051727bceb35cc94b995bab64c524c0039c476da"
+          "blob_sha": "81fd6c5dce8865936c9c899dd4b204a35b2dbbb8"
+        },
+        {
+          "path": "scripts/mfm/formation_feature_bank.py",
+          "purpose": "lossless source-bound frozen representation cache and external digest verification",
+          "blob_sha": "069f3e7f213335ec4184e4df55d4227ed76f413e"
+        },
+        {
+          "path": "scripts/mfm/export_v16_frozen_features.py",
+          "purpose": "complete admitted source-only CPU BF16 frozen feature export",
+          "blob_sha": "6cdc60b317b6b206fa9cb1a48e019ee788505c3b"
+        },
+        {
+          "path": "scripts/mfm/train_v16_cached_specialist.py",
+          "purpose": "FP32 cache-only teacher training, stress probe and actual optimizer restart",
+          "blob_sha": "ce13481b48310d6e850b175c36f5ac656d7d3a3e"
+        },
+        {
+          "path": "scripts/mfm/run_v16_cached_diagnostic.py",
+          "purpose": "matched generated FP32 teacher development diagnostics and raw failure preservation",
+          "blob_sha": "e8a9acd005933ae399a6d8c0aa24cadc20ec7aaf"
+        },
+        {
+          "path": "scripts/mfm/magnolia_v16_feature_resume_20261002.sbatch",
+          "purpose": "bounded TIMEOUT-only source export continuation with preserved interrupted writes",
+          "blob_sha": "1d60838a6e96dac042d7883ba99924aa40e13a51"
+        },
+        {
+          "path": "scripts/mfm/magnolia_v16_cached_pipeline_20261002.sbatch",
+          "purpose": "dependent full-size stress, teacher fit and generated-control compute handoff",
+          "blob_sha": "7273e6451a5cb7f840fbb921cab6e0f9030b169c"
+        },
+        {
+          "path": "scripts/mfm/benchmark_v16_cpu_precision.py",
+          "purpose": "measured CPU FP32 source arithmetic versus committed BF16 states",
+          "blob_sha": "a101e1d77315744414218c034c83f29d594c0378"
+        },
+        {
+          "path": "scripts/mfm/magnolia_v16_frozen_feature_export.sbatch",
+          "purpose": "protected same-owner Magnolia allocated CPU feature job",
+          "blob_sha": "886f9cb78ff76bc6ea141ef92bbf6fff4de68f63"
+        },
+        {
+          "path": "scripts/mfm/issue_v16_longitudinal_synthetic_expansion.py",
+          "purpose": "pinned synthetic corpus reissuance from original owner-custody archive",
+          "blob_sha": "7d79e125f231e8caf723d2303b1b788f042d6556"
+        },
+        {
+          "path": "tests/governance/test_mfm_v16_frozen_features.py",
+          "purpose": "frozen cache live-loss/gradient parity, custody and multistep restart tests",
+          "blob_sha": "308821620f9e393bed3f4bab4c356e0491520543"
+        },
+        {
+          "path": "tests/governance/test_mfm_v16_cached_diagnostic.py",
+          "purpose": "cached generated-control lineage, EOS, FP32 and unqualified diagnostic tests",
+          "blob_sha": "e1adf45b9b71f1422d21f820ecbb269091a9656c"
         },
         {
           "path": "scripts/mfm/run_v1_formation_specialist.py",
@@ -137,7 +197,7 @@
         {
           "path": "scripts/mfm/run_v16_formation_specialist.py",
           "purpose": "versioned v1.6 specialist inference",
-          "blob_sha": "65eab3260262251b5d16a7005534d179b8e2f490"
+          "blob_sha": "66f4b79fbf957b9875f990b4dba42de7c7855d3b"
         },
         {
           "path": "scripts/mfm/qualify_v16_formation_specialist.py",
@@ -177,12 +237,12 @@
         {
           "path": "tests/governance/test_mfm_v16_specialist_assessment.py",
           "purpose": "v1.6 specialist assessment contract tests",
-          "blob_sha": "661b3f2143ec9acd49bba5d7e77f06181b76234a"
+          "blob_sha": "e0345cd6ae1f57eb706132f5da59e6bc79bc078e"
         },
         {
           "path": "tests/governance/test_mfm_v16_signed_fit_gate.py",
           "purpose": "externally pinned signed corpus optimizer gate tests",
-          "blob_sha": "e2b7b26c0ea4c439cc2fd65895ca8ea11ea72c72"
+          "blob_sha": "573a6d4eed006b028c996ae4424395fc1f96592b"
         },
         {
           "path": "tests/phase2/test_formation_v16_p2_adapter.py",
@@ -193,12 +253,22 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "4dbc1943e93700840da734b1e0c7bd77f843ca85",
+      "commit": "691a341c348fc81a7f5cbc9c2b07a295a818efb3",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
           "purpose": "FBM ordered replay seed",
-          "blob_sha": "08240975a84e3342492310724372b3b5c65d3b0d"
+          "blob_sha": "96c11ce7724046c2196ef86dc6050526697f6192"
+        },
+        {
+          "path": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
+          "purpose": "FBM recovered teacher CPU evidence and frozen-feature build continuation",
+          "blob_sha": "39aa6a8a697f6366f3e87c5f87441f0bbea08908"
+        },
+        {
+          "path": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl",
+          "purpose": "FBM artifact recovery, measured tests and compute-route procedure traces",
+          "blob_sha": "6e36b28812b8906f7489a693670d433cc73b8e86"
         },
         {
           "path": "training/fbm/base_assembly/mfm_v1_training_role_coverage_20260930.json",
@@ -208,7 +278,7 @@
         {
           "path": "docs/fable-builder/FBM_V1_GEMMA4_BASE_DISSECTION_AND_ROLE_RECIPE_2026-09-30.md",
           "purpose": "FBM source and role recipe",
-          "blob_sha": "a5421b940e69c0b0d00863fd4072c925b2c195f5"
+          "blob_sha": "ccb316e014f7aaa80fe78086e038f2520c5e9813"
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20260930_GEMMA4_MFM_REPLAY_SEED.jsonl",
