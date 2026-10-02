@@ -358,6 +358,89 @@ def _member_map_fixture(source_pin):
         "historical_authority_granted": False, "training_authorized": False}
 
 
+def _coverage_fixture(registry=None):
+    metrics = {key: 0 for key in ("total_rows", "reference_occurrences", "unique_references",
+        "resolved_reference_occurrences", "unresolved_reference_occurrences", "resolved_unique_references",
+        "unresolved_unique_references", "rows_with_missing")}
+    kinds = {kind: dict(metrics) for kind in ("E0", "EINF", "ASYN_DIRECT", "ASYN_BASE", "ASYN_TARGETED", "ASYN_CONTEXT")}
+    registry = {"EINF": []} if registry is None else {"EINF": sorted(registry["EINF"])}
+    global_counts = dict(metrics, reference_union_count=0, reference_registry_intersection_count=0,
+                         reference_registry_difference_count=0, registry_reference_difference_count=len(registry["EINF"]))
+    value = {"schema": "alice-personality-raw-lineage-coverage-diagnostic-v1", "state": "UNQUALIFIED",
+        "source_archive_sha256": helper.PACKAGE_SHA256, "package_pin_sha256": "1" * 64,
+        "compiler_implementation_sha256": "2" * 64, "registry_count": len(registry["EINF"]),
+        "raw_lineage_registry_sha256": sha256(json.dumps(registry, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest(),
+        "source_kind_counts": kinds, "global_counts": global_counts, "einf_source_origin_counts": dict(metrics),
+        "acceptance_authority": False, "private_gradient_authorized": False, "historical_authority_granted": False,
+        "training_authorized": False, "behavior_qualification": None}
+    value["receipt_sha256"] = sha256(helper._canonical(value)).hexdigest()
+    return value
+
+
+@pytest.mark.parametrize("invalid", [None, "extra_top", "extra_count", "bad_seal", "source_pin", "authority", "bool_count", "inconsistent_count"])
+def test_missing_raw_lineage_diagnostic_emits_only_verified_fixed_counts(public_stage, monkeypatch, capsys, invalid):
+    module = sys.modules["src.alice_personality.n1.compiler"]
+    value = _coverage_fixture()
+    if invalid == "extra_top":
+        value["PRIVATE_EXTRA_FIELD"] = "FICTITIOUS SOURCE PAYLOAD"
+    if invalid == "extra_count":
+        value["source_kind_counts"]["E0"]["PRIVATE_ID"] = 1
+    if invalid == "source_pin":
+        value["source_archive_sha256"] = "0" * 64
+    if invalid == "authority":
+        value["training_authorized"] = True
+    if invalid == "bool_count":
+        value["source_kind_counts"]["E0"]["total_rows"] = True
+    if invalid == "inconsistent_count":
+        value["global_counts"]["reference_union_count"] = 1
+    value.pop("receipt_sha256")
+    value["receipt_sha256"] = "0" * 64 if invalid == "bad_seal" else sha256(helper._canonical(value)).hexdigest()
+    def aggregate(path, **kwargs):
+        assert public_stage.guard.call_count == 1
+        assert path == public_stage.archive and kwargs["raw_lineage_registry"] is None
+        print("FICTITIOUS SOURCE PAYLOAD")
+        return value
+    module.audit_raw_lineage_coverage = Mock(side_effect=aggregate)
+    public_stage.compile.side_effect = ValueError("raw EINF support is absent from the explicit lineage registry")
+    with pytest.raises(helper.PrivateStageError, match="sanitized"):
+        helper.run_private_compile()
+    assert capsys.readouterr().out == ""
+    payload = (public_stage.run / "compile_summary.json").read_text()
+    summary = json.loads(payload)
+    assert summary["failure_reason"] == "missing_raw_inference_lineage"
+    assert summary["state"] == "FAILED_UNQUALIFIED" and summary["model_training_performed"] is False
+    assert "FICTITIOUS SOURCE PAYLOAD" not in payload and "PRIVATE_ID" not in payload
+    if invalid is None:
+        assert summary["raw_lineage_coverage"] == value
+    else:
+        assert summary["raw_lineage_coverage_diagnostic_refused"] is True and "raw_lineage_coverage" not in summary
+
+
+def test_lineage_coverage_registry_binding_preserves_utf8_compiler_canonicalization():
+    registry = {"EINF": ["PUBLIC_é"]}
+    value = _coverage_fixture(registry)
+    assert helper._lineage_coverage(value, registry) == value
+    value["raw_lineage_registry_sha256"] = sha256(helper._canonical(registry)).hexdigest()
+    value.pop("receipt_sha256")
+    value["receipt_sha256"] = sha256(helper._canonical(value)).hexdigest()
+    with pytest.raises(helper.PrivateStageError, match="aggregate schema"):
+        helper._lineage_coverage(value, registry)
+
+
+def test_resealed_global_lineage_counts_must_agree_with_source_kinds():
+    registry = {"EINF": ["PUBLIC_RAW_1"]}
+    value = _coverage_fixture(registry)
+    value["source_kind_counts"]["E0"].update(total_rows=1, reference_occurrences=1,
+        unique_references=1, resolved_reference_occurrences=1, resolved_unique_references=1)
+    value["global_counts"].update(total_rows=1, reference_occurrences=1, unique_references=1,
+        unresolved_reference_occurrences=1, unresolved_unique_references=1, rows_with_missing=1,
+        reference_union_count=1, reference_registry_difference_count=1)
+    value.pop("receipt_sha256")
+    value["receipt_sha256"] = sha256(helper._canonical(value)).hexdigest()
+    with pytest.raises(helper.PrivateStageError, match="aggregate schema"):
+        helper._lineage_coverage(value, registry)
+
+
 @pytest.mark.parametrize("failure", ["missing_pin", "without_source", "external_pin", "source_pin",
     "authority", "duplicate_key", "unsafe_member", "different_root", "metadata_alias", "oversize", "in_code"])
 def test_explicit_member_map_refuses_unbound_or_authoritative_input_before_source_read(public_stage, monkeypatch, failure):

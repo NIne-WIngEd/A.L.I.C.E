@@ -14,6 +14,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 import warnings
 import zipfile
 
@@ -214,6 +215,128 @@ class IdentitySubstrateTests(unittest.TestCase):
             with self.subTest(registry=registry), self.assertRaises(c.IdentitySubstrateError):
                 self.compile(package, pin, raw_lineage_registry=registry)
             self.assertFalse((self.root / f"compiled-{self.index}").exists())
+
+    def test_raw_lineage_audit_fixed_coverage_counts_without_accepting_missing_support(self):
+        rows = deepcopy(self.rows)
+        rows["ASYN_DIRECT"][0]["supporting_raw_EINF_ids"] = ["raw.einf.1", "older.public.fixture"]
+        rows["ASYN_BASE"][0]["supporting_raw_EINF_ids"] = ["older.public.fixture"]
+        rows["ASYN_DIRECT"][0]["source_proposal_id"] = "never.count.ASYN.origin.as.EINF"
+        package, pin = self.archive(rows=rows)
+        before = package.read_bytes()
+        registry = {"EINF": ["raw.einf.1", "public.unreferenced.registry"]}
+        report = c.audit_raw_lineage_coverage(package, pin=pin, raw_lineage_registry=registry)
+        self.assertEqual(report["schema"], "alice-personality-raw-lineage-coverage-diagnostic-v1")
+        self.assertEqual(report["state"], "UNQUALIFIED")
+        self.assertEqual(set(report["source_kind_counts"]), set(c.ACTIVE_FILES))
+        direct = report["source_kind_counts"]["ASYN_DIRECT"]
+        self.assertEqual(direct, {"total_rows": 1, "reference_occurrences": 2, "unique_references": 2,
+                                 "resolved_reference_occurrences": 1, "unresolved_reference_occurrences": 1,
+                                 "resolved_unique_references": 1, "unresolved_unique_references": 1,
+                                 "rows_with_missing": 1})
+        self.assertEqual(report["global_counts"], {"total_rows": 9, "reference_occurrences": 4,
+            "unique_references": 2, "resolved_reference_occurrences": 2, "unresolved_reference_occurrences": 2,
+            "resolved_unique_references": 1, "unresolved_unique_references": 1, "rows_with_missing": 2,
+            "reference_union_count": 2, "reference_registry_intersection_count": 1,
+            "reference_registry_difference_count": 1, "registry_reference_difference_count": 1})
+        self.assertEqual(report["einf_source_origin_counts"]["total_rows"], 2)
+        self.assertEqual(report["einf_source_origin_counts"]["reference_occurrences"], 2)
+        self.assertEqual(report["einf_source_origin_counts"]["resolved_unique_references"], 1)
+        self.assertEqual(report["einf_source_origin_counts"]["unresolved_unique_references"], 1)
+        self.assertEqual(report["registry_count"], 2)
+        self.assertEqual(report["raw_lineage_registry_sha256"], sha256(c._canonical(c._registry(registry))).hexdigest())
+        for flag in ("acceptance_authority", "training_authorized", "private_gradient_authorized",
+                     "historical_authority_granted"):
+            self.assertIs(report[flag], False)
+        self.assertIsNone(report["behavior_qualification"])
+        unsigned = dict(report)
+        seal = unsigned.pop("receipt_sha256")
+        self.assertEqual(seal, sha256(c._canonical(unsigned)).hexdigest())
+        rendered = json.dumps(report)
+        for value in ("raw.einf.1", "older.public.fixture", "public.unreferenced.registry",
+                      "never.count.ASYN.origin.as.EINF", "Public fixture evidence", "source_proposal_id",
+                      str(package), "PUBLIC_FRONTIER"):
+            self.assertNotIn(value, rendered)
+        self.assertEqual(package.read_bytes(), before)
+        self.assertFalse(any(path.name.startswith("compiled-") for path in self.root.iterdir()))
+        with self.assertRaisesRegex(c.IdentitySubstrateError, "absent from the explicit lineage registry"):
+            self.compile(package, pin, raw_lineage_registry=registry)
+
+    def test_raw_lineage_audit_empty_registry_is_counted_not_invented(self):
+        package, pin = self.archive()
+        for registry in (None, {}, {"EINF": []}):
+            with self.subTest(registry=registry):
+                report = c.audit_raw_lineage_coverage(package, pin=pin, raw_lineage_registry=registry)
+                self.assertEqual(report["registry_count"], 0)
+                self.assertEqual(report["global_counts"]["resolved_reference_occurrences"], 0)
+                self.assertEqual(report["global_counts"]["unresolved_reference_occurrences"], 1)
+                self.assertEqual(report["global_counts"]["rows_with_missing"], 1)
+                self.assertEqual(report["einf_source_origin_counts"]["rows_with_missing"], 2)
+
+    def test_raw_lineage_audit_requires_exact_archive_complete_pins_and_active_types(self):
+        package, pin = self.archive()
+        with self.assertRaisesRegex(c.IdentitySubstrateError, "archive SHA256"):
+            c.audit_raw_lineage_coverage(package, pin=c.PackagePin("0" * 64, pin.package_root, pin.members_sha256),
+                                        raw_lineage_registry=self.registry)
+        bad_members = dict(pin.members_sha256)
+        bad_members[next(iter(bad_members))] = "0" * 64
+        with self.assertRaisesRegex(c.IdentitySubstrateError, "member hash"):
+            c.audit_raw_lineage_coverage(package, pin=c.PackagePin(pin.archive_sha256, pin.package_root, bad_members),
+                                        raw_lineage_registry=self.registry)
+        for value in ("raw.einf.1", [None], [True], ["bad whitespace"], ["raw.einf.1", "raw.einf.1"]):
+            rows = deepcopy(self.rows)
+            rows["ASYN_TARGETED"][0]["supporting_raw_EINF_ids"] = value
+            source, source_pin = self.archive(rows=rows)
+            with self.subTest(ref=value), self.assertRaises(c.IdentitySubstrateError):
+                c.audit_raw_lineage_coverage(source, pin=source_pin, raw_lineage_registry=self.registry)
+        for registry in ({"ASYN": ["raw.einf.1"]}, {"EINF": ["same", "same"]}, {"EINF": [True]}):
+            with self.subTest(registry=registry), self.assertRaises(c.IdentitySubstrateError):
+                c.audit_raw_lineage_coverage(package, pin=pin, raw_lineage_registry=registry)
+        rows = deepcopy(self.rows)
+        rows["ASYN_DIRECT"][0]["curated_id"] = "einf.1"
+        source, source_pin = self.archive(rows=rows)
+        with self.assertRaisesRegex(c.IdentitySubstrateError, "duplicate active"):
+            c.audit_raw_lineage_coverage(source, pin=source_pin, raw_lineage_registry=self.registry)
+
+    def test_raw_lineage_audit_parses_only_active_members_and_rechecks_registry_code_source(self):
+        package, pin = self.archive(overrides={c.UNKNOWN_FILE: b"PUBLIC unparsed UNKNOWN sentinel",
+                                               c.ALTERNATIVE_FILE: b"PUBLIC unparsed alternative sentinel"})
+        opened = []
+        original = c._jsonl
+
+        def tracked(archive, name):
+            opened.append(name)
+            return original(archive, name)
+
+        with patch.object(c, "_jsonl", tracked), patch.object(c, "_compile", side_effect=AssertionError("no compile")), \
+                patch.object(c, "_families", side_effect=AssertionError("no families")):
+            c.audit_raw_lineage_coverage(package, pin=pin, raw_lineage_registry=self.registry)
+        self.assertEqual(opened, [pin.package_root + "/" + name for name in c.ACTIVE_FILES.values()])
+        changed_registry = deepcopy(self.registry)
+
+        def mutate_registry(archive, name):
+            changed_registry["EINF"] = ["changed.public.fixture"]
+            return original(archive, name)
+
+        with patch.object(c, "_jsonl", mutate_registry), self.assertRaisesRegex(c.IdentitySubstrateError,
+                                                                             "registry changed"):
+            c.audit_raw_lineage_coverage(package, pin=pin, raw_lineage_registry=changed_registry)
+        actual_implementation = c._implementation()
+        with patch.object(c, "_implementation", side_effect=[actual_implementation, []]), \
+                self.assertRaisesRegex(c.IdentitySubstrateError, "implementation changed"):
+            c.audit_raw_lineage_coverage(package, pin=pin, raw_lineage_registry=self.registry)
+        original_hash = c._hash_stream
+        calls = []
+
+        def mutate_hash(stream):
+            if getattr(stream, "name", None) == str(package):
+                calls.append(True)
+                if len(calls) == 2:
+                    return "0" * 64
+            return original_hash(stream)
+
+        with patch.object(c, "_hash_stream", mutate_hash), self.assertRaisesRegex(c.IdentitySubstrateError,
+                                                                             "archive changed"):
+            c.audit_raw_lineage_coverage(package, pin=pin, raw_lineage_registry=self.registry)
 
     def test_wrong_namespace_missing_support_and_duplicate_ids_fail(self):
         changes = [("ASYN_DIRECT", "supporting_curated_EINF_ids", ["missing.einf"]),

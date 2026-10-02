@@ -342,6 +342,64 @@ def _raw_source_receipt(value: object, registry: object, registry_sha256: str,
     return value
 
 
+def _lineage_coverage(value: object, registry: object) -> dict:
+    """Allow only a sealed fixed aggregate diagnostic to leave source parsing."""
+    flags = {"acceptance_authority", "training_authorized", "private_gradient_authorized", "historical_authority_granted"}
+    digests = {"source_archive_sha256", "package_pin_sha256", "compiler_implementation_sha256",
+               "raw_lineage_registry_sha256", "receipt_sha256"}
+    keys = flags | digests | {"schema", "state", "registry_count", "source_kind_counts",
+                              "global_counts", "einf_source_origin_counts", "behavior_qualification"}
+    metric_keys = {"total_rows", "reference_occurrences", "unique_references", "resolved_reference_occurrences",
+                  "unresolved_reference_occurrences", "resolved_unique_references", "unresolved_unique_references", "rows_with_missing"}
+    global_keys = metric_keys | {"reference_union_count", "reference_registry_intersection_count",
+                                 "reference_registry_difference_count", "registry_reference_difference_count"}
+    kinds = {"E0", "EINF", "ASYN_DIRECT", "ASYN_BASE", "ASYN_TARGETED", "ASYN_CONTEXT"}
+    normalized = {"EINF": sorted(registry["EINF"])} if registry is not None else {"EINF": []}
+    registry_digest = sha256(json.dumps(normalized, sort_keys=True, separators=(",", ":"),
+                                         ensure_ascii=False, allow_nan=False).encode("utf-8")).hexdigest()
+    valid = (type(value) is dict and set(value) == keys
+             and value["schema"] == "alice-personality-raw-lineage-coverage-diagnostic-v1"
+             and value["state"] == "UNQUALIFIED" and value["behavior_qualification"] is None
+             and all(value[key] is False for key in flags)
+             and all(type(value[key]) is str and re.fullmatch(r"[0-9a-f]{64}", value[key]) for key in digests)
+             and value["source_archive_sha256"] == PACKAGE_SHA256
+             and value["raw_lineage_registry_sha256"] == registry_digest
+             and type(value["registry_count"]) is int and value["registry_count"] == len(normalized["EINF"])
+             and type(value["source_kind_counts"]) is dict and set(value["source_kind_counts"]) == kinds)
+    if valid:
+        tables = [(table, metric_keys) for table in value["source_kind_counts"].values()]
+        tables += [(value["global_counts"], global_keys), (value["einf_source_origin_counts"], metric_keys)]
+        for table, expected in tables:
+            if type(table) is not dict or set(table) != expected \
+                    or any(type(count) is not int or count < 0 for count in table.values()):
+                valid = False
+                break
+            valid &= (table["reference_occurrences"] == table["resolved_reference_occurrences"] + table["unresolved_reference_occurrences"]
+                      and table["unique_references"] == table["resolved_unique_references"] + table["unresolved_unique_references"]
+                      and table["unique_references"] <= table["reference_occurrences"]
+                      and table["rows_with_missing"] <= table["total_rows"]
+                      and table["resolved_unique_references"] <= table["resolved_reference_occurrences"]
+                      and table["unresolved_unique_references"] <= table["unresolved_reference_occurrences"]
+                      and table["rows_with_missing"] <= table["unresolved_reference_occurrences"]
+                      and table["resolved_unique_references"] <= value["registry_count"])
+        if valid:
+            global_counts = value["global_counts"]
+            valid &= (global_counts["total_rows"] == sum(table["total_rows"] for table in value["source_kind_counts"].values())
+                      and global_counts["reference_occurrences"] == sum(table["reference_occurrences"] for table in value["source_kind_counts"].values())
+                      and all(global_counts[key] == sum(table[key] for table in value["source_kind_counts"].values())
+                              for key in ("resolved_reference_occurrences", "unresolved_reference_occurrences", "rows_with_missing"))
+                      and global_counts["reference_union_count"] == global_counts["unique_references"]
+                      and global_counts["reference_registry_intersection_count"] == global_counts["resolved_unique_references"]
+                      and global_counts["reference_registry_difference_count"] == global_counts["unresolved_unique_references"]
+                      and global_counts["registry_reference_difference_count"] + global_counts["resolved_unique_references"] == value["registry_count"]
+                      and value["einf_source_origin_counts"]["total_rows"] == value["source_kind_counts"]["EINF"]["total_rows"])
+        unsigned = {key: item for key, item in value.items() if key != "receipt_sha256"}
+        valid &= value["receipt_sha256"] == sha256(_canonical(unsigned)).hexdigest()
+    if not valid or len(_canonical(value)) > MAX_MEMBER_MAP_BYTES:
+        raise PrivateStageError("lineage diagnostic aggregate schema, source or seal differs")
+    return value
+
+
 def run_private_compile() -> dict:
     """One isolated scientific stage; never a model or gradient operation."""
     isolation = _p2_guard()  # MUST precede private path resolution, stat or hash.
@@ -483,6 +541,24 @@ def run_private_compile() -> dict:
                        alternatives_are_unordered_not_negatives=True)
     except BaseException as exc:
         summary.update(failure_phase=phase, failure_type=type(exc).__name__, failure_reason=_safe_reason(exc))
+        if summary["failure_reason"] == "missing_raw_inference_lineage":
+            try:
+                from src.alice_personality.n1.compiler import audit_raw_lineage_coverage
+                if registry_path and (sha256(_canonical(registry)).hexdigest() != registry_content_sha256
+                        or _file_hash(lineage, max_bytes=MAX_REGISTRY_BYTES) != registry_sha256):
+                    raise PrivateStageError("raw lineage changed during source compilation")
+                if raw_source_path and _file_hash(raw_source, max_bytes=raw_source_size) != RAW_SOURCE_SHA256:
+                    raise PrivateStageError("original inference source changed during source compilation")
+                if member_map_path and _file_hash(member_map_file, max_bytes=MAX_MEMBER_MAP_BYTES) != member_map_sha256:
+                    raise PrivateStageError("raw member map changed during source compilation")
+                _clean_code(code, expected_commit)
+                with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                    coverage = audit_raw_lineage_coverage(package, pin=pin, raw_lineage_registry=registry)
+                coverage = _lineage_coverage(coverage, registry)
+                _clean_code(code, expected_commit)
+                summary["raw_lineage_coverage"] = coverage
+            except BaseException:
+                summary["raw_lineage_coverage_diagnostic_refused"] = True
         if summary["failure_reason"] == "raw_lineage_missing_or_ambiguous_logical_member":
             try:
                 from src.alice_personality.n1.raw_inference_lineage import audit_raw_inference_source_layout

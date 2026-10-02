@@ -576,6 +576,101 @@ def audit_loss_role_structure(package_path: str | Path, *, pin: PackagePin) -> d
             "acceptance_authority": False, "training_authorized": False, "counts": counts}
 
 
+def _raw_coverage_counts(reference_rows: list[list[str]], registry_ids: set[str]) -> dict:
+    """Fixed count-only projection; neither IDs nor arbitrary keys escape."""
+    occurrences = [reference for row in reference_rows for reference in row]
+    references = set(occurrences)
+    resolved_occurrences = sum(reference in registry_ids for reference in occurrences)
+    return {"total_rows": len(reference_rows), "reference_occurrences": len(occurrences),
+            "unique_references": len(references),
+            "resolved_reference_occurrences": resolved_occurrences,
+            "unresolved_reference_occurrences": len(occurrences) - resolved_occurrences,
+            "resolved_unique_references": len(references & registry_ids),
+            "unresolved_unique_references": len(references - registry_ids),
+            "rows_with_missing": sum(bool(set(row) - registry_ids) for row in reference_rows)}
+
+
+def audit_raw_lineage_coverage(package_path: str | Path, *, pin: PackagePin,
+                               raw_lineage_registry: Mapping | None) -> dict:
+    """Diagnose exact raw-support coverage without compilation or approval.
+
+    The caller MUST establish its private-source isolation before invoking this
+    function, including before path resolution or hashing. All archive members
+    must match the independently supplied complete package pin; only ACTIVE_FILES
+    are structurally parsed, with existing normalization/reference/type checks.
+    Main counts concern supporting_raw_EINF_ids, the current strict support gate.
+    EINF source-origin counts concern its separately typed normalized source_ref
+    (raw-EINF in _families), never ASYN origins, and introduce NO support gate.
+    No registry is invented, no missing support becomes accepted, no source IDs,
+    prefixes, paths, text or arbitrary source keys are returned. This function
+    writes no files and neither calls _compile nor assigns evidence families.
+    """
+    package = _file(package_path)
+    binding = _pin(pin)
+    registry = _registry(raw_lineage_registry)
+    registry_sha = sha256(_canonical(registry)).hexdigest()
+    registry_ids = set(registry["EINF"])
+    implementation = _implementation()
+    before = package.stat()
+    shared_state = lambda value: (value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns)
+    with package.open("rb") as stream:
+        descriptor_before = os.fstat(stream.fileno())
+        if shared_state(before) != shared_state(descriptor_before) or not stat.S_ISREG(descriptor_before.st_mode):
+            raise IdentitySubstrateError("source file changed before lineage coverage audit")
+        if _hash_stream(stream) != binding["archive_sha256"]:
+            raise IdentitySubstrateError("archive SHA256 differs from the explicit package pin")
+        stream.seek(0)
+        try:
+            with zipfile.ZipFile(stream) as archive:
+                _verify_members(archive, binding)
+                records = {kind: [_normalize(kind, row) for row in
+                                  _jsonl(archive, binding["package_root"] + "/" + path)]
+                           for kind, path in ACTIVE_FILES.items()}
+        except (zipfile.BadZipFile, UnicodeError, KeyError, RuntimeError, OSError) as exc:
+            raise IdentitySubstrateError("source archive cannot satisfy governed lineage coverage audit") from None
+        identifiers = [record["record_id"] for rows in records.values() for record in rows]
+        if len(set(identifiers)) != len(identifiers):
+            raise IdentitySubstrateError("duplicate active record IDs")
+        reference_rows = {kind: [record["supporting_raw_einf_ids"] for record in rows]
+                          for kind, rows in records.items()}
+        all_reference_rows = [row for kind in ACTIVE_FILES for row in reference_rows[kind]]
+        all_references = {reference for row in all_reference_rows for reference in row}
+        origin_rows = [[record["source_ref"]] if record["source_ref"] is not None else []
+                       for record in records["EINF"]]
+        counts = {kind: _raw_coverage_counts(reference_rows[kind], registry_ids) for kind in ACTIVE_FILES}
+        global_counts = _raw_coverage_counts(all_reference_rows, registry_ids)
+        global_counts.update(reference_union_count=len(all_references),
+                             reference_registry_intersection_count=len(all_references & registry_ids),
+                             reference_registry_difference_count=len(all_references - registry_ids),
+                             registry_reference_difference_count=len(registry_ids - all_references))
+        origins = _raw_coverage_counts(origin_rows, registry_ids)
+        stream.seek(0)
+        if _hash_stream(stream) != binding["archive_sha256"]:
+            raise IdentitySubstrateError("source archive changed during lineage coverage audit")
+        descriptor_after = os.fstat(stream.fileno())
+        if shared_state(descriptor_before) != shared_state(descriptor_after) \
+                or descriptor_before.st_ctime_ns != descriptor_after.st_ctime_ns:
+            raise IdentitySubstrateError("source file changed during lineage coverage audit")
+    after = _file(package).stat()
+    if shared_state(before) != shared_state(after) or before.st_ctime_ns != after.st_ctime_ns \
+            or implementation != _implementation():
+        raise IdentitySubstrateError("source file or compiler implementation changed during lineage coverage audit")
+    if sha256(_canonical(_registry(raw_lineage_registry))).hexdigest() != registry_sha:
+        raise IdentitySubstrateError("raw lineage registry changed during lineage coverage audit")
+    report = {"schema": "alice-personality-raw-lineage-coverage-diagnostic-v1", "state": "UNQUALIFIED",
+              "source_archive_sha256": binding["archive_sha256"],
+              "package_pin_sha256": sha256(_canonical(binding)).hexdigest(),
+              "compiler_implementation_sha256": sha256(_canonical(implementation)).hexdigest(),
+              "raw_lineage_registry_sha256": registry_sha, "registry_count": len(registry_ids),
+              "source_kind_counts": counts, "global_counts": global_counts,
+              "einf_source_origin_counts": origins,
+              "acceptance_authority": False, "training_authorized": False,
+              "private_gradient_authorized": False, "historical_authority_granted": False,
+              "behavior_qualification": None}
+    report["receipt_sha256"] = sha256(_canonical(report)).hexdigest()
+    return report
+
+
 def compile_package(package_path: str | Path, output_dir: str | Path, *, pin: PackagePin,
                     split_seed: str = "alice-eipm-evidence-families-v1",
                     raw_lineage_registry: Mapping | None = None) -> dict:
