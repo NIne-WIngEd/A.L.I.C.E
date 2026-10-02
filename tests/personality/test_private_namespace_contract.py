@@ -28,6 +28,10 @@ SPEC.loader.exec_module(helper)
     ("internal checksums do not cover the complete archive membership", "source_checksum_inventory_mismatch"),
     ("canonical E0 requires an explicit historical truth flag", "source_history_authority_missing"),
     ("curation manifest count or closed-gap status mismatch", "source_manifest_count_mismatch"),
+    ("training_authority must be a Boolean", "source_row_boolean_type_mismatch"),
+    ("recommended_supervision_lane must be an array of nonempty strings", "source_row_list_type_mismatch"),
+    ("personality dimensions contains duplicate identifiers or labels", "source_row_list_duplicate"),
+    ("E0 text requires a SHA256 digest", "source_text_pin_missing_or_invalid"),
     ("FICTITIOUS SOURCE SENTENCE MUST NOT REACH LOGS", "private_stage_refused"),
 ])
 def test_failure_categories_are_fixed_public_diagnostics(message, category):

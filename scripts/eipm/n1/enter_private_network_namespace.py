@@ -215,7 +215,32 @@ def _safe_reason(exc: BaseException) -> str:
                "unordered alternatives cannot be authorized training negatives": "source_alternative_authority_conflict",
                "curation manifest omits required source counts or gap status": "source_manifest_count_missing",
                "curation manifest count or closed-gap status mismatch": "source_manifest_count_mismatch"}
-    return reasons.get(str(exc), "private_stage_refused")
+    message = str(exc)
+    # These labels originate exclusively in the public compiler schema; no
+    # source values or exception chaining may enter a diagnostic category.
+    boolean_fields = {"training_authority", "model_training_authority", "historical_truth_allowed",
+                      "historical_Elaina_truth", "runtime_behavioral_prior_allowed", "Alice_lived_memory",
+                      "alice_lived_memory", "autobiographical_recall_allowed", "owner_final_review_required",
+                      "hard_negative_authorized", "acceptance_authority", "private_gradient_authorized",
+                      "is_training_negative", "is_negative"}
+    if message in {f"{field} must be a Boolean" for field in boolean_fields}:
+        return "source_row_boolean_type_mismatch"
+    list_fields = {"use_lanes", "recommended_supervision_lane", "personality dimensions",
+                   "identity_supporting_E0_unit_ids", "context_only_E0_unit_ids", "excluded_context_E0_unit_ids",
+                   "supporting_curated_EINF_ids", "supporting_raw_EINF_ids", "related_curated_ASYN_ids"}
+    if message in {f"{field} must be an array of nonempty strings" for field in list_fields}:
+        return "source_row_list_type_mismatch"
+    if message in {f"{field} contains duplicate identifiers or labels" for field in list_fields}:
+        return "source_row_list_duplicate"
+    if message == "E0 text requires a SHA256 digest":
+        return "source_text_pin_missing_or_invalid"
+    if message == "source archive cannot satisfy governed compilation":
+        return "source_archive_structure_or_encoding_refused"
+    if message == "loss_mask requires named Boolean values":
+        return "source_loss_mask_type_mismatch"
+    if message == "context-only or excluded evidence cannot enable identity loss":
+        return "source_loss_role_conflict"
+    return reasons.get(message, "private_stage_refused")
 
 
 def _write_summary(path: Path, value: dict) -> None:
