@@ -150,6 +150,10 @@ def public_stage(tmp_path, monkeypatch):
     code, run, archive = tmp_path / "public-code", tmp_path / "run", tmp_path / "public-fixture.zip"
     code.mkdir()
     run.mkdir(mode=0o700)
+    # The fake P2 guard above is a stand-in, so bind the public temporary
+    # filesystem owner here. Production retains Magnolia's exact UID 1905.
+    # GitHub's runner UID differs from both Windows and Magnolia.
+    monkeypatch.setattr(helper, "HOST_UID", run.stat().st_uid)
     archive.write_bytes(b"public test stand-in, never a real curated archive")
     for key, value in {"COMPUTE_ROOT": tmp_path, "PERSONALITY_REPO_ROOT": code,
                        "PERSONALITY_RUN_ROOT": run, "PRIVATE_PACKAGE_PATH": archive,
