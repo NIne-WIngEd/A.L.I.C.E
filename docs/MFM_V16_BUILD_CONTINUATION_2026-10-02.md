@@ -166,3 +166,82 @@ Magnolia's older Bash treats an empty array as unbound under `set -u`. Use a
 nonempty command array and an explicit resume flag. Preserve its logs and
 job-local dependencies. A replacement export still requires its own actual
 completion receipt; no base-forward success is inferred from this failed job.
+
+## Saved execution handoff: 2026-10-02
+
+Execution code is pinned to `7f9621bddfe0b1136b776a9850e2f0e5c8f4842a`
+for cached training, generated diagnostics and the precision benchmark. The
+running BF16 exporter and its resumes remain pinned to
+`eee3b30cf1791b92dbb509b7423b993d45e6596c`; do not change their bound modules
+while the bank is being produced.
+
+Magnolia **576615 completed exit 0**: five additional generated-diagnostic
+tests passed on Linux, and **all 441 complete targets** tokenized identically
+with the processor tokenizer and cache-only tokenizer. The parity receipt is
+`5cb5c0bfdc0446f9574aacbf569fe03139aabf40ee65f79c3ae78785e2cabe19`.
+This proves target tokenization, not semantic target accuracy.
+
+Dedicated GPU runtime `rayan-mfm-cache-gpu-v2-576613` is ready. **576616
+completed exit 0** on one actual Tesla P100-PCIE-12GB, Torch 2.7.1+cu118,
+capability 6.0. A tiny FP32 specialist completed backward with BF16 source
+features, without opening teacher data. Receipt:
+`3a47b9e54245fcac392d9834f78f62c70e1712f699d23b3ec4b5d1b32ed32a00`.
+**Full-size capacity is still unproved.** Failed container setup jobs 576611
+and 576613 and their logs remain preserved. The repaired dedicated runtime
+does not modify the shared N0/personality container's dependencies.
+
+**576610** is running the source-only BF16 export on 12 CPU threads, 64 GB,
+with a 12-hour allocation. The first measured cases took about 189–293 seconds
+each. Export root:
+`/homes/01/mxrayan/rayan-compute/rayan-mfm/features/rayan-mfm-features-441-eee3b30cf`.
+The export record digest is
+`ac8a80daff0dd22b33ca80e7ca71cca90e03ee3030cb1fd3e2383e97200b76ce`.
+No completed bank digest or learned weights exists at this handoff.
+
+**576614** is a separate CPU FP32 measurement on 12 threads, 96 GB. It measures
+time and numerical differences against the first two committed BF16 cases.
+Loading the FP32 base reached roughly 67.6 GiB peak resident memory. Timing and
+numerical receipts are pending. It does not alter the BF16 bank, train the
+decoder or justify switching the export precision before results are inspected.
+
+Bounded continuation jobs **576619 → 576620 → 576621** follow 576610 through
+Slurm `afterany` dependencies. Each requests 12 hours and resumes only an
+upstream **TIMEOUT**, revalidating all committed cases with the identical
+export invocation. Recognized interrupted atomic staging directories are
+preserved separately in private custody. Unknown members, links, FAILED,
+NODE_FAIL and CANCELLED stop the chain. A completed bank causes subsequent
+resumes to skip duplicate work. This bounds the existing BF16 route to four
+allocations; unfinished export after the last timeout requires another decision.
+
+GPU pipeline **576622** waits for `afterok:576621`. It obtains the external
+bank pin from the final complete producer receipt in the separately stored
+stdout of **576610/576619/576620/576621**, then the trainer independently
+verifies the bank, corpus, model, processor and code lineage. The stages are:
+
+1. Full-size stress accumulation, three actual optimizer steps and disk reload,
+   comparing subsequent weights and Adam moments. A failure stops the job.
+2. A fresh two-epoch fit of all 432 train cases, with development gradient-free.
+   Probe weights are not continued into this run.
+3. Matched trained/seeded greedy FP32 generation on nine diagnostic cases, up
+   to 2,048 new tokens, preserving raw failures and checking JSON grounding.
+
+This job requests one P100, eight CPU threads, 64 GB and four hours under
+`mxrayan`. Its completed receipts, exit status and full-size peak memory must
+be inspected before claiming even a teacher fit. A timeout or partial
+checkpoint is not a completed component. Generated JSON grounding does not
+establish semantic accuracy, Claim-gate execution or useful later judgment.
+
+Exact submitted scripts are retained as
+`scripts/mfm/magnolia_v16_feature_resume_20261002.sbatch` and
+`scripts/mfm/magnolia_v16_cached_pipeline_20261002.sbatch`. Remote launch copies
+and submission receipt are under `rayan-mfm/jobs/` and
+`rayan-mfm/receipts/rayan-mfm-pipeline-submission-20261002.txt`. Training outputs
+are under `rayan-mfm/runs/rayan-mfm-{probe,fit,generated}-576622`; producer logs
+are `rayan-mfm/slurm/rayan-mfm-features-<job>.{out,err}`, learning logs
+`rayan-mfm/slurm/rayan-mfm-learning-576622.{out,err}`.
+
+At the next continuation, inspect accounting and original receipt bytes first.
+If a stage failed, diagnose it before any retry; use Kaggle/free HF options if
+actual Magnolia capacity or runtime fails. No paid allocation has been made.
+Independent gold, native modalities, accepted-memory feedback, sealed FINAL and
+second-consumer qualification remain the subsequent full-capability gates.
