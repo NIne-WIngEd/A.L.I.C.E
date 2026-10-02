@@ -8,9 +8,10 @@ No reserve/proposal/identity row stream, extraction, reference registry, model o
 gradient is used. Arbitrary JSON keys can themselves be IDs or filenames: the
 returned structure is PROTECTED metadata, never a safe public schema dump.
 
-The public contract does not specify original-input digest key paths. Thus this
-stage does not search for digest strings, infer provenance from keys, or compare
-legacy reserve bytes to any input/delivery. Bounds are parser/resource limits.
+The original discovery never interprets values. A separate targeted comparison
+uses only the exact source_hashes path established by the pinned phase-one
+review; it does not scan strings, attribute labels or prove original input
+authenticity. Bounds are parser/resource limits.
 """
 from __future__ import annotations
 
@@ -18,6 +19,7 @@ from contextlib import ExitStack
 from hashlib import sha256
 import os
 from pathlib import Path, PurePosixPath
+import re
 import stat
 import zipfile
 import zlib
@@ -34,6 +36,14 @@ MAX_STRUCTURE_DEPTH = 32
 MAX_STRUCTURE_NODES = 50_000
 MAX_STRUCTURE_KEY_BYTES = 1024 * 1024
 MAX_STRUCTURE_BYTES = 4 * 1024 * 1024
+COMPARISON_SCHEMA = "alice-personality-declared-source-hash-comparison-v1"
+COMPARISON_STATE = "DECLARED_SOURCE_HASHES_COMPARED_UNQUALIFIED"
+LEGACY_RESERVE_SHA256 = "83901fc75ff25c1dda6188ad3b1fab65faf8f833df74b8c5c9e85fc6ea755327"
+LEGACY_RESERVE_PUBLIC_MEMBER = "reserve/legacy_einf_720_raw_reserve.jsonl"
+REVIEWED_STRUCTURE_FILE_SHA256 = "4e55e0c8ca124565d45cdf7f05b5ae5ad01754c7505e5ae84e9aed32f07e1788"
+REVIEWED_CURATED_MANIFEST_SHA256 = "f5fc12c09d3304b6327570bda43cced0919bf1f67a16c0725e0ffafd75adc22f"
+REVIEWED_RAW_MANIFEST_SHA256 = "a720bdc756ae0c798461c0733ad9d3093a65a8bd6c6f265491e2667dfd56b810"
+DECLARED_SOURCE_HASH_COUNT = 30
 _FLAGS = ("acceptance_authority", "private_gradient_authorized",
           "historical_authority_granted", "training_authorized")
 _FAILURES = frozenset({"audit_refused", "audit_input_invalid", "audit_custody_refused", "audit_inventory_refused",
@@ -190,13 +200,14 @@ def _selection(value: object, expected_archive: str) -> dict:
     return dict(value)
 
 
-def _read_structure(archive, files, name, expected_digest) -> tuple[dict, int, str]:
+def _read_structure(archive, files, name, expected_digest) -> tuple[dict, int, str, dict]:
     payload = raw._read_member(archive, files[name], raw.MAX_METADATA_BYTES)
     digest = sha256(payload).hexdigest()
     if digest != expected_digest:
         _fail("audit_metadata_refused")
-    structure, count = manifest_structure(raw._json(payload))
-    return structure, count, digest
+    manifest = raw._json(payload)
+    structure, count = manifest_structure(manifest)
+    return structure, count, digest, manifest
 
 
 def verify_discovery_result(protected: dict, summary: dict) -> None:
@@ -281,20 +292,12 @@ def verify_discovery_result(protected: dict, summary: dict) -> None:
         _fail("audit_metadata_refused")
 
 
-def discover_manifest_structure(curated_archive_path: str | Path, *,
+def _inspect_manifests(curated_archive_path: str | Path, *,
                                 curated_pin: compiler.PackagePin,
                                 raw_archive_path: str | Path,
                                 expected_raw_archive_sha256: str,
-                                raw_member_map: dict) -> tuple[dict, dict]:
-    """Return (PROTECTED structure, fixed public summary), both unqualified.
-
-    Caller-established isolation is mandatory, without a bypass parameter. A
-    tiny explicit fixture pin can test custody mechanics but never accepts data.
-    Public structural node counts do not count proposals or establish lineage.
-    The map's prior layout receipt digests are retained only as declared map
-    metadata; this operation verifies its exact selection against the pinned ZIP,
-    not the original layout receipt or any proposal/registry/coverage payload.
-    """
+                                raw_member_map: dict, observer=None) -> tuple[dict, dict]:
+    """Private shared custody seam. Observer runs before both postchecks."""
     try:
         pin = compiler._pin(curated_pin)
         expected_raw = raw._digest(expected_raw_archive_sha256)
@@ -322,7 +325,7 @@ def discover_manifest_structure(curated_archive_path: str | Path, *,
                 if curation_name not in ledger or any(
                         digest != pin["members_sha256"][name] for name, digest in ledger.items()):
                     _fail("audit_inventory_refused")
-                curated_structure, curated_nodes, curated_digest = _read_structure(
+                curated_structure, curated_nodes, curated_digest, _ = _read_structure(
                     archive, files, curation_name, pin["members_sha256"][curation_name])
                 curated_ledger_digest = sha256(ledger_bytes).hexdigest()
             with zipfile.ZipFile(raw_file.stream) as archive:
@@ -334,20 +337,22 @@ def discover_manifest_structure(curated_archive_path: str | Path, *,
                 ledger = raw._ledger(ledger_bytes, files, root, ledger_name)
                 if manifest_name not in ledger or source_name not in ledger:
                     _fail("audit_metadata_refused")
-                raw_structure, raw_nodes, raw_digest = _read_structure(archive, files, manifest_name, ledger[manifest_name])
+                raw_structure, raw_nodes, raw_digest, raw_manifest = _read_structure(archive, files, manifest_name, ledger[manifest_name])
                 raw_ledger_digest = sha256(ledger_bytes).hexdigest()
+            protected = {"schema": STRUCTURE_SCHEMA, "state": STATE,
+                         "key_names_are_protected_metadata": True,
+                         "curated": {"manifest_member_path": curation_name,
+                                     "manifest_sha256": curated_digest, "structure": curated_structure},
+                         "raw": {"manifest_member_path": manifest_name,
+                                 "manifest_sha256": raw_digest, "structure": raw_structure},
+                         "link_compared": False, **{key: False for key in _FLAGS}}
+            if observer is not None:
+                observer(protected, raw_manifest)
             # Both original descriptors remain open through the complete audit.
             curated_file.verify()
             raw_file.verify()
             if implementation_hashes() != code:
                 _fail("audit_code_changed")
-        protected = {"schema": STRUCTURE_SCHEMA, "state": STATE,
-                     "key_names_are_protected_metadata": True,
-                     "curated": {"manifest_member_path": curation_name,
-                                 "manifest_sha256": curated_digest, "structure": curated_structure},
-                     "raw": {"manifest_member_path": manifest_name,
-                             "manifest_sha256": raw_digest, "structure": raw_structure},
-                     "link_compared": False, **{key: False for key in _FLAGS}}
         protected_bytes = raw._canonical(protected)
         if len(protected_bytes) > MAX_STRUCTURE_BYTES:
             _fail("audit_structure_bound")
@@ -369,4 +374,135 @@ def discover_manifest_structure(curated_archive_path: str | Path, *,
     except (raw.RawInferenceLineageError, compiler.IdentitySubstrateError, OSError, ValueError,
             UnicodeError, RuntimeError, KeyError, EOFError, NotImplementedError, RecursionError,
             zlib.error, lzma.LZMAError, zipfile.BadZipFile, zipfile.LargeZipFile):
+        raise ManifestStructureAuditError("audit_refused") from None
+
+
+def discover_manifest_structure(curated_archive_path: str | Path, *,
+                                curated_pin: compiler.PackagePin,
+                                raw_archive_path: str | Path,
+                                expected_raw_archive_sha256: str,
+                                raw_member_map: dict) -> tuple[dict, dict]:
+    """Return (PROTECTED structure, fixed public summary), both unqualified.
+
+    Caller-established isolation is mandatory, without a bypass parameter. A
+    tiny explicit fixture pin can test custody mechanics but never accepts data.
+    Public structural node counts do not count proposals or establish lineage.
+    This original discovery API/schema always leaves link_compared=False. The
+    map's layout receipt hashes are declared metadata, not receipt verification.
+    """
+    return _inspect_manifests(curated_archive_path, curated_pin=curated_pin,
+        raw_archive_path=raw_archive_path, expected_raw_archive_sha256=expected_raw_archive_sha256,
+        raw_member_map=raw_member_map)
+
+
+def _declared_matches(manifest: dict) -> int:
+    # Exactly one reviewed path, with no recursive scan, labels, key aliases,
+    # filename/prefix normalization or source_package value interpretation.
+    values = manifest.get("source_hashes")
+    if type(values) is not dict or len(values) != DECLARED_SOURCE_HASH_COUNT or \
+            type(manifest.get("source_package")) is not str:
+        _fail("audit_metadata_refused")
+    if any(type(value) is not str or re.fullmatch(r"[0-9a-f]{64}", value) is None
+           for value in values.values()):
+        _fail("audit_metadata_refused")
+    # Validate EVERY declaration before any equality comparison.
+    return sum(value == LEGACY_RESERVE_SHA256 for value in values.values())
+
+
+def verify_comparison_result(value: dict) -> None:
+    digest_keys = {"curated_archive_sha256", "raw_archive_sha256", "curated_manifest_sha256",
+        "raw_generation_manifest_sha256", "curated_checksum_ledger_sha256", "raw_checksum_ledger_sha256",
+        "reviewed_structure_file_sha256", "protected_structure_sha256", "legacy_reserve_member_sha256"}
+    count_keys = {"declared_source_hash_count", "reserve_digest_match_count", "opened_json_manifest_count",
+                  "opened_checksum_ledger_count", "opened_identity_payload_member_count"}
+    false_keys = set(_FLAGS) | {"original_source_independently_verified", "legacy_namespace_proven",
+        "source_admission", "digest_search_performed", "reference_registry_written", "model_training_performed"}
+    true_keys = {"link_compared", "reviewed_structure_matched", "reviewed_manifest_pins_matched"}
+    keys = digest_keys | count_keys | false_keys | true_keys | {
+        "schema", "state", "comparison_basis", "generator_declares_matching_digest", "implementation_sha256"}
+    if type(value) is not dict or set(value) != keys or value["schema"] != COMPARISON_SCHEMA or \
+            value["state"] != COMPARISON_STATE or value["comparison_basis"] != "reviewed_generation_source_hash_map" or \
+            any(value[key] is not False for key in false_keys) or any(value[key] is not True for key in true_keys) or \
+            any(type(value[key]) is not int for key in count_keys) or \
+            value["declared_source_hash_count"] != DECLARED_SOURCE_HASH_COUNT or \
+            not 0 <= value["reserve_digest_match_count"] <= DECLARED_SOURCE_HASH_COUNT or \
+            type(value["generator_declares_matching_digest"]) is not bool or \
+            value["generator_declares_matching_digest"] != (value["reserve_digest_match_count"] > 0) or \
+            value["opened_json_manifest_count"] != 2 or value["opened_checksum_ledger_count"] != 2 or \
+            value["opened_identity_payload_member_count"] != 0 or value["legacy_reserve_member_sha256"] != LEGACY_RESERVE_SHA256:
+        _fail("audit_metadata_refused")
+    for key in digest_keys:
+        if raw._digest(value[key]) != value[key]:
+            _fail("audit_metadata_refused")
+    code = value["implementation_sha256"]
+    if type(code) is not dict or set(code) != {"manifest_structure_audit.py", "raw_inference_lineage.py", "compiler.py", "__init__.py"}:
+        _fail("audit_metadata_refused")
+    if any(raw._digest(digest) != digest for digest in code.values()):
+        _fail("audit_metadata_refused")
+
+
+def compare_declared_source_hashes(curated_archive_path: str | Path, *,
+        curated_pin: compiler.PackagePin, raw_archive_path: str | Path,
+        expected_raw_archive_sha256: str, raw_member_map: dict,
+        reviewed_structure_path: str | Path,
+        expected_reviewed_structure_file_sha256: str,
+        expected_curated_manifest_sha256: str,
+        expected_raw_generation_manifest_sha256: str) -> dict:
+    """Compare one literal reviewed declaration map, never original authenticity.
+
+    The caller MUST first establish isolation. Both opened manifest byte hashes
+    and the entire scalar-free phase-one structure (including exact private key
+    labels) must match independently supplied review pins. Matching labels and
+    source_package contents are never returned, even as protected new evidence.
+    A match/no-match is scoped only to this pinned generator-declared source map;
+    it cannot prove an original source, legacy ID namespace, registry or approval.
+    legacy_reserve_member_sha256 is the externally reviewed PUBLIC member pin,
+    not a freshly read reserve-member hash. The production wrapper additionally
+    checks this exact named public pin entry; tiny fixtures test mechanics only.
+    """
+    try:
+        curated_digest = raw._digest(expected_curated_manifest_sha256)
+        raw_digest = raw._digest(expected_raw_generation_manifest_sha256)
+        with _PinnedFile(reviewed_structure_path, expected_reviewed_structure_file_sha256,
+                         MAX_STRUCTURE_BYTES + 1) as reviewed_file:
+            reviewed_bytes = reviewed_file.bounded_bytes()
+            reviewed = raw._json(reviewed_bytes)
+            matches = None
+
+            def compare(protected, manifest):
+                nonlocal matches
+                if reviewed_bytes != raw._canonical(reviewed) + b"\n" or raw._canonical(protected) != raw._canonical(reviewed) or \
+                        protected["curated"]["manifest_sha256"] != curated_digest or \
+                        protected["raw"]["manifest_sha256"] != raw_digest:
+                    _fail("audit_metadata_refused")
+                matches = _declared_matches(manifest)
+
+            _, discovered = _inspect_manifests(curated_archive_path, curated_pin=curated_pin,
+                raw_archive_path=raw_archive_path, expected_raw_archive_sha256=expected_raw_archive_sha256,
+                raw_member_map=raw_member_map, observer=compare)
+            reviewed_file.verify()
+            if implementation_hashes() != discovered["implementation_sha256"]:
+                _fail("audit_code_changed")
+        digest_keys = ("curated_archive_sha256", "raw_archive_sha256", "curated_manifest_sha256",
+                      "raw_generation_manifest_sha256", "curated_checksum_ledger_sha256", "raw_checksum_ledger_sha256",
+                      "protected_structure_sha256")
+        result = {"schema": COMPARISON_SCHEMA, "state": COMPARISON_STATE,
+            **{key: discovered[key] for key in digest_keys},
+            "reviewed_structure_file_sha256": raw._digest(expected_reviewed_structure_file_sha256),
+            "legacy_reserve_member_sha256": LEGACY_RESERVE_SHA256,
+            "comparison_basis": "reviewed_generation_source_hash_map", "declared_source_hash_count": DECLARED_SOURCE_HASH_COUNT,
+            "reserve_digest_match_count": matches, "generator_declares_matching_digest": matches > 0,
+            "link_compared": True, "reviewed_structure_matched": True, "reviewed_manifest_pins_matched": True,
+            "original_source_independently_verified": False, "legacy_namespace_proven": False, "source_admission": False,
+            "digest_search_performed": False, "reference_registry_written": False, "model_training_performed": False,
+            "opened_json_manifest_count": 2, "opened_checksum_ledger_count": 2,
+            "opened_identity_payload_member_count": 0, "implementation_sha256": discovered["implementation_sha256"],
+            **{key: False for key in _FLAGS}}
+        verify_comparison_result(result)
+        return result
+    except ManifestStructureAuditError:
+        raise
+    except (raw.RawInferenceLineageError, OSError, ValueError, UnicodeError, TypeError, RuntimeError, KeyError,
+            EOFError, NotImplementedError, RecursionError, zlib.error, lzma.LZMAError,
+            zipfile.BadZipFile, zipfile.LargeZipFile):
         raise ManifestStructureAuditError("audit_refused") from None

@@ -26,6 +26,7 @@ from src.alice_personality.n1 import raw_inference_lineage as raw
 REPO = Path(__file__).resolve().parents[2]
 ENTRY = REPO / "scripts/eipm/n1/audit_provenance_manifest_structure.py"
 SBATCH = REPO / "scripts/eipm/n1/magnolia_audit_provenance_manifests.sbatch"
+COMPARISON_SBATCH = REPO / "scripts/eipm/n1/magnolia_compare_declared_source_hashes.sbatch"
 SPEC = importlib.util.spec_from_file_location("manifest_structure_entry_fixture", ENTRY)
 entry = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(entry)
@@ -362,3 +363,148 @@ def test_launcher_reuses_namespace_and_one_existing_p2_no_payload_work():
     if bash:
         result = subprocess.run([bash, "-n", str(SBATCH)], capture_output=True, text=True, check=False)
         assert result.returncode == 0, result.stderr
+
+
+def fixture_comparison(tmp_path, *, matches=0, manifest_change=None):
+    values = {f"PUBLIC_FIXTURE_LABEL_{number:02d}": f"{number + 10:064x}" for number in range(30)}
+    for number in range(matches):
+        values[f"PUBLIC_FIXTURE_LABEL_{number:02d}"] = audit.LEGACY_RESERVE_SHA256
+    manifest = {"source_hashes": values, "source_package": "PUBLIC_PACKAGE_VALUE_MUST_NOT_BE_LOGGED",
+                # A matching digest outside the exact source_hashes path is ignored.
+                "notes": {"unrelated_output_digest": audit.LEGACY_RESERVE_SHA256}}
+    if manifest_change:
+        manifest_change(manifest)
+    inputs = fixture_inputs(tmp_path, raw_json=raw._canonical(manifest))
+    protected, discovery = audit.discover_manifest_structure(**inputs)
+    path = tmp_path / "reviewed-public-fixture.protected.json"
+    path.write_bytes(raw._canonical(protected) + b"\n")
+    return dict(inputs, reviewed_structure_path=path,
+                expected_reviewed_structure_file_sha256=digest(path.read_bytes()),
+                expected_curated_manifest_sha256=discovery["curated_manifest_sha256"],
+                expected_raw_generation_manifest_sha256=discovery["raw_generation_manifest_sha256"])
+
+
+@pytest.mark.parametrize("matches", [0, 1, 2])
+def test_targeted_declaration_count_without_label_or_original_authority(tmp_path, monkeypatch, matches):
+    inputs = fixture_comparison(tmp_path, matches=matches)
+    before = inputs["reviewed_structure_path"].read_bytes()
+    opened = []
+    original = raw._read_member
+
+    def observed(archive, member, limit):
+        opened.append(member.filename)
+        return original(archive, member, limit)
+
+    monkeypatch.setattr(raw, "_read_member", observed)
+    result = audit.compare_declared_source_hashes(**inputs)
+    assert result["reserve_digest_match_count"] == matches
+    assert result["generator_declares_matching_digest"] is (matches > 0)
+    assert result["declared_source_hash_count"] == 30
+    assert result["link_compared"] is True
+    assert all(result[key] is False for key in (*audit._FLAGS, "original_source_independently_verified",
+                                               "legacy_namespace_proven", "source_admission", "digest_search_performed"))
+    assert len(opened) == 4 and not any(name.endswith(".jsonl") for name in opened)
+    public = raw._canonical(result)
+    assert b"PUBLIC_FIXTURE_LABEL" not in public and b"PUBLIC_PACKAGE_VALUE" not in public
+    assert inputs["reviewed_structure_path"].read_bytes() == before
+    audit.verify_comparison_result(result)
+
+
+@pytest.mark.parametrize("invalid", [True, 42, "g" * 64, "A" * 64, "0" * 63, {"digest": "0" * 64}])
+def test_all30_declared_values_must_validate_before_any_match_result(tmp_path, invalid):
+    inputs = fixture_comparison(tmp_path, matches=1, manifest_change=lambda value:
+        value["source_hashes"].__setitem__("PUBLIC_FIXTURE_LABEL_29", invalid))
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_metadata_refused$"):
+        audit.compare_declared_source_hashes(**inputs)
+
+
+def test_declared_map_requires_exact30_and_package_string(tmp_path):
+    for number, change in enumerate((lambda value: value["source_hashes"].pop("PUBLIC_FIXTURE_LABEL_29"),
+                                    lambda value: value.__setitem__("source_package", True),
+                                    lambda value: value.__setitem__("source_hashes", ["0" * 64] * 30))):
+        directory = tmp_path / str(number)
+        directory.mkdir()
+        inputs = fixture_comparison(directory, manifest_change=change)
+        with pytest.raises(audit.ManifestStructureAuditError, match="^audit_metadata_refused$"):
+            audit.compare_declared_source_hashes(**inputs)
+
+
+def test_reviewed_structure_exact_typed_bytes_reject_false_zero_and_key_drift(tmp_path):
+    inputs = fixture_comparison(tmp_path)
+    path = inputs["reviewed_structure_path"]
+    reviewed = json.loads(path.read_bytes())
+    for changed in (dict(reviewed, link_compared=0), deepcopy(reviewed)):
+        if changed.get("link_compared") is False:
+            fields = changed["raw"]["structure"]["fields"]["source_hashes"]["fields"]
+            fields["DIFFERENT_PUBLIC_FIXTURE_LABEL"] = fields.pop("PUBLIC_FIXTURE_LABEL_29")
+            assert len(fields) == 30
+        path.write_bytes(raw._canonical(changed) + b"\n")
+        inputs["expected_reviewed_structure_file_sha256"] = digest(path.read_bytes())
+        with pytest.raises(audit.ManifestStructureAuditError, match="^audit_metadata_refused$"):
+            audit.compare_declared_source_hashes(**inputs)
+
+
+def test_reviewed_structure_and_actual_manifest_pins_are_both_required(tmp_path, monkeypatch):
+    inputs = fixture_comparison(tmp_path)
+    opened = Mock()
+    monkeypatch.setattr(zipfile.ZipFile, "open", opened)
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_custody_refused$"):
+        audit.compare_declared_source_hashes(**dict(inputs, expected_reviewed_structure_file_sha256="0" * 64))
+    opened.assert_not_called()
+    monkeypatch.undo()
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_metadata_refused$"):
+        audit.compare_declared_source_hashes(**dict(inputs, expected_raw_generation_manifest_sha256="0" * 64))
+
+
+def test_comparison_observer_source_mutation_cannot_return_result(tmp_path, monkeypatch):
+    inputs = fixture_comparison(tmp_path)
+    original = audit._declared_matches
+
+    def changed(manifest):
+        result = original(manifest)
+        with inputs["raw_archive_path"].open("ab") as stream:
+            stream.write(b"public fixture mutation after targeted comparison")
+        return result
+
+    monkeypatch.setattr(audit, "_declared_matches", changed)
+    with pytest.raises(audit.ManifestStructureAuditError, match="^audit_custody_refused$"):
+        audit.compare_declared_source_hashes(**inputs)
+
+
+def test_comparison_result_rejects_inconsistent_counts_booltypes_and_authority(tmp_path):
+    result = audit.compare_declared_source_hashes(**fixture_comparison(tmp_path, matches=1))
+    for change in ({"reserve_digest_match_count": 31}, {"reserve_digest_match_count": True},
+                   {"generator_declares_matching_digest": False}, {"source_admission": 0},
+                   {"original_source_independently_verified": True}, {"PRIVATE_FIXTURE_LABEL": "forbidden"}):
+        with pytest.raises(audit.ManifestStructureAuditError, match="^audit_metadata_refused$"):
+            audit.verify_comparison_result(dict(result, **change))
+
+
+def test_comparison_mode_guard_precedes_private_inputs_and_failure_is_fixed(monkeypatch, capsys):
+    guard, bounded = Mock(side_effect=entry.namespace.PrivateStageError("PUBLIC GUARD REFUSAL")), Mock()
+    monkeypatch.setattr(entry.namespace, "_p2_guard", guard)
+    monkeypatch.setattr(entry.namespace, "_bounded_path", bounded)
+    with pytest.raises(entry.namespace.PrivateStageError):
+        entry.run_structure_audit(compare_source_hashes=True)
+    bounded.assert_not_called()
+    monkeypatch.setattr(entry, "run_structure_audit", Mock(side_effect=ValueError("PRIVATE FIXTURE LABEL")))
+    assert entry.main(["--p2-source-hash-comparison-stage"]) == 3
+    output = capsys.readouterr()
+    assert output.out == "" and "PRIVATE FIXTURE" not in output.err
+
+
+def test_public_target_pin_and_new_launcher_contract():
+    pin = compiler.curated_frontier_v2_pin()  # PUBLIC pin file only; no ZIP open.
+    assert pin.members_sha256[pin.package_root + "/" + audit.LEGACY_RESERVE_PUBLIC_MEMBER] == audit.LEGACY_RESERVE_SHA256
+    text = COMPARISON_SBATCH.read_text()
+    assert "rayan-source-hash-comparison-${SLURM_JOB_ID}" in text
+    assert 'exec python -I "$1" --p2-source-hash-comparison-stage' in text
+    assert '--env="PERSONALITY_REVIEWED_STRUCTURE_PATH=$PERSONALITY_REVIEWED_STRUCTURE_PATH"' in text
+    assert "#SBATCH --mem=4G" in text and "#SBATCH --cpus-per-task=1" in text and "#SBATCH --time=00:15:00" in text
+    assert text.count('exec "$UDOCKER" run') == 1 and "rayan-n0-base" in text
+    prefix = text.split('"$NAMESPACE_HELPER" -- /bin/bash')[0]
+    assert 'realpath -e "$PERSONALITY_REVIEWED_STRUCTURE_PATH"' not in prefix
+    bash = str(Path("C:/Program Files/Git/bin/bash.exe")) if Path("C:/Program Files/Git/bin/bash.exe").is_file() else shutil.which("bash")
+    if bash:
+        checked = subprocess.run([bash, "-n", str(COMPARISON_SBATCH)], capture_output=True, text=True)
+        assert checked.returncode == 0, checked.stderr

@@ -1,4 +1,4 @@
-"""Guarded P2 entry for exact-two-manifest protected structural discovery.
+"""Guarded P2 entry for discovery or reviewed source-hash-map comparison.
 
 Run ONLY through the existing same-owner fresh USER+NET namespace helper and
 existing rayan-n0-base P2 container. This script creates no namespace, changes
@@ -36,18 +36,21 @@ def _write_new(path: Path, payload: bytes) -> None:
         os.fsync(stream.fileno())
 
 
-def _validate_final_summary(summary: dict, initial: dict, protected_payload: bytes) -> None:
-    extra = {"raw_member_map_file_sha256", "code_commit", "protected_structure_file_sha256",
-             "entry_implementation_sha256", "isolation", "receipt_sha256"}
+def _validate_final_summary(summary: dict, initial: dict, protected_payload: bytes | None) -> None:
+    extra = {"raw_member_map_file_sha256", "code_commit", "entry_implementation_sha256", "isolation", "receipt_sha256"}
+    if protected_payload is not None:
+        extra.add("protected_structure_file_sha256")
     valid = (type(summary) is dict and set(summary) == set(initial) | extra
-             and all(summary[key] == value for key, value in initial.items())
+             and namespace._canonical({key: summary[key] for key in initial}) == namespace._canonical(initial)
              and type(summary["code_commit"]) is str
              and re.fullmatch(r"[0-9a-f]{40}", summary["code_commit"]) is not None
              and type(summary["entry_implementation_sha256"]) is dict
              and set(summary["entry_implementation_sha256"]) == {"entry.py", "namespace.py"})
     if valid:
-        digests = [summary["raw_member_map_file_sha256"], summary["protected_structure_file_sha256"],
-                   summary["receipt_sha256"], *summary["entry_implementation_sha256"].values()]
+        digests = [summary["raw_member_map_file_sha256"], summary["receipt_sha256"],
+                   *summary["entry_implementation_sha256"].values()]
+        if protected_payload is not None:
+            digests.append(summary["protected_structure_file_sha256"])
         valid = all(type(value) is str and re.fullmatch(r"[0-9a-f]{64}", value) for value in digests)
     if valid:
         identity = summary["isolation"]
@@ -61,15 +64,18 @@ def _validate_final_summary(summary: dict, initial: dict, protected_payload: byt
                  and all(type(identity[key]) is str and re.fullmatch(r"net:\[[0-9]+\]", identity[key])
                          for key in ("host_netns", "isolated_netns"))
                  and identity["host_netns"] != identity["isolated_netns"])
-    if not valid or summary["protected_structure_file_sha256"] != sha256(protected_payload + b"\n").hexdigest() or \
+    if not valid or (protected_payload is not None and summary["protected_structure_file_sha256"] != \
+                    sha256(protected_payload + b"\n").hexdigest()) or \
             summary["receipt_sha256"] != sha256(namespace._canonical(
                 {key: value for key, value in summary.items() if key != "receipt_sha256"})).hexdigest():
         raise namespace.PrivateStageError("fixed audit summary binding differs")
 
 
-def run_structure_audit() -> dict:
+def run_structure_audit(*, compare_source_hashes: bool = False) -> dict:
     # REQUIRED FIRST OPERATION: actual namespace/identity, before private paths.
     isolation = namespace._p2_guard()
+    if type(compare_source_hashes) is not bool:
+        raise namespace.PrivateStageError("audit mode differs")
     os.umask(0o077)
     root_value = Path(os.environ["COMPUTE_ROOT"])
     if not root_value.is_absolute() or ".." in root_value.parts or any(
@@ -105,6 +111,9 @@ def run_structure_audit() -> dict:
     pin = curated_frontier_v2_pin()
     if pin.archive_sha256 != namespace.PACKAGE_SHA256:
         raise namespace.PrivateStageError("public curated frontier archive pin differs")
+    if compare_source_hashes and pin.members_sha256.get(
+            pin.package_root + "/" + audit.LEGACY_RESERVE_PUBLIC_MEMBER) != audit.LEGACY_RESERVE_SHA256:
+        raise namespace.PrivateStageError("public retained reserve member pin differs")
     package = namespace._bounded_path(os.environ["PRIVATE_PACKAGE_PATH"], root, file=True)
     raw_source = namespace._bounded_path(os.environ["PERSONALITY_RAW_SOURCE_PATH"], root, file=True)
     member_map_path = namespace._bounded_path(os.environ["PERSONALITY_RAW_MEMBER_MAP_PATH"], root, file=True)
@@ -115,17 +124,33 @@ def run_structure_audit() -> dict:
             or member_map_path.stat().st_uid not in (0, namespace.HOST_UID):
         raise namespace.PrivateStageError("protected map permissions or owner differs")
     map_sha = os.environ["PERSONALITY_RAW_MEMBER_MAP_SHA256"]
-    summary_path = run / "manifest-structure-summary.json"
+    reviewed_structure = None
+    if compare_source_hashes:
+        reviewed_structure = namespace._bounded_path(os.environ["PERSONALITY_REVIEWED_STRUCTURE_PATH"], root, file=True)
+        if reviewed_structure in sources or code in reviewed_structure.parents or run in reviewed_structure.parents or \
+                stat.S_IMODE(reviewed_structure.stat().st_mode) != 0o600 or \
+                reviewed_structure.stat().st_uid not in (0, namespace.HOST_UID):
+            raise namespace.PrivateStageError("reviewed protected structure location or permissions differs")
+    summary_path = run / ("declared-source-hash-comparison.json" if compare_source_hashes else "manifest-structure-summary.json")
     structure_path = run / "manifest-structure.protected.json"
     with audit._PinnedFile(member_map_path, map_sha, namespace.MAX_MEMBER_MAP_BYTES) as pinned_map:
         payload = pinned_map.bounded_bytes()
         member_map = namespace._raw_member_map(raw._json(payload))
         # Capturing output prevents any arbitrary metadata/error text reaching logs.
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
-            protected, summary = audit.discover_manifest_structure(package, curated_pin=pin,
-                raw_archive_path=raw_source, expected_raw_archive_sha256=namespace.RAW_SOURCE_SHA256,
-                raw_member_map=member_map)
-        audit.verify_discovery_result(protected, summary)
+            if compare_source_hashes:
+                summary = audit.compare_declared_source_hashes(package, curated_pin=pin,
+                    raw_archive_path=raw_source, expected_raw_archive_sha256=namespace.RAW_SOURCE_SHA256,
+                    raw_member_map=member_map, reviewed_structure_path=reviewed_structure,
+                    expected_reviewed_structure_file_sha256=audit.REVIEWED_STRUCTURE_FILE_SHA256,
+                    expected_curated_manifest_sha256=audit.REVIEWED_CURATED_MANIFEST_SHA256,
+                    expected_raw_generation_manifest_sha256=audit.REVIEWED_RAW_MANIFEST_SHA256)
+                audit.verify_comparison_result(summary)
+            else:
+                protected, summary = audit.discover_manifest_structure(package, curated_pin=pin,
+                    raw_archive_path=raw_source, expected_raw_archive_sha256=namespace.RAW_SOURCE_SHA256,
+                    raw_member_map=member_map)
+                audit.verify_discovery_result(protected, summary)
         pinned_map.verify()
         namespace._clean_code(code, revision)
         if entry_code != {"entry.py": sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -133,31 +158,36 @@ def run_structure_audit() -> dict:
                 or audit.implementation_hashes() != summary["implementation_sha256"]:
             raise namespace.PrivateStageError("audit implementation changed")
         # No files are created until every source/map/code recheck succeeds.
-        structure_payload = raw._canonical(protected)
-        if sha256(structure_payload).hexdigest() != summary["protected_structure_sha256"]:
+        structure_payload = None if compare_source_hashes else raw._canonical(protected)
+        if structure_payload is not None and sha256(structure_payload).hexdigest() != summary["protected_structure_sha256"]:
             raise namespace.PrivateStageError("protected structure binding differs")
         initial_summary = dict(summary)
         summary.update(raw_member_map_file_sha256=map_sha, code_commit=revision,
-                       protected_structure_file_sha256=sha256(structure_payload + b"\n").hexdigest(),
                        entry_implementation_sha256=entry_code, isolation=isolation)
+        if structure_payload is not None:
+            summary["protected_structure_file_sha256"] = sha256(structure_payload + b"\n").hexdigest()
         summary["receipt_sha256"] = sha256(raw._canonical(summary)).hexdigest()
         _validate_final_summary(summary, initial_summary, structure_payload)
-    _write_new(structure_path, structure_payload + b"\n")
+    if structure_payload is not None:
+        _write_new(structure_path, structure_payload + b"\n")
     _write_new(summary_path, raw._canonical(summary) + b"\n")
     return summary
 
 
 def main(argv: list[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
-    if args != ["--p2-structure-stage"]:
-        print("usage: guarded manifest audit --p2-structure-stage", file=sys.stderr)
+    comparison = args == ["--p2-source-hash-comparison-stage"]
+    if args != ["--p2-structure-stage"] and not comparison:
+        print("usage: guarded manifest audit --p2-structure-stage | --p2-source-hash-comparison-stage", file=sys.stderr)
         return 2
     try:
-        summary = run_structure_audit()
-        public = ("schema", "state", "receipt_sha256", "protected_structure_file_sha256",
-                  "curated_manifest_sha256", "raw_generation_manifest_sha256", "link_compared",
+        summary = run_structure_audit(compare_source_hashes=True) if comparison else run_structure_audit()
+        public = ("schema", "state", "receipt_sha256", "curated_manifest_sha256", "raw_generation_manifest_sha256", "link_compared",
                   "acceptance_authority", "private_gradient_authorized", "historical_authority_granted",
                   "training_authorized")
+        public += (("declared_source_hash_count", "reserve_digest_match_count", "generator_declares_matching_digest",
+                    "original_source_independently_verified", "legacy_namespace_proven", "source_admission")
+                   if comparison else ("protected_structure_file_sha256",))
         print(json.dumps({key: summary[key] for key in public}, sort_keys=True))
         return 0
     except BaseException:
