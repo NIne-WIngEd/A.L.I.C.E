@@ -205,11 +205,19 @@ diagnosis without another publisher forward. See
 Actual public closure job 576635 subsequently completed `0:0`, preserving all
 152 complete feature banks and original receipts in a separately verified CPU
 consumer package. Independent file/canonical pins and inventory/source bindings
-passed. Consumer diagnostic 576638 was submitted using those reviewed pins,
+passed. Consumer diagnostic 576638 completed using those reviewed pins,
 with no fit, publisher forward, installation or private identity source.
 See `PERSONALITY_PUBLIC_FEATURE_HANDOFF_RESULT_576635.md`. Closure proves
 reusable feature custody; it does not improve the weak learning result or
-qualify N0. No diagnostic result is claimed yet.
+qualify N0. The diagnostic reproduced original results exactly. The learned
+scorer responds to source substitutions, but selects familiar TRAIN-positive
+descriptions on 15/16 DEV examples; its global 49-state mixture remains nearly
+uniform. These are destructive ablations with retained reference targets, not
+reviewed counterfactual gold, and do not identify inherited persona as the cause.
+See `PERSONALITY_PUBLIC_FEATURE_DIAGNOSTICS_RESULT_576638.md` for exact original
+receipts and independently verified findings. Primary research and actual
+candidate-exposure accounting precede selection of a learning repair. DEV has
+already been observed and remains exploratory, not untouched confirmation.
 
 Kaggle's existing CLI successfully listed the owner's `mkrayanyan` notebooks.
 That observes working authentication, not current GPU quota or allocation.
