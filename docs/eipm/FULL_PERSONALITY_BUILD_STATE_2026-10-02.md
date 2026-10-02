@@ -53,6 +53,42 @@ archive existence and hashes cannot qualify source fidelity or a teaching target
 
 ## Implementation and evidence still required
 
+This preparation branch now implements a first-party learned N1/N2/N3 tensor
+core in `src/alice_personality/identity/`. It is newly initialized, not a trained
+identity checkpoint. N1 learns all-layer/token readouts and directed provenance
+graphs, separates five source/context views, and exposes concept/source support
+scores. N2 produces dynamic candidate preferences, independent co-validity, all
+seven semantic head families, value trade-offs, portable voice controls, distinct
+history/experience pointers, uncertainty and rich latent state. N3 is separately
+frozen except for an explicit supplied calibration batch, with sparse target
+availability. Source authority remains structural and cannot be learned away.
+
+The new JSON ACFP document and IDP output codecs in `identity/codec.py` preserve
+full situation/evidence/context coverage with explicit absence, arbitrary entry
+counts, provenance and metadata pointers. `identity/feature_producer.py` supplies
+an actual complete raw-text path to every provider layer; pointer IDs are not
+embedded, targets remain outside inputs, and overbudget entries fail before any
+forward. It binds document/code/token lineage and requires a closing fresh
+source verification. Feature values remain runtime data in memory. Private
+execution isolation must be established by the caller before document access.
+These are implemented interfaces, not accepted private input or behavior proof.
+
+The new `teaching/` package implements explicit reviewed sparse targets and
+actual N1/N2/calibration losses, stage-isolated AdamW and checkpoint/resume of
+first-party weights, optimizer, RNG and replay cursor. It never derives a winner
+from candidate order or treats unordered alternatives as negatives. Governed
+teaching requires external source/compiled/prepared/target/family/current-
+authorization pins, a separately qualified personality N0, and a verified
+closed producer session linked to the exact feature frame. Public random-tensor
+fixtures exercise these mechanics only. Real private training has not run.
+
+The role-specific public semantic readout is a diagnostic of learnable frozen
+representations, not the private identity model or an MFM specialist. Its first
+precommitted run uses one TRAIN row per relation family and two DEV rows per
+family, preserves each original candidate pool, and reports source-sentence
+overlap separately. The operating sample, width and update count do not limit
+the full Alice build. No N0 qualification follows from fixture success.
+
 N1 must learn the governed source concepts, conditional policy/evidence graph,
 source authority and auditable residual nuance. It must distinguish immutable
 source history, revisable inference, synthetic behavior, current host and
@@ -77,10 +113,12 @@ and resume, calibrated exports and reload, independent behavior evaluation and
 correction/deletion influence checks. The retired custom-N0 special IDs,
 17-state/640-width geometry and upstream gradient policy do not apply to Gemma.
 
-Before real teaching compilation, harden the old compiler: strict boolean
-authority fields, complete manifest/file hash membership, safe append-only
-extraction/output, resolved inference lineage and split groups that close shared
-source-support and transform dependencies. UNKNOWN is epistemic uncertainty,
+The new `n1/compiler.py` hardens compilation with strict Boolean fields, pinned
+complete archive/member membership, streaming without extraction, create-only
+outputs, explicit raw inference registry and shared evidence/transform split
+closure. Declared row eligibility remains separate from pending package
+acceptance. It has passed public fixtures; actual private source compilation
+and payload validation are still separate. UNKNOWN is epistemic uncertainty,
 not a behavioral void; ASYN supplies explicit governed starting priors.
 
 ## Independent public semantics
@@ -92,6 +130,20 @@ TRAIN/DEV artifacts, or a new extraction route that never opens FINAL sentences
 or descriptions. Transparent synthetic intervention targets and service-teacher
 semantics can supplement teaching, with explicit provenance and independent
 checks. Generic helper, voice or relationship preferences are not identity gold.
+
+Allocated public source-admission job 576599 completed `0:0` on Magnolia node005
+in 19s under `mxrayan`, using immutable code
+`44a4a278162f84a9e8f6690b92335c5f591608b0`. All 39,200 TRAIN and 5,600 DEV
+records and the four exact receipted artifacts were checked without opening
+FINAL payloads. Relation families are disjoint (56/8), and exact/normalized
+ordered sentence-and-entity examples have zero cross-split overlap. There are
+149 normalized sentence-only overlaps, so lexical independence is not claimed.
+The returned receipt independently matched source pins, original code bytes and
+canonical digest `f0d0cc3e9ae77d102acebbad543edd64d3e95197dab3da749dcdcc910798523c`;
+external file SHA-256
+`0f3be4c82eee0c6db31346788b34242efe8d4ea546354dad6293c8bf09a4eed0`.
+Its state is `ELIGIBLE_PUBLIC_SOURCE_UNQUALIFIED`; it grants no training,
+semantic suitability, inherited-preference suppression or N0 approval.
 
 Public forward fixtures exercise execution. Source-family holdouts, natural
 relation targets, source attribution, relevant/irrelevant interventions and
