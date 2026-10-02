@@ -504,7 +504,11 @@ def audit_loss_role_structure(package_path: str | Path, *, pin: PackagePin) -> d
     package, binding = _file(package_path), _pin(pin)
     if _file_hash(package) != binding["archive_sha256"]:
         raise IdentitySubstrateError("archive SHA256 differs from the explicit package pin")
-    keys = ("direct_identity", "identity_core", "identity_loss", "exclude_from_identity_loss")
+    keys = ("direct_identity", "conditional_identity", "identity_core", "identity_loss",
+            "identity_conditioning", "identity_reconstruction", "identity_core_loss",
+            "exclude_from_identity_loss", "exclude_identity", "excluded_identity",
+            "exclude_identity_loss", "exclude_identity_supervision", "identity_core_supervision",
+            "conditional_identity_supervision", "context_only", "context_only_conditioning")
     counts = {name: 0 for name in ("e0_rows", "legacy_conflicting_rows",
         "context_only_rows", "exclusion_lane_rows", "context_and_direct_supervision_rows",
         "conflicting_positive_direct_identity_rows", "conflicting_positive_identity_core_rows",
