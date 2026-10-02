@@ -23,8 +23,10 @@ COMPUTE_ROOT="$(realpath -e "$HOME/rayan-compute")"
 [[ "$(stat -c %U "$COMPUTE_ROOT")" == mxrayan && "$(stat -c %a "$COMPUTE_ROOT")" == 700 ]] || exit 2
 PERSONALITY_REPO_ROOT="$(realpath -e "$PERSONALITY_REPO_ROOT")"
 case "$PERSONALITY_REPO_ROOT" in "$COMPUTE_ROOT"/*) ;; *) exit 2 ;; esac
-[[ "$(git -C "$PERSONALITY_REPO_ROOT" rev-parse HEAD)" == "$PERSONALITY_EXPECTED_REVISION" ]]
-[[ -z "$(git -C "$PERSONALITY_REPO_ROOT" status --porcelain)" ]]
+# Magnolia's login Git predates -C. Explicit work-tree arguments preserve the
+# exact clean source check without upgrading or mutating the shared runtime.
+[[ "$(git --git-dir="$PERSONALITY_REPO_ROOT/.git" --work-tree="$PERSONALITY_REPO_ROOT" rev-parse HEAD)" == "$PERSONALITY_EXPECTED_REVISION" ]]
+[[ -z "$(git --git-dir="$PERSONALITY_REPO_ROOT/.git" --work-tree="$PERSONALITY_REPO_ROOT" status --porcelain)" ]]
 
 SOURCE="$(realpath -e "$COMPUTE_ROOT/mfm/gemma4-12b-023679ed352de9bb66cc873c9009ce3482585c08/source")"
 case "$SOURCE" in "$COMPUTE_ROOT"/*) ;; *) exit 3 ;; esac

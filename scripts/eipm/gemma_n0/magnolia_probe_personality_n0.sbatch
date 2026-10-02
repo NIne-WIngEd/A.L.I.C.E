@@ -44,8 +44,8 @@ within_root() {
 PERSONALITY_REPO_ROOT="$(within_root "$PERSONALITY_REPO_ROOT")"
 PERSONALITY_PREPARED_RECEIPT="$(within_root "$PERSONALITY_PREPARED_RECEIPT")"
 [[ -d "$PERSONALITY_REPO_ROOT" && -f "$PERSONALITY_PREPARED_RECEIPT" ]]
-[[ "$(git -C "$PERSONALITY_REPO_ROOT" rev-parse HEAD)" == "$PERSONALITY_EXPECTED_REVISION" &&
-   -z "$(git -C "$PERSONALITY_REPO_ROOT" status --porcelain)" ]] || {
+[[ "$(git --git-dir="$PERSONALITY_REPO_ROOT/.git" --work-tree="$PERSONALITY_REPO_ROOT" rev-parse HEAD)" == "$PERSONALITY_EXPECTED_REVISION" &&
+   -z "$(git --git-dir="$PERSONALITY_REPO_ROOT/.git" --work-tree="$PERSONALITY_REPO_ROOT" status --porcelain)" ]] || {
   echo 'personality code differs from the exact clean pin' >&2; exit 3;
 }
 PLAN="$(within_root "$PERSONALITY_REPO_ROOT/evaluation/eipm/gemma_n0/public_probe_plan_v1.json")"
@@ -171,8 +171,8 @@ PY
   "$PERSONALITY_PREPARED_RECEIPT" "$PERSONALITY_PREPARED_RECEIPT_SHA256" \
   "$PLAN" "$PLAN_SHA256" "$RUN_ROOT" "$PILLOW" "$VISION" "$COMPUTE_ROOT"
 
-[[ "$(git -C "$PERSONALITY_REPO_ROOT" rev-parse HEAD)" == "$PERSONALITY_EXPECTED_REVISION" &&
-   -z "$(git -C "$PERSONALITY_REPO_ROOT" status --porcelain)" ]] || {
+[[ "$(git --git-dir="$PERSONALITY_REPO_ROOT/.git" --work-tree="$PERSONALITY_REPO_ROOT" rev-parse HEAD)" == "$PERSONALITY_EXPECTED_REVISION" &&
+   -z "$(git --git-dir="$PERSONALITY_REPO_ROOT/.git" --work-tree="$PERSONALITY_REPO_ROOT" status --porcelain)" ]] || {
   echo 'code changed during the public forward diagnostic' >&2; exit 6;
 }
 printf '%s  %s\n' "$PLAN_SHA256" "$PLAN" | sha256sum -c - >/dev/null
