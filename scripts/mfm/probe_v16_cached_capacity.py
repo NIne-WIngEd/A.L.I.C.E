@@ -17,28 +17,25 @@ from . import train_v16_cached_specialist as cached
 
 def run(args):
     shared = cached.training.shared
-    shared._require_private_network_isolation()
-    preflight = shared._read_sealed(args.preflight_receipt, cached.training.PREFLIGHT_SCHEMA)
-    if preflight["record_sha256"] != require_sha256(args.preflight_sha256, "preflight_sha256") or \
-            preflight.get("decoder_implementation_sha256") != cached.training._decoder_sha256() or \
-            preflight.get("teacher_fit") is not True or preflight.get("full_fit") is not False:
-        raise CognitiveKernelContractError("capacity metadata differs from retained decoder")
+    # Purely public random tensors. There is deliberately no corpus, model,
+    # processor or preflight-file argument. Private training keeps its separate
+    # mandatory namespace guard; this probe cannot be used to bypass it.
+    reference = require_sha256(args.shape_reference_sha256, "shape_reference_sha256")
     import torch
     from cognitive_kernel.formation_v1_specialist import FormationSpecialist, SpecialistConfig
     if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
         raise CognitiveKernelContractError("capacity probe requires one actual CUDA device")
-    source_length, target_length = (preflight[k] for k in ("longest_source_tokens", "longest_target_tokens"))
-    if not 0 < source_length <= preflight["max_source_tokens"] or \
-            not 1 < target_length <= preflight["max_target_tokens"]:
+    source_length, target_length = args.source_tokens, args.target_tokens
+    if not 0 < source_length <= 32768 or not 1 < target_length <= 8192:
         raise CognitiveKernelContractError("capacity stress lengths invalid")
     torch.manual_seed(73129)
     torch.cuda.manual_seed_all(73129)
-    config = SpecialistConfig(3840, 262144, 768, preflight["specialist_layers"],
-        preflight["specialist_heads"], preflight["max_target_tokens"], 0, 2, 1, 64)
+    config = SpecialistConfig(3840, 262144, 768, 6, 12, 8192, 0, 2, 1, 64)
     args.output_dir.mkdir(parents=True, mode=0o700, exist_ok=False)
     record = shared._write_new(args.output_dir / "run.json", {
         "schema": "mfm-v16-cached-synthetic-capacity-run-v1",
-        "preflight_sha256": preflight["record_sha256"], "specialist_config": config.record(),
+        "shape_reference_sha256": reference, "shape_reference_file_opened": False,
+        "specialist_config": config.record(),
         "probe_sha256": shared._digest(Path(__file__)),
         "decoder_sha256": cached.training._decoder_sha256(),
         "source_length": source_length, "target_length": target_length,
@@ -119,8 +116,9 @@ def run(args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--preflight-receipt", type=Path, required=True)
-    parser.add_argument("--preflight-sha256", required=True)
+    parser.add_argument("--shape-reference-sha256", required=True)
+    parser.add_argument("--source-tokens", type=int, default=3035)
+    parser.add_argument("--target-tokens", type=int, default=1607)
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args()
     os.environ.update({"HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1", "WANDB_DISABLED": "true"})
