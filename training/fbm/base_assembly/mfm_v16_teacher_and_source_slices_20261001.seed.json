@@ -567,9 +567,9 @@
   },
   "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_TEACHER_LANE_AND_EXACT_SLICES.jsonl",
   "build_continuation_20261002": {
-    "status": "PROTECTED_TEACHER_CPU_PASSED_FEATURE_EXPORT_RUNNING_UNQUALIFIED",
+    "status": "BF16_EXPORT_RUNNING_BOUNDED_RESUMES_AND_GUARDED_GPU_PIPELINE_QUEUED_UNQUALIFIED",
     "mfm_branch": "research/mfm-v1-licensed-base-20260930",
-    "mfm_commit": "eee3b30cf1791b92dbb509b7423b993d45e6596c",
+    "mfm_commit": "a9c143f457f10b93d5d4f914fc10ad002e485fa4",
     "tested_implementation_commit": "561fac07570e78e2a9833f6bbac728a8950dc713",
     "contract": "docs/MFM_V16_BUILD_CONTINUATION_2026-10-02.md",
     "original_v3_archive_sha256": "fd34cddc1c8b8958d00d5daf74f39b928e9fb2818ccaa4ee6294b928037f40a3",
@@ -595,7 +595,9 @@
     "local_new_tests_passed": 12,
     "failed_jobs_preserved": {
       "576604": "namespace helper argument mismatch before corpus open",
-      "576609": "legacy Bash empty-array error before exporter execution"
+      "576609": "legacy Bash empty-array error before exporter execution",
+      "576611": "container clone library-copy failure",
+      "576613": "fresh runtime library-copy failure; repaired dedicated runtime separately"
     },
     "feature_export_job": 576610,
     "feature_export_complete": false,
@@ -616,7 +618,7 @@
     "cached_training_entrypoint": "scripts/mfm/train_v16_cached_specialist.py",
     "original_live_inference_schema_compatible": false,
     "free_compute": {
-      "magnolia": "active allocated CPU export; P100 GPU stress next",
+      "magnolia": "source export active; bounded resumes and guarded GPU capacity/fit/generated pipeline queued under mxrayan",
       "kaggle": "owner CLI works; actual new allocation and remaining quota unverified",
       "hugging_face": "connected NineWinged non-PRO; eligible ZeroGPU may offer short free probes; Jobs use billed credits"
     },
@@ -636,6 +638,60 @@
     "trace": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl",
     "training_eligible": false,
     "evaluation_eligible": false,
-    "qualification_boundary": "CPU and small-model tests prove contracts only. Single-author fictional targets, lower CE and frozen exports do not prove useful learned formation."
+    "qualification_boundary": "CPU and small-model tests prove contracts only. Single-author fictional targets, lower CE and frozen exports do not prove useful learned formation.",
+    "execution_code_commit": "7f9621bddfe0b1136b776a9850e2f0e5c8f4842a",
+    "feature_export_code_commit": "eee3b30cf1791b92dbb509b7423b993d45e6596c",
+    "additional_linux_diagnostic_tests_passed": 5,
+    "target_tokenizer_parity": {
+      "job": 576615,
+      "exit_code": "0:0",
+      "cases_checked": 441,
+      "all_complete_targets_identical": true,
+      "receipt_sha256": "5cb5c0bfdc0446f9574aacbf569fe03139aabf40ee65f79c3ae78785e2cabe19"
+    },
+    "gpu_runtime_smoke": {
+      "job": 576616,
+      "exit_code": "0:0",
+      "actual_device": "Tesla P100-PCIE-12GB",
+      "runtime": "rayan-mfm-cache-gpu-v2-576613",
+      "receipt_sha256": "3a47b9e54245fcac392d9834f78f62c70e1712f699d23b3ec4b5d1b32ed32a00",
+      "tiny_fixture_backward_passed": true,
+      "full_size_capacity_passed": false,
+      "teacher_corpus_opened": false
+    },
+    "feature_export_continuation_jobs": [
+      576619,
+      576620,
+      576621
+    ],
+    "feature_export_resume_policy": "bounded 12h allocations, resume only prior TIMEOUT; skip completed bank; halt other failures and preserve interrupted atomic stages",
+    "cpu_fp32_benchmark": {
+      "job": 576614,
+      "status_at_handoff": "RUNNING",
+      "results_reviewed": false,
+      "allocated_memory_gb": 96,
+      "precision_change_adopted": false
+    },
+    "gpu_learning_pipeline": {
+      "job": 576622,
+      "status_at_handoff": "PENDING_DEPENDENCY",
+      "depends_afterok": 576621,
+      "external_bank_pin_from_producer_jobs": [
+        576610,
+        576619,
+        576620,
+        576621
+      ],
+      "stages": [
+        "full-size stress backward and actual checkpoint reload",
+        "fresh 432-case two-epoch teacher fit",
+        "matched trained/seeded FP32 generated diagnostic development"
+      ],
+      "requested_device": "one P100",
+      "allocation_hours": 4,
+      "capacity_or_fit_pass_inferred_from_submission": false
+    },
+    "generated_diagnostic_entrypoint": "scripts/mfm/run_v16_cached_diagnostic.py",
+    "generated_diagnostic_scope": "raw generated failures and JSON/source grounding; no semantic accuracy, independent gold, Claim-gate or downstream usefulness claim"
   }
 }
