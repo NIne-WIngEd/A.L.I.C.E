@@ -326,6 +326,13 @@ def run_private_compile() -> dict:
                        alternatives_are_unordered_not_negatives=True)
     except BaseException as exc:
         summary.update(failure_phase=phase, failure_type=type(exc).__name__, failure_reason=_safe_reason(exc))
+        if summary["failure_reason"] == "source_loss_role_conflict":
+            try:
+                from src.alice_personality.n1.compiler import audit_loss_role_structure
+                with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                    summary["source_structure"] = audit_loss_role_structure(package, pin=pin)
+            except BaseException:
+                summary["source_structure"] = {"state": "STRUCTURAL_DIAGNOSTIC_REFUSED"}
         _write_summary(summary_path, summary)
         raise PrivateStageError("private compilation refused; sanitized failure receipt preserved") from None
     _write_summary(summary_path, summary)

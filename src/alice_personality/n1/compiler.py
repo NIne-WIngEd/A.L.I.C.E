@@ -494,6 +494,53 @@ def _compile(archive: zipfile.ZipFile, pin: dict, registry: dict, seed: str) -> 
     return output, info
 
 
+def audit_loss_role_structure(package_path: str | Path, *, pin: PackagePin) -> dict:
+    """Return only fixed aggregate schema diagnostics after exact source custody.
+
+    No source text, IDs, unrecognized keys or values leave this audit. The
+    aggregate predicates diagnose compiler assumptions, never approve a lane.
+    The caller must establish private execution isolation before invoking it.
+    """
+    package, binding = _file(package_path), _pin(pin)
+    if _file_hash(package) != binding["archive_sha256"]:
+        raise IdentitySubstrateError("archive SHA256 differs from the explicit package pin")
+    keys = ("direct_identity", "identity_core", "identity_loss", "exclude_from_identity_loss")
+    counts = {name: 0 for name in ("e0_rows", "legacy_conflicting_rows",
+        "context_only_rows", "exclusion_lane_rows", "context_and_direct_supervision_rows",
+        "conflicting_positive_direct_identity_rows", "conflicting_positive_identity_core_rows",
+        "conflicting_identity_exclusion_name_rows", "conflicting_other_identity_name_rows")}
+    counts["enabled_known_mask_fields"] = {key: 0 for key in keys}
+    with zipfile.ZipFile(package) as archive:
+        _verify_members(archive, binding)
+        rows = _jsonl(archive, binding["package_root"] + "/" + ACTIVE_FILES["E0"])
+        for row in rows:
+            lanes, mask = row.get("use_lanes", []), row.get("loss_mask", {})
+            if not isinstance(lanes, list) or any(not isinstance(value, str) for value in lanes) \
+                    or not isinstance(mask, dict) or any(not isinstance(key, str) or type(value) is not bool
+                                                       for key, value in mask.items()):
+                raise IdentitySubstrateError("loss role structural audit requires explicit schema types")
+            counts["e0_rows"] += 1
+            context = "context_only_conditioning" in lanes
+            excluded = "exclude_from_identity_loss" in lanes
+            conflict_keys = [key for key, value in mask.items() if value and "identity" in key]
+            counts["context_only_rows"] += int(context)
+            counts["exclusion_lane_rows"] += int(excluded)
+            counts["context_and_direct_supervision_rows"] += int(context and "direct_identity_supervision" in lanes)
+            for key in keys:
+                counts["enabled_known_mask_fields"][key] += int(mask.get(key) is True)
+            if (context or excluded) and conflict_keys:
+                counts["legacy_conflicting_rows"] += 1
+                counts["conflicting_positive_direct_identity_rows"] += int(mask.get("direct_identity") is True)
+                counts["conflicting_positive_identity_core_rows"] += int(mask.get("identity_core") is True)
+                counts["conflicting_identity_exclusion_name_rows"] += int(any("exclu" in key.lower() for key in conflict_keys))
+                counts["conflicting_other_identity_name_rows"] += int(any(key not in keys and "exclu" not in key.lower()
+                                                                         for key in conflict_keys))
+    if _file_hash(package) != binding["archive_sha256"]:
+        raise IdentitySubstrateError("source archive changed during compilation")
+    return {"schema": "alice-personality-source-loss-structure-diagnostic-v1",
+            "acceptance_authority": False, "training_authorized": False, "counts": counts}
+
+
 def compile_package(package_path: str | Path, output_dir: str | Path, *, pin: PackagePin,
                     split_seed: str = "alice-eipm-evidence-families-v1",
                     raw_lineage_registry: Mapping | None = None) -> dict:

@@ -278,6 +278,31 @@ class IdentitySubstrateTests(unittest.TestCase):
         with self.assertRaisesRegex(c.IdentitySubstrateError, "overlap"):
             self.compile(package, pin)
 
+    def test_loss_role_diagnostic_is_aggregate_and_never_grants_authority(self):
+        rows = deepcopy(self.rows)
+        rows["E0"][0]["use_lanes"] = ["context_only_conditioning"]
+        rows["E0"][0]["loss_mask"] = {"direct_identity": True}
+        rows["E0"][1]["use_lanes"] = ["exclude_from_identity_loss"]
+        rows["E0"][1]["loss_mask"] = {"direct_identity": False, "exclude_from_identity_loss": True,
+                                      "PRIVATE_LOOKING_FIXTURE_KEY": True}
+        package, pin = self.archive(rows=rows)
+        report = c.audit_loss_role_structure(package, pin=pin)
+        counts = report["counts"]
+        self.assertEqual(counts["e0_rows"], 3)
+        self.assertEqual(counts["legacy_conflicting_rows"], 2)
+        self.assertEqual(counts["conflicting_positive_direct_identity_rows"], 1)
+        self.assertEqual(counts["conflicting_identity_exclusion_name_rows"], 1)
+        self.assertFalse(report["acceptance_authority"])
+        self.assertFalse(report["training_authorized"])
+        rendered = json.dumps(report)
+        self.assertNotIn("PRIVATE_LOOKING_FIXTURE_KEY", rendered)
+        self.assertNotIn("Public fixture evidence", rendered)
+        self.assertNotIn("e0.1", rendered)
+        with self.assertRaisesRegex(c.IdentitySubstrateError, "identity loss"):
+            self.compile(package, pin)
+        with self.assertRaisesRegex(c.IdentitySubstrateError, "archive SHA256"):
+            c.audit_loss_role_structure(package, pin=c.PackagePin("0" * 64, pin.package_root, pin.members_sha256))
+
     def test_unknown_and_alternatives_cannot_gain_learning_or_negative_authority(self):
         for field, value in (("training_authority", True), ("hard_negative_authorized", True),
                              ("hard_negative_authorized", "false"), ("is_training_negative", True),
