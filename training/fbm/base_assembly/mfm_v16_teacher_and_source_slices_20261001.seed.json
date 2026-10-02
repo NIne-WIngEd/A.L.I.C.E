@@ -53,37 +53,49 @@
     },
     {
       "id": "materialize_exact_slices",
-      "requires": ["freeze_sources"],
+      "requires": [
+        "freeze_sources"
+      ],
       "action": "Rebuild the packet from pinned original JSON bytes; extract only the verbatim source-native values visible in each day window, record original whole-file digest and exact byte offsets in a private index, and store deduplicated fragments in a private blob.",
       "gate": "Reject packet drift, future-day records and altered fragments. Create a new 0700 directory with 0600 files; store receipt hash separately before any export. The shared blob and index are custody artifacts, never teacher input."
     },
     {
       "id": "export_one_isolated_packet",
-      "requires": ["materialize_exact_slices"],
+      "requires": [
+        "materialize_exact_slices"
+      ],
       "action": "With an externally pinned slice receipt hash, rehash receipt, index and blob; select exactly one packet ID and export only its exact selected source fragments, source type, window and HMAC-derived opaque packet/host/source/slice handles to a fresh 0600 file. Keep the original packet ID and handle map in private custody.",
       "gate": "No original packet or host ID, whole parent file, shared blob, index, future-day source, private path or generator-only field enters the teacher-visible export; the output remains source-only and unadmitted. Opaque handles reduce incidental disclosure but are not secrecy against a party with the public corpus and derived HMAC key. Authorization is checked separately before any external teacher sees source bytes."
     },
     {
       "id": "author_v16_teacher_targets",
-      "requires": ["export_one_isolated_packet"],
+      "requires": [
+        "export_one_isolated_packet"
+      ],
       "action": "Create source-grounded full v1.6 targets with exact narrow original evidence spans resolved privately from slice handles. Preserve the teacher identity, version, exact input/response and conversion bytes separately from the target, or record a licensed deterministic generator with the corresponding input/output/converter bytes.",
       "gate": "Review all ten dimensions as present, negative or unknown; never infer negative from missing older labels. Resolve plan versus outcome, host versus source person, time, contradiction, correction and abstention. A teacher suggestion is not historical truth or independent gold."
     },
     {
       "id": "admit_teacher_training",
-      "requires": ["author_v16_teacher_targets"],
+      "requires": [
+        "author_v16_teacher_targets"
+      ],
       "action": "Build an exact-hash owner-authorized mfm-v16-owner-teacher-corpus-v1 manifest and check train/diagnostic-development lineage, source rights, provenance payload bindings, complete target schema, duplicate inputs and full-role positives before handoff.",
       "gate": "Owner/steward authenticates source rights for shared formation training and model distribution outside the hash checker. No fictitious reviewer records or roster. A single generator may supply training but cannot create independent development or FINAL merely by changing host IDs."
     },
     {
       "id": "fit_teacher_supervised_role",
-      "requires": ["admit_teacher_training"],
+      "requires": [
+        "admit_teacher_training"
+      ],
       "action": "Run an exact-code full-corpus CPU processor pass on the role clone, then a bounded full backward/checkpoint/restart GPU probe, then the complete teacher-fit training objective if actual memory/time fit. Bind clone, corpus, code, processor, optimizer, seeded-untrained control and checkpoint lineage.",
       "gate": "Record teacher_fit=true, status owner-authorized-teacher-training-only-unqualified; report observed modality and role coverage. The 49,819 v1.5 rows and current 21-case v1.6 diagnostic are not complete admitted v1.6 training. No paid hour is authorized by this seed alone."
     },
     {
       "id": "independent_qualification",
-      "requires": ["fit_teacher_supervised_role"],
+      "requires": [
+        "fit_teacher_supervised_role"
+      ],
       "action": "Use independently sourced person/source/generator/time/modality development and separately custodied sealed FINAL with authenticated rights and blind review. Freeze model and evaluator before FINAL custodian access. Compare trained specialist to matched seeded-untrained and base controls, then test proposal to independent memory gate, accepted retrieval, and controlled later judgment.",
       "gate": "No teacher training result, hash check or synthetic self-evaluation qualifies an MFM. Keep FINAL unavailable to gradients and model selection; record critical failures and independent causal contribution."
     }
@@ -103,10 +115,17 @@
     "candidate_method_path": "scripts/mfm/prepare_v16_scoped_exercise_teacher_case.py",
     "candidate_contract_path": "docs/MFM_V16_FIRST_SCOPED_TEACHER_CANDIDATE_2026-10-01.md",
     "prompt_template_path": "scripts/mfm/prompts/v16_scoped_exercise_teacher_v1.txt",
-    "selected_source_fields": ["planner.exercise_target", "daily_self_report.exercise", "device_log.activity_tracker"],
+    "selected_source_fields": [
+      "planner.exercise_target",
+      "daily_self_report.exercise",
+      "device_log.activity_tracker"
+    ],
     "scope": "One fictional day and these three exact source fields only; no claims about the full history.",
     "role_boundary": "Separate day-scoped plan, self-reported outcome and device signal; abstain from claiming the planned run was completed.",
-    "positive_dimensions": ["outcome", "abstention"],
+    "positive_dimensions": [
+      "outcome",
+      "abstention"
+    ],
     "remaining_dimension_status": "The other eight were explicitly reviewed as negative within the selected three fields only; never turn absence in the wider history into a negative label.",
     "claim_anchors": "Narrow spans on the selected original source properties, not whole-field citations; original parent-file offsets and handle mapping stay in private custody.",
     "reported_private_artifact_hashes": {
@@ -154,12 +173,23 @@
       "synthea_source_inventory_sha256": "18934bb58539650c4cd42c556c83e4a6c011fa1e54ae7386c04689aaf1df8a55",
       "synthea_patient_bundles": 555,
       "synthea_lineage_components": 1,
-      "additional_research_only": ["AMI Meeting Corpus", "ICSI Meeting Corpus", "Wikimedia revision history"],
+      "additional_research_only": [
+        "AMI Meeting Corpus",
+        "ICSI Meeting Corpus",
+        "Wikimedia revision history"
+      ],
       "source_rights_status": "exact-byte external review pending; no automatic cross-split independence"
     },
     "new_fit_guard": {
       "entrypoint": "scripts/mfm/train_v16_formation_specialist.py",
-      "required_positive_constructs_per_opened_split": ["assistant_self", "procedural_skill", "behavior_pattern", "decision_rationale", "deletion_request", "revocation_request"],
+      "required_positive_constructs_per_opened_split": [
+        "assistant_self",
+        "procedural_skill",
+        "behavior_pattern",
+        "decision_rationale",
+        "deletion_request",
+        "revocation_request"
+      ],
       "scope": "GPU admission safeguard in addition to ten coarse v1.6 dimension positives; does not supply missing explicit negative labels or qualification"
     },
     "fbm_replay": [
@@ -204,7 +234,9 @@
       "host_netns": "net:[4026531956]",
       "helper_and_p2_netns": "net:[4026532988]",
       "caller_uid_gid": "1905/100",
-      "p2_interfaces": ["lo"],
+      "p2_interfaces": [
+        "lo"
+      ],
       "stderr_empty": true,
       "private_corpus_opened": false,
       "scope": "no-data P2 network namespace capability check on node005 only; not complete privacy or corpus admission",
@@ -300,8 +332,14 @@
       "license_issuer": "scripts/mfm/issue_v16_ami_public_license_receipts.py",
       "config": "configs/mfm/v16_ami_cross_stage_teacher_expansion_20261002.json",
       "config_sha256": "5801669ddc24bcef6eed2458dc6dba5fe51c5760f7d0bab9c06550ada52a1781",
-      "train_case_ids": ["ami-es2005bcd-design-tradeoffs", "ami-ts3003bcd-remote-tradeoffs"],
-      "candidate_sha256s": ["ce22062da67efe4820c2c971148f55b11d91f82a4f91235b54539fc6e84c2368", "93d2a8bd0f3329d35974fee2d1687dfb42ebf17ade4a91fc54a488eea0a6a76d"],
+      "train_case_ids": [
+        "ami-es2005bcd-design-tradeoffs",
+        "ami-ts3003bcd-remote-tradeoffs"
+      ],
+      "candidate_sha256s": [
+        "ce22062da67efe4820c2c971148f55b11d91f82a4f91235b54539fc6e84c2368",
+        "93d2a8bd0f3329d35974fee2d1687dfb42ebf17ade4a91fc54a488eea0a6a76d"
+      ],
       "source_family": "AMI manual annotations v1.6.2; both sessions and existing AMI cases share one source family and one service teacher",
       "copyright_receipts_issued": 22,
       "copyright_receipt_scope": "Project-side CC BY 4.0 interpretation for exact released AMI transcript text with attribution, license link and modification notice conditions. Issuer alice-agent-under-owner-direction is not the publisher; participant consent, privacy/publicity rights, independent legal opinion and label correctness are not established.",
@@ -332,7 +370,10 @@
       "composition_method": "scripts/mfm/compose_v16_mixed_teacher_corpus.py",
       "composition_local_commit": "7d69a77",
       "mixed_umbrella_authorization_ref": "owner-directed-mfm-v16-mixed-teacher-20261002",
-      "original_case_authorizations": ["owner-directed-mfm-v16-synthetic", "owner-directed-mfm-v16-public-teacher"],
+      "original_case_authorizations": [
+        "owner-directed-mfm-v16-synthetic",
+        "owner-directed-mfm-v16-public-teacher"
+      ],
       "authorization_source_family_bindings": 25,
       "mixed_train_cases": 434,
       "mixed_diagnostic_development_cases": 9,
@@ -355,7 +396,10 @@
         "cases": 16,
         "original_seed_cases": 15,
         "separate_role_revocation_cases": 1,
-        "methods": ["scripts/mfm/materialize_v16_authoring_seed_train.py", "scripts/mfm/materialize_v16_role_revocation_train.py"],
+        "methods": [
+          "scripts/mfm/materialize_v16_authoring_seed_train.py",
+          "scripts/mfm/materialize_v16_role_revocation_train.py"
+        ],
         "original_seed_generator_family": "assistant-authored-v16-seed-20260930",
         "role_revocation_generator_family": "codex-fictional-role-chronicle-20261001",
         "source_rights": "Exact source-bound drafts are deliberately unissued with null issuer, authority, permissions and revocation. Do not mechanically turn drafts into rights receipts.",
@@ -413,8 +457,17 @@
       "total_train_cases": 432,
       "diagnostic_development_cases": 9,
       "new_source_bound_rights_receipts": 832,
-      "source_reference_modalities": {"text": 800, "structured": 32, "code": 32},
-      "not_exercised": ["native audio", "image", "video", "accepted memory fed into later turns"],
+      "source_reference_modalities": {
+        "text": 800,
+        "structured": 32,
+        "code": 32
+      },
+      "not_exercised": [
+        "native audio",
+        "image",
+        "video",
+        "accepted memory fed into later turns"
+      ],
       "manifest_sha256": "f54f03ace36b7bb8afde531faf5a283b1cb894ff40389ddaeb96d2f5caa4c48a",
       "intake_sha256": "57d968b97475b052e873ce84b1484b64dedde52f976b941fe8a8121234a1acdc",
       "issuance_receipt_sha256": "72181a2889316c095c442ab6c2881a39a1f655c4dd61f5f3d9e0ea9793402882",
@@ -487,7 +540,7 @@
     "qualification_boundary": "A CPU success is a processor/data receipt only. A measured full backward/restart probe and teacher fit are later unqualified training steps. Independent blind development and sealed FINAL, matched controls and accepted memory changing later judgment are separate capability requirements. Owner-local consumer adaptation needs its own private rights contract and must not inherit shared distribution rights rules.",
     "current_observations": {
       "synthetic_only_v16_teacher_manifest_admitted": true,
-      "current_synthetic_manifest_sha256": "f54f03ace36b7bb8afde531faf5a283b1cb894ff40389ddaeb96d2f5caa4c48a",
+      "current_synthetic_manifest_sha256": "0268c134596326bb592e0afaf3fdab8626670a345e813b2148a11eb68dc93676",
       "current_synthetic_train_cases": 432,
       "current_synthetic_diagnostic_development_cases": 9,
       "mixed_v2_local_manifest_sha256": "3ba6e4f40451c51246ed7601e1e7ae95aec473d33e8a4be9425d6ce50de6c655",
@@ -500,14 +553,89 @@
       "ami_project_side_copyright_receipts_issued": 22,
       "two_ami_public_meeting_cases_locally_admitted_in_mixed_v2": true,
       "other_public_meeting_candidates_admitted": false,
-      "full_corpus_cpu_receipt": null,
+      "full_corpus_cpu_receipt": "f2a8d521a567d88833a485604dfd259e232efb20adda1334d4365c55f043230c",
       "trained_mfm": false,
-      "private_payload_in_fbm_git": false
+      "private_payload_in_fbm_git": false,
+      "previous_synthetic_manifest_sha256": "f54f03ace36b7bb8afde531faf5a283b1cb894ff40389ddaeb96d2f5caa4c48a",
+      "full_corpus_cpu_receipt_scope": "reissued synthetic-only teacher corpus; processor/data pass, no model fit",
+      "feature_export_complete": false
     },
     "candidate_replay_trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_SOURCE_CANDIDATES_AND_AUTHORITY_FIX.jsonl",
     "cross_stage_teacher_trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_AMI_CROSS_STAGE_CUSTODY.jsonl",
     "synthetic_issuance_trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_SYNTHETIC_TEACHER_CORPUS_ISSUED.jsonl",
     "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_CORPUS_REPLAY_GATE.jsonl"
   },
-  "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_TEACHER_LANE_AND_EXACT_SLICES.jsonl"
+  "trace": "docs/fable-builder/traces/FBM_TRACE_20261001_MFM_V16_TEACHER_LANE_AND_EXACT_SLICES.jsonl",
+  "build_continuation_20261002": {
+    "status": "PROTECTED_TEACHER_CPU_PASSED_FEATURE_EXPORT_RUNNING_UNQUALIFIED",
+    "mfm_branch": "research/mfm-v1-licensed-base-20260930",
+    "mfm_commit": "eee3b30cf1791b92dbb509b7423b993d45e6596c",
+    "tested_implementation_commit": "561fac07570e78e2a9833f6bbac728a8950dc713",
+    "contract": "docs/MFM_V16_BUILD_CONTINUATION_2026-10-02.md",
+    "original_v3_archive_sha256": "fd34cddc1c8b8958d00d5daf74f39b928e9fb2818ccaa4ee6294b928037f40a3",
+    "recovered_archive_sha256": "1a5155457a43af215ad295e67f039785b1aa8d5f059295ddf52189de48316586",
+    "recovered_manifest_sha256": "0268c134596326bb592e0afaf3fdab8626670a345e813b2148a11eb68dc93676",
+    "reissued_rights_are_new_records": true,
+    "train_cases": 432,
+    "diagnostic_development_cases": 9,
+    "magnolia_owner_account": "mxrayan",
+    "cpu_job": 576606,
+    "cpu_exit_code": "0:0",
+    "processor_receipt_sha256": "f2a8d521a567d88833a485604dfd259e232efb20adda1334d4365c55f043230c",
+    "maximum_source_tokens": 3035,
+    "maximum_target_tokens": 1607,
+    "modalities_processed": [
+      "code",
+      "structured",
+      "text"
+    ],
+    "linux_contract_job": 576608,
+    "linux_tests_passed": 104,
+    "linux_test_seconds": 16.711,
+    "local_new_tests_passed": 12,
+    "failed_jobs_preserved": {
+      "576604": "namespace helper argument mismatch before corpus open",
+      "576609": "legacy Bash empty-array error before exporter execution"
+    },
+    "feature_export_job": 576610,
+    "feature_export_complete": false,
+    "feature_bank_sha256": null,
+    "trained_mfm": false,
+    "frozen_backbone": {
+      "device": "cpu",
+      "dtype": "bfloat16",
+      "language_head_used": false,
+      "targets_visible": false
+    },
+    "fresh_specialist": {
+      "dtype": "float32",
+      "architecture_unchanged": true,
+      "full_size_backward_restart_proved": false
+    },
+    "feature_entrypoint": "scripts/mfm/export_v16_frozen_features.py",
+    "cached_training_entrypoint": "scripts/mfm/train_v16_cached_specialist.py",
+    "original_live_inference_schema_compatible": false,
+    "free_compute": {
+      "magnolia": "active allocated CPU export; P100 GPU stress next",
+      "kaggle": "owner CLI works; actual new allocation and remaining quota unverified",
+      "hugging_face": "connected NineWinged non-PRO; eligible ZeroGPU may offer short free probes; Jobs use billed credits"
+    },
+    "paid_compute_used": false,
+    "independent_gold": false,
+    "final_opened": false,
+    "product_qualified": false,
+    "next_gates": [
+      "complete exact frozen bank",
+      "full-size GPU backward and restart",
+      "complete teacher fit",
+      "matched generated trained/seeded diagnostics",
+      "independent source/host/time/generator-separated gold and native modalities",
+      "governed sequential memory-to-judgment feedback",
+      "sealed FINAL and second-consumer qualification"
+    ],
+    "trace": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl",
+    "training_eligible": false,
+    "evaluation_eligible": false,
+    "qualification_boundary": "CPU and small-model tests prove contracts only. Single-author fictional targets, lower CE and frozen exports do not prove useful learned formation."
+  }
 }
