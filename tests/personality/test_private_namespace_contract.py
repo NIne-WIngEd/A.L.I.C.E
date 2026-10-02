@@ -178,6 +178,7 @@ def public_stage(tmp_path, monkeypatch):
         monkeypatch.setenv(key, str(value))
     monkeypatch.delenv("PERSONALITY_RAW_LINEAGE_PATH", raising=False)
     monkeypatch.delenv("PERSONALITY_RAW_LINEAGE_SHA256", raising=False)
+    monkeypatch.delenv("PERSONALITY_RAW_SOURCE_PATH", raising=False)
     guard = Mock(return_value={"host_uid": 1905, "host_gid": 100, "host_netns": "net:[100]",
                                "isolated_netns": "net:[200]", "interfaces": ["lo"]})
     monkeypatch.setattr(helper, "_p2_guard", guard)
@@ -238,15 +239,131 @@ def test_compilation_bound_and_append_only_unqualified_receipt(public_stage, cap
     assert stage.compile.call_count == 1
 
 
-def test_pinned_raw_lineage_is_optional_bounded_and_checked_before_compile(public_stage, monkeypatch):
+@pytest.mark.parametrize("formatted", [False, True])
+def test_pinned_raw_lineage_is_optional_bounded_and_checked_before_compile(public_stage, monkeypatch, formatted):
     path = public_stage.run.parent / "public-registry.json"
     payload = b'{"EINF":["PUBLIC_RAW_1"]}'
+    if formatted:
+        payload = b'{\n  "EINF": ["PUBLIC_RAW_1"]\n}\n'
     path.write_bytes(payload)
     monkeypatch.setenv("PERSONALITY_RAW_LINEAGE_PATH", str(path))
     monkeypatch.setenv("PERSONALITY_RAW_LINEAGE_SHA256", sha256(payload).hexdigest())
     receipt = helper.run_private_compile()
     assert public_stage.compile.call_args.kwargs["raw_lineage_registry"] == {"EINF": ["PUBLIC_RAW_1"]}
     assert receipt["raw_lineage_file_sha256"] == sha256(payload).hexdigest()
+
+
+@pytest.mark.parametrize("failure", [None, "extra_metadata", "bad_metadata_seal", "original_source_mutation"])
+def test_original_raw_source_derives_protected_registry_in_same_isolated_stage(public_stage, monkeypatch, capsys, failure):
+    raw = public_stage.run.parent / "original-public-source.zip"
+    raw.write_bytes(b"original independently pinned public raw source stand-in")
+    source_pin = sha256(raw.read_bytes()).hexdigest()
+    monkeypatch.setattr(helper, "RAW_SOURCE_SHA256", source_pin)
+    monkeypatch.setenv("PERSONALITY_RAW_SOURCE_PATH", str(raw))
+    registry = {"EINF": ["PUBLIC_RAW_1"]}
+    registry_pin = sha256(helper._canonical(registry)).hexdigest()
+    raw_receipt = {"schema": "alice-personality-raw-inference-lineage-v1", "state": "DERIVED_UNQUALIFIED",
+        "source_archive_sha256": source_pin, "source_member_path": "public/einf_proposals.jsonl",
+        "source_member_sha256": "c" * 64, "source_member_bytes": 40,
+        "generation_manifest_path": "public/generation_manifest.json", "generation_manifest_sha256": "d" * 64,
+        "checksum_ledger_path": "public/SHA256SUMS.txt", "checksum_ledger_sha256": "e" * 64,
+        "code_sha256": "f" * 64, "mechanical_fixture_only": False,
+        "training_authorized": False, "behavior_qualification": None, "registry_sha256": registry_pin,
+        "raw_inference_count": 1, "acceptance_authority": False,
+        "private_gradient_authorized": False, "historical_authority_granted": False}
+    raw_receipt["receipt_sha256"] = sha256(helper._canonical(raw_receipt)).hexdigest()
+    if failure == "extra_metadata":
+        raw_receipt.pop("receipt_sha256")
+        raw_receipt["PRIVATE_LOOKING_EXTRA_METADATA"] = "FICTITIOUS SOURCE TEXT MUST NOT LEAVE SUMMARY"
+        raw_receipt["receipt_sha256"] = sha256(helper._canonical(raw_receipt)).hexdigest()
+    if failure == "bad_metadata_seal":
+        raw_receipt["receipt_sha256"] = "0" * 64
+    def derive(path, *, expected_archive_sha256):
+        assert public_stage.guard.call_count == 1
+        assert path == raw and expected_archive_sha256 == source_pin
+        print("FICTITIOUS RAW SOURCE TEXT MUST NOT BE LOGGED")
+        return registry, raw_receipt
+    call = Mock(side_effect=derive)
+    monkeypatch.setitem(sys.modules, "src.alice_personality.n1.raw_inference_lineage",
+                        SimpleNamespace(derive_raw_inference_registry=call))
+    if failure == "original_source_mutation":
+        original = public_stage.compile.side_effect
+        def mutate(package, output, **kwargs):
+            receipt = original(package, output, **kwargs)
+            raw.write_bytes(b"X" * raw.stat().st_size)
+            return receipt
+        public_stage.compile.side_effect = mutate
+    if failure is not None:
+        with pytest.raises(helper.PrivateStageError, match="sanitized"):
+            helper.run_private_compile()
+        assert capsys.readouterr().out == ""
+        receipt = json.loads((public_stage.run / "compile_summary.json").read_bytes())
+        assert receipt["state"] == "FAILED_UNQUALIFIED"
+        assert "PUBLIC_RAW_1" not in (public_stage.run / "compile_summary.json").read_text()
+        assert "FICTITIOUS SOURCE TEXT" not in (public_stage.run / "compile_summary.json").read_text()
+        if failure != "original_source_mutation":
+            public_stage.compile.assert_not_called()
+            assert "raw_inference_source" not in receipt
+        return
+    receipt = helper.run_private_compile()
+    assert capsys.readouterr().out == ""
+    call.assert_called_once()
+    assert public_stage.compile.call_args.kwargs["raw_lineage_registry"] == registry
+    assert receipt["raw_lineage_file_sha256"] == registry_pin
+    assert receipt["raw_inference_source"] == raw_receipt
+    assert (public_stage.run / "raw-inference-registry.json").read_bytes() == helper._canonical(registry)
+    assert json.loads((public_stage.run / "raw-inference-source.json").read_bytes()) == raw_receipt
+    assert "PUBLIC_RAW_1" not in (public_stage.run / "compile_summary.json").read_text()
+    assert receipt["acceptance_authority"] is False and receipt["private_gradient_authorized"] is False
+
+
+def test_raw_source_and_supplied_registry_are_ambiguous_and_refused(public_stage, monkeypatch):
+    monkeypatch.setenv("PERSONALITY_RAW_SOURCE_PATH", str(public_stage.run.parent / "unopened-original.zip"))
+    monkeypatch.setenv("PERSONALITY_RAW_LINEAGE_PATH", str(public_stage.run.parent / "unopened-registry.json"))
+    monkeypatch.setenv("PERSONALITY_RAW_LINEAGE_SHA256", "c" * 64)
+    with pytest.raises(helper.PrivateStageError, match="sanitized"):
+        helper.run_private_compile()
+    public_stage.compile.assert_not_called()
+    assert json.loads((public_stage.run / "compile_summary.json").read_bytes())["failure_phase"] == "private_source_custody"
+
+
+def test_supplied_registry_change_during_compile_cannot_publish_success(public_stage, monkeypatch):
+    path = public_stage.run.parent / "public-registry.json"
+    payload = b'{"EINF":["PUBLIC_RAW_1"]}'
+    path.write_bytes(payload)
+    monkeypatch.setenv("PERSONALITY_RAW_LINEAGE_PATH", str(path))
+    monkeypatch.setenv("PERSONALITY_RAW_LINEAGE_SHA256", sha256(payload).hexdigest())
+    original = public_stage.compile.side_effect
+    def mutate(package, output, **kwargs):
+        receipt = original(package, output, **kwargs)
+        path.write_bytes(b'{"EINF":["PUBLIC_RAW_2"]}')
+        return receipt
+    public_stage.compile.side_effect = mutate
+    with pytest.raises(helper.PrivateStageError, match="sanitized"):
+        helper.run_private_compile()
+    receipt = json.loads((public_stage.run / "compile_summary.json").read_bytes())
+    assert receipt["state"] == "FAILED_UNQUALIFIED" and receipt["failure_phase"] == "publication_checks"
+
+
+def test_in_memory_registry_change_during_compile_cannot_publish_success(public_stage, monkeypatch):
+    path = public_stage.run.parent / "public-registry.json"
+    payload = b'{"EINF":["PUBLIC_RAW_1"]}'
+    path.write_bytes(payload)
+    monkeypatch.setenv("PERSONALITY_RAW_LINEAGE_PATH", str(path))
+    monkeypatch.setenv("PERSONALITY_RAW_LINEAGE_SHA256", sha256(helper._canonical({"EINF": ["PUBLIC_RAW_1"]})).hexdigest())
+    # Use canonical bytes so the external file binding matches its content.
+    path.write_bytes(helper._canonical({"EINF": ["PUBLIC_RAW_1"]}))
+    original = public_stage.compile.side_effect
+    def mutate(package, output, **kwargs):
+        receipt = original(package, output, **kwargs)
+        kwargs["raw_lineage_registry"]["EINF"].append("PUBLIC_RAW_2")
+        return receipt
+    public_stage.compile.side_effect = mutate
+    with pytest.raises(helper.PrivateStageError, match="sanitized"):
+        helper.run_private_compile()
+    receipt = json.loads((public_stage.run / "compile_summary.json").read_bytes())
+    assert receipt["state"] == "FAILED_UNQUALIFIED" and receipt["failure_phase"] == "publication_checks"
+    assert path.read_bytes() == helper._canonical({"EINF": ["PUBLIC_RAW_1"]})
 
 
 @pytest.mark.parametrize("failure", ["wrong_pin", "too_large", "missing_pair", "inside_code", "duplicate_keys", "nonfinite"])
@@ -387,5 +504,8 @@ def test_transport_and_single_existing_container_stage_contract():
     assert 'realpath -e "$PRIVATE_PACKAGE_PATH"' not in code
     assert 'stat -c %a "$PRIVATE_PACKAGE_PATH"' not in code
     assert 'sha256sum "$PRIVATE_PACKAGE_PATH"' not in code
+    for forbidden in ('realpath -e "$RAW_SOURCE"', 'stat -c %a "$RAW_SOURCE"', 'sha256sum "$RAW_SOURCE"'):
+        assert forbidden not in code
+    assert '--env="PERSONALITY_RAW_SOURCE_PATH=$PERSONALITY_RAW_SOURCE_PATH"' in code
     assert 'export PERSONALITY_HOST_NETNS="$(readlink /proc/self/ns/net)"' in code
     assert '[[ ! -e "$PERSONALITY_RUN_ROOT" && ! -L "$PERSONALITY_RUN_ROOT" ]]' in code

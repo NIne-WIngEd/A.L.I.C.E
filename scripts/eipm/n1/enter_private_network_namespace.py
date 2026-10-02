@@ -13,7 +13,7 @@ from hashlib import sha256
 import io
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import re
 import socket
 import stat
@@ -25,6 +25,7 @@ CLONE_NEWNET = 0x40000000
 HOST_UID = 1905
 HOST_GID = 100
 PACKAGE_SHA256 = "3867ff04d1e326086b9086b2f106b9156b3a3ec8d637d3161e7bf01616183ee9"
+RAW_SOURCE_SHA256 = "5d122894348692900c2ef7f1e22198464b01ecd2df34fdb3a7e4e42e77f99911"
 MAX_REGISTRY_BYTES = 16 * 1024 * 1024
 SUMMARY_SCHEMA = "alice-personality-private-substrate-launch-receipt-v1"
 
@@ -251,6 +252,41 @@ def _write_summary(path: Path, value: dict) -> None:
     os.chmod(path, 0o600)
 
 
+def _raw_source_receipt(value: object, registry: object, registry_sha256: str) -> dict:
+    """Admit a fixed bounded metadata schema, never arbitrary protected fields."""
+    digests = {"source_archive_sha256", "source_member_sha256", "generation_manifest_sha256",
+               "checksum_ledger_sha256", "registry_sha256", "code_sha256", "receipt_sha256"}
+    paths = {"source_member_path": "einf_proposals.jsonl",
+             "generation_manifest_path": "generation_manifest.json", "checksum_ledger_path": "SHA256SUMS.txt"}
+    flags = {"acceptance_authority", "private_gradient_authorized", "historical_authority_granted",
+             "training_authorized", "mechanical_fixture_only"}
+    expected = digests | set(paths) | flags | {"schema", "state", "source_member_bytes",
+                                               "raw_inference_count", "behavior_qualification"}
+    valid = (type(value) is dict and set(value) == expected and type(registry) is dict
+             and set(registry) == {"EINF"} and type(registry["EINF"]) is list
+             and value["schema"] == "alice-personality-raw-inference-lineage-v1"
+             and value["state"] == "DERIVED_UNQUALIFIED" and value["behavior_qualification"] is None
+             and all(value[key] is False for key in flags)
+             and all(type(value[key]) is str and re.fullmatch(r"[0-9a-f]{64}", value[key]) for key in digests)
+             and type(value["source_member_bytes"]) is int and value["source_member_bytes"] > 0
+             and type(value["raw_inference_count"]) is int and value["raw_inference_count"] > 0
+             and value["raw_inference_count"] == len(registry["EINF"])
+             and value["source_archive_sha256"] == RAW_SOURCE_SHA256
+             and value["registry_sha256"] == registry_sha256)
+    if valid:
+        for key, filename in paths.items():
+            member = value[key]
+            valid &= (type(member) is str and 0 < len(member) <= 4096 and "\\" not in member
+                      and not PurePosixPath(member).is_absolute()
+                      and all(part not in ("", ".", "..") for part in member.split("/"))
+                      and PurePosixPath(member).name == filename)
+        unsigned = {key: item for key, item in value.items() if key != "receipt_sha256"}
+        valid &= value["receipt_sha256"] == sha256(_canonical(unsigned)).hexdigest()
+    if not valid or len(_canonical(value)) > 16384:
+        raise PrivateStageError("derived raw lineage metadata schema, binding or seal differs")
+    return value
+
+
 def run_private_compile() -> dict:
     """One isolated scientific stage; never a model or gradient operation."""
     isolation = _p2_guard()  # MUST precede private path resolution, stat or hash.
@@ -286,6 +322,9 @@ def run_private_compile() -> dict:
         registry = None
         registry_path = os.environ.get("PERSONALITY_RAW_LINEAGE_PATH", "")
         registry_sha256 = os.environ.get("PERSONALITY_RAW_LINEAGE_SHA256", "")
+        raw_source_path = os.environ.get("PERSONALITY_RAW_SOURCE_PATH", "")
+        if raw_source_path and (registry_path or registry_sha256):
+            raise PrivateStageError("raw lineage source and external registry modes cannot be combined")
         if bool(registry_path) != bool(registry_sha256):
             raise PrivateStageError("raw lineage needs both path and external SHA256")
         if registry_path:
@@ -301,6 +340,30 @@ def run_private_compile() -> dict:
             if len(payload) > MAX_REGISTRY_BYTES or sha256(payload).hexdigest() != registry_sha256:
                 raise PrivateStageError("raw lineage changed before parsing")
             registry = _registry_json(payload)
+        if raw_source_path:
+            phase = "raw_inference_source_custody"
+            raw_source = _bounded_path(raw_source_path, root, file=True)
+            raw_source_size = raw_source.stat().st_size
+            if raw_source == package or code in raw_source.parents:
+                raise PrivateStageError("original inference source must be separate from curated source and public code")
+            from src.alice_personality.n1.raw_inference_lineage import derive_raw_inference_registry
+            with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                registry, raw_receipt = derive_raw_inference_registry(raw_source,
+                    expected_archive_sha256=RAW_SOURCE_SHA256)
+            payload = _canonical(registry)
+            registry_sha256 = sha256(payload).hexdigest()
+            if len(payload) > MAX_REGISTRY_BYTES:
+                raise PrivateStageError("derived raw lineage source binding or authority differs")
+            raw_receipt = _raw_source_receipt(raw_receipt, registry, registry_sha256)
+            lineage = run / "raw-inference-registry.json"
+            with os.fdopen(os.open(lineage, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "wb") as stream:
+                stream.write(payload)
+            registry_path = str(lineage)
+            # Preserve the extractor's original sealed public metadata exactly.
+            with os.fdopen(os.open(run / "raw-inference-source.json", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "wb") as stream:
+                stream.write(_canonical(raw_receipt) + b"\n")
+            summary["raw_inference_source"] = raw_receipt
+        registry_content_sha256 = sha256(_canonical(registry)).hexdigest() if registry_path else None
         phase = "source_compilation"
         output = run / "compiled-substrate"
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
@@ -310,6 +373,12 @@ def run_private_compile() -> dict:
         if verified != receipt or receipt["state"] != "COMPILED_UNQUALIFIED" or receipt["private_gradient_authorized"] is not False or receipt["acceptance_authority"] is not False:
             raise PrivateStageError("compiled candidate source cannot grant acceptance or gradients")
         phase = "publication_checks"
+        if registry_path and sha256(_canonical(registry)).hexdigest() != registry_content_sha256:
+            raise PrivateStageError("in-memory raw lineage changed during source compilation")
+        if registry_path and _file_hash(lineage, max_bytes=MAX_REGISTRY_BYTES) != registry_sha256:
+            raise PrivateStageError("raw lineage changed during source compilation")
+        if raw_source_path and _file_hash(raw_source, max_bytes=raw_source_size) != RAW_SOURCE_SHA256:
+            raise PrivateStageError("original inference source changed during source compilation")
         _clean_code(code, expected_commit)
         for item in output.iterdir():
             if item.is_symlink() or not item.is_file():

@@ -154,6 +154,15 @@ and refused missing raw inference lineage. The original raw archive exists;
 its actual E-INF IDs must be verified in isolation, not guessed from references.
 No source acceptance, model load or gradients followed this progress.
 
+The isolated compiler now has an optional original-archive lineage route.
+Its stdlib reader verifies the exact raw source hash, real ZIP membership,
+selected E-INF/manifest checksum entries and strict original proposal IDs;
+it reads no older alternative or UNKNOWN bank. The driver forces the reviewed
+raw-v5 archive pin, refuses mechanics evidence and ambiguous registry modes,
+creates a protected registry, admits only fixed sealed metadata, and rechecks
+both the saved and in-memory registry plus the source after compilation.
+This establishes ID lineage only, not inference truth or source acceptance.
+
 The independent data-to-role audit found that current N1 supervision is only
 source alignment and provenance. Metadata/source-graph shortcuts can satisfy
 those losses without learning conditional identity meaning. A reviewed
