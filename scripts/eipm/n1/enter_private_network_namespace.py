@@ -193,7 +193,28 @@ def _safe_reason(exc: BaseException) -> str:
     reasons = {"raw EINF support is absent from the explicit lineage registry": "missing_raw_inference_lineage",
                "unresolved or wrong-namespace E0 support": "unresolved_source_evidence",
                "unresolved or wrong-namespace EINF support": "unresolved_curated_inference",
-               "archive SHA256 differs from the explicit package pin": "source_archive_pin_mismatch"}
+               "archive SHA256 differs from the explicit package pin": "source_archive_pin_mismatch",
+               "archive membership differs from the exact package pin": "source_member_inventory_mismatch",
+               "archive member hash differs from the exact package pin": "source_member_pin_mismatch",
+               "internal checksums do not cover the complete archive membership": "source_checksum_inventory_mismatch",
+               "internal checksum membership or digest conflicts with package pin": "source_checksum_pin_mismatch",
+               "invalid internal checksum line": "source_checksum_format_mismatch",
+               "curation manifest requires authority flags": "source_manifest_authority_missing",
+               "manifest authority flags must be explicit Booleans": "source_manifest_authority_type_mismatch",
+               "source is not an unchanged pre-weight candidate frontier": "source_manifest_candidate_state_mismatch",
+               "active source kind and provenance class disagree": "source_provenance_kind_mismatch",
+               "canonical E0 text hash is invalid": "source_text_pin_mismatch",
+               "canonical E0 requires an explicit historical truth flag": "source_history_authority_missing",
+               "inferred or synthetic policy cannot become history or Alice memory": "source_history_authority_conflict",
+               "source compilation cannot accept Alice memory, acceptance or gradient authority": "source_authority_conflict",
+               "identity, context-only and excluded support classes overlap": "source_support_role_overlap",
+               "active record lacks a stable ID": "source_record_identifier_missing",
+               "duplicate active record IDs": "source_record_identifier_duplicate",
+               "row training authority flags conflict": "source_row_authority_conflict",
+               "historical UNKNOWN cannot carry historical, memory or learning authority": "source_unknown_authority_conflict",
+               "unordered alternatives cannot be authorized training negatives": "source_alternative_authority_conflict",
+               "curation manifest omits required source counts or gap status": "source_manifest_count_missing",
+               "curation manifest count or closed-gap status mismatch": "source_manifest_count_mismatch"}
     return reasons.get(str(exc), "private_stage_refused")
 
 

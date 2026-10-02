@@ -23,6 +23,17 @@ helper = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(helper)
 
 
+@pytest.mark.parametrize("message, category", [
+    ("active source kind and provenance class disagree", "source_provenance_kind_mismatch"),
+    ("internal checksums do not cover the complete archive membership", "source_checksum_inventory_mismatch"),
+    ("canonical E0 requires an explicit historical truth flag", "source_history_authority_missing"),
+    ("curation manifest count or closed-gap status mismatch", "source_manifest_count_mismatch"),
+    ("FICTITIOUS SOURCE SENTENCE MUST NOT REACH LOGS", "private_stage_refused"),
+])
+def test_failure_categories_are_fixed_public_diagnostics(message, category):
+    assert helper._safe_reason(ValueError(message)) == category
+
+
 @pytest.fixture
 def namespace(monkeypatch):
     monkeypatch.setenv("PERSONALITY_HOST_NETNS", "net:[100]")
