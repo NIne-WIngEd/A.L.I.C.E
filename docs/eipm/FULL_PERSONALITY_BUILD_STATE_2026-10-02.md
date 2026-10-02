@@ -173,6 +173,15 @@ their own original provenance; the old compiler silently skipped absent raw
 supports. See `PERSONALITY_INFERENCE_LINEAGE_RESULT_576627.md`. There is no
 accepted private source or identity training result.
 
+Guarded manifest inspection 576640 completed at `42387a9c`, opening only the
+two exact pinned JSON manifests and their checksum lists. It records protected
+key/type structure and fixed verified source/map/code/isolation hashes, with
+no scalar values, source rows, registry or provenance comparison. The exact
+metadata schema must be reviewed before any input/delivery digest comparison;
+no aliases or arbitrary digest search are permitted. See
+`PERSONALITY_PROVENANCE_MANIFEST_INSPECTION_576640.md`. All authority flags
+remain false. The initial submission-path error is preserved separately.
+
 The independent data-to-role audit found that current N1 supervision is only
 source alignment and provenance. Metadata/source-graph shortcuts can satisfy
 those losses without learning conditional identity meaning. A reviewed
