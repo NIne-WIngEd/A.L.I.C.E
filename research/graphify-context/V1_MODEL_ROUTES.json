@@ -32,7 +32,7 @@
     },
     "mfm": {
       "branch": "research/mfm-v1-licensed-base-20260930",
-      "commit": "a9c143f457f10b93d5d4f914fc10ad002e485fa4",
+      "commit": "41252af3a30cb3680a209450a7d49c0886908737",
       "files": [
         {
           "path": "docs/MFM_V1_LICENSED_BASE_DIRECTION_2026-09-30.md",
@@ -47,7 +47,12 @@
         {
           "path": "docs/MFM_V16_BUILD_CONTINUATION_2026-10-02.md",
           "purpose": "MFM recovered corpus, compute decisions and remaining full-capability roadmap",
-          "blob_sha": "e7760af2b8eab3e7074ffc82a61504668656b0d0"
+          "blob_sha": "6395684d440b6dcdac070d6d76adb3a6e053d9b0"
+        },
+        {
+          "path": "docs/MFM_COMPUTE_RECOVERY_RECEIPTS_2026-10-02.json",
+          "purpose": "actual failed export audit, full synthetic capacity, Kaggle isolation evidence and selected protected CPU route",
+          "blob_sha": "bc47bbf883fff6b014f1e47ce2cb965f7ca04d9e"
         },
         {
           "path": "docs/MFM_V1_ROLE_BOUNDARY_DIAGNOSTIC_2026-09-30.md",
@@ -165,6 +170,26 @@
           "blob_sha": "7273e6451a5cb7f840fbb921cab6e0f9030b169c"
         },
         {
+          "path": "scripts/mfm/magnolia_v16_dedicated_export_20261002.sbatch",
+          "purpose": "dedicated locked CPU export runtime and verified saved-case recovery",
+          "blob_sha": "21c6d596207985167d667cc5bfee84d084c39b64"
+        },
+        {
+          "path": "scripts/mfm/probe_v16_cached_capacity.py",
+          "purpose": "public random-tensor full decoder accumulation and exact restart resource measurement",
+          "blob_sha": "6e32e9759b18f0924b7d67102da38b8a738ca39e"
+        },
+        {
+          "path": "scripts/mfm/magnolia_v16_cached_cpu_pipeline_20261002.sbatch",
+          "purpose": "protected CPU full corpus stress, teacher learning and generated-control fallback",
+          "blob_sha": "640d35b8ac6346073f4a21e42a1ccad2dd759813"
+        },
+        {
+          "path": "scripts/mfm/kaggle_nodata_gpu_isolation_probe_20261002.py",
+          "purpose": "owner-private input-free Kaggle actual accelerator and two isolation capability probes",
+          "blob_sha": "4a5a7fd4cabb1a8ef7494bf6cc931ed4cf2ff3af"
+        },
+        {
           "path": "scripts/mfm/benchmark_v16_cpu_precision.py",
           "purpose": "measured CPU FP32 source arithmetic versus committed BF16 states",
           "blob_sha": "a101e1d77315744414218c034c83f29d594c0378"
@@ -172,7 +197,7 @@
         {
           "path": "scripts/mfm/magnolia_v16_frozen_feature_export.sbatch",
           "purpose": "protected same-owner Magnolia allocated CPU feature job",
-          "blob_sha": "886f9cb78ff76bc6ea141ef92bbf6fff4de68f63"
+          "blob_sha": "d06763d7e512fed7649de9246b773e9866290af7"
         },
         {
           "path": "scripts/mfm/issue_v16_longitudinal_synthetic_expansion.py",
@@ -253,7 +278,7 @@
     },
     "fbm": {
       "branch": "research/fbm-v1-licensed-base-20260930",
-      "commit": "691a341c348fc81a7f5cbc9c2b07a295a818efb3",
+      "commit": "e59a20504fb91947cfa50a05d6017996906b8e91",
       "files": [
         {
           "path": "training/fbm/base_assembly/gemma4_12b_mfm_v1.seed.json",
@@ -263,12 +288,12 @@
         {
           "path": "training/fbm/base_assembly/mfm_v16_teacher_and_source_slices_20261001.seed.json",
           "purpose": "FBM recovered teacher CPU evidence and frozen-feature build continuation",
-          "blob_sha": "39aa6a8a697f6366f3e87c5f87441f0bbea08908"
+          "blob_sha": "dfc8bdf7243406351ed0a2bd7d9457733b03dd2a"
         },
         {
           "path": "docs/fable-builder/traces/FBM_TRACE_20261002_MFM_RECOVERY_AND_FROZEN_FEATURE_ROUTE.jsonl",
           "purpose": "FBM artifact recovery, measured tests and compute-route procedure traces",
-          "blob_sha": "6e36b28812b8906f7489a693670d433cc73b8e86"
+          "blob_sha": "744792fca97e972c6f7402918fce897646f4c926"
         },
         {
           "path": "training/fbm/base_assembly/mfm_v1_training_role_coverage_20260930.json",
