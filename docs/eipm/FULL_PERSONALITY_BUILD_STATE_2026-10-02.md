@@ -172,10 +172,16 @@ enforcement remain substantive work. See
 `PERSONALITY_RESEARCH_AND_LEARNING_DECISIONS_2026-10-02.md` for source-grounded
 method choices, alternatives and measured best-effort repair criteria.
 
-Public semantic experiment 576600 is running on Magnolia under `mxrayan` with
+Public semantic experiment 576600 completed on Magnolia under `mxrayan` with
 immutable tested code `f85a9833c5f5af6b8359bd63f4391be7e4db1744`.
 Its existing Torch runtime passed all 18 tiny compatibility tests before the
-actual experiment. There is no learned result or inherited-influence finding yet.
+actual experiment. All 152 complete feature banks were extracted and first-party
+optimizer/RNG resume and export/reload were exact. The learned readout scored
+9/56 TRAIN and 1/16 DEV, below the fixed semantic control's 15/56 and 4/16;
+sentence-unseen DEV was 1/14 versus 3/14. This weak fit/transfer is unqualified.
+The saved features enable source-dependence and familiar-description shortcut
+diagnosis without another publisher forward. See
+`PERSONALITY_PUBLIC_LEARNING_RESULT_576600.md` for exact evidence and limitations.
 
 Kaggle's existing CLI successfully listed the owner's `mkrayanyan` notebooks.
 That observes working authentication, not current GPU quota or allocation.
