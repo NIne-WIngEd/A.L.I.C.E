@@ -163,6 +163,16 @@ creates a protected registry, admits only fixed sealed metadata, and rechecks
 both the saved and in-memory registry plus the source after compilation.
 This establishes ID lineage only, not inference truth or source acceptance.
 
+Explicit, pinned protected selection now handles the actual raw archive layout.
+Actual retry 576626 verified all 195 original proposal IDs, but required support
+closure still failed. Count-only diagnostic 576627 found 448 unique mandatory
+raw references across 988 active rows, with zero intersection with those 195
+new proposal IDs. Separately, 194 of 205 E-INF source origins resolve and 11
+do not. Earlier generator inputs and retained legacy inference material need
+their own original provenance; the old compiler silently skipped absent raw
+supports. See `PERSONALITY_INFERENCE_LINEAGE_RESULT_576627.md`. There is no
+accepted private source or identity training result.
+
 The independent data-to-role audit found that current N1 supervision is only
 source alignment and provenance. Metadata/source-graph shortcuts can satisfy
 those losses without learning conditional identity meaning. A reviewed
