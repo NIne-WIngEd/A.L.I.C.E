@@ -186,6 +186,8 @@ def public_stage(tmp_path, monkeypatch):
     monkeypatch.delenv("PERSONALITY_RAW_LINEAGE_PATH", raising=False)
     monkeypatch.delenv("PERSONALITY_RAW_LINEAGE_SHA256", raising=False)
     monkeypatch.delenv("PERSONALITY_RAW_SOURCE_PATH", raising=False)
+    monkeypatch.delenv("PERSONALITY_RAW_MEMBER_MAP_PATH", raising=False)
+    monkeypatch.delenv("PERSONALITY_RAW_MEMBER_MAP_SHA256", raising=False)
     guard = Mock(return_value={"host_uid": 1905, "host_gid": 100, "host_netns": "net:[100]",
                                "isolated_netns": "net:[200]", "interfaces": ["lo"]})
     monkeypatch.setattr(helper, "_p2_guard", guard)
@@ -260,8 +262,10 @@ def test_pinned_raw_lineage_is_optional_bounded_and_checked_before_compile(publi
     assert receipt["raw_lineage_file_sha256"] == sha256(payload).hexdigest()
 
 
-@pytest.mark.parametrize("failure", [None, "extra_metadata", "bad_metadata_seal", "original_source_mutation"])
-def test_original_raw_source_derives_protected_registry_in_same_isolated_stage(public_stage, monkeypatch, capsys, failure):
+@pytest.mark.parametrize(("failure", "selected"),
+    [(failure, selected) for failure in (None, "extra_metadata", "bad_metadata_seal", "original_source_mutation")
+     for selected in (False, True)] + [("member_map_mutation", True)])
+def test_original_raw_source_derives_protected_registry_in_same_isolated_stage(public_stage, monkeypatch, capsys, failure, selected):
     raw = public_stage.run.parent / "original-public-source.zip"
     raw.write_bytes(b"original independently pinned public raw source stand-in")
     source_pin = sha256(raw.read_bytes()).hexdigest()
@@ -279,25 +283,39 @@ def test_original_raw_source_derives_protected_registry_in_same_isolated_stage(p
         "raw_inference_count": 1, "acceptance_authority": False,
         "private_gradient_authorized": False, "historical_authority_granted": False}
     raw_receipt["receipt_sha256"] = sha256(helper._canonical(raw_receipt)).hexdigest()
+    if selected:
+        raw_receipt["source_member_path"] = "public/explicit_inference_fixture.jsonl"
+        raw_receipt.pop("receipt_sha256")
+        raw_receipt["receipt_sha256"] = sha256(helper._canonical(raw_receipt)).hexdigest()
+        member_map = _member_map_fixture(source_pin)
+        member_path = public_stage.run.parent / "protected-public-member-map.json"
+        member_payload = helper._canonical(member_map)
+        member_path.write_bytes(member_payload)
+        monkeypatch.setenv("PERSONALITY_RAW_MEMBER_MAP_PATH", str(member_path))
+        monkeypatch.setenv("PERSONALITY_RAW_MEMBER_MAP_SHA256", sha256(member_payload).hexdigest())
     if failure == "extra_metadata":
         raw_receipt.pop("receipt_sha256")
         raw_receipt["PRIVATE_LOOKING_EXTRA_METADATA"] = "FICTITIOUS SOURCE TEXT MUST NOT LEAVE SUMMARY"
         raw_receipt["receipt_sha256"] = sha256(helper._canonical(raw_receipt)).hexdigest()
     if failure == "bad_metadata_seal":
         raw_receipt["receipt_sha256"] = "0" * 64
-    def derive(path, *, expected_archive_sha256):
+    def derive(path, *, expected_archive_sha256, source_member_path=None):
         assert public_stage.guard.call_count == 1
         assert path == raw and expected_archive_sha256 == source_pin
+        assert source_member_path == (member_map["source_member_path"] if selected else None)
         print("FICTITIOUS RAW SOURCE TEXT MUST NOT BE LOGGED")
         return registry, raw_receipt
     call = Mock(side_effect=derive)
     monkeypatch.setitem(sys.modules, "src.alice_personality.n1.raw_inference_lineage",
                         SimpleNamespace(derive_raw_inference_registry=call))
-    if failure == "original_source_mutation":
+    if failure in {"original_source_mutation", "member_map_mutation"}:
         original = public_stage.compile.side_effect
         def mutate(package, output, **kwargs):
             receipt = original(package, output, **kwargs)
-            raw.write_bytes(b"X" * raw.stat().st_size)
+            if failure == "original_source_mutation":
+                raw.write_bytes(b"X" * raw.stat().st_size)
+            else:
+                member_path.write_bytes(member_payload + b" ")
             return receipt
         public_stage.compile.side_effect = mutate
     if failure is not None:
@@ -308,7 +326,7 @@ def test_original_raw_source_derives_protected_registry_in_same_isolated_stage(p
         assert receipt["state"] == "FAILED_UNQUALIFIED"
         assert "PUBLIC_RAW_1" not in (public_stage.run / "compile_summary.json").read_text()
         assert "FICTITIOUS SOURCE TEXT" not in (public_stage.run / "compile_summary.json").read_text()
-        if failure != "original_source_mutation":
+        if failure not in {"original_source_mutation", "member_map_mutation"}:
             public_stage.compile.assert_not_called()
             assert "raw_inference_source" not in receipt
         return
@@ -317,11 +335,69 @@ def test_original_raw_source_derives_protected_registry_in_same_isolated_stage(p
     call.assert_called_once()
     assert public_stage.compile.call_args.kwargs["raw_lineage_registry"] == registry
     assert receipt["raw_lineage_file_sha256"] == registry_pin
-    assert receipt["raw_inference_source"] == raw_receipt
+    assert receipt["raw_inference_source"]["source_receipt_sha256"] == raw_receipt["receipt_sha256"]
+    assert receipt["raw_inference_source"]["raw_inference_count"] == 1
+    assert "source_member_path" not in receipt["raw_inference_source"]
     assert (public_stage.run / "raw-inference-registry.json").read_bytes() == helper._canonical(registry)
     assert json.loads((public_stage.run / "raw-inference-source.json").read_bytes()) == raw_receipt
     assert "PUBLIC_RAW_1" not in (public_stage.run / "compile_summary.json").read_text()
+    assert "explicit_inference_fixture" not in (public_stage.run / "compile_summary.json").read_text()
+    if selected:
+        assert (public_stage.run / "raw-member-map.json").read_bytes() == member_payload
+        assert receipt["raw_member_map_file_sha256"] == sha256(member_payload).hexdigest()
     assert receipt["acceptance_authority"] is False and receipt["private_gradient_authorized"] is False
+
+
+def _member_map_fixture(source_pin):
+    return {"schema": "alice-personality-raw-inference-source-layout-review-v1", "state": "PROPOSED_UNQUALIFIED",
+        "source_archive_sha256": source_pin, "source_member_path": "public/explicit_inference_fixture.jsonl",
+        "generation_manifest_path": "public/generation_manifest.json", "checksum_ledger_path": "public/SHA256SUMS.txt",
+        "source_layout_receipt_file_sha256": "1" * 64, "source_layout_receipt_sha256": "2" * 64,
+        "selection_basis": "PUBLIC fixture directory metadata only; proposal schema unverified",
+        "acceptance_authority": False, "private_gradient_authorized": False,
+        "historical_authority_granted": False, "training_authorized": False}
+
+
+@pytest.mark.parametrize("failure", ["missing_pin", "without_source", "external_pin", "source_pin",
+    "authority", "duplicate_key", "unsafe_member", "different_root", "metadata_alias", "oversize", "in_code"])
+def test_explicit_member_map_refuses_unbound_or_authoritative_input_before_source_read(public_stage, monkeypatch, failure):
+    raw = public_stage.run.parent / "unopened-public-raw-source.zip"
+    raw.write_bytes(b"PUBLIC source sentinel must remain unopened by reader")
+    source_pin = sha256(raw.read_bytes()).hexdigest()
+    monkeypatch.setattr(helper, "RAW_SOURCE_SHA256", source_pin)
+    monkeypatch.setenv("PERSONALITY_RAW_SOURCE_PATH", str(raw))
+    value = _member_map_fixture(source_pin)
+    if failure == "source_pin":
+        value["source_archive_sha256"] = "0" * 64
+    if failure == "authority":
+        value["training_authorized"] = True
+    if failure == "unsafe_member":
+        value["source_member_path"] = "../private-looking-name.jsonl"
+    if failure == "different_root":
+        value["source_member_path"] = "other/public-fixture.jsonl"
+    if failure == "metadata_alias":
+        value["source_member_path"] = value["checksum_ledger_path"]
+    payload = helper._canonical(value)
+    if failure == "duplicate_key":
+        payload = payload[:-1] + b',"training_authorized":false}'
+    if failure == "oversize":
+        payload += b" " * helper.MAX_MEMBER_MAP_BYTES
+    path = (public_stage.code if failure == "in_code" else public_stage.run.parent) / "public-member-map.json"
+    path.write_bytes(payload)
+    monkeypatch.setenv("PERSONALITY_RAW_MEMBER_MAP_PATH", str(path))
+    monkeypatch.setenv("PERSONALITY_RAW_MEMBER_MAP_SHA256", "0" * 64 if failure == "external_pin" else sha256(payload).hexdigest())
+    if failure == "missing_pin":
+        monkeypatch.delenv("PERSONALITY_RAW_MEMBER_MAP_SHA256")
+    if failure == "without_source":
+        monkeypatch.delenv("PERSONALITY_RAW_SOURCE_PATH")
+    derive = Mock(side_effect=AssertionError("reader must not open source"))
+    monkeypatch.setitem(sys.modules, "src.alice_personality.n1.raw_inference_lineage", SimpleNamespace(derive_raw_inference_registry=derive))
+    with pytest.raises(helper.PrivateStageError, match="sanitized"):
+        helper.run_private_compile()
+    derive.assert_not_called()
+    public_stage.compile.assert_not_called()
+    summary = (public_stage.run / "compile_summary.json").read_text()
+    assert "private-looking-name" not in summary and "explicit_inference_fixture" not in summary
 
 
 def test_raw_source_and_supplied_registry_are_ambiguous_and_refused(public_stage, monkeypatch):
@@ -540,5 +616,9 @@ def test_transport_and_single_existing_container_stage_contract():
     for forbidden in ('realpath -e "$RAW_SOURCE"', 'stat -c %a "$RAW_SOURCE"', 'sha256sum "$RAW_SOURCE"'):
         assert forbidden not in code
     assert '--env="PERSONALITY_RAW_SOURCE_PATH=$PERSONALITY_RAW_SOURCE_PATH"' in code
+    assert '--env="PERSONALITY_RAW_MEMBER_MAP_PATH=$PERSONALITY_RAW_MEMBER_MAP_PATH"' in code
+    assert '--env="PERSONALITY_RAW_MEMBER_MAP_SHA256=$PERSONALITY_RAW_MEMBER_MAP_SHA256"' in code
+    for forbidden in ('realpath -e "$MEMBER_MAP"', 'stat -c %a "$MEMBER_MAP"', 'sha256sum "$MEMBER_MAP"'):
+        assert forbidden not in code
     assert 'export PERSONALITY_HOST_NETNS="$(readlink /proc/self/ns/net)"' in code
     assert '[[ ! -e "$PERSONALITY_RUN_ROOT" && ! -L "$PERSONALITY_RUN_ROOT" ]]' in code

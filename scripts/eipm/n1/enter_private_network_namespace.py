@@ -27,6 +27,7 @@ HOST_GID = 100
 PACKAGE_SHA256 = "3867ff04d1e326086b9086b2f106b9156b3a3ec8d637d3161e7bf01616183ee9"
 RAW_SOURCE_SHA256 = "5d122894348692900c2ef7f1e22198464b01ecd2df34fdb3a7e4e42e77f99911"
 MAX_REGISTRY_BYTES = 16 * 1024 * 1024
+MAX_MEMBER_MAP_BYTES = 16 * 1024
 SUMMARY_SCHEMA = "alice-personality-private-substrate-launch-receipt-v1"
 
 
@@ -231,6 +232,8 @@ def _safe_reason(exc: BaseException) -> str:
         "source_archive_changed", "source_archive_sha256_mismatch", "required_member_missing_from_checksum_ledger",
         "manifest_checksum_mismatch", "invalid_generation_manifest", "proposal_member_checksum_mismatch",
         "lineage_reader_code_changed", "raw_lineage_source_unreadable"}
+    raw_reasons.update({"unsafe_explicit_source_member_path", "explicit_source_member_missing",
+                        "source_member_metadata_alias"})
     if type(exc).__name__ == "RawInferenceLineageError" and message in raw_reasons:
         return "raw_lineage_" + message
     # These labels originate exclusively in the public compiler schema; no
@@ -268,7 +271,40 @@ def _write_summary(path: Path, value: dict) -> None:
     os.chmod(path, 0o600)
 
 
-def _raw_source_receipt(value: object, registry: object, registry_sha256: str) -> dict:
+def _member_path(value: object) -> bool:
+    return (type(value) is str and 0 < len(value) <= 4096 and "\\" not in value
+            and not PurePosixPath(value).is_absolute()
+            and all(part not in ("", ".", "..") for part in value.split("/"))
+            and not any(ord(character) < 32 or ord(character) == 127 for character in value)
+            and not any(character in value for character in "*?[]"))
+
+
+def _raw_member_map(value: object) -> dict:
+    """Validate externally pinned protected layout metadata, never row authority."""
+    paths = {"source_member_path", "generation_manifest_path", "checksum_ledger_path"}
+    digests = {"source_archive_sha256", "source_layout_receipt_file_sha256", "source_layout_receipt_sha256"}
+    flags = {"acceptance_authority", "private_gradient_authorized", "historical_authority_granted", "training_authorized"}
+    keys = paths | digests | flags | {"schema", "state", "selection_basis"}
+    valid = (type(value) is dict and set(value) == keys
+             and value["schema"] == "alice-personality-raw-inference-source-layout-review-v1"
+             and value["state"] == "PROPOSED_UNQUALIFIED"
+             and value["source_archive_sha256"] == RAW_SOURCE_SHA256
+             and all(value[key] is False for key in flags)
+             and all(type(value[key]) is str and re.fullmatch(r"[0-9a-f]{64}", value[key]) for key in digests)
+             and all(_member_path(value[key]) for key in paths)
+             and type(value["selection_basis"]) is str and 0 < len(value["selection_basis"]) <= 512)
+    if valid:
+        valid &= (PurePosixPath(value["generation_manifest_path"]).name == "generation_manifest.json"
+                  and PurePosixPath(value["checksum_ledger_path"]).name == "SHA256SUMS.txt"
+                  and len({str(PurePosixPath(value[key]).parent) for key in paths}) == 1
+                  and len({value[key] for key in paths}) == 3)
+    if not valid:
+        raise PrivateStageError("raw member map schema, source or authority differs")
+    return value
+
+
+def _raw_source_receipt(value: object, registry: object, registry_sha256: str,
+                        member_map: dict | None = None) -> dict:
     """Admit a fixed bounded metadata schema, never arbitrary protected fields."""
     digests = {"source_archive_sha256", "source_member_sha256", "generation_manifest_sha256",
                "checksum_ledger_sha256", "registry_sha256", "code_sha256", "receipt_sha256"}
@@ -292,10 +328,13 @@ def _raw_source_receipt(value: object, registry: object, registry_sha256: str) -
     if valid:
         for key, filename in paths.items():
             member = value[key]
-            valid &= (type(member) is str and 0 < len(member) <= 4096 and "\\" not in member
-                      and not PurePosixPath(member).is_absolute()
-                      and all(part not in ("", ".", "..") for part in member.split("/"))
-                      and PurePosixPath(member).name == filename)
+            if not _member_path(member):
+                valid = False
+                continue
+            if member_map is not None:
+                valid &= member == member_map[key]
+            else:
+                valid &= PurePosixPath(member).name == filename
         unsigned = {key: item for key, item in value.items() if key != "receipt_sha256"}
         valid &= value["receipt_sha256"] == sha256(_canonical(unsigned)).hexdigest()
     if not valid or len(_canonical(value)) > 16384:
@@ -339,6 +378,10 @@ def run_private_compile() -> dict:
         registry_path = os.environ.get("PERSONALITY_RAW_LINEAGE_PATH", "")
         registry_sha256 = os.environ.get("PERSONALITY_RAW_LINEAGE_SHA256", "")
         raw_source_path = os.environ.get("PERSONALITY_RAW_SOURCE_PATH", "")
+        member_map_path = os.environ.get("PERSONALITY_RAW_MEMBER_MAP_PATH", "")
+        member_map_sha256 = os.environ.get("PERSONALITY_RAW_MEMBER_MAP_SHA256", "")
+        if bool(member_map_path) != bool(member_map_sha256) or (member_map_path and not raw_source_path):
+            raise PrivateStageError("raw member map needs source, path and external pin")
         if raw_source_path and (registry_path or registry_sha256):
             raise PrivateStageError("raw lineage source and external registry modes cannot be combined")
         if bool(registry_path) != bool(registry_sha256):
@@ -362,23 +405,49 @@ def run_private_compile() -> dict:
             raw_source_size = raw_source.stat().st_size
             if raw_source == package or code in raw_source.parents:
                 raise PrivateStageError("original inference source must be separate from curated source and public code")
+            member_map = None
+            selection = {}
+            if member_map_path:
+                phase = "raw_member_map_custody"
+                if re.fullmatch(r"[0-9a-f]{64}", member_map_sha256) is None:
+                    raise PrivateStageError("raw member map external pin is invalid")
+                member_map_file = _bounded_path(member_map_path, root, file=True)
+                if code in member_map_file.parents or member_map_file in (package, raw_source):
+                    raise PrivateStageError("raw member map must be separate from public code and archives")
+                if _file_hash(member_map_file, max_bytes=MAX_MEMBER_MAP_BYTES) != member_map_sha256:
+                    raise PrivateStageError("raw member map differs from external pin")
+                with member_map_file.open("rb") as stream:
+                    map_payload = stream.read(MAX_MEMBER_MAP_BYTES + 1)
+                if len(map_payload) > MAX_MEMBER_MAP_BYTES or sha256(map_payload).hexdigest() != member_map_sha256:
+                    raise PrivateStageError("raw member map changed before parsing")
+                member_map = _raw_member_map(_registry_json(map_payload))
+                selection = {"source_member_path": member_map["source_member_path"]}
+                with os.fdopen(os.open(run / "raw-member-map.json", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "wb") as stream:
+                    stream.write(map_payload)
+                summary["raw_member_map_file_sha256"] = member_map_sha256
+            phase = "raw_inference_source_custody"
             from src.alice_personality.n1.raw_inference_lineage import derive_raw_inference_registry
             with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
                 registry, raw_receipt = derive_raw_inference_registry(raw_source,
-                    expected_archive_sha256=RAW_SOURCE_SHA256)
+                    expected_archive_sha256=RAW_SOURCE_SHA256, **selection)
             payload = _canonical(registry)
             registry_sha256 = sha256(payload).hexdigest()
             if len(payload) > MAX_REGISTRY_BYTES:
                 raise PrivateStageError("derived raw lineage source binding or authority differs")
-            raw_receipt = _raw_source_receipt(raw_receipt, registry, registry_sha256)
+            raw_receipt = _raw_source_receipt(raw_receipt, registry, registry_sha256, member_map)
             lineage = run / "raw-inference-registry.json"
             with os.fdopen(os.open(lineage, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "wb") as stream:
                 stream.write(payload)
             registry_path = str(lineage)
             # Preserve the extractor's original sealed public metadata exactly.
+            raw_receipt_payload = _canonical(raw_receipt) + b"\n"
             with os.fdopen(os.open(run / "raw-inference-source.json", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "wb") as stream:
-                stream.write(_canonical(raw_receipt) + b"\n")
-            summary["raw_inference_source"] = raw_receipt
+                stream.write(raw_receipt_payload)
+            summary["raw_inference_source"] = {
+                key: raw_receipt[key] for key in ("source_archive_sha256", "registry_sha256",
+                                                "source_member_sha256", "raw_inference_count")}
+            summary["raw_inference_source"].update(source_receipt_sha256=raw_receipt["receipt_sha256"],
+                source_receipt_file_sha256=sha256(raw_receipt_payload).hexdigest())
         registry_content_sha256 = sha256(_canonical(registry)).hexdigest() if registry_path else None
         phase = "source_compilation"
         output = run / "compiled-substrate"
@@ -395,6 +464,8 @@ def run_private_compile() -> dict:
             raise PrivateStageError("raw lineage changed during source compilation")
         if raw_source_path and _file_hash(raw_source, max_bytes=raw_source_size) != RAW_SOURCE_SHA256:
             raise PrivateStageError("original inference source changed during source compilation")
+        if member_map_path and _file_hash(member_map_file, max_bytes=MAX_MEMBER_MAP_BYTES) != member_map_sha256:
+            raise PrivateStageError("raw member map changed during source compilation")
         _clean_code(code, expected_commit)
         for item in output.iterdir():
             if item.is_symlink() or not item.is_file():

@@ -467,6 +467,72 @@ class RawInferenceLineageTests(unittest.TestCase):
                 r.RawInferenceLineageError, "lineage_reader_code_changed"):
             r.audit_raw_inference_source_layout(path, expected_archive_sha256=digest)
 
+    def test_explicit_different_public_member_changes_only_selection(self):
+        members = fixture_members()
+        selected = "public-package/public-independent-records.jsonl"
+        members[selected] = members.pop("public-package/einf_proposals.jsonl")
+        refresh_ledger(members)
+        path, digest = self.archive(members)
+        with self.assertRaisesRegex(r.RawInferenceLineageError, "missing_or_ambiguous_logical_member"):
+            r.derive_raw_inference_registry(path, expected_archive_sha256=digest)
+        registry, receipt = r.derive_raw_inference_registry(
+            path, expected_archive_sha256=digest, source_member_path=selected)
+        self.assertEqual(registry, {"EINF": ["public.raw.a", "public.raw.b"]})
+        self.assertEqual(receipt["source_member_path"], selected)
+        self.assertEqual(receipt["source_member_sha256"], sha256(members[selected]).hexdigest())
+        self.assertEqual(receipt["registry_sha256"], sha256(canonical(registry)).hexdigest())
+        self.assertEqual(set(receipt), set(self.derive()[1]))
+        self.assertIs(receipt["private_gradient_authorized"], False)
+        self.assertEqual(receipt["state"], "DERIVED_UNQUALIFIED")
+        seal = receipt.pop("receipt_sha256")
+        self.assertEqual(seal, sha256(canonical(receipt)).hexdigest())
+
+    def test_explicit_selection_exact_safe_root_checksum_and_schema_required(self):
+        members = fixture_members()
+        path, digest = self.archive(members)
+        for selected, reason in (("unknown.jsonl", "explicit_source_member_missing"),
+                                 ("PUBLIC-PACKAGE/einf_proposals.jsonl", "explicit_source_member_missing"),
+                                 ("../escape.jsonl", "unsafe_archive_member_path"),
+                                 ("public-package/*.jsonl", "unsafe_explicit_source_member_path"),
+                                 ("public-package/generation_manifest.json", "source_member_metadata_alias"),
+                                 ("public-package/SHA256SUMS.txt", "source_member_metadata_alias"),
+                                 (False, "unsafe_archive_member_path")):
+            with self.subTest(selected=selected), self.assertRaisesRegex(r.RawInferenceLineageError, reason):
+                r.derive_raw_inference_registry(path, expected_archive_sha256=digest,
+                                                source_member_path=selected)
+        different_root = "other/public-original-inferences.jsonl"
+        members[different_root] = canonical(fixture_rows()[0]) + b"\n"
+        outside, pin = self.archive(members)
+        with self.assertRaisesRegex(r.RawInferenceLineageError, "logical_member_root_mismatch"):
+            r.derive_raw_inference_registry(outside, expected_archive_sha256=pin,
+                                            source_member_path=different_root)
+        selected = "public-package/public-einf-looking-name.jsonl"
+        members = fixture_members()
+        members[selected] = canonical({"proposal_id": "public.asyn", "provenance_class": "A-SYN"}) + b"\n"
+        refresh_ledger(members)
+        bad_class, pin = self.archive(members)
+        with self.assertRaisesRegex(r.RawInferenceLineageError, "invalid_proposal_namespace"):
+            r.derive_raw_inference_registry(bad_class, expected_archive_sha256=pin,
+                                            source_member_path=selected)
+        members[selected] = canonical(fixture_rows()[0]) + b"\n"
+        bad_ledger, pin = self.archive(members)
+        with self.assertRaisesRegex(r.RawInferenceLineageError, "proposal_member_checksum_mismatch"):
+            r.derive_raw_inference_registry(bad_ledger, expected_archive_sha256=pin,
+                                            source_member_path=selected)
+        refresh_ledger(members)
+        source, pin = self.archive(members)
+        original_hash = r._hash_stream
+        calls = []
+
+        def mutated(stream):
+            calls.append(True)
+            return original_hash(stream) if len(calls) == 1 else "0" * 64
+
+        with patch.object(r, "_hash_stream", mutated), self.assertRaisesRegex(
+                r.RawInferenceLineageError, "source_archive_changed"):
+            r.derive_raw_inference_registry(source, expected_archive_sha256=pin,
+                                            source_member_path=selected)
+
 
 if __name__ == "__main__":
     unittest.main()

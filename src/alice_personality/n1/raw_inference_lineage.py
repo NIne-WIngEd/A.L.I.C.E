@@ -159,13 +159,23 @@ def _inventory(archive: zipfile.ZipFile) -> dict[str, zipfile.ZipInfo]:
     return files
 
 
-def _selected(files: dict[str, zipfile.ZipInfo]) -> tuple[str, str, str, str]:
+def _selected(files: dict[str, zipfile.ZipInfo],
+              source_member_path: str | None = None) -> tuple[str, str, str, str]:
     selected = []
-    for logical in _LOGICAL_NAMES:
+    if source_member_path is not None:
+        name = _member_path(source_member_path)
+        if any(char in name for char in "*?[]"):
+            _fail("unsafe_explicit_source_member_path")
+        if name not in files:
+            _fail("explicit_source_member_missing")
+        selected.append(name)
+    for logical in (_LOGICAL_NAMES if source_member_path is None else _LOGICAL_NAMES[1:]):
         matches = [name for name in files if name.rsplit("/", 1)[-1] == logical]
         if len(matches) != 1:
             _fail("missing_or_ambiguous_logical_member")
         selected.append(matches[0])
+    if len(set(selected)) != len(selected):
+        _fail("source_member_metadata_alias")
     roots = [name.rsplit("/", 1)[0] if "/" in name else "" for name in selected]
     if len(set(roots)) != 1:
         _fail("logical_member_root_mismatch")
@@ -274,13 +284,18 @@ def _hash_stream(stream: BinaryIO) -> str:
 
 
 def derive_raw_inference_registry(raw_archive_path: str | Path, *,
-                                  expected_archive_sha256: str) -> tuple[dict, dict]:
+                                  expected_archive_sha256: str,
+                                  source_member_path: str | None = None) -> tuple[dict, dict]:
     """Return pinned original proposal IDs and a sanitized unqualified receipt.
 
     There is no privacy bypass/namespace fixture flag: the caller must admit
     its environment before this function. Supplying a fixture pin cannot grant
     source acceptance, historical truth, qualification or gradient authority.
     Receipt paths are archive logical metadata only; IDs exist only in registry.
+    An explicit source_member_path must be an exact independently reviewed
+    member, supplied by the caller's protected source-layout binding. It changes
+    only selection, never E-INF schema or authority. No role is inferred from
+    its filename. Omitting it preserves documented logical-name selection.
     """
     expected = _digest(expected_archive_sha256)
     try:
@@ -300,7 +315,7 @@ def derive_raw_inference_registry(raw_archive_path: str | Path, *,
                 _fail("source_archive_sha256_mismatch")
             with zipfile.ZipFile(stream, "r") as archive:
                 files = _inventory(archive)
-                root, proposal_name, manifest_name, ledger_name = _selected(files)
+                root, proposal_name, manifest_name, ledger_name = _selected(files, source_member_path)
                 ledger_bytes = _read_member(archive, files[ledger_name], MAX_METADATA_BYTES)
                 checksums = _ledger(ledger_bytes, files, root, ledger_name)
                 if proposal_name not in checksums or manifest_name not in checksums:
