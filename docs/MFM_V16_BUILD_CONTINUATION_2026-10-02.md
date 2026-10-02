@@ -318,3 +318,71 @@ are `rayan-mfm/slurm/rayan-mfm-capacity-576629.{out,err}` and output custody
 `rayan-mfm/runs/rayan-mfm-synthetic-capacity-576629`. Revised learning logs and
 outputs use job ID 576634. At submission, these results remain pending and no
 bank digest or trained model is available.
+
+## Latest route: measured full capacity, protected CPU learning queued
+
+**576629 failed exit 3 before reading private metadata**: the GPU node rejected
+combined USER+NET namespace creation with EINVAL. **576634 was automatically
+cancelled** when that prerequisite failed. The completed CPU isolation probe
+does not establish GPU-node isolation.
+
+The synthetic capacity CLI was then narrowed to **public code and random
+tensors only**, with explicit source/target dimensions and an informational
+shape-reference digest. It cannot receive a corpus, base or preflight-file
+path. Actual private admission, training and diagnostic guards remain intact.
+Execution code is **924ea46b3907297c912b34422890d142381f527b**.
+
+**576636 COMPLETED exit 0**, 3m54s, on the P100 12 GB. The retained decoder has
+**267,542,272 parameters**. It passed 16-case accumulation at 3035/1607 tokens,
+first/later updates and actual checkpoint reload; next weights and Adam moments
+matched with maximum absolute difference **0.0**. Peak CUDA allocation reached
+**10,304,656,384 bytes (~9.60 GiB)**, reservation 10,961,813,504 bytes (~10.21
+GiB). The sealed capacity receipt is
+`6b27110a7fe87a0ef0da348f8e443a0f4e6dc56e6d2d511060e0969799c36bf1`,
+bound to run
+`e39d7ef57bf28890273ec0e53819553c362c4fa2c9a73b23c59fe1855316f429`.
+This establishes **synthetic full-decoder capacity**, not empirical corpus
+stress, semantic accuracy, useful formation or private GPU execution.
+
+Two no-data versions of owner-private Kaggle notebook
+[`mkrayanyan/rayan-mfm-nodata-gpu-20261002`](https://www.kaggle.com/code/mkrayanyan/rayan-mfm-nodata-gpu-20261002)
+completed. Returned metadata confirms private=true, internet=false and no
+attached dataset, model or notebook inputs. L4 was requested; the runtime
+actually provided **two Tesla T4s**, 15,636,037,632 bytes each, Torch
+**2.11.0+cu128**. Both nonroot USER+NET and root NET-only followed by UID drop
+were denied with EPERM. No corpus, base checkpoint or private formation weight
+was uploaded. Version two's sealed receipt is
+`a80934a8d6689ec436cbdcb283284000638a4225816b13361fdaad9b9befb312`.
+Internet=false metadata does not establish the required loopback-only boundary.
+Notebook method follows the official
+[Kaggle kernel metadata documentation](https://github.com/Kaggle/kaggle-cli/blob/main/docs/kernels_metadata.md);
+actual allocation and no-data receipts determine feasibility.
+
+The dedicated source export **576630** has reverified all **17** prior cases
+under proven CPU isolation and resumed new source forwards. Its bounded
+continuations remain **576631/576632/576633**. The free protected CPU route
+already supports the same FP32 specialist and complete targets, so **576637**
+is queued afterok:576633: twelve CPU threads, 64 GB, twelve hours. It uses a
+dedicated source-runtime lock, the same loopback-only checks, externally pinned
+complete producer bank and execution code 01ad19de0. It first measures actual
+corpus stress/reload, then performs a fresh two-epoch fit and matched generated
+controls. No architecture, vocabulary, target length or decoder width is
+reduced to obtain a pass.
+
+The fit saves every five optimizer steps and pauses at a completed optimizer
+boundary after eight training hours if still incomplete. A missing completed
+component stops the pipeline before generation; inspect the saved checkpoint
+and resume only its identical run. A twelve-hour diagnostic timeout likewise
+requires review, never a completion claim. CPU timing and learned behavior
+remain pending. Hugging Face remains a candidate for an independently verified
+free route; no paid credits or GPU allocation has been purchased.
+
+Actual sealed receipts and method-only accounting are saved in
+`docs/MFM_COMPUTE_RECOVERY_RECEIPTS_2026-10-02.json`. The no-data Kaggle source and
+metadata and the selected protected CPU pipeline are under `scripts/mfm/`.
+The CPU learning submission is
+`rayan-mfm/receipts/rayan-mfm-cpu-learning-submission-20261002.txt`, with logs
+`rayan-mfm/slurm/rayan-mfm-learning-576637.{out,err}` and eventual
+`rayan-mfm/runs/rayan-mfm-{probe,fit,generated}-576637` custody. Source export
+continues to use the original exact BF16 bank binding. Full-capability gates
+listed above remain open.

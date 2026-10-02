@@ -1,0 +1,248 @@
+{
+  "schema": "mfm-compute-recovery-audit-v1",
+  "recorded_at_utc": "2026-10-02T22:34:24.299868+00:00",
+  "failed_export": {
+    "job": 576610,
+    "state": "FAILED",
+    "exit_code": "1:0",
+    "elapsed": "01:11:38",
+    "committed_cases": 17,
+    "exception": "FileNotFoundError creating cases directory inside shared container; host directory remains present",
+    "root_cause_status": "shared-runtime mount visibility suspected, causal explanation not proven"
+  },
+  "failed_or_cancelled_jobs": {
+    "576619": "FAILED 3:0 policy halt",
+    "576620": "FAILED 3:0 policy halt",
+    "576621": "FAILED 3:0 policy halt",
+    "576622": "cancelled unsatisfiable dependency",
+    "576614": "TIMEOUT no completed FP32 forward or numerical receipt",
+    "576629": "FAILED 3:0 GPU unshare USER+NET EINVAL before private data",
+    "576634": "cancelled failed prerequisite automatically"
+  },
+  "source_recovery": {
+    "job": 576630,
+    "code_commit": "01ad19de001b47604593e15661f2d4cd4af963f1",
+    "dedicated_container": "rayan-mfm-source-cpu-20261002",
+    "all_17_prior_cases_reverified": true,
+    "continuation_jobs": [
+      576631,
+      576632,
+      576633
+    ],
+    "bank_complete": false
+  },
+  "public_synthetic_capacity": {
+    "job": 576636,
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed": "00:03:54",
+    "code_commit": "924ea46b3907297c912b34422890d142381f527b",
+    "parameters": 267542272,
+    "run": {
+      "decoder_sha256": "36446060dabcbb20df08ed0d5bd1749cad3b0cf367d59a96dcff81945eafab07",
+      "gradient_accumulation": 16,
+      "probe_sha256": "5c46a45b88ff310900a7af61e1710708c2960698583be2a6301e4dcdb838f060",
+      "qualified_for_product": false,
+      "record_sha256": "e39d7ef57bf28890273ec0e53819553c362c4fa2c9a73b23c59fe1855316f429",
+      "schema": "mfm-v16-cached-synthetic-capacity-run-v1",
+      "shape_reference_file_opened": false,
+      "shape_reference_sha256": "f2a8d521a567d88833a485604dfd259e232efb20adda1334d4365c55f043230c",
+      "source_dtype": "bfloat16",
+      "source_length": 3035,
+      "specialist_config": {
+        "base_hidden_size": 3840,
+        "end_token_id": 1,
+        "heads": 12,
+        "layers": 6,
+        "logit_chunk_tokens": 64,
+        "max_target_tokens": 8192,
+        "pad_token_id": 0,
+        "start_token_id": 2,
+        "vocabulary_size": 262144,
+        "width": 768
+      },
+      "specialist_dtype": "float32",
+      "target_length": 1607,
+      "teacher_corpus_opened": false,
+      "torch_version": "2.7.1+cu118"
+    },
+    "receipt": {
+      "capability": [
+        6,
+        0
+      ],
+      "checkpoint_reload_executed": true,
+      "device": "Tesla P100-PCIE-12GB",
+      "empirical_corpus_stress_passed": false,
+      "first_step": {
+        "gradient_norm": 190.2529296875,
+        "mean_loss": 374.3492126464844,
+        "peak_allocated_bytes": 6008453632,
+        "peak_reserved_bytes": 6928990208,
+        "seconds": 27.500982839614153,
+        "step": 1
+      },
+      "model_max_abs_difference": 0.0,
+      "optimizer_max_abs_difference": 0.0,
+      "qualified_for_product": false,
+      "record_sha256": "6b27110a7fe87a0ef0da348f8e443a0f4e6dc56e6d2d511060e0969799c36bf1",
+      "resumed_third_step": {
+        "gradient_norm": 181.6624755859375,
+        "mean_loss": 220.5015106201172,
+        "peak_allocated_bytes": 10304656384,
+        "peak_reserved_bytes": 10961813504,
+        "seconds": 26.79638112336397,
+        "step": 3
+      },
+      "run_sha256": "e39d7ef57bf28890273ec0e53819553c362c4fa2c9a73b23c59fe1855316f429",
+      "schema": "mfm-v16-cached-synthetic-capacity-v1",
+      "scope": "full configured decoder and maximal-length synthetic tensor resource/restart measurement; no teacher learning or admitted-corpus stress pass",
+      "second_step": {
+        "gradient_norm": 240.19100952148438,
+        "mean_loss": 293.2458190917969,
+        "peak_allocated_bytes": 8153681408,
+        "peak_reserved_bytes": 8543797248,
+        "seconds": 26.81045151501894,
+        "step": 2
+      },
+      "seconds": 204.56015969067812,
+      "synthetic_tensor_capacity_passed": true,
+      "teacher_corpus_opened": false,
+      "total_memory_bytes": 12778733568
+    }
+  },
+  "kaggle": {
+    "kernel_url": "https://www.kaggle.com/code/mkrayanyan/rayan-mfm-nodata-gpu-20261002",
+    "versions_completed": [
+      1,
+      2
+    ],
+    "version_1_receipt": {
+      "schema": "mfm-kaggle-nodata-gpu-isolation-v1",
+      "kaggle_owner": "mkrayanyan",
+      "kernel": "rayan-mfm-nodata-gpu-20261002",
+      "requested_accelerator": "NvidiaL4",
+      "requested_internet": false,
+      "private_kernel_requested": true,
+      "datasets_attached": false,
+      "private_corpus_opened": false,
+      "model_weights_opened": false,
+      "actual_torch_version": "2.11.0+cu128",
+      "actual_cuda_available": true,
+      "actual_cuda_device_count": 2,
+      "actual_devices": [
+        {
+          "name": "Tesla T4",
+          "capability": [
+            7,
+            5
+          ],
+          "total_memory_bytes": 15636037632
+        },
+        {
+          "name": "Tesla T4",
+          "capability": [
+            7,
+            5
+          ],
+          "total_memory_bytes": 15636037632
+        }
+      ],
+      "host_kernel": "6.18.48+",
+      "namespace_helper_sha256": "1907d88ad39e5cb2f035f8812704d41972795f40a2195f7082a5d2305ad87c2d",
+      "namespace_exit_code": 3,
+      "namespace_stdout": "",
+      "namespace_stderr": "private namespace unavailable: [Errno 1] unshare user+network namespace: Operation not permitted\n",
+      "elapsed_seconds": 17.053103460000102,
+      "qualified_for_product": false,
+      "record_sha256": "912a0020aa59929e45984c8779b40383df325610071c95d1c2ff1e48b955c5b2"
+    },
+    "version_2_receipt": {
+      "schema": "mfm-kaggle-nodata-gpu-isolation-v1",
+      "kaggle_owner": "mkrayanyan",
+      "kernel": "rayan-mfm-nodata-gpu-20261002",
+      "requested_accelerator": "NvidiaL4",
+      "requested_internet": false,
+      "private_kernel_requested": true,
+      "datasets_attached": false,
+      "private_corpus_opened": false,
+      "model_weights_opened": false,
+      "actual_torch_version": "2.11.0+cu128",
+      "actual_cuda_available": true,
+      "actual_cuda_device_count": 2,
+      "actual_devices": [
+        {
+          "name": "Tesla T4",
+          "capability": [
+            7,
+            5
+          ],
+          "total_memory_bytes": 15636037632
+        },
+        {
+          "name": "Tesla T4",
+          "capability": [
+            7,
+            5
+          ],
+          "total_memory_bytes": 15636037632
+        }
+      ],
+      "host_kernel": "6.18.48+",
+      "namespace_helper_sha256": "1907d88ad39e5cb2f035f8812704d41972795f40a2195f7082a5d2305ad87c2d",
+      "namespace_exit_code": 3,
+      "namespace_stdout": "",
+      "namespace_stderr": "private namespace unavailable: [Errno 1] unshare user+network namespace: Operation not permitted\n",
+      "root_net_only_exit_code": 1,
+      "root_net_only_stdout": "",
+      "root_net_only_stderr": "Traceback (most recent call last):\n  File \"/kaggle/working/mfm-nodata/root_net_only.py\", line 9, in <module>\n    raise OSError(err, 'root network namespace: ' + os.strerror(err))\nPermissionError: [Errno 1] root network namespace: Operation not permitted\n",
+      "scope": "two no-data isolation methods; no private fallback permitted",
+      "elapsed_seconds": 9.583520290999985,
+      "qualified_for_product": false,
+      "record_sha256": "a80934a8d6689ec436cbdcb283284000638a4225816b13361fdaad9b9befb312"
+    },
+    "returned_metadata": {
+      "id": "mkrayanyan/rayan-mfm-nodata-gpu-20261002",
+      "id_no": 136833804,
+      "title": "rayan mfm nodata gpu 20261002",
+      "code_file": "rayan-mfm-nodata-gpu-20261002.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": true,
+      "enable_tpu": false,
+      "enable_internet": false,
+      "keywords": [],
+      "dataset_sources": [],
+      "kernel_sources": [],
+      "competition_sources": [],
+      "model_sources": [],
+      "docker_image": "gcr.io/kaggle-private-byod/python@sha256:2757e0c7d1e0a9cb43da657b97e223c321a98f5014bdf64f44f2f6b083ad2b2f",
+      "machine_shape": "NvidiaL4"
+    },
+    "conclusion": "Actual T4 x2 allocation works; tested nonroot USER+NET and root NET-only isolation denied. No corpus, base or private weight was uploaded."
+  },
+  "selected_learning_route": {
+    "job": 576637,
+    "state_at_submission": "PENDING_DEPENDENCY",
+    "depends_afterok": 576633,
+    "device": "cpu",
+    "cpu_threads": 12,
+    "memory_gb": 64,
+    "allocation_hours": 12,
+    "code_commit": "01ad19de001b47604593e15661f2d4cd4af963f1",
+    "stages": [
+      "full admitted-corpus stress accumulation and actual restart",
+      "fresh all-432-case two-epoch FP32 teacher fit",
+      "matched trained/seeded generated diagnostic development"
+    ],
+    "session_seconds": 28800,
+    "save_every_optimizer_steps": 5,
+    "incomplete_fit_behavior": "checkpoint at optimizer boundary after eight training hours; no component means pipeline stops before generation; manual verified resume required",
+    "privacy": "same owner UID and verified loopback-only namespace; independent external complete bank pin required",
+    "capacity_fit_or_usefulness_pass_inferred": false
+  },
+  "training_or_product_qualified": false,
+  "final_opened": false,
+  "paid_compute_purchased": false
+}
